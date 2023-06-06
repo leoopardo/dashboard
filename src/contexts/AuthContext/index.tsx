@@ -55,6 +55,17 @@ export const AuthProvider = ({ children }: any) => {
     const userToken = `${
       localStorage.getItem("token") || sessionStorage.getItem("token")
     }`;
+
+    api.interceptors.request.use(async config => {
+      const t = userToken;
+
+      if(t){
+        api.defaults.headers.Authorization = `Bearer ${localStorage.getItem("token") || sessionStorage.getItem("token")}`
+      }
+
+      return config
+    })
+
     setToken(userToken);
     let success;
     try {

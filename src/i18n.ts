@@ -10,7 +10,8 @@ i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    fallbackLng: 'pt-BR',
+    fallbackLng: 'ptbr',
+
     debug: true,
     interpolation: {
       escapeValue: false,

@@ -38,7 +38,6 @@ function App() {
     async function signInStorage() {
       let success = false;
       success = await signInByStorage();
-      console.log(success);
 
       if (!success) {
         signOut;
@@ -79,10 +78,10 @@ function App() {
                   }}
                 >
                   <PageHeader />
-                  <Layout style={{ padding: "0 24px 24px", height: "100vh" }}>
+                  <Layout style={{ padding: "0 24px 24px", minHeight: "93vh" }}>
                     <Content
                       style={{
-                        padding: 24,
+                        padding: 2,
                         margin: 0,
                         height: "100%",
                         background: "#fff",

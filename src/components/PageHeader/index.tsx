@@ -60,7 +60,7 @@ export const PageHeader = () => {
           <a onClick={(e) => e.preventDefault()}>
             <Space>
               {" "}
-              {translation === "ptbr" ? (
+              {translation === "pt-BR" || translation === "ptbr" ? (
                 <Avatar
                   style={{ height: "25px", width: "25px" }}
                   src={brazil}
@@ -113,7 +113,7 @@ export const PageHeader = () => {
         <Dropdown menu={{ items }}>
           <a onClick={(e) => e.preventDefault()}>
             <Space>
-              {translation === "ptbr" ? (
+              {translation === "pt-BR" || translation === "ptbr" ? (
                 <Avatar
                   style={{ height: "25px", width: "25px" }}
                   src={brazil}

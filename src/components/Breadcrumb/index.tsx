@@ -33,6 +33,11 @@ export const BreadcrumbComponent = () => {
 
   useEffect(() => {
     handleChangeSidebar(false);
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
   }, [location]);
 
   return <Breadcrumb items={breadcrumbs} style={{ margin: "16px 0" }} />;

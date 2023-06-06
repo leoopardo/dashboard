@@ -22,6 +22,7 @@ import {
 } from "@ant-design/icons";
 import { CheckboxChangeEvent } from "antd/es/checkbox";
 import { useTranslation } from "react-i18next";
+import { api } from "../../../../config/api";
 
 export const Login = () => {
   const { t } = useTranslation();

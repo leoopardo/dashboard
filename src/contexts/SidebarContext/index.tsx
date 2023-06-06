@@ -11,7 +11,6 @@ export const MenuProvider = ({ children }: any) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
 
   function handleChangeSidebar(open: boolean) {
-    console.log(open);
     setIsSidebarOpen(open);
   }
 
