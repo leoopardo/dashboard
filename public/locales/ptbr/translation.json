@@ -50,7 +50,7 @@
 
   "messages": {
     "page_not_found": "Página não encontrada"
-  }, 
+  },
   "login": {
     "sign_in": "Faça login",
     "user": "Usuário",
@@ -58,5 +58,29 @@
     "remember_me": "Lembrar de mim",
     "access": "Entrar",
     "forgot_password": "Esqueci minha senha"
+  },
+
+  "table": {
+    "id": "ID",
+    "bank": "Banco",
+    "merchant_name": "Empresa",
+    "value": "Valor",
+    "createdAt": "Criado em",
+    "delivered_at": "Entregue em",
+    "payer_name": "Pagador",
+    "buyer_name": "Comprador",
+    "buyer_document": "Documento do comprador",
+    "document": "Documento",
+    "status": "Situação",
+    "_id": "ID",
+    "paid": "Pago",
+    "waiting": "Pendente",
+    "waiting_refund": "Aguardando devolução",
+    "canceled": "Cancelado",
+    "refund": "Devolvido",
+    "merchant_id": "ID Empresa",
+    "partner_name": "Plataforma",
+    "partner_id": "ID Plataforma",
+    "details": "Detalhes"
   }
 }

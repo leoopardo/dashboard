@@ -57,8 +57,14 @@ export const SidebarNavigation = () => {
       <FolderAddOutlined style={{ fontSize: "23px" }} />,
       [
         getItem("Paybrokers", "paybrokers", null, [
-          getItem("Usuários", "users", null, null, false, (e) =>
-            handleNavigate(e?.keyPath)
+          getItem(
+            "Usuários",
+            "users",
+            null,
+            null,
+            false,
+            (e) => handleNavigate(e?.keyPath),
+           // { display: "none" }
           ),
           getItem("Categorias", "categories", null, null, false, (e) =>
             handleNavigate(e?.keyPath)

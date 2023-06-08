@@ -7,7 +7,7 @@ export const NotFount: React.FC = () => {
   return (
     <div
       style={{
-        height: "100%",
+        height: "89vh",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",

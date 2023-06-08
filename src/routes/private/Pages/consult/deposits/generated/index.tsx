@@ -1,12 +1,17 @@
-import { Button, Card, Statistic } from "antd";
 import React, { useState, useEffect } from "react";
 import { Grid } from "@mui/material";
-import { generatedDepositTotalQuery } from "../../../../../../services/types/generatedDeposits.interface";
+import {
+  generatedDepositRowsItems,
+  generatedDepositTotalQuery,
+} from "../../../../../../services/types/generatedDeposits.interface";
 import { useGetTotalGeneratedDeposits } from "../../../../../../services/generatedDeposits/getTotal";
 import moment from "moment";
-import { ReloadOutlined } from "@ant-design/icons";
-import { defaultTheme } from "../../../../../../styles/defaultTheme";
-import { useMediaQuery } from "react-responsive";
+import { TotalizersCards } from "./components/TotalizersCards";
+import { ButtonComponent } from "../../../../../../components/Button";
+import { Alert } from "antd";
+import { useGetRowsGeneratedDeposits } from "../../../../../../services/generatedDeposits/getRows";
+import { CustomTable } from "../../../../../../components/CustomTable";
+import { ViewModal } from "./components/ViewModal";
 
 const INITIAL_QUERY: generatedDepositTotalQuery = {
   page: 1,
@@ -16,198 +21,99 @@ const INITIAL_QUERY: generatedDepositTotalQuery = {
     .format("YYYY-MM-DDTHH:mm:ss.SSS"),
   final_date: moment(new Date())
     .add(1, "day")
-    .endOf("day")
+    .startOf("day")
     .format("YYYY-MM-DDTHH:mm:ss.SSS"),
 };
 
 export const GeneratedDeposits = () => {
   const [query, setQuery] = useState<generatedDepositTotalQuery>(INITIAL_QUERY);
-  const isMobile = useMediaQuery({ maxWidth: "900px" });
-  const { depositsTotal, error, isTotalFetching, fetchDepositsTotal } =
-    useGetTotalGeneratedDeposits(INITIAL_QUERY);
+  const {
+    depositsTotal,
+    depositsTotalError,
+    isDepositsTotalFetching,
+    refetchDepositsTotal,
+  } = useGetTotalGeneratedDeposits(query);
+
+  const { depositsRows, depositsRowsError, isDepositsRowsFetching } =
+    useGetRowsGeneratedDeposits(query);
+
+  const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
+  const [currentItem, setCurrentItem] = useState<any>();
+
+  const columns = [
+    "_id",
+    "bank",
+    "merchant_name",
+    "value",
+    "createdAt",
+    "delivered_at",
+    "buyer_name",
+    "buyer_document",
+    "status",
+  ];
 
   return (
     <Grid container style={{ padding: "25px" }}>
-      {!error && (
-        <Grid
-          container
-          spacing={1}
-          style={{ display: "flex", justifyContent: "center" }}
-        >
-          <Grid
-            item
-            xs={6}
-            md={4}
-            lg={"auto"}
-            minWidth={!isMobile ? 180 : undefined}
-          >
-            <Card bordered={false}>
-              <Statistic
-                loading={isTotalFetching}
-                title={`Pago: ${depositsTotal?.paid_total || 0}`}
-                value={new Intl.NumberFormat("pt-BR", {
-                  style: "currency",
-                  currency: "BRL",
-                }).format(depositsTotal?.paid_value || 0)}
-                precision={2}
-                valueStyle={{
-                  color: defaultTheme.colors.success,
-                  fontSize: "18px",
-                }}
-                suffix=""
-              />
-            </Card>
+      <Grid container>
+        {depositsTotalError ? (
+          <Grid item xs={12} style={{ marginBottom: "10px" }}>
+            <Alert
+              message={depositsTotalError?.message}
+              type="error"
+              closable
+            />
           </Grid>
-          <Grid
-            item
-            xs={6}
-            md={4}
-            lg={"auto"}
-            minWidth={!isMobile ? 180 : undefined}
-          >
-            <Card bordered={false}>
-              <Statistic
-                loading={isTotalFetching}
-                title={`Devolvido: ${depositsTotal?.refund_total || 0}`}
-                value={new Intl.NumberFormat("pt-BR", {
-                  style: "currency",
-                  currency: "BRL",
-                }).format(depositsTotal?.awaiting_refund_value || 0)}
-                precision={2}
-                valueStyle={{
-                  color: defaultTheme.colors.success,
-                  fontSize: "18px",
-                }}
-              />
-            </Card>
-          </Grid>
-          <Grid
-            item
-            xs={6}
-            md={4}
-            lg={"auto"}
-            minWidth={!isMobile ? 180 : undefined}
-          >
-            <Card bordered={false}>
-              <Statistic
-                loading={isTotalFetching}
-                title={`Cancelado: ${depositsTotal?.canceled_total || 0}`}
-                value={new Intl.NumberFormat("pt-BR", {
-                  style: "currency",
-                  currency: "BRL",
-                }).format(depositsTotal?.canceled_value || 0)}
-                precision={2}
-                valueStyle={{
-                  color: defaultTheme.colors.error,
-                  fontSize: "18px",
-                }}
-              />
-            </Card>
-          </Grid>
-          <Grid
-            item
-            xs={6}
-            md={4}
-            lg={"auto"}
-            minWidth={!isMobile ? 180 : undefined}
-          >
-            <Card bordered={false}>
-              <Statistic
-                loading={isTotalFetching}
-                title={`Expirado: ${depositsTotal?.expired_total || 0}`}
-                value={new Intl.NumberFormat("pt-BR", {
-                  style: "currency",
-                  currency: "BRL",
-                }).format(depositsTotal?.expired_value || 0)}
-                precision={2}
-                valueStyle={{
-                  color: defaultTheme.colors.error,
-                  fontSize: "18px",
-                }}
-              />
-            </Card>
-          </Grid>
-          <Grid
-            item
-            xs={6}
-            md={4}
-            lg={"auto"}
-            minWidth={!isMobile ? 180 : undefined}
-          >
-            <Card bordered={false}>
-              <Statistic
-                loading={isTotalFetching}
-                title={`Pendente: ${depositsTotal?.waiting_total || 0}`}
-                value={new Intl.NumberFormat("pt-BR", {
-                  style: "currency",
-                  currency: "BRL",
-                }).format(depositsTotal?.waiting_value || 0)}
-                precision={2}
-                valueStyle={{
-                  color: defaultTheme.colors.warnning,
-                  fontSize: "18px",
-                }}
-              />
-            </Card>
-          </Grid>
-          <Grid
-            item
-            xs={6}
-            md={4}
-            lg={"auto"}
-            minWidth={!isMobile ? 180 : undefined}
-          >
-            <Card bordered={false}>
-              <Statistic
-                loading={isTotalFetching}
-                title={`Aguardando devolução: ${
-                  depositsTotal?.awaiting_refund_total || 0
-                }`}
-                value={new Intl.NumberFormat("pt-BR", {
-                  style: "currency",
-                  currency: "BRL",
-                }).format(depositsTotal?.awaiting_refund_value || 0)}
-                precision={2}
-                valueStyle={{
-                  color: defaultTheme.colors.warnning,
-                  fontSize: "18px",
-                }}
-              />
-            </Card>
-          </Grid>
-          <Grid
-            item
-            xs={6}
-            md={4}
-            lg={"auto"}
-            minWidth={!isMobile ? 180 : undefined}
-          >
-            <Card bordered={false}>
-              <Statistic
-                loading={isTotalFetching}
-                title={`Total: ${depositsTotal?.transactions_total || 0}`}
-                value={new Intl.NumberFormat("pt-BR", {
-                  style: "currency",
-                  currency: "BRL",
-                }).format(depositsTotal?.transaction_value || 0)}
-                precision={2}
-                valueStyle={{
-                  color: defaultTheme.colors.dark,
-                  fontSize: "18px",
-                }}
-              />
-            </Card>
-          </Grid>
-          <Grid item xs={2} md={2} lg={1}>
-            <Button
-              loading={isTotalFetching}
-              type="ghost"
-              onClick={fetchDepositsTotal}
-            >
-              {!isTotalFetching && <ReloadOutlined />}
-            </Button>
-          </Grid>
+        ) : (
+          <></>
+        )}
+      </Grid>
+
+      <TotalizersCards
+        data={depositsTotal}
+        fetchData={refetchDepositsTotal}
+        loading={isDepositsTotalFetching}
+        query={query}
+      />
+
+      <Grid container style={{ marginTop: "20px" }}>
+        <Grid item xs={12} md={4} lg={2}>
+          <ButtonComponent
+            loading={false}
+            title="filtros"
+            type="primary"
+            onClick={() => console.log("filtros")}
+          />
         </Grid>
+      </Grid>
+
+      <Grid container style={{ marginTop: "15px" }}>
+        <Grid item xs={12}>
+          {" "}
+          <CustomTable
+            query={query}
+            setCurrentItem={setCurrentItem}
+            setQuery={setQuery}
+            data={depositsRows}
+            items={depositsRows?.items}
+            columns={columns}
+            loading={isDepositsRowsFetching}
+            setViewModalOpen={setIsViewModalOpen}
+            label={[
+              "bank",
+              "merchant_name",
+              "status",
+              "createdAt",
+              "delivered_at",
+            ]}
+          />
+        </Grid>
+      </Grid>
+      {isViewModalOpen && (
+        <ViewModal
+          open={isViewModalOpen}
+          setOpen={setIsViewModalOpen}
+          id={currentItem?.id}
+        />
       )}
     </Grid>
   );

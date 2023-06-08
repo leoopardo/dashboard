@@ -50,7 +50,7 @@
 
   "messages": {
     "page_not_found": "Page not found"
-  }, 
+  },
   "login": {
     "sign_in": "Sign in",
     "user": "User",
@@ -58,5 +58,28 @@
     "remember_me": "Remember-me",
     "access": "Access",
     "forgot_password": "Forgot my password"
+  },
+  "table": {
+    "id": "ID",
+    "bank": "Bank",
+    "merchant_name": "Merchant",
+    "value": "Value",
+    "createdAt": "Created at",
+    "delivered_at": "Delivered at",
+    "buyer_name": "Buyer",
+    "buyer_document": "Buyer document",
+    "payer_name": "Payer",
+    "document": "Document",
+    "status": "Status",
+    "_id": "ID",
+    "paid": "Paid",
+    "waiting": "Waiting",
+    "waiting_refund": "Waiting refund",
+    "canceled": "Canceled",
+    "refund": "Refund",
+    "merchant_id": "Merchant ID",
+    "partner_name": "Partner",
+    "partner_id": "Partner ID",
+    "details": "Details"
   }
 }
