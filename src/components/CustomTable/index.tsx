@@ -16,7 +16,7 @@ interface TableProps {
   disableActions?: boolean;
   label?: string[];
   setViewModalOpen?: Dispatch<SetStateAction<boolean>>;
-  setCurrentItem: Dispatch<SetStateAction<any>>
+  setCurrentItem: Dispatch<SetStateAction<any>>;
 }
 
 export const CustomTable = (props: TableProps) => {
@@ -117,7 +117,10 @@ export const CustomTable = (props: TableProps) => {
                 <Dropdown
                   key={key}
                   menu={{ items: actions }}
-                  onOpenChange={() => props.setCurrentItem(record)}
+                  onOpenChange={() => {
+                    props.setCurrentItem(record);
+                 
+                  }}
                   arrow
                 >
                   <Button>

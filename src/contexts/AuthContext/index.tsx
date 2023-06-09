@@ -22,6 +22,7 @@ export const AuthProvider = ({ children }: any) => {
   const [token, setToken] = useState<string | undefined>();
 
   async function signIn(data: LoginData, rememberMe: boolean) {
+    signOut()
     const response = await api.post(
       "core/token",
       {},
@@ -73,6 +74,7 @@ export const AuthProvider = ({ children }: any) => {
       success = true;
     } catch (error) {
       success = false;
+      signOut()
     }
     return success;
   }

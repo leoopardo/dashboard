@@ -97,7 +97,7 @@ export const Mobile = (props: MobileProps) => {
           ),
 
           children: (
-            <Descriptions bordered>
+            <Descriptions bordered style={{margin: 0}}>
               {Object.keys(item).map((key, value) => {
                 switch (key) {
                   case "createdAt":

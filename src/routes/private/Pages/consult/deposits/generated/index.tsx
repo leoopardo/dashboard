@@ -52,6 +52,9 @@ export const GeneratedDeposits = () => {
     "status",
   ];
 
+  console.log(currentItem);
+  
+
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid container>
@@ -112,7 +115,7 @@ export const GeneratedDeposits = () => {
         <ViewModal
           open={isViewModalOpen}
           setOpen={setIsViewModalOpen}
-          id={currentItem?.id}
+          id={currentItem?._id}
         />
       )}
     </Grid>
