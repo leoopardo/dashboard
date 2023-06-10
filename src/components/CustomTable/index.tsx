@@ -117,13 +117,16 @@ export const CustomTable = (props: TableProps) => {
                 <Dropdown
                   key={key}
                   menu={{ items: actions }}
-                  onOpenChange={() => {
-                    props.setCurrentItem(record);
-                 
+                  onOpenChange={(open) => {
+                    if (open) props.setCurrentItem(record);
                   }}
                   arrow
                 >
-                  <Button>
+                  <Button
+                    onClick={() => {
+                      props.setCurrentItem(record);
+                    }}
+                  >
                     <EllipsisOutlined />
                   </Button>
                 </Dropdown>
@@ -164,6 +167,7 @@ export const CustomTable = (props: TableProps) => {
       items={props?.items}
       label={props?.label}
       actions={actions}
+      setCurrentItem={props.setCurrentItem}
     />
   );
 };

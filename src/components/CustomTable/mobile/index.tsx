@@ -8,7 +8,7 @@ import {
 } from "antd";
 import { Collapse } from "antd";
 import { t } from "i18next";
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { getColor } from "../../../utils/getColor";
 import { EllipsisOutlined } from "@ant-design/icons";
 
@@ -17,6 +17,7 @@ interface MobileProps {
   items: any;
   label: any;
   actions: any;
+  setCurrentItem: Dispatch<SetStateAction<any>>;
 }
 
 export const Mobile = (props: MobileProps) => {
@@ -89,7 +90,11 @@ export const Mobile = (props: MobileProps) => {
             </>
           ),
           extra: (
-            <Dropdown menu={{ items: props.actions }} arrow>
+            <Dropdown
+              menu={{ items: props.actions }}
+              arrow
+              onOpenChange={() => props.setCurrentItem(item)}
+            >
               <Button style={{ width: "45px" }}>
                 <EllipsisOutlined />
               </Button>
@@ -97,7 +102,7 @@ export const Mobile = (props: MobileProps) => {
           ),
 
           children: (
-            <Descriptions bordered style={{margin: 0}}>
+            <Descriptions bordered style={{ margin: 0 }}>
               {Object.keys(item).map((key, value) => {
                 switch (key) {
                   case "createdAt":

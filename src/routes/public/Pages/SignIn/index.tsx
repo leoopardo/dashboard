@@ -8,7 +8,6 @@ import {
   LockIcon,
   RoundedLock,
 } from "./styles";
-import Logo from "../../../../assets/logo.png";
 import { Grid } from "@mui/material";
 import { useMediaQuery } from "react-responsive";
 import { defaultTheme } from "../../../../styles/defaultTheme";
@@ -22,7 +21,8 @@ import {
 } from "@ant-design/icons";
 import { CheckboxChangeEvent } from "antd/es/checkbox";
 import { useTranslation } from "react-i18next";
-import { api } from "../../../../config/api";
+
+const Logo = import.meta.env.VITE_APP_LOGO
 
 export const Login = () => {
   const { t } = useTranslation();

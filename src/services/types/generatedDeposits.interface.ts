@@ -123,4 +123,5 @@ export interface getDeposit {
   createdAt: string;
   qr_code: string;
   paid_at: string;
+  delivered_at: string;
 }

@@ -52,9 +52,6 @@ export const GeneratedDeposits = () => {
     "status",
   ];
 
-  console.log(currentItem);
-  
-
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid container>
