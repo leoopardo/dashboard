@@ -126,6 +126,24 @@
     "used_filters": "Filtros aplicados",
     "apply_filters": "Aplicar filtros",
     "clear_filters": "Limpar filtros",
-    "age": "Idade"
+    "age": "Idade",
+    "processing": "Processando",
+    "in_analysis": "Em análise",
+    "created": "Criado",
+    "receiver_name": "Nome do recebedor",
+    "receiver_document": "Documento",
+    "pix_key_type": "Tipo de chave PIX",
+    "pix_key": "Chave PIX",
+    "receiver_birth_date": "Data de nascimento",
+    "receiver_gender": "Gênero",
+    "receiver_street": "Rua",
+    "receiver_number": "Número",
+    "receiver_neighborhood":"Bairro",
+    "receiver_city": "Cidade",
+    "receiver_state":"Estado",
+    "receiver_zip_code": "Código postal",
+    "receiver_bank_account": "Conta bancária",
+    "receiver_bank_agency": "Agência",
+    "receiver": "Recebedor"
   }
 }

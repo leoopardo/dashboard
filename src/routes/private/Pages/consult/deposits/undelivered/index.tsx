@@ -256,6 +256,7 @@ export const UndeliveredDeposits = () => {
           }}
           startDateKeyName="initial_date"
           endDateKeyName="final_date"
+          initialQuery={INITIAL_QUERY}
         />
       )}
     </Grid>

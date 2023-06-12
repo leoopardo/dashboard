@@ -70,7 +70,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
           shape="circle"
           style={{ width: "50px", height: "50px" }}
           loading={props.loading}
-          type="ghost"
+          type="dashed"
           onClick={props.fetchData}
         >
           {!props.loading && <ReloadOutlined />}

@@ -43,6 +43,7 @@ interface FilterModalProps {
   startDateKeyName: string;
   endDateKeyName: string;
   haveInitialDate?: boolean;
+  initialQuery: any;
 }
 
 export const FiltersModal = ({
@@ -56,6 +57,7 @@ export const FiltersModal = ({
   startDateKeyName,
   endDateKeyName,
   haveInitialDate,
+  initialQuery,
 }: FilterModalProps) => {
   const [filtersQuery, setFiltersQuery] = useState<any>(query);
   const { isStatesFetching, states } = useGetStates();
@@ -83,6 +85,10 @@ export const FiltersModal = ({
       [endDateKeyName]: moment(query[endDateKeyName]),
     });
   }, [query]);
+
+  useEffect(() => {
+    refetchCities();
+  }, [filtersQuery.state]);
 
   useEffect(() => {
     const q = { ...filtersQuery };
@@ -147,7 +153,7 @@ export const FiltersModal = ({
           {t("table.used_filters")}:
         </Grid>
         <Grid item xs={2}>
-          <Button type="dashed" danger>
+          <Button type="dashed" onClick={() => setQuery(initialQuery)} danger>
             <FilterAltOffOutlinedIcon />
           </Button>
         </Grid>

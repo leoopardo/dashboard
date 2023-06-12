@@ -33,19 +33,11 @@ const INITIAL_QUERY: paidDepositRowsQuery = {
 
 export const PaidDeposits = () => {
   const [query, setQuery] = useState<paidDepositRowsQuery>(INITIAL_QUERY);
-  const {
-    paidTotal,
-    paidTotalError,
-    isPaidTotalFetching,
-    refetchPaidTotal,
-  } = useGetTotalPaidDeposits(query);
+  const { paidTotal, paidTotalError, isPaidTotalFetching, refetchPaidTotal } =
+    useGetTotalPaidDeposits(query);
 
-  const {
-    paidRows,
-    paidRowsError,
-    isPaidRowsFetching,
-    refetchPaidTotalRows,
-  } = useGetRowsPaidDeposits(query);
+  const { paidRows, paidRowsError, isPaidRowsFetching, refetchPaidTotalRows } =
+    useGetRowsPaidDeposits(query);
 
   useEffect(() => {
     refetchPaidTotalRows();
@@ -91,11 +83,7 @@ export const PaidDeposits = () => {
       <Grid container>
         {paidTotalError ? (
           <Grid item xs={12} style={{ marginBottom: "10px" }}>
-            <Alert
-              message={paidTotalError?.message}
-              type="error"
-              closable
-            />
+            <Alert message={paidTotalError?.message} type="error" closable />
           </Grid>
         ) : (
           <></>
@@ -258,6 +246,7 @@ export const PaidDeposits = () => {
           }}
           startDateKeyName="initial_date"
           endDateKeyName="final_date"
+          initialQuery={INITIAL_QUERY}
         />
       )}
     </Grid>

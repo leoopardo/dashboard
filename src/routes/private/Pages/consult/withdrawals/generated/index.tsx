@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Grid } from "@mui/material";
-import { generatedDepositTotalQuery } from "../../../../../../services/types/generatedDeposits.interface";
-import { useGetTotalGeneratedDeposits } from "../../../../../../services/generatedDeposits/getTotal";
 import moment from "moment";
 import { TotalizersCards } from "./components/TotalizersCards";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
-import { Alert, Button, Input, Select, Space, DatePicker } from "antd";
-import { useGetRowsGeneratedDeposits } from "../../../../../../services/generatedDeposits/getRows";
+import { Alert, Button, Input, Select, Space } from "antd";
 import { CustomTable } from "../../../../../../components/CustomTable";
 import { ViewModal } from "./components/ViewModal";
 import { SearchOutlined } from "@ant-design/icons";
@@ -14,9 +11,11 @@ import { FiltersModal } from "../../../../../../components/FiltersModal";
 import { t } from "i18next";
 import useDebounce from "../../../../../../utils/useDebounce";
 import { FilterChips } from "../../../../../../components/FiltersModal/filterChips";
-const { RangePicker } = DatePicker;
+import { generatedWithdrawalsRowsQuery } from "../../../../../../services/types/generatedWithdrawals";
+import { useGetTotalGeneratedWithdrawals } from "../../../../../../services/generatedWithdrawals/getTotal";
+import { useGetRowsGeneratedWithdrawals } from "../../../../../../services/generatedWithdrawals/getRows";
 
-const INITIAL_QUERY: generatedDepositTotalQuery = {
+const INITIAL_QUERY: generatedWithdrawalsRowsQuery = {
   page: 1,
   limit: 25,
   initial_date: moment(new Date())
@@ -28,24 +27,25 @@ const INITIAL_QUERY: generatedDepositTotalQuery = {
     .format("YYYY-MM-DDTHH:mm:ss.SSS"),
 };
 
-export const GeneratedDeposits = () => {
-  const [query, setQuery] = useState<generatedDepositTotalQuery>(INITIAL_QUERY);
+export const GeneratedWithdrawals = () => {
+  const [query, setQuery] =
+    useState<generatedWithdrawalsRowsQuery>(INITIAL_QUERY);
   const {
-    depositsTotal,
-    depositsTotalError,
-    isDepositsTotalFetching,
-    refetchDepositsTotal,
-  } = useGetTotalGeneratedDeposits(query);
+    WithdrawalsTotal,
+    WithdrawalsTotalError,
+    isWithdrawalsTotalFetching,
+    refetchWithdrawalsTotal,
+  } = useGetTotalGeneratedWithdrawals(query);
 
   const {
-    depositsRows,
-    depositsRowsError,
-    isDepositsRowsFetching,
-    refetchDepositsTotalRows,
-  } = useGetRowsGeneratedDeposits(query);
+    withdrawalsRows,
+    withdrawalsRowsError,
+    isWithdrawalsRowsFetching,
+    refetchWithdrawalsTotalRows,
+  } = useGetRowsGeneratedWithdrawals(query);
 
   useEffect(() => {
-    refetchDepositsTotalRows();
+    refetchWithdrawalsTotalRows();
   }, [query]);
 
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
@@ -62,8 +62,10 @@ export const GeneratedDeposits = () => {
     "value",
     "createdAt",
     "delivered_at",
-    "buyer_name",
-    "buyer_document",
+    "receiver_name",
+    "receiver_document",
+    "pix_key_type",
+    "pix_key",
     "status",
   ];
 
@@ -86,10 +88,10 @@ export const GeneratedDeposits = () => {
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid container>
-        {depositsTotalError ? (
+        {WithdrawalsTotalError ? (
           <Grid item xs={12} style={{ marginBottom: "10px" }}>
             <Alert
-              message={depositsTotalError?.message}
+              message={WithdrawalsTotalError?.message}
               type="error"
               closable
             />
@@ -100,9 +102,9 @@ export const GeneratedDeposits = () => {
       </Grid>
 
       <TotalizersCards
-        data={depositsTotal}
-        fetchData={refetchDepositsTotal}
-        loading={isDepositsTotalFetching}
+        data={WithdrawalsTotal}
+        fetchData={refetchWithdrawalsTotal}
+        loading={isWithdrawalsTotalFetching}
         query={query}
       />
 
@@ -114,7 +116,7 @@ export const GeneratedDeposits = () => {
         <Grid item xs={12} md={4} lg={2}>
           <Button
             style={{ width: "100%", height: 40 }}
-            loading={isDepositsRowsFetching || isDepositsTotalFetching}
+            loading={isWithdrawalsRowsFetching || isWithdrawalsTotalFetching}
             type="primary"
             onClick={() => setIsFiltersOpen(true)}
           >
@@ -162,9 +164,9 @@ export const GeneratedDeposits = () => {
               onChange={(event) => setSearch(event.target.value)}
             />
             <Button
-              loading={isDepositsRowsFetching}
+              loading={isWithdrawalsRowsFetching}
               type="primary"
-              onClick={() => refetchDepositsTotalRows()}
+              onClick={() => refetchWithdrawalsTotalRows()}
               style={{ height: "40px" }}
               disabled={typeof searchOption === "string" && !search}
             >
@@ -175,7 +177,7 @@ export const GeneratedDeposits = () => {
         <Grid item xs={12} md={2} lg={2}>
           <Button
             type="dashed"
-            loading={isDepositsRowsFetching}
+            loading={isWithdrawalsRowsFetching}
             danger
             onClick={() => {
               setQuery(INITIAL_QUERY);
@@ -197,10 +199,10 @@ export const GeneratedDeposits = () => {
             query={query}
             setCurrentItem={setCurrentItem}
             setQuery={setQuery}
-            data={depositsRows}
-            items={depositsRows?.items}
+            data={withdrawalsRows}
+            items={withdrawalsRows?.items}
             columns={columns}
-            loading={isDepositsRowsFetching}
+            loading={isWithdrawalsRowsFetching}
             setViewModalOpen={setIsViewModalOpen}
             removeTotal
             label={[
@@ -241,7 +243,7 @@ export const GeneratedDeposits = () => {
             "age_start",
             "value_start",
           ]}
-          refetch={refetchDepositsTotalRows}
+          refetch={refetchWithdrawalsTotalRows}
           selectOptions={{
             status: [
               "PAID",

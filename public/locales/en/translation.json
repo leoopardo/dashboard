@@ -123,6 +123,24 @@
     "used_filters": "Used filters",
     "apply_filters": "Apply filters",
     "clear_filters": "Clear filters",
-    "age": "Age"
+    "age": "Age",
+    "processing": "Processing",
+    "in_analysis": "In analysis",
+    "created": "Created",
+    "receiver_name": "Receiver name",
+    "receiver_document": "Document",
+    "pix_key_type": "PIX key type",
+    "pix_key": "PIX key",
+    "receiver_birth_date": "Birth date",
+    "receiver_gender": "Gender",
+    "receiver_street": "Street",
+    "receiver_number": "Number",
+    "receiver_neighborhood": "Neighborhood",
+    "receiver_city": "City",
+    "receiver_state": "State",
+    "receiver_zip_code": "Zip code",
+    "receiver_bank_account": "Bank account",
+    "receiver_bank_agency": "Agency",
+    "receiver": "Receiver"
   }
 }
