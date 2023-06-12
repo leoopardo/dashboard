@@ -352,7 +352,7 @@ export const SidebarNavigation = () => {
             handleNavigate(e?.keyPath)
           ),
         ]),
-        getItem("Devoluções", "refunds", null, [
+        getItem(t("menus.refunds"), "refunds", null, [
           getItem(
             t("menus.refund_deposits"),
             "refund_deposits",
