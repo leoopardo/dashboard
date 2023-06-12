@@ -8,20 +8,24 @@ import {
   NotificationOutlined,
 } from "@ant-design/icons";
 import { Button, Menu, MenuProps } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useMenu } from "../../contexts/SidebarContext";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { defaultTheme } from "../../styles/defaultTheme";
 import { useMediaQuery } from "react-responsive";
+import { useTranslation } from "react-i18next";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
 export const SidebarNavigation = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const isMobile = useMediaQuery({ maxWidth: "900px" });
   const [collapsed, setCollapsed] = useState(true);
   const { handleChangeSidebar, isSidebarOpen } = useMenu();
+  const [items, setItems] = useState<MenuItem[]>([]);
+  const translation = useTranslation().i18n.language;
   const { signOut } = useAuth();
 
   function handleNavigate(pathArray: string[]) {
@@ -48,17 +52,17 @@ export const SidebarNavigation = () => {
     } as MenuItem;
   }
 
-  const items: MenuItem[] = [
+  const i: MenuItem[] = [
     getItem("Paybrokers", "0", null, null, true),
     { type: "divider" },
     getItem(
-      "Cadastro",
+      t("menus.register"),
       "register",
       <FolderAddOutlined style={{ fontSize: "23px" }} />,
       [
         getItem("Paybrokers", "paybrokers", null, [
           getItem(
-            "Usuários",
+            t("menus.users"),
             "users",
             null,
             null,
@@ -66,11 +70,11 @@ export const SidebarNavigation = () => {
             (e) => handleNavigate(e?.keyPath)
             // { display: "none" }
           ),
-          getItem("Categorias", "categories", null, null, false, (e) =>
+          getItem(t("menus.categories"), "categories", null, null, false, (e) =>
             handleNavigate(e?.keyPath)
           ),
           getItem(
-            "Manutenção de bancos",
+            t("menus.bank_maintain"),
             "bank_maintain",
             null,
             null,
@@ -78,106 +82,156 @@ export const SidebarNavigation = () => {
             (e) => handleNavigate(e?.keyPath)
           ),
           getItem(
-            "Configurações gerais",
+            t("menus.general_configs"),
             "general_configs",
             null,
             null,
             false,
             (e) => handleNavigate(e?.keyPath)
           ),
-          getItem("Relatórios", "paybrokers_reports", null, null, false, (e) =>
-            handleNavigate(e?.keyPath)
+          getItem(
+            t("menus.paybrokers_reports"),
+            "paybrokers_reports",
+            null,
+            null,
+            false,
+            (e) => handleNavigate(e?.keyPath)
           ),
         ]),
-        getItem("Plataforma", "partner", null, [
-          getItem("Plataformas", "partners", null, null, false, (e) =>
-            handleNavigate(e?.keyPath)
-          ),
-          getItem("Usuários", "partner_users", null, null, false, (e) =>
-            handleNavigate(e?.keyPath)
-          ),
-          getItem("Relatórios", "partner_reports", null, null, false, (e) =>
-            handleNavigate(e?.keyPath)
-          ),
-        ]),
-        getItem("Empresas", "merchant", null, [
-          getItem("Empresas", "merchants", null, null, false, (e) =>
-            handleNavigate(e?.keyPath)
-          ),
-          getItem("Usuários", "merchant_users", null, null, false, (e) =>
-            handleNavigate(e?.keyPath)
-          ),
-          getItem("Blacklist", "merchant_blacklist", null, null, false, (e) =>
-            handleNavigate(e?.keyPath)
-          ),
-          getItem("Relatórios", "merchant_reports", null, null, false, (e) =>
-            handleNavigate(e?.keyPath)
-          ),
-        ]),
-        getItem("Pessoas", "person", null, [
-          getItem("Pessoas", "persons", null, null, false, (e) =>
+        getItem(t("menus.partner"), "partner", null, [
+          getItem(t("menus.partners"), "partners", null, null, false, (e) =>
             handleNavigate(e?.keyPath)
           ),
           getItem(
-            "Whitelist de chaves PIX",
-            "whitelist",
+            t("menus.partner_users"),
+            "partner_users",
             null,
             null,
             false,
             (e) => handleNavigate(e?.keyPath)
           ),
           getItem(
-            "Bancos de clientes",
+            t("menus.partner_reports"),
+            "partner_reports",
+            null,
+            null,
+            false,
+            (e) => handleNavigate(e?.keyPath)
+          ),
+        ]),
+        getItem(t("menus.merchant"), "merchant", null, [
+          getItem(t("menus.merchants"), "merchants", null, null, false, (e) =>
+            handleNavigate(e?.keyPath)
+          ),
+          getItem(
+            t("menus.merchant_users"),
+            "merchant_users",
+            null,
+            null,
+            false,
+            (e) => handleNavigate(e?.keyPath)
+          ),
+          getItem(
+            t("menus.merchant_blacklist"),
+            "merchant_blacklist",
+            null,
+            null,
+            false,
+            (e) => handleNavigate(e?.keyPath)
+          ),
+          getItem(
+            t("menus.merchant_reports"),
+            "merchant_reports",
+            null,
+            null,
+            false,
+            (e) => handleNavigate(e?.keyPath)
+          ),
+        ]),
+        getItem(t("menus.person"), "person", null, [
+          getItem(t("menus.persons"), "persons", null, null, false, (e) =>
+            handleNavigate(e?.keyPath)
+          ),
+          getItem(t("menus.whitelist"), "whitelist", null, null, false, (e) =>
+            handleNavigate(e?.keyPath)
+          ),
+          getItem(
+            t("menus.person_accounts"),
             "person_accounts",
             null,
             null,
             false,
             (e) => handleNavigate(e?.keyPath)
           ),
-          getItem("Blacklist", "person_blacklist", null, null, false, (e) =>
-            handleNavigate(e?.keyPath)
+          getItem(
+            t("menus.person_blacklist"),
+            "person_blacklist",
+            null,
+            null,
+            false,
+            (e) => handleNavigate(e?.keyPath)
           ),
-          getItem("Relatórios", "person_reports", null, null, false, (e) =>
-            handleNavigate(e?.keyPath)
+          getItem(
+            t("menus.person_reports"),
+            "person_reports",
+            null,
+            null,
+            false,
+            (e) => handleNavigate(e?.keyPath)
           ),
         ]),
       ]
     ),
     getItem(
-      "Movimentações",
+      t("menus.moviment"),
       "moviment",
       <DollarOutlined style={{ fontSize: "23px" }} />,
       [
-        getItem("Lançamentos manuais", "moviments", null, null, false, (e) =>
+        getItem(t("menus.moviments"), "moviments", null, null, false, (e) =>
           handleNavigate(e?.keyPath)
         ),
-        getItem("Relatórios", "moviment_reports", null, null, false, (e) =>
-          handleNavigate(e?.keyPath)
+        getItem(
+          t("menus.moviment_reports"),
+          "moviment_reports",
+          null,
+          null,
+          false,
+          (e) => handleNavigate(e?.keyPath)
         ),
       ]
     ),
     getItem(
-      "Consultas",
+      t("menus.consult"),
       "consult",
       <FileSearchOutlined style={{ fontSize: "23px" }} />,
       [
         getItem("Paybrokers", "consult_paybrokers", null, [
           getItem(
-            "Extrato",
+            t("menus.paybrokers_bank_statement"),
             "paybrokers_bank_statement",
             null,
             null,
             false,
             (e) => handleNavigate(e?.keyPath)
           ),
-          getItem("Saldo", "paybrokers_balance", null, null, false, (e) =>
-            handleNavigate(e?.keyPath)
-          ),
-          getItem("Histórico", "paybrokers_history", null, null, false, (e) =>
-            handleNavigate(e?.keyPath)
+          getItem(
+            t("menus.paybrokers_balance"),
+            "paybrokers_balance",
+            null,
+            null,
+            false,
+            (e) => handleNavigate(e?.keyPath)
           ),
           getItem(
-            "Relatórios",
+            t("menus.paybrokers_history"),
+            "paybrokers_history",
+            null,
+            null,
+            false,
+            (e) => handleNavigate(e?.keyPath)
+          ),
+          getItem(
+            t("menus.consult_paybrokers_reports"),
             "consult_paybrokers_reports",
             null,
             null,
@@ -187,21 +241,31 @@ export const SidebarNavigation = () => {
         ]),
         getItem("Empresas", "consult_merchant", null, [
           getItem(
-            "Extrato",
+            t("menus.merchant_bank_statement"),
             "merchant_bank_statement",
             null,
             null,
             false,
             (e) => handleNavigate(e?.keyPath)
           ),
-          getItem("Saldo", "merchant_balance", null, null, false, (e) =>
-            handleNavigate(e?.keyPath)
-          ),
-          getItem("Histórico", "merchant_history", null, null, false, (e) =>
-            handleNavigate(e?.keyPath)
+          getItem(
+            t("menus.merchant_balance"),
+            "merchant_balance",
+            null,
+            null,
+            false,
+            (e) => handleNavigate(e?.keyPath)
           ),
           getItem(
-            "Relatórios",
+            t("menus.merchant_history"),
+            "merchant_history",
+            null,
+            null,
+            false,
+            (e) => handleNavigate(e?.keyPath)
+          ),
+          getItem(
+            t("menus.consult_merchant_reports"),
             "consult_merchant_reports",
             null,
             null,
@@ -209,15 +273,25 @@ export const SidebarNavigation = () => {
             (e) => handleNavigate(e?.keyPath)
           ),
         ]),
-        getItem("Depósitos", "deposit", null, [
-          getItem("Gerados", "generated_deposits", null, null, false, (e) =>
-            handleNavigate(e?.keyPath)
-          ),
-          getItem("Pagos", "paid_deposits", null, null, false, (e) =>
-            handleNavigate(e?.keyPath)
+        getItem(t("menus.deposit"), "deposit", null, [
+          getItem(
+            t("menus.generated_deposits"),
+            "generated_deposits",
+            null,
+            null,
+            false,
+            (e) => handleNavigate(e?.keyPath)
           ),
           getItem(
-            "Não entregues",
+            t("menus.paid_deposits"),
+            "paid_deposits",
+            null,
+            null,
+            false,
+            (e) => handleNavigate(e?.keyPath)
+          ),
+          getItem(
+            t("menus.undelivered_deposits"),
             "undelivered_deposits",
             null,
             null,
@@ -225,19 +299,103 @@ export const SidebarNavigation = () => {
             (e) => handleNavigate(e?.keyPath)
           ),
           getItem(
-            "Registro de erros",
+            t("menus.error_logs_deposits"),
             "error_logs_deposits",
             null,
             null,
             false,
             (e) => handleNavigate(e?.keyPath)
           ),
-          getItem("Relatórios", "deposits_reports", null, null, false, (e) =>
+          getItem(
+            t("menus.deposits_reports"),
+            "deposits_reports",
+            null,
+            null,
+            false,
+            (e) => handleNavigate(e?.keyPath)
+          ),
+        ]),
+        getItem(t("menus.withdrawals"), "withdrawals", null, [
+          getItem(
+            t("menus.generated_withdrawals"),
+            "generated_withdrawals",
+            null,
+            null,
+            false,
+            (e) => handleNavigate(e?.keyPath)
+          ),
+          getItem(
+            t("menus.paid_withdrawals"),
+            "paid_withdrawals",
+            null,
+            null,
+            false,
+            (e) => handleNavigate(e?.keyPath)
+          ),
+          getItem(
+            t("menus.undelivered_withdrawals"),
+            "undelivered_withdrawals",
+            null,
+            null,
+            false,
+            (e) => handleNavigate(e?.keyPath)
+          ),
+          getItem(
+            "Registro de erros",
+            "error_logs_withdrawals",
+            null,
+            null,
+            false,
+            (e) => handleNavigate(e?.keyPath)
+          ),
+          getItem("Relatórios", "withdrawals_reports", null, null, false, (e) =>
             handleNavigate(e?.keyPath)
           ),
         ]),
-        getItem("Saques", "42", null),
-        getItem("Devoluções", "43", null),
+        getItem("Devoluções", "refunds", null, [
+          getItem(
+            t("menus.refund_deposits"),
+            "refund_deposits",
+            null,
+            null,
+            false,
+            (e) => handleNavigate(e?.keyPath)
+          ),
+          getItem(
+            t("menus.refund_withdrawals"),
+            "refund_withdrawals",
+            null,
+            null,
+            false,
+            (e) => handleNavigate(e?.keyPath)
+          ),
+          getItem(
+            t("menus.refund_manual_deposits"),
+            "refund_manual_deposits",
+            null,
+            null,
+            false,
+            (e) => handleNavigate(e?.keyPath)
+          ),
+          getItem(t("menus.refund_reports"), "error_logs_withdrawals", null, [
+            getItem(
+              t("menus.refund_reports"),
+              "refund_reports",
+              null,
+              null,
+              false,
+              (e) => handleNavigate(e?.keyPath)
+            ),
+            getItem(
+              t("menus.refund_manual_reports"),
+              "refund_manual_reports",
+              null,
+              null,
+              false,
+              (e) => handleNavigate(e?.keyPath)
+            ),
+          ]),
+        ]),
         getItem("Pessoas", "44", null),
       ]
     ),
@@ -258,6 +416,10 @@ export const SidebarNavigation = () => {
       { color: "red" }
     ),
   ];
+
+  useEffect(() => {
+    setItems(i);
+  }, [translation]);
 
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
@@ -296,6 +458,7 @@ export const SidebarNavigation = () => {
           display: isMobile && !isSidebarOpen ? "none" : "inherit",
         }}
         disabledOverflow
+        translate="yes"
         defaultSelectedKeys={["1"]}
         defaultOpenKeys={["sub1"]}
         mode={"inline"}

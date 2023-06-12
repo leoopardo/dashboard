@@ -1,10 +1,11 @@
 import { DownOutlined, EllipsisOutlined, EyeFilled } from "@ant-design/icons";
-import { Button, Dropdown, Space, Table } from "antd";
+import { Button, Dropdown, Pagination, Space, Table } from "antd";
 import type { ColumnsType, TablePaginationConfig } from "antd/es/table";
 import React, { useEffect, useState, Dispatch, SetStateAction } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import { Mobile } from "./mobile";
+import { Grid } from "@mui/material";
 
 interface TableProps {
   data: any;
@@ -17,6 +18,7 @@ interface TableProps {
   label?: string[];
   setViewModalOpen?: Dispatch<SetStateAction<boolean>>;
   setCurrentItem: Dispatch<SetStateAction<any>>;
+  removeTotal: boolean;
 }
 
 export const CustomTable = (props: TableProps) => {
@@ -142,27 +144,34 @@ export const CustomTable = (props: TableProps) => {
   }, [props.columns, translation]);
 
   return !isMobile ? (
-    <Table
-      pagination={{
-        current: Number(props?.data?.page),
-        pageSize: Number(props?.data?.limit),
-        total:
-          Number(props?.data?.total) ??
-          props.items.length < Number(props?.data?.limit)
-            ? Number(props?.data?.limit)
-            : Number(props?.data?.limit) * Number(props?.data?.page),
+    <Grid container>
+      <Grid item xs={12}>
+        <Table
+          pagination={{
+            current: Number(props?.data?.page),
+            pageSize: Number(props?.data?.limit),
+            total: !props.removeTotal
+              ? props?.data?.total
+              : props?.data?.limit > props?.items?.length
+              ? props?.items?.length
+              : props?.data?.limit * props?.data?.page + 1,
 
-        onChange: (page) =>
-          props.setQuery((state: any) => ({ ...state, page })),
-      }}
-      dataSource={props?.items}
-      direction="ltr"
-      columns={columns}
-      loading={props.loading}
-      scroll={{ x: 800 }}
-      sticky
-      bordered
-    />
+            onChange: (page) =>
+              props.setQuery((state: any) => ({ ...state, page })),
+            pageSizeOptions: [10, 25, 50, 100],
+            onShowSizeChange: (current, size) =>
+              props.setQuery((state: any) => ({ ...state, limit: size })),
+          }}
+          dataSource={props?.items}
+          direction="ltr"
+          columns={columns}
+          loading={props.loading}
+          scroll={{ x: 800 }}
+          sticky
+          bordered
+        />
+      </Grid>
+    </Grid>
   ) : (
     <Mobile
       columns={props?.columns}

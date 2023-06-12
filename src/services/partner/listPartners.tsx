@@ -5,27 +5,32 @@ import moment from "moment";
 import { PartnerQuery, PartnersResponse } from "../types/partnerTypes";
 
 export function useListPartners(params: PartnerQuery) {
-  const { data, isFetching, error, refetch } = useQuery<
-    PartnersResponse | null | undefined
-  >(
-    "partners",
-    async () => {
+  const [data, setData] = useState<PartnersResponse | null>(null);
+  const [error, setError] = useState<any>(null);
+  const [isFetching, setIsFetching] = useState<boolean>(false);
+
+  const fetchPartners = async () => {
+    try {
+      setIsFetching(true);
       const response = await api.get("core/partner", {
         params,
       });
-      return response.data;
-    },
-    {
-      refetchInterval: false,
-      refetchIntervalInBackground: false,
-      refetchOnMount: false,
+      setData(response.data);
+    } catch (error) {
+      setError(error);
+    } finally {
+      setIsFetching(false);
     }
-  );
+  };
+
+  useEffect(() => {
+    fetchPartners();
+  }, [params]);
 
   const partnersData = data;
   const isPartnersFetching = isFetching;
   const partnersError: any = error;
-  const refetcPartners = refetch;
+  const refetcPartners = fetchPartners;
 
   return {
     partnersData,

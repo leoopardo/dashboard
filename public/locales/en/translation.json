@@ -45,7 +45,11 @@
     "deposits_reports": "Reports",
     "language": "Language",
     "portuguese": "Portuguese",
-    "english": "English"
+    "english": "English",
+    "withdrawals": "Withdrawals",
+    "paid_withdrawals": "Paid withdrawals",
+    "generated_withdrawals": "Generated withdrawals",
+    "undelivered_withdrawals": "Undelivered withdrawals"
   },
 
   "messages": {
@@ -76,7 +80,7 @@
     "waiting": "Waiting",
     "waiting_refund": "Waiting refund",
     "canceled": "Canceled",
-    "refund": "Refund",
+    "refunded": "Refund",
     "expired": "Expired",
     "merchant_id": "Merchant ID",
     "partner_name": "Partner",
@@ -104,10 +108,21 @@
     "buyer_state": "State",
     "buyer_zip_code": "Zip code",
     "payer_account": "Bank account",
-    "payer_bank": "Bank",
+    "payer_bank": "Payer bank",
     "payer_agency": "Agency",
     "initial_date": "Initial date",
     "final_date": "DFinal date",
-    "filters": "Filters"
+    "filters": "Filters",
+    "state": "State",
+    "city": "City",
+    "gender": "Gender",
+    "male": "Male",
+    "female": "Female",
+    "other": "Other",
+    "date": "Date",
+    "used_filters": "Used filters",
+    "apply_filters": "Apply filters",
+    "clear_filters": "Clear filters",
+    "age": "Age"
   }
 }

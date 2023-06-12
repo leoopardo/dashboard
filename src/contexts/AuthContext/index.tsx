@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }: any) => {
   const [token, setToken] = useState<string | undefined>();
 
   async function signIn(data: LoginData, rememberMe: boolean) {
-    signOut()
+    signOut();
     const response = await api.post(
       "core/token",
       {},
@@ -57,15 +57,17 @@ export const AuthProvider = ({ children }: any) => {
       localStorage.getItem("token") || sessionStorage.getItem("token")
     }`;
 
-    api.interceptors.request.use(async config => {
+    api.interceptors.request.use(async (config) => {
       const t = userToken;
 
-      if(t){
-        api.defaults.headers.Authorization = `Bearer ${localStorage.getItem("token") || sessionStorage.getItem("token")}`
+      if (t) {
+        api.defaults.headers.Authorization = `Bearer ${
+          localStorage.getItem("token") || sessionStorage.getItem("token")
+        }`;
       }
 
-      return config
-    })
+      return config;
+    });
 
     setToken(userToken);
     let success;
@@ -74,7 +76,7 @@ export const AuthProvider = ({ children }: any) => {
       success = true;
     } catch (error) {
       success = false;
-      signOut()
+      signOut();
     }
     return success;
   }

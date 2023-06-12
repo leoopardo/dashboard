@@ -45,7 +45,13 @@
     "deposits_reports": "Relatórios",
     "language": "Idioma",
     "portuguese": "Português",
-    "english": "Inglês"
+    "english": "Inglês",
+    "withdrawals": "Saques",
+    "paid_withdrawals": "Saques pagos",
+    "generated_withdrawals": "Saques gerados",
+    "undelivered_withdrawals": "Saques não entregues",
+    "error_logs_withdrawals": "Erros de saques",
+    "withdrawals_reports": "Relatórios de saques"
   },
 
   "messages": {
@@ -78,7 +84,7 @@
     "waiting": "Pendente",
     "waiting_refund": "Aguardando devolução",
     "canceled": "Cancelado",
-    "refund": "Devolvido",
+    "refunded": "Devolvido",
     "expired": "Expirado",
     "merchant_id": "ID Empresa",
     "partner_name": "Plataforma",
@@ -105,10 +111,21 @@
     "buyer_state": "Estado",
     "buyer_zip_code": "Código postal",
     "payer_account": "Conta bancária",
-    "payer_bank": "Banco",
+    "payer_bank": "Banco pagador",
     "payer_agency": "Agência",
     "initial_date": "Data inicial",
     "final_date": "Data final",
-    "filters": "Filtros"
+    "filters": "Filtros",
+    "state": "Estado",
+    "city": "Cidade",
+    "gender": "Gênero",
+    "male": "Masculino",
+    "female": "Feminino",
+    "other": "Outro",
+    "date": "Data",
+    "used_filters": "Filtros aplicados",
+    "apply_filters": "Aplicar filtros",
+    "clear_filters": "Limpar filtros",
+    "age": "Idade"
   }
 }

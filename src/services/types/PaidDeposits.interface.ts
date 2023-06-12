@@ -1,42 +1,29 @@
-export interface generatedDepositTotalQuery {
+export interface paidDepositTotalQuery {
   page: number;
   limit: number;
   sort_order?: "DESC" | "ASC";
   sort_field?: "string";
   initial_date: string;
   final_date: string;
-  status?:
-    | "PAID"
-    | "CANCELED"
-    | "EXPIRED"
-    | "WAITING"
-    | "AWAITING_REFUND"
-    | "REFUNDED";
+  status?: "PAID";
   pix_id?: string;
   endToEndId?: string;
   txid?: string;
   reference_id?: string;
   buyer_document?: string;
   payer_document?: string;
-  delivered_at?: boolean;
   buyer_name?: string;
   payer_name?: string;
 }
 
-export interface generatedDepositRowsQuery {
+export interface paidDepositRowsQuery {
   page: number;
   limit: number;
   sort_order?: "DESC" | "ASC";
   sort_field?: "string";
   initial_date: string;
   final_date: string;
-  status?:
-    | "PAID"
-    | "CANCELED"
-    | "EXPIRED"
-    | "WAITING"
-    | "AWAITING_REFUND"
-    | "REFUNDED";
+  status?: "PAID";
   endToEndId?: string;
   txid?: string;
   reference_id?: string;
@@ -59,7 +46,7 @@ export interface generatedDepositRowsQuery {
   payer_name?: string;
 }
 
-export interface generatedDepositTotal {
+export interface paidDepositTotal {
   transactions_total: number;
   transaction_value: number;
   awaiting_refund_total: number;
@@ -75,13 +62,13 @@ export interface generatedDepositTotal {
   expired_total: number;
   expired_value: number;
 }
-export interface generatedDepositRowsResponse {
+export interface paidDepositRowsResponse {
   limit: number;
   page: number;
   total: number;
-  items: generatedDepositRowsItems[];
+  items: paidDepositRowsItems[];
 }
-export interface generatedDepositRowsItems {
+export interface paidDepositRowsItems {
   _id: string;
   bank: string;
   merchant_name: string;

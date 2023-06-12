@@ -19,6 +19,7 @@ const { RangePicker } = DatePicker;
 const INITIAL_QUERY: generatedDepositTotalQuery = {
   page: 1,
   limit: 25,
+  delivered_at: false,
   initial_date: moment(new Date())
     .startOf("day")
     .format("YYYY-MM-DDTHH:mm:ss.SSS"),
@@ -28,7 +29,7 @@ const INITIAL_QUERY: generatedDepositTotalQuery = {
     .format("YYYY-MM-DDTHH:mm:ss.SSS"),
 };
 
-export const GeneratedDeposits = () => {
+export const UndeliveredDeposits = () => {
   const [query, setQuery] = useState<generatedDepositTotalQuery>(INITIAL_QUERY);
   const {
     depositsTotal,
