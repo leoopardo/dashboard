@@ -1,6 +1,6 @@
 import { api } from "../../config/api";
-import { getDeposit } from "../types/generatedDeposits.interface";
 import { useQuery } from "react-query";
+import { getDeposit } from "../types/generatedDeposits.interface";
 
 export function useGetDeposit(id: string) {
   const { data, isFetching, error, refetch } = useQuery<

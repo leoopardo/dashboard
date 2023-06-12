@@ -55,7 +55,9 @@ export const CustomTable = (props: TableProps) => {
   }, [props.columns]);
 
   useEffect(() => {
-    sortOrder ? props.setQuery("ASC") : props.setQuery("DESC");
+    sortOrder
+      ? props.setQuery((state: any) => ({ ...state, sort_order: "ASC" }))
+      : props.setQuery((state: any) => ({ ...state, sort_order: "DESC" }));
   }, [sortOrder]);
 
   useEffect(() => {

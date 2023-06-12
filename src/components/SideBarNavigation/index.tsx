@@ -63,8 +63,8 @@ export const SidebarNavigation = () => {
             null,
             null,
             false,
-            (e) => handleNavigate(e?.keyPath),
-           // { display: "none" }
+            (e) => handleNavigate(e?.keyPath)
+            // { display: "none" }
           ),
           getItem("Categorias", "categories", null, null, false, (e) =>
             handleNavigate(e?.keyPath)
@@ -266,7 +266,12 @@ export const SidebarNavigation = () => {
 
   return (
     <div
-      style={{ width: 256, height: "100vh", position: "fixed", zIndex: 999 }}
+      style={{
+        width: isMobile && !isSidebarOpen ? 0 : isSidebarOpen ? 256 : 80,
+        height: "100vh",
+        position: "fixed",
+        zIndex: 999,
+      }}
     >
       <Button
         type={isMobile && !isSidebarOpen ? "ghost" : "primary"}

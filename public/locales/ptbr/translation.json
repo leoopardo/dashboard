@@ -79,6 +79,7 @@
     "waiting_refund": "Aguardando devolução",
     "canceled": "Cancelado",
     "refund": "Devolvido",
+    "expired": "Expirado",
     "merchant_id": "ID Empresa",
     "partner_name": "Plataforma",
     "partner_id": "ID Plataforma",
@@ -105,6 +106,9 @@
     "buyer_zip_code": "Código postal",
     "payer_account": "Conta bancária",
     "payer_bank": "Banco",
-    "payer_agency": "Agência"
+    "payer_agency": "Agência",
+    "initial_date": "Data inicial",
+    "final_date": "Data final",
+    "filters": "Filtros"
   }
 }

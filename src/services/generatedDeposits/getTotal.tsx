@@ -5,16 +5,35 @@ import {
   generatedDepositTotalQuery,
 } from "../types/generatedDeposits.interface";
 import { useQuery } from "react-query";
+import moment from "moment";
 
 export function useGetTotalGeneratedDeposits(
   params: generatedDepositTotalQuery
 ) {
-  const { data, isFetching, error, refetch } = useQuery<
+  const { data, isFetching, error, refetch,  } = useQuery<
     generatedDepositTotal | null | undefined
-  >("depositsTotal", async () => {
-    const response = await api.get("report/pix/total", { params });
-    return response.data;
-  });
+  >(
+    "depositsTotal",
+    async () => {
+      const response = await api.get("report/pix/total", {
+        params: {
+          ...params,
+          initial_date: moment(params.initial_date)
+            .add(3, "hours")
+            .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+          final_date: moment(params.final_date)
+            .add(3, "hours")
+            .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+        },
+      });
+      return response.data;
+    },
+    {
+      refetchInterval: false,
+      refetchIntervalInBackground: false,
+      refetchOnMount: false,
+    }
+  );
 
   const depositsTotal = data;
   const isDepositsTotalFetching = isFetching;

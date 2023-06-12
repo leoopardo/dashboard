@@ -1,3 +1,4 @@
+import moment from "moment";
 import { api } from "../../config/api";
 import {
   generatedDepositRowsResponse,
@@ -9,11 +10,29 @@ export function useGetRowsGeneratedDeposits(
   params: generatedDepositTotalQuery
 ) {
   const { data, isFetching, error, refetch } = useQuery<
-  generatedDepositRowsResponse | null | undefined
-  >("depositsRows", async () => {
-    const response = await api.get("report/pix/rows", { params });
-    return response.data;
-  });
+    generatedDepositRowsResponse | null | undefined
+  >(
+    "depositsRows",
+    async () => {
+      const response = await api.get("report/pix/rows", {
+        params: {
+          ...params,
+          initial_date: moment(params.initial_date)
+            .add(3, "hours")
+            .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+          final_date: moment(params.final_date)
+            .add(3, "hours")
+            .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+        },
+      });
+      return response.data;
+    },
+    {
+      refetchInterval: false,
+      refetchIntervalInBackground: false,
+      refetchOnMount: false,
+    }
+  );
 
   const depositsRows = data;
   const isDepositsRowsFetching = isFetching;
