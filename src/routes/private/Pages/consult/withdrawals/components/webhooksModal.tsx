@@ -9,7 +9,7 @@ import {
   Tag,
 } from "antd";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 import { Grid } from "@mui/material";
 import {
   WebhooksItem,
@@ -32,6 +32,7 @@ const INITIAL_QUERY: WebhooksQuery = {
 };
 
 export const WebhookModal = (props: webhooksModalProps) => {
+  const { t } = useTranslation();
   const [active, setActive] = useState<string | string[]>(["1"]);
   const [query, setQuery] = useState<WebhooksQuery>(INITIAL_QUERY);
   const [query2, setQuery2] = useState<WebhooksQuery>(INITIAL_QUERY);

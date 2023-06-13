@@ -53,7 +53,7 @@ export const PageHeader = () => {
           display: "flex",
           justifyContent: "end",
           alignItems: "center",
-        paddingRight: "20px"
+          paddingRight: "20px",
         }}
       >
         <Dropdown menu={{ items }}>
@@ -81,7 +81,7 @@ export const PageHeader = () => {
             minWidth: "40px",
             display: "flex",
             alignItems: "center",
-            marginLeft: "20px"
+            marginLeft: "20px",
           }}
         >
           {user?.name.toLocaleUpperCase()[0]}
@@ -133,7 +133,7 @@ export const PageHeader = () => {
             minWidth: "40px",
             display: "flex",
             alignItems: "center",
-            marginLeft: "20px"
+            marginLeft: "20px",
           }}
         >
           {user?.name.toLocaleUpperCase()[0]}

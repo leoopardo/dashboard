@@ -8,7 +8,7 @@ import { CustomTable } from "../../../../../../components/CustomTable";
 import { ViewModal } from "../components/ViewModal";
 import { SearchOutlined } from "@ant-design/icons";
 import { FiltersModal } from "../../../../../../components/FiltersModal";
-import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 import useDebounce from "../../../../../../utils/useDebounce";
 import { FilterChips } from "../../../../../../components/FiltersModal/filterChips";
 import { paidWithdrawalsRowsQuery } from "../../../../../../services/types/paidWithdrawals.interface";
@@ -28,6 +28,7 @@ const INITIAL_QUERY: paidWithdrawalsRowsQuery = {
 };
 
 export const PaidWithdrawals = () => {
+  const { t } = useTranslation();
   const [query, setQuery] = useState<paidWithdrawalsRowsQuery>(INITIAL_QUERY);
   const {
     PaidWithdrawalsTotal,

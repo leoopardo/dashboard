@@ -1,9 +1,9 @@
 import { Space, Tag } from "antd";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { t } from "i18next";
 import { CloseCircleOutlined } from "@ant-design/icons";
 import moment from "moment";
 import { useMediaQuery } from "react-responsive";
+import { useTranslation } from "react-i18next";
 
 interface FilterChipsProps {
   query: any;
@@ -20,6 +20,7 @@ export const FilterChips = ({
   startDateKeyName,
   haveInitialDate,
 }: FilterChipsProps) => {
+  const { t } = useTranslation()
   const [filtersQuery, setFiltersQuery] = useState<any>(query);
 
   const isMobile = useMediaQuery({ maxWidth: "400px" });

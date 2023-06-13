@@ -8,7 +8,7 @@ import { CustomTable } from "../../../../../../components/CustomTable";
 import { ViewModal } from "../components/ViewModal";
 import { SearchOutlined } from "@ant-design/icons";
 import { FiltersModal } from "../../../../../../components/FiltersModal";
-import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 import useDebounce from "../../../../../../utils/useDebounce";
 import { FilterChips } from "../../../../../../components/FiltersModal/filterChips";
 import { paidDepositRowsQuery } from "../../../../../../services/types/PaidDeposits.interface";
@@ -29,6 +29,7 @@ const INITIAL_QUERY: paidDepositRowsQuery = {
 };
 
 export const PaidDeposits = () => {
+  const { t } = useTranslation();
   const [query, setQuery] = useState<paidDepositRowsQuery>(INITIAL_QUERY);
   const { paidTotal, paidTotalError, isPaidTotalFetching, refetchPaidTotal } =
     useGetTotalPaidDeposits(query);

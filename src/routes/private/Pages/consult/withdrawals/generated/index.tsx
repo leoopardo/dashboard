@@ -8,7 +8,7 @@ import { CustomTable } from "../../../../../../components/CustomTable";
 import { ViewModal } from "../components/ViewModal";
 import { SearchOutlined } from "@ant-design/icons";
 import { FiltersModal } from "../../../../../../components/FiltersModal";
-import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 import useDebounce from "../../../../../../utils/useDebounce";
 import { FilterChips } from "../../../../../../components/FiltersModal/filterChips";
 import { generatedWithdrawalsRowsQuery } from "../../../../../../services/types/generatedWithdrawals.interface";
@@ -29,6 +29,7 @@ const INITIAL_QUERY: generatedWithdrawalsRowsQuery = {
 };
 
 export const GeneratedWithdrawals = () => {
+  const { t } = useTranslation();
   const [query, setQuery] =
     useState<generatedWithdrawalsRowsQuery>(INITIAL_QUERY);
   const {

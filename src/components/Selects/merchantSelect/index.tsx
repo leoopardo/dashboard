@@ -2,7 +2,7 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { AutoComplete, Empty, Input, Spin } from "antd";
 import { MerchantQuery } from "../../../services/types/merchants.interface";
 import { useListMerchants } from "../../../services/merchant/listMerchants";
-import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 import { DownOutlined } from "@ant-design/icons";
 
 interface MerchantSelectProps {
@@ -14,6 +14,7 @@ export const MerchantSelect = ({
   setQueryFunction,
   queryOptions,
 }: MerchantSelectProps) => {
+  const { t } = useTranslation();
   const [query, setQuery] = useState<MerchantQuery>({
     page: 1,
     limit: 200,

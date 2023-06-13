@@ -1,9 +1,9 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { AutoComplete, Avatar, Empty, Input, Spin } from "antd";
 import { MerchantQuery } from "../../../services/types/merchants.interface";
-import { t } from "i18next";
 import { useListBanks } from "../../../services/bank/listBanks";
 import { DownOutlined } from "@ant-design/icons";
+import { useTranslation } from "react-i18next";
 
 interface BankSelectProps {
   setQueryFunction: Dispatch<SetStateAction<any>>;
@@ -14,6 +14,7 @@ export const BanksSelect = ({
   setQueryFunction,
   queryOptions,
 }: BankSelectProps) => {
+  const { t } = useTranslation()
   const [query, setQuery] = useState<MerchantQuery>({
     page: 1,
     limit: 200,

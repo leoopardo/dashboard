@@ -4,7 +4,7 @@ import { Button, Card, Statistic } from "antd";
 import { defaultTheme } from "../../../../../../../styles/defaultTheme";
 import { useMediaQuery } from "react-responsive";
 import { ReloadOutlined } from "@ant-design/icons";
-import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 import {
   generatedWithdrawalsRowsQuery,
   generatedWithdrawalsTotal,
@@ -18,6 +18,7 @@ interface TotalizersInterface {
 }
 
 export const TotalizersCards = (props: TotalizersInterface) => {
+  const { t } = useTranslation();
   const isMobile = useMediaQuery({ maxWidth: "900px" });
 
   return (

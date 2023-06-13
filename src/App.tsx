@@ -11,6 +11,8 @@ import { SidebarNavigation } from "./components/SideBarNavigation/index.tsx";
 import { useMenu } from "./contexts/SidebarContext/index.tsx";
 import { useMediaQuery } from "react-responsive";
 import { PageHeader } from "./components/PageHeader/index.tsx";
+import { I18nextProvider } from "react-i18next";
+import i18n from "./i18n";
 
 function App() {
   const { signInByStorage, signOut, token, user } = useAuth();
@@ -51,54 +53,58 @@ function App() {
   }, [token]);
 
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <BrowserRouter>
-        <GlobalStyle />
-        <ConfigProvider
-          theme={{
-            token: {
-              colorPrimary: defaultTheme.colors.secondary,
-              colorBgTextHover: defaultTheme.colors.secondary,
-            },
-          }}
-        >
-          {user ? (
-            <Layout>
+    <I18nextProvider i18n={i18n} defaultNS={"translation"}>
+      <ThemeProvider theme={defaultTheme}>
+        <BrowserRouter>
+          <GlobalStyle />
+          <ConfigProvider
+            theme={{
+              token: {
+                colorPrimary: defaultTheme.colors.secondary,
+                colorBgTextHover: defaultTheme.colors.secondary,
+              },
+            }}
+          >
+            {user ? (
               <Layout>
-                <SidebarNavigation />
+                <Layout>
+                  <SidebarNavigation />
 
-                <div
-                  style={{
-                    marginLeft:
-                      !user || isMobile
-                        ? "0"
-                        : isSidebarOpen
-                        ? "256px"
-                        : "90px",
-                  }}
-                >
-                  <PageHeader />
-                  <Layout style={{ padding: "0 24px 24px", minHeight: "93vh" }}>
-                    <Content
-                      style={{
-                        padding: 2,
-                        margin: 0,
-                        height: "100%",
-                        background: "#fff",
-                      }}
+                  <div
+                    style={{
+                      marginLeft:
+                        !user || isMobile
+                          ? "0"
+                          : isSidebarOpen
+                          ? "256px"
+                          : "90px",
+                    }}
+                  >
+                    <PageHeader />
+                    <Layout
+                      style={{ padding: "0 24px 24px", minHeight: "93vh" }}
                     >
-                      {element}
-                    </Content>
-                  </Layout>
-                </div>
+                      <Content
+                        style={{
+                          padding: 2,
+                          margin: 0,
+                          height: "100%",
+                          background: "#fff",
+                        }}
+                      >
+                        {element}
+                      </Content>
+                    </Layout>
+                  </div>
+                </Layout>
               </Layout>
-            </Layout>
-          ) : (
-            element
-          )}
-        </ConfigProvider>
-      </BrowserRouter>
-    </ThemeProvider>
+            ) : (
+              element
+            )}
+          </ConfigProvider>
+        </BrowserRouter>
+      </ThemeProvider>
+    </I18nextProvider>
   );
 }
 

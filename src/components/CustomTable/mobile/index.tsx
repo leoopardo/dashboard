@@ -8,10 +8,10 @@ import {
   Typography,
 } from "antd";
 import { Collapse } from "antd";
-import { t } from "i18next";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { getColor } from "../../../utils/getColor";
 import { EllipsisOutlined } from "@ant-design/icons";
+import { useTranslation } from "react-i18next";
 
 interface MobileProps {
   columns: any;
@@ -22,6 +22,7 @@ interface MobileProps {
 }
 
 export const Mobile = (props: MobileProps) => {
+  const { t } = useTranslation()
   const [active, setActive] = useState<string | string[]>(["1"]);
   const [items, setItems] = useState<CollapseProps["items"]>([]);
 

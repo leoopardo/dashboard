@@ -3,18 +3,14 @@ import {
   Collapse,
   CollapseProps,
   Drawer,
-  Dropdown,
   Pagination,
-  QRCode,
   Segmented,
   Spin,
   Tag,
 } from "antd";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { useGetDeposit } from "../../../../../../services/consult/generatedDeposits/getDeposit";
-import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 import { Grid } from "@mui/material";
-import { StyledSegmented } from "../generated/components/styles";
 import { useGetDepositWebhooks } from "../../../../../../services/consult/generatedDeposits/getWebhooks";
 import {
   WebhooksItem,
@@ -37,6 +33,7 @@ const INITIAL_QUERY: WebhooksQuery = {
 };
 
 export const WebhookModal = (props: webhooksModalProps) => {
+  const { t } = useTranslation();
   const [active, setActive] = useState<string | string[]>(["1"]);
   const [query, setQuery] = useState<WebhooksQuery>(INITIAL_QUERY);
   const [query2, setQuery2] = useState<WebhooksQuery>(INITIAL_QUERY);

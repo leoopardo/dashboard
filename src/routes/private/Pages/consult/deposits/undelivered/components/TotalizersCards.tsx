@@ -8,7 +8,7 @@ import {
 import { defaultTheme } from "../../../../../../../styles/defaultTheme";
 import { useMediaQuery } from "react-responsive";
 import { ReloadOutlined } from "@ant-design/icons";
-import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 
 interface TotalizersInterface {
   data: generatedDepositTotal | null | undefined;
@@ -19,6 +19,7 @@ interface TotalizersInterface {
 
 export const TotalizersCards = (props: TotalizersInterface) => {
   const isMobile = useMediaQuery({ maxWidth: "900px" });
+  const { t } = useTranslation();
 
   return (
     <Grid
@@ -58,7 +59,9 @@ export const TotalizersCards = (props: TotalizersInterface) => {
           >
             <Statistic
               loading={props.loading}
-              title={`${t("table.refunded")}: ${props?.data?.refund_total || 0}`}
+              title={`${t("table.refunded")}: ${
+                props?.data?.refund_total || 0
+              }`}
               value={new Intl.NumberFormat("pt-BR", {
                 style: "currency",
                 currency: "BRL",
@@ -82,7 +85,9 @@ export const TotalizersCards = (props: TotalizersInterface) => {
           >
             <Statistic
               loading={props.loading}
-              title={`${t("table.canceled")}: ${props?.data?.canceled_total || 0}`}
+              title={`${t("table.canceled")}: ${
+                props?.data?.canceled_total || 0
+              }`}
               value={new Intl.NumberFormat("pt-BR", {
                 style: "currency",
                 currency: "BRL",
@@ -106,7 +111,9 @@ export const TotalizersCards = (props: TotalizersInterface) => {
           >
             <Statistic
               loading={props.loading}
-              title={`${t("table.expired")}: ${props?.data?.expired_total || 0}`}
+              title={`${t("table.expired")}: ${
+                props?.data?.expired_total || 0
+              }`}
               value={new Intl.NumberFormat("pt-BR", {
                 style: "currency",
                 currency: "BRL",
@@ -129,7 +136,9 @@ export const TotalizersCards = (props: TotalizersInterface) => {
           >
             <Statistic
               loading={props.loading}
-              title={`${t("table.waiting")}: ${props?.data?.waiting_total || 0}`}
+              title={`${t("table.waiting")}: ${
+                props?.data?.waiting_total || 0
+              }`}
               value={new Intl.NumberFormat("pt-BR", {
                 style: "currency",
                 currency: "BRL",
@@ -153,7 +162,9 @@ export const TotalizersCards = (props: TotalizersInterface) => {
           >
             <Statistic
               loading={props.loading}
-              title={`${t("table.waiting_refund")}: ${props?.data?.awaiting_refund_total || 0}`}
+              title={`${t("table.waiting_refund")}: ${
+                props?.data?.awaiting_refund_total || 0
+              }`}
               value={new Intl.NumberFormat("pt-BR", {
                 style: "currency",
                 currency: "BRL",

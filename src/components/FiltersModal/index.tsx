@@ -10,7 +10,6 @@ import {
   Slider,
   Checkbox,
 } from "antd";
-import { t } from "i18next";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Grid } from "@mui/material";
@@ -28,6 +27,7 @@ import { ClientBanksSelect } from "../Selects/clientBanksSelect";
 import { FilterChips } from "./filterChips";
 import { useGetStates } from "../../services/states_cities/getStates";
 import { useGetCities } from "../../services/states_cities/getCities";
+import { useTranslation } from "react-i18next";
 
 dayjs.extend(weekday);
 dayjs.extend(localeData);
@@ -59,6 +59,7 @@ export const FiltersModal = ({
   haveInitialDate,
   initialQuery,
 }: FilterModalProps) => {
+  const { t } = useTranslation()
   const [filtersQuery, setFiltersQuery] = useState<any>(query);
   const { isStatesFetching, states } = useGetStates();
   const [isAgeRangeAbled, setIsAgeRangeAbled] = useState<boolean>(false);

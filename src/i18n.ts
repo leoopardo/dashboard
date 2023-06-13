@@ -11,6 +11,10 @@ i18n
   .init({
     fallbackLng: "ptbr",
     saveMissing: true,
+    react: {
+      bindI18n: "languageChanged loaded",
+      nsMode: "default",
+    },
     debug: true,
     interpolation: {
       escapeValue: false,

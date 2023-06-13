@@ -4,8 +4,11 @@ import { Button, Card, Statistic } from "antd";
 import { defaultTheme } from "../../../../../../../styles/defaultTheme";
 import { useMediaQuery } from "react-responsive";
 import { ReloadOutlined } from "@ant-design/icons";
-import { t } from "i18next";
-import { paidDepositRowsQuery, paidDepositTotal } from "../../../../../../../services/types/PaidDeposits.interface";
+import { useTranslation } from "react-i18next";
+import {
+  paidDepositRowsQuery,
+  paidDepositTotal,
+} from "../../../../../../../services/types/PaidDeposits.interface";
 
 interface TotalizersInterface {
   data: paidDepositTotal | null | undefined;
@@ -16,7 +19,7 @@ interface TotalizersInterface {
 
 export const TotalizersCards = (props: TotalizersInterface) => {
   const isMobile = useMediaQuery({ maxWidth: "900px" });
-
+  const { t } = useTranslation();
   return (
     <Grid
       container
