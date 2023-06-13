@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { api } from "../../config/api";
-import { BankQuery, BankResponse } from "../types/banksTypes";
+import { BankQuery, BankResponse } from "../types/banks.interface";
 
 export function useListBanks(params: BankQuery) {
   const [data, setData] = useState<BankResponse | null>(null);

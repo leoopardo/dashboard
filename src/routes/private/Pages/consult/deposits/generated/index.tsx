@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { Grid } from "@mui/material";
 import { generatedDepositTotalQuery } from "../../../../../../services/types/generatedDeposits.interface";
-import { useGetTotalGeneratedDeposits } from "../../../../../../services/generatedDeposits/getTotal";
+import { useGetTotalGeneratedDeposits } from "../../../../../../services/consult/generatedDeposits/getTotal";
 import moment from "moment";
 import { TotalizersCards } from "./components/TotalizersCards";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Alert, Button, Input, Select, Space, DatePicker } from "antd";
-import { useGetRowsGeneratedDeposits } from "../../../../../../services/generatedDeposits/getRows";
+import { useGetRowsGeneratedDeposits } from "../../../../../../services/consult/generatedDeposits/getRows";
 import { CustomTable } from "../../../../../../components/CustomTable";
-import { ViewModal } from "./components/ViewModal";
+import { ViewModal } from "../components/ViewModal";
 import { SearchOutlined } from "@ant-design/icons";
 import { FiltersModal } from "../../../../../../components/FiltersModal";
 import { t } from "i18next";
 import useDebounce from "../../../../../../utils/useDebounce";
 import { FilterChips } from "../../../../../../components/FiltersModal/filterChips";
+import { WebhookModal } from "../components/webhooksModal";
 const { RangePicker } = DatePicker;
 
 const INITIAL_QUERY: generatedDepositTotalQuery = {
@@ -49,6 +50,7 @@ export const GeneratedDeposits = () => {
   }, [query]);
 
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
+  const [isWebhookModalOpen, setIsWebhookModalOpen] = useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<any>();
   const [searchOption, setSearchOption] = useState<string | null>(null);
   const [search, setSearch] = useState<string | null>(null);
@@ -202,6 +204,7 @@ export const GeneratedDeposits = () => {
             columns={columns}
             loading={isDepositsRowsFetching}
             setViewModalOpen={setIsViewModalOpen}
+            setWebhookModalOpen={setIsWebhookModalOpen}
             removeTotal
             label={[
               "bank",
@@ -217,6 +220,13 @@ export const GeneratedDeposits = () => {
         <ViewModal
           open={isViewModalOpen}
           setOpen={setIsViewModalOpen}
+          id={currentItem?._id}
+        />
+      )}
+      {isWebhookModalOpen && (
+        <WebhookModal
+          open={isWebhookModalOpen}
+          setOpen={setIsWebhookModalOpen}
           id={currentItem?._id}
         />
       )}

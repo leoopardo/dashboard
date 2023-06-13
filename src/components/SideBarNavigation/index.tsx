@@ -298,14 +298,7 @@ export const SidebarNavigation = () => {
             false,
             (e) => handleNavigate(e?.keyPath)
           ),
-          getItem(
-            t("menus.error_logs_deposits"),
-            "error_logs_deposits",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath)
-          ),
+
           getItem(
             t("menus.deposits_reports"),
             "deposits_reports",
@@ -340,16 +333,14 @@ export const SidebarNavigation = () => {
             false,
             (e) => handleNavigate(e?.keyPath)
           ),
+
           getItem(
-            "Registro de erros",
-            "error_logs_withdrawals",
+            t("menus.withdrawals_reports"),
+            "withdrawals_reports",
             null,
             null,
             false,
             (e) => handleNavigate(e?.keyPath)
-          ),
-          getItem("Relatórios", "withdrawals_reports", null, null, false, (e) =>
-            handleNavigate(e?.keyPath)
           ),
         ]),
         getItem(t("menus.refunds"), "refunds", null, [
@@ -379,8 +370,8 @@ export const SidebarNavigation = () => {
           ),
           getItem(t("menus.refund_reports"), "error_logs_withdrawals", null, [
             getItem(
-              t("menus.refund_reports"),
-              "refund_reports",
+              t("menus.refund_deposits_reports"),
+              "refund_deposits_reports",
               null,
               null,
               false,
@@ -394,15 +385,83 @@ export const SidebarNavigation = () => {
               false,
               (e) => handleNavigate(e?.keyPath)
             ),
+            getItem(
+              t("menus.refund_withdrawals_reports"),
+              "refund_withdrawals_reports",
+              null,
+              null,
+              false,
+              (e) => handleNavigate(e?.keyPath)
+            ),
           ]),
         ]),
-        getItem("Pessoas", "44", null),
+        getItem(t("menus.consult_persons"), "consult_persons", null, [
+          getItem(t("menus.check_cpf"), "check_cpf", null, null, false, (e) =>
+            handleNavigate(e?.keyPath)
+          ),
+        ]),
+        getItem(t("menus.api_logs"), "api_logs", null, [
+          getItem(
+            t("menus.error_logs_deposits"),
+            "error_logs_deposits",
+            null,
+            null,
+            false,
+            (e) => handleNavigate(e?.keyPath)
+          ),
+          getItem(
+            "Registro de erros",
+            "error_logs_withdrawals",
+            null,
+            null,
+            false,
+            (e) => handleNavigate(e?.keyPath)
+          ),
+        ]),
       ]
     ),
     getItem(
       "Suporte",
-      "8",
-      <NotificationOutlined style={{ fontSize: "23px" }} />
+      "support",
+      <NotificationOutlined style={{ fontSize: "23px" }} />,
+      [
+        getItem("Blacklists", "Blacklists", null, [
+          getItem(
+            t("menus.bank_institutions"),
+            "bank_institutions",
+            null,
+            null,
+            false,
+            (e) => handleNavigate(e?.keyPath)
+          ),
+          getItem(
+            t("menus.third_parties_pix_key"),
+            "third_parties_pix_key",
+            null,
+            null,
+            false,
+            (e) => handleNavigate(e?.keyPath)
+          ),
+          getItem(
+            t("menus.invalid_pix_key"),
+            "invalid_pix_key",
+            null,
+            null,
+            false,
+            (e) => handleNavigate(e?.keyPath)
+          ),
+          getItem(t("menus.blacklists_reports"), "blacklists_reports", null, [
+            getItem(
+              t("menus.bank_institutions_reports"),
+              "bank_institutions_reports",
+              null,
+              null,
+              false,
+              (e) => handleNavigate(e?.keyPath)
+            ),
+          ]),
+        ]),
+      ]
     ),
     getItem(
       "Sair",

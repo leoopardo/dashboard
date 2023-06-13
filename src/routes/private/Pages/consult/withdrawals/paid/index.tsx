@@ -5,15 +5,15 @@ import { TotalizersCards } from "./components/TotalizersCards";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Alert, Button, Input, Select, Space } from "antd";
 import { CustomTable } from "../../../../../../components/CustomTable";
-import { ViewModal } from "./components/ViewModal";
+import { ViewModal } from "../components/ViewModal";
 import { SearchOutlined } from "@ant-design/icons";
 import { FiltersModal } from "../../../../../../components/FiltersModal";
 import { t } from "i18next";
 import useDebounce from "../../../../../../utils/useDebounce";
 import { FilterChips } from "../../../../../../components/FiltersModal/filterChips";
-import { paidWithdrawalsRowsQuery } from "../../../../../../services/types/paidWithdrawals";
-import { useGetRowsPaidWithdrawals } from "../../../../../../services/paidWithdrawals/getRows";
-import { useGetTotalPaidWithdrawals } from "../../../../../../services/paidWithdrawals/getTotal";
+import { paidWithdrawalsRowsQuery } from "../../../../../../services/types/paidWithdrawals.interface";
+import { useGetRowsPaidWithdrawals } from "../../../../../../services/consult/paidWithdrawals/getRows";
+import { useGetTotalPaidWithdrawals } from "../../../../../../services/consult/paidWithdrawals/getTotal";
 
 const INITIAL_QUERY: paidWithdrawalsRowsQuery = {
   page: 1,

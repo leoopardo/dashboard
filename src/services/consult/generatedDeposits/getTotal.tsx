@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { api } from "../../config/api";
+import { api } from "../../../config/api";
 import {
   generatedDepositTotal,
   generatedDepositTotalQuery,
-} from "../types/generatedDeposits.interface";
+} from "../../types/generatedDeposits.interface";
 import { useQuery } from "react-query";
 import moment from "moment";
 

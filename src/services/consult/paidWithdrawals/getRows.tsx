@@ -1,11 +1,11 @@
 import moment from "moment";
-import { api } from "../../config/api";
+import { api } from "../../../config/api";
 
 import { useQuery } from "react-query";
 import {
   paidWithdrawalsRowsQuery,
   paidWithdrawalsRowsResponse,
-} from "../types/paidWithdrawals";
+} from "../../types/paidWithdrawals.interface";
 export function useGetRowsPaidWithdrawals(params: paidWithdrawalsRowsQuery) {
   const { data, isFetching, error, refetch } = useQuery<
     paidWithdrawalsRowsResponse | null | undefined

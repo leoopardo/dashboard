@@ -1,17 +1,20 @@
 import moment from "moment";
-import { api } from "../../config/api";
+import { api } from "../../../config/api";
+import {
+  generatedDepositRowsResponse,
+  generatedDepositTotalQuery,
+} from "../../types/generatedDeposits.interface";
 import { useQuery } from "react-query";
-import { paidDepositRowsQuery, paidDepositRowsResponse } from "../types/PaidDeposits.interface";
 
-export function useGetRowsPaidDeposits(
-  params: paidDepositRowsQuery
+export function useGetRowsGeneratedDeposits(
+  params: generatedDepositTotalQuery
 ) {
   const { data, isFetching, error, refetch } = useQuery<
-    paidDepositRowsResponse | null | undefined
+    generatedDepositRowsResponse | null | undefined
   >(
     "depositsRows",
     async () => {
-      const response = await api.get("report/pix/rows/paid-at", {
+      const response = await api.get("report/pix/rows", {
         params: {
           ...params,
           initial_date: moment(params.initial_date)
@@ -31,14 +34,14 @@ export function useGetRowsPaidDeposits(
     }
   );
 
-  const paidRows = data;
-  const isPaidRowsFetching = isFetching;
-  const paidRowsError: any = error;
-  const refetchPaidTotalRows = refetch;
+  const depositsRows = data;
+  const isDepositsRowsFetching = isFetching;
+  const depositsRowsError: any = error;
+  const refetchDepositsTotalRows = refetch;
   return {
-    paidRows,
-    isPaidRowsFetching,
-    paidRowsError,
-    refetchPaidTotalRows,
+    depositsRows,
+    isDepositsRowsFetching,
+    depositsRowsError,
+    refetchDepositsTotalRows,
   };
 }

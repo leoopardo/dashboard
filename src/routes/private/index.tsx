@@ -8,6 +8,8 @@ import { PaidDeposits } from "./Pages/consult/deposits/paid";
 import { UndeliveredDeposits } from "./Pages/consult/deposits/undelivered";
 import { GeneratedWithdrawals } from "./Pages/consult/withdrawals/generated";
 import { PaidWithdrawals } from "./Pages/consult/withdrawals/paid";
+import { UndeliveredWithdrawals } from "./Pages/consult/withdrawals/undelivered";
+import { RefundDeposits } from "./Pages/consult/refunds/deposits";
 
 export const PrivateRoutes = () => {
   const navigate = useNavigate();
@@ -37,9 +39,12 @@ export const PrivateRoutes = () => {
             />
             <Route path="paid_withdrawals" element={<PaidWithdrawals />} />
             <Route
-              path="undelivered_deposits"
-              element={<UndeliveredDeposits />}
+              path="undelivered_withdrawals"
+              element={<UndeliveredWithdrawals />}
             />
+          </Route>
+          <Route path="refunds">
+            <Route path="refund_deposits" element={<RefundDeposits />} />
           </Route>
         </Route>
       </Route>

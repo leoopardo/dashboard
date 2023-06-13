@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { StateItem } from "../types/states_citiesTypes";
+import { StateItem } from "../types/states_cities.interface";
 import axios from "axios";
 
 export function useGetStates() {

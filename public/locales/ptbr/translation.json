@@ -51,11 +51,29 @@
     "generated_withdrawals": "Saques gerados",
     "undelivered_withdrawals": "Saques não entregues",
     "error_logs_withdrawals": "Erros de saques",
-    "withdrawals_reports": "Relatórios de saques"
+    "withdrawals_reports": "Relatórios de saques",
+    "person_reports": "Relatórios pessoas",
+    "refunds": "Devoluções",
+    "refund_withdrawals": "Devolução de saques",
+    "refund_deposits": "Devolução de depósitos",
+    "refund_manual_deposits": "Devolução depósitos manuais",
+    "refund_reports": "Relatórios",
+    "refund_manual_reports": "Devolução depósitos manuais",
+    "refund_deposits_reports": "Devolução de depósitos",
+    "refund_withdrawals_reports": "Devolução de saques",
+    "consult_persons": "Pessoas",
+    "check_cpf": "Checar CPF",
+    "api_logs": "Logs de API",
+    "bank_institutions": "Instituições bancárias",
+    "third_parties_pix_key": "Chaves pix de terceiros",
+    "invalid_pix_key": "Chaves pix inválidas",
+    "blacklists_reports": "Relatórios",
+    "bank_institutions_reports": "Instituições bancárias"
   },
 
   "messages": {
-    "page_not_found": "Página não encontrada"
+    "page_not_found": "Página não encontrada",
+    "empty_table_data": "Nenhum registro encontrado, revise os critérios de pesquisa."
   },
   "login": {
     "sign_in": "Faça login",
@@ -138,12 +156,25 @@
     "receiver_gender": "Gênero",
     "receiver_street": "Rua",
     "receiver_number": "Número",
-    "receiver_neighborhood":"Bairro",
+    "receiver_neighborhood": "Bairro",
     "receiver_city": "Cidade",
-    "receiver_state":"Estado",
+    "receiver_state": "Estado",
     "receiver_zip_code": "Código postal",
     "receiver_bank_account": "Conta bancária",
     "receiver_bank_agency": "Agência",
-    "receiver": "Recebedor"
+    "receiver": "Recebedor",
+    "pix_id": "Pix ID",
+    "page": "Página",
+    "limit": "Limite",
+    "pending": "Pendente",
+    "paid_to_merchant": "Pago para empresa",
+    "error": "Erro",
+    "success": "Sucesso",
+    "primary_logs": "Logs de notificação primário",
+    "secondary_logs": "Logs de notificação secundário"
+  },
+  "actions": {
+    "details": "Detalhes",
+    "logs_webhooks": "Logs de webhooks"
   }
 }

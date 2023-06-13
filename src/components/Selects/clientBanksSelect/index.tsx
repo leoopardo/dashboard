@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { AutoComplete, Empty, Input } from "antd";
-import { MerchantQuery } from "../../../services/types/merchantsTypes";
+import { MerchantQuery } from "../../../services/types/merchants.interface";
 import { t } from "i18next";
 import { useListClientClientBanks } from "../../../services/bank/listClientBanks";
 import { DownOutlined } from "@ant-design/icons";

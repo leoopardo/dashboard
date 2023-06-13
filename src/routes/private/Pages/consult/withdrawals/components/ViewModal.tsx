@@ -1,11 +1,11 @@
 import { Descriptions, Drawer, QRCode, Segmented, Spin } from "antd";
 import React, { Dispatch, SetStateAction, useState } from "react";
-import { useGetDeposit } from "../../../../../../../services/generatedDeposits/getDeposit";
+import { useGetDeposit } from "../../../../../../services/consult/generatedDeposits/getDeposit";
 import { t } from "i18next";
 import { Grid } from "@mui/material";
-import { StyledSegmented } from "./styles";
+import { StyledSegmented } from "../generated/components/styles";
 import Paybrokers from "../../../../../../../assets/logo.png";
-import { useGetWithdraw } from "../../../../../../../services/generatedWithdrawals/getWithdraw";
+import { useGetWithdraw } from "../../../../../../services/consult/generatedWithdrawals/getWithdraw";
 
 interface ViewModalProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -99,7 +99,6 @@ export const ViewModal = (props: ViewModalProps) => {
                     case "description":
                     case "webhook_url":
                     case "receiver_name":
-                    case "receiver_document":
                     case "webhook_url_optional":
                       return (
                         withdraw[key] !== "N/A" && (
@@ -116,6 +115,24 @@ export const ViewModal = (props: ViewModalProps) => {
                             {withdraw[key]}
                           </Descriptions.Item>
                         )
+                      );
+                    case "receiver_document":
+                      return (
+                        <Descriptions.Item
+                          key={key}
+                          label={t(`table.${key}`)}
+                          labelStyle={{
+                            maxWidth: "120px !important",
+                            margin: 0,
+                            padding: 0,
+                            textAlign: "center",
+                          }}
+                        >
+                          {`${withdraw[key]}`.replace(
+                            /(\d{3})(\d{3})(\d{3})(\d{2})/,
+                            "$1.$2.$3-$4"
+                          )}
+                        </Descriptions.Item>
                       );
 
                     case "value":

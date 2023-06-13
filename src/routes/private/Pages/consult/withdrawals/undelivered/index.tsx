@@ -3,7 +3,7 @@ import { Grid } from "@mui/material";
 import moment from "moment";
 import { TotalizersCards } from "./components/TotalizersCards";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
-import { Alert, Button, Input, Select, Space, DatePicker } from "antd";
+import { Alert, Button, Input, Select, Space } from "antd";
 import { CustomTable } from "../../../../../../components/CustomTable";
 import { ViewModal } from "../components/ViewModal";
 import { SearchOutlined } from "@ant-design/icons";
@@ -11,14 +11,14 @@ import { FiltersModal } from "../../../../../../components/FiltersModal";
 import { t } from "i18next";
 import useDebounce from "../../../../../../utils/useDebounce";
 import { FilterChips } from "../../../../../../components/FiltersModal/filterChips";
-import { paidDepositRowsQuery } from "../../../../../../services/types/PaidDeposits.interface";
-import { useGetTotalPaidDeposits } from "../../../../../../services/consult/paidDeposits/getTotal";
-import { useGetRowsPaidDeposits } from "../../../../../../services/consult/paidDeposits/getRows";
-const { RangePicker } = DatePicker;
+import { generatedWithdrawalsRowsQuery } from "../../../../../../services/types/generatedWithdrawals.interface";
+import { useGetTotalGeneratedWithdrawals } from "../../../../../../services/consult/generatedWithdrawals/getTotal";
+import { useGetRowsGeneratedWithdrawals } from "../../../../../../services/consult/generatedWithdrawals/getRows";
 
-const INITIAL_QUERY: paidDepositRowsQuery = {
+const INITIAL_QUERY: generatedWithdrawalsRowsQuery = {
   page: 1,
   limit: 25,
+  delivered_at: false,
   initial_date: moment(new Date())
     .startOf("day")
     .format("YYYY-MM-DDTHH:mm:ss.SSS"),
@@ -28,16 +28,25 @@ const INITIAL_QUERY: paidDepositRowsQuery = {
     .format("YYYY-MM-DDTHH:mm:ss.SSS"),
 };
 
-export const PaidDeposits = () => {
-  const [query, setQuery] = useState<paidDepositRowsQuery>(INITIAL_QUERY);
-  const { paidTotal, paidTotalError, isPaidTotalFetching, refetchPaidTotal } =
-    useGetTotalPaidDeposits(query);
+export const UndeliveredWithdrawals = () => {
+  const [query, setQuery] =
+    useState<generatedWithdrawalsRowsQuery>(INITIAL_QUERY);
+  const {
+    WithdrawalsTotal,
+    WithdrawalsTotalError,
+    isWithdrawalsTotalFetching,
+    refetchWithdrawalsTotal,
+  } = useGetTotalGeneratedWithdrawals(query);
 
-  const { paidRows, paidRowsError, isPaidRowsFetching, refetchPaidTotalRows } =
-    useGetRowsPaidDeposits(query);
+  const {
+    witrawalsRows,
+    witrawalsRowsError,
+    isWithdrawalsRowsFetching,
+    refetchWithdrawalsTotalRows,
+  } = useGetRowsGeneratedWithdrawals(query);
 
   useEffect(() => {
-    refetchPaidTotalRows();
+    refetchWithdrawalsTotalRows();
   }, [query]);
 
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
@@ -54,8 +63,10 @@ export const PaidDeposits = () => {
     "value",
     "createdAt",
     "delivered_at",
-    "buyer_name",
-    "buyer_document",
+    "receiver_name",
+    "receiver_document",
+    "pix_key_type",
+    "pix_key",
     "status",
   ];
 
@@ -78,9 +89,13 @@ export const PaidDeposits = () => {
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid container>
-        {paidTotalError ? (
+        {WithdrawalsTotalError ? (
           <Grid item xs={12} style={{ marginBottom: "10px" }}>
-            <Alert message={paidTotalError?.message} type="error" closable />
+            <Alert
+              message={WithdrawalsTotalError?.message}
+              type="error"
+              closable
+            />
           </Grid>
         ) : (
           <></>
@@ -88,9 +103,9 @@ export const PaidDeposits = () => {
       </Grid>
 
       <TotalizersCards
-        data={paidTotal}
-        fetchData={refetchPaidTotal}
-        loading={isPaidTotalFetching}
+        data={WithdrawalsTotal}
+        fetchData={refetchWithdrawalsTotal}
+        loading={isWithdrawalsTotalFetching}
         query={query}
       />
 
@@ -102,7 +117,7 @@ export const PaidDeposits = () => {
         <Grid item xs={12} md={4} lg={2}>
           <Button
             style={{ width: "100%", height: 40 }}
-            loading={isPaidRowsFetching || isPaidTotalFetching}
+            loading={isWithdrawalsRowsFetching || isWithdrawalsTotalFetching}
             type="primary"
             onClick={() => setIsFiltersOpen(true)}
           >
@@ -150,9 +165,9 @@ export const PaidDeposits = () => {
               onChange={(event) => setSearch(event.target.value)}
             />
             <Button
-              loading={isPaidRowsFetching}
+              loading={isWithdrawalsRowsFetching}
               type="primary"
-              onClick={() => refetchPaidTotalRows()}
+              onClick={() => refetchWithdrawalsTotalRows()}
               style={{ height: "40px" }}
               disabled={typeof searchOption === "string" && !search}
             >
@@ -163,7 +178,7 @@ export const PaidDeposits = () => {
         <Grid item xs={12} md={2} lg={2}>
           <Button
             type="dashed"
-            loading={isPaidRowsFetching}
+            loading={isWithdrawalsRowsFetching}
             danger
             onClick={() => {
               setQuery(INITIAL_QUERY);
@@ -185,10 +200,10 @@ export const PaidDeposits = () => {
             query={query}
             setCurrentItem={setCurrentItem}
             setQuery={setQuery}
-            data={paidRows}
-            items={paidRows?.items}
+            data={witrawalsRows}
+            items={witrawalsRows?.items}
             columns={columns}
-            loading={isPaidRowsFetching}
+            loading={isWithdrawalsRowsFetching}
             setViewModalOpen={setIsViewModalOpen}
             removeTotal
             label={[
@@ -229,7 +244,7 @@ export const PaidDeposits = () => {
             "age_start",
             "value_start",
           ]}
-          refetch={refetchPaidTotalRows}
+          refetch={refetchWithdrawalsTotalRows}
           selectOptions={{
             status: [
               "PAID",

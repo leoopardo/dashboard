@@ -5,15 +5,16 @@ import { TotalizersCards } from "./components/TotalizersCards";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Alert, Button, Input, Select, Space } from "antd";
 import { CustomTable } from "../../../../../../components/CustomTable";
-import { ViewModal } from "./components/ViewModal";
+import { ViewModal } from "../components/ViewModal";
 import { SearchOutlined } from "@ant-design/icons";
 import { FiltersModal } from "../../../../../../components/FiltersModal";
 import { t } from "i18next";
 import useDebounce from "../../../../../../utils/useDebounce";
 import { FilterChips } from "../../../../../../components/FiltersModal/filterChips";
-import { generatedWithdrawalsRowsQuery } from "../../../../../../services/types/generatedWithdrawals";
-import { useGetTotalGeneratedWithdrawals } from "../../../../../../services/generatedWithdrawals/getTotal";
-import { useGetRowsGeneratedWithdrawals } from "../../../../../../services/generatedWithdrawals/getRows";
+import { generatedWithdrawalsRowsQuery } from "../../../../../../services/types/generatedWithdrawals.interface";
+import { useGetTotalGeneratedWithdrawals } from "../../../../../../services/consult/generatedWithdrawals/getTotal";
+import { useGetRowsGeneratedWithdrawals } from "../../../../../../services/consult/generatedWithdrawals/getRows";
+import { WebhookModal } from "../components/webhooksModal";
 
 const INITIAL_QUERY: generatedWithdrawalsRowsQuery = {
   page: 1,
@@ -38,8 +39,8 @@ export const GeneratedWithdrawals = () => {
   } = useGetTotalGeneratedWithdrawals(query);
 
   const {
-    withdrawalsRows,
-    withdrawalsRowsError,
+    witrawalsRows,
+    witrawalsRowsError,
     isWithdrawalsRowsFetching,
     refetchWithdrawalsTotalRows,
   } = useGetRowsGeneratedWithdrawals(query);
@@ -49,6 +50,7 @@ export const GeneratedWithdrawals = () => {
   }, [query]);
 
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
+  const [isWebhookModalOpen, setIsWebhookModalOpen] = useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<any>();
   const [searchOption, setSearchOption] = useState<string | null>(null);
   const [search, setSearch] = useState<string | null>(null);
@@ -199,11 +201,12 @@ export const GeneratedWithdrawals = () => {
             query={query}
             setCurrentItem={setCurrentItem}
             setQuery={setQuery}
-            data={withdrawalsRows}
-            items={withdrawalsRows?.items}
+            data={witrawalsRows}
+            items={witrawalsRows?.items}
             columns={columns}
             loading={isWithdrawalsRowsFetching}
             setViewModalOpen={setIsViewModalOpen}
+            setWebhookModalOpen={setIsWebhookModalOpen}
             removeTotal
             label={[
               "bank",
@@ -219,6 +222,13 @@ export const GeneratedWithdrawals = () => {
         <ViewModal
           open={isViewModalOpen}
           setOpen={setIsViewModalOpen}
+          id={currentItem?._id}
+        />
+      )}
+      {isWebhookModalOpen && (
+        <WebhookModal
+          open={isWebhookModalOpen}
+          setOpen={setIsWebhookModalOpen}
           id={currentItem?._id}
         />
       )}

@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { api } from "../../config/api";
+import { api } from "../../../config/api";
 
 import { useQuery } from "react-query";
 import moment from "moment";
 import {
   generatedWithdrawalsRowsQuery,
   generatedWithdrawalsTotal,
-} from "../types/generatedWithdrawals";
+} from "../../types/generatedWithdrawals.interface";
 
 export function useGetTotalGeneratedWithdrawals(
   params: generatedWithdrawalsRowsQuery

@@ -7,7 +7,7 @@ import { ReloadOutlined } from "@ant-design/icons";
 import { t } from "i18next";
 import {
   paidWithdrawalsRowsQuery, paidWithdrawalsTotal,
-} from "../../../../../../../services/types/paidWithdrawals";
+} from "../../../../../../../services/types/paidWithdrawals.interface";
 
 interface TotalizersInterface {
   data: paidWithdrawalsTotal | null | undefined;

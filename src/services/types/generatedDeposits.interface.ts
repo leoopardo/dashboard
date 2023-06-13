@@ -134,3 +134,25 @@ export interface getDeposit {
   paid_at: string;
   delivered_at: string;
 }
+export interface WebhooksQuery {
+  page: number;
+  limit: number;
+}
+
+export interface WebhooksResponse {
+  items: [];
+  limit: number;
+  page: number;
+  total: number;
+  total_errors: number;
+  total_success: number;
+}
+export interface WebhooksItem {
+  date: string;
+  id: string;
+  response: { status_code: number; status_text: string; response: string };
+  status: string;
+  url: string;
+  url_type: string;
+  webhook_sent: { data: string };
+}

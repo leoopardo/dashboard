@@ -1,6 +1,6 @@
-import { api } from "../../config/api";
+import { api } from "../../../config/api";
 import { useQuery } from "react-query";
-import { getWithdraw } from "../types/generatedWithdrawals";
+import { getWithdraw } from "../../types/generatedWithdrawals.interface";
 
 export function useGetWithdraw(id: string) {
   const { data, isFetching, error, refetch } = useQuery<

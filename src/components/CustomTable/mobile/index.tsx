@@ -4,6 +4,7 @@ import {
   CollapseProps,
   Descriptions,
   Dropdown,
+  Empty,
   Typography,
 } from "antd";
 import { Collapse } from "antd";
@@ -147,17 +148,24 @@ export const Mobile = (props: MobileProps) => {
       })
     );
   }, [props?.items]);
+  
 
   const onChange = (key: string | string[]) => {
     setActive(key);
   };
-  return (
+  return props?.items?.length >= 1 ? (
     <Collapse
       expandIconPosition="end"
       items={items}
       onChange={onChange}
       activeKey={active}
       style={{ width: "100%" }}
+    />
+  ) : (
+    <Empty
+      style={{ padding: 15, paddingBottom: 30 }}
+      image={Empty.PRESENTED_IMAGE_SIMPLE}
+      description={t("messages.empty_table_data")}
     />
   );
 };

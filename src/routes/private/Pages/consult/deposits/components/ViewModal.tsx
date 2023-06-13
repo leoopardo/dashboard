@@ -1,9 +1,9 @@
 import { Descriptions, Drawer, QRCode, Segmented, Spin } from "antd";
 import React, { Dispatch, SetStateAction, useState } from "react";
-import { useGetDeposit } from "../../../../../../../services/generatedDeposits/getDeposit";
+import { useGetDeposit } from "../../../../../../services/consult/generatedDeposits/getDeposit";
 import { t } from "i18next";
 import { Grid } from "@mui/material";
-import { StyledSegmented } from "./styles";
+import { StyledSegmented } from "../generated/components/styles";
 import Paybrokers from "../../../../../../../assets/logo.png";
 
 interface ViewModalProps {
@@ -86,9 +86,7 @@ export const ViewModal = (props: ViewModalProps) => {
                     case "description":
                     case "webhook_url":
                     case "buyer_name":
-                    case "buyer_document":
                     case "payer_name":
-                    case "payer_document":
                     case "webhook_url_optional":
                       return (
                         deposit[key] !== "N/A" && (
@@ -106,8 +104,29 @@ export const ViewModal = (props: ViewModalProps) => {
                           </Descriptions.Item>
                         )
                       );
+
+                    case "payer_document":
+                    case "buyer_document":
+                      return (
+                        <Descriptions.Item
+                          key={key}
+                          label={t(`table.${key}`)}
+                          labelStyle={{
+                            maxWidth: "120px !important",
+                            margin: 0,
+                            padding: 0,
+                            textAlign: "center",
+                          }}
+                        >
+                          {`${deposit[key]}`.replace(
+                            /(\d{3})(\d{3})(\d{3})(\d{2})/,
+                            "$1.$2.$3-$4"
+                          )}
+                        </Descriptions.Item>
+                      );
+
                     case "qr_code":
-                      return  (
+                      return (
                         <Descriptions.Item
                           key={key}
                           label={t(`table.${key}`)}
@@ -168,7 +187,6 @@ export const ViewModal = (props: ViewModalProps) => {
                         </Descriptions.Item>
                       );
                     case "buyer_city":
-                    case "buyer_document":
                     case "buyer_email":
                     case "buyer_gender":
                     case "buyer_name":
@@ -177,7 +195,25 @@ export const ViewModal = (props: ViewModalProps) => {
                     case "buyer_state":
                     case "buyer_street":
                     case "buyer_zip_code":
-                      return  deposit[key] !== "N/A" && (
+                      return (
+                        deposit[key] !== "N/A" && (
+                          <Descriptions.Item
+                            key={key}
+                            label={t(`table.${key}`)}
+                            labelStyle={{
+                              maxWidth: "120px !important",
+                              margin: 0,
+                              padding: 0,
+                              textAlign: "center",
+                            }}
+                          >
+                            {deposit[key]}
+                          </Descriptions.Item>
+                        )
+                      );
+
+                    case "buyer_document":
+                      return (
                         <Descriptions.Item
                           key={key}
                           label={t(`table.${key}`)}
@@ -188,7 +224,10 @@ export const ViewModal = (props: ViewModalProps) => {
                             textAlign: "center",
                           }}
                         >
-                          {deposit[key]}
+                          {`${deposit[key]}`.replace(
+                            /(\d{3})(\d{3})(\d{3})(\d{2})/,
+                            "$1.$2.$3-$4"
+                          )}
                         </Descriptions.Item>
                       );
 
@@ -196,15 +235,33 @@ export const ViewModal = (props: ViewModalProps) => {
                       return;
                   }
                 })}
+
               {currOption === "payer" &&
                 Object.keys(deposit).map((key: string, value) => {
                   switch (key) {
                     case "payer_account":
                     case "payer_agency":
                     case "payer_bank":
-                    case "payer_document":
                     case "payer_name":
-                      return  deposit[key] !== "N/A" && (
+                      return (
+                        deposit[key] !== "N/A" && (
+                          <Descriptions.Item
+                            key={key}
+                            label={t(`table.${key}`)}
+                            labelStyle={{
+                              maxWidth: "120px !important",
+                              margin: 0,
+                              padding: 0,
+                              textAlign: "center",
+                            }}
+                          >
+                            {deposit[key]}
+                          </Descriptions.Item>
+                        )
+                      );
+
+                    case "payer_document":
+                      return (
                         <Descriptions.Item
                           key={key}
                           label={t(`table.${key}`)}
@@ -215,7 +272,10 @@ export const ViewModal = (props: ViewModalProps) => {
                             textAlign: "center",
                           }}
                         >
-                          {deposit[key]}
+                          {`${deposit[key]}`.replace(
+                            /(\d{3})(\d{3})(\d{3})(\d{2})/,
+                            "$1.$2.$3-$4"
+                          )}
                         </Descriptions.Item>
                       );
 

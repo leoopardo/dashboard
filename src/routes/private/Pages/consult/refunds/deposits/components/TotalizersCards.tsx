@@ -6,13 +6,13 @@ import { useMediaQuery } from "react-responsive";
 import { ReloadOutlined } from "@ant-design/icons";
 import { t } from "i18next";
 import {
-  generatedWithdrawalsRowsQuery,
-  generatedWithdrawalsTotal,
-} from "../../../../../../../services/types/generatedWithdrawals.interface";
+  refundDepositTotal,
+  refundDepositsQuery,
+} from "../../../../../../../services/types/refundsDeposits.interface";
 
 interface TotalizersInterface {
-  data: generatedWithdrawalsTotal | null | undefined;
-  query: generatedWithdrawalsRowsQuery;
+  data: refundDepositTotal | null | undefined;
+  query: refundDepositsQuery;
   loading: boolean;
   fetchData: () => void;
 }
@@ -26,7 +26,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
       spacing={1}
       style={{ display: "flex", justifyContent: "center" }}
     >
-      {(props.query.status === "PAID" || !props.query.status) && (
+      {(props.query.status === "REFUNDED" || !props.query.status) && (
         <Grid item xs={6} md={4} lg={"auto"}>
           <Card
             bordered={false}
@@ -34,11 +34,13 @@ export const TotalizersCards = (props: TotalizersInterface) => {
           >
             <Statistic
               loading={props.loading}
-              title={`${t("table.paid")}: ${props?.data?.paid_total || 0}`}
+              title={`${t("table.refunded")}: ${
+                props?.data?.refunded_total || 0
+              }`}
               value={new Intl.NumberFormat("pt-BR", {
                 style: "currency",
                 currency: "BRL",
-              }).format(props?.data?.paid_value || 0)}
+              }).format(props?.data?.refunded_value || 0)}
               precision={2}
               valueStyle={{
                 color: defaultTheme.colors.success,
@@ -50,7 +52,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
           </Card>
         </Grid>
       )}
-      {(props.query.status === "REFUNDED_WITHDRAW" || !props.query.status) && (
+      {(props.query.status === "PAID_TO_MERCHANT" || !props.query.status) && (
         <Grid item xs={6} md={4} lg={"auto"}>
           <Card
             bordered={false}
@@ -58,13 +60,13 @@ export const TotalizersCards = (props: TotalizersInterface) => {
           >
             <Statistic
               loading={props.loading}
-              title={`${t("table.refunded")}: ${
-                props?.data?.withdraw_refunded_total || 0
+              title={`${t("table.paid_to_merchant")}: ${
+                props?.data?.paid_to_merchant_total || 0
               }`}
               value={new Intl.NumberFormat("pt-BR", {
                 style: "currency",
                 currency: "BRL",
-              }).format(props?.data?.withdraw_refunded_value || 0)}
+              }).format(props?.data?.paid_to_merchant_value || 0)}
               precision={2}
               valueStyle={{
                 color: defaultTheme.colors.success,
@@ -76,7 +78,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
         </Grid>
       )}
 
-      {(props.query.status === "CANCELED" || !props.query.status) && (
+      {(props.query.status === "ERROR" || !props.query.status) && (
         <Grid item xs={6} md={4} lg={"auto"}>
           <Card
             bordered={false}
@@ -84,13 +86,11 @@ export const TotalizersCards = (props: TotalizersInterface) => {
           >
             <Statistic
               loading={props.loading}
-              title={`${t("table.canceled")}: ${
-                props?.data?.canceled_total || 0
-              }`}
+              title={`${t("table.error")}: ${props?.data?.error_total || 0}`}
               value={new Intl.NumberFormat("pt-BR", {
                 style: "currency",
                 currency: "BRL",
-              }).format(props?.data?.canceled_value || 0)}
+              }).format(props?.data?.error_value || 0)}
               precision={2}
               valueStyle={{
                 color: defaultTheme.colors.error,
@@ -119,7 +119,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
               }).format(props?.data?.processing_value || 0)}
               precision={2}
               valueStyle={{
-                color: defaultTheme.colors.warnning,
+                color: defaultTheme.colors.error,
                 fontSize: isMobile ? "12px" : "18px",
                 wordBreak: "break-all",
               }}
@@ -136,12 +136,12 @@ export const TotalizersCards = (props: TotalizersInterface) => {
             <Statistic
               loading={props.loading}
               title={`${t("table.pending")}: ${
-                props?.data?.pending_total || 0
+                props?.data?.waiting_total || 0
               }`}
               value={new Intl.NumberFormat("pt-BR", {
                 style: "currency",
                 currency: "BRL",
-              }).format(props?.data?.pending_value || 0)}
+              }).format(props?.data?.waiting_value || 0)}
               precision={2}
               valueStyle={{
                 color: defaultTheme.colors.warnning,
@@ -153,57 +153,8 @@ export const TotalizersCards = (props: TotalizersInterface) => {
         </Grid>
       )}
 
-      {(props.query.status === "IN_ANALYSIS" || !props.query.status) && (
-        <Grid item xs={6} md={4} lg={"auto"}>
-          <Card
-            bordered={false}
-            style={{ height: isMobile ? "100%" : undefined }}
-          >
-            <Statistic
-              loading={props.loading}
-              title={`${t("table.in_analysis")}: ${
-                props?.data?.in_analysis_total || 0
-              }`}
-              value={new Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(props?.data?.in_analysis_value || 0)}
-              precision={2}
-              valueStyle={{
-                color: defaultTheme.colors.warnning,
-                fontSize: isMobile ? "12px" : "18px",
-                wordBreak: "break-all",
-              }}
-            />
-          </Card>
-        </Grid>
-      )}
-      {(props.query.status === "CREATED" || !props.query.status) && (
-        <Grid item xs={6} md={4} lg={"auto"}>
-          <Card
-            bordered={false}
-          >
-            <Statistic
-              loading={props.loading}
-              title={`${t("table.created")}: ${
-                props?.data?.created_total || 0
-              }`}
-              value={new Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(props?.data?.created_value || 0)}
-              precision={2}
-              valueStyle={{
-                color: defaultTheme.colors.warnning,
-                fontSize: isMobile ? "12px" : "18px",
-                wordBreak: "break-all",
-              }}
-            />
-          </Card>
-        </Grid>
-      )}
 
-      <Grid item xs={6} md={4} lg={"auto"} >
+      <Grid item xs={6} md={4} lg={"auto"} height="100%">
         <Card bordered={false}>
           <Statistic
             loading={props.loading}
@@ -211,7 +162,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
             value={new Intl.NumberFormat("pt-BR", {
               style: "currency",
               currency: "BRL",
-            }).format(props?.data?.transaction_value || 0)}
+            }).format(props?.data?.transactions_value || 0)}
             precision={2}
             valueStyle={{
               color: defaultTheme.colors.dark,
@@ -221,7 +172,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
           />
         </Card>
       </Grid>
-      <Grid item xs={2} md={1} lg={1}>
+      <Grid item xs={6} md={1} lg={1}>
         <Button
           shape="circle"
           style={{ width: "50px", height: "50px" }}

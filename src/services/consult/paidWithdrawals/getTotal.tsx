@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { api } from "../../config/api";
+import { api } from "../../../config/api";
 import moment from "moment";
 import {
   paidWithdrawalsRowsQuery,
   paidWithdrawalsTotal,
-} from "../types/paidWithdrawals";
+} from "../../types/paidWithdrawals.interface";
 
 export function useGetTotalPaidWithdrawals(params: paidWithdrawalsRowsQuery) {
   const [data, setData] = useState<paidWithdrawalsTotal | null>(null);

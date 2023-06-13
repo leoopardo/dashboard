@@ -1,5 +1,10 @@
-import { DownOutlined, EllipsisOutlined, EyeFilled } from "@ant-design/icons";
-import { Button, Dropdown, Pagination, Space, Table } from "antd";
+import {
+  DownOutlined,
+  EllipsisOutlined,
+  EyeFilled,
+  SettingFilled,
+} from "@ant-design/icons";
+import { Button, Dropdown, Empty, Pagination, Space, Table } from "antd";
 import type { ColumnsType, TablePaginationConfig } from "antd/es/table";
 import React, { useEffect, useState, Dispatch, SetStateAction } from "react";
 import { useTranslation } from "react-i18next";
@@ -17,6 +22,7 @@ interface TableProps {
   disableActions?: boolean;
   label?: string[];
   setViewModalOpen?: Dispatch<SetStateAction<boolean>>;
+  setWebhookModalOpen?: Dispatch<SetStateAction<boolean>>;
   setCurrentItem: Dispatch<SetStateAction<any>>;
   removeTotal: boolean;
 }
@@ -30,23 +36,37 @@ export const CustomTable = (props: TableProps) => {
   const [actions, setActions] = useState<any>([]);
 
   useEffect(() => {
+    const act: any = [];
     if (
       props.setViewModalOpen &&
-      !actions.find((action: any) => action.key === "setView")
+      !act.find((action: any) => action.key === "setView")
     ) {
-      setActions((state: any) => [
-        ...actions,
-        {
-          key: "setView",
-          label: t("table.details"),
-          icon: <EyeFilled style={{ fontSize: "18px" }} />,
-          onClick: () => {
-            if (props.setViewModalOpen) props?.setViewModalOpen(true);
-          },
+      act.push({
+        key: "setView",
+        label: t("actions.details"),
+        icon: <EyeFilled style={{ fontSize: "18px" }} />,
+        onClick: () => {
+          if (props.setViewModalOpen) props?.setViewModalOpen(true);
         },
-      ]);
+      });
     }
+    if (
+      props.setWebhookModalOpen &&
+      !act.find((action: any) => action.key === "setWebhook")
+    ) {
+      act.push({
+        key: "setWebhook",
+        label: t("actions.logs_webhooks"),
+        icon: <SettingFilled style={{ fontSize: "18px" }} />,
+        onClick: () => {
+          if (props.setWebhookModalOpen) props?.setWebhookModalOpen(true);
+        },
+      });
+    }
+    setActions(act);
   }, [isMobile]);
+
+
   useEffect(() => {
     if (
       !props.disableActions &&
@@ -61,6 +81,14 @@ export const CustomTable = (props: TableProps) => {
       ? props.setQuery((state: any) => ({ ...state, sort_order: "ASC" }))
       : props.setQuery((state: any) => ({ ...state, sort_order: "DESC" }));
   }, [sortOrder]);
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+  }, [props.query]);
 
   useEffect(() => {
     setColumns(
@@ -96,6 +124,20 @@ export const CustomTable = (props: TableProps) => {
                     style: "currency",
                     currency: "BRL",
                   }).format(Number(text) || 0)}
+                </React.Fragment>
+              ),
+            };
+          case "buyer_document":
+          case "payer_document":
+          case "receiver_document":
+          case "document":
+            return {
+              title: t(`table.${key}`),
+              key: key,
+              dataIndex: key,
+              render: (text: string) => (
+                <React.Fragment key={key}>
+                  {text.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")}
                 </React.Fragment>
               ),
             };
@@ -147,6 +189,15 @@ export const CustomTable = (props: TableProps) => {
     <Grid container>
       <Grid item xs={12}>
         <Table
+          locale={{
+            emptyText: (
+              <Empty
+                style={{ padding: 15, paddingBottom: 30 }}
+                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                description={t("messages.empty_table_data")}
+              />
+            ),
+          }}
           pagination={{
             current: Number(props?.data?.page),
             pageSize: Number(props?.data?.limit),
@@ -156,8 +207,9 @@ export const CustomTable = (props: TableProps) => {
               ? props?.items?.length
               : props?.data?.limit * props?.data?.page + 1,
 
-            onChange: (page) =>
-              props.setQuery((state: any) => ({ ...state, page })),
+            onChange: (page) => {
+              props.setQuery((state: any) => ({ ...state, page }));
+            },
             pageSizeOptions: [10, 25, 50, 100],
             onShowSizeChange: (current, size) =>
               props.setQuery((state: any) => ({ ...state, limit: size })),
@@ -173,12 +225,16 @@ export const CustomTable = (props: TableProps) => {
       </Grid>
     </Grid>
   ) : (
-    <Mobile
-      columns={props?.columns}
-      items={props?.items}
-      label={props?.label}
-      actions={actions}
-      setCurrentItem={props.setCurrentItem}
-    />
+    <Grid container>
+      <Grid item xs={12}>
+        <Mobile
+          columns={props?.columns}
+          items={props?.items}
+          label={props?.label}
+          actions={actions}
+          setCurrentItem={props.setCurrentItem}
+        />
+      </Grid>
+    </Grid>
   );
 };

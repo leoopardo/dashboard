@@ -3,7 +3,7 @@ import { Grid } from "@mui/material";
 import moment from "moment";
 import { TotalizersCards } from "./components/TotalizersCards";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
-import { Alert, Button, Input, Select, Space, DatePicker } from "antd";
+import { Alert, Button, Input, Select, Space } from "antd";
 import { CustomTable } from "../../../../../../components/CustomTable";
 import { ViewModal } from "../components/ViewModal";
 import { SearchOutlined } from "@ant-design/icons";
@@ -11,33 +11,40 @@ import { FiltersModal } from "../../../../../../components/FiltersModal";
 import { t } from "i18next";
 import useDebounce from "../../../../../../utils/useDebounce";
 import { FilterChips } from "../../../../../../components/FiltersModal/filterChips";
-import { paidDepositRowsQuery } from "../../../../../../services/types/PaidDeposits.interface";
-import { useGetTotalPaidDeposits } from "../../../../../../services/consult/paidDeposits/getTotal";
-import { useGetRowsPaidDeposits } from "../../../../../../services/consult/paidDeposits/getRows";
-const { RangePicker } = DatePicker;
+import { useGetTotalRefundDeposits } from "../../../../../../services/consult/refundDeposits/getTotal";
+import { refundDepositsQuery } from "../../../../../../services/types/refundsDeposits.interface";
+import { useGetRowsRefundDeposits } from "../../../../../../services/consult/refundDeposits/getRows";
 
-const INITIAL_QUERY: paidDepositRowsQuery = {
+const INITIAL_QUERY: refundDepositsQuery = {
   page: 1,
   limit: 25,
-  initial_date: moment(new Date())
+  start_date: moment(new Date())
     .startOf("day")
     .format("YYYY-MM-DDTHH:mm:ss.SSS"),
-  final_date: moment(new Date())
+  end_date: moment(new Date())
     .add(1, "day")
     .startOf("day")
     .format("YYYY-MM-DDTHH:mm:ss.SSS"),
 };
 
-export const PaidDeposits = () => {
-  const [query, setQuery] = useState<paidDepositRowsQuery>(INITIAL_QUERY);
-  const { paidTotal, paidTotalError, isPaidTotalFetching, refetchPaidTotal } =
-    useGetTotalPaidDeposits(query);
+export const RefundDeposits = () => {
+  const [query, setQuery] = useState<refundDepositsQuery>(INITIAL_QUERY);
+  const {
+    refundDepositsTotal,
+    refundDepositsTotalError,
+    isRefundDepositsTotalFetching,
+    refetchRefundDepositsTotal,
+  } = useGetTotalRefundDeposits(query);
 
-  const { paidRows, paidRowsError, isPaidRowsFetching, refetchPaidTotalRows } =
-    useGetRowsPaidDeposits(query);
+  const {
+    refundDepositsRows,
+    refundDepositsRowsError,
+    isRefundDepositsRowsFetching,
+    refetchRefundDepositsTotalRows,
+  } = useGetRowsRefundDeposits(query);
 
   useEffect(() => {
-    refetchPaidTotalRows();
+    refetchRefundDepositsTotalRows();
   }, [query]);
 
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
@@ -48,8 +55,8 @@ export const PaidDeposits = () => {
   const debounceSearch = useDebounce(search);
 
   const columns = [
-    "_id",
-    "bank",
+    "pix_id",
+    "endToEndId",
     "merchant_name",
     "value",
     "createdAt",
@@ -78,9 +85,13 @@ export const PaidDeposits = () => {
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid container>
-        {paidTotalError ? (
+        {refundDepositsTotalError ? (
           <Grid item xs={12} style={{ marginBottom: "10px" }}>
-            <Alert message={paidTotalError?.message} type="error" closable />
+            <Alert
+              message={refundDepositsTotalError?.message}
+              type="error"
+              closable
+            />
           </Grid>
         ) : (
           <></>
@@ -88,9 +99,9 @@ export const PaidDeposits = () => {
       </Grid>
 
       <TotalizersCards
-        data={paidTotal}
-        fetchData={refetchPaidTotal}
-        loading={isPaidTotalFetching}
+        data={refundDepositsTotal}
+        fetchData={refetchRefundDepositsTotal}
+        loading={isRefundDepositsTotalFetching}
         query={query}
       />
 
@@ -102,7 +113,9 @@ export const PaidDeposits = () => {
         <Grid item xs={12} md={4} lg={2}>
           <Button
             style={{ width: "100%", height: 40 }}
-            loading={isPaidRowsFetching || isPaidTotalFetching}
+            loading={
+              isRefundDepositsRowsFetching || isRefundDepositsTotalFetching
+            }
             type="primary"
             onClick={() => setIsFiltersOpen(true)}
           >
@@ -111,8 +124,8 @@ export const PaidDeposits = () => {
         </Grid>
         <Grid item xs={12} md={8} lg={10}>
           <FilterChips
-            startDateKeyName="initial_date"
-            endDateKeyName="final_date"
+            startDateKeyName="start_date"
+            endDateKeyName="end_date"
             query={query}
             setQuery={setQuery}
             haveInitialDate
@@ -150,9 +163,9 @@ export const PaidDeposits = () => {
               onChange={(event) => setSearch(event.target.value)}
             />
             <Button
-              loading={isPaidRowsFetching}
+              loading={isRefundDepositsRowsFetching}
               type="primary"
-              onClick={() => refetchPaidTotalRows()}
+              onClick={() => refetchRefundDepositsTotalRows()}
               style={{ height: "40px" }}
               disabled={typeof searchOption === "string" && !search}
             >
@@ -163,7 +176,7 @@ export const PaidDeposits = () => {
         <Grid item xs={12} md={2} lg={2}>
           <Button
             type="dashed"
-            loading={isPaidRowsFetching}
+            loading={isRefundDepositsRowsFetching}
             danger
             onClick={() => {
               setQuery(INITIAL_QUERY);
@@ -185,10 +198,10 @@ export const PaidDeposits = () => {
             query={query}
             setCurrentItem={setCurrentItem}
             setQuery={setQuery}
-            data={paidRows}
-            items={paidRows?.items}
+            data={refundDepositsRows}
+            items={refundDepositsRows?.items}
             columns={columns}
-            loading={isPaidRowsFetching}
+            loading={isRefundDepositsRowsFetching}
             setViewModalOpen={setIsViewModalOpen}
             removeTotal
             label={[
@@ -216,8 +229,8 @@ export const PaidDeposits = () => {
           setQuery={setQuery}
           haveInitialDate
           filters={[
-            "initial_date",
-            "final_date",
+            "start_date",
+            "end_date",
             "status",
             "partner_id",
             "merchant_id",
@@ -229,7 +242,7 @@ export const PaidDeposits = () => {
             "age_start",
             "value_start",
           ]}
-          refetch={refetchPaidTotalRows}
+          refetch={refetchRefundDepositsTotalRows}
           selectOptions={{
             status: [
               "PAID",
@@ -241,8 +254,8 @@ export const PaidDeposits = () => {
             ],
             gender: ["MALE", "FEMALE", "OTHER"],
           }}
-          startDateKeyName="initial_date"
-          endDateKeyName="final_date"
+          startDateKeyName="start_date"
+          endDateKeyName="end_date"
           initialQuery={INITIAL_QUERY}
         />
       )}

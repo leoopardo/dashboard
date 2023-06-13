@@ -49,11 +49,29 @@
     "withdrawals": "Withdrawals",
     "paid_withdrawals": "Paid withdrawals",
     "generated_withdrawals": "Generated withdrawals",
-    "undelivered_withdrawals": "Undelivered withdrawals"
+    "undelivered_withdrawals": "Undelivered withdrawals",
+    "person_reports": "Reports",
+    "refunds": "Refunds",
+    "refund_withdrawals": "Deposits refunds",
+    "refund_deposits": "Withdrawals refunds",
+    "refund_manual_deposits": "Manual deposits refunds",
+    "refund_reports": "Reports",
+    "refund_manual_reports": "Manual deposits refunds",
+    "refund_deposits_reports": "Deposits refunds",
+    "refund_withdrawals_reports": "Withdrawals refunds",
+    "consult_persons": "Persons",
+    "check_cpf": "Check document",
+    "api_logs": "API logs",
+    "bank_institutions": "Bank institutions",
+    "third_parties_pix_key": "Third parties pix keys",
+    "invalid_pix_key": "Invalid pix keys",
+    "blacklists_reports": "Reports",
+    "bank_institutions_reports": "Bank institutions"
   },
 
   "messages": {
-    "page_not_found": "Page not found"
+    "page_not_found": "Page not found",
+    "empty_table_data": "No records found, review search criteria."
   },
   "login": {
     "sign_in": "Sign in",
@@ -141,6 +159,19 @@
     "receiver_zip_code": "Zip code",
     "receiver_bank_account": "Bank account",
     "receiver_bank_agency": "Agency",
-    "receiver": "Receiver"
+    "receiver": "Receiver",
+    "pix_id": "Pix ID",
+    "page": "Page",
+    "limit": "Limit",
+    "pending": "Pending",
+    "paid_to_merchant": "Paid to merchant",
+    "error": "Error",
+    "success": "Success",
+    "primary_logs": "Primary notifications logs",
+    "secondary_logs": "Secondary notifications logs"
+  },
+  "actions": {
+    "details": "Details",
+    "logs_webhooks": "Webhook logs"
   }
 }
