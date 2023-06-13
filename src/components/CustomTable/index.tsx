@@ -4,6 +4,7 @@ import {
   EyeFilled,
   SettingFilled,
 } from "@ant-design/icons";
+import ReplayIcon from "@mui/icons-material/Replay";
 import { Button, Dropdown, Empty, Pagination, Space, Table } from "antd";
 import type { ColumnsType, TablePaginationConfig } from "antd/es/table";
 import React, { useEffect, useState, Dispatch, SetStateAction } from "react";
@@ -23,6 +24,8 @@ interface TableProps {
   label?: string[];
   setViewModalOpen?: Dispatch<SetStateAction<boolean>>;
   setWebhookModalOpen?: Dispatch<SetStateAction<boolean>>;
+  setRefundOpen?: Dispatch<SetStateAction<boolean>> | null;
+  setPaidToMerchantOpen?: Dispatch<SetStateAction<boolean>>;
   setCurrentItem: Dispatch<SetStateAction<any>>;
   removeTotal: boolean;
 }
@@ -63,9 +66,21 @@ export const CustomTable = (props: TableProps) => {
         },
       });
     }
+    if (
+      props.setRefundOpen &&
+      !act.find((action: any) => action.key === "setRefund")
+    ) {
+      act.push({
+        key: "setRefund",
+        label: t("actions.refund"),
+        icon: <ReplayIcon style={{ fontSize: "18px" }} />,
+        onClick: () => {
+          if (props.setRefundOpen) props?.setRefundOpen(true);
+        },
+      });
+    }
     setActions(act);
   }, [isMobile]);
-
 
   useEffect(() => {
     if (

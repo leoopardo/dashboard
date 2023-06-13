@@ -521,7 +521,7 @@ export const SidebarNavigation = () => {
         defaultSelectedKeys={["1"]}
         defaultOpenKeys={["sub1"]}
         mode={"inline"}
-        theme="dark"
+        theme={import.meta.env.VITE_APP_MENU_THEME}
         inlineCollapsed={!isSidebarOpen}
         items={items}
       />

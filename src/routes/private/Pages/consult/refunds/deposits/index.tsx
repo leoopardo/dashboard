@@ -49,6 +49,7 @@ export const RefundDeposits = () => {
   }, [query]);
 
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
+  const [isRefundModalOpen, setIsRefundModalOpen] = useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<any>();
   const [searchOption, setSearchOption] = useState<string | null>(null);
   const [search, setSearch] = useState<string | null>(null);
@@ -204,6 +205,11 @@ export const RefundDeposits = () => {
             columns={columns}
             loading={isRefundDepositsRowsFetching}
             setViewModalOpen={setIsViewModalOpen}
+            setRefundOpen={
+              ["WAITING", "ERROR"].includes(currentItem?.status)
+                ? setIsRefundModalOpen
+                : null
+            }
             removeTotal
             label={[
               "bank",
