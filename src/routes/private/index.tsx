@@ -1,6 +1,5 @@
 import React, { FC, useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
-import { Home } from "./Pages/home";
 import { NotFount } from "../public/Pages/404";
 import { Redirect } from "./redirect";
 import { GeneratedDeposits } from "./Pages/consult/deposits/generated";
@@ -10,6 +9,8 @@ import { GeneratedWithdrawals } from "./Pages/consult/withdrawals/generated";
 import { PaidWithdrawals } from "./Pages/consult/withdrawals/paid";
 import { UndeliveredWithdrawals } from "./Pages/consult/withdrawals/undelivered";
 import { RefundDeposits } from "./Pages/consult/refunds/deposits";
+import { OrganizationUser } from "./Pages/register/organization/users";
+import { Auth } from "./auth";
 
 export const PrivateRoutes = () => {
   const navigate = useNavigate();
@@ -17,10 +18,9 @@ export const PrivateRoutes = () => {
   return (
     <Routes>
       <Route path="/login" element={<Redirect />} />
-      <Route path="home" element={<Home />} />
       <Route path="*" element={<NotFount />} />
 
-      <Route path="/">
+      <Route path="/" element={<Auth />}>
         <Route index element={<Redirect />} />
         <Route path="consult">
           <Route path="deposit">
@@ -45,6 +45,11 @@ export const PrivateRoutes = () => {
           </Route>
           <Route path="refunds">
             <Route path="refund_deposits" element={<RefundDeposits />} />
+          </Route>
+        </Route>
+        <Route path="register">
+          <Route path="organization">
+            <Route path="users" element={<OrganizationUser />} />
           </Route>
         </Route>
       </Route>

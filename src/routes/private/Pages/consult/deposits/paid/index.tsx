@@ -4,7 +4,7 @@ import moment from "moment";
 import { TotalizersCards } from "./components/TotalizersCards";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Alert, Button, Input, Select, Space, DatePicker } from "antd";
-import { CustomTable } from "../../../../../../components/CustomTable";
+import { ColumnInterface, CustomTable } from "../../../../../../components/CustomTable";
 import { ViewModal } from "../components/ViewModal";
 import { SearchOutlined } from "@ant-design/icons";
 import { FiltersModal } from "../../../../../../components/FiltersModal";
@@ -48,16 +48,16 @@ export const PaidDeposits = () => {
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const debounceSearch = useDebounce(search);
 
-  const columns = [
-    "_id",
-    "bank",
-    "merchant_name",
-    "value",
-    "createdAt",
-    "delivered_at",
-    "buyer_name",
-    "buyer_document",
-    "status",
+  const columns: ColumnInterface[] = [
+    { name: "_id", type: "text" },
+    { name: "bank", type: "text" },
+    { name: "merchant_name", type: "text" },
+    { name: "value", type: "value" },
+    { name: "createdAt", type: "date" },
+    { name: "delivered_at", type: "date" },
+    { name: "buyer_name", type: "text" },
+    { name: "buyer_document", type: "document" },
+    { name: "status", type: "document" },
   ];
 
   useEffect(() => {

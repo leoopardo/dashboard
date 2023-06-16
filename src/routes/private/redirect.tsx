@@ -12,6 +12,7 @@ export const Redirect = () => {
       ? navigate("/consult/consult_merchant/merchant_bank_statement")
       : navigate("/consult/deposit/generated_deposits");
   }, []);
+ 
   
   return (
     <div

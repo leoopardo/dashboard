@@ -53,14 +53,14 @@ export const SidebarNavigation = () => {
   }
 
   const i: MenuItem[] = [
-    getItem("Paybrokers", "0", null, null, true),
+    getItem(import.meta.env.VITE_APP_COMPANY_NAME, "0", null, null, true),
     { type: "divider" },
     getItem(
       t("menus.register"),
       "register",
       <FolderAddOutlined style={{ fontSize: "23px" }} />,
       [
-        getItem("Paybrokers", "paybrokers", null, [
+        getItem(t("menus.organization"), "organization", null, [
           getItem(
             t("menus.users"),
             "users",
@@ -90,8 +90,8 @@ export const SidebarNavigation = () => {
             (e) => handleNavigate(e?.keyPath)
           ),
           getItem(
-            t("menus.paybrokers_reports"),
-            "paybrokers_reports",
+            t("menus.organization_reports"),
+            "organization_reports",
             null,
             null,
             false,
@@ -205,34 +205,34 @@ export const SidebarNavigation = () => {
       "consult",
       <FileSearchOutlined style={{ fontSize: "23px" }} />,
       [
-        getItem("Paybrokers", "consult_paybrokers", null, [
+        getItem("Paybrokers", "consult_organization", null, [
           getItem(
-            t("menus.paybrokers_bank_statement"),
-            "paybrokers_bank_statement",
+            t("menus.organization_bank_statement"),
+            "organization_bank_statement",
             null,
             null,
             false,
             (e) => handleNavigate(e?.keyPath)
           ),
           getItem(
-            t("menus.paybrokers_balance"),
-            "paybrokers_balance",
+            t("menus.organization_balance"),
+            "organization_balance",
             null,
             null,
             false,
             (e) => handleNavigate(e?.keyPath)
           ),
           getItem(
-            t("menus.paybrokers_history"),
-            "paybrokers_history",
+            t("menus.organization_history"),
+            "organization_history",
             null,
             null,
             false,
             (e) => handleNavigate(e?.keyPath)
           ),
           getItem(
-            t("menus.consult_paybrokers_reports"),
-            "consult_paybrokers_reports",
+            t("menus.consult_organization_reports"),
+            "consult_organization_reports",
             null,
             null,
             false,

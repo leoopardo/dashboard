@@ -13,12 +13,18 @@ import { useMediaQuery } from "react-responsive";
 import { Mobile } from "./mobile";
 import { Grid } from "@mui/material";
 
+export interface ColumnInterface {
+  name: string;
+  type: "text" | "date" | "document" | "value" | "action" | "status";
+}
+
 interface TableProps {
   data: any;
   items: any;
-  columns: any;
+  columns: ColumnInterface[];
   loading: boolean;
   query: any;
+  error?: any;
   setQuery: Dispatch<SetStateAction<any>>;
   disableActions?: boolean;
   label?: string[];
@@ -27,7 +33,7 @@ interface TableProps {
   setRefundOpen?: Dispatch<SetStateAction<boolean>> | null;
   setPaidToMerchantOpen?: Dispatch<SetStateAction<boolean>>;
   setCurrentItem: Dispatch<SetStateAction<any>>;
-  removeTotal: boolean;
+  removeTotal?: boolean;
 }
 
 export const CustomTable = (props: TableProps) => {
@@ -85,9 +91,9 @@ export const CustomTable = (props: TableProps) => {
   useEffect(() => {
     if (
       !props.disableActions &&
-      !props.columns.find((column: string) => column === "actions")
+      !props.columns.find((column) => column.name === "actions")
     ) {
-      props.columns.push("actions");
+      props.columns.push({ name: "actions", type: "action" });
     }
   }, [props.columns]);
 
@@ -107,34 +113,33 @@ export const CustomTable = (props: TableProps) => {
 
   useEffect(() => {
     setColumns(
-      props?.columns?.map((key: string) => {
-        switch (key) {
-          case "createdAt":
-          case "delivered_at":
+      props?.columns?.map((column) => {
+        switch (column.type) {
+          case "date":
             return {
-              title: t(`table.${key}`),
-              key: key,
-              dataIndex: key,
+              title: t(`table.${column.name}`),
+              key: column.name,
+              dataIndex: column.name,
 
               render: (text: string) =>
                 text ? (
-                  <React.Fragment key={key}>{`${new Date(
+                  <React.Fragment key={column.name}>{`${new Date(
                     text
                   ).toLocaleDateString()} ${new Date(
                     text
                   ).toLocaleTimeString()}`}</React.Fragment>
                 ) : (
-                  <React.Fragment key={key}>-</React.Fragment>
+                  <React.Fragment key={column.name}>-</React.Fragment>
                 ),
             };
 
           case "value":
             return {
-              title: t(`table.${key}`),
-              key: key,
-              dataIndex: key,
+              title: t(`table.${column.name}`),
+              key: column.name,
+              dataIndex: column.name,
               render: (text: string) => (
-                <React.Fragment key={key}>
+                <React.Fragment key={column.name}>
                   {new Intl.NumberFormat("pt-BR", {
                     style: "currency",
                     currency: "BRL",
@@ -142,16 +147,13 @@ export const CustomTable = (props: TableProps) => {
                 </React.Fragment>
               ),
             };
-          case "buyer_document":
-          case "payer_document":
-          case "receiver_document":
           case "document":
             return {
-              title: t(`table.${key}`),
-              key: key,
-              dataIndex: key,
+              title: t(`table.${column.name}`),
+              key: column.name,
+              dataIndex: column.name,
               render: (text: string) => (
-                <React.Fragment key={key}>
+                <React.Fragment key={column.name}>
                   {text.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")}
                 </React.Fragment>
               ),
@@ -159,24 +161,24 @@ export const CustomTable = (props: TableProps) => {
 
           case "status":
             return {
-              title: t(`table.${key}`),
-              key: key,
-              dataIndex: key,
+              title: t(`table.${column.name}`),
+              key: column.name,
+              dataIndex: column.name,
               render: (text: string) => (
-                <React.Fragment key={key}>
+                <React.Fragment key={column.name}>
                   {t(`table.${text.toLocaleLowerCase()}`)}
                 </React.Fragment>
               ),
             };
 
-          case "actions":
+          case "action":
             return {
               title: " ",
-              key: key,
-              dataIndex: key,
+              key: column.name,
+              dataIndex: column.name,
               render: (a: any, record: any) => (
                 <Dropdown
-                  key={key}
+                  key={column.name}
                   menu={{ items: actions }}
                   onOpenChange={(open) => {
                     if (open) props.setCurrentItem(record);
@@ -194,7 +196,11 @@ export const CustomTable = (props: TableProps) => {
               ),
             };
           default:
-            return { title: t(`table.${key}`), key: key, dataIndex: key };
+            return {
+              title: t(`table.${column.name}`),
+              key: column.name,
+              dataIndex: column.name,
+            };
         }
       })
     );
@@ -205,7 +211,15 @@ export const CustomTable = (props: TableProps) => {
       <Grid item xs={12}>
         <Table
           locale={{
-            emptyText: (
+            emptyText: props.error ? (
+              <Empty
+                style={{ padding: 15, paddingBottom: 30 }}
+                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                description={`${t("table.error")} ${
+                  props.error.response.status
+                } - ${t(`error.${props.error.response.status}`)}`}
+              />
+            ) : (
               <Empty
                 style={{ padding: 15, paddingBottom: 30 }}
                 image={Empty.PRESENTED_IMAGE_SIMPLE}
@@ -229,7 +243,7 @@ export const CustomTable = (props: TableProps) => {
             onShowSizeChange: (current, size) =>
               props.setQuery((state: any) => ({ ...state, limit: size })),
           }}
-          dataSource={props?.items}
+          dataSource={props.error ? [] : props?.items}
           direction="ltr"
           columns={columns}
           loading={props.loading}

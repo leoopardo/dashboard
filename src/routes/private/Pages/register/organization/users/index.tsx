@@ -1,0 +1,145 @@
+import { Grid } from "@mui/material";
+import { Alert, Button, Input } from "antd";
+import React, { useEffect, useState } from "react";
+import { FilterChips } from "../../../../../../components/FiltersModal/filterChips";
+import { useTranslation } from "react-i18next";
+import { useGetRowsOrganizationUsers } from "../../../../../../services/register/organization/users/getUsers";
+import { OrganizationUserQuery } from "../../../../../../services/types/organizationUsers.interface";
+import { FiltersModal } from "../../../../../../components/FiltersModal";
+import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
+import { ColumnInterface, CustomTable } from "../../../../../../components/CustomTable";
+import useDebounce from "../../../../../../utils/useDebounce";
+
+const INITIAL_QUERY: OrganizationUserQuery = {
+  limit: 25,
+  page: 1,
+  sort_field: "created_at",
+  sort_order: "DESC",
+};
+
+export const OrganizationUser = () => {
+  const [query, setQuery] = useState<OrganizationUserQuery>(INITIAL_QUERY);
+  const { t } = useTranslation();
+  const { UsersData, UsersDataError, isUsersDataFetching, refetchUsersData } =
+    useGetRowsOrganizationUsers(query);
+  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+  const [currentItem, setCurrentItem] = useState(null);
+  const [search, setSearch] = useState<string>("");
+  const debounceSearch = useDebounce(search);
+
+  const columns: ColumnInterface[] = [
+    { name: "id", type: "text" },
+    { name: "name", type: "text" },
+    { name: "username", type: "text" },
+    { name: "email", type: "text" },
+  ];
+
+  useEffect(() => {
+    refetchUsersData();
+  }, [query]);
+
+  useEffect(() => {
+    if (!debounceSearch) {
+      const q = { ...query };
+      delete q.name;
+      return setQuery(q);
+    }
+    setQuery((state) => ({ ...state, name: debounceSearch }));
+  }, [debounceSearch]);
+
+  return (
+    <Grid container style={{ padding: "25px" }}>
+      <Grid
+        container
+        style={{ marginTop: "20px", display: "flex", alignItems: "center" }}
+        spacing={1}
+      >
+        <Grid item xs={12} md={4} lg={2}>
+          <Button
+            style={{ width: "100%", height: 40 }}
+            loading={isUsersDataFetching}
+            type="primary"
+            onClick={() => setIsFiltersOpen(true)}
+          >
+            {t("table.filters")}
+          </Button>
+        </Grid>
+        <Grid item xs={12} md={8} lg={10}>
+          <FilterChips
+            startDateKeyName="initial_date"
+            endDateKeyName="final_date"
+            query={query}
+            setQuery={setQuery}
+            haveInitialDate
+          />
+        </Grid>
+      </Grid>
+
+      <Grid container style={{ marginTop: "5px" }} spacing={1}>
+        <Grid item xs={12} md={4} lg={4}>
+          <Input
+            size="large"
+            placeholder={t("table.name") || ""}
+            onChange={(event) => {
+              setSearch(event.target.value);
+            }}
+          />
+        </Grid>
+        <Grid item xs={12} md={2} lg={2}>
+          <Button
+            type="dashed"
+            loading={isUsersDataFetching}
+            danger
+            onClick={() => {
+              setQuery(INITIAL_QUERY);
+              setSearch("");
+            }}
+            style={{ height: 40, display: "flex", alignItems: "center" }}
+          >
+            <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
+            {t("table.clear_filters")}
+          </Button>
+        </Grid>
+      </Grid>
+
+      <Grid container style={{ marginTop: "15px" }}>
+        <Grid item xs={12}>
+          {" "}
+          <CustomTable
+            query={query}
+            setCurrentItem={setCurrentItem}
+            setQuery={setQuery}
+            data={UsersData}
+            items={UsersData?.items}
+            error={UsersDataError}
+            columns={columns}
+            loading={isUsersDataFetching}
+            label={["id", "name", "username", "email", "cellphone"]}
+          />
+        </Grid>
+      </Grid>
+
+      {isFiltersOpen && (
+        <FiltersModal
+          open={isFiltersOpen}
+          setOpen={setIsFiltersOpen}
+          query={query}
+          setQuery={setQuery}
+          haveInitialDate
+          filters={[
+            "start_date",
+            "end_date",
+            "status",
+            "partner_id",
+            "merchant_id",
+          ]}
+          refetch={refetchUsersData}
+          selectOptions={{}}
+          startDateKeyName="start_date"
+          endDateKeyName="end_date"
+          initialQuery={INITIAL_QUERY}
+        />
+      )}
+    </Grid>
+  );
+};

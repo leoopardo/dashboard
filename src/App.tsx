@@ -13,6 +13,7 @@ import { useMediaQuery } from "react-responsive";
 import { PageHeader } from "./components/PageHeader/index.tsx";
 import { I18nextProvider } from "react-i18next";
 import i18n from "./i18n";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const { signInByStorage, signOut, token, user } = useAuth();
@@ -42,7 +43,7 @@ function App() {
       success = await signInByStorage();
 
       if (!success) {
-        signOut;
+        signOut();
         setElement(<PublicRoutes route="/login" />);
         return;
       }
@@ -65,6 +66,7 @@ function App() {
               },
             }}
           >
+            <Toaster position="top-right" />
             {user ? (
               <Layout>
                 <Layout>

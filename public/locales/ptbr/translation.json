@@ -1,14 +1,14 @@
 {
   "menus": {
     "consult": "Consultas",
-    "paybrokers": "Paybrokers",
+    "organization": "Organização",
     "register": "Cadastro",
     "users": "Usuários",
     "categories": "Categorias",
     "bank_maintain": "Manuteção de bancos",
     "general_configs": "Configurações gerais",
     "reports": "Relatórios",
-    "paybrokers_reports": "Relatórios Paybrokers",
+    "organization_reports": "Relatórios organização",
     "partner": "Plataforma",
     "partners": "Plataformas",
     "partner_users": "Usuários plataforma",
@@ -27,11 +27,11 @@
     "moviment": "Movimentações",
     "moviments": "Lançamentos manuais",
     "moviment_reports": "Relatórios movimentações",
-    "consult_paybrokers": "Consultas Paybrokers",
-    "paybrokers_bank_statement": "Extrato bancário",
-    "paybrokers_balance": "Saldo",
-    "paybrokers_history": "Histórico",
-    "consult_paybrokers_reports": "Relatórios",
+    "consult_organization": "Consultas organização",
+    "organization_bank_statement": "Extrato bancário",
+    "organization_balance": "Saldo",
+    "organization_history": "Histórico",
+    "consult_organization_reports": "Relatórios",
     "consult_merchant": "Empresas",
     "merchant_bank_statement": "Extrato bancário",
     "merchant_balance": "Saldo",
@@ -171,10 +171,16 @@
     "error": "Erro",
     "success": "Sucesso",
     "primary_logs": "Logs de notificação primário",
-    "secondary_logs": "Logs de notificação secundário"
+    "secondary_logs": "Logs de notificação secundário",
+    "name": "Nome",
+    "username": "Nome de usuário",
+    "email": "Email"
   },
   "actions": {
     "details": "Detalhes",
     "logs_webhooks": "Logs de webhooks"
+  },
+  "error": {
+    "400": "Nenhum dado encontrado."
   }
 }

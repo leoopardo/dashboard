@@ -1,14 +1,14 @@
 {
   "menus": {
     "consult": "Consult",
-    "paybrokers": "Paybrokers",
+    "organization": "Organization",
     "register": "Register",
     "users": "Users",
     "categories": "Categories",
     "bank_maintain": "Banks maintenance",
     "general_configs": "General configs",
     "reports": "Reports",
-    "paybrokers_reports": "Paybrokers reports",
+    "organization_reports": "Organization reports",
     "partner": "Partner",
     "partners": "Partners",
     "partner_users": "Partner users",
@@ -27,11 +27,11 @@
     "moviment": "Bank transactions",
     "moviments": "Manual transactions",
     "moviment_reports": "Transactions reports",
-    "consult_paybrokers": "Paybrokers consults",
-    "paybrokers_bank_statement": "Bank statement",
-    "paybrokers_balance": "Balance",
-    "paybrokers_history": "History",
-    "consult_paybrokers_reports": "Reports",
+    "consult_organization": "Organization consults",
+    "organization_bank_statement": "Bank statement",
+    "organization_balance": "Balance",
+    "organization_history": "History",
+    "consult_organization_reports": "Reports",
     "consult_merchant": "Merchants",
     "merchant_bank_statement": "Bank statement",
     "merchant_balance": "Balance",
@@ -168,10 +168,16 @@
     "error": "Error",
     "success": "Success",
     "primary_logs": "Primary notifications logs",
-    "secondary_logs": "Secondary notifications logs"
+    "secondary_logs": "Secondary notifications logs",
+    "name": "Name",
+    "username": "Username",
+    "email": "Email"
   },
   "actions": {
     "details": "Details",
     "logs_webhooks": "Webhook logs"
+  },
+  "error": {
+    "400": "Any records found."
   }
 }

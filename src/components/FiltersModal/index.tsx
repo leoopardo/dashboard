@@ -59,7 +59,7 @@ export const FiltersModal = ({
   haveInitialDate,
   initialQuery,
 }: FilterModalProps) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   const [filtersQuery, setFiltersQuery] = useState<any>(query);
   const { isStatesFetching, states } = useGetStates();
   const [isAgeRangeAbled, setIsAgeRangeAbled] = useState<boolean>(false);
@@ -87,43 +87,39 @@ export const FiltersModal = ({
     });
   }, [query]);
 
-  useEffect(() => {
-    refetchCities();
-  }, [filtersQuery.state]);
-
-  useEffect(() => {
+  const isAgeAbled = (isAbled: boolean) => {
     const q = { ...filtersQuery };
 
-    if (!isAgeRangeAbled) {
+    if (!isAbled) {
       delete q.age_start;
       delete q.age_end;
       setFiltersQuery(q);
     }
-    if (isAgeRangeAbled && !query.age_start) {
+    if (isAbled && !query.age_start) {
       setFiltersQuery((state: any) => ({
         ...state,
         age_start: 0,
         age_end: 100,
       }));
     }
-  }, [isAgeRangeAbled]);
+  };
 
-  useEffect(() => {
+  const isValueAbled = (isAbled: boolean) => {
     const q = { ...filtersQuery };
 
-    if (!isValueRangeAbled) {
+    if (!isAbled) {
       delete q.value_start;
       delete q.value_end;
       setFiltersQuery(q);
     }
-    if (isValueRangeAbled && !query.value_start) {
+    if (isAbled && !query.value_start) {
       setFiltersQuery((state: any) => ({
         ...state,
         value_start: 0,
         value_end: 50000,
       }));
     }
-  }, [isValueRangeAbled]);
+  };
 
   return (
     <Drawer
@@ -283,6 +279,7 @@ export const FiltersModal = ({
                       <Checkbox
                         checked={isAgeRangeAbled}
                         onChange={(event: any) => {
+                          isAgeAbled(event.target.checked);
                           setIsAgeRangeAbled(event.target.checked);
                           console.log(isAgeRangeAbled);
                         }}
@@ -320,6 +317,7 @@ export const FiltersModal = ({
                       <Checkbox
                         checked={isValueRangeAbled}
                         onChange={(event: any) => {
+                          isValueAbled(event.target.checked);
                           setIsValueRangeAbled(event.target.checked);
                           console.log(isAgeRangeAbled);
                         }}
@@ -363,6 +361,7 @@ export const FiltersModal = ({
                         placeholder={t(`table.${filter}`)}
                         value={filtersQuery[filter] ?? null}
                         onSelect={(value) => {
+                          refetchCities();
                           setFiltersQuery((state: any) => ({
                             ...state,
                             [filter]: value,
