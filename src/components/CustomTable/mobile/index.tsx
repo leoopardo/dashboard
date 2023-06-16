@@ -12,9 +12,10 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { getColor } from "../../../utils/getColor";
 import { EllipsisOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
+import { ColumnInterface } from "..";
 
 interface MobileProps {
-  columns: any;
+  columns: ColumnInterface[];
   items: any;
   label: any;
   actions: any;
@@ -22,7 +23,7 @@ interface MobileProps {
 }
 
 export const Mobile = (props: MobileProps) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   const [active, setActive] = useState<string | string[]>(["1"]);
   const [items, setItems] = useState<CollapseProps["items"]>([]);
 
@@ -105,14 +106,13 @@ export const Mobile = (props: MobileProps) => {
 
           children: (
             <Descriptions bordered style={{ margin: 0 }}>
-              {Object.keys(item).map((key, value) => {
-                switch (key) {
-                  case "createdAt":
-                  case "delivered_at":
+              {props.columns.map((value) => {
+                switch (value.type) {
+                  case "date":
                     return (
                       <Descriptions.Item
-                        key={key}
-                        label={t(`table.${key}`)}
+                        key={value.name}
+                        label={t(`table.${value.name}`)}
                         labelStyle={{
                           maxWidth: "100px",
                           margin: 0,
@@ -120,25 +120,72 @@ export const Mobile = (props: MobileProps) => {
                         }}
                       >
                         {`${new Date(
-                          item[key]
+                          item[value.name]
                         ).toLocaleDateString()} ${new Date(
-                          item[key]
+                          item[value.name]
                         ).toLocaleTimeString()}`}
                       </Descriptions.Item>
                     );
-
-                  default:
+                  case "value":
                     return (
                       <Descriptions.Item
-                        key={key}
-                        label={t(`table.${key}`)}
+                        key={value.name}
+                        label={t(`table.${value.name}`)}
                         labelStyle={{
                           maxWidth: "100px",
                           margin: 0,
                           padding: 5,
                         }}
                       >
-                        {item[key]}
+                        <p
+                          key={value.name}
+                          style={{ width: "100%", textAlign: "center" }}
+                        >
+                          {new Intl.NumberFormat("pt-BR", {
+                            style: "currency",
+                            currency: "BRL",
+                          }).format(Number(item[value.name]) || 0)}
+                        </p>
+                      </Descriptions.Item>
+                    );
+                  case "document":
+                    return (
+                      <Descriptions.Item
+                        key={value.name}
+                        label={t(`table.${value.name}`)}
+                        labelStyle={{
+                          maxWidth: "100px",
+                          margin: 0,
+                          padding: 5,
+                        }}
+                      >
+                        <p
+                          key={value.name}
+                          style={{ width: "100%", textAlign: "center" }}
+                        >
+                          {item[value.name]?.replace(
+                            /(\d{3})(\d{3})(\d{3})(\d{2})/,
+                            "$1.$2.$3-$4"
+                          ) || "-"}
+                        </p>
+                      </Descriptions.Item>
+                    );
+
+                  case "actions":
+                    return;
+
+                  default:
+                    return (
+                      <Descriptions.Item
+                        key={value.name}
+                        label={t(`table.${value.name}`)}
+                        labelStyle={{
+                          maxWidth: "100px",
+                          margin: 0,
+                          padding: 5,
+                        }}
+                      >
+                        {item[value.name]}
                       </Descriptions.Item>
                     );
                 }
@@ -149,7 +196,6 @@ export const Mobile = (props: MobileProps) => {
       })
     );
   }, [props?.items]);
-  
 
   const onChange = (key: string | string[]) => {
     setActive(key);

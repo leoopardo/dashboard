@@ -7,8 +7,13 @@ import { useGetRowsOrganizationUsers } from "../../../../../../services/register
 import { OrganizationUserQuery } from "../../../../../../services/types/organizationUsers.interface";
 import { FiltersModal } from "../../../../../../components/FiltersModal";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
-import { ColumnInterface, CustomTable } from "../../../../../../components/CustomTable";
+import {
+  ColumnInterface,
+  CustomTable,
+} from "../../../../../../components/CustomTable";
 import useDebounce from "../../../../../../utils/useDebounce";
+import { UserAddOutlined } from "@ant-design/icons";
+import { NewUserModal } from "./components/newUserModal";
 
 const INITIAL_QUERY: OrganizationUserQuery = {
   limit: 25,
@@ -23,15 +28,17 @@ export const OrganizationUser = () => {
   const { UsersData, UsersDataError, isUsersDataFetching, refetchUsersData } =
     useGetRowsOrganizationUsers(query);
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+  const [isNewUserModal, setIsNewUserModal] = useState(false);
   const [currentItem, setCurrentItem] = useState(null);
   const [search, setSearch] = useState<string>("");
   const debounceSearch = useDebounce(search);
 
   const columns: ColumnInterface[] = [
-    { name: "id", type: "text" },
+    { name: "id", type: "id" },
     { name: "name", type: "text" },
-    { name: "username", type: "text" },
+    { name: "group_id", type: "text" },
     { name: "email", type: "text" },
+    { name: "created_at", type: "date" },
   ];
 
   useEffect(() => {
@@ -94,10 +101,35 @@ export const OrganizationUser = () => {
               setQuery(INITIAL_QUERY);
               setSearch("");
             }}
-            style={{ height: 40, display: "flex", alignItems: "center" }}
+            style={{
+              height: 40,
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
           >
             <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
             {t("table.clear_filters")}
+          </Button>
+        </Grid>
+        <Grid item xs={12} md={2} lg={2}>
+          <Button
+            type="primary"
+            loading={isUsersDataFetching}
+            onClick={() => {
+              setIsNewUserModal(true);
+            }}
+            style={{
+              height: 40,
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <UserAddOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
+            {`${t("buttons.create")} ${t("buttons.new_user")}`}
           </Button>
         </Grid>
       </Grid>
@@ -114,7 +146,7 @@ export const OrganizationUser = () => {
             error={UsersDataError}
             columns={columns}
             loading={isUsersDataFetching}
-            label={["id", "name", "username", "email", "cellphone"]}
+            label={["name", "username"]}
           />
         </Grid>
       </Grid>
@@ -140,6 +172,7 @@ export const OrganizationUser = () => {
           initialQuery={INITIAL_QUERY}
         />
       )}
+      <NewUserModal open={isNewUserModal} setOpen={setIsNewUserModal} />
     </Grid>
   );
 };

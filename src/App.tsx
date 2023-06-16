@@ -66,7 +66,7 @@ function App() {
               },
             }}
           >
-            <Toaster position="top-right" />
+            <Toaster position="top-center" />
             {user ? (
               <Layout>
                 <Layout>

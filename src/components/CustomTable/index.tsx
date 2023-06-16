@@ -1,21 +1,32 @@
 import {
+  CopyOutlined,
   DownOutlined,
   EllipsisOutlined,
   EyeFilled,
   SettingFilled,
 } from "@ant-design/icons";
 import ReplayIcon from "@mui/icons-material/Replay";
-import { Button, Dropdown, Empty, Pagination, Space, Table } from "antd";
+import { Button, Dropdown, Empty, Input, Pagination, Space, Table } from "antd";
 import type { ColumnsType, TablePaginationConfig } from "antd/es/table";
 import React, { useEffect, useState, Dispatch, SetStateAction } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import { Mobile } from "./mobile";
 import { Grid } from "@mui/material";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import { toast } from "react-hot-toast";
 
 export interface ColumnInterface {
   name: string;
-  type: "text" | "date" | "document" | "value" | "action" | "status";
+  type:
+    | "id"
+    | "text"
+    | "date"
+    | "document"
+    | "value"
+    | "action"
+    | "status"
+    | "actions";
 }
 
 interface TableProps {
@@ -115,59 +126,127 @@ export const CustomTable = (props: TableProps) => {
     setColumns(
       props?.columns?.map((column) => {
         switch (column.type) {
-          case "date":
+          case "id":
             return {
-              title: t(`table.${column.name}`),
+              title: (
+                <p style={{ width: "100%", textAlign: "center" }}>
+                  {t(`table.${column.name}`)}
+                </p>
+              ),
               key: column.name,
               dataIndex: column.name,
+              render: (text: string) => (
+                <div
+                  key={column.name}
+                  style={{ width: "100%", textAlign: "center" }}
+                >
+                  <Input
+                    size="large"
+                    addonAfter={
+                      <CopyToClipboard text={text}>
+                        <Button
+                          size="small"
+                          type="ghost"
+                          onClick={() => toast.success(t("table.copied"))}
+                        >
+                          <CopyOutlined />
+                        </Button>
+                      </CopyToClipboard>
+                    }
+                    style={{ maxWidth: "200px", textOverflow: "ellipsis" }}
+                    value={text}
+                    readOnly
+                  />
+                </div>
+              ),
+            };
 
+          case "date":
+            return {
+              title: (
+                <p style={{ width: "100%", textAlign: "center" }}>
+                  {t(`table.${column.name}`)}
+                </p>
+              ),
+              key: column.name,
+              dataIndex: column.name,
               render: (text: string) =>
                 text ? (
-                  <React.Fragment key={column.name}>{`${new Date(
+                  <p
+                    key={column.name}
+                    style={{ width: "100%", textAlign: "center" }}
+                  >{`${new Date(text).toLocaleDateString()} ${new Date(
                     text
-                  ).toLocaleDateString()} ${new Date(
-                    text
-                  ).toLocaleTimeString()}`}</React.Fragment>
+                  ).toLocaleTimeString()}`}</p>
                 ) : (
-                  <React.Fragment key={column.name}>-</React.Fragment>
+                  <p
+                    key={column.name}
+                    style={{ width: "100%", textAlign: "center" }}
+                  >
+                    -
+                  </p>
                 ),
             };
 
           case "value":
             return {
-              title: t(`table.${column.name}`),
+              title: (
+                <p style={{ width: "100%", textAlign: "center" }}>
+                  {t(`table.${column.name}`)}
+                </p>
+              ),
               key: column.name,
               dataIndex: column.name,
               render: (text: string) => (
-                <React.Fragment key={column.name}>
+                <p
+                  key={column.name}
+                  style={{ width: "100%", textAlign: "center" }}
+                >
                   {new Intl.NumberFormat("pt-BR", {
                     style: "currency",
                     currency: "BRL",
                   }).format(Number(text) || 0)}
-                </React.Fragment>
+                </p>
               ),
             };
           case "document":
             return {
-              title: t(`table.${column.name}`),
+              title: (
+                <p style={{ width: "100%", textAlign: "center" }}>
+                  {t(`table.${column.name}`)}
+                </p>
+              ),
               key: column.name,
               dataIndex: column.name,
               render: (text: string) => (
-                <React.Fragment key={column.name}>
-                  {text.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")}
-                </React.Fragment>
+                <p
+                  key={column.name}
+                  style={{ width: "100%", textAlign: "center" }}
+                >
+                  {text?.replace(
+                    /(\d{3})(\d{3})(\d{3})(\d{2})/,
+                    "$1.$2.$3-$4"
+                  ) || "-"}
+                </p>
               ),
             };
 
           case "status":
             return {
-              title: t(`table.${column.name}`),
+              title: (
+                <p style={{ width: "100%", textAlign: "center" }}>
+                  {t(`table.${column.name}`)}
+                </p>
+              ),
               key: column.name,
               dataIndex: column.name,
               render: (text: string) => (
-                <React.Fragment key={column.name}>
+                <p
+                  key={column.name}
+                  style={{ width: "100%", textAlign: "center" }}
+                >
                   {t(`table.${text.toLocaleLowerCase()}`)}
-                </React.Fragment>
+                </p>
               ),
             };
 
@@ -177,34 +256,45 @@ export const CustomTable = (props: TableProps) => {
               key: column.name,
               dataIndex: column.name,
               render: (a: any, record: any) => (
-                <Dropdown
-                  key={column.name}
-                  menu={{ items: actions }}
-                  onOpenChange={(open) => {
-                    if (open) props.setCurrentItem(record);
-                  }}
-                  arrow
-                >
-                  <Button
-                    onClick={() => {
-                      props.setCurrentItem(record);
+                <div style={{ width: "100%", textAlign: "center" }}>
+                  <Dropdown
+                    key={column.name}
+                    menu={{ items: actions }}
+                    onOpenChange={(open) => {
+                      if (open) props.setCurrentItem(record);
                     }}
+                    arrow
                   >
-                    <EllipsisOutlined />
-                  </Button>
-                </Dropdown>
+                    <Button
+                      onClick={() => {
+                        props.setCurrentItem(record);
+                      }}
+                    >
+                      <EllipsisOutlined />
+                    </Button>
+                  </Dropdown>
+                </div>
               ),
             };
           default:
             return {
-              title: t(`table.${column.name}`),
+              title: (
+                <p style={{ width: "100%", textAlign: "center" }}>
+                  {t(`table.${column.name}`)}
+                </p>
+              ),
               key: column.name,
               dataIndex: column.name,
+              render: (a: any, record: any) => (
+                <p style={{ width: "100%", textAlign: "center" }}>
+                  {record[column.name] ?? "-"}
+                </p>
+              ),
             };
         }
       })
     );
-  }, [props.columns, translation]);
+  }, [props.columns]);
 
   return !isMobile ? (
     <Grid container>

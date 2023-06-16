@@ -40,3 +40,20 @@ export interface OrganizationUserResponse {
   page: number;
   items: OrganizationUserItem;
 }
+
+export interface GroupQuery {
+  name?: string;
+  page: number;
+  limit: number;
+}
+export interface GroupItem {
+  id: number;
+  name: string;
+  created_at: string;
+}
+export interface GroupResponse {
+  total: number;
+  limit: number;
+  page: number;
+  items: GroupItem[];
+}

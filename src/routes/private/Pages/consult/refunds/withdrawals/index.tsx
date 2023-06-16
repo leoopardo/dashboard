@@ -56,8 +56,8 @@ export const RefundDeposits = () => {
   const debounceSearch = useDebounce(search);
 
   const columns: ColumnInterface[] = [
-    { name: "pix_id", type: "text" },
-    { name: "endToEndId", type: "text" },
+    { name: "pix_id", type: "id" },
+    { name: "endToEndId", type: "id" },
     { name: "merchant_name", type: "text" },
     { name: "value", type: "value" },
     { name: "createdAt", type: "date" },

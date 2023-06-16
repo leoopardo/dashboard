@@ -81,12 +81,17 @@
     "access": "Access",
     "forgot_password": "Forgot my password"
   },
+  "buttons": {
+    "create": "Create",
+    "new_user": "new user"
+  },
   "table": {
     "id": "ID",
     "bank": "Bank",
     "merchant_name": "Merchant",
     "value": "Value",
     "createdAt": "Created at",
+    "created_at": "Created at",
     "delivered_at": "Delivered at",
     "buyer_name": "Buyer",
     "buyer_document": "Buyer document",
@@ -171,7 +176,17 @@
     "secondary_logs": "Secondary notifications logs",
     "name": "Name",
     "username": "Username",
-    "email": "Email"
+    "email": "Email",
+    "copied": "Copied!",
+    "group_id": "Group ID",
+    "last_signin_date": "Last signin",
+    "type": "Type",
+    "cellphone": "Cellphone",
+    "last_signin_ip": "Last IP",
+    "phone_validated": "Phone validated",
+    "true": "Yes",
+    "false": "No",
+    "group": "Group"
   },
   "actions": {
     "details": "Details",

@@ -62,7 +62,7 @@ export const UndeliveredDeposits = () => {
   const debounceSearch = useDebounce(search);
 
   const columns: ColumnInterface[] = [
-    { name: "_id", type: "text" },
+    { name: "_id", type: "id" },
     { name: "bank", type: "text" },
     { name: "merchant_name", type: "text" },
     { name: "value", type: "value" },

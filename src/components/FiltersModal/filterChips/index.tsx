@@ -20,7 +20,7 @@ export const FilterChips = ({
   startDateKeyName,
   haveInitialDate,
 }: FilterChipsProps) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   const [filtersQuery, setFiltersQuery] = useState<any>(query);
 
   const isMobile = useMediaQuery({ maxWidth: "400px" });
@@ -51,6 +51,7 @@ export const FilterChips = ({
           case startDateKeyName:
             return (
               <Tag
+                key={key}
                 style={{
                   maxWidth: isMobile ? "280px" : "400px",
                   textOverflow: "ellipsis",
@@ -100,6 +101,7 @@ export const FilterChips = ({
           case "age_start":
             return (
               <Tag
+                key={key}
                 color="cyan"
                 icon={
                   <CloseCircleOutlined
@@ -120,6 +122,7 @@ export const FilterChips = ({
           case "value_start":
             return (
               <Tag
+                key={key}
                 color="cyan"
                 icon={
                   <CloseCircleOutlined
@@ -149,6 +152,7 @@ export const FilterChips = ({
           case "status":
             return (
               <Tag
+                key={key}
                 color="cyan"
                 icon={<CloseCircleOutlined onClick={() => deleteFilter(key)} />}
               >
@@ -159,6 +163,7 @@ export const FilterChips = ({
           default:
             return (
               <Tag
+                key={key}
                 color="cyan"
                 icon={<CloseCircleOutlined onClick={() => deleteFilter(key)} />}
               >

@@ -83,6 +83,10 @@
     "access": "Entrar",
     "forgot_password": "Esqueci minha senha"
   },
+  "buttons": {
+    "create": "Criar",
+    "new_user": "novo usuário"
+  },
 
   "table": {
     "id": "ID",
@@ -90,6 +94,7 @@
     "merchant_name": "Empresa",
     "value": "Valor",
     "createdAt": "Data de criação",
+    "created_at": "Data de criação",
     "delivered_at": "Data de entrega",
     "payer_name": "Pagador",
     "buyer_name": "Comprador",
@@ -174,7 +179,17 @@
     "secondary_logs": "Logs de notificação secundário",
     "name": "Nome",
     "username": "Nome de usuário",
-    "email": "Email"
+    "email": "Email",
+    "copied": "Copiado para a área de transferência!",
+    "group_id": "ID do grupo",
+    "last_signin_date": "Último acesso",
+    "type": "Tipo",
+    "cellphone": "Telefone",
+    "last_signin_ip": "Último IP",
+    "phone_validated": "Telefone validado:",
+    "true": "Sim",
+    "false": "Não",
+    "group": "Grupo"
   },
   "actions": {
     "details": "Detalhes",
