@@ -8,12 +8,15 @@ import React, {
 } from "react";
 import { useTranslation } from "react-i18next";
 import { GroupSelect } from "../../../../../../../components/Selects/groupSelect";
-import { useCreateOrganizationUser } from "../../../../../../../services/register/organization/users/createUset";
+import { useCreateOrganizationUser } from "../../../../../../../services/register/organization/users/createUser";
 import { toast } from "react-hot-toast";
+import { OrganizationUserItem } from "../../../../../../../services/types/organizationUsers.interface";
 
 interface NewuserModalprops {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
+  currentUser?: OrganizationUserItem | null;
+  setCurrentUser?: Dispatch<SetStateAction<any>>;
 }
 
 export interface NewUserInterface {
@@ -24,12 +27,18 @@ export interface NewUserInterface {
   cellphone?: string;
   group_id: number;
   type?: number;
-  status: true;
+  status: boolean;
   partner_id?: number;
   merchant_id?: number;
+  user_id?: number;
 }
 
-export const NewUserModal = ({ open, setOpen }: NewuserModalprops) => {
+export const NewUserModal = ({
+  open,
+  setOpen,
+  currentUser,
+  setCurrentUser,
+}: NewuserModalprops) => {
   const { t } = useTranslation();
   const submitRef = useRef<HTMLButtonElement>(null);
   const formRef = React.useRef<FormInstance>(null);
@@ -66,18 +75,25 @@ export const NewUserModal = ({ open, setOpen }: NewuserModalprops) => {
     }
   }, [isSuccess, error]);
 
+  useEffect(() => {
+    if (currentUser)
+      setBody((state) => ({
+        ...state,
+        group_id: currentUser.group_id,
+        user_id: currentUser.id,
+      }));
+  }, [currentUser]);
+
   return (
     <Drawer
       open={open}
       onClose={() => {
         setOpen(false);
         formRef.current?.resetFields();
+        if (setCurrentUser) setCurrentUser(null);
       }}
       bodyStyle={{ overflowX: "hidden" }}
-      title={
-        t("buttons.new_user").charAt(0).toUpperCase() +
-        t("buttons.new_user").slice(1)
-      }
+      title={t("buttons.new_user")}
       footer={
         <Button
           loading={isLoading}
@@ -93,6 +109,16 @@ export const NewUserModal = ({ open, setOpen }: NewuserModalprops) => {
       <Form
         ref={formRef}
         layout="vertical"
+        initialValues={
+          currentUser ?? {
+            name: "",
+            username: "",
+            password: "",
+            group_id: 0,
+            status: true,
+            type: 2,
+          }
+        }
         disabled={isLoading}
         onSubmitCapture={
           body.name && body.username && body.group_id && body.password

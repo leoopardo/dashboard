@@ -6,7 +6,7 @@ import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Alert, Button, Input, Select, Space } from "antd";
 import { ColumnInterface, CustomTable } from "../../../../../../components/CustomTable";
 import { ViewModal } from "../components/ViewModal";
-import { SearchOutlined } from "@ant-design/icons";
+import { EyeFilled, SearchOutlined } from "@ant-design/icons";
 import { FiltersModal } from "../../../../../../components/FiltersModal";
 import { useTranslation } from "react-i18next";
 import useDebounce from "../../../../../../utils/useDebounce";
@@ -205,7 +205,14 @@ export const PaidWithdrawals = () => {
             items={paidWithdrawalsRows?.items}
             columns={columns}
             loading={isPaidWithdrawalsRowsFetching}
-            setViewModalOpen={setIsViewModalOpen}
+            actions={[
+              {
+                label: "details",
+                icon: <EyeFilled style={{ fontSize: "18px" }} />,
+                onClick: () => setIsViewModalOpen(true),
+              },
+             
+            ]}
             removeTotal
             label={[
               "bank",

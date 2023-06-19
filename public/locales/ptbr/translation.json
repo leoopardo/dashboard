@@ -207,9 +207,11 @@
   },
   "actions": {
     "details": "Detalhes",
+    "edit": "Editar",
     "logs_webhooks": "Logs de webhooks"
   },
   "error": {
-    "400": "Nenhum dado encontrado."
+    "400": "Nenhum dado encontrado.",
+    "password_or_username": "Senha e/ou usuário incorretos."
   }
 }

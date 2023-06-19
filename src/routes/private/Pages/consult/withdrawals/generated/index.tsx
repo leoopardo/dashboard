@@ -9,7 +9,7 @@ import {
   CustomTable,
 } from "../../../../../../components/CustomTable";
 import { ViewModal } from "../components/ViewModal";
-import { SearchOutlined } from "@ant-design/icons";
+import { EyeFilled, SearchOutlined, SettingFilled } from "@ant-design/icons";
 import { FiltersModal } from "../../../../../../components/FiltersModal";
 import { useTranslation } from "react-i18next";
 import useDebounce from "../../../../../../utils/useDebounce";
@@ -209,8 +209,18 @@ export const GeneratedWithdrawals = () => {
             items={witrawalsRows?.items}
             columns={columns}
             loading={isWithdrawalsRowsFetching}
-            setViewModalOpen={setIsViewModalOpen}
-            setWebhookModalOpen={setIsWebhookModalOpen}
+            actions={[
+              {
+                label: "details",
+                icon: <EyeFilled style={{ fontSize: "18px" }} />,
+                onClick: () => setIsViewModalOpen(true),
+              },
+              {
+                label: "logs_webhooks",
+                icon: <SettingFilled style={{ fontSize: "18px" }} />,
+                onClick: () => setIsWebhookModalOpen(true),
+              },
+            ]}
             removeTotal
             label={[
               "bank",

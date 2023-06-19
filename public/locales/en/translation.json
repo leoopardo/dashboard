@@ -205,9 +205,11 @@
   },
   "actions": {
     "details": "Details",
+    "edit": "Edit",
     "logs_webhooks": "Webhook logs"
   },
   "error": {
-    "400": "Any records found."
+    "400": "Any records found.",
+    "password_or_username": "Invalid username or password"
   }
 }

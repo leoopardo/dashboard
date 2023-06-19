@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Grid } from "@mui/material";
 import moment from "moment";
+import ReplayIcon from "@mui/icons-material/Replay";
 import { TotalizersCards } from "./components/TotalizersCards";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Alert, Button, Input, Select, Space } from "antd";
@@ -208,6 +209,14 @@ export const RefundDeposits = () => {
             columns={columns}
             loading={isRefundDepositsRowsFetching}
             setViewModalOpen={setIsViewModalOpen}
+            actions={[
+              {
+                label: "refund",
+                icon: <ReplayIcon style={{ fontSize: "18px" }} />,
+                onClick: () => setIsViewModalOpen(true),
+                disabled: ["WAITING", "ERROR"].includes(currentItem?.status),
+              },
+            ]}
             setRefundOpen={
               ["WAITING", "ERROR"].includes(currentItem?.status)
                 ? setIsRefundModalOpen

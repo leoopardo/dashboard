@@ -12,7 +12,7 @@ import {
   CustomTable,
 } from "../../../../../../components/CustomTable";
 import useDebounce from "../../../../../../utils/useDebounce";
-import { UserAddOutlined } from "@ant-design/icons";
+import { EditOutlined, UserAddOutlined } from "@ant-design/icons";
 import { NewUserModal } from "./components/newUserModal";
 
 const INITIAL_QUERY: OrganizationUserQuery = {
@@ -29,7 +29,8 @@ export const OrganizationUser = () => {
     useGetRowsOrganizationUsers(query);
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [isNewUserModal, setIsNewUserModal] = useState(false);
-  const [currentItem, setCurrentItem] = useState(null);
+  const [currentItem, setCurrentItem] = useState<any>(null);
+  const [editId, setEditId] = useState<string | null>(null);
   const [search, setSearch] = useState<string>("");
   const debounceSearch = useDebounce(search);
 
@@ -141,6 +142,16 @@ export const OrganizationUser = () => {
             query={query}
             setCurrentItem={setCurrentItem}
             setQuery={setQuery}
+            actions={[
+              {
+                label: "edit",
+                icon: <EditOutlined style={{ fontSize: "20px" }} />,
+                onClick: () => {
+                  setIsNewUserModal(true);
+                  setEditId(currentItem?.id);
+                },
+              },
+            ]}
             data={UsersData}
             items={UsersData?.items}
             error={UsersDataError}
@@ -173,7 +184,12 @@ export const OrganizationUser = () => {
         />
       )}
       {isNewUserModal && (
-        <NewUserModal open={isNewUserModal} setOpen={setIsNewUserModal} />
+        <NewUserModal
+          open={isNewUserModal}
+          setOpen={setIsNewUserModal}
+          currentUser={currentItem}
+          setCurrentUser={setCurrentItem}
+        />
       )}
     </Grid>
   );

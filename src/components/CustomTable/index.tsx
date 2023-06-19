@@ -29,6 +29,13 @@ export interface ColumnInterface {
     | "actions";
 }
 
+export interface actionsInterface {
+  label: string;
+  icon?: any;
+  onClick: () => void;
+  disabled?: boolean;
+}
+
 interface TableProps {
   data: any;
   items: any;
@@ -37,14 +44,10 @@ interface TableProps {
   query: any;
   error?: any;
   setQuery: Dispatch<SetStateAction<any>>;
-  disableActions?: boolean;
   label?: string[];
-  setViewModalOpen?: Dispatch<SetStateAction<boolean>>;
-  setWebhookModalOpen?: Dispatch<SetStateAction<boolean>>;
-  setRefundOpen?: Dispatch<SetStateAction<boolean>> | null;
-  setPaidToMerchantOpen?: Dispatch<SetStateAction<boolean>>;
   setCurrentItem: Dispatch<SetStateAction<any>>;
   removeTotal?: boolean;
+  actions?: actionsInterface[];
 }
 
 export const CustomTable = (props: TableProps) => {
@@ -57,51 +60,24 @@ export const CustomTable = (props: TableProps) => {
 
   useEffect(() => {
     const act: any = [];
-    if (
-      props.setViewModalOpen &&
-      !act.find((action: any) => action.key === "setView")
-    ) {
-      act.push({
-        key: "setView",
-        label: t("actions.details"),
-        icon: <EyeFilled style={{ fontSize: "18px" }} />,
-        onClick: () => {
-          if (props.setViewModalOpen) props?.setViewModalOpen(true);
-        },
-      });
+
+    if (props.actions && props.actions.length > 0) {
+      for (const action of props.actions) {
+        act.push({
+          key: action.label,
+          label: t(`actions.${action.label}`),
+          icon: action.icon,
+          onClick: action.onClick,
+        });
+      }
+      setActions(act);
     }
-    if (
-      props.setWebhookModalOpen &&
-      !act.find((action: any) => action.key === "setWebhook")
-    ) {
-      act.push({
-        key: "setWebhook",
-        label: t("actions.logs_webhooks"),
-        icon: <SettingFilled style={{ fontSize: "18px" }} />,
-        onClick: () => {
-          if (props.setWebhookModalOpen) props?.setWebhookModalOpen(true);
-        },
-      });
-    }
-    if (
-      props.setRefundOpen &&
-      !act.find((action: any) => action.key === "setRefund")
-    ) {
-      act.push({
-        key: "setRefund",
-        label: t("actions.refund"),
-        icon: <ReplayIcon style={{ fontSize: "18px" }} />,
-        onClick: () => {
-          if (props.setRefundOpen) props?.setRefundOpen(true);
-        },
-      });
-    }
-    setActions(act);
   }, [isMobile]);
 
   useEffect(() => {
     if (
-      !props.disableActions &&
+      props.actions &&
+      props.actions.length > 0 &&
       !props.columns.find((column) => column.name === "actions")
     ) {
       props.columns.push({ name: "actions", type: "action" });

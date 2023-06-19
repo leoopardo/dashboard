@@ -7,9 +7,12 @@ import { TotalizersCards } from "./components/TotalizersCards";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Alert, Button, Input, Select, Space, DatePicker } from "antd";
 import { useGetRowsGeneratedDeposits } from "../../../../../../services/consult/generatedDeposits/getRows";
-import { ColumnInterface, CustomTable } from "../../../../../../components/CustomTable";
+import {
+  ColumnInterface,
+  CustomTable,
+} from "../../../../../../components/CustomTable";
 import { ViewModal } from "../components/ViewModal";
-import { SearchOutlined } from "@ant-design/icons";
+import { EyeFilled, SearchOutlined, SettingFilled } from "@ant-design/icons";
 import { FiltersModal } from "../../../../../../components/FiltersModal";
 import { useTranslation } from "react-i18next";
 import useDebounce from "../../../../../../utils/useDebounce";
@@ -205,8 +208,18 @@ export const GeneratedDeposits = () => {
             error={depositsRowsError}
             columns={columns}
             loading={isDepositsRowsFetching}
-            setViewModalOpen={setIsViewModalOpen}
-            setWebhookModalOpen={setIsWebhookModalOpen}
+            actions={[
+              {
+                label: "details",
+                icon: <EyeFilled style={{ fontSize: "18px" }} />,
+                onClick: () => setIsViewModalOpen(true),
+              },
+              {
+                label: "logs_webhooks",
+                icon: <SettingFilled style={{ fontSize: "18px" }} />,
+                onClick: () => setIsWebhookModalOpen(true),
+              },
+            ]}
             removeTotal
             label={[
               "bank",

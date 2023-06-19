@@ -11,7 +11,7 @@ import {
 import { Grid } from "@mui/material";
 import { useMediaQuery } from "react-responsive";
 import { defaultTheme } from "../../../../styles/defaultTheme";
-import { Button, Checkbox, Input } from "antd";
+import { Alert, Button, Checkbox, Input } from "antd";
 import {
   EyeInvisibleOutlined,
   EyeTwoTone,
@@ -22,7 +22,7 @@ import {
 import { CheckboxChangeEvent } from "antd/es/checkbox";
 import { useTranslation } from "react-i18next";
 
-const Logo = import.meta.env.VITE_APP_LOGO
+const Logo = import.meta.env.VITE_APP_LOGO;
 
 export const Login = () => {
   const { t } = useTranslation();
@@ -167,9 +167,18 @@ export const Login = () => {
               }
             />
           </Grid>
+          {loginError && (
+            <Grid item xs={8}>
+              <Alert
+                message={t("error.password_or_username")}
+                type="error"
+                closable
+              />
+            </Grid>
+          )}
           <Grid item xs={8}>
             <CustomCheckbox checked={rememerMe} onChange={onChange}>
-             {t("login.remember_me")}
+              {t("login.remember_me")}
             </CustomCheckbox>
           </Grid>
         </Grid>
@@ -193,7 +202,7 @@ export const Login = () => {
               onClick={handleLogin}
               loading={isLoadingLogin}
             >
-               {t("login.access")}
+              {t("login.access")}
             </CustButton>
           </Grid>
           <Grid item xs={8}>
