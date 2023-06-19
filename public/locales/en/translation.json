@@ -85,6 +85,20 @@
     "create": "Create",
     "new_user": "new user"
   },
+  "input": {
+    "required": "Please input your {{field}}",
+    "required(a)": "Please input your {{field}}",
+    "confirm_password": "PLease confirm your password",
+    "doest_match": "The new password that you entered do not match!",
+    "name": "Name",
+    "username": "Username",
+    "min_of": "Min of {{min}} characters",
+    "id": "Invalid {{field}}",
+    "number": "number",
+    "email": "email",
+    "group": "group",
+    "password": "password"
+  },
   "table": {
     "id": "ID",
     "bank": "Bank",
@@ -186,7 +200,8 @@
     "phone_validated": "Phone validated",
     "true": "Yes",
     "false": "No",
-    "group": "Group"
+    "group": "Group",
+    "password": "Password"
   },
   "actions": {
     "details": "Details",

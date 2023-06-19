@@ -87,7 +87,20 @@
     "create": "Criar",
     "new_user": "novo usuário"
   },
-
+  "input": {
+    "required": "Por favor, insira seu {{field}}",
+    "required(a)": "Por favor, insira sua {{field}}",
+    "confirm_password": "Por favor, confirme sua senha!",
+    "doest_match": "As senhas não coincidem!",
+    "name": "nome",
+    "username": "nome de usuário",
+    "min_of": "Minímo de {{min}} caractéres",
+    "invalid": "{{field}} inválido",
+    "number": "Número",
+    "email": "Email",
+    "group": "grupo",
+    "password": "senha"
+  },
   "table": {
     "id": "ID",
     "bank": "Banco",
@@ -189,7 +202,8 @@
     "phone_validated": "Telefone validado:",
     "true": "Sim",
     "false": "Não",
-    "group": "Grupo"
+    "group": "Grupo",
+    "password": "Senha"
   },
   "actions": {
     "details": "Detalhes",

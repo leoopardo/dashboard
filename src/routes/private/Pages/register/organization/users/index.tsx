@@ -92,7 +92,7 @@ export const OrganizationUser = () => {
             }}
           />
         </Grid>
-        <Grid item xs={12} md={2} lg={2}>
+        <Grid item xs={12} md={3} lg={2}>
           <Button
             type="dashed"
             loading={isUsersDataFetching}
@@ -113,7 +113,7 @@ export const OrganizationUser = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={2} lg={2}>
+        <Grid item xs={12} md={3} lg={2}>
           <Button
             type="primary"
             loading={isUsersDataFetching}
@@ -172,7 +172,9 @@ export const OrganizationUser = () => {
           initialQuery={INITIAL_QUERY}
         />
       )}
-      <NewUserModal open={isNewUserModal} setOpen={setIsNewUserModal} />
+      {isNewUserModal && (
+        <NewUserModal open={isNewUserModal} setOpen={setIsNewUserModal} />
+      )}
     </Grid>
   );
 };

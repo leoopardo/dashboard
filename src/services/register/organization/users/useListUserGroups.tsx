@@ -31,7 +31,7 @@ export function useListUserGroups(params: GroupQuery) {
   const groupsData = data;
   const isGroupsFetching = isFetching;
   const groupsError: any = error;
-  const refetcGroups = isFetching;
+  const refetcGroups = refetch;
 
   return {
     groupsData,

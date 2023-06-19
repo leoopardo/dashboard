@@ -17,8 +17,11 @@ export const GroupSelect = ({ setBody, body }: GroupSelectProps) => {
   const [query, setQuery] = useState<GroupQuery>({
     page: 1,
     limit: 200,
+    name: "",
   });
   const { groupsData } = useListUserGroups(query);
+
+
 
   return (
     <AutoComplete
@@ -34,8 +37,8 @@ export const GroupSelect = ({ setBody, body }: GroupSelectProps) => {
       }
       notFoundContent={<Empty />}
       style={{ width: "100%", height: 40 }}
-      onChange={(event: any, option) => {
-        setQuery((state) => ({ ...state, name: event }));
+      onChange={(event: any, option: any) => {
+        setQuery((state) => ({ ...state, name: option.label }));
       }}
       onSelect={(value) =>
         setBody((state: any) => ({ ...state, group_id: value }))
