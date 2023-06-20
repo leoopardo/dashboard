@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
 import { Grid } from "@mui/material";
-import { Button, Input } from "antd";
+import { Alert, Button, Input } from "antd";
+import React, { useEffect, useState } from "react";
 import { FilterChips } from "@components/FiltersModal/filterChips";
 import { useTranslation } from "react-i18next";
 import { useGetRowsOrganizationUsers } from "@services/register/organization/users/getUsers";
@@ -12,7 +12,7 @@ import {
   CustomTable,
 } from "@components/CustomTable";
 import useDebounce from "@utils/useDebounce";
-import { UserAddOutlined } from "@ant-design/icons";
+import { EditOutlined, UserAddOutlined } from "@ant-design/icons";
 import { NewUserModal } from "./components/newUserModal";
 
 const INITIAL_QUERY: OrganizationUserQuery = {

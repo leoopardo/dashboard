@@ -7,8 +7,8 @@ import React, {
   useEffect,
 } from "react";
 import { useTranslation } from "react-i18next";
-import { GroupSelect } from "@components/Selects/groupSelect";
-import { useCreateOrganizationUser } from "@services/register/organization/users/createUset";
+import { GroupSelect } from "../../../../../../../components/Selects/groupSelect";
+import { useCreateOrganizationUser } from "@services/register/organization/users/createUser";
 import { toast } from "react-hot-toast";
 
 interface NewuserModalprops {
