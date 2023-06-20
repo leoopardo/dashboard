@@ -26,7 +26,7 @@ export const MerchantSelect = ({
   useEffect(() => {
     setValue(
       merchantsData?.items.find(
-        (partner) => partner.id === queryOptions.merchant_id
+        (merchant) => merchant.id === queryOptions.merchant_id
       )?.name
     );
   }, [merchantsData, queryOptions]);

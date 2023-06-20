@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Grid } from "@mui/material";
 import { Button, Input } from "antd";
 import { FilterChips } from "@components/FiltersModal/filterChips";
 import { useTranslation } from "react-i18next";
-import { useGetRowsOrganizationUsers } from "@services/register/organization/users/getUsers";
+import { useGetRowsMerchantUsers } from "@services/register/merchant/users/getUsers";
 import { OrganizationUserQuery } from "@services/types/organizationUsers.interface";
 import { FiltersModal } from "@components/FiltersModal";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
@@ -22,15 +22,14 @@ const INITIAL_QUERY: OrganizationUserQuery = {
   sort_order: "DESC",
 };
 
-export const OrganizationUser = () => {
+export const MerchantUser = () => {
   const [query, setQuery] = useState<OrganizationUserQuery>(INITIAL_QUERY);
   const { t } = useTranslation();
   const { UsersData, UsersDataError, isUsersDataFetching, refetchUsersData } =
-    useGetRowsOrganizationUsers(query);
+    useGetRowsMerchantUsers(query);
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [isNewUserModal, setIsNewUserModal] = useState(false);
-  const [currentItem, setCurrentItem] = useState<any>(null);
-  const [editId, setEditId] = useState<string | null>(null);
+  const [currentItem, setCurrentItem] = useState(null);
   const [search, setSearch] = useState<string>("");
   const debounceSearch = useDebounce(search);
 
@@ -39,6 +38,7 @@ export const OrganizationUser = () => {
     { name: "name", type: "text" },
     { name: "group_id", type: "text" },
     { name: "email", type: "text" },
+    { name: "last_signin_date", type: "date" },
     { name: "created_at", type: "date" },
   ];
 
@@ -137,21 +137,10 @@ export const OrganizationUser = () => {
 
       <Grid container style={{ marginTop: "15px" }}>
         <Grid item xs={12}>
-          {" "}
           <CustomTable
             query={query}
             setCurrentItem={setCurrentItem}
             setQuery={setQuery}
-            actions={[
-              {
-                label: "edit",
-                icon: <EditOutlined style={{ fontSize: "20px" }} />,
-                onClick: () => {
-                  setIsNewUserModal(true);
-                  setEditId(currentItem?.id);
-                },
-              },
-            ]}
             data={UsersData}
             items={UsersData?.items}
             error={UsersDataError}
@@ -184,12 +173,7 @@ export const OrganizationUser = () => {
         />
       )}
       {isNewUserModal && (
-        <NewUserModal
-          open={isNewUserModal}
-          setOpen={setIsNewUserModal}
-          currentUser={currentItem}
-          setCurrentUser={setCurrentItem}
-        />
+        <NewUserModal open={isNewUserModal} setOpen={setIsNewUserModal} />
       )}
     </Grid>
   );
