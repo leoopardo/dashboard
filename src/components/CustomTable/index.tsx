@@ -309,7 +309,6 @@ export const CustomTable = (props: TableProps) => {
               : props?.data?.limit > props?.items?.length
               ? props?.items?.length
               : props?.data?.limit * props?.data?.page + 1,
-
             onChange: (page) => {
               props.setQuery((state: any) => ({ ...state, page }));
             },
@@ -338,6 +337,7 @@ export const CustomTable = (props: TableProps) => {
           setCurrentItem={props.setCurrentItem}
         />
       </Grid>
+      <Pagination current={Number(props?.data?.page)} pageSize={Number(props?.data?.limit)} />
     </Grid>
   );
 };

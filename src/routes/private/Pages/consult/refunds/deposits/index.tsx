@@ -10,7 +10,7 @@ import {
   CustomTable,
 } from "../../../../../../components/CustomTable";
 import { ViewModal } from "../components/ViewModal";
-import { SearchOutlined } from "@ant-design/icons";
+import { EyeFilled, SearchOutlined } from "@ant-design/icons";
 import { FiltersModal } from "../../../../../../components/FiltersModal";
 import { useTranslation } from "react-i18next";
 import useDebounce from "../../../../../../utils/useDebounce";
@@ -69,7 +69,7 @@ export const RefundDeposits = () => {
     { name: "delivered_at", type: "date" },
     { name: "buyer_name", type: "text" },
     { name: "buyer_document", type: "document" },
-    { name: "status", type: "document" },
+    { name: "status", type: "status" },
   ];
 
   useEffect(() => {
@@ -208,8 +208,12 @@ export const RefundDeposits = () => {
             items={refundDepositsRows?.items}
             columns={columns}
             loading={isRefundDepositsRowsFetching}
-            setViewModalOpen={setIsViewModalOpen}
             actions={[
+              // {
+              //   label: "details",
+              //   icon: <EyeFilled style={{ fontSize: "18px" }} />,
+              //   onClick: () => setIsViewModalOpen(true),
+              // },
               {
                 label: "refund",
                 icon: <ReplayIcon style={{ fontSize: "18px" }} />,
@@ -217,11 +221,6 @@ export const RefundDeposits = () => {
                 disabled: ["WAITING", "ERROR"].includes(currentItem?.status),
               },
             ]}
-            setRefundOpen={
-              ["WAITING", "ERROR"].includes(currentItem?.status)
-                ? setIsRefundModalOpen
-                : null
-            }
             removeTotal
             label={[
               "bank",

@@ -70,7 +70,7 @@ export const UndeliveredDeposits = () => {
     { name: "delivered_at", type: "date" },
     { name: "buyer_name", type: "text" },
     { name: "buyer_document", type: "document" },
-    { name: "status", type: "document" },
+    { name: "status", type: "status" },
   ];
 
   useEffect(() => {

@@ -70,6 +70,7 @@
   },
 
   "messages": {
+    "loading": "Loading...",
     "page_not_found": "Page not found",
     "empty_table_data": "No records found, review search criteria."
   },

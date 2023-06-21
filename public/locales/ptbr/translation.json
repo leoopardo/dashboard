@@ -72,6 +72,7 @@
   },
 
   "messages": {
+    "loading": "Carregando...",
     "page_not_found": "Página não encontrada",
     "empty_table_data": "Nenhum registro encontrado, revise os critérios de pesquisa."
   },

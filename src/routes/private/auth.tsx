@@ -2,19 +2,21 @@ import { Spin } from "antd";
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { Outlet, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export const Auth = () => {
+  const { t } = useTranslation();
   const [element, setElement] = useState<any>(
     <div
       style={{
-        width: "100vw",
-        height: "100vh",
+        width: "80vw",
+        height: "93vh",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
       }}
     >
-      <Spin tip="Loading" size="large">
+      <Spin tip={t("messages.loading")} size="large">
         <div className="content" />
       </Spin>
     </div>

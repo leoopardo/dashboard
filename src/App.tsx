@@ -11,15 +11,27 @@ import { SidebarNavigation } from "./components/SideBarNavigation/index.tsx";
 import { useMenu } from "./contexts/SidebarContext/index.tsx";
 import { useMediaQuery } from "react-responsive";
 import { PageHeader } from "./components/PageHeader/index.tsx";
-import { I18nextProvider } from "react-i18next";
+import { I18nextProvider, useTranslation } from "react-i18next";
 import i18n from "./i18n";
 import { Toaster } from "react-hot-toast";
 
+const Logo = import.meta.env.VITE_APP_ICON;
+
 function App() {
   const { signInByStorage, signOut, token, user } = useAuth();
+  const { t } = useTranslation();
   const isMobile = useMediaQuery({ maxWidth: "900px" });
   const { isSidebarOpen } = useMenu();
   const { Content } = Layout;
+  const [isIconSet, setIsIconSet] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (!isIconSet) {
+      const link: any = document.querySelector("link[rel~='icon']");
+      link.href = Logo;
+      setIsIconSet(true);
+    }
+  }, [isIconSet]);
 
   const [element, setElement] = useState(
     <div
@@ -31,7 +43,7 @@ function App() {
         alignItems: "center",
       }}
     >
-      <Spin tip="Loading" size="large">
+      <Spin tip={t("messages.loading")} size="large">
         <div className="content" />
       </Spin>
     </div>

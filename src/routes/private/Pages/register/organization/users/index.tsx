@@ -14,8 +14,8 @@ import {
 import useDebounce from "@utils/useDebounce";
 import { EditOutlined, UserAddOutlined } from "@ant-design/icons";
 import { NewUserInterface, NewUserModal } from "./components/newUserModal";
-import { ValidateToken } from "../../../../../../components/ValidateToken";
-import { useUpdateOrganizationUser } from "../../../../../../services/register/organization/users/updateUser";
+import { ValidateToken } from "@components/ValidateToken";
+import { useUpdateOrganizationUser } from "@services/register/organization/users/updateUser";
 
 const INITIAL_QUERY: OrganizationUserQuery = {
   limit: 25,
@@ -90,8 +90,8 @@ export const OrganizationUser = () => {
         </Grid>
         <Grid item xs={12} md={8} lg={10}>
           <FilterChips
-            startDateKeyName="initial_date"
-            endDateKeyName="final_date"
+            startDateKeyName="start_date"
+            endDateKeyName="end_date"
             query={query}
             setQuery={setQuery}
             haveInitialDate

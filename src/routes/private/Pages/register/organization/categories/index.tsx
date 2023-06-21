@@ -1,18 +1,18 @@
 import { Grid } from "@mui/material";
 import { Alert, Button, Input } from "antd";
 import React, { useEffect, useState } from "react";
-import { FilterChips } from "../../../../../../components/FiltersModal/filterChips";
+import { FilterChips } from "@components/FiltersModal/filterChips";
 import { useTranslation } from "react-i18next";
-import { FiltersModal } from "../../../../../../components/FiltersModal";
+import { FiltersModal } from "@components/FiltersModal";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import {
   ColumnInterface,
   CustomTable,
-} from "../../../../../../components/CustomTable";
-import useDebounce from "../../../../../../utils/useDebounce";
+} from "@components/CustomTable";
+import useDebounce from "@utils/useDebounce";
 import { EditOutlined, UserAddOutlined } from "@ant-design/icons";
-import { useGetOrganizationCategories } from "../../../../../../services/register/organization/categories/getCategories";
-import { OrganizationCategoriesQuery } from "../../../../../../services/types/organizationCategories.interface";
+import { useGetOrganizationCategories } from "@services/register/organization/categories/getCategories";
+import { OrganizationCategoriesQuery } from "@services/types/organizationCategories.interface";
 
 const INITIAL_QUERY: OrganizationCategoriesQuery = {
   limit: 25,
