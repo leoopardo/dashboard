@@ -216,14 +216,22 @@ export const CustomTable = (props: TableProps) => {
               ),
               key: column.name,
               dataIndex: column.name,
-              render: (text: string) => (
-                <p
-                  key={column.name}
-                  style={{ width: "100%", textAlign: "center" }}
-                >
-                  {t(`table.${text.toLocaleLowerCase()}`)}
-                </p>
-              ),
+              render: (text: string) =>
+                typeof text === "boolean" ? (
+                  <p
+                    key={column.name}
+                    style={{ width: "100%", textAlign: "center" }}
+                  >
+                    {text ? t("table.active") : t("table.inactive")}
+                  </p>
+                ) : (
+                  <p
+                    key={column.name}
+                    style={{ width: "100%", textAlign: "center" }}
+                  >
+                    {t(`table.${text.toLocaleLowerCase()}`)}
+                  </p>
+                ),
             };
 
           case "action":

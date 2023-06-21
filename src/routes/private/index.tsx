@@ -11,6 +11,7 @@ import { UndeliveredWithdrawals } from "./Pages/consult/withdrawals/undelivered"
 import { RefundDeposits } from "./Pages/consult/refunds/deposits";
 import { OrganizationUser } from "./Pages/register/organization/users";
 import { Auth } from "./auth";
+import { OrganizationCategories } from "./Pages/register/organization/categories";
 
 export const PrivateRoutes = () => {
   const navigate = useNavigate();
@@ -50,6 +51,7 @@ export const PrivateRoutes = () => {
         <Route path="register">
           <Route path="organization">
             <Route path="users" element={<OrganizationUser />} />
+            <Route path="categories" element={<OrganizationCategories />} />
           </Route>
         </Route>
       </Route>

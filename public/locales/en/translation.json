@@ -83,7 +83,9 @@
   },
   "buttons": {
     "create": "Create",
-    "new_user": "new user"
+    "new_user": "new user",
+    "update_user": "Update user",
+    "new_categorie": "new categorie"
   },
   "input": {
     "required": "Please input your {{field}}",
@@ -98,6 +100,13 @@
     "email": "email",
     "group": "group",
     "password": "password"
+  },
+  "modal": {
+    "confirm": "Confirm",
+    "validate_token": "Validate token",
+    "token_expires_in": "Token expires in",
+    "resend_token_by_sms": "Resend token by SMS",
+    "validate_phone_number": "Validar número de telefone"
   },
   "table": {
     "id": "ID",
@@ -201,7 +210,11 @@
     "true": "Yes",
     "false": "No",
     "group": "Group",
-    "password": "Password"
+    "password": "Password",
+    "sort_field": "Sort field",
+    "sort_order": "Sort order",
+    "active": "Ativo",
+    "inactive": "Inativo"
   },
   "actions": {
     "details": "Details",

@@ -85,7 +85,16 @@
   },
   "buttons": {
     "create": "Criar",
-    "new_user": "novo usuário"
+    "new_user": "novo usuário",
+    "update_user": "Atualizar usuário",
+    "new_categorie": "nova categoria"
+  },
+  "modal": {
+    "confirm": "Confirmar",
+    "validate_token": "Validar token",
+    "token_expires_in": "Token expira em",
+    "resend_token_by_sms": "Reenviar token por SMS",
+    "validate_phone_number": "Validate phone number"
   },
   "input": {
     "required": "Por favor, insira seu {{field}}",
@@ -203,7 +212,11 @@
     "true": "Sim",
     "false": "Não",
     "group": "Grupo",
-    "password": "Senha"
+    "password": "Senha",
+    "sort_field": "Campo de ordenação",
+    "sort_order": "Ordem",
+    "active": "Ativo",
+    "inactive": "Inativo"
   },
   "actions": {
     "details": "Detalhes",

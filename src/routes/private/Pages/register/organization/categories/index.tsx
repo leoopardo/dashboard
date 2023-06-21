@@ -3,8 +3,6 @@ import { Alert, Button, Input } from "antd";
 import React, { useEffect, useState } from "react";
 import { FilterChips } from "../../../../../../components/FiltersModal/filterChips";
 import { useTranslation } from "react-i18next";
-import { useGetRowsOrganizationUsers } from "../../../../../../services/register/organization/users/getUsers";
-import { OrganizationUserQuery } from "../../../../../../services/types/organizationUsers.interface";
 import { FiltersModal } from "../../../../../../components/FiltersModal";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import {
@@ -13,50 +11,45 @@ import {
 } from "../../../../../../components/CustomTable";
 import useDebounce from "../../../../../../utils/useDebounce";
 import { EditOutlined, UserAddOutlined } from "@ant-design/icons";
-import { NewUserInterface, NewUserModal } from "./components/newUserModal";
-import { ValidateToken } from "../../../../../../components/ValidateToken";
-import { useUpdateOrganizationUser } from "../../../../../../services/register/organization/users/updateUser";
+import { useGetOrganizationCategories } from "../../../../../../services/register/organization/categories/getCategories";
+import { OrganizationCategoriesQuery } from "../../../../../../services/types/organizationCategories.interface";
 
-const INITIAL_QUERY: OrganizationUserQuery = {
+const INITIAL_QUERY: OrganizationCategoriesQuery = {
   limit: 25,
   page: 1,
   sort_field: "created_at",
   sort_order: "DESC",
 };
 
-export const OrganizationUser = () => {
-  const [query, setQuery] = useState<OrganizationUserQuery>(INITIAL_QUERY);
+export const OrganizationCategories = () => {
+  const [query, setQuery] =
+    useState<OrganizationCategoriesQuery>(INITIAL_QUERY);
   const { t } = useTranslation();
-  const { UsersData, UsersDataError, isUsersDataFetching, refetchUsersData } =
-    useGetRowsOrganizationUsers(query);
+
+  const {
+    CategoriesData,
+    CategoriesDataError,
+    isCategoriesDataFetching,
+    refetchCategoriesData,
+  } = useGetOrganizationCategories(query);
+
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
-  const [isNewUserModal, setIsNewUserModal] = useState(false);
+  const [isNewCategorieModal, setIsNewCategorieModal] = useState(false);
   const [currentItem, setCurrentItem] = useState<any>(null);
   const [editId, setEditId] = useState<string | null>(null);
   const [search, setSearch] = useState<string>("");
   const debounceSearch = useDebounce(search);
-  const [updateUserBody, setUpdateUserBody] = useState<NewUserInterface | null>(
-    null
-  );
-  const [isValidateTokenOpen, setIsValidateTokenOpen] =
-    useState<boolean>(false);
-  const [tokenState, setTokenState] = useState<string>("");
-  const { updateSuccess, updateError, updateMutate } =
-    useUpdateOrganizationUser({
-      ...updateUserBody,
-      validation_token: tokenState,
-    });
 
   const columns: ColumnInterface[] = [
     { name: "id", type: "id" },
     { name: "name", type: "text" },
-    { name: "group_id", type: "text" },
-    { name: "email", type: "text" },
+    { name: "description", type: "text" },
+    { name: "status", type: "status" },
     { name: "created_at", type: "date" },
   ];
 
   useEffect(() => {
-    refetchUsersData();
+    refetchCategoriesData();
   }, [query]);
 
   useEffect(() => {
@@ -68,9 +61,6 @@ export const OrganizationUser = () => {
     setQuery((state) => ({ ...state, name: debounceSearch }));
   }, [debounceSearch]);
 
-  const handleUpdateTokenValidate = () => {
-    updateMutate();
-  };
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid
@@ -81,7 +71,7 @@ export const OrganizationUser = () => {
         <Grid item xs={12} md={4} lg={2}>
           <Button
             style={{ width: "100%", height: 40 }}
-            loading={isUsersDataFetching}
+            loading={isCategoriesDataFetching}
             type="primary"
             onClick={() => setIsFiltersOpen(true)}
           >
@@ -112,7 +102,7 @@ export const OrganizationUser = () => {
         <Grid item xs={12} md={3} lg={2}>
           <Button
             type="dashed"
-            loading={isUsersDataFetching}
+            loading={isCategoriesDataFetching}
             danger
             onClick={() => {
               setQuery(INITIAL_QUERY);
@@ -133,9 +123,9 @@ export const OrganizationUser = () => {
         <Grid item xs={12} md={3} lg={2}>
           <Button
             type="primary"
-            loading={isUsersDataFetching}
+            loading={isCategoriesDataFetching}
             onClick={() => {
-              setIsNewUserModal(true);
+              setIsNewCategorieModal(true);
             }}
             style={{
               height: 40,
@@ -146,7 +136,7 @@ export const OrganizationUser = () => {
             }}
           >
             <UserAddOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
-            {`${t("buttons.create")} ${t("buttons.new_user")}`}
+            {`${t("buttons.create")} ${t("buttons.new_categorie")}`}
           </Button>
         </Grid>
       </Grid>
@@ -163,17 +153,17 @@ export const OrganizationUser = () => {
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
                 onClick: () => {
-                  setIsNewUserModal(true);
+                  setIsNewCategorieModal(true);
                   setEditId(currentItem?.id);
                 },
               },
             ]}
-            data={UsersData}
-            items={UsersData?.items}
-            error={UsersDataError}
+            data={CategoriesData}
+            items={CategoriesData?.items}
+            error={CategoriesDataError}
             columns={columns}
-            loading={isUsersDataFetching}
-            label={["name", "username"]}
+            loading={isCategoriesDataFetching}
+            label={["name", "description"]}
           />
         </Grid>
       </Grid>
@@ -185,41 +175,12 @@ export const OrganizationUser = () => {
           query={query}
           setQuery={setQuery}
           haveInitialDate
-          filters={[
-            "start_date",
-            "end_date",
-            "status",
-            "partner_id",
-            "merchant_id",
-          ]}
-          refetch={refetchUsersData}
-          selectOptions={{}}
+          filters={["start_date", "end_date", "status"]}
+          refetch={refetchCategoriesData}
+          selectOptions={{ status: ["true", "false"] }}
           startDateKeyName="start_date"
           endDateKeyName="end_date"
           initialQuery={INITIAL_QUERY}
-        />
-      )}
-      {isNewUserModal && (
-        <NewUserModal
-          open={isNewUserModal}
-          setOpen={setIsNewUserModal}
-          currentUser={currentItem}
-          setCurrentUser={setCurrentItem}
-          setUpdateBody={setUpdateUserBody}
-          setIsValidateTokenOpen={setIsValidateTokenOpen}
-        />
-      )}
-      {isValidateTokenOpen && (
-        <ValidateToken
-          action="USER_UPDATE"
-          body={updateUserBody}
-          open={isValidateTokenOpen}
-          setIsOpen={setIsValidateTokenOpen}
-          setTokenState={setTokenState}
-          tokenState={tokenState}
-          success={updateSuccess}
-          error={updateError}
-          submit={handleUpdateTokenValidate}
         />
       )}
     </Grid>

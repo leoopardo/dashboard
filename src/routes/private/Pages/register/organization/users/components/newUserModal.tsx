@@ -11,12 +11,14 @@ import { GroupSelect } from "../../../../../../../components/Selects/groupSelect
 import { useCreateOrganizationUser } from "../../../../../../../services/register/organization/users/createUser";
 import { toast } from "react-hot-toast";
 import { OrganizationUserItem } from "../../../../../../../services/types/organizationUsers.interface";
-
+import { useUpdateOrganizationUser } from "../../../../../../../services/register/organization/users/updateUser";
 interface NewuserModalprops {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   currentUser?: OrganizationUserItem | null;
-  setCurrentUser?: Dispatch<SetStateAction<any>>;
+  setCurrentUser?: Dispatch<SetStateAction<NewUserInterface | null>>;
+  setUpdateBody?: Dispatch<SetStateAction<NewUserInterface | null>>;
+  setIsValidateTokenOpen?: Dispatch<SetStateAction<boolean>>;
 }
 
 export interface NewUserInterface {
@@ -38,12 +40,15 @@ export const NewUserModal = ({
   setOpen,
   currentUser,
   setCurrentUser,
+  setUpdateBody,
+  setIsValidateTokenOpen,
 }: NewuserModalprops) => {
   const { t } = useTranslation();
   const submitRef = useRef<HTMLButtonElement>(null);
   const formRef = React.useRef<FormInstance>(null);
   const [confirmPassword, setConfirmPassword] = useState<string>("");
-
+  const [form] = Form.useForm();
+  const [cantSubmit, setCantSubmit] = useState<boolean>(true);
   const [body, setBody] = useState<NewUserInterface>({
     name: "",
     username: "",
@@ -55,6 +60,8 @@ export const NewUserModal = ({
 
   const { mutate, error, isLoading, isSuccess } =
     useCreateOrganizationUser(body);
+  const { updateError, updateLoading, updateMutate, updateSuccess } =
+    useUpdateOrganizationUser(body);
 
   function handleChangeUserBody(event: any) {
     setBody((state) => ({ ...state, [event.target.name]: event.target.value }));
@@ -62,6 +69,18 @@ export const NewUserModal = ({
 
   function CreateUser(event: any) {
     event.preventDefault();
+    if (
+      currentUser &&
+      setUpdateBody &&
+      setIsValidateTokenOpen &&
+      setCurrentUser
+    ) {
+      setUpdateBody(body);
+      setCurrentUser(null);
+      setIsValidateTokenOpen(true);
+      setOpen(false);
+      return;
+    }
     mutate();
   }
 
@@ -76,11 +95,24 @@ export const NewUserModal = ({
   }, [isSuccess, error]);
 
   useEffect(() => {
+    if (updateSuccess) {
+      setOpen(false);
+      toast.success("Usuário atualizado com sucesso!");
+    }
+    if (updateError) {
+      toast.error("Erro ao atualizar usuário, tente novamente!");
+    }
+  }, [updateError, updateSuccess]);
+
+  useEffect(() => {
     if (currentUser)
       setBody((state) => ({
         ...state,
+        name: currentUser.name,
         group_id: currentUser.group_id,
         user_id: currentUser.id,
+        status: currentUser.status,
+        username: currentUser.username,
       }));
   }, [currentUser]);
 
@@ -93,10 +125,11 @@ export const NewUserModal = ({
         if (setCurrentUser) setCurrentUser(null);
       }}
       bodyStyle={{ overflowX: "hidden" }}
-      title={t("buttons.new_user")}
+      title={currentUser ? t("buttons.update_user") : t("buttons.new_user")}
       footer={
         <Button
-          loading={isLoading}
+          disabled={currentUser ? false : cantSubmit}
+          loading={currentUser ? updateLoading : isLoading}
           type="primary"
           style={{ width: "100%" }}
           size="large"
@@ -119,7 +152,7 @@ export const NewUserModal = ({
             type: 2,
           }
         }
-        disabled={isLoading}
+        disabled={currentUser ? updateLoading : isLoading}
         onSubmitCapture={
           body.name && body.username && body.group_id && body.password
             ? CreateUser
@@ -172,7 +205,7 @@ export const NewUserModal = ({
           style={{ margin: 10 }}
           rules={[
             {
-              pattern: /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/,
+              pattern: /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{4}[-\s.]?[0-9]{4,6}$/,
               message:
                 t("input.invalid", {
                   field: t("input.number"),
@@ -232,6 +265,7 @@ export const NewUserModal = ({
           label={t(`table.password`)}
           name="password"
           style={{ margin: 10 }}
+          dependencies={["confirmPasswprd"]}
           hasFeedback
           rules={[
             {
@@ -240,6 +274,16 @@ export const NewUserModal = ({
                 t("input.required(a)", { field: t("input.password") }) || "",
             },
             { min: 8, message: t("input.min_of", { min: 8 }) || "" },
+            ({ getFieldValue }) => ({
+              validator(_, value) {
+                if (!value || getFieldValue("confirmPasswprd") === value) {
+                  setCantSubmit(false);
+                  return Promise.resolve();
+                }
+                setCantSubmit(true);
+                return Promise.reject(new Error(t("input.doest_match") || ""));
+              },
+            }),
           ]}
         >
           <Input.Password
@@ -253,17 +297,20 @@ export const NewUserModal = ({
         <Form.Item
           label={t(`table.password`)}
           name="confirmPasswprd"
+          dependencies={["password"]}
           style={{ margin: 10 }}
           rules={[
             {
               required: true,
               message: t("input.confirm_password") || "",
             },
-            ({ getFieldValue: any }) => ({
-              validator(_: any, value: string) {
-                if (!value || body.password === value) {
+            ({ getFieldValue }) => ({
+              validator(_, value) {
+                if (!value || getFieldValue("password") === value) {
+                  setCantSubmit(false);
                   return Promise.resolve();
                 }
+                setCantSubmit(true);
                 return Promise.reject(new Error(t("input.doest_match") || ""));
               },
             }),
