@@ -10,6 +10,7 @@ import { PaidWithdrawals } from "./Pages/consult/withdrawals/paid";
 import { UndeliveredWithdrawals } from "./Pages/consult/withdrawals/undelivered";
 import { RefundDeposits } from "./Pages/consult/refunds/deposits";
 import { OrganizationUser } from "./Pages/register/organization/users";
+import { MerchantUser } from "./Pages/register/merchant/users";
 import { Auth } from "./auth";
 import { OrganizationCategories } from "./Pages/register/organization/categories";
 
@@ -52,6 +53,9 @@ export const PrivateRoutes = () => {
           <Route path="organization">
             <Route path="users" element={<OrganizationUser />} />
             <Route path="categories" element={<OrganizationCategories />} />
+          </Route>
+          <Route path="merchant">
+            <Route path="merchant_users" element={<MerchantUser />} />
           </Route>
         </Route>
       </Route>

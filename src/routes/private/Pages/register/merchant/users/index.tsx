@@ -1,9 +1,9 @@
+import { useEffect, useState } from "react";
 import { Grid } from "@mui/material";
-import { Alert, Button, Input } from "antd";
-import React, { useEffect, useState } from "react";
+import { Button, Input } from "antd";
 import { FilterChips } from "@components/FiltersModal/filterChips";
 import { useTranslation } from "react-i18next";
-import { useGetRowsOrganizationUsers } from "@services/register/organization/users/getUsers";
+import { useGetRowsMerchantUsers } from "@services/register/merchant/users/getUsers";
 import { OrganizationUserQuery } from "@services/types/organizationUsers.interface";
 import { FiltersModal } from "@components/FiltersModal";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
@@ -12,10 +12,8 @@ import {
   CustomTable,
 } from "@components/CustomTable";
 import useDebounce from "@utils/useDebounce";
-import { EditOutlined, UserAddOutlined } from "@ant-design/icons";
-import { NewUserInterface, NewUserModal } from "./components/newUserModal";
-import { ValidateToken } from "../../../../../../components/ValidateToken";
-import { useUpdateOrganizationUser } from "../../../../../../services/register/organization/users/updateUser";
+import { UserAddOutlined } from "@ant-design/icons";
+import { NewUserModal } from "./components/newUserModal";
 
 const INITIAL_QUERY: OrganizationUserQuery = {
   limit: 25,
@@ -24,34 +22,23 @@ const INITIAL_QUERY: OrganizationUserQuery = {
   sort_order: "DESC",
 };
 
-export const OrganizationUser = () => {
+export const MerchantUser = () => {
   const [query, setQuery] = useState<OrganizationUserQuery>(INITIAL_QUERY);
   const { t } = useTranslation();
   const { UsersData, UsersDataError, isUsersDataFetching, refetchUsersData } =
-    useGetRowsOrganizationUsers(query);
+    useGetRowsMerchantUsers(query);
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [isNewUserModal, setIsNewUserModal] = useState(false);
-  const [currentItem, setCurrentItem] = useState<any>(null);
-  const [editId, setEditId] = useState<string | null>(null);
+  const [currentItem, setCurrentItem] = useState(null);
   const [search, setSearch] = useState<string>("");
   const debounceSearch = useDebounce(search);
-  const [updateUserBody, setUpdateUserBody] = useState<NewUserInterface | null>(
-    null
-  );
-  const [isValidateTokenOpen, setIsValidateTokenOpen] =
-    useState<boolean>(false);
-  const [tokenState, setTokenState] = useState<string>("");
-  const { updateSuccess, updateError, updateMutate } =
-    useUpdateOrganizationUser({
-      ...updateUserBody,
-      validation_token: tokenState,
-    });
 
   const columns: ColumnInterface[] = [
     { name: "id", type: "id" },
     { name: "name", type: "text" },
     { name: "group_id", type: "text" },
     { name: "email", type: "text" },
+    { name: "last_signin_date", type: "date" },
     { name: "created_at", type: "date" },
   ];
 
@@ -68,9 +55,6 @@ export const OrganizationUser = () => {
     setQuery((state) => ({ ...state, name: debounceSearch }));
   }, [debounceSearch]);
 
-  const handleUpdateTokenValidate = () => {
-    updateMutate();
-  };
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid
@@ -153,21 +137,10 @@ export const OrganizationUser = () => {
 
       <Grid container style={{ marginTop: "15px" }}>
         <Grid item xs={12}>
-          {" "}
           <CustomTable
             query={query}
             setCurrentItem={setCurrentItem}
             setQuery={setQuery}
-            actions={[
-              {
-                label: "edit",
-                icon: <EditOutlined style={{ fontSize: "20px" }} />,
-                onClick: () => {
-                  setIsNewUserModal(true);
-                  setEditId(currentItem?.id);
-                },
-              },
-            ]}
             data={UsersData}
             items={UsersData?.items}
             error={UsersDataError}
@@ -200,27 +173,7 @@ export const OrganizationUser = () => {
         />
       )}
       {isNewUserModal && (
-        <NewUserModal
-          open={isNewUserModal}
-          setOpen={setIsNewUserModal}
-          currentUser={currentItem}
-          setCurrentUser={setCurrentItem}
-          setUpdateBody={setUpdateUserBody}
-          setIsValidateTokenOpen={setIsValidateTokenOpen}
-        />
-      )}
-      {isValidateTokenOpen && (
-        <ValidateToken
-          action="USER_UPDATE"
-          body={updateUserBody}
-          open={isValidateTokenOpen}
-          setIsOpen={setIsValidateTokenOpen}
-          setTokenState={setTokenState}
-          tokenState={tokenState}
-          success={updateSuccess}
-          error={updateError}
-          submit={handleUpdateTokenValidate}
-        />
+        <NewUserModal open={isNewUserModal} setOpen={setIsNewUserModal} />
       )}
     </Grid>
   );
