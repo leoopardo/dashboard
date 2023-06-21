@@ -22,7 +22,7 @@ export const PrivateRoutes = () => {
       <Route path="/login" element={<Redirect />} />
       <Route path="*" element={<NotFount />} />
 
-      <Route path="/" element={<Auth />}>
+      <Route path="/">
         <Route index element={<Redirect />} />
         <Route path="consult">
           <Route path="deposit">

@@ -7,15 +7,13 @@ import { useGetRowsOrganizationUsers } from "@services/register/organization/use
 import { OrganizationUserQuery } from "@services/types/organizationUsers.interface";
 import { FiltersModal } from "@components/FiltersModal";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
-import {
-  ColumnInterface,
-  CustomTable,
-} from "@components/CustomTable";
+import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import useDebounce from "@utils/useDebounce";
-import { EditOutlined, UserAddOutlined } from "@ant-design/icons";
+import { EditOutlined, EyeFilled, UserAddOutlined } from "@ant-design/icons";
 import { NewUserInterface, NewUserModal } from "./components/newUserModal";
 import { ValidateToken } from "@components/ValidateToken";
 import { useUpdateOrganizationUser } from "@services/register/organization/users/updateUser";
+import { ViewModal } from "@src/components/Modals/viewGenericModal";
 
 const INITIAL_QUERY: OrganizationUserQuery = {
   limit: 25,
@@ -29,10 +27,10 @@ export const OrganizationUser = () => {
   const { t } = useTranslation();
   const { UsersData, UsersDataError, isUsersDataFetching, refetchUsersData } =
     useGetRowsOrganizationUsers(query);
-  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
-  const [isNewUserModal, setIsNewUserModal] = useState(false);
+  const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
+  const [isNewUserModal, setIsNewUserModal] = useState<boolean>(false);
+  const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<any>(null);
-  const [editId, setEditId] = useState<string | null>(null);
   const [search, setSearch] = useState<string>("");
   const debounceSearch = useDebounce(search);
   const [updateUserBody, setUpdateUserBody] = useState<NewUserInterface | null>(
@@ -160,11 +158,17 @@ export const OrganizationUser = () => {
             setQuery={setQuery}
             actions={[
               {
+                label: "details",
+                icon: <EyeFilled style={{ fontSize: "20px" }} />,
+                onClick: () => {
+                  setIsViewModalOpen(true);
+                },
+              },
+              {
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
                 onClick: () => {
                   setIsNewUserModal(true);
-                  setEditId(currentItem?.id);
                 },
               },
             ]}
@@ -220,6 +224,15 @@ export const OrganizationUser = () => {
           success={updateSuccess}
           error={updateError}
           submit={handleUpdateTokenValidate}
+        />
+      )}
+      {isViewModalOpen && (
+        <ViewModal
+          item={currentItem}
+          loading={isUsersDataFetching}
+          modalName={`${t("modal.user")}: ${currentItem?.name}`}
+          open={isViewModalOpen}
+          setOpen={setIsViewModalOpen}
         />
       )}
     </Grid>

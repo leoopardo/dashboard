@@ -1,10 +1,12 @@
 import { Button, Drawer, Form, FormInstance, Input } from "antd";
-import React, { Dispatch, SetStateAction, useRef } from "react";
+import React, { Dispatch, SetStateAction, useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { MerchantSelect } from "../../Selects/merchantSelect";
 import { PartnerSelect } from "../../Selects/partnerSelect";
+import { toast } from "react-hot-toast";
 
-interface CreateProps {
+interface mutateProps {
+  type: "create" | "update";
   fields: { label: string; required: boolean }[];
   modalName: string;
   setBody: Dispatch<SetStateAction<any>>;
@@ -13,9 +15,12 @@ interface CreateProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
   submit: () => void;
   submitLoading: boolean;
+  success: boolean;
+  error: any;
 }
 
-export const Create = ({
+export const MutateModal = ({
+  type,
   body,
   fields,
   open,
@@ -24,17 +29,25 @@ export const Create = ({
   submit,
   modalName,
   submitLoading,
-}: CreateProps) => {
+  success,
+  error,
+}: mutateProps) => {
   const { t } = useTranslation();
   const formRef = useRef<FormInstance>(null);
   const submitRef = useRef<HTMLButtonElement>(null);
 
   const handleChange = (event: any) => {
+    console.log(event.target.name);
+
     setBody((state: any) => ({
       ...state,
       [event.target.name]: event.target.value,
     }));
   };
+
+  useEffect(() => {
+    setBody({});
+  }, []);
 
   return (
     <Drawer
@@ -57,7 +70,26 @@ export const Create = ({
         </Button>
       }
     >
-      <Form>
+      <Form
+        ref={formRef}
+        layout="vertical"
+        initialValues={body}
+        disabled={submitLoading}
+        onSubmitCapture={() => {
+          submit();
+          if (success) {
+            setOpen(false);
+            toast.success(
+              t("messages.action_success", { type: t(`messages.${type}d`) })
+            );
+          }
+          if (error) {
+            toast.error(
+              t("messages.action_error", { type: t(`messages.${type}`) })
+            );
+          }
+        }}
+      >
         {fields.map((field) => {
           switch (field.label) {
             case "merchant":
@@ -119,7 +151,7 @@ export const Create = ({
                 >
                   <Input
                     size="large"
-                    name="name"
+                    name={field.label}
                     value={body[field.label]}
                     onChange={handleChange}
                   />

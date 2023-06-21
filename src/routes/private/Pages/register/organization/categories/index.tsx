@@ -5,14 +5,17 @@ import { FilterChips } from "@components/FiltersModal/filterChips";
 import { useTranslation } from "react-i18next";
 import { FiltersModal } from "@components/FiltersModal";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
-import {
-  ColumnInterface,
-  CustomTable,
-} from "@components/CustomTable";
+import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import useDebounce from "@utils/useDebounce";
-import { EditOutlined, UserAddOutlined } from "@ant-design/icons";
+import { EditOutlined, EyeFilled, UserAddOutlined } from "@ant-design/icons";
 import { useGetOrganizationCategories } from "@services/register/organization/categories/getCategories";
-import { OrganizationCategoriesQuery } from "@services/types/organizationCategories.interface";
+import {
+  OrganizationCategoriesItem,
+  OrganizationCategoriesQuery,
+} from "@services/types/organizationCategories.interface";
+import { MutateModal } from "@src/components/Modals/mutateGenericModal";
+import { useCreateOrganizationCategory } from "@src/services/register/organization/categories/createCategorie";
+import { ViewModal } from "@src/components/Modals/viewGenericModal";
 
 const INITIAL_QUERY: OrganizationCategoriesQuery = {
   limit: 25,
@@ -33,12 +36,21 @@ export const OrganizationCategories = () => {
     refetchCategoriesData,
   } = useGetOrganizationCategories(query);
 
-  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
-  const [isNewCategorieModal, setIsNewCategorieModal] = useState(false);
-  const [currentItem, setCurrentItem] = useState<any>(null);
-  const [editId, setEditId] = useState<string | null>(null);
+  const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
+  const [isNewCategorieModal, setIsNewCategorieModal] =
+    useState<boolean>(false);
+  const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
+  const [currentItem, setCurrentItem] =
+    useState<OrganizationCategoriesItem | null>(null);
   const [search, setSearch] = useState<string>("");
   const debounceSearch = useDebounce(search);
+  const [createBody, setCreateBody] = useState<{
+    name: string;
+    description: string;
+  }>({ name: "", description: "" });
+
+  const { isLoading, mutate, error, isSuccess } =
+    useCreateOrganizationCategory(createBody);
 
   const columns: ColumnInterface[] = [
     { name: "id", type: "id" },
@@ -150,11 +162,17 @@ export const OrganizationCategories = () => {
             setQuery={setQuery}
             actions={[
               {
+                label: "details",
+                icon: <EyeFilled style={{ fontSize: "20px" }} />,
+                onClick: () => {
+                  setIsViewModalOpen(true);
+                },
+              },
+              {
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
                 onClick: () => {
                   setIsNewCategorieModal(true);
-                  setEditId(currentItem?.id);
                 },
               },
             ]}
@@ -181,6 +199,34 @@ export const OrganizationCategories = () => {
           startDateKeyName="start_date"
           endDateKeyName="end_date"
           initialQuery={INITIAL_QUERY}
+        />
+      )}
+
+      {isNewCategorieModal && (
+        <MutateModal
+          type="create"
+          open={isNewCategorieModal}
+          setOpen={setIsNewCategorieModal}
+          fields={[
+            { label: "name", required: true },
+            { label: "description", required: true },
+          ]}
+          body={createBody}
+          setBody={setCreateBody}
+          modalName={t("modal.new_category")}
+          submit={mutate}
+          submitLoading={isLoading}
+          error={error}
+          success={isSuccess}
+        />
+      )}
+      {isViewModalOpen && (
+        <ViewModal
+          item={currentItem}
+          loading={isCategoriesDataFetching}
+          modalName={`${t("modal.category")}: ${currentItem?.name}`}
+          open={isViewModalOpen}
+          setOpen={setIsViewModalOpen}
         />
       )}
     </Grid>

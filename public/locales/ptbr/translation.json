@@ -74,7 +74,13 @@
   "messages": {
     "loading": "Carregando...",
     "page_not_found": "Página não encontrada",
-    "empty_table_data": "Nenhum registro encontrado, revise os critérios de pesquisa."
+    "empty_table_data": "Nenhum registro encontrado, revise os critérios de pesquisa.",
+    "action_success": "{{type}} com sucesso",
+    "action_error": "Erro ao {{type}} registro, revise os dados e tente novamente.",
+    "create": "criar",
+    "update": "atualizar",
+    "created": "Criado",
+    "updated": "Atualizado"
   },
   "login": {
     "sign_in": "Faça login",
@@ -95,7 +101,9 @@
     "validate_token": "Validar token",
     "token_expires_in": "Token expira em",
     "resend_token_by_sms": "Reenviar token por SMS",
-    "validate_phone_number": "Validate phone number"
+    "validate_phone_number": "Validate phone number",
+    "category": "Categoria",
+    "user": "Usuário"
   },
   "input": {
     "required": "Por favor, insira seu {{field}}",
@@ -217,7 +225,8 @@
     "sort_field": "Campo de ordenação",
     "sort_order": "Ordem",
     "active": "Ativo",
-    "inactive": "Inativo"
+    "inactive": "Inativo",
+    "organization_id": "ID da organização"
   },
   "actions": {
     "details": "Detalhes",
