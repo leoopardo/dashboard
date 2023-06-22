@@ -4,15 +4,15 @@ import { BreadcrumbComponent } from "../Breadcrumb";
 import { Avatar, Dropdown, MenuProps, Space } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
-import { useAuth } from "../../contexts/AuthContext";
 import brazil from "../../assets/brazil-.png";
 import eua from "../../assets/united-states.png";
 import { defaultTheme } from "../../styles/defaultTheme";
+import { useValidate } from "@src/services/siginIn/validate";
 
 export const PageHeader = () => {
   const isMobile = useMediaQuery({ maxWidth: "900px" });
   const { t, i18n } = useTranslation();
-  const { user } = useAuth();
+  const { responseValidate } = useValidate();
   const translation = useTranslation().i18n.language;
 
   const changeLanguage = (language: string) => {
@@ -84,7 +84,7 @@ export const PageHeader = () => {
             marginLeft: "20px",
           }}
         >
-          {user?.name.toLocaleUpperCase()[0]}
+          {responseValidate?.name.toLocaleUpperCase()[0]}
         </Avatar>
       </Grid>
     </Grid>
@@ -136,7 +136,7 @@ export const PageHeader = () => {
             marginLeft: "20px",
           }}
         >
-          {user?.name.toLocaleUpperCase()[0]}
+          {responseValidate?.name.toLocaleUpperCase()[0]}
         </Avatar>
       </Grid>
 

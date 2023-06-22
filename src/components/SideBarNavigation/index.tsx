@@ -11,10 +11,10 @@ import { Button, Menu, MenuProps } from "antd";
 import React, { useEffect, useState } from "react";
 import { useMenu } from "../../contexts/SidebarContext";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../contexts/AuthContext";
 import { defaultTheme } from "../../styles/defaultTheme";
 import { useMediaQuery } from "react-responsive";
 import { useTranslation } from "react-i18next";
+import { queryClient } from "@src/services/queryClient";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -26,7 +26,6 @@ export const SidebarNavigation = () => {
   const { handleChangeSidebar, isSidebarOpen } = useMenu();
   const [items, setItems] = useState<MenuItem[]>([]);
   const translation = useTranslation().i18n.language;
-  const { signOut } = useAuth();
 
   function handleNavigate(pathArray: string[]) {
     navigate(pathArray.reverse().join("/"));
@@ -470,7 +469,9 @@ export const SidebarNavigation = () => {
       null,
       false,
       () => {
-        signOut();
+        localStorage.removeItem("token");
+        sessionStorage.removeItem("token");
+        queryClient.refetchQueries(["validate"]);
       },
       { color: "red" }
     ),

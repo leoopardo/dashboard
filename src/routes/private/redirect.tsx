@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
-import { useAuth } from "../../contexts/AuthContext";
 import { Spin } from "antd";
 import { useNavigate } from "react-router-dom";
+import { useValidate } from "@src/services/siginIn/validate";
 
 export const Redirect = () => {
-  const { user } = useAuth();
+  const { responseValidate } = useValidate();
   const navigate = useNavigate();
 
   useEffect(() => {
-    user?.type === 3
+    responseValidate?.type === 3
       ? navigate("/consult/consult_merchant/merchant_bank_statement")
       : navigate("/consult/deposit/generated_deposits");
   }, []);

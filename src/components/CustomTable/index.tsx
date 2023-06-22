@@ -6,7 +6,16 @@ import {
   SettingFilled,
 } from "@ant-design/icons";
 import ReplayIcon from "@mui/icons-material/Replay";
-import { Button, Dropdown, Empty, Input, Pagination, Space, Table } from "antd";
+import {
+  Avatar,
+  Button,
+  Dropdown,
+  Empty,
+  Input,
+  Pagination,
+  Space,
+  Table,
+} from "antd";
 import type { ColumnsType, TablePaginationConfig } from "antd/es/table";
 import React, { useEffect, useState, Dispatch, SetStateAction } from "react";
 import { useTranslation } from "react-i18next";
@@ -26,7 +35,9 @@ export interface ColumnInterface {
     | "value"
     | "action"
     | "status"
-    | "actions";
+    | "actions"
+    | "icon"
+    | "boolean";
 }
 
 export interface actionsInterface {
@@ -206,6 +217,21 @@ export const CustomTable = (props: TableProps) => {
                 </p>
               ),
             };
+          case "icon":
+            return {
+              title: (
+                <p style={{ width: "100%", textAlign: "center" }}>
+                  {t(`table.${column.name}`)}
+                </p>
+              ),
+              key: column.name,
+              dataIndex: column.name,
+              render: (text: string) => (
+                <div style={{ width: "100%", textAlign: "center" }}>
+                  <Avatar src={text} size="large" shape="square" />
+                </div>
+              ),
+            };
 
           case "status":
             return {
@@ -232,6 +258,25 @@ export const CustomTable = (props: TableProps) => {
                     {t(`table.${text.toLocaleLowerCase()}`)}
                   </p>
                 ),
+            };
+
+          case "boolean":
+            return {
+              title: (
+                <p style={{ width: "100%", textAlign: "center" }}>
+                  {t(`table.${column.name}`)}
+                </p>
+              ),
+              key: column.name,
+              dataIndex: column.name,
+              render: (text: string) => (
+                <p
+                  key={column.name}
+                  style={{ width: "100%", textAlign: "center" }}
+                >
+                  {text ? t("table.true") : t("table.false")}
+                </p>
+              ),
             };
 
           case "action":
@@ -337,7 +382,10 @@ export const CustomTable = (props: TableProps) => {
           setCurrentItem={props.setCurrentItem}
         />
       </Grid>
-      <Pagination current={Number(props?.data?.page)} pageSize={Number(props?.data?.limit)} />
+      <Pagination
+        current={Number(props?.data?.page)}
+        pageSize={Number(props?.data?.limit)}
+      />
     </Grid>
   );
 };

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useAuth } from "../../../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import {
   CustButton,
@@ -21,39 +20,34 @@ import {
 } from "@ant-design/icons";
 import { CheckboxChangeEvent } from "antd/es/checkbox";
 import { useTranslation } from "react-i18next";
+import { useToken } from "@src/services/siginIn/signIn";
 
 const Logo = import.meta.env.VITE_APP_LOGO;
 
 export const Login = () => {
   const { t } = useTranslation();
-  const { signIn, token } = useAuth();
+  // const { signIn, token } = useAuth();
   document.title = "Login | Paybrokers";
   const isMobile = useMediaQuery({ maxWidth: "900px" });
   const navigate = useNavigate();
   const [rememerMe, setRememberMe] = useState(false);
-  const [isLoadingLogin, setIsLoadingLogin] = useState(false);
-  const [loginError, setLoginError] = useState<
-    "" | "error" | "warning" | undefined
-  >("");
   const [user, setUser] = useState<{ username: string; password: string }>({
     username: "",
     password: "",
   });
 
-  useEffect(() => {
-    setLoginError("");
-  }, [user]);
+  const {
+    Login,
+    isSuccess,
+    isValidateFetching,
+    responseValidate,
+    validateError,
+    LoginError
+  } = useToken(user, rememerMe);
 
   async function handleLogin(event: any) {
     event.preventDefault();
-    try {
-      setIsLoadingLogin(true);
-      await signIn(user, rememerMe);
-    } catch (error) {
-      setLoginError("error");
-    } finally {
-      setIsLoadingLogin(false);
-    }
+    Login();
   }
 
   const onChange = (e: CheckboxChangeEvent) => {
@@ -140,7 +134,7 @@ export const Login = () => {
         >
           <Grid item xs={8}>
             <Input
-              status={loginError}
+              status={validateError && LoginError  ? "error" : undefined}
               size="large"
               value={user.username}
               onChange={(event) =>
@@ -153,7 +147,7 @@ export const Login = () => {
           </Grid>
           <Grid item xs={8}>
             <Input.Password
-              status={loginError}
+              status={validateError && LoginError ? "error" : undefined}
               value={user.password}
               onChange={(event) =>
                 setUser((state) => ({ ...state, password: event.target.value }))
@@ -167,7 +161,7 @@ export const Login = () => {
               }
             />
           </Grid>
-          {loginError && (
+          {validateError && LoginError && (
             <Grid item xs={8}>
               <Alert
                 message={t("error.password_or_username")}
@@ -200,7 +194,7 @@ export const Login = () => {
               type="primary"
               icon={<LoginOutlined />}
               onClick={handleLogin}
-              loading={isLoadingLogin}
+              loading={isValidateFetching}
             >
               {t("login.access")}
             </CustButton>

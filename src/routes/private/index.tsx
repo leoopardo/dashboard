@@ -11,8 +11,8 @@ import { UndeliveredWithdrawals } from "./Pages/consult/withdrawals/undelivered"
 import { RefundDeposits } from "./Pages/consult/refunds/deposits";
 import { OrganizationUser } from "./Pages/register/organization/users";
 import { MerchantUser } from "./Pages/register/merchant/users";
-import { Auth } from "./auth";
 import { OrganizationCategories } from "./Pages/register/organization/categories";
+import { BankMaintenence } from "./Pages/register/organization/bankMaintenance";
 
 export const PrivateRoutes = () => {
   const navigate = useNavigate();
@@ -53,6 +53,7 @@ export const PrivateRoutes = () => {
           <Route path="organization">
             <Route path="users" element={<OrganizationUser />} />
             <Route path="categories" element={<OrganizationCategories />} />
+            <Route path="bank_maintain" element={<BankMaintenence />} />
           </Route>
           <Route path="merchant">
             <Route path="merchant_users" element={<MerchantUser />} />

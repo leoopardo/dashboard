@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Grid } from "@mui/material";
-import { Alert, Button, Input } from "antd";
-import React, { useEffect, useState } from "react";
+import { Button, Input } from "antd";
+import { useEffect, useState } from "react";
 import { FilterChips } from "@components/FiltersModal/filterChips";
 import { useTranslation } from "react-i18next";
 import { FiltersModal } from "@components/FiltersModal";
@@ -92,8 +93,8 @@ export const OrganizationCategories = () => {
         </Grid>
         <Grid item xs={12} md={8} lg={10}>
           <FilterChips
-            startDateKeyName="initial_date"
-            endDateKeyName="final_date"
+            startDateKeyName="start_date"
+            endDateKeyName="end_date"
             query={query}
             setQuery={setQuery}
             haveInitialDate
@@ -195,7 +196,7 @@ export const OrganizationCategories = () => {
           haveInitialDate
           filters={["start_date", "end_date", "status"]}
           refetch={refetchCategoriesData}
-          selectOptions={{ status: ["true", "false"] }}
+          selectOptions={{}}
           startDateKeyName="start_date"
           endDateKeyName="end_date"
           initialQuery={INITIAL_QUERY}

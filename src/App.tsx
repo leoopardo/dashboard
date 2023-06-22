@@ -14,16 +14,25 @@ import { PageHeader } from "./components/PageHeader/index.tsx";
 import { I18nextProvider, useTranslation } from "react-i18next";
 import i18n from "./i18n";
 import { Toaster } from "react-hot-toast";
+import { useValidate } from "./services/siginIn/validate.tsx";
+import { useToken } from "./services/siginIn/signIn.tsx";
+import { ValidateToken } from "./components/ValidateToken/index.tsx";
 
 const Logo = import.meta.env.VITE_APP_ICON;
 
 function App() {
-  const { signInByStorage, signOut, token, user } = useAuth();
   const { t } = useTranslation();
   const isMobile = useMediaQuery({ maxWidth: "900px" });
   const { isSidebarOpen } = useMenu();
   const { Content } = Layout;
   const [isIconSet, setIsIconSet] = useState<boolean>(false);
+  const {
+    isSuccess,
+    isValidateFetching,
+    refetchValidate,
+    validateError,
+    responseValidate,
+  } = useValidate();
 
   useEffect(() => {
     if (!isIconSet) {
@@ -49,21 +58,22 @@ function App() {
     </div>
   );
 
+  
   useEffect(() => {
     async function signInStorage() {
-      let success = false;
-      success = await signInByStorage();
-
-      if (!success) {
-        signOut();
+  
+      if (validateError) {
         setElement(<PublicRoutes route="/login" />);
+        console.log(validateError);
         return;
       }
-
-      setElement(<PrivateRoutes />);
+      if (isSuccess) {
+        setElement(<PrivateRoutes />);
+        console.log("succsess");
+      }
     }
     signInStorage();
-  }, [token]);
+  }, [isSuccess, validateError]);
 
   return (
     <I18nextProvider i18n={i18n} defaultNS={"translation"}>
@@ -79,7 +89,7 @@ function App() {
             }}
           >
             <Toaster position="top-center" />
-            {user ? (
+            {isSuccess ? (
               <Layout>
                 <Layout>
                   <SidebarNavigation />
@@ -87,7 +97,7 @@ function App() {
                   <div
                     style={{
                       marginLeft:
-                        !user || isMobile
+                        !isSuccess || isMobile
                           ? "0"
                           : isSidebarOpen
                           ? "256px"

@@ -86,10 +86,29 @@ export const Mobile = (props: MobileProps) => {
                         </>
                       </p>
                     );
+                    case "boolean":
+                      return {
+                        title: (
+                          <p style={{ width: "100%", textAlign: "center" }}>
+                            {t(`table.${item[label]}`)}
+                          </p>
+                        ),
+                        key: item[label],
+                        dataIndex: item[label],
+                        render: (text: string) => (
+                          <p
+                            key={item[label]}
+                            style={{ width: "100%", textAlign: "center" }}
+                          >
+                            {item?.value ? t("table.true") : t("table.false")}
+                          </p>
+                        ),
+                      };
                   default:
                     return <p key={label}>{item[label]}</p>;
                 }
               })}
+              
             </>
           ),
           extra: (

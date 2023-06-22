@@ -1,6 +1,9 @@
 import { api } from "../../config/api";
 import { getDeposit } from "../types/generatedDeposits.interface";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
+import { useValidate } from "./validate";
+import { useEffect } from "react";
+import { queryClient } from "../queryClient";
 
 interface TokenInterface {
   token: string;
@@ -10,25 +13,52 @@ export function useToken(
   user: { username: string; password: string },
   rememberMe: boolean
 ) {
-  const { data, isFetching, error, refetch } = useQuery<
-  TokenInterface | null | undefined
-  >(
-    "token",
-    async () => {
-      const response = await api.get("core/token", { data: user });
-      return response.data;
-    },
-    { refetchOnWindowFocus: rememberMe ? "always" : false }
-  );
+  const { data, isLoading, error, mutate } = useMutation<
+    TokenInterface | null | undefined
+  >("token", async () => {
+    const response = await api.post(
+      "core/token",
+      {},
+      {
+        auth: user,
+      }
+    );
+    localStorage.removeItem("token");
+    sessionStorage.removeItem("token");
 
-  const responseToken = data;
-  const isTokenFetching = isFetching;
-  const tokenError: any = error;
-  const refetchDToken = refetch;
+    if (rememberMe) {
+      localStorage.setItem("token", response.data.token);
+    }
+    sessionStorage.setItem("token", response.data.token);
+
+    return response.data;
+  });
+
+  useEffect(() => {
+    if (data?.token) {
+      queryClient.refetchQueries(["validate"]);
+      api.defaults.headers.Authorization = `Bearer ${data.token}`;
+    }
+  }, [data]);
+
+  const {
+    refetchValidate,
+    isValidateFetching,
+    responseValidate,
+    validateError,
+    isSuccess,
+  } = useValidate(rememberMe, data?.token);
+
+  const responseLogin = data;
+  const isLoginFetching = isLoading;
+  const LoginError: any = error;
+  const Login = mutate;
   return {
-    responseToken,
-    isTokenFetching,
-    tokenError,
-    refetchDToken,
+    responseValidate,
+    isValidateFetching,
+    validateError,
+    isSuccess,
+    LoginError,
+    Login,
   };
 }
