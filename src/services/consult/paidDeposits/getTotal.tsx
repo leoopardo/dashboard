@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { api } from "../../../config/api";
 import moment from "moment";
-import { paidDepositRowsQuery, paidDepositTotal } from "../../types/PaidDeposits.interface";
+import { paidDepositRowsQuery, paidDepositTotal } from "../../types/consult/deposits/PaidDeposits.interface";
 
 export function useGetTotalPaidDeposits(
   params: paidDepositRowsQuery

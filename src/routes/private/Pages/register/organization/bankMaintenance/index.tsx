@@ -9,7 +9,7 @@ import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import useDebounce from "@utils/useDebounce";
 import { useGetOrganizationCategories } from "@services/register/organization/categories/getCategories";
-import { BankMaintenenceQuery } from "@src/services/types/bankMaintenence.interface";
+import { BankMaintenenceQuery } from "@src/services/types/register/organization/bankMaintenence.interface";
 import { useGetOrganizationBankMaintenece } from "@src/services/register/organization/bankMaitenence";
 
 const INITIAL_QUERY: BankMaintenenceQuery = {

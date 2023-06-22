@@ -3,7 +3,7 @@ import { api } from "../../../config/api";
 import {
   generatedDepositTotal,
   generatedDepositTotalQuery,
-} from "../../types/generatedDeposits.interface";
+} from "../../types/consult/deposits/generatedDeposits.interface";
 import { useQuery } from "react-query";
 import moment from "moment";
 

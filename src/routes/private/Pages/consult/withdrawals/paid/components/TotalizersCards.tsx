@@ -7,7 +7,7 @@ import { ReloadOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 import {
   paidWithdrawalsRowsQuery, paidWithdrawalsTotal,
-} from "../../../../../../../services/types/paidWithdrawals.interface";
+} from "../../../../../../../services/types/consult/withdrawals/paidWithdrawals.interface";
 
 interface TotalizersInterface {
   data: paidWithdrawalsTotal | null | undefined;

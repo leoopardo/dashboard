@@ -3,7 +3,7 @@ import { api } from "../../../../config/api";
 import {
   GroupQuery,
   GroupResponse,
-} from "../../../types/organizationUsers.interface";
+} from "../../../types/register/organization/organizationUsers.interface";
 import { useQuery } from "react-query";
 
 export function useListUserGroups(params: GroupQuery) {

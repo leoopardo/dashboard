@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 import {
   WebhooksQuery,
   WebhooksResponse,
-} from "../../types/generatedDeposits.interface";
+} from "../../types/consult/deposits/generatedDeposits.interface";
 
 export function useGetWithdrawalsWebhooks(id: string, params: WebhooksQuery) {
   const { data, isFetching, error, refetch } = useQuery<

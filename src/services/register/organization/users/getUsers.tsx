@@ -4,7 +4,7 @@ import { useQuery } from "react-query";
 import {
   OrganizationUserQuery,
   OrganizationUserResponse,
-} from "../../../types/organizationUsers.interface";
+} from "../../../types/register/organization/organizationUsers.interface";
 
 export function useGetRowsOrganizationUsers(params: OrganizationUserQuery) {
   const { data, isFetching, error, refetch } = useQuery<

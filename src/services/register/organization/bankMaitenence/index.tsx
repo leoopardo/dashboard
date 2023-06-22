@@ -1,7 +1,7 @@
 import {
   BankMaintenenceQuery,
   BankMaintenenceResponse,
-} from "@src/services/types/bankMaintenence.interface";
+} from "@src/services/types/register/organization/bankMaintenence.interface";
 import { api } from "../../../../config/api";
 import { useQuery } from "react-query";
 

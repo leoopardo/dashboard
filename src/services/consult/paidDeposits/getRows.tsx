@@ -1,7 +1,7 @@
 import moment from "moment";
 import { api } from "../../../config/api";
 import { useQuery } from "react-query";
-import { paidDepositRowsQuery, paidDepositRowsResponse } from "../../types/PaidDeposits.interface";
+import { paidDepositRowsQuery, paidDepositRowsResponse } from "../../types/consult/deposits/PaidDeposits.interface";
 
 export function useGetRowsPaidDeposits(
   params: paidDepositRowsQuery

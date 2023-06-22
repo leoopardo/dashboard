@@ -4,7 +4,7 @@ import moment from "moment";
 import {
   paidWithdrawalsRowsQuery,
   paidWithdrawalsTotal,
-} from "../../types/paidWithdrawals.interface";
+} from "../../types/consult/withdrawals/paidWithdrawals.interface";
 
 export function useGetTotalPaidWithdrawals(params: paidWithdrawalsRowsQuery) {
   const [data, setData] = useState<paidWithdrawalsTotal | null>(null);

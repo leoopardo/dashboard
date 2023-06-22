@@ -13,7 +13,7 @@ import { useGetOrganizationCategories } from "@services/register/organization/ca
 import {
   OrganizationCategoriesItem,
   OrganizationCategoriesQuery,
-} from "@services/types/organizationCategories.interface";
+} from "@src/services/types/register/organization/organizationCategories.interface";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
 import { useCreateOrganizationCategory } from "@src/services/register/organization/categories/createCategorie";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";

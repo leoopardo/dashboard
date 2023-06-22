@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { api } from "../../config/api";
-import { MerchantQuery, MerchantResponse } from "../types/merchants.interface";
+import { MerchantQuery, MerchantResponse } from "../types/register/merchants/merchants.interface";
 
 export function useListMerchants(params: MerchantQuery) {
   const [data, setData] = useState<MerchantResponse | null>(null);

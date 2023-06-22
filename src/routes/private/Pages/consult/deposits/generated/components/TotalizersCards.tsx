@@ -4,7 +4,7 @@ import { Button, Card, Statistic } from "antd";
 import {
   generatedDepositTotal,
   generatedDepositTotalQuery,
-} from "../../../../../../../services/types/generatedDeposits.interface";
+} from "../../../../../../../services/types/consult/deposits/generatedDeposits.interface";
 import { defaultTheme } from "../../../../../../../styles/defaultTheme";
 import { useMediaQuery } from "react-responsive";
 import { ReloadOutlined } from "@ant-design/icons";

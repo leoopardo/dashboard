@@ -1,5 +1,5 @@
 import { api } from "../../config/api";
-import { getDeposit } from "../types/generatedDeposits.interface";
+import { getDeposit } from "../types/consult/deposits/generatedDeposits.interface";
 import { useMutation, useQuery } from "react-query";
 import { useValidate } from "./validate";
 import { useEffect } from "react";

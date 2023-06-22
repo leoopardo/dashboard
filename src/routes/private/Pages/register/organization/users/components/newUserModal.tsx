@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 import { GroupSelect } from "@components/Selects/groupSelect";
 import { useCreateOrganizationUser } from "@services/register/organization/users/createUser";
 import { toast } from "react-hot-toast";
-import { OrganizationUserItem } from "@services/types/organizationUsers.interface";
+import { OrganizationUserItem } from "@src/services/types/register/organization/organizationUsers.interface";
 import { useUpdateOrganizationUser } from "@services/register/organization/users/updateUser";
 interface NewuserModalprops {
   open: boolean;

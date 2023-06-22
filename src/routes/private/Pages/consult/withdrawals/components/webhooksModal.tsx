@@ -14,7 +14,7 @@ import { Grid } from "@mui/material";
 import {
   WebhooksItem,
   WebhooksQuery,
-} from "../../../../../../services/types/generatedDeposits.interface";
+} from "../../../../../../services/types/consult/deposits/generatedDeposits.interface";
 import ReactJson from "react-json-view";
 import { CheckCircleFilled, CloseCircleFilled } from "@ant-design/icons";
 import { defaultTheme } from "../../../../../../styles/defaultTheme";

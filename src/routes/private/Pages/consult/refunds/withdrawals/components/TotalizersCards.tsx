@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 import {
   refundDepositTotal,
   refundDepositsQuery,
-} from "../../../../../../../services/types/refundsDeposits.interface";
+} from "../../../../../../../services/types/consult/refunds/refundsDeposits.interface";
 
 interface TotalizersInterface {
   data: refundDepositTotal | null | undefined;

@@ -5,7 +5,7 @@ import { useQuery } from "react-query";
 import {
   paidWithdrawalsRowsQuery,
   paidWithdrawalsRowsResponse,
-} from "../../types/paidWithdrawals.interface";
+} from "../../types/consult/withdrawals/paidWithdrawals.interface";
 export function useGetRowsPaidWithdrawals(params: paidWithdrawalsRowsQuery) {
   const { data, isFetching, error, refetch } = useQuery<
     paidWithdrawalsRowsResponse | null | undefined

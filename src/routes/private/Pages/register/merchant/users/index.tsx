@@ -4,7 +4,7 @@ import { Button, Input } from "antd";
 import { FilterChips } from "@components/FiltersModal/filterChips";
 import { useTranslation } from "react-i18next";
 import { useGetRowsMerchantUsers } from "@services/register/merchant/users/getUsers";
-import { OrganizationUserQuery } from "@services/types/organizationUsers.interface";
+import { OrganizationUserQuery } from "@src/services/types/register/organization/organizationUsers.interface";
 import { FiltersModal } from "@components/FiltersModal";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import {

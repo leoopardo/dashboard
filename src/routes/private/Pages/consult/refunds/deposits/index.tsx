@@ -16,7 +16,7 @@ import { useTranslation } from "react-i18next";
 import useDebounce from "../../../../../../utils/useDebounce";
 import { FilterChips } from "../../../../../../components/FiltersModal/filterChips";
 import { useGetTotalRefundDeposits } from "../../../../../../services/consult/refundDeposits/getTotal";
-import { refundDepositsQuery } from "../../../../../../services/types/refundsDeposits.interface";
+import { refundDepositsQuery } from "../../../../../../services/types/consult/refunds/refundsDeposits.interface";
 import { useGetRowsRefundDeposits } from "../../../../../../services/consult/refundDeposits/getRows";
 
 const INITIAL_QUERY: refundDepositsQuery = {

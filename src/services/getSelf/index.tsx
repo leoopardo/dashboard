@@ -1,7 +1,7 @@
 import moment from "moment";
 import { api } from "../../config/api";
 import { useQuery } from "react-query";
-import { SelfInterface } from "../types/self.interface";
+import { SelfInterface } from "../types/register/self/self.interface";
 
 export function useGetSelf() {
   const { data, isFetching, error, refetch } = useQuery<

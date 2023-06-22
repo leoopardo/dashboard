@@ -2,7 +2,6 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Grid } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useValidateToken } from "../../services/sendValidationToken";
-import { useAuth } from "../../contexts/AuthContext";
 import { Button, Modal } from "antd";
 import OTPInput from "react-otp-input";
 import Countdown from "../countdown";

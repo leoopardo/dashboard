@@ -1,10 +1,10 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useListPartners } from "../../../services/partner/listPartners";
 import { AutoComplete, Empty, Input } from "antd";
-import { PartnerQuery } from "../../../services/types/partners.interface";
+import { PartnerQuery } from "../../../services/types/register/partners/partners.interface";
 import { useTranslation } from "react-i18next";
 import { DownOutlined } from "@ant-design/icons";
-import { GroupQuery } from "../../../services/types/organizationUsers.interface";
+import { GroupQuery } from "../../../services/types/register/organization/organizationUsers.interface";
 import { useListUserGroups } from "../../../services/register/organization/users/useListUserGroups";
 
 interface GroupSelectProps {

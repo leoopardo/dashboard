@@ -6,7 +6,7 @@ import moment from "moment";
 import {
   generatedWithdrawalsRowsQuery,
   generatedWithdrawalsTotal,
-} from "../../types/generatedWithdrawals.interface";
+} from "../../types/consult/withdrawals/generatedWithdrawals.interface";
 
 export function useGetTotalGeneratedWithdrawals(
   params: generatedWithdrawalsRowsQuery

@@ -11,7 +11,7 @@ import { FiltersModal } from "../../../../../../components/FiltersModal";
 import { useTranslation } from "react-i18next";
 import useDebounce from "../../../../../../utils/useDebounce";
 import { FilterChips } from "../../../../../../components/FiltersModal/filterChips";
-import { paidWithdrawalsRowsQuery } from "../../../../../../services/types/paidWithdrawals.interface";
+import { paidWithdrawalsRowsQuery } from "../../../../../../services/types/consult/withdrawals/paidWithdrawals.interface";
 import { useGetRowsPaidWithdrawals } from "../../../../../../services/consult/paidWithdrawals/getRows";
 import { useGetTotalPaidWithdrawals } from "../../../../../../services/consult/paidWithdrawals/getTotal";
 

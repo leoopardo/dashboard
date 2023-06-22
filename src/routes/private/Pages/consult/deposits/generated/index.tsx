@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Grid } from "@mui/material";
-import { generatedDepositTotalQuery } from "../../../../../../services/types/generatedDeposits.interface";
+import { generatedDepositTotalQuery } from "../../../../../../services/types/consult/deposits/generatedDeposits.interface";
 import { useGetTotalGeneratedDeposits } from "../../../../../../services/consult/generatedDeposits/getTotal";
 import moment from "moment";
 import { TotalizersCards } from "./components/TotalizersCards";

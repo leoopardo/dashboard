@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 import {
   generatedWithdrawalsRowsQuery,
   generatedWithdrawalsTotal,
-} from "../../../../../../../services/types/generatedWithdrawals.interface";
+} from "../../../../../../../services/types/consult/withdrawals/generatedWithdrawals.interface";
 
 interface TotalizersInterface {
   data: generatedWithdrawalsTotal | null | undefined;

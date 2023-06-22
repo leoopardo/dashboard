@@ -4,7 +4,7 @@ import { useQuery } from "react-query";
 import {
   refundWithdrawalsRowsResponse,
   refundWithdrawalsQuery,
-} from "../../types/refundWithdrawals.interface";
+} from "../../types/consult/refunds/refundWithdrawals.interface";
 
 export function useGetRowsRefundWithdrawals(params: refundWithdrawalsQuery) {
   const { data, isFetching, error, refetch } = useQuery<

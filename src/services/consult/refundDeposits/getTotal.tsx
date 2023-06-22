@@ -4,7 +4,7 @@ import moment from "moment";
 import {
   refundDepositTotal,
   refundDepositsQuery,
-} from "../../types/refundsDeposits.interface";
+} from "../../types/consult/refunds/refundsDeposits.interface";
 
 export function useGetTotalRefundDeposits(params: refundDepositsQuery) {
   const [data, setData] = useState<refundDepositTotal | null>(null);

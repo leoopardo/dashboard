@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { FilterChips } from "@components/FiltersModal/filterChips";
 import { useTranslation } from "react-i18next";
 import { useGetRowsOrganizationUsers } from "@services/register/organization/users/getUsers";
-import { OrganizationUserQuery } from "@services/types/organizationUsers.interface";
+import { OrganizationUserQuery } from "@src/services/types/register/organization/organizationUsers.interface";
 import { FiltersModal } from "@components/FiltersModal";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
