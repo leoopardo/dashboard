@@ -1,11 +1,8 @@
+import { useEffect, useState, Dispatch, SetStateAction } from "react";
 import {
   CopyOutlined,
-  DownOutlined,
   EllipsisOutlined,
-  EyeFilled,
-  SettingFilled,
 } from "@ant-design/icons";
-import ReplayIcon from "@mui/icons-material/Replay";
 import {
   Avatar,
   Button,
@@ -13,11 +10,9 @@ import {
   Empty,
   Input,
   Pagination,
-  Space,
   Table,
 } from "antd";
-import type { ColumnsType, TablePaginationConfig } from "antd/es/table";
-import React, { useEffect, useState, Dispatch, SetStateAction } from "react";
+import type { ColumnsType } from "antd/es/table";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import { Mobile } from "./mobile";
@@ -26,7 +21,8 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import { toast } from "react-hot-toast";
 
 export interface ColumnInterface {
-  name: string;
+  name: string | any;
+  head?: string;
   type:
     | "id"
     | "text"
@@ -64,7 +60,7 @@ interface TableProps {
 export const CustomTable = (props: TableProps) => {
   const { t } = useTranslation();
   const isMobile = useMediaQuery({ maxWidth: "900px" });
-  const [columns, setColumns] = useState<ColumnsType<any>>([]);
+  const [columns, setColumns] = useState<ColumnsType<ColumnInterface>>([]);
   const translation = useTranslation().i18n.language;
   const [sortOrder, setSortOrder] = useState(false);
   const [actions, setActions] = useState<any>([]);
@@ -117,7 +113,7 @@ export const CustomTable = (props: TableProps) => {
             return {
               title: (
                 <p style={{ width: "100%", textAlign: "center" }}>
-                  {t(`table.${column.name}`)}
+                  {t(`table.${column?.head || column.name}`)}
                 </p>
               ),
               key: column.name,
@@ -152,7 +148,7 @@ export const CustomTable = (props: TableProps) => {
             return {
               title: (
                 <p style={{ width: "100%", textAlign: "center" }}>
-                  {t(`table.${column.name}`)}
+                  {t(`table.${column?.head || column.name}`)}
                 </p>
               ),
               key: column.name,
@@ -179,7 +175,7 @@ export const CustomTable = (props: TableProps) => {
             return {
               title: (
                 <p style={{ width: "100%", textAlign: "center" }}>
-                  {t(`table.${column.name}`)}
+                  {t(`table.${column?.head || column.name}`)}
                 </p>
               ),
               key: column.name,
@@ -200,7 +196,7 @@ export const CustomTable = (props: TableProps) => {
             return {
               title: (
                 <p style={{ width: "100%", textAlign: "center" }}>
-                  {t(`table.${column.name}`)}
+                  {t(`table.${column?.head || column.name}`)}
                 </p>
               ),
               key: column.name,
@@ -221,7 +217,7 @@ export const CustomTable = (props: TableProps) => {
             return {
               title: (
                 <p style={{ width: "100%", textAlign: "center" }}>
-                  {t(`table.${column.name}`)}
+                  {t(`table.${column?.head || column.name}`)}
                 </p>
               ),
               key: column.name,
@@ -237,7 +233,7 @@ export const CustomTable = (props: TableProps) => {
             return {
               title: (
                 <p style={{ width: "100%", textAlign: "center" }}>
-                  {t(`table.${column.name}`)}
+                  {t(`table.${column?.head || column.name}`)}
                 </p>
               ),
               key: column.name,
@@ -264,7 +260,7 @@ export const CustomTable = (props: TableProps) => {
             return {
               title: (
                 <p style={{ width: "100%", textAlign: "center" }}>
-                  {t(`table.${column.name}`)}
+                  {t(`table.${column?.head || column.name}`)}
                 </p>
               ),
               key: column.name,
@@ -305,11 +301,26 @@ export const CustomTable = (props: TableProps) => {
                 </div>
               ),
             };
+            case "text":
+              return {
+                title: (
+                  <p style={{ width: "100%", textAlign: "center" }}>
+                    {t(`table.${column?.head || column.name}`)}
+                  </p>
+                ),
+                key: Array.isArray(column.name) ? column.name+`${Math.random()}` : column.name,
+                dataIndex: column.name,
+                render: (text: string) => (
+                  <p style={{ width: "100%", textAlign: "center" }}>
+                    {text || "-"}
+                  </p>
+                ),
+              };
           default:
             return {
               title: (
                 <p style={{ width: "100%", textAlign: "center" }}>
-                  {t(`table.${column.name}`)}
+                  {t(`table.${column?.head || column.name}`)}
                 </p>
               ),
               key: column.name,

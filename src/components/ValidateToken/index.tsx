@@ -1,8 +1,7 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Grid } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useValidateToken } from "../../services/sendValidationToken";
-import { useAuth } from "../../contexts/AuthContext";
 import { Button, Modal } from "antd";
 import OTPInput from "react-otp-input";
 import Countdown from "../countdown";
@@ -58,8 +57,6 @@ export const ValidateToken = ({
   } = useValidatePhone({ validation_token: tokenState });
   const [ableToResend, setAbleToResend] = useState<boolean>(true);
 
-  console.log(Self);
-
   useEffect(() => {
     refetchSelf();
     if (Self?.phone_validated) {
@@ -72,19 +69,7 @@ export const ValidateToken = ({
         cellphone: Self?.cellphone,
       });
     }
-  }, [ValidatePhoneError, ValidatePhoneSuccess]);
 
-  useEffect(() => {
-    if (validateBody.action === "USER_VALIDATE_PHONE") {
-      ValidateToken();
-    }
-  }, [validateBody]);
-
-  useEffect(() => {
-    if (success) setIsOpen(false);
-  }, [success]);
-
-  useEffect(() => {
     if (ValidatePhoneSuccess) {
       toast.success("Telefone válidado com sucesso");
     }
@@ -95,8 +80,16 @@ export const ValidateToken = ({
   }, [ValidatePhoneError, ValidatePhoneSuccess]);
 
   useEffect(() => {
+    if (validateBody.action === "USER_VALIDATE_PHONE") {
+      ValidateToken();
+    }
+  }, [validateBody]);
+
+
+  useEffect(() => {
     if (success) {
       toast.success("Dados atualizados com sucesso");
+      setIsOpen(false);
     }
 
     if (ValidatePhoneError) {
