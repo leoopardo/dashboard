@@ -17,6 +17,10 @@ import {
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
 import { useCreateOrganizationCategory } from "@src/services/register/organization/categories/createCategorie";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
+import {
+  UpdateCategoryInterface,
+  useUpdateOrganizationCategory,
+} from "@src/services/register/organization/categories/updateCategorie";
 
 const INITIAL_QUERY: OrganizationCategoriesQuery = {
   limit: 25,
@@ -40,6 +44,8 @@ export const OrganizationCategories = () => {
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [isNewCategorieModal, setIsNewCategorieModal] =
     useState<boolean>(false);
+  const [isUpdateCategorieModalOpen, setIsUpdateCategorieModalOpen] =
+    useState<boolean>(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const [currentItem, setCurrentItem] =
     useState<OrganizationCategoriesItem | null>(null);
@@ -49,9 +55,16 @@ export const OrganizationCategories = () => {
     name: string;
     description: string;
   }>({ name: "", description: "" });
-
+  const [updateBody, setUpdateBody] = useState<UpdateCategoryInterface>({
+    ...currentItem,
+    status: currentItem?.status,
+    entry_account_category_id: currentItem?.id,
+  });
   const { isLoading, mutate, error, isSuccess } =
     useCreateOrganizationCategory(createBody);
+
+  const { updateError, updateIsLoading, updateMutate, updateSuccess } =
+    useUpdateOrganizationCategory(updateBody);
 
   const columns: ColumnInterface[] = [
     { name: "id", type: "id" },
@@ -73,6 +86,13 @@ export const OrganizationCategories = () => {
     }
     setQuery((state) => ({ ...state, name: debounceSearch }));
   }, [debounceSearch]);
+
+  useEffect(() => {
+    setUpdateBody({
+      ...currentItem,
+      entry_account_category_id: currentItem?.id,
+    });
+  }, [currentItem]);
 
   return (
     <Grid container style={{ padding: "25px" }}>
@@ -173,7 +193,7 @@ export const OrganizationCategories = () => {
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
                 onClick: () => {
-                  setIsNewCategorieModal(true);
+                  setIsUpdateCategorieModalOpen(true);
                 },
               },
             ]}
@@ -219,6 +239,25 @@ export const OrganizationCategories = () => {
           submitLoading={isLoading}
           error={error}
           success={isSuccess}
+        />
+      )}
+      {isUpdateCategorieModalOpen && (
+        <MutateModal
+          type="update"
+          open={isUpdateCategorieModalOpen}
+          setOpen={setIsUpdateCategorieModalOpen}
+          fields={[
+            { label: "name", required: false },
+            { label: "description", required: false },
+            { label: "status", required: false },
+          ]}
+          body={updateBody}
+          setBody={setUpdateBody}
+          modalName={t("modal.update_category")}
+          submit={updateMutate}
+          submitLoading={updateIsLoading}
+          error={updateError}
+          success={updateSuccess}
         />
       )}
       {isViewModalOpen && (

@@ -1,4 +1,4 @@
-import { Button, Drawer, Form, FormInstance, Input } from "antd";
+import { Button, Drawer, Form, FormInstance, Input, Switch } from "antd";
 import React, { Dispatch, SetStateAction, useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { MerchantSelect } from "../../Selects/merchantSelect";
@@ -46,7 +46,7 @@ export const MutateModal = ({
   };
 
   useEffect(() => {
-    setBody({});
+    if (type === "create") setBody({});
   }, []);
 
   return (
@@ -131,6 +131,23 @@ export const MutateModal = ({
               >
                 <PartnerSelect setQueryFunction={setBody} queryOptions={body} />
               </Form.Item>;
+              return;
+            case "status":
+              return (
+                <Form.Item
+                  label={t(`table.${field.label}`)}
+                  name={field.label}
+                  style={{ margin: 10 }}
+                  valuePropName="checked"
+                >
+                  <Switch
+                    checked={body[field.label]}
+                    onChange={(e) =>
+                      setBody((state: any) => ({ ...state, status: e }))
+                    }
+                  />
+                </Form.Item>
+              );
               return;
 
             default:

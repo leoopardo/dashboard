@@ -15,7 +15,7 @@ export interface OrganizationCategoriesItem {
   organization_id: number;
   name: string;
   description: string;
-  status: boolean;
+  status: boolean | undefined;
   created_at: string;
 }
 
