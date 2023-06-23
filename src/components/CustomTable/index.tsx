@@ -1,8 +1,5 @@
 import { useEffect, useState, Dispatch, SetStateAction } from "react";
-import {
-  CopyOutlined,
-  EllipsisOutlined,
-} from "@ant-design/icons";
+import { CopyOutlined, EllipsisOutlined } from "@ant-design/icons";
 import {
   Avatar,
   Button,
@@ -175,7 +172,7 @@ export const CustomTable = (props: TableProps) => {
             return {
               title: (
                 <p style={{ width: "100%", textAlign: "center" }}>
-                  {t(`table.${column?.head || column.name}`)}
+                  {t(`table.${column?.head ?? column.name}`)}
                 </p>
               ),
               key: column.name,
@@ -196,7 +193,7 @@ export const CustomTable = (props: TableProps) => {
             return {
               title: (
                 <p style={{ width: "100%", textAlign: "center" }}>
-                  {t(`table.${column?.head || column.name}`)}
+                  {t(`table.${column?.head ?? column.name}`)}
                 </p>
               ),
               key: column.name,
@@ -217,7 +214,7 @@ export const CustomTable = (props: TableProps) => {
             return {
               title: (
                 <p style={{ width: "100%", textAlign: "center" }}>
-                  {t(`table.${column?.head || column.name}`)}
+                  {t(`table.${column?.head ?? column.name}`)}
                 </p>
               ),
               key: column.name,
@@ -233,7 +230,7 @@ export const CustomTable = (props: TableProps) => {
             return {
               title: (
                 <p style={{ width: "100%", textAlign: "center" }}>
-                  {t(`table.${column?.head || column.name}`)}
+                  {t(`table.${column?.head ?? column.name}`)}
                 </p>
               ),
               key: column.name,
@@ -260,7 +257,7 @@ export const CustomTable = (props: TableProps) => {
             return {
               title: (
                 <p style={{ width: "100%", textAlign: "center" }}>
-                  {t(`table.${column?.head || column.name}`)}
+                  {t(`table.${column?.head ?? column.name}`)}
                 </p>
               ),
               key: column.name,
@@ -301,26 +298,28 @@ export const CustomTable = (props: TableProps) => {
                 </div>
               ),
             };
-            case "text":
-              return {
-                title: (
-                  <p style={{ width: "100%", textAlign: "center" }}>
-                    {t(`table.${column?.head || column.name}`)}
-                  </p>
-                ),
-                key: Array.isArray(column.name) ? column.name+`${Math.random()}` : column.name,
-                dataIndex: column.name,
-                render: (text: string) => (
-                  <p style={{ width: "100%", textAlign: "center" }}>
-                    {text || "-"}
-                  </p>
-                ),
-              };
-          default:
+          case "text":
             return {
               title: (
                 <p style={{ width: "100%", textAlign: "center" }}>
                   {t(`table.${column?.head || column.name}`)}
+                </p>
+              ),
+              key: Array.isArray(column.name)
+                ? column.name + `${Math.random()}`
+                : column.name,
+              dataIndex: column.name,
+              render: (text: string) => (
+                <p style={{ width: "100%", textAlign: "center" }}>
+                  {text ?? "-"}
+                </p>
+              ),
+            };
+          default:
+            return {
+              title: (
+                <p style={{ width: "100%", textAlign: "center" }}>
+                  {t(`table.${column?.head ?? column.name}`)}
                 </p>
               ),
               key: column.name,
@@ -365,7 +364,7 @@ export const CustomTable = (props: TableProps) => {
                 ? props?.data?.limit * props?.data?.page
                 : props?.data?.limit * props?.data?.page + 1
               : props?.data?.total,
-            onChange: (page) => {     
+            onChange: (page) => {
               props.setQuery((state: any) => ({ ...state, page }));
             },
             pageSizeOptions: [10, 25, 50, 100],

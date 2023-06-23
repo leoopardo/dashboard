@@ -305,7 +305,8 @@
     "internal_account_number": "Número de conta interna",
     "account_name": "Nome da conta",
     "account_document": "Documento da conta",
-    "domain": "Domínio"
+    "domain": "Domínio",
+    "partner": "Plataforma"
   },
   "actions": {
     "details": "Detalhes",

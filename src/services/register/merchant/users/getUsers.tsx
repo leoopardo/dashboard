@@ -13,11 +13,6 @@ export function useGetRowsMerchantUsers(params: MerchantUsersQuery) {
         params,
       });
       return response.data;
-    },
-    {
-      refetchInterval: false,
-      refetchIntervalInBackground: false,
-      refetchOnMount: false,
     }
   );
 

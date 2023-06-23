@@ -99,7 +99,7 @@ export const Mobile = (props: MobileProps) => {
                     return (
                       <Descriptions.Item
                         key={value.name}
-                        label={t(`table.${value.name}`)}
+                        label={t(`table.${value.head ?? value.name}`)}
                         labelStyle={{
                           maxWidth: "100px",
                           margin: 0,
@@ -117,7 +117,7 @@ export const Mobile = (props: MobileProps) => {
                     return (
                       <Descriptions.Item
                         key={value.name}
-                        label={t(`table.${value.name}`)}
+                        label={t(`table.${value.head ?? value.name}`)}
                         labelStyle={{
                           maxWidth: "100px",
                           margin: 0,
@@ -139,7 +139,7 @@ export const Mobile = (props: MobileProps) => {
                     return (
                       <Descriptions.Item
                         key={value.name}
-                        label={t(`table.${value.name}`)}
+                        label={t(`table.${value.head ?? value.name}`)}
                         labelStyle={{
                           maxWidth: "100px",
                           margin: 0,
@@ -160,7 +160,7 @@ export const Mobile = (props: MobileProps) => {
                     return (
                       <Descriptions.Item
                         key={value.name}
-                        label={t(`table.${value.name}`)}
+                        label={t(`table.${value.head ?? value.name}`)}
                         labelStyle={{
                           maxWidth: "100px",
                           margin: 0,
@@ -172,7 +172,9 @@ export const Mobile = (props: MobileProps) => {
                             key={value.name}
                             style={{ width: "100%", textAlign: "center" }}
                           >
-                            {item[value.name] ? t("table.active") : t("table.inactive")}
+                            {item[value.name]
+                              ? t("table.active")
+                              : t("table.inactive")}
                           </p>
                         ) : (
                           <p
@@ -189,7 +191,7 @@ export const Mobile = (props: MobileProps) => {
                     return (
                       <Descriptions.Item
                         key={value.name}
-                        label={t(`table.${value.name}`)}
+                        label={t(`table.${value.head ?? value.name}`)}
                         labelStyle={{
                           maxWidth: "100px",
                           margin: 0,
@@ -211,7 +213,7 @@ export const Mobile = (props: MobileProps) => {
                     return (
                       <Descriptions.Item
                         key={value.name}
-                        label={t(`table.${value.name}`)}
+                        label={t(`table.${value.head ?? value.name}`)}
                         labelStyle={{
                           maxWidth: "100px",
                           margin: 0,
@@ -237,8 +239,12 @@ export const Mobile = (props: MobileProps) => {
                   default:
                     return (
                       <Descriptions.Item
-                        key={value.name}
-                        label={t(`table.${value.name}`)}
+                        key={
+                          Array.isArray(value.name)
+                            ? value.name + `${Math.random()}`
+                            : value.name
+                        }
+                        label={t(`table.${value.head ?? value.name}`)}
                         labelStyle={{
                           maxWidth: "100px",
                           margin: 0,
@@ -250,7 +256,9 @@ export const Mobile = (props: MobileProps) => {
                           key={value.name}
                           style={{ width: "100%", textAlign: "center" }}
                         >
-                          {item[value.name]}
+                          {Array.isArray(value.name)
+                            ? item[value.name[0]][value.name[1]]
+                            : item[value.name]}
                         </p>
                       </Descriptions.Item>
                     );

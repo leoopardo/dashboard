@@ -77,7 +77,7 @@ export const OrganizationUser = () => {
     <Grid container style={{ padding: "25px" }}>
       <Grid
         container
-        style={{ marginTop: "20px", display: "flex", alignItems: "center" }}
+        style={{ display: "flex", alignItems: "center" }}
         spacing={1}
       >
         <Grid item xs={12} md={4} lg={2}>

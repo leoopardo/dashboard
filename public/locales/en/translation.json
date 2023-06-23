@@ -303,7 +303,8 @@
     "internal_account_number": "Internal account number",
     "account_name": "Account name",
     "account_document": "Account document",
-    "domain": "Domain"
+    "domain": "Domain",
+    "partner": "Partner"
   },
   "actions": {
     "details": "Details",

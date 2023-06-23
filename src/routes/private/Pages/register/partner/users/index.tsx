@@ -54,7 +54,7 @@ export const PartnerUsers = () => {
     { name: "id", type: "id" },
     { name: "name", type: "text" },
     { name: "group_id", type: "text" },
-    { name: "partner_id", type: "text" },
+    { name: ["partner", "name"], head: "partner", type: "text" },
     { name: "last_signin_date", type: "date" },
     { name: "status", type: "status" },
     { name: "created_at", type: "date" },
@@ -80,7 +80,7 @@ export const PartnerUsers = () => {
     <Grid container style={{ padding: "25px" }}>
       <Grid
         container
-        style={{ marginTop: "20px", display: "flex", alignItems: "center" }}
+        style={{ display: "flex", alignItems: "center" }}
         spacing={1}
       >
         <Grid item xs={12} md={4} lg={2}>
