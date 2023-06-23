@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useAuth } from "./contexts/AuthContext";
 import { PublicRoutes } from "./routes/public";
 import { PrivateRoutes } from "./routes/private";
 import { BrowserRouter } from "react-router-dom";
@@ -13,11 +12,10 @@ import { useMediaQuery } from "react-responsive";
 import { PageHeader } from "./components/PageHeader/index.tsx";
 import { I18nextProvider, useTranslation } from "react-i18next";
 import i18n from "./i18n";
-import { Toaster } from "react-hot-toast";
 import { useValidate } from "./services/siginIn/validate.tsx";
 import { useToken } from "./services/siginIn/signIn.tsx";
 import { ValidateToken } from "./components/ValidateToken/index.tsx";
-
+import { Toaster } from "react-hot-toast";
 const Logo = import.meta.env.VITE_APP_ICON;
 
 function App() {
@@ -64,12 +62,10 @@ function App() {
   
       if (validateError) {
         setElement(<PublicRoutes route="/login" />);
-        console.log(validateError);
         return;
       }
       if (isSuccess) {
         setElement(<PrivateRoutes />);
-        console.log("succsess");
       }
     }
     signInStorage();

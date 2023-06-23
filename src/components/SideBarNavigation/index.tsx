@@ -7,7 +7,7 @@ import {
   MenuUnfoldOutlined,
   NotificationOutlined,
 } from "@ant-design/icons";
-import { Button, Menu, MenuProps } from "antd";
+import { Avatar, Button, Menu, MenuProps } from "antd";
 import React, { useEffect, useState } from "react";
 import { useMenu } from "../../contexts/SidebarContext";
 import { useNavigate } from "react-router-dom";
@@ -26,25 +26,35 @@ export const SidebarNavigation = () => {
   const { handleChangeSidebar, isSidebarOpen } = useMenu();
   const [items, setItems] = useState<MenuItem[]>([]);
   const translation = useTranslation().i18n.language;
+  const [openKeys, setOpenKeys] = useState(["institution"]);
+
+  const onOpenChange: MenuProps["onOpenChange"] = (keys) => {
+    const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
+    if (i.map((item) => item?.key).indexOf(latestOpenKey!) === -1) {
+      setOpenKeys(keys);
+    } else {
+      setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
+    }
+  };
 
   function handleNavigate(pathArray: string[]) {
     navigate(pathArray.reverse().join("/"));
   }
 
   function getItem(
-    label: React.ReactNode,
     key: React.Key,
     icon?: React.ReactNode,
     children?: MenuItem[] | null,
     disabled?: boolean,
     onClick?: (e: any) => void | null,
-    style?: any
+    style?: any,
+    label?: React.ReactNode
   ): MenuItem {
     return {
       key,
       icon,
       children,
-      label,
+      label: label ?? t(`menus.${key}`),
       disabled,
       onClick,
       style,
@@ -52,418 +62,345 @@ export const SidebarNavigation = () => {
   }
 
   const i: MenuItem[] = [
-    getItem(import.meta.env.VITE_APP_COMPANY_NAME, "0", null, null, true),
-    { type: "divider" },
     getItem(
-      t("menus.register"),
-      "register",
-      <FolderAddOutlined style={{ fontSize: "23px" }} />,
-      [
-        getItem(t("menus.organization"), "organization", null, [
-          getItem(
-            t("menus.users"),
-            "users",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath)
-            // { display: "none" }
-          ),
-          getItem(t("menus.categories"), "categories", null, null, false, (e) =>
-            handleNavigate(e?.keyPath)
-          ),
-          getItem(
-            t("menus.bank_maintain"),
-            "bank_maintain",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath)
-          ),
-          getItem(
-            t("menus.general_configs"),
-            "general_configs",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath)
-          ),
-          getItem(
-            t("menus.organization_reports"),
-            "organization_reports",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath)
-          ),
-        ]),
-        getItem(t("menus.partner"), "partner", null, [
-          getItem(t("menus.partners"), "partners", null, null, false, (e) =>
-            handleNavigate(e?.keyPath)
-          ),
-          getItem(
-            t("menus.partner_users"),
-            "partner_users",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath)
-          ),
-          getItem(
-            t("menus.partner_reports"),
-            "partner_reports",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath)
-          ),
-        ]),
-        getItem(t("menus.merchant"), "merchant", null, [
-          getItem(t("menus.merchants"), "merchants", null, null, false, (e) =>
-            handleNavigate(e?.keyPath)
-          ),
-          getItem(
-            t("menus.merchant_users"),
-            "merchant_users",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath)
-          ),
-          getItem(
-            t("menus.merchant_blacklist"),
-            "merchant_blacklist",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath)
-          ),
-          getItem(
-            t("menus.merchant_reports"),
-            "merchant_reports",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath)
-          ),
-        ]),
-        getItem(t("menus.person"), "person", null, [
-          getItem(t("menus.persons"), "persons", null, null, false, (e) =>
-            handleNavigate(e?.keyPath)
-          ),
-          getItem(t("menus.whitelist"), "whitelist", null, null, false, (e) =>
-            handleNavigate(e?.keyPath)
-          ),
-          getItem(
-            t("menus.person_accounts"),
-            "person_accounts",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath)
-          ),
-          getItem(
-            t("menus.person_blacklist"),
-            "person_blacklist",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath)
-          ),
-          getItem(
-            t("menus.person_reports"),
-            "person_reports",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath)
-          ),
-        ]),
-      ]
+      "institution",
+      null,
+      null,
+      true,
+      undefined,
+      { fontSize: "16px" },
+      import.meta.env.VITE_APP_COMPANY_NAME
     ),
-    getItem(
-      t("menus.moviment"),
-      "moviment",
-      <DollarOutlined style={{ fontSize: "23px" }} />,
-      [
-        getItem(t("menus.moviments"), "moviments", null, null, false, (e) =>
-          handleNavigate(e?.keyPath)
-        ),
+    { type: "divider" },
+    getItem("register", <FolderAddOutlined style={{ fontSize: "23px" }} />, [
+      getItem("organization", null, [
         getItem(
-          t("menus.moviment_reports"),
-          "moviment_reports",
+          "users",
           null,
           null,
           false,
           (e) => handleNavigate(e?.keyPath)
+          // { display: "none" }
         ),
-      ]
-    ),
-    getItem(
-      t("menus.consult"),
-      "consult",
-      <FileSearchOutlined style={{ fontSize: "23px" }} />,
-      [
-        getItem("Paybrokers", "consult_organization", null, [
-          getItem(
-            t("menus.organization_bank_statement"),
-            "organization_bank_statement",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath)
+        getItem("categories", null, null, false, (e) =>
+          handleNavigate(e?.keyPath)
+        ),
+        getItem("bank_maintain", null, null, false, (e) =>
+          handleNavigate(e?.keyPath)
+        ),
+        getItem("general_configs", null, null, false, (e) =>
+          handleNavigate(e?.keyPath)
+        ),
+        getItem(
+          "organization_reports",
+          null,
+          [
+            getItem("organization_reports_users", null, null, false, (e) =>
+              handleNavigate(e?.keyPath.reverse())
+            ),
+            getItem("organization_reports_categories", null, null, false, (e) =>
+              handleNavigate(e?.keyPath.reverse())
+            ),
+          ],
+          false,
+          (e) => handleNavigate(e?.keyPath)
+        ),
+      ]),
+      getItem("operator", null, [
+        getItem("operators", null, null, false, (e) =>
+          handleNavigate(e?.keyPath)
+        ),
+        getItem("operator_users", null, null, false, (e) =>
+          handleNavigate(e?.keyPath)
+        ),
+        getItem(
+          "operator_reports",
+          null,
+          [
+            getItem("operator_operators_reports", null, null, false, (e) =>
+              handleNavigate(e?.keyPath.reverse())
+            ),
+            getItem("operator_users_reports", null, null, false, (e) =>
+              handleNavigate(e?.keyPath.reverse())
+            ),
+          ],
+          false,
+          (e) => handleNavigate(e?.keyPath)
+        ),
+      ]),
+      getItem("aggregator", null, [
+        getItem("aggregators", null, null, false, (e) =>
+          handleNavigate(e?.keyPath)
+        ),
+        getItem("aggregator_users", null, null, false, (e) =>
+          handleNavigate(e?.keyPath)
+        ),
+        getItem(
+          "aggregator_reports",
+          null,
+          [
+            getItem("aggregator_aggregators_reports", null, null, false, (e) =>
+              handleNavigate(e?.keyPath.reverse())
+            ),
+            getItem("aggregator_users_reports", null, null, false, (e) =>
+              handleNavigate(e?.keyPath.reverse())
+            ),
+          ],
+          false,
+          (e) => handleNavigate(e?.keyPath)
+        ),
+      ]),
+      getItem("partner", null, [
+        getItem("partners", null, null, false, (e) =>
+          handleNavigate(e?.keyPath)
+        ),
+        getItem("partner_users", null, null, false, (e) =>
+          handleNavigate(e?.keyPath)
+        ),
+        getItem(
+          "partner_reports",
+          null,
+          [
+            getItem("partner_partners_reports", null, null, false, (e) =>
+              handleNavigate(e?.keyPath.reverse())
+            ),
+            getItem("partner_users_reports", null, null, false, (e) =>
+              handleNavigate(e?.keyPath.reverse())
+            ),
+          ],
+          false,
+          (e) => handleNavigate(e?.keyPath)
+        ),
+      ]),
+      getItem("merchant", null, [
+        getItem("merchants", null, null, false, (e) =>
+          handleNavigate(e?.keyPath)
+        ),
+        getItem("merchant_users", null, null, false, (e) =>
+          handleNavigate(e?.keyPath)
+        ),
+        getItem("merchant_blacklist", null, null, false, (e) =>
+          handleNavigate(e?.keyPath)
+        ),
+        getItem(
+          "merchant_reports",
+          null,
+          [
+            getItem("merchant_merchants_reports", null, null, false, (e) =>
+              handleNavigate(e?.keyPath.reverse())
+            ),
+            getItem("merchant_users_reports", null, null, false, (e) =>
+              handleNavigate(e?.keyPath.reverse())
+            ),
+          ],
+          false,
+          (e) => handleNavigate(e?.keyPath)
+        ),
+      ]),
+      getItem("person", null, [
+        getItem("persons", null, null, false, (e) =>
+          handleNavigate(e?.keyPath)
+        ),
+        getItem("whitelist", null, null, false, (e) =>
+          handleNavigate(e?.keyPath)
+        ),
+        getItem("person_accounts", null, null, false, (e) =>
+          handleNavigate(e?.keyPath)
+        ),
+        getItem("person_blacklist", null, null, false, (e) =>
+          handleNavigate(e?.keyPath)
+        ),
+        getItem(
+          "person_reports",
+          null,
+          [
+            getItem("person_persons_reports", null, null, false, (e) =>
+              handleNavigate(e?.keyPath.reverse())
+            ),
+            getItem("client_bank_reports", null, null, false, (e) =>
+              handleNavigate(e?.keyPath.reverse())
+            ),
+            getItem("pix_whitelist_reports", null, null, false, (e) =>
+              handleNavigate(e?.keyPath.reverse())
+            ),
+          ],
+          false,
+          (e) => handleNavigate(e?.keyPath)
+        ),
+      ]),
+    ]),
+    getItem("moviment", <DollarOutlined style={{ fontSize: "23px" }} />, [
+      getItem(
+        "organization_moviments",
+        null,
+        [
+          getItem("organization_manual_moviments", null, null, false, (e) =>
+            handleNavigate(e?.keyPath.reverse())
           ),
-          getItem(
-            t("menus.organization_balance"),
-            "organization_balance",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath)
+          getItem("organization_moviments_reports", null, null, false, (e) =>
+            handleNavigate(e?.keyPath.reverse())
           ),
-          getItem(
-            t("menus.organization_history"),
-            "organization_history",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath)
+        ],
+        false,
+        (e) => handleNavigate(e?.keyPath)
+      ),
+      getItem(
+        "merchant_moviments",
+        null,
+        [
+          getItem("merchant_manual_moviments", null, null, false, (e) =>
+            handleNavigate(e?.keyPath.reverse())
           ),
-          getItem(
-            t("menus.consult_organization_reports"),
-            "consult_organization_reports",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath)
+          getItem("merchant_moviments_reports", null, null, false, (e) =>
+            handleNavigate(e?.keyPath.reverse())
           ),
-        ]),
-        getItem("Empresas", "consult_merchant", null, [
-          getItem(
-            t("menus.merchant_bank_statement"),
-            "merchant_bank_statement",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath)
-          ),
-          getItem(
-            t("menus.merchant_balance"),
-            "merchant_balance",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath)
-          ),
-          getItem(
-            t("menus.merchant_history"),
-            "merchant_history",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath)
-          ),
-          getItem(
-            t("menus.consult_merchant_reports"),
-            "consult_merchant_reports",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath)
-          ),
-        ]),
-        getItem(t("menus.deposit"), "deposit", null, [
-          getItem(
-            t("menus.generated_deposits"),
-            "generated_deposits",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath)
-          ),
-          getItem(
-            t("menus.paid_deposits"),
-            "paid_deposits",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath)
-          ),
-          getItem(
-            t("menus.undelivered_deposits"),
-            "undelivered_deposits",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath)
-          ),
+        ],
+        false,
+        (e) => handleNavigate(e?.keyPath)
+      ),
+    ]),
+    getItem("consult", <FileSearchOutlined style={{ fontSize: "23px" }} />, [
+      getItem("consult_organization", null, [
+        getItem("organization_bank_statement", null, null, false, (e) =>
+          handleNavigate(e?.keyPath)
+        ),
+        getItem("organization_balance", null, null, false, (e) =>
+          handleNavigate(e?.keyPath)
+        ),
+        getItem("organization_history", null, null, false, (e) =>
+          handleNavigate(e?.keyPath)
+        ),
+        getItem("consult_organization_reports", null, null, false, (e) =>
+          handleNavigate(e?.keyPath)
+        ),
+      ]),
+      getItem("consult_merchant", null, [
+        getItem("merchant_bank_statement", null, null, false, (e) =>
+          handleNavigate(e?.keyPath)
+        ),
+        getItem("merchant_balance", null, null, false, (e) =>
+          handleNavigate(e?.keyPath)
+        ),
+        getItem("merchant_history", null, null, false, (e) =>
+          handleNavigate(e?.keyPath)
+        ),
+        getItem("consult_merchant_reports", null, null, false, (e) =>
+          handleNavigate(e?.keyPath)
+        ),
+      ]),
+      getItem("deposit", null, [
+        getItem("generated_deposits", null, null, false, (e) =>
+          handleNavigate(e?.keyPath)
+        ),
+        getItem("paid_deposits", null, null, false, (e) =>
+          handleNavigate(e?.keyPath)
+        ),
+        getItem("undelivered_deposits", null, null, false, (e) =>
+          handleNavigate(e?.keyPath)
+        ),
 
-          getItem(
-            t("menus.deposits_reports"),
-            "deposits_reports",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath)
-          ),
-        ]),
-        getItem(t("menus.withdrawals"), "withdrawals", null, [
-          getItem(
-            t("menus.generated_withdrawals"),
-            "generated_withdrawals",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath)
-          ),
-          getItem(
-            t("menus.paid_withdrawals"),
-            "paid_withdrawals",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath)
-          ),
-          getItem(
-            t("menus.undelivered_withdrawals"),
-            "undelivered_withdrawals",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath)
-          ),
+        getItem(
+          "deposits_reports",
+          null,
+          [
+            getItem("generated_deposits_reports", null, null, false, (e) =>
+              handleNavigate(e?.keyPath.reverse())
+            ),
+            getItem("paid_deposits_reports", null, null, false, (e) =>
+              handleNavigate(e?.keyPath.reverse())
+            ),
+            getItem("webhooks_reports", null, null, false, (e) =>
+              handleNavigate(e?.keyPath.reverse())
+            ),
+          ],
+          false,
+          (e) => handleNavigate(e?.keyPath)
+        ),
+      ]),
+      getItem("withdrawals", null, [
+        getItem("generated_withdrawals", null, null, false, (e) =>
+          handleNavigate(e?.keyPath)
+        ),
+        getItem("paid_withdrawals", null, null, false, (e) =>
+          handleNavigate(e?.keyPath)
+        ),
+        getItem("undelivered_withdrawals", null, null, false, (e) =>
+          handleNavigate(e?.keyPath)
+        ),
 
-          getItem(
-            t("menus.withdrawals_reports"),
-            "withdrawals_reports",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath)
-          ),
-        ]),
-        getItem(t("menus.refunds"), "refunds", null, [
-          getItem(
-            t("menus.refund_deposits"),
-            "refund_deposits",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath)
-          ),
-          getItem(
-            t("menus.refund_withdrawals"),
-            "refund_withdrawals",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath)
-          ),
-          getItem(
-            t("menus.refund_manual_deposits"),
-            "refund_manual_deposits",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath)
-          ),
-          getItem(t("menus.refund_reports"), "error_logs_withdrawals", null, [
-            getItem(
-              t("menus.refund_deposits_reports"),
-              "refund_deposits_reports",
-              null,
-              null,
-              false,
-              (e) => handleNavigate(e?.keyPath)
+        getItem(
+          "withdrawals_reports",
+          null,
+          [
+            getItem("generated_withdrawals_reports", null, null, false, (e) =>
+              handleNavigate(e?.keyPath.reverse())
             ),
-            getItem(
-              t("menus.refund_manual_reports"),
-              "refund_manual_reports",
-              null,
-              null,
-              false,
-              (e) => handleNavigate(e?.keyPath)
+            getItem("paid_withdrawals_reports", null, null, false, (e) =>
+              handleNavigate(e?.keyPath.reverse())
             ),
-            getItem(
-              t("menus.refund_withdrawals_reports"),
-              "refund_withdrawals_reports",
-              null,
-              null,
-              false,
-              (e) => handleNavigate(e?.keyPath)
+            getItem("withdrawals_webhooks_reports", null, null, false, (e) =>
+              handleNavigate(e?.keyPath.reverse())
             ),
-          ]),
-        ]),
-        getItem(t("menus.consult_persons"), "consult_persons", null, [
-          getItem(t("menus.check_cpf"), "check_cpf", null, null, false, (e) =>
+          ],
+          false,
+          (e) => handleNavigate(e?.keyPath)
+        ),
+      ]),
+      getItem("refunds", null, [
+        getItem("refund_deposits", null, null, false, (e) =>
+          handleNavigate(e?.keyPath)
+        ),
+        getItem("refund_withdrawals", null, null, false, (e) =>
+          handleNavigate(e?.keyPath)
+        ),
+        getItem("refund_manual_deposits", null, null, false, (e) =>
+          handleNavigate(e?.keyPath)
+        ),
+        getItem("refund_reports", null, [
+          getItem("refund_deposits_reports", null, null, false, (e) =>
+            handleNavigate(e?.keyPath)
+          ),
+          getItem("refund_manual_reports", null, null, false, (e) =>
+            handleNavigate(e?.keyPath)
+          ),
+          getItem("refund_withdrawals_reports", null, null, false, (e) =>
             handleNavigate(e?.keyPath)
           ),
         ]),
-        getItem(t("menus.api_logs"), "api_logs", null, [
-          getItem(
-            t("menus.error_logs_deposits"),
-            "error_logs_deposits",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath)
-          ),
-          getItem(
-            "Registro de erros",
-            "error_logs_withdrawals",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath)
+      ]),
+      getItem("consult_persons", null, [
+        getItem("check_cpf", null, null, false, (e) =>
+          handleNavigate(e?.keyPath)
+        ),
+      ]),
+      getItem("api_logs", null, [
+        getItem("error_logs_deposits", null, null, false, (e) =>
+          handleNavigate(e?.keyPath)
+        ),
+        getItem("error_logs_withdrawals", null, null, false, (e) =>
+          handleNavigate(e?.keyPath)
+        ),
+      ]),
+    ]),
+    getItem("support", <NotificationOutlined style={{ fontSize: "23px" }} />, [
+      getItem("blacklists", null, [
+        getItem("bank_institutions", null, null, false, (e) =>
+          handleNavigate(e?.keyPath)
+        ),
+        getItem("third_parties_pix_key", null, null, false, (e) =>
+          handleNavigate(e?.keyPath)
+        ),
+        getItem("invalid_pix_key", null, null, false, (e) =>
+          handleNavigate(e?.keyPath)
+        ),
+        getItem("blacklists_reports", null, [
+          getItem("bank_institutions_reports", null, null, false, (e) =>
+            handleNavigate(e?.keyPath)
           ),
         ]),
-      ]
-    ),
+      ]),
+    ]),
     getItem(
-      "Suporte",
-      "support",
-      <NotificationOutlined style={{ fontSize: "23px" }} />,
-      [
-        getItem("Blacklists", "Blacklists", null, [
-          getItem(
-            t("menus.bank_institutions"),
-            "bank_institutions",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath)
-          ),
-          getItem(
-            t("menus.third_parties_pix_key"),
-            "third_parties_pix_key",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath)
-          ),
-          getItem(
-            t("menus.invalid_pix_key"),
-            "invalid_pix_key",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath)
-          ),
-          getItem(t("menus.blacklists_reports"), "blacklists_reports", null, [
-            getItem(
-              t("menus.bank_institutions_reports"),
-              "bank_institutions_reports",
-              null,
-              null,
-              false,
-              (e) => handleNavigate(e?.keyPath)
-            ),
-          ]),
-        ]),
-      ]
-    ),
-    getItem(
-      "Sair",
       "logout",
       <LogoutOutlined style={{ fontSize: "23px" }} />,
       null,
@@ -514,14 +451,16 @@ export const SidebarNavigation = () => {
       <Menu
         style={{
           minHeight: "100%",
+          maxHeight: "100%",
+          overflow: "auto",
           backgroundColor: defaultTheme.colors.primary,
           display: isMobile && !isSidebarOpen ? "none" : "inherit",
         }}
+        openKeys={isSidebarOpen ? openKeys : undefined}
+        onOpenChange={isSidebarOpen ? onOpenChange : undefined}
         disabledOverflow
         translate="yes"
-        defaultSelectedKeys={["1"]}
-        defaultOpenKeys={["sub1"]}
-        mode={"inline"}
+        mode="inline"
         theme={import.meta.env.VITE_APP_MENU_THEME}
         inlineCollapsed={!isSidebarOpen}
         items={items}

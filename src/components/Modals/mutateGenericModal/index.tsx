@@ -37,17 +37,11 @@ export const MutateModal = ({
   const submitRef = useRef<HTMLButtonElement>(null);
 
   const handleChange = (event: any) => {
-    console.log(event.target.name);
-
     setBody((state: any) => ({
       ...state,
       [event.target.name]: event.target.value,
     }));
   };
-
-  useEffect(() => {
-    if (type === "create") setBody({});
-  }, []);
 
   return (
     <Drawer
@@ -55,6 +49,7 @@ export const MutateModal = ({
       onClose={() => {
         setOpen(false);
         formRef.current?.resetFields();
+        if (type === "create") setBody({});
       }}
       bodyStyle={{ overflowX: "hidden" }}
       title={modalName}

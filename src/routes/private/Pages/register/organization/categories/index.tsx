@@ -70,7 +70,7 @@ export const OrganizationCategories = () => {
     { name: "id", type: "id" },
     { name: "name", type: "text" },
     { name: "description", type: "text" },
-    { name: "status", type: "status" },
+    { name: "status", type: "boolean" },
     { name: "created_at", type: "date" },
   ];
 

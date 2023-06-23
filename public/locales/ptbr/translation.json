@@ -27,7 +27,7 @@
     "moviment": "Movimentações",
     "moviments": "Lançamentos manuais",
     "moviment_reports": "Relatórios movimentações",
-    "consult_organization": "Consultas organização",
+    "consult_organization": "Organização",
     "organization_bank_statement": "Extrato bancário",
     "organization_balance": "Saldo",
     "organization_history": "Histórico",
@@ -68,7 +68,43 @@
     "third_parties_pix_key": "Chaves pix de terceiros",
     "invalid_pix_key": "Chaves pix inválidas",
     "blacklists_reports": "Relatórios",
-    "bank_institutions_reports": "Instituições bancárias"
+    "bank_institutions_reports": "Instituições bancárias",
+    "operator": "Operador",
+    "operators": "Operadores",
+    "operator_users": "Usuários operadores",
+    "operator_reports": "Relatórios operador",
+    "operator_operators_reports": "Operadores",
+    "operator_users_reports": "Usuários operadores",
+    "aggregator": "Agregadores",
+    "aggregators": "Agregadores",
+    "aggregator_users": "Usuários agregadores",
+    "aggregator_reports": "Relatórios agregadores",
+    "aggregator_aggregators_reports": "Agregadores",
+    "aggregator_users_reports": "Usuários agregadores",
+    "organization_reports_users": "Usuários organização",
+    "organization_reports_categories": "Categorias",
+    "partner_partners_reports": "Plataformas",
+    "partner_users_reports": "Usuários plataforma",
+    "merchant_merchants_reports": "Empresas",
+    "merchant_users_reports": "Usuários empresa",
+    "person_persons_reports": "Pessoas",
+    "client_bank_reports": "Bancos de clientes",
+    "pix_whitelist_reports": "Whitelist de chave PIX",
+    "organization_moviments": "Organização",
+    "organization_manual_moviments": "Lançamentos manuais",
+    "organization_moviments_reports": "Relatórios",
+    "merchant_moviments": "Empresa",
+    "merchant_manual_moviments": "Lançamentos manuais",
+    "merchant_moviments_reports": "Relatórios",
+    "support": "Suporte",
+    "blacklists": "Blacklists",
+    "logout": "Sair",
+    "generated_withdrawals_reports": "Saques gerados",
+    "paid_withdrawals_reports": "Saques pagos",
+    "withdrawals_webhooks_reports": "Webhooks",
+    "generated_deposits_reports": "Depósitos gerados",
+    "paid_deposits_reports": "Depósitos pagos",
+    "webhooks_reports": "Webhooks"
   },
 
   "messages": {
@@ -80,7 +116,9 @@
     "create": "criar",
     "update": "atualizar",
     "created": "Criado",
-    "updated": "Atualizado"
+    "updated": "Atualizado",
+    "confirm_action_title": "{{action}} dados",
+    "are_you_sure": "Deseja {{action}} {{itens}}?"
   },
   "login": {
     "sign_in": "Faça login",
@@ -95,7 +133,8 @@
     "update": "Atualizar",
     "new_user": "novo usuário",
     "update_user": "Atualizar usuário",
-    "new_categorie": "nova categoria"
+    "new_categorie": "nova categoria",
+    "update_general_configs": "Atualizar configurações gerais"
   },
   "modal": {
     "confirm": "Confirmar",
@@ -106,7 +145,8 @@
     "category": "Categoria",
     "user": "Usuário",
     "new_category": "Nova categoria",
-    "update_category": "Atualizar categoria"
+    "update_category": "Atualizar categoria",
+    "modal_update_bank": "Atualizar banco"
   },
   "input": {
     "required": "Por favor, insira seu {{field}}",
@@ -261,7 +301,10 @@
     "cash_in": "Entrada",
     "cash_out": "Saída",
     "financial": "Financeiro",
-    "administrative": "Administrativo"
+    "administrative": "Administrativo",
+    "internal_account_number": "Número de conta interna",
+    "account_name": "Nome da conta",
+    "account_document": "Documento da conta"
   },
   "actions": {
     "details": "Detalhes",

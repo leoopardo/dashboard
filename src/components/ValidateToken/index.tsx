@@ -57,7 +57,6 @@ export const ValidateToken = ({
   } = useValidatePhone({ validation_token: tokenState });
   const [ableToResend, setAbleToResend] = useState<boolean>(true);
 
-  console.log(Self);
 
   useEffect(() => {
     refetchSelf();

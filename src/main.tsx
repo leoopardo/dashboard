@@ -6,6 +6,7 @@ import { QueryClientProvider } from "react-query";
 import "./i18n.ts";
 import { queryClient } from "./services/queryClient.ts";
 
+
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <QueryClientProvider client={queryClient}>
     <MenuProvider>

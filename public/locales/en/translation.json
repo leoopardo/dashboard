@@ -27,7 +27,7 @@
     "moviment": "Bank transactions",
     "moviments": "Manual transactions",
     "moviment_reports": "Transactions reports",
-    "consult_organization": "Organization consults",
+    "consult_organization": "Organization",
     "organization_bank_statement": "Bank statement",
     "organization_balance": "Balance",
     "organization_history": "History",
@@ -66,7 +66,43 @@
     "third_parties_pix_key": "Third parties pix keys",
     "invalid_pix_key": "Invalid pix keys",
     "blacklists_reports": "Reports",
-    "bank_institutions_reports": "Bank institutions"
+    "bank_institutions_reports": "Bank institutions",
+    "operator": "Operator",
+    "operators": "Operators",
+    "operator_users": "Operator users",
+    "operator_reports": "Operator reports",
+    "operator_operators_reports": "Operators",
+    "operator_users_reports": "Operator users",
+    "aggregator": "Aggregator",
+    "aggregators": "Aggregators",
+    "aggregator_users": "Aggregator users",
+    "aggregator_reports": "Aggregator reports",
+    "aggregator_aggregators_reports": "Aggregators",
+    "aggregator_users_reports": "Aggregator users",
+    "organization_reports_users": "Organization users",
+    "organization_reports_categories": "Organization categories",
+    "partner_partners_reports": "Partners",
+    "partner_users_reports": "Partner users",
+    "merchant_merchants_reports": "Merchants",
+    "merchant_users_reports": "Merchant users",
+    "person_persons_reports": "Persons",
+    "client_bank_reports": "Client bank accounts",
+    "pix_whitelist_reports": "PIX key whitelist",
+    "organization_moviments": "Organization transactions",
+    "organization_manual_moviments": "Manual transactions",
+    "organization_moviments_reports": "Reports",
+    "merchant_moviments": "Merchant transactions",
+    "merchant_manual_moviments": "Manual transactions",
+    "merchant_moviments_reports": "Reports",
+    "support": "Support",
+    "blacklists": "Blacklists",
+    "logout": "Logout",
+    "generated_withdrawals_reports": "Generated withdrawals",
+    "paid_withdrawals_reports": "Paid withdrawals",
+    "withdrawals_webhooks_reports": "Webhooks",
+    "generated_deposits_reports": "Generated deposits",
+    "paid_deposits_reports": "Paid deposits",
+    "webhooks_reports": "Webhooks"
   },
 
   "messages": {
@@ -78,7 +114,9 @@
     "create": "create",
     "update": "update",
     "created": "Created",
-    "updated": "Updated"
+    "updated": "Updated",
+    "confirm_action_title": "{{action}} data",
+    "are_you_sure": "Do you want {{action}} the {{itens}}?"
   },
   "login": {
     "sign_in": "Sign in",
@@ -93,7 +131,8 @@
     "update": "Update",
     "new_user": "new user",
     "update_user": "Update user",
-    "new_categorie": "new categorie"
+    "new_categorie": "new categorie",
+    "update_general_configs": "Update general configs"
   },
   "input": {
     "required": "Please input your {{field}}",
@@ -140,7 +179,8 @@
     "category": "Category",
     "user": "User",
     "new_category": "New category",
-    "update_category": "Update category"
+    "update_category": "Update category",
+    "modal_update_bank": "Update bank"
   },
   "table": {
     "id": "ID",
@@ -259,7 +299,10 @@
     "cash_in": "Cash in",
     "cash_out": "Cash out",
     "financial": "Financial",
-    "administrative": "Administrative"
+    "administrative": "Administrative",
+    "internal_account_number": "Internal account number",
+    "account_name": "Account name",
+    "account_document": "Account document"
   },
   "actions": {
     "details": "Details",

@@ -212,7 +212,6 @@ export const FiltersModal = ({
                               "YYYY-MM-DDTHH:mm:ss.SSS"
                             ),
                           }));
-                          console.log(filtersQuery);
                         }}
                       />
                     </ConfigProvider>
@@ -281,7 +280,7 @@ export const FiltersModal = ({
                         onChange={(event: any) => {
                           isAgeAbled(event.target.checked);
                           setIsAgeRangeAbled(event.target.checked);
-                          console.log(isAgeRangeAbled);
+
                         }}
                       >
                         {t("table.age")}
@@ -319,7 +318,6 @@ export const FiltersModal = ({
                         onChange={(event: any) => {
                           isValueAbled(event.target.checked);
                           setIsValueRangeAbled(event.target.checked);
-                          console.log(isAgeRangeAbled);
                         }}
                       >
                         {t("table.value")}
@@ -401,7 +399,6 @@ export const FiltersModal = ({
                             ...state,
                             [filter]: value,
                           }));
-                          console.log(value);
                         }}
                         filterOption={(inputValue, option) =>
                           option!.value
@@ -455,7 +452,6 @@ export const FiltersModal = ({
                             ...state,
                             [filter]: value,
                           }));
-                          console.log(value);
                         }}
                         options={
                           selectOptions[filter]?.map((option: any) => {

@@ -140,7 +140,7 @@ export const CustomTable = (props: TableProps) => {
                         </Button>
                       </CopyToClipboard>
                     }
-                    style={{ maxWidth: "200px", textOverflow: "ellipsis" }}
+                    style={{ maxWidth: "250px", textOverflow: "ellipsis" }}
                     value={text}
                     readOnly
                   />
@@ -347,14 +347,14 @@ export const CustomTable = (props: TableProps) => {
             ),
           }}
           pagination={{
-            current: Number(props?.data?.page),
-            pageSize: Number(props?.data?.limit),
-            total: !props.removeTotal
-              ? props?.data?.total
-              : props?.data?.limit > props?.items?.length
-              ? props?.items?.length
-              : props?.data?.limit * props?.data?.page + 1,
-            onChange: (page) => {
+            current: Number(props?.query?.page),
+            pageSize: Number(props?.query?.limit),
+            total: props.removeTotal
+              ? props?.items?.length < props?.data?.limit
+                ? props?.data?.limit * props?.data?.page
+                : props?.data?.limit * props?.data?.page + 1
+              : props?.data?.total,
+            onChange: (page) => {     
               props.setQuery((state: any) => ({ ...state, page }));
             },
             pageSizeOptions: [10, 25, 50, 100],

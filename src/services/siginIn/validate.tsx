@@ -21,7 +21,10 @@ export function useValidate(rememberMe?: boolean, token?: string) {
 
       return response.data;
     },
-    { refetchOnWindowFocus: rememberMe ? "always" : false }
+    {
+      refetchOnWindowFocus: rememberMe ? "always" : false,
+    
+    }
   );
   useEffect(() => {
     if (isSuccess)

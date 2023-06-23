@@ -15,24 +15,27 @@ export function useToken(
 ) {
   const { data, isLoading, error, mutate } = useMutation<
     TokenInterface | null | undefined
-  >("token", async () => {
-    const response = await api.post(
-      "core/token",
-      {},
-      {
-        auth: user,
+  >(
+    "token",
+    async () => {
+      const response = await api.post(
+        "core/token",
+        {},
+        {
+          auth: user,
+        }
+      );
+      localStorage.removeItem("token");
+      sessionStorage.removeItem("token");
+
+      if (rememberMe) {
+        localStorage.setItem("token", response.data.token);
       }
-    );
-    localStorage.removeItem("token");
-    sessionStorage.removeItem("token");
+      sessionStorage.setItem("token", response.data.token);
 
-    if (rememberMe) {
-      localStorage.setItem("token", response.data.token);
-    }
-    sessionStorage.setItem("token", response.data.token);
-
-    return response.data;
-  });
+      return response.data;
+    },
+  );
 
   useEffect(() => {
     if (data?.token) {
