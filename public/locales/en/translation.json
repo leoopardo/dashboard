@@ -302,7 +302,8 @@
     "administrative": "Administrative",
     "internal_account_number": "Internal account number",
     "account_name": "Account name",
-    "account_document": "Account document"
+    "account_document": "Account document",
+    "domain": "Domain"
   },
   "actions": {
     "details": "Details",

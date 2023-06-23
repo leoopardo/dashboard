@@ -15,6 +15,7 @@ import { OrganizationCategories } from "./Pages/register/organization/categories
 import { BankMaintenence } from "./Pages/register/organization/bankMaintenance";
 import { GeneralConfigs } from "./Pages/register/organization/generalConfigs";
 import { PartnerUsers } from "./Pages/register/partner/users";
+import { MerchantView } from "./Pages/register/merchant/merchants";
 
 export const PrivateRoutes = () => {
   const navigate = useNavigate();
@@ -63,6 +64,9 @@ export const PrivateRoutes = () => {
           </Route>
           <Route path="partner">
             <Route path="partner_users" element={<PartnerUsers />} />
+          </Route>
+          <Route path="merchant">
+            <Route path="merchants" element={<MerchantView />} />
           </Route>
         </Route>
       </Route>
