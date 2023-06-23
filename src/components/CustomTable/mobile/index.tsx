@@ -71,39 +71,6 @@ export const Mobile = (props: MobileProps) => {
                       </p>
                     );
 
-                  case "status":
-                    return (
-                      <p
-                        key={label}
-                        style={{ color: getColor(item[label].toLowerCase()) }}
-                      >
-                        {t(`table.${item[label].toLowerCase()}`)}:{" "}
-                        <>
-                          {new Intl.NumberFormat("pt-BR", {
-                            style: "currency",
-                            currency: "BRL",
-                          }).format(Number(item?.value) || 0)}
-                        </>
-                      </p>
-                    );
-                  case "boolean":
-                    return {
-                      title: (
-                        <p style={{ width: "100%", textAlign: "center" }}>
-                          {t(`table.${item[label]}`)}
-                        </p>
-                      ),
-                      key: item[label],
-                      dataIndex: item[label],
-                      render: (text: string) => (
-                        <p
-                          key={item[label]}
-                          style={{ width: "100%", textAlign: "center" }}
-                        >
-                          {item?.value ? t("table.true") : t("table.false")}
-                        </p>
-                      ),
-                    };
                   default:
                     return <p key={label}>{item[label]}</p>;
                 }
@@ -168,6 +135,71 @@ export const Mobile = (props: MobileProps) => {
                         </p>
                       </Descriptions.Item>
                     );
+                  case "icon":
+                    return (
+                      <Descriptions.Item
+                        key={value.name}
+                        label={t(`table.${value.name}`)}
+                        labelStyle={{
+                          maxWidth: "100px",
+                          margin: 0,
+                          padding: 5,
+                        }}
+                      >
+                        <div style={{ width: "100%", textAlign: "center" }}>
+                          <Avatar
+                            src={item[value.name]}
+                            size="large"
+                            shape="square"
+                          />
+                        </div>
+                      </Descriptions.Item>
+                    );
+
+                  case "status":
+                    return (
+                      <Descriptions.Item
+                        key={value.name}
+                        label={t(`table.${value.name}`)}
+                        labelStyle={{
+                          maxWidth: "100px",
+                          margin: 0,
+                          padding: 5,
+                        }}
+                      >
+                        <p
+                          key={item[value?.name]}
+                          style={{
+                            color: getColor(item[value.name]?.toLowerCase()),
+                          }}
+                        >
+                          {t(`table.${item[value.name]?.toLowerCase()}`)}:{" "}
+                        </p>
+                      </Descriptions.Item>
+                    );
+
+                  case "boolean":
+                    return (
+                      <Descriptions.Item
+                        key={value.name}
+                        label={t(`table.${value.name}`)}
+                        labelStyle={{
+                          maxWidth: "100px",
+                          margin: 0,
+                          padding: 5,
+                        }}
+                      >
+                        <p
+                          key={item[value.name]}
+                          style={{ width: "100%", textAlign: "center" }}
+                        >
+                          {item[value.name]
+                            ? t("table.true")
+                            : t("table.false")}
+                        </p>
+                      </Descriptions.Item>
+                    );
+
                   case "document":
                     return (
                       <Descriptions.Item
@@ -192,6 +224,7 @@ export const Mobile = (props: MobileProps) => {
                     );
 
                   case "actions":
+                  case "action":
                     return;
 
                   default:
@@ -205,7 +238,13 @@ export const Mobile = (props: MobileProps) => {
                           padding: 5,
                         }}
                       >
-                        {item[value.name]}
+                        {" "}
+                        <p
+                          key={value.name}
+                          style={{ width: "100%", textAlign: "center" }}
+                        >
+                          {item[value.name]}
+                        </p>
                       </Descriptions.Item>
                     );
                 }

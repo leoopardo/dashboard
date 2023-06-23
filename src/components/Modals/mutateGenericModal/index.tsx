@@ -66,7 +66,7 @@ export const MutateModal = ({
           size="large"
           onClick={() => submitRef.current?.click()}
         >
-          {t("buttons.create")}
+          {type == "create" ? t("buttons.create") : t("buttons.update")}
         </Button>
       }
     >
@@ -133,6 +133,8 @@ export const MutateModal = ({
               </Form.Item>;
               return;
             case "status":
+            case "cash_in":
+            case "cash_out":
               return (
                 <Form.Item
                   label={t(`table.${field.label}`)}
@@ -143,7 +145,7 @@ export const MutateModal = ({
                   <Switch
                     checked={body[field.label]}
                     onChange={(e) =>
-                      setBody((state: any) => ({ ...state, status: e }))
+                      setBody((state: any) => ({ ...state, [field.label]: e }))
                     }
                   />
                 </Form.Item>

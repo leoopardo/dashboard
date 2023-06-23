@@ -92,6 +92,7 @@
   },
   "buttons": {
     "create": "Criar",
+    "update": "Atualizar",
     "new_user": "novo usuário",
     "update_user": "Atualizar usuário",
     "new_categorie": "nova categoria"
@@ -101,9 +102,11 @@
     "validate_token": "Validar token",
     "token_expires_in": "Token expira em",
     "resend_token_by_sms": "Reenviar token por SMS",
-    "validate_phone_number": "Validate phone number",
+    "validate_phone_number": "Validar número de telefone",
     "category": "Categoria",
-    "user": "Usuário"
+    "user": "Usuário",
+    "new_category": "Nova categoria",
+    "update_category": "Atualizar categoria"
   },
   "input": {
     "required": "Por favor, insira seu {{field}}",

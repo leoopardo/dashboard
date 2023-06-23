@@ -90,6 +90,7 @@
   },
   "buttons": {
     "create": "Create",
+    "update": "Update",
     "new_user": "new user",
     "update_user": "Update user",
     "new_categorie": "new categorie"
@@ -135,9 +136,11 @@
     "validate_token": "Validate token",
     "token_expires_in": "Token expires in",
     "resend_token_by_sms": "Resend token by SMS",
-    "validate_phone_number": "Validar número de telefone",
+    "validate_phone_number": "Validate phone number",
     "category": "Category",
-    "user": "User"
+    "user": "User",
+    "new_category": "New category",
+    "update_category": "Update category"
   },
   "table": {
     "id": "ID",
