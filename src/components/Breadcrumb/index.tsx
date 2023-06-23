@@ -40,5 +40,5 @@ export const BreadcrumbComponent = () => {
     });
   }, [location]);
 
-  return <Breadcrumb items={breadcrumbs} style={{ margin: "16px 0" }} />;
+  return <Breadcrumb items={breadcrumbs} style={{ margin: "16px 0", fontSize: "16px" }} />;
 };

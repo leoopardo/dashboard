@@ -19,6 +19,7 @@ interface NewuserModalprops {
   setCurrentUser?: Dispatch<SetStateAction<NewUserInterface | null>>;
   setUpdateBody?: Dispatch<SetStateAction<NewUserInterface | null>>;
   setIsValidateTokenOpen?: Dispatch<SetStateAction<boolean>>;
+  action: "create" | "update";
 }
 
 export interface NewUserInterface {
@@ -42,6 +43,7 @@ export const NewUserModal = ({
   setCurrentUser,
   setUpdateBody,
   setIsValidateTokenOpen,
+  action,
 }: NewuserModalprops) => {
   const { t } = useTranslation();
   const submitRef = useRef<HTMLButtonElement>(null);
@@ -115,6 +117,18 @@ export const NewUserModal = ({
         username: currentUser.username,
       }));
   }, [currentUser]);
+  useEffect(() => {
+    if (action === "create") {
+      setBody({
+        name: "",
+        username: "",
+        password: "",
+        group_id: 0,
+        status: true,
+        type: 2,
+      });
+    }
+  }, [action]);
 
   return (
     <Drawer

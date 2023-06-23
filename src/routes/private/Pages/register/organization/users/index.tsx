@@ -44,6 +44,7 @@ export const OrganizationUser = () => {
       ...updateUserBody,
       validation_token: tokenState,
     });
+  const [action, setAction] = useState<"create" | "update">("create");
 
   const columns: ColumnInterface[] = [
     { name: "id", type: "id" },
@@ -133,6 +134,7 @@ export const OrganizationUser = () => {
             type="primary"
             loading={isUsersDataFetching}
             onClick={() => {
+              setAction("create");
               setIsNewUserModal(true);
             }}
             style={{
@@ -168,6 +170,7 @@ export const OrganizationUser = () => {
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
                 onClick: () => {
+                  setAction("update");
                   setIsNewUserModal(true);
                 },
               },
@@ -205,6 +208,7 @@ export const OrganizationUser = () => {
       )}
       {isNewUserModal && (
         <NewUserModal
+          action={action}
           open={isNewUserModal}
           setOpen={setIsNewUserModal}
           currentUser={currentItem}

@@ -12,6 +12,7 @@ import { useCreateOrganizationUser } from "@services/register/organization/users
 import { toast } from "react-hot-toast";
 import { OrganizationUserItem } from "@src/services/types/register/organization/organizationUsers.interface";
 import { useUpdateOrganizationUser } from "@services/register/organization/users/updateUser";
+import { Toast } from "@src/components/Toast";
 interface NewuserModalprops {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -19,6 +20,7 @@ interface NewuserModalprops {
   setCurrentUser?: Dispatch<SetStateAction<NewUserInterface | null>>;
   setUpdateBody?: Dispatch<SetStateAction<NewUserInterface | null>>;
   setIsValidateTokenOpen?: Dispatch<SetStateAction<boolean>>;
+  action?: "create" | "update";
 }
 
 export interface NewUserInterface {
@@ -42,6 +44,7 @@ export const NewUserModal = ({
   setCurrentUser,
   setUpdateBody,
   setIsValidateTokenOpen,
+  action,
 }: NewuserModalprops) => {
   const { t } = useTranslation();
   const submitRef = useRef<HTMLButtonElement>(null);
@@ -85,26 +88,6 @@ export const NewUserModal = ({
   }
 
   useEffect(() => {
-    if (isSuccess) {
-      setOpen(false);
-      toast.success("Usuário criado com sucesso!");
-    }
-    if (error) {
-      toast.error("Erro ao criar usuário, tente novamente!");
-    }
-  }, [isSuccess, error]);
-
-  useEffect(() => {
-    if (updateSuccess) {
-      setOpen(false);
-      toast.success("Usuário atualizado com sucesso!");
-    }
-    if (updateError) {
-      toast.error("Erro ao atualizar usuário, tente novamente!");
-    }
-  }, [updateError, updateSuccess]);
-
-  useEffect(() => {
     if (currentUser)
       setBody((state) => ({
         ...state,
@@ -115,6 +98,19 @@ export const NewUserModal = ({
         username: currentUser.username,
       }));
   }, [currentUser]);
+
+  useEffect(() => {
+    if (action === "create") {
+      setBody({
+        name: "",
+        username: "",
+        password: "",
+        group_id: 0,
+        status: true,
+        type: 2,
+      });
+    }
+  }, [action]);
 
   return (
     <Drawer
@@ -331,6 +327,18 @@ export const NewUserModal = ({
           </button>
         </Form.Item>
       </Form>
+      <Toast
+        actionSuccess={t("messages.created")}
+        actionError={t("messages.create")}
+        error={error}
+        success={isSuccess}
+      />
+      <Toast
+        actionSuccess={t("messages.updated")}
+        actionError={t("messages.update")}
+        error={updateError}
+        success={updateSuccess}
+      />
     </Drawer>
   );
 };
