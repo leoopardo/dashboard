@@ -32,6 +32,7 @@ export const ViewModal = ({
       <Descriptions bordered style={{ margin: 0, padding: 0 }} column={1}>
         {item &&
           Object.keys(item).map((key: string) => {
+            if (typeof item[key] === ("object" || "array")) return;
             switch (key) {
               case "created_at":
               case "createdAt":
@@ -71,7 +72,7 @@ export const ViewModal = ({
                       : t(`table.${item[key.toLocaleLowerCase()]}`)}
                   </Descriptions.Item>
                 );
-                
+
               case "phone_validated":
                 return (
                   <Descriptions.Item

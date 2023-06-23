@@ -1,5 +1,5 @@
 import React from "react";
-import { Empty } from "antd";
+import { Empty, Result } from "antd";
 import { useTranslation } from "react-i18next";
 
 export const NotFount: React.FC = () => {
@@ -13,7 +13,11 @@ export const NotFount: React.FC = () => {
         alignItems: "center",
       }}
     >
-      <Empty description={t("messages.page_not_found")} />
+         <Result
+        status="404"
+        title="404"
+        subTitle={t("messages.page_not_found")}
+      />
     </div>
   );
 };

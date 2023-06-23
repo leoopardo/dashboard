@@ -72,17 +72,7 @@ export const MutateModal = ({
         disabled={submitLoading}
         onSubmitCapture={() => {
           submit();
-          if (success) {
-            setOpen(false);
-            toast.success(
-              t("messages.action_success", { type: t(`messages.${type}d`) })
-            );
-          }
-          if (error) {
-            toast.error(
-              t("messages.action_error", { type: t(`messages.${type}`) })
-            );
-          }
+          setOpen(false);
         }}
       >
         {fields.map((field) => {

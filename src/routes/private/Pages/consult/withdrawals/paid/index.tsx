@@ -4,7 +4,10 @@ import moment from "moment";
 import { TotalizersCards } from "./components/TotalizersCards";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Alert, Button, Input, Select, Space } from "antd";
-import { ColumnInterface, CustomTable } from "../../../../../../components/CustomTable";
+import {
+  ColumnInterface,
+  CustomTable,
+} from "../../../../../../components/CustomTable";
 import { ViewModal } from "../components/ViewModal";
 import { EyeFilled, SearchOutlined } from "@ant-design/icons";
 import { FiltersModal } from "../../../../../../components/FiltersModal";
@@ -115,7 +118,8 @@ export const PaidWithdrawals = () => {
       >
         <Grid item xs={12} md={4} lg={2}>
           <Button
-            style={{ width: "100%", height: 40 }}
+            size="large"
+            style={{ width: "100%" }}
             loading={
               isPaidWithdrawalsRowsFetching || isPaidWithdrawalsTotalFetching
             }
@@ -139,7 +143,7 @@ export const PaidWithdrawals = () => {
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
         <Grid item xs={12} md={2} lg={2}>
           <Select
-            style={{ width: "100%", height: "35px" }}
+            style={{ width: "100%" }}
             size="large"
             onChange={(value) => setSearchOption(value)}
             value={searchOption}
@@ -157,19 +161,18 @@ export const PaidWithdrawals = () => {
           />
         </Grid>
         <Grid item xs={12} md={4} lg={4}>
-          <Space.Compact style={{ width: "100%" }}>
+          <Space.Compact style={{ width: "100%" }} size="large">
             <Input
               placeholder="Pesquisa"
               size="large"
               disabled={!searchOption}
-              style={{ height: "40px", width: "100%" }}
+              style={{ width: "100%" }}
               onChange={(event) => setSearch(event.target.value)}
             />
             <Button
               loading={isPaidWithdrawalsRowsFetching}
               type="primary"
               onClick={() => refetchPaidWithdrawalsTotalRows()}
-              style={{ height: "40px" }}
               disabled={typeof searchOption === "string" && !search}
             >
               <SearchOutlined />
@@ -178,6 +181,7 @@ export const PaidWithdrawals = () => {
         </Grid>
         <Grid item xs={12} md={2} lg={2}>
           <Button
+            size="large"
             type="dashed"
             loading={isPaidWithdrawalsRowsFetching}
             danger
@@ -186,7 +190,12 @@ export const PaidWithdrawals = () => {
               setSearchOption(null);
               setSearch(null);
             }}
-            style={{ height: 40, display: "flex", alignItems: "center" }}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "100%",
+            }}
           >
             <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
             {t("table.clear_filters")}
@@ -211,7 +220,6 @@ export const PaidWithdrawals = () => {
                 icon: <EyeFilled style={{ fontSize: "18px" }} />,
                 onClick: () => setIsViewModalOpen(true),
               },
-             
             ]}
             removeTotal
             label={[

@@ -119,7 +119,8 @@ export const UndeliveredDeposits = () => {
       >
         <Grid item xs={12} md={4} lg={2}>
           <Button
-            style={{ width: "100%", height: 40 }}
+            size="large"
+            style={{ width: "100%" }}
             loading={isDepositsRowsFetching || isDepositsTotalFetching}
             type="primary"
             onClick={() => setIsFiltersOpen(true)}
@@ -141,7 +142,7 @@ export const UndeliveredDeposits = () => {
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
         <Grid item xs={12} md={2} lg={2}>
           <Select
-            style={{ width: "100%", height: "35px" }}
+            style={{ width: "100%" }}
             size="large"
             onChange={(value) => setSearchOption(value)}
             value={searchOption}
@@ -159,19 +160,18 @@ export const UndeliveredDeposits = () => {
           />
         </Grid>
         <Grid item xs={12} md={4} lg={4}>
-          <Space.Compact style={{ width: "100%" }}>
+          <Space.Compact style={{ width: "100%" }} size="large">
             <Input
               placeholder="Pesquisa"
               size="large"
               disabled={!searchOption}
-              style={{ height: "40px", width: "100%" }}
+              style={{ width: "100%" }}
               onChange={(event) => setSearch(event.target.value)}
             />
             <Button
               loading={isDepositsRowsFetching}
               type="primary"
               onClick={() => refetchDepositsTotalRows()}
-              style={{ height: "40px" }}
               disabled={typeof searchOption === "string" && !search}
             >
               <SearchOutlined />
@@ -180,6 +180,7 @@ export const UndeliveredDeposits = () => {
         </Grid>
         <Grid item xs={12} md={2} lg={2}>
           <Button
+            size="large"
             type="dashed"
             loading={isDepositsRowsFetching}
             danger
@@ -188,7 +189,12 @@ export const UndeliveredDeposits = () => {
               setSearchOption(null);
               setSearch(null);
             }}
-            style={{ height: 40, display: "flex", alignItems: "center" }}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              width: "100%",
+              justifyContent: "center",
+            }}
           >
             <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
             {t("table.clear_filters")}

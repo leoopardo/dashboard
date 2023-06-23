@@ -127,7 +127,7 @@ export const PaidDeposits = () => {
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
         <Grid item xs={12} md={2} lg={2}>
           <Select
-            style={{ width: "100%", height: "35px" }}
+            style={{ width: "100%" }}
             size="large"
             onChange={(value) => setSearchOption(value)}
             value={searchOption}
@@ -145,19 +145,18 @@ export const PaidDeposits = () => {
           />
         </Grid>
         <Grid item xs={12} md={4} lg={4}>
-          <Space.Compact style={{ width: "100%" }}>
+          <Space.Compact style={{ width: "100%" }} size="large">
             <Input
               placeholder="Pesquisa"
               size="large"
               disabled={!searchOption}
-              style={{ height: "40px", width: "100%" }}
+              style={{ width: "100%" }}
               onChange={(event) => setSearch(event.target.value)}
             />
             <Button
               loading={isPaidRowsFetching}
               type="primary"
               onClick={() => refetchPaidTotalRows()}
-              style={{ height: "40px" }}
               disabled={typeof searchOption === "string" && !search}
             >
               <SearchOutlined />
@@ -174,7 +173,13 @@ export const PaidDeposits = () => {
               setSearchOption(null);
               setSearch(null);
             }}
-            style={{ height: 40, display: "flex", alignItems: "center" }}
+            style={{
+              height: 40,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "100%",
+            }}
           >
             <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
             {t("table.clear_filters")}

@@ -1,82 +1,66 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { Grid } from "@mui/material";
-import { Button, Input } from "antd";
-import { useEffect, useState } from "react";
+import { Alert, Button, Input } from "antd";
+import React, { useEffect, useState } from "react";
 import { FilterChips } from "@components/FiltersModal/filterChips";
 import { useTranslation } from "react-i18next";
+import { useGetRowsOrganizationUsers } from "@services/register/organization/users/getUsers";
+import { OrganizationUserQuery } from "@src/services/types/register/organization/organizationUsers.interface";
 import { FiltersModal } from "@components/FiltersModal";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import useDebounce from "@utils/useDebounce";
 import { EditOutlined, EyeFilled, UserAddOutlined } from "@ant-design/icons";
-import { useGetOrganizationCategories } from "@services/register/organization/categories/getCategories";
-import {
-  OrganizationCategoriesItem,
-  OrganizationCategoriesQuery,
-} from "@src/services/types/register/organization/organizationCategories.interface";
-import { MutateModal } from "@src/components/Modals/mutateGenericModal";
-import { useCreateOrganizationCategory } from "@src/services/register/organization/categories/createCategorie";
+import { NewUserInterface, NewUserModal } from "./components/newUserModal";
+import { ValidateToken } from "@components/ValidateToken";
+import { useUpdateOrganizationUser } from "@services/register/organization/users/updateUser";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
-import {
-  UpdateCategoryInterface,
-  useUpdateOrganizationCategory,
-} from "@src/services/register/organization/categories/updateCategorie";
-import { Toast } from "@src/components/Toast";
+import { useListPartners } from "@src/services/register/partner/listPartners";
+import { PartnerQuery } from "@src/services/types/register/partners/partners.interface";
+import { useGetPartnerUsers } from "@src/services/register/partner/getPartnerUsers";
 
-const INITIAL_QUERY: OrganizationCategoriesQuery = {
+const INITIAL_QUERY: PartnerQuery = {
   limit: 25,
   page: 1,
   sort_field: "created_at",
   sort_order: "DESC",
 };
 
-export const OrganizationCategories = () => {
-  const [query, setQuery] =
-    useState<OrganizationCategoriesQuery>(INITIAL_QUERY);
+export const PartnerUsers = () => {
+  const [query, setQuery] = useState<PartnerQuery>(INITIAL_QUERY);
   const { t } = useTranslation();
 
-  const {
-    CategoriesData,
-    CategoriesDataError,
-    isCategoriesDataFetching,
-    refetchCategoriesData,
-  } = useGetOrganizationCategories(query);
-
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
-  const [isNewCategorieModal, setIsNewCategorieModal] =
-    useState<boolean>(false);
-  const [isUpdateCategorieModalOpen, setIsUpdateCategorieModalOpen] =
-    useState<boolean>(false);
+  const [isNewUserModal, setIsNewUserModal] = useState<boolean>(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
-  const [currentItem, setCurrentItem] =
-    useState<OrganizationCategoriesItem | null>(null);
+  const [currentItem, setCurrentItem] = useState<any>(null);
   const [search, setSearch] = useState<string>("");
   const debounceSearch = useDebounce(search);
-  const [createBody, setCreateBody] = useState<{
-    name: string;
-    description: string;
-  }>({ name: "", description: "" });
-  const [updateBody, setUpdateBody] = useState<UpdateCategoryInterface>({
-    ...currentItem,
-    status: currentItem?.status,
-    entry_account_category_id: currentItem?.id,
-  });
-  const { isLoading, mutate, error, isSuccess } =
-    useCreateOrganizationCategory(createBody);
-
-  const { updateError, updateIsLoading, updateMutate, updateSuccess } =
-    useUpdateOrganizationCategory(updateBody);
+  const [updateUserBody, setUpdateUserBody] = useState<NewUserInterface | null>(
+    null
+  );
+  const [isValidateTokenOpen, setIsValidateTokenOpen] =
+    useState<boolean>(false);
+  const [tokenState, setTokenState] = useState<string>("");
+  const { UsersData, UsersDataError, isUsersDataFetching, refetchUsersData } =
+    useGetPartnerUsers(query);
+  const { updateSuccess, updateError, updateMutate } =
+    useUpdateOrganizationUser({
+      ...updateUserBody,
+      validation_token: tokenState,
+    });
 
   const columns: ColumnInterface[] = [
     { name: "id", type: "id" },
     { name: "name", type: "text" },
-    { name: "description", type: "text" },
-    { name: "status", type: "boolean" },
+    { name: "group_id", type: "text" },
+    { name: "partner_id", type: "text" },
+    { name: "last_signin_date", type: "date" },
+    { name: "status", type: "status" },
     { name: "created_at", type: "date" },
   ];
 
   useEffect(() => {
-    refetchCategoriesData();
+    refetchUsersData();
   }, [query]);
 
   useEffect(() => {
@@ -88,13 +72,9 @@ export const OrganizationCategories = () => {
     setQuery((state) => ({ ...state, name: debounceSearch }));
   }, [debounceSearch]);
 
-  useEffect(() => {
-    setUpdateBody({
-      ...currentItem,
-      entry_account_category_id: currentItem?.id,
-    });
-  }, [currentItem]);
-
+  const handleUpdateTokenValidate = () => {
+    updateMutate();
+  };
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid
@@ -104,8 +84,9 @@ export const OrganizationCategories = () => {
       >
         <Grid item xs={12} md={4} lg={2}>
           <Button
-            style={{ width: "100%", height: 40 }}
-            loading={isCategoriesDataFetching}
+            size="large"
+            style={{ width: "100%" }}
+            loading={isUsersDataFetching}
             type="primary"
             onClick={() => setIsFiltersOpen(true)}
           >
@@ -135,15 +116,15 @@ export const OrganizationCategories = () => {
         </Grid>
         <Grid item xs={12} md={3} lg={2}>
           <Button
+            size="large"
             type="dashed"
-            loading={isCategoriesDataFetching}
+            loading={isUsersDataFetching}
             danger
             onClick={() => {
               setQuery(INITIAL_QUERY);
               setSearch("");
             }}
             style={{
-              height: 40,
               width: "100%",
               display: "flex",
               alignItems: "center",
@@ -157,9 +138,9 @@ export const OrganizationCategories = () => {
         <Grid item xs={12} md={3} lg={2}>
           <Button
             type="primary"
-            loading={isCategoriesDataFetching}
+            loading={isUsersDataFetching}
             onClick={() => {
-              setIsNewCategorieModal(true);
+              setIsNewUserModal(true);
             }}
             style={{
               height: 40,
@@ -170,7 +151,7 @@ export const OrganizationCategories = () => {
             }}
           >
             <UserAddOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
-            {`${t("buttons.create")} ${t("buttons.new_categorie")}`}
+            {`${t("buttons.create")} ${t("buttons.new_user")}`}
           </Button>
         </Grid>
       </Grid>
@@ -194,16 +175,16 @@ export const OrganizationCategories = () => {
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
                 onClick: () => {
-                  setIsUpdateCategorieModalOpen(true);
+                  setIsNewUserModal(true);
                 },
               },
             ]}
-            data={CategoriesData}
-            items={CategoriesData?.items}
-            error={CategoriesDataError}
+            data={UsersData}
+            items={UsersData?.items}
+            error={UsersDataError}
             columns={columns}
-            loading={isCategoriesDataFetching}
-            label={["name", "description"]}
+            loading={isUsersDataFetching}
+            label={["name", "username"]}
           />
         </Grid>
       </Grid>
@@ -215,73 +196,52 @@ export const OrganizationCategories = () => {
           query={query}
           setQuery={setQuery}
           haveInitialDate
-          filters={["start_date", "end_date", "status"]}
-          refetch={refetchCategoriesData}
+          filters={[
+            "start_date",
+            "end_date",
+            "status",
+            "partner_id",
+            "merchant_id",
+          ]}
+          refetch={refetchUsersData}
           selectOptions={{}}
           startDateKeyName="start_date"
           endDateKeyName="end_date"
           initialQuery={INITIAL_QUERY}
         />
       )}
-
-      {isNewCategorieModal && (
-        <MutateModal
-          type="create"
-          open={isNewCategorieModal}
-          setOpen={setIsNewCategorieModal}
-          fields={[
-            { label: "name", required: true },
-            { label: "description", required: true },
-          ]}
-          body={createBody}
-          setBody={setCreateBody}
-          modalName={t("modal.new_category")}
-          submit={mutate}
-          submitLoading={isLoading}
-          error={error}
-          success={isSuccess}
+      {isNewUserModal && (
+        <NewUserModal
+          open={isNewUserModal}
+          setOpen={setIsNewUserModal}
+          currentUser={currentItem}
+          setCurrentUser={setCurrentItem}
+          setUpdateBody={setUpdateUserBody}
+          setIsValidateTokenOpen={setIsValidateTokenOpen}
         />
       )}
-      {isUpdateCategorieModalOpen && (
-        <MutateModal
-          type="update"
-          open={isUpdateCategorieModalOpen}
-          setOpen={setIsUpdateCategorieModalOpen}
-          fields={[
-            { label: "name", required: false },
-            { label: "description", required: false },
-            { label: "status", required: false },
-          ]}
-          body={updateBody}
-          setBody={setUpdateBody}
-          modalName={t("modal.update_category")}
-          submit={updateMutate}
-          submitLoading={updateIsLoading}
-          error={updateError}
+      {isValidateTokenOpen && (
+        <ValidateToken
+          action="USER_UPDATE"
+          body={updateUserBody}
+          open={isValidateTokenOpen}
+          setIsOpen={setIsValidateTokenOpen}
+          setTokenState={setTokenState}
+          tokenState={tokenState}
           success={updateSuccess}
+          error={updateError}
+          submit={handleUpdateTokenValidate}
         />
       )}
       {isViewModalOpen && (
         <ViewModal
           item={currentItem}
-          loading={isCategoriesDataFetching}
-          modalName={`${t("modal.category")}: ${currentItem?.name}`}
+          loading={isUsersDataFetching}
+          modalName={`${t("modal.user")}: ${currentItem?.name}`}
           open={isViewModalOpen}
           setOpen={setIsViewModalOpen}
         />
       )}
-       <Toast
-        actionSuccess={t("messages.updated")}
-        actionError={t("messages.update")}
-        error={updateError}
-        success={updateSuccess}
-      />
-       <Toast
-        actionSuccess={t("messages.created")}
-        actionError={t("messages.create")}
-        error={error}
-        success={isSuccess}
-      />
     </Grid>
   );
 };

@@ -1,18 +1,14 @@
-import { api } from "../../../../config/api";
-
+import { api } from "@config/api";
+import { PartnerUsersQuery, PartnersUsersResponse } from "@src/services/types/register/partners/partnerUsers.interface";
 import { useQuery } from "react-query";
-import {
-  OrganizationUserQuery,
-  OrganizationUserResponse,
-} from "../../../types/register/organization/organizationUsers.interface";
 
-export function useGetRowsOrganizationUsers(params: OrganizationUserQuery) {
+export function useGetPartnerUsers(params: PartnerUsersQuery) {
   const { data, isFetching, error, refetch } = useQuery<
-    OrganizationUserResponse | null | undefined
+    PartnersUsersResponse | null | undefined
   >(
-    "OrganizationUser",
+    "partnerUser",
     async () => {
-      const response = await api.get("core/user/organization", {
+      const response = await api.get("core/user/partner", {
         params,
       });
       return response.data;

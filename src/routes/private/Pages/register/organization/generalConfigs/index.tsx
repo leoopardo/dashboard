@@ -1,4 +1,5 @@
 import { Grid } from "@mui/material";
+import { Toast } from "@src/components/Toast";
 import { useGetGeneralconfigs } from "@src/services/register/organization/generalConfigs/getGeneralConfigs";
 import { useUpdateOrganizationGeneralConfigs } from "@src/services/register/organization/generalConfigs/updateGeneralConfigs";
 import { OrganizationGeneralConfigs } from "@src/services/types/register/organization/organizationGeneralConfigs.interface";
@@ -448,6 +449,8 @@ export const GeneralConfigs = () => {
             open={isConfirmOpen}
             style={{ maxWidth: "340px" }}
             onConfirm={() => {
+              delete body.id;
+              delete body.organization_id;
               updateMutate();
               setIsConfirmOpen(false);
             }}
@@ -466,6 +469,12 @@ export const GeneralConfigs = () => {
           </Popconfirm>
         </Grid>
       </Grid>
+      <Toast
+        actionSuccess={t("messages.updated")}
+        actionError={t("messages.update")}
+        error={updateError}
+        success={updateSuccess}
+      />
     </Grid>
   );
 };

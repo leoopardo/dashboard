@@ -167,14 +167,21 @@ export const Mobile = (props: MobileProps) => {
                           padding: 5,
                         }}
                       >
-                        <p
-                          key={item[value?.name]}
-                          style={{
-                            color: getColor(item[value.name]?.toLowerCase()),
-                          }}
-                        >
-                          {t(`table.${item[value.name]?.toLowerCase()}`)}:{" "}
-                        </p>
+                        {typeof item[value.name] === "boolean" ? (
+                          <p
+                            key={value.name}
+                            style={{ width: "100%", textAlign: "center" }}
+                          >
+                            {item[value.name] ? t("table.active") : t("table.inactive")}
+                          </p>
+                        ) : (
+                          <p
+                            key={value.name}
+                            style={{ width: "100%", textAlign: "center" }}
+                          >
+                            {t(`table.${item[value.name].toLocaleLowerCase()}`)}
+                          </p>
+                        )}
                       </Descriptions.Item>
                     );
 

@@ -30,7 +30,6 @@ export const TotalizersCards = (props: TotalizersInterface) => {
         <Grid item xs={6} md={4} lg={"auto"}>
           <Card
             bordered={false}
-            style={{ height: isMobile ? "100%" : undefined }}
           >
             <Statistic
               loading={props.loading}
@@ -50,7 +49,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
           </Card>
         </Grid>
       )}
-      <Grid item xs={6} md={4} lg={"auto"} height="100%">
+      <Grid item xs={6} md={4} lg={"auto"}>
         <Card bordered={false}>
           <Statistic
             loading={props.loading}
@@ -68,7 +67,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
           />
         </Card>
       </Grid>
-      <Grid item xs={6} md={1} lg={1}>
+      <Grid item xs={3} md={1} lg={1}>
         <Button
           shape="circle"
           style={{ width: "50px", height: "50px" }}

@@ -56,10 +56,8 @@ function App() {
     </div>
   );
 
-  
   useEffect(() => {
     async function signInStorage() {
-  
       if (validateError) {
         setElement(<PublicRoutes route="/login" />);
         return;
@@ -81,6 +79,7 @@ function App() {
               token: {
                 colorPrimary: defaultTheme.colors.secondary,
                 colorBgTextHover: defaultTheme.colors.secondary,
+                
               },
             }}
           >

@@ -6,6 +6,8 @@ export interface PartnerQuery {
   status?: string;
   country?: string;
   responsible_name?: string;
+  sort_order?: string;
+  sort_field?: string;
   page: number;
   limit: number;
 }

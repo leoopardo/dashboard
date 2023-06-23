@@ -29,10 +29,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
     >
       {(props.query.status === "PAID" || !props.query.status) && (
         <Grid item xs={6} md={4} lg={"auto"}>
-          <Card
-            bordered={false}
-            style={{ height: isMobile ? "100%" : undefined }}
-          >
+          <Card bordered={false}>
             <Statistic
               loading={props.loading}
               title={`${t("table.paid")}: ${props?.data?.paid_total || 0}`}
@@ -53,10 +50,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
       )}
       {(props.query.status === "REFUNDED" || !props.query.status) && (
         <Grid item xs={6} md={4} lg={"auto"}>
-          <Card
-            bordered={false}
-            style={{ height: isMobile ? "100%" : undefined }}
-          >
+          <Card bordered={false}>
             <Statistic
               loading={props.loading}
               title={`${t("table.refunded")}: ${
@@ -79,10 +73,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
 
       {(props.query.status === "CANCELED" || !props.query.status) && (
         <Grid item xs={6} md={4} lg={"auto"}>
-          <Card
-            bordered={false}
-            style={{ height: isMobile ? "100%" : undefined }}
-          >
+          <Card bordered={false}>
             <Statistic
               loading={props.loading}
               title={`${t("table.canceled")}: ${
@@ -105,10 +96,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
 
       {(props.query.status === "EXPIRED" || !props.query.status) && (
         <Grid item xs={6} md={4} lg={"auto"}>
-          <Card
-            bordered={false}
-            style={{ height: isMobile ? "100%" : undefined }}
-          >
+          <Card bordered={false}>
             <Statistic
               loading={props.loading}
               title={`${t("table.expired")}: ${
@@ -130,10 +118,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
       )}
       {(props.query.status === "WAITING" || !props.query.status) && (
         <Grid item xs={6} md={4} lg={"auto"}>
-          <Card
-            bordered={false}
-            style={{ height: isMobile ? "100%" : undefined }}
-          >
+          <Card bordered={false}>
             <Statistic
               loading={props.loading}
               title={`${t("table.waiting")}: ${
@@ -156,10 +141,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
 
       {(props.query.status === "AWAITING_REFUND" || !props.query.status) && (
         <Grid item xs={6} md={4} lg={"auto"}>
-          <Card
-            bordered={false}
-            style={{ height: isMobile ? "100%" : undefined }}
-          >
+          <Card bordered={false}>
             <Statistic
               loading={props.loading}
               title={`${t("table.waiting_refund")}: ${
