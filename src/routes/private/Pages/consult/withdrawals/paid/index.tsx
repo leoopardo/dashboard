@@ -69,7 +69,7 @@ export const PaidWithdrawals = () => {
     { name: "receiver_document", type: "document" },
     { name: "pix_key_type", type: "text" },
     { name: "pix_key", type: "text" },
-    { name: "status", type: "document" },
+    { name: "status", type: "status" },
   ];
 
   useEffect(() => {

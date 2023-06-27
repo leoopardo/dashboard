@@ -116,7 +116,9 @@
     "created": "Created",
     "updated": "Updated",
     "confirm_action_title": "{{action}} data",
-    "are_you_sure": "Do you want {{action}} the {{itens}}?"
+    "are_you_sure": "Do you want {{action}} the {{itens}}?",
+    "yes_update": "Yes, update",
+    "no_cancel": "No, cancel"
   },
   "login": {
     "sign_in": "Sign in",

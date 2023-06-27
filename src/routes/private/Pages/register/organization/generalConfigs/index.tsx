@@ -455,6 +455,8 @@ export const GeneralConfigs = () => {
               setIsConfirmOpen(false);
             }}
             okButtonProps={{ loading: updateIsLoading }}
+            okText={t("messages.yes_update")}
+            cancelText={t("messages.no_cancel")}
             onCancel={() => setIsConfirmOpen(false)}
           >
             <Button

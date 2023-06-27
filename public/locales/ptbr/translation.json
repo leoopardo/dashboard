@@ -118,7 +118,9 @@
     "created": "Criado",
     "updated": "Atualizado",
     "confirm_action_title": "{{action}} dados",
-    "are_you_sure": "Deseja {{action}} {{itens}}?"
+    "are_you_sure": "Deseja {{action}} {{itens}}?",
+    "yes_update": "Sim, atualizar",
+    "no_cancel": "Não, cancelar"
   },
   "login": {
     "sign_in": "Faça login",
