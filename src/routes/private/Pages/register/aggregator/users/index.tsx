@@ -14,6 +14,8 @@ import { useUpdateOrganizationUser } from "@services/register/organization/users
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
 import { PartnerQuery } from "@src/services/types/register/partners/partners.interface";
 import { useGetPartnerUsers } from "@src/services/register/partner/users/getPartnerUsers";
+import { useGetAggregatorUsers } from "@src/services/register/aggregator/users/getAggregatorUsers";
+import { useUpdateAggregatorUser } from "@src/services/register/aggregator/users/updateUser";
 
 const INITIAL_QUERY: PartnerQuery = {
   limit: 25,
@@ -39,12 +41,11 @@ export const AggregatorUsers = () => {
     useState<boolean>(false);
   const [tokenState, setTokenState] = useState<string>("");
   const { UsersData, UsersDataError, isUsersDataFetching, refetchUsersData } =
-    useGetPartnerUsers(query);
-  const { updateSuccess, updateError, updateMutate } =
-    useUpdateOrganizationUser({
-      ...updateUserBody,
-      validation_token: tokenState,
-    });
+    useGetAggregatorUsers(query);
+  const { updateSuccess, updateError, updateMutate } = useUpdateAggregatorUser({
+    ...updateUserBody,
+    validation_token: tokenState,
+  });
   const [action, setAction] = useState<"create" | "update">("create");
 
   const columns: ColumnInterface[] = [

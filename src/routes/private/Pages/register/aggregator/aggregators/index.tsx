@@ -9,19 +9,18 @@ import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import useDebounce from "@utils/useDebounce";
 import { EditOutlined, EyeFilled, UserAddOutlined } from "@ant-design/icons";
-
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
 import { Toast } from "@src/components/Toast";
-import { useGetPartners } from "@src/services/register/partner/getPartners";
-import {
-  PartnerItem,
-  PartnerQuery,
-} from "@src/services/types/register/partners/partners.interface";
-import { useCreatePartner } from "@src/services/register/partner/createPartner";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
-import { useUpdatePartner } from "@src/services/register/partner/updatePartner";
+import {
+  AggregatorItem,
+  AggregatorQuery,
+} from "@src/services/types/register/aggregators/aggregators.interface";
+import { useGetAggregators } from "@src/services/register/aggregator/getAggregators";
+import { useCreateAggregator } from "@src/services/register/aggregator/createAggregator";
+import { useUpdateAggregator } from "@src/services/register/aggregator/updateAggregator";
 
-const INITIAL_QUERY: PartnerQuery = {
+const INITIAL_QUERY: AggregatorQuery = {
   limit: 25,
   page: 1,
   sort_field: "created_at",
@@ -29,15 +28,15 @@ const INITIAL_QUERY: PartnerQuery = {
 };
 
 export const Aggregators = () => {
-  const [query, setQuery] = useState<PartnerQuery>(INITIAL_QUERY);
+  const [query, setQuery] = useState<AggregatorQuery>(INITIAL_QUERY);
   const { t } = useTranslation();
 
   const {
-    PartnersData,
-    PartnersDataError,
-    isPartnersDataFetching,
-    refetchPartnersData,
-  } = useGetPartners(query);
+    AggregatorsData,
+    AggregatorsDataError,
+    isAggregatorsDataFetching,
+    refetchAggregatorsData,
+  } = useGetAggregators(query);
 
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [isNewCategorieModal, setIsNewCategorieModal] =
@@ -45,25 +44,29 @@ export const Aggregators = () => {
   const [isUpdateCategorieModalOpen, setIsUpdateCategorieModalOpen] =
     useState<boolean>(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
-  const [currentItem, setCurrentItem] = useState<PartnerItem | null>(null);
+  const [currentItem, setCurrentItem] = useState<AggregatorItem | null>(null);
   const [search, setSearch] = useState<string>("");
   const debounceSearch = useDebounce(search);
-  const [createBody, setCreateBody] = useState<PartnerItem>({
+  const [createBody, setCreateBody] = useState<AggregatorItem>({
     name: "",
     cnpj: "",
     country: "",
     responsible_name: "",
   });
-  const [updateBody, setUpdateBody] = useState<PartnerItem>({
+  const [updateBody, setUpdateBody] = useState<AggregatorItem>({
     ...currentItem,
-    partner_id: currentItem?.id,
+    Aggregator_id: currentItem?.id,
   });
 
-  const { PartnerIsLoading, PartnerMutate, PartnerError, PartnerIsSuccess } =
-    useCreatePartner(createBody);
+  const {
+    AggregatorIsLoading,
+    AggregatorMutate,
+    AggregatorError,
+    AggregatorIsSuccess,
+  } = useCreateAggregator(createBody);
 
   const { UpdateError, UpdateIsLoading, UpdateMutate, UpdateIsSuccess } =
-    useUpdatePartner(updateBody);
+    useUpdateAggregator(updateBody);
 
   const columns: ColumnInterface[] = [
     { name: "id", type: "id" },
@@ -73,7 +76,7 @@ export const Aggregators = () => {
   ];
 
   useEffect(() => {
-    refetchPartnersData();
+    refetchAggregatorsData();
   }, [query]);
 
   useEffect(() => {
@@ -88,7 +91,7 @@ export const Aggregators = () => {
   useEffect(() => {
     setUpdateBody({
       ...currentItem,
-      partner_id: currentItem?.id,
+      aggregator_id: currentItem?.id,
     });
   }, [currentItem]);
 
@@ -102,7 +105,7 @@ export const Aggregators = () => {
         <Grid item xs={12} md={4} lg={2}>
           <Button
             style={{ width: "100%", height: 40 }}
-            loading={isPartnersDataFetching}
+            loading={isAggregatorsDataFetching}
             type="primary"
             onClick={() => setIsFiltersOpen(true)}
           >
@@ -133,7 +136,7 @@ export const Aggregators = () => {
         <Grid item xs={12} md={3} lg={2}>
           <Button
             type="dashed"
-            loading={isPartnersDataFetching}
+            loading={isAggregatorsDataFetching}
             danger
             onClick={() => {
               setQuery(INITIAL_QUERY);
@@ -154,7 +157,7 @@ export const Aggregators = () => {
         <Grid item xs={12} md={3} lg={2}>
           <Button
             type="primary"
-            loading={isPartnersDataFetching}
+            loading={isAggregatorsDataFetching}
             onClick={() => {
               setIsNewCategorieModal(true);
             }}
@@ -167,7 +170,7 @@ export const Aggregators = () => {
             }}
           >
             <UserAddOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
-            {`${t("buttons.create")} ${t("buttons.new_partner")}`}
+            {`${t("buttons.create")} ${t("buttons.new_aggregator")}`}
           </Button>
         </Grid>
       </Grid>
@@ -195,11 +198,11 @@ export const Aggregators = () => {
                 },
               },
             ]}
-            data={PartnersData}
-            items={PartnersData?.items}
-            error={PartnersDataError}
+            data={AggregatorsData}
+            items={AggregatorsData?.items}
+            error={AggregatorsDataError}
             columns={columns}
-            loading={isPartnersDataFetching}
+            loading={isAggregatorsDataFetching}
             label={["name", "description"]}
           />
         </Grid>
@@ -213,7 +216,7 @@ export const Aggregators = () => {
           setQuery={setQuery}
           haveInitialDate
           filters={["start_date", "end_date", "status"]}
-          refetch={refetchPartnersData}
+          refetch={refetchAggregatorsData}
           selectOptions={{}}
           startDateKeyName="start_date"
           endDateKeyName="end_date"
@@ -235,11 +238,11 @@ export const Aggregators = () => {
           ]}
           body={createBody}
           setBody={setCreateBody}
-          modalName={t("modal.new_partner")}
-          submit={PartnerMutate}
-          submitLoading={PartnerIsLoading}
-          error={PartnerError}
-          success={PartnerIsSuccess}
+          modalName={t("modal.new_aggregator")}
+          submit={AggregatorMutate}
+          submitLoading={AggregatorIsLoading}
+          error={AggregatorError}
+          success={AggregatorIsSuccess}
         />
       )}
       {isUpdateCategorieModalOpen && (
@@ -256,7 +259,7 @@ export const Aggregators = () => {
           ]}
           body={updateBody}
           setBody={setUpdateBody}
-          modalName={t("modal.update_category")}
+          modalName={t("modal.update_aggregator")}
           submit={UpdateMutate}
           submitLoading={UpdateIsLoading}
           error={UpdateError}
@@ -266,8 +269,8 @@ export const Aggregators = () => {
       {isViewModalOpen && (
         <ViewModal
           item={currentItem}
-          loading={isPartnersDataFetching}
-          modalName={`${t("menus.partner")}: ${currentItem?.name}`}
+          loading={isAggregatorsDataFetching}
+          modalName={`${t("menus.aggregator")}: ${currentItem?.name}`}
           open={isViewModalOpen}
           setOpen={setIsViewModalOpen}
         />
@@ -281,8 +284,8 @@ export const Aggregators = () => {
       <Toast
         actionSuccess={t("messages.created")}
         actionError={t("messages.create")}
-        error={PartnerError}
-        success={PartnerIsSuccess}
+        error={AggregatorError}
+        success={AggregatorIsSuccess}
       />
     </Grid>
   );

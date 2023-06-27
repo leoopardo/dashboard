@@ -136,7 +136,8 @@
     "new_categorie": "nova categoria",
     "update_general_configs": "Atualizar configurações gerais",
     "new_partner": "nova plataforma",
-    "new_operator": "novo operador"
+    "new_operator": "novo operador",
+    "new_aggregator": "novo agregador"
   },
   "modal": {
     "confirm": "Confirmar",
@@ -151,7 +152,9 @@
     "modal_update_bank": "Atualizar banco",
     "new_partner": "Nova plataforma",
     "new_operator": "Novo operador",
-    "update_operator": "Atualizar operador"
+    "update_operator": "Atualizar operador",
+    "new_aggregator": "Novo agregador",
+    "update_aggregator": "Atualizar agregador"
   },
   "input": {
     "required": "Por favor, insira seu {{field}}",

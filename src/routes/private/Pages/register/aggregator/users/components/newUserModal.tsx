@@ -13,6 +13,8 @@ import { toast } from "react-hot-toast";
 import { OrganizationUserItem } from "@src/services/types/register/organization/organizationUsers.interface";
 import { useUpdateOrganizationUser } from "@services/register/organization/users/updateUser";
 import { Toast } from "@src/components/Toast";
+import { useCreateAggregatorUser } from "@src/services/register/aggregator/users/createUser";
+import { useUpdateAggregatorUser } from "@src/services/register/aggregator/users/updateUser";
 interface NewuserModalprops {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -61,10 +63,9 @@ export const NewUserModal = ({
     type: 2,
   });
 
-  const { mutate, error, isLoading, isSuccess } =
-    useCreateOrganizationUser(body);
+  const { mutate, error, isLoading, isSuccess } = useCreateAggregatorUser(body);
   const { updateError, updateLoading, updateMutate, updateSuccess } =
-    useUpdateOrganizationUser(body);
+    useUpdateAggregatorUser(body);
 
   function handleChangeUserBody(event: any) {
     setBody((state) => ({ ...state, [event.target.name]: event.target.value }));
@@ -124,7 +125,6 @@ export const NewUserModal = ({
       title={currentUser ? t("buttons.update_user") : t("buttons.new_user")}
       footer={
         <Button
-          disabled={currentUser ? false : cantSubmit}
           loading={currentUser ? updateLoading : isLoading}
           type="primary"
           style={{ width: "100%" }}
@@ -149,13 +149,7 @@ export const NewUserModal = ({
           }
         }
         disabled={currentUser ? updateLoading : isLoading}
-        onSubmitCapture={
-          body.name && body.username && body.group_id && body.password
-            ? CreateUser
-            : () => {
-                return;
-              }
-        }
+        onFinish={CreateUser}
       >
         <Form.Item
           label={t(`table.name`)}

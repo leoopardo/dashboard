@@ -134,7 +134,8 @@
     "new_categorie": "new categorie",
     "update_general_configs": "Update general configs",
     "new_partner": "new partner",
-    "new_operator": "new operator"
+    "new_operator": "new operator",
+    "new_aggregator": "new agregator"
   },
   "input": {
     "required": "Please input your {{field}}",
@@ -188,7 +189,9 @@
     "modal_update_bank": "Update bank",
     "new_partner": "New partner",
     "new_operator": "New operator",
-    "update_operator": "AUpdate operator"
+    "update_operator": "AUpdate operator",
+    "new_aggregator": "New agregator",
+    "update_aggregator": "Update agregator"
   },
   "table": {
     "id": "ID",

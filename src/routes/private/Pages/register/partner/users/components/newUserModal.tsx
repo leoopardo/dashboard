@@ -125,7 +125,6 @@ export const NewUserModal = ({
       title={currentUser ? t("buttons.update_user") : t("buttons.new_user")}
       footer={
         <Button
-          disabled={currentUser ? false : cantSubmit}
           loading={currentUser ? updateLoading : isLoading}
           type="primary"
           style={{ width: "100%" }}
@@ -150,13 +149,7 @@ export const NewUserModal = ({
           }
         }
         disabled={currentUser ? updateLoading : isLoading}
-        onSubmitCapture={
-          body.name && body.username && body.group_id && body.password
-            ? CreateUser
-            : () => {
-                return;
-              }
-        }
+        onFinish={CreateUser}
       >
         <Form.Item
           label={t(`table.name`)}

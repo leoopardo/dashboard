@@ -34,6 +34,7 @@ export interface NewUserInterface {
   partner_id?: number;
   merchant_id?: number;
   user_id?: number;
+  validation_token?: string;
 }
 
 export const NewUserModal = ({
@@ -142,7 +143,6 @@ export const NewUserModal = ({
       title={currentUser ? t("buttons.update_user") : t("buttons.new_user")}
       footer={
         <Button
-       
           loading={currentUser ? updateLoading : isLoading}
           type="primary"
           style={{ width: "100%" }}

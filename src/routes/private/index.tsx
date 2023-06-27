@@ -19,6 +19,8 @@ import { MerchantView } from "./Pages/register/merchant/merchants";
 import { Partners } from "./Pages/register/partner/partners";
 import { Operators } from "./Pages/register/operator/operators";
 import { OperatorUsers } from "./Pages/register/operator/users";
+import { Aggregators } from "./Pages/register/aggregator/aggregators";
+import { AggregatorUsers } from "./Pages/register/aggregator/users";
 
 export const PrivateRoutes = () => {
   const navigate = useNavigate();
@@ -64,8 +66,8 @@ export const PrivateRoutes = () => {
             <Route path="general_configs" element={<GeneralConfigs />} />
           </Route>
           <Route path="aggregator">
-            <Route path="aggregators" element={<Partners />} />
-            <Route path="aggregator_users" element={<PartnerUsers />} />
+            <Route path="aggregators" element={<Aggregators />} />
+            <Route path="aggregator_users" element={<AggregatorUsers />} />
           </Route>
           <Route path="partner">
             <Route path="partners" element={<Partners />} />
