@@ -1,10 +1,8 @@
 import { Grid } from "@mui/material";
-import { Alert, Button, Input } from "antd";
-import React, { useEffect, useState } from "react";
+import { Button, Input } from "antd";
+import { useEffect, useState } from "react";
 import { FilterChips } from "@components/FiltersModal/filterChips";
 import { useTranslation } from "react-i18next";
-import { useGetRowsOrganizationUsers } from "@services/register/organization/users/getUsers";
-import { OrganizationUserQuery } from "@src/services/types/register/organization/organizationUsers.interface";
 import { FiltersModal } from "@components/FiltersModal";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
@@ -12,12 +10,10 @@ import useDebounce from "@utils/useDebounce";
 import { EditOutlined, EyeFilled, UserAddOutlined } from "@ant-design/icons";
 import { NewUserInterface, NewUserModal } from "./components/newUserModal";
 import { ValidateToken } from "@components/ValidateToken";
-import { useUpdateOrganizationUser } from "@services/register/organization/users/updateUser";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
-import { useListPartners } from "@src/services/register/partner/listPartners";
 import { PartnerQuery } from "@src/services/types/register/partners/partners.interface";
-import { useGetPartnerUsers } from "@src/services/register/partner/users/getPartnerUsers";
-import { useUpdatePartnerUser } from "@src/services/register/partner/users/updateUser";
+import { useGetOperatorUsers } from "@src/services/register/operator/users/getOperatorUsers";
+import { useUpdateOperatorUser } from "@src/services/register/operator/users/updateUser";
 
 const INITIAL_QUERY: PartnerQuery = {
   limit: 25,
@@ -26,7 +22,7 @@ const INITIAL_QUERY: PartnerQuery = {
   sort_order: "DESC",
 };
 
-export const PartnerUsers = () => {
+export const OperatorUsers = () => {
   const [query, setQuery] = useState<PartnerQuery>(INITIAL_QUERY);
   const { t } = useTranslation();
 
@@ -43,8 +39,8 @@ export const PartnerUsers = () => {
     useState<boolean>(false);
   const [tokenState, setTokenState] = useState<string>("");
   const { UsersData, UsersDataError, isUsersDataFetching, refetchUsersData } =
-    useGetPartnerUsers(query);
-  const { updateSuccess, updateError, updateMutate } = useUpdatePartnerUser({
+    useGetOperatorUsers(query);
+  const { updateSuccess, updateError, updateMutate } = useUpdateOperatorUser({
     ...updateUserBody,
     validation_token: tokenState,
   });

@@ -16,6 +16,9 @@ import { BankMaintenence } from "./Pages/register/organization/bankMaintenance";
 import { GeneralConfigs } from "./Pages/register/organization/generalConfigs";
 import { PartnerUsers } from "./Pages/register/partner/users";
 import { MerchantView } from "./Pages/register/merchant/merchants";
+import { Partners } from "./Pages/register/partner/partners";
+import { Operators } from "./Pages/register/operator/operators";
+import { OperatorUsers } from "./Pages/register/operator/users";
 
 export const PrivateRoutes = () => {
   const navigate = useNavigate();
@@ -52,6 +55,7 @@ export const PrivateRoutes = () => {
             <Route path="refund_deposits" element={<RefundDeposits />} />
           </Route>
         </Route>
+
         <Route path="register">
           <Route path="organization">
             <Route path="users" element={<OrganizationUser />} />
@@ -59,14 +63,21 @@ export const PrivateRoutes = () => {
             <Route path="bank_maintain" element={<BankMaintenence />} />
             <Route path="general_configs" element={<GeneralConfigs />} />
           </Route>
-          <Route path="merchant">
-            <Route path="merchant_users" element={<MerchantUser />} />
+          <Route path="aggregator">
+            <Route path="aggregators" element={<Partners />} />
+            <Route path="aggregator_users" element={<PartnerUsers />} />
           </Route>
           <Route path="partner">
+            <Route path="partners" element={<Partners />} />
             <Route path="partner_users" element={<PartnerUsers />} />
+          </Route>
+          <Route path="operator">
+            <Route path="operators" element={<Operators />} />
+            <Route path="operator_users" element={<OperatorUsers />} />
           </Route>
           <Route path="merchant">
             <Route path="merchants" element={<MerchantView />} />
+            <Route path="merchant_users" element={<MerchantUser />} />
           </Route>
         </Route>
       </Route>

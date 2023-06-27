@@ -132,7 +132,9 @@
     "new_user": "new user",
     "update_user": "Update user",
     "new_categorie": "new categorie",
-    "update_general_configs": "Update general configs"
+    "update_general_configs": "Update general configs",
+    "new_partner": "new partner",
+    "new_operator": "new operator"
   },
   "input": {
     "required": "Please input your {{field}}",
@@ -168,7 +170,10 @@
     "min_value_to_switch_bank_acc": "Minimum value for automatic bank switching:",
     "check_last_waiting_pix_time_minutes": "Time for PIX Check Waiting (minutes):",
     "paybrokers_qr_code_expire_hours": "QrCode expiration time (hours):",
-    "time_receive_after_expire_qr_code_hours": "Time to receive after QRCode expiration (hours):"
+    "time_receive_after_expire_qr_code_hours": "Time to receive after QRCode expiration (hours):",
+    "description": "Description",
+    "cnpj": "CNPJ",
+    "country": "Country"
   },
   "modal": {
     "confirm": "Confirm",
@@ -180,7 +185,10 @@
     "user": "User",
     "new_category": "New category",
     "update_category": "Update category",
-    "modal_update_bank": "Update bank"
+    "modal_update_bank": "Update bank",
+    "new_partner": "New partner",
+    "new_operator": "New operator",
+    "update_operator": "AUpdate operator"
   },
   "table": {
     "id": "ID",
@@ -304,7 +312,10 @@
     "account_name": "Account name",
     "account_document": "Account document",
     "domain": "Domain",
-    "partner": "Partner"
+    "partner": "Partner",
+    "cnpj": "CNPJ",
+    "country": "Country",
+    "responsible_name": "Responsible name"
   },
   "actions": {
     "details": "Details",
@@ -313,6 +324,7 @@
   },
   "error": {
     "400": "Any records found.",
+    "404": "Route not found",
     "password_or_username": "Invalid username or password"
   }
 }

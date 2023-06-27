@@ -134,7 +134,9 @@
     "new_user": "novo usuário",
     "update_user": "Atualizar usuário",
     "new_categorie": "nova categoria",
-    "update_general_configs": "Atualizar configurações gerais"
+    "update_general_configs": "Atualizar configurações gerais",
+    "new_partner": "nova plataforma",
+    "new_operator": "novo operador"
   },
   "modal": {
     "confirm": "Confirmar",
@@ -146,7 +148,10 @@
     "user": "Usuário",
     "new_category": "Nova categoria",
     "update_category": "Atualizar categoria",
-    "modal_update_bank": "Atualizar banco"
+    "modal_update_bank": "Atualizar banco",
+    "new_partner": "Nova plataforma",
+    "new_operator": "Novo operador",
+    "update_operator": "Atualizar operador"
   },
   "input": {
     "required": "Por favor, insira seu {{field}}",
@@ -182,7 +187,10 @@
     "min_value_to_switch_bank_acc": "Valor mínimo troca automática de bancos:",
     "check_last_waiting_pix_time_minutes": "Tempo checagem de PIX Aguardando (minutos):",
     "paybrokers_qr_code_expire_hours": "Tempo expiração QRCode (horas):",
-    "time_receive_after_expire_qr_code_hours": "Tempo recebimento após expiração QRCode (horas):"
+    "time_receive_after_expire_qr_code_hours": "Tempo recebimento após expiração QRCode (horas):",
+    "description": "Descrição",
+    "cnpj": "CNPJ",
+    "country": "País"
   },
   "table": {
     "id": "ID",
@@ -306,7 +314,10 @@
     "account_name": "Nome da conta",
     "account_document": "Documento da conta",
     "domain": "Domínio",
-    "partner": "Plataforma"
+    "partner": "Plataforma",
+    "cnpj": "CNPJ",
+    "country": "País",
+    "responsible_name": "Nome do responsável"
   },
   "actions": {
     "details": "Detalhes",
@@ -315,6 +326,7 @@
   },
   "error": {
     "400": "Nenhum dado encontrado.",
+    "404": "Rota não encontrada",
     "password_or_username": "Senha e/ou usuário incorretos."
   }
 }

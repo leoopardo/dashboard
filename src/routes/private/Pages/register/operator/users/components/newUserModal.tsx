@@ -9,9 +9,11 @@ import React, {
 import { useTranslation } from "react-i18next";
 import { GroupSelect } from "@components/Selects/groupSelect";
 import { useCreateOrganizationUser } from "@services/register/organization/users/createUser";
-import { toast } from "react-hot-toast";
 import { OrganizationUserItem } from "@src/services/types/register/organization/organizationUsers.interface";
 import { useUpdateOrganizationUser } from "@services/register/organization/users/updateUser";
+import { Toast } from "@src/components/Toast";
+import { useCreateOperatorUser } from "@src/services/register/operator/users/createUser";
+import { useUpdateOperatorUser } from "@src/services/register/operator/users/updateUser";
 interface NewuserModalprops {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -19,7 +21,7 @@ interface NewuserModalprops {
   setCurrentUser?: Dispatch<SetStateAction<NewUserInterface | null>>;
   setUpdateBody?: Dispatch<SetStateAction<NewUserInterface | null>>;
   setIsValidateTokenOpen?: Dispatch<SetStateAction<boolean>>;
-  action: "create" | "update";
+  action?: "create" | "update";
 }
 
 export interface NewUserInterface {
@@ -49,7 +51,6 @@ export const NewUserModal = ({
   const submitRef = useRef<HTMLButtonElement>(null);
   const formRef = React.useRef<FormInstance>(null);
   const [confirmPassword, setConfirmPassword] = useState<string>("");
-  const [form] = Form.useForm();
   const [cantSubmit, setCantSubmit] = useState<boolean>(true);
   const [body, setBody] = useState<NewUserInterface>({
     name: "",
@@ -60,10 +61,9 @@ export const NewUserModal = ({
     type: 2,
   });
 
-  const { mutate, error, isLoading, isSuccess } =
-    useCreateOrganizationUser(body);
+  const { mutate, error, isLoading, isSuccess } = useCreateOperatorUser(body);
   const { updateError, updateLoading, updateMutate, updateSuccess } =
-    useUpdateOrganizationUser(body);
+    useUpdateOperatorUser(body);
 
   function handleChangeUserBody(event: any) {
     setBody((state) => ({ ...state, [event.target.name]: event.target.value }));
@@ -87,26 +87,6 @@ export const NewUserModal = ({
   }
 
   useEffect(() => {
-    if (isSuccess) {
-      setOpen(false);
-      toast.success("Usuário criado com sucesso!");
-    }
-    if (error) {
-      toast.error("Erro ao criar usuário, tente novamente!");
-    }
-  }, [isSuccess, error]);
-
-  useEffect(() => {
-    if (updateSuccess) {
-      setOpen(false);
-      toast.success("Usuário atualizado com sucesso!");
-    }
-    if (updateError) {
-      toast.error("Erro ao atualizar usuário, tente novamente!");
-    }
-  }, [updateError, updateSuccess]);
-
-  useEffect(() => {
     if (currentUser)
       setBody((state) => ({
         ...state,
@@ -117,6 +97,7 @@ export const NewUserModal = ({
         username: currentUser.username,
       }));
   }, [currentUser]);
+
   useEffect(() => {
     if (action === "create") {
       setBody({
@@ -142,7 +123,7 @@ export const NewUserModal = ({
       title={currentUser ? t("buttons.update_user") : t("buttons.new_user")}
       footer={
         <Button
-       
+          disabled={currentUser ? false : cantSubmit}
           loading={currentUser ? updateLoading : isLoading}
           type="primary"
           style={{ width: "100%" }}
@@ -167,7 +148,13 @@ export const NewUserModal = ({
           }
         }
         disabled={currentUser ? updateLoading : isLoading}
-        onFinish={CreateUser}
+        onSubmitCapture={
+          body.name && body.username && body.group_id && body.password
+            ? CreateUser
+            : () => {
+                return;
+              }
+        }
       >
         <Form.Item
           label={t(`table.name`)}
@@ -339,6 +326,18 @@ export const NewUserModal = ({
           </button>
         </Form.Item>
       </Form>
+      <Toast
+        actionSuccess={t("messages.created")}
+        actionError={t("messages.create")}
+        error={error}
+        success={isSuccess}
+      />
+      <Toast
+        actionSuccess={t("messages.updated")}
+        actionError={t("messages.update")}
+        error={updateError}
+        success={updateSuccess}
+      />
     </Drawer>
   );
 };

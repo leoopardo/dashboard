@@ -1,67 +1,82 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Grid } from "@mui/material";
-import { Alert, Button, Input } from "antd";
-import React, { useEffect, useState } from "react";
+import { Button, Input } from "antd";
+import { useEffect, useState } from "react";
 import { FilterChips } from "@components/FiltersModal/filterChips";
 import { useTranslation } from "react-i18next";
-import { useGetRowsOrganizationUsers } from "@services/register/organization/users/getUsers";
-import { OrganizationUserQuery } from "@src/services/types/register/organization/organizationUsers.interface";
 import { FiltersModal } from "@components/FiltersModal";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import useDebounce from "@utils/useDebounce";
 import { EditOutlined, EyeFilled, UserAddOutlined } from "@ant-design/icons";
-import { NewUserInterface, NewUserModal } from "./components/newUserModal";
-import { ValidateToken } from "@components/ValidateToken";
-import { useUpdateOrganizationUser } from "@services/register/organization/users/updateUser";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
-import { useListPartners } from "@src/services/register/partner/listPartners";
-import { PartnerQuery } from "@src/services/types/register/partners/partners.interface";
-import { useGetPartnerUsers } from "@src/services/register/partner/users/getPartnerUsers";
-import { useUpdatePartnerUser } from "@src/services/register/partner/users/updateUser";
+import { Toast } from "@src/components/Toast";
+import { MutateModal } from "@src/components/Modals/mutateGenericModal";
+import { useGetOperator } from "@src/services/register/operator/getOperators";
+import {
+  OperatorItem,
+  OperatorQuery,
+} from "@src/services/types/register/operators/operators.interface";
+import { useCreateOperator } from "@src/services/register/operator/createOperator";
+import { useUpdateOperator } from "@src/services/register/operator/updateOperator";
 
-const INITIAL_QUERY: PartnerQuery = {
+const INITIAL_QUERY: OperatorQuery = {
   limit: 25,
   page: 1,
   sort_field: "created_at",
   sort_order: "DESC",
 };
 
-export const PartnerUsers = () => {
-  const [query, setQuery] = useState<PartnerQuery>(INITIAL_QUERY);
+export const Operators = () => {
+  const [query, setQuery] = useState<OperatorQuery>(INITIAL_QUERY);
   const { t } = useTranslation();
 
+  const {
+    OperatorData,
+    OperatorDataError,
+    isOperatorDataFetching,
+    refetchOperatorData,
+  } = useGetOperator(query);
+
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
-  const [isNewUserModal, setIsNewUserModal] = useState<boolean>(false);
+  const [isNewCategorieModal, setIsNewCategorieModal] =
+    useState<boolean>(false);
+  const [isUpdateCategorieModalOpen, setIsUpdateCategorieModalOpen] =
+    useState<boolean>(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
-  const [currentItem, setCurrentItem] = useState<any>(null);
+  const [currentItem, setCurrentItem] = useState<OperatorItem | null>(null);
   const [search, setSearch] = useState<string>("");
   const debounceSearch = useDebounce(search);
-  const [updateUserBody, setUpdateUserBody] = useState<NewUserInterface | null>(
-    null
-  );
-  const [isValidateTokenOpen, setIsValidateTokenOpen] =
-    useState<boolean>(false);
-  const [tokenState, setTokenState] = useState<string>("");
-  const { UsersData, UsersDataError, isUsersDataFetching, refetchUsersData } =
-    useGetPartnerUsers(query);
-  const { updateSuccess, updateError, updateMutate } = useUpdatePartnerUser({
-    ...updateUserBody,
-    validation_token: tokenState,
+  const [createBody, setCreateBody] = useState<OperatorItem>({
+    name: "",
+    cnpj: "",
+    country: "",
+    responsible_name: "",
   });
-  const [action, setAction] = useState<"create" | "update">("create");
+  const [updateBody, setUpdateBody] = useState<OperatorItem>({
+    ...currentItem,
+    operator_id: currentItem?.id,
+  });
+
+  const {
+    OperatorIsLoading,
+    OperatorMutate,
+    OperatorError,
+    OperatorIsSuccess,
+  } = useCreateOperator(createBody);
+
+  const { UpdateError, UpdateIsLoading, UpdateMutate, UpdateIsSuccess } =
+    useUpdateOperator(updateBody);
 
   const columns: ColumnInterface[] = [
     { name: "id", type: "id" },
     { name: "name", type: "text" },
-    { name: "group_id", type: "text" },
-    { name: ["partner", "name"], head: "partner", type: "text" },
-    { name: "last_signin_date", type: "date" },
     { name: "status", type: "status" },
     { name: "created_at", type: "date" },
   ];
 
   useEffect(() => {
-    refetchUsersData();
+    refetchOperatorData();
   }, [query]);
 
   useEffect(() => {
@@ -73,9 +88,13 @@ export const PartnerUsers = () => {
     setQuery((state) => ({ ...state, name: debounceSearch }));
   }, [debounceSearch]);
 
-  const handleUpdateTokenValidate = () => {
-    updateMutate();
-  };
+  useEffect(() => {
+    setUpdateBody({
+      ...currentItem,
+      operator_id: currentItem?.id,
+    });
+  }, [currentItem]);
+
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid
@@ -85,9 +104,8 @@ export const PartnerUsers = () => {
       >
         <Grid item xs={12} md={4} lg={2}>
           <Button
-            size="large"
-            style={{ width: "100%" }}
-            loading={isUsersDataFetching}
+            style={{ width: "100%", height: 40 }}
+            loading={isOperatorDataFetching}
             type="primary"
             onClick={() => setIsFiltersOpen(true)}
           >
@@ -117,15 +135,15 @@ export const PartnerUsers = () => {
         </Grid>
         <Grid item xs={12} md={3} lg={2}>
           <Button
-            size="large"
             type="dashed"
-            loading={isUsersDataFetching}
+            loading={isOperatorDataFetching}
             danger
             onClick={() => {
               setQuery(INITIAL_QUERY);
               setSearch("");
             }}
             style={{
+              height: 40,
               width: "100%",
               display: "flex",
               alignItems: "center",
@@ -139,10 +157,9 @@ export const PartnerUsers = () => {
         <Grid item xs={12} md={3} lg={2}>
           <Button
             type="primary"
-            loading={isUsersDataFetching}
+            loading={isOperatorDataFetching}
             onClick={() => {
-              setAction("create");
-              setIsNewUserModal(true);
+              setIsNewCategorieModal(true);
             }}
             style={{
               height: 40,
@@ -153,7 +170,7 @@ export const PartnerUsers = () => {
             }}
           >
             <UserAddOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
-            {`${t("buttons.create")} ${t("buttons.new_user")}`}
+            {`${t("buttons.create")} ${t("buttons.new_operator")}`}
           </Button>
         </Grid>
       </Grid>
@@ -177,17 +194,16 @@ export const PartnerUsers = () => {
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
                 onClick: () => {
-                  setAction("update");
-                  setIsNewUserModal(true);
+                  setIsUpdateCategorieModalOpen(true);
                 },
               },
             ]}
-            data={UsersData}
-            items={UsersData?.items}
-            error={UsersDataError}
+            data={OperatorData}
+            items={OperatorData?.items}
+            error={OperatorDataError}
             columns={columns}
-            loading={isUsersDataFetching}
-            label={["name", "username"]}
+            loading={isOperatorDataFetching}
+            label={["name", "description"]}
           />
         </Grid>
       </Grid>
@@ -199,53 +215,78 @@ export const PartnerUsers = () => {
           query={query}
           setQuery={setQuery}
           haveInitialDate
-          filters={[
-            "start_date",
-            "end_date",
-            "status",
-            "partner_id",
-            "merchant_id",
-          ]}
-          refetch={refetchUsersData}
+          filters={["start_date", "end_date", "status"]}
+          refetch={refetchOperatorData}
           selectOptions={{}}
           startDateKeyName="start_date"
           endDateKeyName="end_date"
           initialQuery={INITIAL_QUERY}
         />
       )}
-      {isNewUserModal && (
-        <NewUserModal
-          action={action}
-          open={isNewUserModal}
-          setOpen={setIsNewUserModal}
-          currentUser={currentItem}
-          setCurrentUser={setCurrentItem}
-          setUpdateBody={setUpdateUserBody}
-          setIsValidateTokenOpen={setIsValidateTokenOpen}
+
+      {isNewCategorieModal && (
+        <MutateModal
+          type="create"
+          open={isNewCategorieModal}
+          setOpen={setIsNewCategorieModal}
+          fields={[
+            { label: "name", required: true },
+            { label: "cnpj", required: true },
+            { label: "cellphone", required: false },
+            { label: "email", required: false },
+            { label: "country", required: true },
+          ]}
+          body={createBody}
+          setBody={setCreateBody}
+          modalName={t("modal.new_operator")}
+          submit={OperatorMutate}
+          submitLoading={OperatorIsLoading}
+          error={OperatorError}
+          success={OperatorIsSuccess}
         />
       )}
-      {isValidateTokenOpen && (
-        <ValidateToken
-          action="USER_UPDATE"
-          body={updateUserBody}
-          open={isValidateTokenOpen}
-          setIsOpen={setIsValidateTokenOpen}
-          setTokenState={setTokenState}
-          tokenState={tokenState}
-          success={updateSuccess}
-          error={updateError}
-          submit={handleUpdateTokenValidate}
+      {isUpdateCategorieModalOpen && (
+        <MutateModal
+          type="update"
+          open={isUpdateCategorieModalOpen}
+          setOpen={setIsUpdateCategorieModalOpen}
+          fields={[
+            { label: "name", required: false },
+            { label: "cnpj", required: false },
+            { label: "cellphone", required: false },
+            { label: "email", required: false },
+            { label: "country", required: false },
+          ]}
+          body={updateBody}
+          setBody={setUpdateBody}
+          modalName={t("modal.update_operator")}
+          submit={UpdateMutate}
+          submitLoading={UpdateIsLoading}
+          error={UpdateError}
+          success={UpdateIsSuccess}
         />
       )}
       {isViewModalOpen && (
         <ViewModal
           item={currentItem}
-          loading={isUsersDataFetching}
-          modalName={`${t("modal.user")}: ${currentItem?.name}`}
+          loading={isOperatorDataFetching}
+          modalName={`${t("menus.operator")}: ${currentItem?.name}`}
           open={isViewModalOpen}
           setOpen={setIsViewModalOpen}
         />
       )}
+      <Toast
+        actionSuccess={t("messages.updated")}
+        actionError={t("messages.update")}
+        error={UpdateError}
+        success={UpdateIsSuccess}
+      />
+      <Toast
+        actionSuccess={t("messages.created")}
+        actionError={t("messages.create")}
+        error={OperatorError}
+        success={OperatorIsSuccess}
+      />
     </Grid>
   );
 };

@@ -1,5 +1,5 @@
-export interface PartnerQuery {
-  partner_id?: number;
+export interface OperatorQuery {
+  operator_id?: number;
   start_date?: string;
   end_date?: string;
   name?: string;
@@ -12,9 +12,9 @@ export interface PartnerQuery {
   limit: number;
 }
 
-export interface PartnerItem {
+export interface OperatorItem {
   id?: number;
-  partner_id?: number;
+  operator_id?: number;
   name?: string;
   status?: boolean;
   organization_id?: number;
@@ -26,9 +26,9 @@ export interface PartnerItem {
   responsible_name?: string;
   created_at?: string;
 }
-export interface PartnersResponse {
+export interface OperatorsResponse {
   total: number;
   limit: number;
   page: number;
-  items: PartnerItem[];
+  items: OperatorItem[];
 }

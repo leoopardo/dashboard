@@ -1,10 +1,8 @@
 import { Grid } from "@mui/material";
-import { Alert, Button, Input } from "antd";
-import React, { useEffect, useState } from "react";
+import { Button, Input } from "antd";
+import { useEffect, useState } from "react";
 import { FilterChips } from "@components/FiltersModal/filterChips";
 import { useTranslation } from "react-i18next";
-import { useGetRowsOrganizationUsers } from "@services/register/organization/users/getUsers";
-import { OrganizationUserQuery } from "@src/services/types/register/organization/organizationUsers.interface";
 import { FiltersModal } from "@components/FiltersModal";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
@@ -14,10 +12,8 @@ import { NewUserInterface, NewUserModal } from "./components/newUserModal";
 import { ValidateToken } from "@components/ValidateToken";
 import { useUpdateOrganizationUser } from "@services/register/organization/users/updateUser";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
-import { useListPartners } from "@src/services/register/partner/listPartners";
 import { PartnerQuery } from "@src/services/types/register/partners/partners.interface";
 import { useGetPartnerUsers } from "@src/services/register/partner/users/getPartnerUsers";
-import { useUpdatePartnerUser } from "@src/services/register/partner/users/updateUser";
 
 const INITIAL_QUERY: PartnerQuery = {
   limit: 25,
@@ -26,7 +22,7 @@ const INITIAL_QUERY: PartnerQuery = {
   sort_order: "DESC",
 };
 
-export const PartnerUsers = () => {
+export const AggregatorUsers = () => {
   const [query, setQuery] = useState<PartnerQuery>(INITIAL_QUERY);
   const { t } = useTranslation();
 
@@ -44,10 +40,11 @@ export const PartnerUsers = () => {
   const [tokenState, setTokenState] = useState<string>("");
   const { UsersData, UsersDataError, isUsersDataFetching, refetchUsersData } =
     useGetPartnerUsers(query);
-  const { updateSuccess, updateError, updateMutate } = useUpdatePartnerUser({
-    ...updateUserBody,
-    validation_token: tokenState,
-  });
+  const { updateSuccess, updateError, updateMutate } =
+    useUpdateOrganizationUser({
+      ...updateUserBody,
+      validation_token: tokenState,
+    });
   const [action, setAction] = useState<"create" | "update">("create");
 
   const columns: ColumnInterface[] = [

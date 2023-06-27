@@ -53,3 +53,33 @@ export interface CityItem {
     };
   };
 }
+
+export interface CountryInterface {
+  name: {
+    common: string;
+    official:string;
+  };
+  cca2: string;
+  currencies: {
+    JOD: {
+      name: string;
+      symbol: string;
+    };
+  };
+  idd: {
+    root: string;
+    suffixes: string[];
+  };
+  flag: string;
+  timezones: string[];
+  continents: string[];
+  flags: {
+    png: string;
+    svg: string;
+    alt: string;
+  };
+  postalCode: {
+    format: string;
+    regex: string;
+  };
+}

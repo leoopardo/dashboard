@@ -64,9 +64,8 @@ export const FiltersModal = ({
   const { isStatesFetching, states } = useGetStates();
   const [isAgeRangeAbled, setIsAgeRangeAbled] = useState<boolean>(false);
   const [isValueRangeAbled, setIsValueRangeAbled] = useState<boolean>(false);
-  const { cities, isCitiesFetching, refetchCities } = useGetCities(
-    filtersQuery.state
-  );
+  const [currState, setCurrState] = useState<string>("");
+  const { cities, isCitiesFetching, refetchCities } = useGetCities(currState);
 
   useEffect(() => {
     if (query.age_start) {
@@ -86,6 +85,10 @@ export const FiltersModal = ({
       [endDateKeyName]: moment(query[endDateKeyName]),
     });
   }, [query]);
+
+  useEffect(() => {
+    refetchCities();
+  }, [currState]);
 
   const isAgeAbled = (isAbled: boolean) => {
     const q = { ...filtersQuery };
@@ -280,7 +283,6 @@ export const FiltersModal = ({
                         onChange={(event: any) => {
                           isAgeAbled(event.target.checked);
                           setIsAgeRangeAbled(event.target.checked);
-
                         }}
                       >
                         {t("table.age")}
@@ -359,14 +361,15 @@ export const FiltersModal = ({
                         placeholder={t(`table.${filter}`)}
                         value={filtersQuery[filter] ?? null}
                         onSelect={(value) => {
-                          refetchCities();
+                          delete filtersQuery.city;
                           setFiltersQuery((state: any) => ({
                             ...state,
                             [filter]: value,
                           }));
+                          setCurrState(value);
                         }}
                         filterOption={(inputValue, option) =>
-                          option!.value
+                          option?.value
                             .toUpperCase()
                             .indexOf(inputValue.toUpperCase()) !== -1
                         }

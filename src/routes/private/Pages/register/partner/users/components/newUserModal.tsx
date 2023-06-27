@@ -13,6 +13,8 @@ import { toast } from "react-hot-toast";
 import { OrganizationUserItem } from "@src/services/types/register/organization/organizationUsers.interface";
 import { useUpdateOrganizationUser } from "@services/register/organization/users/updateUser";
 import { Toast } from "@src/components/Toast";
+import { useCreatePartnerUser } from "@src/services/register/partner/users/createUser";
+import { useUpdatePartnerUser } from "@src/services/register/partner/users/updateUser";
 interface NewuserModalprops {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -61,10 +63,9 @@ export const NewUserModal = ({
     type: 2,
   });
 
-  const { mutate, error, isLoading, isSuccess } =
-    useCreateOrganizationUser(body);
+  const { mutate, error, isLoading, isSuccess } = useCreatePartnerUser(body);
   const { updateError, updateLoading, updateMutate, updateSuccess } =
-    useUpdateOrganizationUser(body);
+    useUpdatePartnerUser(body);
 
   function handleChangeUserBody(event: any) {
     setBody((state) => ({ ...state, [event.target.name]: event.target.value }));

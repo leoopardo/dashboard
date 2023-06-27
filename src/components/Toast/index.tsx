@@ -18,7 +18,7 @@ export const Toast = ({
   const { t } = useTranslation();
   useEffect(() => {
     if (error) {
-      toast.error(t("messages.action_success", {
+      toast.error(t("messages.action_error", {
         action: actionError,
       }));
     }
