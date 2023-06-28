@@ -176,7 +176,9 @@
     "time_receive_after_expire_qr_code_hours": "Time to receive after QRCode expiration (hours):",
     "description": "Description",
     "cnpj": "CNPJ",
-    "country": "Country"
+    "country": "Country",
+    "operator": "Operator",
+    "aggregator": "Aggregator"
   },
   "modal": {
     "confirm": "Confirm",
@@ -193,7 +195,8 @@
     "new_operator": "New operator",
     "update_operator": "AUpdate operator",
     "new_aggregator": "New agregator",
-    "update_aggregator": "Update agregator"
+    "update_aggregator": "Update agregator",
+    "person": "Person"
   },
   "table": {
     "id": "ID",
@@ -320,7 +323,27 @@
     "partner": "Partner",
     "cnpj": "CNPJ",
     "country": "Country",
-    "responsible_name": "Responsible name"
+    "responsible_name": "Responsible name",
+    "operator_id": "Operator ID",
+    "cpf": "CPF",
+    "situation_text": "Situation",
+    "birth_date": "Birth date",
+    "mother_name": "Mothers name",
+    "black_list": "Blacklist",
+    "flag_pep": "PEP",
+    "flag_aux_gov": "Government aid",
+    "flag_alert": "Alert flag",
+    "updatedAt": "Updated at",
+    "situation_code": "Situation code",
+    "street": "Street",
+    "neighborhood": "Neighborhood",
+    "number": "Number",
+    "zip_code": "Zip code",
+    "last_check": "Last check",
+    "_v": "v",
+    "cash_in_max_value": "Deposit max value",
+    "cash_out_max_value": "Withdraw max value",
+    "cash_out_transaction_limit": "Withdrawal limit"
   },
   "actions": {
     "details": "Details",

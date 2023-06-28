@@ -50,7 +50,7 @@ export const OperatorUsers = () => {
     { name: "id", type: "id" },
     { name: "name", type: "text" },
     { name: "group_id", type: "text" },
-    { name: ["partner", "name"], head: "partner", type: "text" },
+    { name: "operator_id", type: "text" },
     { name: "last_signin_date", type: "date" },
     { name: "status", type: "status" },
     { name: "created_at", type: "date" },

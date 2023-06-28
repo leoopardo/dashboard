@@ -4,6 +4,7 @@ import { AutoComplete, Empty, Input } from "antd";
 import { PartnerQuery } from "../../../services/types/register/partners/partners.interface";
 import { useTranslation } from "react-i18next";
 import { DownOutlined } from "@ant-design/icons";
+import useDebounce from "@src/utils/useDebounce";
 
 interface PartnerSelectProps {
   setQueryFunction: Dispatch<SetStateAction<any>>;
@@ -21,14 +22,27 @@ export const PartnerSelect = ({
   });
   const { partnersData, refetcPartners } = useListPartners(query);
   const [value, setValue] = useState<any>(null);
+  const debounceSearch = useDebounce(query.name);
 
   useEffect(() => {
-    setValue(
-      partnersData?.items.find(
+    if (partnersData && !value) {
+      const initial = partnersData?.items.find(
         (partner) => partner.id === queryOptions.partner_id
-      )?.name
-    );
+      );
+      if (initial) {
+        setValue(initial?.name);
+      }
+    }
   }, [partnersData, queryOptions]);
+
+  useEffect(() => {
+    refetcPartners();
+  }, [debounceSearch]);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const val = event?.target?.value;
+    setQuery((state) => ({ ...state, name: val }));
+  };
 
   return (
     <AutoComplete
@@ -46,8 +60,7 @@ export const PartnerSelect = ({
         setQueryFunction((state: any) => ({ ...state, partner_id: value }))
       }
       onInputKeyDown={(event: any) => {
-        setQuery((state) => ({ ...state, name: event.target.value }));
-        refetcPartners();
+        handleChange(event);
       }}
       placeholder={t("table.partner_name")}
     />

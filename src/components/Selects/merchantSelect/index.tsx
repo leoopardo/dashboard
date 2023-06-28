@@ -4,6 +4,7 @@ import { MerchantQuery } from "../../../services/types/register/merchants/mercha
 import { useListMerchants } from "../../../services/merchant/listMerchants";
 import { useTranslation } from "react-i18next";
 import { DownOutlined } from "@ant-design/icons";
+import useDebounce from "@src/utils/useDebounce";
 
 interface MerchantSelectProps {
   setQueryFunction: Dispatch<SetStateAction<any>>;
@@ -22,14 +23,27 @@ export const MerchantSelect = ({
   const { merchantsData, refetcMerchant, isMerchantFetching } =
     useListMerchants(query);
   const [value, setValue] = useState<any>(null);
+  const debounceSearch = useDebounce(query.name);
 
   useEffect(() => {
-    setValue(
-      merchantsData?.items.find(
+    if (merchantsData && !value) {
+      const initial = merchantsData?.items.find(
         (merchant) => merchant.id === queryOptions.merchant_id
-      )?.name
-    );
+      );
+      if (initial) {
+        setValue(initial?.name);
+      }
+    }
   }, [merchantsData, queryOptions]);
+
+  useEffect(() => {
+    refetcMerchant();
+  }, [debounceSearch]);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const val = event?.target?.value;
+    setQuery((state) => ({ ...state, name: val }));
+  };
 
   return (
     <AutoComplete
@@ -47,7 +61,7 @@ export const MerchantSelect = ({
         setQueryFunction((state: any) => ({ ...state, merchant_id: value }))
       }
       onInputKeyDown={(event: any) => {
-        setQuery((state) => ({ ...state, name: event.target.value }));
+        handleChange(event);
       }}
       placeholder={t("table.merchant_name")}
     />

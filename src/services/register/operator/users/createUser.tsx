@@ -1,14 +1,15 @@
 import { api } from "../../../../config/api";
-import { useMutation, } from "react-query";
+import { useMutation } from "react-query";
 import { NewUserInterface } from "../../../../routes/private/Pages/register/organization/users/components/newUserModal";
 import { queryClient } from "../../../queryClient";
+import { OperatorItem } from "@src/services/types/register/operators/operators.interface";
 
-export function useCreateOperatorUser(body: NewUserInterface) {
+export function useCreateOperatorUser(body: OperatorItem) {
   const { isLoading, error, mutate, isSuccess } = useMutation<
-    NewUserInterface | null | undefined
+    OperatorItem | null | undefined
   >("createOperatorUser", async () => {
-    const response = await api.post("core/user/create/partner", body, {});
-    await queryClient.refetchQueries({ queryKey: ["operatorUser"] });
+    const response = await api.post("core/user/create/operator", body, {});
+    await queryClient.refetchQueries({ queryKey: ["OperatorUser"] });
     return response.data;
   });
 

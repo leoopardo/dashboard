@@ -25,6 +25,8 @@ export interface OperatorItem {
   country?: string;
   responsible_name?: string;
   created_at?: string;
+  group_id?: number;
+  username?: string;
 }
 export interface OperatorsResponse {
   total: number;

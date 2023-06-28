@@ -13,8 +13,6 @@ import { PageHeader } from "./components/PageHeader/index.tsx";
 import { I18nextProvider, useTranslation } from "react-i18next";
 import i18n from "./i18n";
 import { useValidate } from "./services/siginIn/validate.tsx";
-import { useToken } from "./services/siginIn/signIn.tsx";
-import { ValidateToken } from "./components/ValidateToken/index.tsx";
 import { Toaster } from "react-hot-toast";
 const Logo = import.meta.env.VITE_APP_ICON;
 
@@ -26,10 +24,7 @@ function App() {
   const [isIconSet, setIsIconSet] = useState<boolean>(false);
   const {
     isSuccess,
-    isValidateFetching,
-    refetchValidate,
     validateError,
-    responseValidate,
   } = useValidate();
 
   useEffect(() => {

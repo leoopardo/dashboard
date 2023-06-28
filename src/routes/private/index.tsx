@@ -21,6 +21,8 @@ import { Operators } from "./Pages/register/operator/operators";
 import { OperatorUsers } from "./Pages/register/operator/users";
 import { Aggregators } from "./Pages/register/aggregator/aggregators";
 import { AggregatorUsers } from "./Pages/register/aggregator/users";
+import { Persons } from "./Pages/register/persons";
+import { PersonDetails } from "./Pages/register/persons/personDetails";
 
 export const PrivateRoutes = () => {
   const navigate = useNavigate();
@@ -80,6 +82,12 @@ export const PrivateRoutes = () => {
           <Route path="merchant">
             <Route path="merchants" element={<MerchantView />} />
             <Route path="merchant_users" element={<MerchantUser />} />
+          </Route>
+          <Route path="person">
+            <Route path="persons">
+              <Route index element={<Persons />} />
+              <Route path=":cpf" element={<PersonDetails />} />
+            </Route>
           </Route>
         </Route>
       </Route>

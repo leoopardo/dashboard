@@ -61,6 +61,7 @@ export const CustomTable = (props: TableProps) => {
   const translation = useTranslation().i18n.language;
   const [sortOrder, setSortOrder] = useState(false);
   const [actions, setActions] = useState<any>([]);
+  const [current, setCurrent] = useState<any | null>(null)
 
   useEffect(() => {
     const act: any = [];
@@ -283,7 +284,7 @@ export const CustomTable = (props: TableProps) => {
                     key={column.name}
                     menu={{ items: actions }}
                     onOpenChange={(open) => {
-                      if (open) props.setCurrentItem(record);
+                      if (open) {props.setCurrentItem(record)}
                     }}
                     arrow
                   >

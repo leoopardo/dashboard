@@ -16,6 +16,7 @@ import { toast } from "react-hot-toast";
 import { useGetrefetchCountries } from "@src/services/states_cities/getCountries";
 import ReactInputMask from "react-input-mask";
 import { Country, State, City } from "country-state-city";
+import { OperatorSelect } from "@src/components/Selects/operatorSelect";
 
 interface mutateProps {
   type: "create" | "update";
@@ -90,7 +91,7 @@ export const MutateModal = ({
       >
         {fields.map((field) => {
           switch (field.label) {
-            case "merchant":
+            case "merchant_id":
               <Form.Item
                 label={t(`table.${field.label}`)}
                 name={field.label}
@@ -112,7 +113,7 @@ export const MutateModal = ({
               </Form.Item>;
               return;
 
-            case "partner":
+            case "partner_id":
               <Form.Item
                 label={t(`table.${field.label}`)}
                 name={field.label}
@@ -128,6 +129,28 @@ export const MutateModal = ({
                 ]}
               >
                 <PartnerSelect setQueryFunction={setBody} queryOptions={body} />
+              </Form.Item>;
+              return;
+
+            case "operator_id":
+              <Form.Item
+                label={t(`table.${field.label}`)}
+                name={field.label}
+                style={{ margin: 10 }}
+                rules={[
+                  {
+                    required: field.required,
+                    message:
+                      t("input.required", {
+                        field: t(`input.${field.label}`),
+                      }) || "",
+                  },
+                ]}
+              >
+                <OperatorSelect
+                  setQueryFunction={setBody}
+                  queryOptions={body}
+                />
               </Form.Item>;
               return;
             case "status":

@@ -10,22 +10,20 @@ import {
   Input,
   Popconfirm,
   Select,
-  Spin,
   Tabs,
   TabsProps,
 } from "antd";
-import React, { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 export const GeneralConfigs = () => {
   const { t } = useTranslation();
-  const { data, error, isFetching, isSuccess, refetch } =
+  const { data, isFetching, refetch } =
     useGetGeneralconfigs();
   const onChange = (key: string) => {
     console.log(key);
   };
   const formRef = useRef<FormInstance>(null);
-  const submitRef = useRef<HTMLButtonElement>(null);
   const [body, setBody] = useState<OrganizationGeneralConfigs>({ ...data });
   const [isConfirmOpen, setIsConfirmOpen] = useState<boolean>(false);
   const { updateMutate, updateError, updateIsLoading, updateSuccess } =

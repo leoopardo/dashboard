@@ -12,6 +12,9 @@ import { useCreateOrganizationUser } from "@services/register/organization/users
 import { toast } from "react-hot-toast";
 import { OrganizationUserItem } from "@src/services/types/register/organization/organizationUsers.interface";
 import { useUpdateOrganizationUser } from "@services/register/organization/users/updateUser";
+import { useValidate } from "@src/services/siginIn/validate";
+import { Toast } from "@src/components/Toast";
+import { queryClient } from "@src/services/queryClient";
 interface NewuserModalprops {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -23,16 +26,17 @@ interface NewuserModalprops {
 }
 
 export interface NewUserInterface {
-  name: string;
-  username: string;
-  password: string;
+  name?: string;
+  username?: string;
+  password?: string;
   email?: string;
   cellphone?: string;
-  group_id: number;
+  group_id?: number;
   type?: number;
-  status: boolean;
+  status?: boolean;
   partner_id?: number;
   merchant_id?: number;
+  organization_id?: number;
   user_id?: number;
   validation_token?: string;
 }
@@ -49,9 +53,11 @@ export const NewUserModal = ({
   const { t } = useTranslation();
   const submitRef = useRef<HTMLButtonElement>(null);
   const formRef = React.useRef<FormInstance>(null);
+  const { responseValidate } = useValidate();
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [form] = Form.useForm();
   const [cantSubmit, setCantSubmit] = useState<boolean>(true);
+
   const [body, setBody] = useState<NewUserInterface>({
     name: "",
     username: "",
@@ -59,6 +65,7 @@ export const NewUserModal = ({
     group_id: 0,
     status: true,
     type: 2,
+    organization_id: responseValidate?.organization_id,
   });
 
   const { mutate, error, isLoading, isSuccess } =
@@ -71,7 +78,6 @@ export const NewUserModal = ({
   }
 
   function CreateUser(event: any) {
-    event.preventDefault();
     if (
       currentUser &&
       setUpdateBody &&
@@ -85,27 +91,16 @@ export const NewUserModal = ({
       return;
     }
     mutate();
+    setOpen(false);
+    setBody({});
   }
 
   useEffect(() => {
-    if (isSuccess) {
-      setOpen(false);
-      toast.success("Usuário criado com sucesso!");
-    }
-    if (error) {
-      toast.error("Erro ao criar usuário, tente novamente!");
-    }
-  }, [isSuccess, error]);
-
-  useEffect(() => {
-    if (updateSuccess) {
-      setOpen(false);
-      toast.success("Usuário atualizado com sucesso!");
-    }
-    if (updateError) {
-      toast.error("Erro ao atualizar usuário, tente novamente!");
-    }
-  }, [updateError, updateSuccess]);
+    setBody((state) => ({
+      ...state,
+      organization_id: responseValidate?.organization_id,
+    }));
+  }, [responseValidate]);
 
   useEffect(() => {
     if (currentUser)
@@ -118,6 +113,7 @@ export const NewUserModal = ({
         username: currentUser.username,
       }));
   }, [currentUser]);
+
   useEffect(() => {
     if (action === "create") {
       setBody({
@@ -266,7 +262,12 @@ export const NewUserModal = ({
             style={{ display: "none" }}
             name="group_id"
           />
-          <GroupSelect body={body} setBody={setBody} />
+          <GroupSelect
+            body={body}
+            setBody={setBody}
+            filterIdProp="organization_id"
+            filterIdValue={responseValidate?.organization_id}
+          />
         </Form.Item>
 
         <Form.Item
@@ -339,6 +340,18 @@ export const NewUserModal = ({
           </button>
         </Form.Item>
       </Form>
+      <Toast
+        actionSuccess={t("messages.created")}
+        actionError={t("messages.create")}
+        error={error}
+        success={isSuccess}
+      />
+      <Toast
+        actionSuccess={t("messages.updated")}
+        actionError={t("messages.update")}
+        error={updateError}
+        success={updateSuccess}
+      />
     </Drawer>
   );
 };

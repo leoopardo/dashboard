@@ -15,6 +15,7 @@ import { useUpdateOrganizationUser } from "@services/register/organization/users
 import { Toast } from "@src/components/Toast";
 import { useCreateAggregatorUser } from "@src/services/register/aggregator/users/createUser";
 import { useUpdateAggregatorUser } from "@src/services/register/aggregator/users/updateUser";
+import { AggregatorSelect } from "@src/components/Selects/aggregatorSelect";
 interface NewuserModalprops {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -34,8 +35,7 @@ export interface NewUserInterface {
   group_id: number;
   type?: number;
   status: boolean;
-  partner_id?: number;
-  merchant_id?: number;
+  aggregator_id?: number;
   user_id?: number;
 }
 
@@ -72,7 +72,6 @@ export const NewUserModal = ({
   }
 
   function CreateUser(event: any) {
-    event.preventDefault();
     if (
       currentUser &&
       setUpdateBody &&
@@ -233,6 +232,23 @@ export const NewUserModal = ({
           />
         </Form.Item>
         <Form.Item
+          label={t("input.aggregator")}
+          name="operator_id"
+          style={{ margin: 10 }}
+          rules={[
+            {
+              required: !body.aggregator_id,
+              message:
+                t("input.required", {
+                  field: t(`input.operator`),
+                }) || "",
+            },
+          ]}
+        >
+          <AggregatorSelect setQueryFunction={setBody} queryOptions={body} />
+        </Form.Item>
+
+        <Form.Item
           label={t(`table.group`)}
           name="group_id"
           style={{ margin: 10 }}
@@ -248,7 +264,12 @@ export const NewUserModal = ({
             style={{ display: "none" }}
             name="group_id"
           />
-          <GroupSelect body={body} setBody={setBody} />
+          <GroupSelect
+            body={body}
+            setBody={setBody}
+            filterIdProp="aggregator_id"
+            filterIdValue={body.aggregator_id}
+          />
         </Form.Item>
 
         <Form.Item

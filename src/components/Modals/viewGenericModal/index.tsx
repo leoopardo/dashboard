@@ -36,6 +36,8 @@ export const ViewModal = ({
             switch (key) {
               case "created_at":
               case "createdAt":
+              case "last_check":
+              case "updatedAt":
                 return (
                   <Descriptions.Item
                     key={key}
@@ -50,6 +52,24 @@ export const ViewModal = ({
                     {`${new Date(item[key]).toLocaleDateString()} ${new Date(
                       item[key]
                     ).toLocaleTimeString()}`}
+                  </Descriptions.Item>
+                );
+
+              case "birth_date":
+                return (
+                  <Descriptions.Item
+                    key={key}
+                    label={t(`table.${key}`)}
+                    labelStyle={{
+                      maxWidth: "120px !important",
+                      margin: 0,
+                      padding: 0,
+                      textAlign: "center",
+                    }}
+                  >
+                    {`${new Date(item[key]).toLocaleDateString("pt-BR", {
+                      timeZone: "UTC",
+                    })}`}
                   </Descriptions.Item>
                 );
 
@@ -70,6 +90,23 @@ export const ViewModal = ({
                         ? t("table.active")
                         : t("table.inactive")
                       : t(`table.${item[key.toLocaleLowerCase()]}`)}
+                  </Descriptions.Item>
+                );
+              case "flag_pep":
+              case "flag_aux_gov":
+              case "black_list":
+                return (
+                  <Descriptions.Item
+                    key={key}
+                    label={t(`table.${key}`)}
+                    labelStyle={{
+                      maxWidth: "120px !important",
+                      margin: 0,
+                      padding: 0,
+                      textAlign: "center",
+                    }}
+                  >
+                    {item[key] ? t("table.true") : t("table.false")}
                   </Descriptions.Item>
                 );
 

@@ -14,10 +14,13 @@ import { useUpdateOrganizationUser } from "@services/register/organization/users
 import { Toast } from "@src/components/Toast";
 import { useCreateOperatorUser } from "@src/services/register/operator/users/createUser";
 import { useUpdateOperatorUser } from "@src/services/register/operator/users/updateUser";
+import { OperatorSelect } from "@src/components/Selects/operatorSelect";
+import { OperatorItem } from "@src/services/types/register/operators/operators.interface";
+import ReactInputMask from "react-input-mask";
 interface NewuserModalprops {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
-  currentUser?: OrganizationUserItem | null;
+  currentUser?: OperatorItem | null;
   setCurrentUser?: Dispatch<SetStateAction<NewUserInterface | null>>;
   setUpdateBody?: Dispatch<SetStateAction<NewUserInterface | null>>;
   setIsValidateTokenOpen?: Dispatch<SetStateAction<boolean>>;
@@ -25,16 +28,15 @@ interface NewuserModalprops {
 }
 
 export interface NewUserInterface {
-  name: string;
-  username: string;
-  password: string;
+  name?: string;
+  username?: string;
+  password?: string;
   email?: string;
   cellphone?: string;
-  group_id: number;
+  group_id?: number;
   type?: number;
-  status: boolean;
-  partner_id?: number;
-  merchant_id?: number;
+  status?: boolean;
+  operator_id?: number;
   user_id?: number;
 }
 
@@ -70,7 +72,6 @@ export const NewUserModal = ({
   }
 
   function CreateUser(event: any) {
-    event.preventDefault();
     if (
       currentUser &&
       setUpdateBody &&
@@ -84,17 +85,18 @@ export const NewUserModal = ({
       return;
     }
     mutate();
+    setOpen(false);
   }
 
   useEffect(() => {
     if (currentUser)
       setBody((state) => ({
         ...state,
-        name: currentUser.name,
-        group_id: currentUser.group_id,
-        user_id: currentUser.id,
-        status: currentUser.status,
-        username: currentUser.username,
+        name: currentUser?.name,
+        group_id: currentUser?.group_id,
+        status: currentUser?.status,
+        username: currentUser?.username,
+        operator_id: currentUser?.operator_id,
       }));
   }, [currentUser]);
 
@@ -201,13 +203,22 @@ export const NewUserModal = ({
             },
           ]}
         >
-          <Input
-            size="large"
-            type="string"
-            name="cellphone"
+          <ReactInputMask
             value={body.cellphone}
-            onChange={handleChangeUserBody}
-          />
+            mask="+9999999999999"
+            onChange={(event: any) => {
+              const value = event.target.value.replace(/[^\d]/g, "");
+              if (!value) {
+                delete body.cellphone;
+              }
+              setBody((state: any) => ({
+                ...state,
+                cellphone: `+${value}`,
+              }));
+            }}
+          >
+            <Input size="large" type="string" name="cellphone" />
+          </ReactInputMask>
         </Form.Item>
         <Form.Item
           label={t(`table.email`)}
@@ -231,24 +242,40 @@ export const NewUserModal = ({
           />
         </Form.Item>
         <Form.Item
+          label={t("input.operator")}
+          name="operator_id"
+          style={{ margin: 10 }}
+          rules={[
+            {
+              required: !body.operator_id,
+              message:
+                t("input.required", {
+                  field: t(`input.operator`),
+                }) || "",
+            },
+          ]}
+        >
+          <OperatorSelect setQueryFunction={setBody} queryOptions={body} />
+        </Form.Item>
+
+        <Form.Item
           label={t(`table.group`)}
           name="group_id"
           style={{ margin: 10 }}
           rules={[
             {
-              required: !body.group_id ? true : false,
+              required: true,
               message: t("input.required", { field: t("input.group") }) || "",
             },
           ]}
         >
-          <Input
-            value={body.group_id || ""}
-            style={{ display: "none" }}
-            name="group_id"
+          <GroupSelect
+            body={body}
+            setBody={setBody}
+            filterIdProp="operator_id"
+            filterIdValue={body?.operator_id || currentUser?.operator_id}
           />
-          <GroupSelect body={body} setBody={setBody} />
         </Form.Item>
-
         <Form.Item
           label={t(`table.password`)}
           name="password"
