@@ -86,7 +86,7 @@ export const PrivateRoutes = () => {
           <Route path="person">
             <Route path="persons">
               <Route index element={<Persons />} />
-              <Route path=":cpf" element={<PersonDetails />} />
+              <Route path=":name" element={<PersonDetails />} />
             </Route>
           </Route>
         </Route>

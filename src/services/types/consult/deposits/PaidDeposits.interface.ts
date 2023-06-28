@@ -3,8 +3,8 @@ export interface paidDepositTotalQuery {
   limit: number;
   sort_order?: "DESC" | "ASC";
   sort_field?: "string";
-  initial_date: string;
-  final_date: string;
+  initial_date?: string;
+  final_date?: string;
   status?: "PAID";
   pix_id?: string;
   endToEndId?: string;
@@ -21,8 +21,8 @@ export interface paidDepositRowsQuery {
   limit: number;
   sort_order?: "DESC" | "ASC";
   sort_field?: "string";
-  initial_date: string;
-  final_date: string;
+  initial_date?: string;
+  final_date?: string;
   status?: "PAID";
   endToEndId?: string;
   txid?: string;
@@ -31,8 +31,8 @@ export interface paidDepositRowsQuery {
   merchant_id?: number;
   bank?: string;
   partner_id?: number;
-  buyer_document?: number;
-  payer_document?: number;
+  buyer_document?: number | string;
+  payer_document?: number | string;
   payer_bank?: number;
   age_start?: number;
   age_end?: number;

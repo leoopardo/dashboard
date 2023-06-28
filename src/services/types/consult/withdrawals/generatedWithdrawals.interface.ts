@@ -29,8 +29,8 @@ export interface generatedWithdrawalsRowsQuery {
   limit: number;
   sort_order?: "DESC" | "ASC";
   sort_field?: "string";
-  initial_date: string;
-  final_date: string;
+  initial_date?: string;
+  final_date?: string;
   status?:
     | "PAID"
     | "REFUNDED_WITHDRAW"

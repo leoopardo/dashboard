@@ -10,44 +10,70 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import { useParams } from "react-router-dom";
-import { TotalizersCards } from "../../../consult/deposits/generated/components/TotalizersCards";
+import { TotalizersCards as DepositsCards } from "../../../consult/deposits/generated/components/TotalizersCards";
+import { useGetTotalPaidDeposits } from "@src/services/consult/paidDeposits/getTotal";
+import { useGetRowsPaidDeposits } from "@src/services/consult/paidDeposits/getRows";
+import { paidDepositTotalQuery } from "@src/services/types/consult/deposits/PaidDeposits.interface";
+import { useGetTotalGeneratedWithdrawals } from "@src/services/consult/generatedWithdrawals/getTotal";
+import { useGetRowsGeneratedWithdrawals } from "@src/services/consult/generatedWithdrawals/getRows";
+import { generatedWithdrawalsRowsQuery } from "@src/services/types/consult/withdrawals/generatedWithdrawals.interface";
+import { TotalizersCards } from "../../../consult/withdrawals/generated/components/TotalizersCards";
 
 export const PersonDetails = () => {
   const { t } = useTranslation();
   const isMobile = useMediaQuery({ maxWidth: "750px" });
-  const { cpf } = useParams();
+  const { name } = useParams();
   const query: PersonsQuery = {
     limit: 25,
     page: 1,
     sort_field: "created_at",
     sort_order: "DESC",
-    name: cpf,
+    name: name,
   };
-  const {
-    PersonsData,
-    PersonsDataError,
-    isPersonsDataFetching,
-    refetchPersonsData,
-  } = useGetPersons(query);
+  const { PersonsData, isPersonsDataFetching } = useGetPersons(query);
+
+  ///// generated deposits ------------------
 
   const [gDepositQuery, setGDepositQuery] =
     useState<generatedDepositTotalQuery>({
       page: 1,
       limit: 25,
-      payer_name: cpf?.toLocaleLowerCase(),
+      payer_name: name?.toLocaleLowerCase(),
     });
 
-  const {
-    depositsTotal,
-    isDepositsTotalFetching,
-    refetchDepositsTotal,
-  } = useGetTotalGeneratedDeposits(gDepositQuery);
+  const { depositsTotal, isDepositsTotalFetching, refetchDepositsTotal } =
+    useGetTotalGeneratedDeposits(gDepositQuery);
 
+  const { depositsRows, depositsRowsError, isDepositsRowsFetching } =
+    useGetRowsGeneratedDeposits(gDepositQuery);
+
+  //////// paid deposits ----------------------
+
+  const [pDepositQuery, setPDepositQuery] = useState<paidDepositTotalQuery>({
+    page: 1,
+    limit: 25,
+    payer_name: name?.toLocaleLowerCase(),
+    status: "PAID",
+  });
+
+  const { paidTotal, isPaidTotalFetching, refetchPaidTotal } =
+    useGetTotalPaidDeposits(pDepositQuery);
+
+  const { paidRows, paidRowsError, isPaidRowsFetching } =
+    useGetRowsPaidDeposits(pDepositQuery);
+
+  ////////// withdrawals --------------------
+
+  const [WithdrawalsQuery, setWithdrawalsQuery] =
+    useState<generatedWithdrawalsRowsQuery>({ page: 1, limit: 25 });
   const {
-    depositsRows,
-    depositsRowsError,
-    isDepositsRowsFetching,
-  } = useGetRowsGeneratedDeposits(gDepositQuery);
+    WithdrawalsTotal,
+    isWithdrawalsTotalFetching,
+    refetchWithdrawalsTotal,
+  } = useGetTotalGeneratedWithdrawals(WithdrawalsQuery);
+
+  const { witrawalsRows, witrawalsRowsError, isWithdrawalsRowsFetching } =
+    useGetRowsGeneratedWithdrawals(WithdrawalsQuery);
 
   const items: TabsProps["items"] = [
     {
@@ -72,89 +98,87 @@ export const PersonDetails = () => {
           column={isMobile ? 1 : 3}
         >
           {PersonsData?.items[0] &&
-            Object.keys(PersonsData?.items[0]).map(
-              (key: string, index, arr) => {
-                switch (key) {
-                  case "createdAt":
-                  case "last_check":
-                  case "updatedAt":
-                    return (
-                      <Descriptions.Item
-                        key={key}
-                        label={t(`table.${key}`)}
-                        labelStyle={{
-                          maxWidth: "120px !important",
-                          margin: 0,
-                          padding: 0,
-                          textAlign: "center",
-                        }}
-                      >
-                        {`${new Date(
-                          PersonsData?.items[0][key] ?? ""
-                        ).toLocaleDateString()} ${new Date(
-                          PersonsData?.items[0][key] ?? ""
-                        ).toLocaleTimeString()}`}
-                      </Descriptions.Item>
-                    );
+            Object.keys(PersonsData?.items[0]).map((key: string, index) => {
+              switch (key) {
+                case "createdAt":
+                case "last_check":
+                case "updatedAt":
+                  return (
+                    <Descriptions.Item
+                      key={key}
+                      label={t(`table.${key}`)}
+                      labelStyle={{
+                        maxWidth: "120px !important",
+                        margin: 0,
+                        padding: 0,
+                        textAlign: "center",
+                      }}
+                    >
+                      {`${new Date(
+                        PersonsData?.items[0][key] ?? ""
+                      ).toLocaleDateString()} ${new Date(
+                        PersonsData?.items[0][key] ?? ""
+                      ).toLocaleTimeString()}`}
+                    </Descriptions.Item>
+                  );
 
-                  case "birth_date":
-                    return (
-                      <Descriptions.Item
-                        key={key}
-                        label={t(`table.${key}`)}
-                        labelStyle={{
-                          maxWidth: "120px !important",
-                          margin: 0,
-                          padding: 0,
-                          textAlign: "center",
-                        }}
-                      >
-                        {`${new Date(
-                          PersonsData?.items[0][key] ?? ""
-                        ).toLocaleDateString("pt-BR", {
-                          timeZone: "UTC",
-                        })}`}
-                      </Descriptions.Item>
-                    );
+                case "birth_date":
+                  return (
+                    <Descriptions.Item
+                      key={key}
+                      label={t(`table.${key}`)}
+                      labelStyle={{
+                        maxWidth: "120px !important",
+                        margin: 0,
+                        padding: 0,
+                        textAlign: "center",
+                      }}
+                    >
+                      {`${new Date(
+                        PersonsData?.items[0][key] ?? ""
+                      ).toLocaleDateString("pt-BR", {
+                        timeZone: "UTC",
+                      })}`}
+                    </Descriptions.Item>
+                  );
 
-                  case "flag_pep":
-                  case "flag_aux_gov":
-                  case "black_list":
-                    return (
-                      <Descriptions.Item
-                        key={key}
-                        label={t(`table.${key}`)}
-                        labelStyle={{
-                          maxWidth: "120px !important",
-                          margin: 0,
-                          padding: 0,
-                          textAlign: "center",
-                        }}
-                      >
-                        {PersonsData?.items[0][key]
-                          ? t("table.true")
-                          : t("table.false")}
-                      </Descriptions.Item>
-                    );
+                case "flag_pep":
+                case "flag_aux_gov":
+                case "black_list":
+                  return (
+                    <Descriptions.Item
+                      key={key}
+                      label={t(`table.${key}`)}
+                      labelStyle={{
+                        maxWidth: "120px !important",
+                        margin: 0,
+                        padding: 0,
+                        textAlign: "center",
+                      }}
+                    >
+                      {PersonsData?.items[0][key]
+                        ? t("table.true")
+                        : t("table.false")}
+                    </Descriptions.Item>
+                  );
 
-                  default:
-                    return (
-                      <Descriptions.Item
-                        key={index}
-                        label={t(`table.${key}`)}
-                        labelStyle={{
-                          maxWidth: "120px !important",
-                          margin: 0,
-                          padding: 0,
-                          textAlign: "center",
-                        }}
-                      >
-                        {(PersonsData?.items[0] as any)[key] ?? "-"}
-                      </Descriptions.Item>
-                    );
-                }
+                default:
+                  return (
+                    <Descriptions.Item
+                      key={index}
+                      label={t(`table.${key}`)}
+                      labelStyle={{
+                        maxWidth: "120px !important",
+                        margin: 0,
+                        padding: 0,
+                        textAlign: "center",
+                      }}
+                    >
+                      {(PersonsData?.items[0] as any)[key] ?? "-"}
+                    </Descriptions.Item>
+                  );
               }
-            )}
+            })}
         </Descriptions>
       ),
     },
@@ -168,15 +192,15 @@ export const PersonDetails = () => {
       label: t("menus.generated_deposits"),
       children: (
         <>
-        <div style={{marginBottom: "20px"}}>
-           <TotalizersCards
-            data={depositsTotal}
-            fetchData={refetchDepositsTotal}
-            loading={isDepositsTotalFetching}
-            query={gDepositQuery}
-          />
-        </div>
-         
+          <div style={{ marginBottom: "20px" }}>
+            <DepositsCards
+              data={depositsTotal}
+              fetchData={refetchDepositsTotal}
+              loading={isDepositsTotalFetching}
+              query={gDepositQuery}
+            />
+          </div>
+
           <CustomTable
             query={query}
             setCurrentItem={() => {
@@ -213,12 +237,97 @@ export const PersonDetails = () => {
     {
       key: "4",
       label: t("menus.paid_deposits"),
-      children: <></>,
+      children: (
+        <>
+          <div style={{ marginBottom: "20px" }}>
+            <DepositsCards
+              data={paidTotal}
+              fetchData={refetchPaidTotal}
+              loading={isPaidTotalFetching}
+              query={pDepositQuery}
+            />
+          </div>
+
+          <CustomTable
+            query={query}
+            setCurrentItem={() => {
+              return;
+            }}
+            setQuery={setPDepositQuery}
+            data={paidRows}
+            items={paidRows?.items}
+            error={paidRowsError}
+            columns={[
+              { name: "_id", type: "id" },
+              { name: "bank", type: "text" },
+              { name: "merchant_name", type: "text" },
+              { name: "value", type: "value" },
+              { name: "createdAt", type: "date" },
+              { name: "delivered_at", type: "date" },
+              { name: "buyer_name", type: "text" },
+              { name: "buyer_document", type: "document" },
+              { name: "status", type: "status" },
+            ]}
+            loading={isPaidRowsFetching}
+            removeTotal
+            label={[
+              "bank",
+              "merchant_name",
+              "status",
+              "createdAt",
+              "delivered_at",
+            ]}
+          />
+        </>
+      ),
     },
     {
       key: "5",
       label: t("menus.withdrawals"),
-      children: <></>,
+      children: (
+        <>
+          <div style={{ marginBottom: "20px" }}>
+            <TotalizersCards
+              data={WithdrawalsTotal}
+              fetchData={refetchWithdrawalsTotal}
+              loading={isWithdrawalsTotalFetching}
+              query={WithdrawalsQuery}
+            />
+          </div>
+          <CustomTable
+            query={WithdrawalsQuery}
+            setCurrentItem={() => {
+              return;
+            }}
+            setQuery={setWithdrawalsQuery}
+            data={witrawalsRows}
+            items={witrawalsRows?.items}
+            error={witrawalsRowsError}
+            columns={[
+              { name: "_id", type: "id" },
+              { name: "bank", type: "text" },
+              { name: "merchant_name", type: "text" },
+              { name: "value", type: "value" },
+              { name: "createdAt", type: "date" },
+              { name: "delivered_at", type: "date" },
+              { name: "receiver_name", type: "text" },
+              { name: "receiver_document", type: "document" },
+              { name: "pix_key_type", type: "text" },
+              { name: "pix_key", type: "text" },
+              { name: "status", type: "status" },
+            ]}
+            loading={isWithdrawalsRowsFetching}
+            removeTotal
+            label={[
+              "bank",
+              "merchant_name",
+              "status",
+              "createdAt",
+              "delivered_at",
+            ]}
+          />
+        </>
+      ),
     },
   ];
 
@@ -231,7 +340,7 @@ export const PersonDetails = () => {
       }}
     >
       <Grid item xs={12}>
-        <Tabs defaultActiveKey="1" items={items}/>
+        <Tabs defaultActiveKey="1" items={items} />
       </Grid>
     </Grid>
   );
