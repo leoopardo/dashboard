@@ -28,7 +28,7 @@ export interface generatedWithdrawalsRowsQuery {
   page: number;
   limit: number;
   sort_order?: "DESC" | "ASC";
-  sort_field?: "string";
+  sort_field?: string;
   initial_date?: string;
   final_date?: string;
   status?:

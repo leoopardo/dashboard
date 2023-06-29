@@ -54,3 +54,19 @@ export interface PersonsResponse {
   page: number;
   items: PersonsItem[];
 }
+
+export interface PersonFilesItem {
+  _id: string;
+  cpf: string;
+  file_url: string;
+  file_name: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+export interface PersonFilesResponse {
+  total: number;
+  limit: number;
+  page: number;
+  items: PersonFilesItem[];
+}

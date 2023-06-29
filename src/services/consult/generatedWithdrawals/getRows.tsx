@@ -14,12 +14,16 @@ export function useGetRowsGeneratedWithdrawals(
       const response = await api.get("report/withdraw/rows", {
         params: {
           ...params,
-          initial_date: moment(params.initial_date)
-            .add(3, "hours")
-            .format("YYYY-MM-DDTHH:mm:ss.SSS"),
-          final_date: moment(params.final_date)
-            .add(3, "hours")
-            .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+          initial_date: params.initial_date
+          ? moment(params.initial_date)
+              .add(3, "hours")
+              .format("YYYY-MM-DDTHH:mm:ss.SSS")
+          : '',
+        final_date: params.final_date
+          ? moment(params.final_date)
+              .add(3, "hours")
+              .format("YYYY-MM-DDTHH:mm:ss.SSS")
+          : '',
         },
       });
       return response.data;

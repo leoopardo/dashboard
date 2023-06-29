@@ -5,8 +5,8 @@ import { useGetTotalGeneratedDeposits } from "@src/services/consult/generatedDep
 import { useGetPersons } from "@src/services/register/persons/persons/getPersons";
 import { generatedDepositTotalQuery } from "@src/services/types/consult/deposits/generatedDeposits.interface";
 import { PersonsQuery } from "@src/services/types/register/persons/persons.interface";
-import { Descriptions, Spin, Tabs, TabsProps } from "antd";
-import { useState } from "react";
+import { Button, Descriptions, Spin, Tabs, TabsProps } from "antd";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import { useParams } from "react-router-dom";
@@ -18,6 +18,9 @@ import { useGetTotalGeneratedWithdrawals } from "@src/services/consult/generated
 import { useGetRowsGeneratedWithdrawals } from "@src/services/consult/generatedWithdrawals/getRows";
 import { generatedWithdrawalsRowsQuery } from "@src/services/types/consult/withdrawals/generatedWithdrawals.interface";
 import { TotalizersCards } from "../../../consult/withdrawals/generated/components/TotalizersCards";
+import moment from "moment";
+import { useGetFiles } from "@src/services/register/persons/persons/getFiles";
+import { DownloadOutlined } from "@ant-design/icons";
 
 export const PersonDetails = () => {
   const { t } = useTranslation();
@@ -36,44 +39,92 @@ export const PersonDetails = () => {
 
   const [gDepositQuery, setGDepositQuery] =
     useState<generatedDepositTotalQuery>({
-      page: 1,
+      sort_order: "DESC",
+      sort_field: "created_at",
       limit: 25,
-      payer_name: name?.toLocaleLowerCase(),
+      page: 1,
+      initial_date: moment(new Date())
+        .subtract(30, "days")
+        .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+      final_date: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss.SSS"),
     });
 
   const { depositsTotal, isDepositsTotalFetching, refetchDepositsTotal } =
     useGetTotalGeneratedDeposits(gDepositQuery);
 
-  const { depositsRows, depositsRowsError, isDepositsRowsFetching } =
-    useGetRowsGeneratedDeposits(gDepositQuery);
+  const {
+    depositsRows,
+    depositsRowsError,
+    isDepositsRowsFetching,
+    refetchDepositsTotalRows,
+  } = useGetRowsGeneratedDeposits(gDepositQuery);
 
   //////// paid deposits ----------------------
 
   const [pDepositQuery, setPDepositQuery] = useState<paidDepositTotalQuery>({
-    page: 1,
+    sort_order: "DESC",
+    sort_field: "created_at",
     limit: 25,
-    payer_name: name?.toLocaleLowerCase(),
-    status: "PAID",
+    page: 1,
+    initial_date: moment(new Date())
+      .subtract(30, "days")
+      .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+    final_date: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss.SSS"),
   });
 
   const { paidTotal, isPaidTotalFetching, refetchPaidTotal } =
     useGetTotalPaidDeposits(pDepositQuery);
 
-  const { paidRows, paidRowsError, isPaidRowsFetching } =
+  const { paidRows, paidRowsError, isPaidRowsFetching, refetchPaidTotalRows } =
     useGetRowsPaidDeposits(pDepositQuery);
 
   ////////// withdrawals --------------------
 
   const [WithdrawalsQuery, setWithdrawalsQuery] =
-    useState<generatedWithdrawalsRowsQuery>({ page: 1, limit: 25 });
+    useState<generatedWithdrawalsRowsQuery>({
+      sort_order: "DESC",
+      sort_field: "created_at",
+      limit: 25,
+      page: 1,
+      initial_date: moment(new Date())
+        .subtract(30, "days")
+        .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+      final_date: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss.SSS"),
+    });
   const {
     WithdrawalsTotal,
     isWithdrawalsTotalFetching,
     refetchWithdrawalsTotal,
   } = useGetTotalGeneratedWithdrawals(WithdrawalsQuery);
 
-  const { witrawalsRows, witrawalsRowsError, isWithdrawalsRowsFetching } =
-    useGetRowsGeneratedWithdrawals(WithdrawalsQuery);
+  const {
+    witrawalsRows,
+    witrawalsRowsError,
+    isWithdrawalsRowsFetching,
+    refetchWithdrawalsTotalRows,
+  } = useGetRowsGeneratedWithdrawals(WithdrawalsQuery);
+
+  ///// attachments -------------------------
+
+  const { Files, isFilesFetching, refetchFiles } = useGetFiles(
+    PersonsData?.items[0]?.cpf
+  );
+
+  useEffect(() => {
+    setGDepositQuery((state) => ({ ...state, cpf: PersonsData?.items[0].cpf }));
+    setPDepositQuery((state) => ({ ...state, cpf: PersonsData?.items[0].cpf }));
+    setWithdrawalsQuery((state) => ({
+      ...state,
+      cpf: PersonsData?.items[0].cpf,
+    }));
+    refetchFiles();
+  }, [PersonsData]);
+
+  useEffect(() => {
+    refetchDepositsTotalRows();
+    refetchPaidTotalRows();
+    refetchWithdrawalsTotalRows();
+  }, [gDepositQuery, pDepositQuery, WithdrawalsQuery]);
 
   const items: TabsProps["items"] = [
     {
@@ -184,8 +235,43 @@ export const PersonDetails = () => {
     },
     {
       key: "2",
-      label: t("table.attachment"),
-      children: <></>,
+      label: t("table.attachments"),
+      children: isFilesFetching ? (
+        <div
+          style={{
+            height: "70vh",
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Spin size="large" />
+        </div>
+      ) : (
+        <Descriptions bordered style={{ margin: 0, padding: 0 }} column={1}>
+          {Files?.items.map((file) => (
+            <Descriptions.Item
+              key={file._id}
+              label={file.file_name}
+              labelStyle={{
+                maxWidth: "120px !important",
+                wordBreak: "break-all",
+              }}
+              contentStyle={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Button type="link" shape="round" href={file.file_url}>
+                <DownloadOutlined />
+                {isMobile ? "" : "Download"}
+              </Button>
+            </Descriptions.Item>
+          ))}
+        </Descriptions>
+      ),
     },
     {
       key: "3",

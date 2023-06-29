@@ -198,7 +198,8 @@
     "cnpj": "CNPJ",
     "country": "País",
     "operator": "Operador",
-    "aggregator": "Agregadores"
+    "aggregator": "Agregadores",
+    "user": "Usuário"
   },
   "table": {
     "id": "ID",
@@ -345,7 +346,8 @@
     "_v": "v",
     "cash_in_max_value": "Val. máx. depósito",
     "cash_out_max_value": "Val. máx. saques",
-    "cash_out_transaction_limit": "Limite de saque"
+    "cash_out_transaction_limit": "Limite de saque",
+    "attachments": "Anexos"
   },
   "actions": {
     "details": "Detalhes",

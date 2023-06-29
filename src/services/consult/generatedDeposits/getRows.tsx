@@ -17,12 +17,16 @@ export function useGetRowsGeneratedDeposits(
       const response = await api.get("report/pix/rows", {
         params: {
           ...params,
-          initial_date: moment(params.initial_date)
-            .add(3, "hours")
-            .format("YYYY-MM-DDTHH:mm:ss.SSS"),
-          final_date: moment(params.final_date)
-            .add(3, "hours")
-            .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+          initial_date: params.initial_date
+            ? moment(params.initial_date)
+                .add(3, "hours")
+                .format("YYYY-MM-DDTHH:mm:ss.SSS")
+            : null,
+          final_date: params.initial_date
+            ? moment(params.final_date)
+                .add(3, "hours")
+                .format("YYYY-MM-DDTHH:mm:ss.SSS")
+            : null,
         },
       });
       return response.data;
