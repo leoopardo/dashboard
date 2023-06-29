@@ -3,19 +3,24 @@ import { Grid } from "@mui/material";
 import { Button, Input } from "antd";
 import { FilterChips } from "@components/FiltersModal/filterChips";
 import { useTranslation } from "react-i18next";
-import { useGetRowsMerchantRegister } from "@src/services/register/merchant/merchant/getMerchants";
-import { OrganizationUserQuery } from "@services/types/organizationUsers.interface";
+import { useGetRowsMerchantRegister } from "@services/register/merchant/merchant/getMerchants";
+import { MerchantsItem, MerchantsQuery } from "@services/types/register/merchants/merchantsRegister.interface";
 import { FiltersModal } from "@components/FiltersModal";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import {
   ColumnInterface,
   CustomTable,
 } from "@components/CustomTable";
+import { Toast } from "@components/Toast";
 import useDebounce from "@utils/useDebounce";
 import { UserAddOutlined } from "@ant-design/icons";
 import { NewMerchantModal } from "./components/newMerchantModal";
+import { EyeFilled, EditOutlined } from "@ant-design/icons";
+import { ViewModal } from "@components/Modals/viewGenericModal";
+import { MutateModal } from "@components/Modals/mutateGenericModal";
+import { useUpdateMerchant } from "@services/register/merchant/merchant/updateMerchant";
 
-const INITIAL_QUERY: OrganizationUserQuery = {
+const INITIAL_QUERY: MerchantsQuery = {
   limit: 25,
   page: 1,
   sort_field: "created_at",
@@ -23,23 +28,32 @@ const INITIAL_QUERY: OrganizationUserQuery = {
 };
 
 export const MerchantView = () => {
-  const [query, setQuery] = useState<OrganizationUserQuery>(INITIAL_QUERY);
+  const [query, setQuery] = useState<MerchantsQuery>(INITIAL_QUERY);
   const { t } = useTranslation();
   const { MerchantData, MerchantDataError, isMerchantDataFetching, refetchMerchantData } =
   useGetRowsMerchantRegister(query);
+
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [isNewMerchantModal, setIsNewMerchantModal] = useState(false);
-  const [currentItem, setCurrentItem] = useState(null);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false)
+  const [currentItem, setCurrentItem] = useState<MerchantsItem | null>(null);
+  const [updateBody, setUpdateBody] = useState<MerchantsItem>({
+    ...currentItem,
+    merchant_id: currentItem?.id,
+  });
+
+  const {UpdateError, UpdateIsLoading, UpdateIsSuccess, UpdateMutate} = useUpdateMerchant(updateBody)
   const [search, setSearch] = useState<string>("");
+  const [isViewModalOpen ,setIsViewModalOpen] = useState(false)
   const debounceSearch = useDebounce(search);
 
   const columns: ColumnInterface[] = [
     { name: "id", type: "id" },
     { name: "name", type: "text" },
     { name: "domain", type: "text" },
-   // { name: "partner", type: "text" },
-   { name: ["merchantConfig", "cash_in_bank"], head: 'bank', type: 'text'},
-   { name: "status", type: "status" },
+    { name: ["partner", "name"], head: 'partner', type: "text" },
+    { name: ["merchantConfig", "cash_in_bank"], head: 'bank', type: 'text'},
+    { name: "status", type: "status" },
     { name: "created_at", type: "date" },
   ];
 
@@ -48,12 +62,19 @@ export const MerchantView = () => {
   }, [query]);
 
   useEffect(() => {
+    setUpdateBody({
+      ...currentItem,
+      merchant_id: currentItem?.id,
+    });
+  }, [currentItem]);
+
+  useEffect(() => {
     if (!debounceSearch) {
       const q = { ...query };
       delete q.name;
       return setQuery(q);
     }
-    setQuery((state) => ({ ...state, name: debounceSearch }));
+    setQuery((state: any) => ({ ...state, name: debounceSearch }));
   }, [debounceSearch]);
 
   return (
@@ -148,9 +169,56 @@ export const MerchantView = () => {
             columns={columns}
             loading={isMerchantDataFetching}
             label={["name", "username"]}
+            actions={[
+              {
+                label: "details",
+                icon: <EyeFilled style={{ fontSize: "20px" }} />,
+                onClick: () => {
+                  setIsViewModalOpen(true);
+                },
+              },
+              {
+                label: "edit",
+                icon: <EditOutlined style={{ fontSize: "20px" }} />,
+                onClick: () => setIsUpdateModalOpen(true),
+              },
+            ]}
           />
         </Grid>
       </Grid>
+
+      {isUpdateModalOpen && (
+        <MutateModal
+          type="update"
+          open={isUpdateModalOpen}
+          setOpen={setIsUpdateModalOpen}
+          fields={[
+            { label: "name", required: false },
+            { label: "domain", required: false },
+            { label: "partner_id", required: false },
+            { label: "cellphone", required: false },
+            { label: "email", required: false },
+
+          ]}
+          body={updateBody}
+          setBody={setUpdateBody}
+          modalName={t("modal.modal_update_merchant")}
+          submit={UpdateMutate}
+          submitLoading={UpdateIsLoading}
+          error={UpdateError}
+          success={UpdateIsSuccess}
+        />
+      )}
+
+      {isViewModalOpen && (
+        <ViewModal
+          item={currentItem}
+          loading={isMerchantDataFetching}
+          modalName={`${t("menus.merchant")}: ${currentItem?.name}`}
+          open={isViewModalOpen}
+          setOpen={setIsViewModalOpen}
+        />
+      )}
 
       {isFiltersOpen && (
         <FiltersModal
@@ -176,6 +244,15 @@ export const MerchantView = () => {
       {isNewMerchantModal && (
         <NewMerchantModal open={isNewMerchantModal} setOpen={setIsNewMerchantModal} />
       )}
+
+
+
+      <Toast
+        actionSuccess={t("messages.updated")}
+        actionError={t("messages.update")}
+        error={UpdateError}
+        success={UpdateIsSuccess}
+      />
     </Grid>
   );
 };

@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState, useCallback } from "react";
 import { useListPartners } from "../../../services/register/partner/listPartners";
 import { AutoComplete, Empty, Input } from "antd";
 import { PartnerQuery } from "../../../services/types/register/partners/partners.interface";
@@ -26,14 +26,28 @@ export const PartnerSelect = ({
 
   useEffect(() => {
     if (partnersData && !value) {
-      const initial = partnersData?.items.find(
-        (partner) => partner.id === queryOptions.partner_id
+      const initial = queryOptions.partner_id 
+      ? partnersData?.items.find(
+        (partner) => partner.id === queryOptions.partner_id)
+      : partnersData?.items.find(
+        (partner) => partner.id === queryOptions.partner?.id
       );
       if (initial) {
         setValue(initial?.name);
       }
     }
   }, [partnersData, queryOptions]);
+
+  useEffect(() => {
+    if (partnersData) {
+      const initial = partnersData?.items.find(
+        (partner) => partner.id === queryOptions?.partner_id
+      );
+      if (initial) {
+        setValue(initial?.name);
+      }
+    }
+  }, [queryOptions]);
 
   useEffect(() => {
     refetcPartners();
@@ -55,7 +69,9 @@ export const PartnerSelect = ({
       notFoundContent={<Empty />}
       value={value}
       style={{ width: "100%", height: 40 }}
-      onChange={(value) => setValue(value)}
+      onChange={(value) => {
+        setValue(value)
+      }}
       onSelect={(value) =>
         setQueryFunction((state: any) => ({ ...state, partner_id: value }))
       }

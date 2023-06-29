@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction, useRef, useEffect } from "react";
 import {
   AutoComplete,
   Avatar,
@@ -8,7 +9,6 @@ import {
   Input,
   Switch,
 } from "antd";
-import React, { Dispatch, SetStateAction, useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { MerchantSelect } from "../../Selects/merchantSelect";
 import { PartnerSelect } from "../../Selects/partnerSelect";
@@ -53,8 +53,6 @@ export const MutateModal = ({
       ...state,
       [event.target.name]: event.target.value,
     }));
-
-    console.log(body);
   };
 
   return (
@@ -114,7 +112,7 @@ export const MutateModal = ({
               return;
 
             case "partner_id":
-              <Form.Item
+              return (<Form.Item
                 label={t(`table.${field.label}`)}
                 name={field.label}
                 style={{ margin: 10 }}
@@ -129,8 +127,8 @@ export const MutateModal = ({
                 ]}
               >
                 <PartnerSelect setQueryFunction={setBody} queryOptions={body} />
-              </Form.Item>;
-              return;
+              </Form.Item>
+              )
 
             case "operator_id":
               <Form.Item

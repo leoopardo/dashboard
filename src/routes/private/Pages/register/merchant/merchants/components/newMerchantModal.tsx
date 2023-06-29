@@ -7,9 +7,10 @@ import React, {
   useEffect,
 } from "react";
 import { useTranslation } from "react-i18next";
-import { GroupSelect } from "../../../../../../../components/Selects/groupSelect";
-import { useCreateOrganizationUser } from "@services/register/organization/users/createUser";
+import { PartnerSelect } from "@components/Selects/partnerSelect";
+import { useCreateMerchant } from "@services/register/merchant/merchant/createMerchant";
 import { toast } from "react-hot-toast";
+import { Toast } from "@components/Toast";
 
 interface NewuserModalprops {
   open: boolean;
@@ -18,11 +19,11 @@ interface NewuserModalprops {
 
 export interface NewUserInterface {
   name: string;
-  username: string;
+  domain: string;
   password: string;
   email?: string;
   cellphone?: string;
-  group_id: number;
+  cnpj?: string;
   type?: number;
   status: true;
   partner_id?: number;
@@ -37,15 +38,14 @@ export const NewMerchantModal = ({ open, setOpen }: NewuserModalprops) => {
 
   const [body, setBody] = useState<NewUserInterface>({
     name: "",
-    username: "",
+    domain: "",
     password: "",
-    group_id: 0,
     status: true,
     type: 2,
   });
 
-  const { mutate, error, isLoading, isSuccess } =
-    useCreateOrganizationUser(body);
+  const { CreateError, CreateIsLoading, CreateIsSuccess, CreateMutate } =
+  useCreateMerchant(body);
 
   function handleChangeUserBody(event: any) {
     setBody((state) => ({ ...state, [event.target.name]: event.target.value }));
@@ -53,19 +53,8 @@ export const NewMerchantModal = ({ open, setOpen }: NewuserModalprops) => {
 
   function CreateUser(event: any) {
     event.preventDefault();
-    mutate();
+    CreateMutate();
   }
-
-  useEffect(() => {
-    if (isSuccess) {
-      setOpen(false);
-      toast.success("Usuário criado com sucesso!");
-    }
-    if (error) {
-      toast.error("Erro ao criar usuário, tente novamente!");
-    }
-  }, [isSuccess, error]);
-
   return (
     <Drawer
       open={open}
@@ -80,7 +69,7 @@ export const NewMerchantModal = ({ open, setOpen }: NewuserModalprops) => {
       }
       footer={
         <Button
-          loading={isLoading}
+          loading={CreateIsLoading}
           type="primary"
           style={{ width: "100%" }}
           size="large"
@@ -93,9 +82,9 @@ export const NewMerchantModal = ({ open, setOpen }: NewuserModalprops) => {
       <Form
         ref={formRef}
         layout="vertical"
-        disabled={isLoading}
+        disabled={CreateIsLoading}
         onSubmitCapture={
-          body.name && body.username && body.group_id && body.password
+          body.name && body.domain && body.password
             ? CreateUser
             : () => {
                 return;
@@ -121,25 +110,71 @@ export const NewMerchantModal = ({ open, setOpen }: NewuserModalprops) => {
           />
         </Form.Item>
         <Form.Item
-          label={t(`table.username`)}
+          label={t(`table.domain`)}
           name="username"
           style={{ margin: 10 }}
           rules={[
             {
               required: true,
               message:
-                t("input.required", { field: t("input.username") }) || "",
+                t("input.required", { field: t("input.domain") }) || "",
             },
             { min: 4, message: t("input.min_of", { min: 4 }) || "" },
           ]}
         >
           <Input
             size="large"
-            name="username"
-            value={body.username}
+            name="domain"
+            value={body.domain}
             onChange={handleChangeUserBody}
           />
         </Form.Item>
+
+        <Form.Item
+          label={t(`table.partner`)}
+          name="partner_id"
+          style={{ margin: 10 }}
+          rules={[
+            {
+              required: !body.partner_id ? true : false,
+              message: t("input.required", { field: t("input.partner_id") }) || "",
+            },
+          ]}
+        >
+          <Input
+            value={body.partner_id || ""}
+            style={{ display: "none" }}
+            name="partner_id"
+          />
+          <PartnerSelect
+            queryOptions={body}
+            setQueryFunction={setBody}
+          />
+        </Form.Item>
+
+        <Form.Item
+          label={t(`table.cnpj`)}
+          name="cnpj"
+          style={{ margin: 10 }}
+          rules={[
+            {
+              pattern: /^(\d{2}\.?\d{3}\.?\d{3}\/?\d{4}-?\d{2})$/,
+              message:
+                t("input.invalid", {
+                  field: t("input.number"),
+                }) || "",
+            },
+          ]}
+        >
+          <Input
+            size="large"
+            type="string"
+            name="cnpj"
+            value={body.cnpj}
+            onChange={handleChangeUserBody}
+          />
+        </Form.Item>
+
         <Form.Item
           label={t(`table.cellphone`)}
           name="cellphone"
@@ -162,45 +197,6 @@ export const NewMerchantModal = ({ open, setOpen }: NewuserModalprops) => {
             onChange={handleChangeUserBody}
           />
         </Form.Item>
-        <Form.Item
-          label={t(`table.email`)}
-          name="email"
-          style={{ margin: 10 }}
-          rules={[
-            {
-              type: "email",
-              message:
-                t("input.invalid", {
-                  field: t("input.email"),
-                }) || "",
-            },
-          ]}
-        >
-          <Input
-            size="large"
-            name="email"
-            value={body.cellphone}
-            onChange={handleChangeUserBody}
-          />
-        </Form.Item>
-        <Form.Item
-          label={t(`table.group`)}
-          name="group_id"
-          style={{ margin: 10 }}
-          rules={[
-            {
-              required: !body.group_id ? true : false,
-              message: t("input.required", { field: t("input.group") }) || "",
-            },
-          ]}
-        >
-          <Input
-            value={body.group_id || ""}
-            style={{ display: "none" }}
-            name="group_id"
-          />
-          <GroupSelect body={body} setBody={setBody} />
-        </Form.Item>
 
         <Form.Item
           label={t(`table.password`)}
@@ -220,13 +216,13 @@ export const NewMerchantModal = ({ open, setOpen }: NewuserModalprops) => {
             type="password"
             size="large"
             name="password"
-            value={body.username}
+            value={body.password}
             onChange={handleChangeUserBody}
           />
         </Form.Item>
         <Form.Item
-          label={t(`table.password`)}
-          name="confirmPasswprd"
+          label={t(`table.confirm_password`)}
+          name="confirmPassword"
           style={{ margin: 10 }}
           rules={[
             {
@@ -247,7 +243,7 @@ export const NewMerchantModal = ({ open, setOpen }: NewuserModalprops) => {
           <Input.Password
             type="password"
             size="large"
-            name="confirmPasswprd"
+            name="confirmPassword"
             value={confirmPassword}
             onChange={(event) => setConfirmPassword(event.target.value)}
           />
@@ -258,6 +254,13 @@ export const NewMerchantModal = ({ open, setOpen }: NewuserModalprops) => {
           </button>
         </Form.Item>
       </Form>
+
+      <Toast
+        actionSuccess={t("messages.created")}
+        actionError={t("messages.create")}
+        error={CreateError}
+        success={CreateIsSuccess}
+      />
     </Drawer>
   );
 };

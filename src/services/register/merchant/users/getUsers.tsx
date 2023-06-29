@@ -1,7 +1,7 @@
 import { api } from "../../../../config/api";
 
 import { useQuery } from "react-query";
-import { MerchantUsersResponse, MerchantUsersQuery } from "../../../types/register/merchants/merchantUsers.interface";
+import { MerchantUsersResponse, MerchantUsersQuery } from "@services/types/register/merchants/merchantUsers.interface copy";
 
 export function useGetRowsMerchantUsers(params: MerchantUsersQuery) {
   const { data, isFetching, error, refetch } = useQuery<

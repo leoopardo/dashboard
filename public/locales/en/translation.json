@@ -192,6 +192,7 @@
     "new_category": "New category",
     "update_category": "Update category",
     "modal_update_bank": "Update bank",
+    "modal_update_merchant": "Update Merchant",
     "new_partner": "New partner",
     "new_operator": "New operator",
     "update_operator": "AUpdate operator",
@@ -345,7 +346,9 @@
     "cash_in_max_value": "Deposit max value",
     "cash_out_max_value": "Withdraw max value",
     "cash_out_transaction_limit": "Withdrawal limit",
-    "attachments": "Attachments"
+    "attachments": "Attachments",
+    "confirm_password": "Confirm password",
+    "updated_at": "Updated at"
   },
   "actions": {
     "details": "Details",
