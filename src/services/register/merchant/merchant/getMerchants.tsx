@@ -1,11 +1,11 @@
 import { api } from "../../../../config/api";
 
 import { useQuery } from "react-query";
-import { MerchantUsersResponse, MerchantUsersQuery } from "../../../types/merchantUsers.interface";
+import { MerchantsQuery, MerchantsResponse } from "@services/types/register/merchants/merchantsRegister.interface";
 
-export function useGetRowsMerchantRegister(params: MerchantUsersQuery) {
+export function useGetRowsMerchantRegister(params: MerchantsQuery) {
   const { data, isFetching, error, refetch } = useQuery<
-  MerchantUsersResponse | null | undefined
+  MerchantsResponse | null | undefined
   >(
     "MerchantsRegister",
     async () => {

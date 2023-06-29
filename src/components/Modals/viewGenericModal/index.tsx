@@ -38,6 +38,7 @@ export const ViewModal = ({
               case "createdAt":
               case "last_check":
               case "updatedAt":
+              case "updated_at":
                 return (
                   <Descriptions.Item
                     key={key}

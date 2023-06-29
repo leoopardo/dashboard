@@ -242,6 +242,7 @@ export const OperatorUsers = () => {
           setOpen={setIsViewModalOpen}
         />
       )}
+
     </Grid>
   );
 };

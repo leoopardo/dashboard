@@ -156,6 +156,7 @@
     "new_category": "Nova categoria",
     "update_category": "Atualizar categoria",
     "modal_update_bank": "Atualizar banco",
+    "modal_update_merchant": "Atualizar Empresa",
     "new_partner": "Nova plataforma",
     "new_operator": "Novo operador",
     "update_operator": "Atualizar operador",
@@ -358,7 +359,9 @@
     "locks": "Bloqueios",
     "limits": "Limites",
     "black_list_reason": "Razão blacklist",
-    "black_list_description": "Descrição blacklist"
+    "black_list_description": "Descrição blacklist",
+    "confirm_password": "Confirmar senha",
+    "updated_at": "Atualizado em"
   },
   "actions": {
     "details": "Detalhes",
