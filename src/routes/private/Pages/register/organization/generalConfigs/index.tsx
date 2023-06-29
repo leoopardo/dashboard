@@ -435,7 +435,7 @@ export const GeneralConfigs = () => {
         xs={12}
         style={{ display: "flex", flexDirection: "row-reverse" }}
       >
-        <Grid item xs={12} md={4} lg={2}>
+        <Grid item xs={12} md={4} lg={3}>
           <Popconfirm
             title={t("messages.confirm_action_title", {
               action: t("messages.update"),

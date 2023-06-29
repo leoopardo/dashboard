@@ -46,8 +46,8 @@ export interface generatedWithdrawalsRowsQuery {
   merchant_id?: number;
   bank?: string;
   partner_id?: number;
-  buyer_document?: number;
-  payer_document?: number;
+  buyer_document?: string;
+  payer_document?: string;
   payer_bank?: number;
   age_start?: number;
   age_end?: number;

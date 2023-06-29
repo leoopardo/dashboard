@@ -20,6 +20,7 @@ import {
 } from "@src/services/types/register/persons/persons.interface";
 import { useGetPersons } from "@src/services/register/persons/persons/getPersons";
 import { useNavigate } from "react-router-dom";
+import { useCreatePerson } from "@src/services/register/persons/persons/createPerson";
 
 const INITIAL_QUERY: PersonsQuery = {
   limit: 25,
@@ -31,13 +32,11 @@ const INITIAL_QUERY: PersonsQuery = {
 export const Persons = () => {
   const [query, setQuery] = useState<PersonsQuery>(INITIAL_QUERY);
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
-  const [isNewCategorieModal, setIsNewCategorieModal] =
-    useState<boolean>(false);
-  const [isUpdateCategorieModalOpen, setIsUpdateCategorieModalOpen] =
-    useState<boolean>(false);
+  const [isNewModal, setIsNewModal] = useState<boolean>(false);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<PersonsItem | null>(null);
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
-  const [createBody, setCreateBody] = useState<PersonsItem>({
+  const [createBody, setCreateBody] = useState<{ cpf: string }>({
     cpf: "",
   });
   const [updateBody, setUpdateBody] = useState<PersonsItem>({
@@ -59,8 +58,8 @@ export const Persons = () => {
     refetchPersonsData,
   } = useGetPersons(query);
 
-  const { PartnerIsLoading, PartnerMutate, PartnerError, PartnerIsSuccess } =
-    useCreatePartner(createBody);
+  const { PersonIsLoading, PersonMutate, PersonError, PersonIsSuccess } =
+    useCreatePerson(createBody);
 
   const { UpdateError, UpdateIsLoading, UpdateMutate, UpdateIsSuccess } =
     useUpdatePartner(updateBody);
@@ -95,8 +94,21 @@ export const Persons = () => {
   }, [currentItem]);
 
   useEffect(() => {
-    if (isViewModalOpen) navigate(`${currentItem?.name}`);
-  }, [isViewModalOpen]);
+    if (isViewModalOpen)
+      navigate(
+        `${currentItem?.cpf
+          ?.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")
+          .split(".")
+          .join("%20")}`
+      );
+    if (isUpdateModalOpen)
+      navigate(
+        `update/${currentItem?.cpf
+          ?.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")
+          .split(".")
+          .join("%20")}`
+      );
+  }, [isViewModalOpen, isUpdateModalOpen]);
 
   return (
     <Grid container style={{ padding: "25px" }}>
@@ -180,7 +192,7 @@ export const Persons = () => {
             type="primary"
             loading={isPersonsDataFetching}
             onClick={() => {
-              setIsNewCategorieModal(true);
+              setIsNewModal(true);
             }}
             style={{
               height: 40,
@@ -213,7 +225,7 @@ export const Persons = () => {
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
                 onClick: () => {
-                  setIsUpdateCategorieModalOpen(true);
+                  setIsUpdateModalOpen(true);
                 },
               },
             ]}
@@ -242,26 +254,26 @@ export const Persons = () => {
         />
       )}
 
-      {isNewCategorieModal && (
+      {isNewModal && (
         <MutateModal
           type="create"
-          open={isNewCategorieModal}
-          setOpen={setIsNewCategorieModal}
+          open={isNewModal}
+          setOpen={setIsNewModal}
           fields={[{ label: "cpf", required: true }]}
           body={createBody}
           setBody={setCreateBody}
-          modalName={t("modal.new_partner")}
-          submit={PartnerMutate}
-          submitLoading={PartnerIsLoading}
-          error={PartnerError}
-          success={PartnerIsSuccess}
+          modalName={t("modal.new_person")}
+          submit={PersonMutate}
+          submitLoading={PersonIsLoading}
+          error={PersonError}
+          success={PersonIsSuccess}
         />
       )}
-      {isUpdateCategorieModalOpen && (
+      {isUpdateModalOpen && (
         <MutateModal
           type="update"
-          open={isUpdateCategorieModalOpen}
-          setOpen={setIsUpdateCategorieModalOpen}
+          open={isUpdateModalOpen}
+          setOpen={setIsUpdateModalOpen}
           fields={[
             { label: "name", required: false },
             { label: "cnpj", required: false },
@@ -271,7 +283,7 @@ export const Persons = () => {
           ]}
           body={updateBody}
           setBody={setUpdateBody}
-          modalName={t("modal.update_category")}
+          modalName={t("modal.update_person")}
           submit={UpdateMutate}
           submitLoading={UpdateIsLoading}
           error={UpdateError}
@@ -296,8 +308,8 @@ export const Persons = () => {
       <Toast
         actionSuccess={t("messages.created")}
         actionError={t("messages.create")}
-        error={PartnerError}
-        success={PartnerIsSuccess}
+        error={PersonError}
+        success={PersonIsSuccess}
       />
     </Grid>
   );

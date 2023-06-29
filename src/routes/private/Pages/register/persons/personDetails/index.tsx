@@ -5,7 +5,15 @@ import { useGetTotalGeneratedDeposits } from "@src/services/consult/generatedDep
 import { useGetPersons } from "@src/services/register/persons/persons/getPersons";
 import { generatedDepositTotalQuery } from "@src/services/types/consult/deposits/generatedDeposits.interface";
 import { PersonsQuery } from "@src/services/types/register/persons/persons.interface";
-import { Button, Descriptions, Spin, Tabs, TabsProps } from "antd";
+import {
+  Button,
+  Descriptions,
+  Empty,
+  Spin,
+  Tabs,
+  TabsProps,
+  Upload,
+} from "antd";
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
@@ -25,13 +33,13 @@ import { DownloadOutlined } from "@ant-design/icons";
 export const PersonDetails = () => {
   const { t } = useTranslation();
   const isMobile = useMediaQuery({ maxWidth: "750px" });
-  const { name } = useParams();
+  const { cpf } = useParams();
   const query: PersonsQuery = {
     limit: 25,
     page: 1,
     sort_field: "created_at",
     sort_order: "DESC",
-    name: name,
+    cpf: cpf?.split(" ").join("."),
   };
   const { PersonsData, isPersonsDataFetching } = useGetPersons(query);
 
@@ -43,6 +51,7 @@ export const PersonDetails = () => {
       sort_field: "created_at",
       limit: 25,
       page: 1,
+      buyer_document: cpf?.split(" ").join("."),
       initial_date: moment(new Date())
         .subtract(30, "days")
         .format("YYYY-MM-DDTHH:mm:ss.SSS"),
@@ -66,6 +75,7 @@ export const PersonDetails = () => {
     sort_field: "created_at",
     limit: 25,
     page: 1,
+    buyer_document: cpf?.split(" ").join("."),
     initial_date: moment(new Date())
       .subtract(30, "days")
       .format("YYYY-MM-DDTHH:mm:ss.SSS"),
@@ -86,6 +96,7 @@ export const PersonDetails = () => {
       sort_field: "created_at",
       limit: 25,
       page: 1,
+      buyer_document: cpf?.split(" ").join("."),
       initial_date: moment(new Date())
         .subtract(30, "days")
         .format("YYYY-MM-DDTHH:mm:ss.SSS"),
@@ -109,22 +120,6 @@ export const PersonDetails = () => {
   const { Files, isFilesFetching, refetchFiles } = useGetFiles(
     PersonsData?.items[0]?.cpf
   );
-
-  useEffect(() => {
-    setGDepositQuery((state) => ({ ...state, cpf: PersonsData?.items[0].cpf }));
-    setPDepositQuery((state) => ({ ...state, cpf: PersonsData?.items[0].cpf }));
-    setWithdrawalsQuery((state) => ({
-      ...state,
-      cpf: PersonsData?.items[0].cpf,
-    }));
-    refetchFiles();
-  }, [PersonsData]);
-
-  useEffect(() => {
-    refetchDepositsTotalRows();
-    refetchPaidTotalRows();
-    refetchWithdrawalsTotalRows();
-  }, [gDepositQuery, pDepositQuery, WithdrawalsQuery]);
 
   const items: TabsProps["items"] = [
     {
@@ -248,29 +243,37 @@ export const PersonDetails = () => {
         >
           <Spin size="large" />
         </div>
+      ) : Files?.total && Files.total >= 1 ? (
+        <Upload
+          listType="picture"
+          accept="*"
+          multiple={false}
+          showUploadList={{
+            showRemoveIcon: false,
+          }}
+          defaultFileList={Files?.items.map((file) => {
+            return {
+              uid: file._id,
+              name: file.file_name,
+              url: file.file_url,
+            };
+          })}
+        />
       ) : (
-        <Descriptions bordered style={{ margin: 0, padding: 0 }} column={1}>
-          {Files?.items.map((file) => (
-            <Descriptions.Item
-              key={file._id}
-              label={file.file_name}
-              labelStyle={{
-                maxWidth: "120px !important",
-                wordBreak: "break-all",
-              }}
-              contentStyle={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Button type="link" shape="round" href={file.file_url}>
-                <DownloadOutlined />
-                {isMobile ? "" : "Download"}
-              </Button>
-            </Descriptions.Item>
-          ))}
-        </Descriptions>
+        <div
+          style={{
+            height: "70vh",
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Empty
+            image={Empty.PRESENTED_IMAGE_SIMPLE}
+            description={t("error.400")}
+          />
+        </div>
       ),
     },
     {

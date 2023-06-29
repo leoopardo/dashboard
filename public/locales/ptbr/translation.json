@@ -104,7 +104,8 @@
     "withdrawals_webhooks_reports": "Webhooks",
     "generated_deposits_reports": "Depósitos gerados",
     "paid_deposits_reports": "Depósitos pagos",
-    "webhooks_reports": "Webhooks"
+    "webhooks_reports": "Webhooks",
+    "update": "Editar"
   },
 
   "messages": {
@@ -139,7 +140,10 @@
     "update_general_configs": "Atualizar configurações gerais",
     "new_partner": "nova plataforma",
     "new_operator": "novo operador",
-    "new_aggregator": "novo agregador"
+    "new_aggregator": "novo agregador",
+    "person": "pessoa",
+    "new_person": "Nova pessoa",
+    "update_person": "Atualizar pessoa"
   },
   "modal": {
     "confirm": "Confirmar",
@@ -157,11 +161,12 @@
     "update_operator": "Atualizar operador",
     "new_aggregator": "Novo agregador",
     "update_aggregator": "Atualizar agregador",
-    "person": "Pessoa"
+    "person": "Pessoa",
+    "new_person": "Nova pessoa"
   },
   "input": {
-    "required": "Por favor, insira seu {{field}}",
-    "required(a)": "Por favor, insira sua {{field}}",
+    "required": "Por favor, insira o {{field}}",
+    "required(a)": "Por favor, insira a {{field}}",
     "confirm_password": "Por favor, confirme sua senha!",
     "doest_match": "As senhas não coincidem!",
     "name": "nome",
@@ -199,7 +204,8 @@
     "country": "País",
     "operator": "Operador",
     "aggregator": "Agregadores",
-    "user": "Usuário"
+    "user": "Usuário",
+    "cpf": "CPF"
   },
   "table": {
     "id": "ID",
@@ -347,7 +353,12 @@
     "cash_in_max_value": "Val. máx. depósito",
     "cash_out_max_value": "Val. máx. saques",
     "cash_out_transaction_limit": "Limite de saque",
-    "attachments": "Anexos"
+    "attachments": "Anexos",
+    "general_data": "Dados gerais",
+    "locks": "Bloqueios",
+    "limits": "Limites",
+    "black_list_reason": "Razão blacklist",
+    "black_list_description": "Descrição blacklist"
   },
   "actions": {
     "details": "Detalhes",
