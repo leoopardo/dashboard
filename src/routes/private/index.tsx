@@ -24,6 +24,8 @@ import { AggregatorUsers } from "./Pages/register/aggregator/users";
 import { Persons } from "./Pages/register/persons";
 import { PersonDetails } from "./Pages/register/persons/personDetails";
 import { PersonUpdate } from "./Pages/register/persons/personUpdate";
+import { PixKeyWhitelist } from "./Pages/register/persons/pixKeyWhitelist";
+import { CostumerBanks } from "./Pages/register/persons/costumerBankList";
 
 export const PrivateRoutes = () => {
   const navigate = useNavigate();
@@ -92,6 +94,8 @@ export const PrivateRoutes = () => {
                 <Route path=":cpf" element={<PersonUpdate />} />{" "}
               </Route>
             </Route>
+            <Route path="whitelist" element={<PixKeyWhitelist />} />
+            <Route path="person_accounts" element={<CostumerBanks />} />
           </Route>
         </Route>
       </Route>

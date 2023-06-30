@@ -17,7 +17,6 @@ import { FiltersModal } from "../../../../../../components/FiltersModal";
 import { useTranslation } from "react-i18next";
 import useDebounce from "../../../../../../utils/useDebounce";
 import { FilterChips } from "../../../../../../components/FiltersModal/filterChips";
-const { RangePicker } = DatePicker;
 
 const INITIAL_QUERY: generatedDepositTotalQuery = {
   page: 1,
@@ -45,7 +44,6 @@ export const UndeliveredDeposits = () => {
 
   const {
     depositsRows,
-    depositsRowsError,
     isDepositsRowsFetching,
     refetchDepositsTotalRows,
   } = useGetRowsGeneratedDeposits(query);
@@ -63,7 +61,7 @@ export const UndeliveredDeposits = () => {
 
   const columns: ColumnInterface[] = [
     { name: "_id", type: "id" },
-    { name: "bank", type: "text" },
+    { name: "bank", type: "bankNameToIcon" },
     { name: "merchant_name", type: "text" },
     { name: "value", type: "value" },
     { name: "createdAt", type: "date" },

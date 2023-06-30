@@ -367,7 +367,10 @@
     "black_list_reason": "Blacklist reason",
     "black_list_description": "Blacklist description",
     "confirm_password": "Confirm password",
-    "updated_at": "Updated at"
+    "updated_at": "Updated at",
+    "bank_name": "Bank",
+    "bank_code": "Bank code",
+    "ispb": "ISPB"
   },
   "actions": {
     "details": "Details",

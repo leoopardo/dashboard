@@ -5,14 +5,14 @@ import {
   Descriptions,
   Dropdown,
   Empty,
-  Typography,
+  Tooltip,
 } from "antd";
 import { Collapse } from "antd";
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { getColor } from "../../../utils/getColor";
-import { EllipsisOutlined } from "@ant-design/icons";
+import  { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { BankOutlined, EllipsisOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 import { ColumnInterface } from "..";
+import { useGetOrganizationBankMaintenece } from "@src/services/register/organization/bankMaitenence/getBanks";
 
 interface MobileProps {
   columns: ColumnInterface[];
@@ -20,12 +20,19 @@ interface MobileProps {
   label: any;
   actions: any;
   setCurrentItem: Dispatch<SetStateAction<any>>;
+  Confirm: any;
 }
 
 export const Mobile = (props: MobileProps) => {
   const { t } = useTranslation();
   const [active, setActive] = useState<string | string[]>(["1"]);
   const [items, setItems] = useState<CollapseProps["items"]>([]);
+  const { BankMainteneceData } = useGetOrganizationBankMaintenece({
+    limit: 200,
+    page: 1,
+    sort_field: "label_name",
+    sort_order: "DESC",
+  });
 
   useEffect(() => {
     setItems(
@@ -37,7 +44,27 @@ export const Mobile = (props: MobileProps) => {
               {props?.label?.map((label: string) => {
                 switch (label) {
                   case "bank":
-                    return <Avatar key={label}>B</Avatar>;
+                    return (
+                      <Tooltip
+                        placement="topLeft"
+                        title={item[label]}
+                        arrow
+                      >
+                        <Avatar
+                          src={
+                            BankMainteneceData?.itens.find(
+                              (bank) =>
+                                bank.label_name?.split(" ").join("_") ===
+                                item[label]
+                            )?.icon_url ?? null
+                          }
+                          size="large"
+                          shape="square"
+                        >
+                          <BankOutlined />
+                        </Avatar>
+                      </Tooltip>
+                    );
                   case "merchant_name":
                     return ` - ${item[label]}`;
                   case "createdAt":
@@ -78,15 +105,17 @@ export const Mobile = (props: MobileProps) => {
             </>
           ),
           extra: props.actions.length ? (
-            <Dropdown
-              menu={{ items: props.actions }}
-              arrow
-              onOpenChange={() => props.setCurrentItem(item)}
-            >
-              <Button style={{ width: "45px" }}>
-                <EllipsisOutlined />
-              </Button>
-            </Dropdown>
+            <>
+              <Dropdown
+                menu={{ items: props.actions }}
+                arrow
+                onOpenChange={() => props.setCurrentItem(item)}
+              >
+                <Button style={{ width: "45px" }}>
+                  <EllipsisOutlined />
+                </Button>
+              </Dropdown>
+            </>
           ) : (
             <></>
           ),
@@ -152,6 +181,41 @@ export const Mobile = (props: MobileProps) => {
                             size="large"
                             shape="square"
                           />
+                        </div>
+                      </Descriptions.Item>
+                    );
+
+                  case "bankNameToIcon":
+                    return (
+                      <Descriptions.Item
+                        key={value.name}
+                        label={t(`table.${value.head ?? value.name}`)}
+                        labelStyle={{
+                          maxWidth: "100px",
+                          margin: 0,
+                          padding: 5,
+                        }}
+                      >
+                        <div style={{ width: "100%", textAlign: "center" }}>
+                          <Tooltip
+                            placement="topLeft"
+                            title={item[value.name]}
+                            arrow
+                          >
+                            <Avatar
+                              src={
+                                BankMainteneceData?.itens.find(
+                                  (bank) =>
+                                    bank.label_name?.split(" ").join("_") ===
+                                    item[value.name]
+                                )?.icon_url ?? null
+                              }
+                              size="large"
+                              shape="square"
+                            >
+                              <BankOutlined />
+                            </Avatar>
+                          </Tooltip>
                         </div>
                       </Descriptions.Item>
                     );
@@ -275,13 +339,16 @@ export const Mobile = (props: MobileProps) => {
     setActive(key);
   };
   return props?.items?.length >= 1 ? (
-    <Collapse
-      expandIconPosition="end"
-      items={items}
-      onChange={onChange}
-      activeKey={active}
-      style={{ width: "100%" }}
-    />
+    <>
+      {props.Confirm && props.Confirm}
+      <Collapse
+        expandIconPosition="end"
+        items={items}
+        onChange={onChange}
+        activeKey={active}
+        style={{ width: "100%" }}
+      />
+    </>
   ) : (
     <Empty
       style={{ padding: 15, paddingBottom: 30 }}

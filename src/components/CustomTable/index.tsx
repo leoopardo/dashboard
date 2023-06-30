@@ -1,5 +1,9 @@
 import { useEffect, useState, Dispatch, SetStateAction } from "react";
-import { CopyOutlined, EllipsisOutlined } from "@ant-design/icons";
+import {
+  BankOutlined,
+  CopyOutlined,
+  EllipsisOutlined,
+} from "@ant-design/icons";
 import {
   Avatar,
   Button,
@@ -8,6 +12,7 @@ import {
   Input,
   Pagination,
   Table,
+  Tooltip,
 } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { useTranslation } from "react-i18next";
@@ -16,6 +21,7 @@ import { Mobile } from "./mobile";
 import { Grid } from "@mui/material";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { toast } from "react-hot-toast";
+import { useGetOrganizationBankMaintenece } from "@src/services/register/organization/bankMaitenence/getBanks";
 
 export interface ColumnInterface {
   name: string | any;
@@ -30,7 +36,8 @@ export interface ColumnInterface {
     | "status"
     | "actions"
     | "icon"
-    | "boolean";
+    | "boolean"
+    | "bankNameToIcon";
 }
 
 export interface actionsInterface {
@@ -52,16 +59,21 @@ interface TableProps {
   setCurrentItem: Dispatch<SetStateAction<any>>;
   removeTotal?: boolean;
   actions?: actionsInterface[];
+  Confirm?: any;
 }
 
 export const CustomTable = (props: TableProps) => {
   const { t } = useTranslation();
   const isMobile = useMediaQuery({ maxWidth: "900px" });
   const [columns, setColumns] = useState<ColumnsType<ColumnInterface>>([]);
-  const translation = useTranslation().i18n.language;
   const [sortOrder, setSortOrder] = useState(false);
   const [actions, setActions] = useState<any>([]);
-  const [current, setCurrent] = useState<any | null>(null)
+  const { BankMainteneceData } = useGetOrganizationBankMaintenece({
+    limit: 200,
+    page: 1,
+    sort_field: "label_name",
+    sort_order: "DESC",
+  });
 
   useEffect(() => {
     const act: any = [];
@@ -227,6 +239,35 @@ export const CustomTable = (props: TableProps) => {
               ),
             };
 
+          case "bankNameToIcon":
+            return {
+              title: (
+                <p style={{ width: "100%", textAlign: "center" }}>
+                  {t(`table.${column?.head ?? column.name}`)}
+                </p>
+              ),
+              key: column.name,
+              dataIndex: column.name,
+              render: (text: string) => (
+                <div style={{ width: "100%", textAlign: "center" }}>
+                  <Tooltip placement="topLeft" title={text} arrow>
+                    <Avatar
+                      src={
+                        BankMainteneceData?.itens.find(
+                          (bank) =>
+                            bank.label_name?.split(" ").join("_") === text
+                        )?.icon_url ?? null
+                      }
+                      size="large"
+                      shape="square"
+                    >
+                      <BankOutlined />
+                    </Avatar>
+                  </Tooltip>
+                </div>
+              ),
+            };
+
           case "status":
             return {
               title: (
@@ -280,11 +321,14 @@ export const CustomTable = (props: TableProps) => {
               dataIndex: column.name,
               render: (a: any, record: any) => (
                 <div style={{ width: "100%", textAlign: "center" }}>
+                  {props.Confirm ?? ""}
                   <Dropdown
                     key={column.name}
                     menu={{ items: actions }}
                     onOpenChange={(open) => {
-                      if (open) {props.setCurrentItem(record)}
+                      if (open) {
+                        props.setCurrentItem(record);
+                      }
                     }}
                     arrow
                   >
@@ -391,6 +435,7 @@ export const CustomTable = (props: TableProps) => {
           label={props?.label}
           actions={actions}
           setCurrentItem={props.setCurrentItem}
+          Confirm={props.Confirm}
         />
       </Grid>
       <Pagination
