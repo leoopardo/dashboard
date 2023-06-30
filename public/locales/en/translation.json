@@ -124,7 +124,11 @@
     "confirm_upload_file": "Confirm the file upload?",
     "yes_confirm": "Yes, confirm",
     "uploaded": "Uploaded",
-    "upload": "upload"
+    "upload": "upload",
+    "deleted": "Deleted",
+    "delete": "delete",
+    "upload_label": "Click or drag file to this area to upload",
+    "upload_description": "Support for a single upload. Files types: pdf, png and docx."
   },
   "login": {
     "sign_in": "Sign in",

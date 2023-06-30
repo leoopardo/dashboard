@@ -19,13 +19,14 @@ import {
   Tabs,
   TabsProps,
   Upload,
+  UploadProps,
 } from "antd";
 import { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import { useParams } from "react-router-dom";
 import { useGetFiles } from "@src/services/register/persons/persons/files/getFiles";
-import { DownloadOutlined, UploadOutlined } from "@ant-design/icons";
+import { InboxOutlined, UploadOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 import moment from "moment";
 import { useGetStates } from "@src/services/states_cities/getStates";
@@ -38,6 +39,8 @@ import {
   CreateFileInterface,
   useUploadFile,
 } from "@src/services/register/persons/persons/files/uploadFile";
+import { useDeleteDeleteFile } from "@src/services/register/persons/persons/files/deleteFile";
+import Dragger from "antd/es/upload/Dragger";
 
 export const PersonUpdate = () => {
   const [body, setBody] = useState<PersonsItem | undefined>(undefined);
@@ -45,6 +48,7 @@ export const PersonUpdate = () => {
   const [fileBody, setFileBody] = useState<CreateFileInterface | null>(null);
   const [isConfirmOpen, setIsConfirmOpen] = useState<boolean>(false);
   const [isConfirmFileOpen, setIsConfirmFileOpen] = useState<boolean>(false);
+  const [deleteFileId, setDeleteFileId] = useState<string>("");
   const submitRef1 = useRef<HTMLButtonElement>(null);
   const { t } = useTranslation();
   const isMobile = useMediaQuery({ maxWidth: "750px" });
@@ -68,6 +72,12 @@ export const PersonUpdate = () => {
     fileBody,
     cpf?.split(" ").join(".")
   );
+  const {
+    DeleteFileError,
+    DeleteFileIsLoading,
+    DeleteFileIsSuccess,
+    DeleteFileMutate,
+  } = useDeleteDeleteFile(cpf?.split(" ").join("."), deleteFileId);
 
   ///// attachments -------------------------
 
@@ -85,11 +95,22 @@ export const PersonUpdate = () => {
     refetchCities();
   }, [currState]);
 
+  useEffect(() => {
+    if (deleteFileId) DeleteFileMutate();
+  }, [deleteFileId]);
+  useEffect(() => {
+    if (fileBody?.base64_file) {
+      FileMutate();
+      setFileBody({ base64_file: "", file_name: "" });
+    }
+  }, [fileBody]);
+
   const onChangeConfigs = (event: any) => {
     const { value } = event.target;
     setBody((state) => ({ ...state, [event.target.name]: value }));
     console.log(body);
   };
+
   const items: TabsProps["items"] = [
     {
       key: "1",
@@ -712,12 +733,12 @@ export const PersonUpdate = () => {
       ) : (
         <Grid container spacing={1}>
           <Grid xs={12} item>
-            <Upload
+            <Dragger
               listType="picture"
               accept=".png,.pdf,.docx"
               multiple={false}
               onRemove={(file) => {
-                console.log(file);
+                setDeleteFileId(file?.uid);
               }}
               defaultFileList={Files?.items.map((file) => {
                 return {
@@ -743,49 +764,22 @@ export const PersonUpdate = () => {
                 return false;
               }}
             >
-              <Button icon={<UploadOutlined />} size="large">
-                Upload
-              </Button>
-            </Upload>
+              <p className="ant-upload-drag-icon">
+                <InboxOutlined />
+              </p>
+              <p className="ant-upload-text">{t("messages.upload_label")}</p>
+              <p className="ant-upload-hint">
+                {t("messages.upload_description")}
+              </p>
+            </Dragger>
           </Grid>
-          {(FileIsLoading ||
-            (fileBody?.base64_file && fileBody?.file_name)) && (
-            <Grid
-              container
-              item
-              xs={12}
-              style={{ display: "flex", flexDirection: "row-reverse" }}
-            >
-              <Grid xs={12} md={2} item>
-                <Popconfirm
-                  title={t("messages.upload_file")}
-                  description={t("messages.confirm_upload_file")}
-                  open={isConfirmFileOpen}
-                  showArrow
-                  style={{ maxWidth: "340px" }}
-                  onConfirm={() => {
-                    FileMutate();
-                    setIsConfirmFileOpen(false);
-                    setFileBody({ base64_file: "", file_name: "" });
-                  }}
-                  okButtonProps={{ loading: UpdateIsLoading }}
-                  okText={t("messages.yes_confirm")}
-                  cancelText={t("messages.no_cancel")}
-                  onCancel={() => setIsConfirmFileOpen(false)}
-                >
-                  <Button
-                    size="large"
-                    style={{ width: "100%" }}
-                    loading={FileIsLoading}
-                    type="primary"
-                    onClick={() => {
-                      setIsConfirmFileOpen(true);
-                    }}
-                  >
-                    Confirmar Upload
-                  </Button>
-                </Popconfirm>{" "}
-              </Grid>
+
+          {!Files?.total && !fileBody?.base64_file && (
+            <Grid item xs={12}>
+              <Empty
+                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                description={t("error.400")}
+              />
             </Grid>
           )}
         </Grid>
@@ -815,6 +809,12 @@ export const PersonUpdate = () => {
         actionError={t("messages.upload")}
         error={FileError}
         success={FileIsSuccess}
+      />
+      <Toast
+        actionSuccess={t("messages.deleted")}
+        actionError={t("messages.delete")}
+        error={DeleteFileError}
+        success={DeleteFileIsSuccess}
       />
     </Grid>
   );

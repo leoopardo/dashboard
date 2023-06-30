@@ -126,7 +126,11 @@
     "confirm_upload_file": "Confirmar upload do arquivo?",
     "yes_confirm": "Sim, confirmar",
     "uploaded": "Upload realizado",
-    "upload": "upload"
+    "upload": "upload",
+    "deleted": "Deletado",
+    "delete": "deletar",
+    "upload_label": "Clique ou arraste e solte o arquivo para esta área",
+    "upload_description": "Suporte para um arquivo por vês, nos formatos: pdf, png e docx."
   },
   "login": {
     "sign_in": "Faça login",
