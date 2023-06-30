@@ -16,6 +16,7 @@ import { BankMaintenence } from "./Pages/register/organization/bankMaintenance";
 import { GeneralConfigs } from "./Pages/register/organization/generalConfigs";
 import { PartnerUsers } from "./Pages/register/partner/users";
 import { MerchantView } from "./Pages/register/merchant/merchants";
+import { MerchantConfigs } from "./Pages/register/merchant/merchants/components/merchantConfigs";
 import { Partners } from "./Pages/register/partner/partners";
 import { Operators } from "./Pages/register/operator/operators";
 import { OperatorUsers } from "./Pages/register/operator/users";
@@ -80,7 +81,10 @@ export const PrivateRoutes = () => {
             <Route path="operator_users" element={<OperatorUsers />} />
           </Route>
           <Route path="merchant">
-            <Route path="merchants" element={<MerchantView />} />
+            <Route path="merchants" >
+            <Route index element={<MerchantView />} />
+            <Route path=":id" element={<MerchantConfigs />} />
+            </Route>
             <Route path="merchant_users" element={<MerchantUser />} />
           </Route>
           <Route path="person">

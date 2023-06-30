@@ -200,7 +200,9 @@
     "country": "País",
     "operator": "Operador",
     "aggregator": "Agregadores",
-    "user": "Usuário"
+    "user": "Usuário",
+    "deposit_bank": "Banco depósito",
+    "withdraw_bank": "Banco saque"
   },
   "table": {
     "id": "ID",

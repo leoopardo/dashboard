@@ -1,13 +1,13 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { AutoComplete, Avatar, Empty, Input, Spin } from "antd";
 import { MerchantQuery } from "../../../services/types/register/merchants/merchants.interface";
 import { useListBanks } from "../../../services/bank/listBanks";
-import { DownOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 
 interface BankSelectProps {
   setQueryFunction: Dispatch<SetStateAction<any>>;
   queryOptions: any;
+  onChange?: (value: string) => void
 }
 
 export const BanksSelect = ({
@@ -25,7 +25,7 @@ export const BanksSelect = ({
 
   useEffect(() => {
     setValue(
-      bankListData?.itens.find((bank) => bank.label_name === queryOptions.bank)
+      bankListData?.itens.find((bank) => bank?.label_name === queryOptions?.bank)
         ?.label_name
     );
   }, [bankListData, queryOptions]);

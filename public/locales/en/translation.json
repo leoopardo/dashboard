@@ -179,7 +179,9 @@
     "country": "Country",
     "operator": "Operator",
     "aggregator": "Aggregator",
-    "user": "User"
+    "user": "User",
+    "deposit_bank": "Deposit bank",
+    "withdraw_bank": "Withdraw bank"
   },
   "modal": {
     "confirm": "Confirm",
