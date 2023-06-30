@@ -8,7 +8,7 @@ import {
   Tooltip,
 } from "antd";
 import { Collapse } from "antd";
-import  { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { BankOutlined, EllipsisOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 import { ColumnInterface } from "..";
@@ -44,12 +44,9 @@ export const Mobile = (props: MobileProps) => {
               {props?.label?.map((label: string) => {
                 switch (label) {
                   case "bank":
+                  case "bank_name":
                     return (
-                      <Tooltip
-                        placement="topLeft"
-                        title={item[label]}
-                        arrow
-                      >
+                      <Tooltip placement="topLeft" title={item[label]} arrow>
                         <Avatar
                           src={
                             BankMainteneceData?.itens.find(

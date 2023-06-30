@@ -373,7 +373,17 @@
     "updated_at": "Atualizado em",
     "bank_name": "Banco",
     "bank_code": "Cód. banco",
-    "ispb": "ISPB"
+    "ispb": "ISPB",
+    "number_in": "Transações",
+    "value_in": "Valor transações",
+    "fee_in": "Taxa organização",
+    "bank_fee_in": "Taxa banco",
+    "result_in": "Resultado",
+    "number_out": "Transações",
+    "value_out": "Valor transações",
+    "fee_out": "Taxa organização",
+    "bank_fee_out": "Taxa banco",
+    "result_out": "Resultado"
   },
   "actions": {
     "details": "Detalhes",

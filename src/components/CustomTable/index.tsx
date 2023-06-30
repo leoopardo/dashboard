@@ -126,7 +126,9 @@ export const CustomTable = (props: TableProps) => {
                   {t(`table.${column?.head || column.name}`)}
                 </p>
               ),
-              key: column.name,
+              key: Array.isArray(column.name)
+                ? column.name + `${Math.random()}`
+                : column.name,
               dataIndex: column.name,
               render: (text: string) => (
                 <div
@@ -161,7 +163,9 @@ export const CustomTable = (props: TableProps) => {
                   {t(`table.${column?.head || column.name}`)}
                 </p>
               ),
-              key: column.name,
+              key: Array.isArray(column.name)
+                ? column.name + `${Math.random()}`
+                : column.name,
               dataIndex: column.name,
               render: (text: string) =>
                 text ? (
@@ -188,7 +192,9 @@ export const CustomTable = (props: TableProps) => {
                   {t(`table.${column?.head ?? column.name}`)}
                 </p>
               ),
-              key: column.name,
+              key: Array.isArray(column.name)
+                ? column.name + `${Math.random()}`
+                : column.name,
               dataIndex: column.name,
               render: (text: string) => (
                 <p
@@ -209,7 +215,9 @@ export const CustomTable = (props: TableProps) => {
                   {t(`table.${column?.head ?? column.name}`)}
                 </p>
               ),
-              key: column.name,
+              key: Array.isArray(column.name)
+                ? column.name + `${Math.random()}`
+                : column.name,
               dataIndex: column.name,
               render: (text: string) => (
                 <p
@@ -230,7 +238,9 @@ export const CustomTable = (props: TableProps) => {
                   {t(`table.${column?.head ?? column.name}`)}
                 </p>
               ),
-              key: column.name,
+              key: Array.isArray(column.name)
+                ? column.name + `${Math.random()}`
+                : column.name,
               dataIndex: column.name,
               render: (text: string) => (
                 <div style={{ width: "100%", textAlign: "center" }}>
@@ -246,7 +256,9 @@ export const CustomTable = (props: TableProps) => {
                   {t(`table.${column?.head ?? column.name}`)}
                 </p>
               ),
-              key: column.name,
+              key: Array.isArray(column.name)
+                ? column.name + `${Math.random()}`
+                : column.name,
               dataIndex: column.name,
               render: (text: string) => (
                 <div style={{ width: "100%", textAlign: "center" }}>
@@ -275,7 +287,9 @@ export const CustomTable = (props: TableProps) => {
                   {t(`table.${column?.head ?? column.name}`)}
                 </p>
               ),
-              key: column.name,
+              key: Array.isArray(column.name)
+                ? column.name + `${Math.random()}`
+                : column.name,
               dataIndex: column.name,
               render: (text: string) =>
                 typeof text === "boolean" ? (
@@ -302,7 +316,9 @@ export const CustomTable = (props: TableProps) => {
                   {t(`table.${column?.head ?? column.name}`)}
                 </p>
               ),
-              key: column.name,
+              key: Array.isArray(column.name)
+                ? column.name + `${Math.random()}`
+                : column.name,
               dataIndex: column.name,
               render: (text: string) => (
                 <p
@@ -367,7 +383,9 @@ export const CustomTable = (props: TableProps) => {
                   {t(`table.${column?.head ?? column.name}`)}
                 </p>
               ),
-              key: column.name,
+              key: Array.isArray(column.name)
+                ? column.name + `${Math.random()}`
+                : column.name,
               dataIndex: column.name,
               render: (a: any, record: any) => (
                 <p style={{ width: "100%", textAlign: "center" }}>

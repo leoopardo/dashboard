@@ -370,7 +370,9 @@
     "updated_at": "Updated at",
     "bank_name": "Bank",
     "bank_code": "Bank code",
-    "ispb": "ISPB"
+    "ispb": "ISPB",
+    "number_in": "transaction",
+    
   },
   "actions": {
     "details": "Details",

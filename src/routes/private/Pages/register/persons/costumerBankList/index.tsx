@@ -150,7 +150,7 @@ export const CostumerBanks = () => {
             error={clientbankListError}
             columns={columns}
             loading={isClientBankListFetching}
-            label={["pix_key"]}
+            label={["bank_name", "ispb"]}
           />
         </Grid>
       </Grid>

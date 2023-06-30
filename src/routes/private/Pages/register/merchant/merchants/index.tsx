@@ -52,7 +52,7 @@ export const MerchantView = () => {
     { name: "name", type: "text" },
     { name: "domain", type: "text" },
     { name: ["partner", "name"], head: 'partner', type: "text" },
-    { name: ["merchantConfig", "cash_in_bank"], head: 'bank', type: 'text'},
+    { name: ["merchantConfig", "cash_in_bank"], head: 'bank', type: 'bankNameToIcon'},
     { name: "status", type: "status" },
     { name: "created_at", type: "date" },
   ];
