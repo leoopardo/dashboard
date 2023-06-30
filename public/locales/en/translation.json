@@ -119,7 +119,12 @@
     "confirm_action_title": "{{action}} data",
     "are_you_sure": "Do you want {{action}} the {{itens}}?",
     "yes_update": "Yes, update",
-    "no_cancel": "No, cancel"
+    "no_cancel": "No, cancel",
+    "upload_file": "Upload file",
+    "confirm_upload_file": "Confirm the file upload?",
+    "yes_confirm": "Yes, confirm",
+    "uploaded": "Uploaded",
+    "upload": "upload"
   },
   "login": {
     "sign_in": "Sign in",

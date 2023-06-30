@@ -27,7 +27,7 @@ import { useGetRowsGeneratedWithdrawals } from "@src/services/consult/generatedW
 import { generatedWithdrawalsRowsQuery } from "@src/services/types/consult/withdrawals/generatedWithdrawals.interface";
 import { TotalizersCards } from "../../../consult/withdrawals/generated/components/TotalizersCards";
 import moment from "moment";
-import { useGetFiles } from "@src/services/register/persons/persons/getFiles";
+import { useGetFiles } from "@src/services/register/persons/persons/files/getFiles";
 import { DownloadOutlined } from "@ant-design/icons";
 
 export const PersonDetails = () => {

@@ -24,7 +24,7 @@ import { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import { useParams } from "react-router-dom";
-import { useGetFiles } from "@src/services/register/persons/persons/getFiles";
+import { useGetFiles } from "@src/services/register/persons/persons/files/getFiles";
 import { DownloadOutlined, UploadOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 import moment from "moment";
@@ -34,15 +34,17 @@ import ReactInputMask from "react-input-mask";
 import { useGetBlacklistReasons } from "@src/services/register/persons/persons/getPersonBlacklistReasons";
 import { useUpdatePerson } from "@src/services/register/persons/persons/updatePerson";
 import { Toast } from "@src/components/Toast";
+import {
+  CreateFileInterface,
+  useUploadFile,
+} from "@src/services/register/persons/persons/files/uploadFile";
 
 export const PersonUpdate = () => {
   const [body, setBody] = useState<PersonsItem | undefined>(undefined);
   const [currState, setCurrState] = useState<string | undefined>("");
-  const [fileBody, setFileBody] = useState<{
-    file_name: string;
-    base64_file: string;
-  } | null>(null);
-  const [isConfirm1Open, setIsConfirm1Open] = useState<boolean>(false);
+  const [fileBody, setFileBody] = useState<CreateFileInterface | null>(null);
+  const [isConfirmOpen, setIsConfirmOpen] = useState<boolean>(false);
+  const [isConfirmFileOpen, setIsConfirmFileOpen] = useState<boolean>(false);
   const submitRef1 = useRef<HTMLButtonElement>(null);
   const { t } = useTranslation();
   const isMobile = useMediaQuery({ maxWidth: "750px" });
@@ -61,6 +63,11 @@ export const PersonUpdate = () => {
 
   const { UpdateMutate, UpdateError, UpdateIsLoading, UpdateIsSuccess } =
     useUpdatePerson(body, cpf?.split(" ").join("."));
+
+  const { FileMutate, FileError, FileIsLoading, FileIsSuccess } = useUploadFile(
+    fileBody,
+    cpf?.split(" ").join(".")
+  );
 
   ///// attachments -------------------------
 
@@ -111,7 +118,7 @@ export const PersonUpdate = () => {
           }}
           onFinish={() => {
             UpdateMutate();
-            setIsConfirm1Open(false);
+            setIsConfirmOpen(false);
           }}
         >
           <Grid container columnSpacing={1}>
@@ -346,7 +353,7 @@ export const PersonUpdate = () => {
                     action: t("messages.update"),
                     itens: body?.name,
                   })}
-                  open={isConfirm1Open}
+                  open={isConfirmOpen}
                   style={{ maxWidth: "340px" }}
                   onConfirm={() => {
                     submitRef1.current?.click();
@@ -354,14 +361,14 @@ export const PersonUpdate = () => {
                   okButtonProps={{ loading: UpdateIsLoading }}
                   okText={t("messages.yes_update")}
                   cancelText={t("messages.no_cancel")}
-                  onCancel={() => setIsConfirm1Open(false)}
+                  onCancel={() => setIsConfirmOpen(false)}
                 >
                   <Button
                     size="large"
                     type="primary"
                     style={{ width: "100%" }}
                     loading={isPersonsDataFetching || UpdateIsLoading}
-                    onClick={() => setIsConfirm1Open(true)}
+                    onClick={() => setIsConfirmOpen(true)}
                   >
                     {t("buttons.update_person")}
                   </Button>
@@ -524,7 +531,7 @@ export const PersonUpdate = () => {
                     action: t("messages.update"),
                     itens: body?.name,
                   })}
-                  open={isConfirm1Open}
+                  open={isConfirmOpen}
                   style={{ maxWidth: "340px" }}
                   onConfirm={() => {
                     submitRef1.current?.click();
@@ -532,14 +539,14 @@ export const PersonUpdate = () => {
                   okButtonProps={{ loading: UpdateIsLoading }}
                   okText={t("messages.yes_update")}
                   cancelText={t("messages.no_cancel")}
-                  onCancel={() => setIsConfirm1Open(false)}
+                  onCancel={() => setIsConfirmOpen(false)}
                 >
                   <Button
                     size="large"
                     type="primary"
                     style={{ width: "100%" }}
                     loading={isPersonsDataFetching || UpdateIsLoading}
-                    onClick={() => setIsConfirm1Open(true)}
+                    onClick={() => setIsConfirmOpen(true)}
                   >
                     {t("buttons.update_person")}
                   </Button>
@@ -661,7 +668,7 @@ export const PersonUpdate = () => {
                     action: t("messages.update"),
                     itens: body?.name,
                   })}
-                  open={isConfirm1Open}
+                  open={isConfirmOpen}
                   style={{ maxWidth: "340px" }}
                   onConfirm={() => {
                     submitRef1.current?.click();
@@ -669,14 +676,14 @@ export const PersonUpdate = () => {
                   okButtonProps={{ loading: UpdateIsLoading }}
                   okText={t("messages.yes_update")}
                   cancelText={t("messages.no_cancel")}
-                  onCancel={() => setIsConfirm1Open(false)}
+                  onCancel={() => setIsConfirmOpen(false)}
                 >
                   <Button
                     size="large"
                     type="primary"
                     style={{ width: "100%" }}
                     loading={isPersonsDataFetching || UpdateIsLoading}
-                    onClick={() => setIsConfirm1Open(true)}
+                    onClick={() => setIsConfirmOpen(true)}
                   >
                     {t("buttons.update_person")}
                   </Button>
@@ -707,8 +714,7 @@ export const PersonUpdate = () => {
           <Grid xs={12} item>
             <Upload
               listType="picture"
-              accept="*"
-              
+              accept=".png,.pdf,.docx"
               multiple={false}
               onRemove={(file) => {
                 console.log(file);
@@ -742,9 +748,46 @@ export const PersonUpdate = () => {
               </Button>
             </Upload>
           </Grid>
-          <Grid xs={12} md={4} item>
-            <Button type="primary">Confirmar Upload</Button>
-          </Grid>
+          {(FileIsLoading ||
+            (fileBody?.base64_file && fileBody?.file_name)) && (
+            <Grid
+              container
+              item
+              xs={12}
+              style={{ display: "flex", flexDirection: "row-reverse" }}
+            >
+              <Grid xs={12} md={2} item>
+                <Popconfirm
+                  title={t("messages.upload_file")}
+                  description={t("messages.confirm_upload_file")}
+                  open={isConfirmFileOpen}
+                  showArrow
+                  style={{ maxWidth: "340px" }}
+                  onConfirm={() => {
+                    FileMutate();
+                    setIsConfirmFileOpen(false);
+                    setFileBody({ base64_file: "", file_name: "" });
+                  }}
+                  okButtonProps={{ loading: UpdateIsLoading }}
+                  okText={t("messages.yes_confirm")}
+                  cancelText={t("messages.no_cancel")}
+                  onCancel={() => setIsConfirmFileOpen(false)}
+                >
+                  <Button
+                    size="large"
+                    style={{ width: "100%" }}
+                    loading={FileIsLoading}
+                    type="primary"
+                    onClick={() => {
+                      setIsConfirmFileOpen(true);
+                    }}
+                  >
+                    Confirmar Upload
+                  </Button>
+                </Popconfirm>{" "}
+              </Grid>
+            </Grid>
+          )}
         </Grid>
       ),
     },
@@ -766,6 +809,12 @@ export const PersonUpdate = () => {
         actionError={t("messages.update")}
         error={UpdateError}
         success={UpdateIsSuccess}
+      />
+      <Toast
+        actionSuccess={t("messages.uploaded")}
+        actionError={t("messages.upload")}
+        error={FileError}
+        success={FileIsSuccess}
       />
     </Grid>
   );

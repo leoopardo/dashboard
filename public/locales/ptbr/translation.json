@@ -121,7 +121,12 @@
     "confirm_action_title": "{{action}} dados",
     "are_you_sure": "Deseja {{action}} {{itens}}?",
     "yes_update": "Sim, atualizar",
-    "no_cancel": "Não, cancelar"
+    "no_cancel": "Não, cancelar",
+    "upload_file": "Fazer upload",
+    "confirm_upload_file": "Confirmar upload do arquivo?",
+    "yes_confirm": "Sim, confirmar",
+    "uploaded": "Upload realizado",
+    "upload": "upload"
   },
   "login": {
     "sign_in": "Faça login",
