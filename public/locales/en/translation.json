@@ -102,7 +102,8 @@
     "withdrawals_webhooks_reports": "Webhooks",
     "generated_deposits_reports": "Generated deposits",
     "paid_deposits_reports": "Paid deposits",
-    "webhooks_reports": "Webhooks"
+    "webhooks_reports": "Webhooks",
+    "update": "Editar"
   },
 
   "messages": {
@@ -118,7 +119,16 @@
     "confirm_action_title": "{{action}} data",
     "are_you_sure": "Do you want {{action}} the {{itens}}?",
     "yes_update": "Yes, update",
-    "no_cancel": "No, cancel"
+    "no_cancel": "No, cancel",
+    "upload_file": "Upload file",
+    "confirm_upload_file": "Confirm the file upload?",
+    "yes_confirm": "Yes, confirm",
+    "uploaded": "Uploaded",
+    "upload": "upload",
+    "deleted": "Deleted",
+    "delete": "delete",
+    "upload_label": "Click or drag file to this area to upload",
+    "upload_description": "Support for a single upload. Files types: pdf, png and docx."
   },
   "login": {
     "sign_in": "Sign in",
@@ -137,11 +147,14 @@
     "update_general_configs": "Update general configs",
     "new_partner": "new partner",
     "new_operator": "new operator",
-    "new_aggregator": "new agregator"
+    "new_aggregator": "new agregator",
+    "person": "person",
+    "new_person": "New person",
+    "update_person": "Update person"
   },
   "input": {
-    "required": "Please input your {{field}}",
-    "required(a)": "Please input your {{field}}",
+    "required": "Please input the {{field}}",
+    "required(a)": "Please input the {{field}}",
     "confirm_password": "PLease confirm your password",
     "doest_match": "The new password that you entered do not match!",
     "name": "Name",
@@ -181,7 +194,8 @@
     "aggregator": "Aggregator",
     "user": "User",
     "deposit_bank": "Deposit bank",
-    "withdraw_bank": "Withdraw bank"
+    "withdraw_bank": "Withdraw bank",
+    "cpf": "CPF"
   },
   "modal": {
     "confirm": "Confirm",
@@ -349,6 +363,11 @@
     "cash_out_max_value": "Withdraw max value",
     "cash_out_transaction_limit": "Withdrawal limit",
     "attachments": "Attachments",
+    "general_data": "General data",
+    "locks": "Locks",
+    "limits": "Limits",
+    "black_list_reason": "Blacklist reason",
+    "black_list_description": "Blacklist description",
     "confirm_password": "Confirm password",
     "updated_at": "Updated at"
   },

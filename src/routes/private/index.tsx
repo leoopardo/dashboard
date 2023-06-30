@@ -24,6 +24,7 @@ import { Aggregators } from "./Pages/register/aggregator/aggregators";
 import { AggregatorUsers } from "./Pages/register/aggregator/users";
 import { Persons } from "./Pages/register/persons";
 import { PersonDetails } from "./Pages/register/persons/personDetails";
+import { PersonUpdate } from "./Pages/register/persons/personUpdate";
 
 export const PrivateRoutes = () => {
   const navigate = useNavigate();
@@ -90,7 +91,10 @@ export const PrivateRoutes = () => {
           <Route path="person">
             <Route path="persons">
               <Route index element={<Persons />} />
-              <Route path=":name" element={<PersonDetails />} />
+              <Route path=":cpf" element={<PersonDetails />} />
+              <Route path="update">
+                <Route path=":cpf" element={<PersonUpdate />} />{" "}
+              </Route>
             </Route>
           </Route>
         </Route>

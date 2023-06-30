@@ -26,7 +26,7 @@ export const BreadcrumbComponent = () => {
       l.map((value) => {
         return {
           title: value.includes("%20")
-            ? value.split("%20").join(" ")
+            ? value.split("%20").join(".")
             : t(`menus.${value}`),
         };
       })

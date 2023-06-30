@@ -39,12 +39,14 @@ export interface PersonsItem {
   flag_pep?: boolean;
   flag_aux_gov?: boolean;
   flag_alert?: number;
-  cash_in_max_value?: number;
-  cash_out_max_value?: number;
-  cash_out_transaction_limit?: number;
+  cash_in_max_value?: any;
+  cash_out_max_value?: any;
+  cash_out_transaction_limit?: any;
   last_check?: string;
   createdAt?: string;
   updatedAt?: string;
+  black_list_reason?: string;
+  black_list_description?: string;
   __v?: number;
 }
 
@@ -69,4 +71,16 @@ export interface PersonFilesResponse {
   limit: number;
   page: number;
   items: PersonFilesItem[];
+}
+
+export interface PersonBlacklistReason {
+  total: number;
+  page: number;
+  limit: number;
+  items: {
+    id: string;
+    reason: string;
+    status: boolean;
+    createdAt: string;
+  }[];
 }

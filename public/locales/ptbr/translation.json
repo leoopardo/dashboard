@@ -104,7 +104,8 @@
     "withdrawals_webhooks_reports": "Webhooks",
     "generated_deposits_reports": "Depósitos gerados",
     "paid_deposits_reports": "Depósitos pagos",
-    "webhooks_reports": "Webhooks"
+    "webhooks_reports": "Webhooks",
+    "update": "Editar"
   },
 
   "messages": {
@@ -120,7 +121,16 @@
     "confirm_action_title": "{{action}} dados",
     "are_you_sure": "Deseja {{action}} {{itens}}?",
     "yes_update": "Sim, atualizar",
-    "no_cancel": "Não, cancelar"
+    "no_cancel": "Não, cancelar",
+    "upload_file": "Fazer upload",
+    "confirm_upload_file": "Confirmar upload do arquivo?",
+    "yes_confirm": "Sim, confirmar",
+    "uploaded": "Upload realizado",
+    "upload": "upload",
+    "deleted": "Deletado",
+    "delete": "deletar",
+    "upload_label": "Clique ou arraste e solte o arquivo para esta área",
+    "upload_description": "Suporte para um arquivo por vês, nos formatos: pdf, png e docx."
   },
   "login": {
     "sign_in": "Faça login",
@@ -139,7 +149,10 @@
     "update_general_configs": "Atualizar configurações gerais",
     "new_partner": "nova plataforma",
     "new_operator": "novo operador",
-    "new_aggregator": "novo agregador"
+    "new_aggregator": "novo agregador",
+    "person": "pessoa",
+    "new_person": "Nova pessoa",
+    "update_person": "Atualizar pessoa"
   },
   "modal": {
     "confirm": "Confirmar",
@@ -158,11 +171,12 @@
     "update_operator": "Atualizar operador",
     "new_aggregator": "Novo agregador",
     "update_aggregator": "Atualizar agregador",
-    "person": "Pessoa"
+    "person": "Pessoa",
+    "new_person": "Nova pessoa"
   },
   "input": {
-    "required": "Por favor, insira seu {{field}}",
-    "required(a)": "Por favor, insira sua {{field}}",
+    "required": "Por favor, insira o {{field}}",
+    "required(a)": "Por favor, insira a {{field}}",
     "confirm_password": "Por favor, confirme sua senha!",
     "doest_match": "As senhas não coincidem!",
     "name": "nome",
@@ -202,7 +216,8 @@
     "aggregator": "Agregadores",
     "user": "Usuário",
     "deposit_bank": "Banco depósito",
-    "withdraw_bank": "Banco saque"
+    "withdraw_bank": "Banco saque",
+    "cpf": "CPF"
   },
   "table": {
     "id": "ID",
@@ -351,6 +366,11 @@
     "cash_out_max_value": "Val. máx. saques",
     "cash_out_transaction_limit": "Limite de saque",
     "attachments": "Anexos",
+    "general_data": "Dados gerais",
+    "locks": "Bloqueios",
+    "limits": "Limites",
+    "black_list_reason": "Razão blacklist",
+    "black_list_description": "Descrição blacklist",
     "confirm_password": "Confirmar senha",
     "updated_at": "Atualizado em"
   },
