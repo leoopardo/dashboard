@@ -1,15 +1,19 @@
-import { useGetOrganizationBankStatementTotals } from "@src/services/consult/organization/bankStatement/getTotals";
 import { OrganizationBankStatementTotalsQuery } from "@src/services/types/consult/organization/bankStatement/totals.interface";
 import { Grid } from "@mui/material";
 import moment from "moment";
-import React, { useState } from "react";
-import { Card, Divider, Statistic } from "antd";
-import {
-  ArrowDownOutlined,
-  ArrowUpOutlined,
-  PercentageOutlined,
-} from "@ant-design/icons";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Totalizers } from "./components/Totalizers";
+import { Button, Divider } from "antd";
+import { FilterChips } from "@src/components/FiltersModal/filterChips";
+import { FiltersModal } from "@src/components/FiltersModal";
+import { useGetOrganizationBankStatementTotals } from "@src/services/consult/organization/bankStatement/getTotals";
+import { useGetOrganizationPerbank } from "@src/services/consult/organization/bankStatement/getPerBank";
+import { CustomTable } from "@src/components/CustomTable";
+import { EyeFilled } from "@ant-design/icons";
+import { PieChart } from "./components/PieValue";
+import { PieFee } from "./components/PieFee";
+import { PieBankfee } from "./components/PieBankFee";
 
 const INITIAL_QUERY: OrganizationBankStatementTotalsQuery = {
   start_date: moment(new Date())
@@ -22,167 +26,112 @@ const INITIAL_QUERY: OrganizationBankStatementTotalsQuery = {
 };
 
 export const OrganizationBankStatement = () => {
+  const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
+  const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
+  const [currentItem, setCurrentItem] = useState<any>();
   const { t } = useTranslation();
   const [query, setQuery] =
     useState<OrganizationBankStatementTotalsQuery>(INITIAL_QUERY);
+
   const { OrganizationBankStatementTotals } =
     useGetOrganizationBankStatementTotals(query);
+  const {
+    OrganizationPerbank,
+    OrganizationPerbankError,
+    isOrganizationPerbankFetching,
+    refetchOrganizationPerbank,
+  } = useGetOrganizationPerbank(query);
+
+  useEffect(() => {
+    refetchOrganizationPerbank();
+  }, [query]);
 
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid
         container
-        item
-        xs={12}
-        spacing={2}
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
+        style={{ marginTop: "20px", display: "flex", alignItems: "center" }}
+        spacing={1}
       >
-        <Grid
-          item
-          xs={12}
-          md={1}
-          style={{ display: "flex", justifyContent: "center" }}
-        >
-          Entrada
+        <Grid item xs={12} md={4} lg={2}>
+          <Button
+            style={{ width: "100%", height: 40 }}
+            type="primary"
+            onClick={() => setIsFiltersOpen(true)}
+          >
+            {t("table.filters")}
+          </Button>
         </Grid>
-        {OrganizationBankStatementTotals &&
-          Object.keys(OrganizationBankStatementTotals).map((key) => {
-            switch (key) {
-              case "number_in":
-                return (
-                  <Grid
-                    item
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Statistic
-                      title={t("table.number_in")}
-                      value={OrganizationBankStatementTotals[key]}
-                      precision={0}
-                      valueStyle={{ color: "#3f8600", fontSize: "16px" }}
-                      prefix={<ArrowUpOutlined />}
-                    />
-                  </Grid>
-                );
-              case "value_in":
-              case "bank_fee_in":
-              case "fee_in":
-              case "result_in":
-                return (
-                  <Grid
-                    item
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Statistic
-                      title={t(`table.${key}`)}
-                      value={new Intl.NumberFormat("pt-BR", {
-                        style: "currency",
-                        currency: "BRL",
-                      }).format(OrganizationBankStatementTotals[key] || 0)}
-                      precision={2}
-                      valueStyle={{ color: "#3f8600", fontSize: "16px" }}
-                      prefix={<ArrowUpOutlined />}
-                    />
-                  </Grid>
-                );
+        <Grid item xs={12} md={8} lg={10}>
+          <FilterChips
+            startDateKeyName="start_date"
+            endDateKeyName="end_date"
+            query={query}
+            setQuery={setQuery}
+            haveInitialDate
+          />
+        </Grid>
+      </Grid>
+      <Totalizers query={query} />
 
-              default:
-                return;
-            }
-          })}
-      </Grid>
-      <Grid container>
-        <Grid container item xs={12} style={{ height: "5px" }}>
-          {" "}
-          <Divider />
+      <Grid container style={{ display: "flex", justifyContent: "center", marginTop: "50px" }}>
+        <Grid xs={6} md={2}>
+          <PieChart items={OrganizationBankStatementTotals} />
+        </Grid>
+        <Grid xs={6} md={2}>
+          <PieFee items={OrganizationBankStatementTotals} />
+        </Grid>
+        <Grid xs={6} md={2}>
+          <PieBankfee items={OrganizationBankStatementTotals} />
+        </Grid>
+        <Grid xs={6} md={2}>
+          <PieChart items={OrganizationBankStatementTotals} />
         </Grid>
       </Grid>
-      <Grid
-        container
-        item
-        xs={12}
-        spacing={2}
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          marginTop: "25px",
-        }}
-      >
-        <Grid
-          item
-          xs={12}
-          md={1}
-          style={{ display: "flex", justifyContent: "center" }}
-        >
-          Saída
-        </Grid>
-        {OrganizationBankStatementTotals &&
-          Object.keys(OrganizationBankStatementTotals).map((key) => {
-            switch (key) {
-              case "number_out":
-                return (
-                  <Grid
-                    item
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Statistic
-                      title={t("table.number_in")}
-                      value={OrganizationBankStatementTotals[key]}
-                      precision={0}
-                      valueStyle={{ color: "#cf1322", fontSize: "16px" }}
-                      prefix={<ArrowDownOutlined />}
-                    />
-                  </Grid>
-                );
-              case "value_out":
-              case "bank_fee_out":
-              case "fee_out":
-              case "result_out":
-                return (
-                  <Grid
-                    item
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Statistic
-                      title={t(`table.${key}`)}
-                      value={new Intl.NumberFormat("pt-BR", {
-                        style: "currency",
-                        currency: "BRL",
-                      }).format(OrganizationBankStatementTotals[key] || 0)}
-                      precision={2}
-                      valueStyle={{ color: "#cf1322", fontSize: "16px" }}
-                      prefix={<ArrowDownOutlined />}
-                    />
-                  </Grid>
-                );
 
-              default:
-                return;
-            }
-          })}
-      </Grid>
-      <Grid container>
-        <Grid container item xs={12} style={{ height: "5px" }}>
-          {" "}
-          <Divider />
+      <Grid container style={{ marginTop: "15px" }}>
+        <Grid item xs={12}>
+          <CustomTable
+            query={query}
+            setCurrentItem={setCurrentItem}
+            setQuery={setQuery}
+            data={OrganizationPerbank}
+            items={OrganizationPerbank}
+            error={OrganizationPerbankError}
+            columns={[
+              { name: "bank", type: "bankNameToIcon" },
+              { name: "number_in", type: "text" },
+              { name: "value_in", type: "value" },
+              { name: "fee_in", type: "value" },
+              { name: "number_out", type: "text" },
+              { name: "value_out", type: "value" },
+              { name: "fee_out", type: "value" },
+              { name: "number_total", type: "text" },
+              { name: "value_total", type: "value" },
+              { name: "fee_total", type: "value" },
+            ]}
+            loading={isOrganizationPerbankFetching}
+            removeTotal
+            label={["bank"]}
+          />
         </Grid>
       </Grid>
+
+      {isFiltersOpen && (
+        <FiltersModal
+          open={isFiltersOpen}
+          setOpen={setIsFiltersOpen}
+          query={query}
+          setQuery={setQuery}
+          haveInitialDate
+          filters={["start_date", "end_date", "payment_type", "bank"]}
+          refetch={refetchOrganizationPerbank}
+          selectOptions={{ payment_type: ["pix", "withdraw"] }}
+          startDateKeyName="start_date"
+          endDateKeyName="end_date"
+          initialQuery={INITIAL_QUERY}
+        />
+      )}
     </Grid>
   );
 };
