@@ -13,6 +13,7 @@ import { BankOutlined, EllipsisOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 import { ColumnInterface } from "..";
 import { useGetOrganizationBankMaintenece } from "@src/services/register/organization/bankMaitenence/getBanks";
+import moment from "moment";
 
 interface MobileProps {
   columns: ColumnInterface[];
@@ -70,12 +71,10 @@ export const Mobile = (props: MobileProps) => {
                         {t("table.createdAt")}:{" "}
                         {`${
                           item[label]
-                            ? new Date(item[label]).toLocaleDateString()
+                            ? moment(item[label])
+                                .subtract(3, "hours")
+                                .format("YYYY/DD/MM HH:MM")
                             : ""
-                        } ${
-                          item[label]
-                            ? new Date(item[label]).toLocaleTimeString()
-                            : "-"
                         }`}
                       </p>
                     );

@@ -406,7 +406,14 @@
     "withdraw_transactions_total": "Transações de saques",
     "withdraw_amount_fee": "Taxa de saques",
     "refund_transactions_total": "Transações de devoluções",
-    "refund_amount_fee": "Taxa de devoluções"
+    "refund_amount_fee": "Taxa de devoluções",
+    "total_transactions": "Total transactions",
+    "cash_in_number": "Depósitos",
+    "cash_in_value": "Valor dpósitos",
+    "cash_in_fee": "Taxa depósitos",
+    "cash_out_number": "Saques",
+    "cash_out_value": "Valor saques",
+    "cash_out_fee": "Taxa saques", "balance_history": "Histórico de saldos"
   },
   "actions": {
     "details": "Detalhes",

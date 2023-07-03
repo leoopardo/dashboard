@@ -146,7 +146,7 @@ export const OrganizationBalance = () => {
           <Descriptions
             bordered
             style={{ margin: 0, padding: 0 }}
-            column={isMobile ? 1 : 2}
+            column={isMobile ? 1 : 3}
           >
             {OrganizationBalance &&
               Object.keys(OrganizationBalance).map((key: string, index) => {

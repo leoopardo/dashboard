@@ -403,7 +403,15 @@
     "withdraw_transactions_total": "Withdrawals transactions",
     "withdraw_amount_fee": "Withdrawals fee",
     "refund_transactions_total": "Refund transactions",
-    "refund_amount_fee": "Taxa de devoluções"
+    "refund_amount_fee": "Refund fee",
+    "total_transactions": "Total transactions",
+    "cash_in_number": "Deposits number",
+    "cash_in_value": "Deposits value",
+    "cash_in_fee": "Deposits fee",
+    "cash_out_number": "Withdrawals number",
+    "cash_out_value": "Withdrawals value",
+    "cash_out_fee": "Withdrawals fee",
+    "balance_history": "Balance history"
   },
   "actions": {
     "details": "Details",

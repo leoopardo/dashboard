@@ -29,6 +29,7 @@ import { PixKeyWhitelist } from "./Pages/register/persons/pixKeyWhitelist";
 import { CostumerBanks } from "./Pages/register/persons/costumerBankList";
 import { OrganizationBankStatement } from "./Pages/consult/organization/bankStatement";
 import { OrganizationBalance } from "./Pages/consult/organization/balance";
+import { OrganizationHistory } from "./Pages/consult/organization/history";
 
 export const PrivateRoutes = () => {
   const navigate = useNavigate();
@@ -49,6 +50,10 @@ export const PrivateRoutes = () => {
             <Route
               path="organization_balance"
               element={<OrganizationBalance />}
+            />
+            <Route
+              path="organization_history"
+              element={<OrganizationHistory />}
             />
           </Route>
           <Route path="deposit">
