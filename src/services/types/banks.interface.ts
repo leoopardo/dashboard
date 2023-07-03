@@ -36,6 +36,8 @@ export interface ClientBankQuery {
   ispb?: number;
   page: number;
   limit: number;
+  sort_field?: string;
+  sort_order?: "ASC" | "DESC"
 }
 
 export interface ClientBankItem {

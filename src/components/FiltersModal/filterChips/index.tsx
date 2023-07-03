@@ -53,7 +53,7 @@ export const FilterChips = ({
               <Tag
                 key={key}
                 style={{
-                  maxWidth: isMobile ? "280px" : "400px",
+                  maxWidth: isMobile ? "260px" : "400px",
                   textOverflow: "ellipsis",
                   overflow: "hidden",
                   wordBreak: "break-all",

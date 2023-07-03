@@ -63,7 +63,7 @@ export const GeneratedWithdrawals = () => {
 
   const columns: ColumnInterface[] = [
     { name: "_id", type: "id" },
-    { name: "bank", type: "text" },
+    { name: "bank", type: "bankNameToIcon" },
     { name: "merchant_name", type: "text" },
     { name: "value", type: "value" },
     { name: "createdAt", type: "date" },

@@ -43,7 +43,6 @@ export const RefundDeposits = () => {
 
   const {
     refundDepositsRows,
-    refundDepositsRowsError,
     isRefundDepositsRowsFetching,
     refetchRefundDepositsTotalRows,
   } = useGetRowsRefundDeposits(query);
@@ -230,7 +229,6 @@ export const RefundDeposits = () => {
             ]}
             removeTotal
             label={[
-              "bank",
               "merchant_name",
               "status",
               "createdAt",

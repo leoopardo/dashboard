@@ -25,6 +25,9 @@ import { AggregatorUsers } from "./Pages/register/aggregator/users";
 import { Persons } from "./Pages/register/persons";
 import { PersonDetails } from "./Pages/register/persons/personDetails";
 import { PersonUpdate } from "./Pages/register/persons/personUpdate";
+import { PixKeyWhitelist } from "./Pages/register/persons/pixKeyWhitelist";
+import { CostumerBanks } from "./Pages/register/persons/costumerBankList";
+import { OrganizationBankStatement } from "./Pages/consult/organization/bankStatement";
 
 export const PrivateRoutes = () => {
   const navigate = useNavigate();
@@ -37,6 +40,12 @@ export const PrivateRoutes = () => {
       <Route path="/">
         <Route index element={<Redirect />} />
         <Route path="consult">
+          <Route path="consult_organization">
+            <Route
+              path="organization_bank_statement"
+              element={<OrganizationBankStatement />}
+            />
+          </Route>
           <Route path="deposit">
             <Route path="generated_deposits" element={<GeneratedDeposits />} />
             <Route path="paid_deposits" element={<PaidDeposits />} />
@@ -96,6 +105,8 @@ export const PrivateRoutes = () => {
                 <Route path=":cpf" element={<PersonUpdate />} />{" "}
               </Route>
             </Route>
+            <Route path="whitelist" element={<PixKeyWhitelist />} />
+            <Route path="person_accounts" element={<CostumerBanks />} />
           </Route>
         </Route>
       </Route>
