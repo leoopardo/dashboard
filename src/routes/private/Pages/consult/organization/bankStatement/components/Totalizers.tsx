@@ -2,10 +2,12 @@ import { useGetOrganizationBankStatementTotals } from "@src/services/consult/org
 import { OrganizationBankStatementTotalsQuery } from "@src/services/types/consult/organization/bankStatement/totals.interface";
 import { Grid } from "@mui/material";
 import React, { useEffect } from "react";
-import { Divider, Statistic } from "antd";
+import { Divider, Space, Statistic } from "antd";
 import { defaultTheme } from "@src/styles/defaultTheme";
-import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
+import Icon, { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import type { CustomIconComponentProps } from "@ant-design/icons/lib/components/Icon";
 
 interface TotalizersInterface {
   query: OrganizationBankStatementTotalsQuery;
@@ -22,6 +24,10 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
   useEffect(() => {
     refetchOrganizationBankStatementTotalsTotal();
   }, [query]);
+
+  const MoneyIcon = (props: Partial<CustomIconComponentProps>) => (
+    <Icon component={() => <AttachMoneyIcon />} {...props} />
+  );
 
   return (
     <Grid container>
@@ -50,9 +56,14 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
           item
           xs={12}
           md={1}
-          style={{ display: "flex", justifyContent: "center" }}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
         >
-          Entrada
+          <ArrowUpOutlined style={{ marginRight: "-5px" }} />
+          <MoneyIcon /> {t("table.in")}
         </Grid>
         {Object.keys(OrganizationBankStatementTotals).map((key) => {
           switch (key) {
@@ -75,6 +86,7 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
                       fontSize: "16px",
                     }}
                     prefix={<ArrowUpOutlined />}
+                    valueRender={(node: any) => <>{node.props.value}</>}
                   />
                 </Grid>
               );
@@ -133,9 +145,15 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
           item
           xs={12}
           md={1}
-          style={{ display: "flex", justifyContent: "center" }}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
         >
-          Saída
+          <ArrowDownOutlined style={{ marginRight: "-5px" }} />
+          <MoneyIcon />
+          {t("table.out")}
         </Grid>
         {Object.keys(OrganizationBankStatementTotals).map((key) => {
           switch (key) {
@@ -150,14 +168,14 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
                 >
                   <Statistic
                     loading={isOrganizationBankStatementTotalsFetching}
-                    title={t("table.number_in")}
+                    title={t("table.number_out")}
                     value={OrganizationBankStatementTotals[key]}
                     precision={0}
                     valueStyle={{
                       color: defaultTheme.colors.error,
                       fontSize: "16px",
                     }}
-                    prefix={<ArrowDownOutlined />}
+                    prefix={<ArrowDownOutlined />}    valueRender={(node: any) => <>{node.props.value}</>}
                   />
                 </Grid>
               );
@@ -216,13 +234,17 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
           item
           xs={12}
           md={1}
-          style={{ display: "flex", justifyContent: "center" }}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
         >
-          Saída
+          <MoneyIcon /> Total
         </Grid>
         {Object.keys(OrganizationBankStatementTotals).map((key) => {
           switch (key) {
-            case "number_out":
+            case "number_total":
               return (
                 <Grid
                   item
@@ -233,17 +255,18 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
                 >
                   <Statistic
                     loading={isOrganizationBankStatementTotalsFetching}
-                    title={t("table.number_in")}
+                    title={t("table.number_total")}
                     value={OrganizationBankStatementTotals[key]}
                     precision={0}
+                    valueRender={(node: any) => <>{node.props.value}</>}
                     valueStyle={{ fontSize: "16px" }}
                   />
                 </Grid>
               );
-            case "value_out":
-            case "bank_fee_out":
-            case "fee_out":
-            case "result_out":
+            case "value_total":
+            case "bank_fee_total":
+            case "fee_total":
+            case "result_total":
               return (
                 <Grid
                   item

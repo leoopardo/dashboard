@@ -383,7 +383,14 @@
     "result_out": "Result out",
     "number_total": "Total",
     "value_total": "Total value",
-    "fee_total": "Total fee"
+    "fee_total": "Total fee",
+    "bank_fee_total": "Total bank fee",
+    "result_total": "Total result",
+    "payment_type": "Payment type",
+    "pix": "PIX",
+    "withdraw": "Withdraw",
+    "in": "In",
+    "out": "Out"
   },
   "actions": {
     "details": "Details",

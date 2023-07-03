@@ -35,5 +35,12 @@ export function PieFee({ items }: PieChartValues) {
       },
     },
   };
-  return <Doughnut data={data} />;
+  return <Doughnut data={data} options={{
+    plugins: {
+      legend: {
+        align: "center",
+        position: items.fee_in || items.fee_out ? "top" : "center",
+      },
+    },
+  }}/>;
 }

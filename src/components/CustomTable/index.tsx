@@ -60,6 +60,7 @@ interface TableProps {
   removeTotal?: boolean;
   actions?: actionsInterface[];
   Confirm?: any;
+  removePagination?: boolean;
 }
 
 export const CustomTable = (props: TableProps) => {
@@ -456,10 +457,12 @@ export const CustomTable = (props: TableProps) => {
           Confirm={props.Confirm}
         />
       </Grid>
-      <Pagination
-        current={Number(props?.data?.page)}
-        pageSize={Number(props?.data?.limit)}
-      />
+      {!props.removePagination && (
+        <Pagination
+          current={Number(props?.data?.page)}
+          pageSize={Number(props?.data?.limit)}
+        />
+      )}
     </Grid>
   );
 };

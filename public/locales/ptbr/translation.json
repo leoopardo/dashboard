@@ -386,7 +386,14 @@
     "result_out": "Resultado saídas",
     "number_total": "Total",
     "value_total": "Valor total",
-    "fee_total": "Taxa total"
+    "fee_total": "Taxa total",
+    "bank_fee_total": "Taxa banco total",
+    "result_total": "Resultado total",
+    "payment_type": "Tipo de pagamento",
+    "pix": "PIX",
+    "withdraw": "Saque",
+    "in": "Entrada",
+    "out": "Saída"
   },
   "actions": {
     "details": "Detalhes",

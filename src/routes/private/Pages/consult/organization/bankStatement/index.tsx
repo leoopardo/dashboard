@@ -4,7 +4,7 @@ import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Totalizers } from "./components/Totalizers";
-import { Button, Divider } from "antd";
+import { Button, Divider, Spin } from "antd";
 import { FilterChips } from "@src/components/FiltersModal/filterChips";
 import { FiltersModal } from "@src/components/FiltersModal";
 import { useGetOrganizationBankStatementTotals } from "@src/services/consult/organization/bankStatement/getTotals";
@@ -14,6 +14,7 @@ import { EyeFilled } from "@ant-design/icons";
 import { PieChart } from "./components/PieValue";
 import { PieFee } from "./components/PieFee";
 import { PieBankfee } from "./components/PieBankFee";
+import { PieResult } from "./components/PieResult";
 
 const INITIAL_QUERY: OrganizationBankStatementTotalsQuery = {
   start_date: moment(new Date())
@@ -33,8 +34,11 @@ export const OrganizationBankStatement = () => {
   const [query, setQuery] =
     useState<OrganizationBankStatementTotalsQuery>(INITIAL_QUERY);
 
-  const { OrganizationBankStatementTotals } =
-    useGetOrganizationBankStatementTotals(query);
+  const {
+    OrganizationBankStatementTotals,
+    OrganizationBankStatementTotalsError,
+    isOrganizationBankStatementTotalsFetching,
+  } = useGetOrganizationBankStatementTotals(query);
   const {
     OrganizationPerbank,
     OrganizationPerbankError,
@@ -74,20 +78,49 @@ export const OrganizationBankStatement = () => {
       </Grid>
       <Totalizers query={query} />
 
-      <Grid container style={{ display: "flex", justifyContent: "center", marginTop: "50px" }}>
-        <Grid xs={6} md={2}>
-          <PieChart items={OrganizationBankStatementTotals} />
+      {OrganizationBankStatementTotals.result_total > 0 &&
+        !isOrganizationBankStatementTotalsFetching && (
+          <Grid
+            container
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "50px",
+            }}
+          >
+            <Grid xs={6} md={2}>
+              <PieChart items={OrganizationBankStatementTotals} />
+            </Grid>
+            <Grid xs={6} md={2}>
+              <PieFee items={OrganizationBankStatementTotals} />
+            </Grid>
+            <Grid xs={6} md={2}>
+              <PieBankfee items={OrganizationBankStatementTotals} />
+            </Grid>
+            <Grid xs={6} md={2}>
+              <PieResult items={OrganizationBankStatementTotals} />
+            </Grid>
+          </Grid>
+        )}
+      {isOrganizationBankStatementTotalsFetching && (
+        <Grid container>
+          <Grid
+            item
+            xs={12}
+            style={{
+              height: "200px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundColor: "#FAFAFA",
+            }}
+          >
+            <Spin tip={t("messages.loading")} size="default">
+              <Grid item xs={12} style={{ height: "50px" }} />
+            </Spin>{" "}
+          </Grid>
         </Grid>
-        <Grid xs={6} md={2}>
-          <PieFee items={OrganizationBankStatementTotals} />
-        </Grid>
-        <Grid xs={6} md={2}>
-          <PieBankfee items={OrganizationBankStatementTotals} />
-        </Grid>
-        <Grid xs={6} md={2}>
-          <PieChart items={OrganizationBankStatementTotals} />
-        </Grid>
-      </Grid>
+      )}
 
       <Grid container style={{ marginTop: "15px" }}>
         <Grid item xs={12}>
@@ -113,6 +146,7 @@ export const OrganizationBankStatement = () => {
             loading={isOrganizationPerbankFetching}
             removeTotal
             label={["bank"]}
+            removePagination
           />
         </Grid>
       </Grid>
