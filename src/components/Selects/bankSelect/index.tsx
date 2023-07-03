@@ -58,9 +58,6 @@ export const BanksSelect = ({
       onSelect={(value) =>
         setQueryFunction((state: any) => ({ ...state, bank: value }))
       }
-     /*  filterOption={(inputValue, option) =>
-        option!.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
-      } */
       placeholder={t("table.bank")}
     />
   );
