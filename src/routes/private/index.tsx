@@ -28,6 +28,7 @@ import { PersonUpdate } from "./Pages/register/persons/personUpdate";
 import { PixKeyWhitelist } from "./Pages/register/persons/pixKeyWhitelist";
 import { CostumerBanks } from "./Pages/register/persons/costumerBankList";
 import { OrganizationBankStatement } from "./Pages/consult/organization/bankStatement";
+import { OrganizationBalance } from "./Pages/consult/organization/balance";
 
 export const PrivateRoutes = () => {
   const navigate = useNavigate();
@@ -44,6 +45,10 @@ export const PrivateRoutes = () => {
             <Route
               path="organization_bank_statement"
               element={<OrganizationBankStatement />}
+            />
+            <Route
+              path="organization_balance"
+              element={<OrganizationBalance />}
             />
           </Route>
           <Route path="deposit">
@@ -91,9 +96,9 @@ export const PrivateRoutes = () => {
             <Route path="operator_users" element={<OperatorUsers />} />
           </Route>
           <Route path="merchant">
-            <Route path="merchants" >
-            <Route index element={<MerchantView />} />
-            <Route path=":id" element={<MerchantConfigs />} />
+            <Route path="merchants">
+              <Route index element={<MerchantView />} />
+              <Route path=":id" element={<MerchantConfigs />} />
             </Route>
             <Route path="merchant_users" element={<MerchantUser />} />
           </Route>

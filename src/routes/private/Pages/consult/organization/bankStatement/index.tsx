@@ -10,7 +10,7 @@ import { FiltersModal } from "@src/components/FiltersModal";
 import { useGetOrganizationBankStatementTotals } from "@src/services/consult/organization/bankStatement/getTotals";
 import { useGetOrganizationPerbank } from "@src/services/consult/organization/bankStatement/getPerBank";
 import { CustomTable } from "@src/components/CustomTable";
-import { EyeFilled } from "@ant-design/icons";
+import { EyeFilled, ReloadOutlined } from "@ant-design/icons";
 import { PieChart } from "./components/PieValue";
 import { PieFee } from "./components/PieFee";
 import { PieBankfee } from "./components/PieBankFee";
@@ -36,8 +36,8 @@ export const OrganizationBankStatement = () => {
 
   const {
     OrganizationBankStatementTotals,
-    OrganizationBankStatementTotalsError,
     isOrganizationBankStatementTotalsFetching,
+    refetchOrganizationBankStatementTotalsTotal,
   } = useGetOrganizationBankStatementTotals(query);
   const {
     OrganizationPerbank,
@@ -66,7 +66,7 @@ export const OrganizationBankStatement = () => {
             {t("table.filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={8} lg={10}>
+        <Grid item xs={12} md={6} lg={8}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
@@ -74,6 +74,18 @@ export const OrganizationBankStatement = () => {
             setQuery={setQuery}
             haveInitialDate
           />
+        </Grid>
+        <Grid item xs={12} md={2} lg={2}>
+          <Button
+            style={{ width: "100%" }}
+            loading={isOrganizationBankStatementTotalsFetching}
+            onClick={() => {
+              refetchOrganizationPerbank();
+              refetchOrganizationBankStatementTotalsTotal();
+            }}
+          >
+            <ReloadOutlined /> {t("buttons.refresh")}
+          </Button>
         </Grid>
       </Grid>
       <Totalizers query={query} />

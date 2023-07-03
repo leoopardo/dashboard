@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { api } from "../../config/api";
-import { ClientBankQuery, ClientBankResponse } from "../types/banks.interface";
+import { api } from "../../../config/api";
+import { ClientBankQuery, ClientBankResponse } from "../../../services/types/banks.interface";
 
 export function useListClientClientBanks(params: ClientBankQuery) {
   const [data, setData] = useState<ClientBankResponse | null>(null);
