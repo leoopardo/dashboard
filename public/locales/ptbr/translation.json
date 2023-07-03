@@ -152,7 +152,8 @@
     "new_aggregator": "novo agregador",
     "person": "pessoa",
     "new_person": "Nova pessoa",
-    "update_person": "Atualizar pessoa"
+    "update_person": "Atualizar pessoa",
+    "refresh": "Recarregar"
   },
   "modal": {
     "confirm": "Confirmar",
@@ -388,7 +389,24 @@
     "result_out": "Resultado saídas",
     "number_total": "Total",
     "value_total": "Valor total",
-    "fee_total": "Taxa total"
+    "fee_total": "Taxa total",
+    "bank_fee_total": "Taxa banco total",
+    "result_total": "Resultado total",
+    "payment_type": "Tipo de pagamento",
+    "pix": "PIX",
+    "withdraw": "Saque",
+    "in": "Entrada",
+    "out": "Saída",
+    "balance_to_transactions": "Saldo transação",
+    "balance_to_payment": "Saldo pagamento",
+    "balance_reserved": "Saldo reservado",
+    "balance_total": "Saldo total",
+    "pix_transactions_total": "Transações de depósito",
+    "pix_amount_fee": "Taxa de depósitos",
+    "withdraw_transactions_total": "Transações de saques",
+    "withdraw_amount_fee": "Taxa de saques",
+    "refund_transactions_total": "Transações de devoluções",
+    "refund_amount_fee": "Taxa de devoluções"
   },
   "actions": {
     "details": "Detalhes",

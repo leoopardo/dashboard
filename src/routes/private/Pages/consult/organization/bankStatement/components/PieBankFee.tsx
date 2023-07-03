@@ -25,5 +25,13 @@ export function PieBankfee({ items }: PieChartValues) {
       },
     ],
   };
-  return <Doughnut data={data} />;
+  return <Doughnut data={data} options={{
+    plugins: {
+      legend: {
+        align: "center",
+        position: items.bank_fee_in || items.bank_fee_out ? "top" : "center",
+      },
+    },
+    
+  }}/>;
 }

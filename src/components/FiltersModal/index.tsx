@@ -28,6 +28,7 @@ import { FilterChips } from "./filterChips";
 import { useGetStates } from "../../services/states_cities/getStates";
 import { useGetCities } from "../../services/states_cities/getCities";
 import { useTranslation } from "react-i18next";
+import { useMediaQuery } from "react-responsive";
 
 dayjs.extend(weekday);
 dayjs.extend(localeData);
@@ -61,6 +62,7 @@ export const FiltersModal = ({
 }: FilterModalProps) => {
   const { t } = useTranslation();
   const [filtersQuery, setFiltersQuery] = useState<any>(query);
+  const isMobile = useMediaQuery({ maxWidth: "380px" });
   const { isStatesFetching, states } = useGetStates();
   const [isAgeRangeAbled, setIsAgeRangeAbled] = useState<boolean>(false);
   const [isValueRangeAbled, setIsValueRangeAbled] = useState<boolean>(false);
@@ -197,6 +199,7 @@ export const FiltersModal = ({
                             "YYYY-MM-DD HH:mm:ss"
                           ),
                         ]}
+                  
                         style={{
                           width: "100%",
                           height: "35px",

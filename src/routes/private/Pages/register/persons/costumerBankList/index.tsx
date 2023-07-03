@@ -9,7 +9,7 @@ import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import useDebounce from "@utils/useDebounce";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
-import { useListClientClientBanks } from "@src/services/bank/listClientBanks";
+import { useListClientClientBanks } from "@src/routes/public/bank/listClientBanks";
 import {
   ClientBankItem,
   ClientBankQuery,

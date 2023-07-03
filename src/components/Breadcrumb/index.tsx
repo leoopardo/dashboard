@@ -27,6 +27,8 @@ export const BreadcrumbComponent = () => {
         return {
           title: value.includes("%20")
             ? value.split("%20").join(".")
+            : Number(value)
+            ? value
             : t(`menus.${value}`),
         };
       })
@@ -36,6 +38,8 @@ export const BreadcrumbComponent = () => {
       .map((value) =>
         value.includes("%20")
           ? value.split("%20").join(" ")
+          : Number(value)
+          ? value
           : t(`menus.${value}`)
       )
       .join(" - ")} | Paybrokers`;

@@ -25,5 +25,23 @@ export function PieChart({ items }: PieChartValues) {
       },
     ],
   };
-  return <Doughnut data={data} />;
+  const options = {
+    legend: {
+      position: "left",
+      align: "center",
+    },
+  };
+  return (
+    <Doughnut
+      data={data}
+      options={{
+        plugins: {
+          legend: {
+            align: "center",
+            position: items.value_in || items.value_out ? "top" : "center",
+          },
+        },
+      }}
+    />
+  );
 }

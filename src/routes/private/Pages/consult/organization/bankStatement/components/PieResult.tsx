@@ -11,19 +11,31 @@ interface PieChartValues {
   items: OrganizationBankStatementTotalsResponse;
 }
 
-export function PieChart({ items }: PieChartValues) {
+export function PieResult({ items }: PieChartValues) {
   const { t } = useTranslation();
   const data = {
-    labels: [t("table.value_in"), t("table.value_out")],
+    labels: [t("table.result_in"), t("table.result_out")],
     datasets: [
       {
         label: "",
-        data: [items.value_in, items.value_out],
+        data: [items.result_in, items.result_out],
         backgroundColor: ["rgba(75, 192, 192, 0.2)", "rgba(255, 99, 132, 0.2)"],
         borderColor: ["rgba(75, 192, 192, 1)", "rgba(255, 99, 132, 1)"],
         borderWidth: 1,
       },
     ],
   };
-  return <Doughnut data={data} />;
+  return (
+    <Doughnut
+      data={data}
+      options={{
+        plugins: {
+          legend: {
+            align: "center",
+            position: items.result_in || items.result_out ? "top" : "center",
+          },
+        },
+      }}
+    />
+  );
 }

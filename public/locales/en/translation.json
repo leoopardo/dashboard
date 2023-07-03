@@ -150,7 +150,8 @@
     "new_aggregator": "new agregator",
     "person": "person",
     "new_person": "New person",
-    "update_person": "Update person"
+    "update_person": "Update person",
+    "refresh": "Refresh"
   },
   "input": {
     "required": "Please input the {{field}}",
@@ -385,7 +386,24 @@
     "result_out": "Result out",
     "number_total": "Total",
     "value_total": "Total value",
-    "fee_total": "Total fee"
+    "fee_total": "Total fee",
+    "bank_fee_total": "Total bank fee",
+    "result_total": "Total result",
+    "payment_type": "Payment type",
+    "pix": "PIX",
+    "withdraw": "Withdraw",
+    "in": "In",
+    "out": "Out",
+    "balance_to_transactions": "Balance to transaction",
+    "balance_to_payment": "Balance to payment",
+    "balance_reserved": "Balance reserved",
+    "balance_total": "Balance total",
+    "pix_transactions_total": "Deposit transactions",
+    "pix_amount_fee": "Deposits fee",
+    "withdraw_transactions_total": "Withdrawals transactions",
+    "withdraw_amount_fee": "Withdrawals fee",
+    "refund_transactions_total": "Refund transactions",
+    "refund_amount_fee": "Taxa de devoluções"
   },
   "actions": {
     "details": "Details",
