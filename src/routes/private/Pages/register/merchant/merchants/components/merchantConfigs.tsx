@@ -45,14 +45,14 @@ export const MerchantConfigs = () => {
   const items: TabsProps["items"] = [
     {
       key: "1",
-      label: t("table.banks"),
+      label:`${t("table.bank")}s`,
       children: (
          <BanksTab id={params.id} />
       ),
     },
    /*  {
       key: "2",
-      label: t("table.administrative"),
+      label: t("table.fee"),
       children: (
         <Form ref={formRef} layout="vertical" initialValues={data ? data : {}}>
           <Grid

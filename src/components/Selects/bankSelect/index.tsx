@@ -6,13 +6,17 @@ import { useTranslation } from "react-i18next";
 
 interface BankSelectProps {
   setQueryFunction: Dispatch<SetStateAction<any>>;
-  queryOptions: any;
+  queryOptions?: any;
   onChange?: (value: string) => void
+  currentValue?: any
+  setCurrentValue?: Dispatch<SetStateAction<any>>;
 }
 
 export const BanksSelect = ({
   setQueryFunction,
   queryOptions,
+  currentValue,
+  setCurrentValue,
 }: BankSelectProps) => {
   const { t } = useTranslation()
   const [query, setQuery] = useState<MerchantQuery>({
@@ -48,15 +52,15 @@ export const BanksSelect = ({
         }) ?? []
       }
       notFoundContent={<Empty />}
-      value={value}
+      value={currentValue || value}
       style={{ width: "100%", height: 40 }}
-      onChange={(value) => setValue(value)}
+      onChange={(value) => setCurrentValue ? setCurrentValue(value) : setValue(value)}
       onSelect={(value) =>
         setQueryFunction((state: any) => ({ ...state, bank: value }))
       }
-      filterOption={(inputValue, option) =>
+     /*  filterOption={(inputValue, option) =>
         option!.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
-      }
+      } */
       placeholder={t("table.bank")}
     />
   );

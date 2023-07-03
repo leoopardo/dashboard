@@ -66,6 +66,8 @@ export const BanksTab = (props: { id?: string }) => {
           <Form.Item label={t("input.deposit_bank")} name="cash_in_bank">
             <BanksSelect
               queryOptions={despositBank?.bank}
+              currentValue={despositBank?.bank}
+              setCurrentValue={setDepositBank}
               setQueryFunction={setDepositBank}
             />
           </Form.Item>
@@ -73,7 +75,9 @@ export const BanksTab = (props: { id?: string }) => {
         <Grid item xs={12} md={4}>
           <Form.Item label={t("input.withdraw_bank")} name="cash_out_bank">
             <BanksSelect
+               currentValue={withdrawBank?.bank}
               queryOptions={withdrawBank?.bank}
+              setCurrentValue={setWithdrawBank}
               setQueryFunction={setWithdrawBank}
             />
           </Form.Item>
