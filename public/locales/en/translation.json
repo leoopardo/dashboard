@@ -193,6 +193,8 @@
     "operator": "Operator",
     "aggregator": "Aggregator",
     "user": "User",
+    "deposit_bank": "Deposit bank",
+    "withdraw_bank": "Withdraw bank",
     "cpf": "CPF"
   },
   "modal": {

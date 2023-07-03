@@ -215,6 +215,8 @@
     "operator": "Operador",
     "aggregator": "Agregadores",
     "user": "Usuário",
+    "deposit_bank": "Banco depósito",
+    "withdraw_bank": "Banco saque",
     "cpf": "CPF"
   },
   "table": {

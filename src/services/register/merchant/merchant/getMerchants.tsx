@@ -1,4 +1,4 @@
-import { api } from "../../../../config/api";
+import { api } from "@config/api";
 
 import { useQuery } from "react-query";
 import { MerchantsQuery, MerchantsResponse } from "@services/types/register/merchants/merchantsRegister.interface";

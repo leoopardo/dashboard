@@ -1,18 +1,22 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { AutoComplete, Avatar, Empty, Input, Spin } from "antd";
 import { MerchantQuery } from "../../../services/types/register/merchants/merchants.interface";
 import { useListBanks } from "../../../services/bank/listBanks";
-import { DownOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 
 interface BankSelectProps {
   setQueryFunction: Dispatch<SetStateAction<any>>;
-  queryOptions: any;
+  queryOptions?: any;
+  onChange?: (value: string) => void
+  currentValue?: any
+  setCurrentValue?: Dispatch<SetStateAction<any>>;
 }
 
 export const BanksSelect = ({
   setQueryFunction,
   queryOptions,
+  currentValue,
+  setCurrentValue,
 }: BankSelectProps) => {
   const { t } = useTranslation()
   const [query, setQuery] = useState<MerchantQuery>({
@@ -25,7 +29,7 @@ export const BanksSelect = ({
 
   useEffect(() => {
     setValue(
-      bankListData?.itens.find((bank) => bank.label_name === queryOptions.bank)
+      bankListData?.itens.find((bank) => bank?.label_name === queryOptions?.bank)
         ?.label_name
     );
   }, [bankListData, queryOptions]);
@@ -48,15 +52,15 @@ export const BanksSelect = ({
         }) ?? []
       }
       notFoundContent={<Empty />}
-      value={value}
+      value={currentValue || value}
       style={{ width: "100%", height: 40 }}
-      onChange={(value) => setValue(value)}
+      onChange={(value) => setCurrentValue ? setCurrentValue(value) : setValue(value)}
       onSelect={(value) =>
         setQueryFunction((state: any) => ({ ...state, bank: value }))
       }
-      filterOption={(inputValue, option) =>
+     /*  filterOption={(inputValue, option) =>
         option!.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
-      }
+      } */
       placeholder={t("table.bank")}
     />
   );

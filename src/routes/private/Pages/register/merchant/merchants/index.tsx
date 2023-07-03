@@ -15,10 +15,11 @@ import { Toast } from "@components/Toast";
 import useDebounce from "@utils/useDebounce";
 import { UserAddOutlined } from "@ant-design/icons";
 import { NewMerchantModal } from "./components/newMerchantModal";
-import { EyeFilled, EditOutlined } from "@ant-design/icons";
+import { EyeFilled, EditOutlined, ToolOutlined } from "@ant-design/icons";
 import { ViewModal } from "@components/Modals/viewGenericModal";
 import { MutateModal } from "@components/Modals/mutateGenericModal";
 import { useUpdateMerchant } from "@services/register/merchant/merchant/updateMerchant";
+import { useNavigate } from "react-router-dom";
 
 const INITIAL_QUERY: MerchantsQuery = {
   limit: 25,
@@ -28,8 +29,9 @@ const INITIAL_QUERY: MerchantsQuery = {
 };
 
 export const MerchantView = () => {
-  const [query, setQuery] = useState<MerchantsQuery>(INITIAL_QUERY);
   const { t } = useTranslation();
+  const navigate = useNavigate()
+  const [query, setQuery] = useState<MerchantsQuery>(INITIAL_QUERY);
   const { MerchantData, MerchantDataError, isMerchantDataFetching, refetchMerchantData } =
   useGetRowsMerchantRegister(query);
 
@@ -44,6 +46,7 @@ export const MerchantView = () => {
 
   const {UpdateError, UpdateIsLoading, UpdateIsSuccess, UpdateMutate} = useUpdateMerchant(updateBody)
   const [search, setSearch] = useState<string>("");
+  const [isConfigOpen, setIsConfigOpen] = useState(false)
   const [isViewModalOpen ,setIsViewModalOpen] = useState(false)
   const debounceSearch = useDebounce(search);
 
@@ -56,6 +59,11 @@ export const MerchantView = () => {
     { name: "status", type: "status" },
     { name: "created_at", type: "date" },
   ];
+
+  useEffect(() => {
+    const id = currentItem?.id
+    isConfigOpen &&  navigate(`${id}`)
+  }, [isConfigOpen]);
 
   useEffect(() => {
     refetchMerchantData();
@@ -181,6 +189,11 @@ export const MerchantView = () => {
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
                 onClick: () => setIsUpdateModalOpen(true),
+              },
+              {
+                label: "Configs",
+                icon: <ToolOutlined style={{ fontSize: "20px" }} />,
+                onClick: () => setIsConfigOpen(true),
               },
             ]}
           />
