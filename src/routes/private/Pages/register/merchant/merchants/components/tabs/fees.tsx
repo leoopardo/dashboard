@@ -80,17 +80,17 @@ export const FeesTab = (props: { id?: string }) => {
       { proptype: "pix_refund_fee_type", type:'PERCENT', value: "pix_refund_fee_percent" },
       { proptype: "pix_refund_fee_type", type:'VALUE', value: "pix_refund_fee_value" },
     ];
-
     const stopRequest = array.some((item) => {
       if(body && body[item.proptype as keyof typeof body] === item.type &&
       (bodyUpdate && bodyUpdate?.[item.value as keyof typeof bodyUpdate] === undefined ||
         Number(bodyUpdate?.[item.value as keyof typeof bodyUpdate]) <= 0)) {
+          console.log('test', item.value)
           return true
         } else return false
     })
-    
-   if(stopRequest) return;
-
+    console.log({body})
+    console.log({stopRequest})
+  // if(stopRequest) return;
 
     UpdateMutate();
     setIsConfirmOpen(false);
@@ -338,14 +338,14 @@ export const FeesTab = (props: { id?: string }) => {
               name="customer_withdraw_fee_percent"
               disabled={body?.customer_withdraw_fee_type === "VALUE"}
               value={body?.customer_withdraw_fee_percent}
-              onChange={(value) => {
+              onChange={(e) => {
                 setBody((state) => ({
                   ...state,
-                  customer_withdraw_fee_percent: Number(value),
+                  customer_withdraw_fee_percent: Number(e.target.value),
                 }));
                 setBodyUpdate((state) => ({
                   ...state,
-                  customer_withdraw_fee_percent: Number(value),
+                  customer_withdraw_fee_percent: Number(e.target.value),
                 }));
               }}
             />

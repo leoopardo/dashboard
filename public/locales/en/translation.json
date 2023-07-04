@@ -217,7 +217,14 @@
     "deposit_refund_fee_type": "Deposit refund fee type",
     "deposit_refund_fee_percent": "Deposit refund fee percent",
     "deposit_refund_fee_value": "Deposit refund fee value",
-    "deposit_refund_fee_minimum_value": "Deposit refund fee minimum value"
+    "deposit_refund_fee_minimum_value": "Deposit refund fee minimum value",
+    "general_deposit_permission": "General deposit permission",
+    "general_withdraw_permission": "General withdraw permission",
+    "account_PJ_payment_permission": "Account PJ payment permission",
+    "max_value_payer_pj_by_day": "Max value payer pj/day",
+    "permission_different_payer_pf": "Permission different payer",
+    "max_value_different_payer_pf_by_day": "Max value different payer by days",
+    "withdraw_limit_document_by_day": "Withdraw limit document by day"
   },
   "modal": {
     "confirm": "Confirm",
