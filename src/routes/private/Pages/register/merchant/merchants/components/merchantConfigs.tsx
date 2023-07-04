@@ -53,7 +53,7 @@ export const MerchantConfigs = () => {
     },
      {
       key: "2",
-      label: t("table.fee"),
+      label:`${t("table.fee")}s`,
       children: (
         <FeesTab id={params.id}/>
       ),
