@@ -4,19 +4,21 @@ import CurrencyInputField from "react-currency-input-field";
 interface CurrencyInputProps {
   value: number | undefined;
   onChange: (value: number | undefined) => void;
+  disabled?: boolean
 }
 
 export const CurrencyInput: React.FC<CurrencyInputProps> = ({
   value,
   onChange,
+  disabled
 }) => {
 const [isHovered, setIsHovered] = useState(false)
 
-const handleChange = (value: number | undefined | any) => {
+const handleChange = (value: number | undefined) => {
     onChange(value);
 };
 
-const formattedValue = value !== undefined ? value.toString() : '0';
+const formattedValue = value !== undefined ? value.toString() : '0.00';
 
 const handleMouseEnter = () => {
   setIsHovered(true);
@@ -30,7 +32,7 @@ const inputStyle = {
   width: '100%',
   height: '38px',
   paddingLeft: '10px',
-  borderRadius: '6px',
+  borderRadius: '8px',
   borderStyle: 'solid',
   border: '0.5px solid',
   outline: 'none',
@@ -42,6 +44,8 @@ return (
     prefix="R$"
     decimalSeparator=","
     groupSeparator="."
+    decimalsLimit={2}
+    disabled={disabled}
     value={formattedValue}
     onValueChange={handleChange}
     style={inputStyle}

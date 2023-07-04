@@ -108,6 +108,12 @@
     "update": "Editar"
   },
 
+  "titles": {
+    "current_deposit_fee": "Taxa de depósito atual",
+    "current_withdraw_fee": "Taxa de saque atual",
+    "current_deposit_refund_fee": "Taxa de deposito devolvido atual"
+  },
+
   "messages": {
     "loading": "Carregando...",
     "page_not_found": "Página não encontrada",
@@ -130,7 +136,8 @@
     "deleted": "Deletado",
     "delete": "deletar",
     "upload_label": "Clique ou arraste e solte o arquivo para esta área",
-    "upload_description": "Suporte para um arquivo por vês, nos formatos: pdf, png e docx."
+    "upload_description": "Suporte para um arquivo por vês, nos formatos: pdf, png e docx.",
+    "min_value_higher_then_zero": "O valor desse campo deve ser maior que 0"
   },
   "login": {
     "sign_in": "Faça login",
@@ -142,7 +149,7 @@
   },
   "buttons": {
     "create": "Criar",
-    "update": "Atualizar",
+    "update": "Atualizar {{menu}}",
     "new_user": "novo usuário",
     "update_user": "Atualizar usuário",
     "new_categorie": "nova categoria",
@@ -154,6 +161,7 @@
     "new_person": "Nova pessoa",
     "update_person": "Atualizar pessoa",
     "refresh": "Recarregar"
+
   },
   "modal": {
     "confirm": "Confirmar",
@@ -218,7 +226,21 @@
     "user": "Usuário",
     "deposit_bank": "Banco depósito",
     "withdraw_bank": "Banco saque",
-    "cpf": "CPF"
+    "cpf": "CPF",
+    "deposit_fee_type": "Tipo de taxa de depósito",
+    "deposit_fee_plan": "Plano de taxa de depósito",
+    "deposit_fee_percent": "Percentual de taxa de depósito",
+    "deposit_fee_value": "Valor taxa de depósito",
+    "deposit_fee_minimum_value": "Valor taxa minima de depósito",
+    "withdraw_fee_type": "Tipo de taxa de saque",
+    "withdraw_fee_plan": "Plano de taxa de saque",
+    "withdraw_fee_percent": "Percentual de taxa de saque",
+    "withdraw_fee_value": "Valor taxa de saque",
+    "withdraw_fee_minimum_value": "Valor taxa minima de saque",
+    "deposit_refund_fee_type": "Tipo de taxa de devolução depósito",
+    "deposit_refund_fee_percent": "Percentual de taxa de devolução depósito",
+    "deposit_refund_fee_value": "Valor taxa de devolução depósito",
+    "deposit_refund_fee_minimum_value": "Valor taxa minima de devolução depósito"
   },
   "table": {
     "id": "ID",
@@ -421,6 +443,7 @@
     "transaction_type": "Tipo de transação",
     "fee_type": "Tipo de taxa",
     "fee_percent": "Taxa (%)",
+    "percent": "Percentual",
     "fee": "Taxa"
   },
   "actions": {
