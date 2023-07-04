@@ -6,6 +6,7 @@ import { defaultTheme } from "@src/styles/defaultTheme";
 import { useGetOrganizationBalance } from "@src/services/consult/organization/balance/getPerBank";
 import { useMediaQuery } from "react-responsive";
 import { OrganizationBalanceChart } from "./components/TotalChart";
+import { ReloadOutlined } from "@ant-design/icons";
 
 export const OrganizationBalance = () => {
   const isMobile = useMediaQuery({ maxWidth: "750px" });
@@ -107,13 +108,14 @@ export const OrganizationBalance = () => {
         >
           <Button
             size="large"
+            type="primary"
             style={{ width: "100%" }}
             loading={isOrganizationBalanceFetching}
             onClickCapture={() => {
               refetchOrganizationBalance();
             }}
           >
-            {t("buttons.refresh")}
+            <ReloadOutlined /> {t("buttons.refresh")}
           </Button>
         </Grid>
       </Grid>
@@ -146,7 +148,7 @@ export const OrganizationBalance = () => {
           <Descriptions
             bordered
             style={{ margin: 0, padding: 0 }}
-            column={isMobile ? 1 : 2}
+            column={isMobile ? 1 : 3}
           >
             {OrganizationBalance &&
               Object.keys(OrganizationBalance).map((key: string, index) => {

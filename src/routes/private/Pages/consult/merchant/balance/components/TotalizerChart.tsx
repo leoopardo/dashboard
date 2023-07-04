@@ -1,17 +1,19 @@
-import React from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 import { useTranslation } from "react-i18next";
-import { OrganizationBalance } from "@src/services/types/consult/organization/balance/balnce.interface";
 import { defaultTheme } from "@src/styles/defaultTheme";
+import {
+  MerchantBalanceData,
+  MerchantBalanceItem,
+} from "@src/services/types/consult/merchant/balance";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 interface PieChartValues {
-  items: OrganizationBalance;
+  items?: MerchantBalanceData | null;
 }
 
-export function OrganizationBalanceChart({ items }: PieChartValues) {
+export function MerchantBalanceChart({ items }: PieChartValues) {
   const { t } = useTranslation();
   const data = {
     labels: [
@@ -24,15 +26,17 @@ export function OrganizationBalanceChart({ items }: PieChartValues) {
       {
         label: "",
         data: [
-          items.balance_to_transactions,
-          items.balance_to_payment,
-          items.balance_reserved,
+          items?.balance_to_transactions_total ??
+            items?.balance_to_transactions,
+          items?.balance_to_payment_total ?? items?.balance_to_payment,
+          items?.balance_reserved_total ?? items?.balance_reserved,
         ],
         backgroundColor: [
           "rgba(54, 162, 235, 0.2)",
           "rgba(255, 206, 86, 0.2)",
 
           "rgba(255, 99, 132, 0.2)",
+          "rgba(75, 192, 192, 0.2)",
         ],
         borderColor: [
           "#006086",

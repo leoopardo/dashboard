@@ -15,6 +15,8 @@ import { PieChart } from "./components/PieValue";
 import { PieFee } from "./components/PieFee";
 import { PieBankfee } from "./components/PieBankFee";
 import { PieResult } from "./components/PieResult";
+import { PieNumber } from "./components/PieNumber";
+import { useMediaQuery } from "react-responsive";
 
 const INITIAL_QUERY: OrganizationBankStatementTotalsQuery = {
   start_date: moment(new Date())
@@ -27,6 +29,7 @@ const INITIAL_QUERY: OrganizationBankStatementTotalsQuery = {
 };
 
 export const OrganizationBankStatement = () => {
+  const isMobile = useMediaQuery({ maxWidth: "900px" });
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<any>();
@@ -54,10 +57,10 @@ export const OrganizationBankStatement = () => {
     <Grid container style={{ padding: "25px" }}>
       <Grid
         container
-        style={{ marginTop: "20px", display: "flex", alignItems: "center" }}
+        style={{ display: "flex", alignItems: "center" }}
         spacing={1}
       >
-        <Grid item xs={12} md={4} lg={2}>
+        <Grid item xs={12} md={2} lg={2}>
           <Button
             style={{ width: "100%", height: 40 }}
             type="primary"
@@ -66,7 +69,7 @@ export const OrganizationBankStatement = () => {
             {t("table.filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={6} lg={8}>
+        <Grid item xs={12} md={6} lg={6}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
@@ -78,6 +81,20 @@ export const OrganizationBankStatement = () => {
         <Grid item xs={12} md={2} lg={2}>
           <Button
             style={{ width: "100%" }}
+            size="large"
+            type="dashed"
+            danger
+            loading={isOrganizationBankStatementTotalsFetching}
+            onClickCapture={() => setQuery(INITIAL_QUERY)}
+          >
+            {t("table.clear_filters")}
+          </Button>
+        </Grid>
+        <Grid item xs={12} md={2} lg={2}>
+          <Button
+            style={{ width: "100%" }}
+            type="primary"
+            size="large"
             loading={isOrganizationBankStatementTotalsFetching}
             onClick={() => {
               refetchOrganizationPerbank();
@@ -97,9 +114,30 @@ export const OrganizationBankStatement = () => {
             style={{
               display: "flex",
               justifyContent: "center",
+              alignContent: "center",
               marginTop: "50px",
             }}
           >
+            <Grid xs={12} md={2}>
+              <PieNumber items={OrganizationBankStatementTotals} />
+            </Grid>
+            {!isMobile && (
+              <Grid
+                item
+                xs={1}
+                style={{
+                  height: "100%",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                <Divider
+                  type="vertical"
+                  style={{ height: !isMobile ? "100%" : "150px" }}
+                />
+              </Grid>
+            )}
+
             <Grid xs={6} md={2}>
               <PieChart items={OrganizationBankStatementTotals} />
             </Grid>
