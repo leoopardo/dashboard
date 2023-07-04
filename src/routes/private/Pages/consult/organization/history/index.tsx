@@ -37,8 +37,7 @@ export const OrganizationHistory = () => {
       title: t("table.created_at"),
       dataIndex: "createdAt",
       key: "createdAt",
-      render: (value) =>
-        moment(value).subtract(3, "hours").format("YYYY-MM-DD"),
+      render: (value) => new Date(value ?? "").toLocaleDateString(),
     },
     {
       title: t("table.balance_to_transactions"),

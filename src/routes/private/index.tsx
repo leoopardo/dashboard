@@ -30,6 +30,7 @@ import { CostumerBanks } from "./Pages/register/persons/costumerBankList";
 import { OrganizationBankStatement } from "./Pages/consult/organization/bankStatement";
 import { OrganizationBalance } from "./Pages/consult/organization/balance";
 import { OrganizationHistory } from "./Pages/consult/organization/history";
+import { MerchantBankStatement } from "./Pages/consult/merchant/bankStatement";
 
 export const PrivateRoutes = () => {
   const navigate = useNavigate();
@@ -54,6 +55,12 @@ export const PrivateRoutes = () => {
             <Route
               path="organization_history"
               element={<OrganizationHistory />}
+            />
+          </Route>
+          <Route path="consult_merchant">
+            <Route
+              path="merchant_bank_statement"
+              element={<MerchantBankStatement />}
             />
           </Route>
           <Route path="deposit">
