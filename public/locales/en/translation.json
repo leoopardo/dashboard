@@ -106,6 +106,12 @@
     "update": "Editar"
   },
 
+  "titles": {
+    "current_deposit_fee": "Current deposit fee",
+    "current_withdraw_fee": "Current withdraw fee",
+    "current_deposit_refund_fee": "Current deposit refund fee"
+  },
+
   "messages": {
     "loading": "Loading...",
     "page_not_found": "Page not found",
@@ -128,7 +134,8 @@
     "deleted": "Deleted",
     "delete": "delete",
     "upload_label": "Click or drag file to this area to upload",
-    "upload_description": "Support for a single upload. Files types: pdf, png and docx."
+    "upload_description": "Support for a single upload. Files types: pdf, png and docx.",
+    "min_value_higher_then_zero": "The value of this field must be greater than 0"
   },
   "login": {
     "sign_in": "Sign in",
@@ -140,7 +147,7 @@
   },
   "buttons": {
     "create": "Create",
-    "update": "Update",
+    "update": "Update {{menu}}",
     "new_user": "new user",
     "update_user": "Update user",
     "new_categorie": "new categorie",
@@ -196,7 +203,21 @@
     "user": "User",
     "deposit_bank": "Deposit bank",
     "withdraw_bank": "Withdraw bank",
-    "cpf": "CPF"
+    "cpf": "CPF",
+    "deposit_fee_type": "Deposit fee type",
+    "deposit_fee_plan": "Deposit fee plan",
+    "deposit_fee_percent": "Deposit fee percent",
+    "deposit_fee_value": "Deposit fee value",
+    "deposit_fee_minimum_value": "Deposit fee minimum value",
+    "withdraw_fee_type": "Withdraw fee type",
+    "withdraw_fee_plan": "Withdraw fee plan",
+    "withdraw_fee_percent": "Withdraw fee percent",
+    "withdraw_fee_value": "Withdraw fee value",
+    "withdraw_fee_minimum_value": "Withdraw fee minimum value",
+    "deposit_refund_fee_type": "Deposit refund fee type",
+    "deposit_refund_fee_percent": "Deposit refund fee percent",
+    "deposit_refund_fee_value": "Deposit refund fee value",
+    "deposit_refund_fee_minimum_value": "Deposit refund fee minimum value"
   },
   "modal": {
     "confirm": "Confirm",
@@ -400,10 +421,8 @@
     "balance_total": "Balance total",
     "pix_transactions_total": "Deposit transactions",
     "pix_amount_fee": "Deposits fee",
-    "withdraw_transactions_total": "Withdrawals transactions",
-    "withdraw_amount_fee": "Withdrawals fee",
-    "refund_transactions_total": "Refund transactions",
-    "refund_amount_fee": "Taxa de devoluções"
+    "percent": "Percent",
+    "fee": "Fee"
   },
   "actions": {
     "details": "Details",

@@ -25,9 +25,7 @@ export interface MerchantFeesResponse {
   fees: IMerchantFeesProps;
 }
 
-export interface IMerchantFeesUpdate {
-  merchant_id?: number[];
-  cash_in_bank: string;
-  cash_out_bank: string;
+export interface IMerchantFeesUpdate extends IMerchantFeesProps {
+  merchant_id?: number;
   partner_id?: string;
 }

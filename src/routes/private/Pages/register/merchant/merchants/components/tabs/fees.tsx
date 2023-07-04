@@ -4,8 +4,11 @@ import { Grid } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useUpdateFeesConfig } from "@src/services/register/merchant/merchant/feesConfig/updateFeesConfig";
 import { useMerchantFeesConfig } from "@src/services/register/merchant/merchant/feesConfig/getFeesConfig";
+import { useGetDepositFeePlansRegister } from "@src/services/register/merchant/feePlans/getDepositFeePlans";
+import { useGetWithdrawFeePlansRegister } from "@src/services/register/merchant/feePlans/getWithdrawFeePlans";
 import { Toast } from "@components/Toast";
 import { IMerchantFeesProps } from "@src/services/types/register/merchants/merchantFeesConfig";
+import { IMerchantFeesUpdate } from "@src/services/types/register/merchants/merchantFeesConfig";
 import { CurrencyInput } from "@src/components/CurrencyInput";
 import {
   Form,
@@ -13,181 +16,501 @@ import {
   Divider,
   Button,
   Input,
+  Select,
   Popconfirm,
-  AutoComplete,
-  Empty,
 } from "antd";
 
 export const FeesTab = (props: { id?: string }) => {
   const formRef = useRef<FormInstance>(null);
+  const submitRef = useRef<HTMLButtonElement>(null);
   const { t } = useTranslation();
-  const [body, setBody] = useState<IMerchantFeesProps | null | undefined>(null);
-  const [despositBank, setDepositBank] = useState<
-    { bank?: string } | undefined
+  const { isMerchantFeesFetching, merchantFeesData, refetchMerchantFeesData } =
+    useMerchantFeesConfig(props.id);
+  const [body, setBody] = useState<IMerchantFeesProps | null | undefined>({
+    ...merchantFeesData?.fees,
+  });
+
+  const [bodyUpdate, setBodyUpdate] = useState<
+    IMerchantFeesUpdate | null | undefined
   >();
-  const [withdrawBank, setWithdrawBank] = useState<
-    { bank?: string } | undefined
-  >();
+  const { depositFeePlansData } = useGetDepositFeePlansRegister();
+
+  const { withdrawFeePlansData } = useGetWithdrawFeePlansRegister();
+
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const arrayPercentValue = ["PERCENT", "VALUE"];
-  const {
-    isMerchantFeesFetching,
-    merchantFeesData,
-    merchantFeesError,
-    refetchMerchantFeesData,
-  } = useMerchantFeesConfig(props.id);
+
   const { UpdateError, UpdateIsLoading, UpdateIsSuccess, UpdateMutate } =
-    useUpdateFeesConfig(body as any);
+    useUpdateFeesConfig({ merchant_id: Number(props?.id), ...bodyUpdate });
 
-  const initialPercentValue = useCallback(
-    (feeProp: string): any => {
-      const value =
-        body && (feeProp !== null ? body[feeProp as keyof typeof body] : null);
-      return arrayPercentValue.find((item: any) => item === value) || null;
-    },
-    [body]
-  );
+  const handleDepositFeeTypeChange = (value: string) => {
+    if (value === "PERCENT") {
+      setBody((state) => ({
+        ...state,
+        cashin_pix_fee_value: 0,
+        cashin_pix_fee_type: value,
+      }));
+      setBodyUpdate((state) => ({
+        ...state,
+        cashin_pix_fee_value: 0,
+        cashin_pix_fee_type: value,
+      }));
+      formRef.current?.setFieldsValue({ cashin_pix_fee_value: 0 });
+    } else {
+      setBody((state) => ({
+        ...state,
+        cashin_pix_fee_percent: 0,
+        cashin_pix_fee_type: value,
+      }));
+      setBodyUpdate((state) => ({
+        ...state,
+        cashin_pix_fee_percent: 0,
+        cashin_pix_fee_type: value,
+      }));
+      formRef.current?.setFieldsValue({ cashin_pix_fee_percent: 0 });
+    }
+  };
 
-  useEffect(() => {
-    setBody((state: any) => ({
-      ...state,
-      cash_in_bank: despositBank?.bank,
-      cash_out_bank: withdrawBank?.bank,
-    }));
-    console.log({ despositBank });
-  }, [despositBank, withdrawBank]);
+  const handleSubmit = useCallback(() => {
+    const array = [
+      { proptype: "cashin_pix_fee_type", type:'PERCENT', value: "cashin_pix_fee_percent" },
+      { proptype: "cashin_pix_fee_type", type:'VALUE', value: "cashin_pix_fee_value" },
+      { proptype: "customer_withdraw_fee_type", type:'PERCENT', value: "customer_withdraw_fee_percent" },
+      { proptype: "customer_withdraw_fee_type", type:'VALUE', value: "customer_withdraw_fee_value" },
+      { proptype: "pix_refund_fee_type", type:'PERCENT', value: "pix_refund_fee_percent" },
+      { proptype: "pix_refund_fee_type", type:'VALUE', value: "pix_refund_fee_value" },
+    ];
 
-  useEffect(() => {
-    setBody(merchantFeesData?.fees);
-  }, [merchantFeesData]);
+    const stopRequest = array.some((item) => {
+      if(body && body[item.proptype as keyof typeof body] === item.type &&
+      (bodyUpdate && bodyUpdate?.[item.value as keyof typeof bodyUpdate] === undefined ||
+        Number(bodyUpdate?.[item.value as keyof typeof bodyUpdate]) <= 0)) {
+          return true
+        } else return false
+    })
+    
+   if(stopRequest) return;
+
+
+    UpdateMutate();
+    setIsConfirmOpen(false);
+  }, [body, bodyUpdate]);
 
   useEffect(() => {
     refetchMerchantFeesData();
   }, [UpdateIsSuccess]);
 
-  console.log({ withdrawBank });
+  useEffect(() => {
+    formRef.current?.setFieldsValue(merchantFeesData?.fees);
+  }, [merchantFeesData, depositFeePlansData, withdrawFeePlansData]);
+
   return (
     <Form
       ref={formRef}
       layout="vertical"
-      initialValues={merchantFeesData ? merchantFeesData : {}}
+      onSubmitCapture={() => handleSubmit()}
+      initialValues={merchantFeesData ? merchantFeesData?.fees : {}}
     >
       <Grid container spacing={1}>
         <Grid item xs={12}>
-          <p>Banco Deposito: </p>
-          <p>Banco Saque:</p>
+          <p>
+            {t("titles.current_deposit_fee")}:{" "}
+            {merchantFeesData?.fees?.cashin_pix_fee_percent}%{" "}
+          </p>
+          <p>
+            {t("titles.current_withdraw_fee")}:{" "}
+            {merchantFeesData?.fees?.customer_withdraw_fee_percent}%{" "}
+          </p>
+          <p>
+            {t("titles.current_deposit_refund_fee")}:{" "}
+            {merchantFeesData?.fees?.pix_refund_fee_percent}%{" "}
+          </p>
         </Grid>
 
-        <Divider orientation="left">Depositos</Divider>
+        <Divider orientation="left">{t("menus.deposit")}</Divider>
 
         <Grid item xs={12} md={6}>
-          <Form.Item label={t("input.deposit_fee_type")} name="cash_in_bank">
-            <AutoComplete
+          <Form.Item
+            label={t("input.deposit_fee_type")}
+            name="cashin_pix_fee_type"
+          >
+            <Select
               size="large"
               options={
                 arrayPercentValue?.map((item, index) => ({
                   key: index,
                   value: item,
-                  label: item,
+                  label: `${t(`table.${item.toLocaleLowerCase()}`)}`,
                 })) ?? []
               }
-              notFoundContent={<Empty />}
-              value={initialPercentValue("cashin_pix_fee_type") || null}
-              style={{ width: "100%", height: 40 }}
-              onChange={(value) =>
-                setBody((state) => ({
-                  ...state,
-                  cashin_pix_fee_type: value,
-                }))
-              }
-              placeholder={t("table.payer_bank")}
+              value={body?.cashin_pix_fee_type || null}
+              onChange={handleDepositFeeTypeChange}
             />
           </Form.Item>
         </Grid>
         <Grid item xs={12} md={6}>
-          <Form.Item label={t("input.deposit_fee_plans")} name="cash_in_bank">
-            <AutoComplete
+          <Form.Item
+            label={t("input.deposit_fee_plan")}
+            name="cashin_pix_fee_plan_id"
+          >
+            <Select
               size="large"
               options={
-                arrayPercentValue?.map((item, index) => ({
+                depositFeePlansData?.merchant_fee_plans?.map((item, index) => ({
                   key: index,
-                  value: item,
-                  label: item,
+                  value: item.id,
+                  label: item.name,
                 })) ?? []
               }
-              notFoundContent={<Empty />}
-              value={initialPercentValue("cashin_pix_fee_type") || null}
-              style={{ width: "100%", height: 40 }}
-              onChange={(value) =>
+              value={body?.cashin_pix_fee_plan_id || null}
+              onChange={(value) => {
                 setBody((state) => ({
                   ...state,
-                  cashin_pix_fee_type: value,
-                }))
-              }
-              placeholder={t("table.payer_bank")}
+                  cashin_pix_fee_plan_id: Number(value),
+                }));
+                setBodyUpdate((state) => ({
+                  ...state,
+                  cashin_pix_fee_plan_id: Number(value),
+                }));
+              }}
             />
           </Form.Item>
         </Grid>
 
         <Grid item xs={12} md={4}>
-          <Form.Item label={t("input.deposit_fee_type")} name="cash_in_bank">
+          <Form.Item
+            label={t("input.deposit_fee_percent")}
+            name="cashin_pix_fee_percent"
+            rules={[
+              {
+                type: "number",
+                min: body?.cashin_pix_fee_type === "PERCENT" ? 0.01 : 0,
+                message: t("messages.min_value_higher_then_zero") || "",
+              },
+            ]}
+          >
+            <Input
+              size="large"
+              type="number"
+              name="cashin_pix_fee_percent"
+              disabled={body?.cashin_pix_fee_type === "VALUE"}
+              value={body?.cashin_pix_fee_percent}
+              onChange={(e) => {
+                setBody((state) => ({
+                  ...state,
+                  cashin_pix_fee_percent: Number(e.target.value),
+                }));
+                setBodyUpdate((state) => ({
+                  ...state,
+                  cashin_pix_fee_percent: Number(e.target.value),
+                }));
+              }}
+            />
+          </Form.Item>
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <Form.Item
+            label={t("input.deposit_fee_value")}
+            name="cashin_pix_fee_value"
+            rules={[
+              {
+                type: "number",
+                min: body?.cashin_pix_fee_type === "VALUE" ? 0.01 : 0,
+                message: t("messages.min_value_higher_then_zero") || "",
+              },
+            ]}
+          >
             <CurrencyInput
+              disabled={body?.cashin_pix_fee_type === "PERCENT"}
               value={body?.cashin_pix_fee_value}
-              onChange={(value) =>
+              onChange={(value) => {
                 setBody((state) => ({
                   ...state,
-                  cashin_pix_fee_value: value,
-                }))
-              }
-            />
-          </Form.Item>
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <Form.Item label={t("input.deposit_fee_plans")} name="cash_in_bank">
-            <AutoComplete
-              size="large"
-              options={
-                arrayPercentValue?.map((item, index) => ({
-                  key: index,
-                  value: item,
-                  label: item,
-                })) ?? []
-              }
-              notFoundContent={<Empty />}
-              value={initialPercentValue("cashin_pix_fee_type") || null}
-              style={{ width: "100%", height: 40 }}
-              onChange={(value) =>
-                setBody((state) => ({
+                  cashin_pix_fee_value: Number(value),
+                }));
+
+                setBodyUpdate((state) => ({
                   ...state,
-                  cashin_pix_fee_type: value,
-                }))
-              }
-              placeholder={t("table.payer_bank")}
+                  cashin_pix_fee_value: Number(value),
+                }));
+              }}
             />
           </Form.Item>
         </Grid>
 
         <Grid item xs={12} md={4}>
-          <Form.Item label={t("input.deposit_fee_plans")} name="cash_in_bank">
-            <AutoComplete
+          <Form.Item
+            label={t("input.deposit_fee_minimum_value")}
+            name="cashin_pix_fee_min"
+          >
+            <CurrencyInput
+              value={body?.cashin_pix_fee_min}
+              onChange={(value) => {
+                setBody((state) => ({
+                  ...state,
+                  cashin_pix_fee_min: value,
+                }));
+                setBodyUpdate((state) => ({
+                  ...state,
+                  cashin_pix_fee_min: value,
+                }));
+              }}
+            />
+          </Form.Item>
+        </Grid>
+
+        <Divider orientation="left">{t("menus.withdrawals")}</Divider>
+
+        <Grid item xs={12} md={6}>
+          <Form.Item
+            label={t("input.withdraw_fee_type")}
+            name="customer_withdraw_fee_type"
+          >
+            <Select
               size="large"
               options={
                 arrayPercentValue?.map((item, index) => ({
                   key: index,
                   value: item,
-                  label: item,
+                  label: `${t(`table.${item.toLocaleLowerCase()}`)}`,
                 })) ?? []
               }
-              notFoundContent={<Empty />}
-              value={initialPercentValue("cashin_pix_fee_type") || null}
-              style={{ width: "100%", height: 40 }}
-              onChange={(value) =>
+              value={body?.customer_withdraw_fee_type || null}
+              onChange={(value) => {
                 setBody((state) => ({
                   ...state,
-                  cashin_pix_fee_type: value,
-                }))
+                  customer_withdraw_fee_type: value,
+                }));
+                setBodyUpdate((state) => ({
+                  ...state,
+                  customer_withdraw_fee_type: value,
+                }));
+              }}
+            />
+          </Form.Item>
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <Form.Item
+            label={t("input.withdraw_fee_plan")}
+            name="customer_withdraw_fee_plan_id"
+          >
+            <Select
+              size="large"
+              options={
+                withdrawFeePlansData?.merchant_fee_plans?.map(
+                  (item, index) => ({
+                    key: index,
+                    value: item.id,
+                    label: item.name,
+                  })
+                ) ?? []
               }
-              placeholder={t("table.payer_bank")}
+              value={body?.customer_withdraw_fee_plan_id || null}
+              onChange={(value) => {
+                setBody((state) => ({
+                  ...state,
+                  customer_withdraw_fee_plan_id: Number(value),
+                }));
+                setBodyUpdate((state) => ({
+                  ...state,
+                  customer_withdraw_fee_plan_id: Number(value),
+                }));
+              }}
+            />
+          </Form.Item>
+        </Grid>
+
+        <Grid item xs={12} md={4}>
+          <Form.Item
+            label={t("input.withdraw_fee_percent")}
+            name="customer_withdraw_fee_percent"
+            rules={[
+              {
+                type: "number",
+                min: body?.customer_withdraw_fee_type === "PERCENT" ? 0.01 : 0,
+                message: t("messages.min_value_higher_then_zero") || "",
+              },
+            ]}
+          >
+            <Input
+              size="large"
+              type="number"
+              name="customer_withdraw_fee_percent"
+              disabled={body?.customer_withdraw_fee_type === "VALUE"}
+              value={body?.customer_withdraw_fee_percent}
+              onChange={(value) => {
+                setBody((state) => ({
+                  ...state,
+                  customer_withdraw_fee_percent: Number(value),
+                }));
+                setBodyUpdate((state) => ({
+                  ...state,
+                  customer_withdraw_fee_percent: Number(value),
+                }));
+              }}
+            />
+          </Form.Item>
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <Form.Item
+            label={t("input.withdraw_fee_value")}
+            name="customer_withdraw_fee_value"
+            rules={[
+              {
+                type: "number",
+                min: body?.customer_withdraw_fee_type === "VALUE" ? 0.01 : 0,
+                message: t("messages.min_value_higher_then_zero") || "",
+              },
+            ]}
+          >
+            <CurrencyInput
+              disabled={body?.customer_withdraw_fee_type === "PERCENT"}
+              value={body?.customer_withdraw_fee_value}
+              onChange={(value) => {
+                setBody((state) => ({
+                  ...state,
+                  customer_withdraw_fee_value: Number(value),
+                }));
+
+                setBodyUpdate((state) => ({
+                  ...state,
+                  customer_withdraw_fee_value: Number(value),
+                }));
+              }}
+            />
+          </Form.Item>
+        </Grid>
+
+        <Grid item xs={12} md={4}>
+          <Form.Item
+            label={t("input.withdraw_fee_minimum_value")}
+            name="customer_withdraw_fee_min"
+          >
+            <CurrencyInput
+              value={body?.customer_withdraw_fee_min}
+              onChange={(value) => {
+                setBody((state) => ({
+                  ...state,
+                  customer_withdraw_fee_min: value,
+                }));
+                setBodyUpdate((state) => ({
+                  ...state,
+                  customer_withdraw_fee_min: value,
+                }));
+              }}
+            />
+          </Form.Item>
+        </Grid>
+
+        <Divider orientation="left">{t("menus.refunds")}</Divider>
+
+        <Grid item xs={12} sm={6} md={3}>
+          <Form.Item
+            label={t("input.deposit_refund_fee_type")}
+            name="pix_refund_fee_type"
+          >
+            <Select
+              size="large"
+              options={
+                arrayPercentValue?.map((item, index) => ({
+                  key: index,
+                  value: item,
+                  label: `${t(`table.${item.toLocaleLowerCase()}`)}`,
+                })) ?? []
+              }
+              value={body?.pix_refund_fee_type || null}
+              onChange={(value) => {
+                setBody((state) => ({
+                  ...state,
+                  pix_refund_fee_type: value,
+                }));
+                setBodyUpdate((state) => ({
+                  ...state,
+                  pix_refund_fee_type: value,
+                }));
+              }}
+            />
+          </Form.Item>
+        </Grid>
+
+        <Grid item xs={12} sm={6} md={3}>
+          <Form.Item
+            label={t("input.deposit_refund_fee_percent")}
+            name="pix_refund_fee_percent"
+            rules={[
+              {
+                type: "number",
+                min: body?.pix_refund_fee_type === "PERCENT" ? 0.01 : 0,
+                message: t("messages.min_value_higher_then_zero") || "",
+              },
+            ]}
+          >
+            <Input
+              size="large"
+              type="number"
+              name="pix_refund_fee_percent"
+              disabled={body?.pix_refund_fee_type === "VALUE"}
+              value={body?.pix_refund_fee_percent}
+              onChange={(e) => {
+                setBody((state) => ({
+                  ...state,
+                  pix_refund_fee_percent: Number(e.target.value),
+                }));
+                setBodyUpdate((state) => ({
+                  ...state,
+                  pix_refund_fee_percent: Number(e.target.value),
+                }));
+              }}
+            />
+          </Form.Item>
+        </Grid>
+
+        <Grid item xs={12} sm={6} md={3}>
+          <Form.Item
+            label={t("input.deposit_refund_fee_value")}
+            name="pix_refund_fee_value"
+            rules={[
+              {
+                type: "number",
+                min: body?.pix_refund_fee_type === "VALUE" ? 0.01 : 0,
+                message: t("messages.min_value_higher_then_zero") || "",
+              },
+            ]}
+          >
+            <CurrencyInput
+              disabled={body?.pix_refund_fee_type === "PERCENT"}
+              value={body?.pix_refund_fee_value}
+              onChange={(value) => {
+                setBody((state) => ({
+                  ...state,
+                  pix_refund_fee_value: value,
+                }));
+                setBodyUpdate((state) => ({
+                  ...state,
+                  pix_refund_fee_value: value,
+                }));
+              }}
+            />
+          </Form.Item>
+        </Grid>
+
+        <Grid item xs={12} sm={6} md={3}>
+          <Form.Item
+            label={t("input.deposit_refund_fee_minimum_value")}
+            name="pix_refund_fee_min"
+          >
+            <CurrencyInput
+              value={Number(body?.pix_refund_fee_min)}
+              onChange={(value) => {
+                setBody((state) => ({
+                  ...state,
+                  pix_refund_fee_value: value,
+                }));
+                setBodyUpdate((state) => ({
+                  ...state,
+                  pix_refund_fee_value: value,
+                }));
+              }}
             />
           </Form.Item>
         </Grid>
@@ -200,35 +523,37 @@ export const FeesTab = (props: { id?: string }) => {
         style={{ display: "flex", flexDirection: "row-reverse" }}
       >
         <Grid item xs={12} md={4} lg={2}>
-          <Popconfirm
-            title={t("messages.confirm_action_title", {
-              action: t("messages.update"),
-            })}
-            description={t("messages.are_you_sure", {
-              action: t("messages.update"),
-              itens: t("menus.general_configs").toLowerCase(),
-            })}
-            open={isConfirmOpen}
-            style={{ maxWidth: "340px" }}
-            onConfirm={() => {
-              UpdateMutate();
-              setIsConfirmOpen(false);
-            }}
-            okButtonProps={{ loading: isMerchantFeesFetching }}
-            okText={t("messages.yes_update")}
-            cancelText={t("messages.no_cancel")}
-            onCancel={() => setIsConfirmOpen(false)}
-          >
-            <Button
-              size="large"
-              type="primary"
-              style={{ width: "100%" }}
-              loading={isMerchantFeesFetching}
-              onClick={() => setIsConfirmOpen(true)}
+          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+            <button type="submit" ref={submitRef} style={{ display: "none" }}>
+              Submit
+            </button>
+            <Popconfirm
+              title={t("messages.confirm_action_title", {
+                action: t("messages.update"),
+              })}
+              description={t("messages.are_you_sure", {
+                action: t("messages.update"),
+                itens: t("menus.general_configs").toLowerCase(),
+              })}
+              open={isConfirmOpen}
+              style={{ maxWidth: "340px" }}
+              onConfirm={() => submitRef.current?.click()}
+              okButtonProps={{ loading: isMerchantFeesFetching }}
+              okText={t("messages.yes_update")}
+              cancelText={t("messages.no_cancel")}
+              onCancel={() => setIsConfirmOpen(false)}
             >
-              {t("buttons.update_general_configs")}
-            </Button>
-          </Popconfirm>
+              <Button
+                size="large"
+                type="primary"
+                style={{ width: "100%" }}
+                loading={isMerchantFeesFetching}
+                onClick={() => setIsConfirmOpen(true)}
+              >
+                {t("buttons.update", { menu: `${t("table.fee")}s` })}
+              </Button>
+            </Popconfirm>
+          </Form.Item>
         </Grid>
       </Grid>
       <Toast
