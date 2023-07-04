@@ -1,39 +1,46 @@
-import React, { useEffect, useState } from "react";
-import { Grid } from "@mui/material";
+import { useGetMerchantHistory } from "@src/services/consult/merchant/history/getMerchantHistory";
+import {
+  MerchantHistoryItem,
+  MerchantHistoryQuery,
+} from "@src/services/types/consult/merchant/history";
+import { Button, Empty, Table, TableColumnsType } from "antd";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
-import { useGetOrganizationHistory } from "@src/services/consult/organization/history/getPerBank";
-import {
-  OrganizationHistoryItem,
-  OrganizationHistoryQuery,
-} from "@src/services/types/consult/organization/history";
-import { OrganizationHistoryLineChart } from "./components/historyLineChart";
-import { Button, Table, TableColumnsType } from "antd";
-import moment from "moment";
+import { Grid } from "@mui/material";
 import { CustomTable } from "@src/components/CustomTable";
+import { MerchantSelect } from "@src/components/Selects/merchantSelect";
+import { FilterChips } from "@src/components/FiltersModal/filterChips";
+import { MerchantHistoryLineChart } from "./components/MerchantHistoryLineChart";
 import { ReloadOutlined } from "@ant-design/icons";
 
-export const OrganizationHistory = () => {
+export const MerchantHistory = () => {
+  const INITIAL_QUERY: MerchantHistoryQuery = {
+    page: 1,
+    limit: 30,
+  };
   const { t } = useTranslation();
   const isMobile = useMediaQuery({ maxWidth: "750px" });
-  const [query, setQuery] = useState<OrganizationHistoryQuery>({
+  const [query, setQuery] = useState<MerchantHistoryQuery>({
     page: 1,
     limit: 30,
   });
   const {
-    OrganizationHistory,
-    isOrganizationHistoryFetching,
-    OrganizationHistoryError,
-    refetchOrganizationHistory,
-  } = useGetOrganizationHistory(query);
+    MerchantHistory,
+    isMerchantHistoryFetching,
+    MerchantHistoryError,
+    refetchMerchantHistory,
+  } = useGetMerchantHistory(query);
   const [expanded, setExpanded] = useState<string[]>([]);
-  const [, setCurrentItem] = useState<OrganizationHistoryItem | null>();
+  const [, setCurrentItem] = useState<MerchantHistoryItem | null>();
 
   useEffect(() => {
-    refetchOrganizationHistory();
+    refetchMerchantHistory();
   }, [query]);
 
-  const columns: TableColumnsType<OrganizationHistoryItem> = [
+  console.log(MerchantHistoryError);
+
+  const columns: TableColumnsType<MerchantHistoryItem> = [
     {
       title: t("table.created_at"),
       dataIndex: "createdAt",
@@ -83,7 +90,7 @@ export const OrganizationHistory = () => {
   ];
 
   const expandedRowRender = (record: any) => {
-    const columns: TableColumnsType<OrganizationHistoryItem> = [
+    const columns: TableColumnsType<MerchantHistoryItem> = [
       {
         title: t("table.cash_in_number"),
         dataIndex: "cash_in_number",
@@ -166,15 +173,45 @@ export const OrganizationHistory = () => {
 
   return (
     <Grid container style={{ padding: "25px" }}>
-      <Grid container style={{ display: "flex", flexDirection: "row-reverse" }}>
-        {" "}
-        <Grid xs={12} md={2}>
+      <Grid
+        container
+        style={{
+          display: "flex",
+          alignItems: "center",
+          marginBottom: "20px",
+        }}
+        spacing={1}
+      >
+        <Grid item xs={12} md={4} lg={2}>
+          <MerchantSelect queryOptions={query} setQueryFunction={setQuery} />
+        </Grid>
+        <Grid item xs={12} md={4} lg={6}>
+          <FilterChips
+            startDateKeyName="start_date"
+            endDateKeyName="end_date"
+            query={query}
+            setQuery={setQuery}
+          />
+        </Grid>
+        <Grid item xs={12} md={2} lg={2}>
+          <Button
+            style={{ width: "100%" }}
+            size="large"
+            type="dashed"
+            danger
+            loading={isMerchantHistoryFetching}
+            onClickCapture={() => setQuery(INITIAL_QUERY)}
+          >
+            {t("table.clear_filters")}
+          </Button>
+        </Grid>
+        <Grid item xs={12} md={2} lg={2}>
           <Button
             style={{ width: "100%" }}
             size="large"
             type="primary"
-            loading={isOrganizationHistoryFetching}
-            onClickCapture={() => refetchOrganizationHistory()}
+            loading={isMerchantHistoryFetching}
+            onClickCapture={() => refetchMerchantHistory()}
           >
             <ReloadOutlined /> {t("buttons.refresh")}
           </Button>
@@ -190,7 +227,7 @@ export const OrganizationHistory = () => {
           maxHeight: "350px",
         }}
       >
-        <OrganizationHistoryLineChart items={OrganizationHistory?.items} />
+        <MerchantHistoryLineChart items={MerchantHistory?.items} />
       </Grid>
 
       <Grid item xs={12} style={{ marginTop: "25px" }}>
@@ -198,17 +235,34 @@ export const OrganizationHistory = () => {
           <Table
             columns={columns}
             bordered
+            locale={{
+              emptyText: MerchantHistoryError ? (
+                <Empty
+                  style={{ padding: 15, paddingBottom: 30 }}
+                  image={Empty.PRESENTED_IMAGE_SIMPLE}
+                  description={`${t("table.error")} ${
+                    MerchantHistoryError?.response?.status
+                  } - ${t(`error.${MerchantHistoryError?.response?.status}`)}`}
+                />
+              ) : (
+                <Empty
+                  style={{ padding: 15, paddingBottom: 30 }}
+                  image={Empty.PRESENTED_IMAGE_SIMPLE}
+                  description={t("messages.empty_table_data")}
+                />
+              ),
+            }}
             expandable={{
               expandedRowRender,
               onExpand: onTableRowExpand,
               expandedRowKeys: expanded,
             }}
             rowKey={(record) => record?._id ?? ""}
-            dataSource={OrganizationHistory?.items}
+            dataSource={MerchantHistory?.items}
             pagination={{
               current: query?.page,
               pageSize: query?.limit,
-              total: OrganizationHistory?.total,
+              total: MerchantHistory?.total,
               onChange: (page) => {
                 setQuery((state: any) => ({ ...state, page }));
               },
@@ -232,10 +286,10 @@ export const OrganizationHistory = () => {
               { name: "cash_out_value", type: "value" },
               { name: "cash_out_fee", type: "value" },
             ]}
-            data={OrganizationHistory}
-            items={OrganizationHistory?.items}
-            loading={isOrganizationHistoryFetching}
-            error={OrganizationHistoryError}
+            data={MerchantHistory}
+            items={MerchantHistory?.items}
+            loading={isMerchantHistoryFetching}
+            error={MerchantHistoryError}
             query={query}
             setCurrentItem={setCurrentItem}
             setQuery={setQuery}

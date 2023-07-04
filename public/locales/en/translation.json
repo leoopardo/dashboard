@@ -418,7 +418,10 @@
     "transaction_type": "Transaction type",
     "fee_type": "Fee type",
     "fee_percent": "Fee percent",
-    "fee": "Fee"
+    "fee": "Fee",
+    "pix_amount_value": "Deposits value",
+    "withdraw_amount_value": "Withdrawals value",
+    "merchant": "Merchant"
   },
   "actions": {
     "details": "Details",

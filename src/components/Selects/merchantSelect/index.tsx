@@ -56,10 +56,21 @@ export const MerchantSelect = ({
       notFoundContent={<Empty />}
       value={value}
       style={{ width: "100%", height: 40 }}
-      onChange={(value) => setValue(value)}
-      onSelect={(value) =>
-        setQueryFunction((state: any) => ({ ...state, merchant_id: value }))
-      }
+      onChange={(value) => {
+        if (!value) {
+          delete queryOptions.merchant_id;
+          setValue("");
+        }
+        setValue(value);
+      }}
+      onSelect={(value) => {
+        setQueryFunction((state: any) => ({ ...state, merchant_id: value }));
+        setValue(
+          merchantsData?.items.find(
+            (merchant) => merchant.id === queryOptions.merchant_id
+          )?.name
+        );
+      }}
       onInputKeyDown={(event: any) => {
         handleChange(event);
       }}

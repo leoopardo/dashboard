@@ -54,10 +54,10 @@ export const OrganizationBankStatement = () => {
     <Grid container style={{ padding: "25px" }}>
       <Grid
         container
-        style={{ marginTop: "20px", display: "flex", alignItems: "center" }}
+        style={{ display: "flex", alignItems: "center" }}
         spacing={1}
       >
-        <Grid item xs={12} md={4} lg={2}>
+        <Grid item xs={12} md={2} lg={2}>
           <Button
             style={{ width: "100%", height: 40 }}
             type="primary"
@@ -66,7 +66,7 @@ export const OrganizationBankStatement = () => {
             {t("table.filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={6} lg={8}>
+        <Grid item xs={12} md={6} lg={6}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
@@ -78,6 +78,20 @@ export const OrganizationBankStatement = () => {
         <Grid item xs={12} md={2} lg={2}>
           <Button
             style={{ width: "100%" }}
+            size="large"
+            type="dashed"
+            danger
+            loading={isOrganizationBankStatementTotalsFetching}
+            onClickCapture={() => setQuery(INITIAL_QUERY)}
+          >
+            {t("table.clear_filters")}
+          </Button>
+        </Grid>
+        <Grid item xs={12} md={2} lg={2}>
+          <Button
+            style={{ width: "100%" }}
+            type="primary"
+            size="large"
             loading={isOrganizationBankStatementTotalsFetching}
             onClick={() => {
               refetchOrganizationPerbank();

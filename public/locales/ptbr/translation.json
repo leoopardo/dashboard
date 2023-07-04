@@ -421,7 +421,10 @@
     "transaction_type": "Tipo de transação",
     "fee_type": "Tipo de taxa",
     "fee_percent": "Taxa (%)",
-    "fee": "Taxa"
+    "fee": "Taxa",
+    "pix_amount_value": "Valor depósitos",
+    "withdraw_amount_value": "Vlor saques",
+    "merchant": "Empresa"
   },
   "actions": {
     "details": "Detalhes",

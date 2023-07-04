@@ -1,13 +1,13 @@
 import { Grid } from "@mui/material";
 import moment from "moment";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Totalizers } from "./components/totalizers";
-import { Button, Divider, Spin } from "antd";
+import { Button, Spin } from "antd";
 import { FilterChips } from "@src/components/FiltersModal/filterChips";
 import { FiltersModal } from "@src/components/FiltersModal";
 import { CustomTable } from "@src/components/CustomTable";
-import { EyeFilled, ReloadOutlined } from "@ant-design/icons";
+import { ReloadOutlined } from "@ant-design/icons";
 import { useGetMerchantBankStatementTotals } from "@src/services/consult/merchant/bankStatement/getTotals";
 import { MerchantBankStatementTotalsQuery } from "@src/services/types/consult/merchant/bankStatement";
 import { MerchantHourlyLineChart } from "./components/HourlyChart";
@@ -28,13 +28,12 @@ const INITIAL_QUERY: MerchantBankStatementTotalsQuery = {
 
 export const MerchantBankStatement = () => {
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
-  const [currentItem, setCurrentItem] = useState<any>();
+  const [, setCurrentItem] = useState<any>();
   const { t } = useTranslation();
   const [query, setQuery] =
     useState<MerchantBankStatementTotalsQuery>(INITIAL_QUERY);
 
   const {
-    MerchantBankStatementTotals,
     isMerchantBankStatementTotalsFetching,
     refetchMerchantBankStatementTotalsTotal,
   } = useGetMerchantBankStatementTotals(query);
@@ -56,7 +55,7 @@ export const MerchantBankStatement = () => {
     <Grid container style={{ padding: "25px" }}>
       <Grid
         container
-        style={{ marginTop: "20px", display: "flex", alignItems: "center" }}
+        style={{ display: "flex", alignItems: "center" }}
         spacing={1}
       >
         <Grid item xs={12} md={4} lg={2}>
@@ -68,7 +67,7 @@ export const MerchantBankStatement = () => {
             {t("table.filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={6} lg={8}>
+        <Grid item xs={12} md={4} lg={6}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
@@ -80,9 +79,23 @@ export const MerchantBankStatement = () => {
         <Grid item xs={12} md={2} lg={2}>
           <Button
             style={{ width: "100%" }}
+            size="large"
+            type="dashed"
+            danger
+            loading={isMerchantTransactionsFetching}
+            onClickCapture={() => setQuery(INITIAL_QUERY)}
+          >
+            {t("table.clear_filters")}
+          </Button>
+        </Grid>
+        <Grid item xs={12} md={2} lg={2}>
+          <Button
+            style={{ width: "100%" }}
+            type="primary"
+            size="large"
             loading={isMerchantBankStatementTotalsFetching}
             onClick={() => {
-              //  refetchOrganizationPerbank();
+              refetchMerchantTransactionsTotal();
               refetchMerchantBankStatementTotalsTotal();
             }}
           >
