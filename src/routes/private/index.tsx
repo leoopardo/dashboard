@@ -33,6 +33,7 @@ import { OrganizationHistory } from "./Pages/consult/organization/history";
 import { MerchantBankStatement } from "./Pages/consult/merchant/bankStatement";
 import { MerchantBalance } from "./Pages/consult/merchant/balance";
 import { MerchantHistory } from "./Pages/consult/merchant/history";
+import { OrgonizationManual } from "./Pages/moviments/organization/manual";
 
 export const PrivateRoutes = () => {
   const navigate = useNavigate();
@@ -130,6 +131,15 @@ export const PrivateRoutes = () => {
             </Route>
             <Route path="whitelist" element={<PixKeyWhitelist />} />
             <Route path="person_accounts" element={<CostumerBanks />} />
+          </Route>
+        </Route>
+
+        <Route path="moviment">
+          <Route path="organization_moviments">
+            <Route
+              path="organization_manual_moviments"
+              element={<OrgonizationManual />}
+            />
           </Route>
         </Route>
       </Route>

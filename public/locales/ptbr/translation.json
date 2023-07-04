@@ -443,12 +443,20 @@
     "transaction_type": "Tipo de transação",
     "fee_type": "Tipo de taxa",
     "fee_percent": "Taxa (%)",
-    "fee": "Taxa",
     "pix_amount_value": "Valor depósitos",
     "withdraw_amount_value": "Vlor saques",
     "merchant": "Empresa",
     "percent": "Percentual",
-    "fee": "Taxa"
+    "fee": "Taxa",
+    "category_name": "Categoria",
+    "user_name": "Usuário",
+    "total_in_canceled": "Entradas (Canceladas)",
+    "total_in_processing": "Entradas (Processando)",
+    "total_in_success": "Entradas (Sucesso)",
+    "total_out_canceled": "Saídas (Canceladas)",
+    "total_out_processing": "Saídas (Processando)",
+    "total_out_success": "Saídas (Sucesso)"
+
   },
   "actions": {
     "details": "Detalhes",
