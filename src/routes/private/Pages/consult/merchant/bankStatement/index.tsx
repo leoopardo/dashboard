@@ -168,7 +168,13 @@ export const MerchantBankStatement = () => {
           query={query}
           setQuery={setQuery}
           haveInitialDate
-          filters={["start_date", "end_date", "payment_type", "bank"]}
+          filters={[
+            "start_date",
+            "end_date",
+            "payment_type",
+            "bank",
+            "merchant_id",
+          ]}
           refetch={refetchMerchantBankStatementTotalsTotal}
           selectOptions={{ payment_type: ["pix", "withdraw"] }}
           startDateKeyName="start_date"

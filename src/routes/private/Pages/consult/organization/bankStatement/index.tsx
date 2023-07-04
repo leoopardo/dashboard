@@ -15,6 +15,8 @@ import { PieChart } from "./components/PieValue";
 import { PieFee } from "./components/PieFee";
 import { PieBankfee } from "./components/PieBankFee";
 import { PieResult } from "./components/PieResult";
+import { PieNumber } from "./components/PieNumber";
+import { useMediaQuery } from "react-responsive";
 
 const INITIAL_QUERY: OrganizationBankStatementTotalsQuery = {
   start_date: moment(new Date())
@@ -27,6 +29,7 @@ const INITIAL_QUERY: OrganizationBankStatementTotalsQuery = {
 };
 
 export const OrganizationBankStatement = () => {
+  const isMobile = useMediaQuery({ maxWidth: "900px" });
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<any>();
@@ -111,9 +114,30 @@ export const OrganizationBankStatement = () => {
             style={{
               display: "flex",
               justifyContent: "center",
+              alignContent: "center",
               marginTop: "50px",
             }}
           >
+            <Grid xs={12} md={2}>
+              <PieNumber items={OrganizationBankStatementTotals} />
+            </Grid>
+            {!isMobile && (
+              <Grid
+                item
+                xs={1}
+                style={{
+                  height: "100%",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                <Divider
+                  type="vertical"
+                  style={{ height: !isMobile ? "100%" : "150px" }}
+                />
+              </Grid>
+            )}
+
             <Grid xs={6} md={2}>
               <PieChart items={OrganizationBankStatementTotals} />
             </Grid>

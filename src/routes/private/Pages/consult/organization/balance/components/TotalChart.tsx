@@ -27,14 +27,12 @@ export function OrganizationBalanceChart({ items }: PieChartValues) {
           items.balance_to_transactions,
           items.balance_to_payment,
           items.balance_reserved,
-          items.balance_total,
         ],
         backgroundColor: [
           "rgba(54, 162, 235, 0.2)",
           "rgba(255, 206, 86, 0.2)",
 
           "rgba(255, 99, 132, 0.2)",
-          "rgba(75, 192, 192, 0.2)",
         ],
         borderColor: [
           "#006086",
