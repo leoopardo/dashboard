@@ -456,7 +456,16 @@
     "withdraw_amount_value": "Valor saques",
     "merchant": "Empresa",
     "percent": "Percentual",
-    "fee": "Taxa"
+    "fee": "Taxa",
+    "category_name": "Categoria",
+    "user_name": "Usuário",
+    "total_in_canceled": "Entradas (Canceladas)",
+    "total_in_processing": "Entradas (Processando)",
+    "total_in_success": "Entradas (Sucesso)",
+    "total_out_canceled": "Saídas (Canceladas)",
+    "total_out_processing": "Saídas (Processando)",
+    "total_out_success": "Saídas (Sucesso)"
+
   },
   "actions": {
     "details": "Detalhes",

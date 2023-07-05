@@ -452,7 +452,15 @@
     "withdraw_amount_value": "Withdrawals value",
     "merchant": "Merchant",
     "percent": "Percent",
-    "fee": "Fee"
+    "fee": "Fee",
+    "category_name": "Cstegory",
+    "user_name": "Username",
+    "total_in_canceled": "In (Canceled)",
+    "total_in_processing": "In (Processing)",
+    "total_in_success": "In (Success)",
+    "total_out_canceled": "Out (Canceled)",
+    "total_out_processing": "Out (Processing)",
+    "total_out_success": "Out (Success)"
   },
   "actions": {
     "details": "Details",
