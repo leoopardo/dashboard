@@ -225,7 +225,7 @@ export const CustomTable = (props: TableProps) => {
                   key={column.name}
                   style={{ width: "100%", textAlign: "center" }}
                 >
-                  {text?.replace(
+                  {`${text}`?.replace(
                     /(\d{3})(\d{3})(\d{3})(\d{2})/,
                     "$1.$2.$3-$4"
                   ) || "-"}
@@ -446,7 +446,7 @@ export const CustomTable = (props: TableProps) => {
       </Grid>
     </Grid>
   ) : (
-    <Grid container>
+    <Grid container style={{ display: "flex", justifyContent: "center" }}>
       <Grid item xs={12}>
         <Mobile
           columns={props?.columns}
@@ -459,8 +459,11 @@ export const CustomTable = (props: TableProps) => {
       </Grid>
       {!props.removePagination && (
         <Pagination
-          current={Number(props?.data?.page)}
-          pageSize={Number(props?.data?.limit)}
+          current={Number(props?.query?.page)}
+          pageSize={Number(props?.query?.limit)}
+          onChange={(page) => {
+            props.setQuery((state: any) => ({ ...state, page }));
+          }}
         />
       )}
     </Grid>

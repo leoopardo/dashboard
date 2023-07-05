@@ -284,7 +284,7 @@ export const Mobile = (props: MobileProps) => {
                           key={value.name}
                           style={{ width: "100%", textAlign: "center" }}
                         >
-                          {item[value.name]?.replace(
+                          {`${item[value.name]}`?.replace(
                             /(\d{3})(\d{3})(\d{3})(\d{2})/,
                             "$1.$2.$3-$4"
                           ) || "-"}

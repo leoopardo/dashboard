@@ -8,6 +8,8 @@ import Countdown from "../countdown";
 import { useGetSelf } from "../../services/getSelf";
 import { useValidatePhone } from "../../services/sendValidationPhone";
 import { toast } from "react-hot-toast";
+import { queryClient } from "@src/services/queryClient";
+import { Toast } from "../Toast";
 
 interface ValidateTokenProps {
   open: boolean;
@@ -34,14 +36,10 @@ export const ValidateToken = ({
 }: ValidateTokenProps) => {
   const { t } = useTranslation();
   const { Self, refetchSelf } = useGetSelf();
-  const INITIAL_BODY: {
-    action: string;
-    cellphone: string | undefined;
-  } = { action, cellphone: body?.cellphone };
   const [validateBody, setValidateBody] = useState<{
     action: string;
     cellphone: string | undefined;
-  }>({ action, cellphone: body?.cellphone });
+  }>({ action, cellphone: undefined });
   const {
     ValidateToken,
     ValidateTokenError,
@@ -55,54 +53,62 @@ export const ValidateToken = ({
     ValidatePhoneError,
     ValidatePhoneSuccess,
   } = useValidatePhone({ validation_token: tokenState });
+
   const [ableToResend, setAbleToResend] = useState<boolean>(true);
+
+  const [validationTokenSent, setValidationTokenSent] =
+    useState<boolean>(false);
+  const [validationPhoneSent, setValidationPhoneSent] =
+    useState<boolean>(false);
 
   useEffect(() => {
     refetchSelf();
-    if (Self?.phone_validated) {
+    setValidationPhoneSent(false);
+    setValidationTokenSent(false);
+    setValidateBody({ action, cellphone: undefined });
+  }, [ValidatePhoneError, ValidatePhoneSuccess]);
+
+  useEffect(() => {
+    if (
+      Self &&
+      Self?.phone_validated &&
+      Self?.cellphone &&
+      !validationTokenSent
+    ) {
       setTokenState("");
-      setValidateBody(INITIAL_BODY);
-      return ValidateToken();
-    } else {
+      setValidateBody({ action, cellphone: `+${Self?.cellphone}` });
+      setValidationTokenSent(true);
+    }
+    if (Self && !Self?.phone_validated && !validationPhoneSent) {
       setValidateBody({
         action: "USER_VALIDATE_PHONE",
         cellphone: Self?.cellphone,
       });
+      setValidationPhoneSent(true);
     }
-
-    if (ValidatePhoneSuccess) {
-      toast.success("Telefone válidado com sucesso");
-    }
-
-    if (ValidatePhoneError) {
-      toast.error("Token inválido");
-    }
-  }, [ValidatePhoneError, ValidatePhoneSuccess]);
+  }, [Self]);
 
   useEffect(() => {
-    if (validateBody.action === "USER_VALIDATE_PHONE") {
+    if (
+      validateBody.cellphone &&
+      (!validationPhoneSent ||
+      !validationTokenSent)
+    ) {
       ValidateToken();
     }
-  }, [validateBody]);
-
-
-  useEffect(() => {
-    if (success) {
-      toast.success("Dados atualizados com sucesso");
-      setIsOpen(false);
-    }
-
-    if (ValidatePhoneError) {
-      toast.error("Erro ao atualizar dados");
-    }
-  }, [success, error]);
+  }, [validateBody, validationPhoneSent, validationTokenSent]);
 
   return Self?.phone_validated ? (
     <Modal
       centered
       title={t("modal.validate_token")}
       open={open}
-      onCancel={() => setIsOpen(false)}
+      onCancel={() => {
+        setIsOpen(false);
+        setValidationPhoneSent(false);
+        setValidationTokenSent(false);
+        setValidateBody({ action, cellphone: undefined });
+      }}
       footer={[
         <Grid
           style={{
@@ -124,6 +130,9 @@ export const ValidateToken = ({
             type="primary"
             onClick={() => {
               submit();
+              setValidationPhoneSent(false);
+              setValidationTokenSent(false);
+              setValidateBody({ action, cellphone: undefined });
             }}
           >
             {t("modal.confirm")}
@@ -154,7 +163,7 @@ export const ValidateToken = ({
           type="link"
           disabled={!ableToResend}
           onClick={() => {
-            setValidateBody(INITIAL_BODY);
+            setValidateBody({ action, cellphone: `+${Self?.cellphone}` });
             ValidateToken();
           }}
         >
@@ -167,7 +176,12 @@ export const ValidateToken = ({
       centered
       title={t("modal.validate_phone_number")}
       open={open}
-      onCancel={() => setIsOpen(false)}
+      onCancel={() => {
+        setIsOpen(false);
+        setValidationPhoneSent(false);
+        setValidationTokenSent(false);
+        setValidateBody({ action, cellphone: undefined });
+      }}
       footer={[
         <Grid
           style={{
@@ -189,6 +203,9 @@ export const ValidateToken = ({
             type="primary"
             onClick={() => {
               ValidatePhone();
+              setValidationPhoneSent(false);
+              setValidationTokenSent(false);
+              setValidateBody({ action, cellphone: undefined });
             }}
           >
             {t("modal.confirm")}
@@ -229,6 +246,13 @@ export const ValidateToken = ({
           {t("modal.resend_token_by_sms")}
         </Button>
       </Grid>
+
+      <Toast
+        actionSuccess={t("messages.validated")}
+        actionError={t("messages.validated")}
+        error={ValidatePhoneError}
+        success={ValidatePhoneSuccess}
+      />
     </Modal>
   );
 };

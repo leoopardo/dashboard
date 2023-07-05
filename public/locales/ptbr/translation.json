@@ -161,7 +161,6 @@
     "new_person": "Nova pessoa",
     "update_person": "Atualizar pessoa",
     "refresh": "Recarregar"
-
   },
   "modal": {
     "confirm": "Confirmar",
@@ -181,7 +180,9 @@
     "new_aggregator": "Novo agregador",
     "update_aggregator": "Atualizar agregador",
     "person": "Pessoa",
-    "new_person": "Nova pessoa"
+    "new_person": "Nova pessoa",
+    "register_in": "Registrar entrada",
+    "register_out": "Registrar saída"
   },
   "input": {
     "required": "Por favor, insira o {{field}}",
@@ -240,7 +241,8 @@
     "deposit_refund_fee_type": "Tipo de taxa de devolução depósito",
     "deposit_refund_fee_percent": "Percentual de taxa de devolução depósito",
     "deposit_refund_fee_value": "Valor taxa de devolução depósito",
-    "deposit_refund_fee_minimum_value": "Valor taxa minima de devolução depósito"
+    "deposit_refund_fee_minimum_value": "Valor taxa minima de devolução depósito",
+    "category": "Categoria"
   },
   "table": {
     "id": "ID",
@@ -455,8 +457,8 @@
     "total_in_success": "Entradas (Sucesso)",
     "total_out_canceled": "Saídas (Canceladas)",
     "total_out_processing": "Saídas (Processando)",
-    "total_out_success": "Saídas (Sucesso)"
-
+    "total_out_success": "Saídas (Sucesso)",
+    "category": "Categoria"
   },
   "actions": {
     "details": "Detalhes",

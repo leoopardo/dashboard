@@ -1,46 +1,46 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { AutoComplete, Empty } from "antd";
 import { useTranslation } from "react-i18next";
-import {
-  OperatorQuery,
-} from "@src/services/types/register/operators/operators.interface";
+import { OperatorQuery } from "@src/services/types/register/operators/operators.interface";
 import { useGetOperator } from "@src/services/register/operator/getOperators";
 import useDebounce from "@src/utils/useDebounce";
+import { OrganizationCategoriesQuery } from "@src/services/types/register/organization/organizationCategories.interface";
+import { useGetOrganizationCategories } from "@src/services/register/organization/categories/getCategories";
 
-interface MerchantSelectProps {
+interface CategorieSelectProps {
   setQueryFunction: Dispatch<SetStateAction<any>>;
   queryOptions: any;
 }
 
-export const OperatorSelect = ({
+export const OrganizationCategorieSelect = ({
   setQueryFunction,
   queryOptions,
-}: MerchantSelectProps) => {
+}: CategorieSelectProps) => {
   const { t } = useTranslation();
-  const [query, setQuery] = useState<OperatorQuery>({
+  const [query, setQuery] = useState<OrganizationCategoriesQuery>({
     page: 1,
     limit: 200,
     name: "",
   });
-  const { OperatorData, refetchOperatorData } = useGetOperator(query);
+  const { CategoriesData, refetchCategoriesData } = useGetOrganizationCategories(query);
   const [value, setValue] = useState<any>(null);
   const debounceSearch = useDebounce(query.name);
 
   useEffect(() => {
-    if (OperatorData && !value) {
-      const initial = OperatorData?.items.find(
-        (operator) => operator.id === queryOptions?.operator_id
+    if (CategoriesData && !value) {
+      const initial = CategoriesData?.items.find(
+        (operator) => operator.id === queryOptions?.category_id
       );
       if (initial) {
         setValue(initial?.name);
       }
     }
-  }, [queryOptions, OperatorData]);
+  }, [queryOptions, CategoriesData]);
 
   useEffect(() => {
-    if (OperatorData) {
-      const initial = OperatorData?.items.find(
-        (operator) => operator.id === queryOptions?.operator_id
+    if (CategoriesData) {
+      const initial = CategoriesData?.items.find(
+        (operator) => operator.id === queryOptions?.category_id
       );
       if (initial) {
         setValue(initial?.name);
@@ -49,7 +49,7 @@ export const OperatorSelect = ({
   }, [queryOptions]);
 
   useEffect(() => {
-    refetchOperatorData();
+    refetchCategoriesData();
   }, [debounceSearch]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,7 +61,7 @@ export const OperatorSelect = ({
     <AutoComplete
       size="large"
       options={
-        OperatorData?.items?.map((item, index) => {
+        CategoriesData?.items?.map((item, index) => {
           return { key: index, value: item.id, label: item.name };
         }) ?? []
       }
@@ -75,14 +75,13 @@ export const OperatorSelect = ({
       onSelect={(value) =>
         setQueryFunction((state: any) => ({
           ...state,
-          operator_id: value,
-          group_id: null,
+          category_id: value,
         }))
       }
       onInputKeyDown={(event: any) => {
         handleChange(event);
       }}
-      placeholder={t("input.operator")}
+      placeholder={t("input.category")}
     />
   );
 };

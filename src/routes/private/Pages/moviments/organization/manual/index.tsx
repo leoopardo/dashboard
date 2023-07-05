@@ -12,6 +12,11 @@ import { FilterChips } from "@src/components/FiltersModal/filterChips";
 import { CustomTable } from "@src/components/CustomTable";
 import { FiltersModal } from "@src/components/FiltersModal";
 import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
+import { CreateMovimentModal } from "../../components/createMovimentModal";
+import { ValidateToken } from "@src/components/ValidateToken";
+import { useCreateManualTransaction } from "@src/services/moviments/organization/manual/createManualTransaction";
+import { CreateManualTransaction } from "@src/services/types/moviments/organization/createManualTransaction.interface";
+import { useGetSelf } from "@src/services/getSelf";
 
 export const OrgonizationManual = () => {
   const INITIAL_QUERY: GetMovimentsQuery = {
@@ -27,11 +32,19 @@ export const OrgonizationManual = () => {
       .startOf("day")
       .format("YYYY-MM-DDTHH:mm:ss.SSS"),
   };
+  const [tokenState, setTokenState] = useState<string>("");
   const [query, setQuery] = useState<GetMovimentsQuery>(INITIAL_QUERY);
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<GetMovimentsItem | null>(null);
+  const [operationInOpen, setOperationInIOpen] = useState<boolean>(false);
+  const [operationOutOpen, setOperationOutOpen] = useState<boolean>(false);
+  const [operationInTokenModalOpen, setOperationInTokenModalOpen] =
+    useState<boolean>(false);
+  const [operationInBody, setOperationInBody] =
+    useState<CreateManualTransaction | null>(null);
 
   const { t } = useTranslation();
+  const { Self } = useGetSelf();
 
   const {
     OrganizationMovimentsData,
@@ -40,9 +53,22 @@ export const OrgonizationManual = () => {
     refetchOrganizationMovimentsData,
   } = useGetOrganizationMoviments(query);
 
+  const { mutate, isLoading, error, isSuccess } =
+    useCreateManualTransaction(operationInBody);
+
   useEffect(() => {
     refetchOrganizationMovimentsData();
   }, [query]);
+
+  const onSubmitIn = () => {
+    setOperationInIOpen(false);
+    setOperationOutOpen(false);
+    setOperationInTokenModalOpen(true);
+  };
+
+  useEffect(() => {
+    setOperationInBody((state) => ({ ...state, validation_token: tokenState }));
+  }, [tokenState]);
 
   return (
     <Grid container style={{ padding: "25px" }}>
@@ -60,6 +86,8 @@ export const OrgonizationManual = () => {
               case "total_in_success":
                 return (
                   <Grid
+                    key={key}
+                    item
                     xs={5}
                     md="auto"
                     style={{
@@ -82,7 +110,13 @@ export const OrgonizationManual = () => {
               case "total_out_canceled":
               case "total_out_success":
                 return (
-                  <Grid xs={5} md="auto" style={{ margin: "10px" }}>
+                  <Grid
+                    key={key}
+                    item
+                    xs={5}
+                    md="auto"
+                    style={{ margin: "10px" }}
+                  >
                     <Statistic
                       valueStyle={{ color: "#cf1322", fontSize: "20px" }}
                       prefix={<ArrowDownOutlined />}
@@ -99,19 +133,7 @@ export const OrgonizationManual = () => {
                 return;
             }
           })}
-        <Grid container item xs={12} md={2} rowSpacing={1}>
-          <Grid item xs={12}>
-            <Button
-              style={{ width: "100%" }}
-              size="large"
-              type="default"
-              shape="round"
-              danger
-            >
-              <ArrowDownOutlined />
-              Registrar saída
-            </Button>
-          </Grid>
+        <Grid container item xs={12} md={3} lg={2} rowSpacing={1}>
           <Grid item xs={12}>
             {" "}
             <Button
@@ -119,8 +141,22 @@ export const OrgonizationManual = () => {
               size="large"
               type="default"
               shape="round"
+              onClickCapture={() => setOperationInIOpen(true)}
             >
               <ArrowUpOutlined /> Registrar entrada
+            </Button>
+          </Grid>
+          <Grid item xs={12}>
+            <Button
+              style={{ width: "100%" }}
+              size="large"
+              type="default"
+              shape="round"
+              danger
+              onClickCapture={() => setOperationOutOpen(true)}
+            >
+              <ArrowDownOutlined />
+              Registrar saída
             </Button>
           </Grid>
         </Grid>
@@ -215,6 +251,45 @@ export const OrgonizationManual = () => {
           startDateKeyName="start_date"
           endDateKeyName="end_date"
           initialQuery={INITIAL_QUERY}
+        />
+      )}
+
+      {operationInOpen && (
+        <CreateMovimentModal
+          open={operationInOpen}
+          setOpen={setOperationInIOpen}
+          category="organization"
+          type="in"
+          onSubmit={onSubmitIn}
+          body={operationInBody}
+          setBody={setOperationInBody}
+        />
+      )}
+      {operationOutOpen && (
+        <CreateMovimentModal
+          open={operationOutOpen}
+          setOpen={setOperationOutOpen}
+          category="organization"
+          type="out"
+          onSubmit={onSubmitIn}
+          body={operationInBody}
+          setBody={setOperationInBody}
+        />
+      )}
+
+      {operationInTokenModalOpen && (
+        <ValidateToken
+          open={operationInTokenModalOpen}
+          setIsOpen={setOperationInTokenModalOpen}
+          action="MERCHANT_ENTRY_ACCOUNT_ORGANIZATION_CREATE"
+          body={operationInBody}
+          setTokenState={setTokenState}
+          tokenState={tokenState}
+          error={error}
+          success={isSuccess}
+          submit={() => {
+            mutate();
+          }}
         />
       )}
     </Grid>

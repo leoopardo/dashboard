@@ -4,8 +4,8 @@ export interface OrganizationCategoriesQuery {
   start_date?: string;
   end_date?: string;
   status?: boolean;
-  sort_field: string;
-  sort_order: string;
+  sort_field?: string;
+  sort_order?: string;
   page: number;
   limit: number;
 }

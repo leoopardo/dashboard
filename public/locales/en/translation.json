@@ -217,7 +217,8 @@
     "deposit_refund_fee_type": "Deposit refund fee type",
     "deposit_refund_fee_percent": "Deposit refund fee percent",
     "deposit_refund_fee_value": "Deposit refund fee value",
-    "deposit_refund_fee_minimum_value": "Deposit refund fee minimum value"
+    "deposit_refund_fee_minimum_value": "Deposit refund fee minimum value",
+    "category":"Category"
   },
   "modal": {
     "confirm": "Confirm",
@@ -236,7 +237,9 @@
     "update_operator": "AUpdate operator",
     "new_aggregator": "New agregator",
     "update_aggregator": "Update agregator",
-    "person": "Person"
+    "person": "Person",
+    "register_in": "Register in",
+    "register_out": "Register out"
   },
   "table": {
     "id": "ID",
@@ -451,7 +454,8 @@
     "total_in_success": "In (Success)",
     "total_out_canceled": "Out (Canceled)",
     "total_out_processing": "Out (Processing)",
-    "total_out_success": "Out (Success)"
+    "total_out_success": "Out (Success)",
+    "category": "Category"
   },
   "actions": {
     "details": "Details",
