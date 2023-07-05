@@ -251,7 +251,8 @@
     "permission_different_payer_pf": "Permissão pagamentos de terceiros",
     "max_value_different_payer_pf_by_day": "Valor máximo terceiros/dia",
     "withdraw_limit_document_by_day": "Limite de Saques por CPF (Quantidade por dia)",
-    "unlimited": "Sem limites"
+    "unlimited": "Sem limites",
+    "check_cpf_permission": "Permissão Checar CPF"
   },
   "table": {
     "id": "ID",
