@@ -182,6 +182,12 @@ export const SidebarNavigation = () => {
         getItem("merchant_blacklist", null, null, false, (e) =>
           handleNavigate(e?.keyPath)
         ),
+        getItem("merchant_categories", null, null, false, (e) =>
+          handleNavigate(e?.keyPath)
+        ),
+        getItem("merchants_fee_plans", null, null, false, (e) =>
+          handleNavigate(e?.keyPath)
+        ),
         getItem(
           "merchant_reports",
           null,
