@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import CurrencyInputField from "react-currency-input-field";
 
 interface CurrencyInputProps {
-  value: number | undefined;
+  value: number | undefined | string;
   onChange: (value: number | undefined) => void;
   disabled?: boolean
 }
@@ -14,11 +14,11 @@ export const CurrencyInput: React.FC<CurrencyInputProps> = ({
 }) => {
 const [isHovered, setIsHovered] = useState(false)
 
-const handleChange = (value: number | undefined) => {
-    onChange(value);
+const handleChange = ( value: number | undefined | string) => {
+    onChange(Number(value));
 };
 
-const formattedValue = value !== undefined ? value.toString() : '0.00';
+const formattedValue = value !== undefined ? value?.toString() : '0.00';
 
 const handleMouseEnter = () => {
   setIsHovered(true);

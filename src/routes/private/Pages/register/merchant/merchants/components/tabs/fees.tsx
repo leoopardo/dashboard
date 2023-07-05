@@ -7,8 +7,8 @@ import { useMerchantFeesConfig } from "@src/services/register/merchant/merchant/
 import { useGetDepositFeePlansRegister } from "@src/services/register/merchant/feePlans/getDepositFeePlans";
 import { useGetWithdrawFeePlansRegister } from "@src/services/register/merchant/feePlans/getWithdrawFeePlans";
 import { Toast } from "@components/Toast";
-import { IMerchantFeesProps } from "@src/services/types/register/merchants/merchantFeesConfig";
-import { IMerchantFeesUpdate } from "@src/services/types/register/merchants/merchantFeesConfig";
+import { IMerchantFeesProps } from "@src/services/types/register/merchants/merchantFeesConfig.interface";
+import { IMerchantFeesUpdate } from "@src/services/types/register/merchants/merchantFeesConfig.interface";
 import { CurrencyInput } from "@src/components/CurrencyInput";
 import {
   Form,
@@ -80,17 +80,16 @@ export const FeesTab = (props: { id?: string }) => {
       { proptype: "pix_refund_fee_type", type:'PERCENT', value: "pix_refund_fee_percent" },
       { proptype: "pix_refund_fee_type", type:'VALUE', value: "pix_refund_fee_value" },
     ];
-
     const stopRequest = array.some((item) => {
       if(body && body[item.proptype as keyof typeof body] === item.type &&
       (bodyUpdate && bodyUpdate?.[item.value as keyof typeof bodyUpdate] === undefined ||
         Number(bodyUpdate?.[item.value as keyof typeof bodyUpdate]) <= 0)) {
+          console.log('test', item.value)
           return true
         } else return false
     })
-    
-   if(stopRequest) return;
-
+  
+    if(stopRequest) return;
 
     UpdateMutate();
     setIsConfirmOpen(false);
@@ -338,14 +337,14 @@ export const FeesTab = (props: { id?: string }) => {
               name="customer_withdraw_fee_percent"
               disabled={body?.customer_withdraw_fee_type === "VALUE"}
               value={body?.customer_withdraw_fee_percent}
-              onChange={(value) => {
+              onChange={(e) => {
                 setBody((state) => ({
                   ...state,
-                  customer_withdraw_fee_percent: Number(value),
+                  customer_withdraw_fee_percent: Number(e.target.value),
                 }));
                 setBodyUpdate((state) => ({
                   ...state,
-                  customer_withdraw_fee_percent: Number(value),
+                  customer_withdraw_fee_percent: Number(e.target.value),
                 }));
               }}
             />

@@ -149,7 +149,8 @@
   },
   "buttons": {
     "create": "Criar",
-    "update": "Atualizar {{menu}}",
+    "update": "Atualizar",
+    "update_menu":  "Atualizar {{menu}}",
     "new_user": "novo usuário",
     "update_user": "Atualizar usuário",
     "new_categorie": "nova categoria",
@@ -242,7 +243,15 @@
     "deposit_refund_fee_percent": "Percentual de taxa de devolução depósito",
     "deposit_refund_fee_value": "Valor taxa de devolução depósito",
     "deposit_refund_fee_minimum_value": "Valor taxa minima de devolução depósito",
-    "category": "Categoria"
+    "category": "Categoria",
+    "general_deposit_permission": "Permissão de depósito geral",
+    "general_withdraw_permission": "Permissão de saque geral",
+    "account_PJ_payment_permission": "Permissão pagamento de conta PJ",
+    "max_value_payer_pj_by_day": "Valor máximo PJ/dia",
+    "permission_different_payer_pf": "Permissão pagamentos de terceiros",
+    "max_value_different_payer_pf_by_day": "Valor máximo terceiros/dia",
+    "withdraw_limit_document_by_day": "Limite de Saques por CPF (Quantidade por dia)",
+    "unlimited": "Sem limites"
   },
   "table": {
     "id": "ID",
@@ -433,7 +442,7 @@
     "refund_amount_fee": "Taxa de devoluções",
     "total_transactions": "Total transactions",
     "cash_in_number": "Depósitos",
-    "cash_in_value": "Valor dpósitos",
+    "cash_in_value": "Valor depósitos",
     "cash_in_fee": "Taxa depósitos",
     "cash_out_number": "Saques",
     "cash_out_value": "Valor saques",
@@ -446,7 +455,7 @@
     "fee_type": "Tipo de taxa",
     "fee_percent": "Taxa (%)",
     "pix_amount_value": "Valor depósitos",
-    "withdraw_amount_value": "Vlor saques",
+    "withdraw_amount_value": "Valor saques",
     "merchant": "Empresa",
     "percent": "Percentual",
     "fee": "Taxa",
@@ -463,7 +472,8 @@
   "actions": {
     "details": "Detalhes",
     "edit": "Editar",
-    "logs_webhooks": "Logs de webhooks"
+    "logs_webhooks": "Logs de webhooks",
+    "configs": "Configurações"
   },
   "error": {
     "400": "Nenhum dado encontrado.",

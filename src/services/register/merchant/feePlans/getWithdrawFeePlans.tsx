@@ -4,7 +4,7 @@ import { useQuery } from "react-query";
 import {
   MerchantsQuery,
 } from "@services/types/register/merchants/merchantsRegister.interface";
-import { IDepositFeeResponse } from "@src/services/types/register/merchants/merchantFeePlans";
+import { IDepositFeeResponse } from "@src/services/types/register/merchants/merchantFeePlans.interface";
 
 
 export function useGetWithdrawFeePlansRegister(params?: MerchantsQuery) {
