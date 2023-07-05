@@ -1,8 +1,3 @@
-import { useGetOrganizationMoviments } from "@src/services/moviments/organization/manual/GetManualTransactions";
-import {
-  GetMovimentsItem,
-  GetMovimentsQuery,
-} from "@src/services/types/moviments/organization/getMoviments";
 import moment from "moment";
 import React, { useState, useEffect } from "react";
 import { Grid } from "@mui/material";
@@ -14,14 +9,15 @@ import { FiltersModal } from "@src/components/FiltersModal";
 import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
 import { CreateMovimentModal } from "../../components/createMovimentModal";
 import { ValidateToken } from "@src/components/ValidateToken";
-import { useCreateManualTransaction } from "@src/services/moviments/organization/manual/createManualTransaction";
-import { CreateManualTransaction } from "@src/services/types/moviments/organization/createManualTransaction.interface";
 import { useGetSelf } from "@src/services/getSelf";
-import { useMediaQuery } from "react-responsive";
+import { useGetMerchantMoviments } from "@src/services/moviments/merchants/manual/GetManualTransactions";
+import { CreateMerchantManualTransaction } from "@src/services/types/moviments/merchant/createManualTransaction.interface";
+import { GetMerchantMovimentsItem, GetMerchantMovimentsQuery } from "@src/services/types/moviments/merchant/getMoviments";
+import { useCreateMerchantManualTransaction } from "@src/services/moviments/merchants/manual/createManualTransaction";
 
-export const OrgonizationManual = () => {
-  const isMobile = useMediaQuery({ maxWidth: "900px" });
-  const INITIAL_QUERY: GetMovimentsQuery = {
+export const MerchantManual = () => {
+
+  const INITIAL_QUERY: GetMerchantMovimentsQuery = {
     page: 1,
     limit: 25,
     sort_field: "createdAt",
@@ -35,31 +31,31 @@ export const OrgonizationManual = () => {
       .format("YYYY-MM-DDTHH:mm:ss.SSS"),
   };
   const [tokenState, setTokenState] = useState<string>("");
-  const [query, setQuery] = useState<GetMovimentsQuery>(INITIAL_QUERY);
+  const [query, setQuery] = useState<GetMerchantMovimentsQuery>(INITIAL_QUERY);
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
-  const [, setCurrentItem] = useState<GetMovimentsItem | null>(null);
+  const [, setCurrentItem] = useState<GetMerchantMovimentsItem | null>(null);
   const [operationInOpen, setOperationInIOpen] = useState<boolean>(false);
   const [operationOutOpen, setOperationOutOpen] = useState<boolean>(false);
   const [operationInTokenModalOpen, setOperationInTokenModalOpen] =
     useState<boolean>(false);
   const [operationInBody, setOperationInBody] =
-    useState<CreateManualTransaction | null>(null);
+    useState<CreateMerchantManualTransaction | null>(null);
 
   const { t } = useTranslation();
   const { Self } = useGetSelf();
 
   const {
-    OrganizationMovimentsData,
-    isOrganizationMovimentsDataFetching,
-    OrganizationMovimentsDataError,
-    refetchOrganizationMovimentsData,
-  } = useGetOrganizationMoviments(query);
+    MerchantMovimentsData,
+    isMerchantMovimentsDataFetching,
+    MerchantMovimentsDataError,
+    refetchMerchantMovimentsData,
+  } = useGetMerchantMoviments(query);
 
   const { mutate, isLoading, error, isSuccess } =
-    useCreateManualTransaction(operationInBody);
+    useCreateMerchantManualTransaction(operationInBody);
 
   useEffect(() => {
-    refetchOrganizationMovimentsData();
+    refetchMerchantMovimentsData();
   }, [query]);
 
   const onSubmitIn = () => {
@@ -80,8 +76,8 @@ export const OrgonizationManual = () => {
         xs={12}
         style={{ display: "flex", justifyContent: "center" }}
       >
-        {OrganizationMovimentsData &&
-          Object.keys(OrganizationMovimentsData).map((key) => {
+        {MerchantMovimentsData &&
+          Object.keys(MerchantMovimentsData).map((key) => {
             switch (key) {
               case "total_in_processing":
               case "total_in_canceled":
@@ -100,11 +96,11 @@ export const OrgonizationManual = () => {
                       valueStyle={{ color: "#3f8600", fontSize: "20px" }}
                       prefix={<ArrowUpOutlined />}
                       title={t(`table.${key}`)}
-                      loading={isOrganizationMovimentsDataFetching}
+                      loading={isMerchantMovimentsDataFetching}
                       value={new Intl.NumberFormat("pt-BR", {
                         style: "currency",
                         currency: "BRL",
-                      }).format(OrganizationMovimentsData[key] || 0)}
+                      }).format(MerchantMovimentsData[key] || 0)}
                     />
                   </Grid>
                 );
@@ -123,11 +119,11 @@ export const OrgonizationManual = () => {
                       valueStyle={{ color: "#cf1322", fontSize: "20px" }}
                       prefix={<ArrowDownOutlined />}
                       title={t(`table.${key}`)}
-                      loading={isOrganizationMovimentsDataFetching}
+                      loading={isMerchantMovimentsDataFetching}
                       value={new Intl.NumberFormat("pt-BR", {
                         style: "currency",
                         currency: "BRL",
-                      }).format(OrganizationMovimentsData[key] || 0)}
+                      }).format(MerchantMovimentsData[key] || 0)}
                     />
                   </Grid>
                 );
@@ -177,7 +173,7 @@ export const OrgonizationManual = () => {
           <Button
             size="large"
             style={{ width: "100%" }}
-            loading={isOrganizationMovimentsDataFetching}
+            loading={isMerchantMovimentsDataFetching}
             type="primary"
             onClick={() => setIsFiltersOpen(true)}
           >
@@ -213,9 +209,9 @@ export const OrgonizationManual = () => {
             query={query}
             setCurrentItem={setCurrentItem}
             setQuery={setQuery}
-            data={OrganizationMovimentsData}
-            items={OrganizationMovimentsData?.items}
-            error={OrganizationMovimentsDataError}
+            data={MerchantMovimentsData}
+            items={MerchantMovimentsData?.items}
+            error={MerchantMovimentsDataError}
             columns={[
               { name: "_id", type: "id" },
               { name: "category_name", type: "text" },
@@ -225,7 +221,7 @@ export const OrgonizationManual = () => {
               { name: "createdAt", type: "date" },
               { name: "status", type: "status" },
             ]}
-            loading={isOrganizationMovimentsDataFetching}
+            loading={isMerchantMovimentsDataFetching}
             actions={[]}
             removeTotal
             label={[
@@ -246,7 +242,7 @@ export const OrgonizationManual = () => {
           setQuery={setQuery}
           haveInitialDate
           filters={["start_date", "end_date"]}
-          refetch={refetchOrganizationMovimentsData}
+          refetch={refetchMerchantMovimentsData}
           selectOptions={{
             status: [],
           }}
@@ -260,7 +256,7 @@ export const OrgonizationManual = () => {
         <CreateMovimentModal
           open={operationInOpen}
           setOpen={setOperationInIOpen}
-          category="organization"
+          category="merchant"
           type="in"
           onSubmit={onSubmitIn}
           body={operationInBody}
@@ -271,7 +267,7 @@ export const OrgonizationManual = () => {
         <CreateMovimentModal
           open={operationOutOpen}
           setOpen={setOperationOutOpen}
-          category="organization"
+          category="merchant"
           type="out"
           onSubmit={onSubmitIn}
           body={operationInBody}

@@ -1,3 +1,4 @@
+import { MerchantCategorieSelect } from "@src/components/Selects/merchantCategorieSelect";
 import { OrganizationCategorieSelect } from "@src/components/Selects/organizationCategorieSelect";
 import { Button, Drawer, Form, FormInstance, Input } from "antd";
 import { Dispatch, SetStateAction, useRef, useEffect } from "react";
@@ -71,27 +72,33 @@ export const CreateMovimentModal = ({
           setOpen(false);
         }}
       >
-        {category === "organization" && (
-          <Form.Item
-            label={t("table.category")}
-            name="category"
-            style={{ margin: 10 }}
-            rules={[
-              {
-                required: !body?.category_id,
-                message:
-                  t("input.required", {
-                    field: t("table.category"),
-                  }) || "",
-              },
-            ]}
-          >
+        <Form.Item
+          label={t("table.category")}
+          name="category"
+          style={{ margin: 10 }}
+          rules={[
+            {
+              required: !body?.category_id,
+              message:
+                t("input.required", {
+                  field: t("table.category"),
+                }) || "",
+            },
+          ]}
+        >
+          {" "}
+          {category === "organization" ? (
             <OrganizationCategorieSelect
               setQueryFunction={setBody}
               queryOptions={body}
             />
-          </Form.Item>
-        )}
+          ) : (
+            <MerchantCategorieSelect
+              setQueryFunction={setBody}
+              queryOptions={body}
+            />
+          )}
+        </Form.Item>
 
         <Form.Item
           label={t("table.value")}
