@@ -34,7 +34,7 @@ export const MerchantConfigs = () => {
     }, 
     {
       key: "3",
-      label:`${t("table.merchant_config")}s`,
+      label:`${t("table.merchant_name")} Configs`,
       children: (
         <MerchantConfigTab id={params.id}/>
       ),

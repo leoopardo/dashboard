@@ -1,51 +1,134 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, ChangeEvent } from "react";
+import { CheckboxChangeEvent } from "antd/lib/checkbox";
 import { Grid } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { useMerchantBankConfig } from "@services/register/merchant/merchant/bankConfig/getBankConfig";
-import { useUpdateBankConfig } from "@src/services/register/merchant/merchant/bankConfig/updateBankConfig";
-import { IMerchantBankUpdate } from "@services/types/register/merchants/merchantBankConfig";
+import { useMerchantConfig } from "@src/services/register/merchant/merchant/merchantConfig.tsx/getMerchantConfig";
+import { useUpdateMerchantConfig } from "@src/services/register/merchant/merchant/merchantConfig.tsx/updateMerchantConfig";
+import { IMerchantConfig } from "@src/services/types/register/merchants/merchantConfig.interface";
 import { CurrencyInput } from "@src/components/CurrencyInput";
 import { Toast } from "@components/Toast";
-import { Form, FormInstance, Select, Button, Popconfirm, Checkbox, Input } from "antd";
+import {
+  Form,
+  FormInstance,
+  Select,
+  Button,
+  Popconfirm,
+  Checkbox,
+  Input,
+} from "antd";
 
 export const MerchantConfigTab = (props: { id?: string }) => {
   const formRef = useRef<FormInstance>(null);
+  const submitRef = useRef<HTMLButtonElement>(null);
   const { t } = useTranslation();
-  const [body, setBody] = useState<IMerchantBankUpdate | null>(null);
-  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const {
-    isMerchantBankFetching,
-    merchantBankData,
-    merchantBankError,
-    refetchMerchantBankData,
-  } = useMerchantBankConfig(props.id);
-  const { UpdateError, UpdateIsLoading, UpdateIsSuccess, UpdateMutate } =
-    useUpdateBankConfig(body);
+    merchantConfigData,
+    refetchMerchantConfigData,
+    isMerchantConfigFetching,
+  } = useMerchantConfig(props?.id);
+  const [body, setBody] = useState<IMerchantConfig | null | undefined>(
+    merchantConfigData?.merchantConfig
+  );
+  const [bodyUpdate, setBodyUpdate] = useState<
+    Partial<IMerchantConfig> | null | undefined
+  >(null);
+  const [withdrawUnlimited, setWithdrawUnlimited] = useState(false);
+  const [payerPjUnlimited, setPayerPjUnlimited] = useState(false);
+  const [differentPayerUnlimited, setDifferentPayerUnlimited] = useState(false);
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const cashoutLimits = [null, 1, 2, 3, 4, 5];
 
-  useEffect(() => {
+  const { UpdateIsSuccess, UpdateMutate, UpdateIsLoading, UpdateError } =
+    useUpdateMerchantConfig({ merchant_id: Number(props?.id), ...bodyUpdate });
+
+  const handleWithdrawUnlimitedChange = (event: CheckboxChangeEvent) => {
+    setWithdrawUnlimited(event.target.checked);
+    formRef.current?.setFieldsValue({ cash_out_max_value: null });
     setBody((state: any) => ({
       ...state,
-      merchants_ids: [Number(props?.id)],
-      cash_in_bank: merchantBankData?.merchantConfig?.cash_in_bank,
-      cash_out_bank: merchantBankData?.merchantConfig?.cash_out_bank,
+      cash_out_max_value: null,
     }));
-  }, [merchantBankData]);
+    setBodyUpdate((state: any) => ({
+      ...state,
+      cash_out_max_value: null,
+    }));
+  };
+
+  const handlPayerPjUnlimitedChange = (event: CheckboxChangeEvent) => {
+    setPayerPjUnlimited(event.target.checked);
+    formRef.current?.setFieldsValue({ cash_in_max_value_receive_by_pj: null });
+    setBody((state: any) => ({
+      ...state,
+      cash_in_max_value_receive_by_pj: null,
+    }));
+    setBodyUpdate((state: any) => ({
+      ...state,
+      cash_in_max_value_receive_by_pj: null,
+    }));
+  };
+
+  const handleDifferentPayerUnlimitedChange = (event: CheckboxChangeEvent) => {
+    setDifferentPayerUnlimited(event.target.checked);
+    formRef.current?.setFieldsValue({ cash_in_max_value_receive_by_different_payer: null });
+    setBody((state: any) => ({
+      ...state,
+      cash_in_max_value_receive_by_different_payer: null,
+    }));
+    setBodyUpdate((state: any) => ({
+      ...state,
+      cash_in_max_value_receive_by_different_payer: null,
+    }));
+  };
+
+  const handleSubmit = () => {
+    const array = [
+      { props: "cash_out_max_value", isUnlimited: withdrawUnlimited },
+      { props: "cash_in_max_value_receive_by_pj",  isUnlimited: payerPjUnlimited },
+      { props: "cash_in_max_value_receive_by_different_payer", isUnlimited: differentPayerUnlimited },
+    ];
+    const stopRequest = array.some((item) => {
+      if(item.isUnlimited === false && body && body[item.props as keyof typeof body] === null ) {
+        setIsConfirmOpen(false);
+          return true
+        } else return false
+    })
+  
+    if(stopRequest) return;
+
+    UpdateMutate();
+    setIsConfirmOpen(false);
+  }
 
   useEffect(() => {
-    refetchMerchantBankData();
+    refetchMerchantConfigData();
   }, [UpdateIsSuccess]);
+
+  useEffect(() => {
+    formRef.current?.setFieldsValue(merchantConfigData?.merchantConfig);
+
+    merchantConfigData?.merchantConfig?.cash_out_max_value === null &&
+      setWithdrawUnlimited(true);
+    merchantConfigData?.merchantConfig?.cash_in_max_value_receive_by_pj ===
+      null && setPayerPjUnlimited(true);
+    merchantConfigData?.merchantConfig
+      ?.cash_in_max_value_receive_by_different_payer === null &&
+      setDifferentPayerUnlimited(true);
+  }, [merchantConfigData]);
 
   return (
     <Form
       ref={formRef}
       layout="vertical"
-      initialValues={merchantBankData ? merchantBankData : {}}
+      onSubmitCapture={() => handleSubmit()}
+      initialValues={
+        merchantConfigData ? merchantConfigData?.merchantConfig : {}
+      }
     >
       <Grid container spacing={1}>
         <Grid item xs={12} md={6}>
           <Form.Item
-            label={t("input.withdraw_fee_type")}
-            name="customer_withdraw_fee_type"
+            label={t("input.general_deposit_permission")}
+            name="cash_in_permission"
           >
             <Select
               size="large"
@@ -56,24 +139,24 @@ export const MerchantConfigTab = (props: { id?: string }) => {
                   label: `${t(`table.${item}`)}`,
                 })) ?? []
               }
-              value={null}
+              value={body?.cash_in_permission}
               onChange={(value) => {
-                /*     setBody((state) => ({
+                setBody((state) => ({
                   ...state,
-                  customer_withdraw_fee_type: value,
+                  cash_in_permission: value,
                 }));
                 setBodyUpdate((state) => ({
                   ...state,
-                  customer_withdraw_fee_type: value,
-                })); */
+                  cash_in_permission: value,
+                }));
               }}
             />
           </Form.Item>
         </Grid>
         <Grid item xs={12} md={6}>
           <Form.Item
-            label={t("input.withdraw_fee_type")}
-            name="customer_withdraw_fee_type"
+            label={t("input.general_withdraw_permission")}
+            name="cash_out_permission"
           >
             <Select
               size="large"
@@ -84,133 +167,177 @@ export const MerchantConfigTab = (props: { id?: string }) => {
                   label: `${t(`table.${item}`)}`,
                 })) ?? []
               }
-              value={null}
+              value={body?.cash_out_permission}
               onChange={(value) => {
-                /*     setBody((state) => ({
+                setBody((state) => ({
                   ...state,
-                  customer_withdraw_fee_type: value,
+                  cash_out_permission: value,
                 }));
                 setBodyUpdate((state) => ({
                   ...state,
-                  customer_withdraw_fee_type: value,
-                })); */
+                  cash_out_permission: value,
+                }));
               }}
             />
           </Form.Item>
         </Grid>
-        <Grid item xs={8} sm={6} md={2}>
+        <Grid item xs={12} md={6}>
           <Form.Item
-            label={t("input.deposit_refund_fee_minimum_value")}
-            name="pix_refund_fee_min"
+            label={t("input.withdraw_limit_document_by_day")}
+            name="cash_out_transaction_limit"
+          >
+            <Select
+              size="large"
+              options={
+                cashoutLimits?.map((item, index) => ({
+                  key: index,
+                  value: item,
+                  label: item === null ? t(`input.unlimited`) : item,
+                })) ?? []
+              }
+              value={body?.cash_out_transaction_limit}
+              onChange={(value) => {
+                setBody((state) => ({
+                  ...state,
+                  cash_out_transaction_limit: value,
+                }));
+                setBodyUpdate((state) => ({
+                  ...state,
+                  cash_out_transaction_limit: value,
+                }));
+              }}
+            />
+          </Form.Item>
+        </Grid>
+        <Grid item xs={8} sm={6} md={3}>
+          <Form.Item
+            label={t("input.cash_out_max_value")}
+            name="cash_out_max_value"
+            rules={[
+              {
+                required: !withdrawUnlimited,
+                message:
+                  t("input.required", {
+                    field: t("input.cash_out_max_value"),
+                  }) || "",
+              },
+            ]}
           >
             <CurrencyInput
-              value={""}
+              disabled={withdrawUnlimited}
+              value={body?.cash_out_max_value || 0}
               onChange={(value) => {
-                /*   setBody((state) => ({
+                setBody((state) => ({
                   ...state,
-                  pix_refund_fee_value: value,
+                  cash_out_max_value: value,
                 }));
                 setBodyUpdate((state) => ({
                   ...state,
-                  pix_refund_fee_value: value,
-                })); */
+                  cash_out_max_value: value,
+                }));
               }}
             />
           </Form.Item>
         </Grid>
-        <Grid item container alignItems={'center'} style={{marginTop: '28px'}} xs={4} sm={6} md={2}>
-          <Form.Item
-            label={''}
-            name="pix_refund_fee_min"
-          >
+        <Grid
+          item
+          container
+          alignItems={"center"}
+          style={{ marginTop: "28px" }}
+          xs={4}
+          sm={6}
+          md={2}
+        >
+          <Form.Item label={""} name="pix_refund_fee_min">
             <Checkbox
-              checked={true}
-              onChange={(event: any) => {
-              /*   isAgeAbled(event.target.checked);
-                setIsAgeRangeAbled(event.target.checked); */
-              }}
+              checked={withdrawUnlimited}
+              onChange={handleWithdrawUnlimitedChange}
             >
-              {t("table.unlimited")}
+              {t("input.unlimited")}
             </Checkbox>
           </Form.Item>
         </Grid>
-        <Grid item xs={8} sm={6} md={2}>
+        <Grid item xs={12} md={6}>
           <Form.Item
-            label={t("input.deposit_refund_fee_minimum_value")}
-            name="pix_refund_fee_min"
+            label={t("input.account_PJ_payment_permission")}
+            name="cash_in_receive_by_pj"
           >
-            <CurrencyInput
-              value={""}
+            <Select
+              size="large"
+              options={
+                [true, false]?.map((item, index) => ({
+                  key: index,
+                  value: item,
+                  label: `${t(`table.${item}`)}`,
+                })) ?? []
+              }
+              value={body?.cash_in_receive_by_pj}
               onChange={(value) => {
-                /*   setBody((state) => ({
+                setBody((state) => ({
                   ...state,
-                  pix_refund_fee_value: value,
+                  cash_in_receive_by_pj: value,
                 }));
                 setBodyUpdate((state) => ({
                   ...state,
-                  pix_refund_fee_value: value,
-                })); */
+                  cash_in_receive_by_pj: value,
+                }));
               }}
             />
           </Form.Item>
         </Grid>
-        <Grid item container alignItems={'center'} style={{marginTop: '28px'}} xs={12} sm={6} md={2}>
+        <Grid item xs={8} sm={6} md={3}>
           <Form.Item
-            label={''}
-            name="pix_refund_fee_min"
-          >
-            <Checkbox
-              checked={true}
-              onChange={(event: any) => {
-              /*   isAgeAbled(event.target.checked);
-                setIsAgeRangeAbled(event.target.checked); */
-              }}
-            >
-              {t("table.unlimited")}
-            </Checkbox>
-          </Form.Item>
-        </Grid>
-        <Grid item xs={8} sm={6} md={2}>
-          <Form.Item
-            label={t("input.deposit_refund_fee_minimum_value")}
-            name="pix_refund_fee_min"
+            label={t("input.max_value_payer_pj_by_day")}
+            name="cash_in_max_value_receive_by_pj"
+            rules={[
+              {
+                required: !payerPjUnlimited,
+                message:
+                  t("input.required", {
+                    field: t("input.max_value_payer_pj_by_day"),
+                  }) || "",
+              },
+            ]}
           >
             <CurrencyInput
-              value={""}
+             disabled={payerPjUnlimited}
+              value={body?.cash_in_max_value_receive_by_pj}
               onChange={(value) => {
-                /*   setBody((state) => ({
+                setBody((state) => ({
                   ...state,
-                  pix_refund_fee_value: value,
+                  cash_in_max_value_receive_by_pj: value,
                 }));
                 setBodyUpdate((state) => ({
                   ...state,
-                  pix_refund_fee_value: value,
-                })); */
+                  cash_in_max_value_receive_by_pj: value,
+                }));
               }}
             />
           </Form.Item>
         </Grid>
-        <Grid item container alignItems={'center'} style={{marginTop: '50px'}} xs={12} sm={6} md={2}>
-          <Form.Item
-            label={''}
-            name="pix_refund_fee_min"
-          >
+        <Grid
+          item
+          container
+          alignItems={"center"}
+          style={{ marginTop: "28px" }}
+          xs={12}
+          sm={6}
+          md={2}
+        >
+          <Form.Item label={""} name="pix_refund_fee_min">
             <Checkbox
-              checked={true}
-              onChange={(event: any) => {
-              /*   isAgeAbled(event.target.checked);
-                setIsAgeRangeAbled(event.target.checked); */
-              }}
+              checked={payerPjUnlimited}
+              onChange={handlPayerPjUnlimitedChange}
             >
-              {t("table.unlimited1")}
+              {t("input.unlimited")}
             </Checkbox>
           </Form.Item>
         </Grid>
 
         <Grid item xs={12} md={6}>
           <Form.Item
-            label={t("input.withdraw_fee_type")}
-            name="customer_withdraw_fee_type"
+            label={t("input.permission_different_payer_pf")}
+            name="cash_in_receive_by_different_payer"
           >
             <Select
               size="large"
@@ -221,39 +348,87 @@ export const MerchantConfigTab = (props: { id?: string }) => {
                   label: `${t(`table.${item}`)}`,
                 })) ?? []
               }
-              value={null}
+              value={body?.cash_in_receive_by_different_payer}
               onChange={(value) => {
-                /*     setBody((state) => ({
+                setBody((state) => ({
                   ...state,
-                  customer_withdraw_fee_type: value,
+                  cash_in_receive_by_different_payer: value,
                 }));
                 setBodyUpdate((state) => ({
                   ...state,
-                  customer_withdraw_fee_type: value,
-                })); */
+                  cash_in_receive_by_different_payer: value,
+                }));
               }}
             />
+          </Form.Item>
+        </Grid>
+        <Grid item xs={8} sm={6} md={3}>
+          <Form.Item
+            label={t("input.max_value_different_payer_pf_by_day")}
+            name="cash_in_max_value_receive_by_different_payer"
+            rules={[
+              {
+                required: !differentPayerUnlimited,
+                message:
+                  t("input.required", {
+                    field: t("input.max_value_different_payer_pf_by_day"),
+                  }) || "",
+              },
+            ]}
+          >
+            <CurrencyInput
+              disabled={differentPayerUnlimited}
+              value={body?.cash_in_max_value_receive_by_different_payer || 0}
+              onChange={(value) => {
+                setBody((state) => ({
+                  ...state,
+                  cash_in_max_value_receive_by_different_payer: value,
+                }));
+                setBodyUpdate((state) => ({
+                  ...state,
+                  cash_in_max_value_receive_by_different_payer: value,
+                }));
+              }}
+            />
+          </Form.Item>
+        </Grid>
+        <Grid
+          item
+          container
+          alignItems={"center"}
+          style={{ marginTop: "30px" }}
+          xs={12}
+          sm={6}
+          md={3}
+        >
+          <Form.Item label={""} name="pix_refund_fee_min">
+            <Checkbox
+              checked={differentPayerUnlimited}
+              onChange={handleDifferentPayerUnlimitedChange}
+            >
+              {t("input.unlimited")}
+            </Checkbox>
           </Form.Item>
         </Grid>
 
         <Grid item xs={12} md={6}>
           <Form.Item
-            label={t("input.withdraw_fee_percent")}
-            name="customer_withdraw_fee_percent"
+            label={t("table.webhook_url_optional")}
+            name="webhook_url_optional"
           >
             <Input
               size="large"
-              name="customer_withdraw_fee_percent"
-              value={''}
+              name="webhook_url_optional"
+              value={body?.webhook_url_optional}
               onChange={(e) => {
-             /*    setBody((state) => ({
+                setBody((state) => ({
                   ...state,
-                  customer_withdraw_fee_percent: Number(e.target.value),
+                  webhook_url_optional: e.target.value,
                 }));
                 setBodyUpdate((state) => ({
                   ...state,
-                  customer_withdraw_fee_percent: Number(e.target.value),
-                })); */
+                  webhook_url_optional: e.target.value,
+                }));
               }}
             />
           </Form.Item>
@@ -266,6 +441,9 @@ export const MerchantConfigTab = (props: { id?: string }) => {
         style={{ display: "flex", flexDirection: "row-reverse" }}
       >
         <Grid item xs={12} md={4} lg={2}>
+        <button type="submit" ref={submitRef} style={{ display: "none" }}>
+              Submit
+            </button>
           <Popconfirm
             title={t("messages.confirm_action_title", {
               action: t("messages.update"),
@@ -276,11 +454,8 @@ export const MerchantConfigTab = (props: { id?: string }) => {
             })}
             open={isConfirmOpen}
             style={{ maxWidth: "340px" }}
-            onConfirm={() => {
-              UpdateMutate();
-              setIsConfirmOpen(false);
-            }}
-            okButtonProps={{ loading: isMerchantBankFetching }}
+            onConfirm={() => submitRef.current?.click()}
+            okButtonProps={{ loading: isMerchantConfigFetching }}
             okText={t("messages.yes_update")}
             cancelText={t("messages.no_cancel")}
             onCancel={() => setIsConfirmOpen(false)}
@@ -289,7 +464,7 @@ export const MerchantConfigTab = (props: { id?: string }) => {
               size="large"
               type="primary"
               style={{ width: "100%" }}
-              loading={isMerchantBankFetching}
+              loading={isMerchantConfigFetching}
               onClick={() => setIsConfirmOpen(true)}
             >
               {t("buttons.update", { menu: "configs" })}

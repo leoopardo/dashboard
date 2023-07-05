@@ -18,7 +18,7 @@ const handleChange = ( value: number | undefined | string) => {
     onChange(Number(value));
 };
 
-const formattedValue = value !== undefined ? value.toString() : '0.00';
+const formattedValue = value !== undefined ? value?.toString() : '0.00';
 
 const handleMouseEnter = () => {
   setIsHovered(true);

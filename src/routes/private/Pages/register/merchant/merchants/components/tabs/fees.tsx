@@ -7,8 +7,8 @@ import { useMerchantFeesConfig } from "@src/services/register/merchant/merchant/
 import { useGetDepositFeePlansRegister } from "@src/services/register/merchant/feePlans/getDepositFeePlans";
 import { useGetWithdrawFeePlansRegister } from "@src/services/register/merchant/feePlans/getWithdrawFeePlans";
 import { Toast } from "@components/Toast";
-import { IMerchantFeesProps } from "@src/services/types/register/merchants/merchantFeesConfig";
-import { IMerchantFeesUpdate } from "@src/services/types/register/merchants/merchantFeesConfig";
+import { IMerchantFeesProps } from "@src/services/types/register/merchants/merchantFeesConfig.interface";
+import { IMerchantFeesUpdate } from "@src/services/types/register/merchants/merchantFeesConfig.interface";
 import { CurrencyInput } from "@src/components/CurrencyInput";
 import {
   Form,
@@ -88,9 +88,8 @@ export const FeesTab = (props: { id?: string }) => {
           return true
         } else return false
     })
-    console.log({body})
-    console.log({stopRequest})
-  // if(stopRequest) return;
+  
+    if(stopRequest) return;
 
     UpdateMutate();
     setIsConfirmOpen(false);

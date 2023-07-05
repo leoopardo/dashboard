@@ -191,7 +191,7 @@ export const MerchantView = () => {
                 onClick: () => setIsUpdateModalOpen(true),
               },
               {
-                label: "Configs",
+                label: "configs",
                 icon: <ToolOutlined style={{ fontSize: "20px" }} />,
                 onClick: () => setIsConfigOpen(true),
               },
