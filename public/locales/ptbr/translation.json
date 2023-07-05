@@ -471,7 +471,10 @@
     "total_out_canceled": "Saídas (Canceladas)",
     "total_out_processing": "Saídas (Processando)",
     "total_out_success": "Saídas (Sucesso)",
-    "category": "Categoria"
+    "category": "Categoria",
+    "error_message": "Mensagem de erro",
+    "response": "Resposta",
+    "step": "Etapa"
   },
   "actions": {
     "details": "Detalhes",
@@ -483,5 +486,29 @@
     "400": "Nenhum dado encontrado.",
     "404": "Rota não encontrada",
     "password_or_username": "Senha e/ou usuário incorretos."
+  },
+  "logs": {
+    "login": "Login",
+    "create_qr_code": "Criação QRCode",
+    "client_request": "Requisição do cliente",
+    "validation_data": "Validação de dados",
+    "create_e2e_id": "Criação E2E",
+    "create_withdraw": "Pagamento do saque",
+    "canceled_withdraw": "Cancelamento de saque",
+    "customer_api": "Validação CPF",
+    "genial": "Banco Genial",
+    "bs2": "Banco BS2",
+    "sicoob": "Banco Sicoob",
+    "bradesco": "Banco Badesco",
+    "bitcapital": "Banco BITCAPITAL",
+    "queue_account": "Envio p/cc",
+    "queue_validation_pix_key": "Envio validação chave PIX",
+    "pix_key_valid_add_to_account": "Adição chave PIX conta corrente",
+    "bs2_filial_01": "Banco Bs2 1",
+    "bs2_filial_02": "Banco Bs2 2",
+    "bs2_filial_03": "Banco Bs2 3",
+    "mercado_pago": "Banco Mercado Pago",
+    "pay365": "banco Pay365",
+    "pixsbrasil": "PIXS Brasil"
   }
 }

@@ -469,7 +469,10 @@
     "total_out_canceled": "Out (Canceled)",
     "total_out_processing": "Out (Processing)",
     "total_out_success": "Out (Success)",
-    "category": "Category"
+    "category": "Category",
+    "error_message": "Error message",
+    "response": "Response",
+    "step": "Step"
   },
   "actions": {
     "details": "Details",
@@ -481,5 +484,29 @@
     "400": "Any records found.",
     "404": "Route not found",
     "password_or_username": "Invalid username or password"
+  },
+  "logs": {
+    "login": "Login",
+    "create_qr_code": "Create QRCode",
+    "client_request": "Client request",
+    "validation_data": "Data validation",
+    "create_e2e_id": "Create E2E",
+    "create_withdraw": "Create withdraw",
+    "canceled_withdraw": "Cancel withdraw",
+    "customer_api": "Validate CPF",
+    "genial": "Genial bank",
+    "bs2": "BS2 bank",
+    "sicoob": "SICOOB bank",
+    "bradesco": "BRADESCO bank",
+    "bitcapital": "BITCAPITAL bank",
+    "queue_account": "Envio p/cc",
+    "queue_validation_pix_key": "Send validation pix key",
+    "pix_key_valid_add_to_account": "Add account pix key",
+    "bs2_filial_01": "Bs2 bank 1",
+    "bs2_filial_02": "Bs2 bank 2",
+    "bs2_filial_03": "Bs2 bank 3",
+    "mercado_pago": "Mercado Pago bank",
+    "pay365": "Pay365 bank",
+    "pixsbrasil": "PIXS Brasil"
   }
 }
