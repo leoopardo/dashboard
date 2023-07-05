@@ -231,7 +231,8 @@
     "permission_different_payer_pf": "Permission different payer",
     "max_value_different_payer_pf_by_day": "Max value different payer by days",
     "withdraw_limit_document_by_day": "Withdraw limit document by day",
-    "unlimited": "Unlimited"
+    "unlimited": "Unlimited",
+    "check_cpf_permission": "Check CPF Permission"
   },
   "modal": {
     "confirm": "Confirm",
