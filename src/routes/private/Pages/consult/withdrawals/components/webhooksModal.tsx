@@ -18,8 +18,7 @@ import {
 import ReactJson from "react-json-view";
 import { CheckCircleFilled, CloseCircleFilled } from "@ant-design/icons";
 import { defaultTheme } from "../../../../../../styles/defaultTheme";
-import { useGetWithdrawalsWebhooks } from "../../../../../../services/consult/generatedWithdrawals/getWebhooks";
-
+import { useGetWithdrawalsWebhooks } from "@src/services/consult/withdrawals/generatedWithdrawals/getWebhooks";
 interface webhooksModalProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
   open: boolean;

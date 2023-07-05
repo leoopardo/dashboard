@@ -15,8 +15,8 @@ import { useTranslation } from "react-i18next";
 import useDebounce from "../../../../../../utils/useDebounce";
 import { FilterChips } from "../../../../../../components/FiltersModal/filterChips";
 import { paidDepositRowsQuery } from "../../../../../../services/types/consult/deposits/PaidDeposits.interface";
-import { useGetTotalPaidDeposits } from "../../../../../../services/consult/paidDeposits/getTotal";
-import { useGetRowsPaidDeposits } from "../../../../../../services/consult/paidDeposits/getRows";
+import { useGetTotalPaidDeposits } from "../../../../../../services/consult/deposits/paidDeposits/getTotal";
+import { useGetRowsPaidDeposits } from "../../../../../../services/consult/deposits/paidDeposits/getRows";
 const { RangePicker } = DatePicker;
 
 const INITIAL_QUERY: paidDepositRowsQuery = {

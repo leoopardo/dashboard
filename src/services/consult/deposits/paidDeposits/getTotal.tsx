@@ -1,23 +1,20 @@
 import { useEffect, useState } from "react";
-import { api } from "../../../config/api";
-import {
-  generatedDepositTotal,
-  generatedDepositTotalQuery,
-} from "../../types/consult/deposits/generatedDeposits.interface";
-import { useQuery } from "react-query";
+import { api } from "../../../../config/api";
 import moment from "moment";
+import {
+  paidDepositRowsQuery,
+  paidDepositTotal,
+} from "../../../types/consult/deposits/PaidDeposits.interface";
 
-export function useGetTotalGeneratedDeposits(
-  params: generatedDepositTotalQuery
-) {
-  const [data, setData] = useState<generatedDepositTotal | null>(null);
+export function useGetTotalPaidDeposits(params: paidDepositRowsQuery) {
+  const [data, setData] = useState<paidDepositTotal | null>(null);
   const [error, setError] = useState<any>(null);
   const [isFetching, setIsFetching] = useState<boolean>(false);
 
-  const fetchTotalDeposits = async () => {
+  const fetchPaidTotal = async () => {
     try {
       setIsFetching(true);
-      const response = await api.get("report/pix/total", {
+      const response = await api.get("report/pix/total/paid-at", {
         params: {
           ...params,
           initial_date: params.initial_date
@@ -41,18 +38,18 @@ export function useGetTotalGeneratedDeposits(
   };
 
   useEffect(() => {
-    fetchTotalDeposits();
+    fetchPaidTotal();
   }, [params]);
 
-  const depositsTotal = data;
-  const isDepositsTotalFetching = isFetching;
-  const depositsTotalError: any = error;
-  const refetchDepositsTotal = fetchTotalDeposits;
+  const paidTotal = data;
+  const isPaidTotalFetching = isFetching;
+  const paidTotalError: any = error;
+  const refetchPaidTotal = fetchPaidTotal;
 
   return {
-    depositsTotal,
-    isDepositsTotalFetching,
-    depositsTotalError,
-    refetchDepositsTotal,
+    paidTotal,
+    isPaidTotalFetching,
+    paidTotalError,
+    refetchPaidTotal,
   };
 }

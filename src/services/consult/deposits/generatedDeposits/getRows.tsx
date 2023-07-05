@@ -1,9 +1,9 @@
 import moment from "moment";
-import { api } from "../../../config/api";
+import { api } from "../../../../config/api";
 import {
   generatedDepositRowsResponse,
   generatedDepositTotalQuery,
-} from "../../types/consult/deposits/generatedDeposits.interface";
+} from "../../../types/consult/deposits/generatedDeposits.interface";
 import { useQuery } from "react-query";
 
 export function useGetRowsGeneratedDeposits(

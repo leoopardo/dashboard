@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { api } from "../../../config/api";
+import { api } from "../../../../config/api";
 import moment from "moment";
-import { refundWithdrawalsQuery } from "../../types/consult/refunds/refundWithdrawals.interface";
-import { refundDepositTotal } from "../../types/consult/refunds/refundsDeposits.interface";
+import { refundWithdrawalsQuery } from "../../../types/consult/refunds/refundWithdrawals.interface";
+import { refundDepositTotal } from "../../../types/consult/refunds/refundsDeposits.interface";
 
 export function useGetTotalRefundWithdrawals(params: refundWithdrawalsQuery) {
   const [data, setData] = useState<refundDepositTotal | null>(null);

@@ -1,10 +1,10 @@
 import moment from "moment";
-import { api } from "../../../config/api";
+import { api } from "../../../../config/api";
 import { useQuery } from "react-query";
 import {
   refundDepositRowsResponse,
   refundDepositsQuery,
-} from "../../types/consult/refunds/refundsDeposits.interface";
+} from "../../../types/consult/refunds/refundsDeposits.interface";
 
 export function useGetRowsRefundDeposits(params: refundDepositsQuery) {
   const { data, isFetching, error, refetch } = useQuery<

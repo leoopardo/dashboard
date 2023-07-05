@@ -379,14 +379,7 @@ export const SidebarNavigation = () => {
           handleNavigate(e?.keyPath)
         ),
       ]),
-      getItem("api_logs", null, [
-        getItem("error_logs_deposits", null, null, false, (e) =>
-          handleNavigate(e?.keyPath)
-        ),
-        getItem("error_logs_withdrawals", null, null, false, (e) =>
-          handleNavigate(e?.keyPath)
-        ),
-      ]),
+     
     ]),
     getItem("support", <NotificationOutlined style={{ fontSize: "23px" }} />, [
       getItem("blacklists", null, [
@@ -404,6 +397,14 @@ export const SidebarNavigation = () => {
             handleNavigate(e?.keyPath)
           ),
         ]),
+      ]),
+      getItem("api_logs", null, [
+        getItem("error_logs_deposits", null, null, false, (e) =>
+          handleNavigate(e?.keyPath)
+        ),
+        getItem("error_logs_withdrawals", null, null, false, (e) =>
+          handleNavigate(e?.keyPath)
+        ),
       ]),
     ]),
     getItem(

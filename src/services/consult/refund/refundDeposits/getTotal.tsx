@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { api } from "../../../config/api";
+import { api } from "../../../../config/api";
 import moment from "moment";
 import {
   refundDepositTotal,
   refundDepositsQuery,
-} from "../../types/consult/refunds/refundsDeposits.interface";
+} from "../../../types/consult/refunds/refundsDeposits.interface";
 
 export function useGetTotalRefundDeposits(params: refundDepositsQuery) {
   const [data, setData] = useState<refundDepositTotal | null>(null);

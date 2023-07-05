@@ -1,11 +1,11 @@
 import { Descriptions, Drawer, QRCode, Segmented, Spin } from "antd";
 import React, { Dispatch, SetStateAction, useState } from "react";
-import { useGetDeposit } from "../../../../../../services/consult/generatedDeposits/getDeposit";
+import { useGetDeposit } from "../../../../../../services/consult/deposits/generatedDeposits/getDeposit";
 import { useTranslation } from "react-i18next";
 import { Grid } from "@mui/material";
 import { StyledSegmented } from "../generated/components/styles";
 import Paybrokers from "../../../../../../../assets/logo.png";
-import { useGetWithdraw } from "../../../../../../services/consult/generatedWithdrawals/getWithdraw";
+import { useGetWithdraw } from "@src/services/consult/withdrawals/generatedWithdrawals/getWithdraw";
 
 interface ViewModalProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -34,7 +34,7 @@ export const ViewModal = (props: ViewModalProps) => {
     >
       <Grid container>
         <Grid item xs={12}>
-          <StyledSegmented
+          <Segmented
             block
             size="middle"
             style={{ width: "100%" }}

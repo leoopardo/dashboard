@@ -35,6 +35,7 @@ import { MerchantBalance } from "./Pages/consult/merchant/balance";
 import { MerchantHistory } from "./Pages/consult/merchant/history";
 import { OrgonizationManual } from "./Pages/moviments/organization/manual";
 import { MerchantManual } from "./Pages/moviments/merchants/manual";
+import { CheckDocument } from "./Pages/consult/persons/checkDocument";
 
 export const PrivateRoutes = () => {
   const navigate = useNavigate();
@@ -93,6 +94,10 @@ export const PrivateRoutes = () => {
           </Route>
           <Route path="refunds">
             <Route path="refund_deposits" element={<RefundDeposits />} />
+          </Route>
+
+          <Route path="consult_persons">
+            <Route path="check_cpf" element={<CheckDocument />} />
           </Route>
         </Route>
 

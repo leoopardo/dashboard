@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Grid } from "@mui/material";
 import { generatedDepositTotalQuery } from "../../../../../../services/types/consult/deposits/generatedDeposits.interface";
-import { useGetTotalGeneratedDeposits } from "../../../../../../services/consult/generatedDeposits/getTotal";
+import { useGetTotalGeneratedDeposits } from "../../../../../../services/consult/deposits/generatedDeposits/getTotal";
 import moment from "moment";
 import { TotalizersCards } from "./components/TotalizersCards";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Alert, Button, Input, Select, Space, DatePicker } from "antd";
-import { useGetRowsGeneratedDeposits } from "../../../../../../services/consult/generatedDeposits/getRows";
+import { useGetRowsGeneratedDeposits } from "../../../../../../services/consult/deposits/generatedDeposits/getRows";
 import {
   ColumnInterface,
   CustomTable,

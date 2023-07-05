@@ -11,12 +11,12 @@ import {
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Grid } from "@mui/material";
-import { useGetDepositWebhooks } from "../../../../../../services/consult/generatedDeposits/getWebhooks";
+import { useGetDepositWebhooks } from "../../../../../../services/consult/deposits/generatedDeposits/getWebhooks";
 import {
   WebhooksItem,
   WebhooksQuery,
 } from "../../../../../../services/types/consult/deposits/generatedDeposits.interface";
-import { useGetDepositWebhooks2 } from "../../../../../../services/consult/generatedDeposits/getWebhooksSecondary";
+import { useGetDepositWebhooks2 } from "../../../../../../services/consult/deposits/generatedDeposits/getWebhooksSecondary";
 import ReactJson from "react-json-view";
 import { CheckCircleFilled, CloseCircleFilled } from "@ant-design/icons";
 import { defaultTheme } from "../../../../../../styles/defaultTheme";

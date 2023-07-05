@@ -1,9 +1,9 @@
-import { api } from "../../../config/api";
+import { api } from "../../../../config/api";
 import { useQuery } from "react-query";
 import {
   WebhooksQuery,
   WebhooksResponse,
-} from "../../types/consult/deposits/generatedDeposits.interface";
+} from "../../../types/consult/deposits/generatedDeposits.interface";
 
 export function useGetWithdrawalsWebhooks(id: string, params: WebhooksQuery) {
   const { data, isFetching, error, refetch } = useQuery<

@@ -1,6 +1,6 @@
 import { Descriptions, Drawer, QRCode, Segmented, Spin } from "antd";
 import React, { Dispatch, SetStateAction, useState } from "react";
-import { useGetDeposit } from "../../../../../../services/consult/generatedDeposits/getDeposit";
+import { useGetDeposit } from "../../../../../../services/consult/deposits/generatedDeposits/getDeposit";
 import { useTranslation } from "react-i18next";
 import { Grid } from "@mui/material";
 import { StyledSegmented } from "../deposits/components/styles";

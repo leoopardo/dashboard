@@ -1,7 +1,7 @@
 import { Grid } from "@mui/material";
 import { CustomTable } from "@src/components/CustomTable";
-import { useGetRowsGeneratedDeposits } from "@src/services/consult/generatedDeposits/getRows";
-import { useGetTotalGeneratedDeposits } from "@src/services/consult/generatedDeposits/getTotal";
+import { useGetRowsGeneratedDeposits } from "@src/services/consult/deposits/generatedDeposits/getRows";
+import { useGetTotalGeneratedDeposits } from "@src/services/consult/deposits/generatedDeposits/getTotal";
 import { useGetPersons } from "@src/services/register/persons/persons/getPersons";
 import { generatedDepositTotalQuery } from "@src/services/types/consult/deposits/generatedDeposits.interface";
 import { PersonsQuery } from "@src/services/types/register/persons/persons.interface";
@@ -19,16 +19,16 @@ import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import { useParams } from "react-router-dom";
 import { TotalizersCards as DepositsCards } from "../../../consult/deposits/generated/components/TotalizersCards";
-import { useGetTotalPaidDeposits } from "@src/services/consult/paidDeposits/getTotal";
-import { useGetRowsPaidDeposits } from "@src/services/consult/paidDeposits/getRows";
+import { useGetTotalPaidDeposits } from "@src/services/consult/deposits/paidDeposits/getTotal";
+import { useGetRowsPaidDeposits } from "@src/services/consult/deposits/paidDeposits/getRows";
 import { paidDepositTotalQuery } from "@src/services/types/consult/deposits/PaidDeposits.interface";
-import { useGetTotalGeneratedWithdrawals } from "@src/services/consult/generatedWithdrawals/getTotal";
-import { useGetRowsGeneratedWithdrawals } from "@src/services/consult/generatedWithdrawals/getRows";
 import { generatedWithdrawalsRowsQuery } from "@src/services/types/consult/withdrawals/generatedWithdrawals.interface";
 import { TotalizersCards } from "../../../consult/withdrawals/generated/components/TotalizersCards";
 import moment from "moment";
 import { useGetFiles } from "@src/services/register/persons/persons/files/getFiles";
 import { DownloadOutlined } from "@ant-design/icons";
+import { useGetTotalGeneratedWithdrawals } from "@src/services/consult/withdrawals/generatedWithdrawals/getTotal";
+import { useGetRowsGeneratedWithdrawals } from "@src/services/consult/withdrawals/generatedWithdrawals/getRows";
 
 export const PersonDetails = () => {
   const { t } = useTranslation();

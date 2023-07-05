@@ -15,9 +15,9 @@ import { FiltersModal } from "../../../../../../components/FiltersModal";
 import { useTranslation } from "react-i18next";
 import useDebounce from "../../../../../../utils/useDebounce";
 import { FilterChips } from "../../../../../../components/FiltersModal/filterChips";
-import { useGetTotalRefundDeposits } from "../../../../../../services/consult/refundDeposits/getTotal";
+import { useGetTotalRefundDeposits } from "../../../../../../services/consult/refund/refundDeposits/getTotal";
 import { refundDepositsQuery } from "../../../../../../services/types/consult/refunds/refundsDeposits.interface";
-import { useGetRowsRefundDeposits } from "../../../../../../services/consult/refundDeposits/getRows";
+import { useGetRowsRefundDeposits } from "../../../../../../services/consult/refund/refundDeposits/getRows";
 
 const INITIAL_QUERY: refundDepositsQuery = {
   page: 1,

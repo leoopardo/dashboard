@@ -15,9 +15,9 @@ import { useTranslation } from "react-i18next";
 import useDebounce from "../../../../../../utils/useDebounce";
 import { FilterChips } from "../../../../../../components/FiltersModal/filterChips";
 import { generatedWithdrawalsRowsQuery } from "../../../../../../services/types/consult/withdrawals/generatedWithdrawals.interface";
-import { useGetTotalGeneratedWithdrawals } from "../../../../../../services/consult/generatedWithdrawals/getTotal";
-import { useGetRowsGeneratedWithdrawals } from "../../../../../../services/consult/generatedWithdrawals/getRows";
 import { WebhookModal } from "../components/webhooksModal";
+import { useGetTotalGeneratedWithdrawals } from "@src/services/consult/withdrawals/generatedWithdrawals/getTotal";
+import { useGetRowsGeneratedWithdrawals } from "@src/services/consult/withdrawals/generatedWithdrawals/getRows";
 
 const INITIAL_QUERY: generatedWithdrawalsRowsQuery = {
   page: 1,

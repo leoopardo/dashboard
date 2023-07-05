@@ -134,7 +134,11 @@ export const CustomTable = (props: TableProps) => {
               render: (text: string) => (
                 <div
                   key={column.name}
-                  style={{ width: "100%", textAlign: "center" }}
+                  style={{
+                    width: "100%",
+
+                    textAlign: "center",
+                  }}
                 >
                   <Input
                     size="large"
@@ -149,7 +153,11 @@ export const CustomTable = (props: TableProps) => {
                         </Button>
                       </CopyToClipboard>
                     }
-                    style={{ maxWidth: "250px", textOverflow: "ellipsis" }}
+                    style={{
+                      maxWidth: "250px",
+                      minWidth: "90px",
+                      textOverflow: "ellipsis",
+                    }}
                     value={text}
                     readOnly
                   />

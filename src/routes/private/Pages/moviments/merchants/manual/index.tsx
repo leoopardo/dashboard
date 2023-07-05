@@ -141,7 +141,7 @@ export const MerchantManual = () => {
               shape="round"
               onClickCapture={() => setOperationInIOpen(true)}
             >
-              <ArrowUpOutlined /> Registrar entrada
+              <ArrowUpOutlined /> {t("buttons.register_in")}
             </Button>
           </Grid>
           <Grid item xs={12}>
@@ -154,7 +154,7 @@ export const MerchantManual = () => {
               onClickCapture={() => setOperationOutOpen(true)}
             >
               <ArrowDownOutlined />
-              Registrar saída
+              {t("buttons.register_out")}
             </Button>
           </Grid>
         </Grid>

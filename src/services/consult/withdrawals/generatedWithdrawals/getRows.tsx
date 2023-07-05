@@ -1,7 +1,7 @@
 import moment from "moment";
-import { api } from "../../../config/api";
+import { api } from "../../../../config/api";
 import { useQuery } from "react-query";
-import { generatedWithdrawalsRowsQuery, generatedWithdrawalsRowsResponse } from "../../types/consult/withdrawals/generatedWithdrawals.interface";
+import { generatedWithdrawalsRowsQuery, generatedWithdrawalsRowsResponse } from "../../../types/consult/withdrawals/generatedWithdrawals.interface";
 
 export function useGetRowsGeneratedWithdrawals(
   params: generatedWithdrawalsRowsQuery

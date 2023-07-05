@@ -41,7 +41,7 @@
     "generated_deposits": "Depósitos gerados",
     "paid_deposits": "Depósitos pagos",
     "undelivered_deposits": "Depósitos não entregues",
-    "error_logs_deposits": "Logs de erros",
+    "error_logs_deposits": "Erros de depósitos",
     "deposits_reports": "Relatórios",
     "language": "Idioma",
     "portuguese": "Português",
@@ -150,7 +150,7 @@
   "buttons": {
     "create": "Criar",
     "update": "Atualizar",
-    "update_menu":  "Atualizar {{menu}}",
+    "update_menu": "Atualizar {{menu}}",
     "new_user": "novo usuário",
     "update_user": "Atualizar usuário",
     "new_categorie": "nova categoria",
@@ -161,7 +161,10 @@
     "person": "pessoa",
     "new_person": "Nova pessoa",
     "update_person": "Atualizar pessoa",
-    "refresh": "Recarregar"
+    "refresh": "Recarregar",
+    "check": "Checar",
+    "register_in": "Registrar entrada",
+    "register_out": "Registrar saída"
   },
   "modal": {
     "confirm": "Confirmar",
