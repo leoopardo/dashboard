@@ -1,13 +1,12 @@
 import { queryClient } from "@src/services/queryClient";
 import { api } from "@config/api";
 import { useMutation } from "react-query";
-import { IMerchantUpdateConfig } from "@src/services/types/register/merchants/merchantConfig.interface";
-
-export function useUpdateOrganizationConfig(body?: IMerchantUpdateConfig | null) {
+import { IBodyCredentialItem } from "@src/services/types/register/merchants/merchantsCredentialsConfig.interface";
+export function useUpdateCredentialConfig(body?: IBodyCredentialItem | null) {
   const { isLoading, error, mutate, isSuccess } = useMutation<
-  IMerchantUpdateConfig | null | undefined
+  IBodyCredentialItem | null | undefined
   >("UpdateCredentialsConfig", async () => {
-    const response = await api.put("core/merchant/config/paybrokers/update", body, {});
+    const response = await api.put("core/api-credentials/update", body, {});
     await queryClient.refetchQueries({ queryKey: ["UpdateCredentialsConfig"] });
     return response.data;
   });

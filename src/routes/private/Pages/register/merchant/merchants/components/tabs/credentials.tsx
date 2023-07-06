@@ -1,22 +1,23 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { Grid } from "@mui/material";
-import { Button, Input } from "antd";
-import { FilterChips } from "@components/FiltersModal/filterChips";
+import { Button } from "antd";
 import { useTranslation } from "react-i18next";
 import { MerchantsItem } from "@services/types/register/merchants/merchantsRegister.interface";
-import { FiltersModal } from "@components/FiltersModal";
-import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { CredentialQuery } from "@src/services/types/register/merchants/merchantsCredentialsConfig.interface";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import { Toast } from "@components/Toast";
 import useDebounce from "@utils/useDebounce";
+import { ValidateToken } from "@components/ValidateToken";
 import { UserAddOutlined } from "@ant-design/icons";
-import { EyeFilled, EditOutlined, ToolOutlined } from "@ant-design/icons";
+import { EyeFilled, EditOutlined } from "@ant-design/icons";
 import { ViewModal } from "@components/Modals/viewGenericModal";
 import { MutateModal } from "@components/Modals/mutateGenericModal";
-import { useUpdateMerchant } from "@services/register/merchant/merchant/updateMerchant";
-import { useCredentialsConfig } from "@src/services/register/merchant/merchant/credentialsConfig.tsx/getCredentialsConfig";
-import { useNavigate } from "react-router-dom";
+import { useGetCredentialsConfig } from "@src/services/register/merchant/merchant/credentialsConfig.tsx/getCredentialsConfig";
+import { useShowCredentialsConfig } from "@src/services/register/merchant/merchant/credentialsConfig.tsx/showCredentialsConfig";
+import { useUpdateCredentialConfig } from "@src/services/register/merchant/merchant/credentialsConfig.tsx/updateCredentialsConfig";
+import { useCreateCredentialsConfig } from "@src/services/register/merchant/merchant/credentialsConfig.tsx/createCredentialsConfig";
+import { IBodyCredentialItem } from "@src/services/types/register/merchants/merchantsCredentialsConfig.interface";
 
 const INITIAL_QUERY: CredentialQuery = {
   limit: 25,
@@ -26,28 +27,60 @@ const INITIAL_QUERY: CredentialQuery = {
 
 export const CredentialConfigTab = (props: { id?: string }) => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const [query, setQuery] = useState<CredentialQuery>(INITIAL_QUERY);
   const {
     credentialConfigData,
     credentialConfigError,
     isCredentialConfigFetching,
     refetchCredentialConfigData,
-  } = useCredentialsConfig({merchant_id: Number(props?.id), ...query});
+  } = useGetCredentialsConfig({ merchant_id: Number(props?.id), ...query });
 
-  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
-  const [isNewMerchantModal, setIsNewMerchantModal] = useState(false);
-  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [isGetValidateTokenOpen, setIsGetValidateTokenOpen] = useState(false);
   const [currentItem, setCurrentItem] = useState<MerchantsItem | null>(null);
-  const [updateBody, setUpdateBody] = useState<MerchantsItem>({
-    ...currentItem,
-    merchant_id: currentItem?.id,
+  const [tokenState, setTokenState] = useState("");
+  const [updateBody, setUpdateBody] = useState<IBodyCredentialItem | null>(
+    null
+  );
+  const [createBody, setCreateBody] = useState<IBodyCredentialItem | null>({
+    name: "",
+    type: "",
+  });
+  const [isUpdateValidateTokenOpen, setIsUpdateValidateTokenOpen] =
+    useState(false);
+
+  const [isCreateValidateTokenOpen, setIsCreateValidateTokenOpen] =
+    useState(false);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+
+  const {
+    isShowCredentialConfigFetching,
+    showCredentialConfigData,
+    showCredentialConfigError,
+    refetchShowCredentialConfigData,
+  } = useShowCredentialsConfig({
+    api_credential_id: currentItem?.id,
+    validation_token: tokenState,
   });
 
   const { UpdateError, UpdateIsLoading, UpdateIsSuccess, UpdateMutate } =
-    useUpdateMerchant(updateBody);
+    useUpdateCredentialConfig({
+      api_credential_id: currentItem?.id,
+      validation_token: tokenState,
+      ...updateBody,
+    });
+
+  const {
+    CreateCredentialsError,
+    CreateCredentialsIsLoading,
+    CreateCredentialsIsSuccess,
+    CreateCredentialsMutate,
+  } = useCreateCredentialsConfig({
+    merchant_id: Number(props?.id),
+    validation_token: tokenState,
+    ...createBody,
+  });
   const [search, setSearch] = useState<string>("");
-  const [isConfigOpen, setIsConfigOpen] = useState(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const debounceSearch = useDebounce(search);
 
@@ -60,20 +93,26 @@ export const CredentialConfigTab = (props: { id?: string }) => {
   ];
 
   useEffect(() => {
-    const id = currentItem?.id;
-    isConfigOpen && navigate(`${id}`);
-  }, [isConfigOpen]);
-
-  useEffect(() => {
-    refetchCredentialConfigData();
-  }, [query]);
-
-  useEffect(() => {
     setUpdateBody({
       ...currentItem,
       merchant_id: currentItem?.id,
     });
   }, [currentItem]);
+  
+  useEffect(() => {
+    if (showCredentialConfigError?.response?.status === 400) return;
+
+    setIsGetValidateTokenOpen(false);
+    showCredentialConfigData && setIsViewModalOpen(true);
+  }, [showCredentialConfigData, showCredentialConfigError]);
+
+  useEffect(() => {
+    if (UpdateIsSuccess || CreateCredentialsIsSuccess) {
+      refetchCredentialConfigData();
+      setIsUpdateValidateTokenOpen(false);
+    }
+
+  }, [UpdateIsSuccess, CreateCredentialsIsSuccess]);
 
   useEffect(() => {
     if (!debounceSearch) {
@@ -85,13 +124,18 @@ export const CredentialConfigTab = (props: { id?: string }) => {
 
   return (
     <Grid container style={{ padding: "25px" }}>
-      <Grid container justifyContent={'flex-end'} style={{ marginTop: "5px" }} spacing={1}>
+      <Grid
+        container
+        justifyContent={"flex-end"}
+        style={{ marginTop: "5px" }}
+        spacing={1}
+      >
         <Grid item xs={12} md={3} lg={2}>
           <Button
             type="primary"
             loading={isCredentialConfigFetching}
             onClick={() => {
-              setIsNewMerchantModal(true);
+              setIsCreateModalOpen(true);
             }}
             style={{
               height: 40,
@@ -124,7 +168,7 @@ export const CredentialConfigTab = (props: { id?: string }) => {
                 label: "details",
                 icon: <EyeFilled style={{ fontSize: "20px" }} />,
                 onClick: () => {
-                  setIsViewModalOpen(true);
+                  setIsGetValidateTokenOpen(true);
                 },
               },
               {
@@ -149,8 +193,27 @@ export const CredentialConfigTab = (props: { id?: string }) => {
           body={updateBody}
           setBody={setUpdateBody}
           modalName={t("modal.modal_update_merchant")}
-          submit={UpdateMutate}
+          submit={() => setIsUpdateValidateTokenOpen(true)}
           submitLoading={UpdateIsLoading}
+          error={UpdateError}
+          success={UpdateIsSuccess}
+        />
+      )}
+
+      {isCreateModalOpen && (
+        <MutateModal
+          type="create"
+          open={isCreateModalOpen}
+          setOpen={setIsCreateModalOpen}
+          fields={[
+            { label: "name", required: false },
+            { label: "type", required: false },
+          ]}
+          body={createBody}
+          setBody={setCreateBody}
+          modalName={t("modal.modal_update_merchant")}
+          submit={() => setIsCreateValidateTokenOpen(true)}
+          submitLoading={CreateCredentialsIsLoading}
           error={UpdateError}
           success={UpdateIsSuccess}
         />
@@ -158,11 +221,55 @@ export const CredentialConfigTab = (props: { id?: string }) => {
 
       {isViewModalOpen && (
         <ViewModal
-          item={currentItem}
-          loading={isCredentialConfigFetching}
+          item={showCredentialConfigData}
+          loading={isShowCredentialConfigFetching}
           modalName={`${t("menus.merchant")}: ${currentItem?.name}`}
           open={isViewModalOpen}
           setOpen={setIsViewModalOpen}
+        />
+      )}
+
+      {isUpdateValidateTokenOpen && (
+        <ValidateToken
+          open={isUpdateValidateTokenOpen}
+          setIsOpen={setIsUpdateValidateTokenOpen}
+          action="API_CREDENTIAL_UPDATE"
+          setTokenState={setTokenState}
+          tokenState={tokenState}
+          error={CreateCredentialsError}
+          success={CreateCredentialsIsSuccess}
+          submit={() => {
+            UpdateMutate();
+          }}
+        />
+      )}
+
+      {isCreateValidateTokenOpen && (
+        <ValidateToken
+          open={isCreateValidateTokenOpen}
+          setIsOpen={setIsCreateValidateTokenOpen}
+          action="API_CREDENTIAL_CREATE"
+          setTokenState={setTokenState}
+          tokenState={tokenState}
+          error={CreateCredentialsError}
+          success={CreateCredentialsIsSuccess}
+          submit={() => {
+            CreateCredentialsMutate();
+          }}
+        />
+      )}
+
+      {isGetValidateTokenOpen && (
+        <ValidateToken
+          open={isGetValidateTokenOpen}
+          setIsOpen={setIsGetValidateTokenOpen}
+          action="API_CREDENTIAL_GET"
+          setTokenState={setTokenState}
+          tokenState={tokenState}
+          error={showCredentialConfigError}
+          submit={() => {
+            refetchShowCredentialConfigData();
+          }}
         />
       )}
 

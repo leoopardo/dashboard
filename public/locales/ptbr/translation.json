@@ -471,7 +471,8 @@
     "total_out_canceled": "Saídas (Canceladas)",
     "total_out_processing": "Saídas (Processando)",
     "total_out_success": "Saídas (Sucesso)",
-    "category": "Categoria"
+    "category": "Categoria",
+    "production": "Produção"
   },
   "actions": {
     "details": "Detalhes",

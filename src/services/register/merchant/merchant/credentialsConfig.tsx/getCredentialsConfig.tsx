@@ -2,7 +2,7 @@ import { api } from "@config/api";
 import { useQuery } from "react-query";
 import { ICredentialResponse, CredentialQuery } from "@src/services/types/register/merchants/merchantsCredentialsConfig.interface";
 
-export function useCredentialsConfig(params: CredentialQuery) {
+export function useGetCredentialsConfig(params: CredentialQuery) {
   const { data, isFetching, error, refetch } = useQuery<
   ICredentialResponse | null
   >(
