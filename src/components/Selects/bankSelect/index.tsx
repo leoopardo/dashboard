@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { AutoComplete, Avatar, Empty, Input, Spin } from "antd";
 import { MerchantQuery } from "../../../services/types/register/merchants/merchants.interface";
-import { useListBanks } from "../../../routes/public/bank/listBanks";
 import { useTranslation } from "react-i18next";
+import { useListBanks } from "@src/services/bank/listBanks";
 
 interface BankSelectProps {
   setQueryFunction: Dispatch<SetStateAction<any>>;

@@ -163,7 +163,8 @@
     "refresh": "Refresh",
     "check": "Check",
     "register_in": "Register in",
-    "register_out": "Register out"
+    "register_out": "Register out",
+    "create_bank_blacklist": "Add to blacklist"
   },
   "input": {
     "required": "Please input the {{field}}",
@@ -483,7 +484,8 @@
   "error": {
     "400": "Any records found.",
     "404": "Route not found",
-    "password_or_username": "Invalid username or password"
+    "password_or_username": "Invalid username or password",
+    "BANK_ALREADY_CREATED": "Bank already created"
   },
   "logs": {
     "login": "Login",

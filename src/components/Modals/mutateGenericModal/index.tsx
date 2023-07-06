@@ -7,6 +7,7 @@ import {
   Form,
   FormInstance,
   Input,
+  Select,
   Switch,
 } from "antd";
 import { useTranslation } from "react-i18next";
@@ -17,6 +18,7 @@ import { useGetrefetchCountries } from "@src/services/states_cities/getCountries
 import ReactInputMask from "react-input-mask";
 import { Country, State, City } from "country-state-city";
 import { OperatorSelect } from "@src/components/Selects/operatorSelect";
+import { useListClientClientBanks } from "@src/services/bank/listClientBanks";
 
 interface mutateProps {
   type: "create" | "update";
@@ -54,6 +56,12 @@ export const MutateModal = ({
       [event.target.name]: event.target.value,
     }));
   };
+
+  const { clientbankListData, isClientBankListFetching } =
+    useListClientClientBanks({
+      page: 1,
+      limit: 200,
+    });
 
   return (
     <Drawer
@@ -112,23 +120,27 @@ export const MutateModal = ({
               return;
 
             case "partner_id":
-              return (<Form.Item
-                label={t(`table.${field.label}`)}
-                name={field.label}
-                style={{ margin: 10 }}
-                rules={[
-                  {
-                    required: field.required,
-                    message:
-                      t("input.required", {
-                        field: t(`input.${field.label}`),
-                      }) || "",
-                  },
-                ]}
-              >
-                <PartnerSelect setQueryFunction={setBody} queryOptions={body} />
-              </Form.Item>
-              )
+              return (
+                <Form.Item
+                  label={t(`table.${field.label}`)}
+                  name={field.label}
+                  style={{ margin: 10 }}
+                  rules={[
+                    {
+                      required: field.required,
+                      message:
+                        t("input.required", {
+                          field: t(`input.${field.label}`),
+                        }) || "",
+                    },
+                  ]}
+                >
+                  <PartnerSelect
+                    setQueryFunction={setBody}
+                    queryOptions={body}
+                  />
+                </Form.Item>
+              );
 
             case "operator_id":
               <Form.Item
@@ -232,6 +244,45 @@ export const MutateModal = ({
                   </ReactInputMask>
                 </Form.Item>
               );
+            case "bank_name":
+              return (
+                <Form.Item
+                  label={t(`table.${field.label}`)}
+                  name={field.label}
+                  style={{ margin: 10 }}
+                  rules={[
+                    {
+                      required: field.required,
+                      message:
+                        t("input.required", {
+                          field: t(`table.${field.label}`),
+                        }) || "",
+                    },
+                  ]}
+                >
+                  <Select
+                    size="large"
+                    options={clientbankListData?.items.map((bank: any) => {
+                      return {
+                        label: bank.bank_name,
+                        value: bank.bank_name,
+                        key: bank.ispb,
+                      };
+                    })}
+                    loading={isClientBankListFetching}
+                    onChange={(value, option: any) => {
+                      setBody({
+                        bank_name: option.value,
+                        ispb: option.key,
+                      });
+
+                      console.log(option);
+                    }}
+                  />
+                </Form.Item>
+              );
+            case "ispb":
+              return;
 
             case "country":
               return (

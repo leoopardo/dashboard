@@ -29,6 +29,7 @@ import { useGetStates } from "../../services/states_cities/getStates";
 import { useGetCities } from "../../services/states_cities/getCities";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
+import { StyleWrapperDatePicker, StyledRangePicker } from "./styles";
 
 dayjs.extend(weekday);
 dayjs.extend(localeData);
@@ -126,6 +127,10 @@ export const FiltersModal = ({
     }
   };
 
+  const panelRender = (panelNode: any) => (
+    <StyleWrapperDatePicker>{panelNode}</StyleWrapperDatePicker>
+  );
+
   return (
     <Drawer
       title={`${t("table.filters")}`}
@@ -187,6 +192,7 @@ export const FiltersModal = ({
                     <ConfigProvider locale={locale}>
                       <RangePicker
                         size="small"
+                        panelRender={panelRender}
                         format="YYYY-MM-DD HH:mm:ss"
                         showTime
                         value={[

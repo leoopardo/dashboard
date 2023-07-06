@@ -2,8 +2,8 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { AutoComplete, Empty, Input } from "antd";
 import { MerchantQuery } from "../../../services/types/register/merchants/merchants.interface";
 import { useTranslation } from "react-i18next";
-import { useListClientClientBanks } from "../../../routes/public/bank/listClientBanks";
 import { DownOutlined } from "@ant-design/icons";
+import { useListClientClientBanks } from "@src/services/bank/listClientBanks";
 
 interface BankSelectProps {
   setQueryFunction: Dispatch<SetStateAction<any>>;

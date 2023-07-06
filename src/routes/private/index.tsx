@@ -37,6 +37,7 @@ import { MerchantManual } from "./Pages/moviments/merchants/manual";
 import { CheckDocument } from "./Pages/consult/persons/checkDocument";
 import { DepositsErrors } from "./Pages/support/apiLogs/DepositsErrors";
 import { WithdrawalsErrors } from "./Pages/support/apiLogs/WithdrawalsErrors";
+import { BankBlacklist } from "./Pages/support/blacklists/bankBlacklist";
 
 export const PrivateRoutes = () => {
   return (
@@ -160,6 +161,9 @@ export const PrivateRoutes = () => {
               path="error_logs_withdrawals"
               element={<WithdrawalsErrors />}
             />
+          </Route>
+          <Route path="blacklists">
+            <Route path="bank_institutions" element={<BankBlacklist />} />
           </Route>
         </Route>
       </Route>
