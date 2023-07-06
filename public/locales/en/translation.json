@@ -134,6 +134,8 @@
     "upload": "upload",
     "deleted": "Deleted",
     "delete": "Delete",
+    "checked": "Checked",
+    "check": "Check",
     "upload_label": "Click or drag file to this area to upload",
     "upload_description": "Support for a single upload. Files types: pdf, png and docx.",
     "min_value_higher_then_zero": "The value of this field must be greater than 0"
@@ -482,7 +484,8 @@
     "edit": "Edit",
     "logs_webhooks": "Webhook logs",
     "configs": "Configuration",
-    "delete": "Delete"
+    "delete": "Delete",
+    "check": "Check"
   },
   "error": {
     "400": "Any records found.",
