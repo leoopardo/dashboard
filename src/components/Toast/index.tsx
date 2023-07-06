@@ -5,22 +5,27 @@ import { useTranslation } from "react-i18next";
 interface ToastInterface {
   actionSuccess: string;
   actionError: string;
+  errorMessage?: string;
   error: any;
   success: boolean;
 }
 
 export const Toast = ({
-    actionSuccess,
-    actionError,
+  actionSuccess,
+  actionError,
+  errorMessage,
   error,
   success,
 }: ToastInterface) => {
   const { t } = useTranslation();
   useEffect(() => {
     if (error) {
-      toast.error(t("messages.action_error", {
-        action: actionError,
-      }));
+      toast.error(
+        errorMessage ??
+          t("messages.action_error", {
+            action: actionError,
+          })
+      );
     }
     if (success) {
       toast.success(

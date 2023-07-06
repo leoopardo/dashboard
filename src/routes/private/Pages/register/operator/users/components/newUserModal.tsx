@@ -8,9 +8,6 @@ import React, {
 } from "react";
 import { useTranslation } from "react-i18next";
 import { GroupSelect } from "@components/Selects/groupSelect";
-import { useCreateOrganizationUser } from "@services/register/organization/users/createUser";
-import { OrganizationUserItem } from "@src/services/types/register/organization/organizationUsers.interface";
-import { useUpdateOrganizationUser } from "@services/register/organization/users/updateUser";
 import { Toast } from "@src/components/Toast";
 import { useCreateOperatorUser } from "@src/services/register/operator/users/createUser";
 import { useUpdateOperatorUser } from "@src/services/register/operator/users/updateUser";
@@ -64,7 +61,7 @@ export const NewUserModal = ({
   });
 
   const { mutate, error, isLoading, isSuccess } = useCreateOperatorUser(body);
-  const { updateError, updateLoading, updateMutate, updateSuccess } =
+  const { updateError, updateLoading, updateSuccess } =
     useUpdateOperatorUser(body);
 
   function handleChangeUserBody(event: any) {
@@ -131,7 +128,7 @@ export const NewUserModal = ({
           size="large"
           onClick={() => submitRef.current?.click()}
         >
-          {t("buttons.create")}
+          {currentUser ? t("buttons.update") : t("buttons.create")}
         </Button>
       }
     >

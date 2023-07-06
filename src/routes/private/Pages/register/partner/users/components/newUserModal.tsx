@@ -131,7 +131,7 @@ export const NewUserModal = ({
           size="large"
           onClick={() => submitRef.current?.click()}
         >
-          {t("buttons.create")}
+          {currentUser ? t("buttons.update") : t("buttons.create")}
         </Button>
       }
     >
@@ -248,7 +248,12 @@ export const NewUserModal = ({
             style={{ display: "none" }}
             name="group_id"
           />
-          <GroupSelect body={body} setBody={setBody} />
+          <GroupSelect
+            body={body}
+            setBody={setBody}
+            filterIdProp="partner_id"
+            filterIdValue={body?.partner_id || currentUser?.partner_id}
+          />
         </Form.Item>
 
         <Form.Item

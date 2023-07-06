@@ -148,7 +148,6 @@ export const PixKeyWhitelist = () => {
               },
               {
                 label: "delete",
-
                 icon: <DeleteOutlined />,
                 onClick() {
                   setIsConfirmOpen(true);
@@ -161,26 +160,10 @@ export const PixKeyWhitelist = () => {
             columns={columns}
             loading={isPixKeyWhitelistDataFetching}
             label={["pix_key"]}
-            Confirm={
-              <Popconfirm
-                title={t("messages.confirm_action_title", {
-                  action: t("messages.delete"),
-                })}
-                description={t("messages.are_you_sure", {
-                  action: t("messages.delete"),
-                  itens: currentItem?.pix_key,
-                })}
-                open={isConfirmOpen}
-                style={{ maxWidth: "340px" }}
-                onConfirm={() => {
-                  DeletePixKeyMutate();
-                  setIsConfirmOpen(false);
-                }}
-                okText={t("messages.yes_delete")}
-                cancelText={t("messages.no_cancel")}
-                onCancel={() => setIsConfirmOpen(false)}
-              />
-            }
+            isConfirmOpen={isConfirmOpen}
+            setIsConfirmOpen={setIsConfirmOpen}
+            itemToAction={currentItem?.pix_key}
+            onConfirmAction={ () => DeletePixKeyMutate()}
           />
         </Grid>
       </Grid>

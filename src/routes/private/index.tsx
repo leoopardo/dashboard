@@ -1,4 +1,3 @@
-import React, { FC, useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { NotFount } from "../public/Pages/404";
 import { Redirect } from "./redirect";
@@ -36,10 +35,11 @@ import { MerchantHistory } from "./Pages/consult/merchant/history";
 import { OrgonizationManual } from "./Pages/moviments/organization/manual";
 import { MerchantManual } from "./Pages/moviments/merchants/manual";
 import { CheckDocument } from "./Pages/consult/persons/checkDocument";
+import { DepositsErrors } from "./Pages/support/apiLogs/DepositsErrors";
+import { WithdrawalsErrors } from "./Pages/support/apiLogs/WithdrawalsErrors";
+import { BankBlacklist } from "./Pages/support/blacklists/bankBlacklist";
 
 export const PrivateRoutes = () => {
-  const navigate = useNavigate();
-
   return (
     <Routes>
       <Route path="/login" element={<Redirect />} />
@@ -152,6 +152,18 @@ export const PrivateRoutes = () => {
               path="merchant_manual_moviments"
               element={<MerchantManual />}
             />
+          </Route>
+        </Route>
+        <Route path="support">
+          <Route path="api_logs">
+            <Route path="error_logs_deposits" element={<DepositsErrors />} />
+            <Route
+              path="error_logs_withdrawals"
+              element={<WithdrawalsErrors />}
+            />
+          </Route>
+          <Route path="blacklists">
+            <Route path="bank_institutions" element={<BankBlacklist />} />
           </Route>
         </Route>
       </Route>

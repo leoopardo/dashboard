@@ -10,7 +10,9 @@ import {
   Dropdown,
   Empty,
   Input,
+  Modal,
   Pagination,
+  Popconfirm,
   Table,
   Tooltip,
 } from "antd";
@@ -59,8 +61,11 @@ interface TableProps {
   setCurrentItem: Dispatch<SetStateAction<any>>;
   removeTotal?: boolean;
   actions?: actionsInterface[];
-  Confirm?: any;
   removePagination?: boolean;
+  isConfirmOpen?: boolean;
+  setIsConfirmOpen?: Dispatch<SetStateAction<boolean>>;
+  itemToAction?: string;
+  onConfirmAction?: () => void;
 }
 
 export const CustomTable = (props: TableProps) => {
@@ -346,7 +351,6 @@ export const CustomTable = (props: TableProps) => {
               dataIndex: column.name,
               render: (a: any, record: any) => (
                 <div style={{ width: "100%", textAlign: "center" }}>
-                  {props.Confirm ?? ""}
                   <Dropdown
                     key={column.name}
                     menu={{ items: actions }}
@@ -407,73 +411,96 @@ export const CustomTable = (props: TableProps) => {
     );
   }, [props.columns]);
 
-  return !isMobile ? (
-    <Grid container>
-      <Grid item xs={12}>
-        <Table
-          locale={{
-            emptyText: props.error ? (
-              <Empty
-                style={{ padding: 15, paddingBottom: 30 }}
-                image={Empty.PRESENTED_IMAGE_SIMPLE}
-                description={`${t("table.error")} ${
-                  props.error.response.status
-                } - ${t(`error.${props.error.response.status}`)}`}
-              />
-            ) : (
-              <Empty
-                style={{ padding: 15, paddingBottom: 30 }}
-                image={Empty.PRESENTED_IMAGE_SIMPLE}
-                description={t("messages.empty_table_data")}
-              />
-            ),
-          }}
-          pagination={{
-            current: Number(props?.query?.page),
-            pageSize: Number(props?.query?.limit),
-            total: props.removeTotal
-              ? props?.items?.length < props?.data?.limit
-                ? props?.data?.limit * props?.data?.page
-                : props?.data?.limit * props?.data?.page + 1
-              : props?.data?.total,
-            onChange: (page) => {
-              props.setQuery((state: any) => ({ ...state, page }));
-            },
-            pageSizeOptions: [10, 25, 50, 100],
-            onShowSizeChange: (current, size) =>
-              props.setQuery((state: any) => ({ ...state, limit: size })),
-          }}
-          dataSource={props.error ? [] : props?.items}
-          direction="ltr"
-          columns={columns}
-          loading={props.loading}
-          scroll={{ x: 800 }}
-          sticky
-          bordered
-        />
-      </Grid>
-    </Grid>
-  ) : (
-    <Grid container style={{ display: "flex", justifyContent: "center" }}>
-      <Grid item xs={12}>
-        <Mobile
-          columns={props?.columns}
-          items={props?.items}
-          label={props?.label}
-          actions={actions}
-          setCurrentItem={props.setCurrentItem}
-          Confirm={props.Confirm}
-        />
-      </Grid>
-      {!props.removePagination && (
-        <Pagination
-          current={Number(props?.query?.page)}
-          pageSize={Number(props?.query?.limit)}
-          onChange={(page) => {
-            props.setQuery((state: any) => ({ ...state, page }));
-          }}
-        />
+  return (
+    <>
+      {!isMobile ? (
+        <Grid container>
+          <Grid item xs={12}>
+            <Table
+              locale={{
+                emptyText: props.error ? (
+                  <Empty
+                    style={{ padding: 15, paddingBottom: 30 }}
+                    image={Empty.PRESENTED_IMAGE_SIMPLE}
+                    description={`${t("table.error")} ${
+                      props.error.response.status
+                    } - ${t(`error.${props.error.response.status}`)}`}
+                  />
+                ) : (
+                  <Empty
+                    style={{ padding: 15, paddingBottom: 30 }}
+                    image={Empty.PRESENTED_IMAGE_SIMPLE}
+                    description={t("messages.empty_table_data")}
+                  />
+                ),
+              }}
+              pagination={{
+                current: Number(props?.query?.page),
+                pageSize: Number(props?.query?.limit),
+                total: props.removeTotal
+                  ? props?.items?.length < props?.data?.limit
+                    ? props?.data?.limit * props?.data?.page
+                    : props?.data?.limit * props?.data?.page + 1
+                  : props?.data?.total,
+                onChange: (page) => {
+                  props.setQuery((state: any) => ({ ...state, page }));
+                },
+                pageSizeOptions: [10, 25, 50, 100],
+                onShowSizeChange: (current, size) =>
+                  props.setQuery((state: any) => ({ ...state, limit: size })),
+              }}
+              dataSource={props.error ? [] : props?.items}
+              direction="ltr"
+              columns={columns}
+              loading={props.loading}
+              scroll={{ x: 800 }}
+              sticky
+              bordered
+            />
+          </Grid>
+        </Grid>
+      ) : (
+        <Grid container style={{ display: "flex", justifyContent: "center" }}>
+          <Grid item xs={12}>
+            <Mobile
+              columns={props?.columns}
+              items={props?.items}
+              label={props?.label}
+              actions={actions}
+              setCurrentItem={props.setCurrentItem}
+            />
+          </Grid>
+          {!props.removePagination && (
+            <Pagination
+              current={Number(props?.query?.page)}
+              pageSize={Number(props?.query?.limit)}
+              onChange={(page) => {
+                props.setQuery((state: any) => ({ ...state, page }));
+              }}
+            />
+          )}
+        </Grid>
       )}
-    </Grid>
+      {props.isConfirmOpen && (
+        <Modal
+          title={t("messages.confirm_action_title", {
+            action: t("messages.delete"),
+          })}
+          open={props.isConfirmOpen}
+          onOk={() => {
+            props.onConfirmAction && props.onConfirmAction();
+            props.setIsConfirmOpen && props.setIsConfirmOpen(false);
+          }}
+          onCancel={() =>
+            props.setIsConfirmOpen && props.setIsConfirmOpen(false)
+          }
+        >
+          {t("messages.are_you_sure", {
+            action: t("messages.delete"),
+            itens: props.itemToAction,
+          })}
+        </Modal>
+      )}
+    </>
   );
 };

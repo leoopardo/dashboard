@@ -21,7 +21,6 @@ interface MobileProps {
   label: any;
   actions: any;
   setCurrentItem: Dispatch<SetStateAction<any>>;
-  Confirm: any;
 }
 
 export const Mobile = (props: MobileProps) => {
@@ -336,7 +335,7 @@ export const Mobile = (props: MobileProps) => {
   };
   return props?.items?.length >= 1 ? (
     <>
-      {props.Confirm && props.Confirm}
+      
       <Collapse
         expandIconPosition="end"
         items={items}

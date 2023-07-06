@@ -15,6 +15,7 @@ import { useUpdateOrganizationUser } from "@services/register/organization/users
 import { useValidate } from "@src/services/siginIn/validate";
 import { Toast } from "@src/components/Toast";
 import { queryClient } from "@src/services/queryClient";
+import ReactInputMask from "react-input-mask";
 interface NewuserModalprops {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -145,7 +146,7 @@ export const NewUserModal = ({
           size="large"
           onClick={() => submitRef.current?.click()}
         >
-          {t("buttons.create")}
+         {currentUser ? t("buttons.update") : t("buttons.create")}
         </Button>
       }
     >
@@ -217,13 +218,22 @@ export const NewUserModal = ({
             },
           ]}
         >
-          <Input
-            size="large"
-            type="string"
-            name="cellphone"
+          <ReactInputMask
             value={body.cellphone}
-            onChange={handleChangeUserBody}
-          />
+            mask="+9999999999999"
+            onChange={(event: any) => {
+              const value = event.target.value.replace(/[^\d]/g, "");
+              if (!value) {
+                delete body.cellphone;
+              }
+              setBody((state: any) => ({
+                ...state,
+                cellphone: `+${value}`,
+              }));
+            }}
+          >
+            <Input size="large" type="string" name="cellphone" />
+          </ReactInputMask>
         </Form.Item>
         <Form.Item
           label={t(`table.email`)}

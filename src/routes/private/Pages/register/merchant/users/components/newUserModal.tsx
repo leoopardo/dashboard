@@ -199,7 +199,12 @@ export const NewUserModal = ({ open, setOpen }: NewuserModalprops) => {
             style={{ display: "none" }}
             name="group_id"
           />
-          <GroupSelect body={body} setBody={setBody} />
+          <GroupSelect
+            body={body}
+            setBody={setBody}
+            filterIdProp="merchant_id"
+            filterIdValue={body?.merchant_id}
+          />
         </Form.Item>
 
         <Form.Item
