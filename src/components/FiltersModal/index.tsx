@@ -199,7 +199,6 @@ export const FiltersModal = ({
                             "YYYY-MM-DD HH:mm:ss"
                           ),
                         ]}
-                  
                         style={{
                           width: "100%",
                           height: "35px",
@@ -463,7 +462,10 @@ export const FiltersModal = ({
                           selectOptions[filter]?.map((option: any) => {
                             return {
                               value: option,
-                              label: t(`table.${option.toLowerCase()}`),
+                              label:
+                                filter === "step"
+                                  ? t(`logs.${option.toLowerCase()}`)
+                                  : t(`table.${option.toLowerCase()}`),
                             };
                           }) ?? []
                         }

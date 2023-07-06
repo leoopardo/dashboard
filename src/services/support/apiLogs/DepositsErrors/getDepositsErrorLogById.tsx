@@ -1,10 +1,7 @@
 import moment from "moment";
 import { api } from "../../../../config/api";
 import { useQuery } from "react-query";
-import {
-
-  DepositLogsItemById,
-} from "@src/services/types/support/apiLogs/depositsError.interface";
+import { DepositLogsItemById } from "@src/services/types/support/apiLogs/depositsError.interface";
 
 export function useGetDepositsErrorsLogById(id?: string) {
   const { data, isFetching, error, refetch } = useQuery<
@@ -19,6 +16,7 @@ export function useGetDepositsErrorsLogById(id?: string) {
       refetchInterval: false,
       refetchIntervalInBackground: false,
       refetchOnMount: false,
+      enabled: false,
     }
   );
 

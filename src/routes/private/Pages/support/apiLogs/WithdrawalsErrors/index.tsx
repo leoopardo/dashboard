@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Grid } from "@mui/material";
-import { useGetDepositsErrorsTotal } from "@src/services/support/apiLogs/DepositsErrors/getDepositsErrorStepsTotal";
 import {
   DepositLogsItem,
   DepositsLogsStepsTotalQuery,
@@ -12,16 +11,17 @@ import { FilterChips } from "@src/components/FiltersModal/filterChips";
 import { FiltersModal } from "@src/components/FiltersModal";
 import { useGetOrganizationBankMaintenece } from "@src/services/register/organization/bankMaitenence/getBanks";
 import { LogsColors } from "../utils/logsColors";
-import { useGetDepositsErrorsLogs } from "@src/services/support/apiLogs/DepositsErrors/getDepositsErrorLogs";
 import { CustomTable } from "@src/components/CustomTable";
 import { EyeFilled, ReloadOutlined } from "@ant-design/icons";
-import { useGetDepositsErrorsLogById } from "@src/services/support/apiLogs/DepositsErrors/getDepositsErrorLogById";
 import { LogDetailsModal } from "../components/LogDetailsModal";
-import { useGetLogsSteps } from "@src/services/support/apiLogs/DepositsErrors/ListSteps";
+import { useGetWithdrawalsErrorsLogs } from "@src/services/support/apiLogs/WithdrawalsErrors/getWithdrawalsErrorLogs";
+import { useGetWithdrawErrorsLogById } from "@src/services/support/apiLogs/WithdrawalsErrors/getWithdrawalsErrorLogById";
+import { useGetWithdrawalsErrorsTotal } from "@src/services/support/apiLogs/WithdrawalsErrors/getWithdrawalsErrorStepsTotal";
+import { useGetWithdrawLogsSteps } from "@src/services/support/apiLogs/WithdrawalsErrors/ListSteps";
 
-export const DepositsErrors = () => {
+export const WithdrawalsErrors = () => {
   const INITIAL_QUERY: DepositsLogsStepsTotalQuery = {
-    limit: 25,
+    limit: 10,
     page: 1,
     start_date: moment(new Date())
       .startOf("day")
@@ -39,23 +39,23 @@ export const DepositsErrors = () => {
 
   const { t } = useTranslation();
 
-  const { LogsSteps, refetchLogsSteps } = useGetLogsSteps(query);
+  const { LogsSteps, refetchLogsSteps } = useGetWithdrawLogsSteps(query);
 
   const {
-    DepositsErrorsTotal,
-    isDepositsErrorsTotalFetching,
-    refetchDepositsErrorsTotal,
-  } = useGetDepositsErrorsTotal(query);
+    WithdrawalsErrorsTotal,
+    isWithdrawalsErrorsTotalFetching,
+    refetchWithdrawalsErrorsTotal,
+  } = useGetWithdrawalsErrorsTotal(query);
 
   const {
-    DepositsErrorsLogs,
-    DepositsErrorsLogsError,
-    isDepositsErrorsLogsFetching,
-    refetchDepositsErrorsLogs,
-  } = useGetDepositsErrorsLogs(query);
+    WithdrawalsErrorsLogs,
+    WithdrawalsErrorsLogsError,
+    isWithdrawalsErrorsLogsFetching,
+    refetchWithdrawalsErrorsLogs,
+  } = useGetWithdrawalsErrorsLogs(query);
 
-  const { DepositErrorLog, refetchDepositErrorLog } =
-    useGetDepositsErrorsLogById(currentItem?._id);
+  const { WithdrawErrorLog, refetchWithdrawErrorLog } =
+    useGetWithdrawErrorsLogById(currentItem?._id);
 
   const { BankMainteneceData } = useGetOrganizationBankMaintenece({
     limit: 200,
@@ -65,23 +65,23 @@ export const DepositsErrors = () => {
   });
 
   useEffect(() => {
-    refetchDepositsErrorsTotal();
-    refetchDepositsErrorsLogs();
+    refetchWithdrawalsErrorsTotal();
+    refetchWithdrawalsErrorsLogs();
     refetchLogsSteps();
   }, [query]);
 
-  console.log(DepositsErrorsTotal);
+  console.log(WithdrawalsErrorsTotal);
 
   return (
     <Grid container style={{ padding: "25px" }}>
-      {DepositsErrorsTotal && DepositsErrorsTotal?.length >= 1 && (
+      {WithdrawalsErrorsTotal && WithdrawalsErrorsTotal?.length >= 1 && (
         <Grid
           container
           item
           xs={12}
           style={{ display: "flex", justifyContent: "center" }}
         >
-          {DepositsErrorsTotal?.map((error) => (
+          {WithdrawalsErrorsTotal?.map((error) => (
             <Grid
               xs={5}
               md="auto"
@@ -92,7 +92,7 @@ export const DepositsErrors = () => {
             >
               <Card bordered={false}>
                 <Statistic
-                  loading={isDepositsErrorsTotalFetching}
+                  loading={isWithdrawalsErrorsTotalFetching}
                   title={t(`logs.${error.step.toLowerCase()}`)}
                   value={error.total}
                   style={{ wordBreak: "break-word" }}
@@ -120,9 +120,9 @@ export const DepositsErrors = () => {
             <Button
               style={{ width: "100%" }}
               size="large"
-              loading={isDepositsErrorsTotalFetching}
+              loading={isWithdrawalsErrorsTotalFetching}
               onClickCapture={() => {
-                refetchDepositsErrorsTotal();
+                refetchWithdrawalsErrorsTotal();
               }}
             >
               <ReloadOutlined /> {t("buttons.refresh")}
@@ -137,7 +137,7 @@ export const DepositsErrors = () => {
           display: "flex",
           alignItems: "center",
           marginTop:
-            DepositsErrorsTotal && DepositsErrorsTotal?.length >= 1
+            WithdrawalsErrorsTotal && WithdrawalsErrorsTotal?.length >= 1
               ? "10px"
               : 0,
         }}
@@ -146,7 +146,7 @@ export const DepositsErrors = () => {
         <Grid item xs={12} md={4} lg={2}>
           <Button
             style={{ width: "100%", height: 40 }}
-            loading={isDepositsErrorsTotalFetching}
+            loading={isWithdrawalsErrorsTotalFetching}
             type="primary"
             onClick={() => setIsFiltersOpen(true)}
           >
@@ -170,9 +170,9 @@ export const DepositsErrors = () => {
             query={query}
             setCurrentItem={setCurrentItem}
             setQuery={setQuery}
-            data={DepositsErrorsLogs}
-            items={DepositsErrorsLogs}
-            error={DepositsErrorsLogsError}
+            data={WithdrawalsErrorsLogs}
+            items={WithdrawalsErrorsLogs}
+            error={WithdrawalsErrorsLogsError}
             removeTotal
             columns={[
               { name: "_id", type: "id" },
@@ -183,7 +183,7 @@ export const DepositsErrors = () => {
               { name: "step", type: "text" },
               { name: "createdAt", type: "date" },
             ]}
-            loading={isDepositsErrorsLogsFetching}
+            loading={isWithdrawalsErrorsLogsFetching}
             label={["error_message", "step"]}
             actions={[
               {
@@ -191,7 +191,7 @@ export const DepositsErrors = () => {
                 icon: <EyeFilled style={{ fontSize: "20px" }} />,
                 onClick: () => {
                   setIsDetailsOpen(true);
-                  refetchDepositErrorLog();
+                  refetchWithdrawErrorLog();
                 },
               },
             ]}
@@ -206,7 +206,7 @@ export const DepositsErrors = () => {
           setQuery={setQuery}
           haveInitialDate
           filters={["start_date", "end_date", "step"]}
-          refetch={refetchDepositsErrorsTotal}
+          refetch={refetchWithdrawalsErrorsTotal}
           selectOptions={{ step: LogsSteps?.map((step) => step.step) }}
           startDateKeyName="start_date"
           endDateKeyName="end_date"
@@ -218,7 +218,7 @@ export const DepositsErrors = () => {
         <LogDetailsModal
           open={isDetailsOpen}
           setOpen={setIsDetailsOpen}
-          data={DepositErrorLog}
+          data={WithdrawErrorLog}
         />
       )}
     </Grid>

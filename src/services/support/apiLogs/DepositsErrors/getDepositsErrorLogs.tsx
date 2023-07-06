@@ -29,11 +29,6 @@ export function useGetDepositsErrorsLogs(
       });
       return response.data;
     },
-    {
-      refetchInterval: false,
-      refetchIntervalInBackground: false,
-      refetchOnMount: false,
-    }
   );
 
   const DepositsErrorsLogs = data;

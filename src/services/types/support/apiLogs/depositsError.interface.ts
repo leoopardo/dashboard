@@ -47,3 +47,7 @@ export interface DepositLogsItemById {
   _id: string;
 }
 
+export interface LogsStepsItem {
+  step: string;
+}
+

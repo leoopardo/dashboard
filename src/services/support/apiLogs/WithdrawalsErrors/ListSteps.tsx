@@ -2,19 +2,19 @@ import moment from "moment";
 import { api } from "../../../../config/api";
 import { useQuery } from "react-query";
 import {
-  DepositsLogsStepsTotalItem,
   DepositsLogsStepsTotalQuery,
+  LogsStepsItem,
 } from "@src/services/types/support/apiLogs/depositsError.interface";
 
-export function useGetDepositsErrorsTotal(
+export function useGetWithdrawLogsSteps(
   params: DepositsLogsStepsTotalQuery
 ) {
   const { data, isFetching, error, refetch } = useQuery<
-    DepositsLogsStepsTotalItem[] | null | undefined
+    LogsStepsItem[] | null | undefined
   >(
-    "DepositsErrorsTotal",
+    "ListSteps",
     async () => {
-      const response = await api.get("report/logs/deposit/steps/total", {
+      const response = await api.get("report/logs/withdraw/steps", {
         params: {
           ...params,
           start_date: params.start_date
@@ -33,14 +33,14 @@ export function useGetDepositsErrorsTotal(
     },
   );
 
-  const DepositsErrorsTotal = data;
-  const isDepositsErrorsTotalFetching = isFetching;
-  const DepositsErrorsTotalError: any = error;
-  const refetchDepositsErrorsTotal = refetch;
+  const LogsSteps = data;
+  const isLogsStepsFetching = isFetching;
+  const LogsStepsError: any = error;
+  const refetchLogsSteps = refetch;
   return {
-    DepositsErrorsTotal,
-    isDepositsErrorsTotalFetching,
-    DepositsErrorsTotalError,
-    refetchDepositsErrorsTotal,
+    LogsSteps,
+    isLogsStepsFetching,
+    LogsStepsError,
+    refetchLogsSteps,
   };
 }

@@ -6,15 +6,15 @@ import {
   DepositsLogsStepsTotalQuery,
 } from "@src/services/types/support/apiLogs/depositsError.interface";
 
-export function useGetDepositsErrorsTotal(
+export function useGetWithdrawalsErrorsTotal(
   params: DepositsLogsStepsTotalQuery
 ) {
   const { data, isFetching, error, refetch } = useQuery<
     DepositsLogsStepsTotalItem[] | null | undefined
   >(
-    "DepositsErrorsTotal",
+    "WithdrawalsErrorsTotal",
     async () => {
-      const response = await api.get("report/logs/deposit/steps/total", {
+      const response = await api.get("report/logs/withdraw/steps/total", {
         params: {
           ...params,
           start_date: params.start_date
@@ -33,14 +33,14 @@ export function useGetDepositsErrorsTotal(
     },
   );
 
-  const DepositsErrorsTotal = data;
-  const isDepositsErrorsTotalFetching = isFetching;
-  const DepositsErrorsTotalError: any = error;
-  const refetchDepositsErrorsTotal = refetch;
+  const WithdrawalsErrorsTotal = data;
+  const isWithdrawalsErrorsTotalFetching = isFetching;
+  const WithdrawalsErrorsTotalError: any = error;
+  const refetchWithdrawalsErrorsTotal = refetch;
   return {
-    DepositsErrorsTotal,
-    isDepositsErrorsTotalFetching,
-    DepositsErrorsTotalError,
-    refetchDepositsErrorsTotal,
+    WithdrawalsErrorsTotal,
+    isWithdrawalsErrorsTotalFetching,
+    WithdrawalsErrorsTotalError,
+    refetchWithdrawalsErrorsTotal,
   };
 }

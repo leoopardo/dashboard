@@ -36,6 +36,7 @@ import { OrgonizationManual } from "./Pages/moviments/organization/manual";
 import { MerchantManual } from "./Pages/moviments/merchants/manual";
 import { CheckDocument } from "./Pages/consult/persons/checkDocument";
 import { DepositsErrors } from "./Pages/support/apiLogs/DepositsErrors";
+import { WithdrawalsErrors } from "./Pages/support/apiLogs/WithdrawalsErrors";
 
 export const PrivateRoutes = () => {
   return (
@@ -155,6 +156,10 @@ export const PrivateRoutes = () => {
         <Route path="support">
           <Route path="api_logs">
             <Route path="error_logs_deposits" element={<DepositsErrors />} />
+            <Route
+              path="error_logs_withdrawals"
+              element={<WithdrawalsErrors />}
+            />
           </Route>
         </Route>
       </Route>
