@@ -493,6 +493,7 @@
   "error": {
     "400": "Nenhum dado encontrado.",
     "404": "Rota não encontrada",
+    "date_too_log": "A diferença entre as datas deve ser menor ou igual a 30 dias",
     "password_or_username": "Senha e/ou usuário incorretos.",
     "BANK_ALREADY_CREATED": "Esse banco já foi adicionado"
   },
