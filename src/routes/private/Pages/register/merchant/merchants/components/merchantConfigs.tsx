@@ -8,6 +8,7 @@ import { BanksTab } from "./tabs/banks";
 import { FeesTab } from "./tabs/fees";
 import { MerchantConfigTab } from "./tabs/merchantConfigTab";
 import { OrganizationConfigTab } from "./tabs/organizationConfigTab";
+import { CredentialConfigTab } from "./tabs/credentials";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 
@@ -45,6 +46,13 @@ export const MerchantConfigs = () => {
       label:`${t("menus.organization")} Configs`,
       children: (
         <OrganizationConfigTab id={params.id}/>
+      ),
+    }, 
+    {
+      key: "5",
+      label:`${t("menus.credentials")}`,
+      children: (
+        <CredentialConfigTab id={params.id}/>
       ),
     }, 
   ];

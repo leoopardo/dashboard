@@ -3,19 +3,19 @@ import { useMutation } from "react-query";
 
 interface ValidateTokenInterface {
   action: string;
-  cellphone: string | undefined;
+  cellphone?: string | undefined;
 }
 interface ValidateTokenResponseInterface {
   cellphone: string;
   expiration: number;
 }
 
-export function useValidateToken(body: ValidateTokenInterface) {
+export function useValidateToken(body: ValidateTokenInterface, dispatch?: boolean) {
   const { isLoading, error, mutate, isSuccess, data } = useMutation<
     ValidateTokenResponseInterface | null | undefined
   >("validateToken", async () => {
-    const response = await api.post("core/user/validation-token", body, {});
-    return response.data;
+    const response = dispatch && await api.post("core/user/validation-token", body, {});
+    return response && response.data;
   });
 
   const ValidateToken = mutate;

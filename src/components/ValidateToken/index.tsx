@@ -1,4 +1,5 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { Dispatch, SetStateAction, useCallback, useEffect, useState } from "react";
 import { Grid } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useValidateToken } from "../../services/sendValidationToken";
@@ -7,18 +8,16 @@ import OTPInput from "react-otp-input";
 import Countdown from "../countdown";
 import { useGetSelf } from "../../services/getSelf";
 import { useValidatePhone } from "../../services/sendValidationPhone";
-import { toast } from "react-hot-toast";
-import { queryClient } from "@src/services/queryClient";
 import { Toast } from "../Toast";
 
 interface ValidateTokenProps {
   open: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
-  body: any;
+  body?: any;
   action: string;
   tokenState: string;
   setTokenState: Dispatch<SetStateAction<string>>;
-  success: boolean;
+  success?: boolean;
   error: any;
   submit: () => void;
 }
@@ -26,27 +25,28 @@ interface ValidateTokenProps {
 export const ValidateToken = ({
   open,
   setIsOpen,
-  body,
   action,
   tokenState,
   setTokenState,
-  success,
-  error,
+  body,
   submit,
 }: ValidateTokenProps) => {
   const { t } = useTranslation();
   const { Self, refetchSelf } = useGetSelf();
+  const [validationTokenSent, setValidationTokenSent] =
+  useState<boolean>(false);
+const [validationPhoneSent, setValidationPhoneSent] =
+  useState<boolean>(false);
   const [validateBody, setValidateBody] = useState<{
     action: string;
-    cellphone: string | undefined;
+    cellphone?: string | undefined;
   }>({ action, cellphone: undefined });
   const {
     ValidateToken,
-    ValidateTokenError,
     ValidateTokenLoading,
     ValidateTokenSuccess,
     tokenData,
-  } = useValidateToken(validateBody);
+  } = useValidateToken(validateBody, (validationTokenSent || validationPhoneSent));
   const {
     ValidatePhone,
     ValidatePhoneLoading,
@@ -56,10 +56,6 @@ export const ValidateToken = ({
 
   const [ableToResend, setAbleToResend] = useState<boolean>(true);
 
-  const [validationTokenSent, setValidationTokenSent] =
-    useState<boolean>(false);
-  const [validationPhoneSent, setValidationPhoneSent] =
-    useState<boolean>(false);
 
   useEffect(() => {
     refetchSelf();
@@ -69,30 +65,26 @@ export const ValidateToken = ({
   }, [ValidatePhoneError, ValidatePhoneSuccess]);
 
   useEffect(() => {
-    if (
-      Self &&
-      Self?.phone_validated &&
-      Self?.cellphone &&
-      !validationTokenSent
-    ) {
-      setTokenState("");
-      setValidateBody({ action, cellphone: body?.cellphone });
-      setValidationTokenSent(true);
-    }
     if (Self && !Self?.phone_validated && !validationPhoneSent) {
       setValidateBody({
         action: "USER_VALIDATE_PHONE",
-        cellphone: Self?.cellphone,
+        cellphone: body && body?.cellphone ? body?.cellphone : Self?.cellphone,
       });
       setValidationPhoneSent(true);
     }
-  }, [Self]);
+
+    if (Self && Self?.phone_validated && !validationTokenSent) {
+      setTokenState("");
+      setValidateBody({
+        action,
+        cellphone: body && body?.cellphone ? `+${body?.cellphone}` : undefined,
+      });
+      setValidationTokenSent(true);
+    }
+  }, [Self, body]);
 
   useEffect(() => {
-    if (
-      validateBody.cellphone &&
-      (!validationPhoneSent || !validationTokenSent)
-    ) {
+    if (!validationPhoneSent || !validationTokenSent) {
       ValidateToken();
     }
   }, [validateBody, validationPhoneSent, validationTokenSent]);

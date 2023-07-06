@@ -474,6 +474,7 @@
     "total_out_processing": "Out (Processing)",
     "total_out_success": "Out (Success)",
     "category": "Category",
+    "production": "Production",
     "error_message": "Error message",
     "response": "Response",
     "step": "Step",

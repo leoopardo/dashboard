@@ -284,6 +284,33 @@ export const MutateModal = ({
             case "ispb":
               return;
 
+            case "type":
+            return (
+              <Form.Item
+              label={t("table.type")}
+              name="type"
+              style={{ margin: 10 }}
+            >
+              <Select
+                size="large"
+                options={
+                  ['production']?.map((item, index) => ({
+                    key: index,
+                    value: item,
+                    label: `${t(`table.${item.toLocaleLowerCase()}`)}`,
+                  })) ?? []
+                }
+                value={body?.cashin_pix_fee_type || null}
+                onChange={(value) => {
+                setBody((state: any) => ({
+                  ...state,
+                  [field.label]: value,
+                }));
+                }}
+              />
+            </Form.Item>
+            )
+
             case "country":
               return (
                 <Form.Item
