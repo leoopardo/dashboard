@@ -5,7 +5,7 @@ import {
   BankBlacklistItem,
   BankBlacklistQuery,
 } from "@src/services/types/support/blacklists/bankBlacklist.interface";
-import { Button, Input, Select } from "antd";
+import { Button, Input, Popconfirm, Select } from "antd";
 import { useTranslation } from "react-i18next";
 import { FilterChips } from "@src/components/FiltersModal/filterChips";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
@@ -15,6 +15,8 @@ import { FiltersModal } from "@src/components/FiltersModal";
 import { useCreateBankBlacklist } from "@src/services/support/blacklists/bankBlacklist/createBankBlacklist";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
 import { Toast } from "@src/components/Toast";
+import { DeleteOutlined } from "@ant-design/icons";
+import { useDeleteBankBlacklist } from "@src/services/support/blacklists/bankBlacklist/deteteBankBlacklist";
 
 export const BankBlacklist = () => {
   const INITIAL_QUERY: BankBlacklistQuery = {
@@ -25,6 +27,7 @@ export const BankBlacklist = () => {
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [isCreateOpen, setIsCreateOpen] = useState<boolean>(false);
   const [searchOption, setSearchOption] = useState<string | null>(null);
+  const [isConfirmOpen, setIsConfirmOpen] = useState<boolean>(false);
   const [search, setSearch] = useState<string>("");
   const [currentItem, setCurrentItem] = useState<BankBlacklistItem | null>(
     null
@@ -44,6 +47,9 @@ export const BankBlacklist = () => {
 
   const { CreateError, CreateIsLoading, CreateIsSuccess, CreateMutate } =
     useCreateBankBlacklist(body);
+
+  const { DeleteError, DeleteIsLoading, DeleteIsSuccess, DeleteMutate } =
+    useDeleteBankBlacklist({ ispb: currentItem?.ispb });
 
   useEffect(() => {
     refetchBankBlacklist();
@@ -172,7 +178,20 @@ export const BankBlacklist = () => {
               { name: "createdAt", type: "date" },
             ]}
             loading={isBankBlacklistFetching}
+            actions={[
+              {
+                label: "delete",
+                icon: <DeleteOutlined />,
+                onClick() {
+                  setIsConfirmOpen(true);
+                },
+              },
+            ]}
+            isConfirmOpen={isConfirmOpen}
+            setIsConfirmOpen={setIsConfirmOpen}
             label={["bank_name", "ispb"]}
+            itemToAction={currentItem?.bank_name}
+            onConfirmAction={() => DeleteMutate()}
           />
         </Grid>
       </Grid>
@@ -221,6 +240,12 @@ export const BankBlacklist = () => {
         }
         error={CreateError}
         success={CreateIsSuccess}
+      />
+      <Toast
+        actionSuccess={t("messages.deleted")}
+        actionError={t("messages.delete")}
+        error={DeleteError}
+        success={DeleteIsSuccess}
       />
     </Grid>
   );

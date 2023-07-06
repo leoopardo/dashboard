@@ -76,7 +76,7 @@ export const ValidateToken = ({
       !validationTokenSent
     ) {
       setTokenState("");
-      setValidateBody({ action, cellphone: `+${Self?.cellphone}` });
+      setValidateBody({ action, cellphone: body?.cellphone });
       setValidationTokenSent(true);
     }
     if (Self && !Self?.phone_validated && !validationPhoneSent) {
@@ -91,8 +91,7 @@ export const ValidateToken = ({
   useEffect(() => {
     if (
       validateBody.cellphone &&
-      (!validationPhoneSent ||
-      !validationTokenSent)
+      (!validationPhoneSent || !validationTokenSent)
     ) {
       ValidateToken();
     }

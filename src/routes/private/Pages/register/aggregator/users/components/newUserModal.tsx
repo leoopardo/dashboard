@@ -130,7 +130,7 @@ export const NewUserModal = ({
           size="large"
           onClick={() => submitRef.current?.click()}
         >
-          {t("buttons.create")}
+          {currentUser ? t("buttons.update") : t("buttons.create")}
         </Button>
       }
     >

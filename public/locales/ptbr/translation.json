@@ -134,7 +134,7 @@
     "uploaded": "Upload realizado",
     "upload": "upload",
     "deleted": "Deletado",
-    "delete": "deletar",
+    "delete": "Deletar",
     "upload_label": "Clique ou arraste e solte o arquivo para esta área",
     "upload_description": "Suporte para um arquivo por vês, nos formatos: pdf, png e docx.",
     "min_value_higher_then_zero": "O valor desse campo deve ser maior que 0"
@@ -187,7 +187,8 @@
     "person": "Pessoa",
     "new_person": "Nova pessoa",
     "register_in": "Registrar entrada",
-    "register_out": "Registrar saída"
+    "register_out": "Registrar saída",
+    "new_bank_blacklist": "Adicionar à blacklist"
   },
   "input": {
     "required": "Por favor, insira o {{field}}",
@@ -475,13 +476,15 @@
     "category": "Categoria",
     "error_message": "Mensagem de erro",
     "response": "Resposta",
-    "step": "Etapa"
+    "step": "Etapa",
+    "user_id": "ID Usuário"
   },
   "actions": {
     "details": "Detalhes",
     "edit": "Editar",
     "logs_webhooks": "Logs de webhooks",
-    "configs": "Configurações"
+    "configs": "Configurações",
+    "delete": "Deletar"
   },
   "error": {
     "400": "Nenhum dado encontrado.",

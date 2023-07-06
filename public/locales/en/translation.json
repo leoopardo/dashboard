@@ -133,7 +133,7 @@
     "uploaded": "Uploaded",
     "upload": "upload",
     "deleted": "Deleted",
-    "delete": "delete",
+    "delete": "Delete",
     "upload_label": "Click or drag file to this area to upload",
     "upload_description": "Support for a single upload. Files types: pdf, png and docx.",
     "min_value_higher_then_zero": "The value of this field must be greater than 0"
@@ -254,7 +254,8 @@
     "update_aggregator": "Update agregator",
     "person": "Person",
     "register_in": "Register in",
-    "register_out": "Register out"
+    "register_out": "Register out",
+    "new_bank_blacklist": "Add to blacklist"
   },
   "table": {
     "id": "ID",
@@ -473,13 +474,15 @@
     "category": "Category",
     "error_message": "Error message",
     "response": "Response",
-    "step": "Step"
+    "step": "Step",
+    "user_id": "User ID"
   },
   "actions": {
     "details": "Details",
     "edit": "Edit",
     "logs_webhooks": "Webhook logs",
-    "configs": "Configuration"
+    "configs": "Configuration",
+    "delete": "Delete"
   },
   "error": {
     "400": "Any records found.",
