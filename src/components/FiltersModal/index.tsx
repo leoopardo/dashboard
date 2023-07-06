@@ -189,7 +189,7 @@ export const FiltersModal = ({
         layout="vertical"
         onFinish={() => {
           setQuery({ ...filtersQuery, page: 1, limit: 25 });
-          refetch();
+    
           setOpen(false);
         }}
       >

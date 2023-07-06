@@ -32,7 +32,7 @@ export function useGetRowsPaidDeposits(
       refetchInterval: false,
       refetchIntervalInBackground: false,
       refetchOnMount: false,
-      
+      refetchOnWindowFocus: false
     }
   );
 

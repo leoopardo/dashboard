@@ -35,6 +35,7 @@ export function useGetRowsGeneratedDeposits(
       refetchInterval: false,
       refetchIntervalInBackground: false,
       refetchOnMount: false,
+      refetchOnWindowFocus: false
     }
   );
 

@@ -32,6 +32,7 @@ export function useGetRowsGeneratedWithdrawals(
       refetchInterval: false,
       refetchIntervalInBackground: false,
       refetchOnMount: false,
+      refetchOnWindowFocus: false
     }
   );
 
