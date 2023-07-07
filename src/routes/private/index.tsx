@@ -38,6 +38,8 @@ import { CheckDocument } from "./Pages/consult/persons/checkDocument";
 import { DepositsErrors } from "./Pages/support/apiLogs/DepositsErrors";
 import { WithdrawalsErrors } from "./Pages/support/apiLogs/WithdrawalsErrors";
 import { BankBlacklist } from "./Pages/support/blacklists/bankBlacklist";
+import { ThirdPartKeyBlacklist } from "./Pages/support/blacklists/thirdPartKey";
+import { InvalidPixKeyBlacklist } from "./Pages/support/blacklists/invalidPixKey";
 
 export const PrivateRoutes = () => {
   return (
@@ -164,6 +166,14 @@ export const PrivateRoutes = () => {
           </Route>
           <Route path="blacklists">
             <Route path="bank_institutions" element={<BankBlacklist />} />
+            <Route
+              path="third_parties_pix_key"
+              element={<ThirdPartKeyBlacklist />}
+            />
+            <Route
+              path="invalid_pix_key"
+              element={<InvalidPixKeyBlacklist />}
+            />
           </Route>
         </Route>
       </Route>

@@ -9,9 +9,16 @@ import {
   AutoComplete,
   Slider,
   Checkbox,
+  FormInstance,
 } from "antd";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+  useRef,
+} from "react";
 import { Grid } from "@mui/material";
 import moment from "moment";
 const { RangePicker } = DatePicker;
@@ -29,7 +36,7 @@ import { useGetStates } from "../../services/states_cities/getStates";
 import { useGetCities } from "../../services/states_cities/getCities";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
-import { StyleWrapperDatePicker, StyledRangePicker } from "./styles";
+import { StyleWrapperDatePicker } from "./styles";
 
 dayjs.extend(weekday);
 dayjs.extend(localeData);
@@ -69,6 +76,8 @@ export const FiltersModal = ({
   const [isValueRangeAbled, setIsValueRangeAbled] = useState<boolean>(false);
   const [currState, setCurrState] = useState<string>("");
   const { cities, isCitiesFetching, refetchCities } = useGetCities(currState);
+  const submitRef = useRef<HTMLButtonElement>(null);
+  const formRef = useRef<FormInstance>(null);
 
   useEffect(() => {
     if (query.age_start) {
@@ -142,8 +151,7 @@ export const FiltersModal = ({
         <Button
           type="primary"
           onClick={() => {
-            setQuery({ ...filtersQuery, page: 1, limit: 25 });
-            setOpen(false);
+            submitRef.current?.click();
           }}
           style={{ width: "100%", height: "50px" }}
         >
@@ -174,315 +182,325 @@ export const FiltersModal = ({
           />
         </Grid>
       </Grid>
-      <Grid container>
-        <Form initialValues={filtersQuery}>
-          {filters.map((filter) => {
-            switch (filter) {
-              case startDateKeyName:
-                return (
-                  <Grid
-                    item
-                    xs={12}
-                    style={{
-                      marginBottom: "8px",
-                      display: "flex",
-                      alignItems: "center",
+
+      <Form
+        ref={formRef}
+        initialValues={filtersQuery}
+        layout="vertical"
+        onFinish={() => {
+          setQuery({ ...filtersQuery, page: 1, limit: 25 });
+    
+          setOpen(false);
+        }}
+      >
+        {filters.map((filter) => {
+          switch (filter) {
+            case startDateKeyName:
+              return (
+                <Form.Item
+                  label={"table.date"}
+                  style={{ margin: 10 }}
+                  name={startDateKeyName}
+                  rules={[
+                    { required: haveInitialDate },
+                    {
+                      validator: () => {
+                        if (
+                          haveInitialDate &&
+                          filtersQuery[endDateKeyName] >
+                            moment(new Date(filtersQuery[startDateKeyName]))
+                              .add(30, "days")
+                              .format("YYYY-MM-DDTHH:mm:00.000")
+                        ) {
+                          return Promise.reject(t("error.date_too_log"));
+                        } else return Promise.resolve();
+                      },
+                    },
+                  ]}
+                >
+                  <ConfigProvider locale={locale}>
+                    <RangePicker
+                      size="small"
+                      panelRender={panelRender}
+                      format="YYYY-MM-DD HH:mm:ss"
+                      showTime
+                      value={[
+                        dayjs(
+                          filtersQuery[startDateKeyName],
+                          "YYYY-MM-DD HH:mm:ss"
+                        ),
+                        dayjs(
+                          filtersQuery[endDateKeyName],
+                          "YYYY-MM-DD HH:mm:ss"
+                        ),
+                      ]}
+                      clearIcon={<></>}
+                      style={{
+                        width: "100%",
+                        height: "40px",
+                      }}
+                      placeholder={[
+                        t("table.initial_date"),
+                        t("table.final_date"),
+                      ]}
+                      onChange={(value: any) => {
+                        setFiltersQuery((state: any) => ({
+                          ...state,
+                          [startDateKeyName]: moment(value[0]?.$d).format(
+                            "YYYY-MM-DDTHH:mm:ss.SSS"
+                          ),
+                          [endDateKeyName]: moment(value[1]?.$d).format(
+                            "YYYY-MM-DDTHH:mm:ss.SSS"
+                          ),
+                        }));
+                        formRef?.current?.validateFields();
+                      }}
+                    />
+                  </ConfigProvider>
+                </Form.Item>
+              );
+
+            case "partner_id":
+              return (
+                <Form.Item
+                  label={t(`table.${filter}`)}
+                  name={filter}
+                  style={{ margin: 10 }}
+                >
+                  <PartnerSelect
+                    queryOptions={filtersQuery}
+                    setQueryFunction={setFiltersQuery}
+                  />
+                </Form.Item>
+              );
+
+            case "bank":
+              return (
+                <Form.Item
+                  label={t(`table.${filter}`)}
+                  name={filter}
+                  style={{ margin: 10 }}
+                >
+                  <BanksSelect
+                    queryOptions={filtersQuery}
+                    setQueryFunction={setFiltersQuery}
+                  />
+                </Form.Item>
+              );
+
+            case "payer_bank":
+              return (
+                <Form.Item
+                  label={t(`table.${filter}`)}
+                  name={filter}
+                  style={{ margin: 10 }}
+                >
+                  <ClientBanksSelect
+                    queryOptions={filtersQuery}
+                    setQueryFunction={setFiltersQuery}
+                  />
+                </Form.Item>
+              );
+
+            case "age_start":
+              return (
+                <Grid
+                  container
+                  item
+                  xs={12}
+                  style={{ display: "flex", alignItems: "center", margin: 10 }}
+                >
+                  <Grid item xs={3}>
+                    <Checkbox
+                      checked={isAgeRangeAbled}
+                      onChange={(event: any) => {
+                        isAgeAbled(event.target.checked);
+                        setIsAgeRangeAbled(event.target.checked);
+                      }}
+                    >
+                      {t("table.age")}
+                    </Checkbox>
+                  </Grid>
+                  <Grid item xs={8}>
+                    <Slider
+                      disabled={!isAgeRangeAbled}
+                      range
+                      step={10}
+                      value={[filtersQuery.age_start, filtersQuery.age_end]}
+                      onChange={(value) => {
+                        setFiltersQuery((state: any) => ({
+                          ...state,
+                          age_start: value[0],
+                          age_end: value[1],
+                        }));
+                      }}
+                    />
+                  </Grid>
+                </Grid>
+              );
+
+            case "value_start":
+              return (
+                <Grid
+                  container
+                  item
+                  xs={12}
+                  style={{ display: "flex", alignItems: "center", margin: 10 }}
+                >
+                  <Grid item xs={3}>
+                    <Checkbox
+                      checked={isValueRangeAbled}
+                      onChange={(event: any) => {
+                        isValueAbled(event.target.checked);
+                        setIsValueRangeAbled(event.target.checked);
+                      }}
+                    >
+                      {t("table.value")}
+                    </Checkbox>
+                  </Grid>
+                  <Grid item xs={8}>
+                    <Slider
+                      disabled={!isValueRangeAbled}
+                      range
+                      step={10}
+                      max={50000}
+                      value={[filtersQuery.value_start, filtersQuery.value_end]}
+                      onChange={(value) => {
+                        setFiltersQuery((state: any) => ({
+                          ...state,
+                          value_start: value[0],
+                          value_end: value[1],
+                        }));
+                      }}
+                    />
+                  </Grid>
+                </Grid>
+              );
+
+            case "state":
+              return (
+                <Form.Item
+                  label={t(`table.${filter}`)}
+                  name={filter}
+                  style={{ margin: 10 }}
+                >
+                  <AutoComplete
+                    size="large"
+                    style={{ width: "100%", height: "40px" }}
+                    placeholder={t(`table.${filter}`)}
+                    value={filtersQuery[filter] ?? null}
+                    onSelect={(value) => {
+                      delete filtersQuery.city;
+                      setFiltersQuery((state: any) => ({
+                        ...state,
+                        [filter]: value,
+                      }));
+                      setCurrState(value);
                     }}
-                  >
-                    <ConfigProvider locale={locale}>
-                      <RangePicker
-                        size="small"
-                        panelRender={panelRender}
-                        format="YYYY-MM-DD HH:mm:ss"
-                        showTime
-                        value={[
-                          dayjs(
-                            filtersQuery[startDateKeyName],
-                            "YYYY-MM-DD HH:mm:ss"
-                          ),
-                          dayjs(
-                            filtersQuery[endDateKeyName],
-                            "YYYY-MM-DD HH:mm:ss"
-                          ),
-                        ]}
-                        style={{
-                          width: "100%",
-                          height: "35px",
-                        }}
-                        placeholder={[
-                          t("table.initial_date"),
-                          t("table.final_date"),
-                        ]}
-                        onChange={(value: any) => {
-                          setFiltersQuery((state: any) => ({
-                            ...state,
-                            [startDateKeyName]: moment(value[0]?.$d).format(
-                              "YYYY-MM-DDTHH:mm:ss.SSS"
-                            ),
-                            [endDateKeyName]: moment(value[1]?.$d).format(
-                              "YYYY-MM-DDTHH:mm:ss.SSS"
-                            ),
-                          }));
-                        }}
-                      />
-                    </ConfigProvider>
-                  </Grid>
-                );
+                    filterOption={(inputValue, option) =>
+                      option?.value
+                        .toUpperCase()
+                        .indexOf(inputValue.toUpperCase()) !== -1
+                    }
+                    options={states?.map((state) => {
+                      return {
+                        value: state.sigla,
+                        label: state.sigla,
+                      };
+                    })}
+                  />
+                </Form.Item>
+              );
+            case "city":
+              return (
+                <Form.Item
+                  label={t(`table.${filter}`)}
+                  name={filter}
+                  style={{ margin: 10 }}
+                >
+                  <AutoComplete
+                    size="large"
+                    disabled={!filtersQuery.state}
+                    style={{ width: "100%", height: "40px" }}
+                    placeholder={t(`table.${filter}`)}
+                    value={filtersQuery[filter] ?? null}
+                    onSelect={(value) => {
+                      setFiltersQuery((state: any) => ({
+                        ...state,
+                        [filter]: value,
+                      }));
+                    }}
+                    filterOption={(inputValue, option) =>
+                      option!.value
+                        .toUpperCase()
+                        .indexOf(inputValue.toUpperCase()) !== -1
+                    }
+                    options={cities?.map((state) => {
+                      return {
+                        value: state.nome,
+                        label: state.nome,
+                      };
+                    })}
+                  />
+                </Form.Item>
+              );
 
-              case "partner_id":
-                return (
-                  <Grid item xs={12}>
-                    <Form.Item
-                      label={t(`table.${filter}`)}
-                      name={filter}
-                      style={{ margin: 10 }}
-                    >
-                      <PartnerSelect
-                        queryOptions={filtersQuery}
-                        setQueryFunction={setFiltersQuery}
-                      />
-                    </Form.Item>
-                  </Grid>
-                );
+            case "merchant_id":
+              return (
+                <Form.Item
+                  label={t(`table.${filter}`)}
+                  name={filter}
+                  style={{ margin: 10 }}
+                >
+                  <MerchantSelect
+                    queryOptions={filtersQuery}
+                    setQueryFunction={setFiltersQuery}
+                  />
+                </Form.Item>
+              );
+            case endDateKeyName:
+              return;
 
-              case "bank":
-                return (
-                  <Grid item xs={12}>
-                    <Form.Item
-                      label={t(`table.${filter}`)}
-                      name={filter}
-                      style={{ margin: 10 }}
-                    >
-                      <BanksSelect
-                        queryOptions={filtersQuery}
-                        setQueryFunction={setFiltersQuery}
-                      />
-                    </Form.Item>
-                  </Grid>
-                );
-
-              case "payer_bank":
-                return (
-                  <Grid item xs={12}>
-                    <Form.Item
-                      label={t(`table.${filter}`)}
-                      name={filter}
-                      style={{ margin: 10 }}
-                    >
-                      <ClientBanksSelect
-                        queryOptions={filtersQuery}
-                        setQueryFunction={setFiltersQuery}
-                      />
-                    </Form.Item>
-                  </Grid>
-                );
-
-              case "age_start":
-                return (
-                  <Grid
-                    container
-                    item
-                    xs={12}
-                    style={{ display: "flex", alignItems: "center" }}
-                  >
-                    <Grid item xs={3}>
-                      <Checkbox
-                        checked={isAgeRangeAbled}
-                        onChange={(event: any) => {
-                          isAgeAbled(event.target.checked);
-                          setIsAgeRangeAbled(event.target.checked);
-                        }}
-                      >
-                        {t("table.age")}
-                      </Checkbox>
-                    </Grid>
-                    <Grid item xs={8}>
-                      <Slider
-                        disabled={!isAgeRangeAbled}
-                        range
-                        step={10}
-                        value={[filtersQuery.age_start, filtersQuery.age_end]}
-                        onChange={(value) => {
-                          setFiltersQuery((state: any) => ({
-                            ...state,
-                            age_start: value[0],
-                            age_end: value[1],
-                          }));
-                        }}
-                      />
-                    </Grid>
-                  </Grid>
-                );
-
-              case "value_start":
-                return (
-                  <Grid
-                    container
-                    item
-                    xs={12}
-                    style={{ display: "flex", alignItems: "center" }}
-                  >
-                    <Grid item xs={3}>
-                      <Checkbox
-                        checked={isValueRangeAbled}
-                        onChange={(event: any) => {
-                          isValueAbled(event.target.checked);
-                          setIsValueRangeAbled(event.target.checked);
-                        }}
-                      >
-                        {t("table.value")}
-                      </Checkbox>
-                    </Grid>
-                    <Grid item xs={8}>
-                      <Slider
-                        disabled={!isValueRangeAbled}
-                        range
-                        step={10}
-                        max={50000}
-                        value={[
-                          filtersQuery.value_start,
-                          filtersQuery.value_end,
-                        ]}
-                        onChange={(value) => {
-                          setFiltersQuery((state: any) => ({
-                            ...state,
-                            value_start: value[0],
-                            value_end: value[1],
-                          }));
-                        }}
-                      />
-                    </Grid>
-                  </Grid>
-                );
-
-              case "state":
-                return (
-                  <Grid item xs={12} style={{ margin: "2px" }}>
-                    <Form.Item
-                      label={t(`table.${filter}`)}
-                      name={filter}
-                      style={{ margin: 10 }}
-                    >
-                      <AutoComplete
-                        size="large"
-                        style={{ width: "100%", height: "40px" }}
-                        placeholder={t(`table.${filter}`)}
-                        value={filtersQuery[filter] ?? null}
-                        onSelect={(value) => {
-                          delete filtersQuery.city;
-                          setFiltersQuery((state: any) => ({
-                            ...state,
-                            [filter]: value,
-                          }));
-                          setCurrState(value);
-                        }}
-                        filterOption={(inputValue, option) =>
-                          option?.value
-                            .toUpperCase()
-                            .indexOf(inputValue.toUpperCase()) !== -1
-                        }
-                        options={states?.map((state) => {
-                          return {
-                            value: state.sigla,
-                            label: state.sigla,
-                          };
-                        })}
-                      />
-                    </Form.Item>
-                  </Grid>
-                );
-              case "city":
-                return (
-                  <Grid item xs={12} style={{ margin: "2px" }}>
-                    <Form.Item
-                      label={t(`table.${filter}`)}
-                      name={filter}
-                      style={{ margin: 10 }}
-                    >
-                      <AutoComplete
-                        size="large"
-                        disabled={!filtersQuery.state}
-                        style={{ width: "100%", height: "40px" }}
-                        placeholder={t(`table.${filter}`)}
-                        value={filtersQuery[filter] ?? null}
-                        onSelect={(value) => {
-                          setFiltersQuery((state: any) => ({
-                            ...state,
-                            [filter]: value,
-                          }));
-                        }}
-                        filterOption={(inputValue, option) =>
-                          option!.value
-                            .toUpperCase()
-                            .indexOf(inputValue.toUpperCase()) !== -1
-                        }
-                        options={cities?.map((state) => {
-                          return {
-                            value: state.nome,
-                            label: state.nome,
-                          };
-                        })}
-                      />
-                    </Form.Item>
-                  </Grid>
-                );
-
-              case "merchant_id":
-                return (
-                  <Grid item xs={12}>
-                    <Form.Item
-                      label={t(`table.${filter}`)}
-                      name={filter}
-                      style={{ margin: 10 }}
-                    >
-                      <MerchantSelect
-                        queryOptions={filtersQuery}
-                        setQueryFunction={setFiltersQuery}
-                      />
-                    </Form.Item>
-                  </Grid>
-                );
-              case endDateKeyName:
-                return;
-
-              default:
-                return (
-                  <Grid item xs={12} style={{ margin: "2px" }}>
-                    <Form.Item
-                      label={t(`table.${filter}`)}
-                      name={filter}
-                      style={{ margin: 10 }}
-                    >
-                      <Select
-                        size="large"
-                        style={{ width: "100%", height: "40px" }}
-                        placeholder={t(`table.${filter}`)}
-                        value={filtersQuery[filter] ?? null}
-                        onChange={(value) => {
-                          setFiltersQuery((state: any) => ({
-                            ...state,
-                            [filter]: value,
-                          }));
-                        }}
-                        options={
-                          selectOptions[filter]?.map((option: any) => {
-                            return {
-                              value: option,
-                              label:
-                                filter === "step"
-                                  ? t(`logs.${option.toLowerCase()}`)
-                                  : t(`table.${option.toLowerCase()}`),
-                            };
-                          }) ?? []
-                        }
-                      />
-                    </Form.Item>
-                  </Grid>
-                );
-            }
-          })}
-        </Form>
-      </Grid>
+            default:
+              return (
+                <Form.Item
+                  label={t(`table.${filter}`)}
+                  name={filter}
+                  style={{ margin: 10 }}
+                >
+                  <Select
+                    size="large"
+                    style={{ width: "100%", height: "40px" }}
+                    placeholder={t(`table.${filter}`)}
+                    value={filtersQuery[filter] ?? null}
+                    onChange={(value) => {
+                      setFiltersQuery((state: any) => ({
+                        ...state,
+                        [filter]: value,
+                      }));
+                    }}
+                    options={
+                      selectOptions[filter]?.map((option: any) => {
+                        return {
+                          value: option,
+                          label:
+                            filter === "step"
+                              ? t(`logs.${option.toLowerCase()}`)
+                              : t(`table.${option.toLowerCase()}`),
+                        };
+                      }) ?? []
+                    }
+                  />
+                </Form.Item>
+              );
+          }
+        })}
+        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+          <button type="submit" ref={submitRef} style={{ display: "none" }}>
+            Submit
+          </button>
+        </Form.Item>
+      </Form>
     </Drawer>
   );
 };

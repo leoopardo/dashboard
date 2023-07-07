@@ -136,6 +136,8 @@
     "upload": "upload",
     "deleted": "Deletado",
     "delete": "Deletar",
+    "checked": "Dhecado",
+    "check": "Checar",
     "upload_label": "Clique ou arraste e solte o arquivo para esta área",
     "upload_description": "Suporte para um arquivo por vês, nos formatos: pdf, png e docx.",
     "min_value_higher_then_zero": "O valor desse campo deve ser maior que 0"
@@ -487,11 +489,13 @@
     "edit": "Editar",
     "logs_webhooks": "Logs de webhooks",
     "configs": "Configurações",
-    "delete": "Deletar"
+    "delete": "Deletar",
+    "check": "Checar"
   },
   "error": {
     "400": "Nenhum dado encontrado.",
     "404": "Rota não encontrada",
+    "date_too_log": "A diferença entre as datas deve ser menor ou igual a 30 dias",
     "password_or_username": "Senha e/ou usuário incorretos.",
     "BANK_ALREADY_CREATED": "Esse banco já foi adicionado"
   },
