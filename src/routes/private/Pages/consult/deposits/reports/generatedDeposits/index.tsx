@@ -12,7 +12,7 @@ import { useGetGeneratedDepositsReports } from "@src/services/reports/consult/de
 
 export const GeneratedDepositsReports = () => {
   const INITIAL_QUERY: ReportsQuery = {
-    limit: 25,
+    limit: 10,
     page: 1,
   };
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
