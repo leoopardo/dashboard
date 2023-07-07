@@ -104,7 +104,8 @@
     "generated_deposits_reports": "Generated deposits",
     "paid_deposits_reports": "Paid deposits",
     "webhooks_reports": "Webhooks",
-    "update": "Editar"
+    "update": "Editar",
+    "credentials": "Credentials"
   },
 
   "titles": {
@@ -476,7 +477,8 @@
     "error_message": "Error message",
     "response": "Response",
     "step": "Step",
-    "user_id": "User ID"
+    "user_id": "User ID",
+    "ip": "Ip"
   },
   "actions": {
     "details": "Details",
