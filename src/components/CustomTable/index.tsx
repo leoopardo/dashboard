@@ -13,6 +13,7 @@ import {
   Modal,
   Pagination,
   Popconfirm,
+  Progress,
   Table,
   Tooltip,
 } from "antd";
@@ -39,14 +40,15 @@ export interface ColumnInterface {
     | "actions"
     | "icon"
     | "boolean"
-    | "bankNameToIcon";
+    | "bankNameToIcon"
+    | "progress";
 }
 
 export interface actionsInterface {
   label: string;
   icon?: any;
-  onClick: () => void;
-  disabled?: boolean;
+  onClick: (item?: any) => void;
+  disabled?: (item?: any) => boolean;
 }
 
 interface TableProps {
@@ -90,6 +92,7 @@ export const CustomTable = (props: TableProps) => {
           key: action.label,
           label: t(`actions.${action.label}`),
           icon: action.icon,
+          disabled: action.disabled,
           onClick: action.onClick,
         });
       }
@@ -267,13 +270,13 @@ export const CustomTable = (props: TableProps) => {
             return {
               title: (
                 <p style={{ width: "100%", textAlign: "center" }}>
-                  {t(`table.${column?.head ?? column.name}`)}
+                  {t(`table.${column?.head ?? column?.name}`)}
                 </p>
               ),
-              key: Array.isArray(column.name)
-                ? column.name + `${Math.random()}`
-                : column.name,
-              dataIndex: column.name,
+              key: Array.isArray(column?.name)
+                ? column?.name + `${Math.random()}`
+                : column?.name,
+              dataIndex: column?.name,
               render: (text: string) => (
                 <div style={{ width: "100%", textAlign: "center" }}>
                   <Tooltip placement="topLeft" title={text} arrow>
@@ -281,7 +284,7 @@ export const CustomTable = (props: TableProps) => {
                       src={
                         BankMainteneceData?.itens.find(
                           (bank) =>
-                            bank.label_name?.split(" ").join("_") === text
+                            bank?.label_name?.split(" ").join("_") === text
                         )?.icon_url ?? null
                       }
                       size="large"
@@ -298,27 +301,27 @@ export const CustomTable = (props: TableProps) => {
             return {
               title: (
                 <p style={{ width: "100%", textAlign: "center" }}>
-                  {t(`table.${column?.head ?? column.name}`)}
+                  {t(`table.${column?.head ?? column?.name}`)}
                 </p>
               ),
-              key: Array.isArray(column.name)
-                ? column.name + `${Math.random()}`
-                : column.name,
-              dataIndex: column.name,
+              key: Array.isArray(column?.name)
+                ? column?.name + `${Math.random()}`
+                : column?.name,
+              dataIndex: column?.name,
               render: (text: string) =>
                 typeof text === "boolean" ? (
                   <p
-                    key={column.name}
+                    key={column?.name}
                     style={{ width: "100%", textAlign: "center" }}
                   >
                     {text ? t("table.active") : t("table.inactive")}
                   </p>
                 ) : (
                   <p
-                    key={column.name}
+                    key={column?.name}
                     style={{ width: "100%", textAlign: "center" }}
                   >
-                    {t(`table.${text.toLocaleLowerCase()}`)}
+                    {t(`table.${text?.toLocaleLowerCase()}`)}
                   </p>
                 ),
             };
@@ -327,16 +330,16 @@ export const CustomTable = (props: TableProps) => {
             return {
               title: (
                 <p style={{ width: "100%", textAlign: "center" }}>
-                  {t(`table.${column?.head ?? column.name}`)}
+                  {t(`table.${column?.head ?? column?.name}`)}
                 </p>
               ),
-              key: Array.isArray(column.name)
-                ? column.name + `${Math.random()}`
-                : column.name,
-              dataIndex: column.name,
+              key: Array.isArray(column?.name)
+                ? column?.name + `${Math.random()}`
+                : column?.name,
+              dataIndex: column?.name,
               render: (text: string) => (
                 <p
-                  key={column.name}
+                  key={column?.name}
                   style={{ width: "100%", textAlign: "center" }}
                 >
                   {text ? t("table.true") : t("table.false")}
@@ -347,13 +350,29 @@ export const CustomTable = (props: TableProps) => {
           case "action":
             return {
               title: " ",
-              key: column.name,
-              dataIndex: column.name,
+              key: column?.name,
+              dataIndex: column?.name,
               render: (a: any, record: any) => (
                 <div style={{ width: "100%", textAlign: "center" }}>
                   <Dropdown
-                    key={column.name}
-                    menu={{ items: actions }}
+                    key={column?.name}
+                    menu={{
+                      items: actions.map((action: actionsInterface) => {
+                        let disable = false;
+
+                        if (action.disabled) {
+                          action.disabled(record)
+                            ? (disable = true)
+                            : (disable = false);
+                        }
+
+                        return {
+                          ...action,
+                          disabled: disable,
+                          onClick: () => action.onClick(record),
+                        };
+                      }),
+                    }}
                     onOpenChange={(open) => {
                       if (open) {
                         props.setCurrentItem(record);
@@ -379,30 +398,59 @@ export const CustomTable = (props: TableProps) => {
                   {t(`table.${column?.head || column.name}`)}
                 </p>
               ),
-              key: Array.isArray(column.name)
-                ? column.name + `${Math.random()}`
-                : column.name,
-              dataIndex: column.name,
+              key: Array.isArray(column?.name)
+                ? column?.name + `${Math.random()}`
+                : column?.name,
+              dataIndex: column?.name,
               render: (text: string) => (
                 <p style={{ width: "100%", textAlign: "center" }}>
                   {text ?? "-"}
                 </p>
               ),
             };
+
+          case "progress":
+            return {
+              title: (
+                <p style={{ width: "100%", textAlign: "center" }}>
+                  {t(`table.${column?.head ?? column?.name}`)}
+                </p>
+              ),
+              key: Array.isArray(column?.name)
+                ? column?.name + `${Math.random()}`
+                : column?.name,
+              dataIndex: column?.name,
+              render: (text: any, record: any) => (
+                <div style={{ width: "100%", textAlign: "center" }}>
+                  <Progress
+                    type="line"
+                    percent={text?.split("/")[0]}
+                    size="small"
+                    status={
+                      record.status === "ERROR" || record.status === "CANCELED"
+                        ? "exception"
+                        : record.status === "COMPLETED"
+                        ? "success"
+                        : "active"
+                    }
+                  />
+                </div>
+              ),
+            };
           default:
             return {
               title: (
                 <p style={{ width: "100%", textAlign: "center" }}>
-                  {t(`table.${column?.head ?? column.name}`)}
+                  {t(`table.${column?.head ?? column?.name}`)}
                 </p>
               ),
-              key: Array.isArray(column.name)
-                ? column.name + `${Math.random()}`
-                : column.name,
-              dataIndex: column.name,
+              key: Array.isArray(column?.name)
+                ? column?.name + `${Math.random()}`
+                : column?.name,
+              dataIndex: column?.name,
               render: (a: any, record: any) => (
                 <p style={{ width: "100%", textAlign: "center" }}>
-                  {record[column.name] ?? "-"}
+                  {record[column?.name] ?? "-"}
                 </p>
               ),
             };
@@ -423,8 +471,8 @@ export const CustomTable = (props: TableProps) => {
                     style={{ padding: 15, paddingBottom: 30 }}
                     image={Empty.PRESENTED_IMAGE_SIMPLE}
                     description={`${t("table.error")} ${
-                      props.error.response.status
-                    } - ${t(`error.${props.error.response.status}`)}`}
+                      props?.error?.response?.status
+                    } - ${t(`error.${props?.error?.response?.status}`)}`}
                   />
                 ) : (
                   <Empty
@@ -449,7 +497,7 @@ export const CustomTable = (props: TableProps) => {
                 onShowSizeChange: (current, size) =>
                   props.setQuery((state: any) => ({ ...state, limit: size })),
               }}
-              dataSource={props.error ? [] : props?.items}
+              dataSource={props?.error ? [] : props?.items ?? []}
               direction="ltr"
               columns={columns}
               loading={props.loading}

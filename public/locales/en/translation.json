@@ -478,7 +478,10 @@
     "error_message": "Error message",
     "response": "Response",
     "step": "Step",
-    "user_id": "User ID"
+    "user_id": "User ID",
+    "created_by_name": "Created by",
+    "rows": "Rows",
+    "progress": "Progress"
   },
   "actions": {
     "details": "Details",
@@ -486,7 +489,8 @@
     "logs_webhooks": "Webhook logs",
     "configs": "Configuration",
     "delete": "Delete",
-    "check": "Check"
+    "check": "Check",
+    "download": "Download"
   },
   "error": {
     "400": "Any records found.",

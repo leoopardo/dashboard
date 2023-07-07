@@ -51,7 +51,7 @@ export const PersonDetails = () => {
       sort_field: "created_at",
       limit: 25,
       page: 1,
-      buyer_document: cpf?.split(" ").join("").split("-").join(""),
+      payer_document: cpf?.split(" ").join("").split("-").join(""),
       initial_date: moment(new Date())
         .subtract(30, "days")
         .format("YYYY-MM-DDTHH:mm:ss.SSS"),
@@ -75,7 +75,7 @@ export const PersonDetails = () => {
     sort_field: "created_at",
     limit: 25,
     page: 1,
-    buyer_document: cpf?.split(" ").join("").split("-").join(""),
+    payer_document: cpf?.split(" ").join("").split("-").join(""),
     initial_date: moment(new Date())
       .subtract(30, "days")
       .format("YYYY-MM-DDTHH:mm:ss.SSS"),
@@ -96,7 +96,7 @@ export const PersonDetails = () => {
       sort_field: "created_at",
       limit: 25,
       page: 1,
-      buyer_document: cpf?.split(" ").join("").split("-").join(""),
+      receiver_document: cpf?.split(" ").join("").split("-").join(""),
       initial_date: moment(new Date())
         .subtract(30, "days")
         .format("YYYY-MM-DDTHH:mm:ss.SSS"),

@@ -40,6 +40,11 @@ import { WithdrawalsErrors } from "./Pages/support/apiLogs/WithdrawalsErrors";
 import { BankBlacklist } from "./Pages/support/blacklists/bankBlacklist";
 import { ThirdPartKeyBlacklist } from "./Pages/support/blacklists/thirdPartKey";
 import { InvalidPixKeyBlacklist } from "./Pages/support/blacklists/invalidPixKey";
+import { OrganizationUserReports } from "./Pages/register/organization/reports/user";
+import { OrganizationCategoriesReports } from "./Pages/register/organization/reports/categories";
+import { PartnerReports } from "./Pages/register/partner/reports/partner";
+import { PartnerUsersReports } from "./Pages/register/partner/reports/users";
+import { GeneratedDepositsReports } from "./Pages/consult/deposits/reports/generatedDeposits";
 
 export const PrivateRoutes = () => {
   return (
@@ -81,6 +86,10 @@ export const PrivateRoutes = () => {
               path="undelivered_deposits"
               element={<UndeliveredDeposits />}
             />
+
+            <Route path="deposits_reports">
+              <Route path="generated_deposits_reports" element={<GeneratedDepositsReports/>}/>
+            </Route>
           </Route>
 
           <Route path="withdrawals">
@@ -109,6 +118,16 @@ export const PrivateRoutes = () => {
             <Route path="categories" element={<OrganizationCategories />} />
             <Route path="bank_maintain" element={<BankMaintenence />} />
             <Route path="general_configs" element={<GeneralConfigs />} />
+            <Route path="organization_reports">
+              <Route
+                path="organization_reports_users"
+                element={<OrganizationUserReports />}
+              />
+              <Route
+                path="organization_reports_categories"
+                element={<OrganizationCategoriesReports />}
+              />
+            </Route>
           </Route>
           <Route path="aggregator">
             <Route path="aggregators" element={<Aggregators />} />
@@ -117,6 +136,16 @@ export const PrivateRoutes = () => {
           <Route path="partner">
             <Route path="partners" element={<Partners />} />
             <Route path="partner_users" element={<PartnerUsers />} />
+            <Route path="partner_reports">
+              <Route
+                path="partner_partners_reports"
+                element={<PartnerReports />}
+              />
+               <Route
+                path="partner_users_reports"
+                element={<PartnerUsersReports />}
+              />
+            </Route>
           </Route>
           <Route path="operator">
             <Route path="operators" element={<Operators />} />
