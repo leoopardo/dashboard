@@ -9,6 +9,7 @@ import { FeesTab } from "./tabs/fees";
 import { MerchantConfigTab } from "./tabs/merchantConfigTab";
 import { OrganizationConfigTab } from "./tabs/organizationConfigTab";
 import { CredentialConfigTab } from "./tabs/credentials";
+import { IpsConfigTab } from "./tabs/ips";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 
@@ -53,6 +54,13 @@ export const MerchantConfigs = () => {
       label:`${t("menus.credentials")}`,
       children: (
         <CredentialConfigTab id={params.id}/>
+      ),
+    }, 
+    {
+      key: "6",
+      label:"IPs",
+      children: (
+        <IpsConfigTab id={params.id}/>
       ),
     }, 
   ];

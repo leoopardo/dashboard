@@ -9,8 +9,7 @@ import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import { Toast } from "@components/Toast";
 import useDebounce from "@utils/useDebounce";
 import { ValidateToken } from "@components/ValidateToken";
-import { UserAddOutlined } from "@ant-design/icons";
-import { EyeFilled, EditOutlined } from "@ant-design/icons";
+import { PlusOutlined, EyeFilled, EditOutlined } from "@ant-design/icons";
 import { ViewModal } from "@components/Modals/viewGenericModal";
 import { MutateModal } from "@components/Modals/mutateGenericModal";
 import { useGetCredentialsConfig } from "@src/services/register/merchant/merchant/credentialsConfig.tsx/getCredentialsConfig";
@@ -145,8 +144,8 @@ export const CredentialConfigTab = (props: { id?: string }) => {
               justifyContent: "center",
             }}
           >
-            <UserAddOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
-            {`${t("buttons.create")} ${t("buttons.new_user")}`}
+            <PlusOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
+            {`${t("buttons.create")} ${t("menus.credentials")?.toLocaleLowerCase()}`}
           </Button>
         </Grid>
       </Grid>
@@ -211,7 +210,7 @@ export const CredentialConfigTab = (props: { id?: string }) => {
           ]}
           body={createBody}
           setBody={setCreateBody}
-          modalName={t("modal.modal_update_merchant")}
+          modalName={`${t("buttons.create")} ${t("menus.merchant")}`}
           submit={() => setIsCreateValidateTokenOpen(true)}
           submitLoading={CreateCredentialsIsLoading}
           error={UpdateError}
