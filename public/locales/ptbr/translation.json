@@ -485,7 +485,9 @@
     "created_by_name": "Criado por",
     "rows": "Linhas", 
     "progress": "Progresso",
-    "ip": "Ip"
+    "ip": "Ip",
+    "reason": "Motivo",
+    "create_user_name": "Nome de quem adicionou"
   },
   "actions": {
     "details": "Detalhes",

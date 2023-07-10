@@ -483,7 +483,9 @@
     "created_by_name": "Created by",
     "rows": "Rows",
     "progress": "Progress",
-    "ip": "Ip"
+    "ip": "Ip",
+    "reason": "Reason",
+    "create_user_name": "Create user name"
   },
   "actions": {
     "details": "Details",
