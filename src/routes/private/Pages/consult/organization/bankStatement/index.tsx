@@ -17,6 +17,8 @@ import { PieBankfee } from "./components/PieBankFee";
 import { PieResult } from "./components/PieResult";
 import { PieNumber } from "./components/PieNumber";
 import { useMediaQuery } from "react-responsive";
+import { useCreateBankStatementReports } from "@src/services/reports/consult/organization/createBankStatementReports";
+import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 
 const INITIAL_QUERY: OrganizationBankStatementTotalsQuery = {
   start_date: moment(new Date())
@@ -48,6 +50,13 @@ export const OrganizationBankStatement = () => {
     refetchOrganizationPerbank,
   } = useGetOrganizationPerbank(query);
 
+  const {
+    BankStatementReportsError,
+    BankStatementReportsIsLoading,
+    BankStatementReportsIsSuccess,
+    BankStatementReportsMutate,
+  } = useCreateBankStatementReports(query);
+
   useEffect(() => {
     refetchOrganizationPerbank();
   }, [query]);
@@ -68,7 +77,7 @@ export const OrganizationBankStatement = () => {
             {t("table.filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={6} lg={6}>
+        <Grid item xs={12} md={5} lg={5}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
@@ -102,6 +111,15 @@ export const OrganizationBankStatement = () => {
           >
             <ReloadOutlined /> {t("buttons.refresh")}
           </Button>
+        </Grid>
+        <Grid item xs={12} md="auto" lg={1}>
+          <ExportReportsModal
+            mutateReport={() => BankStatementReportsMutate()}
+            error={BankStatementReportsError}
+            success={BankStatementReportsIsSuccess}
+            loading={BankStatementReportsIsLoading}
+            reportPath="/consult/consult_organization/consult_organization_reports"
+          />
         </Grid>
       </Grid>
       <Totalizers query={query} />
@@ -213,7 +231,6 @@ export const OrganizationBankStatement = () => {
           startDateKeyName="start_date"
           endDateKeyName="end_date"
           initialQuery={INITIAL_QUERY}
-          
         />
       )}
     </Grid>

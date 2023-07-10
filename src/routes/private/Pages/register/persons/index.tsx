@@ -214,7 +214,7 @@ export const Persons = () => {
             {`${t("buttons.create")} ${t("buttons.person")}`}
           </Button>
         </Grid>
-        <Grid item xs={12} md={2} lg={2}>
+        <Grid item xs={12} md="auto">
           <ExportReportsModal
             mutateReport={() => PersonsReportsMutate()}
             error={PersonsReportsError}

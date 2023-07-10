@@ -194,7 +194,7 @@ export const OrgonizationManual = () => {
             {t("table.filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={4} lg={6}>
+        <Grid item xs={12} md={6} lg={7}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
@@ -203,7 +203,7 @@ export const OrgonizationManual = () => {
             haveInitialDate
           />
         </Grid>
-        <Grid item xs={12} md={3} lg={2}>
+        <Grid item xs={12} md={2} lg={2}>
           <Button
             type="dashed"
             loading={isOrganizationMovimentsDataFetching}
@@ -223,7 +223,7 @@ export const OrgonizationManual = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={2} lg={2}>
+        <Grid item xs={12} md="auto" lg={1}>
           <ExportReportsModal
             mutateReport={() => OrganizationManualReportsMutate()}
             error={OrganizationManualReportsError}

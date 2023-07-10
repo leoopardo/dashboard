@@ -181,7 +181,7 @@ export const OrganizationCategories = () => {
             {`${t("buttons.create")} ${t("buttons.new_categorie")}`}
           </Button>
         </Grid>
-        <Grid item xs={12} md={3} lg={2}>
+        <Grid item xs={12} md="auto">
           <ExportReportsModal
             mutateReport={() => CategoryReportsMutate()}
             error={CategoryReportsError}

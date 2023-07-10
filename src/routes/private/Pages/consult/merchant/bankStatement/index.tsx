@@ -13,6 +13,8 @@ import { MerchantBankStatementTotalsQuery } from "@src/services/types/consult/me
 import { MerchantHourlyLineChart } from "./components/HourlyChart";
 import { useGetHourly } from "@src/services/consult/merchant/bankStatement/getHourly";
 import { useGetMerchantTransactions } from "@src/services/consult/merchant/bankStatement/getTransactions";
+import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
+import { useCreateMerchantBankStatementReports } from "@src/services/reports/consult/merchant/createBankStatementReports";
 
 const INITIAL_QUERY: MerchantBankStatementTotalsQuery = {
   page: 1,
@@ -46,6 +48,13 @@ export const MerchantBankStatement = () => {
     refetchMerchantTransactionsTotal,
   } = useGetMerchantTransactions(query);
 
+  const {
+    BankStatementReportsError,
+    BankStatementReportsIsLoading,
+    BankStatementReportsIsSuccess,
+    BankStatementReportsMutate,
+  } = useCreateMerchantBankStatementReports(query);
+
   useEffect(() => {
     refetchHourlyTotal();
     refetchMerchantTransactionsTotal();
@@ -67,7 +76,7 @@ export const MerchantBankStatement = () => {
             {t("table.filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={4} lg={6}>
+        <Grid item xs={12} md={4} lg={5}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
@@ -101,6 +110,15 @@ export const MerchantBankStatement = () => {
           >
             <ReloadOutlined /> {t("buttons.refresh")}
           </Button>
+        </Grid>
+        <Grid item xs={12} md="auto" lg={1}>
+          <ExportReportsModal
+            mutateReport={() => BankStatementReportsMutate()}
+            error={BankStatementReportsError}
+            success={BankStatementReportsIsSuccess}
+            loading={BankStatementReportsIsLoading}
+            reportPath="/consult/consult_merchant/consult_merchant_reports"
+          />
         </Grid>
       </Grid>
 

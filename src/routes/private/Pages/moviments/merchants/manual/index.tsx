@@ -221,7 +221,7 @@ export const MerchantManual = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={2} lg={2}>
+        <Grid item xs={12} md="auto">
           <ExportReportsModal
             mutateReport={() => MerchantManualReportsMutate()}
             error={MerchantManualReportsError}

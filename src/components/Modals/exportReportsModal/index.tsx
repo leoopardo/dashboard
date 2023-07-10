@@ -67,12 +67,12 @@ export const ExportReportsModal = ({
       <Button
         style={{ width: "100%" }}
         size="large"
-        type="primary"
+        type="default"
+        shape="round"
         onClick={() => setOpen(true)}
         loading={loading}
       >
-        <FileAddOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
-        {t("messages.create_csv")}
+        <FileAddOutlined style={{ fontSize: 22 }} /> CSV
       </Button>
     </Popconfirm>
   );

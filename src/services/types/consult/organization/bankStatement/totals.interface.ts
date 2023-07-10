@@ -3,6 +3,10 @@ export interface OrganizationBankStatementTotalsQuery {
   end_date?: string;
   bank?: string;
   payment_type?: string;
+  sort_order?: string;
+  sort_field?: string;
+  page?: number;
+  limit?: number;
 }
 
 export interface OrganizationBankStatementTotalsResponse {
