@@ -11,7 +11,6 @@ import useDebounce from "@utils/useDebounce";
 import { EditOutlined, EyeFilled, UserAddOutlined } from "@ant-design/icons";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
 import { Toast } from "@src/components/Toast";
-import { useCreatePartner } from "@src/services/register/partner/createPartner";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
 import { useUpdatePartner } from "@src/services/register/partner/updatePartner";
 import {
@@ -21,6 +20,8 @@ import {
 import { useGetPersons } from "@src/services/register/persons/persons/getPersons";
 import { useNavigate } from "react-router-dom";
 import { useCreatePerson } from "@src/services/register/persons/persons/createPerson";
+import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
+import { useCreatePersonsReports } from "@src/services/reports/register/persons/persons/createPersonReports";
 
 const INITIAL_QUERY: PersonsQuery = {
   limit: 25,
@@ -57,6 +58,13 @@ export const Persons = () => {
     isPersonsDataFetching,
     refetchPersonsData,
   } = useGetPersons(query);
+
+  const {
+    PersonsReportsError,
+    PersonsReportsIsLoading,
+    PersonsReportsIsSuccess,
+    PersonsReportsMutate,
+  } = useCreatePersonsReports(query);
 
   const { PersonIsLoading, PersonMutate, PersonError, PersonIsSuccess } =
     useCreatePerson(createBody);
@@ -205,6 +213,15 @@ export const Persons = () => {
             <UserAddOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
             {`${t("buttons.create")} ${t("buttons.person")}`}
           </Button>
+        </Grid>
+        <Grid item xs={12} md="auto">
+          <ExportReportsModal
+            mutateReport={() => PersonsReportsMutate()}
+            error={PersonsReportsError}
+            success={PersonsReportsIsSuccess}
+            loading={PersonsReportsIsLoading}
+            reportPath="/register/person/person_reports/person_persons_reports"
+          />
         </Grid>
       </Grid>
 

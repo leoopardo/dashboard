@@ -14,6 +14,8 @@ import {
   ClientBankQuery,
 } from "@src/services/types/banks.interface";
 import { useListClientClientBanks } from "@src/services/bank/listClientBanks";
+import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
+import { useCreateCustomerBanksReports } from "@src/services/reports/register/persons/customerBanks/createCustomerBanksReports";
 
 const INITIAL_QUERY: ClientBankQuery = {
   limit: 25,
@@ -37,6 +39,13 @@ export const CostumerBanks = () => {
   const [currentItem, setCurrentItem] = useState<ClientBankItem | null>(null);
   const [search, setSearch] = useState<string>("");
   const debounceSearch = useDebounce(search);
+
+  const {
+    CustomerBanksReportsError,
+    CustomerBanksReportsIsLoading,
+    CustomerBanksReportsIsSuccess,
+    CustomerBanksReportsMutate
+  } = useCreateCustomerBanksReports(query);
 
   const columns: ColumnInterface[] = [
     { name: "bank_code", type: "text" },
@@ -136,6 +145,15 @@ export const CostumerBanks = () => {
             <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
             {t("table.clear_filters")}
           </Button>
+        </Grid>
+        <Grid item xs={12} md="auto">
+          <ExportReportsModal
+            mutateReport={() => CustomerBanksReportsMutate()}
+            error={CustomerBanksReportsError}
+            success={CustomerBanksReportsIsSuccess}
+            loading={CustomerBanksReportsIsLoading}
+            reportPath="/register/person/person_reports/client_bank_reports"
+          />
         </Grid>
       </Grid>
 

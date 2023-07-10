@@ -12,11 +12,16 @@ import { ValidateToken } from "@src/components/ValidateToken";
 import { useGetSelf } from "@src/services/getSelf";
 import { useGetMerchantMoviments } from "@src/services/moviments/merchants/manual/GetManualTransactions";
 import { CreateMerchantManualTransaction } from "@src/services/types/moviments/merchant/createManualTransaction.interface";
-import { GetMerchantMovimentsItem, GetMerchantMovimentsQuery } from "@src/services/types/moviments/merchant/getMoviments";
+import {
+  GetMerchantMovimentsItem,
+  GetMerchantMovimentsQuery,
+} from "@src/services/types/moviments/merchant/getMoviments";
 import { useCreateMerchantManualTransaction } from "@src/services/moviments/merchants/manual/createManualTransaction";
+import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
+import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
+import { useCreateMerchantManualReports } from "@src/services/reports/moviments/merchant/createManualTransactionsReports";
 
 export const MerchantManual = () => {
-
   const INITIAL_QUERY: GetMerchantMovimentsQuery = {
     page: 1,
     limit: 25,
@@ -50,6 +55,13 @@ export const MerchantManual = () => {
     MerchantMovimentsDataError,
     refetchMerchantMovimentsData,
   } = useGetMerchantMoviments(query);
+
+  const {
+    MerchantManualReportsError,
+    MerchantManualReportsIsLoading,
+    MerchantManualReportsIsSuccess,
+    MerchantManualReportsMutate,
+  } = useCreateMerchantManualReports(query);
 
   const { mutate, isLoading, error, isSuccess } =
     useCreateMerchantManualTransaction(operationInBody);
@@ -169,7 +181,7 @@ export const MerchantManual = () => {
         style={{ display: "flex", alignItems: "center" }}
         spacing={1}
       >
-        <Grid item xs={12} md={4} lg={2}>
+        <Grid item xs={12} md={3} lg={2}>
           <Button
             size="large"
             style={{ width: "100%" }}
@@ -180,7 +192,7 @@ export const MerchantManual = () => {
             {t("table.filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={6} lg={6}>
+        <Grid item xs={12} md={5} lg={6}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
@@ -189,17 +201,35 @@ export const MerchantManual = () => {
             haveInitialDate
           />
         </Grid>
-      </Grid>
-      <Grid
-        container
-        style={{
-          display: "flex",
-          alignItems: "center",
-          flexDirection: "row-reverse",
-        }}
-        spacing={1}
-      >
-        {" "}
+        <Grid item xs={12} md={2} lg={2}>
+          <Button
+            type="dashed"
+            loading={isMerchantMovimentsDataFetching}
+            danger
+            onClick={() => {
+              setQuery(INITIAL_QUERY);
+            }}
+            style={{
+              height: 40,
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
+            {t("table.clear_filters")}
+          </Button>
+        </Grid>
+        <Grid item xs={12} md="auto">
+          <ExportReportsModal
+            mutateReport={() => MerchantManualReportsMutate()}
+            error={MerchantManualReportsError}
+            success={MerchantManualReportsIsSuccess}
+            loading={MerchantManualReportsIsLoading}
+            reportPath="/moviment/merchant_moviments/merchant_moviments_reports"
+          />
+        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>

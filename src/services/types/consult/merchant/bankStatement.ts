@@ -1,8 +1,10 @@
 export interface MerchantBankStatementTotalsQuery {
   start_date: string;
   end_date: string;
-  page: number;
-  limit: number;
+  page?: number;
+  limit?: number;
+  sort_field?: string;
+  sort_order?: string;
 }
 
 export interface MerchantBankStatementTotalsData {

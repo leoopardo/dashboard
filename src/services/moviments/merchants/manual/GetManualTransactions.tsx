@@ -3,6 +3,7 @@ import {
   GetMerchantMovimentsData,
   GetMerchantMovimentsQuery,
 } from "@src/services/types/moviments/merchant/getMoviments";
+import moment from "moment";
 
 import { useQuery } from "react-query";
 
@@ -11,7 +12,19 @@ export function useGetMerchantMoviments(params: GetMerchantMovimentsQuery) {
     GetMerchantMovimentsData | null | undefined
   >("MerchantMoviments", async () => {
     const response = await api.get("core/entry-account", {
-      params,
+      params: {
+        ...params,
+        start_date: params.start_date
+          ? moment(params.start_date)
+              .add(3, "hours")
+              .format("YYYY-MM-DDTHH:mm:ss.SSS")
+          : null,
+        end_date: params.end_date
+          ? moment(params.end_date)
+              .add(3, "hours")
+              .format("YYYY-MM-DDTHH:mm:ss.SSS")
+          : null,
+      },
     });
     return response.data;
   });

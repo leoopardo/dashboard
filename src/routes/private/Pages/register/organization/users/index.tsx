@@ -12,11 +12,10 @@ import { NewUserInterface, NewUserModal } from "./components/newUserModal";
 import { ValidateToken } from "@components/ValidateToken";
 import { useUpdateOrganizationUser } from "@services/register/organization/users/updateUser";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
-import {
-  ColumnInterface,
-  CustomTable,
-} from "@components/CustomTable";
+import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import useDebounce from "@utils/useDebounce";
+import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
+import { useCreateOrganizationReports } from "@src/services/reports/register/organization/createUserReports";
 
 const INITIAL_QUERY: OrganizationUserQuery = {
   limit: 25,
@@ -47,6 +46,12 @@ export const OrganizationUser = () => {
       ...updateUserBody,
       validation_token: tokenState,
     });
+  const {
+    OrganizationReportsError,
+    OrganizationReportsIsLoading,
+    OrganizationReportsIsSuccess,
+    OrganizationReportsMutate,
+  } = useCreateOrganizationReports(query);
   const [action, setAction] = useState<"create" | "update">("create");
 
   const columns: ColumnInterface[] = [
@@ -151,6 +156,15 @@ export const OrganizationUser = () => {
             <UserAddOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
             {`${t("buttons.create")} ${t("buttons.new_user")}`}
           </Button>
+        </Grid>
+        <Grid item xs={12} md="auto">
+          <ExportReportsModal
+            mutateReport={() => OrganizationReportsMutate()}
+            error={OrganizationReportsError}
+            success={OrganizationReportsIsSuccess}
+            loading={OrganizationReportsIsLoading}
+            reportPath="/register/organization/organization_reports/organization_reports_users"
+          />
         </Grid>
       </Grid>
 

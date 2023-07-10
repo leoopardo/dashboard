@@ -17,8 +17,7 @@ export const GeneratedDepositsReports = () => {
   };
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [query, setQuery] = useState<ReportsQuery>(INITIAL_QUERY);
-  const [currentItem, setCurrentItem] = useState<any>();
-  const [disable, setDisable] = useState<boolean>(false);
+  const [, setCurrentItem] = useState<any>();
 
   const {
     GeneratedDepositsReportsData,
@@ -30,10 +29,6 @@ export const GeneratedDepositsReports = () => {
   useEffect(() => {
     refetchGeneratedDepositsReportsData();
   }, [query]);
-
-  useEffect(() => {
-    currentItem?.report_url ? setDisable(false) : setDisable(true);
-  }, [currentItem]);
 
   const { t } = useTranslation();
   return (
