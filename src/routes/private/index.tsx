@@ -45,6 +45,7 @@ import { OrganizationCategoriesReports } from "./Pages/register/organization/rep
 import { PartnerReports } from "./Pages/register/partner/reports/partner";
 import { PartnerUsersReports } from "./Pages/register/partner/reports/users";
 import { GeneratedDepositsReports } from "./Pages/consult/deposits/reports/generatedDeposits";
+import { MerchantBlacklist } from "./Pages/register/merchant/blacklist";
 import { MerchantReports } from "./Pages/register/merchant/reports/merchant";
 import { MerchantUserReports } from "./Pages/register/merchant/reports/user";
 import { PersonsReports } from "./Pages/register/persons/reports/persons";
@@ -215,6 +216,8 @@ export const PrivateRoutes = () => {
               <Route path=":id" element={<MerchantConfigs />} />
             </Route>
             <Route path="merchant_users" element={<MerchantUser />} />
+
+            <Route path="merchant_blacklist" element={<MerchantBlacklist />} />
             <Route path="merchant_reports">
               <Route
                 path="merchant_merchants_reports"

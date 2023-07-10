@@ -1,9 +1,17 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+  useRef,
+} from "react";
 import {
   Button,
   Drawer,
   DatePicker,
   Select,
-  Divider,
   Form,
   ConfigProvider,
   AutoComplete,
@@ -12,13 +20,6 @@ import {
   FormInstance,
 } from "antd";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
-import React, {
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useState,
-  useRef,
-} from "react";
 import { Grid } from "@mui/material";
 import moment from "moment";
 const { RangePicker } = DatePicker;
@@ -31,6 +32,7 @@ import { PartnerSelect } from "../Selects/partnerSelect";
 import { MerchantSelect } from "../Selects/merchantSelect";
 import { BanksSelect } from "../Selects/bankSelect";
 import { ClientBanksSelect } from "../Selects/clientBanksSelect";
+import { ReasonSelect } from "../Selects/reasonSelect";
 import { FilterChips } from "./filterChips";
 import { useGetStates } from "../../services/states_cities/getStates";
 import { useGetCities } from "../../services/states_cities/getCities";
@@ -61,7 +63,6 @@ export const FiltersModal = ({
   setOpen,
   query,
   setQuery,
-  refetch,
   filters,
   selectOptions,
   startDateKeyName,
@@ -72,12 +73,11 @@ export const FiltersModal = ({
 }: FilterModalProps) => {
   const { t } = useTranslation();
   const [filtersQuery, setFiltersQuery] = useState<any>(query);
-  const isMobile = useMediaQuery({ maxWidth: "380px" });
-  const { isStatesFetching, states } = useGetStates();
+  const { states } = useGetStates();
   const [isAgeRangeAbled, setIsAgeRangeAbled] = useState<boolean>(false);
   const [isValueRangeAbled, setIsValueRangeAbled] = useState<boolean>(false);
   const [currState, setCurrState] = useState<string>("");
-  const { cities, isCitiesFetching, refetchCities } = useGetCities(currState);
+  const { cities, refetchCities } = useGetCities(currState);
   const submitRef = useRef<HTMLButtonElement>(null);
   const formRef = useRef<FormInstance>(null);
 
@@ -460,6 +460,20 @@ export const FiltersModal = ({
                   />
                 </Form.Item>
               );
+
+              case "reason":
+                return (
+                  <Form.Item
+                    label={t(`table.${filter}`)}
+                    name={filter}
+                    style={{ margin: 10 }}
+                  >
+                    <ReasonSelect
+                      queryOptions={filtersQuery}
+                      setQueryFunction={setFiltersQuery}
+                    />
+                  </Form.Item>
+                );
             case endDateKeyName:
               return;
 

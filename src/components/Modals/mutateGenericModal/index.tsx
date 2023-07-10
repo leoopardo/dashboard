@@ -19,6 +19,7 @@ import ReactInputMask from "react-input-mask";
 import { Country, State, City } from "country-state-city";
 import { OperatorSelect } from "@src/components/Selects/operatorSelect";
 import { useListClientClientBanks } from "@src/services/bank/listClientBanks";
+import { ReasonSelect } from "@src/components/Selects/reasonSelect";
 
 interface mutateProps {
   type: "create" | "update";
@@ -136,6 +137,29 @@ export const MutateModal = ({
                   ]}
                 >
                   <PartnerSelect
+                    setQueryFunction={setBody}
+                    queryOptions={body}
+                  />
+                </Form.Item>
+              );
+
+              case "reason":
+              return (
+                <Form.Item
+                  label={t(`table.black_list_reason`)}
+                  name={field.label}
+                  style={{ margin: 10 }}
+                  rules={[
+                    {
+                      required: field.required,
+                      message:
+                        t("input.required", {
+                          field: t(`input.${field.label}`),
+                        }) || "",
+                    },
+                  ]}
+                >
+                  <ReasonSelect
                     setQueryFunction={setBody}
                     queryOptions={body}
                   />
