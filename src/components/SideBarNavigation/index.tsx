@@ -1033,33 +1033,131 @@ export const SidebarNavigation = () => {
             display: permissions.report.withdraw.menu ? undefined : "none",
           }
         ),
-        getItem("refunds", null, [
-          getItem("refund_deposits", null, null, false, (e) =>
-            handleNavigate(e?.keyPath)
-          ),
-          getItem("refund_withdrawals", null, null, false, (e) =>
-            handleNavigate(e?.keyPath)
-          ),
-          getItem("refund_manual_deposits", null, null, false, (e) =>
-            handleNavigate(e?.keyPath)
-          ),
-          getItem("refund_reports", null, [
-            getItem("refund_deposits_reports", null, null, false, (e) =>
-              handleNavigate(e?.keyPath)
+        getItem(
+          "refunds",
+          null,
+          [
+            getItem(
+              "refund_deposits",
+              null,
+              null,
+              false,
+              (e) => handleNavigate(e?.keyPath),
+              {
+                display: permissions.report.chargeback.deposit_chargeback.menu
+                  ? undefined
+                  : "none",
+              }
             ),
-            getItem("refund_manual_reports", null, null, false, (e) =>
-              handleNavigate(e?.keyPath)
+            getItem(
+              "refund_withdrawals",
+              null,
+              null,
+              false,
+              (e) => handleNavigate(e?.keyPath),
+              {
+                display: permissions.report.chargeback.withdraw_chargeback.menu
+                  ? undefined
+                  : "none",
+              }
             ),
-            getItem("refund_withdrawals_reports", null, null, false, (e) =>
-              handleNavigate(e?.keyPath)
+            getItem(
+              "refund_manual_deposits",
+              null,
+              null,
+              false,
+              (e) => handleNavigate(e?.keyPath),
+              {
+                display: permissions.report.chargeback.manual_deposit_chargeback
+                  .menu
+                  ? undefined
+                  : "none",
+              }
             ),
-          ]),
-        ]),
-        getItem("consult_persons", null, [
-          getItem("check_cpf", null, null, false, (e) =>
-            handleNavigate(e?.keyPath)
-          ),
-        ]),
+            getItem(
+              "refund_reports",
+              null,
+              [
+                getItem(
+                  "refund_deposits_reports",
+                  null,
+                  null,
+                  false,
+                  (e) => handleNavigate(e?.keyPath),
+                  {
+                    display: permissions.report.chargeback.deposit_chargeback
+                      .report_chargeback_deposit_chargeback_export_csv
+                      ? undefined
+                      : "none",
+                  }
+                ),
+                getItem(
+                  "refund_manual_reports",
+                  null,
+                  null,
+                  false,
+                  (e) => handleNavigate(e?.keyPath),
+                  {
+                    display: permissions.report.chargeback.withdraw_chargeback
+                      .report_chargeback_withdraw_chargeback_export_csv
+                      ? undefined
+                      : "none",
+                  }
+                ),
+                getItem(
+                  "refund_withdrawals_reports",
+                  null,
+                  null,
+                  false,
+                  (e) => handleNavigate(e?.keyPath),
+                  {
+                    display: permissions.report.chargeback
+                      .manual_deposit_chargeback
+                      .report_chargeback_manual_deposit_chargeback_export_csv
+                      ? undefined
+                      : "none",
+                  }
+                ),
+              ],
+              undefined,
+              undefined,
+              {
+                display: permissions.report.chargeback.deposit_chargeback
+                  .report_chargeback_deposit_chargeback_export_csv
+                  ? undefined
+                  : "none",
+              }
+            ),
+          ],
+          undefined,
+          undefined,
+          {
+            display: permissions.report.chargeback.menu ? undefined : "none",
+          }
+        ),
+        getItem(
+          "consult_persons",
+          null,
+          [
+            getItem(
+              "check_cpf",
+              null,
+              null,
+              false,
+              (e) => handleNavigate(e?.keyPath),
+              {
+                display: permissions.report.person.check_cpf.menu
+                  ? undefined
+                  : "none",
+              }
+            ),
+          ],
+          undefined,
+          undefined,
+          {
+            display: permissions.report.person.menu ? undefined : "none",
+          }
+        ),
       ],
       undefined,
       undefined,
@@ -1067,32 +1165,91 @@ export const SidebarNavigation = () => {
         display: permissions.report.menu ? undefined : "none",
       }
     ),
-    getItem("support", <NotificationOutlined style={{ fontSize: "23px" }} />, [
-      getItem("blacklists", null, [
-        getItem("bank_institutions", null, null, false, (e) =>
-          handleNavigate(e?.keyPath)
+    getItem(
+      "support",
+      <NotificationOutlined style={{ fontSize: "23px" }} />,
+      [
+        getItem(
+          "blacklists",
+          null,
+          [
+            getItem(
+              "bank_institutions",
+              null,
+              null,
+              false,
+              (e) => handleNavigate(e?.keyPath),
+              {
+                display: permissions.support.blacklist.banks.menu
+                  ? undefined
+                  : "none",
+              }
+            ),
+            getItem(
+              "third_parties_pix_key",
+              null,
+              null,
+              false,
+              (e) => handleNavigate(e?.keyPath),
+              {
+                display: permissions.support.blacklist.third_party_pix_keys.menu
+                  ? undefined
+                  : "none",
+              }
+            ),
+            getItem(
+              "invalid_pix_key",
+              null,
+              null,
+              false,
+              (e) => handleNavigate(e?.keyPath),
+              {
+                display: permissions.support.blacklist.invalid_pix_keys.menu
+                  ? undefined
+                  : "none",
+              }
+            ),
+            getItem(
+              "blacklists_reports",
+              null,
+              [
+                getItem("bank_institutions_reports", null, null, false, (e) =>
+                  handleNavigate(e?.keyPath)
+                ),
+              ],
+              undefined,
+              undefined,
+              {
+                display: permissions.support.blacklist.banks
+                  .support_blacklist_bank_export_csv
+                  ? undefined
+                  : "none",
+              }
+            ),
+          ],
+          undefined,
+          undefined,
+          {
+            display: permissions.support.blacklist.menu ? undefined : "none",
+          }
         ),
-        getItem("third_parties_pix_key", null, null, false, (e) =>
-          handleNavigate(e?.keyPath)
-        ),
-        getItem("invalid_pix_key", null, null, false, (e) =>
-          handleNavigate(e?.keyPath)
-        ),
-        getItem("blacklists_reports", null, [
-          getItem("bank_institutions_reports", null, null, false, (e) =>
+        getItem("api_logs", null, [
+          getItem("error_logs_deposits", null, null, false, (e) =>
             handleNavigate(e?.keyPath)
           ),
-        ]),
-      ]),
-      getItem("api_logs", null, [
-        getItem("error_logs_deposits", null, null, false, (e) =>
-          handleNavigate(e?.keyPath)
-        ),
-        getItem("error_logs_withdrawals", null, null, false, (e) =>
-          handleNavigate(e?.keyPath)
-        ),
-      ]),
-    ]),
+          getItem("error_logs_withdrawals", null, null, false, (e) =>
+            handleNavigate(e?.keyPath)
+          ),
+        ], undefined, undefined, {
+          display: permissions.report.deposit.deposit_error_logs.menu ? undefined : "none",
+        }),
+      ],
+      undefined,
+      undefined,
+      {
+        display: permissions.support.menu ? undefined : "none",
+      }
+    ),
     getItem(
       "logout",
       <LogoutOutlined style={{ fontSize: "23px" }} />,
