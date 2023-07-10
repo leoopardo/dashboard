@@ -496,8 +496,8 @@ export const CustomTable = (props: TableProps) => {
                 ),
               }}
               pagination={{
-                current: Number(props?.query?.page),
-                pageSize: Number(props?.query?.limit),
+                current: Number(props?.query?.page ?? 1),
+                pageSize: Number(props?.query?.limit ?? 25),
                 total: props.removeTotal
                   ? props?.items?.length < props?.data?.limit
                     ? props?.data?.limit * props?.data?.page

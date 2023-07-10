@@ -1,6 +1,6 @@
 export interface paidDepositTotalQuery {
-  page: number;
-  limit: number;
+  page?: number;
+  limit?: number;
   sort_order?: "DESC" | "ASC";
   sort_field?: string;
   initial_date?: string;
@@ -17,8 +17,8 @@ export interface paidDepositTotalQuery {
 }
 
 export interface paidDepositRowsQuery {
-  page: number;
-  limit: number;
+  page?: number;
+  limit?: number;
   sort_order?: "DESC" | "ASC";
   sort_field?: string;
   initial_date?: string;

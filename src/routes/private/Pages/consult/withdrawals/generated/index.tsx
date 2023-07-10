@@ -18,6 +18,8 @@ import { generatedWithdrawalsRowsQuery } from "../../../../../../services/types/
 import { WebhookModal } from "../components/webhooksModal";
 import { useGetTotalGeneratedWithdrawals } from "@src/services/consult/withdrawals/generatedWithdrawals/getTotal";
 import { useGetRowsGeneratedWithdrawals } from "@src/services/consult/withdrawals/generatedWithdrawals/getRows";
+import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
+import { useCreateGeneratedWithdrawalsReports } from "@src/services/reports/consult/withdrawals/generated/createGeneratedWithdrawalsReports";
 
 const INITIAL_QUERY: generatedWithdrawalsRowsQuery = {
   page: 1,
@@ -48,6 +50,13 @@ export const GeneratedWithdrawals = () => {
     isWithdrawalsRowsFetching,
     refetchWithdrawalsTotalRows,
   } = useGetRowsGeneratedWithdrawals(query);
+
+  const {
+    GeneratedWithdrawalsReportsError,
+    GeneratedWithdrawalsReportsIsLoading,
+    GeneratedWithdrawalsReportsIsSuccess,
+    GeneratedWithdrawalsReportsMutate,
+  } = useCreateGeneratedWithdrawalsReports(query);
 
   useEffect(() => {
     refetchWithdrawalsTotalRows();
@@ -180,7 +189,7 @@ export const GeneratedWithdrawals = () => {
             </Button>
           </Space.Compact>
         </Grid>
-        <Grid item xs={12} md={2} lg={2}>
+        <Grid item xs={12} md={3} lg={2}>
           <Button
             size="large"
             type="dashed"
@@ -201,6 +210,15 @@ export const GeneratedWithdrawals = () => {
             <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
             {t("table.clear_filters")}
           </Button>
+        </Grid>
+        <Grid item xs={12} md="auto" lg={1}>
+          <ExportReportsModal
+            mutateReport={() => GeneratedWithdrawalsReportsMutate()}
+            error={GeneratedWithdrawalsReportsError}
+            success={GeneratedWithdrawalsReportsIsSuccess}
+            loading={GeneratedWithdrawalsReportsIsLoading}
+            reportPath="/consult/withdrawals/withdrawals_reports/generated_withdrawals_reports"
+          />
         </Grid>
       </Grid>
 
@@ -254,7 +272,7 @@ export const GeneratedWithdrawals = () => {
       )}
       {isFiltersOpen && (
         <FiltersModal
-        maxRange
+          maxRange
           open={isFiltersOpen}
           setOpen={setIsFiltersOpen}
           query={query}

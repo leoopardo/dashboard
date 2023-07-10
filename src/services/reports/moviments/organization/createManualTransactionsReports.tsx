@@ -5,10 +5,7 @@ import { GetMovimentsQuery } from "@src/services/types/moviments/organization/ge
 import moment from "moment";
 
 export function useCreateOrganizationManualReports(body: GetMovimentsQuery) {
-  delete body.limit;
-  delete body.page;
-  delete body.sort_field;
-  delete body.sort_order;
+
   const { isLoading, error, mutate, isSuccess } = useMutation<
     GetMovimentsQuery | null | undefined
   >("CreateOrganizationManualReports", async () => {

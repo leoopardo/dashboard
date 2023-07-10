@@ -17,6 +17,8 @@ import { FilterChips } from "../../../../../../components/FiltersModal/filterChi
 import { paidDepositRowsQuery } from "../../../../../../services/types/consult/deposits/PaidDeposits.interface";
 import { useGetTotalPaidDeposits } from "../../../../../../services/consult/deposits/paidDeposits/getTotal";
 import { useGetRowsPaidDeposits } from "../../../../../../services/consult/deposits/paidDeposits/getRows";
+import { useCreatePaidDepositsReports } from "@src/services/reports/consult/deposits/createPaidDepositsReports";
+import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 const { RangePicker } = DatePicker;
 
 const INITIAL_QUERY: paidDepositRowsQuery = {
@@ -39,6 +41,13 @@ export const PaidDeposits = () => {
 
   const { paidRows, paidRowsError, isPaidRowsFetching, refetchPaidTotalRows } =
     useGetRowsPaidDeposits(query);
+
+  const {
+    PaidDepositsReportsError,
+    PaidDepositsReportsIsLoading,
+    PaidDepositsReportsIsSuccess,
+    PaidDepositsReportsMutate,
+  } = useCreatePaidDepositsReports(query);
 
   useEffect(() => {
     refetchPaidTotalRows();
@@ -185,6 +194,15 @@ export const PaidDeposits = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
+        <Grid item xs={12} md="auto" lg={1}>
+          <ExportReportsModal
+            mutateReport={() => PaidDepositsReportsMutate()}
+            error={PaidDepositsReportsError}
+            success={PaidDepositsReportsIsSuccess}
+            loading={PaidDepositsReportsIsLoading}
+            reportPath="/consult/deposit/deposits_reports/Paid_deposits_reports"
+          />
+        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -225,7 +243,7 @@ export const PaidDeposits = () => {
       )}
       {isFiltersOpen && (
         <FiltersModal
-        maxRange
+          maxRange
           open={isFiltersOpen}
           setOpen={setIsFiltersOpen}
           query={query}

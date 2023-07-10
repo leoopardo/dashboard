@@ -10,7 +10,7 @@ import {
 import { Avatar, Button, Menu, MenuProps } from "antd";
 import React, { useEffect, useState } from "react";
 import { useMenu } from "../../contexts/SidebarContext";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { defaultTheme } from "../../styles/defaultTheme";
 import { useMediaQuery } from "react-responsive";
 import { useTranslation } from "react-i18next";
@@ -27,6 +27,18 @@ export const SidebarNavigation = () => {
   const [items, setItems] = useState<MenuItem[]>([]);
   const translation = useTranslation().i18n.language;
   const [openKeys, setOpenKeys] = useState(["institution"]);
+  const location = useLocation();
+  const [active, setActive] = useState<string>(
+    location.pathname.split("/")[location.pathname.split("/").length - 1]
+  );
+
+  useEffect(() => {
+    setActive(
+      location.pathname.split("/")[location.pathname.split("/").length - 1]
+    );
+  }, [location]);
+
+  console.log(active);
 
   const onOpenChange: MenuProps["onOpenChange"] = (keys) => {
     const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
@@ -379,7 +391,6 @@ export const SidebarNavigation = () => {
           handleNavigate(e?.keyPath)
         ),
       ]),
-     
     ]),
     getItem("support", <NotificationOutlined style={{ fontSize: "23px" }} />, [
       getItem("blacklists", null, [
@@ -464,6 +475,7 @@ export const SidebarNavigation = () => {
           display: isMobile && !isSidebarOpen ? "none" : "inherit",
         }}
         openKeys={isSidebarOpen ? openKeys : undefined}
+        selectedKeys={[active]}
         onOpenChange={isSidebarOpen ? onOpenChange : undefined}
         disabledOverflow
         translate="yes"

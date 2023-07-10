@@ -18,6 +18,8 @@ import { useTranslation } from "react-i18next";
 import useDebounce from "../../../../../../utils/useDebounce";
 import { FilterChips } from "../../../../../../components/FiltersModal/filterChips";
 import { WebhookModal } from "../components/webhooksModal";
+import { useCreateGeneratedDepositsReports } from "@src/services/reports/consult/deposits/createGeneratedDepositsReports";
+import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 const { RangePicker } = DatePicker;
 
 const INITIAL_QUERY: generatedDepositTotalQuery = {
@@ -60,6 +62,13 @@ export const GeneratedDeposits = () => {
   const [search, setSearch] = useState<string | null>(null);
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const debounceSearch = useDebounce(search);
+
+  const {
+    GeneratedDepositsReportsError,
+    GeneratedDepositsReportsIsLoading,
+    GeneratedDepositsReportsIsSuccess,
+    GeneratedDepositsReportsMutate,
+  } = useCreateGeneratedDepositsReports(query);
 
   const columns: ColumnInterface[] = [
     { name: "_id", type: "id" },
@@ -199,6 +208,15 @@ export const GeneratedDeposits = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
+        <Grid item xs={12} md="auto" lg={1}>
+          <ExportReportsModal
+            mutateReport={() => GeneratedDepositsReportsMutate()}
+            error={GeneratedDepositsReportsError}
+            success={GeneratedDepositsReportsIsSuccess}
+            loading={GeneratedDepositsReportsIsLoading}
+            reportPath="/consult/deposit/deposits_reports/generated_deposits_reports"
+          />
+        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -252,7 +270,7 @@ export const GeneratedDeposits = () => {
       )}
       {isFiltersOpen && (
         <FiltersModal
-        maxRange
+          maxRange
           open={isFiltersOpen}
           setOpen={setIsFiltersOpen}
           query={query}
