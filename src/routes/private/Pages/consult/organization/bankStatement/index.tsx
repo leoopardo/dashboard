@@ -1,7 +1,7 @@
 import { OrganizationBankStatementTotalsQuery } from "@src/services/types/consult/organization/bankStatement/totals.interface";
 import { Grid } from "@mui/material";
 import moment from "moment";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Totalizers } from "./components/Totalizers";
 import { Button, Divider, Spin } from "antd";
@@ -10,7 +10,7 @@ import { FiltersModal } from "@src/components/FiltersModal";
 import { useGetOrganizationBankStatementTotals } from "@src/services/consult/organization/bankStatement/getTotals";
 import { useGetOrganizationPerbank } from "@src/services/consult/organization/bankStatement/getPerBank";
 import { CustomTable } from "@src/components/CustomTable";
-import { EyeFilled, ReloadOutlined } from "@ant-design/icons";
+import { ReloadOutlined } from "@ant-design/icons";
 import { PieChart } from "./components/PieValue";
 import { PieFee } from "./components/PieFee";
 import { PieBankfee } from "./components/PieBankFee";
@@ -31,8 +31,7 @@ const INITIAL_QUERY: OrganizationBankStatementTotalsQuery = {
 export const OrganizationBankStatement = () => {
   const isMobile = useMediaQuery({ maxWidth: "900px" });
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
-  const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
-  const [currentItem, setCurrentItem] = useState<any>();
+  const [, setCurrentItem] = useState<any>();
   const { t } = useTranslation();
   const [query, setQuery] =
     useState<OrganizationBankStatementTotalsQuery>(INITIAL_QUERY);
@@ -214,6 +213,7 @@ export const OrganizationBankStatement = () => {
           startDateKeyName="start_date"
           endDateKeyName="end_date"
           initialQuery={INITIAL_QUERY}
+          
         />
       )}
     </Grid>

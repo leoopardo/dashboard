@@ -81,7 +81,6 @@ export const UndeliveredWithdrawals = () => {
     delete q.txid;
     delete q.reference_id;
     delete q.buyer_document;
-    delete q.payer_document;
     delete q.buyer_name;
     delete q.payer_name;
 
@@ -120,7 +119,7 @@ export const UndeliveredWithdrawals = () => {
       >
         <Grid item xs={12} md={4} lg={2}>
           <Button
-          size="large"
+            size="large"
             style={{ width: "100%" }}
             loading={isWithdrawalsRowsFetching || isWithdrawalsTotalFetching}
             type="primary"
@@ -181,7 +180,7 @@ export const UndeliveredWithdrawals = () => {
         </Grid>
         <Grid item xs={12} md={2} lg={2}>
           <Button
-          size="large"
+            size="large"
             type="dashed"
             loading={isWithdrawalsRowsFetching}
             danger
@@ -241,6 +240,7 @@ export const UndeliveredWithdrawals = () => {
       )}
       {isFiltersOpen && (
         <FiltersModal
+          maxRange
           open={isFiltersOpen}
           setOpen={setIsFiltersOpen}
           query={query}

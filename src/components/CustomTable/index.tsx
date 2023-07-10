@@ -467,13 +467,26 @@ export const CustomTable = (props: TableProps) => {
             <Table
               locale={{
                 emptyText: props.error ? (
-                  <Empty
-                    style={{ padding: 15, paddingBottom: 30 }}
-                    image={Empty.PRESENTED_IMAGE_SIMPLE}
-                    description={`${t("table.error")} ${
-                      props?.error?.response?.status
-                    } - ${t(`error.${props?.error?.response?.status}`)}`}
-                  />
+                  <div style={{ display: "flex", justifyContent: "center" }}>
+                    <Empty
+                      style={{
+                        padding: 15,
+                        paddingBottom: 30,
+                        maxWidth: "430px",
+                      }}
+                      image={Empty.PRESENTED_IMAGE_SIMPLE}
+                      description={
+                        <div>
+                          <div>
+                            {`${t("table.error")} ${
+                              props?.error?.response?.status
+                            }`}
+                          </div>
+                          {`${t(`error.${props?.error?.response?.status}`)}`}
+                        </div>
+                      }
+                    />
+                  </div>
                 ) : (
                   <Empty
                     style={{ padding: 15, paddingBottom: 30 }}

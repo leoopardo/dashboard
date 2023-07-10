@@ -238,6 +238,7 @@ export const UndeliveredDeposits = () => {
       )}
       {isFiltersOpen && (
         <FiltersModal
+        maxRange
           open={isFiltersOpen}
           setOpen={setIsFiltersOpen}
           query={query}

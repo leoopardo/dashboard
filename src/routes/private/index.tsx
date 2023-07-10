@@ -1,4 +1,4 @@
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { NotFount } from "../public/Pages/404";
 import { Redirect } from "./redirect";
 import { GeneratedDeposits } from "./Pages/consult/deposits/generated";
@@ -25,7 +25,7 @@ import { Persons } from "./Pages/register/persons";
 import { PersonDetails } from "./Pages/register/persons/personDetails";
 import { PersonUpdate } from "./Pages/register/persons/personUpdate";
 import { PixKeyWhitelist } from "./Pages/register/persons/pixKeyWhitelist";
-import { CostumerBanks } from "./Pages/register/persons/costumerBankList";
+import { CostumerBanks } from "./Pages/register/persons/customerBankList";
 import { OrganizationBankStatement } from "./Pages/consult/organization/bankStatement";
 import { OrganizationBalance } from "./Pages/consult/organization/balance";
 import { OrganizationHistory } from "./Pages/consult/organization/history";
@@ -46,6 +46,22 @@ import { PartnerReports } from "./Pages/register/partner/reports/partner";
 import { PartnerUsersReports } from "./Pages/register/partner/reports/users";
 import { GeneratedDepositsReports } from "./Pages/consult/deposits/reports/generatedDeposits";
 import { MerchantBlacklist } from "./Pages/register/merchant/blacklist";
+import { MerchantReports } from "./Pages/register/merchant/reports/merchant";
+import { MerchantUserReports } from "./Pages/register/merchant/reports/user";
+import { PersonsReports } from "./Pages/register/persons/reports/persons";
+import { CustomerBanksReports } from "./Pages/register/persons/reports/customerBanks";
+import { PixKeyWhitelistReports } from "./Pages/register/persons/reports/PixKeyWhitelist";
+import { OrganizationManualReports } from "./Pages/moviments/organization/reports";
+import { MerchantManualReports } from "./Pages/moviments/merchants/reports";
+import { ConsultOrganizationReports } from "./Pages/consult/organization/reports";
+import { ConsultMerchantReports } from "./Pages/consult/merchant/reports";
+import { PaidDepositsReports } from "./Pages/consult/deposits/reports/paidDeposits";
+import { GeneratedWithdrawalsReports } from "./Pages/consult/withdrawals/reports/generatedWithdrawals";
+import { PaidWithdrawalsReports } from "./Pages/consult/withdrawals/reports/paidWithdrawals";
+import { RefundDepositsReports } from "./Pages/consult/refunds/reports/deposits";
+import { RefundManualDepositsReports } from "./Pages/consult/refunds/reports/manualDeposits";
+import { RefundWithdrawalsReports } from "./Pages/consult/refunds/reports/withdrawals";
+import { BankBlackistReports } from "./Pages/support/blacklists/reports/bankBlacklist";
 
 export const PrivateRoutes = () => {
   return (
@@ -69,6 +85,10 @@ export const PrivateRoutes = () => {
               path="organization_history"
               element={<OrganizationHistory />}
             />
+            <Route
+              path="consult_organization_reports"
+              element={<ConsultOrganizationReports />}
+            />
           </Route>
 
           <Route path="consult_merchant">
@@ -78,6 +98,10 @@ export const PrivateRoutes = () => {
             />
             <Route path="merchant_balance" element={<MerchantBalance />} />
             <Route path="merchant_history" element={<MerchantHistory />} />
+            <Route
+              path="consult_merchant_reports"
+              element={<ConsultMerchantReports />}
+            />
           </Route>
 
           <Route path="deposit">
@@ -89,7 +113,14 @@ export const PrivateRoutes = () => {
             />
 
             <Route path="deposits_reports">
-              <Route path="generated_deposits_reports" element={<GeneratedDepositsReports/>}/>
+              <Route
+                path="generated_deposits_reports"
+                element={<GeneratedDepositsReports />}
+              />
+              <Route
+                path="paid_deposits_reports"
+                element={<PaidDepositsReports />}
+              />
             </Route>
           </Route>
 
@@ -103,9 +134,36 @@ export const PrivateRoutes = () => {
               path="undelivered_withdrawals"
               element={<UndeliveredWithdrawals />}
             />
+
+            <Route path="withdrawals_reports">
+              <Route
+                path="generated_withdrawals_reports"
+                element={<GeneratedWithdrawalsReports />}
+              />
+              <Route
+                path="paid_withdrawals_reports"
+                element={<PaidWithdrawalsReports />}
+              />
+            </Route>
           </Route>
+
           <Route path="refunds">
             <Route path="refund_deposits" element={<RefundDeposits />} />
+
+            <Route path="refund_reports">
+              <Route
+                path="refund_deposits_reports"
+                element={<RefundDepositsReports />}
+              />
+              <Route
+                path="refund_manual_reports"
+                element={<RefundManualDepositsReports />}
+              />
+              <Route
+                path="refund_withdrawals_reports"
+                element={<RefundWithdrawalsReports />}
+              />
+            </Route>
           </Route>
 
           <Route path="consult_persons">
@@ -142,7 +200,7 @@ export const PrivateRoutes = () => {
                 path="partner_partners_reports"
                 element={<PartnerReports />}
               />
-               <Route
+              <Route
                 path="partner_users_reports"
                 element={<PartnerUsersReports />}
               />
@@ -160,6 +218,16 @@ export const PrivateRoutes = () => {
             <Route path="merchant_users" element={<MerchantUser />} />
 
             <Route path="merchant_blacklist" element={<MerchantBlacklist />} />
+            <Route path="merchant_reports">
+              <Route
+                path="merchant_merchants_reports"
+                element={<MerchantReports />}
+              />
+              <Route
+                path="merchant_users_reports"
+                element={<MerchantUserReports />}
+              />
+            </Route>
           </Route>
           <Route path="person">
             <Route path="persons">
@@ -171,6 +239,20 @@ export const PrivateRoutes = () => {
             </Route>
             <Route path="whitelist" element={<PixKeyWhitelist />} />
             <Route path="person_accounts" element={<CostumerBanks />} />
+            <Route path="person_reports">
+              <Route
+                path="person_persons_reports"
+                element={<PersonsReports />}
+              />
+              <Route
+                path="client_bank_reports"
+                element={<CustomerBanksReports />}
+              />
+              <Route
+                path="pix_whitelist_reports"
+                element={<PixKeyWhitelistReports />}
+              />
+            </Route>
           </Route>
         </Route>
 
@@ -180,11 +262,19 @@ export const PrivateRoutes = () => {
               path="organization_manual_moviments"
               element={<OrgonizationManual />}
             />
+            <Route
+              path="organization_moviments_reports"
+              element={<OrganizationManualReports />}
+            />
           </Route>
           <Route path="merchant_moviments">
             <Route
               path="merchant_manual_moviments"
               element={<MerchantManual />}
+            />
+            <Route
+              path="merchant_moviments_reports"
+              element={<MerchantManualReports />}
             />
           </Route>
         </Route>
@@ -206,6 +296,12 @@ export const PrivateRoutes = () => {
               path="invalid_pix_key"
               element={<InvalidPixKeyBlacklist />}
             />
+            <Route path="blacklists_reports">
+              <Route
+                path="bank_institutions_reports"
+                element={<BankBlackistReports />}
+              />
+            </Route>
           </Route>
         </Route>
       </Route>

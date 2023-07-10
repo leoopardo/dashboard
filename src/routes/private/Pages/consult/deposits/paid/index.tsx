@@ -225,6 +225,7 @@ export const PaidDeposits = () => {
       )}
       {isFiltersOpen && (
         <FiltersModal
+        maxRange
           open={isFiltersOpen}
           setOpen={setIsFiltersOpen}
           query={query}
