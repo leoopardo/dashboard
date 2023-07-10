@@ -7,10 +7,10 @@ export interface GetMovimentsQuery {
   type?: string;
   min_value?: number;
   max_value?: number;
-  sort_field: string;
-  sort_order: string;
-  page: number;
-  limit: number;
+  sort_field?: string;
+  sort_order?: string;
+  page?: number;
+  limit?: number;
 }
 
 export interface GetMovimentsItem {

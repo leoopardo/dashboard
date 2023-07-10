@@ -18,6 +18,9 @@ import { useCreateManualTransaction } from "@src/services/moviments/organization
 import { CreateManualTransaction } from "@src/services/types/moviments/organization/createManualTransaction.interface";
 import { useGetSelf } from "@src/services/getSelf";
 import { useMediaQuery } from "react-responsive";
+import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
+import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
+import { useCreateOrganizationManualReports } from "@src/services/reports/moviments/organization/createManualTransactionsReports";
 
 export const OrgonizationManual = () => {
   const isMobile = useMediaQuery({ maxWidth: "900px" });
@@ -55,8 +58,15 @@ export const OrgonizationManual = () => {
     refetchOrganizationMovimentsData,
   } = useGetOrganizationMoviments(query);
 
-  const { mutate, isLoading, error, isSuccess } =
+  const { mutate, error, isSuccess } =
     useCreateManualTransaction(operationInBody);
+
+  const {
+    OrganizationManualReportsError,
+    OrganizationManualReportsIsLoading,
+    OrganizationManualReportsIsSuccess,
+    OrganizationManualReportsMutate,
+  } = useCreateOrganizationManualReports(query);
 
   useEffect(() => {
     refetchOrganizationMovimentsData();
@@ -173,7 +183,7 @@ export const OrgonizationManual = () => {
         style={{ display: "flex", alignItems: "center" }}
         spacing={1}
       >
-        <Grid item xs={12} md={4} lg={2}>
+        <Grid item xs={12} md={3} lg={2}>
           <Button
             size="large"
             style={{ width: "100%" }}
@@ -184,7 +194,7 @@ export const OrgonizationManual = () => {
             {t("table.filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={6} lg={6}>
+        <Grid item xs={12} md={4} lg={6}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
@@ -193,17 +203,35 @@ export const OrgonizationManual = () => {
             haveInitialDate
           />
         </Grid>
-      </Grid>
-      <Grid
-        container
-        style={{
-          display: "flex",
-          alignItems: "center",
-          flexDirection: "row-reverse",
-        }}
-        spacing={1}
-      >
-        {" "}
+        <Grid item xs={12} md={3} lg={2}>
+          <Button
+            type="dashed"
+            loading={isOrganizationMovimentsDataFetching}
+            danger
+            onClick={() => {
+              setQuery(INITIAL_QUERY);
+            }}
+            style={{
+              height: 40,
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
+            {t("table.clear_filters")}
+          </Button>
+        </Grid>
+        <Grid item xs={12} md={2} lg={2}>
+          <ExportReportsModal
+            mutateReport={() => OrganizationManualReportsMutate()}
+            error={OrganizationManualReportsError}
+            success={OrganizationManualReportsIsSuccess}
+            loading={OrganizationManualReportsIsLoading}
+            reportPath="/moviment/organization_moviments/organization_moviments_reports"
+          />
+        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>

@@ -19,6 +19,8 @@ import {
 import { useUpdateMerchant } from "@src/services/register/merchant/users/updateMerhchant";
 import { UpdateUserModal } from "./components/UpdateUserModal";
 import { ValidateToken } from "@src/components/ValidateToken";
+import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
+import { useCreateMerchantUsersReports } from "@src/services/reports/register/merchant/createMerchantUsersReports";
 
 const INITIAL_QUERY: MerchantUsersQuery = {
   limit: 25,
@@ -46,10 +48,16 @@ export const MerchantUser = () => {
   );
   const [search, setSearch] = useState<string>("");
   const { updateError, updateIsLoading, updateIsSuccess, updateMutate } =
-  useUpdateMerchant({
-    ...updateUserBody,
-    validation_token: tokenState,
-  });
+    useUpdateMerchant({
+      ...updateUserBody,
+      validation_token: tokenState,
+    });
+  const {
+    MerchantUsersReportsError,
+    MerchantUsersReportsIsLoading,
+    MerchantUsersReportsIsSuccess,
+    MerchantUsersReportsMutate,
+  } = useCreateMerchantUsersReports(query);
   const debounceSearch = useDebounce(search);
 
   const columns: ColumnInterface[] = [
@@ -161,6 +169,15 @@ export const MerchantUser = () => {
             {`${t("buttons.create")} ${t("buttons.new_user")}`}
           </Button>
         </Grid>
+        <Grid item xs={12} md={2} lg={2}>
+          <ExportReportsModal
+            mutateReport={() => MerchantUsersReportsMutate()}
+            error={MerchantUsersReportsError}
+            success={MerchantUsersReportsIsSuccess}
+            loading={MerchantUsersReportsIsLoading}
+            reportPath="/register/merchant/merchant_reports/merchant_users_reports"
+          />
+        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -187,8 +204,8 @@ export const MerchantUser = () => {
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
                 onClick: () => {
-                  setRequestType("update")
-                  setIsNewUserModal(true)
+                  setRequestType("update");
+                  setIsNewUserModal(true);
                 },
               },
             ]}

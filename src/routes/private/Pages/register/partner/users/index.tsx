@@ -167,7 +167,7 @@ export const PartnerUsers = () => {
             error={PartnerReportsError}
             success={PartnerReportsIsSuccess}
             loading={PartnerReportsIsLoading}
-            reportPath="/register/partner/partner_reports/partner_users_reports"
+            reportPath="/register/merchant/merchant_reports/merchant_merchants_reports"
           />
         </Grid>
       </Grid>

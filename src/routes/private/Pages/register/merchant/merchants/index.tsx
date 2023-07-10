@@ -4,13 +4,13 @@ import { Button, Input } from "antd";
 import { FilterChips } from "@components/FiltersModal/filterChips";
 import { useTranslation } from "react-i18next";
 import { useGetRowsMerchantRegister } from "@services/register/merchant/merchant/getMerchants";
-import { MerchantsItem, MerchantsQuery } from "@services/types/register/merchants/merchantsRegister.interface";
+import {
+  MerchantsItem,
+  MerchantsQuery,
+} from "@services/types/register/merchants/merchantsRegister.interface";
 import { FiltersModal } from "@components/FiltersModal";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
-import {
-  ColumnInterface,
-  CustomTable,
-} from "@components/CustomTable";
+import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import { Toast } from "@components/Toast";
 import useDebounce from "@utils/useDebounce";
 import { UserAddOutlined } from "@ant-design/icons";
@@ -20,6 +20,8 @@ import { ViewModal } from "@components/Modals/viewGenericModal";
 import { MutateModal } from "@components/Modals/mutateGenericModal";
 import { useUpdateMerchant } from "@services/register/merchant/merchant/updateMerchant";
 import { useNavigate } from "react-router-dom";
+import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
+import { useCreateMerchantReports } from "@src/services/reports/register/merchant/createMerchantReports";
 
 const INITIAL_QUERY: MerchantsQuery = {
   limit: 25,
@@ -30,39 +32,54 @@ const INITIAL_QUERY: MerchantsQuery = {
 
 export const MerchantView = () => {
   const { t } = useTranslation();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [query, setQuery] = useState<MerchantsQuery>(INITIAL_QUERY);
-  const { MerchantData, MerchantDataError, isMerchantDataFetching, refetchMerchantData } =
-  useGetRowsMerchantRegister(query);
+  const {
+    MerchantData,
+    MerchantDataError,
+    isMerchantDataFetching,
+    refetchMerchantData,
+  } = useGetRowsMerchantRegister(query);
 
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [isNewMerchantModal, setIsNewMerchantModal] = useState(false);
-  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false)
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [currentItem, setCurrentItem] = useState<MerchantsItem | null>(null);
   const [updateBody, setUpdateBody] = useState<MerchantsItem>({
     ...currentItem,
     merchant_id: currentItem?.id,
   });
 
-  const {UpdateError, UpdateIsLoading, UpdateIsSuccess, UpdateMutate} = useUpdateMerchant(updateBody)
+  const { UpdateError, UpdateIsLoading, UpdateIsSuccess, UpdateMutate } =
+    useUpdateMerchant(updateBody);
+  const {
+    MerchantReportsError,
+    MerchantReportsIsLoading,
+    MerchantReportsIsSuccess,
+    MerchantReportsMutate,
+  } = useCreateMerchantReports(query);
   const [search, setSearch] = useState<string>("");
-  const [isConfigOpen, setIsConfigOpen] = useState(false)
-  const [isViewModalOpen ,setIsViewModalOpen] = useState(false)
+  const [isConfigOpen, setIsConfigOpen] = useState(false);
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const debounceSearch = useDebounce(search);
 
   const columns: ColumnInterface[] = [
     { name: "id", type: "id" },
     { name: "name", type: "text" },
     { name: "domain", type: "text" },
-    { name: ["partner", "name"], head: 'partner', type: "text" },
-    { name: ["merchantConfig", "cash_in_bank"], head: 'bank', type: 'bankNameToIcon'},
+    { name: ["partner", "name"], head: "partner", type: "text" },
+    {
+      name: ["merchantConfig", "cash_in_bank"],
+      head: "bank",
+      type: "bankNameToIcon",
+    },
     { name: "status", type: "status" },
     { name: "created_at", type: "date" },
   ];
 
   useEffect(() => {
-    const id = currentItem?.id
-    isConfigOpen &&  navigate(`${id}`)
+    const id = currentItem?.id;
+    isConfigOpen && navigate(`${id}`);
   }, [isConfigOpen]);
 
   useEffect(() => {
@@ -89,7 +106,7 @@ export const MerchantView = () => {
     <Grid container style={{ padding: "25px" }}>
       <Grid
         container
-        style={{ marginTop: "20px", display: "flex", alignItems: "center" }}
+        style={{ display: "flex", alignItems: "center" }}
         spacing={1}
       >
         <Grid item xs={12} md={4} lg={2}>
@@ -163,6 +180,15 @@ export const MerchantView = () => {
             {`${t("buttons.create")} ${t("buttons.new_user")}`}
           </Button>
         </Grid>
+        <Grid item xs={12} md={2} lg={2}>
+          <ExportReportsModal
+            mutateReport={() => MerchantReportsMutate()}
+            error={MerchantReportsError}
+            success={MerchantReportsIsSuccess}
+            loading={MerchantReportsIsLoading}
+            reportPath="/register/merchant/merchant_reports/merchant_merchants_reports"
+          />
+        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -211,7 +237,6 @@ export const MerchantView = () => {
             { label: "partner_id", required: false },
             { label: "cellphone", required: false },
             { label: "email", required: false },
-
           ]}
           body={updateBody}
           setBody={setUpdateBody}
@@ -255,10 +280,11 @@ export const MerchantView = () => {
         />
       )}
       {isNewMerchantModal && (
-        <NewMerchantModal open={isNewMerchantModal} setOpen={setIsNewMerchantModal} />
+        <NewMerchantModal
+          open={isNewMerchantModal}
+          setOpen={setIsNewMerchantModal}
+        />
       )}
-
-
 
       <Toast
         actionSuccess={t("messages.updated")}

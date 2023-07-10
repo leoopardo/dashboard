@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Grid } from "@mui/material";
-import { Button, Input, Popconfirm } from "antd";
+import { Button, Input } from "antd";
 import { useEffect, useState } from "react";
 import { FilterChips } from "@components/FiltersModal/filterChips";
 import { useTranslation } from "react-i18next";
@@ -8,11 +8,7 @@ import { FiltersModal } from "@components/FiltersModal";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import useDebounce from "@utils/useDebounce";
-import {
-  DeleteColumnOutlined,
-  DeleteOutlined,
-  EyeFilled,
-} from "@ant-design/icons";
+import { DeleteOutlined, EyeFilled } from "@ant-design/icons";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
 import { useGetPixKeyWhitelist } from "@src/services/register/persons/blacklist/getPixKeyWhitelist";
 import {
@@ -21,6 +17,8 @@ import {
 } from "@src/services/types/register/persons/blacklist/pixKeyWhitelist.interface";
 import { useDeleteDeletePixKey } from "@src/services/register/persons/blacklist/deleteFile";
 import { Toast } from "@src/components/Toast";
+import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
+import { useCreatePixKeyWhitelistReports } from "@src/services/reports/register/persons/PixKeyWhitelist/createPixKeyWhitelistReports";
 
 const INITIAL_QUERY: PixKeyWhitelistQuery = {
   limit: 25,
@@ -40,6 +38,13 @@ export const PixKeyWhitelist = () => {
     isPixKeyWhitelistDataFetching,
     refetchPixKeyWhitelistData,
   } = useGetPixKeyWhitelist(query);
+
+  const {
+    PixKeyWhitelistReportsError,
+    PixKeyWhitelistReportsIsLoading,
+    PixKeyWhitelistReportsIsSuccess,
+    PixKeyWhitelistReportsMutate,
+  } = useCreatePixKeyWhitelistReports(query);
 
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
@@ -130,6 +135,15 @@ export const PixKeyWhitelist = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
+        <Grid item xs={12} md={2} lg={2}>
+          <ExportReportsModal
+            mutateReport={() => PixKeyWhitelistReportsMutate()}
+            error={PixKeyWhitelistReportsError}
+            success={PixKeyWhitelistReportsIsSuccess}
+            loading={PixKeyWhitelistReportsIsLoading}
+            reportPath="/register/person/person_reports/pix_whitelist_reports"
+          />
+        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -163,7 +177,7 @@ export const PixKeyWhitelist = () => {
             isConfirmOpen={isConfirmOpen}
             setIsConfirmOpen={setIsConfirmOpen}
             itemToAction={currentItem?.pix_key}
-            onConfirmAction={ () => DeletePixKeyMutate()}
+            onConfirmAction={() => DeletePixKeyMutate()}
           />
         </Grid>
       </Grid>
