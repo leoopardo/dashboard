@@ -105,7 +105,8 @@
     "paid_deposits_reports": "Paid deposits",
     "webhooks_reports": "Webhooks",
     "update": "Editar",
-    "credentials": "Credentials"
+    "credentials": "Credentials",
+    "manual_entry_category": "Manual entry category"
   },
 
   "titles": {

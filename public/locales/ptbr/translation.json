@@ -106,7 +106,9 @@
     "paid_deposits_reports": "Depósitos pagos",
     "webhooks_reports": "Webhooks",
     "update": "Editar",
-    "credentials": "Credenciais"
+    "credentials": "Credenciais",
+    "manual_entry_category": "Categorias lançamentos manuais"
+
   },
 
   "titles": {

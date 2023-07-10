@@ -62,6 +62,7 @@ import { RefundDepositsReports } from "./Pages/consult/refunds/reports/deposits"
 import { RefundManualDepositsReports } from "./Pages/consult/refunds/reports/manualDeposits";
 import { RefundWithdrawalsReports } from "./Pages/consult/refunds/reports/withdrawals";
 import { BankBlackistReports } from "./Pages/support/blacklists/reports/bankBlacklist";
+import { MerchantManualEntryCategory } from "./Pages/register/merchant/manualEntryCategory";
 
 export const PrivateRoutes = () => {
   return (
@@ -218,6 +219,10 @@ export const PrivateRoutes = () => {
             <Route path="merchant_users" element={<MerchantUser />} />
 
             <Route path="merchant_blacklist" element={<MerchantBlacklist />} />
+            <Route
+                path="manual_entry_category"
+                element={<MerchantManualEntryCategory />}
+              />
             <Route path="merchant_reports">
               <Route
                 path="merchant_merchants_reports"
@@ -227,6 +232,7 @@ export const PrivateRoutes = () => {
                 path="merchant_users_reports"
                 element={<MerchantUserReports />}
               />
+            
             </Route>
           </Route>
           <Route path="person">
