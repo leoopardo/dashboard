@@ -1,7 +1,7 @@
 import { api } from "@config/api";
 
 import { useQuery } from "react-query";
-import { MerchantFeesResponse } from "@src/services/types/register/merchants/merchantFeesConfig";
+import { MerchantFeesResponse } from "@src/services/types/register/merchants/merchantFeesConfig.interface";
 
 export function useMerchantFeesConfig(id?: string) {
   const { data, isFetching, error, refetch } = useQuery<

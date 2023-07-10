@@ -1,7 +1,7 @@
 import { queryClient } from "@src/services/queryClient";
 import { api } from "@config/api";
 import { useMutation } from "react-query";
-import { IMerchantFeesUpdate} from "@src/services/types/register/merchants/merchantFeesConfig";
+import { IMerchantFeesUpdate } from "@src/services/types/register/merchants/merchantFeesConfig.interface";
 
 export function useUpdateFeesConfig(body?: IMerchantFeesUpdate | null) {
   const { isLoading, error, mutate, isSuccess } = useMutation<

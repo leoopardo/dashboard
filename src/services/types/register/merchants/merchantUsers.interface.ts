@@ -63,9 +63,41 @@ export interface MerchantUsersItem {
   username: string;
 }
 
+export interface MerchantUserBodyItem {
+  cellphone?: string;
+  email?: string;
+  group_id?: number;
+  merchant_id?: number | null;
+  name?: string;
+  password?: string;
+  organization_id?: number;
+  partner_id?: number;
+  status?: boolean;
+  type?: number;
+  validation_token?: string | null
+  username?: string;
+}
+
 export interface MerchantUsersResponse {
   total: number;
   limit: number;
   page: number;
   items: MerchantUsersItem[];
+}
+
+
+export interface UpdateUserInterface {
+  name?: string;
+  username?: string;
+  password?: string;
+  email?: string;
+  cellphone?: string;
+  group_id?: number;
+  type?: number;
+  status?: boolean;
+  partner_id?: number;
+  merchant_id?: number;
+  organization_id?: number;
+  user_id?: number;
+  validation_token?: string;
 }

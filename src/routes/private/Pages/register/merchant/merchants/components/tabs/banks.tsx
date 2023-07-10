@@ -1,9 +1,9 @@
-import { useRef, useState, useEffect, useCallback } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Grid } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useMerchantBankConfig } from "@services/register/merchant/merchant/bankConfig/getBankConfig";
 import { useUpdateBankConfig } from "@src/services/register/merchant/merchant/bankConfig/updateBankConfig";
-import { IMerchantBankUpdate, MerchantBankResponse } from "@services/types/register/merchants/merchantBankConfig";
+import { IMerchantBankUpdate } from "@src/services/types/register/merchants/merchantBankConfig.interface";
 import { BanksSelect } from "@components/Selects/bankSelect";
 import { Toast } from "@components/Toast";
 import { Form, FormInstance, Input, Button, Popconfirm } from "antd";
@@ -18,7 +18,6 @@ export const BanksTab = (props: { id?: string }) => {
   const {
     isMerchantBankFetching,
     merchantBankData,
-    merchantBankError,
     refetchMerchantBankData,
   } = useMerchantBankConfig(props.id);
   const { UpdateError, UpdateIsLoading, UpdateIsSuccess, UpdateMutate } =

@@ -8,7 +8,7 @@ export function useUpdateOrganizationConfig(body?: IMerchantUpdateConfig | null)
   IMerchantUpdateConfig | null | undefined
   >("UpdateOrganizationConfig", async () => {
     const response = await api.put("core/merchant/config/paybrokers/update", body, {});
-    await queryClient.refetchQueries({ queryKey: ["UpdateOrganizationConfig"] });
+    await queryClient.refetchQueries({ queryKey: ["OrganizationConfig"] });
     return response.data;
   });
 

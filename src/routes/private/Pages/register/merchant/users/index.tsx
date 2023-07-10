@@ -4,18 +4,23 @@ import { Button, Input } from "antd";
 import { FilterChips } from "@components/FiltersModal/filterChips";
 import { useTranslation } from "react-i18next";
 import { useGetRowsMerchantUsers } from "@services/register/merchant/users/getUsers";
-import { OrganizationUserQuery } from "@src/services/types/register/organization/organizationUsers.interface";
 import { FiltersModal } from "@components/FiltersModal";
+import { EditOutlined, EyeFilled } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
-import {
-  ColumnInterface,
-  CustomTable,
-} from "@components/CustomTable";
+import { ColumnInterface, CustomTable } from "@components/CustomTable";
+import { ViewModal } from "@components/Modals/viewGenericModal";
 import useDebounce from "@utils/useDebounce";
 import { UserAddOutlined } from "@ant-design/icons";
-import { NewUserModal } from "./components/newUserModal";
+import {
+  MerchantUsersItem,
+  MerchantUsersQuery,
+  MerchantUserBodyItem,
+} from "@src/services/types/register/merchants/merchantUsers.interface";
+import { useUpdateMerchant } from "@src/services/register/merchant/users/updateMerhchant";
+import { UpdateUserModal } from "./components/UpdateUserModal";
+import { ValidateToken } from "@src/components/ValidateToken";
 
-const INITIAL_QUERY: OrganizationUserQuery = {
+const INITIAL_QUERY: MerchantUsersQuery = {
   limit: 25,
   page: 1,
   sort_field: "created_at",
@@ -23,14 +28,28 @@ const INITIAL_QUERY: OrganizationUserQuery = {
 };
 
 export const MerchantUser = () => {
-  const [query, setQuery] = useState<OrganizationUserQuery>(INITIAL_QUERY);
+  const [query, setQuery] = useState<MerchantUsersQuery>(INITIAL_QUERY);
   const { t } = useTranslation();
   const { UsersData, UsersDataError, isUsersDataFetching, refetchUsersData } =
     useGetRowsMerchantUsers(query);
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [isNewUserModal, setIsNewUserModal] = useState(false);
-  const [currentItem, setCurrentItem] = useState(null);
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
+  const [requestType, setRequestType] = useState<"create" | "update">("create");
+  const [tokenState, setTokenState] = useState<string>("");
+  const [isValidateTokenOpen, setIsValidateTokenOpen] =
+    useState<boolean>(false);
+  const [updateUserBody, setUpdateUserBody] =
+    useState<MerchantUserBodyItem | null>(null);
+  const [currentItem, setCurrentItem] = useState<MerchantUsersItem | null>(
+    null
+  );
   const [search, setSearch] = useState<string>("");
+  const { updateError, updateIsLoading, updateIsSuccess, updateMutate } =
+  useUpdateMerchant({
+    ...updateUserBody,
+    validation_token: tokenState,
+  });
   const debounceSearch = useDebounce(search);
 
   const columns: ColumnInterface[] = [
@@ -42,9 +61,17 @@ export const MerchantUser = () => {
     { name: "created_at", type: "date" },
   ];
 
+  const handleUpdateTokenValidate = () => {
+    updateMutate();
+  };
+
   useEffect(() => {
     refetchUsersData();
   }, [query]);
+
+  useEffect(() => {
+    updateIsSuccess && setIsValidateTokenOpen(false);
+  }, [updateIsSuccess]);
 
   useEffect(() => {
     if (!debounceSearch) {
@@ -119,6 +146,7 @@ export const MerchantUser = () => {
             type="primary"
             loading={isUsersDataFetching}
             onClick={() => {
+              setRequestType("create");
               setIsNewUserModal(true);
             }}
             style={{
@@ -147,6 +175,23 @@ export const MerchantUser = () => {
             columns={columns}
             loading={isUsersDataFetching}
             label={["name", "username"]}
+            actions={[
+              {
+                label: "details",
+                icon: <EyeFilled style={{ fontSize: "20px" }} />,
+                onClick: () => {
+                  setIsViewModalOpen(true);
+                },
+              },
+              {
+                label: "edit",
+                icon: <EditOutlined style={{ fontSize: "20px" }} />,
+                onClick: () => {
+                  setRequestType("update")
+                  setIsNewUserModal(true)
+                },
+              },
+            ]}
           />
         </Grid>
       </Grid>
@@ -172,8 +217,41 @@ export const MerchantUser = () => {
           initialQuery={INITIAL_QUERY}
         />
       )}
+
+      {isViewModalOpen && (
+        <ViewModal
+          item={currentItem}
+          loading={isUsersDataFetching}
+          modalName={`${t("menus.merchant")}: ${currentItem?.name}`}
+          open={isViewModalOpen}
+          setOpen={setIsViewModalOpen}
+        />
+      )}
+
+      {isValidateTokenOpen && (
+        <ValidateToken
+          action="USER_UPDATE"
+          body={updateUserBody}
+          open={isValidateTokenOpen}
+          setIsOpen={setIsValidateTokenOpen}
+          setTokenState={setTokenState}
+          tokenState={tokenState}
+          success={updateIsSuccess}
+          error={updateError}
+          submit={handleUpdateTokenValidate}
+        />
+      )}
+
       {isNewUserModal && (
-        <NewUserModal open={isNewUserModal} setOpen={setIsNewUserModal} />
+        <UpdateUserModal
+          action={requestType}
+          open={isNewUserModal}
+          setOpen={setIsNewUserModal}
+          currentUser={currentItem}
+          setCurrentUser={setCurrentItem}
+          setUpdateBody={setUpdateUserBody}
+          setIsValidateTokenOpen={setIsValidateTokenOpen}
+        />
       )}
     </Grid>
   );

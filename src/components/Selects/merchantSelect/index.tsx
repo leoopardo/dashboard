@@ -1,9 +1,8 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { AutoComplete, Empty, Input, Spin } from "antd";
+import { AutoComplete, Empty } from "antd";
 import { MerchantQuery } from "../../../services/types/register/merchants/merchants.interface";
 import { useListMerchants } from "../../../services/merchant/listMerchants";
 import { useTranslation } from "react-i18next";
-import { DownOutlined } from "@ant-design/icons";
 import useDebounce from "@src/utils/useDebounce";
 
 interface MerchantSelectProps {

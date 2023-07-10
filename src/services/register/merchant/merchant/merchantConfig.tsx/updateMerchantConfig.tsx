@@ -8,7 +8,7 @@ export function useUpdateMerchantConfig(body?: IMerchantUpdateConfig | null) {
   IMerchantUpdateConfig | null | undefined
   >("UpdateMerchantConfig", async () => {
     const response = await api.put("core/merchant/config/merchant/update", body, {});
-    await queryClient.refetchQueries({ queryKey: ["UpdateMerchantConfig"] });
+    await queryClient.refetchQueries({ queryKey: ["MerchantConfig"] });
     return response.data;
   });
 

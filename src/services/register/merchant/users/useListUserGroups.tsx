@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { api } from "../../../../config/api";
 import {
   GroupQuery,

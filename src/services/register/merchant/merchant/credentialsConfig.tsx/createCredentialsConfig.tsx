@@ -8,7 +8,7 @@ export function useCreateCredentialsConfig(body: IBodyCredentialItem) {
     IBodyCredentialItem | null | undefined
   >("CreateCredentialsConfig", async () => {
     const response = await api.post("core/api-credentials/create", body, {});
-    await queryClient.refetchQueries({ queryKey: ["CreateCredentialsConfig"] });
+    await queryClient.refetchQueries({ queryKey: ["CredentialsConfig"] });
     return response.data;
   });
 
