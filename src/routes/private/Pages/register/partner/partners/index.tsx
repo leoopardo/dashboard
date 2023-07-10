@@ -11,10 +11,7 @@ import useDebounce from "@utils/useDebounce";
 import { EditOutlined, EyeFilled, UserAddOutlined } from "@ant-design/icons";
 
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
-import {
-  UpdateCategoryInterface,
-  useUpdateOrganizationCategory,
-} from "@src/services/register/organization/categories/updateCategorie";
+
 import { Toast } from "@src/components/Toast";
 import { useGetPartners } from "@src/services/register/partner/getPartners";
 import {
@@ -24,6 +21,8 @@ import {
 import { useCreatePartner } from "@src/services/register/partner/createPartner";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
 import { useUpdatePartner } from "@src/services/register/partner/updatePartner";
+import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
+import { useCreatePartnerReports } from "@src/services/reports/register/partner/createPartnerReports";
 
 const INITIAL_QUERY: PartnerQuery = {
   limit: 25,
@@ -62,6 +61,13 @@ export const Partners = () => {
     ...currentItem,
     partner_id: currentItem?.id,
   });
+
+  const {
+    PartnerReportsError,
+    PartnerReportsIsLoading,
+    PartnerReportsIsSuccess,
+    PartnerReportsMutate,
+  } = useCreatePartnerReports(query);
 
   const { PartnerIsLoading, PartnerMutate, PartnerError, PartnerIsSuccess } =
     useCreatePartner(createBody);
@@ -173,6 +179,15 @@ export const Partners = () => {
             <UserAddOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
             {`${t("buttons.create")} ${t("buttons.new_partner")}`}
           </Button>
+        </Grid>
+        <Grid item xs={12} md={2} lg={2}>
+          <ExportReportsModal
+            mutateReport={() => PartnerReportsMutate()}
+            error={PartnerReportsError}
+            success={PartnerReportsIsSuccess}
+            loading={PartnerReportsIsLoading}
+            reportPath="/register/partner/partner_reports/partner_partners_reports"
+          />
         </Grid>
       </Grid>
 

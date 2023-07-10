@@ -132,6 +132,7 @@
     "upload_file": "Fazer upload",
     "confirm_upload_file": "Confirmar upload do arquivo?",
     "yes_confirm": "Sim, confirmar",
+    "yes_create": "Sim, criar",
     "uploaded": "Upload realizado",
     "upload": "upload",
     "deleted": "Deletado",
@@ -140,7 +141,11 @@
     "check": "Checar",
     "upload_label": "Clique ou arraste e solte o arquivo para esta área",
     "upload_description": "Suporte para um arquivo por vês, nos formatos: pdf, png e docx.",
-    "min_value_higher_then_zero": "O valor desse campo deve ser maior que 0"
+    "min_value_higher_then_zero": "O valor desse campo deve ser maior que 0",
+    "create_csv": "Criar CSV",
+    "csv_confirm": "Deseja criar um CSV com os filtros selecionados?",
+    "creating_csv": "Gerando CSV",
+    "creating_csv_message": "O arquivo CSV está sendo sendo gerado. Você pode acompanhar o processamento navegando para:"
   },
   "login": {
     "sign_in": "Faça login",

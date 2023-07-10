@@ -22,6 +22,8 @@ import {
   useUpdateOrganizationCategory,
 } from "@src/services/register/organization/categories/updateCategorie";
 import { Toast } from "@src/components/Toast";
+import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
+import { useCreateOrganizationCategoryReports } from "@src/services/reports/register/organization/createCategoryReport";
 
 const INITIAL_QUERY: OrganizationCategoriesQuery = {
   limit: 25,
@@ -66,6 +68,13 @@ export const OrganizationCategories = () => {
 
   const { updateError, updateIsLoading, updateMutate, updateSuccess } =
     useUpdateOrganizationCategory(updateBody);
+
+  const {
+    CategoryReportsError,
+    CategoryReportsIsLoading,
+    CategoryReportsIsSuccess,
+    CategoryReportsMutate,
+  } = useCreateOrganizationCategoryReports(query);
 
   const columns: ColumnInterface[] = [
     { name: "id", type: "id" },
@@ -118,7 +127,6 @@ export const OrganizationCategories = () => {
             endDateKeyName="end_date"
             query={query}
             setQuery={setQuery}
-            
           />
         </Grid>
       </Grid>
@@ -172,6 +180,15 @@ export const OrganizationCategories = () => {
             <UserAddOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
             {`${t("buttons.create")} ${t("buttons.new_categorie")}`}
           </Button>
+        </Grid>
+        <Grid item xs={12} md={3} lg={2}>
+          <ExportReportsModal
+            mutateReport={() => CategoryReportsMutate()}
+            error={CategoryReportsError}
+            success={CategoryReportsIsSuccess}
+            loading={CategoryReportsIsLoading}
+            reportPath="/register/organization/organization_reports/organization_reports_categories"
+          />
         </Grid>
       </Grid>
 
@@ -269,13 +286,13 @@ export const OrganizationCategories = () => {
           setOpen={setIsViewModalOpen}
         />
       )}
-       <Toast
+      <Toast
         actionSuccess={t("messages.updated")}
         actionError={t("messages.update")}
         error={updateError}
         success={updateSuccess}
       />
-       <Toast
+      <Toast
         actionSuccess={t("messages.created")}
         actionError={t("messages.create")}
         error={error}

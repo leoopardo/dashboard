@@ -1,8 +1,8 @@
 export interface ReportsQuery {
   start_date?: string;
   end_date?: string;
-  limit: number;
-  page: number;
+  limit?: number;
+  page?: number;
 }
 
 export interface ReportsItem {
