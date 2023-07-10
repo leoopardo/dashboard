@@ -181,7 +181,7 @@ export const RefundDeposits = () => {
         </Grid>
         <Grid item xs={12} md={2} lg={2}>
           <Button
-          size="large"
+            size="large"
             type="dashed"
             loading={isRefundDepositsRowsFetching}
             danger
@@ -224,16 +224,11 @@ export const RefundDeposits = () => {
                 label: "refund",
                 icon: <ReplayIcon style={{ fontSize: "18px" }} />,
                 onClick: () => setIsViewModalOpen(true),
-                disabled: ["WAITING", "ERROR"].includes(currentItem?.status),
+                disabled: (item) => ["WAITING", "ERROR"].includes(item?.status),
               },
             ]}
             removeTotal
-            label={[
-              "merchant_name",
-              "status",
-              "createdAt",
-              "delivered_at",
-            ]}
+            label={["merchant_name", "status", "createdAt", "delivered_at"]}
           />
         </Grid>
       </Grid>

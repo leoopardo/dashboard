@@ -482,6 +482,9 @@
     "response": "Resposta",
     "step": "Etapa",
     "user_id": "ID Usuário",
+    "created_by_name": "Criado por",
+    "rows": "Linhas", 
+    "progress": "Progresso",
     "ip": "Ip"
   },
   "actions": {
@@ -490,7 +493,8 @@
     "logs_webhooks": "Logs de webhooks",
     "configs": "Configurações",
     "delete": "Deletar",
-    "check": "Checar"
+    "check": "Checar",
+    "download": "Baixar"
   },
   "error": {
     "400": "Nenhum dado encontrado.",

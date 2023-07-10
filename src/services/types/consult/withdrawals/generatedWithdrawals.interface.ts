@@ -18,7 +18,7 @@ export interface generatedWithdrawalsTotalQuery {
   txid?: string;
   reference_id?: string;
   buyer_document?: string;
-  payer_document?: string;
+  receiver_document?: string;
   delivered_at?: boolean;
   buyer_name?: string;
   payer_name?: string;
@@ -47,7 +47,7 @@ export interface generatedWithdrawalsRowsQuery {
   bank?: string;
   partner_id?: number;
   buyer_document?: string;
-  payer_document?: string;
+  receiver_document?: string;
   payer_bank?: number;
   age_start?: number;
   age_end?: number;
