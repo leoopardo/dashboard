@@ -53,6 +53,7 @@ interface FilterModalProps {
   endDateKeyName: string;
   haveInitialDate?: boolean;
   initialQuery: any;
+  maxRange?: boolean;
 }
 
 export const FiltersModal = ({
@@ -66,6 +67,7 @@ export const FiltersModal = ({
   startDateKeyName,
   endDateKeyName,
   haveInitialDate,
+  maxRange,
   initialQuery,
 }: FilterModalProps) => {
   const { t } = useTranslation();
@@ -189,7 +191,7 @@ export const FiltersModal = ({
         layout="vertical"
         onFinish={() => {
           setQuery({ ...filtersQuery, page: 1, limit: 25 });
-    
+
           setOpen(false);
         }}
       >
@@ -206,7 +208,7 @@ export const FiltersModal = ({
                     {
                       validator: () => {
                         if (
-                          haveInitialDate &&
+                          maxRange &&
                           filtersQuery[endDateKeyName] >
                             moment(new Date(filtersQuery[startDateKeyName]))
                               .add(30, "days")

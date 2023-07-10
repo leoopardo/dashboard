@@ -499,7 +499,8 @@
     "404": "Route not found",
     "date_too_log": "The diffrence between dates should be equal or less than 30 days",
     "password_or_username": "Invalid username or password",
-    "BANK_ALREADY_CREATED": "Bank already created"
+    "BANK_ALREADY_CREATED": "Bank already created",
+    "undefined": "Couldn't connect to server. Wait while we solve this problem."
   },
   "logs": {
     "login": "Login",

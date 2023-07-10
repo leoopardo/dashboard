@@ -252,6 +252,7 @@ export const GeneratedDeposits = () => {
       )}
       {isFiltersOpen && (
         <FiltersModal
+        maxRange
           open={isFiltersOpen}
           setOpen={setIsFiltersOpen}
           query={query}

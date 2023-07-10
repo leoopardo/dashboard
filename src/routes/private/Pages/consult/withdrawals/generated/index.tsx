@@ -82,7 +82,7 @@ export const GeneratedWithdrawals = () => {
     delete q.txid;
     delete q.reference_id;
     delete q.buyer_document;
-    delete q.payer_document;
+    delete q.receiver_document;
     delete q.buyer_name;
     delete q.payer_name;
 
@@ -254,6 +254,7 @@ export const GeneratedWithdrawals = () => {
       )}
       {isFiltersOpen && (
         <FiltersModal
+        maxRange
           open={isFiltersOpen}
           setOpen={setIsFiltersOpen}
           query={query}
