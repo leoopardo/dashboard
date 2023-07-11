@@ -7,14 +7,14 @@ type IDepositFeePlansDetails = {
 }
 
 export interface IDepositFeeItem  {
-    id: string;
-    name: string;
-    plan_type: string;
-    status: boolean;
-    transaction_type: string;
-    range_type: string;
-    created_at: string;
-    merchant_fee_plans_details: IDepositFeePlansDetails[]
+    id?: string;
+    name?: string;
+    plan_type?: string | null;
+    status?: boolean;
+    transaction_type?: string | null;
+    range_type?: string | null;
+    created_at?: string;
+    merchant_fee_plans_details?: IDepositFeePlansDetails[]
 }
   
   export interface IDepositFeeResponse {

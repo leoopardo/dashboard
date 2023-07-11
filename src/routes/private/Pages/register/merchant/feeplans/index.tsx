@@ -5,15 +5,13 @@ import { FilterChips } from "@components/FiltersModal/filterChips";
 import { useTranslation } from "react-i18next";
 import { FiltersModal } from "@components/FiltersModal";
 import { EditOutlined, PlusOutlined } from "@ant-design/icons";
-import {
-  MerchantManualEntryCategoryQuery,
-  MerchantManualEntryCategoryItem,
-} from "@src/services/types/register/merchants/merchantManualEntryCategory.interface";
+import { MerchantManualEntryCategoryQuery } from "@src/services/types/register/merchants/merchantManualEntryCategory.interface";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
-import { useGetRowsMerchantManualEntryCategory } from "@src/services/register/merchant/manualEntryCategory/getManualEntryCategory";
-import { useCreateManualEntryCategory } from "@src/services/register/merchant/manualEntryCategory/createManualEntryCategory";
-import { useUpdateManualEntryCategory } from "@src/services/register/merchant/manualEntryCategory/updateManualEntryCategory";
-import { MutateModal } from "@src/components/Modals/mutateGenericModal";
+import { useGetFeePlansRegister } from "@src/services/register/merchant/feePlans/getFeePlans";
+import { useCreateMerchantFeePlans } from "@src/services/register/merchant/feePlans/createFeePlans";
+import { useUpdateMerchantFeePlan } from "@src/services/register/merchant/feePlans/updateFeePlans";
+import { UpdateFeePlanModal } from "./components/UpdateFeePlanModal";
+import { IDepositFeeItem } from "@src/services/types/register/merchants/merchantFeePlans.interface";
 import { Toast } from "@src/components/Toast";
 
 const INITIAL_QUERY: MerchantManualEntryCategoryQuery = {
@@ -23,49 +21,43 @@ const INITIAL_QUERY: MerchantManualEntryCategoryQuery = {
   sort_order: "DESC",
 };
 
-export const MerchantManualEntryCategory = () => {
+export const MerchantFeePlans = () => {
   const [query, setQuery] =
     useState<MerchantManualEntryCategoryQuery>(INITIAL_QUERY);
   const { t } = useTranslation();
-  const [body, setBody] = useState<MerchantManualEntryCategoryItem | null>({
+  const [body, setBody] = useState<IDepositFeeItem | null>({
     name: "",
-    description: "",
   });
-  const [updateBody, setUpdateBody] =
-    useState<MerchantManualEntryCategoryItem | null>(null);
+  const [updateBody, setUpdateBody] = useState<IDepositFeeItem | null>(null);
+  const [currentItem, setCurrentItem] = useState<IDepositFeeItem | null>(null);
   const {
-    categoryData,
-    categoryDataError,
-    isCategoryDataFetching,
-    refetchCategoryData,
-  } = useGetRowsMerchantManualEntryCategory(query);
+    depositFeePlansData,
+    depositFeePlansDataError,
+    isDepositFeePlansDataFetching,
+    refetchDepositFeePlansData,
+  } = useGetFeePlansRegister(query);
   const { error, isLoading, isSuccess, mutate } =
-    useCreateManualEntryCategory(body);
+    useCreateMerchantFeePlans(body);
   const { updateError, updateIsLoading, updateIsSuccess, updateMutate } =
-    useUpdateManualEntryCategory(updateBody);
+    useUpdateMerchantFeePlan(currentItem?.id, updateBody);
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
-  const [currentItem, setCurrentItem] =
-    useState<MerchantManualEntryCategoryItem | null>(null);
-
   const columns: ColumnInterface[] = [
     { name: "id", type: "id" },
     { name: "name", type: "text" },
-    { name: "description", type: "text" },
-    { name: "organization_id", type: "text" },
+    { name: "plan_type", type: "text" },
+    { name: "transaction_type", type: "text" },
     { name: "status", type: "status" },
-    { name: "created_at", type: "date" },
   ];
 
   useEffect(() => {
-    refetchCategoryData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    refetchDepositFeePlansData();
   }, [query]);
 
   useEffect(() => {
-    setUpdateBody({...currentItem, entry_account_category_id: currentItem?.id});
+    setUpdateBody(currentItem);
   }, [currentItem]);
 
   return (
@@ -78,7 +70,7 @@ export const MerchantManualEntryCategory = () => {
         <Grid item xs={12} md={3} lg={2}>
           <Button
             style={{ width: "100%", height: 40 }}
-            loading={isCategoryDataFetching}
+            loading={isDepositFeePlansDataFetching}
             type="primary"
             onClick={() => setIsFiltersOpen(true)}
           >
@@ -98,7 +90,7 @@ export const MerchantManualEntryCategory = () => {
         <Grid item xs={12} md={3} lg={2}>
           <Button
             type="primary"
-            loading={isCategoryDataFetching}
+            loading={isDepositFeePlansDataFetching}
             onClick={() => {
               setIsCreateModalOpen(true);
             }}
@@ -111,7 +103,7 @@ export const MerchantManualEntryCategory = () => {
             }}
           >
             <PlusOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
-            {`${t("buttons.create")} ${t("buttons.new_categorie")}`}
+            {`${t("buttons.create")} ${t("table.fee_plan")}`}
           </Button>
         </Grid>
       </Grid>
@@ -122,11 +114,11 @@ export const MerchantManualEntryCategory = () => {
             query={query}
             setCurrentItem={setCurrentItem}
             setQuery={setQuery}
-            data={categoryData}
-            items={categoryData?.items}
-            error={categoryDataError}
+            data={depositFeePlansData}
+            items={depositFeePlansData?.merchant_fee_plans}
+            error={depositFeePlansDataError}
             columns={columns}
-            loading={isCategoryDataFetching}
+            loading={isDepositFeePlansDataFetching}
             label={["name", "username"]}
             actions={[
               {
@@ -149,7 +141,7 @@ export const MerchantManualEntryCategory = () => {
           setQuery={setQuery}
           haveInitialDate
           filters={["start_date", "end_date", "status"]}
-          refetch={refetchCategoryData}
+          refetch={refetchDepositFeePlansData}
           selectOptions={{ status: ["true", "false"] }}
           startDateKeyName="start_date"
           endDateKeyName="end_date"
@@ -158,40 +150,20 @@ export const MerchantManualEntryCategory = () => {
       )}
 
       {isCreateModalOpen && (
-        <MutateModal
-          type="create"
+        <UpdateFeePlanModal
+          action="create"
           open={isCreateModalOpen}
           setOpen={setIsCreateModalOpen}
-          fields={[
-            { label: "name", required: true },
-            { label: "description", required: true },
-          ]}
-          body={body}
-          setBody={setBody}
-          modalName={t("modal.new_category")}
-          submit={mutate}
-          submitLoading={isLoading}
-          error={error}
-          success={isSuccess}
         />
       )}
 
       {isUpdateModalOpen && (
-        <MutateModal
-          type="update"
+        <UpdateFeePlanModal
+          action="update"
           open={isUpdateModalOpen}
           setOpen={setIsUpdateModalOpen}
-          fields={[
-            { label: "name", required: true },
-            { label: "description", required: true },
-          ]}
-          body={updateBody}
-          setBody={setUpdateBody}
-          modalName={t("modal.update_category")}
-          submit={updateMutate}
-          submitLoading={updateIsLoading}
-          error={updateError}
-          success={updateIsSuccess}
+          setCurrentUser={setCurrentItem}
+          currentUser={currentItem}
         />
       )}
 

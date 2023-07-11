@@ -1,4 +1,10 @@
-import { Dispatch, SetStateAction, useRef, useEffect } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import {
+  Dispatch,
+  SetStateAction,
+  useRef,
+  ChangeEvent,
+} from "react";
 import {
   AutoComplete,
   Avatar,
@@ -9,22 +15,29 @@ import {
   Input,
   Select,
   Switch,
+  Empty,
 } from "antd";
 import { useTranslation } from "react-i18next";
 import { MerchantSelect } from "../../Selects/merchantSelect";
 import { PartnerSelect } from "../../Selects/partnerSelect";
-import { toast } from "react-hot-toast";
 import { useGetrefetchCountries } from "@src/services/states_cities/getCountries";
 import ReactInputMask from "react-input-mask";
 import { Country, State, City } from "country-state-city";
 import { OperatorSelect } from "@src/components/Selects/operatorSelect";
 import { useListClientClientBanks } from "@src/services/bank/listClientBanks";
 import { ReasonSelect } from "@src/components/Selects/reasonSelect";
+import { Grid } from "@mui/material";
 
 interface mutateProps {
   type: "create" | "update";
-  fields: { label: string; required: boolean }[];
+  fields: {
+    label: string;
+    required: boolean;
+    selectOption?: boolean;
+    feesDetails?: boolean;
+  }[];
   modalName: string;
+  selectOptions?: any;
   setBody: Dispatch<SetStateAction<any>>;
   body: any;
   open: boolean;
@@ -43,6 +56,7 @@ export const MutateModal = ({
   setBody,
   setOpen,
   submit,
+  selectOptions,
   modalName,
   submitLoading,
 }: mutateProps) => {
@@ -50,6 +64,11 @@ export const MutateModal = ({
   const formRef = useRef<FormInstance>(null);
   const submitRef = useRef<HTMLButtonElement>(null);
   const { Countries } = useGetrefetchCountries();
+  const { clientbankListData, isClientBankListFetching } =
+    useListClientClientBanks({
+      page: 1,
+      limit: 200,
+    });
 
   const handleChange = (event: any) => {
     setBody((state: any) => ({
@@ -57,12 +76,6 @@ export const MutateModal = ({
       [event.target.name]: event.target.value,
     }));
   };
-
-  const { clientbankListData, isClientBankListFetching } =
-    useListClientClientBanks({
-      page: 1,
-      limit: 200,
-    });
 
   return (
     <Drawer
@@ -143,7 +156,7 @@ export const MutateModal = ({
                 </Form.Item>
               );
 
-              case "reason":
+            case "reason":
               return (
                 <Form.Item
                   label={t(`table.black_list_reason`)}
@@ -309,31 +322,31 @@ export const MutateModal = ({
               return;
 
             case "type":
-            return (
-              <Form.Item
-              label={t("table.type")}
-              name="type"
-              style={{ margin: 10 }}
-            >
-              <Select
-                size="large"
-                options={
-                  ['production']?.map((item, index) => ({
-                    key: index,
-                    value: item,
-                    label: `${t(`table.${item.toLocaleLowerCase()}`)}`,
-                  })) ?? []
-                }
-                value={body?.cashin_pix_fee_type || null}
-                onChange={(value) => {
-                setBody((state: any) => ({
-                  ...state,
-                  [field.label]: value,
-                }));
-                }}
-              />
-            </Form.Item>
-            )
+              return (
+                <Form.Item
+                  label={t("table.type")}
+                  name="type"
+                  style={{ margin: 10 }}
+                >
+                  <Select
+                    size="large"
+                    options={
+                      ["production"]?.map((item, index) => ({
+                        key: index,
+                        value: item,
+                        label: `${t(`table.${item.toLocaleLowerCase()}`)}`,
+                      })) ?? []
+                    }
+                    value={body?.cashin_pix_fee_type || null}
+                    onChange={(value) => {
+                      setBody((state: any) => ({
+                        ...state,
+                        [field.label]: value,
+                      }));
+                    }}
+                  />
+                </Form.Item>
+              );
 
             case "country":
               return (
@@ -386,6 +399,40 @@ export const MutateModal = ({
               );
 
             default:
+              if (field.selectOption) {
+                return (
+                  <Form.Item
+                    label={t(`input.${field.label}`)}
+                    name={field.label}
+                    style={{ margin: 10 }}
+                    rules={[
+                      {
+                        required: field.required,
+                        message:
+                          t("input.required", {
+                            field: t(`input.${field.label}`),
+                          }) || "",
+                      },
+                    ]}
+                  >
+                    <Select
+                      size="large"
+                      options={selectOptions ? selectOptions[field.label] : []}
+                      notFoundContent={<Empty />}
+                      value={body[field.label] || null}
+                      onChange={(value) => {
+                        setBody((state: any) => ({
+                          ...state,
+                          [field.label]: value,
+                        }));
+                      }}
+                      style={{ width: "100%", height: 40 }}
+                      placeholder={t(`table.${field.label}`)}
+                    />
+                  </Form.Item>
+                );
+              }
+
               return (
                 <Form.Item
                   label={t(`table.${field.label}`)}

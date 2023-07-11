@@ -1,8 +1,8 @@
 export interface MerchantManualEntryCategoryQuery {
   start_date?: string;
   end_date?: string;
-  sort_field?: string;
-  sort_order?: string;
+  sort_field: string;
+  sort_order: string;
   status?: boolean;
   page: number;
   limit: number;

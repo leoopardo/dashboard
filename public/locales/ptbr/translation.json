@@ -267,7 +267,11 @@
     "max_value_different_payer_pf_by_day": "Valor máximo terceiros/dia",
     "withdraw_limit_document_by_day": "Limite de Saques por CPF (Quantidade por dia)",
     "unlimited": "Sem limites",
-    "check_cpf_permission": "Permissão Checar CPF"
+    "check_cpf_permission": "Permissão Checar CPF",
+    "plan_type": "Tipo de plano",
+    "transaction_type": "Tipo de transação",
+    "range_type": "Tipo de faixa",
+    "minimum_value": "Valor minimo"
   },
   "table": {
     "id": "ID",
@@ -494,7 +498,12 @@
     "progress": "Progresso",
     "ip": "Ip",
     "reason": "Motivo",
-    "create_user_name": "Nome de quem adicionou"
+    "create_user_name": "Nome de quem adicionou",
+    "monthly": "Mensal",
+    "continuos": "Continuo",
+    "cashin": "Depósito",
+    "cashout": "Saque",
+    "transactions": "Transações"
   },
   "actions": {
     "details": "Detalhes",

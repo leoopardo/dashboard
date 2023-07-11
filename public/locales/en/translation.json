@@ -242,7 +242,11 @@
     "max_value_different_payer_pf_by_day": "Max value different payer by days",
     "withdraw_limit_document_by_day": "Withdraw limit document by day",
     "unlimited": "Unlimited",
-    "check_cpf_permission": "Check CPF Permission"
+    "check_cpf_permission": "Check CPF Permission",
+    "plan_type": "Plan type",
+    "transaction_type": "Transaction type",
+    "range_type": "Range type",
+    "minimum_value": "Minimum value"
   },
   "modal": {
     "confirm": "Confirm",
@@ -491,7 +495,12 @@
     "progress": "Progress",
     "ip": "Ip",
     "reason": "Reason",
-    "create_user_name": "Create user name"
+    "create_user_name": "Create user name",
+    "monthly": "Monthly",
+    "continuos": "Continuos",
+    "cashin": "Cashin",
+    "cashout": "Cashout",
+    "transactions": "Transactions"
   },
   "actions": {
     "details": "Details",
