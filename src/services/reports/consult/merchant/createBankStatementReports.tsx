@@ -7,10 +7,6 @@ import { MerchantBankStatementTotalsQuery } from "@src/services/types/consult/me
 export function useCreateMerchantBankStatementReports(
   body: MerchantBankStatementTotalsQuery
 ) {
-  delete body.sort_order;
-  delete body.sort_field;
-  delete body.page;
-  delete body.limit;
 
   const { isLoading, error, mutate, isSuccess } = useMutation<
     MerchantBankStatementTotalsQuery | null | undefined

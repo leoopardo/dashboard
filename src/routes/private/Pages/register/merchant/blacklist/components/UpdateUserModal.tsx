@@ -18,6 +18,8 @@ import {
 } from "@services/types/register/merchants/merchantUsers.interface";
 import { MerchantSelect } from "@components/Selects/merchantSelect";
 import ReactInputMask from "react-input-mask";
+import { queryClient } from "@src/services/queryClient";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 
 interface NewuserModalprops {
   open: boolean;
@@ -37,6 +39,10 @@ export const UpdateUserModal = ({
   setIsValidateTokenOpen,
   action,
 }: NewuserModalprops) => {
+  const { permissions } = queryClient.getQueryData(
+    "validate"
+  ) as ValidateInterface;
+
   const { t } = useTranslation();
   const submitRef = useRef<HTMLButtonElement>(null);
   const formRef = React.useRef<FormInstance>(null);
@@ -240,51 +246,52 @@ export const UpdateUserModal = ({
             onChange={handleChangeUserBody}
           />
         </Form.Item>
-        <Form.Item
-          label={t(`table.merchant`)}
-          name="merchant"
-          style={{ margin: 10 }}
-          rules={[
-            {
-              required: !body.merchant_id ? true : false,
-              message:
-                t("input.required", { field: t("table.merchant") }) || "",
-            },
-          ]}
-        >
-          <Input
-            value={body.merchant_id || ""}
-            style={{ display: "none" }}
-            name="merchant_id"
-          />
-          <MerchantSelect
-            queryOptions={body}
-            setQueryFunction={setBody}
-          />
-        </Form.Item>
-        <Form.Item
-          label={t(`table.group`)}
-          name="group_id"
-          style={{ margin: 10 }}
-          rules={[
-            {
-              required: !body.group_id ? true : false,
-              message: t("input.required", { field: t("input.group") }) || "",
-            },
-          ]}
-        >
-          <Input
-            value={body.group_id || ""}
-            style={{ display: "none" }}
+        {permissions.register.merchant.merchant.merchant_list && (
+          <Form.Item
+            label={t(`table.merchant`)}
+            name="merchant"
+            style={{ margin: 10 }}
+            rules={[
+              {
+                required: !body.merchant_id ? true : false,
+                message:
+                  t("input.required", { field: t("table.merchant") }) || "",
+              },
+            ]}
+          >
+            <Input
+              value={body.merchant_id || ""}
+              style={{ display: "none" }}
+              name="merchant_id"
+            />
+            <MerchantSelect queryOptions={body} setQueryFunction={setBody} />
+          </Form.Item>
+        )}
+        {permissions.register.merchant.merchant.merchant_list && (
+          <Form.Item
+            label={t(`table.group`)}
             name="group_id"
-          />
-          <GroupSelect
-            body={body}
-            setBody={setBody}
-            filterIdProp="organization_id"
-            filterIdValue={responseValidate?.organization_id}
-          />
-        </Form.Item>
+            style={{ margin: 10 }}
+            rules={[
+              {
+                required: !body.group_id ? true : false,
+                message: t("input.required", { field: t("input.group") }) || "",
+              },
+            ]}
+          >
+            <Input
+              value={body.group_id || ""}
+              style={{ display: "none" }}
+              name="group_id"
+            />
+            <GroupSelect
+              body={body}
+              setBody={setBody}
+              filterIdProp="organization_id"
+              filterIdValue={responseValidate?.organization_id}
+            />
+          </Form.Item>
+        )}
 
         <Form.Item
           label={t(`table.password`)}

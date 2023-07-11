@@ -3,7 +3,7 @@ import { AggregatorQuery, AggregatorsResponse } from "@src/services/types/regist
 import { useQuery } from "react-query";
 
 export function useGetAggregators(params: AggregatorQuery) {
-  const { data, isFetching, error, refetch } = useQuery<
+  const { data, isFetching, error, refetch, } = useQuery<
   AggregatorsResponse | null | undefined
   >(
     "Aggregator",

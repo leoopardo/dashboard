@@ -16,6 +16,8 @@ import { useGetPartnerUsers } from "@src/services/register/partner/users/getPart
 import { useUpdatePartnerUser } from "@src/services/register/partner/users/updateUser";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { useCreatePartnerUserReports } from "@src/services/reports/register/partner/createUserReports";
+import { queryClient } from "@src/services/queryClient";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 
 const INITIAL_QUERY: PartnerQuery = {
   limit: 25,
@@ -25,6 +27,10 @@ const INITIAL_QUERY: PartnerQuery = {
 };
 
 export const PartnerUsers = () => {
+  const { permissions } = queryClient.getQueryData(
+    "validate"
+  ) as ValidateInterface;
+
   const [query, setQuery] = useState<PartnerQuery>(INITIAL_QUERY);
   const { t } = useTranslation();
 
@@ -42,16 +48,18 @@ export const PartnerUsers = () => {
   const [tokenState, setTokenState] = useState<string>("");
   const { UsersData, UsersDataError, isUsersDataFetching, refetchUsersData } =
     useGetPartnerUsers(query);
-  const { updateSuccess, updateError, updateMutate } = useUpdatePartnerUser({
-    ...updateUserBody,
-    validation_token: tokenState,
-  });
+  const { updateSuccess, updateError, updateMutate, updateReset } =
+    useUpdatePartnerUser({
+      ...updateUserBody,
+      validation_token: tokenState,
+    });
 
   const {
     PartnerReportsError,
     PartnerReportsIsLoading,
     PartnerReportsIsSuccess,
     PartnerReportsMutate,
+    PartnerReportsReset,
   } = useCreatePartnerUserReports(query);
   const [action, setAction] = useState<"create" | "update">("create");
 
@@ -81,6 +89,7 @@ export const PartnerUsers = () => {
   const handleUpdateTokenValidate = () => {
     updateMutate();
   };
+
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid
@@ -141,35 +150,41 @@ export const PartnerUsers = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={3} lg={2}>
-          <Button
-            type="primary"
-            loading={isUsersDataFetching}
-            onClick={() => {
-              setAction("create");
-              setIsNewUserModal(true);
-            }}
-            style={{
-              height: 40,
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <UserAddOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
-            {`${t("buttons.create")} ${t("buttons.new_user")}`}
-          </Button>
-        </Grid>
-        <Grid item xs={12} md="auto">
-          <ExportReportsModal
-            mutateReport={() => PartnerReportsMutate()}
-            error={PartnerReportsError}
-            success={PartnerReportsIsSuccess}
-            loading={PartnerReportsIsLoading}
-            reportPath="/register/merchant/merchant_reports/merchant_merchants_reports"
-          />
-        </Grid>
+        {permissions.register.partner.users.partner_user_create && (
+          <Grid item xs={12} md={3} lg={2}>
+            <Button
+              type="primary"
+              loading={isUsersDataFetching}
+              onClick={() => {
+                PartnerReportsReset();
+                setAction("create");
+                setIsNewUserModal(true);
+              }}
+              style={{
+                height: 40,
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <UserAddOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
+              {`${t("buttons.create")} ${t("buttons.new_user")}`}
+            </Button>
+          </Grid>
+        )}
+
+        {permissions.register.partner.users.partner_user_export_csv && (
+          <Grid item xs={12} md="auto">
+            <ExportReportsModal
+              mutateReport={() => PartnerReportsMutate()}
+              error={PartnerReportsError}
+              success={PartnerReportsIsSuccess}
+              loading={PartnerReportsIsLoading}
+              reportPath="/register/merchant/merchant_reports/merchant_merchants_reports"
+            />
+          </Grid>
+        )}
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -187,10 +202,11 @@ export const PartnerUsers = () => {
                   setIsViewModalOpen(true);
                 },
               },
-              {
+              permissions.register.partner.users.partner_user_update && {
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
                 onClick: () => {
+                  updateReset();
                   setAction("update");
                   setIsNewUserModal(true);
                 },

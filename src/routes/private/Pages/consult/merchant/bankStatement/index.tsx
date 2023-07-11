@@ -15,6 +15,8 @@ import { useGetHourly } from "@src/services/consult/merchant/bankStatement/getHo
 import { useGetMerchantTransactions } from "@src/services/consult/merchant/bankStatement/getTransactions";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { useCreateMerchantBankStatementReports } from "@src/services/reports/consult/merchant/createBankStatementReports";
+import { queryClient } from "@src/services/queryClient";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 
 const INITIAL_QUERY: MerchantBankStatementTotalsQuery = {
   page: 1,
@@ -29,6 +31,9 @@ const INITIAL_QUERY: MerchantBankStatementTotalsQuery = {
 };
 
 export const MerchantBankStatement = () => {
+  const { permissions } = queryClient.getQueryData(
+    "validate"
+  ) as ValidateInterface;
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [, setCurrentItem] = useState<any>();
   const { t } = useTranslation();
@@ -111,15 +116,19 @@ export const MerchantBankStatement = () => {
             <ReloadOutlined /> {t("buttons.refresh")}
           </Button>
         </Grid>
-        <Grid item xs={12} md="auto" lg={1}>
-          <ExportReportsModal
-            mutateReport={() => BankStatementReportsMutate()}
-            error={BankStatementReportsError}
-            success={BankStatementReportsIsSuccess}
-            loading={BankStatementReportsIsLoading}
-            reportPath="/consult/consult_merchant/consult_merchant_reports"
-          />
-        </Grid>
+
+        {permissions.report.merchant.extract
+          .report_merchant_extract_export_csv && (
+          <Grid item xs={12} md="auto" lg={1}>
+            <ExportReportsModal
+              mutateReport={() => BankStatementReportsMutate()}
+              error={BankStatementReportsError}
+              success={BankStatementReportsIsSuccess}
+              loading={BankStatementReportsIsLoading}
+              reportPath="/consult/consult_merchant/consult_merchant_reports"
+            />
+          </Grid>
+        )}
       </Grid>
 
       <Totalizers query={query} />

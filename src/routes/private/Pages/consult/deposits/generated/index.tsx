@@ -18,6 +18,14 @@ import { useTranslation } from "react-i18next";
 import useDebounce from "../../../../../../utils/useDebounce";
 import { FilterChips } from "../../../../../../components/FiltersModal/filterChips";
 import { WebhookModal } from "../components/webhooksModal";
+import { useCreateGeneratedDepositsReports } from "@src/services/reports/consult/deposits/createGeneratedDepositsReports";
+import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
+import { queryClient } from "@src/services/queryClient";
+import { ValidateInterface } from "@src/services/types/validate.interface";
+import { ResendWebhookModal } from "../components/ResendWebhookModal";
+import { useCreateSendWebhook } from "@src/services/consult/deposits/generatedDeposits/resendWebhook";
+import { ResendWebhookBody } from "@src/services/types/consult/deposits/createResendWebhook.interface";
+import { Toast } from "@src/components/Toast";
 const { RangePicker } = DatePicker;
 
 const INITIAL_QUERY: generatedDepositTotalQuery = {
@@ -33,6 +41,9 @@ const INITIAL_QUERY: generatedDepositTotalQuery = {
 };
 
 export const GeneratedDeposits = () => {
+  const { permissions } = queryClient.getQueryData(
+    "validate"
+  ) as ValidateInterface;
   const { t } = useTranslation();
   const [query, setQuery] = useState<generatedDepositTotalQuery>(INITIAL_QUERY);
   const {
@@ -55,11 +66,33 @@ export const GeneratedDeposits = () => {
 
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const [isWebhookModalOpen, setIsWebhookModalOpen] = useState<boolean>(false);
+  const [isResendWebhookModalOpen, setIsResendWebhookModalOpen] =
+    useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<any>();
   const [searchOption, setSearchOption] = useState<string | null>(null);
   const [search, setSearch] = useState<string | null>(null);
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const debounceSearch = useDebounce(search);
+
+  const {
+    GeneratedDepositsReportsError,
+    GeneratedDepositsReportsIsLoading,
+    GeneratedDepositsReportsIsSuccess,
+    GeneratedDepositsReportsMutate,
+  } = useCreateGeneratedDepositsReports(query);
+
+  const [webhookBody, setWebhookBody] = useState<ResendWebhookBody>({
+    start_date: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss.SSS"),
+    end_date: moment(new Date())
+      .add(1, "hour")
+      .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+    merchant_id: undefined,
+    partner_id: undefined,
+    webhook_url_type: "both",
+  });
+
+  const { ResendWebMutate, ResendWebError, ResendWebIsSuccess } =
+    useCreateSendWebhook(webhookBody);
 
   const columns: ColumnInterface[] = [
     { name: "_id", type: "id" },
@@ -105,16 +138,26 @@ export const GeneratedDeposits = () => {
         )}
       </Grid>
 
-      <TotalizersCards
-        data={depositsTotal}
-        fetchData={refetchDepositsTotal}
-        loading={isDepositsTotalFetching}
-        query={query}
-      />
+      {permissions.report.deposit.generated_deposit
+        .report_deposit_generated_deposit_list_totals && (
+        <TotalizersCards
+          data={depositsTotal}
+          fetchData={refetchDepositsTotal}
+          loading={isDepositsTotalFetching}
+          query={query}
+        />
+      )}
 
       <Grid
         container
-        style={{ marginTop: "20px", display: "flex", alignItems: "center" }}
+        style={{
+          marginTop: permissions.report.deposit.generated_deposit
+            .report_deposit_generated_deposit_list_totals
+            ? "20px"
+            : 0,
+          display: "flex",
+          alignItems: "center",
+        }}
         spacing={1}
       >
         <Grid item xs={12} md={4} lg={2}>
@@ -182,13 +225,13 @@ export const GeneratedDeposits = () => {
             type="dashed"
             loading={isDepositsRowsFetching}
             danger
+            size="large"
             onClick={() => {
               setQuery(INITIAL_QUERY);
               setSearchOption(null);
               setSearch(null);
             }}
             style={{
-              height: 40,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -199,6 +242,36 @@ export const GeneratedDeposits = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
+        <Grid item xs={12} md={2} lg={2}>
+          <Button
+            type="primary"
+            loading={isDepositsRowsFetching}
+            size="large"
+            onClick={() => {
+              setIsResendWebhookModalOpen(true);
+            }}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "100%",
+            }}
+          >
+            {t("modal.resend_webhook")}
+          </Button>
+        </Grid>
+        {permissions.report.deposit.generated_deposit
+          .report_deposit_generated_deposit_export_csv && (
+          <Grid item xs={12} md="auto" lg={1}>
+            <ExportReportsModal
+              mutateReport={() => GeneratedDepositsReportsMutate()}
+              error={GeneratedDepositsReportsError}
+              success={GeneratedDepositsReportsIsSuccess}
+              loading={GeneratedDepositsReportsIsLoading}
+              reportPath="/consult/deposit/deposits_reports/generated_deposits_reports"
+            />
+          </Grid>
+        )}
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -252,7 +325,7 @@ export const GeneratedDeposits = () => {
       )}
       {isFiltersOpen && (
         <FiltersModal
-        maxRange
+          maxRange
           open={isFiltersOpen}
           setOpen={setIsFiltersOpen}
           query={query}
@@ -289,6 +362,21 @@ export const GeneratedDeposits = () => {
           initialQuery={INITIAL_QUERY}
         />
       )}
+      {isResendWebhookModalOpen && (
+        <ResendWebhookModal
+          open={isResendWebhookModalOpen}
+          setOpen={setIsResendWebhookModalOpen}
+          body={webhookBody}
+          setBody={setWebhookBody}
+          submit={ResendWebMutate}
+        />
+      )}
+      <Toast
+        actionSuccess={t("messages.created")}
+        actionError={t("messages.create")}
+        error={ResendWebError}
+        success={ResendWebIsSuccess}
+      />
     </Grid>
   );
 };

@@ -54,7 +54,8 @@ export const UpdateUserModal = ({
     merchant_id: currentUser?.merchant_id,
   });
 
-  const { mutate, error, isLoading, isSuccess } = useCreateMerchantUser(body);
+  const { mutate, error, isLoading, isSuccess, reset } =
+    useCreateMerchantUser(body);
   const { updateError, updateIsLoading, updateIsSuccess, updateMutate } =
     useUpdateMerchant(body);
 
@@ -100,6 +101,7 @@ export const UpdateUserModal = ({
   }, [currentUser]);
 
   useEffect(() => {
+    reset();
     if (action === "create") {
       setBody({
         name: "",
@@ -257,10 +259,7 @@ export const UpdateUserModal = ({
             style={{ display: "none" }}
             name="merchant_id"
           />
-          <MerchantSelect
-            queryOptions={body}
-            setQueryFunction={setBody}
-          />
+          <MerchantSelect queryOptions={body} setQueryFunction={setBody} />
         </Form.Item>
         <Form.Item
           label={t(`table.group`)}

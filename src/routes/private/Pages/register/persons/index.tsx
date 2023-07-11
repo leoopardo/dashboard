@@ -22,6 +22,8 @@ import { useNavigate } from "react-router-dom";
 import { useCreatePerson } from "@src/services/register/persons/persons/createPerson";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { useCreatePersonsReports } from "@src/services/reports/register/persons/persons/createPersonReports";
+import { queryClient } from "@src/services/queryClient";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 
 const INITIAL_QUERY: PersonsQuery = {
   limit: 25,
@@ -31,6 +33,10 @@ const INITIAL_QUERY: PersonsQuery = {
 };
 
 export const Persons = () => {
+  const { permissions } = queryClient.getQueryData(
+    "validate"
+  ) as ValidateInterface;
+
   const [query, setQuery] = useState<PersonsQuery>(INITIAL_QUERY);
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const [isNewModal, setIsNewModal] = useState<boolean>(false);
@@ -195,34 +201,39 @@ export const Persons = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={3} lg={2}>
-          <Button
-            type="primary"
-            loading={isPersonsDataFetching}
-            onClick={() => {
-              setIsNewModal(true);
-            }}
-            style={{
-              height: 40,
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <UserAddOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
-            {`${t("buttons.create")} ${t("buttons.person")}`}
-          </Button>
-        </Grid>
-        <Grid item xs={12} md="auto">
-          <ExportReportsModal
-            mutateReport={() => PersonsReportsMutate()}
-            error={PersonsReportsError}
-            success={PersonsReportsIsSuccess}
-            loading={PersonsReportsIsLoading}
-            reportPath="/register/person/person_reports/person_persons_reports"
-          />
-        </Grid>
+        {permissions.register.person.person.person_person_create && (
+          <Grid item xs={12} md={3} lg={2}>
+            <Button
+              type="primary"
+              loading={isPersonsDataFetching}
+              onClick={() => {
+                setIsNewModal(true);
+              }}
+              style={{
+                height: 40,
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <UserAddOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
+              {`${t("buttons.create")} ${t("buttons.person")}`}
+            </Button>
+          </Grid>
+        )}
+
+        {permissions.register.person.person.person_person_export_csv && (
+          <Grid item xs={12} md="auto">
+            <ExportReportsModal
+              mutateReport={() => PersonsReportsMutate()}
+              error={PersonsReportsError}
+              success={PersonsReportsIsSuccess}
+              loading={PersonsReportsIsLoading}
+              reportPath="/register/person/person_reports/person_persons_reports"
+            />
+          </Grid>
+        )}
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -238,7 +249,7 @@ export const Persons = () => {
                 icon: <EyeFilled style={{ fontSize: "20px" }} />,
                 onClick: () => setIsViewModalOpen(true),
               },
-              {
+              permissions.register.person.person.person_person_update && {
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
                 onClick: () => {

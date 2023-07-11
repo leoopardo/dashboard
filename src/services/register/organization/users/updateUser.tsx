@@ -4,7 +4,7 @@ import { NewUserInterface } from "../../../../routes/private/Pages/register/orga
 import { queryClient } from "../../../queryClient";
 
 export function useUpdateOrganizationUser(body: any | null) {
-  const { isLoading, error, mutate, isSuccess } = useMutation<
+  const { isLoading, error, mutate, isSuccess, reset } = useMutation<
     NewUserInterface | null | undefined
   >("updateOrganizationUser", async () => {
     const response = await api.put("core/user/update/organization", body, {});
@@ -16,11 +16,12 @@ export function useUpdateOrganizationUser(body: any | null) {
   const updateError = error;
   const updateMutate = mutate;
   const updateSuccess = isSuccess;
+  const updateReset = reset;
 
   return {
     updateLoading,
     updateError,
     updateMutate,
-    updateSuccess,
+    updateSuccess,updateReset
   };
 }

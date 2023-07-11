@@ -16,6 +16,8 @@ import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import useDebounce from "@utils/useDebounce";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { useCreateOrganizationReports } from "@src/services/reports/register/organization/createUserReports";
+import { queryClient } from "@src/services/queryClient";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 
 const INITIAL_QUERY: OrganizationUserQuery = {
   limit: 25,
@@ -25,6 +27,9 @@ const INITIAL_QUERY: OrganizationUserQuery = {
 };
 
 export const OrganizationUser = () => {
+  const { permissions } = queryClient.getQueryData(
+    "validate"
+  ) as ValidateInterface;
   const [query, setQuery] = useState<OrganizationUserQuery>(INITIAL_QUERY);
   const { t } = useTranslation();
   const { UsersData, UsersDataError, isUsersDataFetching, refetchUsersData } =
@@ -41,7 +46,7 @@ export const OrganizationUser = () => {
   const [isValidateTokenOpen, setIsValidateTokenOpen] =
     useState<boolean>(false);
   const [tokenState, setTokenState] = useState<string>("");
-  const { updateSuccess, updateError, updateMutate } =
+  const { updateSuccess, updateError, updateMutate, updateReset } =
     useUpdateOrganizationUser({
       ...updateUserBody,
       validation_token: tokenState,
@@ -137,35 +142,39 @@ export const OrganizationUser = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={3} lg={2}>
-          <Button
-            type="primary"
-            loading={isUsersDataFetching}
-            onClick={() => {
-              setAction("create");
-              setIsNewUserModal(true);
-            }}
-            style={{
-              height: 40,
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <UserAddOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
-            {`${t("buttons.create")} ${t("buttons.new_user")}`}
-          </Button>
-        </Grid>
-        <Grid item xs={12} md="auto">
-          <ExportReportsModal
-            mutateReport={() => OrganizationReportsMutate()}
-            error={OrganizationReportsError}
-            success={OrganizationReportsIsSuccess}
-            loading={OrganizationReportsIsLoading}
-            reportPath="/register/organization/organization_reports/organization_reports_users"
-          />
-        </Grid>
+        {permissions.register.paybrokers.users.paybrokers_user_create && (
+          <Grid item xs={12} md={3} lg={2}>
+            <Button
+              type="primary"
+              loading={isUsersDataFetching}
+              onClick={() => {
+                setAction("create");
+                setIsNewUserModal(true);
+              }}
+              style={{
+                height: 40,
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <UserAddOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
+              {`${t("buttons.create")} ${t("buttons.new_user")}`}
+            </Button>
+          </Grid>
+        )}
+        {permissions.register.paybrokers.users.paybrokers_user_export_csv && (
+          <Grid item xs={12} md="auto">
+            <ExportReportsModal
+              mutateReport={() => OrganizationReportsMutate()}
+              error={OrganizationReportsError}
+              success={OrganizationReportsIsSuccess}
+              loading={OrganizationReportsIsLoading}
+              reportPath="/register/organization/organization_reports/organization_reports_users"
+            />
+          </Grid>
+        )}
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -183,10 +192,11 @@ export const OrganizationUser = () => {
                   setIsViewModalOpen(true);
                 },
               },
-              {
+              permissions.register.paybrokers.users.paybrokers_user_update && {
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
                 onClick: () => {
+                  updateReset();
                   setAction("update");
                   setIsNewUserModal(true);
                 },

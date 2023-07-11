@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Grid } from "@mui/material";
 import { useGetBankBlacklist } from "@src/services/support/blacklists/bankBlacklist/getBankBlacklist";
 import {
   BankBlacklistItem,
   BankBlacklistQuery,
 } from "@src/services/types/support/blacklists/bankBlacklist.interface";
-import { Button, Input, Popconfirm, Select } from "antd";
+import { Button, Input, Select } from "antd";
 import { useTranslation } from "react-i18next";
 import { FilterChips } from "@src/components/FiltersModal/filterChips";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
@@ -17,8 +17,15 @@ import { MutateModal } from "@src/components/Modals/mutateGenericModal";
 import { Toast } from "@src/components/Toast";
 import { DeleteOutlined } from "@ant-design/icons";
 import { useDeleteBankBlacklist } from "@src/services/support/blacklists/bankBlacklist/deteteBankBlacklist";
+import { useCreateBankBlacklistReports } from "@src/services/reports/support/blacklist/createBankBlacklistReports";
+import { queryClient } from "@src/services/queryClient";
+import { ValidateInterface } from "@src/services/types/validate.interface";
+import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 
 export const BankBlacklist = () => {
+  const { permissions } = queryClient.getQueryData(
+    "validate"
+  ) as ValidateInterface;
   const INITIAL_QUERY: BankBlacklistQuery = {
     limit: 25,
     page: 1,
@@ -50,6 +57,13 @@ export const BankBlacklist = () => {
 
   const { DeleteError, DeleteIsLoading, DeleteIsSuccess, DeleteMutate } =
     useDeleteBankBlacklist({ ispb: currentItem?.ispb });
+
+  const {
+    BankBlacklistReportsError,
+    BankBlacklistReportsIsLoading,
+    BankBlacklistReportsIsSuccess,
+    BankBlacklistReportsMutate,
+  } = useCreateBankBlacklistReports(query);
 
   useEffect(() => {
     refetchBankBlacklist();
@@ -109,7 +123,7 @@ export const BankBlacklist = () => {
             ]}
           />
         </Grid>
-        <Grid item xs={12} md={4} lg={4}>
+        <Grid item xs={12} md={3} lg={4}>
           <Input
             disabled={!searchOption}
             size="large"
@@ -142,24 +156,39 @@ export const BankBlacklist = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={3} lg={2}>
-          <Button
-            type="primary"
-            size="large"
-            loading={isBankBlacklistFetching}
-            onClick={() => {
-              setIsCreateOpen(true);
-            }}
-            style={{
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            {t("buttons.create_bank_blacklist")}
-          </Button>
-        </Grid>
+        {permissions.support.blacklist.banks.support_blacklist_bank_create && (
+          <Grid item xs={12} md={3} lg={2}>
+            <Button
+              type="primary"
+              size="large"
+              loading={isBankBlacklistFetching}
+              onClick={() => {
+                setIsCreateOpen(true);
+              }}
+              style={{
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              {t("buttons.create_bank_blacklist")}
+            </Button>
+          </Grid>
+        )}
+
+        {permissions.support.blacklist.banks
+          .support_blacklist_bank_export_csv && (
+          <Grid item xs={12} md="auto">
+            <ExportReportsModal
+              mutateReport={() => BankBlacklistReportsMutate()}
+              error={BankBlacklistReportsError}
+              success={BankBlacklistReportsIsSuccess}
+              loading={BankBlacklistReportsIsLoading}
+              reportPath="/support/blacklists/blacklists_reports/bank_institutions_reports"
+            />
+          </Grid>
+        )}
       </Grid>
       <Grid container style={{ marginTop: "15px" }}>
         <Grid item xs={12}>
@@ -178,15 +207,19 @@ export const BankBlacklist = () => {
               { name: "createdAt", type: "date" },
             ]}
             loading={isBankBlacklistFetching}
-            actions={[
-              {
-                label: "delete",
-                icon: <DeleteOutlined />,
-                onClick() {
-                  setIsConfirmOpen(true);
-                },
-              },
-            ]}
+            actions={
+              permissions.support.blacklist.banks.support_blacklist_bank_create
+                ? [
+                    {
+                      label: "delete",
+                      icon: <DeleteOutlined />,
+                      onClick() {
+                        setIsConfirmOpen(true);
+                      },
+                    },
+                  ]
+                : []
+            }
             isConfirmOpen={isConfirmOpen}
             setIsConfirmOpen={setIsConfirmOpen}
             label={["bank_name", "ispb"]}

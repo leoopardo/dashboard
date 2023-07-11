@@ -24,6 +24,8 @@ import {
 import { Toast } from "@src/components/Toast";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { useCreateOrganizationCategoryReports } from "@src/services/reports/register/organization/createCategoryReport";
+import { queryClient } from "@src/services/queryClient";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 
 const INITIAL_QUERY: OrganizationCategoriesQuery = {
   limit: 25,
@@ -33,6 +35,10 @@ const INITIAL_QUERY: OrganizationCategoriesQuery = {
 };
 
 export const OrganizationCategories = () => {
+  const { permissions } = queryClient.getQueryData(
+    "validate"
+  ) as ValidateInterface;
+
   const [query, setQuery] =
     useState<OrganizationCategoriesQuery>(INITIAL_QUERY);
   const { t } = useTranslation();
@@ -162,34 +168,41 @@ export const OrganizationCategories = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={3} lg={2}>
-          <Button
-            type="primary"
-            loading={isCategoriesDataFetching}
-            onClick={() => {
-              setIsNewCategorieModal(true);
-            }}
-            style={{
-              height: 40,
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <UserAddOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
-            {`${t("buttons.create")} ${t("buttons.new_categorie")}`}
-          </Button>
-        </Grid>
-        <Grid item xs={12} md="auto">
-          <ExportReportsModal
-            mutateReport={() => CategoryReportsMutate()}
-            error={CategoryReportsError}
-            success={CategoryReportsIsSuccess}
-            loading={CategoryReportsIsLoading}
-            reportPath="/register/organization/organization_reports/organization_reports_categories"
-          />
-        </Grid>
+        {permissions.register.paybrokers.release_category
+          .paybrokers_release_category_create && (
+          <Grid item xs={12} md={3} lg={2}>
+            <Button
+              type="primary"
+              loading={isCategoriesDataFetching}
+              onClick={() => {
+                setIsNewCategorieModal(true);
+              }}
+              style={{
+                height: 40,
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <UserAddOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
+              {`${t("buttons.create")} ${t("buttons.new_categorie")}`}
+            </Button>
+          </Grid>
+        )}
+
+        {permissions.register.paybrokers.release_category
+          .paybrokers_release_category_export_csv && (
+          <Grid item xs={12} md="auto">
+            <ExportReportsModal
+              mutateReport={() => CategoryReportsMutate()}
+              error={CategoryReportsError}
+              success={CategoryReportsIsSuccess}
+              loading={CategoryReportsIsLoading}
+              reportPath="/register/organization/organization_reports/organization_reports_categories"
+            />
+          </Grid>
+        )}
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -207,7 +220,8 @@ export const OrganizationCategories = () => {
                   setIsViewModalOpen(true);
                 },
               },
-              {
+              permissions.register.paybrokers.release_category
+                .paybrokers_release_category_update && {
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
                 onClick: () => {

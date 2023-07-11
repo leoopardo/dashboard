@@ -7,10 +7,6 @@ import moment from "moment";
 export function useCreateBankStatementReports(
   body: OrganizationBankStatementTotalsQuery
 ) {
-  delete body.sort_order;
-  delete body.sort_field;
-  delete body.page;
-  delete body.limit;
   const { isLoading, error, mutate, isSuccess } = useMutation<
     OrganizationBankStatementTotalsQuery | null | undefined
   >("CreateBankStatementReports", async () => {

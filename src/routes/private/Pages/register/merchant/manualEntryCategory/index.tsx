@@ -15,6 +15,8 @@ import { useCreateManualEntryCategory } from "@src/services/register/merchant/ma
 import { useUpdateManualEntryCategory } from "@src/services/register/merchant/manualEntryCategory/updateManualEntryCategory";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
 import { Toast } from "@src/components/Toast";
+import { queryClient } from "@src/services/queryClient";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 
 const INITIAL_QUERY: MerchantManualEntryCategoryQuery = {
   limit: 25,
@@ -24,6 +26,10 @@ const INITIAL_QUERY: MerchantManualEntryCategoryQuery = {
 };
 
 export const MerchantManualEntryCategory = () => {
+  const { permissions } = queryClient.getQueryData(
+    "validate"
+  ) as ValidateInterface;
+
   const [query, setQuery] =
     useState<MerchantManualEntryCategoryQuery>(INITIAL_QUERY);
   const { t } = useTranslation();
@@ -65,7 +71,10 @@ export const MerchantManualEntryCategory = () => {
   }, [query]);
 
   useEffect(() => {
-    setUpdateBody({...currentItem, entry_account_category_id: currentItem?.id});
+    setUpdateBody({
+      ...currentItem,
+      entry_account_category_id: currentItem?.id,
+    });
   }, [currentItem]);
 
   return (
@@ -95,25 +104,28 @@ export const MerchantManualEntryCategory = () => {
           />
         </Grid>
 
-        <Grid item xs={12} md={3} lg={2}>
-          <Button
-            type="primary"
-            loading={isCategoryDataFetching}
-            onClick={() => {
-              setIsCreateModalOpen(true);
-            }}
-            style={{
-              height: 40,
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <PlusOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
-            {`${t("buttons.create")} ${t("buttons.new_categorie")}`}
-          </Button>
-        </Grid>
+        {permissions.register.merchant.release_category
+          .merchant_release_category_create && (
+          <Grid item xs={12} md={3} lg={2}>
+            <Button
+              type="primary"
+              loading={isCategoryDataFetching}
+              onClick={() => {
+                setIsCreateModalOpen(true);
+              }}
+              style={{
+                height: 40,
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <PlusOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
+              {`${t("buttons.create")} ${t("buttons.new_categorie")}`}
+            </Button>
+          </Grid>
+        )}
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -129,7 +141,8 @@ export const MerchantManualEntryCategory = () => {
             loading={isCategoryDataFetching}
             label={["name", "username"]}
             actions={[
-              {
+              permissions.register.merchant.release_category
+                .merchant_release_category_update && {
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
                 onClick: () => {

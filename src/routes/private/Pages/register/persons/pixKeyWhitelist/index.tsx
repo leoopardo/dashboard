@@ -19,6 +19,8 @@ import { useDeleteDeletePixKey } from "@src/services/register/persons/blacklist/
 import { Toast } from "@src/components/Toast";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { useCreatePixKeyWhitelistReports } from "@src/services/reports/register/persons/PixKeyWhitelist/createPixKeyWhitelistReports";
+import { queryClient } from "@src/services/queryClient";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 
 const INITIAL_QUERY: PixKeyWhitelistQuery = {
   limit: 25,
@@ -28,6 +30,10 @@ const INITIAL_QUERY: PixKeyWhitelistQuery = {
 };
 
 export const PixKeyWhitelist = () => {
+  const { permissions } = queryClient.getQueryData(
+    "validate"
+  ) as ValidateInterface;
+
   const [query, setQuery] = useState<PixKeyWhitelistQuery>(INITIAL_QUERY);
   const [isConfirmOpen, setIsConfirmOpen] = useState<boolean>(false);
   const { t } = useTranslation();
@@ -135,15 +141,18 @@ export const PixKeyWhitelist = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md="auto">
-          <ExportReportsModal
-            mutateReport={() => PixKeyWhitelistReportsMutate()}
-            error={PixKeyWhitelistReportsError}
-            success={PixKeyWhitelistReportsIsSuccess}
-            loading={PixKeyWhitelistReportsIsLoading}
-            reportPath="/register/person/person_reports/pix_whitelist_reports"
-          />
-        </Grid>
+        {permissions.register.person.pix_whitelist
+          .person_pix_whitelist_export_csv && (
+          <Grid item xs={12} md="auto">
+            <ExportReportsModal
+              mutateReport={() => PixKeyWhitelistReportsMutate()}
+              error={PixKeyWhitelistReportsError}
+              success={PixKeyWhitelistReportsIsSuccess}
+              loading={PixKeyWhitelistReportsIsLoading}
+              reportPath="/register/person/person_reports/pix_whitelist_reports"
+            />
+          </Grid>
+        )}
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -160,7 +169,8 @@ export const PixKeyWhitelist = () => {
                   setIsViewModalOpen(true);
                 },
               },
-              {
+              permissions.register.person.pix_whitelist
+                .person_pix_whitelist_delete && {
                 label: "delete",
                 icon: <DeleteOutlined />,
                 onClick() {

@@ -7,6 +7,7 @@ export interface ValidateInterface {
   last_signin_ip: string;
   permissions: {
     register: {
+      menu: boolean;
       paybrokers: {
         menu: boolean;
         users: {
@@ -95,6 +96,44 @@ export interface ValidateInterface {
           merchant_blacklist_create: boolean;
           merchant_blacklist_delete: boolean;
           merchant_blacklist_export_csv: boolean;
+        };
+      };
+      aggregator: {
+        menu: boolean;
+        users: {
+          menu: boolean;
+          aggregator_user_list: boolean;
+          aggregator_user_create: boolean;
+          aggregator_user_update: boolean;
+          aggregator_user_export_csv: boolean;
+        };
+        aggregator: {
+          menu: boolean;
+          aggregator_list: boolean;
+          aggregator_create: boolean;
+          aggregator_update: boolean;
+          aggregator_export_csv: boolean;
+        };
+        aggregator_config: {
+          menu: boolean;
+          aggregator_config_update: boolean;
+        };
+      };
+      operator: {
+        menu: boolean;
+        users: {
+          menu: boolean;
+          operator_user_list: boolean;
+          operator_user_create: boolean;
+          operator_user_update: boolean;
+          operator_user_export_csv: boolean;
+        };
+        operator: {
+          menu: boolean;
+          operator_list: boolean;
+          operator_create: boolean;
+          operator_update: boolean;
+          operator_export_csv: boolean;
         };
       };
       person: {

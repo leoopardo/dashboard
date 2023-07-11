@@ -1,9 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Grid } from "@mui/material";
-import { Button, Input } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import {
   BankMaintenenceItem,
@@ -13,6 +11,8 @@ import { useGetOrganizationBankMaintenece } from "@src/services/register/organiz
 import { EditFilled } from "@ant-design/icons";
 import { useUpdateBank } from "@src/services/register/organization/bankMaitenence/updateBank";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
+import { queryClient } from "@src/services/queryClient";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 
 const INITIAL_QUERY: BankMaintenenceQuery = {
   limit: 25,
@@ -22,6 +22,10 @@ const INITIAL_QUERY: BankMaintenenceQuery = {
 };
 
 export const BankMaintenence = () => {
+  const { permissions } = queryClient.getQueryData(
+    "validate"
+  ) as ValidateInterface;
+
   const [query, setQuery] = useState<BankMaintenenceQuery>(INITIAL_QUERY);
   const { t } = useTranslation();
   const [isUpdateBankModalOpen, setIsUpdateBankModalOpen] =
@@ -76,15 +80,20 @@ export const BankMaintenence = () => {
             items={BankMainteneceData?.itens}
             error={BankMainteneceDataError}
             columns={columns}
-            actions={[
-              {
-                label: "edit",
-                icon: <EditFilled />,
-                onClick: () => {
-                  setIsUpdateBankModalOpen(true);
-                },
-              },
-            ]}
+            actions={
+              permissions.register.paybrokers.banks_maintain
+                .banks_maintain_update
+                ? [
+                    {
+                      label: "edit",
+                      icon: <EditFilled />,
+                      onClick: () => {
+                        setIsUpdateBankModalOpen(true);
+                      },
+                    },
+                  ]
+                : undefined
+            }
             loading={isBankMainteneceDataFetching}
             label={["label_name"]}
           />

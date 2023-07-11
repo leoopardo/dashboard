@@ -13,8 +13,13 @@ import { MerchantSelect } from "@src/components/Selects/merchantSelect";
 import { FilterChips } from "@src/components/FiltersModal/filterChips";
 import { MerchantHistoryLineChart } from "./components/MerchantHistoryLineChart";
 import { ReloadOutlined } from "@ant-design/icons";
+import { queryClient } from "@src/services/queryClient";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 
 export const MerchantHistory = () => {
+  const { permissions } = queryClient.getQueryData(
+    "validate"
+  ) as ValidateInterface;
   const INITIAL_QUERY: MerchantHistoryQuery = {
     page: 1,
     limit: 30,
@@ -182,9 +187,12 @@ export const MerchantHistory = () => {
         }}
         spacing={1}
       >
-        <Grid item xs={12} md={4} lg={2}>
-          <MerchantSelect queryOptions={query} setQueryFunction={setQuery} />
-        </Grid>
+        {permissions.register.merchant.merchant.merchant_list && (
+          <Grid item xs={12} md={4} lg={2}>
+            <MerchantSelect queryOptions={query} setQueryFunction={setQuery} />
+          </Grid>
+        )}
+
         <Grid item xs={12} md={4} lg={6}>
           <FilterChips
             startDateKeyName="start_date"

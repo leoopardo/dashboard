@@ -21,6 +21,8 @@ import { UpdateUserModal } from "./components/UpdateUserModal";
 import { ValidateToken } from "@src/components/ValidateToken";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { useCreateMerchantUsersReports } from "@src/services/reports/register/merchant/createMerchantUsersReports";
+import { queryClient } from "@src/services/queryClient";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 
 const INITIAL_QUERY: MerchantUsersQuery = {
   limit: 25,
@@ -30,6 +32,10 @@ const INITIAL_QUERY: MerchantUsersQuery = {
 };
 
 export const MerchantUser = () => {
+  const { permissions } = queryClient.getQueryData(
+    "validate"
+  ) as ValidateInterface;
+
   const [query, setQuery] = useState<MerchantUsersQuery>(INITIAL_QUERY);
   const { t } = useTranslation();
   const { UsersData, UsersDataError, isUsersDataFetching, refetchUsersData } =
@@ -47,11 +53,16 @@ export const MerchantUser = () => {
     null
   );
   const [search, setSearch] = useState<string>("");
-  const { updateError, updateIsLoading, updateIsSuccess, updateMutate } =
-    useUpdateMerchant({
-      ...updateUserBody,
-      validation_token: tokenState,
-    });
+  const {
+    updateError,
+    updateIsLoading,
+    updateIsSuccess,
+    updateMutate,
+    updateReset,
+  } = useUpdateMerchant({
+    ...updateUserBody,
+    validation_token: tokenState,
+  });
   const {
     MerchantUsersReportsError,
     MerchantUsersReportsIsLoading,
@@ -149,35 +160,39 @@ export const MerchantUser = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={3} lg={2}>
-          <Button
-            type="primary"
-            loading={isUsersDataFetching}
-            onClick={() => {
-              setRequestType("create");
-              setIsNewUserModal(true);
-            }}
-            style={{
-              height: 40,
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <UserAddOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
-            {`${t("buttons.create")} ${t("buttons.new_user")}`}
-          </Button>
-        </Grid>
-        <Grid item xs={12} md="auto">
-          <ExportReportsModal
-            mutateReport={() => MerchantUsersReportsMutate()}
-            error={MerchantUsersReportsError}
-            success={MerchantUsersReportsIsSuccess}
-            loading={MerchantUsersReportsIsLoading}
-            reportPath="/register/merchant/merchant_reports/merchant_users_reports"
-          />
-        </Grid>
+        {permissions.register.merchant.users.merchant_user_create && (
+          <Grid item xs={12} md={3} lg={2}>
+            <Button
+              type="primary"
+              loading={isUsersDataFetching}
+              onClick={() => {
+                setRequestType("create");
+                setIsNewUserModal(true);
+              }}
+              style={{
+                height: 40,
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <UserAddOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
+              {`${t("buttons.create")} ${t("buttons.new_user")}`}
+            </Button>
+          </Grid>
+        )}
+        {permissions.register.merchant.users.merchant_user_export_csv && (
+          <Grid item xs={12} md="auto">
+            <ExportReportsModal
+              mutateReport={() => MerchantUsersReportsMutate()}
+              error={MerchantUsersReportsError}
+              success={MerchantUsersReportsIsSuccess}
+              loading={MerchantUsersReportsIsLoading}
+              reportPath="/register/merchant/merchant_reports/merchant_users_reports"
+            />
+          </Grid>
+        )}
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -200,10 +215,11 @@ export const MerchantUser = () => {
                   setIsViewModalOpen(true);
                 },
               },
-              {
+              permissions.register.merchant.users.merchant_user_update && {
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
                 onClick: () => {
+                  updateReset();
                   setRequestType("update");
                   setIsNewUserModal(true);
                 },

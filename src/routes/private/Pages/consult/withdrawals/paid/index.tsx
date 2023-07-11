@@ -17,6 +17,10 @@ import { FilterChips } from "../../../../../../components/FiltersModal/filterChi
 import { paidWithdrawalsRowsQuery } from "../../../../../../services/types/consult/withdrawals/paidWithdrawals.interface";
 import { useGetRowsPaidWithdrawals } from "../../../../../../services/consult/withdrawals/paidWithdrawals/getRows";
 import { useGetTotalPaidWithdrawals } from "../../../../../../services/consult/withdrawals/paidWithdrawals/getTotal";
+import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
+import { useCreatePaidWithdrawalsReports } from "@src/services/reports/consult/withdrawals/paid/createGeneratedWithdrawalsReports";
+import { queryClient } from "@src/services/queryClient";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 
 const INITIAL_QUERY: paidWithdrawalsRowsQuery = {
   page: 1,
@@ -31,6 +35,10 @@ const INITIAL_QUERY: paidWithdrawalsRowsQuery = {
 };
 
 export const PaidWithdrawals = () => {
+  const { permissions } = queryClient.getQueryData(
+    "validate"
+  ) as ValidateInterface;
+
   const { t } = useTranslation();
   const [query, setQuery] = useState<paidWithdrawalsRowsQuery>(INITIAL_QUERY);
   const {
@@ -46,6 +54,13 @@ export const PaidWithdrawals = () => {
     isPaidWithdrawalsRowsFetching,
     refetchPaidWithdrawalsTotalRows,
   } = useGetRowsPaidWithdrawals(query);
+
+  const {
+    PaidWithdrawalsReportsError,
+    PaidWithdrawalsReportsIsLoading,
+    PaidWithdrawalsReportsIsSuccess,
+    PaidWithdrawalsReportsMutate,
+  } = useCreatePaidWithdrawalsReports(query);
 
   useEffect(() => {
     refetchPaidWithdrawalsTotalRows();
@@ -104,12 +119,15 @@ export const PaidWithdrawals = () => {
         )}
       </Grid>
 
-      <TotalizersCards
-        data={PaidWithdrawalsTotal}
-        fetchData={refetchPaidWithdrawalsTotal}
-        loading={isPaidWithdrawalsTotalFetching}
-        query={query}
-      />
+      {permissions.report.withdraw.paid_withdraw
+        .report_withdraw_paid_withdraw_list_totals && (
+        <TotalizersCards
+          data={PaidWithdrawalsTotal}
+          fetchData={refetchPaidWithdrawalsTotal}
+          loading={isPaidWithdrawalsTotalFetching}
+          query={query}
+        />
+      )}
 
       <Grid
         container
@@ -179,7 +197,7 @@ export const PaidWithdrawals = () => {
             </Button>
           </Space.Compact>
         </Grid>
-        <Grid item xs={12} md={2} lg={2}>
+        <Grid item xs={12} md={3} lg={2}>
           <Button
             size="large"
             type="dashed"
@@ -201,6 +219,19 @@ export const PaidWithdrawals = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
+
+        {permissions.report.withdraw.paid_withdraw
+          .report_withdraw_paid_withdraw_export_csv && (
+          <Grid item xs={12} md="auto" lg={1}>
+            <ExportReportsModal
+              mutateReport={() => PaidWithdrawalsReportsMutate()}
+              error={PaidWithdrawalsReportsError}
+              success={PaidWithdrawalsReportsIsSuccess}
+              loading={PaidWithdrawalsReportsIsLoading}
+              reportPath="/consult/withdrawals/withdrawals_reports/paid_withdrawals_reports"
+            />
+          </Grid>
+        )}
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>

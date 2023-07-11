@@ -1,6 +1,6 @@
 export interface generatedDepositTotalQuery {
-  page: number;
-  limit: number;
+  page?: number;
+  limit?: number;
   sort_order?: "DESC" | "ASC";
   sort_field?: string;
   initial_date?: string;

@@ -23,6 +23,8 @@ import { MutateModal } from "@src/components/Modals/mutateGenericModal";
 import { useUpdatePartner } from "@src/services/register/partner/updatePartner";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { useCreatePartnerReports } from "@src/services/reports/register/partner/createPartnerReports";
+import { queryClient } from "@src/services/queryClient";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 
 const INITIAL_QUERY: PartnerQuery = {
   limit: 25,
@@ -32,6 +34,10 @@ const INITIAL_QUERY: PartnerQuery = {
 };
 
 export const Partners = () => {
+  const { permissions } = queryClient.getQueryData(
+    "validate"
+  ) as ValidateInterface;
+
   const [query, setQuery] = useState<PartnerQuery>(INITIAL_QUERY);
   const { t } = useTranslation();
 
@@ -161,34 +167,39 @@ export const Partners = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={3} lg={2}>
-          <Button
-            type="primary"
-            loading={isPartnersDataFetching}
-            onClick={() => {
-              setIsNewCategorieModal(true);
-            }}
-            style={{
-              height: 40,
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <UserAddOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
-            {`${t("buttons.create")} ${t("buttons.new_partner")}`}
-          </Button>
-        </Grid>
-        <Grid item xs={12} md="auto">
-          <ExportReportsModal
-            mutateReport={() => PartnerReportsMutate()}
-            error={PartnerReportsError}
-            success={PartnerReportsIsSuccess}
-            loading={PartnerReportsIsLoading}
-            reportPath="/register/partner/partner_reports/partner_partners_reports"
-          />
-        </Grid>
+        {permissions.register.partner.partner.partner_create && (
+          <Grid item xs={12} md={3} lg={2}>
+            <Button
+              type="primary"
+              loading={isPartnersDataFetching}
+              onClick={() => {
+                setIsNewCategorieModal(true);
+              }}
+              style={{
+                height: 40,
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <UserAddOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
+              {`${t("buttons.create")} ${t("buttons.new_partner")}`}
+            </Button>
+          </Grid>
+        )}
+
+        {permissions.register.partner.partner.partner_export_csv && (
+          <Grid item xs={12} md="auto">
+            <ExportReportsModal
+              mutateReport={() => PartnerReportsMutate()}
+              error={PartnerReportsError}
+              success={PartnerReportsIsSuccess}
+              loading={PartnerReportsIsLoading}
+              reportPath="/register/partner/partner_reports/partner_partners_reports"
+            />
+          </Grid>
+        )}
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -206,7 +217,7 @@ export const Partners = () => {
                   setIsViewModalOpen(true);
                 },
               },
-              {
+              permissions.register.partner.partner.partner_update && {
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
                 onClick: () => {

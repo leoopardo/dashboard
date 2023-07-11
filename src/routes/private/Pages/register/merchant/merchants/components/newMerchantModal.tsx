@@ -11,6 +11,8 @@ import { PartnerSelect } from "@components/Selects/partnerSelect";
 import { useCreateMerchant } from "@services/register/merchant/merchant/createMerchant";
 import { toast } from "react-hot-toast";
 import { Toast } from "@components/Toast";
+import { queryClient } from "@src/services/queryClient";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 
 interface NewuserModalprops {
   open: boolean;
@@ -31,6 +33,9 @@ export interface NewUserInterface {
 }
 
 export const NewMerchantModal = ({ open, setOpen }: NewuserModalprops) => {
+  const { permissions } = queryClient.getQueryData(
+    "validate"
+  ) as ValidateInterface;
   const { t } = useTranslation();
   const submitRef = useRef<HTMLButtonElement>(null);
   const formRef = React.useRef<FormInstance>(null);
@@ -45,7 +50,7 @@ export const NewMerchantModal = ({ open, setOpen }: NewuserModalprops) => {
   });
 
   const { CreateError, CreateIsLoading, CreateIsSuccess, CreateMutate } =
-  useCreateMerchant(body);
+    useCreateMerchant(body);
 
   function handleChangeUserBody(event: any) {
     setBody((state) => ({ ...state, [event.target.name]: event.target.value }));
@@ -116,8 +121,7 @@ export const NewMerchantModal = ({ open, setOpen }: NewuserModalprops) => {
           rules={[
             {
               required: true,
-              message:
-                t("input.required", { field: t("input.domain") }) || "",
+              message: t("input.required", { field: t("input.domain") }) || "",
             },
             { min: 4, message: t("input.min_of", { min: 4 }) || "" },
           ]}
@@ -130,27 +134,27 @@ export const NewMerchantModal = ({ open, setOpen }: NewuserModalprops) => {
           />
         </Form.Item>
 
-        <Form.Item
-          label={t(`table.partner`)}
-          name="partner_id"
-          style={{ margin: 10 }}
-          rules={[
-            {
-              required: !body.partner_id ? true : false,
-              message: t("input.required", { field: t("input.partner_id") }) || "",
-            },
-          ]}
-        >
-          <Input
-            value={body.partner_id || ""}
-            style={{ display: "none" }}
+        {permissions.register.partner.partner.partner_list && (
+          <Form.Item
+            label={t(`table.partner`)}
             name="partner_id"
-          />
-          <PartnerSelect
-            queryOptions={body}
-            setQueryFunction={setBody}
-          />
-        </Form.Item>
+            style={{ margin: 10 }}
+            rules={[
+              {
+                required: !body.partner_id ? true : false,
+                message:
+                  t("input.required", { field: t("input.partner_id") }) || "",
+              },
+            ]}
+          >
+            <Input
+              value={body.partner_id || ""}
+              style={{ display: "none" }}
+              name="partner_id"
+            />
+            <PartnerSelect queryOptions={body} setQueryFunction={setBody} />
+          </Form.Item>
+        )}
 
         <Form.Item
           label={t(`table.cnpj`)}

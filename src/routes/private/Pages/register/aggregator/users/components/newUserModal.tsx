@@ -8,14 +8,13 @@ import React, {
 } from "react";
 import { useTranslation } from "react-i18next";
 import { GroupSelect } from "@components/Selects/groupSelect";
-import { useCreateOrganizationUser } from "@services/register/organization/users/createUser";
-import { toast } from "react-hot-toast";
 import { OrganizationUserItem } from "@src/services/types/register/organization/organizationUsers.interface";
-import { useUpdateOrganizationUser } from "@services/register/organization/users/updateUser";
 import { Toast } from "@src/components/Toast";
 import { useCreateAggregatorUser } from "@src/services/register/aggregator/users/createUser";
 import { useUpdateAggregatorUser } from "@src/services/register/aggregator/users/updateUser";
 import { AggregatorSelect } from "@src/components/Selects/aggregatorSelect";
+import { queryClient } from "@src/services/queryClient";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 interface NewuserModalprops {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -48,6 +47,9 @@ export const NewUserModal = ({
   setIsValidateTokenOpen,
   action,
 }: NewuserModalprops) => {
+  const { permissions } = queryClient.getQueryData(
+    "validate"
+  ) as ValidateInterface;
   const { t } = useTranslation();
   const submitRef = useRef<HTMLButtonElement>(null);
   const formRef = React.useRef<FormInstance>(null);
@@ -63,8 +65,9 @@ export const NewUserModal = ({
     type: 2,
   });
 
-  const { mutate, error, isLoading, isSuccess } = useCreateAggregatorUser(body);
-  const { updateError, updateLoading, updateMutate, updateSuccess } =
+  const { mutate, error, isLoading, isSuccess, reset } =
+    useCreateAggregatorUser(body);
+  const { updateError, updateLoading, updateSuccess } =
     useUpdateAggregatorUser(body);
 
   function handleChangeUserBody(event: any) {
@@ -100,6 +103,7 @@ export const NewUserModal = ({
   }, [currentUser]);
 
   useEffect(() => {
+    reset();
     if (action === "create") {
       setBody({
         name: "",
@@ -231,46 +235,50 @@ export const NewUserModal = ({
             onChange={handleChangeUserBody}
           />
         </Form.Item>
-        <Form.Item
-          label={t("input.aggregator")}
-          name="operator_id"
-          style={{ margin: 10 }}
-          rules={[
-            {
-              required: !body.aggregator_id,
-              message:
-                t("input.required", {
-                  field: t(`input.operator`),
-                }) || "",
-            },
-          ]}
-        >
-          <AggregatorSelect setQueryFunction={setBody} queryOptions={body} />
-        </Form.Item>
+        {permissions.register.aggregator.aggregator.aggregator_list && (
+          <Form.Item
+            label={t("input.aggregator")}
+            name="operator_id"
+            style={{ margin: 10 }}
+            rules={[
+              {
+                required: !body.aggregator_id,
+                message:
+                  t("input.required", {
+                    field: t(`input.operator`),
+                  }) || "",
+              },
+            ]}
+          >
+            <AggregatorSelect setQueryFunction={setBody} queryOptions={body} />
+          </Form.Item>
+        )}
 
-        <Form.Item
-          label={t(`table.group`)}
-          name="group_id"
-          style={{ margin: 10 }}
-          rules={[
-            {
-              required: !body.group_id ? true : false,
-              message: t("input.required", { field: t("input.group") }) || "",
-            },
-          ]}
-        >
-          <Input
-            value={body.group_id || ""}
-            style={{ display: "none" }}
+        {permissions.register.aggregator.aggregator.aggregator_list && (
+          <Form.Item
+            label={t(`table.group`)}
             name="group_id"
-          />
-          <GroupSelect
-            body={body}
-            setBody={setBody}
-            filterIdProp="aggregator_id"
-            filterIdValue={body.aggregator_id}
-          />
-        </Form.Item>
+            style={{ margin: 10 }}
+            rules={[
+              {
+                required: !body.group_id ? true : false,
+                message: t("input.required", { field: t("input.group") }) || "",
+              },
+            ]}
+          >
+            <Input
+              value={body.group_id || ""}
+              style={{ display: "none" }}
+              name="group_id"
+            />
+            <GroupSelect
+              body={body}
+              setBody={setBody}
+              filterIdProp="aggregator_id"
+              filterIdValue={body.aggregator_id}
+            />
+          </Form.Item>
+        )}
 
         <Form.Item
           label={t(`table.password`)}

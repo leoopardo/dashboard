@@ -10,12 +10,12 @@ import useDebounce from "@utils/useDebounce";
 import { EditOutlined, EyeFilled, UserAddOutlined } from "@ant-design/icons";
 import { NewUserInterface, NewUserModal } from "./components/newUserModal";
 import { ValidateToken } from "@components/ValidateToken";
-import { useUpdateOrganizationUser } from "@services/register/organization/users/updateUser";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
 import { PartnerQuery } from "@src/services/types/register/partners/partners.interface";
-import { useGetPartnerUsers } from "@src/services/register/partner/users/getPartnerUsers";
 import { useGetAggregatorUsers } from "@src/services/register/aggregator/users/getAggregatorUsers";
 import { useUpdateAggregatorUser } from "@src/services/register/aggregator/users/updateUser";
+import { queryClient } from "@src/services/queryClient";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 
 const INITIAL_QUERY: PartnerQuery = {
   limit: 25,
@@ -25,6 +25,9 @@ const INITIAL_QUERY: PartnerQuery = {
 };
 
 export const AggregatorUsers = () => {
+  const { permissions } = queryClient.getQueryData(
+    "validate"
+  ) as ValidateInterface;
   const [query, setQuery] = useState<PartnerQuery>(INITIAL_QUERY);
   const { t } = useTranslation();
 
@@ -42,10 +45,11 @@ export const AggregatorUsers = () => {
   const [tokenState, setTokenState] = useState<string>("");
   const { UsersData, UsersDataError, isUsersDataFetching, refetchUsersData } =
     useGetAggregatorUsers(query);
-  const { updateSuccess, updateError, updateMutate } = useUpdateAggregatorUser({
-    ...updateUserBody,
-    validation_token: tokenState,
-  });
+  const { updateSuccess, updateError, updateMutate, updateReset } =
+    useUpdateAggregatorUser({
+      ...updateUserBody,
+      validation_token: tokenState,
+    });
   const [action, setAction] = useState<"create" | "update">("create");
 
   const columns: ColumnInterface[] = [
@@ -134,26 +138,28 @@ export const AggregatorUsers = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={3} lg={2}>
-          <Button
-            type="primary"
-            loading={isUsersDataFetching}
-            onClick={() => {
-              setAction("create");
-              setIsNewUserModal(true);
-            }}
-            style={{
-              height: 40,
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <UserAddOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
-            {`${t("buttons.create")} ${t("buttons.new_user")}`}
-          </Button>
-        </Grid>
+        {permissions.register.aggregator.users.aggregator_user_create && (
+          <Grid item xs={12} md={3} lg={2}>
+            <Button
+              type="primary"
+              loading={isUsersDataFetching}
+              onClick={() => {
+                setAction("create");
+                setIsNewUserModal(true);
+              }}
+              style={{
+                height: 40,
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <UserAddOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
+              {`${t("buttons.create")} ${t("buttons.new_user")}`}
+            </Button>
+          </Grid>
+        )}
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -171,10 +177,11 @@ export const AggregatorUsers = () => {
                   setIsViewModalOpen(true);
                 },
               },
-              {
+              permissions.register.aggregator.users.aggregator_user_update && {
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
                 onClick: () => {
+                  updateReset();
                   setAction("update");
                   setIsNewUserModal(true);
                 },

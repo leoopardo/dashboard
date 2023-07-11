@@ -4,7 +4,7 @@ import { useMutation } from "react-query";
 import { AggregatorItem } from "@src/services/types/register/aggregators/aggregators.interface";
 
 export function useCreateAggregator(body: AggregatorItem) {
-  const { isLoading, error, mutate, isSuccess } = useMutation<
+  const { isLoading, error, mutate, isSuccess, reset } = useMutation<
     AggregatorItem | null | undefined
   >("CreateAggregator", async () => {
     const response = await api.post("core/aggregator/create", body, {});
@@ -16,9 +16,11 @@ export function useCreateAggregator(body: AggregatorItem) {
   const AggregatorIsLoading = isLoading;
   const AggregatorError = error;
   const AggregatorIsSuccess = isSuccess;
+  const AggregatorReset = reset;
 
   return {
     AggregatorMutate,
+    AggregatorReset,
     AggregatorIsLoading,
     AggregatorError,
     AggregatorIsSuccess,

@@ -7,10 +7,6 @@ import moment from "moment";
 export function useCreateMerchantManualReports(
   body: GetMerchantMovimentsQuery
 ) {
-  delete body.limit;
-  delete body.page;
-  delete body.sort_field;
-  delete body.sort_order;
 
   const { isLoading, error, mutate, isSuccess } = useMutation<
     GetMerchantMovimentsQuery | null | undefined
