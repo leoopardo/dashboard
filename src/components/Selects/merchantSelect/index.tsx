@@ -18,6 +18,7 @@ export const MerchantSelect = ({
   const [query, setQuery] = useState<MerchantQuery>({
     page: 1,
     limit: 200,
+    partner_id: queryOptions?.partner_id,
   });
   const { merchantsData, refetcMerchant, isMerchantFetching } =
     useListMerchants(query);
@@ -25,7 +26,7 @@ export const MerchantSelect = ({
   const debounceSearch = useDebounce(query.name);
 
   useEffect(() => {
-    if (merchantsData && !value) {
+    if (!value) {
       const initial = merchantsData?.items.find(
         (merchant) => merchant.id === queryOptions.merchant_id
       );
@@ -36,8 +37,12 @@ export const MerchantSelect = ({
   }, [merchantsData, queryOptions]);
 
   useEffect(() => {
+    setQuery((state) => ({ ...state, partner_id: queryOptions.partner_id }));
+  }, [queryOptions]);
+
+  useEffect(() => {
     refetcMerchant();
-  }, [debounceSearch]);
+  }, [debounceSearch, query]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const val = event?.target?.value;
@@ -55,10 +60,14 @@ export const MerchantSelect = ({
       notFoundContent={<Empty />}
       value={value}
       style={{ width: "100%", height: 40 }}
-      onChange={(value) => {
+      onChange={(value, option) => {
         if (!value) {
           delete queryOptions.merchant_id;
           setValue("");
+          setQueryFunction((state: any) => ({
+            ...state,
+            merchant_id: undefined,
+          }));
         }
         setValue(value);
       }}

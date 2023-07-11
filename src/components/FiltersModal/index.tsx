@@ -33,6 +33,8 @@ import { useGetCities } from "../../services/states_cities/getCities";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import { StyleWrapperDatePicker } from "./styles";
+import { queryClient } from "@src/services/queryClient";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 
 dayjs.extend(weekday);
 dayjs.extend(localeData);
@@ -65,6 +67,9 @@ export const FiltersModal = ({
   maxRange,
   initialQuery,
 }: FilterModalProps) => {
+  const { permissions } = queryClient.getQueryData(
+    "validate"
+  ) as ValidateInterface;
   const { t } = useTranslation();
   const [filtersQuery, setFiltersQuery] = useState<any>(query);
   const { states } = useGetStates();
@@ -257,18 +262,20 @@ export const FiltersModal = ({
               );
 
             case "partner_id":
-              return (
-                <Form.Item
-                  label={t(`table.${filter}`)}
-                  name={filter}
-                  style={{ margin: 10 }}
-                >
-                  <PartnerSelect
-                    queryOptions={filtersQuery}
-                    setQueryFunction={setFiltersQuery}
-                  />
-                </Form.Item>
-              );
+              if (permissions.register.partner.partner.partner_list) {
+                return (
+                  <Form.Item
+                    label={t(`table.${filter}`)}
+                    name={filter}
+                    style={{ margin: 10 }}
+                  >
+                    <PartnerSelect
+                      queryOptions={filtersQuery}
+                      setQueryFunction={setFiltersQuery}
+                    />
+                  </Form.Item>
+                );
+              } else return;
 
             case "bank":
               return (
@@ -285,18 +292,23 @@ export const FiltersModal = ({
               );
 
             case "payer_bank":
-              return (
-                <Form.Item
-                  label={t(`table.${filter}`)}
-                  name={filter}
-                  style={{ margin: 10 }}
-                >
-                  <ClientBanksSelect
-                    queryOptions={filtersQuery}
-                    setQueryFunction={setFiltersQuery}
-                  />
-                </Form.Item>
-              );
+              if (
+                permissions.register.person.client_banks
+                  .person_client_banks_list
+              ) {
+                return (
+                  <Form.Item
+                    label={t(`table.${filter}`)}
+                    name={filter}
+                    style={{ margin: 10 }}
+                  >
+                    <ClientBanksSelect
+                      queryOptions={filtersQuery}
+                      setQueryFunction={setFiltersQuery}
+                    />
+                  </Form.Item>
+                );
+              } else return;
 
             case "age_start":
               return (
@@ -442,18 +454,20 @@ export const FiltersModal = ({
               );
 
             case "merchant_id":
-              return (
-                <Form.Item
-                  label={t(`table.${filter}`)}
-                  name={filter}
-                  style={{ margin: 10 }}
-                >
-                  <MerchantSelect
-                    queryOptions={filtersQuery}
-                    setQueryFunction={setFiltersQuery}
-                  />
-                </Form.Item>
-              );
+              if (permissions.register.merchant.merchant.merchant_list) {
+                return (
+                  <Form.Item
+                    label={t(`table.${filter}`)}
+                    name={filter}
+                    style={{ margin: 10 }}
+                  >
+                    <MerchantSelect
+                      queryOptions={filtersQuery}
+                      setQueryFunction={setFiltersQuery}
+                    />
+                  </Form.Item>
+                );
+              } else return;
 
             case "reason":
               return (

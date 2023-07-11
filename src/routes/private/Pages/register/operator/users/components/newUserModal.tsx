@@ -14,6 +14,8 @@ import { useUpdateOperatorUser } from "@src/services/register/operator/users/upd
 import { OperatorSelect } from "@src/components/Selects/operatorSelect";
 import { OperatorItem } from "@src/services/types/register/operators/operators.interface";
 import ReactInputMask from "react-input-mask";
+import { queryClient } from "@src/services/queryClient";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 interface NewuserModalprops {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -46,6 +48,9 @@ export const NewUserModal = ({
   setIsValidateTokenOpen,
   action,
 }: NewuserModalprops) => {
+  const { permissions } = queryClient.getQueryData(
+    "validate"
+  ) as ValidateInterface;
   const { t } = useTranslation();
   const submitRef = useRef<HTMLButtonElement>(null);
   const formRef = React.useRef<FormInstance>(null);
@@ -238,22 +243,24 @@ export const NewUserModal = ({
             onChange={handleChangeUserBody}
           />
         </Form.Item>
-        <Form.Item
-          label={t("input.operator")}
-          name="operator_id"
-          style={{ margin: 10 }}
-          rules={[
-            {
-              required: !body.operator_id,
-              message:
-                t("input.required", {
-                  field: t(`input.operator`),
-                }) || "",
-            },
-          ]}
-        >
-          <OperatorSelect setQueryFunction={setBody} queryOptions={body} />
-        </Form.Item>
+        {permissions.register.operator.operator.operator_list && (
+          <Form.Item
+            label={t("input.operator")}
+            name="operator_id"
+            style={{ margin: 10 }}
+            rules={[
+              {
+                required: !body.operator_id,
+                message:
+                  t("input.required", {
+                    field: t(`input.operator`),
+                  }) || "",
+              },
+            ]}
+          >
+            <OperatorSelect setQueryFunction={setBody} queryOptions={body} />
+          </Form.Item>
+        )}
 
         <Form.Item
           label={t(`table.group`)}

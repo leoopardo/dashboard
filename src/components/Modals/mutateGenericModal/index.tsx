@@ -20,6 +20,8 @@ import { Country, State, City } from "country-state-city";
 import { OperatorSelect } from "@src/components/Selects/operatorSelect";
 import { useListClientClientBanks } from "@src/services/bank/listClientBanks";
 import { ReasonSelect } from "@src/components/Selects/reasonSelect";
+import { queryClient } from "@src/services/queryClient";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 
 interface mutateProps {
   type: "create" | "update";
@@ -46,6 +48,9 @@ export const MutateModal = ({
   modalName,
   submitLoading,
 }: mutateProps) => {
+  const { permissions } = queryClient.getQueryData(
+    "validate"
+  ) as ValidateInterface;
   const { t } = useTranslation();
   const formRef = useRef<FormInstance>(null);
   const submitRef = useRef<HTMLButtonElement>(null);
@@ -99,51 +104,56 @@ export const MutateModal = ({
         {fields.map((field) => {
           switch (field.label) {
             case "merchant_id":
-              <Form.Item
-                label={t(`table.${field.label}`)}
-                name={field.label}
-                style={{ margin: 10 }}
-                rules={[
-                  {
-                    required: field.required,
-                    message:
-                      t("input.required", {
-                        field: t(`input.${field.label}`),
-                      }) || "",
-                  },
-                ]}
-              >
-                <MerchantSelect
-                  setQueryFunction={setBody}
-                  queryOptions={body}
-                />
-              </Form.Item>;
-              return;
+              if (permissions.register.merchant.merchant.merchant_list) {
+                return (
+                  <Form.Item
+                    label={t(`table.${field.label}`)}
+                    name={field.label}
+                    style={{ margin: 10 }}
+                    rules={[
+                      {
+                        required: field.required,
+                        message:
+                          t("input.required", {
+                            field: t(`input.${field.label}`),
+                          }) || "",
+                      },
+                    ]}
+                  >
+                    <MerchantSelect
+                      setQueryFunction={setBody}
+                      queryOptions={body}
+                    />
+                  </Form.Item>
+                );
+              } else return;
 
             case "partner_id":
-              return (
-                <Form.Item
-                  label={t(`table.${field.label}`)}
-                  name={field.label}
-                  style={{ margin: 10 }}
-                  rules={[
-                    {
-                      required: field.required,
-                      message:
-                        t("input.required", {
-                          field: t(`input.${field.label}`),
-                        }) || "",
-                    },
-                  ]}
-                >
-                  <PartnerSelect
-                    setQueryFunction={setBody}
-                    queryOptions={body}
-                  />
-                </Form.Item>
-              );
+              if (permissions.register.partner.partner.partner_list) {
+                return (
+                  <Form.Item
+                    label={t(`table.${field.label}`)}
+                    name={field.label}
+                    style={{ margin: 10 }}
+                    rules={[
+                      {
+                        required: field.required,
+                        message:
+                          t("input.required", {
+                            field: t(`input.${field.label}`),
+                          }) || "",
+                      },
+                    ]}
+                  >
+                    <PartnerSelect
+                      setQueryFunction={setBody}
+                      queryOptions={body}
+                    />
+                  </Form.Item>
+                );
+              } else return;
 
-              case "reason":
+            case "reason":
               return (
                 <Form.Item
                   label={t(`table.black_list_reason`)}
@@ -167,26 +177,30 @@ export const MutateModal = ({
               );
 
             case "operator_id":
-              <Form.Item
-                label={t(`table.${field.label}`)}
-                name={field.label}
-                style={{ margin: 10 }}
-                rules={[
-                  {
-                    required: field.required,
-                    message:
-                      t("input.required", {
-                        field: t(`input.${field.label}`),
-                      }) || "",
-                  },
-                ]}
-              >
-                <OperatorSelect
-                  setQueryFunction={setBody}
-                  queryOptions={body}
-                />
-              </Form.Item>;
-              return;
+              if (permissions.register.operator.operator.operator_list) {
+                return (
+                  <Form.Item
+                    label={t(`table.${field.label}`)}
+                    name={field.label}
+                    style={{ margin: 10 }}
+                    rules={[
+                      {
+                        required: field.required,
+                        message:
+                          t("input.required", {
+                            field: t(`input.${field.label}`),
+                          }) || "",
+                      },
+                    ]}
+                  >
+                    <OperatorSelect
+                      setQueryFunction={setBody}
+                      queryOptions={body}
+                    />
+                  </Form.Item>
+                );
+              } else return;
+
             case "status":
             case "cash_in":
             case "cash_out":
@@ -309,31 +323,31 @@ export const MutateModal = ({
               return;
 
             case "type":
-            return (
-              <Form.Item
-              label={t("table.type")}
-              name="type"
-              style={{ margin: 10 }}
-            >
-              <Select
-                size="large"
-                options={
-                  ['production']?.map((item, index) => ({
-                    key: index,
-                    value: item,
-                    label: `${t(`table.${item.toLocaleLowerCase()}`)}`,
-                  })) ?? []
-                }
-                value={body?.cashin_pix_fee_type || null}
-                onChange={(value) => {
-                setBody((state: any) => ({
-                  ...state,
-                  [field.label]: value,
-                }));
-                }}
-              />
-            </Form.Item>
-            )
+              return (
+                <Form.Item
+                  label={t("table.type")}
+                  name="type"
+                  style={{ margin: 10 }}
+                >
+                  <Select
+                    size="large"
+                    options={
+                      ["production"]?.map((item, index) => ({
+                        key: index,
+                        value: item,
+                        label: `${t(`table.${item.toLocaleLowerCase()}`)}`,
+                      })) ?? []
+                    }
+                    value={body?.cashin_pix_fee_type || null}
+                    onChange={(value) => {
+                      setBody((state: any) => ({
+                        ...state,
+                        [field.label]: value,
+                      }));
+                    }}
+                  />
+                </Form.Item>
+              );
 
             case "country":
               return (
