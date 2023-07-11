@@ -238,24 +238,28 @@ export const GeneratedWithdrawals = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={2} lg={2}>
-          <Button
-            type="primary"
-            loading={isWithdrawalsRowsFetching}
-            size="large"
-            onClick={() => {
-              setIsResendWebhookModalOpen(true);
-            }}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              width: "100%",
-            }}
-          >
-            {t("modal.resend_webhook")}
-          </Button>
-        </Grid>
+        {permissions.report.withdraw.generated_withdraw
+          .report_withdraw_generated_withdraw_resend_notification && (
+          <Grid item xs={12} md={2} lg={2}>
+            <Button
+              type="primary"
+              loading={isWithdrawalsRowsFetching}
+              size="large"
+              onClick={() => {
+                setIsResendWebhookModalOpen(true);
+              }}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "100%",
+              }}
+            >
+              {t("modal.resend_webhook")}
+            </Button>
+          </Grid>
+        )}
+
         {permissions.report.withdraw.generated_withdraw
           .report_withdraw_generated_withdraw_export_csv && (
           <Grid item xs={12} md="auto" lg={1}>

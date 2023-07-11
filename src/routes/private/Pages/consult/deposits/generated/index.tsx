@@ -242,24 +242,28 @@ export const GeneratedDeposits = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={2} lg={2}>
-          <Button
-            type="primary"
-            loading={isDepositsRowsFetching}
-            size="large"
-            onClick={() => {
-              setIsResendWebhookModalOpen(true);
-            }}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              width: "100%",
-            }}
-          >
-            {t("modal.resend_webhook")}
-          </Button>
-        </Grid>
+        {permissions.report.deposit.generated_deposit
+          .report_deposit_generated_deposit_resend_notification && (
+          <Grid item xs={12} md={2} lg={2}>
+            <Button
+              type="primary"
+              loading={isDepositsRowsFetching}
+              size="large"
+              onClick={() => {
+                setIsResendWebhookModalOpen(true);
+              }}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "100%",
+              }}
+            >
+              {t("modal.resend_webhook")}
+            </Button>
+          </Grid>
+        )}
+
         {permissions.report.deposit.generated_deposit
           .report_deposit_generated_deposit_export_csv && (
           <Grid item xs={12} md="auto" lg={1}>

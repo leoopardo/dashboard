@@ -16,6 +16,8 @@ import React, { Dispatch, SetStateAction, useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import locale from "antd/locale/pt_BR";
 import dayjs from "dayjs";
+import { queryClient } from "@src/services/queryClient";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 const { RangePicker } = DatePicker;
 
 interface ResendWebhookModalInterface {
@@ -33,6 +35,9 @@ export const ResendWebhookModal = ({
   body,
   setBody,
 }: ResendWebhookModalInterface) => {
+  const { permissions } = queryClient.getQueryData(
+    "validate"
+  ) as ValidateInterface;
   const { t } = useTranslation();
   const formRef = useRef<FormInstance>(null);
   const submitRef = useRef<HTMLButtonElement>(null);
@@ -136,20 +141,24 @@ export const ResendWebhookModal = ({
             />
           </ConfigProvider>
         </Form.Item>
-        <Form.Item
-          label={t("table.partner")}
-          style={{ margin: 10 }}
-          rules={[{ required: !body.partner_id }]}
-        >
-          <PartnerSelect queryOptions={body} setQueryFunction={setBody} />
-        </Form.Item>
-        <Form.Item
-          label={t("table.merchant")}
-          style={{ margin: 10 }}
-          rules={[{ required: !body.merchant_id }]}
-        >
-          <MerchantSelect queryOptions={body} setQueryFunction={setBody} />
-        </Form.Item>
+        {permissions.register.partner.partner.partner_list && (
+          <Form.Item
+            label={t("table.partner")}
+            style={{ margin: 10 }}
+            rules={[{ required: !body.partner_id }]}
+          >
+            <PartnerSelect queryOptions={body} setQueryFunction={setBody} />
+          </Form.Item>
+        )}
+        {permissions.register.merchant.merchant.merchant_list && (
+          <Form.Item
+            label={t("table.merchant")}
+            style={{ margin: 10 }}
+            rules={[{ required: !body.merchant_id }]}
+          >
+            <MerchantSelect queryOptions={body} setQueryFunction={setBody} />
+          </Form.Item>
+        )}
 
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
           <button type="submit" ref={submitRef} style={{ display: "none" }}>
