@@ -143,24 +143,43 @@ export const SidebarNavigation = () => {
             "organization_reports",
             null,
             [
-              getItem("organization_reports_users", null, null, false, (e) =>
-                handleNavigate(e?.keyPath)
+              getItem(
+                "organization_reports_users",
+                null,
+                null,
+                false,
+                (e) => handleNavigate(e?.keyPath),
+                {
+                  display: permissions.register.paybrokers.users
+                    .paybrokers_user_export_csv
+                    ? undefined
+                    : "none",
+                }
               ),
               getItem(
                 "organization_reports_categories",
                 null,
                 null,
                 false,
-                (e) => handleNavigate(e?.keyPath)
+                (e) => handleNavigate(e?.keyPath),
+                {
+                  display: permissions.register.paybrokers.release_category
+                    .paybrokers_release_category_export_csv
+                    ? undefined
+                    : "none",
+                }
               ),
             ],
             false,
             undefined,
             {
-              display: permissions.register.paybrokers.users
-                .paybrokers_user_export_csv
-                ? undefined
-                : "none",
+              display:
+                permissions.register.paybrokers.users
+                  .paybrokers_user_export_csv ||
+                permissions.register.paybrokers.release_category
+                  .paybrokers_release_category_export_csv
+                  ? undefined
+                  : "none",
             }
           ),
         ],
@@ -232,10 +251,12 @@ export const SidebarNavigation = () => {
             false,
             undefined,
             {
-              display: permissions.register.aggregator.aggregator
-                .aggregator_export_csv
-                ? undefined
-                : "none",
+              display:
+                permissions.register.aggregator.aggregator
+                  .aggregator_export_csv ||
+                permissions.register.aggregator.users.aggregator_user_export_csv
+                  ? undefined
+                  : "none",
             }
           ),
         ],
@@ -307,10 +328,11 @@ export const SidebarNavigation = () => {
             false,
             undefined,
             {
-              display: permissions.register.operator.operator
-                .operator_export_csv
-                ? undefined
-                : "none",
+              display:
+                permissions.register.operator.operator.operator_export_csv ||
+                permissions.register.operator.users.operator_user_export_csv
+                  ? undefined
+                  : "none",
             }
           ),
         ],
@@ -382,9 +404,11 @@ export const SidebarNavigation = () => {
             false,
             undefined,
             {
-              display: permissions.register.partner.partner.partner_export_csv
-                ? undefined
-                : "none",
+              display:
+                permissions.register.partner.partner.partner_export_csv ||
+                permissions.register.partner.users.partner_user_export_csv
+                  ? undefined
+                  : "none",
             }
           ),
         ],
@@ -492,10 +516,11 @@ export const SidebarNavigation = () => {
             false,
             undefined,
             {
-              display: permissions.register.merchant.merchant
-                .merchant_export_csv
-                ? undefined
-                : "none",
+              display:
+                permissions.register.merchant.merchant.merchant_export_csv ||
+                permissions.register.merchant.users.merchant_user_export_csv
+                  ? undefined
+                  : "none",
             }
           ),
         ],
@@ -604,10 +629,14 @@ export const SidebarNavigation = () => {
             false,
             undefined,
             {
-              display: permissions.register.person.person
-                .person_person_export_csv
-                ? undefined
-                : "none",
+              display:
+                permissions.register.person.person.person_person_export_csv ||
+                permissions.register.person.client_banks
+                  .person_client_banks_export_csv ||
+                permissions.register.person.pix_whitelist
+                  .person_pix_whitelist_export_csv
+                  ? undefined
+                  : "none",
             }
           ),
         ],
@@ -1233,16 +1262,25 @@ export const SidebarNavigation = () => {
             display: permissions.support.blacklist.menu ? undefined : "none",
           }
         ),
-        getItem("api_logs", null, [
-          getItem("error_logs_deposits", null, null, false, (e) =>
-            handleNavigate(e?.keyPath)
-          ),
-          getItem("error_logs_withdrawals", null, null, false, (e) =>
-            handleNavigate(e?.keyPath)
-          ),
-        ], undefined, undefined, {
-          display: permissions.report.deposit.deposit_error_logs.menu ? undefined : "none",
-        }),
+        getItem(
+          "api_logs",
+          null,
+          [
+            getItem("error_logs_deposits", null, null, false, (e) =>
+              handleNavigate(e?.keyPath)
+            ),
+            getItem("error_logs_withdrawals", null, null, false, (e) =>
+              handleNavigate(e?.keyPath)
+            ),
+          ],
+          undefined,
+          undefined,
+          {
+            display: permissions.report.deposit.deposit_error_logs.menu
+              ? undefined
+              : "none",
+          }
+        ),
       ],
       undefined,
       undefined,

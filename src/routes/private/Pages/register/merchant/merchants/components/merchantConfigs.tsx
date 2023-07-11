@@ -24,20 +24,22 @@ export const MerchantConfigs = () => {
 
   const initialTab = () => {
     if (!permissions.register.merchant.merchant.merchant_config_banks) {
+      if (!permissions.register.merchant.merchant.merchant_config_fees) {
+        if (!permissions.register.merchant.merchant.merchant_config_merchant) {
+          if (!permissions.register.merchant.merchant.merchant_config_paybrokers) {
+            if (!permissions.register.merchant.merchant.merchant_config_ips) {
+              return "6";
+            }
+            return "5";
+          }
+          return "4";
+        }
+        return "3"; 
+      }
       return "2";
     }
-    if (!permissions.register.merchant.merchant.merchant_config_fees) {
-      return "3";
-    }
-    if (!permissions.register.merchant.merchant.merchant_config_merchant) {
-      return "4";
-    }
-    if (!permissions.register.merchant.merchant.merchant_config_paybrokers) {
-      return "5";
-    }
-    if (!permissions.register.merchant.merchant.merchant_config_ips) {
-      return "6";
-    }
+   
+  
 
     return "1";
   };
