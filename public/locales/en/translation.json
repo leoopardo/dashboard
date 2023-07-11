@@ -242,7 +242,11 @@
     "max_value_different_payer_pf_by_day": "Max value different payer by days",
     "withdraw_limit_document_by_day": "Withdraw limit document by day",
     "unlimited": "Unlimited",
-    "check_cpf_permission": "Check CPF Permission"
+    "check_cpf_permission": "Check CPF Permission",
+    "webhook_type": "Webhook type",
+    "primary": "Primary",
+    "secondary": "Secondary",
+    "both": "Both"
   },
   "modal": {
     "confirm": "Confirm",
@@ -264,7 +268,8 @@
     "person": "Person",
     "register_in": "Register in",
     "register_out": "Register out",
-    "new_bank_blacklist": "Add to blacklist"
+    "new_bank_blacklist": "Add to blacklist",
+    "resend_webhook": "Resend webhook"
   },
   "table": {
     "id": "ID",
@@ -508,6 +513,7 @@
     "date_too_log": "The diffrence between dates should be equal or less than 30 days",
     "password_or_username": "Invalid username or password",
     "BANK_ALREADY_CREATED": "Bank already created",
+    "date_1_hour": "The max range is one hour",
     "undefined": "Couldn't connect to server. Wait while we solve this problem."
   },
   "logs": {

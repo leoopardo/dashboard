@@ -1,34 +1,29 @@
 import { useEffect, useState } from "react";
 import { api } from "../../config/api";
 import { MerchantQuery, MerchantResponse } from "../types/register/merchants/merchants.interface";
+import { useQuery } from "react-query";
 
 export function useListMerchants(params: MerchantQuery) {
-  const [data, setData] = useState<MerchantResponse | null>(null);
-  const [error, setError] = useState<any>(null);
-  const [isFetching, setIsFetching] = useState<boolean>(false);
-
-  const fetchMerchants = async () => {
-    try {
-      setIsFetching(true);
+  const { data, isFetching, error, refetch,  } = useQuery<
+  MerchantResponse | null | undefined
+  >(
+    "MerchantList",
+    async () => {
       const response = await api.get("core/merchant/list", {
         params,
       });
-      setData(response.data);
-    } catch (error) {
-      setError(error);
-    } finally {
-      setIsFetching(false);
+      return response.data;
     }
-  };
+  );
 
   useEffect(() => {
-    fetchMerchants();
+    refetch();
   }, [params]);
 
   const merchantsData = data;
   const isMerchantFetching = isFetching;
   const merchantError: any = error;
-  const refetcMerchant = fetchMerchants;
+  const refetcMerchant = refetch;
 
   return {
     merchantsData,

@@ -108,7 +108,6 @@
     "update": "Editar",
     "credentials": "Credenciais",
     "manual_entry_category": "Categorias lançamentos manuais"
-
   },
 
   "titles": {
@@ -198,7 +197,8 @@
     "new_person": "Nova pessoa",
     "register_in": "Registrar entrada",
     "register_out": "Registrar saída",
-    "new_bank_blacklist": "Adicionar à blacklist"
+    "new_bank_blacklist": "Adicionar à blacklist",
+    "resend_webhook": "Reenviar webhook"
   },
   "input": {
     "required": "Por favor, insira o {{field}}",
@@ -267,7 +267,11 @@
     "max_value_different_payer_pf_by_day": "Valor máximo terceiros/dia",
     "withdraw_limit_document_by_day": "Limite de Saques por CPF (Quantidade por dia)",
     "unlimited": "Sem limites",
-    "check_cpf_permission": "Permissão Checar CPF"
+    "check_cpf_permission": "Permissão Checar CPF",
+    "webhook_type": "Tipo de webhook",
+    "primary": "Primário",
+    "secondary": "Secundário",
+    "both": "Ambos"
   },
   "table": {
     "id": "ID",
@@ -511,6 +515,7 @@
     "date_too_log": "A diferença entre as datas deve ser menor ou igual a 30 dias",
     "password_or_username": "Senha e/ou usuário incorretos.",
     "BANK_ALREADY_CREATED": "Esse banco já foi adicionado",
+    "date_1_hour": "A diferença máxima deve ser de uma hora",
     "undefined": "Não foi possível se conectar ao servidor. Aguarde enquanto solucionamos este problema."
   },
   "logs": {

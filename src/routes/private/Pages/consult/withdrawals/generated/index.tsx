@@ -22,6 +22,10 @@ import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { useCreateGeneratedWithdrawalsReports } from "@src/services/reports/consult/withdrawals/generated/createGeneratedWithdrawalsReports";
 import { queryClient } from "@src/services/queryClient";
 import { ValidateInterface } from "@src/services/types/validate.interface";
+import { useCreateSendWithdrawWebhook } from "@src/services/consult/withdrawals/generatedWithdrawals/resendWebhook";
+import { ResendWebhookBody } from "@src/services/types/consult/deposits/createResendWebhook.interface";
+import { ResendWebhookModal } from "../../deposits/components/ResendWebhookModal";
+import { Toast } from "@src/components/Toast";
 
 const INITIAL_QUERY: generatedWithdrawalsRowsQuery = {
   page: 1,
@@ -70,11 +74,26 @@ export const GeneratedWithdrawals = () => {
 
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const [isWebhookModalOpen, setIsWebhookModalOpen] = useState<boolean>(false);
+  const [isResendWebhookModalOpen, setIsResendWebhookModalOpen] =
+    useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<any>();
   const [searchOption, setSearchOption] = useState<string | null>(null);
   const [search, setSearch] = useState<string | null>(null);
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const debounceSearch = useDebounce(search);
+
+  const [webhookBody, setWebhookBody] = useState<ResendWebhookBody>({
+    start_date: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss.SSS"),
+    end_date: moment(new Date())
+      .add(1, "hour")
+      .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+    merchant_id: undefined,
+    partner_id: undefined,
+    webhook_url_type: "both",
+  });
+
+  const { ResendWebMutate, ResendWebError, ResendWebIsSuccess } =
+    useCreateSendWithdrawWebhook(webhookBody);
 
   const columns: ColumnInterface[] = [
     { name: "_id", type: "id" },
@@ -219,6 +238,24 @@ export const GeneratedWithdrawals = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
+        <Grid item xs={12} md={2} lg={2}>
+          <Button
+            type="primary"
+            loading={isWithdrawalsRowsFetching}
+            size="large"
+            onClick={() => {
+              setIsResendWebhookModalOpen(true);
+            }}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "100%",
+            }}
+          >
+            {t("modal.resend_webhook")}
+          </Button>
+        </Grid>
         {permissions.report.withdraw.generated_withdraw
           .report_withdraw_generated_withdraw_export_csv && (
           <Grid item xs={12} md="auto" lg={1}>
@@ -320,6 +357,21 @@ export const GeneratedWithdrawals = () => {
           initialQuery={INITIAL_QUERY}
         />
       )}
+      {isResendWebhookModalOpen && (
+        <ResendWebhookModal
+          open={isResendWebhookModalOpen}
+          setOpen={setIsResendWebhookModalOpen}
+          body={webhookBody}
+          setBody={setWebhookBody}
+          submit={ResendWebMutate}
+        />
+      )}
+      <Toast
+        actionSuccess={t("messages.created")}
+        actionError={t("messages.create")}
+        error={ResendWebError}
+        success={ResendWebIsSuccess}
+      />
     </Grid>
   );
 };

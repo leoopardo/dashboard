@@ -22,6 +22,10 @@ import { useCreateGeneratedDepositsReports } from "@src/services/reports/consult
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { queryClient } from "@src/services/queryClient";
 import { ValidateInterface } from "@src/services/types/validate.interface";
+import { ResendWebhookModal } from "../components/ResendWebhookModal";
+import { useCreateSendWebhook } from "@src/services/consult/deposits/generatedDeposits/resendWebhook";
+import { ResendWebhookBody } from "@src/services/types/consult/deposits/createResendWebhook.interface";
+import { Toast } from "@src/components/Toast";
 const { RangePicker } = DatePicker;
 
 const INITIAL_QUERY: generatedDepositTotalQuery = {
@@ -62,6 +66,8 @@ export const GeneratedDeposits = () => {
 
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const [isWebhookModalOpen, setIsWebhookModalOpen] = useState<boolean>(false);
+  const [isResendWebhookModalOpen, setIsResendWebhookModalOpen] =
+    useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<any>();
   const [searchOption, setSearchOption] = useState<string | null>(null);
   const [search, setSearch] = useState<string | null>(null);
@@ -74,6 +80,19 @@ export const GeneratedDeposits = () => {
     GeneratedDepositsReportsIsSuccess,
     GeneratedDepositsReportsMutate,
   } = useCreateGeneratedDepositsReports(query);
+
+  const [webhookBody, setWebhookBody] = useState<ResendWebhookBody>({
+    start_date: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss.SSS"),
+    end_date: moment(new Date())
+      .add(1, "hour")
+      .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+    merchant_id: undefined,
+    partner_id: undefined,
+    webhook_url_type: "both",
+  });
+
+  const { ResendWebMutate, ResendWebError, ResendWebIsSuccess } =
+    useCreateSendWebhook(webhookBody);
 
   const columns: ColumnInterface[] = [
     { name: "_id", type: "id" },
@@ -206,13 +225,13 @@ export const GeneratedDeposits = () => {
             type="dashed"
             loading={isDepositsRowsFetching}
             danger
+            size="large"
             onClick={() => {
               setQuery(INITIAL_QUERY);
               setSearchOption(null);
               setSearch(null);
             }}
             style={{
-              height: 40,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -221,6 +240,24 @@ export const GeneratedDeposits = () => {
           >
             <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
             {t("table.clear_filters")}
+          </Button>
+        </Grid>
+        <Grid item xs={12} md={2} lg={2}>
+          <Button
+            type="primary"
+            loading={isDepositsRowsFetching}
+            size="large"
+            onClick={() => {
+              setIsResendWebhookModalOpen(true);
+            }}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "100%",
+            }}
+          >
+            {t("modal.resend_webhook")}
           </Button>
         </Grid>
         {permissions.report.deposit.generated_deposit
@@ -325,6 +362,21 @@ export const GeneratedDeposits = () => {
           initialQuery={INITIAL_QUERY}
         />
       )}
+      {isResendWebhookModalOpen && (
+        <ResendWebhookModal
+          open={isResendWebhookModalOpen}
+          setOpen={setIsResendWebhookModalOpen}
+          body={webhookBody}
+          setBody={setWebhookBody}
+          submit={ResendWebMutate}
+        />
+      )}
+      <Toast
+        actionSuccess={t("messages.created")}
+        actionError={t("messages.create")}
+        error={ResendWebError}
+        success={ResendWebIsSuccess}
+      />
     </Grid>
   );
 };

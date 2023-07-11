@@ -223,6 +223,7 @@ export const FiltersModal = ({
                     <RangePicker
                       size="small"
                       panelRender={panelRender}
+                      popupStyle={{marginLeft: "40px"}}
                       format="YYYY-MM-DD HH:mm:ss"
                       showTime
                       value={[
