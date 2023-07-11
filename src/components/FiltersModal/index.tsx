@@ -1,12 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useState,
-  useRef,
-} from "react";
+import { Dispatch, SetStateAction, useEffect, useState, useRef } from "react";
 import {
   Button,
   Drawer,
@@ -200,7 +194,7 @@ export const FiltersModal = ({
             case startDateKeyName:
               return (
                 <Form.Item
-                  label={"table.date"}
+                  label={t("table.date")}
                   style={{ margin: 10 }}
                   name={startDateKeyName}
                   rules={[
@@ -461,19 +455,19 @@ export const FiltersModal = ({
                 </Form.Item>
               );
 
-              case "reason":
-                return (
-                  <Form.Item
-                    label={t(`table.${filter}`)}
-                    name={filter}
-                    style={{ margin: 10 }}
-                  >
-                    <ReasonSelect
-                      queryOptions={filtersQuery}
-                      setQueryFunction={setFiltersQuery}
-                    />
-                  </Form.Item>
-                );
+            case "reason":
+              return (
+                <Form.Item
+                  label={t(`table.${filter}`)}
+                  name={filter}
+                  style={{ margin: 10 }}
+                >
+                  <ReasonSelect
+                    queryOptions={filtersQuery}
+                    setQueryFunction={setFiltersQuery}
+                  />
+                </Form.Item>
+              );
             case endDateKeyName:
               return;
 

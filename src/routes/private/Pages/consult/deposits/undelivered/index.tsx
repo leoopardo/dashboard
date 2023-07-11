@@ -17,6 +17,10 @@ import { FiltersModal } from "../../../../../../components/FiltersModal";
 import { useTranslation } from "react-i18next";
 import useDebounce from "../../../../../../utils/useDebounce";
 import { FilterChips } from "../../../../../../components/FiltersModal/filterChips";
+import { queryClient } from "@src/services/queryClient";
+import { ValidateInterface } from "@src/services/types/validate.interface";
+import { useCreateGeneratedDepositsReports } from "@src/services/reports/consult/deposits/createGeneratedDepositsReports";
+import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 
 const INITIAL_QUERY: generatedDepositTotalQuery = {
   page: 1,
@@ -32,8 +36,11 @@ const INITIAL_QUERY: generatedDepositTotalQuery = {
 };
 
 export const UndeliveredDeposits = () => {
-  const { t } = useTranslation();
+  const { permissions } = queryClient.getQueryData(
+    "validate"
+  ) as ValidateInterface;
 
+  const { t } = useTranslation();
   const [query, setQuery] = useState<generatedDepositTotalQuery>(INITIAL_QUERY);
   const {
     depositsTotal,
@@ -42,11 +49,15 @@ export const UndeliveredDeposits = () => {
     refetchDepositsTotal,
   } = useGetTotalGeneratedDeposits(query);
 
+  const { depositsRows, isDepositsRowsFetching, refetchDepositsTotalRows } =
+    useGetRowsGeneratedDeposits(query);
+
   const {
-    depositsRows,
-    isDepositsRowsFetching,
-    refetchDepositsTotalRows,
-  } = useGetRowsGeneratedDeposits(query);
+    GeneratedDepositsReportsError,
+    GeneratedDepositsReportsIsLoading,
+    GeneratedDepositsReportsIsSuccess,
+    GeneratedDepositsReportsMutate,
+  } = useCreateGeneratedDepositsReports(query);
 
   useEffect(() => {
     refetchDepositsTotalRows();
@@ -103,12 +114,15 @@ export const UndeliveredDeposits = () => {
         )}
       </Grid>
 
-      <TotalizersCards
-        data={depositsTotal}
-        fetchData={refetchDepositsTotal}
-        loading={isDepositsTotalFetching}
-        query={query}
-      />
+      {permissions.report.deposit.undelivered_deposit
+        .report_deposit_undelivered_deposit_list_totals && (
+        <TotalizersCards
+          data={depositsTotal}
+          fetchData={refetchDepositsTotal}
+          loading={isDepositsTotalFetching}
+          query={query}
+        />
+      )}
 
       <Grid
         container
@@ -198,6 +212,18 @@ export const UndeliveredDeposits = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
+        {permissions.report.deposit.undelivered_deposit
+          .report_deposit_undelivered_deposit_export_csv && (
+          <Grid item xs={12} md="auto" lg={1}>
+            <ExportReportsModal
+              mutateReport={() => GeneratedDepositsReportsMutate()}
+              error={GeneratedDepositsReportsError}
+              success={GeneratedDepositsReportsIsSuccess}
+              loading={GeneratedDepositsReportsIsLoading}
+              reportPath="/consult/deposit/deposits_reports/generated_deposits_reports"
+            />
+          </Grid>
+        )}
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -238,7 +264,7 @@ export const UndeliveredDeposits = () => {
       )}
       {isFiltersOpen && (
         <FiltersModal
-        maxRange
+          maxRange
           open={isFiltersOpen}
           setOpen={setIsFiltersOpen}
           query={query}

@@ -72,7 +72,6 @@ export const NewUserModal = ({
   }
 
   function CreateUser(event: any) {
-    event.preventDefault();
     if (
       currentUser &&
       setUpdateBody &&

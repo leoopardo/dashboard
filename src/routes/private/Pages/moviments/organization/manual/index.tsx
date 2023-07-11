@@ -21,8 +21,14 @@ import { useMediaQuery } from "react-responsive";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { useCreateOrganizationManualReports } from "@src/services/reports/moviments/organization/createManualTransactionsReports";
+import { queryClient } from "@src/services/queryClient";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 
 export const OrgonizationManual = () => {
+  const { permissions } = queryClient.getQueryData(
+    "validate"
+  ) as ValidateInterface;
+
   const isMobile = useMediaQuery({ maxWidth: "900px" });
   const INITIAL_QUERY: GetMovimentsQuery = {
     page: 1,
@@ -145,33 +151,36 @@ export const OrgonizationManual = () => {
                 return;
             }
           })}
-        <Grid container item xs={12} md={4} lg={2} rowSpacing={1}>
-          <Grid item xs={12}>
-            {" "}
-            <Button
-              style={{ width: "100%", minWidth: "200px" }}
-              size="large"
-              type="default"
-              shape="round"
-              onClickCapture={() => setOperationInIOpen(true)}
-            >
-              <ArrowUpOutlined /> {t("buttons.register_in")}
-            </Button>
+        {permissions.transactions.paybrokers.manual_transactions
+          .paybrokers_manual_transactions_create && (
+          <Grid container item xs={12} md={4} lg={2} rowSpacing={1}>
+            <Grid item xs={12}>
+              {" "}
+              <Button
+                style={{ width: "100%", minWidth: "200px" }}
+                size="large"
+                type="default"
+                shape="round"
+                onClickCapture={() => setOperationInIOpen(true)}
+              >
+                <ArrowUpOutlined /> {t("buttons.register_in")}
+              </Button>
+            </Grid>
+            <Grid item xs={12}>
+              <Button
+                style={{ width: "100%", minWidth: "200px" }}
+                size="large"
+                type="default"
+                shape="round"
+                danger
+                onClickCapture={() => setOperationOutOpen(true)}
+              >
+                <ArrowDownOutlined />
+                {t("buttons.register_out")}
+              </Button>
+            </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <Button
-              style={{ width: "100%", minWidth: "200px" }}
-              size="large"
-              type="default"
-              shape="round"
-              danger
-              onClickCapture={() => setOperationOutOpen(true)}
-            >
-              <ArrowDownOutlined />
-              {t("buttons.register_out")}
-            </Button>
-          </Grid>
-        </Grid>
+        )}
       </Grid>
       <Grid container>
         <Grid item xs={12}>
@@ -223,15 +232,18 @@ export const OrgonizationManual = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md="auto" lg={1}>
-          <ExportReportsModal
-            mutateReport={() => OrganizationManualReportsMutate()}
-            error={OrganizationManualReportsError}
-            success={OrganizationManualReportsIsSuccess}
-            loading={OrganizationManualReportsIsLoading}
-            reportPath="/moviment/organization_moviments/organization_moviments_reports"
-          />
-        </Grid>
+        {permissions.transactions.paybrokers.manual_transactions
+          .paybrokers_manual_transactions_export_csv && (
+          <Grid item xs={12} md="auto" lg={1}>
+            <ExportReportsModal
+              mutateReport={() => OrganizationManualReportsMutate()}
+              error={OrganizationManualReportsError}
+              success={OrganizationManualReportsIsSuccess}
+              loading={OrganizationManualReportsIsLoading}
+              reportPath="/moviment/organization_moviments/organization_moviments_reports"
+            />
+          </Grid>
+        )}
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>

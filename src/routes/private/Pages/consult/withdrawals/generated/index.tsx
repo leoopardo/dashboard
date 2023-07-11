@@ -20,6 +20,8 @@ import { useGetTotalGeneratedWithdrawals } from "@src/services/consult/withdrawa
 import { useGetRowsGeneratedWithdrawals } from "@src/services/consult/withdrawals/generatedWithdrawals/getRows";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { useCreateGeneratedWithdrawalsReports } from "@src/services/reports/consult/withdrawals/generated/createGeneratedWithdrawalsReports";
+import { queryClient } from "@src/services/queryClient";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 
 const INITIAL_QUERY: generatedWithdrawalsRowsQuery = {
   page: 1,
@@ -34,6 +36,10 @@ const INITIAL_QUERY: generatedWithdrawalsRowsQuery = {
 };
 
 export const GeneratedWithdrawals = () => {
+  const { permissions } = queryClient.getQueryData(
+    "validate"
+  ) as ValidateInterface;
+
   const { t } = useTranslation();
   const [query, setQuery] =
     useState<generatedWithdrawalsRowsQuery>(INITIAL_QUERY);
@@ -115,13 +121,15 @@ export const GeneratedWithdrawals = () => {
           <></>
         )}
       </Grid>
-
-      <TotalizersCards
-        data={WithdrawalsTotal}
-        fetchData={refetchWithdrawalsTotal}
-        loading={isWithdrawalsTotalFetching}
-        query={query}
-      />
+      {permissions.report.withdraw.generated_withdraw
+        .report_withdraw_generated_withdraw_list_totals && (
+        <TotalizersCards
+          data={WithdrawalsTotal}
+          fetchData={refetchWithdrawalsTotal}
+          loading={isWithdrawalsTotalFetching}
+          query={query}
+        />
+      )}
 
       <Grid
         container
@@ -211,15 +219,18 @@ export const GeneratedWithdrawals = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md="auto" lg={1}>
-          <ExportReportsModal
-            mutateReport={() => GeneratedWithdrawalsReportsMutate()}
-            error={GeneratedWithdrawalsReportsError}
-            success={GeneratedWithdrawalsReportsIsSuccess}
-            loading={GeneratedWithdrawalsReportsIsLoading}
-            reportPath="/consult/withdrawals/withdrawals_reports/generated_withdrawals_reports"
-          />
-        </Grid>
+        {permissions.report.withdraw.generated_withdraw
+          .report_withdraw_generated_withdraw_export_csv && (
+          <Grid item xs={12} md="auto" lg={1}>
+            <ExportReportsModal
+              mutateReport={() => GeneratedWithdrawalsReportsMutate()}
+              error={GeneratedWithdrawalsReportsError}
+              success={GeneratedWithdrawalsReportsIsSuccess}
+              loading={GeneratedWithdrawalsReportsIsLoading}
+              reportPath="/consult/withdrawals/withdrawals_reports/generated_withdrawals_reports"
+            />
+          </Grid>
+        )}
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>

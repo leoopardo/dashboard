@@ -45,9 +45,9 @@ export interface ColumnInterface {
 }
 
 export interface actionsInterface {
-  label: string;
+  label?: string;
   icon?: any;
-  onClick: (item?: any) => void;
+  onClick?: (item?: any) => void;
   disabled?: (item?: any) => boolean;
 }
 
@@ -62,7 +62,7 @@ interface TableProps {
   label?: string[];
   setCurrentItem: Dispatch<SetStateAction<any>>;
   removeTotal?: boolean;
-  actions?: actionsInterface[];
+  actions?: (actionsInterface | false)[];
   removePagination?: boolean;
   isConfirmOpen?: boolean;
   setIsConfirmOpen?: Dispatch<SetStateAction<boolean>>;
@@ -88,13 +88,14 @@ export const CustomTable = (props: TableProps) => {
 
     if (props.actions && props.actions.length > 0) {
       for (const action of props.actions) {
-        act.push({
-          key: action.label,
-          label: t(`actions.${action.label}`),
-          icon: action.icon,
-          disabled: action.disabled,
-          onClick: action.onClick,
-        });
+        if (action)
+          act.push({
+            key: action?.label,
+            label: t(`actions.${action?.label}`),
+            icon: action?.icon,
+            disabled: action?.disabled,
+            onClick: action?.onClick,
+          });
       }
       setActions(act);
     }
@@ -369,7 +370,11 @@ export const CustomTable = (props: TableProps) => {
                         return {
                           ...action,
                           disabled: disable,
-                          onClick: () => action.onClick(record),
+                          onClick: () => {
+                            if (action && action.onClick) {
+                              action.onClick(record);
+                            }
+                          },
                         };
                       }),
                     }}

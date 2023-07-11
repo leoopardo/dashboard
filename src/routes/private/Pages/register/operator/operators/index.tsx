@@ -19,6 +19,8 @@ import {
 } from "@src/services/types/register/operators/operators.interface";
 import { useCreateOperator } from "@src/services/register/operator/createOperator";
 import { useUpdateOperator } from "@src/services/register/operator/updateOperator";
+import { queryClient } from "@src/services/queryClient";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 
 const INITIAL_QUERY: OperatorQuery = {
   limit: 25,
@@ -28,6 +30,9 @@ const INITIAL_QUERY: OperatorQuery = {
 };
 
 export const Operators = () => {
+  const { permissions } = queryClient.getQueryData(
+    "validate"
+  ) as ValidateInterface;
   const [query, setQuery] = useState<OperatorQuery>(INITIAL_QUERY);
   const { t } = useTranslation();
 
@@ -154,25 +159,27 @@ export const Operators = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={3} lg={2}>
-          <Button
-            type="primary"
-            loading={isOperatorDataFetching}
-            onClick={() => {
-              setIsNewCategorieModal(true);
-            }}
-            style={{
-              height: 40,
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <UserAddOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
-            {`${t("buttons.create")} ${t("buttons.new_operator")}`}
-          </Button>
-        </Grid>
+        {permissions.register.operator.operator.operator_create && (
+          <Grid item xs={12} md={3} lg={2}>
+            <Button
+              type="primary"
+              loading={isOperatorDataFetching}
+              onClick={() => {
+                setIsNewCategorieModal(true);
+              }}
+              style={{
+                height: 40,
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <UserAddOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
+              {`${t("buttons.create")} ${t("buttons.new_operator")}`}
+            </Button>
+          </Grid>
+        )}
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -190,7 +197,7 @@ export const Operators = () => {
                   setIsViewModalOpen(true);
                 },
               },
-              {
+              permissions.register.operator.operator.operator_update && {
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
                 onClick: () => {

@@ -22,6 +22,8 @@ import { useUpdateMerchant } from "@services/register/merchant/merchant/updateMe
 import { useNavigate } from "react-router-dom";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { useCreateMerchantReports } from "@src/services/reports/register/merchant/createMerchantReports";
+import { queryClient } from "@src/services/queryClient";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 
 const INITIAL_QUERY: MerchantsQuery = {
   limit: 25,
@@ -31,6 +33,9 @@ const INITIAL_QUERY: MerchantsQuery = {
 };
 
 export const MerchantView = () => {
+  const { permissions } = queryClient.getQueryData(
+    "validate"
+  ) as ValidateInterface;
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [query, setQuery] = useState<MerchantsQuery>(INITIAL_QUERY);
@@ -50,13 +55,19 @@ export const MerchantView = () => {
     merchant_id: currentItem?.id,
   });
 
-  const { UpdateError, UpdateIsLoading, UpdateIsSuccess, UpdateMutate } =
-    useUpdateMerchant(updateBody);
+  const {
+    UpdateError,
+    UpdateIsLoading,
+    UpdateIsSuccess,
+    UpdateMutate,
+    UpdateReset,
+  } = useUpdateMerchant(updateBody);
   const {
     MerchantReportsError,
     MerchantReportsIsLoading,
     MerchantReportsIsSuccess,
     MerchantReportsMutate,
+    MerchantReset,
   } = useCreateMerchantReports(query);
   const [search, setSearch] = useState<string>("");
   const [isConfigOpen, setIsConfigOpen] = useState(false);
@@ -161,34 +172,40 @@ export const MerchantView = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={3} lg={2}>
-          <Button
-            type="primary"
-            loading={isMerchantDataFetching}
-            onClick={() => {
-              setIsNewMerchantModal(true);
-            }}
-            style={{
-              height: 40,
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <UserAddOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
-            {`${t("buttons.create")} ${t("buttons.new_user")}`}
-          </Button>
-        </Grid>
-        <Grid item xs={12} md="auto">
-          <ExportReportsModal
-            mutateReport={() => MerchantReportsMutate()}
-            error={MerchantReportsError}
-            success={MerchantReportsIsSuccess}
-            loading={MerchantReportsIsLoading}
-            reportPath="/register/merchant/merchant_reports/merchant_merchants_reports"
-          />
-        </Grid>
+        {permissions.register.merchant.merchant.merchant_create && (
+          <Grid item xs={12} md={3} lg={2}>
+            <Button
+              type="primary"
+              loading={isMerchantDataFetching}
+              onClick={() => {
+                MerchantReset();
+                setIsNewMerchantModal(true);
+              }}
+              style={{
+                height: 40,
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <UserAddOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
+              {`${t("buttons.create")} ${t("buttons.new_user")}`}
+            </Button>
+          </Grid>
+        )}
+
+        {permissions.register.merchant.merchant.merchant_export_csv && (
+          <Grid item xs={12} md="auto">
+            <ExportReportsModal
+              mutateReport={() => MerchantReportsMutate()}
+              error={MerchantReportsError}
+              success={MerchantReportsIsSuccess}
+              loading={MerchantReportsIsLoading}
+              reportPath="/register/merchant/merchant_reports/merchant_merchants_reports"
+            />
+          </Grid>
+        )}
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -211,10 +228,13 @@ export const MerchantView = () => {
                   setIsViewModalOpen(true);
                 },
               },
-              {
+              permissions.register.merchant.merchant.merchant_update && {
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
-                onClick: () => setIsUpdateModalOpen(true),
+                onClick: () => {
+                  UpdateReset();
+                  setIsUpdateModalOpen(true);
+                },
               },
               {
                 label: "configs",

@@ -8,10 +8,7 @@ import React, {
 } from "react";
 import { useTranslation } from "react-i18next";
 import { GroupSelect } from "@components/Selects/groupSelect";
-import { useCreateOrganizationUser } from "@services/register/organization/users/createUser";
-import { toast } from "react-hot-toast";
 import { OrganizationUserItem } from "@src/services/types/register/organization/organizationUsers.interface";
-import { useUpdateOrganizationUser } from "@services/register/organization/users/updateUser";
 import { Toast } from "@src/components/Toast";
 import { useCreateAggregatorUser } from "@src/services/register/aggregator/users/createUser";
 import { useUpdateAggregatorUser } from "@src/services/register/aggregator/users/updateUser";
@@ -63,8 +60,9 @@ export const NewUserModal = ({
     type: 2,
   });
 
-  const { mutate, error, isLoading, isSuccess } = useCreateAggregatorUser(body);
-  const { updateError, updateLoading, updateMutate, updateSuccess } =
+  const { mutate, error, isLoading, isSuccess, reset } =
+    useCreateAggregatorUser(body);
+  const { updateError, updateLoading, updateSuccess } =
     useUpdateAggregatorUser(body);
 
   function handleChangeUserBody(event: any) {
@@ -100,6 +98,7 @@ export const NewUserModal = ({
   }, [currentUser]);
 
   useEffect(() => {
+    reset();
     if (action === "create") {
       setBody({
         name: "",

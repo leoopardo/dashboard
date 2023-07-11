@@ -17,6 +17,10 @@ import { FilterChips } from "../../../../../../components/FiltersModal/filterChi
 import { generatedWithdrawalsRowsQuery } from "../../../../../../services/types/consult/withdrawals/generatedWithdrawals.interface";
 import { useGetTotalGeneratedWithdrawals } from "@src/services/consult/withdrawals/generatedWithdrawals/getTotal";
 import { useGetRowsGeneratedWithdrawals } from "@src/services/consult/withdrawals/generatedWithdrawals/getRows";
+import { useCreateGeneratedWithdrawalsReports } from "@src/services/reports/consult/withdrawals/generated/createGeneratedWithdrawalsReports";
+import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
+import { queryClient } from "@src/services/queryClient";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 
 const INITIAL_QUERY: generatedWithdrawalsRowsQuery = {
   page: 1,
@@ -32,6 +36,9 @@ const INITIAL_QUERY: generatedWithdrawalsRowsQuery = {
 };
 
 export const UndeliveredWithdrawals = () => {
+  const { permissions } = queryClient.getQueryData(
+    "validate"
+  ) as ValidateInterface;
   const { t } = useTranslation();
   const [query, setQuery] =
     useState<generatedWithdrawalsRowsQuery>(INITIAL_QUERY);
@@ -48,6 +55,13 @@ export const UndeliveredWithdrawals = () => {
     isWithdrawalsRowsFetching,
     refetchWithdrawalsTotalRows,
   } = useGetRowsGeneratedWithdrawals(query);
+
+  const {
+    GeneratedWithdrawalsReportsError,
+    GeneratedWithdrawalsReportsIsLoading,
+    GeneratedWithdrawalsReportsIsSuccess,
+    GeneratedWithdrawalsReportsMutate,
+  } = useCreateGeneratedWithdrawalsReports(query);
 
   useEffect(() => {
     refetchWithdrawalsTotalRows();
@@ -105,12 +119,15 @@ export const UndeliveredWithdrawals = () => {
         )}
       </Grid>
 
-      <TotalizersCards
-        data={WithdrawalsTotal}
-        fetchData={refetchWithdrawalsTotal}
-        loading={isWithdrawalsTotalFetching}
-        query={query}
-      />
+      {permissions.report.withdraw.undelivered_withdraw
+        .report_withdraw_undelivered_withdraw_list_totals && (
+        <TotalizersCards
+          data={WithdrawalsTotal}
+          fetchData={refetchWithdrawalsTotal}
+          loading={isWithdrawalsTotalFetching}
+          query={query}
+        />
+      )}
 
       <Grid
         container
@@ -200,6 +217,18 @@ export const UndeliveredWithdrawals = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
+        {permissions.report.withdraw.undelivered_withdraw
+          .report_withdraw_undelivered_withdraw_export_csv && (
+          <Grid item xs={12} md="auto" lg={1}>
+            <ExportReportsModal
+              mutateReport={() => GeneratedWithdrawalsReportsMutate()}
+              error={GeneratedWithdrawalsReportsError}
+              success={GeneratedWithdrawalsReportsIsSuccess}
+              loading={GeneratedWithdrawalsReportsIsLoading}
+              reportPath="/consult/withdrawals/withdrawals_reports/generated_withdrawals_reports"
+            />
+          </Grid>
+        )}
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>

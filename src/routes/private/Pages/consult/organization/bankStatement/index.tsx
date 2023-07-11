@@ -19,6 +19,8 @@ import { PieNumber } from "./components/PieNumber";
 import { useMediaQuery } from "react-responsive";
 import { useCreateBankStatementReports } from "@src/services/reports/consult/organization/createBankStatementReports";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
+import { queryClient } from "@src/services/queryClient";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 
 const INITIAL_QUERY: OrganizationBankStatementTotalsQuery = {
   start_date: moment(new Date())
@@ -31,6 +33,10 @@ const INITIAL_QUERY: OrganizationBankStatementTotalsQuery = {
 };
 
 export const OrganizationBankStatement = () => {
+  const { permissions } = queryClient.getQueryData(
+    "validate"
+  ) as ValidateInterface;
+
   const isMobile = useMediaQuery({ maxWidth: "900px" });
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [, setCurrentItem] = useState<any>();
@@ -112,15 +118,18 @@ export const OrganizationBankStatement = () => {
             <ReloadOutlined /> {t("buttons.refresh")}
           </Button>
         </Grid>
-        <Grid item xs={12} md="auto" lg={1}>
-          <ExportReportsModal
-            mutateReport={() => BankStatementReportsMutate()}
-            error={BankStatementReportsError}
-            success={BankStatementReportsIsSuccess}
-            loading={BankStatementReportsIsLoading}
-            reportPath="/consult/consult_organization/consult_organization_reports"
-          />
-        </Grid>
+        {permissions.report.paybrokers.extract
+          .report_paybrokers_extract_export_csv && (
+          <Grid item xs={12} md="auto" lg={1}>
+            <ExportReportsModal
+              mutateReport={() => BankStatementReportsMutate()}
+              error={BankStatementReportsError}
+              success={BankStatementReportsIsSuccess}
+              loading={BankStatementReportsIsLoading}
+              reportPath="/consult/consult_organization/consult_organization_reports"
+            />
+          </Grid>
+        )}
       </Grid>
       <Totalizers query={query} />
 

@@ -19,6 +19,8 @@ import {
 import { useGetAggregators } from "@src/services/register/aggregator/getAggregators";
 import { useCreateAggregator } from "@src/services/register/aggregator/createAggregator";
 import { useUpdateAggregator } from "@src/services/register/aggregator/updateAggregator";
+import { queryClient } from "@src/services/queryClient";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 
 const INITIAL_QUERY: AggregatorQuery = {
   limit: 25,
@@ -28,6 +30,9 @@ const INITIAL_QUERY: AggregatorQuery = {
 };
 
 export const Aggregators = () => {
+  const { permissions } = queryClient.getQueryData(
+    "validate"
+  ) as ValidateInterface;
   const [query, setQuery] = useState<AggregatorQuery>(INITIAL_QUERY);
   const { t } = useTranslation();
 
@@ -63,10 +68,16 @@ export const Aggregators = () => {
     AggregatorMutate,
     AggregatorError,
     AggregatorIsSuccess,
+    AggregatorReset,
   } = useCreateAggregator(createBody);
 
-  const { UpdateError, UpdateIsLoading, UpdateMutate, UpdateIsSuccess } =
-    useUpdateAggregator(updateBody);
+  const {
+    UpdateError,
+    UpdateIsLoading,
+    UpdateMutate,
+    UpdateIsSuccess,
+    UpdateReset,
+  } = useUpdateAggregator(updateBody);
 
   const columns: ColumnInterface[] = [
     { name: "id", type: "id" },
@@ -154,25 +165,28 @@ export const Aggregators = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={3} lg={2}>
-          <Button
-            type="primary"
-            loading={isAggregatorsDataFetching}
-            onClick={() => {
-              setIsNewCategorieModal(true);
-            }}
-            style={{
-              height: 40,
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <UserAddOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
-            {`${t("buttons.create")} ${t("buttons.new_aggregator")}`}
-          </Button>
-        </Grid>
+        {permissions.register.aggregator.aggregator.aggregator_create && (
+          <Grid item xs={12} md={3} lg={2}>
+            <Button
+              type="primary"
+              loading={isAggregatorsDataFetching}
+              onClick={() => {
+                AggregatorReset();
+                setIsNewCategorieModal(true);
+              }}
+              style={{
+                height: 40,
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <UserAddOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
+              {`${t("buttons.create")} ${t("buttons.new_aggregator")}`}
+            </Button>
+          </Grid>
+        )}
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -190,10 +204,11 @@ export const Aggregators = () => {
                   setIsViewModalOpen(true);
                 },
               },
-              {
+              permissions.register.aggregator.aggregator.aggregator_update && {
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
                 onClick: () => {
+                  UpdateReset();
                   setIsUpdateCategorieModalOpen(true);
                 },
               },

@@ -5,7 +5,7 @@ import { MerchantUserBodyItem } from "@src/services/types/register/merchants/mer
 import { queryClient } from "../../../queryClient";
 
 export function useCreateMerchantUser(body: MerchantUserBodyItem) {
-  const { isLoading, error, mutate, isSuccess } = useMutation<
+  const { isLoading, error, mutate, isSuccess, reset } = useMutation<
     MerchantUserBodyItem | null | undefined
   >("CreateMerchantUserr", async () => {
     const response = await api.post("core/user/create/merchant", body, {});
@@ -17,6 +17,6 @@ export function useCreateMerchantUser(body: MerchantUserBodyItem) {
     isLoading,
     error,
     mutate,
-    isSuccess,
+    isSuccess,reset
   };
 }

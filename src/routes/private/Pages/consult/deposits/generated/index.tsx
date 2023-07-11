@@ -20,6 +20,8 @@ import { FilterChips } from "../../../../../../components/FiltersModal/filterChi
 import { WebhookModal } from "../components/webhooksModal";
 import { useCreateGeneratedDepositsReports } from "@src/services/reports/consult/deposits/createGeneratedDepositsReports";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
+import { queryClient } from "@src/services/queryClient";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 const { RangePicker } = DatePicker;
 
 const INITIAL_QUERY: generatedDepositTotalQuery = {
@@ -35,6 +37,9 @@ const INITIAL_QUERY: generatedDepositTotalQuery = {
 };
 
 export const GeneratedDeposits = () => {
+  const { permissions } = queryClient.getQueryData(
+    "validate"
+  ) as ValidateInterface;
   const { t } = useTranslation();
   const [query, setQuery] = useState<generatedDepositTotalQuery>(INITIAL_QUERY);
   const {
@@ -114,16 +119,26 @@ export const GeneratedDeposits = () => {
         )}
       </Grid>
 
-      <TotalizersCards
-        data={depositsTotal}
-        fetchData={refetchDepositsTotal}
-        loading={isDepositsTotalFetching}
-        query={query}
-      />
+      {permissions.report.deposit.generated_deposit
+        .report_deposit_generated_deposit_list_totals && (
+        <TotalizersCards
+          data={depositsTotal}
+          fetchData={refetchDepositsTotal}
+          loading={isDepositsTotalFetching}
+          query={query}
+        />
+      )}
 
       <Grid
         container
-        style={{ marginTop: "20px", display: "flex", alignItems: "center" }}
+        style={{
+          marginTop: permissions.report.deposit.generated_deposit
+            .report_deposit_generated_deposit_list_totals
+            ? "20px"
+            : 0,
+          display: "flex",
+          alignItems: "center",
+        }}
         spacing={1}
       >
         <Grid item xs={12} md={4} lg={2}>
@@ -208,15 +223,18 @@ export const GeneratedDeposits = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md="auto" lg={1}>
-          <ExportReportsModal
-            mutateReport={() => GeneratedDepositsReportsMutate()}
-            error={GeneratedDepositsReportsError}
-            success={GeneratedDepositsReportsIsSuccess}
-            loading={GeneratedDepositsReportsIsLoading}
-            reportPath="/consult/deposit/deposits_reports/generated_deposits_reports"
-          />
-        </Grid>
+        {permissions.report.deposit.generated_deposit
+          .report_deposit_generated_deposit_export_csv && (
+          <Grid item xs={12} md="auto" lg={1}>
+            <ExportReportsModal
+              mutateReport={() => GeneratedDepositsReportsMutate()}
+              error={GeneratedDepositsReportsError}
+              success={GeneratedDepositsReportsIsSuccess}
+              loading={GeneratedDepositsReportsIsLoading}
+              reportPath="/consult/deposit/deposits_reports/generated_deposits_reports"
+            />
+          </Grid>
+        )}
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>

@@ -13,7 +13,7 @@ export const queryClient = new QueryClient({
         localStorage.removeItem("token");
         sessionStorage.removeItem("token");
         queryClient.refetchQueries(["validate"]);
-        toast.error("Token expirado")
+        toast.error("Token expirado");
       }
     },
   }),

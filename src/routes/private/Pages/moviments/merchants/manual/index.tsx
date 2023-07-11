@@ -20,8 +20,14 @@ import { useCreateMerchantManualTransaction } from "@src/services/moviments/merc
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { useCreateMerchantManualReports } from "@src/services/reports/moviments/merchant/createManualTransactionsReports";
+import { queryClient } from "@src/services/queryClient";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 
 export const MerchantManual = () => {
+  const { permissions } = queryClient.getQueryData(
+    "validate"
+  ) as ValidateInterface;
+
   const INITIAL_QUERY: GetMerchantMovimentsQuery = {
     page: 1,
     limit: 25,
@@ -143,33 +149,36 @@ export const MerchantManual = () => {
                 return;
             }
           })}
-        <Grid container item xs={12} md={4} lg={2} rowSpacing={1}>
-          <Grid item xs={12}>
-            {" "}
-            <Button
-              style={{ width: "100%", minWidth: "200px" }}
-              size="large"
-              type="default"
-              shape="round"
-              onClickCapture={() => setOperationInIOpen(true)}
-            >
-              <ArrowUpOutlined /> {t("buttons.register_in")}
-            </Button>
+        {permissions.transactions.merchant.manual_transactions
+          .merchant_manual_transactions_create && (
+          <Grid container item xs={12} md={4} lg={2} rowSpacing={1}>
+            <Grid item xs={12}>
+              {" "}
+              <Button
+                style={{ width: "100%", minWidth: "200px" }}
+                size="large"
+                type="default"
+                shape="round"
+                onClickCapture={() => setOperationInIOpen(true)}
+              >
+                <ArrowUpOutlined /> {t("buttons.register_in")}
+              </Button>
+            </Grid>
+            <Grid item xs={12}>
+              <Button
+                style={{ width: "100%", minWidth: "200px" }}
+                size="large"
+                type="default"
+                shape="round"
+                danger
+                onClickCapture={() => setOperationOutOpen(true)}
+              >
+                <ArrowDownOutlined />
+                {t("buttons.register_out")}
+              </Button>
+            </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <Button
-              style={{ width: "100%", minWidth: "200px" }}
-              size="large"
-              type="default"
-              shape="round"
-              danger
-              onClickCapture={() => setOperationOutOpen(true)}
-            >
-              <ArrowDownOutlined />
-              {t("buttons.register_out")}
-            </Button>
-          </Grid>
-        </Grid>
+        )}
       </Grid>
       <Grid container>
         <Grid item xs={12}>
@@ -221,15 +230,18 @@ export const MerchantManual = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md="auto">
-          <ExportReportsModal
-            mutateReport={() => MerchantManualReportsMutate()}
-            error={MerchantManualReportsError}
-            success={MerchantManualReportsIsSuccess}
-            loading={MerchantManualReportsIsLoading}
-            reportPath="/moviment/merchant_moviments/merchant_moviments_reports"
-          />
-        </Grid>
+        {permissions.transactions.merchant.manual_transactions
+          .merchant_manual_transactions_export_csv && (
+          <Grid item xs={12} md="auto">
+            <ExportReportsModal
+              mutateReport={() => MerchantManualReportsMutate()}
+              error={MerchantManualReportsError}
+              success={MerchantManualReportsIsSuccess}
+              loading={MerchantManualReportsIsLoading}
+              reportPath="/moviment/merchant_moviments/merchant_moviments_reports"
+            />
+          </Grid>
+        )}
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>

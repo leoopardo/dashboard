@@ -16,6 +16,8 @@ import {
 import { useListClientClientBanks } from "@src/services/bank/listClientBanks";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { useCreateCustomerBanksReports } from "@src/services/reports/register/persons/customerBanks/createCustomerBanksReports";
+import { queryClient } from "@src/services/queryClient";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 
 const INITIAL_QUERY: ClientBankQuery = {
   limit: 25,
@@ -25,6 +27,9 @@ const INITIAL_QUERY: ClientBankQuery = {
 };
 
 export const CostumerBanks = () => {
+  const { permissions } = queryClient.getQueryData(
+    "validate"
+  ) as ValidateInterface;
   const [query, setQuery] = useState<ClientBankQuery>(INITIAL_QUERY);
   const [searchOption, setSearchOption] = useState<string | null>(null);
   const { t } = useTranslation();
@@ -44,7 +49,7 @@ export const CostumerBanks = () => {
     CustomerBanksReportsError,
     CustomerBanksReportsIsLoading,
     CustomerBanksReportsIsSuccess,
-    CustomerBanksReportsMutate
+    CustomerBanksReportsMutate,
   } = useCreateCustomerBanksReports(query);
 
   const columns: ColumnInterface[] = [
@@ -146,15 +151,18 @@ export const CostumerBanks = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md="auto">
-          <ExportReportsModal
-            mutateReport={() => CustomerBanksReportsMutate()}
-            error={CustomerBanksReportsError}
-            success={CustomerBanksReportsIsSuccess}
-            loading={CustomerBanksReportsIsLoading}
-            reportPath="/register/person/person_reports/client_bank_reports"
-          />
-        </Grid>
+        {permissions.register.person.client_banks
+          .person_client_banks_export_csv && (
+          <Grid item xs={12} md="auto">
+            <ExportReportsModal
+              mutateReport={() => CustomerBanksReportsMutate()}
+              error={CustomerBanksReportsError}
+              success={CustomerBanksReportsIsSuccess}
+              loading={CustomerBanksReportsIsLoading}
+              reportPath="/register/person/person_reports/client_bank_reports"
+            />
+          </Grid>
+        )}
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>

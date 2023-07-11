@@ -4,7 +4,7 @@ import { useMutation } from "react-query";
 import { MerchantsQuery } from "@src/services/types/register/merchants/merchantsRegister.interface";
 
 export function useCreateMerchantReports(body: MerchantsQuery) {
-  const { isLoading, error, mutate, isSuccess } = useMutation<
+  const { isLoading, error, mutate, isSuccess, reset } = useMutation<
   MerchantsQuery | null | undefined
   >("CreateMerchantReports", async () => {
     const response = await api.post("report/csv/merchant", body, {});
@@ -16,11 +16,12 @@ export function useCreateMerchantReports(body: MerchantsQuery) {
   const MerchantReportsIsLoading = isLoading;
   const MerchantReportsError = error;
   const MerchantReportsIsSuccess = isSuccess;
-
+  const MerchantReset = reset;
   return {
     MerchantReportsMutate,
     MerchantReportsIsLoading,
     MerchantReportsError,
     MerchantReportsIsSuccess,
+    MerchantReset
   };
 }

@@ -1,8 +1,10 @@
 import { Grid } from "@mui/material";
 import { Toast } from "@src/components/Toast";
+import { queryClient } from "@src/services/queryClient";
 import { useGetGeneralconfigs } from "@src/services/register/organization/generalConfigs/getGeneralConfigs";
 import { useUpdateOrganizationGeneralConfigs } from "@src/services/register/organization/generalConfigs/updateGeneralConfigs";
 import { OrganizationGeneralConfigs } from "@src/services/types/register/organization/organizationGeneralConfigs.interface";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 import {
   Button,
   Form,
@@ -17,9 +19,12 @@ import { useRef, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 export const GeneralConfigs = () => {
+  const { permissions } = queryClient.getQueryData(
+    "validate"
+  ) as ValidateInterface;
+
   const { t } = useTranslation();
-  const { data, isFetching, refetch } =
-    useGetGeneralconfigs();
+  const { data, isFetching, refetch } = useGetGeneralconfigs();
   const onChange = (key: string) => {
     console.log(key);
   };
@@ -169,6 +174,15 @@ export const GeneralConfigs = () => {
           </Grid>
         </Form>
       ),
+      style: {
+        display: permissions.register.paybrokers.general_configs
+          .general_configs_update_financial
+          ? undefined
+          : "none",
+      },
+      disabled:
+        !permissions.register.paybrokers.general_configs
+          .general_configs_update_financial,
     },
     {
       key: "2",
@@ -415,6 +429,15 @@ export const GeneralConfigs = () => {
           </Grid>
         </Form>
       ),
+      style: {
+        display: permissions.register.paybrokers.general_configs
+          .general_configs_update_adminstrative
+          ? undefined
+          : "none",
+      },
+      disabled:
+        !permissions.register.paybrokers.general_configs
+          .general_configs_update_adminstrative,
     },
   ];
 
@@ -427,7 +450,16 @@ export const GeneralConfigs = () => {
       }}
     >
       <Grid item xs={12}>
-        <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+        <Tabs
+          defaultActiveKey={
+            permissions.register.paybrokers.general_configs
+              .general_configs_update_financial
+              ? "1"
+              : "2"
+          }
+          items={items}
+          onChange={onChange}
+        />
       </Grid>
       <Grid
         item
