@@ -17,20 +17,24 @@ import {
   Empty,
   Pagination,
 } from "antd";
+import { TextField } from "@mui/material";
 import { DeleteOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
-import { useCreateMerchantFeePlans } from "@src/services/register/merchant/feePlans/createFeePlans";
-import { useUpdateMerchantFeePlan } from "@src/services/register/merchant/feePlans/updateFeePlans";
-import { useValidate } from "@services/siginIn/validate";
 import { IDepositFeeItem } from "@src/services/types/register/merchants/merchantFeePlans.interface";
 import { Grid } from "@mui/material";
 
 interface NewuserModalprops {
   open: boolean;
+  mutate: () => void;
   setOpen: Dispatch<SetStateAction<boolean>>;
   currentUser?: IDepositFeeItem | null;
   setCurrentUser?: Dispatch<SetStateAction<IDepositFeeItem | null>>;
   setUpdateBody?: Dispatch<SetStateAction<IDepositFeeItem | null>>;
+  setBody:  Dispatch<SetStateAction<IDepositFeeItem | null>>;
+  body: IDepositFeeItem | null;
+  setFees:  Dispatch<SetStateAction<any>>;
+  fees: any
+  loading: boolean
   action: "create" | "update";
 }
 export const UpdateFeePlanModal = ({
@@ -38,6 +42,13 @@ export const UpdateFeePlanModal = ({
   setOpen,
   currentUser,
   setCurrentUser,
+  mutate,
+  setUpdateBody,
+  fees,
+  body,
+  setBody,
+  setFees,
+  loading,
   action,
 }: NewuserModalprops) => {
   const { t } = useTranslation();
@@ -45,26 +56,13 @@ export const UpdateFeePlanModal = ({
   const formRef = useRef<FormInstance>(null);
   const formFeesRef = useRef<FormInstance>(null);
 
-  const [body, setBody] = useState<IDepositFeeItem>({
-    name: "",
-    plan_type: null,
-    merchant_fee_plans_details: [],
-    transaction_type: null,
-    range_type: null,
-  });
-  const [fees, setFees] = useState<any[]>([]);
-  const [feePage, setFeePage] = useState(1);
-  const { mutate, error, isLoading, isSuccess } = useCreateMerchantFeePlans({
-    ...body,
-    merchant_fee_plans_details: fees,
-  });
-  const { updateError, updateIsLoading, updateIsSuccess, updateMutate } =
-    useUpdateMerchantFeePlan(currentUser?.id, {
-      ...body,
-      merchant_fee_plans_details: fees,
-    });
 
-  function handleChangeUserBody(event: any) {
+  const [feePage, setFeePage] = useState(1);
+
+  const handleChangeUserBody = (event:ChangeEvent<HTMLInputElement>) => {
+    if(setUpdateBody) {
+      setUpdateBody((state) => ({ ...state, [event.target.name]: event.target.value }));
+    }
     setBody((state) => ({ ...state, [event.target.name]: event.target.value }));
   }
 
@@ -84,14 +82,13 @@ export const UpdateFeePlanModal = ({
 
     return result;
   };
-
   const handleChangeFee = (
     event: ChangeEvent<HTMLInputElement>,
     id: number
   ) => {
-    if (fees.some((fee) => fee.id === id)) {
+    if (fees.some((fee: any) => fee.id === id)) {
       const newFeeValue = {
-        ...fees.find((fee) => fee.id === id),
+        ...fees.find((fee: any) => fee.id === id),
         [event.target.name]: event.target.value,
       };
 
@@ -109,7 +106,7 @@ export const UpdateFeePlanModal = ({
   };
 
   const handleDeleteFee = (id: number) => {
-    const updatedFees = fees.filter((fee) => fee.id !== id);
+    const updatedFees = fees.filter((fee: any) => fee.id !== id);
 
     formFeesRef.current?.setFieldsValue((state: any) => ({
       ...state,
@@ -124,24 +121,24 @@ export const UpdateFeePlanModal = ({
   };
 
   function CreateUser() {
-    if (currentUser && setCurrentUser) {
-      updateMutate();
-      setCurrentUser(null);
-      setOpen(false);
-      return;
-    }
     mutate();
-    setOpen(false);
     setBody({});
+    if(setUpdateBody) setUpdateBody({})
+    setOpen(false);
   }
 
   useEffect(() => {
-    console.log('current', currentUser?.merchant_fee_plans_details)
-    setFees(currentUser?.merchant_fee_plans_details ?? []);
-    formFeesRef.current?.setFieldsValue((state: any) => ({
-      ...state,
-      merchant_fee_plans_details: currentUser?.merchant_fee_plans_details,
-    }));
+    if(currentUser && currentUser?.merchant_fee_plans_details){
+      const currentFeesDetails = currentUser?.merchant_fee_plans_details.map((item) => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const {id, merchant_fee_plans_id, ...rest} = item
+  
+        return rest
+      })
+     return setFees(currentFeesDetails ?? []);
+    }
+
+    return setFees([])
   }, [currentUser]);
 
   useEffect(() => {
@@ -152,7 +149,7 @@ export const UpdateFeePlanModal = ({
       });
     }
   }, [action]);
-  
+
   return (
     <Drawer
       open={open}
@@ -166,7 +163,7 @@ export const UpdateFeePlanModal = ({
       title={currentUser ? t("buttons.update_user") : t("buttons.new_user")}
       footer={
         <Button
-          loading={currentUser ? updateIsLoading : isLoading}
+          loading={loading}
           type="primary"
           style={{ width: "100%" }}
           size="large"
@@ -188,7 +185,7 @@ export const UpdateFeePlanModal = ({
             range_type: null,
           }
         }
-        disabled={currentUser ? updateIsLoading : isLoading}
+        disabled={loading}
         onFinish={CreateUser}
       >
         <Form.Item
@@ -205,7 +202,7 @@ export const UpdateFeePlanModal = ({
           <Input
             size="large"
             name="name"
-            value={body.name}
+            value={body?.name || ""}
             onChange={handleChangeUserBody}
           />
         </Form.Item>
@@ -232,6 +229,12 @@ export const UpdateFeePlanModal = ({
             notFoundContent={<Empty />}
             value={currentUser?.plan_type || null}
             onChange={(value) => {
+              if(setUpdateBody) {
+                setUpdateBody((state: any) => ({
+                  ...state,
+                  plan_type: value,
+                }));
+              }
               setBody((state: any) => ({
                 ...state,
                 plan_type: value,
@@ -265,6 +268,12 @@ export const UpdateFeePlanModal = ({
             notFoundContent={<Empty />}
             value={currentUser?.transaction_type || null}
             onChange={(value) => {
+              if(setUpdateBody) {
+                setUpdateBody((state: any) => ({
+                  ...state,
+                  transaction_type: value,
+                }));
+              }
               setBody((state: any) => ({
                 ...state,
                 transaction_type: value,
@@ -298,6 +307,12 @@ export const UpdateFeePlanModal = ({
             notFoundContent={<Empty />}
             value={currentUser?.range_type || null}
             onChange={(value) => {
+              if(setUpdateBody) {
+                setUpdateBody((state: any) => ({
+                  ...state,
+                  range_type: value,
+                }));
+              }
               setBody((state: any) => ({
                 ...state,
                 range_type: value,
@@ -316,19 +331,7 @@ export const UpdateFeePlanModal = ({
           <Button
             type="default"
             onClick={() => {
-              formFeesRef.current?.setFieldsValue((state: any) => ({
-                ...state,
-                merchant_fee_plans_details: [
-                  ...state.merchant_fee_plans_details,
-                  {
-                    range_fee: 0,
-                    range_value: 0,
-                    range_limit: 0,
-                    id: Math.random() * 10000000000000,
-                  },
-                ],
-              }));
-              setFees((state) => [
+              setFees((state: any) => [
                 ...state,
                 {
                   range_fee: 0,
@@ -349,88 +352,125 @@ export const UpdateFeePlanModal = ({
         </Form.Item>
       </Form>
 
-      <Form
-        ref={formFeesRef}
-        layout="vertical"
-        initialValues={
-          currentUser?.merchant_fee_plans_details ?? {
-            merchant_fee_plans_id: 0,
-            range_fee: 0,
-            range_limit: 0,
-            range_value: 0,
-          }
-        }
-        disabled={currentUser ? updateIsLoading : isLoading}
-      >
-        {fees.length !== 0 &&
-          listItems(fees, feePage, 3)?.map((fee: any) => (
-            <Grid
-              container
-              spacing={1}
-              alignItems={"center"}
-              style={{ marginLeft: "5px", marginTop: "5px" }}
-            >
-              <Grid item xs={3}>
-                <Form.Item label={t(`table.fee_percent`)} name="range_fee">
-                  <Input
-                    type="number"
-                    size="large"
-                    name="range_fee"
-                    value={fee?.range_fee}
-                    onChange={(event) => handleChangeFee(event, fee.id)}
-                  />
-                </Form.Item>
-              </Grid>
-              <Grid item xs={3}>
-                <Form.Item label={t(`input.minimum_value`)} name="range_limit">
-                  <Input
-                    size="large"
-                    type="number"
-                    name="range_limit"
-                    style={{ marginBottom: "20px" }}
-                    value={fee?.range_limit}
-                    onChange={(event) => handleChangeFee(event, fee.id)}
-                  />
-                </Form.Item>
-              </Grid>
-              <Grid item xs={3}>
-                <Form.Item label={t(`table.limit`)} name="range_value">
-                  <Input
-                    size="large"
-                    type="number"
-                    name="range_value"
-                    value={fee?.range_value}
-                    onChange={(event) => handleChangeFee(event, fee.id)}
-                  />
-                </Form.Item>
-              </Grid>
-              <Grid item container xs={2} justifyContent={"center"}>
-                <DeleteOutlined
-                  onClick={() => handleDeleteFee(fee.id)}
-                  style={{ fontSize: "20px", cursor: "pointer" }}
-                />
-              </Grid>
-            </Grid>
-          ))}
-        {fees.length > 2 && (
+      {fees.length !== 0 &&
+        listItems(fees, feePage, 3)?.map((fee: any) => (
           <Grid
             container
-            justifyContent={"flex-end"}
-            style={{ paddingRight: "40px" }}
+            key={fee.id}
+            spacing={1}
+            alignItems={"center"}
+            style={{ marginLeft: "5px", marginTop: "5px" }}
           >
-            <Pagination
-              size="small"
-              total={Number(fees.length)}
-              current={feePage}
-              pageSize={3}
-              style={{ marginTop: fees.length > 2 ? "5px" : 0 }}
-              onChange={(page) => {
-                setFeePage(page);
-              }}
-            />
+            <Grid item xs={3}>
+              <p style={{ marginBottom: "10px", color: "black" }}>
+                {t("table.fee_percent")}
+              </p>
+              <TextField
+                type="number"
+                variant="outlined"
+                name="range_fee"
+                value={fee?.range_fee}
+                onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                  handleChangeFee(event, fee.id)
+                }
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    height: "38px",
+                    borderRadius: "8px",
+                  },
+                  "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline":
+                    {
+                      borderColor: "#5BC4BC",
+                    },
+                  "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
+                    {
+                      borderColor: "#5BC4BC",
+                    },
+                }}
+              />
+            </Grid>
+            <Grid item xs={3}>
+              <p style={{ marginBottom: "10px", color: "black" }}>
+                {t("input.minimum_value")}
+              </p>
+              <TextField
+                type="number"
+                variant="outlined"
+                name="range_limit"
+                value={fee?.range_limit}
+                onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                  handleChangeFee(event, fee.id)
+                }
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    height: "38px",
+                    borderRadius: "8px",
+                  },
+                  "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline":
+                    {
+                      borderColor: "#5BC4BC",
+                    },
+                  "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
+                    {
+                      borderColor: "#5BC4BC",
+                    },
+                }}
+              />
+            </Grid>
+            <Grid item xs={3}>
+              <p style={{ marginBottom: "10px", color: "black" }}>
+                {t("table.limit")}
+              </p>
+              <TextField
+                type="number"
+                variant="outlined"
+                name="range_value"
+                value={fee?.range_value}
+                onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                  handleChangeFee(event, fee.id)
+                }
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    height: "38px",
+                    borderRadius: "8px",
+                  },
+                  "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline":
+                    {
+                      borderColor: "#5BC4BC",
+                    },
+                  "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
+                    {
+                      borderColor: "#5BC4BC",
+                    },
+                }}
+              />
+            </Grid>
+            <Grid item container xs={2} justifyContent={"center"}>
+              <DeleteOutlined
+                onClick={() => handleDeleteFee(fee.id)}
+                style={{ fontSize: "20px", cursor: "pointer", color: "red" }}
+              />
+            </Grid>
           </Grid>
-        )}
-      </Form>
+        ))}
+      {fees.length > 2 && (
+        <Grid
+          container
+          justifyContent={"flex-end"}
+          style={{ paddingRight: "40px" }}
+        >
+          <Pagination
+            size="small"
+            total={Number(fees.length)}
+            current={feePage}
+            pageSize={3}
+            style={{ marginTop: "10px" }}
+            onChange={(page) => {
+              setFeePage(page);
+            }}
+          />
+        </Grid>
+      )}
     </Drawer>
   );
 };

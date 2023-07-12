@@ -1,5 +1,5 @@
-import { Descriptions, Drawer, Spin } from "antd";
-import { Dispatch, SetStateAction } from "react";
+import { Descriptions, Drawer, Spin, Table, Pagination } from "antd";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 interface viewProps {
@@ -10,6 +10,16 @@ interface viewProps {
   item: any;
 }
 
+interface FeeTableProps {
+  data: Array<{
+    id?: number;
+    merchant_fee_plans_id?: number;
+    range_fee: number;
+    range_value: number;
+    range_limit: number;
+  }>
+}
+
 export const ViewModal = ({
   open,
   setOpen,
@@ -18,6 +28,45 @@ export const ViewModal = ({
   item,
 }: viewProps) => {
   const { t } = useTranslation();
+  const [feePage, setFeePage] = useState(1);
+  const listItems = (items: any, atual: any, limit: number) => {
+    const result = [];
+    const totalPage = Math.ceil(items?.length / limit);
+    let count = atual * limit - limit;
+    const delimiter = count + limit;
+    if (atual <= totalPage) {
+      for (let i = count; i < delimiter; i++) {
+        if (items[i]) {
+          result.push(items[i]);
+        }
+        count++;
+      }
+    }
+
+    return result;
+  };
+
+  const FeeTable: React.FC<FeeTableProps> = ({ data }) => {
+    const columns = [
+      {
+        title: `${t('table.fee')} (%)`,
+        dataIndex: 'range_fee',
+        key: 'range_fee',
+      },
+      {
+        title: t('input.minimum_value'),
+        dataIndex: 'range_value',
+        key: 'range_value',
+      },
+      {
+        title: t('table.limit'),
+        dataIndex: 'range_limit',
+        key: 'range_limit',
+      },
+    ];
+  
+    return <Table pagination={false} dataSource={data} columns={columns} />;
+  };
 
   return (
     <Drawer
@@ -148,6 +197,26 @@ export const ViewModal = ({
             }
           })}
       </Descriptions>
+
+      {item?.merchant_fee_plans_details && (
+        <div style={{marginTop: '20px'}}>
+          <span style={{fontWeight: 'bold', padding: '0 10px'}}>Taxas</span>
+          <FeeTable 
+          data={listItems(item?.merchant_fee_plans_details, feePage, 5)} />
+          <div style={{display: 'flex', justifyContent: 'flex-end', marginRight: '10px'}}>
+          <Pagination
+              size="small"
+              total={Number(item?.merchant_fee_plans_details.length)}
+              current={feePage}
+              pageSize={5}
+              style={{ marginTop: '10px'}}
+              onChange={(page) => {
+                setFeePage(page);
+              }}
+            />
+          </div>
+        </div>
+        )}
     </Drawer>
   );
 };

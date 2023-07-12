@@ -107,6 +107,7 @@
     "update": "Editar",
     "credentials": "Credentials",
     "manual_entry_category": "Manual entry category",
+    "fee_plans": "Fee plans",
     "edit_user": "Edit user"
   },
 
@@ -507,7 +508,9 @@
     "continuos": "Continuos",
     "cashin": "Cashin",
     "cashout": "Cashout",
-    "transactions": "Transactions"
+    "transactions": "Transactions",
+    "plan_type": "Plan type",
+    "range_type":"Range type"
   },
   "actions": {
     "details": "Details",

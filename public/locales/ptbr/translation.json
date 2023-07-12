@@ -108,6 +108,7 @@
     "update": "Editar",
     "credentials": "Credenciais",
     "manual_entry_category": "Categorias lançamentos manuais",
+    "fee_plans": "Plano de taxas",
     "edit_user": "Editar usuário"
   },
 
@@ -509,7 +510,9 @@
     "continuos": "Continuo",
     "cashin": "Depósito",
     "cashout": "Saque",
-    "transactions": "Transações"
+    "transactions": "Transações",
+    "plan_type": "Tipo de plano",
+    "range_type": "Tipo de faixa"
   },
   "actions": {
     "details": "Detalhes",
