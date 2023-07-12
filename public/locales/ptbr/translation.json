@@ -512,7 +512,8 @@
     "cashout": "Saque",
     "transactions": "Transações",
     "plan_type": "Tipo de plano",
-    "range_type": "Tipo de faixa"
+    "range_type": "Tipo de faixa",
+    "aggregator_id": "ID Agregador"
   },
   "actions": {
     "details": "Detalhes",

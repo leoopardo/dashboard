@@ -14,9 +14,10 @@ import { FiltersModal } from "../../../../../../components/FiltersModal";
 import { useTranslation } from "react-i18next";
 import useDebounce from "../../../../../../utils/useDebounce";
 import { FilterChips } from "../../../../../../components/FiltersModal/filterChips";
+import { useGetTotalRefundDeposits } from "../../../../../../services/consult/refund/refundDeposits/getTotal";
 import { refundDepositsQuery } from "../../../../../../services/types/consult/refunds/refundsDeposits.interface";
-import { useGetRowsRefundWithdrawals } from "@src/services/consult/refund/refundWithdrawals/getRows";
-import { useGetTotalRefundWithdrawals } from "@src/services/consult/refund/refundWithdrawals/getTotal";
+import { useGetRefundDepositsManual } from "@src/services/consult/refund/refundDepositsManual/getRows";
+import { useGetTotalRefundDepositManual } from "@src/services/consult/refund/refundDepositsManual/getTotal";
 
 const INITIAL_QUERY: refundDepositsQuery = {
   page: 1,
@@ -30,25 +31,22 @@ const INITIAL_QUERY: refundDepositsQuery = {
     .format("YYYY-MM-DDTHH:mm:ss.SSS"),
 };
 
-export const RefundWithdrawals = () => {
+export const RefundDepositsManual = () => {
   const { t } = useTranslation();
   const [query, setQuery] = useState<refundDepositsQuery>(INITIAL_QUERY);
   const {
-    isRefundWithdrawalsTotalFetching,
-    refetchRefundWithdrawalsTotal,
-    refundWithdrawalsTotal,
-    refundWithdrawalsTotalError,
-  } = useGetTotalRefundWithdrawals(query);
+isRefundDepositManualTotalFetching, refetchRefundDepositManualTotal, refundDepositManualTotal, refundDepositManualTotalError
+  } = useGetTotalRefundDepositManual(query);
 
   const {
-    isRefundWithdrawalsFetching,
-    refetchRefundWithdrawals,
-    refundWithdrawals,
-    refundWithdrawalsError,
-  } = useGetRowsRefundWithdrawals(query);
+    isRefundDepositsManualFetching,
+    refetchRefundDepositsManual,
+    refundDepositsManual,
+    refundDepositsManualError,
+  } = useGetRefundDepositsManual(query);
 
   useEffect(() => {
-    refetchRefundWithdrawals();
+    refetchRefundDepositsManual();
   }, [query]);
 
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
@@ -89,10 +87,10 @@ export const RefundWithdrawals = () => {
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid container>
-        {refundWithdrawalsTotalError ? (
+        {refundDepositManualTotalError ? (
           <Grid item xs={12} style={{ marginBottom: "10px" }}>
             <Alert
-              message={refundWithdrawalsTotalError?.message}
+              message={refundDepositManualTotalError?.message}
               type="error"
               closable
             />
@@ -103,9 +101,9 @@ export const RefundWithdrawals = () => {
       </Grid>
 
       <TotalizersCards
-        data={refundWithdrawalsTotal}
-        fetchData={refetchRefundWithdrawalsTotal}
-        loading={isRefundWithdrawalsTotalFetching}
+        data={refundDepositManualTotal}
+        fetchData={refetchRefundDepositManualTotal}
+        loading={isRefundDepositManualTotalFetching}
         query={query}
       />
 
@@ -118,7 +116,7 @@ export const RefundWithdrawals = () => {
           <Button
             style={{ width: "100%", height: 40 }}
             loading={
-              isRefundWithdrawalsFetching || isRefundWithdrawalsTotalFetching
+              isRefundDepositsManualFetching || isRefundDepositManualTotalFetching
             }
             type="primary"
             onClick={() => setIsFiltersOpen(true)}
@@ -167,9 +165,9 @@ export const RefundWithdrawals = () => {
               onChange={(event) => setSearch(event.target.value)}
             />
             <Button
-              loading={isRefundWithdrawalsFetching}
+              loading={isRefundDepositsManualFetching}
               type="primary"
-              onClick={() => refetchRefundWithdrawalsTotal()}
+              onClick={() => refetchRefundDepositManualTotal()}
               style={{ height: "40px" }}
               disabled={typeof searchOption === "string" && !search}
             >
@@ -180,7 +178,7 @@ export const RefundWithdrawals = () => {
         <Grid item xs={12} md={2} lg={2}>
           <Button
             type="dashed"
-            loading={isRefundWithdrawalsFetching}
+            loading={isRefundDepositsManualFetching}
             danger
             onClick={() => {
               setQuery(INITIAL_QUERY);
@@ -201,10 +199,10 @@ export const RefundWithdrawals = () => {
             query={query}
             setCurrentItem={setCurrentItem}
             setQuery={setQuery}
-            data={refundWithdrawals}
-            items={refundWithdrawals?.items}
+            data={refundDepositsManual}
+            items={refundDepositsManual?.items}
             columns={columns}
-            loading={isRefundWithdrawalsFetching}
+            loading={isRefundDepositsManualFetching}
             actions={[
               {
                 label: "details",
@@ -251,7 +249,7 @@ export const RefundWithdrawals = () => {
             "aggregator_id",
             "operator_id",
           ]}
-          refetch={refetchRefundWithdrawalsTotal}
+          refetch={refetchRefundDepositManualTotal}
           selectOptions={{
             status: [
               "PAID",

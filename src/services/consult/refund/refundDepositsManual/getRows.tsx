@@ -6,11 +6,11 @@ import {
   refundWithdrawalsQuery,
 } from "../../../types/consult/refunds/refundWithdrawals.interface";
 
-export function useGetRowsRefundWithdrawals(params: refundWithdrawalsQuery) {
+export function useGetRefundDepositsManual(params: refundWithdrawalsQuery) {
   const { data, isFetching, error, refetch } = useQuery<
     refundWithdrawalsRowsResponse | null | undefined
   >(
-    "depositsRows",
+    "RefundDepositsManual",
     async () => {
       const response = await api.get("refund/pix/rows", {
         params: {
@@ -32,14 +32,15 @@ export function useGetRowsRefundWithdrawals(params: refundWithdrawalsQuery) {
     }
   );
 
-  const refundWithdrawals = data;
-  const isRefundWithdrawalsFetching = isFetching;
-  const refundWithdrawalsError: any = error;
-  const refetchRefundWithdrawals = refetch;
+  const refundDepositsManual = data;
+  const isRefundDepositsManualFetching = isFetching;
+  const refundDepositsManualError: any = error;
+  const refetchRefundDepositsManual = refetch;
   return {
-    refundWithdrawals,
-    isRefundWithdrawalsFetching,
-    refundWithdrawalsError,
-    refetchRefundWithdrawals,
+    refundDepositsManual,
+    isRefundDepositsManualFetching ,
+    refundDepositsManualError,
+    refetchRefundDepositsManual
   };
 }
+

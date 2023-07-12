@@ -1079,7 +1079,7 @@ export const SidebarNavigation = () => {
               }
             ),
             getItem(
-              "refund_withdrawals",
+              "withdrawals",
               null,
               null,
               false,

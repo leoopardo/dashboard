@@ -1,8 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { AutoComplete, Empty } from "antd";
 import { useTranslation } from "react-i18next";
-import { OperatorQuery } from "@src/services/types/register/operators/operators.interface";
-import { useGetOperator } from "@src/services/register/operator/getOperators";
 import useDebounce from "@src/utils/useDebounce";
 import { AggregatorQuery } from "@src/services/types/register/aggregators/aggregators.interface";
 import { useGetAggregators } from "@src/services/register/aggregator/getAggregators";
