@@ -510,7 +510,8 @@
     "cashout": "Cashout",
     "transactions": "Transactions",
     "plan_type": "Plan type",
-    "range_type":"Range type"
+    "range_type":"Range type",
+    "aggregator_id": "ID Aggregator"
   },
   "actions": {
     "details": "Details",

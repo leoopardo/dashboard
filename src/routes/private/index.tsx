@@ -15,9 +15,11 @@ import { OrganizationHistory } from "./Pages/consult/organization/history";
 import { ConsultOrganizationReports } from "./Pages/consult/organization/reports";
 import { CheckDocument } from "./Pages/consult/persons/checkDocument";
 import { RefundDeposits } from "./Pages/consult/refunds/deposits";
+import { RefundDepositsManual } from "./Pages/consult/refunds/depositsManual";
 import { RefundDepositsReports } from "./Pages/consult/refunds/reports/deposits";
 import { RefundManualDepositsReports } from "./Pages/consult/refunds/reports/manualDeposits";
 import { RefundWithdrawalsReports } from "./Pages/consult/refunds/reports/withdrawals";
+import { RefundWithdrawals } from "./Pages/consult/refunds/withdrawals";
 import { GeneratedWithdrawals } from "./Pages/consult/withdrawals/generated";
 import { PaidWithdrawals } from "./Pages/consult/withdrawals/paid";
 import { GeneratedWithdrawalsReports } from "./Pages/consult/withdrawals/reports/generatedWithdrawals";
@@ -151,6 +153,11 @@ export const PrivateRoutes = () => {
 
           <Route path="refunds">
             <Route path="refund_deposits" element={<RefundDeposits />} />
+            <Route path="withdrawals" element={<RefundWithdrawals />} />
+            <Route
+              path="refund_manual_deposits"
+              element={<RefundDepositsManual />}
+            />
 
             <Route path="refund_reports">
               <Route

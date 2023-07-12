@@ -16,7 +16,6 @@ export const AggregatorSelect = ({
   setQueryFunction,
   queryOptions,
 }: MerchantSelectProps) => {
-  
   const { t } = useTranslation();
   const [query, setQuery] = useState<AggregatorQuery>({
     page: 1,

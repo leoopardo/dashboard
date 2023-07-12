@@ -26,9 +26,11 @@ import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useGetCities } from "../../services/states_cities/getCities";
 import { useGetStates } from "../../services/states_cities/getStates";
+import { AggregatorSelect } from "../Selects/aggregatorSelect";
 import { BanksSelect } from "../Selects/bankSelect";
 import { ClientBanksSelect } from "../Selects/clientBanksSelect";
 import { MerchantSelect } from "../Selects/merchantSelect";
+import { OperatorSelect } from "../Selects/operatorSelect";
 import { PartnerSelect } from "../Selects/partnerSelect";
 import { ReasonSelect } from "../Selects/reasonSelect";
 import { FilterChips } from "./filterChips";
@@ -468,6 +470,35 @@ export const FiltersModal = ({
                   </Form.Item>
                 );
               } else return;
+
+              case "aggregator_id":
+                return (
+                  <Form.Item
+                    label={t(`table.${filter}`)}
+                    name={filter}
+                    style={{ margin: 10 }}
+                  >
+                    <AggregatorSelect
+                      queryOptions={filtersQuery}
+                      setQueryFunction={setFiltersQuery}
+                    />
+                  </Form.Item>
+              );
+
+              case "operator_id":
+                return (
+                  <Form.Item
+                    label={t(`table.${filter}`)}
+                    name={filter}
+                    style={{ margin: 10 }}
+                  >
+                    <OperatorSelect
+                      queryOptions={filtersQuery}
+                      setQueryFunction={setFiltersQuery}
+                    />
+                  </Form.Item>
+              );
+            
 
             case "reason":
               return (
