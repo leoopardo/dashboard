@@ -1,10 +1,10 @@
-import moment from "moment";
-import { api } from "../../../../config/api";
-import { useQuery } from "react-query";
 import {
   BankBlacklistData,
   BankBlacklistQuery,
 } from "@src/services/types/support/blacklists/bankBlacklist.interface";
+import moment from "moment";
+import { useQuery } from "react-query";
+import { api } from "../../../../config/api";
 
 export function useGetBankBlacklist(params: BankBlacklistQuery) {
   const { data, isFetching, error, refetch } = useQuery<

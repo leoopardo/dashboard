@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { Select, Empty } from "antd";
-import { useTranslation } from "react-i18next";
 import { useGetRowsMerchantBlacklist } from "@services/register/merchant/blacklist/getMerchantBlacklistReason";
+import { Empty, Select } from "antd";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface MerchantSelectProps {
   setQueryFunction: Dispatch<SetStateAction<any>>;
   queryOptions: any;
   currentValue?: string;
-  onReasonChange?: (e: any) => void
+  onReasonChange?: (e: any) => void;
 }
 
 export const ReasonSelect = ({

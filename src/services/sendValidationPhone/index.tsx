@@ -1,7 +1,6 @@
-import { api } from "../../config/api";
 import { useMutation } from "react-query";
+import { api } from "../../config/api";
 import { queryClient } from "../queryClient";
-
 
 interface ValidatePhoneInterface {
   validation_token: string;

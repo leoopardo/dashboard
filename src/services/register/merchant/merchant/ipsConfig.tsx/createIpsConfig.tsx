@@ -1,7 +1,7 @@
 import { queryClient } from "@services/queryClient";
 import { api } from "@src/config/api";
-import { useMutation } from "react-query";
 import { MerchantIpsItem } from "@src/services/types/register/merchants/merchantIpsConfig";
+import { useMutation } from "react-query";
 
 export function useCreateIpConfig(body: MerchantIpsItem) {
   const { isLoading, error, mutate, isSuccess } = useMutation<

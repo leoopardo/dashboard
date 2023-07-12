@@ -1,10 +1,10 @@
-import moment from "moment";
-import { api } from "../../../../config/api";
-import { useQuery } from "react-query";
 import {
   OrganizationBankStatementTotalsQuery,
   OrganizationBankStatementTotalsResponse,
 } from "@src/services/types/consult/organization/bankStatement/totals.interface";
+import moment from "moment";
+import { useQuery } from "react-query";
+import { api } from "../../../../config/api";
 
 export function useGetOrganizationBankStatementTotals(
   params: OrganizationBankStatementTotalsQuery

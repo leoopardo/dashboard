@@ -1,7 +1,7 @@
-import { api } from "../../../../config/api";
-import { useMutation } from "react-query";
-import { queryClient } from "../../../queryClient";
 import { OrganizationGeneralConfigs } from "@src/services/types/register/organization/organizationGeneralConfigs.interface";
+import { useMutation } from "react-query";
+import { api } from "../../../../config/api";
+import { queryClient } from "../../../queryClient";
 
 export function useUpdateOrganizationGeneralConfigs(
   body: OrganizationGeneralConfigs

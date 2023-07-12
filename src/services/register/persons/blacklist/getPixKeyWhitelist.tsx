@@ -1,5 +1,8 @@
 import { api } from "@config/api";
-import { PixKeyWhitelistQuery, PixKeyWhitelistResponse } from "@src/services/types/register/persons/blacklist/pixKeyWhitelist.interface";
+import {
+  PixKeyWhitelistQuery,
+  PixKeyWhitelistResponse,
+} from "@src/services/types/register/persons/blacklist/pixKeyWhitelist.interface";
 
 import { useQuery } from "react-query";
 

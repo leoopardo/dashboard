@@ -1,11 +1,12 @@
 import moment from "moment";
-import { api } from "../../../../config/api";
 import { useQuery } from "react-query";
-import { paidDepositRowsQuery, paidDepositRowsResponse } from "../../../types/consult/deposits/PaidDeposits.interface";
+import { api } from "../../../../config/api";
+import {
+  paidDepositRowsQuery,
+  paidDepositRowsResponse,
+} from "../../../types/consult/deposits/PaidDeposits.interface";
 
-export function useGetRowsPaidDeposits(
-  params: paidDepositRowsQuery
-) {
+export function useGetRowsPaidDeposits(params: paidDepositRowsQuery) {
   const { data, isFetching, error, refetch } = useQuery<
     paidDepositRowsResponse | null | undefined
   >(
@@ -15,15 +16,15 @@ export function useGetRowsPaidDeposits(
         params: {
           ...params,
           initial_date: params.initial_date
-          ? moment(params.initial_date)
-              .add(3, "hours")
-              .format("YYYY-MM-DDTHH:mm:ss.SSS")
-          : null,
-        final_date: params.final_date
-          ? moment(params.final_date)
-              .add(3, "hours")
-              .format("YYYY-MM-DDTHH:mm:ss.SSS")
-          : null,
+            ? moment(params.initial_date)
+                .add(3, "hours")
+                .format("YYYY-MM-DDTHH:mm:ss.SSS")
+            : null,
+          final_date: params.final_date
+            ? moment(params.final_date)
+                .add(3, "hours")
+                .format("YYYY-MM-DDTHH:mm:ss.SSS")
+            : null,
         },
       });
       return response.data;
@@ -32,7 +33,7 @@ export function useGetRowsPaidDeposits(
       refetchInterval: false,
       refetchIntervalInBackground: false,
       refetchOnMount: false,
-      refetchOnWindowFocus: false
+      refetchOnWindowFocus: false,
     }
   );
 

@@ -1,14 +1,14 @@
-import { queryClient } from "@src/services/queryClient";
 import { api } from "@src/config/api";
-import { useMutation } from "react-query";
+import { queryClient } from "@src/services/queryClient";
 import { MerchantIpsItem } from "@src/services/types/register/merchants/merchantIpsConfig";
+import { useMutation } from "react-query";
 
 export function useDeleteIpConfig(params?: MerchantIpsItem) {
   const { isLoading, error, mutate, isSuccess } = useMutation<
     MerchantIpsItem | null | undefined
   >("deleteIpsConfig", async () => {
     const response = await api.delete("core/merchant/delete/ip", {
-     data: params,
+      data: params,
     });
     await queryClient.refetchQueries({ queryKey: ["IpsConfig"] });
     return response.data;

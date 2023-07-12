@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useQuery } from "react-query";
 import { api } from "../../../../config/api";
 import {
   GroupQuery,
   GroupResponse,
 } from "../../../types/register/organization/organizationUsers.interface";
-import { useQuery } from "react-query";
 
 export function useListUserGroups(params: GroupQuery) {
   const { data, isFetching, error, refetch } = useQuery<

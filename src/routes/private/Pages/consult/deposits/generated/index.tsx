@@ -1,32 +1,33 @@
-import React, { useState, useEffect } from "react";
-import { Grid } from "@mui/material";
-import { generatedDepositTotalQuery } from "../../../../../../services/types/consult/deposits/generatedDeposits.interface";
-import { useGetTotalGeneratedDeposits } from "../../../../../../services/consult/deposits/generatedDeposits/getTotal";
-import moment from "moment";
-import { TotalizersCards } from "./components/TotalizersCards";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/exhaustive-deps */
+import { EyeFilled, SearchOutlined, SettingFilled } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
-import { Alert, Button, Input, Select, Space, DatePicker } from "antd";
-import { useGetRowsGeneratedDeposits } from "../../../../../../services/consult/deposits/generatedDeposits/getRows";
+import { Grid } from "@mui/material";
+import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
+import { Toast } from "@src/components/Toast";
+import { useCreateSendWebhook } from "@src/services/consult/deposits/generatedDeposits/resendWebhook";
+import { queryClient } from "@src/services/queryClient";
+import { useCreateGeneratedDepositsReports } from "@src/services/reports/consult/deposits/createGeneratedDepositsReports";
+import { ResendWebhookBody } from "@src/services/types/consult/deposits/createResendWebhook.interface";
+import { ValidateInterface } from "@src/services/types/validate.interface";
+import { Alert, Button, Input, Select, Space } from "antd";
+import moment from "moment";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   ColumnInterface,
   CustomTable,
 } from "../../../../../../components/CustomTable";
-import { ViewModal } from "../components/ViewModal";
-import { EyeFilled, SearchOutlined, SettingFilled } from "@ant-design/icons";
 import { FiltersModal } from "../../../../../../components/FiltersModal";
-import { useTranslation } from "react-i18next";
-import useDebounce from "../../../../../../utils/useDebounce";
 import { FilterChips } from "../../../../../../components/FiltersModal/filterChips";
-import { WebhookModal } from "../components/webhooksModal";
-import { useCreateGeneratedDepositsReports } from "@src/services/reports/consult/deposits/createGeneratedDepositsReports";
-import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
-import { queryClient } from "@src/services/queryClient";
-import { ValidateInterface } from "@src/services/types/validate.interface";
+import { useGetRowsGeneratedDeposits } from "../../../../../../services/consult/deposits/generatedDeposits/getRows";
+import { useGetTotalGeneratedDeposits } from "../../../../../../services/consult/deposits/generatedDeposits/getTotal";
+import { generatedDepositTotalQuery } from "../../../../../../services/types/consult/deposits/generatedDeposits.interface";
+import useDebounce from "../../../../../../utils/useDebounce";
 import { ResendWebhookModal } from "../components/ResendWebhookModal";
-import { useCreateSendWebhook } from "@src/services/consult/deposits/generatedDeposits/resendWebhook";
-import { ResendWebhookBody } from "@src/services/types/consult/deposits/createResendWebhook.interface";
-import { Toast } from "@src/components/Toast";
-const { RangePicker } = DatePicker;
+import { ViewModal } from "../components/ViewModal";
+import { WebhookModal } from "../components/webhooksModal";
+import { TotalizersCards } from "./components/TotalizersCards";
 
 const INITIAL_QUERY: generatedDepositTotalQuery = {
   page: 1,
@@ -118,7 +119,7 @@ export const GeneratedDeposits = () => {
     delete q.payer_name;
 
     if (debounceSearch && searchOption) {
-      setQuery((state) => ({ ...q, [searchOption]: debounceSearch }));
+      setQuery(() => ({ ...q, [searchOption]: debounceSearch }));
     }
   }, [debounceSearch, searchOption]);
 

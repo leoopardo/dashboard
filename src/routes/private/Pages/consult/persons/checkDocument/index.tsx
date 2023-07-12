@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { Grid } from "@mui/material";
-import useDebounce from "@src/utils/useDebounce";
-import { Button, Descriptions, Input, Space } from "antd";
-import { useTranslation } from "react-i18next";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
-import ReactInputMask from "react-input-mask";
+import { Grid } from "@mui/material";
 import { useGetCheckCpf } from "@src/services/consult/persons/checkDocument";
+import { Button, Descriptions, Input, Space } from "antd";
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import ReactInputMask from "react-input-mask";
 import { useMediaQuery } from "react-responsive";
 
 export const CheckDocument = () => {
@@ -13,12 +13,8 @@ export const CheckDocument = () => {
 
   const isMobile = useMediaQuery({ maxWidth: "750px" });
 
-  const {
-    CheckCpfData,
-    CheckCpfDataError,
-    isCheckCpfDataFetching,
-    refetchCheckCpfData,
-  } = useGetCheckCpf(search);
+  const { CheckCpfData, isCheckCpfDataFetching, refetchCheckCpfData } =
+    useGetCheckCpf(search);
 
   const { t } = useTranslation();
   return (

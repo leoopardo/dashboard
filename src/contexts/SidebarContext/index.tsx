@@ -1,4 +1,6 @@
-import React, { createContext, useState, useContext } from "react";
+/* eslint-disable react-refresh/only-export-components */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { createContext, useContext, useState } from "react";
 
 interface SideMenuContext {
   handleChangeSidebar(open: boolean): void;

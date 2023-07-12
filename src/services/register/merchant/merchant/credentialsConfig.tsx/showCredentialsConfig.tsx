@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { api } from "@config/api";
 import { useQuery } from "react-query";
 import { IShowCredentialItem, IShowCredentialQuery } from "@src/services/types/register/merchants/merchantsCredentialsConfig.interface";
 
 export function useShowCredentialsConfig(params: IShowCredentialQuery) {
-  const { data, isFetching, error, refetch,  } = useQuery<
+  const { data, isFetching, error, refetch, isSuccess  } = useQuery<
   IShowCredentialItem | null
   >(
     "ShowCredentialsConfig",
@@ -29,5 +30,6 @@ export function useShowCredentialsConfig(params: IShowCredentialQuery) {
     isShowCredentialConfigFetching,
     showCredentialConfigError,
     refetchShowCredentialConfigData,
+    isSuccess
   };
 }

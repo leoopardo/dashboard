@@ -1,5 +1,18 @@
-import React, { useState, useEffect } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/exhaustive-deps */
+import { ReloadOutlined } from "@ant-design/icons";
 import { Grid } from "@mui/material";
+import { CustomTable } from "@src/components/CustomTable";
+import { FilterChips } from "@src/components/FiltersModal/filterChips";
+import { MerchantSelect } from "@src/components/Selects/merchantSelect";
+import { useGetMerchantBalance } from "@src/services/consult/merchant/balance/getMerchantBalance";
+import { queryClient } from "@src/services/queryClient";
+import {
+  MerchantBalanceItem,
+  MerchantBalanceQuery,
+} from "@src/services/types/consult/merchant/balance";
+import { ValidateInterface } from "@src/services/types/validate.interface";
+import { defaultTheme } from "@src/styles/defaultTheme";
 import {
   Button,
   Card,
@@ -9,21 +22,10 @@ import {
   Table,
   TableColumnsType,
 } from "antd";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { defaultTheme } from "@src/styles/defaultTheme";
 import { useMediaQuery } from "react-responsive";
-import { useGetMerchantBalance } from "@src/services/consult/merchant/balance/getMerchantBalance";
-import {
-  MerchantBalanceItem,
-  MerchantBalanceQuery,
-} from "@src/services/types/consult/merchant/balance";
-import { CustomTable } from "@src/components/CustomTable";
 import { MerchantBalanceChart } from "./components/TotalizerChart";
-import { MerchantSelect } from "@src/components/Selects/merchantSelect";
-import { FilterChips } from "@src/components/FiltersModal/filterChips";
-import { ReloadOutlined } from "@ant-design/icons";
-import { queryClient } from "@src/services/queryClient";
-import { ValidateInterface } from "@src/services/types/validate.interface";
 
 export const MerchantBalance = () => {
   const { permissions } = queryClient.getQueryData(
@@ -388,7 +390,7 @@ export const MerchantBalance = () => {
                   setQuery((state: any) => ({ ...state, page }));
                 },
                 pageSizeOptions: [10, 25, 50, 100],
-                onShowSizeChange: (current, size) =>
+                onShowSizeChange: (_current, size) =>
                   setQuery((state: any) => ({ ...state, limit: size })),
               }}
             />

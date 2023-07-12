@@ -1,4 +1,6 @@
-import React, { useEffect } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect } from "react";
 import { toast } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 

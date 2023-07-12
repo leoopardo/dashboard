@@ -1,35 +1,34 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
+import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
+import { Grid } from "@mui/material";
+import { CustomTable } from "@src/components/CustomTable";
+import { FiltersModal } from "@src/components/FiltersModal";
+import { FilterChips } from "@src/components/FiltersModal/filterChips";
+import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
+import { ValidateToken } from "@src/components/ValidateToken";
+import { useGetSelf } from "@src/services/getSelf";
 import { useGetOrganizationMoviments } from "@src/services/moviments/organization/manual/GetManualTransactions";
+import { useCreateManualTransaction } from "@src/services/moviments/organization/manual/createManualTransaction";
+import { queryClient } from "@src/services/queryClient";
+import { useCreateOrganizationManualReports } from "@src/services/reports/moviments/organization/createManualTransactionsReports";
+import { CreateManualTransaction } from "@src/services/types/moviments/organization/createManualTransaction.interface";
 import {
   GetMovimentsItem,
   GetMovimentsQuery,
 } from "@src/services/types/moviments/organization/getMoviments";
-import moment from "moment";
-import React, { useState, useEffect } from "react";
-import { Grid } from "@mui/material";
-import { Button, Divider, Statistic } from "antd";
-import { useTranslation } from "react-i18next";
-import { FilterChips } from "@src/components/FiltersModal/filterChips";
-import { CustomTable } from "@src/components/CustomTable";
-import { FiltersModal } from "@src/components/FiltersModal";
-import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
-import { CreateMovimentModal } from "../../components/createMovimentModal";
-import { ValidateToken } from "@src/components/ValidateToken";
-import { useCreateManualTransaction } from "@src/services/moviments/organization/manual/createManualTransaction";
-import { CreateManualTransaction } from "@src/services/types/moviments/organization/createManualTransaction.interface";
-import { useGetSelf } from "@src/services/getSelf";
-import { useMediaQuery } from "react-responsive";
-import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
-import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
-import { useCreateOrganizationManualReports } from "@src/services/reports/moviments/organization/createManualTransactionsReports";
-import { queryClient } from "@src/services/queryClient";
 import { ValidateInterface } from "@src/services/types/validate.interface";
+import { Button, Divider, Statistic } from "antd";
+import moment from "moment";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { CreateMovimentModal } from "../../components/createMovimentModal";
 
 export const OrgonizationManual = () => {
   const { permissions } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
 
-  const isMobile = useMediaQuery({ maxWidth: "900px" });
   const INITIAL_QUERY: GetMovimentsQuery = {
     page: 1,
     limit: 25,
@@ -55,7 +54,9 @@ export const OrgonizationManual = () => {
     useState<CreateManualTransaction | null>(null);
 
   const { t } = useTranslation();
-  const { Self } = useGetSelf();
+  const { SelfError } = useGetSelf();
+
+  console.error(SelfError);
 
   const {
     OrganizationMovimentsData,
@@ -268,13 +269,7 @@ export const OrgonizationManual = () => {
             loading={isOrganizationMovimentsDataFetching}
             actions={[]}
             removeTotal
-            label={[
-              "bank",
-              "user_name",
-              "status",
-              "createdAt",
-              "delivered_at",
-            ]}
+            label={["bank", "user_name", "status", "createdAt", "delivered_at"]}
           />
         </Grid>
       </Grid>

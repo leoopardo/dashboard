@@ -1,10 +1,8 @@
 import { api } from "@config/api";
 
-import { useQuery } from "react-query";
-import {
-  MerchantsQuery,
-} from "@services/types/register/merchants/merchantsRegister.interface";
+import { MerchantsQuery } from "@services/types/register/merchants/merchantsRegister.interface";
 import { IDepositFeeResponse } from "@src/services/types/register/merchants/merchantFeePlans.interface";
+import { useQuery } from "react-query";
 
 export function useGetFeePlansRegister(params?: MerchantsQuery) {
   const { data, isFetching, error, refetch } = useQuery<

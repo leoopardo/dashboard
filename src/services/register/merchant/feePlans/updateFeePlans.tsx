@@ -1,11 +1,14 @@
-import { queryClient } from "@services/queryClient";
 import { api } from "@config/api";
-import { useMutation } from "react-query";
+import { queryClient } from "@services/queryClient";
 import { IDepositFeeItem } from "@src/services/types/register/merchants/merchantFeePlans.interface";
+import { useMutation } from "react-query";
 
-export function useUpdateMerchantFeePlan(id?: number | string, body?: IDepositFeeItem | null) {
+export function useUpdateMerchantFeePlan(
+  id?: number | string,
+  body?: IDepositFeeItem | null
+) {
   const { isLoading, error, mutate, isSuccess } = useMutation<
-  IDepositFeeItem | null | undefined
+    IDepositFeeItem | null | undefined
   >("UpdateMerchantsFeePlans", async () => {
     const response = await api.put(`core/merchant_fee_plans/${id}`, body, {});
     await queryClient.refetchQueries({ queryKey: ["MerchantsFeePlans"] });

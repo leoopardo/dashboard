@@ -1,6 +1,6 @@
 import { CheckCpf } from "@src/services/types/consult/persons/checkDocument.interface";
-import { api } from "../../../config/api";
 import { useQuery } from "react-query";
+import { api } from "../../../config/api";
 
 export function useGetCheckCpf(cpf?: string) {
   const { data, isFetching, error, refetch } = useQuery<

@@ -1,21 +1,22 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { GroupSelect } from "@components/Selects/groupSelect";
+import { OperatorSelect } from "@src/components/Selects/operatorSelect";
+import { Toast } from "@src/components/Toast";
+import { queryClient } from "@src/services/queryClient";
+import { useCreateOperatorUser } from "@src/services/register/operator/users/createUser";
+import { useUpdateOperatorUser } from "@src/services/register/operator/users/updateUser";
+import { OperatorItem } from "@src/services/types/register/operators/operators.interface";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 import { Button, Drawer, Form, FormInstance, Input } from "antd";
 import React, {
   Dispatch,
   SetStateAction,
+  useEffect,
   useRef,
   useState,
-  useEffect,
 } from "react";
 import { useTranslation } from "react-i18next";
-import { GroupSelect } from "@components/Selects/groupSelect";
-import { Toast } from "@src/components/Toast";
-import { useCreateOperatorUser } from "@src/services/register/operator/users/createUser";
-import { useUpdateOperatorUser } from "@src/services/register/operator/users/updateUser";
-import { OperatorSelect } from "@src/components/Selects/operatorSelect";
-import { OperatorItem } from "@src/services/types/register/operators/operators.interface";
 import ReactInputMask from "react-input-mask";
-import { queryClient } from "@src/services/queryClient";
-import { ValidateInterface } from "@src/services/types/validate.interface";
 interface NewuserModalprops {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -55,7 +56,7 @@ export const NewUserModal = ({
   const submitRef = useRef<HTMLButtonElement>(null);
   const formRef = React.useRef<FormInstance>(null);
   const [confirmPassword, setConfirmPassword] = useState<string>("");
-  const [cantSubmit, setCantSubmit] = useState<boolean>(true);
+  const [, setCantSubmit] = useState<boolean>(true);
   const [body, setBody] = useState<NewUserInterface>({
     name: "",
     username: "",
@@ -73,7 +74,7 @@ export const NewUserModal = ({
     setBody((state) => ({ ...state, [event.target.name]: event.target.value }));
   }
 
-  function CreateUser(event: any) {
+  function CreateUser() {
     if (
       currentUser &&
       setUpdateBody &&

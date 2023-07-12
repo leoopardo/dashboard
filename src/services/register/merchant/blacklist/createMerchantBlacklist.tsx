@@ -1,7 +1,7 @@
 import { api } from "../../../../config/api";
 
-import { useMutation } from "react-query";
 import { MerchantBlacklistItem } from "@src/services/types/register/merchants/merchantBlacklist.interface";
+import { useMutation } from "react-query";
 import { queryClient } from "../../../queryClient";
 
 export function useCreateMerchantBlacklist(body: MerchantBlacklistItem | null) {

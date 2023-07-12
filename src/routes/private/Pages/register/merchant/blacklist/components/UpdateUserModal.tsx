@@ -1,25 +1,26 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { GroupSelect } from "@components/Selects/groupSelect";
+import { MerchantSelect } from "@components/Selects/merchantSelect";
+import { Toast } from "@components/Toast";
+import { useCreateMerchantUser } from "@services/register/merchant/users/createUser";
+import { useUpdateMerchant } from "@services/register/merchant/users/updateMerhchant";
+import { useValidate } from "@services/siginIn/validate";
+import {
+  MerchantUserBodyItem,
+  MerchantUsersItem,
+} from "@services/types/register/merchants/merchantUsers.interface";
+import { queryClient } from "@src/services/queryClient";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 import { Button, Drawer, Form, FormInstance, Input } from "antd";
 import React, {
   Dispatch,
   SetStateAction,
+  useEffect,
   useRef,
   useState,
-  useEffect,
 } from "react";
 import { useTranslation } from "react-i18next";
-import { GroupSelect } from "@components/Selects/groupSelect";
-import { useCreateMerchantUser } from "@services/register/merchant/users/createUser";
-import { useUpdateMerchant } from "@services/register/merchant/users/updateMerhchant";
-import { useValidate } from "@services/siginIn/validate";
-import { Toast } from "@components/Toast";
-import {
-  MerchantUsersItem,
-  MerchantUserBodyItem,
-} from "@services/types/register/merchants/merchantUsers.interface";
-import { MerchantSelect } from "@components/Selects/merchantSelect";
 import ReactInputMask from "react-input-mask";
-import { queryClient } from "@src/services/queryClient";
-import { ValidateInterface } from "@src/services/types/validate.interface";
 
 interface NewuserModalprops {
   open: boolean;
@@ -48,7 +49,7 @@ export const UpdateUserModal = ({
   const formRef = React.useRef<FormInstance>(null);
   const { responseValidate } = useValidate();
   const [confirmPassword, setConfirmPassword] = useState<string>("");
-  const [cantSubmit, setCantSubmit] = useState<boolean>(true);
+  const [, setCantSubmit] = useState<boolean>(true);
 
   const [body, setBody] = useState<MerchantUserBodyItem>({
     name: "",
@@ -61,14 +62,14 @@ export const UpdateUserModal = ({
   });
 
   const { mutate, error, isLoading, isSuccess } = useCreateMerchantUser(body);
-  const { updateError, updateIsLoading, updateIsSuccess, updateMutate } =
+  const { updateError, updateIsLoading, updateIsSuccess } =
     useUpdateMerchant(body);
 
   function handleChangeUserBody(event: any) {
     setBody((state) => ({ ...state, [event.target.name]: event.target.value }));
   }
 
-  function CreateUser(event: any) {
+  function CreateUser() {
     if (
       currentUser &&
       setUpdateBody &&

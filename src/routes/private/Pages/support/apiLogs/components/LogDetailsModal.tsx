@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Grid } from "@mui/material";
 import { DepositLogsItemById } from "@src/services/types/support/apiLogs/depositsError.interface";
 import { Collapse, Descriptions, Drawer } from "antd";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Grid } from "@mui/material";
 import ReactJson from "react-json-view";
 
 interface LogsDetailsModalInterface {
@@ -121,7 +122,7 @@ export const LogDetailsModal = ({
                       </Grid>
                     ),
                   }
-                : { },
+                : {},
             ]}
             onChange={onChange}
             activeKey={active}

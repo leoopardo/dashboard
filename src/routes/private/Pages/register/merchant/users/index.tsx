@@ -1,28 +1,28 @@
-import { useEffect, useState } from "react";
-import { Grid } from "@mui/material";
-import { Button, Input } from "antd";
-import { FilterChips } from "@components/FiltersModal/filterChips";
-import { useTranslation } from "react-i18next";
-import { useGetRowsMerchantUsers } from "@services/register/merchant/users/getUsers";
-import { FiltersModal } from "@components/FiltersModal";
-import { EditOutlined, EyeFilled } from "@ant-design/icons";
-import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { EditOutlined, EyeFilled, UserAddOutlined } from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
+import { FiltersModal } from "@components/FiltersModal";
+import { FilterChips } from "@components/FiltersModal/filterChips";
 import { ViewModal } from "@components/Modals/viewGenericModal";
-import useDebounce from "@utils/useDebounce";
-import { UserAddOutlined } from "@ant-design/icons";
+import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
+import { Grid } from "@mui/material";
+import { useGetRowsMerchantUsers } from "@services/register/merchant/users/getUsers";
+import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
+import { ValidateToken } from "@src/components/ValidateToken";
+import { queryClient } from "@src/services/queryClient";
+import { useUpdateMerchant } from "@src/services/register/merchant/users/updateMerhchant";
+import { useCreateMerchantUsersReports } from "@src/services/reports/register/merchant/createMerchantUsersReports";
 import {
+  MerchantUserBodyItem,
   MerchantUsersItem,
   MerchantUsersQuery,
-  MerchantUserBodyItem,
 } from "@src/services/types/register/merchants/merchantUsers.interface";
-import { useUpdateMerchant } from "@src/services/register/merchant/users/updateMerhchant";
-import { UpdateUserModal } from "./components/UpdateUserModal";
-import { ValidateToken } from "@src/components/ValidateToken";
-import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
-import { useCreateMerchantUsersReports } from "@src/services/reports/register/merchant/createMerchantUsersReports";
-import { queryClient } from "@src/services/queryClient";
 import { ValidateInterface } from "@src/services/types/validate.interface";
+import useDebounce from "@utils/useDebounce";
+import { Button, Input } from "antd";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { UpdateUserModal } from "./components/UpdateUserModal";
 
 const INITIAL_QUERY: MerchantUsersQuery = {
   limit: 25,
@@ -55,7 +55,6 @@ export const MerchantUser = () => {
   const [search, setSearch] = useState<string>("");
   const {
     updateError,
-    updateIsLoading,
     updateIsSuccess,
     updateMutate,
     updateReset,

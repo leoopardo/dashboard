@@ -1,7 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useGetSelf } from "@src/services/getSelf";
-import { ValidateInterface } from "@src/services/types/validate.interface";
 import { Drawer, Form, FormInstance, Input } from "antd";
-import React, { Dispatch, SetStateAction, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
 interface EditSelfModalInterface {
@@ -18,7 +18,7 @@ export const EditSelfModal = ({
   const { t } = useTranslation();
   const { Self } = useGetSelf();
   const formRef = useRef<FormInstance>(null);
-  const submitRef = useRef<HTMLButtonElement>(null);
+  // const submitRef = useRef<HTMLButtonElement>(null);
   return (
     <Drawer
       open={open}

@@ -1,16 +1,13 @@
-import { api } from "../../../../config/api";
 import { useQuery } from "react-query";
+import { api } from "../../../../config/api";
 
 export function useGetRowsMerchantBlacklist() {
   const { data, isFetching, error, refetch } = useQuery<
-  string[] | null | undefined
-  >(
-    "MerchantBlacklistReason",
-    async () => {
-      const response = await api.get("blacklist/merchant-black-list/reasons", {});
-      return response.data;
-    }
-  );
+    string[] | null | undefined
+  >("MerchantBlacklistReason", async () => {
+    const response = await api.get("blacklist/merchant-black-list/reasons", {});
+    return response.data;
+  });
 
   const merchantBlacklistData = data;
   const isMerchantBlacklistDataFetching = isFetching;

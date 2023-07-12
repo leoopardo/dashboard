@@ -1,7 +1,7 @@
 import { queryClient } from "@src/services/queryClient";
-import { api } from "../../../config/api";
-import { useMutation } from "react-query";
 import { AggregatorItem } from "@src/services/types/register/aggregators/aggregators.interface";
+import { useMutation } from "react-query";
+import { api } from "../../../config/api";
 
 export function useCreateAggregator(body: AggregatorItem) {
   const { isLoading, error, mutate, isSuccess, reset } = useMutation<

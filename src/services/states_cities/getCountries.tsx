@@ -1,6 +1,6 @@
+import axios from "axios";
 import { useQuery } from "react-query";
 import { CountryInterface } from "../types/states_cities.interface";
-import axios from "axios";
 
 export function useGetrefetchCountries() {
   const { data, isFetching, error, refetch } = useQuery<

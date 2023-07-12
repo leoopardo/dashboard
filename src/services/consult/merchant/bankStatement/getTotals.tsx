@@ -1,15 +1,15 @@
-import { api } from "../../../../config/api";
-import { useQuery } from "react-query";
 import {
   MerchantBankStatementTotalsData,
   MerchantBankStatementTotalsQuery,
 } from "@src/services/types/consult/merchant/bankStatement";
+import { useQuery } from "react-query";
+import { api } from "../../../../config/api";
 
 export function useGetMerchantBankStatementTotals(
   params: MerchantBankStatementTotalsQuery
 ) {
   const { data, isFetching, error, refetch } = useQuery<
-  MerchantBankStatementTotalsData | null | undefined
+    MerchantBankStatementTotalsData | null | undefined
   >("MerchantBankStatementTotals", async () => {
     const response = await api.get("account/report/merchant-account/total", {
       params,

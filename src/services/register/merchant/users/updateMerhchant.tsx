@@ -1,11 +1,11 @@
-import { queryClient } from "@services/queryClient";
 import { api } from "@config/api";
-import { useMutation } from "react-query";
+import { queryClient } from "@services/queryClient";
 import { MerchantUserBodyItem } from "@src/services/types/register/merchants/merchantUsers.interface";
+import { useMutation } from "react-query";
 
 export function useUpdateMerchant(body: MerchantUserBodyItem) {
   const { isLoading, error, mutate, isSuccess, reset } = useMutation<
-  MerchantUserBodyItem | null | undefined
+    MerchantUserBodyItem | null | undefined
   >("UpdateMerchantUserr", async () => {
     const response = await api.put("core/user/update/merchant", body, {});
     await queryClient.refetchQueries({ queryKey: ["MerchantUser"] });
@@ -22,6 +22,7 @@ export function useUpdateMerchant(body: MerchantUserBodyItem) {
     updateMutate,
     updateIsLoading,
     updateError,
-    updateIsSuccess,updateReset
+    updateIsSuccess,
+    updateReset,
   };
 }

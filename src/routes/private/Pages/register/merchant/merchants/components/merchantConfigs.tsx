@@ -1,15 +1,15 @@
 import { Grid } from "@mui/material";
-import { Tabs, TabsProps } from "antd";
-import { BanksTab } from "./tabs/banks";
-import { FeesTab } from "./tabs/fees";
-import { MerchantConfigTab } from "./tabs/merchantConfigTab";
-import { OrganizationConfigTab } from "./tabs/organizationConfigTab";
-import { CredentialConfigTab } from "./tabs/credentials";
-import { IpsConfigTab } from "./tabs/ips";
-import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
 import { queryClient } from "@src/services/queryClient";
 import { ValidateInterface } from "@src/services/types/validate.interface";
+import { Tabs, TabsProps } from "antd";
+import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
+import { BanksTab } from "./tabs/banks";
+import { CredentialConfigTab } from "./tabs/credentials";
+import { FeesTab } from "./tabs/fees";
+import { IpsConfigTab } from "./tabs/ips";
+import { MerchantConfigTab } from "./tabs/merchantConfigTab";
+import { OrganizationConfigTab } from "./tabs/organizationConfigTab";
 
 export const MerchantConfigs = () => {
   const { permissions } = queryClient.getQueryData(
@@ -26,7 +26,9 @@ export const MerchantConfigs = () => {
     if (!permissions.register.merchant.merchant.merchant_config_banks) {
       if (!permissions.register.merchant.merchant.merchant_config_fees) {
         if (!permissions.register.merchant.merchant.merchant_config_merchant) {
-          if (!permissions.register.merchant.merchant.merchant_config_paybrokers) {
+          if (
+            !permissions.register.merchant.merchant.merchant_config_paybrokers
+          ) {
             if (!permissions.register.merchant.merchant.merchant_config_ips) {
               return "6";
             }
@@ -34,12 +36,10 @@ export const MerchantConfigs = () => {
           }
           return "4";
         }
-        return "3"; 
+        return "3";
       }
       return "2";
     }
-   
-  
 
     return "1";
   };

@@ -1,7 +1,7 @@
 import { queryClient } from "@services/queryClient";
 import { api } from "@src/config/api";
-import { useMutation } from "react-query";
 import { IBodyCredentialItem } from "@src/services/types/register/merchants/merchantsCredentialsConfig.interface";
+import { useMutation } from "react-query";
 
 export function useCreateCredentialsConfig(body: IBodyCredentialItem) {
   const { isLoading, error, mutate, isSuccess } = useMutation<

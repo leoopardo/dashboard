@@ -1,23 +1,25 @@
-import React, { useState, useEffect } from "react";
-import { Grid } from "@mui/material";
-import moment from "moment";
-import ReplayIcon from "@mui/icons-material/Replay";
-import { TotalizersCards } from "./components/TotalizersCards";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/exhaustive-deps */
+import { SearchOutlined } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
+import ReplayIcon from "@mui/icons-material/Replay";
+import { Grid } from "@mui/material";
 import { Alert, Button, Input, Select, Space } from "antd";
+import moment from "moment";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   ColumnInterface,
   CustomTable,
 } from "../../../../../../components/CustomTable";
-import { ViewModal } from "../components/ViewModal";
-import { EyeFilled, SearchOutlined } from "@ant-design/icons";
 import { FiltersModal } from "../../../../../../components/FiltersModal";
-import { useTranslation } from "react-i18next";
-import useDebounce from "../../../../../../utils/useDebounce";
 import { FilterChips } from "../../../../../../components/FiltersModal/filterChips";
+import { useGetRowsRefundDeposits } from "../../../../../../services/consult/refund/refundDeposits/getRows";
 import { useGetTotalRefundDeposits } from "../../../../../../services/consult/refund/refundDeposits/getTotal";
 import { refundDepositsQuery } from "../../../../../../services/types/consult/refunds/refundsDeposits.interface";
-import { useGetRowsRefundDeposits } from "../../../../../../services/consult/refund/refundDeposits/getRows";
+import useDebounce from "../../../../../../utils/useDebounce";
+import { ViewModal } from "../components/ViewModal";
+import { TotalizersCards } from "./components/TotalizersCards";
 
 const INITIAL_QUERY: refundDepositsQuery = {
   page: 1,
@@ -52,7 +54,6 @@ export const RefundDeposits = () => {
   }, [query]);
 
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
-  const [isRefundModalOpen, setIsRefundModalOpen] = useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<any>();
   const [searchOption, setSearchOption] = useState<string | null>(null);
   const [search, setSearch] = useState<string | null>(null);
@@ -83,7 +84,7 @@ export const RefundDeposits = () => {
     delete q.payer_name;
 
     if (debounceSearch && searchOption) {
-      setQuery((state) => ({ ...q, [searchOption]: debounceSearch }));
+      setQuery(() => ({ ...q, [searchOption]: debounceSearch }));
     }
   }, [debounceSearch, searchOption]);
 

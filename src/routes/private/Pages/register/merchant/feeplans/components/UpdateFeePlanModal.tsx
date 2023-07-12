@@ -1,27 +1,27 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  Dispatch,
-  SetStateAction,
-  useRef,
-  useState,
-  useEffect,
-  ChangeEvent,
-} from "react";
+import { DeleteOutlined } from "@ant-design/icons";
+import { Grid, TextField } from "@mui/material";
+import { IDepositFeeItem } from "@src/services/types/register/merchants/merchantFeePlans.interface";
 import {
   Button,
   Drawer,
+  Empty,
   Form,
   FormInstance,
   Input,
-  Select,
-  Empty,
   Pagination,
+  Select,
 } from "antd";
-import { TextField } from "@mui/material";
-import { DeleteOutlined } from "@ant-design/icons";
+import {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { useTranslation } from "react-i18next";
-import { IDepositFeeItem } from "@src/services/types/register/merchants/merchantFeePlans.interface";
-import { Grid } from "@mui/material";
 
 interface NewuserModalprops {
   open: boolean;
@@ -30,11 +30,11 @@ interface NewuserModalprops {
   currentUser?: IDepositFeeItem | null;
   setCurrentUser?: Dispatch<SetStateAction<IDepositFeeItem | null>>;
   setUpdateBody?: Dispatch<SetStateAction<IDepositFeeItem | null>>;
-  setBody:  Dispatch<SetStateAction<IDepositFeeItem | null>>;
+  setBody: Dispatch<SetStateAction<IDepositFeeItem | null>>;
   body: IDepositFeeItem | null;
-  setFees:  Dispatch<SetStateAction<any>>;
-  fees: any
-  loading: boolean
+  setFees: Dispatch<SetStateAction<any>>;
+  fees: any;
+  loading: boolean;
   action: "create" | "update";
 }
 export const UpdateFeePlanModal = ({
@@ -56,15 +56,17 @@ export const UpdateFeePlanModal = ({
   const formRef = useRef<FormInstance>(null);
   const formFeesRef = useRef<FormInstance>(null);
 
-
   const [feePage, setFeePage] = useState(1);
 
-  const handleChangeUserBody = (event:ChangeEvent<HTMLInputElement>) => {
-    if(setUpdateBody) {
-      setUpdateBody((state) => ({ ...state, [event.target.name]: event.target.value }));
+  const handleChangeUserBody = (event: ChangeEvent<HTMLInputElement>) => {
+    if (setUpdateBody) {
+      setUpdateBody((state) => ({
+        ...state,
+        [event.target.name]: event.target.value,
+      }));
     }
     setBody((state) => ({ ...state, [event.target.name]: event.target.value }));
-  }
+  };
 
   const listItems = (items: any, atual: any, limit: number) => {
     const result = [];
@@ -123,22 +125,24 @@ export const UpdateFeePlanModal = ({
   function CreateUser() {
     mutate();
     setBody({});
-    if(setUpdateBody) setUpdateBody({})
+    if (setUpdateBody) setUpdateBody({});
     setOpen(false);
   }
 
   useEffect(() => {
-    if(currentUser && currentUser?.merchant_fee_plans_details){
-      const currentFeesDetails = currentUser?.merchant_fee_plans_details.map((item) => {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const {id, merchant_fee_plans_id, ...rest} = item
-  
-        return rest
-      })
-     return setFees(currentFeesDetails ?? []);
+    if (currentUser && currentUser?.merchant_fee_plans_details) {
+      const currentFeesDetails = currentUser?.merchant_fee_plans_details.map(
+        (item) => {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          const { id, merchant_fee_plans_id, ...rest } = item;
+
+          return rest;
+        }
+      );
+      return setFees(currentFeesDetails ?? []);
     }
 
-    return setFees([])
+    return setFees([]);
   }, [currentUser]);
 
   useEffect(() => {
@@ -229,7 +233,7 @@ export const UpdateFeePlanModal = ({
             notFoundContent={<Empty />}
             value={currentUser?.plan_type || null}
             onChange={(value) => {
-              if(setUpdateBody) {
+              if (setUpdateBody) {
                 setUpdateBody((state: any) => ({
                   ...state,
                   plan_type: value,
@@ -268,7 +272,7 @@ export const UpdateFeePlanModal = ({
             notFoundContent={<Empty />}
             value={currentUser?.transaction_type || null}
             onChange={(value) => {
-              if(setUpdateBody) {
+              if (setUpdateBody) {
                 setUpdateBody((state: any) => ({
                   ...state,
                   transaction_type: value,
@@ -307,7 +311,7 @@ export const UpdateFeePlanModal = ({
             notFoundContent={<Empty />}
             value={currentUser?.range_type || null}
             onChange={(value) => {
-              if(setUpdateBody) {
+              if (setUpdateBody) {
                 setUpdateBody((state: any) => ({
                   ...state,
                   range_type: value,

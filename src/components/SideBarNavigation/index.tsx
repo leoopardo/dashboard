@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   DollarOutlined,
   FileSearchOutlined,
@@ -7,15 +9,15 @@ import {
   MenuUnfoldOutlined,
   NotificationOutlined,
 } from "@ant-design/icons";
-import { Avatar, Button, Menu, MenuProps } from "antd";
-import React, { useEffect, useState } from "react";
-import { useMenu } from "../../contexts/SidebarContext";
-import { useLocation, useNavigate } from "react-router-dom";
-import { defaultTheme } from "../../styles/defaultTheme";
-import { useMediaQuery } from "react-responsive";
-import { useTranslation } from "react-i18next";
 import { queryClient } from "@src/services/queryClient";
 import { ValidateInterface } from "@src/services/types/validate.interface";
+import { Button, Menu, MenuProps } from "antd";
+import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useMediaQuery } from "react-responsive";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useMenu } from "../../contexts/SidebarContext";
+import { defaultTheme } from "../../styles/defaultTheme";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -44,7 +46,7 @@ export const SidebarNavigation = () => {
 
   const onOpenChange: MenuProps["onOpenChange"] = (keys) => {
     const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
-    if (i.map((item) => item?.key).indexOf(latestOpenKey!) === -1) {
+    if (i.map((item) => item?.key).indexOf(latestOpenKey) === -1) {
       setOpenKeys(keys);
     } else {
       setOpenKeys(latestOpenKey ? [latestOpenKey] : []);

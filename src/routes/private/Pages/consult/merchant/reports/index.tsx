@@ -1,15 +1,17 @@
-import { useState, useEffect } from "react";
-import { Grid } from "@mui/material";
-import { Button } from "antd";
-import { useTranslation } from "react-i18next";
-import { FilterChips } from "@src/components/FiltersModal/filterChips";
-import { ReportsQuery } from "@src/services/types/reports/reports.interface";
-import { FiltersModal } from "@src/components/FiltersModal";
-import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
-import { CustomTable } from "@src/components/CustomTable";
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { DownloadOutlined } from "@ant-design/icons";
-import moment from "moment";
+import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
+import { Grid } from "@mui/material";
+import { CustomTable } from "@src/components/CustomTable";
+import { FiltersModal } from "@src/components/FiltersModal";
+import { FilterChips } from "@src/components/FiltersModal/filterChips";
 import { useGetConsultMerchantReports } from "@src/services/reports/consult/merchant/getConsultMerchantReports";
+import { ReportsQuery } from "@src/services/types/reports/reports.interface";
+import { Button } from "antd";
+import moment from "moment";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export const ConsultMerchantReports = () => {
   const INITIAL_QUERY: ReportsQuery = {

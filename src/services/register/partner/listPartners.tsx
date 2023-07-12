@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { api } from "../../../config/api";
-import { useQuery } from "react-query";
-import moment from "moment";
-import { PartnerQuery, PartnersResponse } from "../../types/register/partners/partners.interface";
+import {
+  PartnerQuery,
+  PartnersResponse,
+} from "../../types/register/partners/partners.interface";
 
 export function useListPartners(params: PartnerQuery) {
   const [data, setData] = useState<PartnersResponse | null>(null);

@@ -1,8 +1,8 @@
+import axios from "axios";
 import { useQuery } from "react-query";
 import { CityItem } from "../types/states_cities.interface";
-import axios from "axios";
 
-export function useGetCities(state?: string ) {
+export function useGetCities(state?: string) {
   const { data, isFetching, error, refetch } = useQuery<
     CityItem[] | null | undefined
   >("Cities", async () => {

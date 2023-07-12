@@ -1,24 +1,26 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useRef, useState, useEffect, useCallback } from "react";
+import { Toast } from "@components/Toast";
 import { Grid } from "@mui/material";
-import { useTranslation } from "react-i18next";
-import { useUpdateFeesConfig } from "@src/services/register/merchant/merchant/feesConfig/updateFeesConfig";
-import { useMerchantFeesConfig } from "@src/services/register/merchant/merchant/feesConfig/getFeesConfig";
+import { CurrencyInput } from "@src/components/CurrencyInput";
 import { useGetDepositFeePlansRegister } from "@src/services/register/merchant/feePlans/getDepositFeePlans";
 import { useGetWithdrawFeePlansRegister } from "@src/services/register/merchant/feePlans/getWithdrawFeePlans";
-import { Toast } from "@components/Toast";
-import { IMerchantFeesProps } from "@src/services/types/register/merchants/merchantFeesConfig.interface";
-import { IMerchantFeesUpdate } from "@src/services/types/register/merchants/merchantFeesConfig.interface";
-import { CurrencyInput } from "@src/components/CurrencyInput";
+import { useMerchantFeesConfig } from "@src/services/register/merchant/merchant/feesConfig/getFeesConfig";
+import { useUpdateFeesConfig } from "@src/services/register/merchant/merchant/feesConfig/updateFeesConfig";
 import {
+  IMerchantFeesProps,
+  IMerchantFeesUpdate,
+} from "@src/services/types/register/merchants/merchantFeesConfig.interface";
+import {
+  Button,
+  Divider,
   Form,
   FormInstance,
-  Divider,
-  Button,
   Input,
-  Select,
   Popconfirm,
+  Select,
 } from "antd";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export const FeesTab = (props: { id?: string }) => {
   const formRef = useRef<FormInstance>(null);
@@ -40,7 +42,7 @@ export const FeesTab = (props: { id?: string }) => {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const arrayPercentValue = ["PERCENT", "VALUE"];
 
-  const { UpdateError, UpdateIsLoading, UpdateIsSuccess, UpdateMutate } =
+  const { UpdateError, UpdateIsSuccess, UpdateMutate } =
     useUpdateFeesConfig({ merchant_id: Number(props?.id), ...bodyUpdate });
 
   const handleDepositFeeTypeChange = (value: string) => {
@@ -73,23 +75,51 @@ export const FeesTab = (props: { id?: string }) => {
 
   const handleSubmit = useCallback(() => {
     const array = [
-      { proptype: "cashin_pix_fee_type", type:'PERCENT', value: "cashin_pix_fee_percent" },
-      { proptype: "cashin_pix_fee_type", type:'VALUE', value: "cashin_pix_fee_value" },
-      { proptype: "customer_withdraw_fee_type", type:'PERCENT', value: "customer_withdraw_fee_percent" },
-      { proptype: "customer_withdraw_fee_type", type:'VALUE', value: "customer_withdraw_fee_value" },
-      { proptype: "pix_refund_fee_type", type:'PERCENT', value: "pix_refund_fee_percent" },
-      { proptype: "pix_refund_fee_type", type:'VALUE', value: "pix_refund_fee_value" },
+      {
+        proptype: "cashin_pix_fee_type",
+        type: "PERCENT",
+        value: "cashin_pix_fee_percent",
+      },
+      {
+        proptype: "cashin_pix_fee_type",
+        type: "VALUE",
+        value: "cashin_pix_fee_value",
+      },
+      {
+        proptype: "customer_withdraw_fee_type",
+        type: "PERCENT",
+        value: "customer_withdraw_fee_percent",
+      },
+      {
+        proptype: "customer_withdraw_fee_type",
+        type: "VALUE",
+        value: "customer_withdraw_fee_value",
+      },
+      {
+        proptype: "pix_refund_fee_type",
+        type: "PERCENT",
+        value: "pix_refund_fee_percent",
+      },
+      {
+        proptype: "pix_refund_fee_type",
+        type: "VALUE",
+        value: "pix_refund_fee_value",
+      },
     ];
     const stopRequest = array.some((item) => {
-      if(body && body[item.proptype as keyof typeof body] === item.type &&
-      (bodyUpdate && bodyUpdate?.[item.value as keyof typeof bodyUpdate] === undefined ||
-        Number(bodyUpdate?.[item.value as keyof typeof bodyUpdate]) <= 0)) {
-          console.log('test', item.value)
-          return true
-        } else return false
-    })
-  
-    if(stopRequest) return;
+      if (
+        body &&
+        body[item.proptype as keyof typeof body] === item.type &&
+        ((bodyUpdate &&
+          bodyUpdate?.[item.value as keyof typeof bodyUpdate] === undefined) ||
+          Number(bodyUpdate?.[item.value as keyof typeof bodyUpdate]) <= 0)
+      ) {
+        console.log("test", item.value);
+        return true;
+      } else return false;
+    });
+
+    if (stopRequest) return;
 
     UpdateMutate();
     setIsConfirmOpen(false);

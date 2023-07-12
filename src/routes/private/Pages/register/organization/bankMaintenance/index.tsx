@@ -1,18 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Grid } from "@mui/material";
-import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { EditFilled } from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
+import { Grid } from "@mui/material";
+import { MutateModal } from "@src/components/Modals/mutateGenericModal";
+import { queryClient } from "@src/services/queryClient";
+import { useGetOrganizationBankMaintenece } from "@src/services/register/organization/bankMaitenence/getBanks";
+import { useUpdateBank } from "@src/services/register/organization/bankMaitenence/updateBank";
 import {
   BankMaintenenceItem,
   BankMaintenenceQuery,
 } from "@src/services/types/register/organization/bankMaintenence.interface";
-import { useGetOrganizationBankMaintenece } from "@src/services/register/organization/bankMaitenence/getBanks";
-import { EditFilled } from "@ant-design/icons";
-import { useUpdateBank } from "@src/services/register/organization/bankMaitenence/updateBank";
-import { MutateModal } from "@src/components/Modals/mutateGenericModal";
-import { queryClient } from "@src/services/queryClient";
 import { ValidateInterface } from "@src/services/types/validate.interface";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const INITIAL_QUERY: BankMaintenenceQuery = {
   limit: 25,

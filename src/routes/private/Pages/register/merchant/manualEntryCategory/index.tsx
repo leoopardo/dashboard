@@ -1,22 +1,22 @@
-import { useEffect, useState } from "react";
-import { Grid } from "@mui/material";
-import { Button } from "antd";
-import { FilterChips } from "@components/FiltersModal/filterChips";
-import { useTranslation } from "react-i18next";
-import { FiltersModal } from "@components/FiltersModal";
 import { EditOutlined, PlusOutlined } from "@ant-design/icons";
-import {
-  MerchantManualEntryCategoryQuery,
-  MerchantManualEntryCategoryItem,
-} from "@src/services/types/register/merchants/merchantManualEntryCategory.interface";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
-import { useGetRowsMerchantManualEntryCategory } from "@src/services/register/merchant/manualEntryCategory/getManualEntryCategory";
-import { useCreateManualEntryCategory } from "@src/services/register/merchant/manualEntryCategory/createManualEntryCategory";
-import { useUpdateManualEntryCategory } from "@src/services/register/merchant/manualEntryCategory/updateManualEntryCategory";
+import { FiltersModal } from "@components/FiltersModal";
+import { FilterChips } from "@components/FiltersModal/filterChips";
+import { Grid } from "@mui/material";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
 import { Toast } from "@src/components/Toast";
 import { queryClient } from "@src/services/queryClient";
+import { useCreateManualEntryCategory } from "@src/services/register/merchant/manualEntryCategory/createManualEntryCategory";
+import { useGetRowsMerchantManualEntryCategory } from "@src/services/register/merchant/manualEntryCategory/getManualEntryCategory";
+import { useUpdateManualEntryCategory } from "@src/services/register/merchant/manualEntryCategory/updateManualEntryCategory";
+import {
+  MerchantManualEntryCategoryItem,
+  MerchantManualEntryCategoryQuery,
+} from "@src/services/types/register/merchants/merchantManualEntryCategory.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
+import { Button } from "antd";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const INITIAL_QUERY: MerchantManualEntryCategoryQuery = {
   limit: 25,
@@ -67,7 +67,7 @@ export const MerchantManualEntryCategory = () => {
 
   useEffect(() => {
     refetchCategoryData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query]);
 
   useEffect(() => {

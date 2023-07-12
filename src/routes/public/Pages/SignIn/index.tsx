@@ -1,16 +1,3 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import {
-  CustButton,
-  CustomCheckbox,
-  HalfHover,
-  LockIcon,
-  RoundedLock,
-} from "./styles";
-import { Grid } from "@mui/material";
-import { useMediaQuery } from "react-responsive";
-import { defaultTheme } from "../../../../styles/defaultTheme";
-import { Alert, Button, Checkbox, Form, Input } from "antd";
 import {
   EyeInvisibleOutlined,
   EyeTwoTone,
@@ -18,9 +5,21 @@ import {
   LoginOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { CheckboxChangeEvent } from "antd/es/checkbox";
-import { useTranslation } from "react-i18next";
+import { Grid } from "@mui/material";
 import { useToken } from "@src/services/siginIn/signIn";
+import { Alert, Form, Input } from "antd";
+import { CheckboxChangeEvent } from "antd/es/checkbox";
+import { useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useMediaQuery } from "react-responsive";
+import { defaultTheme } from "../../../../styles/defaultTheme";
+import {
+  CustButton,
+  CustomCheckbox,
+  HalfHover,
+  LockIcon,
+  RoundedLock,
+} from "./styles";
 
 const Logo = import.meta.env.VITE_APP_LOGO;
 
@@ -30,23 +29,18 @@ export const Login = () => {
   document.title = `Login | ${import.meta.env.VITE_APP_COMPANY_NAME}`;
   const submitRef = useRef<HTMLButtonElement>(null);
   const isMobile = useMediaQuery({ maxWidth: "900px" });
-  const navigate = useNavigate();
   const [rememerMe, setRememberMe] = useState(false);
   const [user, setUser] = useState<{ username: string; password: string }>({
     username: "",
     password: "",
   });
 
-  const {
-    Login,
-    isSuccess,
-    isValidateFetching,
-    responseValidate,
-    validateError,
-    LoginError,
-  } = useToken(user, rememerMe);
+  const { Login, isValidateFetching, validateError, LoginError } = useToken(
+    user,
+    rememerMe
+  );
 
-  async function handleLogin(event: any) {
+  async function handleLogin() {
     Login();
   }
 

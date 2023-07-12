@@ -1,9 +1,11 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { AutoComplete, Empty } from "antd";
-import { useTranslation } from "react-i18next";
-import useDebounce from "@src/utils/useDebounce";
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useGetMerchantCategories } from "@src/services/register/merchant/categories/getMerchantCategories";
 import { GetMerchantCategoryQuery } from "@src/services/types/register/merchants/merchantCategories";
+import useDebounce from "@src/utils/useDebounce";
+import { AutoComplete, Empty } from "antd";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface CategorieSelectProps {
   setQueryFunction: Dispatch<SetStateAction<any>>;

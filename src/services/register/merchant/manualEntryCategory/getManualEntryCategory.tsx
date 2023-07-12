@@ -1,10 +1,10 @@
 import { api } from "../../../../config/api";
 
-import { useQuery } from "react-query";
 import {
   MerchantManualEntryCategoryQuery,
   MerchantManualEntryCategoryResponse,
 } from "@src/services/types/register/merchants/merchantManualEntryCategory.interface";
+import { useQuery } from "react-query";
 
 export function useGetRowsMerchantManualEntryCategory(
   params: MerchantManualEntryCategoryQuery

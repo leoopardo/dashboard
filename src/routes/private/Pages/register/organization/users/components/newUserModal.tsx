@@ -1,20 +1,19 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { GroupSelect } from "@components/Selects/groupSelect";
+import { useCreateOrganizationUser } from "@services/register/organization/users/createUser";
+import { useUpdateOrganizationUser } from "@services/register/organization/users/updateUser";
+import { Toast } from "@src/components/Toast";
+import { useValidate } from "@src/services/siginIn/validate";
+import { OrganizationUserItem } from "@src/services/types/register/organization/organizationUsers.interface";
 import { Button, Drawer, Form, FormInstance, Input } from "antd";
 import React, {
   Dispatch,
   SetStateAction,
+  useEffect,
   useRef,
   useState,
-  useEffect,
 } from "react";
 import { useTranslation } from "react-i18next";
-import { GroupSelect } from "@components/Selects/groupSelect";
-import { useCreateOrganizationUser } from "@services/register/organization/users/createUser";
-import { toast } from "react-hot-toast";
-import { OrganizationUserItem } from "@src/services/types/register/organization/organizationUsers.interface";
-import { useUpdateOrganizationUser } from "@services/register/organization/users/updateUser";
-import { useValidate } from "@src/services/siginIn/validate";
-import { Toast } from "@src/components/Toast";
-import { queryClient } from "@src/services/queryClient";
 import ReactInputMask from "react-input-mask";
 interface NewuserModalprops {
   open: boolean;
@@ -56,8 +55,7 @@ export const NewUserModal = ({
   const formRef = React.useRef<FormInstance>(null);
   const { responseValidate } = useValidate();
   const [confirmPassword, setConfirmPassword] = useState<string>("");
-  const [form] = Form.useForm();
-  const [cantSubmit, setCantSubmit] = useState<boolean>(true);
+  const [, setCantSubmit] = useState<boolean>(true);
 
   const [body, setBody] = useState<NewUserInterface>({
     name: "",
@@ -71,14 +69,14 @@ export const NewUserModal = ({
 
   const { mutate, error, isLoading, isSuccess } =
     useCreateOrganizationUser(body);
-  const { updateError, updateLoading, updateMutate, updateSuccess } =
+  const { updateError, updateLoading, updateSuccess } =
     useUpdateOrganizationUser(body);
 
   function handleChangeUserBody(event: any) {
     setBody((state) => ({ ...state, [event.target.name]: event.target.value }));
   }
 
-  function CreateUser(event: any) {
+  function CreateUser() {
     if (
       currentUser &&
       setUpdateBody &&
@@ -146,7 +144,7 @@ export const NewUserModal = ({
           size="large"
           onClick={() => submitRef.current?.click()}
         >
-         {currentUser ? t("buttons.update") : t("buttons.create")}
+          {currentUser ? t("buttons.update") : t("buttons.create")}
         </Button>
       }
     >

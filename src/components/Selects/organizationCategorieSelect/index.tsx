@@ -1,11 +1,11 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { AutoComplete, Empty } from "antd";
-import { useTranslation } from "react-i18next";
-import { OperatorQuery } from "@src/services/types/register/operators/operators.interface";
-import { useGetOperator } from "@src/services/register/operator/getOperators";
-import useDebounce from "@src/utils/useDebounce";
-import { OrganizationCategoriesQuery } from "@src/services/types/register/organization/organizationCategories.interface";
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useGetOrganizationCategories } from "@src/services/register/organization/categories/getCategories";
+import { OrganizationCategoriesQuery } from "@src/services/types/register/organization/organizationCategories.interface";
+import useDebounce from "@src/utils/useDebounce";
+import { AutoComplete, Empty } from "antd";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface CategorieSelectProps {
   setQueryFunction: Dispatch<SetStateAction<any>>;
@@ -22,7 +22,8 @@ export const OrganizationCategorieSelect = ({
     limit: 200,
     name: "",
   });
-  const { CategoriesData, refetchCategoriesData } = useGetOrganizationCategories(query);
+  const { CategoriesData, refetchCategoriesData } =
+    useGetOrganizationCategories(query);
   const [value, setValue] = useState<any>(null);
   const debounceSearch = useDebounce(query.name);
 

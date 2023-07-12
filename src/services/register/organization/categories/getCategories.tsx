@@ -1,8 +1,13 @@
-import { api } from "../../../../config/api";
 import { useQuery } from "react-query";
-import { OrganizationCategoriesQuery, OrganizationCategoriesResponse } from "../../../types/register/organization/organizationCategories.interface";
+import { api } from "../../../../config/api";
+import {
+  OrganizationCategoriesQuery,
+  OrganizationCategoriesResponse,
+} from "../../../types/register/organization/organizationCategories.interface";
 
-export function useGetOrganizationCategories(params: OrganizationCategoriesQuery) {
+export function useGetOrganizationCategories(
+  params: OrganizationCategoriesQuery
+) {
   const { data, isFetching, error, refetch } = useQuery<
     OrganizationCategoriesResponse | null | undefined
   >(

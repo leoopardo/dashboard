@@ -1,17 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { Grid } from "@mui/material";
-import { Button } from "antd";
-import { useTranslation } from "react-i18next";
-import { FilterChips } from "@src/components/FiltersModal/filterChips";
-import {
-  ReportsItem,
-  ReportsQuery,
-} from "@src/services/types/reports/reports.interface";
-import { FiltersModal } from "@src/components/FiltersModal";
-import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
-import { CustomTable } from "@src/components/CustomTable";
 import { DownloadOutlined } from "@ant-design/icons";
+import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
+import { Grid } from "@mui/material";
+import { CustomTable } from "@src/components/CustomTable";
+import { FiltersModal } from "@src/components/FiltersModal";
+import { FilterChips } from "@src/components/FiltersModal/filterChips";
 import { useGetOrganizationCategoriesReports } from "@src/services/reports/register/organization/getCategoriesReports";
+import { ReportsQuery } from "@src/services/types/reports/reports.interface";
+import { Button } from "antd";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export const OrganizationCategoriesReports = () => {
   const INITIAL_QUERY: ReportsQuery = {
@@ -32,7 +29,6 @@ export const OrganizationCategoriesReports = () => {
   useEffect(() => {
     refetchCategoriesReportsData();
   }, [query]);
-
 
   const { t } = useTranslation();
   return (

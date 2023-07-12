@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import CurrencyInputField from "react-currency-input-field";
 
 interface CurrencyInputProps {

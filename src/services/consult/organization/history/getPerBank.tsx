@@ -1,9 +1,9 @@
-import { api } from "../../../../config/api";
-import { useQuery } from "react-query";
 import {
   OrganizationHistoryQuery,
   OrganizationHistoryResponse,
 } from "@src/services/types/consult/organization/history";
+import { useQuery } from "react-query";
+import { api } from "../../../../config/api";
 
 export function useGetOrganizationHistory(params: OrganizationHistoryQuery) {
   const { data, isFetching, error, refetch } = useQuery<

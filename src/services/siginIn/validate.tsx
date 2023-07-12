@@ -1,7 +1,9 @@
-import { api } from "../../config/api";
-import { useQuery } from "react-query";
-import { ValidateInterface } from "../types/validate.interface";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
+import { useQuery } from "react-query";
+import { api } from "../../config/api";
+import { ValidateInterface } from "../types/validate.interface";
 
 export function useValidate(rememberMe?: boolean, token?: string) {
   const { data, isFetching, error, refetch, isSuccess } = useQuery<
@@ -23,7 +25,6 @@ export function useValidate(rememberMe?: boolean, token?: string) {
     },
     {
       refetchOnWindowFocus: rememberMe ? "always" : false,
-    
     }
   );
   useEffect(() => {

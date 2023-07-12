@@ -1,16 +1,11 @@
-import React, {
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useState,
-  useCallback,
-} from "react";
-import { useListPartners } from "../../../services/register/partner/listPartners";
-import { AutoComplete, Empty, Input } from "antd";
-import { PartnerQuery } from "../../../services/types/register/partners/partners.interface";
-import { useTranslation } from "react-i18next";
-import { DownOutlined } from "@ant-design/icons";
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import useDebounce from "@src/utils/useDebounce";
+import { AutoComplete, Empty } from "antd";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useListPartners } from "../../../services/register/partner/listPartners";
+import { PartnerQuery } from "../../../services/types/register/partners/partners.interface";
 
 interface PartnerSelectProps {
   setQueryFunction: Dispatch<SetStateAction<any>>;

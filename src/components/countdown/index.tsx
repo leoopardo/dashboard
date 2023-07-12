@@ -1,7 +1,9 @@
-import { CloseCircleOutlined, WarningOutlined } from "@ant-design/icons";
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { WarningOutlined } from "@ant-design/icons";
 import { Container } from "@mui/material";
 import { Tag } from "antd";
-import React, { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 interface countdowProps {

@@ -1,7 +1,6 @@
-import moment from "moment";
 import { api } from "../../../../config/api";
 
-import { useMutation, useQuery } from "react-query";
+import { useMutation } from "react-query";
 import { NewUserInterface } from "../../../../routes/private/Pages/register/organization/users/components/newUserModal";
 import { queryClient } from "../../../queryClient";
 

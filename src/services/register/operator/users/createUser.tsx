@@ -1,8 +1,7 @@
-import { api } from "../../../../config/api";
-import { useMutation } from "react-query";
-import { NewUserInterface } from "../../../../routes/private/Pages/register/organization/users/components/newUserModal";
-import { queryClient } from "../../../queryClient";
 import { OperatorItem } from "@src/services/types/register/operators/operators.interface";
+import { useMutation } from "react-query";
+import { api } from "../../../../config/api";
+import { queryClient } from "../../../queryClient";
 
 export function useCreateOperatorUser(body: OperatorItem) {
   const { isLoading, error, mutate, isSuccess } = useMutation<

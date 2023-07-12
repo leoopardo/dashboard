@@ -1,5 +1,5 @@
-import { api } from "../../../../config/api";
 import { useQuery } from "react-query";
+import { api } from "../../../../config/api";
 import { getWithdraw } from "../../../types/consult/withdrawals/generatedWithdrawals.interface";
 
 export function useGetWithdraw(id: string) {

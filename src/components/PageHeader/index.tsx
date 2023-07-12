@@ -1,14 +1,14 @@
-import { useMediaQuery } from "react-responsive";
-import { Grid } from "@mui/material";
-import { BreadcrumbComponent } from "../Breadcrumb";
-import { Avatar, Divider, Dropdown, MenuProps, Space, theme } from "antd";
 import { DownOutlined, UserOutlined } from "@ant-design/icons";
+import { Grid } from "@mui/material";
+import { useValidate } from "@src/services/siginIn/validate";
+import { Avatar, Dropdown, MenuProps, Space, theme } from "antd";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useMediaQuery } from "react-responsive";
 import brazil from "../../assets/brazil-.png";
 import eua from "../../assets/united-states.png";
 import { defaultTheme } from "../../styles/defaultTheme";
-import { useValidate } from "@src/services/siginIn/validate";
-import React, { useState } from "react";
+import { BreadcrumbComponent } from "../Breadcrumb";
 import { EditSelfModal } from "./EditSelf";
 const { useToken } = theme;
 

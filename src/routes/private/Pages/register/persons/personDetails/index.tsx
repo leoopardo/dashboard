@@ -1,34 +1,26 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Grid } from "@mui/material";
 import { CustomTable } from "@src/components/CustomTable";
 import { useGetRowsGeneratedDeposits } from "@src/services/consult/deposits/generatedDeposits/getRows";
 import { useGetTotalGeneratedDeposits } from "@src/services/consult/deposits/generatedDeposits/getTotal";
+import { useGetRowsPaidDeposits } from "@src/services/consult/deposits/paidDeposits/getRows";
+import { useGetTotalPaidDeposits } from "@src/services/consult/deposits/paidDeposits/getTotal";
+import { useGetRowsGeneratedWithdrawals } from "@src/services/consult/withdrawals/generatedWithdrawals/getRows";
+import { useGetTotalGeneratedWithdrawals } from "@src/services/consult/withdrawals/generatedWithdrawals/getTotal";
+import { useGetFiles } from "@src/services/register/persons/persons/files/getFiles";
 import { useGetPersons } from "@src/services/register/persons/persons/getPersons";
+import { paidDepositTotalQuery } from "@src/services/types/consult/deposits/PaidDeposits.interface";
 import { generatedDepositTotalQuery } from "@src/services/types/consult/deposits/generatedDeposits.interface";
+import { generatedWithdrawalsRowsQuery } from "@src/services/types/consult/withdrawals/generatedWithdrawals.interface";
 import { PersonsQuery } from "@src/services/types/register/persons/persons.interface";
-import {
-  Button,
-  Descriptions,
-  Empty,
-  Spin,
-  Tabs,
-  TabsProps,
-  Upload,
-} from "antd";
-import { useState, useEffect } from "react";
+import { Descriptions, Empty, Spin, Tabs, TabsProps, Upload } from "antd";
+import moment from "moment";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import { useParams } from "react-router-dom";
 import { TotalizersCards as DepositsCards } from "../../../consult/deposits/generated/components/TotalizersCards";
-import { useGetTotalPaidDeposits } from "@src/services/consult/deposits/paidDeposits/getTotal";
-import { useGetRowsPaidDeposits } from "@src/services/consult/deposits/paidDeposits/getRows";
-import { paidDepositTotalQuery } from "@src/services/types/consult/deposits/PaidDeposits.interface";
-import { generatedWithdrawalsRowsQuery } from "@src/services/types/consult/withdrawals/generatedWithdrawals.interface";
 import { TotalizersCards } from "../../../consult/withdrawals/generated/components/TotalizersCards";
-import moment from "moment";
-import { useGetFiles } from "@src/services/register/persons/persons/files/getFiles";
-import { DownloadOutlined } from "@ant-design/icons";
-import { useGetTotalGeneratedWithdrawals } from "@src/services/consult/withdrawals/generatedWithdrawals/getTotal";
-import { useGetRowsGeneratedWithdrawals } from "@src/services/consult/withdrawals/generatedWithdrawals/getRows";
 
 export const PersonDetails = () => {
   const { t } = useTranslation();
@@ -61,12 +53,8 @@ export const PersonDetails = () => {
   const { depositsTotal, isDepositsTotalFetching, refetchDepositsTotal } =
     useGetTotalGeneratedDeposits(gDepositQuery);
 
-  const {
-    depositsRows,
-    depositsRowsError,
-    isDepositsRowsFetching,
-    refetchDepositsTotalRows,
-  } = useGetRowsGeneratedDeposits(gDepositQuery);
+  const { depositsRows, depositsRowsError, isDepositsRowsFetching } =
+    useGetRowsGeneratedDeposits(gDepositQuery);
 
   //////// paid deposits ----------------------
 
@@ -85,7 +73,7 @@ export const PersonDetails = () => {
   const { paidTotal, isPaidTotalFetching, refetchPaidTotal } =
     useGetTotalPaidDeposits(pDepositQuery);
 
-  const { paidRows, paidRowsError, isPaidRowsFetching, refetchPaidTotalRows } =
+  const { paidRows, paidRowsError, isPaidRowsFetching } =
     useGetRowsPaidDeposits(pDepositQuery);
 
   ////////// withdrawals --------------------
@@ -108,18 +96,12 @@ export const PersonDetails = () => {
     refetchWithdrawalsTotal,
   } = useGetTotalGeneratedWithdrawals(WithdrawalsQuery);
 
-  const {
-    witrawalsRows,
-    witrawalsRowsError,
-    isWithdrawalsRowsFetching,
-    refetchWithdrawalsTotalRows,
-  } = useGetRowsGeneratedWithdrawals(WithdrawalsQuery);
+  const { witrawalsRows, witrawalsRowsError, isWithdrawalsRowsFetching } =
+    useGetRowsGeneratedWithdrawals(WithdrawalsQuery);
 
   ///// attachments -------------------------
 
-  const { Files, isFilesFetching, refetchFiles } = useGetFiles(
-    cpf?.split(" ").join(".")
-  );
+  const { Files, isFilesFetching } = useGetFiles(cpf?.split(" ").join("."));
 
   const items: TabsProps["items"] = [
     {

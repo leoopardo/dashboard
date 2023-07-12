@@ -1,22 +1,24 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { ReloadOutlined } from "@ant-design/icons";
 import { Grid } from "@mui/material";
+import { CustomTable } from "@src/components/CustomTable";
+import { FiltersModal } from "@src/components/FiltersModal";
+import { FilterChips } from "@src/components/FiltersModal/filterChips";
+import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
+import { useGetHourly } from "@src/services/consult/merchant/bankStatement/getHourly";
+import { useGetMerchantBankStatementTotals } from "@src/services/consult/merchant/bankStatement/getTotals";
+import { useGetMerchantTransactions } from "@src/services/consult/merchant/bankStatement/getTransactions";
+import { queryClient } from "@src/services/queryClient";
+import { useCreateMerchantBankStatementReports } from "@src/services/reports/consult/merchant/createBankStatementReports";
+import { MerchantBankStatementTotalsQuery } from "@src/services/types/consult/merchant/bankStatement";
+import { ValidateInterface } from "@src/services/types/validate.interface";
+import { Button, Spin } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Totalizers } from "./components/totalizers";
-import { Button, Spin } from "antd";
-import { FilterChips } from "@src/components/FiltersModal/filterChips";
-import { FiltersModal } from "@src/components/FiltersModal";
-import { CustomTable } from "@src/components/CustomTable";
-import { ReloadOutlined } from "@ant-design/icons";
-import { useGetMerchantBankStatementTotals } from "@src/services/consult/merchant/bankStatement/getTotals";
-import { MerchantBankStatementTotalsQuery } from "@src/services/types/consult/merchant/bankStatement";
 import { MerchantHourlyLineChart } from "./components/HourlyChart";
-import { useGetHourly } from "@src/services/consult/merchant/bankStatement/getHourly";
-import { useGetMerchantTransactions } from "@src/services/consult/merchant/bankStatement/getTransactions";
-import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
-import { useCreateMerchantBankStatementReports } from "@src/services/reports/consult/merchant/createBankStatementReports";
-import { queryClient } from "@src/services/queryClient";
-import { ValidateInterface } from "@src/services/types/validate.interface";
+import { Totalizers } from "./components/totalizers";
 
 const INITIAL_QUERY: MerchantBankStatementTotalsQuery = {
   page: 1,

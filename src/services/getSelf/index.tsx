@@ -1,6 +1,5 @@
-import moment from "moment";
-import { api } from "../../config/api";
 import { useQuery } from "react-query";
+import { api } from "../../config/api";
 import { SelfInterface } from "../types/register/self/self.interface";
 
 export function useGetSelf() {

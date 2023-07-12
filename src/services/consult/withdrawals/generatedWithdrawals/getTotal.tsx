@@ -1,6 +1,6 @@
+import moment from "moment";
 import { useEffect, useState } from "react";
 import { api } from "../../../../config/api";
-import moment from "moment";
 import {
   generatedWithdrawalsRowsQuery,
   generatedWithdrawalsTotal,
@@ -20,15 +20,15 @@ export function useGetTotalGeneratedWithdrawals(
         params: {
           ...params,
           initial_date: params.initial_date
-          ? moment(params.initial_date)
-              .add(3, "hours")
-              .format("YYYY-MM-DDTHH:mm:ss.SSS")
-          : null,
-        final_date: params.final_date
-          ? moment(params.final_date)
-              .add(3, "hours")
-              .format("YYYY-MM-DDTHH:mm:ss.SSS")
-          : null,
+            ? moment(params.initial_date)
+                .add(3, "hours")
+                .format("YYYY-MM-DDTHH:mm:ss.SSS")
+            : null,
+          final_date: params.final_date
+            ? moment(params.final_date)
+                .add(3, "hours")
+                .format("YYYY-MM-DDTHH:mm:ss.SSS")
+            : null,
         },
       });
       setData(response.data);

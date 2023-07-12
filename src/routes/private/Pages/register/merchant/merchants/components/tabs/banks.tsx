@@ -1,36 +1,36 @@
-import { useRef, useState, useEffect } from "react";
+import { BanksSelect } from "@components/Selects/bankSelect";
+import { Toast } from "@components/Toast";
 import { Grid } from "@mui/material";
-import { useTranslation } from "react-i18next";
 import { useMerchantBankConfig } from "@services/register/merchant/merchant/bankConfig/getBankConfig";
 import { useUpdateBankConfig } from "@src/services/register/merchant/merchant/bankConfig/updateBankConfig";
 import { IMerchantBankUpdate } from "@src/services/types/register/merchants/merchantBankConfig.interface";
-import { BanksSelect } from "@components/Selects/bankSelect";
-import { Toast } from "@components/Toast";
-import { Form, FormInstance, Input, Button, Popconfirm } from "antd";
+import { Button, Form, FormInstance, Popconfirm } from "antd";
+import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export const BanksTab = (props: { id?: string }) => {
   const formRef = useRef<FormInstance>(null);
   const { t } = useTranslation();
   const [body, setBody] = useState<IMerchantBankUpdate | null>(null);
-  const [despositBank, setDepositBank] = useState<{bank?: string } | undefined>();
-  const [withdrawBank, setWithdrawBank] = useState<{bank?: string } | undefined>();
+  const [despositBank, setDepositBank] = useState<
+    { bank?: string } | undefined
+  >();
+  const [withdrawBank, setWithdrawBank] = useState<
+    { bank?: string } | undefined
+  >();
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
-  const {
-    isMerchantBankFetching,
-    merchantBankData,
-    refetchMerchantBankData,
-  } = useMerchantBankConfig(props.id);
+  const { isMerchantBankFetching, merchantBankData, refetchMerchantBankData } =
+    useMerchantBankConfig(props.id);
   const { UpdateError, UpdateIsLoading, UpdateIsSuccess, UpdateMutate } =
     useUpdateBankConfig(body);
 
- useEffect(() => {
+  useEffect(() => {
     setBody((state: any) => ({
       ...state,
       cash_in_bank: despositBank?.bank,
       cash_out_bank: withdrawBank?.bank,
     }));
-    console.log({despositBank})
-
+    console.log({ despositBank });
   }, [despositBank, withdrawBank]);
 
   useEffect(() => {
@@ -41,15 +41,15 @@ export const BanksTab = (props: { id?: string }) => {
       cash_out_bank: merchantBankData?.merchantConfig?.cash_out_bank,
     }));
 
-    setDepositBank({bank: merchantBankData?.merchantConfig?.cash_in_bank})
-    setWithdrawBank({bank: merchantBankData?.merchantConfig?.cash_out_bank})
-  }, [merchantBankData])
+    setDepositBank({ bank: merchantBankData?.merchantConfig?.cash_in_bank });
+    setWithdrawBank({ bank: merchantBankData?.merchantConfig?.cash_out_bank });
+  }, [merchantBankData]);
 
   useEffect(() => {
-    refetchMerchantBankData()
-  }, [UpdateIsSuccess])
+    refetchMerchantBankData();
+  }, [UpdateIsSuccess]);
 
-  console.log({withdrawBank})
+  console.log({ withdrawBank });
   return (
     <Form
       ref={formRef}
@@ -74,7 +74,7 @@ export const BanksTab = (props: { id?: string }) => {
         <Grid item xs={12} md={4}>
           <Form.Item label={t("input.withdraw_bank")} name="cash_out_bank">
             <BanksSelect
-               currentValue={withdrawBank?.bank}
+              currentValue={withdrawBank?.bank}
               queryOptions={withdrawBank?.bank}
               setCurrentValue={setWithdrawBank}
               setQueryFunction={setWithdrawBank}

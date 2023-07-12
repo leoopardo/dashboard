@@ -1,40 +1,39 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Dispatch, SetStateAction, useEffect, useState, useRef } from "react";
-import {
-  Button,
-  Drawer,
-  DatePicker,
-  Select,
-  Form,
-  ConfigProvider,
-  AutoComplete,
-  Slider,
-  Checkbox,
-  FormInstance,
-} from "antd";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
-import moment from "moment";
-const { RangePicker } = DatePicker;
-import "dayjs/locale/zh-cn";
-import locale from "antd/locale/pt_BR";
-import dayjs from "dayjs";
-import weekday from "dayjs/plugin/weekday";
-import localeData from "dayjs/plugin/localeData";
-import { PartnerSelect } from "../Selects/partnerSelect";
-import { MerchantSelect } from "../Selects/merchantSelect";
-import { BanksSelect } from "../Selects/bankSelect";
-import { ClientBanksSelect } from "../Selects/clientBanksSelect";
-import { ReasonSelect } from "../Selects/reasonSelect";
-import { FilterChips } from "./filterChips";
-import { useGetStates } from "../../services/states_cities/getStates";
-import { useGetCities } from "../../services/states_cities/getCities";
-import { useTranslation } from "react-i18next";
-import { useMediaQuery } from "react-responsive";
-import { StyleWrapperDatePicker } from "./styles";
 import { queryClient } from "@src/services/queryClient";
 import { ValidateInterface } from "@src/services/types/validate.interface";
+import {
+  AutoComplete,
+  Button,
+  Checkbox,
+  ConfigProvider,
+  DatePicker,
+  Drawer,
+  Form,
+  FormInstance,
+  Select,
+  Slider,
+} from "antd";
+import locale from "antd/locale/pt_BR";
+import dayjs from "dayjs";
+import "dayjs/locale/zh-cn";
+import localeData from "dayjs/plugin/localeData";
+import weekday from "dayjs/plugin/weekday";
+import moment from "moment";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useGetCities } from "../../services/states_cities/getCities";
+import { useGetStates } from "../../services/states_cities/getStates";
+import { BanksSelect } from "../Selects/bankSelect";
+import { ClientBanksSelect } from "../Selects/clientBanksSelect";
+import { MerchantSelect } from "../Selects/merchantSelect";
+import { PartnerSelect } from "../Selects/partnerSelect";
+import { ReasonSelect } from "../Selects/reasonSelect";
+import { FilterChips } from "./filterChips";
+import { StyleWrapperDatePicker } from "./styles";
+const { RangePicker } = DatePicker;
 
 dayjs.extend(weekday);
 dayjs.extend(localeData);
@@ -440,7 +439,7 @@ export const FiltersModal = ({
                       }));
                     }}
                     filterOption={(inputValue, option) =>
-                      option!.value
+                      option?.value
                         .toUpperCase()
                         .indexOf(inputValue.toUpperCase()) !== -1
                     }

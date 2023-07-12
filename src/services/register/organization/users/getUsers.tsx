@@ -9,15 +9,12 @@ import {
 export function useGetRowsOrganizationUsers(params: OrganizationUserQuery) {
   const { data, isFetching, error, refetch } = useQuery<
     OrganizationUserResponse | null | undefined
-  >(
-    "OrganizationUser",
-    async () => {
-      const response = await api.get("core/user/organization", {
-        params,
-      });
-      return response.data;
-    }
-  );
+  >("OrganizationUser", async () => {
+    const response = await api.get("core/user/organization", {
+      params,
+    });
+    return response.data;
+  });
 
   const UsersData = data;
   const isUsersDataFetching = isFetching;

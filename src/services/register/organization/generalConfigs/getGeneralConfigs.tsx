@@ -1,10 +1,10 @@
-import { api } from "../../../../config/api";
-import { useQuery } from "react-query";
 import { OrganizationGeneralConfigs } from "@src/services/types/register/organization/organizationGeneralConfigs.interface";
+import { useQuery } from "react-query";
+import { api } from "../../../../config/api";
 
 export function useGetGeneralconfigs() {
   const { data, isFetching, error, isSuccess, refetch } = useQuery<
-  OrganizationGeneralConfigs | null | undefined
+    OrganizationGeneralConfigs | null | undefined
   >(
     "OrganizationGeneralConfigs",
     async () => {

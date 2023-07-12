@@ -1,27 +1,29 @@
-import moment from "moment";
-import React, { useState, useEffect } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
+import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
-import { Button, Divider, Statistic } from "antd";
-import { useTranslation } from "react-i18next";
-import { FilterChips } from "@src/components/FiltersModal/filterChips";
 import { CustomTable } from "@src/components/CustomTable";
 import { FiltersModal } from "@src/components/FiltersModal";
-import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
-import { CreateMovimentModal } from "../../components/createMovimentModal";
+import { FilterChips } from "@src/components/FiltersModal/filterChips";
+import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { ValidateToken } from "@src/components/ValidateToken";
 import { useGetSelf } from "@src/services/getSelf";
 import { useGetMerchantMoviments } from "@src/services/moviments/merchants/manual/GetManualTransactions";
+import { useCreateMerchantManualTransaction } from "@src/services/moviments/merchants/manual/createManualTransaction";
+import { queryClient } from "@src/services/queryClient";
+import { useCreateMerchantManualReports } from "@src/services/reports/moviments/merchant/createManualTransactionsReports";
 import { CreateMerchantManualTransaction } from "@src/services/types/moviments/merchant/createManualTransaction.interface";
 import {
   GetMerchantMovimentsItem,
   GetMerchantMovimentsQuery,
 } from "@src/services/types/moviments/merchant/getMoviments";
-import { useCreateMerchantManualTransaction } from "@src/services/moviments/merchants/manual/createManualTransaction";
-import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
-import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
-import { useCreateMerchantManualReports } from "@src/services/reports/moviments/merchant/createManualTransactionsReports";
-import { queryClient } from "@src/services/queryClient";
 import { ValidateInterface } from "@src/services/types/validate.interface";
+import { Button, Divider, Statistic } from "antd";
+import moment from "moment";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { CreateMovimentModal } from "../../components/createMovimentModal";
 
 export const MerchantManual = () => {
   const { permissions } = queryClient.getQueryData(
@@ -53,8 +55,8 @@ export const MerchantManual = () => {
     useState<CreateMerchantManualTransaction | null>(null);
 
   const { t } = useTranslation();
-  const { Self } = useGetSelf();
-
+  const { SelfError } = useGetSelf();
+  console.error(SelfError);
   const {
     MerchantMovimentsData,
     isMerchantMovimentsDataFetching,
@@ -69,7 +71,7 @@ export const MerchantManual = () => {
     MerchantManualReportsMutate,
   } = useCreateMerchantManualReports(query);
 
-  const { mutate, isLoading, error, isSuccess } =
+  const { mutate, error, isSuccess } =
     useCreateMerchantManualTransaction(operationInBody);
 
   useEffect(() => {

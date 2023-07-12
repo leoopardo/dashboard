@@ -1,17 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { Grid } from "@mui/material";
-import { Button } from "antd";
-import { useTranslation } from "react-i18next";
-import { FilterChips } from "@src/components/FiltersModal/filterChips";
-import {
-  ReportsItem,
-  ReportsQuery,
-} from "@src/services/types/reports/reports.interface";
-import { FiltersModal } from "@src/components/FiltersModal";
-import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
-import { CustomTable } from "@src/components/CustomTable";
-import { useGetRowsOrganizationUsersReports } from "@src/services/reports/register/organization/getUserReports";
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { DownloadOutlined } from "@ant-design/icons";
+import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
+import { Grid } from "@mui/material";
+import { CustomTable } from "@src/components/CustomTable";
+import { FiltersModal } from "@src/components/FiltersModal";
+import { FilterChips } from "@src/components/FiltersModal/filterChips";
+import { useGetRowsOrganizationUsersReports } from "@src/services/reports/register/organization/getUserReports";
+import { ReportsQuery } from "@src/services/types/reports/reports.interface";
+import { Button } from "antd";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export const OrganizationUserReports = () => {
   const INITIAL_QUERY: ReportsQuery = {
@@ -21,7 +20,7 @@ export const OrganizationUserReports = () => {
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [query, setQuery] = useState<ReportsQuery>(INITIAL_QUERY);
   const [currentItem, setCurrentItem] = useState<any>();
-  const [disable, setDisable] = useState<boolean>(false);
+  const [, setDisable] = useState<boolean>(false);
 
   const {
     UsersReportsData,

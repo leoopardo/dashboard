@@ -1,20 +1,20 @@
+import { GroupSelect } from "@components/Selects/groupSelect";
+import { AggregatorSelect } from "@src/components/Selects/aggregatorSelect";
+import { Toast } from "@src/components/Toast";
+import { queryClient } from "@src/services/queryClient";
+import { useCreateAggregatorUser } from "@src/services/register/aggregator/users/createUser";
+import { useUpdateAggregatorUser } from "@src/services/register/aggregator/users/updateUser";
+import { OrganizationUserItem } from "@src/services/types/register/organization/organizationUsers.interface";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 import { Button, Drawer, Form, FormInstance, Input } from "antd";
 import React, {
   Dispatch,
   SetStateAction,
+  useEffect,
   useRef,
   useState,
-  useEffect,
 } from "react";
 import { useTranslation } from "react-i18next";
-import { GroupSelect } from "@components/Selects/groupSelect";
-import { OrganizationUserItem } from "@src/services/types/register/organization/organizationUsers.interface";
-import { Toast } from "@src/components/Toast";
-import { useCreateAggregatorUser } from "@src/services/register/aggregator/users/createUser";
-import { useUpdateAggregatorUser } from "@src/services/register/aggregator/users/updateUser";
-import { AggregatorSelect } from "@src/components/Selects/aggregatorSelect";
-import { queryClient } from "@src/services/queryClient";
-import { ValidateInterface } from "@src/services/types/validate.interface";
 interface NewuserModalprops {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;

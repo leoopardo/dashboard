@@ -1,20 +1,22 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/exhaustive-deps */
+import { ReloadOutlined } from "@ant-design/icons";
+import { Grid } from "@mui/material";
+import { CustomTable } from "@src/components/CustomTable";
+import { FilterChips } from "@src/components/FiltersModal/filterChips";
+import { MerchantSelect } from "@src/components/Selects/merchantSelect";
 import { useGetMerchantHistory } from "@src/services/consult/merchant/history/getMerchantHistory";
+import { queryClient } from "@src/services/queryClient";
 import {
   MerchantHistoryItem,
   MerchantHistoryQuery,
 } from "@src/services/types/consult/merchant/history";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 import { Button, Empty, Table, TableColumnsType } from "antd";
-import React, { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
-import { Grid } from "@mui/material";
-import { CustomTable } from "@src/components/CustomTable";
-import { MerchantSelect } from "@src/components/Selects/merchantSelect";
-import { FilterChips } from "@src/components/FiltersModal/filterChips";
 import { MerchantHistoryLineChart } from "./components/MerchantHistoryLineChart";
-import { ReloadOutlined } from "@ant-design/icons";
-import { queryClient } from "@src/services/queryClient";
-import { ValidateInterface } from "@src/services/types/validate.interface";
 
 export const MerchantHistory = () => {
   const { permissions } = queryClient.getQueryData(
@@ -275,7 +277,7 @@ export const MerchantHistory = () => {
                 setQuery((state: any) => ({ ...state, page }));
               },
               pageSizeOptions: [10, 25, 50, 100],
-              onShowSizeChange: (current, size) =>
+              onShowSizeChange: (_current, size) =>
                 setQuery((state: any) => ({ ...state, limit: size })),
             }}
           />

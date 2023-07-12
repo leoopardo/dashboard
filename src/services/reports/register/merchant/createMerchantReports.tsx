@@ -1,11 +1,11 @@
 import { queryClient } from "@src/services/queryClient";
-import { api } from "../../../../config/api";
-import { useMutation } from "react-query";
 import { MerchantsQuery } from "@src/services/types/register/merchants/merchantsRegister.interface";
+import { useMutation } from "react-query";
+import { api } from "../../../../config/api";
 
 export function useCreateMerchantReports(body: MerchantsQuery) {
   const { isLoading, error, mutate, isSuccess, reset } = useMutation<
-  MerchantsQuery | null | undefined
+    MerchantsQuery | null | undefined
   >("CreateMerchantReports", async () => {
     const response = await api.post("report/csv/merchant", body, {});
     await queryClient.refetchQueries({ queryKey: ["MerchantReports"] });
@@ -22,6 +22,6 @@ export function useCreateMerchantReports(body: MerchantsQuery) {
     MerchantReportsIsLoading,
     MerchantReportsError,
     MerchantReportsIsSuccess,
-    MerchantReset
+    MerchantReset,
   };
 }

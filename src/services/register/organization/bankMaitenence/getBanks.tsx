@@ -2,8 +2,8 @@ import {
   BankMaintenenceQuery,
   BankMaintenenceResponse,
 } from "@src/services/types/register/organization/bankMaintenence.interface";
-import { api } from "../../../../config/api";
 import { useQuery } from "react-query";
+import { api } from "../../../../config/api";
 
 export function useGetOrganizationBankMaintenece(params: BankMaintenenceQuery) {
   const { data, isFetching, error, refetch } = useQuery<
@@ -11,12 +11,9 @@ export function useGetOrganizationBankMaintenece(params: BankMaintenenceQuery) {
   >(
     "OrganizationBankMaintenece",
     async () => {
-      const response = await api.get(
-        "config/list_banks",
-        {
-          params,
-        }
-      );
+      const response = await api.get("config/list_banks", {
+        params,
+      });
       return response.data;
     },
     {

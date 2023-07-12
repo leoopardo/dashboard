@@ -1,23 +1,25 @@
-import React, { useEffect, useState } from "react";
-import { Grid } from "@mui/material";
-import { Button, Input } from "antd";
-import { FilterChips } from "@components/FiltersModal/filterChips";
-import { useTranslation } from "react-i18next";
-import { useGetRowsOrganizationUsers } from "@services/register/organization/users/getUsers";
-import { OrganizationUserQuery } from "@src/services/types/register/organization/organizationUsers.interface";
-import { FiltersModal } from "@components/FiltersModal";
-import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { EditOutlined, EyeFilled, UserAddOutlined } from "@ant-design/icons";
-import { NewUserInterface, NewUserModal } from "./components/newUserModal";
-import { ValidateToken } from "@components/ValidateToken";
-import { useUpdateOrganizationUser } from "@services/register/organization/users/updateUser";
-import { ViewModal } from "@src/components/Modals/viewGenericModal";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
-import useDebounce from "@utils/useDebounce";
+import { FiltersModal } from "@components/FiltersModal";
+import { FilterChips } from "@components/FiltersModal/filterChips";
+import { ValidateToken } from "@components/ValidateToken";
+import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
+import { Grid } from "@mui/material";
+import { useGetRowsOrganizationUsers } from "@services/register/organization/users/getUsers";
+import { useUpdateOrganizationUser } from "@services/register/organization/users/updateUser";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
-import { useCreateOrganizationReports } from "@src/services/reports/register/organization/createUserReports";
+import { ViewModal } from "@src/components/Modals/viewGenericModal";
 import { queryClient } from "@src/services/queryClient";
+import { useCreateOrganizationReports } from "@src/services/reports/register/organization/createUserReports";
+import { OrganizationUserQuery } from "@src/services/types/register/organization/organizationUsers.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
+import useDebounce from "@utils/useDebounce";
+import { Button, Input } from "antd";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { NewUserInterface, NewUserModal } from "./components/newUserModal";
 
 const INITIAL_QUERY: OrganizationUserQuery = {
   limit: 25,

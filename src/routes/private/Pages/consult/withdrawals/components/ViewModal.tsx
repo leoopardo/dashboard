@@ -1,11 +1,9 @@
-import { Descriptions, Drawer, QRCode, Segmented, Spin } from "antd";
-import React, { Dispatch, SetStateAction, useState } from "react";
-import { useGetDeposit } from "../../../../../../services/consult/deposits/generatedDeposits/getDeposit";
-import { useTranslation } from "react-i18next";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Grid } from "@mui/material";
-import { StyledSegmented } from "../generated/components/styles";
-import Paybrokers from "../../../../../../../assets/logo.png";
 import { useGetWithdraw } from "@src/services/consult/withdrawals/generatedWithdrawals/getWithdraw";
+import { Descriptions, Drawer, Segmented, Spin } from "antd";
+import { Dispatch, SetStateAction, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface ViewModalProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -19,9 +17,7 @@ export const ViewModal = (props: ViewModalProps) => {
     props.setOpen(false);
   };
 
-  const { withdraw, withdrawError, isWithdrawFetching } = useGetWithdraw(
-    props.id
-  );
+  const { withdraw, isWithdrawFetching } = useGetWithdraw(props.id);
   const [currOption, setCurrOption] = useState<any>("transaction");
 
   return (
@@ -69,7 +65,7 @@ export const ViewModal = (props: ViewModalProps) => {
           <Grid xs={12}>
             <Descriptions bordered style={{ margin: 0, padding: 0 }} column={1}>
               {currOption === "transaction" &&
-                Object.keys(withdraw).map((key: string, value) => {
+                Object.keys(withdraw).map((key: string) => {
                   switch (key) {
                     case "createdAt":
                     case "paid_at":
@@ -161,7 +157,7 @@ export const ViewModal = (props: ViewModalProps) => {
                   }
                 })}
               {currOption === "receiver" &&
-                Object.keys(withdraw).map((key: string, value) => {
+                Object.keys(withdraw).map((key: string) => {
                   switch (key) {
                     case "receiver_birth_date":
                       return (

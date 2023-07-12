@@ -1,9 +1,11 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { AutoComplete, Empty } from "antd";
-import { MerchantQuery } from "../../../services/types/register/merchants/merchants.interface";
-import { useListMerchants } from "../../../services/merchant/listMerchants";
-import { useTranslation } from "react-i18next";
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import useDebounce from "@src/utils/useDebounce";
+import { AutoComplete, Empty } from "antd";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useListMerchants } from "../../../services/merchant/listMerchants";
+import { MerchantQuery } from "../../../services/types/register/merchants/merchants.interface";
 
 interface MerchantSelectProps {
   setQueryFunction: Dispatch<SetStateAction<any>>;
@@ -20,7 +22,7 @@ export const MerchantSelect = ({
     limit: 200,
     partner_id: queryOptions?.partner_id,
   });
-  const { merchantsData, refetcMerchant, isMerchantFetching, merchantError } =
+  const { merchantsData, refetcMerchant, merchantError } =
     useListMerchants(query);
   const [value, setValue] = useState<any>(null);
   const debounceSearch = useDebounce(query.name);
@@ -61,7 +63,7 @@ export const MerchantSelect = ({
       notFoundContent={<Empty />}
       value={value}
       style={{ width: "100%", height: 40 }}
-      onChange={(value, option) => {
+      onChange={(value) => {
         if (!value) {
           delete queryOptions.merchant_id;
           setValue("");

@@ -29,7 +29,7 @@ export function useGetRowsPaidWithdrawals(params: paidWithdrawalsRowsQuery) {
       refetchInterval: false,
       refetchIntervalInBackground: false,
       refetchOnMount: false,
-      refetchOnWindowFocus: false
+      refetchOnWindowFocus: false,
     }
   );
 

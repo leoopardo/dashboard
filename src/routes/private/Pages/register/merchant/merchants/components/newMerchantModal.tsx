@@ -1,18 +1,13 @@
-import { Button, Drawer, Form, FormInstance, Input } from "antd";
-import React, {
-  Dispatch,
-  SetStateAction,
-  useRef,
-  useState,
-  useEffect,
-} from "react";
-import { useTranslation } from "react-i18next";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { PartnerSelect } from "@components/Selects/partnerSelect";
-import { useCreateMerchant } from "@services/register/merchant/merchant/createMerchant";
-import { toast } from "react-hot-toast";
 import { Toast } from "@components/Toast";
+import { useCreateMerchant } from "@services/register/merchant/merchant/createMerchant";
 import { queryClient } from "@src/services/queryClient";
 import { ValidateInterface } from "@src/services/types/validate.interface";
+import { Button, Drawer, Form, FormInstance, Input } from "antd";
+import React, { Dispatch, SetStateAction, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface NewuserModalprops {
   open: boolean;
@@ -233,7 +228,7 @@ export const NewMerchantModal = ({ open, setOpen }: NewuserModalprops) => {
               required: true,
               message: t("input.confirm_password") || "",
             },
-            ({ getFieldValue: any }) => ({
+            () => ({
               validator(_: any, value: string) {
                 if (!value || body.password === value) {
                   return Promise.resolve();

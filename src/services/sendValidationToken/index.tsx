@@ -1,5 +1,5 @@
-import { api } from "../../config/api";
 import { useMutation } from "react-query";
+import { api } from "../../config/api";
 
 interface ValidateTokenInterface {
   action: string;
@@ -10,11 +10,15 @@ interface ValidateTokenResponseInterface {
   expiration: number;
 }
 
-export function useValidateToken(body: ValidateTokenInterface, dispatch?: boolean) {
+export function useValidateToken(
+  body: ValidateTokenInterface,
+  dispatch?: boolean
+) {
   const { isLoading, error, mutate, isSuccess, data } = useMutation<
     ValidateTokenResponseInterface | null | undefined
   >("validateToken", async () => {
-    const response = dispatch && await api.post("core/user/validation-token", body, {});
+    const response =
+      dispatch && (await api.post("core/user/validation-token", body, {}));
     return response && response.data;
   });
 

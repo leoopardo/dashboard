@@ -1,6 +1,9 @@
-import { GetMerchantCategoriesData, GetMerchantCategoryQuery } from "@src/services/types/register/merchants/merchantCategories";
-import { api } from "../../../../config/api";
+import {
+  GetMerchantCategoriesData,
+  GetMerchantCategoryQuery,
+} from "@src/services/types/register/merchants/merchantCategories";
 import { useQuery } from "react-query";
+import { api } from "../../../../config/api";
 
 export function useGetMerchantCategories(params: GetMerchantCategoryQuery) {
   const { data, isFetching, error, refetch } = useQuery<
@@ -8,12 +11,9 @@ export function useGetMerchantCategories(params: GetMerchantCategoryQuery) {
   >(
     "MerchantCategories",
     async () => {
-      const response = await api.get(
-        "core/entry-account/category",
-        {
-          params,
-        }
-      );
+      const response = await api.get("core/entry-account/category", {
+        params,
+      });
       return response.data;
     },
     {

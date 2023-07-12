@@ -1,23 +1,23 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Grid } from "@mui/material";
-import { Button, Input, Select } from "antd";
-import { useEffect, useState } from "react";
-import { FilterChips } from "@components/FiltersModal/filterChips";
-import { useTranslation } from "react-i18next";
-import { FiltersModal } from "@components/FiltersModal";
-import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
-import useDebounce from "@utils/useDebounce";
+import { FiltersModal } from "@components/FiltersModal";
+import { FilterChips } from "@components/FiltersModal/filterChips";
+import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
+import { Grid } from "@mui/material";
+import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
+import { useListClientClientBanks } from "@src/services/bank/listClientBanks";
+import { queryClient } from "@src/services/queryClient";
+import { useCreateCustomerBanksReports } from "@src/services/reports/register/persons/customerBanks/createCustomerBanksReports";
 import {
   ClientBankItem,
   ClientBankQuery,
 } from "@src/services/types/banks.interface";
-import { useListClientClientBanks } from "@src/services/bank/listClientBanks";
-import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
-import { useCreateCustomerBanksReports } from "@src/services/reports/register/persons/customerBanks/createCustomerBanksReports";
-import { queryClient } from "@src/services/queryClient";
 import { ValidateInterface } from "@src/services/types/validate.interface";
+import useDebounce from "@utils/useDebounce";
+import { Button, Input, Select } from "antd";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const INITIAL_QUERY: ClientBankQuery = {
   limit: 25,

@@ -1,20 +1,20 @@
-import { useEffect, useState } from "react";
-import { api } from "../../config/api";
-import { MerchantQuery, MerchantResponse } from "../types/register/merchants/merchants.interface";
+import { useEffect } from "react";
 import { useQuery } from "react-query";
+import { api } from "../../config/api";
+import {
+  MerchantQuery,
+  MerchantResponse,
+} from "../types/register/merchants/merchants.interface";
 
 export function useListMerchants(params: MerchantQuery) {
-  const { data, isFetching, error, refetch,  } = useQuery<
-  MerchantResponse | null | undefined
-  >(
-    "MerchantList",
-    async () => {
-      const response = await api.get("core/merchant/list", {
-        params,
-      });
-      return response.data;
-    }
-  );
+  const { data, isFetching, error, refetch } = useQuery<
+    MerchantResponse | null | undefined
+  >("MerchantList", async () => {
+    const response = await api.get("core/merchant/list", {
+      params,
+    });
+    return response.data;
+  });
 
   useEffect(() => {
     refetch();

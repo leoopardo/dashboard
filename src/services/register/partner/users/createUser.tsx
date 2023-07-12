@@ -1,5 +1,5 @@
+import { useMutation } from "react-query";
 import { api } from "../../../../config/api";
-import { useMutation, } from "react-query";
 import { NewUserInterface } from "../../../../routes/private/Pages/register/organization/users/components/newUserModal";
 import { queryClient } from "../../../queryClient";
 

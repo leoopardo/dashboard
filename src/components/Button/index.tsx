@@ -1,5 +1,4 @@
 import { Button } from "antd";
-import React from "react";
 
 interface ButtonInterface {
   title: string;

@@ -1,7 +1,7 @@
-import { api } from "../../../../config/api";
-import { useMutation } from "react-query";
-import { queryClient } from "../../../queryClient";
 import { BankMaintenenceItem } from "@src/services/types/register/organization/bankMaintenence.interface";
+import { useMutation } from "react-query";
+import { api } from "../../../../config/api";
+import { queryClient } from "../../../queryClient";
 
 export function useUpdateBank(
   body: BankMaintenenceItem | null,

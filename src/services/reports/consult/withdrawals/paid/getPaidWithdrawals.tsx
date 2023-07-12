@@ -2,9 +2,9 @@ import {
   ReportsData,
   ReportsQuery,
 } from "@src/services/types/reports/reports.interface";
-import { api } from "../../../../../config/api";
-import { useQuery } from "react-query";
 import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
+import { api } from "../../../../../config/api";
 
 export function useGetPaidWithdrawalsReports(params: ReportsQuery) {
   const [loadData, setLoadData] = useState<ReportsData | null | undefined>(

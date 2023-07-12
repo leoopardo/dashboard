@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
-import { api } from "../../../config/api";
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   OperatorQuery,
   OperatorsResponse,
 } from "@src/services/types/register/operators/operators.interface";
+import { useEffect, useState } from "react";
+import { api } from "../../../config/api";
 
 export function useListOperators(params: OperatorQuery) {
   const [data, setData] = useState<OperatorsResponse | null>(null);

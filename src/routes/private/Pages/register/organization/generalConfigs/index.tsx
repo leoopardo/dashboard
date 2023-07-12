@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Grid } from "@mui/material";
 import { Toast } from "@src/components/Toast";
 import { queryClient } from "@src/services/queryClient";
@@ -15,7 +16,7 @@ import {
   Tabs,
   TabsProps,
 } from "antd";
-import { useRef, useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 export const GeneralConfigs = () => {
@@ -24,7 +25,7 @@ export const GeneralConfigs = () => {
   ) as ValidateInterface;
 
   const { t } = useTranslation();
-  const { data, isFetching, refetch } = useGetGeneralconfigs();
+  const { data, isFetching } = useGetGeneralconfigs();
   const onChange = (key: string) => {
     console.log(key);
   };
@@ -76,7 +77,7 @@ export const GeneralConfigs = () => {
                     { value: false, label: t("table.false") },
                   ]}
                   value={body.cash_in_receive_by_pj}
-                  onChange={(value, option: any) =>
+                  onChange={(_value, option: any) =>
                     setBody((state) => ({
                       ...state,
                       cash_in_receive_by_pj: option.value,
@@ -110,7 +111,7 @@ export const GeneralConfigs = () => {
                     { value: false, label: t("table.false") },
                   ]}
                   value={body.cash_in_receive_by_different_payer}
-                  onChange={(value, option: any) =>
+                  onChange={(_value, option: any) =>
                     setBody((state) => ({
                       ...state,
                       cash_in_receive_by_different_payer: option.value,
@@ -206,7 +207,7 @@ export const GeneralConfigs = () => {
                     { value: false, label: t("table.false") },
                   ]}
                   value={body.cash_in_permission}
-                  onChange={(value, option: any) =>
+                  onChange={(_value, option: any) =>
                     setBody((state) => ({
                       ...state,
                       cash_in_permission: option.value,
@@ -227,7 +228,7 @@ export const GeneralConfigs = () => {
                     { value: false, label: t("table.false") },
                   ]}
                   value={body.auto_switch_bank_acc}
-                  onChange={(value, option: any) =>
+                  onChange={(_value, option: any) =>
                     setBody((state) => ({
                       ...state,
                       auto_switch_bank_acc: option.value,
@@ -248,7 +249,7 @@ export const GeneralConfigs = () => {
                     { value: false, label: t("table.false") },
                   ]}
                   value={body.cash_out_permission}
-                  onChange={(value, option: any) =>
+                  onChange={(_value, option: any) =>
                     setBody((state) => ({
                       ...state,
                       cash_out_permission: option.value,
@@ -269,7 +270,7 @@ export const GeneralConfigs = () => {
                     { value: false, label: t("table.false") },
                   ]}
                   value={body.check_last_waiting_pix}
-                  onChange={(value, option: any) =>
+                  onChange={(_value, option: any) =>
                     setBody((state) => ({
                       ...state,
                       check_last_waiting_pix: option.value,
@@ -290,7 +291,7 @@ export const GeneralConfigs = () => {
                     { value: false, label: t("table.false") },
                   ]}
                   value={body.callback_deposit_api_enable}
-                  onChange={(value, option: any) =>
+                  onChange={(_value, option: any) =>
                     setBody((state) => ({
                       ...state,
                       callback_deposit_api_enable: option.value,
@@ -311,7 +312,7 @@ export const GeneralConfigs = () => {
                     { value: false, label: t("table.false") },
                   ]}
                   value={body.callback_withdraw_api_enable}
-                  onChange={(value, option: any) =>
+                  onChange={(_value, option: any) =>
                     setBody((state) => ({
                       ...state,
                       callback_withdraw_api_enable: option.value,

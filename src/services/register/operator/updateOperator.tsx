@@ -1,7 +1,7 @@
 import { queryClient } from "@src/services/queryClient";
-import { api } from "../../../config/api";
-import { useMutation } from "react-query";
 import { OperatorItem } from "@src/services/types/register/operators/operators.interface";
+import { useMutation } from "react-query";
+import { api } from "../../../config/api";
 
 export function useUpdateOperator(body: OperatorItem) {
   const { isLoading, error, mutate, isSuccess } = useMutation<

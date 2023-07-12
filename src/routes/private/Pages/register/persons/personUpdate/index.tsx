@@ -1,5 +1,19 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/exhaustive-deps */
+import { InboxOutlined } from "@ant-design/icons";
 import { Grid } from "@mui/material";
+import { Toast } from "@src/components/Toast";
+import { useDeleteDeleteFile } from "@src/services/register/persons/persons/files/deleteFile";
+import { useGetFiles } from "@src/services/register/persons/persons/files/getFiles";
+import {
+  CreateFileInterface,
+  useUploadFile,
+} from "@src/services/register/persons/persons/files/uploadFile";
+import { useGetBlacklistReasons } from "@src/services/register/persons/persons/getPersonBlacklistReasons";
 import { useGetPersons } from "@src/services/register/persons/persons/getPersons";
+import { useUpdatePerson } from "@src/services/register/persons/persons/updatePerson";
+import { useGetCities } from "@src/services/states_cities/getCities";
+import { useGetStates } from "@src/services/states_cities/getStates";
 import {
   PersonsItem,
   PersonsQuery,
@@ -8,7 +22,6 @@ import {
   AutoComplete,
   Button,
   DatePicker,
-  Descriptions,
   Empty,
   Form,
   Input,
@@ -18,40 +31,23 @@ import {
   Spin,
   Tabs,
   TabsProps,
-  Upload,
-  UploadProps,
 } from "antd";
-import { useState, useEffect, useRef } from "react";
-import { useTranslation } from "react-i18next";
-import { useMediaQuery } from "react-responsive";
-import { useParams } from "react-router-dom";
-import { useGetFiles } from "@src/services/register/persons/persons/files/getFiles";
-import { InboxOutlined, UploadOutlined } from "@ant-design/icons";
+import Dragger from "antd/es/upload/Dragger";
 import dayjs from "dayjs";
 import moment from "moment";
-import { useGetStates } from "@src/services/states_cities/getStates";
-import { useGetCities } from "@src/services/states_cities/getCities";
+import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import ReactInputMask from "react-input-mask";
-import { useGetBlacklistReasons } from "@src/services/register/persons/persons/getPersonBlacklistReasons";
-import { useUpdatePerson } from "@src/services/register/persons/persons/updatePerson";
-import { Toast } from "@src/components/Toast";
-import {
-  CreateFileInterface,
-  useUploadFile,
-} from "@src/services/register/persons/persons/files/uploadFile";
-import { useDeleteDeleteFile } from "@src/services/register/persons/persons/files/deleteFile";
-import Dragger from "antd/es/upload/Dragger";
+import { useParams } from "react-router-dom";
 
 export const PersonUpdate = () => {
   const [body, setBody] = useState<PersonsItem | undefined>(undefined);
   const [currState, setCurrState] = useState<string | undefined>("");
   const [fileBody, setFileBody] = useState<CreateFileInterface | null>(null);
   const [isConfirmOpen, setIsConfirmOpen] = useState<boolean>(false);
-  const [isConfirmFileOpen, setIsConfirmFileOpen] = useState<boolean>(false);
   const [deleteFileId, setDeleteFileId] = useState<string>("");
   const submitRef1 = useRef<HTMLButtonElement>(null);
   const { t } = useTranslation();
-  const isMobile = useMediaQuery({ maxWidth: "750px" });
   const { cpf } = useParams();
   const query: PersonsQuery = {
     limit: 25,
@@ -68,16 +64,12 @@ export const PersonUpdate = () => {
   const { UpdateMutate, UpdateError, UpdateIsLoading, UpdateIsSuccess } =
     useUpdatePerson(body, cpf?.split(" ").join("."));
 
-  const { FileMutate, FileError, FileIsLoading, FileIsSuccess } = useUploadFile(
+  const { FileMutate, FileError, FileIsSuccess } = useUploadFile(
     fileBody,
     cpf?.split(" ").join(".")
   );
-  const {
-    DeleteFileError,
-    DeleteFileIsLoading,
-    DeleteFileIsSuccess,
-    DeleteFileMutate,
-  } = useDeleteDeleteFile(cpf?.split(" ").join("."), deleteFileId);
+  const { DeleteFileError, DeleteFileIsSuccess, DeleteFileMutate } =
+    useDeleteDeleteFile(cpf?.split(" ").join("."), deleteFileId);
 
   ///// attachments -------------------------
 
@@ -213,7 +205,7 @@ export const PersonUpdate = () => {
                     { label: t("table.female"), value: "feminino" },
                   ]}
                   value={body?.gender}
-                  onChange={(value, option: any) => {
+                  onChange={(_value, option: any) => {
                     setBody((state) => ({ ...state, gender: option.value }));
                   }}
                 />
@@ -263,7 +255,7 @@ export const PersonUpdate = () => {
                     }));
                   }}
                   filterOption={(inputValue, option) =>
-                    option!.value
+                    option?.value
                       .toUpperCase()
                       .indexOf(inputValue.toUpperCase()) !== -1
                   }
@@ -431,7 +423,7 @@ export const PersonUpdate = () => {
                     { label: t("table.false"), value: false },
                   ]}
                   value={body?.black_list}
-                  onChange={(value, option: any) => {
+                  onChange={(_value, option: any) => {
                     setBody((state) => ({
                       ...state,
                       black_list: option.value,
@@ -462,7 +454,7 @@ export const PersonUpdate = () => {
                       console.log(body);
                     }
                   }}
-                  onSelect={(value, option: any) => {
+                  onSelect={(_value, option: any) => {
                     setBody((state) => ({
                       ...state,
                       black_list_reason: option.value,
@@ -493,7 +485,7 @@ export const PersonUpdate = () => {
                     { label: t("table.false"), value: false },
                   ]}
                   value={body?.flag_pep}
-                  onChange={(value, option: any) => {
+                  onChange={(_value, option: any) => {
                     setBody((state) => ({ ...state, flag_pep: option.value }));
                   }}
                 />
@@ -508,7 +500,7 @@ export const PersonUpdate = () => {
                     { label: t("table.false"), value: false },
                   ]}
                   value={body?.flag_aux_gov}
-                  onChange={(value, option: any) => {
+                  onChange={(_value, option: any) => {
                     setBody((state) => ({
                       ...state,
                       flag_aux_gov: option.value,
@@ -528,7 +520,7 @@ export const PersonUpdate = () => {
                     { label: 3, value: 3 },
                   ]}
                   value={body?.flag_alert}
-                  onChange={(value, option: any) => {
+                  onChange={(_value, option: any) => {
                     setBody((state) => ({
                       ...state,
                       flag_alert: option.value,
@@ -665,7 +657,7 @@ export const PersonUpdate = () => {
                     { label: 5, value: 5 },
                   ]}
                   value={body?.cash_out_transaction_limit}
-                  onChange={(value, option: any) => {
+                  onChange={(_value, option: any) => {
                     setBody((state) => ({
                       ...state,
                       cash_out_transaction_limit: option.value,

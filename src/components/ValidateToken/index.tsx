@@ -1,21 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-import {
-  Dispatch,
-  SetStateAction,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
 import { Grid } from "@mui/material";
-import { useTranslation } from "react-i18next";
-import { useValidateToken } from "../../services/sendValidationToken";
 import { Button, Modal } from "antd";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import OTPInput from "react-otp-input";
-import Countdown from "../countdown";
 import { useGetSelf } from "../../services/getSelf";
 import { useValidatePhone } from "../../services/sendValidationPhone";
+import { useValidateToken } from "../../services/sendValidationToken";
 import { Toast } from "../Toast";
-import { queryClient } from "@src/services/queryClient";
+import Countdown from "../countdown";
 
 interface ValidateTokenProps {
   open: boolean;
@@ -37,7 +31,8 @@ export const ValidateToken = ({
   setTokenState,
   body,
   submit,
-  success,error
+  success,
+  error,
 }: ValidateTokenProps) => {
   const { t } = useTranslation();
   const { Self, refetchSelf } = useGetSelf();
@@ -65,7 +60,7 @@ export const ValidateToken = ({
     ValidatePhoneSuccess,
   } = useValidatePhone({ validation_token: tokenState });
 
-  const [ableToResend, setAbleToResend] = useState<boolean>(true);
+  const [ableToResend] = useState<boolean>(true);
 
   useEffect(() => {
     refetchSelf();
@@ -75,7 +70,6 @@ export const ValidateToken = ({
   }, [ValidatePhoneError, ValidatePhoneSuccess]);
 
   useEffect(() => {
-
     if (Self && !Self?.phone_validated && !validationPhoneSent) {
       setValidateBody({
         action: "USER_VALIDATE_PHONE",
@@ -259,7 +253,7 @@ export const ValidateToken = ({
         error={ValidatePhoneError}
         success={ValidatePhoneSuccess}
       />
-        <Toast
+      <Toast
         actionSuccess={t("messages.validated")}
         actionError={t("messages.validated")}
         error={error}

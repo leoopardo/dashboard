@@ -1,19 +1,19 @@
-import { useState, useEffect } from "react";
-import { PublicRoutes } from "./routes/public";
-import { PrivateRoutes } from "./routes/private";
+import { ConfigProvider, Layout, Spin } from "antd";
+import { useEffect, useState } from "react";
+import { Toaster } from "react-hot-toast";
+import { I18nextProvider, useTranslation } from "react-i18next";
+import { useMediaQuery } from "react-responsive";
 import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
-import { GlobalStyle } from "./styles/globalStyles.ts";
-import { defaultTheme } from "./styles/defaultTheme/index.ts";
-import { ConfigProvider, Spin, Layout } from "antd";
+import { PageHeader } from "./components/PageHeader/index.tsx";
 import { SidebarNavigation } from "./components/SideBarNavigation/index.tsx";
 import { useMenu } from "./contexts/SidebarContext/index.tsx";
-import { useMediaQuery } from "react-responsive";
-import { PageHeader } from "./components/PageHeader/index.tsx";
-import { I18nextProvider, useTranslation } from "react-i18next";
 import i18n from "./i18n";
+import { PrivateRoutes } from "./routes/private";
+import { PublicRoutes } from "./routes/public";
 import { useValidate } from "./services/siginIn/validate.tsx";
-import { Toaster } from "react-hot-toast";
+import { defaultTheme } from "./styles/defaultTheme/index.ts";
+import { GlobalStyle } from "./styles/globalStyles.ts";
 const Logo = import.meta.env.VITE_APP_ICON;
 
 function App() {
@@ -22,10 +22,7 @@ function App() {
   const { isSidebarOpen } = useMenu();
   const { Content } = Layout;
   const [isIconSet, setIsIconSet] = useState<boolean>(false);
-  const {
-    isSuccess,
-    validateError,
-  } = useValidate();
+  const { isSuccess, validateError } = useValidate();
 
   useEffect(() => {
     if (!isIconSet) {
@@ -74,7 +71,6 @@ function App() {
               token: {
                 colorPrimary: defaultTheme.colors.secondary,
                 colorBgTextHover: defaultTheme.colors.secondary,
-                
               },
             }}
           >

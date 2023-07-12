@@ -1,8 +1,9 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { AutoComplete, Avatar, Empty, Input, Spin } from "antd";
-import { MerchantQuery } from "../../../services/types/register/merchants/merchants.interface";
-import { useTranslation } from "react-i18next";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useListBanks } from "@src/services/bank/listBanks";
+import { AutoComplete, Avatar, Empty } from "antd";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { MerchantQuery } from "../../../services/types/register/merchants/merchants.interface";
 
 interface BankSelectProps {
   setQueryFunction: Dispatch<SetStateAction<any>>;
@@ -19,11 +20,11 @@ export const BanksSelect = ({
   setCurrentValue,
 }: BankSelectProps) => {
   const { t } = useTranslation()
-  const [query, setQuery] = useState<MerchantQuery>({
+  const [query] = useState<MerchantQuery>({
     page: 1,
     limit: 200,
   });
-  const { bankListData, isBankListFetching, refetchBankList } =
+  const { bankListData } =
     useListBanks(query);
   const [value, setValue] = useState<any>(null);
 

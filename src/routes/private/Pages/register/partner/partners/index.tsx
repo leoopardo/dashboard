@@ -1,29 +1,29 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { EditOutlined, EyeFilled, UserAddOutlined } from "@ant-design/icons";
+import { ColumnInterface, CustomTable } from "@components/CustomTable";
+import { FiltersModal } from "@components/FiltersModal";
+import { FilterChips } from "@components/FiltersModal/filterChips";
+import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
+import useDebounce from "@utils/useDebounce";
 import { Button, Input } from "antd";
 import { useEffect, useState } from "react";
-import { FilterChips } from "@components/FiltersModal/filterChips";
 import { useTranslation } from "react-i18next";
-import { FiltersModal } from "@components/FiltersModal";
-import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
-import { ColumnInterface, CustomTable } from "@components/CustomTable";
-import useDebounce from "@utils/useDebounce";
-import { EditOutlined, EyeFilled, UserAddOutlined } from "@ant-design/icons";
 
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
 
+import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
+import { MutateModal } from "@src/components/Modals/mutateGenericModal";
 import { Toast } from "@src/components/Toast";
+import { queryClient } from "@src/services/queryClient";
+import { useCreatePartner } from "@src/services/register/partner/createPartner";
 import { useGetPartners } from "@src/services/register/partner/getPartners";
+import { useUpdatePartner } from "@src/services/register/partner/updatePartner";
+import { useCreatePartnerReports } from "@src/services/reports/register/partner/createPartnerReports";
 import {
   PartnerItem,
   PartnerQuery,
 } from "@src/services/types/register/partners/partners.interface";
-import { useCreatePartner } from "@src/services/register/partner/createPartner";
-import { MutateModal } from "@src/components/Modals/mutateGenericModal";
-import { useUpdatePartner } from "@src/services/register/partner/updatePartner";
-import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
-import { useCreatePartnerReports } from "@src/services/reports/register/partner/createPartnerReports";
-import { queryClient } from "@src/services/queryClient";
 import { ValidateInterface } from "@src/services/types/validate.interface";
 
 const INITIAL_QUERY: PartnerQuery = {

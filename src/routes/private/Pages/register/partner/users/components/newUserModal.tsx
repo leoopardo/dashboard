@@ -1,23 +1,21 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { GroupSelect } from "@components/Selects/groupSelect";
+import { PartnerSelect } from "@src/components/Selects/partnerSelect";
+import { Toast } from "@src/components/Toast";
+import { queryClient } from "@src/services/queryClient";
+import { useCreatePartnerUser } from "@src/services/register/partner/users/createUser";
+import { useUpdatePartnerUser } from "@src/services/register/partner/users/updateUser";
+import { OrganizationUserItem } from "@src/services/types/register/organization/organizationUsers.interface";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 import { Button, Drawer, Form, FormInstance, Input } from "antd";
 import React, {
   Dispatch,
   SetStateAction,
+  useEffect,
   useRef,
   useState,
-  useEffect,
 } from "react";
 import { useTranslation } from "react-i18next";
-import { GroupSelect } from "@components/Selects/groupSelect";
-import { useCreateOrganizationUser } from "@services/register/organization/users/createUser";
-import { toast } from "react-hot-toast";
-import { OrganizationUserItem } from "@src/services/types/register/organization/organizationUsers.interface";
-import { useUpdateOrganizationUser } from "@services/register/organization/users/updateUser";
-import { Toast } from "@src/components/Toast";
-import { useCreatePartnerUser } from "@src/services/register/partner/users/createUser";
-import { useUpdatePartnerUser } from "@src/services/register/partner/users/updateUser";
-import { PartnerSelect } from "@src/components/Selects/partnerSelect";
-import { queryClient } from "@src/services/queryClient";
-import { ValidateInterface } from "@src/services/types/validate.interface";
 interface NewuserModalprops {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -57,8 +55,7 @@ export const NewUserModal = ({
   const submitRef = useRef<HTMLButtonElement>(null);
   const formRef = React.useRef<FormInstance>(null);
   const [confirmPassword, setConfirmPassword] = useState<string>("");
-  const [form] = Form.useForm();
-  const [cantSubmit, setCantSubmit] = useState<boolean>(true);
+  const [, setCantSubmit] = useState<boolean>(true);
   const [body, setBody] = useState<NewUserInterface>({
     name: "",
     username: "",
@@ -70,14 +67,14 @@ export const NewUserModal = ({
   });
 
   const { mutate, error, isLoading, isSuccess } = useCreatePartnerUser(body);
-  const { updateError, updateLoading, updateMutate, updateSuccess } =
+  const { updateError, updateLoading, updateSuccess } =
     useUpdatePartnerUser(body);
 
   function handleChangeUserBody(event: any) {
     setBody((state) => ({ ...state, [event.target.name]: event.target.value }));
   }
 
-  function CreateUser(event: any) {
+  function CreateUser() {
     if (
       currentUser &&
       setUpdateBody &&

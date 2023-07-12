@@ -1,14 +1,13 @@
-import React from "react";
+import { ReloadOutlined } from "@ant-design/icons";
 import { Grid } from "@mui/material";
 import { Button, Card, Statistic } from "antd";
-import { defaultTheme } from "../../../../../../../styles/defaultTheme";
-import { useMediaQuery } from "react-responsive";
-import { ReloadOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
+import { useMediaQuery } from "react-responsive";
 import {
   refundDepositTotal,
   refundDepositsQuery,
 } from "../../../../../../../services/types/consult/refunds/refundsDeposits.interface";
+import { defaultTheme } from "../../../../../../../styles/defaultTheme";
 
 interface TotalizersInterface {
   data: refundDepositTotal | null | undefined;
@@ -153,7 +152,6 @@ export const TotalizersCards = (props: TotalizersInterface) => {
           </Card>
         </Grid>
       )}
-
 
       <Grid item xs={6} md={4} lg={"auto"} height="100%">
         <Card bordered={false}>

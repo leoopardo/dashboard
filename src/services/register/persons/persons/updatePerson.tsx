@@ -1,7 +1,7 @@
 import { queryClient } from "@src/services/queryClient";
-import { api } from "../../../../config/api";
-import { useMutation } from "react-query";
 import { PersonsItem } from "@src/services/types/register/persons/persons.interface";
+import { useMutation } from "react-query";
+import { api } from "../../../../config/api";
 
 export function useUpdatePerson(
   body: PersonsItem | undefined,

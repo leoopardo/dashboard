@@ -1,14 +1,13 @@
-import React from "react";
+import { ReloadOutlined } from "@ant-design/icons";
 import { Grid } from "@mui/material";
 import { Button, Card, Statistic } from "antd";
-import { defaultTheme } from "../../../../../../../styles/defaultTheme";
-import { useMediaQuery } from "react-responsive";
-import { ReloadOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
+import { useMediaQuery } from "react-responsive";
 import {
   generatedWithdrawalsRowsQuery,
   generatedWithdrawalsTotal,
 } from "../../../../../../../services/types/consult/withdrawals/generatedWithdrawals.interface";
+import { defaultTheme } from "../../../../../../../styles/defaultTheme";
 
 interface TotalizersInterface {
   data: generatedWithdrawalsTotal | null | undefined;
@@ -181,9 +180,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
       )}
       {(props.query.status === "CREATED" || !props.query.status) && (
         <Grid item xs={6} md={4} lg={"auto"}>
-          <Card
-            bordered={false}
-          >
+          <Card bordered={false}>
             <Statistic
               loading={props.loading}
               title={`${t("table.created")}: ${
@@ -204,7 +201,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
         </Grid>
       )}
 
-      <Grid item xs={6} md={4} lg={"auto"} >
+      <Grid item xs={6} md={4} lg={"auto"}>
         <Card bordered={false}>
           <Statistic
             loading={props.loading}

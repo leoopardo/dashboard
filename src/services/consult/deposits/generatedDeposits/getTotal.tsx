@@ -1,11 +1,10 @@
+import moment from "moment";
 import { useEffect, useState } from "react";
 import { api } from "../../../../config/api";
 import {
   generatedDepositTotal,
   generatedDepositTotalQuery,
 } from "../../../types/consult/deposits/generatedDeposits.interface";
-import { useQuery } from "react-query";
-import moment from "moment";
 
 export function useGetTotalGeneratedDeposits(
   params: generatedDepositTotalQuery

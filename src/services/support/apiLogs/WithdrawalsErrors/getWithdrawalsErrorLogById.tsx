@@ -1,7 +1,6 @@
-import moment from "moment";
-import { api } from "../../../../config/api";
-import { useQuery } from "react-query";
 import { DepositLogsItemById } from "@src/services/types/support/apiLogs/depositsError.interface";
+import { useQuery } from "react-query";
+import { api } from "../../../../config/api";
 
 export function useGetWithdrawErrorsLogById(id?: string) {
   const { data, isFetching, error, refetch } = useQuery<
@@ -13,7 +12,6 @@ export function useGetWithdrawErrorsLogById(id?: string) {
       return response.data;
     },
     {
-   
       enabled: false,
     }
   );

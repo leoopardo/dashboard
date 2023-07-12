@@ -1,3 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { CheckCircleFilled, CloseCircleFilled } from "@ant-design/icons";
+import { Grid } from "@mui/material";
+import { useGetWithdrawalsWebhooks } from "@src/services/consult/withdrawals/generatedWithdrawals/getWebhooks";
 import {
   Badge,
   Collapse,
@@ -10,15 +15,12 @@ import {
 } from "antd";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Grid } from "@mui/material";
+import ReactJson from "react-json-view";
 import {
   WebhooksItem,
   WebhooksQuery,
 } from "../../../../../../services/types/consult/deposits/generatedDeposits.interface";
-import ReactJson from "react-json-view";
-import { CheckCircleFilled, CloseCircleFilled } from "@ant-design/icons";
 import { defaultTheme } from "../../../../../../styles/defaultTheme";
-import { useGetWithdrawalsWebhooks } from "@src/services/consult/withdrawals/generatedWithdrawals/getWebhooks";
 interface webhooksModalProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
   open: boolean;
@@ -34,7 +36,6 @@ export const WebhookModal = (props: webhooksModalProps) => {
   const { t } = useTranslation();
   const [active, setActive] = useState<string | string[]>(["1"]);
   const [query, setQuery] = useState<WebhooksQuery>(INITIAL_QUERY);
-  const [query2, setQuery2] = useState<WebhooksQuery>(INITIAL_QUERY);
   const [items, setItems] = useState<CollapseProps["items"]>([]);
 
   const onClose = () => {
@@ -128,10 +129,7 @@ export const WebhookModal = (props: webhooksModalProps) => {
             size="middle"
             style={{ width: "100%" }}
             value={currOption}
-            options={[
-              { label: t("table.primary_logs"), value: "1" },
-       
-            ]}
+            options={[{ label: t("table.primary_logs"), value: "1" }]}
             onChange={(value) => {
               setCurrOption(value);
             }}

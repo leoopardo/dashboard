@@ -1,6 +1,6 @@
-import { api } from "../../../../config/api";
-import { useQuery } from "react-query";
 import { OrganizationBalance } from "@src/services/types/consult/organization/balance/balnce.interface";
+import { useQuery } from "react-query";
+import { api } from "../../../../config/api";
 
 export function useGetOrganizationBalance() {
   const { data, isFetching, error, refetch } = useQuery<

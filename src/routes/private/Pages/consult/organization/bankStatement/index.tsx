@@ -1,26 +1,28 @@
-import { OrganizationBankStatementTotalsQuery } from "@src/services/types/consult/organization/bankStatement/totals.interface";
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { ReloadOutlined } from "@ant-design/icons";
 import { Grid } from "@mui/material";
+import { CustomTable } from "@src/components/CustomTable";
+import { FiltersModal } from "@src/components/FiltersModal";
+import { FilterChips } from "@src/components/FiltersModal/filterChips";
+import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
+import { useGetOrganizationPerbank } from "@src/services/consult/organization/bankStatement/getPerBank";
+import { useGetOrganizationBankStatementTotals } from "@src/services/consult/organization/bankStatement/getTotals";
+import { queryClient } from "@src/services/queryClient";
+import { useCreateBankStatementReports } from "@src/services/reports/consult/organization/createBankStatementReports";
+import { OrganizationBankStatementTotalsQuery } from "@src/services/types/consult/organization/bankStatement/totals.interface";
+import { ValidateInterface } from "@src/services/types/validate.interface";
+import { Button, Divider, Spin } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Totalizers } from "./components/Totalizers";
-import { Button, Divider, Spin } from "antd";
-import { FilterChips } from "@src/components/FiltersModal/filterChips";
-import { FiltersModal } from "@src/components/FiltersModal";
-import { useGetOrganizationBankStatementTotals } from "@src/services/consult/organization/bankStatement/getTotals";
-import { useGetOrganizationPerbank } from "@src/services/consult/organization/bankStatement/getPerBank";
-import { CustomTable } from "@src/components/CustomTable";
-import { ReloadOutlined } from "@ant-design/icons";
-import { PieChart } from "./components/PieValue";
-import { PieFee } from "./components/PieFee";
-import { PieBankfee } from "./components/PieBankFee";
-import { PieResult } from "./components/PieResult";
-import { PieNumber } from "./components/PieNumber";
 import { useMediaQuery } from "react-responsive";
-import { useCreateBankStatementReports } from "@src/services/reports/consult/organization/createBankStatementReports";
-import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
-import { queryClient } from "@src/services/queryClient";
-import { ValidateInterface } from "@src/services/types/validate.interface";
+import { PieBankfee } from "./components/PieBankFee";
+import { PieFee } from "./components/PieFee";
+import { PieNumber } from "./components/PieNumber";
+import { PieResult } from "./components/PieResult";
+import { PieChart } from "./components/PieValue";
+import { Totalizers } from "./components/Totalizers";
 
 const INITIAL_QUERY: OrganizationBankStatementTotalsQuery = {
   start_date: moment(new Date())

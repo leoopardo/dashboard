@@ -1,7 +1,7 @@
 import { queryClient } from "@src/services/queryClient";
-import { api } from "../../../../config/api";
-import { useMutation } from "react-query";
 import { OrganizationUserQuery } from "@src/services/types/register/organization/organizationUsers.interface";
+import { useMutation } from "react-query";
+import { api } from "../../../../config/api";
 
 export function useCreateOrganizationReports(body: OrganizationUserQuery) {
   const { isLoading, error, mutate, isSuccess } = useMutation<

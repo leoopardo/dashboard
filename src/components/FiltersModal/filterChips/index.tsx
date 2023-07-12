@@ -1,9 +1,10 @@
-import { Space, Tag } from "antd";
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { CloseCircleOutlined } from "@ant-design/icons";
+import { Space, Tag } from "antd";
 import moment from "moment";
-import { useMediaQuery } from "react-responsive";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useMediaQuery } from "react-responsive";
 
 interface FilterChipsProps {
   query: any;

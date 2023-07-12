@@ -1,4 +1,5 @@
-import { Descriptions, Drawer, Spin, Table, Pagination } from "antd";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Descriptions, Drawer, Pagination, Spin, Table } from "antd";
 import { Dispatch, SetStateAction, useState } from "react";
 import { useTranslation } from "react-i18next";
 

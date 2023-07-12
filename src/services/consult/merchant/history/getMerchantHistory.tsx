@@ -1,10 +1,10 @@
+import { queryClient } from "@src/services/queryClient";
 import {
   MerchantHistoryData,
   MerchantHistoryQuery,
 } from "@src/services/types/consult/merchant/history";
-import { api } from "../../../../config/api";
 import { useQuery } from "react-query";
-import { queryClient } from "@src/services/queryClient";
+import { api } from "../../../../config/api";
 
 export function useGetMerchantHistory(params: MerchantHistoryQuery) {
   const { data, isFetching, error, refetch } = useQuery<

@@ -1,9 +1,9 @@
-import { api } from "../../config/api";
-import { getDeposit } from "../types/consult/deposits/generatedDeposits.interface";
-import { useMutation, useQuery } from "react-query";
-import { useValidate } from "./validate";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect } from "react";
+import { useMutation } from "react-query";
+import { api } from "../../config/api";
 import { queryClient } from "../queryClient";
+import { useValidate } from "./validate";
 
 interface TokenInterface {
   token: string;
@@ -13,7 +13,7 @@ export function useToken(
   user: { username: string; password: string },
   rememberMe: boolean
 ) {
-  const { data, isLoading, error, mutate } = useMutation<
+  const { data, error, mutate } = useMutation<
     TokenInterface | null | undefined
   >("token", async () => {
     const response = await api.post(
@@ -41,16 +41,9 @@ export function useToken(
     }
   }, [data]);
 
-  const {
-    refetchValidate,
-    isValidateFetching,
-    responseValidate,
-    validateError,
-    isSuccess,
-  } = useValidate(rememberMe, data?.token);
+  const { isValidateFetching, responseValidate, validateError, isSuccess } =
+    useValidate(rememberMe, data?.token);
 
-  const responseLogin = data;
-  const isLoginFetching = isLoading;
   const LoginError: any = error;
   const Login = mutate;
   return {

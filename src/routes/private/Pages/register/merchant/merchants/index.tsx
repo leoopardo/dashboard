@@ -1,29 +1,33 @@
-import { useEffect, useState } from "react";
-import { Grid } from "@mui/material";
-import { Button, Input } from "antd";
+import {
+  EditOutlined,
+  EyeFilled,
+  ToolOutlined,
+  UserAddOutlined,
+} from "@ant-design/icons";
+import { ColumnInterface, CustomTable } from "@components/CustomTable";
+import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
-import { useTranslation } from "react-i18next";
+import { MutateModal } from "@components/Modals/mutateGenericModal";
+import { ViewModal } from "@components/Modals/viewGenericModal";
+import { Toast } from "@components/Toast";
+import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
+import { Grid } from "@mui/material";
 import { useGetRowsMerchantRegister } from "@services/register/merchant/merchant/getMerchants";
+import { useUpdateMerchant } from "@services/register/merchant/merchant/updateMerchant";
 import {
   MerchantsItem,
   MerchantsQuery,
 } from "@services/types/register/merchants/merchantsRegister.interface";
-import { FiltersModal } from "@components/FiltersModal";
-import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
-import { ColumnInterface, CustomTable } from "@components/CustomTable";
-import { Toast } from "@components/Toast";
-import useDebounce from "@utils/useDebounce";
-import { UserAddOutlined } from "@ant-design/icons";
-import { NewMerchantModal } from "./components/newMerchantModal";
-import { EyeFilled, EditOutlined, ToolOutlined } from "@ant-design/icons";
-import { ViewModal } from "@components/Modals/viewGenericModal";
-import { MutateModal } from "@components/Modals/mutateGenericModal";
-import { useUpdateMerchant } from "@services/register/merchant/merchant/updateMerchant";
-import { useNavigate } from "react-router-dom";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
-import { useCreateMerchantReports } from "@src/services/reports/register/merchant/createMerchantReports";
 import { queryClient } from "@src/services/queryClient";
+import { useCreateMerchantReports } from "@src/services/reports/register/merchant/createMerchantReports";
 import { ValidateInterface } from "@src/services/types/validate.interface";
+import useDebounce from "@utils/useDebounce";
+import { Button, Input } from "antd";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import { NewMerchantModal } from "./components/newMerchantModal";
 
 const INITIAL_QUERY: MerchantsQuery = {
   limit: 25,

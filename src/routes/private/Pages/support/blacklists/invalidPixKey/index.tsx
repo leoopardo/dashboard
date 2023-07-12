@@ -1,20 +1,20 @@
-import { useState, useEffect } from "react";
-import { Grid } from "@mui/material";
-import { Button, Input, Select } from "antd";
-import { useTranslation } from "react-i18next";
-import { FilterChips } from "@src/components/FiltersModal/filterChips";
+import { CheckCircleOutlined } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
-import useDebounce from "@src/utils/useDebounce";
+import { Grid } from "@mui/material";
 import { CustomTable } from "@src/components/CustomTable";
 import { FiltersModal } from "@src/components/FiltersModal";
+import { FilterChips } from "@src/components/FiltersModal/filterChips";
 import { Toast } from "@src/components/Toast";
-import { CheckCircleOutlined } from "@ant-design/icons";
+import { useCheckInvalidPixKey } from "@src/services/support/blacklists/invalidPixKey/checkPixKey";
+import { useGetInvalidPixKey } from "@src/services/support/blacklists/invalidPixKey/getInvalidPixKey";
 import {
   ThirdPartItem,
   ThirdPartQuery,
 } from "@src/services/types/support/blacklists/thirdPartKey.interface";
-import { useGetInvalidPixKey } from "@src/services/support/blacklists/invalidPixKey/getInvalidPixKey";
-import { useCheckInvalidPixKey } from "@src/services/support/blacklists/invalidPixKey/checkPixKey";
+import useDebounce from "@src/utils/useDebounce";
+import { Button, Input, Select } from "antd";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export const InvalidPixKeyBlacklist = () => {
   const INITIAL_QUERY: ThirdPartQuery = {
@@ -35,8 +35,9 @@ export const InvalidPixKeyBlacklist = () => {
     refetchInvalidPixKey,
   } = useGetInvalidPixKey(query);
 
-  const { CheckError, CheckIsSuccess, CheckMutate } =
-    useCheckInvalidPixKey(currentItem?._id);
+  const { CheckError, CheckIsSuccess, CheckMutate } = useCheckInvalidPixKey(
+    currentItem?._id
+  );
 
   useEffect(() => {
     refetchInvalidPixKey();
@@ -90,9 +91,7 @@ export const InvalidPixKeyBlacklist = () => {
             }}
             value={searchOption}
             placeholder="Opções"
-            options={[
-              { value: "pix_key", label: t("table.pix_key") },
-            ]}
+            options={[{ value: "pix_key", label: t("table.pix_key") }]}
           />
         </Grid>
         <Grid item xs={12} md={4} lg={4}>

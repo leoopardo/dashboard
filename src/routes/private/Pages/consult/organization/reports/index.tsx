@@ -1,15 +1,17 @@
-import { useState, useEffect } from "react";
-import { Grid } from "@mui/material";
-import { Button } from "antd";
-import { useTranslation } from "react-i18next";
-import { FilterChips } from "@src/components/FiltersModal/filterChips";
-import { ReportsQuery } from "@src/services/types/reports/reports.interface";
-import { FiltersModal } from "@src/components/FiltersModal";
-import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
-import { CustomTable } from "@src/components/CustomTable";
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { DownloadOutlined } from "@ant-design/icons";
+import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
+import { Grid } from "@mui/material";
+import { CustomTable } from "@src/components/CustomTable";
+import { FiltersModal } from "@src/components/FiltersModal";
+import { FilterChips } from "@src/components/FiltersModal/filterChips";
 import { useGetConsultOrganizationReports } from "@src/services/reports/consult/organization/getConsultOrganizationReports";
+import { ReportsQuery } from "@src/services/types/reports/reports.interface";
+import { Button } from "antd";
 import moment from "moment";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export const ConsultOrganizationReports = () => {
   const INITIAL_QUERY: ReportsQuery = {
@@ -25,7 +27,7 @@ export const ConsultOrganizationReports = () => {
   };
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [query, setQuery] = useState<ReportsQuery>(INITIAL_QUERY);
-  const [currentItem, setCurrentItem] = useState<any>();
+  const [, setCurrentItem] = useState<any>();
 
   const {
     ConsultOrganizationReportsData,

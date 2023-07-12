@@ -1,31 +1,31 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Grid } from "@mui/material";
-import { Button, Input } from "antd";
-import { useEffect, useState } from "react";
-import { FilterChips } from "@components/FiltersModal/filterChips";
-import { useTranslation } from "react-i18next";
-import { FiltersModal } from "@components/FiltersModal";
-import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
-import { ColumnInterface, CustomTable } from "@components/CustomTable";
-import useDebounce from "@utils/useDebounce";
 import { EditOutlined, EyeFilled, UserAddOutlined } from "@ant-design/icons";
+import { ColumnInterface, CustomTable } from "@components/CustomTable";
+import { FiltersModal } from "@components/FiltersModal";
+import { FilterChips } from "@components/FiltersModal/filterChips";
+import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
+import { Grid } from "@mui/material";
 import { useGetOrganizationCategories } from "@services/register/organization/categories/getCategories";
-import {
-  OrganizationCategoriesItem,
-  OrganizationCategoriesQuery,
-} from "@src/services/types/register/organization/organizationCategories.interface";
+import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
-import { useCreateOrganizationCategory } from "@src/services/register/organization/categories/createCategorie";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
+import { Toast } from "@src/components/Toast";
+import { queryClient } from "@src/services/queryClient";
+import { useCreateOrganizationCategory } from "@src/services/register/organization/categories/createCategorie";
 import {
   UpdateCategoryInterface,
   useUpdateOrganizationCategory,
 } from "@src/services/register/organization/categories/updateCategorie";
-import { Toast } from "@src/components/Toast";
-import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { useCreateOrganizationCategoryReports } from "@src/services/reports/register/organization/createCategoryReport";
-import { queryClient } from "@src/services/queryClient";
+import {
+  OrganizationCategoriesItem,
+  OrganizationCategoriesQuery,
+} from "@src/services/types/register/organization/organizationCategories.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
+import useDebounce from "@utils/useDebounce";
+import { Button, Input } from "antd";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const INITIAL_QUERY: OrganizationCategoriesQuery = {
   limit: 25,

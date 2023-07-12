@@ -1,10 +1,10 @@
 import moment from "moment";
+import { useQuery } from "react-query";
 import { api } from "../../../../config/api";
 import {
   generatedDepositRowsResponse,
   generatedDepositTotalQuery,
 } from "../../../types/consult/deposits/generatedDeposits.interface";
-import { useQuery } from "react-query";
 
 export function useGetRowsGeneratedDeposits(
   params: generatedDepositTotalQuery
@@ -35,7 +35,7 @@ export function useGetRowsGeneratedDeposits(
       refetchInterval: false,
       refetchIntervalInBackground: false,
       refetchOnMount: false,
-      refetchOnWindowFocus: false
+      refetchOnWindowFocus: false,
     }
   );
 

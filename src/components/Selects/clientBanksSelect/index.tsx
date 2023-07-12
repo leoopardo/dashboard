@@ -1,9 +1,9 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { AutoComplete, Empty, Input } from "antd";
-import { MerchantQuery } from "../../../services/types/register/merchants/merchants.interface";
-import { useTranslation } from "react-i18next";
-import { DownOutlined } from "@ant-design/icons";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useListClientClientBanks } from "@src/services/bank/listClientBanks";
+import { AutoComplete, Empty } from "antd";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { MerchantQuery } from "../../../services/types/register/merchants/merchants.interface";
 
 interface BankSelectProps {
   setQueryFunction: Dispatch<SetStateAction<any>>;

@@ -1,26 +1,26 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Grid } from "@mui/material";
-import { Button, Input } from "antd";
-import { useEffect, useState } from "react";
-import { FilterChips } from "@components/FiltersModal/filterChips";
-import { useTranslation } from "react-i18next";
-import { FiltersModal } from "@components/FiltersModal";
-import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
-import { ColumnInterface, CustomTable } from "@components/CustomTable";
-import useDebounce from "@utils/useDebounce";
 import { EditOutlined, EyeFilled, UserAddOutlined } from "@ant-design/icons";
+import { ColumnInterface, CustomTable } from "@components/CustomTable";
+import { FiltersModal } from "@components/FiltersModal";
+import { FilterChips } from "@components/FiltersModal/filterChips";
+import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
+import { Grid } from "@mui/material";
+import { MutateModal } from "@src/components/Modals/mutateGenericModal";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
 import { Toast } from "@src/components/Toast";
-import { MutateModal } from "@src/components/Modals/mutateGenericModal";
+import { queryClient } from "@src/services/queryClient";
+import { useCreateOperator } from "@src/services/register/operator/createOperator";
 import { useGetOperator } from "@src/services/register/operator/getOperators";
+import { useUpdateOperator } from "@src/services/register/operator/updateOperator";
 import {
   OperatorItem,
   OperatorQuery,
 } from "@src/services/types/register/operators/operators.interface";
-import { useCreateOperator } from "@src/services/register/operator/createOperator";
-import { useUpdateOperator } from "@src/services/register/operator/updateOperator";
-import { queryClient } from "@src/services/queryClient";
 import { ValidateInterface } from "@src/services/types/validate.interface";
+import useDebounce from "@utils/useDebounce";
+import { Button, Input } from "antd";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const INITIAL_QUERY: OperatorQuery = {
   limit: 25,

@@ -1,69 +1,69 @@
-import { Routes, Route } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { NotFount } from "../public/Pages/404";
-import { Redirect } from "./redirect";
 import { GeneratedDeposits } from "./Pages/consult/deposits/generated";
 import { PaidDeposits } from "./Pages/consult/deposits/paid";
-import { UndeliveredDeposits } from "./Pages/consult/deposits/undelivered";
-import { GeneratedWithdrawals } from "./Pages/consult/withdrawals/generated";
-import { PaidWithdrawals } from "./Pages/consult/withdrawals/paid";
-import { UndeliveredWithdrawals } from "./Pages/consult/withdrawals/undelivered";
-import { RefundDeposits } from "./Pages/consult/refunds/deposits";
-import { OrganizationUser } from "./Pages/register/organization/users";
-import { MerchantUser } from "./Pages/register/merchant/users";
-import { OrganizationCategories } from "./Pages/register/organization/categories";
-import { BankMaintenence } from "./Pages/register/organization/bankMaintenance";
-import { GeneralConfigs } from "./Pages/register/organization/generalConfigs";
-import { PartnerUsers } from "./Pages/register/partner/users";
-import { MerchantView } from "./Pages/register/merchant/merchants";
-import { MerchantConfigs } from "./Pages/register/merchant/merchants/components/merchantConfigs";
-import { Partners } from "./Pages/register/partner/partners";
-import { Operators } from "./Pages/register/operator/operators";
-import { OperatorUsers } from "./Pages/register/operator/users";
-import { Aggregators } from "./Pages/register/aggregator/aggregators";
-import { AggregatorUsers } from "./Pages/register/aggregator/users";
-import { Persons } from "./Pages/register/persons";
-import { PersonDetails } from "./Pages/register/persons/personDetails";
-import { PersonUpdate } from "./Pages/register/persons/personUpdate";
-import { PixKeyWhitelist } from "./Pages/register/persons/pixKeyWhitelist";
-import { CostumerBanks } from "./Pages/register/persons/customerBankList";
-import { OrganizationBankStatement } from "./Pages/consult/organization/bankStatement";
-import { OrganizationBalance } from "./Pages/consult/organization/balance";
-import { OrganizationHistory } from "./Pages/consult/organization/history";
-import { MerchantBankStatement } from "./Pages/consult/merchant/bankStatement";
-import { MerchantBalance } from "./Pages/consult/merchant/balance";
-import { MerchantHistory } from "./Pages/consult/merchant/history";
-import { OrgonizationManual } from "./Pages/moviments/organization/manual";
-import { MerchantManual } from "./Pages/moviments/merchants/manual";
-import { CheckDocument } from "./Pages/consult/persons/checkDocument";
-import { DepositsErrors } from "./Pages/support/apiLogs/DepositsErrors";
-import { WithdrawalsErrors } from "./Pages/support/apiLogs/WithdrawalsErrors";
-import { BankBlacklist } from "./Pages/support/blacklists/bankBlacklist";
-import { ThirdPartKeyBlacklist } from "./Pages/support/blacklists/thirdPartKey";
-import { InvalidPixKeyBlacklist } from "./Pages/support/blacklists/invalidPixKey";
-import { OrganizationUserReports } from "./Pages/register/organization/reports/user";
-import { OrganizationCategoriesReports } from "./Pages/register/organization/reports/categories";
-import { PartnerReports } from "./Pages/register/partner/reports/partner";
-import { PartnerUsersReports } from "./Pages/register/partner/reports/users";
 import { GeneratedDepositsReports } from "./Pages/consult/deposits/reports/generatedDeposits";
-import { MerchantBlacklist } from "./Pages/register/merchant/blacklist";
-import { MerchantReports } from "./Pages/register/merchant/reports/merchant";
-import { MerchantUserReports } from "./Pages/register/merchant/reports/user";
-import { PersonsReports } from "./Pages/register/persons/reports/persons";
-import { CustomerBanksReports } from "./Pages/register/persons/reports/customerBanks";
-import { PixKeyWhitelistReports } from "./Pages/register/persons/reports/PixKeyWhitelist";
-import { OrganizationManualReports } from "./Pages/moviments/organization/reports";
-import { MerchantManualReports } from "./Pages/moviments/merchants/reports";
-import { ConsultOrganizationReports } from "./Pages/consult/organization/reports";
-import { ConsultMerchantReports } from "./Pages/consult/merchant/reports";
 import { PaidDepositsReports } from "./Pages/consult/deposits/reports/paidDeposits";
-import { GeneratedWithdrawalsReports } from "./Pages/consult/withdrawals/reports/generatedWithdrawals";
-import { PaidWithdrawalsReports } from "./Pages/consult/withdrawals/reports/paidWithdrawals";
+import { UndeliveredDeposits } from "./Pages/consult/deposits/undelivered";
+import { MerchantBalance } from "./Pages/consult/merchant/balance";
+import { MerchantBankStatement } from "./Pages/consult/merchant/bankStatement";
+import { MerchantHistory } from "./Pages/consult/merchant/history";
+import { ConsultMerchantReports } from "./Pages/consult/merchant/reports";
+import { OrganizationBalance } from "./Pages/consult/organization/balance";
+import { OrganizationBankStatement } from "./Pages/consult/organization/bankStatement";
+import { OrganizationHistory } from "./Pages/consult/organization/history";
+import { ConsultOrganizationReports } from "./Pages/consult/organization/reports";
+import { CheckDocument } from "./Pages/consult/persons/checkDocument";
+import { RefundDeposits } from "./Pages/consult/refunds/deposits";
 import { RefundDepositsReports } from "./Pages/consult/refunds/reports/deposits";
 import { RefundManualDepositsReports } from "./Pages/consult/refunds/reports/manualDeposits";
 import { RefundWithdrawalsReports } from "./Pages/consult/refunds/reports/withdrawals";
-import { BankBlackistReports } from "./Pages/support/blacklists/reports/bankBlacklist";
-import { MerchantManualEntryCategory } from "./Pages/register/merchant/manualEntryCategory";
+import { GeneratedWithdrawals } from "./Pages/consult/withdrawals/generated";
+import { PaidWithdrawals } from "./Pages/consult/withdrawals/paid";
+import { GeneratedWithdrawalsReports } from "./Pages/consult/withdrawals/reports/generatedWithdrawals";
+import { PaidWithdrawalsReports } from "./Pages/consult/withdrawals/reports/paidWithdrawals";
+import { UndeliveredWithdrawals } from "./Pages/consult/withdrawals/undelivered";
+import { MerchantManual } from "./Pages/moviments/merchants/manual";
+import { MerchantManualReports } from "./Pages/moviments/merchants/reports";
+import { OrgonizationManual } from "./Pages/moviments/organization/manual";
+import { OrganizationManualReports } from "./Pages/moviments/organization/reports";
+import { Aggregators } from "./Pages/register/aggregator/aggregators";
+import { AggregatorUsers } from "./Pages/register/aggregator/users";
+import { MerchantBlacklist } from "./Pages/register/merchant/blacklist";
 import { MerchantFeePlans } from "./Pages/register/merchant/feeplans";
+import { MerchantManualEntryCategory } from "./Pages/register/merchant/manualEntryCategory";
+import { MerchantView } from "./Pages/register/merchant/merchants";
+import { MerchantConfigs } from "./Pages/register/merchant/merchants/components/merchantConfigs";
+import { MerchantReports } from "./Pages/register/merchant/reports/merchant";
+import { MerchantUserReports } from "./Pages/register/merchant/reports/user";
+import { MerchantUser } from "./Pages/register/merchant/users";
+import { Operators } from "./Pages/register/operator/operators";
+import { OperatorUsers } from "./Pages/register/operator/users";
+import { BankMaintenence } from "./Pages/register/organization/bankMaintenance";
+import { OrganizationCategories } from "./Pages/register/organization/categories";
+import { GeneralConfigs } from "./Pages/register/organization/generalConfigs";
+import { OrganizationCategoriesReports } from "./Pages/register/organization/reports/categories";
+import { OrganizationUserReports } from "./Pages/register/organization/reports/user";
+import { OrganizationUser } from "./Pages/register/organization/users";
+import { Partners } from "./Pages/register/partner/partners";
+import { PartnerReports } from "./Pages/register/partner/reports/partner";
+import { PartnerUsersReports } from "./Pages/register/partner/reports/users";
+import { PartnerUsers } from "./Pages/register/partner/users";
+import { Persons } from "./Pages/register/persons";
+import { CostumerBanks } from "./Pages/register/persons/customerBankList";
+import { PersonDetails } from "./Pages/register/persons/personDetails";
+import { PersonUpdate } from "./Pages/register/persons/personUpdate";
+import { PixKeyWhitelist } from "./Pages/register/persons/pixKeyWhitelist";
+import { PixKeyWhitelistReports } from "./Pages/register/persons/reports/PixKeyWhitelist";
+import { CustomerBanksReports } from "./Pages/register/persons/reports/customerBanks";
+import { PersonsReports } from "./Pages/register/persons/reports/persons";
+import { DepositsErrors } from "./Pages/support/apiLogs/DepositsErrors";
+import { WithdrawalsErrors } from "./Pages/support/apiLogs/WithdrawalsErrors";
+import { BankBlacklist } from "./Pages/support/blacklists/bankBlacklist";
+import { InvalidPixKeyBlacklist } from "./Pages/support/blacklists/invalidPixKey";
+import { BankBlackistReports } from "./Pages/support/blacklists/reports/bankBlacklist";
+import { ThirdPartKeyBlacklist } from "./Pages/support/blacklists/thirdPartKey";
+import { Redirect } from "./redirect";
 
 export const PrivateRoutes = () => {
   return (
@@ -222,9 +222,9 @@ export const PrivateRoutes = () => {
             <Route path="merchant_blacklist" element={<MerchantBlacklist />} />
             <Route path="fee_plans" element={<MerchantFeePlans />} />
             <Route
-                path="manual_entry_category"
-                element={<MerchantManualEntryCategory />}
-              />
+              path="manual_entry_category"
+              element={<MerchantManualEntryCategory />}
+            />
             <Route path="merchant_reports">
               <Route
                 path="merchant_merchants_reports"
@@ -234,7 +234,6 @@ export const PrivateRoutes = () => {
                 path="merchant_users_reports"
                 element={<MerchantUserReports />}
               />
-            
             </Route>
           </Route>
           <Route path="person">

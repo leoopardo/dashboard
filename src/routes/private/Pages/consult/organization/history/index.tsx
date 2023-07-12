@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/exhaustive-deps */
+import { ReloadOutlined } from "@ant-design/icons";
 import { Grid } from "@mui/material";
-import { useTranslation } from "react-i18next";
-import { useMediaQuery } from "react-responsive";
+import { CustomTable } from "@src/components/CustomTable";
 import { useGetOrganizationHistory } from "@src/services/consult/organization/history/getPerBank";
 import {
   OrganizationHistoryItem,
   OrganizationHistoryQuery,
 } from "@src/services/types/consult/organization/history";
-import { OrganizationHistoryLineChart } from "./components/historyLineChart";
 import { Button, Table, TableColumnsType } from "antd";
-import moment from "moment";
-import { CustomTable } from "@src/components/CustomTable";
-import { ReloadOutlined } from "@ant-design/icons";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useMediaQuery } from "react-responsive";
+import { OrganizationHistoryLineChart } from "./components/historyLineChart";
 
 export const OrganizationHistory = () => {
   const { t } = useTranslation();
@@ -213,7 +214,7 @@ export const OrganizationHistory = () => {
                 setQuery((state: any) => ({ ...state, page }));
               },
               pageSizeOptions: [10, 25, 50, 100],
-              onShowSizeChange: (current, size) =>
+              onShowSizeChange: (_current, size) =>
                 setQuery((state: any) => ({ ...state, limit: size })),
             }}
           />

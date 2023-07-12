@@ -1,8 +1,7 @@
-import { api } from "../../../../config/api";
 import { useMutation } from "react-query";
+import { api } from "../../../../config/api";
 import { NewUserInterface } from "../../../../routes/private/Pages/register/organization/users/components/newUserModal";
 import { queryClient } from "../../../queryClient";
-import { useEffect } from "react";
 
 export function useUpdatePartnerUser(body: any | null) {
   const { isLoading, error, mutate, isSuccess, reset } = useMutation<
@@ -28,6 +27,6 @@ export function useUpdatePartnerUser(body: any | null) {
     updateError,
     updateMutate,
     updateSuccess,
-    updateReset
+    updateReset,
   };
 }

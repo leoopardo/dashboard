@@ -1,19 +1,21 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { BankOutlined, EllipsisOutlined } from "@ant-design/icons";
+import { useGetOrganizationBankMaintenece } from "@src/services/register/organization/bankMaitenence/getBanks";
 import {
   Avatar,
   Button,
+  Collapse,
   CollapseProps,
   Descriptions,
   Dropdown,
   Empty,
   Tooltip,
 } from "antd";
-import { Collapse } from "antd";
+import moment from "moment";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { BankOutlined, EllipsisOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 import { ColumnInterface } from "..";
-import { useGetOrganizationBankMaintenece } from "@src/services/register/organization/bankMaitenence/getBanks";
-import moment from "moment";
 
 interface MobileProps {
   columns: ColumnInterface[];

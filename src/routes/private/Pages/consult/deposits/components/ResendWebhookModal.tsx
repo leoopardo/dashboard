@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { MerchantSelect } from "@src/components/Selects/merchantSelect";
 import { PartnerSelect } from "@src/components/Selects/partnerSelect";
+import { queryClient } from "@src/services/queryClient";
 import { ResendWebhookBody } from "@src/services/types/consult/deposits/createResendWebhook.interface";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 import {
   Button,
-  Checkbox,
   ConfigProvider,
   DatePicker,
   Drawer,
@@ -11,13 +13,11 @@ import {
   FormInstance,
   Radio,
 } from "antd";
-import moment from "moment";
-import React, { Dispatch, SetStateAction, useState, useRef } from "react";
-import { useTranslation } from "react-i18next";
 import locale from "antd/locale/pt_BR";
 import dayjs from "dayjs";
-import { queryClient } from "@src/services/queryClient";
-import { ValidateInterface } from "@src/services/types/validate.interface";
+import moment from "moment";
+import { Dispatch, SetStateAction, useRef } from "react";
+import { useTranslation } from "react-i18next";
 const { RangePicker } = DatePicker;
 
 interface ResendWebhookModalInterface {

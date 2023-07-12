@@ -1,20 +1,19 @@
-import React from "react";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js";
-import { Line } from "react-chartjs-2";
-import { useTranslation } from "react-i18next";
-import moment from "moment";
-import { useMediaQuery } from "react-responsive";
 import { MerchantHourlyItem } from "@src/services/types/consult/merchant/bankStatement";
 import { defaultTheme } from "@src/styles/defaultTheme";
+import {
+  CategoryScale,
+  Chart as ChartJS,
+  Legend,
+  LineElement,
+  LinearScale,
+  PointElement,
+  Title,
+  Tooltip,
+} from "chart.js";
+import moment from "moment";
+import { Line } from "react-chartjs-2";
+import { useTranslation } from "react-i18next";
+import { useMediaQuery } from "react-responsive";
 
 ChartJS.register(
   CategoryScale,
@@ -49,10 +48,7 @@ export function MerchantHourlyLineChart({
   };
 
   const data = {
-    labels: items
-      ?.map((item) =>
-        moment(item.date).format("DD/MM HH:00")
-      ),
+    labels: items?.map((item) => moment(item.date).format("DD/MM HH:00")),
     datasets: [
       {
         label: t("table.value_out"),

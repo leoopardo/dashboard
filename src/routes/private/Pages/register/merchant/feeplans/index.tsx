@@ -1,19 +1,23 @@
-import { useEffect, useState } from "react";
-import { Grid } from "@mui/material";
-import { Button } from "antd";
-import { FilterChips } from "@components/FiltersModal/filterChips";
-import { useTranslation } from "react-i18next";
-import { FiltersModal } from "@components/FiltersModal";
-import { EditOutlined, PlusOutlined, EyeFilled } from "@ant-design/icons";
-import { MerchantManualEntryCategoryQuery } from "@src/services/types/register/merchants/merchantManualEntryCategory.interface";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { EditOutlined, EyeFilled, PlusOutlined } from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
-import { useGetFeePlansRegister } from "@src/services/register/merchant/feePlans/getFeePlans";
-import { useCreateMerchantFeePlans } from "@src/services/register/merchant/feePlans/createFeePlans";
-import { useUpdateMerchantFeePlan } from "@src/services/register/merchant/feePlans/updateFeePlans";
-import { UpdateFeePlanModal } from "./components/UpdateFeePlanModal";
-import { IDepositFeeItem, IDepositFeePlansDetails } from "@src/services/types/register/merchants/merchantFeePlans.interface";
-import { Toast } from "@src/components/Toast";
+import { FiltersModal } from "@components/FiltersModal";
+import { FilterChips } from "@components/FiltersModal/filterChips";
+import { Grid } from "@mui/material";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
+import { Toast } from "@src/components/Toast";
+import { useCreateMerchantFeePlans } from "@src/services/register/merchant/feePlans/createFeePlans";
+import { useGetFeePlansRegister } from "@src/services/register/merchant/feePlans/getFeePlans";
+import { useUpdateMerchantFeePlan } from "@src/services/register/merchant/feePlans/updateFeePlans";
+import {
+  IDepositFeeItem,
+  IDepositFeePlansDetails,
+} from "@src/services/types/register/merchants/merchantFeePlans.interface";
+import { MerchantManualEntryCategoryQuery } from "@src/services/types/register/merchants/merchantManualEntryCategory.interface";
+import { Button } from "antd";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { UpdateFeePlanModal } from "./components/UpdateFeePlanModal";
 
 const INITIAL_QUERY: MerchantManualEntryCategoryQuery = {
   limit: 25,
@@ -34,10 +38,13 @@ export const MerchantFeePlans = () => {
     range_type: null,
   });
   const [fees, setFees] = useState<IDepositFeePlansDetails[] | null>([]);
-  const [updateBody, setUpdateBody] = useState<IDepositFeeItem | null>(null);
+  const [, setUpdateBody] = useState<IDepositFeeItem | null>(null);
   const [currentItem, setCurrentItem] = useState<IDepositFeeItem | null>(null);
   const {
-   feePlansData, feePlansDataError, isFeePlansDataFetching, refetchFeePlansData
+    feePlansData,
+    feePlansDataError,
+    isFeePlansDataFetching,
+    refetchFeePlansData,
   } = useGetFeePlansRegister(query);
   const { mutate, error, isLoading, isSuccess } = useCreateMerchantFeePlans({
     ...body,
@@ -52,7 +59,7 @@ export const MerchantFeePlans = () => {
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-  
+
   const columns: ColumnInterface[] = [
     { name: "id", type: "id" },
     { name: "name", type: "text" },
@@ -111,7 +118,9 @@ export const MerchantFeePlans = () => {
             }}
           >
             <PlusOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
-            {`${t("buttons.create")} ${t("menus.fee_plans").toString().toLocaleLowerCase()}`}
+            {`${t("buttons.create")} ${t("menus.fee_plans")
+              .toString()
+              .toLocaleLowerCase()}`}
           </Button>
         </Grid>
       </Grid>

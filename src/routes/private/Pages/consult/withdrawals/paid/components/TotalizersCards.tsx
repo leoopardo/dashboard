@@ -1,13 +1,13 @@
-import React from "react";
+import { ReloadOutlined } from "@ant-design/icons";
 import { Grid } from "@mui/material";
 import { Button, Card, Statistic } from "antd";
-import { defaultTheme } from "../../../../../../../styles/defaultTheme";
-import { useMediaQuery } from "react-responsive";
-import { ReloadOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
+import { useMediaQuery } from "react-responsive";
 import {
-  paidWithdrawalsRowsQuery, paidWithdrawalsTotal,
+  paidWithdrawalsRowsQuery,
+  paidWithdrawalsTotal,
 } from "../../../../../../../services/types/consult/withdrawals/paidWithdrawals.interface";
+import { defaultTheme } from "../../../../../../../styles/defaultTheme";
 
 interface TotalizersInterface {
   data: paidWithdrawalsTotal | null | undefined;

@@ -1,23 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
-import { Grid } from "@mui/material";
-import { Button } from "antd";
-import { useTranslation } from "react-i18next";
+import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
-import { Toast } from "@components/Toast";
-import useDebounce from "@utils/useDebounce";
-import { PlusOutlined, DeleteOutlined } from "@ant-design/icons";
 import { MutateModal } from "@components/Modals/mutateGenericModal";
-import { useUpdateCredentialConfig } from "@src/services/register/merchant/merchant/credentialsConfig.tsx/updateCredentialsConfig";
-import { useCreateCredentialsConfig } from "@src/services/register/merchant/merchant/credentialsConfig.tsx/createCredentialsConfig";
-import { useGetIpsConfig } from "@src/services/register/merchant/merchant/ipsConfig.tsx/getIpsConfig";
-import { useDeleteIpConfig } from "@src/services/register/merchant/merchant/ipsConfig.tsx/deleteIpsConfig";
+import { Toast } from "@components/Toast";
+import { Grid } from "@mui/material";
 import { useCreateIpConfig } from "@src/services/register/merchant/merchant/ipsConfig.tsx/createIpsConfig";
+import { useDeleteIpConfig } from "@src/services/register/merchant/merchant/ipsConfig.tsx/deleteIpsConfig";
+import { useGetIpsConfig } from "@src/services/register/merchant/merchant/ipsConfig.tsx/getIpsConfig";
 import {
-  MerchantIpsQuery,
   MerchantIpsItem,
+  MerchantIpsQuery,
 } from "@src/services/types/register/merchants/merchantIpsConfig";
-import { IBodyCredentialItem } from "@src/services/types/register/merchants/merchantsCredentialsConfig.interface";
+import useDebounce from "@utils/useDebounce";
+import { Button } from "antd";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export const IpsConfigTab = (props: { id?: string }) => {
   const { t } = useTranslation();
@@ -32,11 +29,8 @@ export const IpsConfigTab = (props: { id?: string }) => {
   const [currentItem, setCurrentItem] = useState<MerchantIpsItem | null>(null);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
-  const {
-    ipsConfigData,
-    ipsConfigError,
-    isIpsConfigFetching,
-  } = useGetIpsConfig({ merchant_id: Number(props?.id), ...query });
+  const { ipsConfigData, ipsConfigError, isIpsConfigFetching } =
+    useGetIpsConfig({ merchant_id: Number(props?.id), ...query });
 
   const {
     deleteIpsConfigError,

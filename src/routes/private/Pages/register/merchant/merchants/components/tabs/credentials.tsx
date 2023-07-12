@@ -1,22 +1,25 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
-import { Grid } from "@mui/material";
-import { Button } from "antd";
-import { useTranslation } from "react-i18next";
-import { MerchantsItem } from "@services/types/register/merchants/merchantsRegister.interface";
-import { CredentialQuery } from "@src/services/types/register/merchants/merchantsCredentialsConfig.interface";
+import { EditOutlined, EyeFilled, PlusOutlined } from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
-import { Toast } from "@components/Toast";
-import useDebounce from "@utils/useDebounce";
-import { ValidateToken } from "@components/ValidateToken";
-import { PlusOutlined, EyeFilled, EditOutlined } from "@ant-design/icons";
-import { ViewModal } from "@components/Modals/viewGenericModal";
 import { MutateModal } from "@components/Modals/mutateGenericModal";
+import { ViewModal } from "@components/Modals/viewGenericModal";
+import { Toast } from "@components/Toast";
+import { ValidateToken } from "@components/ValidateToken";
+import { Grid } from "@mui/material";
+import { MerchantsItem } from "@services/types/register/merchants/merchantsRegister.interface";
+import { useCreateCredentialsConfig } from "@src/services/register/merchant/merchant/credentialsConfig.tsx/createCredentialsConfig";
 import { useGetCredentialsConfig } from "@src/services/register/merchant/merchant/credentialsConfig.tsx/getCredentialsConfig";
 import { useShowCredentialsConfig } from "@src/services/register/merchant/merchant/credentialsConfig.tsx/showCredentialsConfig";
 import { useUpdateCredentialConfig } from "@src/services/register/merchant/merchant/credentialsConfig.tsx/updateCredentialsConfig";
-import { useCreateCredentialsConfig } from "@src/services/register/merchant/merchant/credentialsConfig.tsx/createCredentialsConfig";
-import { IBodyCredentialItem } from "@src/services/types/register/merchants/merchantsCredentialsConfig.interface";
+import {
+  CredentialQuery,
+  IBodyCredentialItem,
+} from "@src/services/types/register/merchants/merchantsCredentialsConfig.interface";
+import useDebounce from "@utils/useDebounce";
+import { Button } from "antd";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const INITIAL_QUERY: CredentialQuery = {
   limit: 25,
@@ -56,6 +59,7 @@ export const CredentialConfigTab = (props: { id?: string }) => {
     isShowCredentialConfigFetching,
     showCredentialConfigData,
     showCredentialConfigError,
+    isSuccess,
     refetchShowCredentialConfigData,
   } = useShowCredentialsConfig({
     api_credential_id: currentItem?.id,
@@ -79,7 +83,7 @@ export const CredentialConfigTab = (props: { id?: string }) => {
     validation_token: tokenState,
     ...createBody,
   });
-  const [search, setSearch] = useState<string>("");
+  const [search] = useState<string>("");
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const debounceSearch = useDebounce(search);
 
@@ -97,7 +101,7 @@ export const CredentialConfigTab = (props: { id?: string }) => {
       merchant_id: currentItem?.id,
     });
   }, [currentItem]);
-  
+
   useEffect(() => {
     if (showCredentialConfigError?.response?.status === 400) return;
 
@@ -110,7 +114,6 @@ export const CredentialConfigTab = (props: { id?: string }) => {
       refetchCredentialConfigData();
       setIsUpdateValidateTokenOpen(false);
     }
-
   }, [UpdateIsSuccess, CreateCredentialsIsSuccess]);
 
   useEffect(() => {
@@ -145,7 +148,9 @@ export const CredentialConfigTab = (props: { id?: string }) => {
             }}
           >
             <PlusOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
-            {`${t("buttons.create")} ${t("menus.credentials")?.toLocaleLowerCase()}`}
+            {`${t("buttons.create")} ${t(
+              "menus.credentials"
+            )?.toLocaleLowerCase()}`}
           </Button>
         </Grid>
       </Grid>
@@ -264,6 +269,7 @@ export const CredentialConfigTab = (props: { id?: string }) => {
           setIsOpen={setIsGetValidateTokenOpen}
           action="API_CREDENTIAL_GET"
           setTokenState={setTokenState}
+          success={isSuccess}
           tokenState={tokenState}
           error={showCredentialConfigError}
           submit={() => {

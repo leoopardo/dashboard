@@ -1,13 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/exhaustive-deps */
+import Icon, { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
+import type { CustomIconComponentProps } from "@ant-design/icons/lib/components/Icon";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import { Grid } from "@mui/material";
 import { useGetOrganizationBankStatementTotals } from "@src/services/consult/organization/bankStatement/getTotals";
 import { OrganizationBankStatementTotalsQuery } from "@src/services/types/consult/organization/bankStatement/totals.interface";
-import { Grid } from "@mui/material";
-import React, { useEffect } from "react";
-import { Divider, Space, Statistic } from "antd";
 import { defaultTheme } from "@src/styles/defaultTheme";
-import Icon, { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
+import { Divider, Statistic } from "antd";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
-import type { CustomIconComponentProps } from "@ant-design/icons/lib/components/Icon";
 
 interface TotalizersInterface {
   query: OrganizationBankStatementTotalsQuery;
@@ -175,7 +177,8 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
                       color: defaultTheme.colors.error,
                       fontSize: "16px",
                     }}
-                    prefix={<ArrowDownOutlined />}    valueRender={(node: any) => <>{node.props.value}</>}
+                    prefix={<ArrowDownOutlined />}
+                    valueRender={(node: any) => <>{node.props.value}</>}
                   />
                 </Grid>
               );

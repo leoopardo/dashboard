@@ -1,5 +1,5 @@
-import { api } from "../../../../config/api";
 import { useQuery } from "react-query";
+import { api } from "../../../../config/api";
 import { getDeposit } from "../../../types/consult/deposits/generatedDeposits.interface";
 
 export function useGetDeposit(id: string) {

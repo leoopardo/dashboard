@@ -1,23 +1,25 @@
-import { useState, useEffect } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/exhaustive-deps */
+import { EyeFilled, ReloadOutlined } from "@ant-design/icons";
 import { Grid } from "@mui/material";
+import { CustomTable } from "@src/components/CustomTable";
+import { FiltersModal } from "@src/components/FiltersModal";
+import { FilterChips } from "@src/components/FiltersModal/filterChips";
+import { useGetOrganizationBankMaintenece } from "@src/services/register/organization/bankMaitenence/getBanks";
+import { useGetLogsSteps } from "@src/services/support/apiLogs/DepositsErrors/ListSteps";
+import { useGetDepositsErrorsLogById } from "@src/services/support/apiLogs/DepositsErrors/getDepositsErrorLogById";
+import { useGetDepositsErrorsLogs } from "@src/services/support/apiLogs/DepositsErrors/getDepositsErrorLogs";
 import { useGetDepositsErrorsTotal } from "@src/services/support/apiLogs/DepositsErrors/getDepositsErrorStepsTotal";
 import {
   DepositLogsItem,
   DepositsLogsStepsTotalQuery,
 } from "@src/services/types/support/apiLogs/depositsError.interface";
-import moment from "moment";
 import { Avatar, Button, Card, Statistic } from "antd";
+import moment from "moment";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { FilterChips } from "@src/components/FiltersModal/filterChips";
-import { FiltersModal } from "@src/components/FiltersModal";
-import { useGetOrganizationBankMaintenece } from "@src/services/register/organization/bankMaitenence/getBanks";
-import { LogsColors } from "../utils/logsColors";
-import { useGetDepositsErrorsLogs } from "@src/services/support/apiLogs/DepositsErrors/getDepositsErrorLogs";
-import { CustomTable } from "@src/components/CustomTable";
-import { EyeFilled, ReloadOutlined } from "@ant-design/icons";
-import { useGetDepositsErrorsLogById } from "@src/services/support/apiLogs/DepositsErrors/getDepositsErrorLogById";
 import { LogDetailsModal } from "../components/LogDetailsModal";
-import { useGetLogsSteps } from "@src/services/support/apiLogs/DepositsErrors/ListSteps";
+import { LogsColors } from "../utils/logsColors";
 
 export const DepositsErrors = () => {
   const INITIAL_QUERY: DepositsLogsStepsTotalQuery = {

@@ -1,7 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { MerchantCategorieSelect } from "@src/components/Selects/merchantCategorieSelect";
 import { OrganizationCategorieSelect } from "@src/components/Selects/organizationCategorieSelect";
 import { Button, Drawer, Form, FormInstance, Input } from "antd";
-import { Dispatch, SetStateAction, useRef, useEffect } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { NumericFormat } from "react-number-format";
 

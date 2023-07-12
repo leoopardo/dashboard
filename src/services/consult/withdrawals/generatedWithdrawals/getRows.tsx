@@ -1,7 +1,10 @@
 import moment from "moment";
-import { api } from "../../../../config/api";
 import { useQuery } from "react-query";
-import { generatedWithdrawalsRowsQuery, generatedWithdrawalsRowsResponse } from "../../../types/consult/withdrawals/generatedWithdrawals.interface";
+import { api } from "../../../../config/api";
+import {
+  generatedWithdrawalsRowsQuery,
+  generatedWithdrawalsRowsResponse,
+} from "../../../types/consult/withdrawals/generatedWithdrawals.interface";
 
 export function useGetRowsGeneratedWithdrawals(
   params: generatedWithdrawalsRowsQuery
@@ -15,15 +18,15 @@ export function useGetRowsGeneratedWithdrawals(
         params: {
           ...params,
           initial_date: params.initial_date
-          ? moment(params.initial_date)
-              .add(3, "hours")
-              .format("YYYY-MM-DDTHH:mm:ss.SSS")
-          : '',
-        final_date: params.final_date
-          ? moment(params.final_date)
-              .add(3, "hours")
-              .format("YYYY-MM-DDTHH:mm:ss.SSS")
-          : '',
+            ? moment(params.initial_date)
+                .add(3, "hours")
+                .format("YYYY-MM-DDTHH:mm:ss.SSS")
+            : "",
+          final_date: params.final_date
+            ? moment(params.final_date)
+                .add(3, "hours")
+                .format("YYYY-MM-DDTHH:mm:ss.SSS")
+            : "",
         },
       });
       return response.data;
@@ -32,7 +35,7 @@ export function useGetRowsGeneratedWithdrawals(
       refetchInterval: false,
       refetchIntervalInBackground: false,
       refetchOnMount: false,
-      refetchOnWindowFocus: false
+      refetchOnWindowFocus: false,
     }
   );
 

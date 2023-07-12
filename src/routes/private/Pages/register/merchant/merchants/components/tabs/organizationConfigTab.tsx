@@ -1,11 +1,16 @@
-import { useRef, useState, useEffect } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Toast } from "@components/Toast";
 import { Grid } from "@mui/material";
-import { useTranslation } from "react-i18next";
 import { useOrganizationConfig } from "@src/services/register/merchant/merchant/organizationConfig.tsx/getMerchantConfig";
 import { useUpdateOrganizationConfig } from "@src/services/register/merchant/merchant/organizationConfig.tsx/updateMerchantConfig";
-import { IOrganizationConfigResponse, IOrganizationUpdateConfig } from "@src/services/types/register/merchants/organizationConfig.interface";
-import { Toast } from "@components/Toast";
-import { Form, FormInstance, Select, Button, Popconfirm, Switch } from "antd";
+import {
+  IOrganizationConfigResponse,
+  IOrganizationUpdateConfig,
+} from "@src/services/types/register/merchants/organizationConfig.interface";
+import { Button, Form, FormInstance, Popconfirm, Select, Switch } from "antd";
+import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export const OrganizationConfigTab = (props: { id?: string }) => {
   const formRef = useRef<FormInstance>(null);
@@ -14,19 +19,21 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
   const {
     isOrganizationConfigFetching,
     organizationConfigData,
-    organizationConfigError,
     refetchOrganizationConfigData,
   } = useOrganizationConfig(props?.id);
   const [body, setBody] = useState<
     IOrganizationConfigResponse | undefined | null
   >(null);
   const [bodyUpdate, setBodyUpdate] = useState<
-  IOrganizationUpdateConfig | null | undefined
+    IOrganizationUpdateConfig | null | undefined
   >(null);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
-  const { UpdateIsSuccess, UpdateMutate, UpdateIsLoading, UpdateError } =
-  useUpdateOrganizationConfig({ merchant_id: Number(props?.id), ...bodyUpdate });
+  const { UpdateIsSuccess, UpdateMutate, UpdateError } =
+    useUpdateOrganizationConfig({
+      merchant_id: Number(props?.id),
+      ...bodyUpdate,
+    });
 
   const sanitazerOrganizationConfig = (result: any) => {
     let helper;
@@ -67,9 +74,9 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
     formRef.current?.setFieldsValue(
       sanitazerOrganizationConfig(organizationConfigData)
     );
-    setBody(sanitazerOrganizationConfig(organizationConfigData))
+    setBody(sanitazerOrganizationConfig(organizationConfigData));
   }, [organizationConfigData]);
-console.log({body})
+  console.log({ body });
   return (
     <Form
       ref={formRef}
@@ -109,7 +116,7 @@ console.log({body})
 
         <Grid item xs={12} md={6}>
           <Form.Item label={t("table.status")} name="status">
-            <Switch  
+            <Switch
               checked={body?.status}
               onChange={(value) => {
                 setBody((state) => ({
@@ -120,7 +127,8 @@ console.log({body})
                   ...state,
                   status: value,
                 }));
-              }} />
+              }}
+            />
           </Form.Item>
         </Grid>
       </Grid>

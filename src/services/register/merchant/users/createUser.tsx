@@ -1,7 +1,7 @@
 import { api } from "../../../../config/api";
 
-import { useMutation } from "react-query";
 import { MerchantUserBodyItem } from "@src/services/types/register/merchants/merchantUsers.interface";
+import { useMutation } from "react-query";
 import { queryClient } from "../../../queryClient";
 
 export function useCreateMerchantUser(body: MerchantUserBodyItem) {
@@ -17,6 +17,7 @@ export function useCreateMerchantUser(body: MerchantUserBodyItem) {
     isLoading,
     error,
     mutate,
-    isSuccess,reset
+    isSuccess,
+    reset,
   };
 }

@@ -1,27 +1,28 @@
-import React, { useState, useEffect } from "react";
-import { Grid } from "@mui/material";
-import moment from "moment";
-import { TotalizersCards } from "./components/TotalizersCards";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/exhaustive-deps */
+import { EyeFilled, SearchOutlined } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
-import { Alert, Button, Input, Select, Space, DatePicker } from "antd";
+import { Grid } from "@mui/material";
+import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
+import { queryClient } from "@src/services/queryClient";
+import { useCreatePaidDepositsReports } from "@src/services/reports/consult/deposits/createPaidDepositsReports";
+import { ValidateInterface } from "@src/services/types/validate.interface";
+import { Alert, Button, Input, Select, Space } from "antd";
+import moment from "moment";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   ColumnInterface,
   CustomTable,
 } from "../../../../../../components/CustomTable";
-import { ViewModal } from "../components/ViewModal";
-import { EyeFilled, SearchOutlined } from "@ant-design/icons";
 import { FiltersModal } from "../../../../../../components/FiltersModal";
-import { useTranslation } from "react-i18next";
-import useDebounce from "../../../../../../utils/useDebounce";
 import { FilterChips } from "../../../../../../components/FiltersModal/filterChips";
-import { paidDepositRowsQuery } from "../../../../../../services/types/consult/deposits/PaidDeposits.interface";
-import { useGetTotalPaidDeposits } from "../../../../../../services/consult/deposits/paidDeposits/getTotal";
 import { useGetRowsPaidDeposits } from "../../../../../../services/consult/deposits/paidDeposits/getRows";
-import { useCreatePaidDepositsReports } from "@src/services/reports/consult/deposits/createPaidDepositsReports";
-import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
-import { queryClient } from "@src/services/queryClient";
-import { ValidateInterface } from "@src/services/types/validate.interface";
-const { RangePicker } = DatePicker;
+import { useGetTotalPaidDeposits } from "../../../../../../services/consult/deposits/paidDeposits/getTotal";
+import { paidDepositRowsQuery } from "../../../../../../services/types/consult/deposits/PaidDeposits.interface";
+import useDebounce from "../../../../../../utils/useDebounce";
+import { ViewModal } from "../components/ViewModal";
+import { TotalizersCards } from "./components/TotalizersCards";
 
 const INITIAL_QUERY: paidDepositRowsQuery = {
   page: 1,
@@ -44,7 +45,7 @@ export const PaidDeposits = () => {
   const { paidTotal, paidTotalError, isPaidTotalFetching, refetchPaidTotal } =
     useGetTotalPaidDeposits(query);
 
-  const { paidRows, paidRowsError, isPaidRowsFetching, refetchPaidTotalRows } =
+  const { paidRows, isPaidRowsFetching, refetchPaidTotalRows } =
     useGetRowsPaidDeposits(query);
 
   const {
@@ -89,7 +90,7 @@ export const PaidDeposits = () => {
     delete q.payer_name;
 
     if (debounceSearch && searchOption) {
-      setQuery((state) => ({ ...q, [searchOption]: debounceSearch }));
+      setQuery(() => ({ ...q, [searchOption]: debounceSearch }));
     }
   }, [debounceSearch, searchOption]);
 

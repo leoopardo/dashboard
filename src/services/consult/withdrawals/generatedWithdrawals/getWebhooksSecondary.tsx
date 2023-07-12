@@ -1,19 +1,22 @@
-import { api } from "../../../config/api";
 import { useQuery } from "react-query";
+import { api } from "../../../../config/api";
 import {
   WebhooksQuery,
   WebhooksResponse,
-} from "../../types/consult/deposits/generatedDeposits.interface";
+} from "../../../types/consult/deposits/generatedDeposits.interface";
 
 export function useGetWithdrawalsWebhooks2(id: string, params: WebhooksQuery) {
   const { data, isFetching, error, refetch } = useQuery<
-  WebhooksResponse | null | undefined
+    WebhooksResponse | null | undefined
   >(
     "webhooks2",
     async () => {
-      const response = await api.get(`report/logs/webhooks/pix/secondary${id}`, {
-        params,
-      });
+      const response = await api.get(
+        `report/logs/webhooks/pix/secondary${id}`,
+        {
+          params,
+        }
+      );
       return response.data;
     },
     { refetchOnWindowFocus: "always" }

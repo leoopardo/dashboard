@@ -1,5 +1,5 @@
-import { api } from "../../../../config/api";
 import { useMutation } from "react-query";
+import { api } from "../../../../config/api";
 import { NewUserInterface } from "../../../../routes/private/Pages/register/organization/users/components/newUserModal";
 import { queryClient } from "../../../queryClient";
 
@@ -22,6 +22,7 @@ export function useUpdateOrganizationUser(body: any | null) {
     updateLoading,
     updateError,
     updateMutate,
-    updateSuccess,updateReset
+    updateSuccess,
+    updateReset,
   };
 }

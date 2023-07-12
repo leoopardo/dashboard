@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
-import { api } from "../../../config/api";
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   AggregatorQuery,
   AggregatorsResponse,
 } from "@src/services/types/register/aggregators/aggregators.interface";
+import { useEffect, useState } from "react";
+import { api } from "../../../config/api";
 
 export function useListAggregators(params: AggregatorQuery) {
   const [data, setData] = useState<AggregatorsResponse | null>(null);

@@ -1,21 +1,23 @@
-import { Grid } from "@mui/material";
-import { Button, Input } from "antd";
-import { useEffect, useState } from "react";
-import { FilterChips } from "@components/FiltersModal/filterChips";
-import { useTranslation } from "react-i18next";
-import { FiltersModal } from "@components/FiltersModal";
-import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
-import { ColumnInterface, CustomTable } from "@components/CustomTable";
-import useDebounce from "@utils/useDebounce";
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { EditOutlined, EyeFilled, UserAddOutlined } from "@ant-design/icons";
-import { NewUserInterface, NewUserModal } from "./components/newUserModal";
+import { ColumnInterface, CustomTable } from "@components/CustomTable";
+import { FiltersModal } from "@components/FiltersModal";
+import { FilterChips } from "@components/FiltersModal/filterChips";
 import { ValidateToken } from "@components/ValidateToken";
+import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
+import { Grid } from "@mui/material";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
-import { PartnerQuery } from "@src/services/types/register/partners/partners.interface";
+import { queryClient } from "@src/services/queryClient";
 import { useGetAggregatorUsers } from "@src/services/register/aggregator/users/getAggregatorUsers";
 import { useUpdateAggregatorUser } from "@src/services/register/aggregator/users/updateUser";
-import { queryClient } from "@src/services/queryClient";
+import { PartnerQuery } from "@src/services/types/register/partners/partners.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
+import useDebounce from "@utils/useDebounce";
+import { Button, Input } from "antd";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { NewUserInterface, NewUserModal } from "./components/newUserModal";
 
 const INITIAL_QUERY: PartnerQuery = {
   limit: 25,

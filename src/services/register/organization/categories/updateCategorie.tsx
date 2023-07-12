@@ -1,5 +1,5 @@
-import { api } from "../../../../config/api";
 import { useMutation } from "react-query";
+import { api } from "../../../../config/api";
 import { queryClient } from "../../../queryClient";
 
 export interface UpdateCategoryInterface {

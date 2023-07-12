@@ -1,7 +1,7 @@
-import { queryClient } from "@src/services/queryClient";
 import { api } from "@config/api";
-import { useMutation } from "react-query";
 import { MerchantsItem } from "@services/types/register/merchants/merchantsRegister.interface";
+import { queryClient } from "@src/services/queryClient";
+import { useMutation } from "react-query";
 
 export function useUpdateMerchant(body: MerchantsItem) {
   const { isLoading, error, mutate, isSuccess, reset } = useMutation<

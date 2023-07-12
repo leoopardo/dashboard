@@ -1,9 +1,8 @@
-import React from "react";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { Doughnut } from "react-chartjs-2";
-import { useTranslation } from "react-i18next";
 import { OrganizationBalance } from "@src/services/types/consult/organization/balance/balnce.interface";
 import { defaultTheme } from "@src/styles/defaultTheme";
+import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js";
+import { Doughnut } from "react-chartjs-2";
+import { useTranslation } from "react-i18next";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 

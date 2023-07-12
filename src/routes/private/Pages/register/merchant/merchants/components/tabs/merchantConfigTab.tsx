@@ -1,21 +1,23 @@
-import { useRef, useState, useEffect, ChangeEvent } from "react";
-import { CheckboxChangeEvent } from "antd/lib/checkbox";
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Toast } from "@components/Toast";
 import { Grid } from "@mui/material";
-import { useTranslation } from "react-i18next";
+import { CurrencyInput } from "@src/components/CurrencyInput";
 import { useMerchantConfig } from "@src/services/register/merchant/merchant/merchantConfig.tsx/getMerchantConfig";
 import { useUpdateMerchantConfig } from "@src/services/register/merchant/merchant/merchantConfig.tsx/updateMerchantConfig";
 import { IMerchantConfig } from "@src/services/types/register/merchants/merchantConfig.interface";
-import { CurrencyInput } from "@src/components/CurrencyInput";
-import { Toast } from "@components/Toast";
 import {
+  Button,
+  Checkbox,
   Form,
   FormInstance,
-  Select,
-  Button,
-  Popconfirm,
-  Checkbox,
   Input,
+  Popconfirm,
+  Select,
 } from "antd";
+import { CheckboxChangeEvent } from "antd/lib/checkbox";
+import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export const MerchantConfigTab = (props: { id?: string }) => {
   const formRef = useRef<FormInstance>(null);
@@ -38,7 +40,7 @@ export const MerchantConfigTab = (props: { id?: string }) => {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const cashoutLimits = [null, 1, 2, 3, 4, 5];
 
-  const { UpdateIsSuccess, UpdateMutate, UpdateIsLoading, UpdateError } =
+  const { UpdateIsSuccess, UpdateMutate, UpdateError } =
     useUpdateMerchantConfig({ merchant_id: Number(props?.id), ...bodyUpdate });
 
   const handleWithdrawUnlimitedChange = (event: CheckboxChangeEvent) => {
@@ -69,7 +71,9 @@ export const MerchantConfigTab = (props: { id?: string }) => {
 
   const handleDifferentPayerUnlimitedChange = (event: CheckboxChangeEvent) => {
     setDifferentPayerUnlimited(event.target.checked);
-    formRef.current?.setFieldsValue({ cash_in_max_value_receive_by_different_payer: null });
+    formRef.current?.setFieldsValue({
+      cash_in_max_value_receive_by_different_payer: null,
+    });
     setBody((state: any) => ({
       ...state,
       cash_in_max_value_receive_by_different_payer: null,
@@ -83,21 +87,31 @@ export const MerchantConfigTab = (props: { id?: string }) => {
   const handleSubmit = () => {
     const array = [
       { props: "cash_out_max_value", isUnlimited: withdrawUnlimited },
-      { props: "cash_in_max_value_receive_by_pj",  isUnlimited: payerPjUnlimited },
-      { props: "cash_in_max_value_receive_by_different_payer", isUnlimited: differentPayerUnlimited },
+      {
+        props: "cash_in_max_value_receive_by_pj",
+        isUnlimited: payerPjUnlimited,
+      },
+      {
+        props: "cash_in_max_value_receive_by_different_payer",
+        isUnlimited: differentPayerUnlimited,
+      },
     ];
     const stopRequest = array.some((item) => {
-      if(item.isUnlimited === false && body && body[item.props as keyof typeof body] === null ) {
+      if (
+        item.isUnlimited === false &&
+        body &&
+        body[item.props as keyof typeof body] === null
+      ) {
         setIsConfirmOpen(false);
-          return true
-        } else return false
-    })
-  
-    if(stopRequest) return;
+        return true;
+      } else return false;
+    });
+
+    if (stopRequest) return;
 
     UpdateMutate();
     setIsConfirmOpen(false);
-  }
+  };
 
   useEffect(() => {
     refetchMerchantConfigData();
@@ -300,7 +314,7 @@ export const MerchantConfigTab = (props: { id?: string }) => {
             ]}
           >
             <CurrencyInput
-             disabled={payerPjUnlimited}
+              disabled={payerPjUnlimited}
               value={body?.cash_in_max_value_receive_by_pj}
               onChange={(value) => {
                 setBody((state) => ({
@@ -441,9 +455,9 @@ export const MerchantConfigTab = (props: { id?: string }) => {
         style={{ display: "flex", flexDirection: "row-reverse" }}
       >
         <Grid item xs={12} md={4} lg={2}>
-        <button type="submit" ref={submitRef} style={{ display: "none" }}>
-              Submit
-            </button>
+          <button type="submit" ref={submitRef} style={{ display: "none" }}>
+            Submit
+          </button>
           <Popconfirm
             title={t("messages.confirm_action_title", {
               action: t("messages.update"),

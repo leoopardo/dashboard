@@ -1,23 +1,24 @@
-import { useEffect, useState } from "react";
-import { Grid } from "@mui/material";
-import { Button, Input } from "antd";
-import { FilterChips } from "@components/FiltersModal/filterChips";
-import { useTranslation } from "react-i18next";
-import { FiltersModal } from "@components/FiltersModal";
-import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
-import { ColumnInterface, CustomTable } from "@components/CustomTable";
-import { ViewModal } from "@components/Modals/viewGenericModal";
-import useDebounce from "@utils/useDebounce";
+/* eslint-disable react-hooks/exhaustive-deps */
 import { PlusOutlined } from "@ant-design/icons";
+import { ColumnInterface, CustomTable } from "@components/CustomTable";
+import { FiltersModal } from "@components/FiltersModal";
+import { FilterChips } from "@components/FiltersModal/filterChips";
+import { ViewModal } from "@components/Modals/viewGenericModal";
+import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
+import { Grid } from "@mui/material";
+import useDebounce from "@utils/useDebounce";
+import { Button, Input } from "antd";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
+import { MutateModal } from "@src/components/Modals/mutateGenericModal";
+import { ReasonSelect } from "@src/components/Selects/reasonSelect";
+import { useCreateMerchantBlacklist } from "@src/services/register/merchant/blacklist/createMerchantBlacklist";
+import { useGetRowsMerchantBlacklist } from "@src/services/register/merchant/blacklist/getMerchantBlacklist";
 import {
   MerchantBlacklistItem,
   MerchantBlacklistQuery,
 } from "@src/services/types/register/merchants/merchantBlacklist.interface";
-import { useGetRowsMerchantBlacklist } from "@src/services/register/merchant/blacklist/getMerchantBlacklist";
-import { useCreateMerchantBlacklist } from "@src/services/register/merchant/blacklist/createMerchantBlacklist";
-import { ReasonSelect } from "@src/components/Selects/reasonSelect";
-import { MutateModal } from "@src/components/Modals/mutateGenericModal";
 
 const INITIAL_QUERY: MerchantBlacklistQuery = {
   limit: 25,
@@ -104,10 +105,7 @@ export const MerchantBlacklist = () => {
 
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
         <Grid item xs={12} md={2} lg={2}>
-          <ReasonSelect
-            queryOptions={query}
-            setQueryFunction={setQuery}
-          />
+          <ReasonSelect queryOptions={query} setQueryFunction={setQuery} />
         </Grid>
         <Grid item xs={12} md={4} lg={4}>
           <Input
@@ -125,9 +123,9 @@ export const MerchantBlacklist = () => {
             loading={isMerchantBlacklistDataFetching}
             danger
             onClick={() => {
-              setQuery((state: any) => ({
+              setQuery(() => ({
                 ...INITIAL_QUERY,
-              }))
+              }));
               setSearch("");
             }}
             style={{

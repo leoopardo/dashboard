@@ -1,13 +1,17 @@
-import { queryClient } from "@src/services/queryClient";
 import { api } from "@config/api";
-import { useMutation } from "react-query";
+import { queryClient } from "@src/services/queryClient";
 import { IMerchantUpdateConfig } from "@src/services/types/register/merchants/merchantConfig.interface";
+import { useMutation } from "react-query";
 
 export function useUpdateMerchantConfig(body?: IMerchantUpdateConfig | null) {
   const { isLoading, error, mutate, isSuccess } = useMutation<
-  IMerchantUpdateConfig | null | undefined
+    IMerchantUpdateConfig | null | undefined
   >("UpdateMerchantConfig", async () => {
-    const response = await api.put("core/merchant/config/merchant/update", body, {});
+    const response = await api.put(
+      "core/merchant/config/merchant/update",
+      body,
+      {}
+    );
     await queryClient.refetchQueries({ queryKey: ["MerchantConfig"] });
     return response.data;
   });

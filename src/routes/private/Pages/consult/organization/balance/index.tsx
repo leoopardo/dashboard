@@ -1,12 +1,12 @@
-import React from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { ReloadOutlined } from "@ant-design/icons";
 import { Grid } from "@mui/material";
+import { useGetOrganizationBalance } from "@src/services/consult/organization/balance/getPerBank";
+import { defaultTheme } from "@src/styles/defaultTheme";
 import { Button, Card, Descriptions, Divider, Spin, Statistic } from "antd";
 import { useTranslation } from "react-i18next";
-import { defaultTheme } from "@src/styles/defaultTheme";
-import { useGetOrganizationBalance } from "@src/services/consult/organization/balance/getPerBank";
 import { useMediaQuery } from "react-responsive";
 import { OrganizationBalanceChart } from "./components/TotalChart";
-import { ReloadOutlined } from "@ant-design/icons";
 
 export const OrganizationBalance = () => {
   const isMobile = useMediaQuery({ maxWidth: "750px" });

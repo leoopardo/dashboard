@@ -1,13 +1,15 @@
-import { Grid } from "@mui/material";
-import React, { useEffect } from "react";
-import { Card, Divider, Statistic } from "antd";
-import { defaultTheme } from "@src/styles/defaultTheme";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/exhaustive-deps */
 import Icon, { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
-import { useTranslation } from "react-i18next";
-import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import type { CustomIconComponentProps } from "@ant-design/icons/lib/components/Icon";
-import { MerchantBankStatementTotalsQuery } from "@src/services/types/consult/merchant/bankStatement";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import { Grid } from "@mui/material";
 import { useGetMerchantBankStatementTotals } from "@src/services/consult/merchant/bankStatement/getTotals";
+import { MerchantBankStatementTotalsQuery } from "@src/services/types/consult/merchant/bankStatement";
+import { defaultTheme } from "@src/styles/defaultTheme";
+import { Divider, Statistic } from "antd";
+import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 interface TotalizersInterface {
   query: MerchantBankStatementTotalsQuery;
@@ -164,7 +166,8 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            marginTop: "25px",  paddingLeft: "3%",
+            marginTop: "25px",
+            paddingLeft: "3%",
             paddingRight: "3%",
           }}
         >

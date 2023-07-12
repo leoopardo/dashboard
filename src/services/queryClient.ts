@@ -1,6 +1,5 @@
 import { toast } from "react-hot-toast";
 import { QueryCache, QueryClient } from "react-query";
-import i18n from "../i18n";
 
 export const queryClient = new QueryClient({
   queryCache: new QueryCache({

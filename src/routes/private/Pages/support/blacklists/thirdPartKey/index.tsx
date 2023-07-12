@@ -1,21 +1,21 @@
-import { useState, useEffect } from "react";
-import { Grid } from "@mui/material";
-
-import { Button, Input, Select } from "antd";
-import { useTranslation } from "react-i18next";
-import { FilterChips } from "@src/components/FiltersModal/filterChips";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { DeleteOutlined } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
-import useDebounce from "@src/utils/useDebounce";
+import { Grid } from "@mui/material";
 import { CustomTable } from "@src/components/CustomTable";
 import { FiltersModal } from "@src/components/FiltersModal";
+import { FilterChips } from "@src/components/FiltersModal/filterChips";
 import { Toast } from "@src/components/Toast";
-import { DeleteOutlined } from "@ant-design/icons";
+import { useDeleteThirdPartKey } from "@src/services/support/blacklists/thirdPartKey/deleteThirdPartKey";
 import { useGetThirdPartKey } from "@src/services/support/blacklists/thirdPartKey/getThirdPartKey";
 import {
   ThirdPartItem,
   ThirdPartQuery,
 } from "@src/services/types/support/blacklists/thirdPartKey.interface";
-import { useDeleteThirdPartKey } from "@src/services/support/blacklists/thirdPartKey/deleteThirdPartKey";
+import useDebounce from "@src/utils/useDebounce";
+import { Button, Input, Select } from "antd";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export const ThirdPartKeyBlacklist = () => {
   const INITIAL_QUERY: ThirdPartQuery = {
@@ -28,10 +28,6 @@ export const ThirdPartKeyBlacklist = () => {
   const [isConfirmOpen, setIsConfirmOpen] = useState<boolean>(false);
   const [search, setSearch] = useState<string>("");
   const [currentItem, setCurrentItem] = useState<ThirdPartItem | null>(null);
-  const [body, setBody] = useState<{ bank_name: string; ispb: string }>({
-    bank_name: "",
-    ispb: "",
-  });
   const debounceSearch = useDebounce(search);
   const { t } = useTranslation();
   const {
@@ -41,8 +37,9 @@ export const ThirdPartKeyBlacklist = () => {
     refetchThirdPartKey,
   } = useGetThirdPartKey(query);
 
-  const { DeleteError, DeleteIsLoading, DeleteIsSuccess, DeleteMutate } =
-    useDeleteThirdPartKey({ id: currentItem?._id });
+  const { DeleteError, DeleteIsSuccess, DeleteMutate } = useDeleteThirdPartKey({
+    id: currentItem?._id,
+  });
 
   useEffect(() => {
     refetchThirdPartKey();

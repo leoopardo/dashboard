@@ -1,3 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { CheckCircleFilled, CloseCircleFilled } from "@ant-design/icons";
+import { Grid } from "@mui/material";
 import {
   Badge,
   Collapse,
@@ -8,17 +12,15 @@ import {
   Spin,
   Tag,
 } from "antd";
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Grid } from "@mui/material";
+import ReactJson from "react-json-view";
 import { useGetDepositWebhooks } from "../../../../../../services/consult/deposits/generatedDeposits/getWebhooks";
+import { useGetDepositWebhooks2 } from "../../../../../../services/consult/deposits/generatedDeposits/getWebhooksSecondary";
 import {
   WebhooksItem,
   WebhooksQuery,
 } from "../../../../../../services/types/consult/deposits/generatedDeposits.interface";
-import { useGetDepositWebhooks2 } from "../../../../../../services/consult/deposits/generatedDeposits/getWebhooksSecondary";
-import ReactJson from "react-json-view";
-import { CheckCircleFilled, CloseCircleFilled } from "@ant-design/icons";
 import { defaultTheme } from "../../../../../../styles/defaultTheme";
 
 interface webhooksModalProps {
