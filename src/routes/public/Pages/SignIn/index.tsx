@@ -167,7 +167,8 @@ export const Login = () => {
                   {
                     required: true,
                     message:
-                      t("input.required(a)", { field: t("input.password") }) || "",
+                      t("input.required(a)", { field: t("input.password") }) ||
+                      "",
                   },
                 ]}
               >
