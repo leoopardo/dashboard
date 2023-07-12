@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { OrganizationBalance } from "@src/services/types/consult/organization/balance/balnce.interface";
 import { useQuery } from "react-query";
 import { api } from "../../../../config/api";

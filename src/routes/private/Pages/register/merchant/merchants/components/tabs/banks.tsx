@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { BanksSelect } from "@components/Selects/bankSelect";
 import { Toast } from "@components/Toast";
 import { Grid } from "@mui/material";
@@ -21,7 +23,7 @@ export const BanksTab = (props: { id?: string }) => {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const { isMerchantBankFetching, merchantBankData, refetchMerchantBankData } =
     useMerchantBankConfig(props.id);
-  const { UpdateError, UpdateIsLoading, UpdateIsSuccess, UpdateMutate } =
+  const { UpdateError, UpdateIsSuccess, UpdateMutate } =
     useUpdateBankConfig(body);
 
   useEffect(() => {

@@ -1,29 +1,27 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Dispatch, SetStateAction, useRef, ChangeEvent } from "react";
+import { OperatorSelect } from "@src/components/Selects/operatorSelect";
+import { ReasonSelect } from "@src/components/Selects/reasonSelect";
+import { useListClientClientBanks } from "@src/services/bank/listClientBanks";
+import { queryClient } from "@src/services/queryClient";
+import { useGetrefetchCountries } from "@src/services/states_cities/getCountries";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 import {
   AutoComplete,
   Avatar,
   Button,
   Drawer,
+  Empty,
   Form,
   FormInstance,
   Input,
   Select,
   Switch,
-  Empty,
 } from "antd";
+import { Dispatch, SetStateAction, useRef } from "react";
 import { useTranslation } from "react-i18next";
+import ReactInputMask from "react-input-mask";
 import { MerchantSelect } from "../../Selects/merchantSelect";
 import { PartnerSelect } from "../../Selects/partnerSelect";
-import { useGetrefetchCountries } from "@src/services/states_cities/getCountries";
-import ReactInputMask from "react-input-mask";
-import { Country, State, City } from "country-state-city";
-import { OperatorSelect } from "@src/components/Selects/operatorSelect";
-import { useListClientClientBanks } from "@src/services/bank/listClientBanks";
-import { ReasonSelect } from "@src/components/Selects/reasonSelect";
-import { Grid } from "@mui/material";
-import { queryClient } from "@src/services/queryClient";
-import { ValidateInterface } from "@src/services/types/validate.interface";
 
 interface mutateProps {
   type: "create" | "update";
@@ -316,7 +314,7 @@ export const MutateModal = ({
                       };
                     })}
                     loading={isClientBankListFetching}
-                    onChange={(value, option: any) => {
+                    onChange={(_value, option: any) => {
                       setBody({
                         bank_name: option.value,
                         ispb: option.key,

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useMutation } from "react-query";
 import { api } from "../../../../config/api";
 import { NewUserInterface } from "../../../../routes/private/Pages/register/organization/users/components/newUserModal";

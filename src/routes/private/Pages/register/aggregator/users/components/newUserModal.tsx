@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { GroupSelect } from "@components/Selects/groupSelect";
 import { AggregatorSelect } from "@src/components/Selects/aggregatorSelect";
 import { Toast } from "@src/components/Toast";
@@ -54,8 +56,7 @@ export const NewUserModal = ({
   const submitRef = useRef<HTMLButtonElement>(null);
   const formRef = React.useRef<FormInstance>(null);
   const [confirmPassword, setConfirmPassword] = useState<string>("");
-  const [form] = Form.useForm();
-  const [cantSubmit, setCantSubmit] = useState<boolean>(true);
+  const [, setCantSubmit] = useState<boolean>(true);
   const [body, setBody] = useState<NewUserInterface>({
     name: "",
     username: "",
@@ -74,7 +75,7 @@ export const NewUserModal = ({
     setBody((state) => ({ ...state, [event.target.name]: event.target.value }));
   }
 
-  function CreateUser(event: any) {
+  function CreateUser() {
     if (
       currentUser &&
       setUpdateBody &&

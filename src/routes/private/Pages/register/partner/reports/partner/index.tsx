@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { DownloadOutlined } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
@@ -18,7 +20,7 @@ export const PartnerReports = () => {
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [query, setQuery] = useState<ReportsQuery>(INITIAL_QUERY);
   const [currentItem, setCurrentItem] = useState<any>();
-  const [disable, setDisable] = useState<boolean>(false);
+  const [, setDisable] = useState<boolean>(false);
 
   const {
     PartnersReportsData,

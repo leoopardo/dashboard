@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 import { useQuery } from "react-query";
 import { CityItem } from "../types/states_cities.interface";

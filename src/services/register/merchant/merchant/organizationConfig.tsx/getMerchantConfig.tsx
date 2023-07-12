@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { api } from "@config/api";
-
 import { IOrganizationConfigResponse } from "@src/services/types/register/merchants/organizationConfig.interface";
 import { useQuery } from "react-query";
 

@@ -1,5 +1,4 @@
 import { api } from "../../../../config/api";
-
 import { MerchantUserBodyItem } from "@src/services/types/register/merchants/merchantUsers.interface";
 import { useMutation } from "react-query";
 import { queryClient } from "../../../queryClient";

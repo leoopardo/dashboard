@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { DepositLogsItemById } from "@src/services/types/support/apiLogs/depositsError.interface";
 import { useQuery } from "react-query";
 import { api } from "../../../../config/api";

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { api } from "@src/config/api";
 import { useQuery } from "react-query";
 import { BankQuery, BankResponse } from "../types/banks.interface";

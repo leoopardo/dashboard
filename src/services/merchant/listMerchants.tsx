@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { api } from "../../config/api";

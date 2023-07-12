@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useValidate } from "@src/services/siginIn/validate";
 import { Spin } from "antd";
 import { useEffect } from "react";

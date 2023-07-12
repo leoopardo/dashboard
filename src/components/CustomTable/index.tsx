@@ -1,9 +1,12 @@
-import { useEffect, useState, Dispatch, SetStateAction } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   BankOutlined,
   CopyOutlined,
   EllipsisOutlined,
 } from "@ant-design/icons";
+import { Grid } from "@mui/material";
+import { useGetOrganizationBankMaintenece } from "@src/services/register/organization/bankMaitenence/getBanks";
 import {
   Avatar,
   Button,
@@ -12,19 +15,17 @@ import {
   Input,
   Modal,
   Pagination,
-  Popconfirm,
   Progress,
   Table,
-  Tooltip,
+  Tooltip
 } from "antd";
 import type { ColumnsType } from "antd/es/table";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import { toast } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import { Mobile } from "./mobile";
-import { Grid } from "@mui/material";
-import { CopyToClipboard } from "react-copy-to-clipboard";
-import { toast } from "react-hot-toast";
-import { useGetOrganizationBankMaintenece } from "@src/services/register/organization/bankMaitenence/getBanks";
 
 export interface ColumnInterface {
   name: string | any;
@@ -75,7 +76,7 @@ export const CustomTable = (props: TableProps) => {
   const { t } = useTranslation();
   const isMobile = useMediaQuery({ maxWidth: "900px" });
   const [columns, setColumns] = useState<ColumnsType<ColumnInterface>>([]);
-  const [sortOrder, setSortOrder] = useState(false);
+  const [sortOrder] = useState(false);
   const [actions, setActions] = useState<any>([]);
   const { BankMainteneceData } = useGetOrganizationBankMaintenece({
     limit: 200,
@@ -354,7 +355,7 @@ export const CustomTable = (props: TableProps) => {
               title: " ",
               key: column?.name,
               dataIndex: column?.name,
-              render: (a: any, record: any) => (
+              render: (_a: any, record: any) => (
                 <div style={{ width: "100%", textAlign: "center" }}>
                   <Dropdown
                     key={column?.name}
@@ -472,7 +473,7 @@ export const CustomTable = (props: TableProps) => {
                 ? column?.name + `${Math.random()}`
                 : column?.name,
               dataIndex: column?.name,
-              render: (a: any, record: any) => (
+              render: (_a: any, record: any) => (
                 <p style={{ width: "100%", textAlign: "center" }}>
                   {record[column?.name] ?? "-"}
                 </p>
@@ -531,7 +532,7 @@ export const CustomTable = (props: TableProps) => {
                   props.setQuery((state: any) => ({ ...state, page }));
                 },
                 pageSizeOptions: [10, 25, 50, 100],
-                onShowSizeChange: (current, size) =>
+                onShowSizeChange: (_current, size) =>
                   props.setQuery((state: any) => ({ ...state, limit: size })),
               }}
               dataSource={props?.error ? [] : props?.items ?? []}

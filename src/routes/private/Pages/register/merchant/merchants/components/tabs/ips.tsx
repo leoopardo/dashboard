@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
@@ -53,7 +54,7 @@ export const IpsConfigTab = (props: { id?: string }) => {
     merchant_id: Number(props?.id),
     ...createBody,
   });
-  const [search, setSearch] = useState<string>("");
+  const [search] = useState<string>("");
   const debounceSearch = useDebounce(search);
 
   const columns: ColumnInterface[] = [{ name: "ip", type: "text" }];

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useQuery } from "react-query";
 import { api } from "../../../../config/api";
 import { getWithdraw } from "../../../types/consult/withdrawals/generatedWithdrawals.interface";

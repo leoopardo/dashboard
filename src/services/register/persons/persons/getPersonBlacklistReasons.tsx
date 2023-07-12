@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { api } from "@config/api";
 import { PersonBlacklistReason } from "@src/services/types/register/persons/persons.interface";
 import { useQuery } from "react-query";

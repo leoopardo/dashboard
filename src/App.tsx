@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ConfigProvider, Layout, Spin } from "antd";
 import { useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";

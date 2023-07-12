@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { queryClient } from "@src/services/queryClient";
 import { useMutation } from "react-query";
 import { api } from "../../../../config/api";

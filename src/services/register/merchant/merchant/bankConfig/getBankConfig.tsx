@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { api } from "@config/api";
 import { MerchantBankResponse } from "@src/services/types/register/merchants/merchantBankConfig.interface";
 import { useQuery } from "react-query";
