@@ -12,27 +12,6 @@ interface IPartner {
   status: boolean
 }
 
-interface IMerchant {
-  cellphone: string;
-  cnpj: string;
-  created_at: string;
-  domain: string;
-  email: string;
-  id: number;
-  merchantConfig: {
-    cash_in_bank: string;
-    cash_out_bank: string;
-  },
-  partner: Pick<IPartner,"id" | "name" >
-  name: string;
-  operator_id: number;
-  organization_id: number;
-  partner_id: number;
-  status: boolean
-}
-
-
-
 export interface MerchantUsersQuery {
   user_id?: string;
   start_date?: string;

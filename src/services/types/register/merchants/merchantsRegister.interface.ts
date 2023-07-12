@@ -1,17 +1,3 @@
-interface IMerchant {
-  aggregator_id: string;
-  cellphone: string;
-  cnpj: string;
-  created_at: string;
-  domain: string;
-  email: string;
-  id: number;
-  name: string;
-  operator_id: number;
-  organization_id: number;
-  partner_id: number;
-  status: boolean
-}
 
 interface IPartner {
   id: number;

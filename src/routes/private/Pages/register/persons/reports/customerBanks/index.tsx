@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect } from "react";
 import { Grid } from "@mui/material";
 import { Button } from "antd";
@@ -17,7 +19,7 @@ export const CustomerBanksReports = () => {
   };
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [query, setQuery] = useState<ReportsQuery>(INITIAL_QUERY);
-  const [currentItem, setCurrentItem] = useState<any>();
+  const [, setCurrentItem] = useState<any>();
 
   const {
     CustomerBanksReportsData,

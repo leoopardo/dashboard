@@ -1,9 +1,7 @@
-import styled from "styled-components";
-import { Button, Checkbox, Layout } from "antd";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Avatar, Grid } from "@mui/material";
-
-const { Sider } = Layout;
+import { Button, Checkbox } from "antd";
+import styled from "styled-components";
 
 export const HalfHover = styled(Grid)`
   display: flex;
