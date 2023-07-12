@@ -1,14 +1,14 @@
 import moment from "moment";
 import { api } from "../../../../config/api";
 import { useQuery } from "react-query";
-import { DepositLogsItem, DepositsLogsStepsTotalQuery } from "@src/services/types/support/apiLogs/depositsError.interface";
+import { DepositLogsData, DepositLogsItem, DepositsLogsStepsTotalQuery } from "@src/services/types/support/apiLogs/depositsError.interface";
 
 
 export function useGetWithdrawalsErrorsLogs(
   params: DepositsLogsStepsTotalQuery
 ) {
   const { data, isFetching, error, refetch } = useQuery<
-  DepositLogsItem[] | null | undefined
+  DepositLogsData | null | undefined
   >(
     "WithdrawalsErrorsLogs",
     async () => {

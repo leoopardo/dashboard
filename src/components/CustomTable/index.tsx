@@ -32,6 +32,7 @@ export interface ColumnInterface {
   type:
     | "id"
     | "text"
+    | "translate"
     | "date"
     | "document"
     | "value"
@@ -410,6 +411,24 @@ export const CustomTable = (props: TableProps) => {
               render: (text: string) => (
                 <p style={{ width: "100%", textAlign: "center" }}>
                   {text ?? "-"}
+                </p>
+              ),
+            };
+
+          case "translate":
+            return {
+              title: (
+                <p style={{ width: "100%", textAlign: "center" }}>
+                  {t(`table.${column?.head || column.name}`)}
+                </p>
+              ),
+              key: Array.isArray(column?.name)
+                ? column?.name + `${Math.random()}`
+                : column?.name,
+              dataIndex: column?.name,
+              render: (text: string) => (
+                <p style={{ width: "100%", textAlign: "center" }}>
+                  {text ? t(`table.${text.toLocaleLowerCase()}`) : "-"}
                 </p>
               ),
             };

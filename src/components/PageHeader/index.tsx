@@ -1,19 +1,35 @@
 import { useMediaQuery } from "react-responsive";
 import { Grid } from "@mui/material";
 import { BreadcrumbComponent } from "../Breadcrumb";
-import { Avatar, Dropdown, MenuProps, Space } from "antd";
-import { DownOutlined } from "@ant-design/icons";
+import { Avatar, Divider, Dropdown, MenuProps, Space, theme } from "antd";
+import { DownOutlined, UserOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 import brazil from "../../assets/brazil-.png";
 import eua from "../../assets/united-states.png";
 import { defaultTheme } from "../../styles/defaultTheme";
 import { useValidate } from "@src/services/siginIn/validate";
+import React, { useState } from "react";
+import { EditSelfModal } from "./EditSelf";
+const { useToken } = theme;
 
 export const PageHeader = () => {
   const isMobile = useMediaQuery({ maxWidth: "900px" });
   const { t, i18n } = useTranslation();
   const { responseValidate } = useValidate();
   const translation = useTranslation().i18n.language;
+  const { token } = useToken();
+  const [isEditUserModalOpen, setIsEditUserModalOpen] =
+    useState<boolean>(false);
+
+  const contentStyle = {
+    backgroundColor: token.colorBgElevated,
+    borderRadius: token.borderRadiusLG,
+    boxShadow: token.boxShadowSecondary,
+  };
+
+  const menuStyle = {
+    boxShadow: "none",
+  };
 
   const changeLanguage = (language: string) => {
     i18n.changeLanguage(language);
@@ -33,6 +49,21 @@ export const PageHeader = () => {
       onClick: () => changeLanguage("en"),
     },
   ];
+
+  const userItems: MenuProps["items"] = [
+    {
+      type: "divider",
+    },
+    {
+      key: "en",
+      label: t("menus.edit_user"),
+      icon: <UserOutlined />,
+      onClick: () => {
+        setIsEditUserModalOpen(true);
+      },
+    },
+  ];
+
   return !isMobile ? (
     <Grid
       container
@@ -56,7 +87,7 @@ export const PageHeader = () => {
           paddingRight: "20px",
         }}
       >
-        <Dropdown menu={{ items }}>
+        <Dropdown menu={{ items }} arrow placement="bottomRight">
           <a onClick={(e) => e.preventDefault()}>
             <Space>
               {" "}
@@ -73,20 +104,85 @@ export const PageHeader = () => {
             </Space>
           </a>
         </Dropdown>
-
-        <Avatar
-          style={{
-            backgroundColor: defaultTheme.colors.secondary,
-            minHeight: "40px",
-            minWidth: "40px",
-            display: "flex",
-            alignItems: "center",
-            marginLeft: "20px",
-          }}
+        <Dropdown
+          menu={{ items: userItems }}
+          arrow
+          placement="bottomRight"
+          dropdownRender={(menu) => (
+            <div style={contentStyle}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  flexDirection: "column",
+                  width: "250px",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    width: "250px",
+                    marginTop: "10px",
+                  }}
+                >
+                  <Avatar
+                    style={{
+                      backgroundColor: defaultTheme.colors.secondary,
+                      marginRight: "5px",
+                    }}
+                  >
+                    {responseValidate?.name.toLocaleUpperCase()[0]}
+                  </Avatar>
+                  {responseValidate?.name}
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    textAlign: "center",
+                    marginTop: "10px",
+                    fontSize: "12px",
+                  }}
+                >
+                  {t("table.last_signin_date")}:{" "}
+                  {`${new Date(
+                    `${responseValidate?.last_signin_date}`
+                  ).toLocaleDateString("pt-BR", {
+                    timeZone: "UTC",
+                  })} ${new Date(
+                    `${responseValidate?.last_signin_date}`
+                  ).toLocaleTimeString("pt-BR", { timeZone: "UTC" })}`}
+                </div>
+              </div>
+              {React.cloneElement(menu as React.ReactElement, {
+                style: menuStyle,
+              })}
+            </div>
+          )}
         >
-          {responseValidate?.name.toLocaleUpperCase()[0]}
-        </Avatar>
+          <Avatar
+            style={{
+              backgroundColor: defaultTheme.colors.secondary,
+              minHeight: "40px",
+              minWidth: "40px",
+              display: "flex",
+              alignItems: "center",
+              marginLeft: "20px",
+            }}
+          >
+            {responseValidate?.name.toLocaleUpperCase()[0]}
+          </Avatar>
+        </Dropdown>
       </Grid>
+      {isEditUserModalOpen && (
+        <EditSelfModal
+          open={isEditUserModalOpen}
+          setOpen={setIsEditUserModalOpen}
+        />
+      )}
     </Grid>
   ) : (
     <Grid
@@ -98,15 +194,14 @@ export const PageHeader = () => {
     >
       <Grid
         item
-        xs={12}
+        xs={11}
         md={2}
         lg={2}
         style={{
           display: "flex",
           justifyContent: "flex-end",
           alignItems: "center",
-          paddingLeft: "50%",
-          paddingTop: "15px",
+          paddingTop: "5px",
           paddingBottom: "15px",
         }}
       >
@@ -126,18 +221,78 @@ export const PageHeader = () => {
             </Space>
           </a>
         </Dropdown>
-        <Avatar
-          style={{
-            backgroundColor: defaultTheme.colors.secondary,
-            minHeight: "40px",
-            minWidth: "40px",
-            display: "flex",
-            alignItems: "center",
-            marginLeft: "20px",
-          }}
+        <Dropdown
+          menu={{ items: userItems }}
+          arrow
+          placement="bottomRight"
+          dropdownRender={(menu) => (
+            <div style={contentStyle}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  flexDirection: "column",
+                  width: "250px",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    width: "250px",
+                    marginTop: "10px",
+                  }}
+                >
+                  <Avatar
+                    style={{
+                      backgroundColor: defaultTheme.colors.secondary,
+                      marginRight: "5px",
+                    }}
+                  >
+                    {responseValidate?.name.toLocaleUpperCase()[0]}
+                  </Avatar>
+                  {responseValidate?.name}
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    textAlign: "center",
+                    marginTop: "10px",
+                    fontSize: "12px",
+                  }}
+                >
+                  {t("table.last_signin_date")}:{" "}
+                  {`${new Date(
+                    `${responseValidate?.last_signin_date}`
+                  ).toLocaleDateString("pt-BR", {
+                    timeZone: "UTC",
+                  })} ${new Date(
+                    `${responseValidate?.last_signin_date}`
+                  ).toLocaleTimeString("pt-BR", { timeZone: "UTC" })}`}
+                </div>
+              </div>
+              {React.cloneElement(menu as React.ReactElement, {
+                style: menuStyle,
+              })}
+            </div>
+          )}
         >
-          {responseValidate?.name.toLocaleUpperCase()[0]}
-        </Avatar>
+          <Avatar
+            style={{
+              backgroundColor: defaultTheme.colors.secondary,
+              minHeight: "40px",
+              minWidth: "40px",
+              display: "flex",
+              alignItems: "center",
+              marginLeft: "20px",
+            }}
+          >
+            {responseValidate?.name.toLocaleUpperCase()[0]}
+          </Avatar>
+        </Dropdown>
       </Grid>
 
       <Grid
@@ -153,6 +308,13 @@ export const PageHeader = () => {
       >
         <BreadcrumbComponent />
       </Grid>
+
+      {isEditUserModalOpen && (
+        <EditSelfModal
+          open={isEditUserModalOpen}
+          setOpen={setIsEditUserModalOpen}
+        />
+      )}
     </Grid>
   );
 };

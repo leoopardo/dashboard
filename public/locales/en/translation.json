@@ -107,7 +107,8 @@
     "update": "Editar",
     "credentials": "Credentials",
     "manual_entry_category": "Manual entry category",
-    "fee_plans": "Fee plans"
+    "fee_plans": "Fee plans",
+    "edit_user": "Edit user"
   },
 
   "titles": {
@@ -274,7 +275,8 @@
     "register_in": "Register in",
     "register_out": "Register out",
     "new_bank_blacklist": "Add to blacklist",
-    "resend_webhook": "Resend webhook"
+    "resend_webhook": "Resend webhook",
+    "update_bank": "Update bank"
   },
   "table": {
     "id": "ID",

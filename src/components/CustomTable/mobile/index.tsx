@@ -25,7 +25,7 @@ interface MobileProps {
 
 export const Mobile = (props: MobileProps) => {
   const { t } = useTranslation();
-  const [active, setActive] = useState<string | string[]>(["1"]);
+  const [active, setActive] = useState<string | string[]>([]);
   const [items, setItems] = useState<CollapseProps["items"]>([]);
   const { BankMainteneceData } = useGetOrganizationBankMaintenece({
     limit: 200,
@@ -39,6 +39,7 @@ export const Mobile = (props: MobileProps) => {
       props?.items?.map((item: any) => {
         return {
           key: item.id ?? item._id,
+
           label: (
             <>
               {props?.label?.map((label: string) => {
@@ -77,6 +78,17 @@ export const Mobile = (props: MobileProps) => {
                         }`}
                       </p>
                     );
+                  case "status": {
+                    return typeof item[label] === "boolean" ? (
+                      <p key={label}>
+                        {item[label] ? t("table.active") : t("table.inactive")}
+                      </p>
+                    ) : (
+                      <p key={label}>
+                        {t(`table.${item[label]?.toLocaleLowerCase()}`)}
+                      </p>
+                    );
+                  }
                   case "delivered_at":
                     return (
                       <p key={label} style={{ fontSize: "12px" }}>
@@ -92,6 +104,12 @@ export const Mobile = (props: MobileProps) => {
                         }`}
                       </p>
                     );
+
+                  case "value_total":
+                    return <p key={label}>{new Intl.NumberFormat("pt-BR", {
+                      style: "currency",
+                      currency: "BRL",
+                    }).format(Number(item[label]) || 0)}</p>;
 
                   default:
                     return <p key={label}>{item[label]}</p>;
@@ -116,7 +134,7 @@ export const Mobile = (props: MobileProps) => {
           ),
 
           children: (
-            <Descriptions bordered style={{ margin: 0 }}>
+            <Descriptions bordered style={{ margin: 0, padding: 0 }}>
               {props.columns.map((value) => {
                 switch (value.type) {
                   case "date":
@@ -130,11 +148,15 @@ export const Mobile = (props: MobileProps) => {
                           padding: 5,
                         }}
                       >
-                        {`${new Date(
-                          item[value.name]
-                        ).toLocaleDateString()} ${new Date(
-                          item[value.name]
-                        ).toLocaleTimeString()}`}
+                        <p style={{ width: "100%", textAlign: "center" }}>
+                          {item[value.name]
+                            ? `${new Date(
+                                item[value.name]
+                              ).toLocaleDateString()} ${new Date(
+                                item[value.name]
+                              ).toLocaleTimeString()}`
+                            : "-"}
+                        </p>
                       </Descriptions.Item>
                     );
                   case "value":
@@ -295,6 +317,33 @@ export const Mobile = (props: MobileProps) => {
                   case "action":
                     return;
 
+                  case "translate":
+                    return (
+                      <Descriptions.Item
+                        key={
+                          Array.isArray(value.name)
+                            ? value.name + `${Math.random()}`
+                            : value.name
+                        }
+                        label={t(`table.${value.head ?? value.name}`)}
+                        labelStyle={{
+                          maxWidth: "100px",
+                          margin: 0,
+                          padding: 5,
+                        }}
+                      >
+                        {" "}
+                        <p
+                          key={value.name}
+                          style={{ width: "100%", textAlign: "center" }}
+                        >
+                          {Array.isArray(value.name)
+                            ? t(`table.${item[value.name[0]][value.name[1]]}`)
+                            : t(`table.${item[value.name]}`)}
+                        </p>
+                      </Descriptions.Item>
+                    );
+
                   default:
                     return (
                       <Descriptions.Item
@@ -335,7 +384,6 @@ export const Mobile = (props: MobileProps) => {
   };
   return props?.items?.length >= 1 ? (
     <>
-      
       <Collapse
         expandIconPosition="end"
         items={items}

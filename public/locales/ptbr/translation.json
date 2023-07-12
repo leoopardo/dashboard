@@ -108,7 +108,8 @@
     "update": "Editar",
     "credentials": "Credenciais",
     "manual_entry_category": "Categorias lançamentos manuais",
-    "fee_plans": "Plano de taxas"
+    "fee_plans": "Plano de taxas",
+    "edit_user": "Editar usuário"
   },
 
   "titles": {
@@ -199,7 +200,8 @@
     "register_in": "Registrar entrada",
     "register_out": "Registrar saída",
     "new_bank_blacklist": "Adicionar à blacklist",
-    "resend_webhook": "Reenviar webhook"
+    "resend_webhook": "Reenviar webhook",
+    "update_bank": "Atualizar banco"
   },
   "input": {
     "required": "Por favor, insira o {{field}}",
