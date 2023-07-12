@@ -220,7 +220,7 @@ export const PrivateRoutes = () => {
             <Route path="merchant_users" element={<MerchantUser />} />
 
             <Route path="merchant_blacklist" element={<MerchantBlacklist />} />
-            <Route path="merchants_fee_plans" element={<MerchantFeePlans />} />
+            <Route path="fee_plans" element={<MerchantFeePlans />} />
             <Route
                 path="manual_entry_category"
                 element={<MerchantManualEntryCategory />}

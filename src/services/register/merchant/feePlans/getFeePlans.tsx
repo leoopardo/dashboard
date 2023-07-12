@@ -24,14 +24,14 @@ export function useGetFeePlansRegister(params?: MerchantsQuery) {
     }
   );
 
-  const depositFeePlansData = data;
-  const isDepositFeePlansDataFetching = isFetching;
-  const depositFeePlansDataError: any = error;
-  const refetchDepositFeePlansData = refetch;
+  const feePlansData = data;
+  const isFeePlansDataFetching = isFetching;
+  const feePlansDataError: any = error;
+  const refetchFeePlansData = refetch;
   return {
-    depositFeePlansData,
-    isDepositFeePlansDataFetching,
-    depositFeePlansDataError,
-    refetchDepositFeePlansData,
+    feePlansData,
+    isFeePlansDataFetching,
+    feePlansDataError,
+    refetchFeePlansData,
   };
 }

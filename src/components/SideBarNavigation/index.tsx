@@ -471,7 +471,7 @@ export const SidebarNavigation = () => {
             }
           ),
           getItem(
-            "merchants_fee_plans",
+            "fee_plans",
             null,
             null,
             false,

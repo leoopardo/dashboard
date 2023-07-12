@@ -106,7 +106,8 @@
     "webhooks_reports": "Webhooks",
     "update": "Editar",
     "credentials": "Credentials",
-    "manual_entry_category": "Manual entry category"
+    "manual_entry_category": "Manual entry category",
+    "fee_plans": "Fee plans"
   },
 
   "titles": {
@@ -505,7 +506,9 @@
     "continuos": "Continuos",
     "cashin": "Cashin",
     "cashout": "Cashout",
-    "transactions": "Transactions"
+    "transactions": "Transactions",
+    "plan_type": "Plan type",
+    "range_type":"Range type"
   },
   "actions": {
     "details": "Details",
