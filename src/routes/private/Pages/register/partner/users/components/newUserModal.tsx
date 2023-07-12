@@ -15,6 +15,9 @@ import { useUpdateOrganizationUser } from "@services/register/organization/users
 import { Toast } from "@src/components/Toast";
 import { useCreatePartnerUser } from "@src/services/register/partner/users/createUser";
 import { useUpdatePartnerUser } from "@src/services/register/partner/users/updateUser";
+import { PartnerSelect } from "@src/components/Selects/partnerSelect";
+import { queryClient } from "@src/services/queryClient";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 interface NewuserModalprops {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -48,6 +51,8 @@ export const NewUserModal = ({
   setIsValidateTokenOpen,
   action,
 }: NewuserModalprops) => {
+  const user = queryClient.getQueryData("validate") as ValidateInterface;
+
   const { t } = useTranslation();
   const submitRef = useRef<HTMLButtonElement>(null);
   const formRef = React.useRef<FormInstance>(null);
@@ -58,6 +63,7 @@ export const NewUserModal = ({
     name: "",
     username: "",
     password: "",
+    partner_id: user.partner_id,
     group_id: 0,
     status: true,
     type: 2,
@@ -231,6 +237,24 @@ export const NewUserModal = ({
             onChange={handleChangeUserBody}
           />
         </Form.Item>
+
+        {user.permissions.register.partner.partner.partner_list && (
+          <Form.Item
+            label={t(`table.partner`)}
+            name="partner_id"
+            style={{ margin: 10 }}
+            rules={[
+              {
+                required: !body.partner_id ? true : false,
+                message:
+                  t("input.required", { field: t("input.partner") }) || "",
+              },
+            ]}
+          >
+            <PartnerSelect queryOptions={body} setQueryFunction={setBody} />
+          </Form.Item>
+        )}
+
         <Form.Item
           label={t(`table.group`)}
           name="group_id"
@@ -251,7 +275,7 @@ export const NewUserModal = ({
             body={body}
             setBody={setBody}
             filterIdProp="partner_id"
-            filterIdValue={body?.partner_id || currentUser?.partner_id}
+            filterIdValue={body?.partner_id || user?.partner_id}
           />
         </Form.Item>
 

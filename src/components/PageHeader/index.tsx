@@ -181,6 +181,7 @@ export const PageHeader = () => {
         <EditSelfModal
           open={isEditUserModalOpen}
           setOpen={setIsEditUserModalOpen}
+          self={responseValidate}
         />
       )}
     </Grid>
@@ -313,6 +314,7 @@ export const PageHeader = () => {
         <EditSelfModal
           open={isEditUserModalOpen}
           setOpen={setIsEditUserModalOpen}
+          self={responseValidate}
         />
       )}
     </Grid>

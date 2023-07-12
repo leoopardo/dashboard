@@ -3,6 +3,8 @@ export interface ValidateInterface {
   name: string;
   username: string;
   organization_id: number;
+  partner_id?: number;
+  merchant_id?: number;
   last_signin_date: string;
   last_signin_ip: string;
   permissions: {
