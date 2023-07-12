@@ -1,10 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  Dispatch,
-  SetStateAction,
-  useRef,
-  ChangeEvent,
-} from "react";
+import { Dispatch, SetStateAction, useRef, ChangeEvent } from "react";
 import {
   AutoComplete,
   Avatar,
@@ -362,6 +357,32 @@ export const MutateModal = ({
                 </Form.Item>
               );
 
+            case "icon_url":
+              return (
+                <Form.Item
+                  label={t(`table.${field.label}`)}
+                  name={field.label}
+                  style={{ margin: 10 }}
+                  rules={[
+                    {
+                      required: field.required,
+                      message:
+                        t("input.required", {
+                          field: t(`input.${field.label}`),
+                        }) || "",
+                    },
+                  ]}
+                >
+                  <Input
+                    size="large"
+                    name={field.label}
+                    value={body[field.label]}
+                    onChange={handleChange}
+                    suffix={<Avatar src={body[field.label]} shape="square" />}
+                  />
+                </Form.Item>
+              );
+
             case "country":
               return (
                 <Form.Item
@@ -446,7 +467,6 @@ export const MutateModal = ({
                   </Form.Item>
                 );
               }
-
               return (
                 <Form.Item
                   label={t(`table.${field.label}`)}

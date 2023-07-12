@@ -106,7 +106,8 @@
     "webhooks_reports": "Webhooks",
     "update": "Editar",
     "credentials": "Credentials",
-    "manual_entry_category": "Manual entry category"
+    "manual_entry_category": "Manual entry category",
+    "edit_user": "Edit user"
   },
 
   "titles": {
@@ -273,7 +274,8 @@
     "register_in": "Register in",
     "register_out": "Register out",
     "new_bank_blacklist": "Add to blacklist",
-    "resend_webhook": "Resend webhook"
+    "resend_webhook": "Resend webhook",
+    "update_bank": "Update bank"
   },
   "table": {
     "id": "ID",

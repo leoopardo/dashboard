@@ -171,7 +171,7 @@ export const WithdrawalsErrors = () => {
             setCurrentItem={setCurrentItem}
             setQuery={setQuery}
             data={WithdrawalsErrorsLogs}
-            items={WithdrawalsErrorsLogs}
+            items={WithdrawalsErrorsLogs?.items}
             error={WithdrawalsErrorsLogsError}
             removeTotal
             columns={[

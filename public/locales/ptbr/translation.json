@@ -107,7 +107,8 @@
     "webhooks_reports": "Webhooks",
     "update": "Editar",
     "credentials": "Credenciais",
-    "manual_entry_category": "Categorias lançamentos manuais"
+    "manual_entry_category": "Categorias lançamentos manuais",
+    "edit_user": "Editar usuário"
   },
 
   "titles": {
@@ -198,7 +199,8 @@
     "register_in": "Registrar entrada",
     "register_out": "Registrar saída",
     "new_bank_blacklist": "Adicionar à blacklist",
-    "resend_webhook": "Reenviar webhook"
+    "resend_webhook": "Reenviar webhook",
+    "update_bank": "Atualizar banco"
   },
   "input": {
     "required": "Por favor, insira o {{field}}",

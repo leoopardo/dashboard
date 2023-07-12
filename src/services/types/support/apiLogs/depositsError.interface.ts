@@ -23,10 +23,16 @@ export interface DepositLogsItem {
   error_message: string;
   createdAt: string;
 }
+export interface DepositLogsData {
+  page: number;
+  limit: number;
+  total: number;
+  items: DepositLogsItem[];
+}
 
 export interface DepositLogsItemById {
   aggregator_id: number;
-  createdAt:string;
+  createdAt: string;
   document: string;
   error_message: string;
   ip: string;
@@ -50,4 +56,3 @@ export interface DepositLogsItemById {
 export interface LogsStepsItem {
   step: string;
 }
-

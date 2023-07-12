@@ -260,7 +260,7 @@ export const OrgonizationManual = () => {
               { name: "_id", type: "id" },
               { name: "category_name", type: "text" },
               { name: "user_name", type: "text" },
-              { name: "type", type: "text" },
+              { name: "type", type: "translate" },
               { name: "value", type: "value" },
               { name: "createdAt", type: "date" },
               { name: "status", type: "status" },
@@ -270,7 +270,7 @@ export const OrgonizationManual = () => {
             removeTotal
             label={[
               "bank",
-              "merchant_name",
+              "user_name",
               "status",
               "createdAt",
               "delivered_at",

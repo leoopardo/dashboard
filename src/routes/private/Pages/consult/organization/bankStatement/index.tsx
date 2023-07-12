@@ -221,7 +221,7 @@ export const OrganizationBankStatement = () => {
             ]}
             loading={isOrganizationPerbankFetching}
             removeTotal
-            label={["bank"]}
+            label={["bank", "value_total"]}
             removePagination
           />
         </Grid>
