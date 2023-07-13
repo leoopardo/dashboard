@@ -395,25 +395,26 @@ export const CustomTable = (props: TableProps) => {
                     </Avatar>
                   </Tooltip>
                 </div>
-              ),sorter: column.sort
-              ? () => {
-                  props.setQuery((state: any) => ({
-                    ...state,
-                    sort_field: column.name,
-                    sort_order:
-                      props.query.sort_order === "DESC" ? "ASC" : "DESC",
-                    page: 1,
-                  }));
-                  console.log(
-                    "sortf:",
-                    column.name,
-                    "sorto:",
-                    props.query.sort_order === "DESC" ? "ASC" : "DESC"
-                  );
+              ),
+              sorter: column.sort
+                ? () => {
+                    props.setQuery((state: any) => ({
+                      ...state,
+                      sort_field: column.name,
+                      sort_order:
+                        props.query.sort_order === "DESC" ? "ASC" : "DESC",
+                      page: 1,
+                    }));
+                    console.log(
+                      "sortf:",
+                      column.name,
+                      "sorto:",
+                      props.query.sort_order === "DESC" ? "ASC" : "DESC"
+                    );
 
-                  return 0;
-                }
-              : undefined,
+                    return 0;
+                  }
+                : undefined,
             };
 
           case "status":
@@ -652,25 +653,26 @@ export const CustomTable = (props: TableProps) => {
                     }
                   />
                 </div>
-              ), sorter: column.sort
-              ? () => {
-                  props.setQuery((state: any) => ({
-                    ...state,
-                    sort_field: column.name,
-                    sort_order:
-                      props.query.sort_order === "DESC" ? "ASC" : "DESC",
-                    page: 1,
-                  }));
-                  console.log(
-                    "sortf:",
-                    column.name,
-                    "sorto:",
-                    props.query.sort_order === "DESC" ? "ASC" : "DESC"
-                  );
+              ),
+              sorter: column.sort
+                ? () => {
+                    props.setQuery((state: any) => ({
+                      ...state,
+                      sort_field: column.name,
+                      sort_order:
+                        props.query.sort_order === "DESC" ? "ASC" : "DESC",
+                      page: 1,
+                    }));
+                    console.log(
+                      "sortf:",
+                      column.name,
+                      "sorto:",
+                      props.query.sort_order === "DESC" ? "ASC" : "DESC"
+                    );
 
-                  return 0;
-                }
-              : undefined,
+                    return 0;
+                  }
+                : undefined,
             };
           default:
             return {
@@ -769,9 +771,10 @@ export const CustomTable = (props: TableProps) => {
               direction="ltr"
               columns={columns}
               loading={props.loading}
-              onRow={(record, rowIndex) => {
+              showSorterTooltip={false}
+              onRow={(record) => {
                 return {
-                  onMouseEnter: (event) => {
+                  onMouseEnter: () => {
                     props.setCurrentItem(record);
                   },
                 };

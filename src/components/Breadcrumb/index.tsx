@@ -43,7 +43,7 @@ export const BreadcrumbComponent = () => {
           ? value
           : t(`menus.${value}`)
       )
-      .join(" - ")} | Paybrokers`;
+      .join(" - ")} | ${import.meta.env.VITE_APP_COMPANY_NAME}`;
   }, [location, translation]);
 
   useEffect(() => {
