@@ -204,7 +204,7 @@ export const CustomTable = (props: TableProps) => {
                     -
                   </p>
                 ),
-              sorter: (a, b) => {
+              sorter: () => {
                 props.setQuery((state: any) => ({
                   ...state,
                   sort_field: column.name,

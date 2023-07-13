@@ -365,7 +365,7 @@ export const UpdateFeePlanModal = ({
                 });
               }}
             >
-              <PlusOutlined  />
+              <PlusOutlined />
               {t("buttons.add_fee")}
             </Button>
           </Grid>
@@ -390,7 +390,7 @@ export const UpdateFeePlanModal = ({
                     <Form.Item label={`${t("table.fee")}:`}>
                       <InputNumber
                         value={fee?.range_fee}
-                        onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                        onChange={(event) => {
                           console.log(event, fee.id);
                           handleChangeFee(event, fee.id, "range_fee");
                         }}
@@ -402,7 +402,7 @@ export const UpdateFeePlanModal = ({
                       <InputNumber
                         style={{ width: "100%" }}
                         value={fee?.range_value}
-                        onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                        onChange={(event) =>
                           handleChangeFee(event, fee.id, "range_value")
                         }
                       />
@@ -412,7 +412,7 @@ export const UpdateFeePlanModal = ({
                     <Form.Item label={`${t("table.limit")}:`}>
                       <InputNumber
                         value={fee?.range_limit}
-                        onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                        onChange={(event) =>
                           handleChangeFee(event, fee.id, "range_limit")
                         }
                       />
