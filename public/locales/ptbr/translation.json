@@ -176,7 +176,9 @@
     "check": "Checar",
     "register_in": "Registrar entrada",
     "register_out": "Registrar saída",
-    "create_bank_blacklist": "Adicionar à blacklist"
+    "create_bank_blacklist": "Adicionar à blacklist",
+    "new_fee": "Criar taxa",
+    "add_fee": "Adicionar taxa"
   },
   "modal": {
     "confirm": "Confirmar",

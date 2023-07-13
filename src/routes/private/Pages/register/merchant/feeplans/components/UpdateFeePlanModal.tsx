@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { DeleteOutlined } from "@ant-design/icons";
-import { Grid, TextField } from "@mui/material";
+import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
+import { Grid } from "@mui/material";
 import { IDepositFeeItem } from "@src/services/types/register/merchants/merchantFeePlans.interface";
 import {
   Button,
@@ -10,8 +10,10 @@ import {
   Form,
   FormInstance,
   Input,
+  InputNumber,
   Pagination,
   Select,
+  Space,
 } from "antd";
 import {
   ChangeEvent,
@@ -54,6 +56,7 @@ export const UpdateFeePlanModal = ({
   const { t } = useTranslation();
   const submitRef = useRef<HTMLButtonElement>(null);
   const formRef = useRef<FormInstance>(null);
+  const divRef = useRef<HTMLDivElement>(null);
   const formFeesRef = useRef<FormInstance>(null);
 
   const [feePage, setFeePage] = useState(1);
@@ -86,12 +89,13 @@ export const UpdateFeePlanModal = ({
   };
   const handleChangeFee = (
     event: ChangeEvent<HTMLInputElement>,
-    id: number
+    id: number,
+    field: "range_fee" | "range_value" | "range_limit"
   ) => {
     if (fees.some((fee: any) => fee.id === id)) {
       const newFeeValue = {
         ...fees.find((fee: any) => fee.id === id),
-        [event.target.name]: event.target.value,
+        [field]: event,
       };
 
       const f = [...fees];
@@ -104,6 +108,7 @@ export const UpdateFeePlanModal = ({
         ...state,
         f,
       }));
+      console.log(f);
     }
   };
 
@@ -163,8 +168,8 @@ export const UpdateFeePlanModal = ({
         if (setCurrentUser) setCurrentUser(null);
       }}
       bodyStyle={{ overflowX: "hidden" }}
-      width={450}
-      title={currentUser ? t("buttons.update_user") : t("buttons.new_user")}
+      size="default"
+      title={t("buttons.new_fee")}
       footer={
         <Button
           loading={loading}
@@ -177,304 +182,281 @@ export const UpdateFeePlanModal = ({
         </Button>
       }
     >
-      <Form
-        ref={formRef}
-        layout="vertical"
-        initialValues={
-          currentUser ?? {
-            name: "",
-            plan_type: null,
-            merchant_fee_plans_details: [],
-            transaction_type: null,
-            range_type: null,
-          }
-        }
-        disabled={loading}
-        onFinish={CreateUser}
+      <div
+        style={{
+          maxHeight: "530px",
+          overflowY: "auto",
+          width: "340px",
+          paddingRight: "15px",
+        }}
+        ref={divRef}
       >
-        <Form.Item
-          label={t(`table.name`)}
-          name="name"
-          style={{ margin: 10 }}
-          rules={[
-            {
-              required: true,
-              message: t("input.required", { field: t("input.name") }) || "",
-            },
-          ]}
+        <Form
+          ref={formRef}
+          layout="vertical"
+          initialValues={
+            currentUser ?? {
+              name: "",
+              plan_type: null,
+              merchant_fee_plans_details: [],
+              transaction_type: null,
+              range_type: null,
+            }
+          }
+          disabled={loading}
+          onFinish={CreateUser}
         >
-          <Input
-            size="large"
+          <Form.Item
+            label={t(`table.name`)}
             name="name"
-            value={body?.name || ""}
-            onChange={handleChangeUserBody}
-          />
-        </Form.Item>
-        <Form.Item
-          label={t(`input.plan_type`)}
-          name="plan_type"
-          style={{ margin: 10 }}
-          rules={[
-            {
-              required: true,
-              message:
-                t("input.required", {
-                  field: t(`input.plan_type`),
-                }) || "",
-            },
-          ]}
-        >
-          <Select
-            size="large"
-            options={[
-              { label: t("table.monthly"), value: "MONTHLY" },
-              { label: t("table.continuos"), value: "CONTINUOS" },
+            style={{ margin: 10 }}
+            rules={[
+              {
+                required: true,
+                message: t("input.required", { field: t("input.name") }) || "",
+              },
             ]}
-            notFoundContent={<Empty />}
-            value={currentUser?.plan_type || null}
-            onChange={(value) => {
-              if (setUpdateBody) {
-                setUpdateBody((state: any) => ({
+          >
+            <Input
+              size="large"
+              name="name"
+              value={body?.name || ""}
+              onChange={handleChangeUserBody}
+            />
+          </Form.Item>
+          <Form.Item
+            label={t(`input.plan_type`)}
+            name="plan_type"
+            style={{ margin: 10 }}
+            rules={[
+              {
+                required: true,
+                message:
+                  t("input.required", {
+                    field: t(`input.plan_type`),
+                  }) || "",
+              },
+            ]}
+          >
+            <Select
+              size="large"
+              options={[
+                { label: t("table.monthly"), value: "MONTHLY" },
+                { label: t("table.continuos"), value: "CONTINUOS" },
+              ]}
+              notFoundContent={<Empty />}
+              value={currentUser?.plan_type || null}
+              onChange={(value) => {
+                if (setUpdateBody) {
+                  setUpdateBody((state: any) => ({
+                    ...state,
+                    plan_type: value,
+                  }));
+                }
+                setBody((state: any) => ({
                   ...state,
                   plan_type: value,
                 }));
-              }
-              setBody((state: any) => ({
-                ...state,
-                plan_type: value,
-              }));
-            }}
-            style={{ width: "100%", height: 40 }}
-            placeholder={t(`input.plan_type`)}
-          />
-        </Form.Item>
+              }}
+              style={{ width: "100%", height: 40 }}
+              placeholder={t(`input.plan_type`)}
+            />
+          </Form.Item>
 
-        <Form.Item
-          label={t(`input.transaction_type`)}
-          name="transaction_type"
-          style={{ margin: 10 }}
-          rules={[
-            {
-              required: true,
-              message:
-                t("input.required", {
-                  field: t(`input.transaction_type`),
-                }) || "",
-            },
-          ]}
-        >
-          <Select
-            size="large"
-            options={[
-              { label: t("table.cashin"), value: "CASHIN" },
-              { label: t("table.cashout"), value: "CASHOUT" },
+          <Form.Item
+            label={t(`input.transaction_type`)}
+            name="transaction_type"
+            style={{ margin: 10 }}
+            rules={[
+              {
+                required: true,
+                message:
+                  t("input.required", {
+                    field: t(`input.transaction_type`),
+                  }) || "",
+              },
             ]}
-            notFoundContent={<Empty />}
-            value={currentUser?.transaction_type || null}
-            onChange={(value) => {
-              if (setUpdateBody) {
-                setUpdateBody((state: any) => ({
+          >
+            <Select
+              size="large"
+              options={[
+                { label: t("table.cashin"), value: "CASHIN" },
+                { label: t("table.cashout"), value: "CASHOUT" },
+              ]}
+              notFoundContent={<Empty />}
+              value={currentUser?.transaction_type || null}
+              onChange={(value) => {
+                if (setUpdateBody) {
+                  setUpdateBody((state: any) => ({
+                    ...state,
+                    transaction_type: value,
+                  }));
+                }
+                setBody((state: any) => ({
                   ...state,
                   transaction_type: value,
                 }));
-              }
-              setBody((state: any) => ({
-                ...state,
-                transaction_type: value,
-              }));
-            }}
-            style={{ width: "100%", height: 40 }}
-            placeholder={t(`input.transaction_type`)}
-          />
-        </Form.Item>
+              }}
+              style={{ width: "100%", height: 40 }}
+              placeholder={t(`input.transaction_type`)}
+            />
+          </Form.Item>
 
-        <Form.Item
-          label={t(`input.range_type`)}
-          name="range_type"
-          style={{ margin: 10 }}
-          rules={[
-            {
-              required: true,
-              message:
-                t("input.required", {
-                  field: t(`input.range_type`),
-                }) || "",
-            },
-          ]}
-        >
-          <Select
-            size="large"
-            options={[
-              { label: t("table.transactions"), value: "TRANSACTIONS" },
-              { label: t("table.value"), value: "VALUE" },
+          <Form.Item
+            label={t(`input.range_type`)}
+            name="range_type"
+            style={{ margin: 10 }}
+            rules={[
+              {
+                required: true,
+                message:
+                  t("input.required", {
+                    field: t(`input.range_type`),
+                  }) || "",
+              },
             ]}
-            notFoundContent={<Empty />}
-            value={currentUser?.range_type || null}
-            onChange={(value) => {
-              if (setUpdateBody) {
-                setUpdateBody((state: any) => ({
+          >
+            <Select
+              size="large"
+              options={[
+                { label: t("table.transactions"), value: "TRANSACTIONS" },
+                { label: t("table.value"), value: "VALUE" },
+              ]}
+              notFoundContent={<Empty />}
+              value={currentUser?.range_type || null}
+              onChange={(value) => {
+                if (setUpdateBody) {
+                  setUpdateBody((state: any) => ({
+                    ...state,
+                    range_type: value,
+                  }));
+                }
+                setBody((state: any) => ({
                   ...state,
                   range_type: value,
                 }));
-              }
-              setBody((state: any) => ({
-                ...state,
-                range_type: value,
-              }));
-            }}
-            style={{ width: "100%", height: 40 }}
-            placeholder={t(`input.range_type`)}
-          />
-        </Form.Item>
+              }}
+              style={{ width: "100%", height: 40 }}
+              placeholder={t(`input.range_type`)}
+            />
+          </Form.Item>
 
-        <Grid
-          container
-          justifyContent={"flex-end"}
-          style={{ paddingRight: "10px" }}
-        >
-          <Button
-            type="default"
-            onClick={() => {
-              setFees((state: any) => [
-                ...state,
-                {
-                  range_fee: 0,
-                  range_value: 0,
-                  range_limit: 0,
-                  id: Math.random() * 10000000000000,
-                },
-              ]);
-            }}
-          >
-            Adicionar Taxa
-          </Button>
-        </Grid>
-        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <button type="submit" ref={submitRef} style={{ display: "none" }}>
-            Submit
-          </button>
-        </Form.Item>
-      </Form>
-
-      {fees.length !== 0 &&
-        listItems(fees, feePage, 3)?.map((fee: any) => (
           <Grid
             container
-            key={fee.id}
-            spacing={1}
-            alignItems={"center"}
-            style={{ marginLeft: "5px", marginTop: "5px" }}
+            justifyContent={"flex-end"}
+            style={{ paddingRight: "10px" }}
           >
-            <Grid item xs={3}>
-              <p style={{ marginBottom: "10px", color: "black" }}>
-                {t("table.fee_percent")}
-              </p>
-              <TextField
-                type="number"
-                variant="outlined"
-                name="range_fee"
-                value={fee?.range_fee}
-                onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                  handleChangeFee(event, fee.id)
-                }
-                sx={{
-                  "& .MuiOutlinedInput-root": {
-                    height: "38px",
-                    borderRadius: "8px",
+            <Button
+              type="dashed"
+              onClick={() => {
+                setFees((state: any) => [
+                  ...state,
+                  {
+                    range_fee: 0,
+                    range_value: 0,
+                    range_limit: 0,
+                    id: Math.random() * 10000000000000,
                   },
-                  "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline":
-                    {
-                      borderColor: "#5BC4BC",
-                    },
-                  "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-                    {
-                      borderColor: "#5BC4BC",
-                    },
-                }}
-              />
-            </Grid>
-            <Grid item xs={3}>
-              <p style={{ marginBottom: "10px", color: "black" }}>
-                {t("input.minimum_value")}
-              </p>
-              <TextField
-                type="number"
-                variant="outlined"
-                name="range_limit"
-                value={fee?.range_limit}
-                onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                  handleChangeFee(event, fee.id)
-                }
-                sx={{
-                  "& .MuiOutlinedInput-root": {
-                    height: "38px",
-                    borderRadius: "8px",
-                  },
-                  "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline":
-                    {
-                      borderColor: "#5BC4BC",
-                    },
-                  "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-                    {
-                      borderColor: "#5BC4BC",
-                    },
-                }}
-              />
-            </Grid>
-            <Grid item xs={3}>
-              <p style={{ marginBottom: "10px", color: "black" }}>
-                {t("table.limit")}
-              </p>
-              <TextField
-                type="number"
-                variant="outlined"
-                name="range_value"
-                value={fee?.range_value}
-                onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                  handleChangeFee(event, fee.id)
-                }
-                sx={{
-                  "& .MuiOutlinedInput-root": {
-                    height: "38px",
-                    borderRadius: "8px",
-                  },
-                  "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline":
-                    {
-                      borderColor: "#5BC4BC",
-                    },
-                  "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-                    {
-                      borderColor: "#5BC4BC",
-                    },
-                }}
-              />
-            </Grid>
-            <Grid item container xs={2} justifyContent={"center"}>
-              <DeleteOutlined
-                onClick={() => handleDeleteFee(fee.id)}
-                style={{ fontSize: "20px", cursor: "pointer", color: "red" }}
-              />
-            </Grid>
+                ]);
+                divRef.current?.scrollTo({
+                  top: 5000,
+                  left: 5000,
+                  behavior: "smooth",
+                });
+              }}
+            >
+              <PlusOutlined  />
+              {t("buttons.add_fee")}
+            </Button>
           </Grid>
-        ))}
-      {fees.length > 2 && (
-        <Grid
-          container
-          justifyContent={"flex-end"}
-          style={{ paddingRight: "40px" }}
-        >
-          <Pagination
-            size="small"
-            total={Number(fees.length)}
-            current={feePage}
-            pageSize={3}
-            style={{ marginTop: "10px" }}
-            onChange={(page) => {
-              setFeePage(page);
-            }}
-          />
-        </Grid>
-      )}
+          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+            <button type="submit" ref={submitRef} style={{ display: "none" }}>
+              Submit
+            </button>
+          </Form.Item>
+        </Form>
+
+        {fees.length !== 0 &&
+          listItems(fees, feePage, 2)?.map((fee: any) => (
+            <Grid container style={{ marginTop: "-20px" }}>
+              <Form
+                layout="vertical"
+                initialValues={listItems(fees, feePage, 2).find(
+                  (f) => f.id === fee.id
+                )}
+              >
+                <Space.Compact size="large">
+                  <Grid item xs={2}>
+                    <Form.Item label={`${t("table.fee")}:`}>
+                      <InputNumber
+                        value={fee?.range_fee}
+                        onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                          console.log(event, fee.id);
+                          handleChangeFee(event, fee.id, "range_fee");
+                        }}
+                      />
+                    </Form.Item>
+                  </Grid>
+                  <Grid item xs={5}>
+                    <Form.Item label={`${t("input.minimum_value")}:`}>
+                      <InputNumber
+                        style={{ width: "100%" }}
+                        value={fee?.range_value}
+                        onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                          handleChangeFee(event, fee.id, "range_value")
+                        }
+                      />
+                    </Form.Item>
+                  </Grid>
+                  <Grid item xs={3}>
+                    <Form.Item label={`${t("table.limit")}:`}>
+                      <InputNumber
+                        value={fee?.range_limit}
+                        onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                          handleChangeFee(event, fee.id, "range_limit")
+                        }
+                      />
+                    </Form.Item>
+                  </Grid>
+                  <Grid
+                    item
+                    container
+                    xs={2}
+                    justifyContent={"center"}
+                    style={{ marginLeft: 10 }}
+                  >
+                    <DeleteOutlined
+                      onClick={() => handleDeleteFee(fee.id)}
+                      style={{
+                        fontSize: "20px",
+                        cursor: "pointer",
+                        color: "red",
+                      }}
+                    />
+                  </Grid>
+                </Space.Compact>
+              </Form>
+            </Grid>
+          ))}
+
+        {fees.length > 2 && (
+          <Grid
+            container
+            justifyContent={"flex-end"}
+            style={{ paddingRight: "40px" }}
+          >
+            <Pagination
+              size="small"
+              total={Number(fees.length)}
+              current={feePage}
+              pageSize={2}
+              onChange={(page) => {
+                setFeePage(page);
+              }}
+            />
+          </Grid>
+        )}
+      </div>
     </Drawer>
   );
 };
