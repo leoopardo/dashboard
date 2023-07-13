@@ -7,7 +7,7 @@ export const queryClient = new QueryClient({
     onError: (err: any) => {
       if (
         err.response.status === 401 &&
-        err.request.responseUR.split("token/")[1] !== "validate"
+        err.request.responseURL.split("token/")[1] !== "validate"
       ) {
         localStorage.removeItem("token");
         sessionStorage.removeItem("token");
