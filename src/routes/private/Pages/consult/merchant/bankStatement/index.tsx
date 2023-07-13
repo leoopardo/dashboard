@@ -13,12 +13,13 @@ import { queryClient } from "@src/services/queryClient";
 import { useCreateMerchantBankStatementReports } from "@src/services/reports/consult/merchant/createBankStatementReports";
 import { MerchantBankStatementTotalsQuery } from "@src/services/types/consult/merchant/bankStatement";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Spin } from "antd";
+import { Button, Spin, Tabs } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { MerchantHourlyLineChart } from "./components/HourlyChart";
 import { Totalizers } from "./components/totalizers";
+import { MerchantNumberLineChart } from "./components/HourlyNumber";
 
 const INITIAL_QUERY: MerchantBankStatementTotalsQuery = {
   page: 1,
@@ -135,12 +136,23 @@ export const MerchantBankStatement = () => {
 
       <Totalizers query={query} />
 
-      <Grid
-        item
-        xs={12}
-        style={{ marginTop: "25px", paddingLeft: "3%", paddingRight: "3%" }}
-      >
-        <MerchantHourlyLineChart items={Hourly} />
+      <Grid item xs={12} style={{ marginTop: "20px", marginBottom: "20px" }}>
+        <Tabs
+          defaultActiveKey="1"
+          tabPosition="top"
+          items={[
+            {
+              label: t("table.balance_history"),
+              key: "1",
+              children: <MerchantHourlyLineChart items={Hourly} />,
+            },
+            {
+              label: t("table.transactions_history"),
+              key: "2",
+              children: <MerchantNumberLineChart items={Hourly} />,
+            },
+          ]}
+        />
       </Grid>
 
       {isMerchantBankStatementTotalsFetching && (
@@ -173,18 +185,18 @@ export const MerchantBankStatement = () => {
             items={MerchantTransactions?.items}
             error={MerchantTransactionsError}
             columns={[
-              { name: "bank_name", type: "bankNameToIcon"},
+              { name: "bank_name", type: "bankNameToIcon" },
               { name: "bank_account_number", type: "text" },
               { name: "paid_at", type: "date" },
-              { name: "transaction_type", type: "text" },
-              { name: "fee_type", type: "text" },
+              { name: "transaction_type", type: "translate" },
+              { name: "fee_type", type: "translate" },
               { name: "value", type: "value" },
               { name: "fee_percent", type: "text" },
               { name: "fee", type: "value" },
             ]}
             loading={isMerchantTransactionsFetching}
             removeTotal
-            label={["bank"]}
+            label={["bank_name", "value", "paid_at"]}
             removePagination
           />
         </Grid>
@@ -204,8 +216,8 @@ export const MerchantBankStatement = () => {
             "bank",
             "merchant_id",
           ]}
-          refetch={refetchMerchantBankStatementTotalsTotal}
-          selectOptions={{ payment_type: ["pix", "withdraw"] }}
+          refetch={refetchMerchantTransactionsTotal}
+          selectOptions={{ payment_type: ["PIX", "WITHDRAW"] }}
           startDateKeyName="start_date"
           endDateKeyName="end_date"
           initialQuery={INITIAL_QUERY}

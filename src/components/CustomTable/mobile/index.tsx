@@ -68,9 +68,10 @@ export const Mobile = (props: MobileProps) => {
                   case "merchant_name":
                     return ` - ${item[label]}`;
                   case "createdAt":
+                  case "paid_at":
                     return (
                       <p key={label} style={{ fontSize: "12px" }}>
-                        {t("table.createdAt")}:{" "}
+                        {t(`table.${label}`)}:{" "}
                         {`${
                           item[label]
                             ? moment(item[label])
@@ -108,10 +109,15 @@ export const Mobile = (props: MobileProps) => {
                     );
 
                   case "value_total":
-                    return <p key={label}>{new Intl.NumberFormat("pt-BR", {
-                      style: "currency",
-                      currency: "BRL",
-                    }).format(Number(item[label]) || 0)}</p>;
+                  case "value":
+                    return (
+                      <p key={label}>
+                        {new Intl.NumberFormat("pt-BR", {
+                          style: "currency",
+                          currency: "BRL",
+                        }).format(Number(item[label]) || 0)}
+                      </p>
+                    );
 
                   default:
                     return <p key={label}>{item[label]}</p>;

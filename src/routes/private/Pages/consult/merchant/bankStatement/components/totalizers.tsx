@@ -244,11 +244,7 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
               }
             })}
         </Grid>
-        <Grid container>
-          <Grid container item xs={12} style={{ height: "5px" }}>
-            <Divider />
-          </Grid>
-        </Grid>
+        
       </Grid>
     </Grid>
   );

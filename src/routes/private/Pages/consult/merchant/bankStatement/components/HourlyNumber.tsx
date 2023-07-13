@@ -29,7 +29,7 @@ interface OrganizationHistoryLineChartInterface {
   items?: MerchantHourlyItem[] | null;
 }
 
-export function MerchantHourlyLineChart({
+export function MerchantNumberLineChart({
   items,
 }: OrganizationHistoryLineChartInterface) {
   const { t } = useTranslation();
@@ -50,14 +50,14 @@ export function MerchantHourlyLineChart({
     labels: items?.map((item) => moment(item.date).format("DD/MM HH:00")),
     datasets: [
       {
-        label: t("table.value_out"),
-        data: items?.map((item) => item.value_out),
+        label: t("table.number_out"),
+        data: items?.map((item) => item.number_out),
         borderColor: "rgb(255, 99, 132)",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
       },
       {
-        label: t("table.value_in"),
-        data: items?.map((item) => item.value_in),
+        label: t("table.number_in"),
+        data: items?.map((item) => item.number_in),
         borderColor: defaultTheme.colors.paid,
         backgroundColor: "rgba(75, 192, 192, 0.2)",
       },
