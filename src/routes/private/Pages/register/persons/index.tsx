@@ -158,7 +158,7 @@ export const Persons = () => {
             size="large"
             onChange={(value) => setSearchOption(value)}
             value={searchOption}
-            placeholder="Opções"
+            placeholder={t("input.options")}
             options={[
               { value: "name", label: t("table.name") },
               { value: "cellphone", label: t("table.cellphone") },

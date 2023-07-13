@@ -280,7 +280,8 @@
     "webhook_type": "Tipo de webhook",
     "primary": "Primário",
     "secondary": "Secundário",
-    "both": "Ambos"
+    "both": "Ambos",
+    "options": "Opções"
   },
   "table": {
     "id": "ID",

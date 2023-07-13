@@ -117,7 +117,7 @@ export const BankBlacklist = () => {
               setSearch("");
             }}
             value={searchOption}
-            placeholder="Opções"
+            placeholder={t("input.options")}
             options={[
               { value: "ispb", label: t("table.ispb") },
               { value: "bank_name", label: t("table.bank_name") },

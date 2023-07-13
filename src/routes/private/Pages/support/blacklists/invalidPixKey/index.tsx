@@ -91,7 +91,7 @@ export const InvalidPixKeyBlacklist = () => {
               setSearch("");
             }}
             value={searchOption}
-            placeholder="Opções"
+            placeholder={t("input.options")}
             options={[{ value: "pix_key", label: t("table.pix_key") }]}
           />
         </Grid>

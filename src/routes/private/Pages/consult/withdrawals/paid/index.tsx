@@ -166,7 +166,7 @@ export const PaidWithdrawals = () => {
             size="large"
             onChange={(value) => setSearchOption(value)}
             value={searchOption}
-            placeholder="Opções"
+            placeholder={t("input.options")}
             options={[
               { value: "pix_id", label: t("table.pix_id") },
               { value: "endToEndId", label: t("table.endToEndId") },
@@ -285,6 +285,8 @@ export const PaidWithdrawals = () => {
             "status",
             "partner_id",
             "merchant_id",
+            "aggregator_id",
+            "operator_id",
             "bank",
             "payer_bank",
             "state",

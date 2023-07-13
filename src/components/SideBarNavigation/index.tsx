@@ -269,82 +269,6 @@ export const SidebarNavigation = () => {
         }
       ),
       getItem(
-        "operator",
-        null,
-        [
-          getItem(
-            "operators",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath),
-            {
-              display: permissions.register.operator.operator.menu
-                ? undefined
-                : "none",
-            }
-          ),
-          getItem(
-            "operator_users",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath),
-            {
-              display: permissions.register.operator.users.menu
-                ? undefined
-                : "none",
-            }
-          ),
-          getItem(
-            "operator_reports",
-            null,
-            [
-              getItem(
-                "operator_operators_reports",
-                null,
-                null,
-                false,
-                (e) => handleNavigate(e?.keyPath),
-                {
-                  display: permissions.register.operator.operator
-                    .operator_export_csv
-                    ? undefined
-                    : "none",
-                }
-              ),
-              getItem(
-                "operator_users_reports",
-                null,
-                null,
-                false,
-                (e) => handleNavigate(e?.keyPath),
-                {
-                  display: permissions.register.operator.users
-                    .operator_user_export_csv
-                    ? undefined
-                    : "none",
-                }
-              ),
-            ],
-            false,
-            undefined,
-            {
-              display:
-                permissions.register.operator.operator.operator_export_csv ||
-                permissions.register.operator.users.operator_user_export_csv
-                  ? undefined
-                  : "none",
-            }
-          ),
-        ],
-        undefined,
-        undefined,
-        {
-          display: permissions.register.operator.menu ? undefined : "none",
-        }
-      ),
-      getItem(
         "partner",
         null,
         [
@@ -418,6 +342,82 @@ export const SidebarNavigation = () => {
         undefined,
         {
           display: permissions.register.partner.menu ? undefined : "none",
+        }
+      ),
+      getItem(
+        "operator",
+        null,
+        [
+          getItem(
+            "operators",
+            null,
+            null,
+            false,
+            (e) => handleNavigate(e?.keyPath),
+            {
+              display: permissions.register.operator.operator.menu
+                ? undefined
+                : "none",
+            }
+          ),
+          getItem(
+            "operator_users",
+            null,
+            null,
+            false,
+            (e) => handleNavigate(e?.keyPath),
+            {
+              display: permissions.register.operator.users.menu
+                ? undefined
+                : "none",
+            }
+          ),
+          getItem(
+            "operator_reports",
+            null,
+            [
+              getItem(
+                "operator_operators_reports",
+                null,
+                null,
+                false,
+                (e) => handleNavigate(e?.keyPath),
+                {
+                  display: permissions.register.operator.operator
+                    .operator_export_csv
+                    ? undefined
+                    : "none",
+                }
+              ),
+              getItem(
+                "operator_users_reports",
+                null,
+                null,
+                false,
+                (e) => handleNavigate(e?.keyPath),
+                {
+                  display: permissions.register.operator.users
+                    .operator_user_export_csv
+                    ? undefined
+                    : "none",
+                }
+              ),
+            ],
+            false,
+            undefined,
+            {
+              display:
+                permissions.register.operator.operator.operator_export_csv ||
+                permissions.register.operator.users.operator_user_export_csv
+                  ? undefined
+                  : "none",
+            }
+          ),
+        ],
+        undefined,
+        undefined,
+        {
+          display: permissions.register.operator.menu ? undefined : "none",
         }
       ),
       getItem(

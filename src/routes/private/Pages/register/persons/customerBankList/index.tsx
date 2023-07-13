@@ -55,9 +55,9 @@ export const CostumerBanks = () => {
   const columns: ColumnInterface[] = [
     { name: "bank_code", type: "text" },
     { name: "bank_name", type: "bankNameToIcon" },
-    { name: "bank_name", type: "text",sort: true },
+    { name: "bank_name", type: "text", sort: true },
     { name: "ispb", type: "text" },
-    { name: "createdAt", type: "date",sort: true },
+    { name: "createdAt", type: "date", sort: true },
   ];
 
   useEffect(() => {
@@ -112,7 +112,7 @@ export const CostumerBanks = () => {
               setSearch("");
             }}
             value={searchOption}
-            placeholder="Opções"
+            placeholder={t("input.options")}
             options={[
               { value: "ispb", label: t("table.ispb") },
               { value: "bank_name", label: t("table.bank_name") },

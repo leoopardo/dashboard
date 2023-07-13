@@ -142,7 +142,7 @@ isRefundDepositManualTotalFetching, refetchRefundDepositManualTotal, refundDepos
             size="large"
             onChange={(value) => setSearchOption(value)}
             value={searchOption}
-            placeholder="Opções"
+            placeholder={t("input.options")}
             options={[
               { value: "pix_id", label: t("table.pix_id") },
               { value: "endToEndId", label: t("table.endToEndId") },
@@ -246,6 +246,7 @@ isRefundDepositManualTotalFetching, refetchRefundDepositManualTotal, refundDepos
             "end_date",
             "status",
             "merchant_id",
+            "aggregator_id",
             "aggregator_id",
             "operator_id",
           ]}

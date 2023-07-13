@@ -203,6 +203,8 @@ export const OperatorUsers = () => {
             "status",
             "partner_id",
             "merchant_id",
+            "aggregator_id",
+            "operator_id",
           ]}
           refetch={refetchUsersData}
           selectOptions={{}}

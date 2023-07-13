@@ -224,7 +224,7 @@ export const FiltersModal = ({
                     <RangePicker
                       size="small"
                       panelRender={panelRender}
-                      popupStyle={{marginLeft: "40px"}}
+                      popupStyle={{ marginLeft: "40px" }}
                       format="YYYY-MM-DD HH:mm:ss"
                       showTime
                       value={[
@@ -471,7 +471,8 @@ export const FiltersModal = ({
                 );
               } else return;
 
-              case "aggregator_id":
+            case "aggregator_id":
+              if (permissions.register.aggregator.aggregator.aggregator_list) {
                 return (
                   <Form.Item
                     label={t(`table.${filter}`)}
@@ -483,9 +484,11 @@ export const FiltersModal = ({
                       setQueryFunction={setFiltersQuery}
                     />
                   </Form.Item>
-              );
+                );
+              } else return;
 
-              case "operator_id":
+            case "operator_id":
+              if (permissions.register.operator.operator.operator_list) {
                 return (
                   <Form.Item
                     label={t(`table.${filter}`)}
@@ -497,8 +500,8 @@ export const FiltersModal = ({
                       setQueryFunction={setFiltersQuery}
                     />
                   </Form.Item>
-              );
-            
+                );
+              } else return;
 
             case "reason":
               return (

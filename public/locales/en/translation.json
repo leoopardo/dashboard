@@ -254,7 +254,8 @@
     "webhook_type": "Webhook type",
     "primary": "Primary",
     "secondary": "Secondary",
-    "both": "Both"
+    "both": "Both",
+    "options": "Options"
   },
   "modal": {
     "confirm": "Confirm",
@@ -512,7 +513,7 @@
     "cashout": "Cashout",
     "transactions": "Transactions",
     "plan_type": "Plan type",
-    "range_type":"Range type",
+    "range_type": "Range type",
     "aggregator_id": "ID Aggregator"
   },
   "actions": {
