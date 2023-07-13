@@ -55,6 +55,7 @@ export const CostumerBanks = () => {
   const columns: ColumnInterface[] = [
     { name: "bank_code", type: "text" },
     { name: "bank_name", type: "bankNameToIcon" },
+    { name: "bank_name", type: "text" },
     { name: "ispb", type: "text" },
     { name: "createdAt", type: "date" },
   ];

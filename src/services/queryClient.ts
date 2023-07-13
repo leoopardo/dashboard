@@ -8,7 +8,7 @@ export const queryClient = new QueryClient({
       if (
         err.response.status === 401 &&
         err.request.responseURL !==
-          "https://dev-v4.paybrokers.io/v4/core/token/validate"
+          `${import.meta.env.VITE_API_URL}core/token/validate`
       ) {
         localStorage.removeItem("token");
         sessionStorage.removeItem("token");

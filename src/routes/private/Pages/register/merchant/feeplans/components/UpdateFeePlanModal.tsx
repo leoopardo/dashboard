@@ -184,7 +184,7 @@ export const UpdateFeePlanModal = ({
     >
       <div
         style={{
-          maxHeight: "530px",
+          maxHeight: "95%",
           overflowY: "auto",
           width: "340px",
           paddingRight: "15px",

@@ -63,8 +63,8 @@ export const MerchantFeePlans = () => {
   const columns: ColumnInterface[] = [
     { name: "id", type: "id" },
     { name: "name", type: "text" },
-    { name: "plan_type", type: "text" },
-    { name: "transaction_type", type: "text" },
+    { name: "plan_type", type: "translate" },
+    { name: "transaction_type", type: "translate" },
     { name: "status", type: "status" },
   ];
 

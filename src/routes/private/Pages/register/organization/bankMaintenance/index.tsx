@@ -53,7 +53,7 @@ export const BankMaintenence = () => {
     { name: "priority", type: "text" },
     { name: "agency", type: "text" },
     { name: "account", type: "text" },
-    { name: "status", type: "boolean" },
+    { name: "status", type: "status" },
     { name: "bank_fee", type: "text" },
     { name: "cash_in", type: "boolean" },
     { name: "cash_out", type: "boolean" },

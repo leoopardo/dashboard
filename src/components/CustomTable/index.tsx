@@ -17,7 +17,7 @@ import {
   Pagination,
   Progress,
   Table,
-  Tooltip
+  Tooltip,
 } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
@@ -75,7 +75,8 @@ interface TableProps {
 export const CustomTable = (props: TableProps) => {
   const { t } = useTranslation();
   const isMobile = useMediaQuery({ maxWidth: "900px" });
-  const [columns, setColumns] = useState<ColumnsType<ColumnInterface>>([]);
+  const [columns, setColumns] = useState<ColumnsType<ColumnInterface>>([
+  ]);
   const [sortOrder] = useState(false);
   const [actions, setActions] = useState<any>([]);
   const { BankMainteneceData } = useGetOrganizationBankMaintenece({
@@ -203,6 +204,22 @@ export const CustomTable = (props: TableProps) => {
                     -
                   </p>
                 ),
+              sorter: (a, b) => {
+                props.setQuery((state: any) => ({
+                  ...state,
+                  sort_field: column.name,
+                  sort_order:
+                    props.query.sort_order === "DESC" ? "ASC" : "DESC",
+                }));
+                console.log(
+                  "sortf:",
+                  column.name,
+                  "sorto:",
+                  props.query.sort_order === "DESC" ? "ASC" : "DESC"
+                );
+
+                return 1;
+              },
             };
 
           case "value":
