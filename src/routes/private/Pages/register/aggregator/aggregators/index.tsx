@@ -80,10 +80,10 @@ export const Aggregators = () => {
   } = useUpdateAggregator(updateBody);
 
   const columns: ColumnInterface[] = [
-    { name: "id", type: "id" },
-    { name: "name", type: "text" },
-    { name: "status", type: "status" },
-    { name: "created_at", type: "date" },
+    { name: "id", type: "id",sort: true },
+    { name: "name", type: "text",sort: true },
+    { name: "status", type: "status",sort: true },
+    { name: "created_at", type: "date",sort: true },
   ];
 
   useEffect(() => {

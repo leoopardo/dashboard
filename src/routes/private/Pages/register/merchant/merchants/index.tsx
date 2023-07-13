@@ -81,9 +81,9 @@ export const MerchantView = () => {
   const debounceSearch = useDebounce(search);
 
   const columns: ColumnInterface[] = [
-    { name: "id", type: "id" },
-    { name: "name", type: "text" },
-    { name: "domain", type: "text" },
+    { name: "id", type: "id",sort: true },
+    { name: "name", type: "text",sort: true },
+    { name: "domain", type: "text",sort: true },
     { name: ["partner", "name"], head: "partner", type: "text" },
     {
       name: ["merchantConfig", "cash_in_bank"],
@@ -91,7 +91,7 @@ export const MerchantView = () => {
       type: "bankNameToIcon",
     },
     { name: "status", type: "status" },
-    { name: "created_at", type: "date" },
+    { name: "created_at", type: "date",sort: true },
   ];
 
   useEffect(() => {

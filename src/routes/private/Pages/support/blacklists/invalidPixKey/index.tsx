@@ -140,11 +140,11 @@ export const InvalidPixKeyBlacklist = () => {
             error={InvalidPixKeyError}
             columns={[
               { name: "pix_key", type: "id" },
-              { name: "pix_key_type", type: "text" },
-              { name: "bank_name", type: "bankNameToIcon" },
+              { name: "pix_key_type", type: "text", sort: true },
+              { name: "bank_name", type: "bankNameToIcon", sort: true },
               { name: "receiver_document", type: "document" },
-              { name: "receiver_name", type: "text" },
-              { name: "createdAt", type: "date" },
+              { name: "receiver_name", type: "text", sort: true },
+              { name: "createdAt", type: "date", sort: true },
             ]}
             loading={isInvalidPixKeyFetching}
             actions={[

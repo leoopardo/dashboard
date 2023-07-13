@@ -61,11 +61,11 @@ export const MerchantFeePlans = () => {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
   const columns: ColumnInterface[] = [
-    { name: "id", type: "id" },
-    { name: "name", type: "text" },
+    { name: "id", type: "id",sort: true },
+    { name: "name", type: "text",sort: true },
     { name: "plan_type", type: "translate" },
-    { name: "transaction_type", type: "translate" },
-    { name: "status", type: "status" },
+    { name: "transaction_type", type: "translate"},
+    { name: "status", type: "status",sort: true },
   ];
 
   useEffect(() => {

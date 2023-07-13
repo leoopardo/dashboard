@@ -67,7 +67,13 @@ export const OrganizationBankStatement = () => {
 
   useEffect(() => {
     refetchOrganizationPerbank();
-  }, [query]);
+  }, [
+    query.page,
+    query.bank,
+    query.payment_type,
+    query.end_date,
+    query.start_date,
+  ]);
 
   return (
     <Grid container style={{ padding: "25px" }}>
@@ -210,8 +216,8 @@ export const OrganizationBankStatement = () => {
             items={OrganizationPerbank}
             error={OrganizationPerbankError}
             columns={[
-              { name: "bank", type: "bankNameToIcon" },
-              { name: "number_in", type: "text" },
+              { name: "bank", type: "bankNameToIcon", sort: true },
+              { name: "number_in", type: "text", sort: true },
               { name: "value_in", type: "value" },
               { name: "fee_in", type: "value" },
               { name: "number_out", type: "text" },

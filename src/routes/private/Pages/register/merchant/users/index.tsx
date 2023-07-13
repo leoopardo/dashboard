@@ -71,12 +71,12 @@ export const MerchantUser = () => {
   const debounceSearch = useDebounce(search);
 
   const columns: ColumnInterface[] = [
-    { name: "id", type: "id" },
-    { name: "name", type: "text" },
+    { name: "id", type: "id",sort: true },
+    { name: "name", type: "text",sort: true },
     { name: "group_id", type: "text" },
     { name: "email", type: "text" },
     { name: "last_signin_date", type: "date" },
-    { name: "created_at", type: "date" },
+    { name: "created_at", type: "date",sort: true },
   ];
 
   const handleUpdateTokenValidate = () => {

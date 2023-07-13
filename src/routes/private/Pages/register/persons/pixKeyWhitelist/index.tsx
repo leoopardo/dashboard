@@ -64,9 +64,9 @@ export const PixKeyWhitelist = () => {
     useDeleteDeletePixKey({ pix_key: currentItem?.pix_key });
 
   const columns: ColumnInterface[] = [
-    { name: "_id", type: "id" },
+    { name: "_id", type: "id"},
     { name: "pix_key", type: "text" },
-    { name: "createdAt", type: "date" },
+    { name: "createdAt", type: "date",sort: true },
   ];
 
   useEffect(() => {

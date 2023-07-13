@@ -57,12 +57,12 @@ export const MerchantManualEntryCategory = () => {
     useState<MerchantManualEntryCategoryItem | null>(null);
 
   const columns: ColumnInterface[] = [
-    { name: "id", type: "id" },
-    { name: "name", type: "text" },
-    { name: "description", type: "text" },
+    { name: "id", type: "id",sort: true },
+    { name: "name", type: "text",sort: true },
+    { name: "description", type: "text",sort: true },
     { name: "organization_id", type: "text" },
     { name: "status", type: "status" },
-    { name: "created_at", type: "date" },
+    { name: "created_at", type: "date",sort: true },
   ];
 
   useEffect(() => {

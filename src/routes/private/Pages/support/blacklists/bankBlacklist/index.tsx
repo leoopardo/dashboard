@@ -201,11 +201,11 @@ export const BankBlacklist = () => {
             items={BankBlacklist?.items}
             error={BankBlacklistError}
             columns={[
-              { name: "ispb", type: "id" },
-              { name: "bank_name", type: "bankNameToIcon" },
+              { name: "ispb", type: "id", sort: true },
+              { name: "bank_name", type: "bankNameToIcon", sort: true },
               { name: "user_id", type: "text" },
               { name: "user_name", type: "text" },
-              { name: "createdAt", type: "date" },
+              { name: "createdAt", type: "date", sort: true },
             ]}
             loading={isBankBlacklistFetching}
             actions={

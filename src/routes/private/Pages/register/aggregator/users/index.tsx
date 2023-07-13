@@ -55,13 +55,13 @@ export const AggregatorUsers = () => {
   const [action, setAction] = useState<"create" | "update">("create");
 
   const columns: ColumnInterface[] = [
-    { name: "id", type: "id" },
-    { name: "name", type: "text" },
+    { name: "id", type: "id",sort: true },
+    { name: "name", type: "text",sort: true },
     { name: "group_id", type: "text" },
-    { name: ["partner", "name"], head: "partner", type: "text" },
-    { name: "last_signin_date", type: "date" },
+    { name: ["partner", "name"], head: "partner", type: "text"},
+    { name: "last_signin_date", type: "date"},
     { name: "status", type: "status" },
-    { name: "created_at", type: "date" },
+    { name: "created_at", type: "date",sort: true },
   ];
 
   useEffect(() => {

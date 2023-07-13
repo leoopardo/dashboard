@@ -74,10 +74,10 @@ export const Operators = () => {
     useUpdateOperator(updateBody);
 
   const columns: ColumnInterface[] = [
-    { name: "id", type: "id" },
-    { name: "name", type: "text" },
+    { name: "id", type: "id",sort: true },
+    { name: "name", type: "text",sort: true },
     { name: "status", type: "status" },
-    { name: "created_at", type: "date" },
+    { name: "created_at", type: "date",sort: true },
   ];
 
   useEffect(() => {

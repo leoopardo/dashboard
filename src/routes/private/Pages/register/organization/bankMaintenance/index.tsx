@@ -49,7 +49,7 @@ export const BankMaintenence = () => {
 
   const columns: ColumnInterface[] = [
     { name: "icon_url", type: "icon" },
-    { name: "label_name", type: "text" },
+    { name: "label_name", type: "text",sort: true },
     { name: "priority", type: "text" },
     { name: "agency", type: "text" },
     { name: "account", type: "text" },
@@ -57,7 +57,7 @@ export const BankMaintenence = () => {
     { name: "bank_fee", type: "text" },
     { name: "cash_in", type: "boolean" },
     { name: "cash_out", type: "boolean" },
-    { name: "created_at", type: "date" },
+    { name: "created_at", type: "date",sort: true },
   ];
 
   useEffect(() => {

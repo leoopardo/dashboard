@@ -258,12 +258,12 @@ export const OrgonizationManual = () => {
             items={OrganizationMovimentsData?.items}
             error={OrganizationMovimentsDataError}
             columns={[
-              { name: "_id", type: "id" },
-              { name: "category_name", type: "text" },
+              { name: "_id", type: "id",sort: true  },
+              { name: "category_name", type: "text",sort: true  },
               { name: "user_name", type: "text" },
               { name: "type", type: "translate" },
-              { name: "value", type: "value" },
-              { name: "createdAt", type: "date" },
+              { name: "value", type: "value",sort: true  },
+              { name: "createdAt", type: "date",sort: true  },
               { name: "status", type: "status" },
             ]}
             loading={isOrganizationMovimentsDataFetching}

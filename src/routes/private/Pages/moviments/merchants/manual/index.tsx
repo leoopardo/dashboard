@@ -257,13 +257,13 @@ export const MerchantManual = () => {
             items={MerchantMovimentsData?.items}
             error={MerchantMovimentsDataError}
             columns={[
-              { name: "_id", type: "id" },
-              { name: "category_name", type: "text" },
+              { name: "_id", type: "id"  },
+              { name: "category_name", type: "text",sort: true  },
               { name: "user_name", type: "text" },
-              { name: "type", type: "text" },
-              { name: "value", type: "value" },
-              { name: "createdAt", type: "date" },
-              { name: "status", type: "status" },
+              { name: "type", type: "translate"  },
+              { name: "value", type: "value"  },
+              { name: "createdAt", type: "date",sort: true  },
+              { name: "status", type: "status",sort: true  },
             ]}
             loading={isMerchantMovimentsDataFetching}
             actions={[]}

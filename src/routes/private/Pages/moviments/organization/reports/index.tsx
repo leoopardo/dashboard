@@ -107,8 +107,8 @@ export const OrganizationManualReports = () => {
             items={OrganizationManualReportsData?.items}
             error={OrganizationManualReportsDataError}
             columns={[
-              { name: "_id", type: "id" },
-              { name: "createdAt", type: "date" },
+              { name: "_id", type: "id",sort: true  },
+              { name: "createdAt", type: "date",sort: true  },
               { name: "created_by_name", type: "text" },
               { name: "rows", type: "text" },
               { name: "progress", type: "progress" },

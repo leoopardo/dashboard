@@ -56,10 +56,10 @@ export const MerchantBlacklist = () => {
   const columns: ColumnInterface[] = [
     { name: "cpf", type: "id" },
     { name: "merchant_name", type: "text" },
-    { name: "reason", type: "text" },
+    { name: "reason", type: "text",sort: true },
     { name: "description", type: "text" },
     { name: "create_user_name", type: "text" },
-    { name: "createdAt", type: "date" },
+    { name: "createdAt", type: "date",sort: true },
   ];
 
   useEffect(() => {

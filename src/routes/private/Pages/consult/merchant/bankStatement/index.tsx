@@ -173,7 +173,7 @@ export const MerchantBankStatement = () => {
             items={MerchantTransactions?.items}
             error={MerchantTransactionsError}
             columns={[
-              { name: "bank_name", type: "bankNameToIcon" },
+              { name: "bank_name", type: "bankNameToIcon"},
               { name: "bank_account_number", type: "text" },
               { name: "paid_at", type: "date" },
               { name: "transaction_type", type: "text" },

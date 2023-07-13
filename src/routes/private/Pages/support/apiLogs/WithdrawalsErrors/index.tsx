@@ -177,13 +177,13 @@ export const WithdrawalsErrors = () => {
             error={WithdrawalsErrorsLogsError}
             removeTotal
             columns={[
-              { name: "_id", type: "id" },
+              { name: "_id", type: "id", sort: true },
               { name: "merchant_id", type: "text" },
               { name: "partner_id", type: "text" },
               { name: "document", type: "document" },
               { name: "error_message", type: "text" },
-              { name: "step", type: "text" },
-              { name: "createdAt", type: "date" },
+              { name: "step", type: "text", sort: true },
+              { name: "createdAt", type: "date", sort: true },
             ]}
             loading={isWithdrawalsErrorsLogsFetching}
             label={["error_message", "step"]}

@@ -44,6 +44,7 @@ export interface ColumnInterface {
     | "boolean"
     | "bankNameToIcon"
     | "progress";
+  sort?: boolean;
 }
 
 export interface actionsInterface {
@@ -76,6 +77,7 @@ export const CustomTable = (props: TableProps) => {
   const { t } = useTranslation();
   const isMobile = useMediaQuery({ maxWidth: "900px" });
   const [columns, setColumns] = useState<ColumnsType<ColumnInterface>>([
+    { sorter: {} },
   ]);
   const [sortOrder] = useState(false);
   const [actions, setActions] = useState<any>([]);
@@ -167,7 +169,6 @@ export const CustomTable = (props: TableProps) => {
                     }
                     style={{
                       maxWidth: "250px",
-                      minWidth: "90px",
                       textOverflow: "ellipsis",
                     }}
                     value={text}
@@ -175,6 +176,25 @@ export const CustomTable = (props: TableProps) => {
                   />
                 </div>
               ),
+              sorter: column.sort
+                ? () => {
+                    props.setQuery((state: any) => ({
+                      ...state,
+                      sort_field: column.name,
+                      sort_order:
+                        props.query.sort_order === "DESC" ? "ASC" : "DESC",
+                      page: 1,
+                    }));
+                    console.log(
+                      "sortf:",
+                      column.name,
+                      "sorto:",
+                      props.query.sort_order === "DESC" ? "ASC" : "DESC"
+                    );
+
+                    return 0;
+                  }
+                : undefined,
             };
 
           case "date":
@@ -204,22 +224,26 @@ export const CustomTable = (props: TableProps) => {
                     -
                   </p>
                 ),
-              sorter: () => {
-                props.setQuery((state: any) => ({
-                  ...state,
-                  sort_field: column.name,
-                  sort_order:
-                    props.query.sort_order === "DESC" ? "ASC" : "DESC",
-                }));
-                console.log(
-                  "sortf:",
-                  column.name,
-                  "sorto:",
-                  props.query.sort_order === "DESC" ? "ASC" : "DESC"
-                );
 
-                return 1;
-              },
+              sorter: column.sort
+                ? () => {
+                    props.setQuery((state: any) => ({
+                      ...state,
+                      sort_field: column.name,
+                      sort_order:
+                        props.query.sort_order === "DESC" ? "ASC" : "DESC",
+                      page: 1,
+                    }));
+                    console.log(
+                      "sortf:",
+                      column.name,
+                      "sorto:",
+                      props.query.sort_order === "DESC" ? "ASC" : "DESC"
+                    );
+
+                    return 0;
+                  }
+                : undefined,
             };
 
           case "value":
@@ -244,6 +268,25 @@ export const CustomTable = (props: TableProps) => {
                   }).format(Number(text) || 0)}
                 </p>
               ),
+              sorter: column.sort
+                ? () => {
+                    props.setQuery((state: any) => ({
+                      ...state,
+                      sort_field: column.name,
+                      sort_order:
+                        props.query.sort_order === "DESC" ? "ASC" : "DESC",
+                      page: 1,
+                    }));
+                    console.log(
+                      "sortf:",
+                      column.name,
+                      "sorto:",
+                      props.query.sort_order === "DESC" ? "ASC" : "DESC"
+                    );
+
+                    return 0;
+                  }
+                : undefined,
             };
           case "document":
             return {
@@ -267,6 +310,25 @@ export const CustomTable = (props: TableProps) => {
                   ) || "-"}
                 </p>
               ),
+              sorter: column.sort
+                ? () => {
+                    props.setQuery((state: any) => ({
+                      ...state,
+                      sort_field: column.name,
+                      sort_order:
+                        props.query.sort_order === "DESC" ? "ASC" : "DESC",
+                      page: 1,
+                    }));
+                    console.log(
+                      "sortf:",
+                      column.name,
+                      "sorto:",
+                      props.query.sort_order === "DESC" ? "ASC" : "DESC"
+                    );
+
+                    return 0;
+                  }
+                : undefined,
             };
           case "icon":
             return {
@@ -284,6 +346,25 @@ export const CustomTable = (props: TableProps) => {
                   <Avatar src={text} size="large" shape="square" />
                 </div>
               ),
+              sorter: column.sort
+                ? () => {
+                    props.setQuery((state: any) => ({
+                      ...state,
+                      sort_field: column.name,
+                      sort_order:
+                        props.query.sort_order === "DESC" ? "ASC" : "DESC",
+                      page: 1,
+                    }));
+                    console.log(
+                      "sortf:",
+                      column.name,
+                      "sorto:",
+                      props.query.sort_order === "DESC" ? "ASC" : "DESC"
+                    );
+
+                    return 0;
+                  }
+                : undefined,
             };
 
           case "bankNameToIcon":
@@ -314,7 +395,25 @@ export const CustomTable = (props: TableProps) => {
                     </Avatar>
                   </Tooltip>
                 </div>
-              ),
+              ),sorter: column.sort
+              ? () => {
+                  props.setQuery((state: any) => ({
+                    ...state,
+                    sort_field: column.name,
+                    sort_order:
+                      props.query.sort_order === "DESC" ? "ASC" : "DESC",
+                    page: 1,
+                  }));
+                  console.log(
+                    "sortf:",
+                    column.name,
+                    "sorto:",
+                    props.query.sort_order === "DESC" ? "ASC" : "DESC"
+                  );
+
+                  return 0;
+                }
+              : undefined,
             };
 
           case "status":
@@ -344,6 +443,25 @@ export const CustomTable = (props: TableProps) => {
                     {t(`table.${text?.toLocaleLowerCase()}`)}
                   </p>
                 ),
+              sorter: column.sort
+                ? () => {
+                    props.setQuery((state: any) => ({
+                      ...state,
+                      sort_field: column.name,
+                      sort_order:
+                        props.query.sort_order === "DESC" ? "ASC" : "DESC",
+                      page: 1,
+                    }));
+                    console.log(
+                      "sortf:",
+                      column.name,
+                      "sorto:",
+                      props.query.sort_order === "DESC" ? "ASC" : "DESC"
+                    );
+
+                    return 0;
+                  }
+                : undefined,
             };
 
           case "boolean":
@@ -365,6 +483,25 @@ export const CustomTable = (props: TableProps) => {
                   {text ? t("table.true") : t("table.false")}
                 </p>
               ),
+              sorter: column.sort
+                ? () => {
+                    props.setQuery((state: any) => ({
+                      ...state,
+                      sort_field: column.name,
+                      sort_order:
+                        props.query.sort_order === "DESC" ? "ASC" : "DESC",
+                      page: 1,
+                    }));
+                    console.log(
+                      "sortf:",
+                      column.name,
+                      "sorto:",
+                      props.query.sort_order === "DESC" ? "ASC" : "DESC"
+                    );
+
+                    return 0;
+                  }
+                : undefined,
             };
 
           case "action":
@@ -431,6 +568,25 @@ export const CustomTable = (props: TableProps) => {
                   {text ?? "-"}
                 </p>
               ),
+              sorter: column.sort
+                ? () => {
+                    props.setQuery((state: any) => ({
+                      ...state,
+                      sort_field: column.name,
+                      sort_order:
+                        props.query.sort_order === "DESC" ? "ASC" : "DESC",
+                      page: 1,
+                    }));
+                    console.log(
+                      "sortf:",
+                      column.name,
+                      "sorto:",
+                      props.query.sort_order === "DESC" ? "ASC" : "DESC"
+                    );
+
+                    return 0;
+                  }
+                : undefined,
             };
 
           case "translate":
@@ -449,6 +605,25 @@ export const CustomTable = (props: TableProps) => {
                   {text ? t(`table.${text.toLocaleLowerCase()}`) : "-"}
                 </p>
               ),
+              sorter: column.sort
+                ? () => {
+                    props.setQuery((state: any) => ({
+                      ...state,
+                      sort_field: column.name,
+                      sort_order:
+                        props.query.sort_order === "DESC" ? "ASC" : "DESC",
+                      page: 1,
+                    }));
+                    console.log(
+                      "sortf:",
+                      column.name,
+                      "sorto:",
+                      props.query.sort_order === "DESC" ? "ASC" : "DESC"
+                    );
+
+                    return 0;
+                  }
+                : undefined,
             };
 
           case "progress":
@@ -477,7 +652,25 @@ export const CustomTable = (props: TableProps) => {
                     }
                   />
                 </div>
-              ),
+              ), sorter: column.sort
+              ? () => {
+                  props.setQuery((state: any) => ({
+                    ...state,
+                    sort_field: column.name,
+                    sort_order:
+                      props.query.sort_order === "DESC" ? "ASC" : "DESC",
+                    page: 1,
+                  }));
+                  console.log(
+                    "sortf:",
+                    column.name,
+                    "sorto:",
+                    props.query.sort_order === "DESC" ? "ASC" : "DESC"
+                  );
+
+                  return 0;
+                }
+              : undefined,
             };
           default:
             return {
@@ -495,6 +688,25 @@ export const CustomTable = (props: TableProps) => {
                   {record[column?.name] ?? "-"}
                 </p>
               ),
+              sorter: column.sort
+                ? () => {
+                    props.setQuery((state: any) => ({
+                      ...state,
+                      sort_field: column.name,
+                      sort_order:
+                        props.query.sort_order === "DESC" ? "ASC" : "DESC",
+                      page: 1,
+                    }));
+                    console.log(
+                      "sortf:",
+                      column.name,
+                      "sorto:",
+                      props.query.sort_order === "DESC" ? "ASC" : "DESC"
+                    );
+
+                    return 0;
+                  }
+                : undefined,
             };
         }
       })
@@ -552,10 +764,18 @@ export const CustomTable = (props: TableProps) => {
                 onShowSizeChange: (_current, size) =>
                   props.setQuery((state: any) => ({ ...state, limit: size })),
               }}
+              sortDirections={["ascend", "descend"]}
               dataSource={props?.error ? [] : props?.items ?? []}
               direction="ltr"
               columns={columns}
               loading={props.loading}
+              onRow={(record, rowIndex) => {
+                return {
+                  onMouseEnter: (event) => {
+                    props.setCurrentItem(record);
+                  },
+                };
+              }}
               scroll={{ x: 800 }}
               sticky
               bordered

@@ -102,11 +102,11 @@ export const PersonsReports = () => {
             items={PersonsReportsData?.items}
             error={PersonsReportsDataError}
             columns={[
-              { name: "_id", type: "id" },
-              { name: "createdAt", type: "date" },
+              { name: "_id", type: "id",sort: true },
+              { name: "createdAt", type: "date",sort: true },
               { name: "created_by_name", type: "text" },
-              { name: "rows", type: "text" },
-              { name: "progress", type: "progress" },
+              { name: "rows", type: "text",sort: true  },
+              { name: "progress", type: "progress",sort: true },
             ]}
             loading={isPersonsReportsDataFetching}
             label={["createdAt", "progress"]}

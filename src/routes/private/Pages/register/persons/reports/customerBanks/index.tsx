@@ -103,10 +103,10 @@ export const CustomerBanksReports = () => {
             error={CustomerBanksReportsDataError}
             columns={[
               { name: "_id", type: "id" },
-              { name: "createdAt", type: "date" },
+              { name: "createdAt", type: "date",sort: true  },
               { name: "created_by_name", type: "text" },
-              { name: "rows", type: "text" },
-              { name: "progress", type: "progress" },
+              { name: "rows", type: "text"  },
+              { name: "progress", type: "progress"  },
             ]}
             loading={isCustomerBanksReportsDataFetching}
             label={["createdAt", "progress"]}

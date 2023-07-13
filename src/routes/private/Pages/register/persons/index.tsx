@@ -79,16 +79,16 @@ export const Persons = () => {
     useUpdatePartner(updateBody);
 
   const columns: ColumnInterface[] = [
-    { name: "cpf", type: "document" },
-    { name: "situation_text", type: "text" },
-    { name: "name", type: "text" },
-    { name: "birth_date", type: "date" },
+    { name: "cpf", type: "document",sort: true },
+    { name: "situation_text", type: "text", },
+    { name: "name", type: "text",sort: true },
+    { name: "birth_date", type: "date",sort: true },
     { name: "mother_name", type: "text" },
     { name: "black_list", type: "boolean" },
     { name: "flag_pep", type: "boolean" },
     { name: "flag_aux_gov", type: "boolean" },
     { name: "flag_alert", type: "text" },
-    { name: "updatedAt", type: "date" },
+    { name: "updatedAt", type: "date",sort: true },
   ];
 
   useEffect(() => {
