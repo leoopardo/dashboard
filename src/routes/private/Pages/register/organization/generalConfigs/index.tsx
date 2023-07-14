@@ -26,9 +26,8 @@ export const GeneralConfigs = () => {
 
   const { t } = useTranslation();
   const { data, isFetching } = useGetGeneralconfigs();
-  const onChange = (key: string) => {
-    console.log(key);
-  };
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  const onChange = () => {};
   const formRef = useRef<FormInstance>(null);
   const [body, setBody] = useState<OrganizationGeneralConfigs>({ ...data });
   const [isConfirmOpen, setIsConfirmOpen] = useState<boolean>(false);

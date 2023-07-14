@@ -54,9 +54,6 @@ export const OrgonizationManual = () => {
     useState<CreateManualTransaction | null>(null);
 
   const { t } = useTranslation();
-  const { SelfError } = useGetSelf();
-
-  console.error(SelfError);
 
   const {
     OrganizationMovimentsData,
@@ -258,12 +255,12 @@ export const OrgonizationManual = () => {
             items={OrganizationMovimentsData?.items}
             error={OrganizationMovimentsDataError}
             columns={[
-              { name: "_id", type: "id",sort: true  },
-              { name: "category_name", type: "text",sort: true  },
+              { name: "_id", type: "id", sort: true },
+              { name: "category_name", type: "text", sort: true },
               { name: "user_name", type: "text" },
               { name: "type", type: "translate" },
-              { name: "value", type: "value",sort: true  },
-              { name: "createdAt", type: "date",sort: true  },
+              { name: "value", type: "value", sort: true },
+              { name: "createdAt", type: "date", sort: true },
               { name: "status", type: "status" },
             ]}
             loading={isOrganizationMovimentsDataFetching}

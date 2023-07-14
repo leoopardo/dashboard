@@ -185,12 +185,6 @@ export const CustomTable = (props: TableProps) => {
                         props.query.sort_order === "DESC" ? "ASC" : "DESC",
                       page: 1,
                     }));
-                    console.log(
-                      "sortf:",
-                      column.name,
-                      "sorto:",
-                      props.query.sort_order === "DESC" ? "ASC" : "DESC"
-                    );
 
                     return 0;
                   }
@@ -234,12 +228,6 @@ export const CustomTable = (props: TableProps) => {
                         props.query.sort_order === "DESC" ? "ASC" : "DESC",
                       page: 1,
                     }));
-                    console.log(
-                      "sortf:",
-                      column.name,
-                      "sorto:",
-                      props.query.sort_order === "DESC" ? "ASC" : "DESC"
-                    );
 
                     return 0;
                   }
@@ -277,12 +265,6 @@ export const CustomTable = (props: TableProps) => {
                         props.query.sort_order === "DESC" ? "ASC" : "DESC",
                       page: 1,
                     }));
-                    console.log(
-                      "sortf:",
-                      column.name,
-                      "sorto:",
-                      props.query.sort_order === "DESC" ? "ASC" : "DESC"
-                    );
 
                     return 0;
                   }
@@ -319,12 +301,6 @@ export const CustomTable = (props: TableProps) => {
                         props.query.sort_order === "DESC" ? "ASC" : "DESC",
                       page: 1,
                     }));
-                    console.log(
-                      "sortf:",
-                      column.name,
-                      "sorto:",
-                      props.query.sort_order === "DESC" ? "ASC" : "DESC"
-                    );
 
                     return 0;
                   }
@@ -355,12 +331,6 @@ export const CustomTable = (props: TableProps) => {
                         props.query.sort_order === "DESC" ? "ASC" : "DESC",
                       page: 1,
                     }));
-                    console.log(
-                      "sortf:",
-                      column.name,
-                      "sorto:",
-                      props.query.sort_order === "DESC" ? "ASC" : "DESC"
-                    );
 
                     return 0;
                   }
@@ -405,12 +375,6 @@ export const CustomTable = (props: TableProps) => {
                         props.query.sort_order === "DESC" ? "ASC" : "DESC",
                       page: 1,
                     }));
-                    console.log(
-                      "sortf:",
-                      column.name,
-                      "sorto:",
-                      props.query.sort_order === "DESC" ? "ASC" : "DESC"
-                    );
 
                     return 0;
                   }
@@ -453,12 +417,6 @@ export const CustomTable = (props: TableProps) => {
                         props.query.sort_order === "DESC" ? "ASC" : "DESC",
                       page: 1,
                     }));
-                    console.log(
-                      "sortf:",
-                      column.name,
-                      "sorto:",
-                      props.query.sort_order === "DESC" ? "ASC" : "DESC"
-                    );
 
                     return 0;
                   }
@@ -493,12 +451,6 @@ export const CustomTable = (props: TableProps) => {
                         props.query.sort_order === "DESC" ? "ASC" : "DESC",
                       page: 1,
                     }));
-                    console.log(
-                      "sortf:",
-                      column.name,
-                      "sorto:",
-                      props.query.sort_order === "DESC" ? "ASC" : "DESC"
-                    );
 
                     return 0;
                   }
@@ -578,12 +530,6 @@ export const CustomTable = (props: TableProps) => {
                         props.query.sort_order === "DESC" ? "ASC" : "DESC",
                       page: 1,
                     }));
-                    console.log(
-                      "sortf:",
-                      column.name,
-                      "sorto:",
-                      props.query.sort_order === "DESC" ? "ASC" : "DESC"
-                    );
 
                     return 0;
                   }
@@ -615,12 +561,6 @@ export const CustomTable = (props: TableProps) => {
                         props.query.sort_order === "DESC" ? "ASC" : "DESC",
                       page: 1,
                     }));
-                    console.log(
-                      "sortf:",
-                      column.name,
-                      "sorto:",
-                      props.query.sort_order === "DESC" ? "ASC" : "DESC"
-                    );
 
                     return 0;
                   }
@@ -663,12 +603,6 @@ export const CustomTable = (props: TableProps) => {
                         props.query.sort_order === "DESC" ? "ASC" : "DESC",
                       page: 1,
                     }));
-                    console.log(
-                      "sortf:",
-                      column.name,
-                      "sorto:",
-                      props.query.sort_order === "DESC" ? "ASC" : "DESC"
-                    );
 
                     return 0;
                   }
@@ -699,12 +633,6 @@ export const CustomTable = (props: TableProps) => {
                         props.query.sort_order === "DESC" ? "ASC" : "DESC",
                       page: 1,
                     }));
-                    console.log(
-                      "sortf:",
-                      column.name,
-                      "sorto:",
-                      props.query.sort_order === "DESC" ? "ASC" : "DESC"
-                    );
 
                     return 0;
                   }

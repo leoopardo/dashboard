@@ -72,8 +72,6 @@ export const WithdrawalsErrors = () => {
     refetchLogsSteps();
   }, [query]);
 
-  console.log(WithdrawalsErrorsTotal);
-
   return (
     <Grid container style={{ padding: "25px" }}>
       {WithdrawalsErrorsTotal && WithdrawalsErrorsTotal?.length >= 1 && (

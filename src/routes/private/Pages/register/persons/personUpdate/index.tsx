@@ -100,7 +100,6 @@ export const PersonUpdate = () => {
   const onChangeConfigs = (event: any) => {
     const { value } = event.target;
     setBody((state) => ({ ...state, [event.target.name]: value }));
-    console.log(body);
   };
 
   const items: TabsProps["items"] = [
@@ -181,7 +180,6 @@ export const PersonUpdate = () => {
                         "YYYY-MM-DDTHH:mm:ss"
                       ),
                     }));
-                    console.log(body);
                   }}
                 />
               </Form.Item>
@@ -451,7 +449,6 @@ export const PersonUpdate = () => {
                   onChange={(e) => {
                     if (!e) {
                       delete body?.black_list_reason;
-                      console.log(body);
                     }
                   }}
                   onSelect={(_value, option: any) => {
@@ -630,8 +627,6 @@ export const PersonUpdate = () => {
                   addonBefore="R$"
                   value={body?.cash_out_max_value}
                   onChange={(e) => {
-                    console.log(e);
-
                     setBody((state) => ({
                       ...state,
                       cash_out_max_value: e,

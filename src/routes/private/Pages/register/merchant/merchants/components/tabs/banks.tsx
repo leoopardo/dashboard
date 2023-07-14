@@ -32,7 +32,6 @@ export const BanksTab = (props: { id?: string }) => {
       cash_in_bank: despositBank?.bank,
       cash_out_bank: withdrawBank?.bank,
     }));
-    console.log({ despositBank });
   }, [despositBank, withdrawBank]);
 
   useEffect(() => {
@@ -51,7 +50,6 @@ export const BanksTab = (props: { id?: string }) => {
     refetchMerchantBankData();
   }, [UpdateIsSuccess]);
 
-  console.log({ withdrawBank });
   return (
     <Form
       ref={formRef}

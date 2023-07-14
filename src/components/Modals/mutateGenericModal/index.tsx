@@ -248,13 +248,12 @@ export const MutateModal = ({
                       const value = event.target.value.replace(/[^\d]/g, "");
                       if (!value) {
                         delete body[field.label];
-                        return console.log(body);
+                        return;
                       }
                       setBody((state: any) => ({
                         ...state,
                         [field.label]: value,
                       }));
-                      console.log(body);
                     }}
                   >
                     <Input size="large" />
@@ -319,8 +318,6 @@ export const MutateModal = ({
                         bank_name: option.value,
                         ispb: option.key,
                       });
-
-                      console.log(option);
                     }}
                   />
                 </Form.Item>

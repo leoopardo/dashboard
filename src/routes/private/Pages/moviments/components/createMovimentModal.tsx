@@ -133,7 +133,6 @@ export const CreateMovimentModal = ({
                 ...state,
                 value: Number(value),
               }));
-              console.log(body);
             }}
             prefix="R$ "
           />

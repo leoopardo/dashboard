@@ -45,8 +45,6 @@ export const MerchantHistory = () => {
     refetchMerchantHistory();
   }, [query]);
 
-  console.log(MerchantHistoryError);
-
   const columns: TableColumnsType<MerchantHistoryItem> = [
     {
       title: t("table.created_at"),

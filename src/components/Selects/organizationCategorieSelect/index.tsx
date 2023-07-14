@@ -69,7 +69,6 @@ export const OrganizationCategorieSelect = ({
       value={value}
       notFoundContent={<Empty />}
       onChange={(e) => {
-        console.log(e);
         setValue(e);
       }}
       style={{ width: "100%", height: 40 }}

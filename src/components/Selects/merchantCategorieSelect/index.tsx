@@ -22,7 +22,8 @@ export const MerchantCategorieSelect = ({
     limit: 200,
     name: "",
   });
-  const { CategoriesData, refetchCategoriesData } = useGetMerchantCategories(query);
+  const { CategoriesData, refetchCategoriesData } =
+    useGetMerchantCategories(query);
   const [value, setValue] = useState<any>(null);
   const debounceSearch = useDebounce(query.name);
 
@@ -68,7 +69,6 @@ export const MerchantCategorieSelect = ({
       value={value}
       notFoundContent={<Empty />}
       onChange={(e) => {
-        console.log(e);
         setValue(e);
       }}
       style={{ width: "100%", height: 40 }}

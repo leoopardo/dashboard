@@ -108,7 +108,6 @@ export const UpdateFeePlanModal = ({
         ...state,
         f,
       }));
-      console.log(f);
     }
   };
 
@@ -391,7 +390,6 @@ export const UpdateFeePlanModal = ({
                       <InputNumber
                         value={fee?.range_fee}
                         onChange={(event) => {
-                          console.log(event, fee.id);
                           handleChangeFee(event, fee.id, "range_fee");
                         }}
                       />

@@ -42,8 +42,10 @@ export const FeesTab = (props: { id?: string }) => {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const arrayPercentValue = ["PERCENT", "VALUE"];
 
-  const { UpdateError, UpdateIsSuccess, UpdateMutate } =
-    useUpdateFeesConfig({ merchant_id: Number(props?.id), ...bodyUpdate });
+  const { UpdateError, UpdateIsSuccess, UpdateMutate } = useUpdateFeesConfig({
+    merchant_id: Number(props?.id),
+    ...bodyUpdate,
+  });
 
   const handleDepositFeeTypeChange = (value: string) => {
     if (value === "PERCENT") {
@@ -114,7 +116,6 @@ export const FeesTab = (props: { id?: string }) => {
           bodyUpdate?.[item.value as keyof typeof bodyUpdate] === undefined) ||
           Number(bodyUpdate?.[item.value as keyof typeof bodyUpdate]) <= 0)
       ) {
-        console.log("test", item.value);
         return true;
       } else return false;
     });

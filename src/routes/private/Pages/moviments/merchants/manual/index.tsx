@@ -56,7 +56,7 @@ export const MerchantManual = () => {
 
   const { t } = useTranslation();
   const { SelfError } = useGetSelf();
-  console.error(SelfError);
+  
   const {
     MerchantMovimentsData,
     isMerchantMovimentsDataFetching,

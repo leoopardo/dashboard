@@ -76,7 +76,7 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
     );
     setBody(sanitazerOrganizationConfig(organizationConfigData));
   }, [organizationConfigData]);
-  console.log({ body });
+
   return (
     <Form
       ref={formRef}

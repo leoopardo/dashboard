@@ -44,7 +44,6 @@ export const ResendWebhookModal = ({
 
   const handleChange = (event: any) => {
     setBody((state) => ({ ...state, [event.target.name]: event.target.value }));
-    console.log(body);
   };
 
   return (
