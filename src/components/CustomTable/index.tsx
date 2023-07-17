@@ -682,15 +682,22 @@ export const CustomTable = (props: TableProps) => {
               pagination={{
                 current: Number(props?.query?.page ?? 1),
                 pageSize: Number(props?.query?.limit ?? 25),
+                showTotal: (total, range) => {
+                  return props.removeTotal
+                    ? `${range[0]} - ${range[1]}`
+                    : `${range[0]} - ${range[1]} de ${total}`;
+                },
                 total: props.removeTotal
                   ? props?.items?.length < props?.data?.limit
                     ? props?.data?.limit * props?.data?.page
                     : props?.data?.limit * props?.data?.page + 1
                   : props?.data?.total,
+
                 onChange: (page) => {
                   props.setQuery((state: any) => ({ ...state, page }));
                 },
                 pageSizeOptions: [10, 25, 50, 100],
+                defaultPageSize: 25,
                 onShowSizeChange: (_current, size) =>
                   props.setQuery((state: any) => ({ ...state, limit: size })),
               }}

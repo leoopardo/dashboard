@@ -150,7 +150,6 @@ export const FilterChips = ({
             );
 
           case "gender":
-          case "status":
             return (
               <Tag
                 key={key}
@@ -159,6 +158,26 @@ export const FilterChips = ({
               >
                 {t(`table.${key}`)}:{" "}
                 {t(`table.${filtersQuery[key].toLowerCase()}`)}
+              </Tag>
+            );
+
+          case "status":
+            return (
+              <Tag
+                key={key}
+                color="cyan"
+                icon={<CloseCircleOutlined onClick={() => deleteFilter(key)} />}
+              >
+                {t(`table.${key}`)}:{" "}
+                {t(
+                  `table.${
+                    filtersQuery[key].toLowerCase() == "true"
+                      ? "active"
+                      : filtersQuery[key].toLowerCase() == "false"
+                      ? "inactive"
+                      : filtersQuery[key].toLowerCase()
+                  }`
+                )}
               </Tag>
             );
           default:

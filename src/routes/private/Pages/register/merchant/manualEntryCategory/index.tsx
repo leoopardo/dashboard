@@ -57,12 +57,12 @@ export const MerchantManualEntryCategory = () => {
     useState<MerchantManualEntryCategoryItem | null>(null);
 
   const columns: ColumnInterface[] = [
-    { name: "id", type: "id",sort: true },
-    { name: "name", type: "text",sort: true },
-    { name: "description", type: "text",sort: true },
+    { name: "id", type: "id", sort: true },
+    { name: "name", type: "text", sort: true },
+    { name: "description", type: "text", sort: true },
     { name: "organization_id", type: "text" },
     { name: "status", type: "status" },
-    { name: "created_at", type: "date",sort: true },
+    { name: "created_at", type: "date", sort: true },
   ];
 
   useEffect(() => {
@@ -96,8 +96,8 @@ export const MerchantManualEntryCategory = () => {
         </Grid>
         <Grid item xs={12} md={6} lg={8}>
           <FilterChips
-            startDateKeyName="initial_date"
-            endDateKeyName="final_date"
+            startDateKeyName="start_date"
+            endDateKeyName="end_date"
             query={query}
             setQuery={setQuery}
             haveInitialDate
@@ -160,7 +160,6 @@ export const MerchantManualEntryCategory = () => {
           setOpen={setIsFiltersOpen}
           query={query}
           setQuery={setQuery}
-          haveInitialDate
           filters={["start_date", "end_date", "status"]}
           refetch={refetchCategoryData}
           selectOptions={{ status: ["true", "false"] }}
