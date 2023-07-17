@@ -113,6 +113,7 @@ export const AggregatorUsers = () => {
         <Grid item xs={12} md={4} lg={4}>
           <Input
             size="large"
+            value={search}
             placeholder={t("table.name") || ""}
             onChange={(event) => {
               setSearch(event.target.value);

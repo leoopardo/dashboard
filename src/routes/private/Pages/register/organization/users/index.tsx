@@ -62,11 +62,11 @@ export const OrganizationUser = () => {
   const [action, setAction] = useState<"create" | "update">("create");
 
   const columns: ColumnInterface[] = [
-    { name: "id", type: "id",sort: true },
-    { name: "name", type: "text",sort: true },
-    { name: "group_id", type: "text",sort: true },
+    { name: "id", type: "id", sort: true },
+    { name: "name", type: "text", sort: true },
+    { name: "group_id", type: "text", sort: true },
     { name: "email", type: "text" },
-    { name: "created_at", type: "date",sort: true },
+    { name: "created_at", type: "date", sort: true },
   ];
 
   useEffect(() => {
@@ -117,6 +117,7 @@ export const OrganizationUser = () => {
         <Grid item xs={12} md={4} lg={4}>
           <Input
             size="large"
+            value={search}
             placeholder={t("table.name") || ""}
             onChange={(event) => {
               setSearch(event.target.value);

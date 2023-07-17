@@ -53,15 +53,11 @@ export const MerchantUser = () => {
     null
   );
   const [search, setSearch] = useState<string>("");
-  const {
-    updateError,
-    updateIsSuccess,
-    updateMutate,
-    updateReset,
-  } = useUpdateMerchant({
-    ...updateUserBody,
-    validation_token: tokenState,
-  });
+  const { updateError, updateIsSuccess, updateMutate, updateReset } =
+    useUpdateMerchant({
+      ...updateUserBody,
+      validation_token: tokenState,
+    });
   const {
     MerchantUsersReportsError,
     MerchantUsersReportsIsLoading,
@@ -71,12 +67,12 @@ export const MerchantUser = () => {
   const debounceSearch = useDebounce(search);
 
   const columns: ColumnInterface[] = [
-    { name: "id", type: "id",sort: true },
-    { name: "name", type: "text",sort: true },
+    { name: "id", type: "id", sort: true },
+    { name: "name", type: "text", sort: true },
     { name: "group_id", type: "text" },
     { name: "email", type: "text" },
     { name: "last_signin_date", type: "date" },
-    { name: "created_at", type: "date",sort: true },
+    { name: "created_at", type: "date", sort: true },
   ];
 
   const handleUpdateTokenValidate = () => {
@@ -132,6 +128,7 @@ export const MerchantUser = () => {
         <Grid item xs={12} md={4} lg={4}>
           <Input
             size="large"
+            value={search}
             placeholder={t("table.name") || ""}
             onChange={(event) => {
               setSearch(event.target.value);

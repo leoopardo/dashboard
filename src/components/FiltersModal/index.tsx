@@ -170,7 +170,14 @@ export const FiltersModal = ({
           {t("table.used_filters")}:
         </Grid>
         <Grid item xs={2}>
-          <Button type="dashed" onClick={() => setQuery(initialQuery)} danger>
+          <Button
+            type="dashed"
+            onClick={() => {
+              setQuery(initialQuery);
+              setFiltersQuery(initialQuery);
+            }}
+            danger
+          >
             <FilterAltOffOutlinedIcon />
           </Button>
         </Grid>
@@ -544,6 +551,10 @@ export const FiltersModal = ({
                           label:
                             filter === "step"
                               ? t(`logs.${option.toLowerCase()}`)
+                              : filter === "status"
+                              ? option == "true"
+                                ? t("table.active")
+                                : t("table.inactive")
                               : t(`table.${option.toLowerCase()}`),
                         };
                       }) ?? []
