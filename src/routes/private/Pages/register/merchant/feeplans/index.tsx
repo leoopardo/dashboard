@@ -1,22 +1,28 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { EditOutlined, EyeFilled, PlusOutlined } from "@ant-design/icons";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import {
+  EditOutlined,
+  EyeFilled,
+  PlusOutlined,
+  DeleteOutlined,
+} from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
 import { Grid } from "@mui/material";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
 import { Toast } from "@src/components/Toast";
-import { useCreateMerchantFeePlans } from "@src/services/register/merchant/feePlans/createFeePlans";
-import { useGetFeePlansRegister } from "@src/services/register/merchant/feePlans/getFeePlans";
-import { useUpdateMerchantFeePlan } from "@src/services/register/merchant/feePlans/updateFeePlans";
+import { useCreateMerchantFeePlans } from "@services/register/merchant/feePlans/createFeePlans";
+import { useGetFeePlansRegister } from "@services/register/merchant/feePlans/getFeePlans";
+import { useUpdateMerchantFeePlan } from "@services/register/merchant/feePlans/updateFeePlans";
 import {
   IDepositFeeItem,
   IDepositFeePlansDetails,
-} from "@src/services/types/register/merchants/merchantFeePlans.interface";
-import { MerchantManualEntryCategoryQuery } from "@src/services/types/register/merchants/merchantManualEntryCategory.interface";
+} from "@services/types/register/merchants/merchantFeePlans.interface";
+import { MerchantManualEntryCategoryQuery } from "@services/types/register/merchants/merchantManualEntryCategory.interface";
 import { Button } from "antd";
-import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { useDeleteMerchantFeePlan } from "@services/register/merchant/feePlans/deleteFeePlans";
 import { UpdateFeePlanModal } from "./components/UpdateFeePlanModal";
 
 const INITIAL_QUERY: MerchantManualEntryCategoryQuery = {
@@ -46,6 +52,11 @@ export const MerchantFeePlans = () => {
     isFeePlansDataFetching,
     refetchFeePlansData,
   } = useGetFeePlansRegister(query);
+  const {
+    deleteMerchantFeePlanError,
+    deleteMerchantFeePlanIsSuccess,
+    deleteMerchantFeePlanMutate,
+  } = useDeleteMerchantFeePlan(currentItem?.id);
   const { mutate, error, isLoading, isSuccess } = useCreateMerchantFeePlans({
     ...body,
     merchant_fee_plans_details: fees,
@@ -59,13 +70,14 @@ export const MerchantFeePlans = () => {
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
   const columns: ColumnInterface[] = [
-    { name: "id", type: "id",sort: true },
-    { name: "name", type: "text",sort: true },
+    { name: "id", type: "id", sort: true },
+    { name: "name", type: "text", sort: true },
     { name: "plan_type", type: "translate" },
-    { name: "transaction_type", type: "translate"},
-    { name: "status", type: "status",sort: true },
+    { name: "transaction_type", type: "translate" },
+    { name: "status", type: "status", sort: true },
   ];
 
   useEffect(() => {
@@ -152,7 +164,16 @@ export const MerchantFeePlans = () => {
                   setIsUpdateModalOpen(true);
                 },
               },
+              {
+                label: "delete",
+                icon: <DeleteOutlined style={{ fontSize: "20px" }} />,
+                onClick: () => setIsConfirmOpen(true),
+              },
             ]}
+            isConfirmOpen={isConfirmOpen}
+            setIsConfirmOpen={setIsConfirmOpen}
+            itemToAction={currentItem?.name}
+            onConfirmAction={() => deleteMerchantFeePlanMutate()}
           />
         </Grid>
       </Grid>
@@ -225,6 +246,13 @@ export const MerchantFeePlans = () => {
         actionError={t("messages.update")}
         error={updateError}
         success={updateIsSuccess}
+      />
+
+      <Toast
+        actionSuccess={t("messages.deleted")}
+        actionError={t("messages.delete")}
+        error={deleteMerchantFeePlanError}
+        success={deleteMerchantFeePlanIsSuccess}
       />
     </Grid>
   );

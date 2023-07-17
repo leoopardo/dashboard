@@ -211,7 +211,7 @@ export const PixKeyWhitelist = () => {
         <ViewModal
           item={currentItem}
           loading={isPixKeyWhitelistDataFetching}
-          modalName={`${t("menus.pix_key")}: ${currentItem?.pix_key}`}
+          modalName={`${t("table.pix_key")}: ${currentItem?.pix_key}`}
           open={isViewModalOpen}
           setOpen={setIsViewModalOpen}
         />

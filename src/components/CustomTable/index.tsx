@@ -69,7 +69,7 @@ interface TableProps {
   removePagination?: boolean;
   isConfirmOpen?: boolean;
   setIsConfirmOpen?: Dispatch<SetStateAction<boolean>>;
-  itemToAction?: string;
+  itemToAction?: string | null; 
   onConfirmAction?: () => void;
 }
 
