@@ -554,7 +554,9 @@ export const FiltersModal = ({
                               : filter === "status"
                               ? option == "true"
                                 ? t("table.active")
-                                : t("table.inactive")
+                                : option == "false"
+                                ? t("table.inactive")
+                                : t(`table.${option.toLowerCase()}`)
                               : t(`table.${option.toLowerCase()}`),
                         };
                       }) ?? []

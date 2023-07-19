@@ -26,6 +26,7 @@ import { toast } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import { Mobile } from "./mobile";
+import { defaultTheme } from "@src/styles/defaultTheme";
 
 export interface ColumnInterface {
   name: string | any;
@@ -69,16 +70,14 @@ interface TableProps {
   removePagination?: boolean;
   isConfirmOpen?: boolean;
   setIsConfirmOpen?: Dispatch<SetStateAction<boolean>>;
-  itemToAction?: string | null; 
+  itemToAction?: string | null;
   onConfirmAction?: () => void;
 }
 
 export const CustomTable = (props: TableProps) => {
   const { t } = useTranslation();
   const isMobile = useMediaQuery({ maxWidth: "900px" });
-  const [columns, setColumns] = useState<ColumnsType<ColumnInterface>>([
-    { sorter: {} },
-  ]);
+  const [columns, setColumns] = useState<ColumnsType<ColumnInterface>>([]);
   const [sortOrder] = useState(false);
   const [actions, setActions] = useState<any>([]);
   const { BankMainteneceData } = useGetOrganizationBankMaintenece({
@@ -392,22 +391,33 @@ export const CustomTable = (props: TableProps) => {
                 ? column?.name + `${Math.random()}`
                 : column?.name,
               dataIndex: column?.name,
-              render: (text: string) =>
-                typeof text === "boolean" ? (
-                  <p
-                    key={column?.name}
-                    style={{ width: "100%", textAlign: "center" }}
-                  >
-                    {text ? t("table.active") : t("table.inactive")}
-                  </p>
-                ) : (
-                  <p
-                    key={column?.name}
-                    style={{ width: "100%", textAlign: "center" }}
-                  >
-                    {t(`table.${text?.toLocaleLowerCase()}`)}
-                  </p>
-                ),
+              render: (text: string) => {
+                return {
+                  children:
+                    typeof text === "boolean" ? (
+                      <p
+                        key={column?.name}
+                        style={{ width: "100%", textAlign: "center" }}
+                      >
+                        {text ? t("table.active") : t("table.inactive")}
+                      </p>
+                    ) : (
+                      <p
+                        key={column?.name}
+                        style={{
+                          width: "100%",
+                          textAlign: "center",
+                          color: (defaultTheme.colors as any)[
+                            text?.toLocaleLowerCase()
+                          ],
+                          fontWeight: 600,
+                        }}
+                      >
+                        {t(`table.${text?.toLocaleLowerCase()}`)}
+                      </p>
+                    ),
+                };
+              },
               sorter: column.sort
                 ? () => {
                     props.setQuery((state: any) => ({

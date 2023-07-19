@@ -11,7 +11,7 @@ export function useGetRowsRefundWithdrawals(params: refundWithdrawalsQuery) {
   const { data, isFetching, error, refetch } = useQuery<
     refundWithdrawalsRowsResponse | null | undefined
   >(
-    "depositsRows",
+    "refundWithdrawalsRows",
     async () => {
       const response = await api.get("refund/pix/rows", {
         params: {

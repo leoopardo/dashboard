@@ -708,7 +708,7 @@ export const PersonUpdate = () => {
       children: isFilesFetching ? (
         <div
           style={{
-            height: "70vh",
+            height: "100%",
             width: "100%",
             display: "flex",
             alignItems: "center",
@@ -722,7 +722,6 @@ export const PersonUpdate = () => {
           <Grid xs={12} item>
             <Dragger
               listType="picture"
-              accept=".png,.pdf,.docx"
               multiple={false}
               onRemove={(file) => {
                 setDeleteFileId(file?.uid);
@@ -780,6 +779,7 @@ export const PersonUpdate = () => {
       style={{
         padding: "25px",
         display: "flex",
+        minHeight: "1000px",
       }}
     >
       <Grid item xs={12}>

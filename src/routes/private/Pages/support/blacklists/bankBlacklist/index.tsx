@@ -56,8 +56,9 @@ export const BankBlacklist = () => {
   const { CreateError, CreateIsLoading, CreateIsSuccess, CreateMutate } =
     useCreateBankBlacklist(body);
 
-  const { DeleteError, DeleteIsSuccess, DeleteMutate } =
-    useDeleteBankBlacklist({ ispb: currentItem?.ispb });
+  const { DeleteError, DeleteIsSuccess, DeleteMutate } = useDeleteBankBlacklist(
+    { ispb: currentItem?.ispb }
+  );
 
   const {
     BankBlacklistReportsError,
@@ -202,7 +203,8 @@ export const BankBlacklist = () => {
             error={BankBlacklistError}
             columns={[
               { name: "ispb", type: "id", sort: true },
-              { name: "bank_name", type: "bankNameToIcon", sort: true },
+              { name: "bank_name", type: "bankNameToIcon", head: "bank_icon" },
+              { name: "bank_name", type: "text", sort: true },
               { name: "user_id", type: "text" },
               { name: "user_name", type: "text" },
               { name: "createdAt", type: "date", sort: true },

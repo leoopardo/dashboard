@@ -517,7 +517,8 @@
     "transactions": "Transações",
     "plan_type": "Tipo de plano",
     "range_type": "Tipo de faixa",
-    "aggregator_id": "ID Agregador"
+    "aggregator_id": "ID Agregador",
+    "bank_icon": "Logo do banco"
   },
   "actions": {
     "details": "Detalhes",

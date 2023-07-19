@@ -515,7 +515,8 @@
     "transactions": "Transactions",
     "plan_type": "Plan type",
     "range_type": "Range type",
-    "aggregator_id": "ID Aggregator"
+    "aggregator_id": "ID Aggregator",
+    "bank_icon": "Bank icon"
   },
   "actions": {
     "details": "Details",

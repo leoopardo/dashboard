@@ -1,9 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Grid } from "@mui/material";
-import { Descriptions, Drawer, QRCode, Segmented, Spin } from "antd";
+import {
+  Button,
+  Descriptions,
+  Drawer,
+  Input,
+  QRCode,
+  Segmented,
+  Spin,
+} from "antd";
 import { Dispatch, SetStateAction, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useGetDeposit } from "../../../../../../services/consult/deposits/generatedDeposits/getDeposit";
+import CopyToClipboard from "react-copy-to-clipboard";
+import { toast } from "react-hot-toast";
+import { CopyOutlined } from "@ant-design/icons";
 
 interface ViewModalProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -137,7 +148,39 @@ export const ViewModal = (props: ViewModalProps) => {
                             textAlign: "center",
                           }}
                         >
-                          <QRCode value={deposit[key] || "-"} type="canvas" />
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              justifyContent: "center",
+                              alignItems: "center",
+                            }}
+                          >
+                            <QRCode
+                              value={deposit[key] || "-"}
+                              icon={import.meta.env.VITE_APP_ICON}
+                              errorLevel="L"
+                              type="canvas"
+                              style={{ marginBottom: "5px" }}
+                            />
+                            <Input
+                              placeholder="-"
+                              value={deposit[key] || "-"}
+                              addonAfter={
+                                <CopyToClipboard text={deposit[key]}>
+                                  <Button
+                                    size="small"
+                                    type="ghost"
+                                    onClick={() =>
+                                      toast.success(t("table.copied"))
+                                    }
+                                  >
+                                    <CopyOutlined />
+                                  </Button>
+                                </CopyToClipboard>
+                              }
+                            />
+                          </div>
                         </Descriptions.Item>
                       );
                     case "value":
