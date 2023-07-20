@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { api } from "../../../../config/api";
 
-export function useGetOperatorsReports(params: ReportsQuery) {
+export function useGetAggregatorsReports(params: ReportsQuery) {
   const [loadData, setLoadData] = useState<ReportsData | null | undefined>(
     null
   );
@@ -15,9 +15,9 @@ export function useGetOperatorsReports(params: ReportsQuery) {
   const { data, isFetching, error, refetch } = useQuery<
     ReportsData | null | undefined
   >(
-    "OperatorReports",
+    "AggregatorReports",
     async () => {
-      const response = await api.get("report/csv/operator", {
+      const response = await api.get("report/csv/aggregator", {
         params,
       });
       return response.data;
@@ -35,14 +35,14 @@ export function useGetOperatorsReports(params: ReportsQuery) {
     setLoadData(data);
   }, [data]);
 
-  const OperatrsReportsData = data;
-  const isOperatrsReportsDataFetching = isFetching;
-  const OperatrsReportsDataError: any = error;
-  const refetchOperatrsReportsData = refetch;
+  const AggregatorsReportsData = data;
+  const isAggregatorsReportsDataFetching = isFetching;
+  const AggregatorsReportsDataError: any = error;
+  const refetchAggregatorsReportsData = refetch;
   return {
-    OperatrsReportsData,
-    isOperatrsReportsDataFetching,
-    OperatrsReportsDataError,
-    refetchOperatrsReportsData,
+    AggregatorsReportsData,
+    isAggregatorsReportsDataFetching,
+    AggregatorsReportsDataError,
+    refetchAggregatorsReportsData,
   };
 }

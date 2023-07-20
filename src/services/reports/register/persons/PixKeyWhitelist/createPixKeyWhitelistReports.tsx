@@ -10,7 +10,7 @@ export function useCreatePixKeyWhitelistReports(body: PixKeyWhitelistQuery) {
     const response = await api.post(
       "blacklist/pix-key-white-list/csv",
       body,
-      {}
+      {  params: body,}
     );
     await queryClient.refetchQueries({ queryKey: ["PixKeyWhitelistReports"] });
     return response.data;

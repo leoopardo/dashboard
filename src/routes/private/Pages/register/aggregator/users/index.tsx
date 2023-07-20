@@ -18,6 +18,7 @@ import { Button, Input } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { NewUserInterface, NewUserModal } from "./components/newUserModal";
+import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 
 const INITIAL_QUERY: PartnerQuery = {
   limit: 25,
@@ -55,13 +56,13 @@ export const AggregatorUsers = () => {
   const [action, setAction] = useState<"create" | "update">("create");
 
   const columns: ColumnInterface[] = [
-    { name: "id", type: "id",sort: true },
-    { name: "name", type: "text",sort: true },
+    { name: "id", type: "id", sort: true },
+    { name: "name", type: "text", sort: true },
     { name: "group_id", type: "text" },
-    { name: ["partner", "name"], head: "partner", type: "text"},
-    { name: "last_signin_date", type: "date"},
+    { name: ["partner", "name"], head: "partner", type: "text" },
+    { name: "last_signin_date", type: "date" },
     { name: "status", type: "status" },
-    { name: "created_at", type: "date",sort: true },
+    { name: "created_at", type: "date", sort: true },
   ];
 
   useEffect(() => {
@@ -163,6 +164,18 @@ export const AggregatorUsers = () => {
             </Button>
           </Grid>
         )}
+        {/* {permissions.register.aggregator.users.aggregator_user_export_csv && (
+          <Grid item xs={12} md="auto">
+            <ExportReportsModal
+              disabled={!UsersData?.total || AggregatorsDataError}
+              mutateReport={() => AggregatorReportsMutate()}
+              error={AggregatorReportsError}
+              success={AggregatorReportsIsSuccess}
+              loading={AggregatorReportsIsLoading}
+              reportPath="/register/aggregator/aggregator_reports/aggregator_aggregators_reports"
+            />
+          </Grid>
+        )} */}
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>

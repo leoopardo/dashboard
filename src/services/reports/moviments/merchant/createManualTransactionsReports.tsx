@@ -25,7 +25,7 @@ export function useCreateMerchantManualReports(
               .format("YYYY-MM-DDTHH:mm:ss.SSS")
           : null,
       },
-      {}
+      {  params: body,}
     );
     await queryClient.refetchQueries({
       queryKey: ["MerchantManualReports"],

@@ -8,7 +8,7 @@ export function useCreatePersonsReports(body: PersonsQuery) {
   const { isLoading, error, mutate, isSuccess } = useMutation<
     PersonsQuery | null | undefined
   >("CreatePersonsReports", async () => {
-    const response = await api.post("customer/csv/persons", body, {});
+    const response = await api.post("customer/csv/persons", body, {  params: body,});
     await queryClient.refetchQueries({ queryKey: ["PersonsReports"] });
     return response.data;
   });

@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { api } from "../../../../config/api";
 
-export function useGetOperatorsReports(params: ReportsQuery) {
+export function useGetOperatorUsersReports(params: ReportsQuery) {
   const [loadData, setLoadData] = useState<ReportsData | null | undefined>(
     null
   );
@@ -15,9 +15,9 @@ export function useGetOperatorsReports(params: ReportsQuery) {
   const { data, isFetching, error, refetch } = useQuery<
     ReportsData | null | undefined
   >(
-    "OperatorReports",
+    "OperatorUsersReports",
     async () => {
-      const response = await api.get("report/csv/operator", {
+      const response = await api.get("report/csv/user/operator", {
         params,
       });
       return response.data;
@@ -35,14 +35,14 @@ export function useGetOperatorsReports(params: ReportsQuery) {
     setLoadData(data);
   }, [data]);
 
-  const OperatrsReportsData = data;
-  const isOperatrsReportsDataFetching = isFetching;
-  const OperatrsReportsDataError: any = error;
-  const refetchOperatrsReportsData = refetch;
+  const OperatorUsersReportsData = data;
+  const isOperatorUsersReportsDataFetching = isFetching;
+  const OperatorUsersReportsDataError: any = error;
+  const refetchOperatorUsersReportsData = refetch;
   return {
-    OperatrsReportsData,
-    isOperatrsReportsDataFetching,
-    OperatrsReportsDataError,
-    refetchOperatrsReportsData,
+    OperatorUsersReportsData,
+    isOperatorUsersReportsDataFetching,
+    OperatorUsersReportsDataError,
+    refetchOperatorUsersReportsData,
   };
 }

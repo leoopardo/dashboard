@@ -66,6 +66,10 @@ import { InvalidPixKeyBlacklist } from "./Pages/support/blacklists/invalidPixKey
 import { BankBlackistReports } from "./Pages/support/blacklists/reports/bankBlacklist";
 import { ThirdPartKeyBlacklist } from "./Pages/support/blacklists/thirdPartKey";
 import { Redirect } from "./redirect";
+import { OperatorReports } from "./Pages/register/operator/reports/operator";
+import { OperatorUsersReports } from "./Pages/register/operator/reports/users";
+import { AggregatorsReports } from "./Pages/register/aggregator/reports/aggregators";
+import { AggregatorUsersReports } from "./Pages/register/aggregator/reports/users";
 
 export const PrivateRoutes = () => {
   return (
@@ -200,6 +204,13 @@ export const PrivateRoutes = () => {
           <Route path="aggregator">
             <Route path="aggregators" element={<Aggregators />} />
             <Route path="aggregator_users" element={<AggregatorUsers />} />
+            <Route path="aggregator_reports">
+              <Route
+                path="aggregator_aggregators_reports"
+                element={<AggregatorsReports />}
+              />
+              <Route path="aggregator_users_reports" element={<AggregatorUsersReports />} />
+            </Route>
           </Route>
           <Route path="partner">
             <Route path="partners" element={<Partners />} />
@@ -218,6 +229,16 @@ export const PrivateRoutes = () => {
           <Route path="operator">
             <Route path="operators" element={<Operators />} />
             <Route path="operator_users" element={<OperatorUsers />} />
+            <Route path="operator_reports">
+              <Route
+                path="operator_operators_reports"
+                element={<OperatorReports />}
+              />
+              <Route
+                path="operator_users_reports"
+                element={<OperatorUsersReports />}
+              />
+            </Route>
           </Route>
           <Route path="merchant">
             <Route path="merchants">

@@ -7,7 +7,7 @@ export function useCreateMerchantReports(body: MerchantsQuery) {
   const { isLoading, error, mutate, isSuccess, reset } = useMutation<
     MerchantsQuery | null | undefined
   >("CreateMerchantReports", async () => {
-    const response = await api.post("report/csv/merchant", body, {});
+    const response = await api.post("report/csv/merchant", body, {  params: body,});
     await queryClient.refetchQueries({ queryKey: ["MerchantReports"] });
     return response.data;
   });

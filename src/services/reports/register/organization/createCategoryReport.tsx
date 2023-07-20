@@ -12,7 +12,7 @@ export function useCreateOrganizationCategoryReports(
     const response = await api.post(
       "core/csv/organization/entry-account/category",
       body,
-      {}
+      {  params: body,}
     );
     await queryClient.refetchQueries({
       queryKey: ["OrganizationCategoriesReports"],

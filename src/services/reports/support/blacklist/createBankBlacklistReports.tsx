@@ -7,7 +7,7 @@ export function useCreateBankBlacklistReports(body: BankBlacklistQuery) {
   const { isLoading, error, mutate, isSuccess, reset } = useMutation<
     BankBlacklistQuery | null | undefined
   >("CreateBankBlacklistReports", async () => {
-    const response = await api.post("/blacklist/bank-black-list/csv", body, {});
+    const response = await api.post("/blacklist/bank-black-list/csv", body, {  params: body,});
     await queryClient.refetchQueries({ queryKey: ["BankBlacklistReports"] });
     return response.data;
   });

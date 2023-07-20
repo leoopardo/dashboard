@@ -7,7 +7,7 @@ export function useCreatePartnerUserReports(body: PartnerUsersQuery) {
   const { isLoading, error, mutate, isSuccess, reset } = useMutation<
     PartnerUsersQuery | null | undefined
   >("PartnerUsersReports", async () => {
-    const response = await api.post("report/csv/user/partner", body, {});
+    const response = await api.post("report/csv/user/partner", body, {  params: body,});
     await queryClient.refetchQueries({ queryKey: ["PartnerUserReports"] });
     return response.data;
   });

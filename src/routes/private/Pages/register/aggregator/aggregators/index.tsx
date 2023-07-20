@@ -5,6 +5,7 @@ import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
+import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
 import { Toast } from "@src/components/Toast";
@@ -12,6 +13,7 @@ import { queryClient } from "@src/services/queryClient";
 import { useCreateAggregator } from "@src/services/register/aggregator/createAggregator";
 import { useGetAggregators } from "@src/services/register/aggregator/getAggregators";
 import { useUpdateAggregator } from "@src/services/register/aggregator/updateAggregator";
+import { useCreateAggregatorReports } from "@src/services/reports/register/aggregators/createAggregatorReports";
 import {
   AggregatorItem,
   AggregatorQuery,
@@ -42,6 +44,13 @@ export const Aggregators = () => {
     isAggregatorsDataFetching,
     refetchAggregatorsData,
   } = useGetAggregators(query);
+
+  const {
+    AggregatorReportsError,
+    AggregatorReportsIsLoading,
+    AggregatorReportsIsSuccess,
+    AggregatorReportsMutate,
+  } = useCreateAggregatorReports(query);
 
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [isNewCategorieModal, setIsNewCategorieModal] =
@@ -80,10 +89,10 @@ export const Aggregators = () => {
   } = useUpdateAggregator(updateBody);
 
   const columns: ColumnInterface[] = [
-    { name: "id", type: "id",sort: true },
-    { name: "name", type: "text",sort: true },
-    { name: "status", type: "status",sort: true },
-    { name: "created_at", type: "date",sort: true },
+    { name: "id", type: "id", sort: true },
+    { name: "name", type: "text", sort: true },
+    { name: "status", type: "status", sort: true },
+    { name: "created_at", type: "date", sort: true },
   ];
 
   useEffect(() => {
@@ -186,6 +195,18 @@ export const Aggregators = () => {
               <UserAddOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
               {`${t("buttons.create")} ${t("buttons.new_aggregator")}`}
             </Button>
+          </Grid>
+        )}
+        {permissions.register.aggregator.aggregator.aggregator_export_csv && (
+          <Grid item xs={12} md="auto">
+            <ExportReportsModal
+              disabled={!AggregatorsData?.total || AggregatorsDataError}
+              mutateReport={() => AggregatorReportsMutate()}
+              error={AggregatorReportsError}
+              success={AggregatorReportsIsSuccess}
+              loading={AggregatorReportsIsLoading}
+              reportPath="/register/aggregator/aggregator_reports/aggregator_aggregators_reports"
+            />
           </Grid>
         )}
       </Grid>

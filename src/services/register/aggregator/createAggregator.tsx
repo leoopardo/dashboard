@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { queryClient } from "@src/services/queryClient";
 import { AggregatorItem } from "@src/services/types/register/aggregators/aggregators.interface";
 import { useMutation } from "react-query";
@@ -14,7 +15,7 @@ export function useCreateAggregator(body: AggregatorItem) {
 
   const AggregatorMutate = mutate;
   const AggregatorIsLoading = isLoading;
-  const AggregatorError = error;
+  const AggregatorError: any = error;
   const AggregatorIsSuccess = isSuccess;
   const AggregatorReset = reset;
 

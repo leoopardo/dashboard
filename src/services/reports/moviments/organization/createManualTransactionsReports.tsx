@@ -23,7 +23,7 @@ export function useCreateOrganizationManualReports(body: GetMovimentsQuery) {
               .format("YYYY-MM-DDTHH:mm:ss.SSS")
           : null,
       },
-      {}
+      {  params: body,}
     );
     await queryClient.refetchQueries({
       queryKey: ["OrganizationManualReports"],
