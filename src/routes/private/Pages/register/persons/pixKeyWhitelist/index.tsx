@@ -64,9 +64,9 @@ export const PixKeyWhitelist = () => {
     useDeleteDeletePixKey({ pix_key: currentItem?.pix_key });
 
   const columns: ColumnInterface[] = [
-    { name: "_id", type: "id"},
+    { name: "_id", type: "id" },
     { name: "pix_key", type: "text" },
-    { name: "createdAt", type: "date",sort: true },
+    { name: "createdAt", type: "date", sort: true },
   ];
 
   useEffect(() => {
@@ -145,6 +145,7 @@ export const PixKeyWhitelist = () => {
           .person_pix_whitelist_export_csv && (
           <Grid item xs={12} md="auto">
             <ExportReportsModal
+              disabled={!PixKeyWhitelistData?.total || PixKeyWhitelistDataError}
               mutateReport={() => PixKeyWhitelistReportsMutate()}
               error={PixKeyWhitelistReportsError}
               success={PixKeyWhitelistReportsIsSuccess}

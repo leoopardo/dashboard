@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { FileAddOutlined } from "@ant-design/icons";
-import { Button, Popconfirm, notification } from "antd";
+import { Button, Popconfirm, Tooltip, notification } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +12,7 @@ interface ExportReportsInterface {
   reportPageName?: string;
   success: boolean;
   loading: boolean;
+  disabled?: boolean;
   error: any;
 }
 
@@ -24,6 +25,7 @@ export const ExportReportsModal = ({
   error,
   success,
   loading,
+  disabled,
 }: ExportReportsInterface) => {
   const { t } = useTranslation();
   const [open, setOpen] = useState<boolean>(false);
@@ -52,7 +54,7 @@ export const ExportReportsModal = ({
 
   return (
     <Popconfirm
-      title={t("messages.create_csv")}
+      title={t("messages.export_csv")}
       description={t("messages.csv_confirm")}
       onConfirm={() => {
         mutateReport();
@@ -65,16 +67,27 @@ export const ExportReportsModal = ({
       placement="bottom"
     >
       {contextHolder}
-      <Button
-        style={{ width: "100%" }}
-        size="large"
-        type="default"
-        shape="round"
-        onClick={() => setOpen(true)}
-        loading={loading}
+      <Tooltip
+        placement="topRight"
+        title={
+          disabled
+            ? t("messages.no_records_to_export")
+            : t("messages.export_csv")
+        }
+        arrow
       >
-        {!loading && <FileAddOutlined style={{ fontSize: 22 }} />} CSV
-      </Button>
+        <Button
+          disabled={disabled}
+          style={{ width: "100%" }}
+          size="large"
+          type="default"
+          shape="round"
+          onClick={() => setOpen(true)}
+          loading={loading}
+        >
+          {!loading && <FileAddOutlined style={{ fontSize: 22 }} />} CSV
+        </Button>
+      </Tooltip>
     </Popconfirm>
   );
 };

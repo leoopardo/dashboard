@@ -124,6 +124,7 @@ export const MerchantBankStatement = () => {
           .report_merchant_extract_export_csv && (
           <Grid item xs={12} md="auto" lg={1}>
             <ExportReportsModal
+              disabled={!MerchantTransactions?.total || MerchantTransactionsError}
               mutateReport={() => BankStatementReportsMutate()}
               error={BankStatementReportsError}
               success={BankStatementReportsIsSuccess}

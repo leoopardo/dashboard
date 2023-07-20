@@ -7,7 +7,6 @@ import { FiltersModal } from "@src/components/FiltersModal";
 import { FilterChips } from "@src/components/FiltersModal/filterChips";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { ValidateToken } from "@src/components/ValidateToken";
-import { useGetSelf } from "@src/services/getSelf";
 import { useGetOrganizationMoviments } from "@src/services/moviments/organization/manual/GetManualTransactions";
 import { useCreateManualTransaction } from "@src/services/moviments/organization/manual/createManualTransaction";
 import { queryClient } from "@src/services/queryClient";
@@ -234,6 +233,7 @@ export const OrgonizationManual = () => {
           .paybrokers_manual_transactions_export_csv && (
           <Grid item xs={12} md="auto" lg={1}>
             <ExportReportsModal
+             disabled={!OrganizationMovimentsData?.total || OrganizationMovimentsDataError}
               mutateReport={() => OrganizationManualReportsMutate()}
               error={OrganizationManualReportsError}
               success={OrganizationManualReportsIsSuccess}

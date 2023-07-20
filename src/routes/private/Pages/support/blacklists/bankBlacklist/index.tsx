@@ -183,6 +183,7 @@ export const BankBlacklist = () => {
           .support_blacklist_bank_export_csv && (
           <Grid item xs={12} md="auto">
             <ExportReportsModal
+              disabled={!BankBlacklist?.total || BankBlacklistError}
               mutateReport={() => BankBlacklistReportsMutate()}
               error={BankBlacklistReportsError}
               success={BankBlacklistReportsIsSuccess}

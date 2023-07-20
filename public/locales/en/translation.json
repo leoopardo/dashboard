@@ -147,7 +147,9 @@
     "create_csv": "Create CSV",
     "csv_confirm": "Do you want to create an CSV file with the selected filters?",
     "creating_csv": "Generating CSV",
-    "creating_csv_message": "The CSV file is being generated. You can view the process by navigating to:"
+    "creating_csv_message": "The CSV file is being generated. You can view the process by navigating to:",
+    "export_csv": "Generate CSV report",
+    "no_records_to_export": "No records to export"
   },
   "login": {
     "sign_in": "Sign in",

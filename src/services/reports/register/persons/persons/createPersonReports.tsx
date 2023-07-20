@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { queryClient } from "@src/services/queryClient";
 import { PersonsQuery } from "@src/services/types/register/persons/persons.interface";
 import { useMutation } from "react-query";
@@ -14,7 +15,7 @@ export function useCreatePersonsReports(body: PersonsQuery) {
 
   const PersonsReportsMutate = mutate;
   const PersonsReportsIsLoading = isLoading;
-  const PersonsReportsError = error;
+  const PersonsReportsError: any = error;
   const PersonsReportsIsSuccess = isSuccess;
 
   return {

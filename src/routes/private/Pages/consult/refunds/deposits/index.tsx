@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { SearchOutlined } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import ReplayIcon from "@mui/icons-material/Replay";
 import { Grid } from "@mui/material";
-import { Alert, Button, Input, Select, Space } from "antd";
+import { Alert, Button, Input, Select } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -145,7 +144,10 @@ export const RefundDeposits = () => {
           <Select
             style={{ width: "100%" }}
             size="large"
-            onChange={(value) => setSearchOption(value)}
+            onChange={(value) => {
+              setSearchOption(value);
+              setSearch("");
+            }}
             value={searchOption}
             placeholder={t("input.options")}
             options={[
@@ -161,24 +163,14 @@ export const RefundDeposits = () => {
           />
         </Grid>
         <Grid item xs={12} md={4} lg={4}>
-          <Space.Compact style={{ width: "100%" }} size="large">
-            <Input
-              placeholder="Pesquisa"
-              size="large"
-              disabled={!searchOption}
-              style={{ width: "100%" }}
-              onChange={(event) => setSearch(event.target.value)}
-            />
-            <Button
-              size="large"
-              loading={isRefundDepositsRowsFetching}
-              type="primary"
-              onClick={() => refetchRefundDepositsTotalRows()}
-              disabled={typeof searchOption === "string" && !search}
-            >
-              <SearchOutlined />
-            </Button>
-          </Space.Compact>
+          <Input
+            placeholder="Pesquisa"
+            size="large"
+            disabled={!searchOption}
+            value={search || ""}
+            style={{ width: "100%" }}
+            onChange={(event) => setSearch(event.target.value)}
+          />
         </Grid>
         <Grid item xs={12} md={2} lg={2}>
           <Button
@@ -189,7 +181,7 @@ export const RefundDeposits = () => {
             onClick={() => {
               setQuery(INITIAL_QUERY);
               setSearchOption(null);
-              setSearch(null);
+              setSearch("");
             }}
             style={{
               display: "flex",

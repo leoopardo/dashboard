@@ -170,6 +170,7 @@ export const OrganizationUser = () => {
         {permissions.register.paybrokers.users.paybrokers_user_export_csv && (
           <Grid item xs={12} md="auto">
             <ExportReportsModal
+              disabled={!UsersData?.total || UsersDataError}
               mutateReport={() => OrganizationReportsMutate()}
               error={OrganizationReportsError}
               success={OrganizationReportsIsSuccess}

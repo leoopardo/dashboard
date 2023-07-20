@@ -79,16 +79,16 @@ export const Persons = () => {
     useUpdatePartner(updateBody);
 
   const columns: ColumnInterface[] = [
-    { name: "cpf", type: "document",sort: true },
-    { name: "situation_text", type: "text", },
-    { name: "name", type: "text",sort: true },
-    { name: "birth_date", type: "date",sort: true },
+    { name: "cpf", type: "document", sort: true },
+    { name: "situation_text", type: "text" },
+    { name: "name", type: "text", sort: true },
+    { name: "birth_date", type: "date", sort: true },
     { name: "mother_name", type: "text" },
     { name: "black_list", type: "boolean" },
     { name: "flag_pep", type: "boolean" },
     { name: "flag_aux_gov", type: "boolean" },
     { name: "flag_alert", type: "text" },
-    { name: "updatedAt", type: "date",sort: true },
+    { name: "updatedAt", type: "date", sort: true },
   ];
 
   useEffect(() => {
@@ -226,6 +226,7 @@ export const Persons = () => {
         {permissions.register.person.person.person_person_export_csv && (
           <Grid item xs={12} md="auto">
             <ExportReportsModal
+              disabled={!PersonsData?.total || PersonsReportsError}
               mutateReport={() => PersonsReportsMutate()}
               error={PersonsReportsError}
               success={PersonsReportsIsSuccess}

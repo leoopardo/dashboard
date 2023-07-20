@@ -83,11 +83,11 @@ export const OrganizationCategories = () => {
   } = useCreateOrganizationCategoryReports(query);
 
   const columns: ColumnInterface[] = [
-    { name: "id", type: "id",sort: true },
-    { name: "name", type: "text",sort: true },
-    { name: "description", type: "text",sort: true },
-    { name: "status", type: "status",sort: true },
-    { name: "created_at", type: "date",sort: true },
+    { name: "id", type: "id", sort: true },
+    { name: "name", type: "text", sort: true },
+    { name: "description", type: "text", sort: true },
+    { name: "status", type: "status", sort: true },
+    { name: "created_at", type: "date", sort: true },
   ];
 
   useEffect(() => {
@@ -196,6 +196,7 @@ export const OrganizationCategories = () => {
           .paybrokers_release_category_export_csv && (
           <Grid item xs={12} md="auto">
             <ExportReportsModal
+              disabled={!CategoriesData?.total || CategoriesDataError }
               mutateReport={() => CategoryReportsMutate()}
               error={CategoryReportsError}
               success={CategoryReportsIsSuccess}

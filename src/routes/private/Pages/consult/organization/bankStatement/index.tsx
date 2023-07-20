@@ -130,6 +130,7 @@ export const OrganizationBankStatement = () => {
           .report_paybrokers_extract_export_csv && (
           <Grid item xs={12} md="auto" lg={1}>
             <ExportReportsModal
+              disabled={!OrganizationPerbank?.length || OrganizationPerbankError}
               mutateReport={() => BankStatementReportsMutate()}
               error={BankStatementReportsError}
               success={BankStatementReportsIsSuccess}

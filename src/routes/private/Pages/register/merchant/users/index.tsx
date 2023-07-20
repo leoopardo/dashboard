@@ -181,6 +181,7 @@ export const MerchantUser = () => {
         {permissions.register.merchant.users.merchant_user_export_csv && (
           <Grid item xs={12} md="auto">
             <ExportReportsModal
+              disabled={!UsersData?.total || UsersDataError}
               mutateReport={() => MerchantUsersReportsMutate()}
               error={MerchantUsersReportsError}
               success={MerchantUsersReportsIsSuccess}

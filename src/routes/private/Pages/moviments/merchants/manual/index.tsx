@@ -56,7 +56,7 @@ export const MerchantManual = () => {
 
   const { t } = useTranslation();
   const { SelfError } = useGetSelf();
-  
+
   const {
     MerchantMovimentsData,
     isMerchantMovimentsDataFetching,
@@ -87,6 +87,10 @@ export const MerchantManual = () => {
   useEffect(() => {
     setOperationInBody((state) => ({ ...state, validation_token: tokenState }));
   }, [tokenState]);
+
+  useEffect(() => {
+    console.error(SelfError);
+  }, [SelfError]);
 
   return (
     <Grid container style={{ padding: "25px" }}>
@@ -236,6 +240,7 @@ export const MerchantManual = () => {
           .merchant_manual_transactions_export_csv && (
           <Grid item xs={12} md="auto">
             <ExportReportsModal
+              disabled={!MerchantMovimentsData?.total || MerchantMovimentsDataError}
               mutateReport={() => MerchantManualReportsMutate()}
               error={MerchantManualReportsError}
               success={MerchantManualReportsIsSuccess}
@@ -257,13 +262,13 @@ export const MerchantManual = () => {
             items={MerchantMovimentsData?.items}
             error={MerchantMovimentsDataError}
             columns={[
-              { name: "_id", type: "id"  },
-              { name: "category_name", type: "text",sort: true  },
+              { name: "_id", type: "id" },
+              { name: "category_name", type: "text", sort: true },
               { name: "user_name", type: "text" },
-              { name: "type", type: "translate"  },
-              { name: "value", type: "value"  },
-              { name: "createdAt", type: "date",sort: true  },
-              { name: "status", type: "status",sort: true  },
+              { name: "type", type: "translate" },
+              { name: "value", type: "value" },
+              { name: "createdAt", type: "date", sort: true },
+              { name: "status", type: "status", sort: true },
             ]}
             loading={isMerchantMovimentsDataFetching}
             actions={[]}

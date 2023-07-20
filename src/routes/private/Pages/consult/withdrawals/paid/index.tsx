@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { EyeFilled, SearchOutlined } from "@ant-design/icons";
+import { EyeFilled } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { queryClient } from "@src/services/queryClient";
 import { useCreatePaidWithdrawalsReports } from "@src/services/reports/consult/withdrawals/paid/createGeneratedWithdrawalsReports";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Alert, Button, Input, Select, Space } from "antd";
+import { Alert, Button, Input, Select } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -54,6 +54,7 @@ export const PaidWithdrawals = () => {
     paidWithdrawalsRows,
     isPaidWithdrawalsRowsFetching,
     refetchPaidWithdrawalsTotalRows,
+    paidWithdrawalsRowsError,
   } = useGetRowsPaidWithdrawals(query);
 
   const {
@@ -164,7 +165,10 @@ export const PaidWithdrawals = () => {
           <Select
             style={{ width: "100%" }}
             size="large"
-            onChange={(value) => setSearchOption(value)}
+            onChange={(value) => {
+              setSearchOption(value);
+              setSearch("");
+            }}
             value={searchOption}
             placeholder={t("input.options")}
             options={[
@@ -180,23 +184,14 @@ export const PaidWithdrawals = () => {
           />
         </Grid>
         <Grid item xs={12} md={4} lg={4}>
-          <Space.Compact style={{ width: "100%" }} size="large">
-            <Input
-              placeholder="Pesquisa"
-              size="large"
-              disabled={!searchOption}
-              style={{ width: "100%" }}
-              onChange={(event) => setSearch(event.target.value)}
-            />
-            <Button
-              loading={isPaidWithdrawalsRowsFetching}
-              type="primary"
-              onClick={() => refetchPaidWithdrawalsTotalRows()}
-              disabled={typeof searchOption === "string" && !search}
-            >
-              <SearchOutlined />
-            </Button>
-          </Space.Compact>
+          <Input
+            placeholder="Pesquisa"
+            size="large"
+            disabled={!searchOption}
+            value={search || ""}
+            style={{ width: "100%" }}
+            onChange={(event) => setSearch(event.target.value)}
+          />
         </Grid>
         <Grid item xs={12} md={3} lg={2}>
           <Button
@@ -207,7 +202,7 @@ export const PaidWithdrawals = () => {
             onClick={() => {
               setQuery(INITIAL_QUERY);
               setSearchOption(null);
-              setSearch(null);
+              setSearch("");
             }}
             style={{
               display: "flex",
@@ -225,6 +220,9 @@ export const PaidWithdrawals = () => {
           .report_withdraw_paid_withdraw_export_csv && (
           <Grid item xs={12} md="auto" lg={1}>
             <ExportReportsModal
+              disabled={
+                !paidWithdrawalsRows?.items.length || paidWithdrawalsRowsError
+              }
               mutateReport={() => PaidWithdrawalsReportsMutate()}
               error={PaidWithdrawalsReportsError}
               success={PaidWithdrawalsReportsIsSuccess}
@@ -246,6 +244,7 @@ export const PaidWithdrawals = () => {
             items={paidWithdrawalsRows?.items}
             columns={columns}
             loading={isPaidWithdrawalsRowsFetching}
+            error={paidWithdrawalsRowsError}
             actions={[
               {
                 label: "details",

@@ -66,13 +66,13 @@ export const PartnerUsers = () => {
   const [action, setAction] = useState<"create" | "update">("create");
 
   const columns: ColumnInterface[] = [
-    { name: "id", type: "id",sort: true },
-    { name: "name", type: "text",sort: true },
+    { name: "id", type: "id", sort: true },
+    { name: "name", type: "text", sort: true },
     { name: "group_id", type: "text" },
     { name: ["partner", "name"], head: "partner", type: "text" },
     { name: "last_signin_date", type: "date" },
     { name: "status", type: "status" },
-    { name: "created_at", type: "date",sort: true },
+    { name: "created_at", type: "date", sort: true },
   ];
 
   useEffect(() => {
@@ -180,6 +180,7 @@ export const PartnerUsers = () => {
         {permissions.register.partner.users.partner_user_export_csv && (
           <Grid item xs={12} md="auto">
             <ExportReportsModal
+              disabled={!UsersData?.total || UsersDataError}
               mutateReport={() => PartnerReportsMutate()}
               error={PartnerReportsError}
               success={PartnerReportsIsSuccess}

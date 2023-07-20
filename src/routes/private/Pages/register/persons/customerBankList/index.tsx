@@ -156,6 +156,7 @@ export const CostumerBanks = () => {
           .person_client_banks_export_csv && (
           <Grid item xs={12} md="auto">
             <ExportReportsModal
+              disabled={!clientbankListData?.total || clientbankListError}
               mutateReport={() => CustomerBanksReportsMutate()}
               error={CustomerBanksReportsError}
               success={CustomerBanksReportsIsSuccess}

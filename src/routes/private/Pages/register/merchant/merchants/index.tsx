@@ -205,6 +205,7 @@ export const MerchantView = () => {
         {permissions.register.merchant.merchant.merchant_export_csv && (
           <Grid item xs={12} md="auto">
             <ExportReportsModal
+              disabled={!MerchantData?.total || MerchantDataError}
               mutateReport={() => MerchantReportsMutate()}
               error={MerchantReportsError}
               success={MerchantReportsIsSuccess}

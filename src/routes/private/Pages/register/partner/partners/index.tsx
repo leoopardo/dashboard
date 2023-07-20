@@ -82,10 +82,10 @@ export const Partners = () => {
     useUpdatePartner(updateBody);
 
   const columns: ColumnInterface[] = [
-    { name: "id", type: "id",sort: true },
-    { name: "name", type: "text",sort: true },
+    { name: "id", type: "id", sort: true },
+    { name: "name", type: "text", sort: true },
     { name: "status", type: "status" },
-    { name: "created_at", type: "date",sort: true },
+    { name: "created_at", type: "date", sort: true },
   ];
 
   useEffect(() => {
@@ -193,6 +193,7 @@ export const Partners = () => {
         {permissions.register.partner.partner.partner_export_csv && (
           <Grid item xs={12} md="auto">
             <ExportReportsModal
+              disabled={!PartnersData?.total || PartnersDataError}
               mutateReport={() => PartnerReportsMutate()}
               error={PartnerReportsError}
               success={PartnerReportsIsSuccess}

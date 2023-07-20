@@ -143,7 +143,10 @@ export const RefundWithdrawals = () => {
           <Select
             style={{ width: "100%", height: "35px" }}
             size="large"
-            onChange={(value) => setSearchOption(value)}
+            onChange={(value) => {
+              setSearchOption(value);
+              setSearch("");
+            }}
             value={searchOption}
             placeholder={t("input.options")}
             options={[
@@ -159,24 +162,14 @@ export const RefundWithdrawals = () => {
           />
         </Grid>
         <Grid item xs={12} md={4} lg={4}>
-          <Space.Compact style={{ width: "100%" }}>
-            <Input
-              placeholder="Pesquisa"
-              size="large"
-              disabled={!searchOption}
-              style={{ height: "40px", width: "100%" }}
-              onChange={(event) => setSearch(event.target.value)}
-            />
-            <Button
-              loading={isRefundWithdrawalsFetching}
-              type="primary"
-              onClick={() => refetchRefundWithdrawalsTotal()}
-              style={{ height: "40px" }}
-              disabled={typeof searchOption === "string" && !search}
-            >
-              <SearchOutlined />
-            </Button>
-          </Space.Compact>
+          <Input
+            placeholder="Pesquisa"
+            size="large"
+            disabled={!searchOption}
+            value={search || ""}
+            style={{ height: "40px", width: "100%" }}
+            onChange={(event) => setSearch(event.target.value)}
+          />
         </Grid>
         <Grid item xs={12} md={2} lg={2}>
           <Button
@@ -186,7 +179,7 @@ export const RefundWithdrawals = () => {
             onClick={() => {
               setQuery(INITIAL_QUERY);
               setSearchOption(null);
-              setSearch(null);
+              setSearch("");
             }}
             style={{ height: 40, display: "flex", alignItems: "center" }}
           >

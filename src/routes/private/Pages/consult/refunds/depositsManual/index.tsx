@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { EyeFilled, SearchOutlined } from "@ant-design/icons";
+import { EyeFilled } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { useGetRefundDepositsManual } from "@src/services/consult/refund/refundDepositsManual/getRows";
 import { useGetTotalRefundDepositManual } from "@src/services/consult/refund/refundDepositsManual/getTotal";
-import { Alert, Button, Input, Select, Space } from "antd";
+import { Alert, Button, Input, Select } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -36,7 +36,10 @@ export const RefundDepositsManual = () => {
   const { t } = useTranslation();
   const [query, setQuery] = useState<refundDepositsQuery>(INITIAL_QUERY);
   const {
-isRefundDepositManualTotalFetching, refetchRefundDepositManualTotal, refundDepositManualTotal, refundDepositManualTotalError
+    isRefundDepositManualTotalFetching,
+    refetchRefundDepositManualTotal,
+    refundDepositManualTotal,
+    refundDepositManualTotalError,
   } = useGetTotalRefundDepositManual(query);
 
   const {
@@ -116,7 +119,8 @@ isRefundDepositManualTotalFetching, refetchRefundDepositManualTotal, refundDepos
           <Button
             style={{ width: "100%", height: 40 }}
             loading={
-              isRefundDepositsManualFetching || isRefundDepositManualTotalFetching
+              isRefundDepositsManualFetching ||
+              isRefundDepositManualTotalFetching
             }
             type="primary"
             onClick={() => setIsFiltersOpen(true)}
@@ -140,7 +144,10 @@ isRefundDepositManualTotalFetching, refetchRefundDepositManualTotal, refundDepos
           <Select
             style={{ width: "100%", height: "35px" }}
             size="large"
-            onChange={(value) => setSearchOption(value)}
+            onChange={(value) => {
+              setSearchOption(value);
+              setSearch("");
+            }}
             value={searchOption}
             placeholder={t("input.options")}
             options={[
@@ -156,24 +163,14 @@ isRefundDepositManualTotalFetching, refetchRefundDepositManualTotal, refundDepos
           />
         </Grid>
         <Grid item xs={12} md={4} lg={4}>
-          <Space.Compact style={{ width: "100%" }}>
-            <Input
-              placeholder="Pesquisa"
-              size="large"
-              disabled={!searchOption}
-              style={{ height: "40px", width: "100%" }}
-              onChange={(event) => setSearch(event.target.value)}
-            />
-            <Button
-              loading={isRefundDepositsManualFetching}
-              type="primary"
-              onClick={() => refetchRefundDepositManualTotal()}
-              style={{ height: "40px" }}
-              disabled={typeof searchOption === "string" && !search}
-            >
-              <SearchOutlined />
-            </Button>
-          </Space.Compact>
+          <Input
+            placeholder="Pesquisa"
+            size="large"
+            disabled={!searchOption}
+            value={search || ""}
+            style={{ height: "40px", width: "100%" }}
+            onChange={(event) => setSearch(event.target.value)}
+          />
         </Grid>
         <Grid item xs={12} md={2} lg={2}>
           <Button
@@ -183,7 +180,7 @@ isRefundDepositManualTotalFetching, refetchRefundDepositManualTotal, refundDepos
             onClick={() => {
               setQuery(INITIAL_QUERY);
               setSearchOption(null);
-              setSearch(null);
+              setSearch("");
             }}
             style={{ height: 40, display: "flex", alignItems: "center" }}
           >
