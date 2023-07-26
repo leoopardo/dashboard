@@ -17,9 +17,8 @@ export const EditSelfModal = ({
   setOpen,
   self,
 }: EditSelfModalInterface) => {
-  const SelfUser = queryClient.getQueryData("Self") as SelfInterface;
   const { t } = useTranslation();
-  const { Self } = useGetSelf();
+  const { Self, SelfFetching } = useGetSelf();
   const formRef = useRef<FormInstance>(null);
   // const submitRef = useRef<HTMLButtonElement>(null);
   return (
@@ -30,21 +29,23 @@ export const EditSelfModal = ({
       }}
       title={self?.name}
     >
-      <Form
-        ref={formRef}
-        layout="vertical"
-        initialValues={SelfUser ? { ...SelfUser } : { ...Self }}
-        onFinish={() => {
-          setOpen(false);
-        }}
-      >
-        <Form.Item label={t("table.email")} name="email">
-          <Input size="large" />
-        </Form.Item>
-        <Form.Item label={t("table.cellphone")} name="cellphone">
-          <Input size="large" />
-        </Form.Item>
-      </Form>
+      {!SelfFetching && (
+        <Form
+          ref={formRef}
+          layout="vertical"
+          initialValues={{ ...Self }}
+          onFinish={() => {
+            setOpen(false);
+          }}
+        >
+          <Form.Item label={t("table.email")} name="email">
+            <Input size="large" value={Self?.email} />
+          </Form.Item>
+          <Form.Item label={t("table.cellphone")}>
+            <Input size="large" name="cellphone" value={Self?.cellphone} />
+          </Form.Item>
+        </Form>
+      )}
     </Drawer>
   );
 };

@@ -10,5 +10,20 @@ export const GlobalStyle = createGlobalStyle`
         color: ${(props) => props.theme.colors.dark};
     }
     
+    ::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Customizing the scrollbar track */
+::-webkit-scrollbar-track {
+  background-color: transparent;
+  background-color: #ebebeb;
+}
+
+/* Customizing the scrollbar thumb */
+::-webkit-scrollbar-thumb {
+  background-color: ${(props) => props.theme.colors.secondary};
+  border-radius: 20px;
+}
 
 `;
