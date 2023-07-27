@@ -722,9 +722,12 @@ export const CustomTable = (props: TableProps) => {
                   onMouseEnter: () => {
                     props.setCurrentItem(record);
                   },
+                  onMouseLeave: () => {
+                    props.setCurrentItem({});
+                  },
                 };
               }}
-              scroll={{ x: 800 }}
+              scroll={{ x: "none" }}
               sticky
               bordered
             />

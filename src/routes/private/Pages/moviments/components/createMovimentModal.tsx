@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { MerchantCategorieSelect } from "@src/components/Selects/merchantCategorieSelect";
+import { MerchantSelect } from "@src/components/Selects/merchantSelect";
 import { OrganizationCategorieSelect } from "@src/components/Selects/organizationCategorieSelect";
 import { Button, Drawer, Form, FormInstance, Input } from "antd";
 import { Dispatch, SetStateAction, useEffect, useRef } from "react";
@@ -74,6 +75,25 @@ export const CreateMovimentModal = ({
           setOpen(false);
         }}
       >
+        {category === "merchant" && (
+          <Form.Item
+            label={t("table.merchant")}
+            name="category"
+            style={{ margin: 10 }}
+            rules={[
+              {
+                required: !body?.merchant_id,
+                message:
+                  t("input.required", {
+                    field: t("table.merchant_id"),
+                  }) || "",
+              },
+            ]}
+          >
+            <MerchantSelect queryOptions={body} setQueryFunction={setBody} />
+          </Form.Item>
+        )}
+
         <Form.Item
           label={t("table.category")}
           name="category"

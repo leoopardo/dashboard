@@ -328,7 +328,7 @@ export const MerchantManual = () => {
         <ValidateToken
           open={operationInTokenModalOpen}
           setIsOpen={setOperationInTokenModalOpen}
-          action="MERCHANT_ENTRY_ACCOUNT_ORGANIZATION_CREATE"
+          action="MERCHANT_ENTRY_ACCOUNT_CREATE"
           body={operationInBody}
           setTokenState={setTokenState}
           tokenState={tokenState}
