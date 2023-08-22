@@ -115,6 +115,7 @@ export const Aggregators = () => {
     });
   }, [currentItem]);
 
+
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid

@@ -717,16 +717,7 @@ export const CustomTable = (props: TableProps) => {
               columns={columns}
               loading={props.loading}
               showSorterTooltip={false}
-              onRow={(record) => {
-                return {
-                  onMouseEnter: () => {
-                    props.setCurrentItem(record);
-                  },
-                  onMouseLeave: () => {
-                    props.setCurrentItem({});
-                  },
-                };
-              }}
+             
               scroll={{ x: "none" }}
               sticky
               bordered
