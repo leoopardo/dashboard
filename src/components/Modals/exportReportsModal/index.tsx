@@ -75,6 +75,7 @@ export const ExportReportsModal = ({
             : t("messages.export_csv")
         }
         arrow
+        
       >
         <Button
           disabled={disabled}

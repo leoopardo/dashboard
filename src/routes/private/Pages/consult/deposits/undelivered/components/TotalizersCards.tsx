@@ -1,6 +1,5 @@
 import { ReloadOutlined } from "@ant-design/icons";
-import { Grid } from "@mui/material";
-import { Button, Card, Statistic } from "antd";
+import { Button, Card, Col, Row, Statistic } from "antd";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import {
@@ -21,13 +20,17 @@ export const TotalizersCards = (props: TotalizersInterface) => {
   const { t } = useTranslation();
 
   return (
-    <Grid
-      container
-      spacing={1}
-      style={{ display: "flex", justifyContent: "center" }}
+    <Row
+      gutter={[8, 8]}
+      align="middle"
+      justify="center"
+      style={{ width: "100%" }}
     >
       {(props.query.status === "PAID" || !props.query.status) && (
-        <Grid item xs={6} md={4} lg={"auto"}>
+        <Col
+          style={{ maxWidth: "220px" }}
+          xs={{ span: isMobile ? 10 : undefined }}
+        >
           <Card bordered={false}>
             <Statistic
               loading={props.loading}
@@ -45,10 +48,13 @@ export const TotalizersCards = (props: TotalizersInterface) => {
               suffix=""
             />
           </Card>
-        </Grid>
+        </Col>
       )}
       {(props.query.status === "REFUNDED" || !props.query.status) && (
-        <Grid item xs={6} md={4} lg={"auto"}>
+        <Col
+          style={{ maxWidth: "220px" }}
+          xs={{ span: isMobile ? 10 : undefined }}
+        >
           <Card bordered={false}>
             <Statistic
               loading={props.loading}
@@ -67,11 +73,14 @@ export const TotalizersCards = (props: TotalizersInterface) => {
               }}
             />
           </Card>
-        </Grid>
+        </Col>
       )}
 
       {(props.query.status === "CANCELED" || !props.query.status) && (
-        <Grid item xs={6} md={4} lg={"auto"}>
+        <Col
+          style={{ maxWidth: "220px" }}
+          xs={{ span: isMobile ? 10 : undefined }}
+        >
           <Card bordered={false}>
             <Statistic
               loading={props.loading}
@@ -90,11 +99,14 @@ export const TotalizersCards = (props: TotalizersInterface) => {
               }}
             />
           </Card>
-        </Grid>
+        </Col>
       )}
 
       {(props.query.status === "EXPIRED" || !props.query.status) && (
-        <Grid item xs={6} md={4} lg={"auto"}>
+        <Col
+          style={{ maxWidth: "220px" }}
+          xs={{ span: isMobile ? 10 : undefined }}
+        >
           <Card bordered={false}>
             <Statistic
               loading={props.loading}
@@ -113,10 +125,13 @@ export const TotalizersCards = (props: TotalizersInterface) => {
               }}
             />
           </Card>
-        </Grid>
+        </Col>
       )}
       {(props.query.status === "WAITING" || !props.query.status) && (
-        <Grid item xs={6} md={4} lg={"auto"}>
+        <Col
+          style={{ maxWidth: "220px" }}
+          xs={{ span: isMobile ? 10 : undefined }}
+        >
           <Card bordered={false}>
             <Statistic
               loading={props.loading}
@@ -135,11 +150,14 @@ export const TotalizersCards = (props: TotalizersInterface) => {
               }}
             />
           </Card>
-        </Grid>
+        </Col>
       )}
 
       {(props.query.status === "AWAITING_REFUND" || !props.query.status) && (
-        <Grid item xs={6} md={4} lg={"auto"}>
+        <Col
+          style={{ maxWidth: "220px" }}
+          xs={{ span: isMobile ? 10 : undefined }}
+        >
           <Card bordered={false}>
             <Statistic
               loading={props.loading}
@@ -158,10 +176,13 @@ export const TotalizersCards = (props: TotalizersInterface) => {
               }}
             />
           </Card>
-        </Grid>
+        </Col>
       )}
 
-      <Grid item xs={6} md={4} lg={"auto"} height="100%">
+      <Col
+        style={{ maxWidth: "220px" }}
+        xs={{ span: isMobile ? 10 : undefined }}
+      >
         <Card bordered={false}>
           <Statistic
             loading={props.loading}
@@ -178,8 +199,11 @@ export const TotalizersCards = (props: TotalizersInterface) => {
             }}
           />
         </Card>
-      </Grid>
-      <Grid item xs={6} md={1} lg={1}>
+      </Col>
+      <Col
+        style={{ maxWidth: "220px" }}
+        xs={{ span: isMobile ? 10 : undefined }}
+      >
         <Button
           shape="circle"
           style={{ width: "50px", height: "50px" }}
@@ -189,7 +213,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
         >
           {!props.loading && <ReloadOutlined />}
         </Button>
-      </Grid>
-    </Grid>
+      </Col>
+    </Row>
   );
 };

@@ -10,7 +10,7 @@ import { queryClient } from "@src/services/queryClient";
 import { useCreateGeneratedDepositsReports } from "@src/services/reports/consult/deposits/createGeneratedDepositsReports";
 import { ResendWebhookBody } from "@src/services/types/consult/deposits/createResendWebhook.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Alert, Button, Input, Select } from "antd";
+import { Alert, Button, Col, Input, Row, Select, Space } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -28,6 +28,7 @@ import { ResendWebhookModal } from "../components/ResendWebhookModal";
 import { ViewModal } from "../components/ViewModal";
 import { WebhookModal } from "../components/webhooksModal";
 import { TotalizersCards } from "./components/TotalizersCards";
+import { useMediaQuery } from "react-responsive";
 
 const INITIAL_QUERY: generatedDepositTotalQuery = {
   page: 1,
@@ -45,6 +46,7 @@ export const GeneratedDeposits = () => {
   const { permissions } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
+  const isMobile = useMediaQuery({ maxWidth: "750px" });
   const { t } = useTranslation();
   const [query, setQuery] = useState<generatedDepositTotalQuery>(INITIAL_QUERY);
   const {
@@ -124,7 +126,7 @@ export const GeneratedDeposits = () => {
   }, [debounceSearch, searchOption]);
 
   return (
-    <Grid container style={{ padding: "25px" }}>
+    <Row gutter={[8, 8]} align="middle" style={{ padding: "25px" }}>
       <Grid container>
         {depositsTotalError ? (
           <Grid item xs={12} style={{ marginBottom: "10px" }}>
@@ -149,19 +151,13 @@ export const GeneratedDeposits = () => {
         />
       )}
 
-      <Grid
-        container
-        style={{
-          marginTop: permissions.report.deposit.generated_deposit
-            .report_deposit_generated_deposit_list_totals
-            ? "20px"
-            : 0,
-          display: "flex",
-          alignItems: "center",
-        }}
-        spacing={1}
+      <Row
+        align="middle"
+        justify="start"
+        gutter={[8, 8]}
+        style={{ width: "100%" }}
       >
-        <Grid item xs={12} md={4} lg={2}>
+        <Col xs={{ span: 24 }} md={{ span: 4 }}>
           <Button
             style={{ width: "100%", height: 40 }}
             loading={isDepositsRowsFetching || isDepositsTotalFetching}
@@ -170,8 +166,8 @@ export const GeneratedDeposits = () => {
           >
             {t("table.filters")}
           </Button>
-        </Grid>
-        <Grid item xs={12} md={8} lg={10}>
+        </Col>
+        <Col xs={{ span: 24 }} md={{ span: 20 }}>
           <FilterChips
             startDateKeyName="initial_date"
             endDateKeyName="final_date"
@@ -179,44 +175,90 @@ export const GeneratedDeposits = () => {
             setQuery={setQuery}
             haveInitialDate
           />
-        </Grid>
-      </Grid>
+        </Col>
+      </Row>
 
-      <Grid container style={{ marginTop: "5px" }} spacing={1}>
-        <Grid item xs={12} md={2} lg={2}>
-          <Select
-            style={{ width: "100%" }}
-            size="large"
-            onChange={(value) => {
-              setSearchOption(value);
-              setSearch("");
-            }}
-            value={searchOption}
-            placeholder={t("input.options")}
-            options={[
-              { value: "pix_id", label: t("table.pix_id") },
-              { value: "endToEndId", label: t("table.endToEndId") },
-              { value: "payer_document", label: t("table.payer_document") },
-              { value: "buyer_document", label: t("table.buyer_document") },
-              { value: "buyer_name", label: t("table.buyer_name") },
-              { value: "payer_name", label: t("table.payer_name") },
-              { value: "txid", label: t("table.txid") },
-              { value: "reference_id", label: t("table.reference_id") },
-              { value: "description", label: t("table.description") },
-            ]}
-          />
-        </Grid>
-        <Grid item xs={12} md={4} lg={4}>
-          <Input
-            placeholder="Pesquisa"
-            size="large"
-            value={search || ""}
-            disabled={!searchOption}
-            style={{ width: "100%" }}
-            onChange={(event) => setSearch(event.target.value)}
-          />
-        </Grid>
-        <Grid item xs={12} md={2} lg={2}>
+      <Row
+        align="middle"
+        justify="start"
+        style={{ width: "100%" }}
+        gutter={[8, 8]}
+      >
+        <Col xs={{ span: 24 }} md={{ span: 12 }}>
+          {!isMobile && (
+            <Space.Compact style={{ width: "100%" }} size="large">
+              <Select
+                style={{ width: "60%" }}
+                size="large"
+                onChange={(value) => {
+                  setSearchOption(value);
+                  setSearch("");
+                }}
+                value={searchOption}
+                placeholder={t("input.options")}
+                options={[
+                  { value: "pix_id", label: t("table.pix_id") },
+                  { value: "endToEndId", label: t("table.endToEndId") },
+                  { value: "payer_document", label: t("table.payer_document") },
+                  { value: "buyer_document", label: t("table.buyer_document") },
+                  { value: "buyer_name", label: t("table.buyer_name") },
+                  { value: "payer_name", label: t("table.payer_name") },
+                  { value: "txid", label: t("table.txid") },
+                  { value: "reference_id", label: t("table.reference_id") },
+                  { value: "description", label: t("table.description") },
+                ]}
+              />
+
+              <Input
+                placeholder="Pesquisa"
+                size="large"
+                value={search || ""}
+                disabled={!searchOption}
+                style={{ width: "100%" }}
+                onChange={(event) => setSearch(event.target.value)}
+              />
+            </Space.Compact>
+          )}
+
+          {isMobile && (
+            <Select
+              style={{ width: "100%" }}
+              size="large"
+              onChange={(value) => {
+                setSearchOption(value);
+                setSearch("");
+              }}
+              value={searchOption}
+              placeholder={t("input.options")}
+              options={[
+                { value: "pix_id", label: t("table.pix_id") },
+                { value: "endToEndId", label: t("table.endToEndId") },
+                { value: "payer_document", label: t("table.payer_document") },
+                { value: "buyer_document", label: t("table.buyer_document") },
+                { value: "buyer_name", label: t("table.buyer_name") },
+                { value: "payer_name", label: t("table.payer_name") },
+                { value: "txid", label: t("table.txid") },
+                { value: "reference_id", label: t("table.reference_id") },
+                { value: "description", label: t("table.description") },
+              ]}
+            />
+          )}
+        </Col>
+
+        {isMobile && (
+          <Col xs={{ span: 24 }}>
+            <Input
+              placeholder="Pesquisa"
+              size="large"
+              value={search || ""}
+              disabled={!searchOption}
+              style={{ width: "100%" }}
+              onChange={(event) => setSearch(event.target.value)}
+            />
+          </Col>
+        )}
+
+        <Col xs={{ span: 24 }} md={{ span: 4 }}>
           <Button
             type="dashed"
             loading={isDepositsRowsFetching}
@@ -237,10 +279,10 @@ export const GeneratedDeposits = () => {
             <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
             {t("table.clear_filters")}
           </Button>
-        </Grid>
+        </Col>
         {permissions.report.deposit.generated_deposit
           .report_deposit_generated_deposit_resend_notification && (
-          <Grid item xs={12} md={2} lg={2}>
+          <Col xs={{ span: 24 }} md={{ span: 4 }}>
             <Button
               type="primary"
               loading={isDepositsRowsFetching}
@@ -257,12 +299,12 @@ export const GeneratedDeposits = () => {
             >
               {t("modal.resend_webhook")}
             </Button>
-          </Grid>
+          </Col>
         )}
 
         {permissions.report.deposit.generated_deposit
           .report_deposit_generated_deposit_export_csv && (
-          <Grid item xs={12} md="auto" lg={1}>
+          <Col xs={{ span: 24 }} md={{ span: 2 }}>
             <ExportReportsModal
               disabled={!depositsRows?.items.length || depositsRowsError}
               mutateReport={() => GeneratedDepositsReportsMutate()}
@@ -271,13 +313,12 @@ export const GeneratedDeposits = () => {
               loading={GeneratedDepositsReportsIsLoading}
               reportPath="/consult/deposit/deposits_reports/generated_deposits_reports"
             />
-          </Grid>
+          </Col>
         )}
-      </Grid>
+      </Row>
 
-      <Grid container style={{ marginTop: "15px" }}>
-        <Grid item xs={12}>
-          {" "}
+      <Row style={{ width: "100%" }}>
+        <Col xs={24}>
           <CustomTable
             query={query}
             setCurrentItem={setCurrentItem}
@@ -308,8 +349,8 @@ export const GeneratedDeposits = () => {
               "delivered_at",
             ]}
           />
-        </Grid>
-      </Grid>
+        </Col>
+      </Row>
       {isViewModalOpen && (
         <ViewModal
           open={isViewModalOpen}
@@ -380,6 +421,6 @@ export const GeneratedDeposits = () => {
         error={ResendWebError}
         success={ResendWebIsSuccess}
       />
-    </Grid>
+    </Row>
   );
 };
