@@ -18,7 +18,6 @@ import { Button, Input } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { NewUserInterface, NewUserModal } from "./components/newUserModal";
-import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 
 const INITIAL_QUERY: PartnerQuery = {
   limit: 25,

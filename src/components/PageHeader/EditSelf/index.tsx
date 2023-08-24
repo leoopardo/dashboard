@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useGetSelf } from "@src/services/getSelf";
-import { queryClient } from "@src/services/queryClient";
-import { SelfInterface } from "@src/services/types/register/self/self.interface";
 import { Drawer, Form, FormInstance, Input } from "antd";
 import { Dispatch, SetStateAction, useRef } from "react";
 import { useTranslation } from "react-i18next";

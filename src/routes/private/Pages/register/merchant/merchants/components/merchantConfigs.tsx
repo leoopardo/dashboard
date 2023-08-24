@@ -19,7 +19,7 @@ export const MerchantConfigs = () => {
   const { t } = useTranslation();
   const params = useParams();
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  const onChange = (key: string) => {};
+  const onChange = () => {};
 
   const initialTab = () => {
     if (!permissions.register.merchant.merchant.merchant_config_banks) {
