@@ -487,7 +487,7 @@ export const FiltersModal = ({
                     style={{ margin: 10 }}
                   >
                     <AggregatorSelect
-                      queryOptions={filtersQuery}
+                      aggregatorId={filtersQuery?.aggregator_id}
                       setQueryFunction={setFiltersQuery}
                     />
                   </Form.Item>
