@@ -64,7 +64,12 @@ export const OrganizationUser = () => {
   const columns: ColumnInterface[] = [
     { name: "id", type: "id", sort: true },
     { name: "name", type: "text", sort: true },
-    { name: "group_id", type: "text", sort: true },
+    {
+      name: ["permission_group", "name"],
+      head: "group",
+      type: "text",
+      sort: true,
+    },
     { name: "email", type: "text" },
     { name: "created_at", type: "date", sort: true },
   ];

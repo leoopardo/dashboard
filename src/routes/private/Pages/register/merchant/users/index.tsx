@@ -69,7 +69,7 @@ export const MerchantUser = () => {
   const columns: ColumnInterface[] = [
     { name: "id", type: "id", sort: true },
     { name: "name", type: "text", sort: true },
-    { name: "group_id", type: "text" },
+    {name: ["permission_group", "name"], head: "group", type: "text" },
     { name: "email", type: "text" },
     { name: "last_signin_date", type: "date" },
     { name: "created_at", type: "date", sort: true },

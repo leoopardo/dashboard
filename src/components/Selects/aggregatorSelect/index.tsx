@@ -9,12 +9,12 @@ import { useTranslation } from "react-i18next";
 
 interface MerchantSelectProps {
   setQueryFunction: Dispatch<SetStateAction<any>>;
-  queryOptions: any;
+  aggregatorId: any;
 }
 
 export const AggregatorSelect = ({
   setQueryFunction,
-  queryOptions,
+  aggregatorId,
 }: MerchantSelectProps) => {
   const { t } = useTranslation();
   const [query, setQuery] = useState<AggregatorQuery>({
@@ -29,24 +29,24 @@ export const AggregatorSelect = ({
   useEffect(() => {
     if (AggregatorsData && !value) {
       const initial = AggregatorsData?.items.find(
-        (operator) => operator.id === queryOptions?.aggregator_id
+        (aggregator) => aggregator.id === aggregatorId
       );
       if (initial) {
         setValue(initial?.name);
       }
     }
-  }, [queryOptions, AggregatorsData]);
+  }, [aggregatorId, AggregatorsData]);
 
   useEffect(() => {
     if (AggregatorsData) {
       const initial = AggregatorsData?.items.find(
-        (operator) => operator.id === queryOptions?.aggregator_id
+        (aggregator) => aggregator.id === aggregatorId
       );
       if (initial) {
         setValue(initial?.name);
       }
     }
-  }, [queryOptions]);
+  }, [aggregatorId]);
 
   useEffect(() => {
     refetchAggregatorsData();

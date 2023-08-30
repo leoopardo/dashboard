@@ -251,7 +251,10 @@ export const NewUserModal = ({
               },
             ]}
           >
-            <AggregatorSelect setQueryFunction={setBody} queryOptions={body} />
+            <AggregatorSelect
+              setQueryFunction={setBody}
+              aggregatorId={body?.aggregator_id ?? currentUser?.aggregator_id}
+            />
           </Form.Item>
         )}
 
@@ -276,7 +279,7 @@ export const NewUserModal = ({
               body={body}
               setBody={setBody}
               filterIdProp="aggregator_id"
-              filterIdValue={body.aggregator_id}
+              filterIdValue={body.aggregator_id ?? currentUser?.aggregator_id}
             />
           </Form.Item>
         )}

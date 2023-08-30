@@ -17,6 +17,7 @@ export interface OrganizationUserQuery {
 export interface OrganizationUserItem {
   id: number;
   organization_id: number;
+  aggregator_id: number;
   partner_id: number;
   merchant_id: number;
   status: boolean;

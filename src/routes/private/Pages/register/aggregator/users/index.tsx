@@ -57,7 +57,7 @@ export const AggregatorUsers = () => {
   const columns: ColumnInterface[] = [
     { name: "id", type: "id", sort: true },
     { name: "name", type: "text", sort: true },
-    { name: "group_id", type: "text" },
+    { name: ["permission_group", "name"], head: "group", type: "text" },
     { name: ["partner", "name"], head: "partner", type: "text" },
     { name: "last_signin_date", type: "date" },
     { name: "status", type: "status" },
@@ -104,7 +104,6 @@ export const AggregatorUsers = () => {
             endDateKeyName="end_date"
             query={query}
             setQuery={setQuery}
-            haveInitialDate
           />
         </Grid>
       </Grid>
@@ -218,7 +217,6 @@ export const AggregatorUsers = () => {
           setOpen={setIsFiltersOpen}
           query={query}
           setQuery={setQuery}
-          haveInitialDate
           filters={[
             "start_date",
             "end_date",
