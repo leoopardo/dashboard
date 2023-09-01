@@ -99,6 +99,7 @@ export const NewUserModal = ({
         user_id: currentUser.id,
         status: currentUser.status,
         username: currentUser.username,
+        partner_id: currentUser.partner_id,
       }));
   }, [currentUser]);
 
@@ -248,7 +249,10 @@ export const NewUserModal = ({
               },
             ]}
           >
-            <PartnerSelect queryOptions={body} setQueryFunction={setBody} />
+            <PartnerSelect
+              queryOptions={body ?? currentUser}
+              setQueryFunction={setBody}
+            />
           </Form.Item>
         )}
 
@@ -272,7 +276,9 @@ export const NewUserModal = ({
             body={body}
             setBody={setBody}
             filterIdProp="partner_id"
-            filterIdValue={body?.partner_id || user?.partner_id}
+            filterIdValue={
+              user?.partner_id ?? body?.partner_id ?? currentUser?.partner.id
+            }
           />
         </Form.Item>
 

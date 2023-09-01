@@ -7,7 +7,7 @@ import { queryClient } from "../../../queryClient";
 export function useCreateMerchantBlacklist(body: MerchantBlacklistItem | null) {
   const { isLoading, error, mutate, isSuccess } = useMutation<
     MerchantBlacklistItem | null | undefined
-  >("CreateMerchantUserr", async () => {
+  >("CreateMerchantBlacklist", async () => {
     const response = await api.post("blacklist/merchant-black-list", body, {});
     await queryClient.refetchQueries({ queryKey: ["MerchantBlacklist"] });
     return response.data;

@@ -35,7 +35,7 @@ export const Login = () => {
     password: "",
   });
 
-  const { Login, isValidateFetching, validateError, LoginError } = useToken(
+  const { Login, isValidateFetching, validateError, LoginError, isLoading } = useToken(
     user,
     rememerMe
   );
@@ -214,7 +214,7 @@ export const Login = () => {
                   type="primary"
                   icon={<LoginOutlined />}
                   onClick={() => submitRef.current?.click()}
-                  loading={isValidateFetching}
+                  loading={isValidateFetching || isLoading}
                 >
                   {t("login.access")}
                 </CustButton>

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useGetRowsMerchantBlacklist } from "@services/register/merchant/blacklist/getMerchantBlacklistReason";
+import { useGetRowsMerchantBlacklistReasons } from "@services/register/merchant/blacklist/getMerchantBlacklistReason";
 import { Empty, Select } from "antd";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -19,12 +19,12 @@ export const ReasonSelect = ({
   onReasonChange,
 }: MerchantSelectProps) => {
   const { t } = useTranslation();
-  const { merchantBlacklistData } = useGetRowsMerchantBlacklist();
+  const { merchantBlacklistData } = useGetRowsMerchantBlacklistReasons();
   const [value, setValue] = useState<any>(null);
 
   useEffect(() => {
     if (merchantBlacklistData && !value) {
-      const initial = merchantBlacklistData?.find(
+      const initial = merchantBlacklistData?.items?.find(
         (reason) => reason === queryOptions?.reason
       );
       if (initial) {
@@ -35,7 +35,7 @@ export const ReasonSelect = ({
 
   useEffect(() => {
     if (merchantBlacklistData) {
-      const initial = merchantBlacklistData?.find(
+      const initial = merchantBlacklistData?.items?.find(
         (reason) => reason === queryOptions?.reason
       );
 
@@ -47,8 +47,8 @@ export const ReasonSelect = ({
     <Select
       size="large"
       options={
-        merchantBlacklistData?.map((item, index) => {
-          return { key: index, value: item, label: item };
+        merchantBlacklistData?.items?.map((item, index) => {
+          return { key: index, value: item.reason_name, label: item.reason_name };
         }) ?? []
       }
       value={currentValue || value}

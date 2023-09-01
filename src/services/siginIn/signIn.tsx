@@ -13,7 +13,7 @@ export function useToken(
   user: { username: string; password: string },
   rememberMe: boolean
 ) {
-  const { data, error, mutate } = useMutation<
+  const { data, error, mutate, isLoading } = useMutation<
     TokenInterface | null | undefined
   >("token", async () => {
     const response = await api.post(
@@ -52,6 +52,7 @@ export function useToken(
     validateError,
     isSuccess,
     LoginError,
+    isLoading,
     Login,
   };
 }

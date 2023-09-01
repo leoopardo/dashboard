@@ -181,6 +181,30 @@ export const MutateModal = ({
                   />
                 </Form.Item>
               );
+            case "new_reason":
+              return (
+                <Form.Item
+                  label={t(`table.black_list_reason`)}
+                  name={field.label}
+                  style={{ margin: 10 }}
+                  rules={[
+                    {
+                      required: field.required,
+                      message:
+                        t("input.required", {
+                          field: t(`input.${field.label}`),
+                        }) || "",
+                    },
+                  ]}
+                >
+                  <Input
+                    size="large"
+                    name="reason"
+                    value={body.reason}
+                    onChange={handleChange}
+                  />
+                </Form.Item>
+              );
 
             case "operator_id":
               if (permissions.register.operator.operator.operator_list) {

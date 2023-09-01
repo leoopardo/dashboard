@@ -17,7 +17,7 @@ export interface OrganizationUserQuery {
 export interface OrganizationUserItem {
   id: number;
   organization_id: number;
-  aggregator_id: number;
+  aggregator: { id: number; name: string };
   partner_id: number;
   merchant_id: number;
   status: boolean;
@@ -31,7 +31,7 @@ export interface OrganizationUserItem {
   last_signin_date: string;
   phone_validated: boolean;
   created_at: string;
-  partner: boolean;
+  partner:  { id: number; name: string };
   merchant: boolean;
 }
 

@@ -10,6 +10,8 @@ import {
   MerchantUserBodyItem,
   MerchantUsersItem,
 } from "@services/types/register/merchants/merchantUsers.interface";
+import { queryClient } from "@src/services/queryClient";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 import { Button, Drawer, Form, FormInstance, Input } from "antd";
 import React, {
   Dispatch,
@@ -40,6 +42,7 @@ export const UpdateUserModal = ({
   action,
 }: NewuserModalprops) => {
   const { t } = useTranslation();
+  const user = queryClient.getQueryData("validate") as ValidateInterface;
   const submitRef = useRef<HTMLButtonElement>(null);
   const formRef = React.useRef<FormInstance>(null);
   const { responseValidate } = useValidate();
@@ -99,6 +102,7 @@ export const UpdateUserModal = ({
         user_id: currentUser.id,
         status: currentUser.status,
         username: currentUser.username,
+        merchant_id: currentUser.merchant_id,
       }));
   }, [currentUser]);
 
@@ -282,8 +286,12 @@ export const UpdateUserModal = ({
           <GroupSelect
             body={body}
             setBody={setBody}
-            filterIdProp="organization_id"
-            filterIdValue={responseValidate?.organization_id}
+            filterIdProp="merchant_id"
+            filterIdValue={
+              user.merchant_id ??
+              body?.organization_id ??
+              currentUser?.merchant.id
+            }
           />
         </Form.Item>
 

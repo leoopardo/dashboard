@@ -108,7 +108,10 @@
     "credentials": "Credentials",
     "manual_entry_category": "Manual entry category",
     "fee_plans": "Fee plans",
-    "edit_user": "Edit user"
+    "edit_user": "Edit user",
+    "merchant_blacklists": "Blacklist",
+    "merchant_blacklist_reasons": "Blacklist reasons",
+    "organization_bank_balance": "Bank balance"
   },
 
   "titles": {
@@ -179,7 +182,8 @@
     "register_out": "Register out",
     "create_bank_blacklist": "Add to blacklist",
     "new_fee": "Create fee",
-    "add_fee": "Add fee"
+    "add_fee": "Add fee",
+    "new_reason": "Novo motivo"
   },
   "input": {
     "required": "Please input the {{field}}",
@@ -281,7 +285,8 @@
     "register_out": "Register out",
     "new_bank_blacklist": "Add to blacklist",
     "resend_webhook": "Resend webhook",
-    "update_bank": "Update bank"
+    "update_bank": "Update bank",
+    "new_reason": "New reason"
   },
   "table": {
     "id": "ID",

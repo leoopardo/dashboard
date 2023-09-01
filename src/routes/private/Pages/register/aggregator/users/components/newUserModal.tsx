@@ -52,6 +52,7 @@ export const NewUserModal = ({
   const { permissions } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
+  const user = queryClient.getQueryData("validate") as ValidateInterface;
   const { t } = useTranslation();
   const submitRef = useRef<HTMLButtonElement>(null);
   const formRef = React.useRef<FormInstance>(null);
@@ -236,27 +237,28 @@ export const NewUserModal = ({
             onChange={handleChangeUserBody}
           />
         </Form.Item>
-        {permissions.register.aggregator.aggregator.aggregator_list && (
-          <Form.Item
-            label={t("input.aggregator")}
-            name="operator_id"
-            style={{ margin: 10 }}
-            rules={[
-              {
-                required: !body.aggregator_id,
-                message:
-                  t("input.required", {
-                    field: t(`input.operator`),
-                  }) || "",
-              },
-            ]}
-          >
-            <AggregatorSelect
-              setQueryFunction={setBody}
-              aggregatorId={body?.aggregator_id ?? currentUser?.aggregator_id}
-            />
-          </Form.Item>
-        )}
+        {permissions.register.aggregator.aggregator.aggregator_list &&
+          !user.aggregator_id && (
+            <Form.Item
+              label={t("input.aggregator")}
+              name="operator_id"
+              style={{ margin: 10 }}
+              rules={[
+                {
+                  required: !body.aggregator_id,
+                  message:
+                    t("input.required", {
+                      field: t(`input.operator`),
+                    }) || "",
+                },
+              ]}
+            >
+              <AggregatorSelect
+                setQueryFunction={setBody}
+                aggregatorId={body?.aggregator_id ?? currentUser?.aggregator.id}
+              />
+            </Form.Item>
+          )}
 
         {permissions.register.aggregator.aggregator.aggregator_list && (
           <Form.Item
@@ -279,7 +281,11 @@ export const NewUserModal = ({
               body={body}
               setBody={setBody}
               filterIdProp="aggregator_id"
-              filterIdValue={body.aggregator_id ?? currentUser?.aggregator_id}
+              filterIdValue={
+                user.aggregator_id ??
+                body.aggregator_id ??
+                currentUser?.aggregator.id
+              }
             />
           </Form.Item>
         )}

@@ -450,18 +450,32 @@ export const SidebarNavigation = () => {
                 : "none",
             }
           ),
-          getItem(
-            "merchant_blacklist",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath),
-            {
-              display: permissions?.register?.merchant?.blacklist?.menu
-                ? undefined
-                : "none",
-            }
-          ),
+          getItem("merchant_blacklists", null, [
+            getItem(
+              "merchant_blacklist",
+              null,
+              null,
+              false,
+              (e) => handleNavigate(e?.keyPath),
+              {
+                display: permissions?.register?.merchant?.blacklist?.menu
+                  ? undefined
+                  : "none",
+              }
+            ),
+            getItem(
+              "merchant_blacklist_reasons",
+              null,
+              null,
+              false,
+              (e) => handleNavigate(e?.keyPath),
+              {
+                display: permissions?.register?.merchant?.blacklist?.menu
+                  ? undefined
+                  : "none",
+              }
+            ),
+          ]),
           getItem(
             "manual_entry_category",
             null,
@@ -771,6 +785,18 @@ export const SidebarNavigation = () => {
               (e) => handleNavigate(e?.keyPath),
               {
                 display: permissions?.report?.paybrokers?.balance?.menu
+                  ? undefined
+                  : "none",
+              }
+            ),
+            getItem(
+              "organization_bank_balance",
+              null,
+              null,
+              false,
+              (e) => handleNavigate(e?.keyPath),
+              {
+                display: permissions?.report?.paybrokers?.extract?.menu
                   ? undefined
                   : "none",
               }

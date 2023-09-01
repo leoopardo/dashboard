@@ -70,6 +70,8 @@ import { OperatorReports } from "./Pages/register/operator/reports/operator";
 import { OperatorUsersReports } from "./Pages/register/operator/reports/users";
 import { AggregatorsReports } from "./Pages/register/aggregator/reports/aggregators";
 import { AggregatorUsersReports } from "./Pages/register/aggregator/reports/users";
+import { MerchantBlacklistReasons } from "./Pages/register/merchant/blacklist/reasons";
+import { OrganizationBankBalance } from "./Pages/consult/organization/bankBalance";
 
 export const PrivateRoutes = () => {
   return (
@@ -88,6 +90,10 @@ export const PrivateRoutes = () => {
             <Route
               path="organization_balance"
               element={<OrganizationBalance />}
+            />
+            <Route
+              path="organization_bank_balance"
+              element={<OrganizationBankBalance />}
             />
             <Route
               path="organization_history"
@@ -209,7 +215,10 @@ export const PrivateRoutes = () => {
                 path="aggregator_aggregators_reports"
                 element={<AggregatorsReports />}
               />
-              <Route path="aggregator_users_reports" element={<AggregatorUsersReports />} />
+              <Route
+                path="aggregator_users_reports"
+                element={<AggregatorUsersReports />}
+              />
             </Route>
           </Route>
           <Route path="partner">
@@ -247,7 +256,16 @@ export const PrivateRoutes = () => {
             </Route>
             <Route path="merchant_users" element={<MerchantUser />} />
 
-            <Route path="merchant_blacklist" element={<MerchantBlacklist />} />
+            <Route path="merchant_blacklists">
+              <Route
+                path="merchant_blacklist"
+                element={<MerchantBlacklist />}
+              />{" "}
+              <Route
+                path="merchant_blacklist_reasons"
+                element={<MerchantBlacklistReasons />}
+              />
+            </Route>
             <Route path="fee_plans" element={<MerchantFeePlans />} />
             <Route
               path="manual_entry_category"

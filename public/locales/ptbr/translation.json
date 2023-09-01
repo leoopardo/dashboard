@@ -109,7 +109,10 @@
     "credentials": "Credenciais",
     "manual_entry_category": "Categorias lançamentos manuais",
     "fee_plans": "Plano de taxas",
-    "edit_user": "Editar usuário"
+    "edit_user": "Editar usuário",
+    "merchant_blacklists": "Blacklist",
+    "merchant_blacklist_reasons": "Motivos de blacklist",
+    "organization_bank_balance": "Saldo bancário"
   },
 
   "titles": {
@@ -180,7 +183,8 @@
     "register_out": "Registrar saída",
     "create_bank_blacklist": "Adicionar à blacklist",
     "new_fee": "Criar taxa",
-    "add_fee": "Adicionar taxa"
+    "add_fee": "Adicionar taxa",
+    "new_reason": "Novo motivo"
   },
   "modal": {
     "confirm": "Confirmar",
@@ -205,7 +209,8 @@
     "register_out": "Registrar saída",
     "new_bank_blacklist": "Adicionar à blacklist",
     "resend_webhook": "Reenviar webhook",
-    "update_bank": "Atualizar banco"
+    "update_bank": "Atualizar banco",
+    "new_reason": "Novo motivo"
   },
   "input": {
     "required": "Por favor, insira o {{field}}",
