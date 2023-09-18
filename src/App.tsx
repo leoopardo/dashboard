@@ -39,7 +39,7 @@ function App() {
   }, [isIconSet]);
 
   const [element, setElement] = useState(
-    <div
+    <Layout
       style={{
         width: "100vw",
         height: "100vh",
@@ -49,9 +49,9 @@ function App() {
       }}
     >
       <Spin tip={t("messages.loading")} size="large">
-        <div className="content" />
+        <Layout className="content" />
       </Spin>
-    </div>
+    </Layout>
   );
 
   useEffect(() => {
