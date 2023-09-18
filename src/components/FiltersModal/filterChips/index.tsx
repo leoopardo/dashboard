@@ -50,7 +50,7 @@ export const FilterChips = ({
       {Object.keys(filtersQuery).map((key) => {
         switch (key) {
           case startDateKeyName:
-            return (
+            return query[startDateKeyName] ? (
               <Tag
                 key={key}
                 style={{
@@ -82,16 +82,18 @@ export const FilterChips = ({
                 }
               >
                 {t(`table.date`)}:{" "}
-                {`${new Date(
-                  filtersQuery[key]
-                ).toLocaleDateString()} ${new Date(
-                  filtersQuery[key]
-                ).toLocaleTimeString()} - ${new Date(
-                  filtersQuery[endDateKeyName]
-                ).toLocaleDateString()} ${new Date(
-                  filtersQuery[endDateKeyName]
-                ).toLocaleTimeString()}`}
+                {`${moment(filtersQuery[key]).format(
+                  navigator.language === 'pt-BR'
+                    ? 'DD/MM/YYYY HH:mm'
+                    : 'YYYY/MM/DD HH:mm'
+                )} - ${moment(filtersQuery[endDateKeyName]).format(
+                  navigator.language === 'pt-BR'
+                    ? 'DD/MM/YYYY HH:mm'
+                    : 'YYYY/MM/DD HH:mm'
+                )} `}
               </Tag>
+            ) : (
+              <></>
             );
           case endDateKeyName:
           case "age_end":

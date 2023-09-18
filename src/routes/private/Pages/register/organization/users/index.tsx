@@ -227,7 +227,6 @@ export const OrganizationUser = () => {
           setOpen={setIsFiltersOpen}
           query={query}
           setQuery={setQuery}
-          haveInitialDate
           filters={[
             "start_date",
             "end_date",

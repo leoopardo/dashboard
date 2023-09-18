@@ -87,6 +87,9 @@ function App() {
                 Tooltip: {
                   colorTextLightSolid: theme === "dark" ? "#000" : "#fff",
                 },
+                DatePicker: {
+                  controlItemBgActive: theme === "dark" ? "#303030" : defaultTheme.colors.secondary
+                }
               },
               token: {
                 colorPrimary: defaultTheme.colors.secondary,

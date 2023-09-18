@@ -15,6 +15,7 @@ import {
   FormInstance,
   Select,
   Slider,
+  Typography,
 } from "antd";
 import locale from "antd/locale/pt_BR";
 import dayjs from "dayjs";
@@ -95,8 +96,12 @@ export const FiltersModal = ({
       limit: null,
       sort_order: null,
       sort_field: null,
-      [startDateKeyName]: moment(query[startDateKeyName]),
-      [endDateKeyName]: moment(query[endDateKeyName]),
+      [startDateKeyName]: query[startDateKeyName]
+        ? moment(query[startDateKeyName])
+        : null,
+      [endDateKeyName]: query[endDateKeyName]
+        ? moment(query[endDateKeyName])
+        : null,
     });
   }, [query]);
 
@@ -167,7 +172,7 @@ export const FiltersModal = ({
         spacing={1}
       >
         <Grid item xs={10}>
-          {t("table.used_filters")}:
+          <Typography>{t("table.used_filters")}:</Typography>
         </Grid>
         <Grid item xs={2}>
           <Button
@@ -229,39 +234,37 @@ export const FiltersModal = ({
                 >
                   <ConfigProvider locale={locale}>
                     <RangePicker
-                      size="small"
                       panelRender={panelRender}
+                      format={
+                        navigator.language === "pt-BR"
+                          ? "DD/MM/YYYY HH:mm"
+                          : "YYYY/MM/DD HH:mm"
+                      }
                       popupStyle={{ marginLeft: "40px" }}
-                      format="YYYY-MM-DD HH:mm:ss"
                       showTime
                       value={[
-                        dayjs(
-                          filtersQuery[startDateKeyName],
-                          "YYYY-MM-DD HH:mm:ss"
-                        ),
-                        dayjs(
-                          filtersQuery[endDateKeyName],
-                          "YYYY-MM-DD HH:mm:ss"
-                        ),
+                        filtersQuery[startDateKeyName]
+                          ? dayjs(filtersQuery[startDateKeyName])
+                          : null,
+                        filtersQuery[endDateKeyName]
+                          ? dayjs(filtersQuery[endDateKeyName])
+                          : null,
                       ]}
                       clearIcon={<></>}
-                      style={{
-                        width: "100%",
-                        height: "40px",
-                      }}
                       placeholder={[
                         t("table.initial_date"),
                         t("table.final_date"),
                       ]}
                       onChange={(value: any) => {
+                        const [startDate, endDate] = value;
                         setFiltersQuery((state: any) => ({
                           ...state,
-                          [startDateKeyName]: moment(value[0]?.$d).format(
-                            "YYYY-MM-DDTHH:mm:ss.SSS"
-                          ),
-                          [endDateKeyName]: moment(value[1]?.$d).format(
-                            "YYYY-MM-DDTHH:mm:ss.SSS"
-                          ),
+                          [startDateKeyName]: startDate
+                            ? startDate.format("YYYY-MM-DDTHH:mm:00.000")
+                            : null,
+                          [endDateKeyName]: endDate
+                            ? endDate.format("YYYY-MM-DDTHH:mm:59.999")
+                            : null,
                         }));
                         formRef?.current?.validateFields();
                       }}
