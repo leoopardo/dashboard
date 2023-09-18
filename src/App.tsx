@@ -89,6 +89,10 @@ function App() {
                 },
                 DatePicker: {
                   controlItemBgActive: theme === "dark" ? "#303030" : defaultTheme.colors.secondary
+                },
+                Button: {
+                  colorTextLightSolid:
+                  "rgba(0, 0, 0, 0.88)",
                 }
               },
               token: {
