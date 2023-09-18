@@ -4,6 +4,7 @@ import {
   BankOutlined,
   CopyOutlined,
   EllipsisOutlined,
+  InfoCircleTwoTone,
 } from "@ant-design/icons";
 import { Grid } from "@mui/material";
 import { useGetOrganizationBankMaintenece } from "@src/services/register/organization/bankMaitenence/getBanks";
@@ -18,6 +19,7 @@ import {
   Progress,
   Table,
   Tooltip,
+  Typography,
 } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
@@ -136,9 +138,9 @@ export const CustomTable = (props: TableProps) => {
           case "id":
             return {
               title: (
-                <p style={{ width: "100%", textAlign: "center" }}>
+                <Typography style={{ width: "100%", textAlign: "center" }}>
                   {t(`table.${column?.head || column.name}`)}
-                </p>
+                </Typography>
               ),
               key: Array.isArray(column.name)
                 ? column.name + `${Math.random()}`
@@ -193,9 +195,9 @@ export const CustomTable = (props: TableProps) => {
           case "date":
             return {
               title: (
-                <p style={{ width: "100%", textAlign: "center" }}>
+                <Typography style={{ width: "100%", textAlign: "center" }}>
                   {t(`table.${column?.head || column.name}`)}
-                </p>
+                </Typography>
               ),
               key: Array.isArray(column.name)
                 ? column.name + `${Math.random()}`
@@ -203,19 +205,19 @@ export const CustomTable = (props: TableProps) => {
               dataIndex: column.name,
               render: (text: string) =>
                 text ? (
-                  <p
+                  <Typography
                     key={column.name}
                     style={{ width: "100%", textAlign: "center" }}
                   >{`${new Date(text).toLocaleDateString()} ${new Date(
                     text
-                  ).toLocaleTimeString()}`}</p>
+                  ).toLocaleTimeString()}`}</Typography>
                 ) : (
-                  <p
+                  <Typography
                     key={column.name}
                     style={{ width: "100%", textAlign: "center" }}
                   >
                     -
-                  </p>
+                  </Typography>
                 ),
 
               sorter: column.sort
@@ -236,16 +238,16 @@ export const CustomTable = (props: TableProps) => {
           case "value":
             return {
               title: (
-                <p style={{ width: "100%", textAlign: "center" }}>
+                <Typography style={{ width: "100%", textAlign: "center" }}>
                   {t(`table.${column?.head ?? column.name}`)}
-                </p>
+                </Typography>
               ),
               key: Array.isArray(column.name)
                 ? column.name + `${Math.random()}`
                 : column.name,
               dataIndex: column.name,
               render: (text: string) => (
-                <p
+                <Typography
                   key={column.name}
                   style={{ width: "100%", textAlign: "center" }}
                 >
@@ -253,7 +255,7 @@ export const CustomTable = (props: TableProps) => {
                     style: "currency",
                     currency: "BRL",
                   }).format(Number(text) || 0)}
-                </p>
+                </Typography>
               ),
               sorter: column.sort
                 ? () => {
@@ -272,16 +274,16 @@ export const CustomTable = (props: TableProps) => {
           case "document":
             return {
               title: (
-                <p style={{ width: "100%", textAlign: "center" }}>
+                <Typography style={{ width: "100%", textAlign: "center" }}>
                   {t(`table.${column?.head ?? column.name}`)}
-                </p>
+                </Typography>
               ),
               key: Array.isArray(column.name)
                 ? column.name + `${Math.random()}`
                 : column.name,
               dataIndex: column.name,
               render: (text: string) => (
-                <p
+                <Typography
                   key={column.name}
                   style={{ width: "100%", textAlign: "center" }}
                 >
@@ -289,7 +291,7 @@ export const CustomTable = (props: TableProps) => {
                     /(\d{3})(\d{3})(\d{3})(\d{2})/,
                     "$1.$2.$3-$4"
                   ) || "-"}
-                </p>
+                </Typography>
               ),
               sorter: column.sort
                 ? () => {
@@ -308,9 +310,9 @@ export const CustomTable = (props: TableProps) => {
           case "icon":
             return {
               title: (
-                <p style={{ width: "100%", textAlign: "center" }}>
+                <Typography style={{ width: "100%", textAlign: "center" }}>
                   {t(`table.${column?.head ?? column.name}`)}
-                </p>
+                </Typography>
               ),
               key: Array.isArray(column.name)
                 ? column.name + `${Math.random()}`
@@ -339,9 +341,9 @@ export const CustomTable = (props: TableProps) => {
           case "bankNameToIcon":
             return {
               title: (
-                <p style={{ width: "100%", textAlign: "center" }}>
+                <Typography style={{ width: "100%", textAlign: "center" }}>
                   {t(`table.${column?.head ?? column?.name}`)}
-                </p>
+                </Typography>
               ),
               key: Array.isArray(column?.name)
                 ? column?.name + `${Math.random()}`
@@ -383,26 +385,28 @@ export const CustomTable = (props: TableProps) => {
           case "status":
             return {
               title: (
-                <p style={{ width: "100%", textAlign: "center" }}>
+                <Typography style={{ width: "100%", textAlign: "center" }}>
                   {t(`table.${column?.head ?? column?.name}`)}
-                </p>
+                </Typography>
               ),
               key: Array.isArray(column?.name)
                 ? column?.name + `${Math.random()}`
                 : column?.name,
               dataIndex: column?.name,
-              render: (text: string) => {
+              render: (text: any) => {
                 return {
                   children:
-                    typeof text === "boolean" ? (
-                      <p
+                    typeof text === "boolean" || text === 1 || text === 0 ? (
+                      <Typography
                         key={column?.name}
                         style={{ width: "100%", textAlign: "center" }}
                       >
-                        {text ? t("table.active") : t("table.inactive")}
-                      </p>
+                        {text === true || text === 1
+                          ? t("table.active")
+                          : t("table.inactive")}
+                      </Typography>
                     ) : (
-                      <p
+                      <Typography
                         key={column?.name}
                         style={{
                           width: "100%",
@@ -414,7 +418,7 @@ export const CustomTable = (props: TableProps) => {
                         }}
                       >
                         {t(`table.${text?.toLocaleLowerCase()}`)}
-                      </p>
+                      </Typography>
                     ),
                 };
               },
@@ -436,21 +440,21 @@ export const CustomTable = (props: TableProps) => {
           case "boolean":
             return {
               title: (
-                <p style={{ width: "100%", textAlign: "center" }}>
+                <Typography style={{ width: "100%", textAlign: "center" }}>
                   {t(`table.${column?.head ?? column?.name}`)}
-                </p>
+                </Typography>
               ),
               key: Array.isArray(column?.name)
                 ? column?.name + `${Math.random()}`
                 : column?.name,
               dataIndex: column?.name,
               render: (text: string) => (
-                <p
+                <Typography
                   key={column?.name}
                   style={{ width: "100%", textAlign: "center" }}
                 >
                   {text ? t("table.true") : t("table.false")}
-                </p>
+                </Typography>
               ),
               sorter: column.sort
                 ? () => {
@@ -518,18 +522,18 @@ export const CustomTable = (props: TableProps) => {
           case "text":
             return {
               title: (
-                <p style={{ width: "100%", textAlign: "center" }}>
+                <Typography style={{ width: "100%", textAlign: "center" }}>
                   {t(`table.${column?.head || column.name}`)}
-                </p>
+                </Typography>
               ),
               key: Array.isArray(column?.name)
                 ? column?.name + `${Math.random()}`
                 : column?.name,
               dataIndex: column?.name,
               render: (text: string) => (
-                <p style={{ width: "100%", textAlign: "center" }}>
+                <Typography style={{ width: "100%", textAlign: "center" }}>
                   {text ?? "-"}
-                </p>
+                </Typography>
               ),
               sorter: column.sort
                 ? () => {
@@ -549,18 +553,18 @@ export const CustomTable = (props: TableProps) => {
           case "translate":
             return {
               title: (
-                <p style={{ width: "100%", textAlign: "center" }}>
+                <Typography style={{ width: "100%", textAlign: "center" }}>
                   {t(`table.${column?.head || column.name}`)}
-                </p>
+                </Typography>
               ),
               key: Array.isArray(column?.name)
                 ? column?.name + `${Math.random()}`
                 : column?.name,
               dataIndex: column?.name,
               render: (text: string) => (
-                <p style={{ width: "100%", textAlign: "center" }}>
+                <Typography style={{ width: "100%", textAlign: "center" }}>
                   {text ? t(`table.${text.toLocaleLowerCase()}`) : "-"}
-                </p>
+                </Typography>
               ),
               sorter: column.sort
                 ? () => {
@@ -580,29 +584,51 @@ export const CustomTable = (props: TableProps) => {
           case "progress":
             return {
               title: (
-                <p style={{ width: "100%", textAlign: "center" }}>
+                <Typography style={{ width: "100%", textAlign: "center" }}>
                   {t(`table.${column?.head ?? column?.name}`)}
-                </p>
+                </Typography>
               ),
               key: Array.isArray(column?.name)
                 ? column?.name + `${Math.random()}`
                 : column?.name,
               dataIndex: column?.name,
               render: (text: any, record: any) => (
-                <div style={{ width: "100%", textAlign: "center" }}>
-                  <Progress
-                    type="line"
-                    percent={text?.split("/")[0]}
-                    size="small"
-                    status={
-                      record.status === "ERROR" || record.status === "CANCELED"
-                        ? "exception"
-                        : record.status === "COMPLETED"
-                        ? "success"
-                        : "active"
-                    }
-                  />
-                </div>
+                <Grid
+                  container
+                  style={{
+                    width: "100%",
+                    textAlign: "center",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Grid item xs={record?.error_message ? 11 : 12}>
+                    <Progress
+                      type="line"
+                      percent={text?.split("/")[0]}
+                      size="small"
+                      status={
+                        record.status === "ERROR" ||
+                        record.status === "CANCELED"
+                          ? "exception"
+                          : record.status === "COMPLETED"
+                          ? "success"
+                          : "active"
+                      }
+                    />
+                  </Grid>
+                  {record?.error_message && (
+                    <Grid item xs={1}>
+                      <Tooltip title={record?.error_message}>
+                        <InfoCircleTwoTone
+                          twoToneColor={defaultTheme.colors.error}
+                          style={{ marginBottom: "8px" }}
+                        />
+                      </Tooltip>
+                    </Grid>
+                  )}
+                </Grid>
               ),
               sorter: column.sort
                 ? () => {
@@ -621,18 +647,18 @@ export const CustomTable = (props: TableProps) => {
           default:
             return {
               title: (
-                <p style={{ width: "100%", textAlign: "center" }}>
+                <Typography style={{ width: "100%", textAlign: "center" }}>
                   {t(`table.${column?.head ?? column?.name}`)}
-                </p>
+                </Typography>
               ),
               key: Array.isArray(column?.name)
                 ? column?.name + `${Math.random()}`
                 : column?.name,
               dataIndex: column?.name,
               render: (_a: any, record: any) => (
-                <p style={{ width: "100%", textAlign: "center" }}>
+                <Typography style={{ width: "100%", textAlign: "center" }}>
                   {record[column?.name] ?? "-"}
-                </p>
+                </Typography>
               ),
               sorter: column.sort
                 ? () => {
@@ -717,7 +743,6 @@ export const CustomTable = (props: TableProps) => {
               columns={columns}
               loading={props.loading}
               showSorterTooltip={false}
-             
               scroll={{ x: "none" }}
               sticky
               bordered

@@ -15,6 +15,10 @@ import { PublicRoutes } from "./routes/public";
 import { useValidate } from "./services/siginIn/validate.tsx";
 import { defaultTheme } from "./styles/defaultTheme/index.ts";
 import { GlobalStyle } from "./styles/globalStyles.ts";
+import {
+  StyledThemeProvider,
+  useTheme,
+} from "./contexts/ThemeContext/index.tsx";
 const Logo = import.meta.env.VITE_APP_ICON;
 
 function App() {
@@ -24,6 +28,7 @@ function App() {
   const { Content } = Layout;
   const [isIconSet, setIsIconSet] = useState<boolean>(false);
   const { isSuccess, validateError } = useValidate();
+  const { theme } = useTheme();
 
   useEffect(() => {
     if (!isIconSet) {
@@ -69,9 +74,39 @@ function App() {
           <GlobalStyle />
           <ConfigProvider
             theme={{
+              components: {
+                Menu: {
+                  colorTextLightSolid:
+                    theme === "dark"
+                      ? "#fff"
+                      : import.meta.env.VITE_APP_MENU_THEME === "dark"
+                      ? "#fff"
+                      : "#000",
+                  subMenuItemBg: "#000",
+                },
+                Tooltip: {
+                  colorTextLightSolid: theme === "dark" ? "#000" : "#fff",
+                },
+              },
               token: {
                 colorPrimary: defaultTheme.colors.secondary,
                 colorBgTextHover: defaultTheme.colors.secondary,
+                colorBgContainer: theme === "dark" ? "#1a1a1a" : "#ffffff",
+                colorBgLayout: theme === "dark" ? "#1a1a1a" : "#f5f5f5",
+                colorText: theme === "dark" ? "#f5f5f5" : "rgba(0, 0, 0, 0.88)",
+                colorTextHeading:
+                  theme === "dark" ? "#f5f5f5" : "rgba(0, 0, 0, 0.88)",
+                colorTextLightSolid:
+                  theme === "dark" ? "#ffffff" : "rgba(0, 0, 0, 0.88)",
+                colorTextBase:
+                  theme === "dark" ? "#f5f5f5" : "rgba(0, 0, 0, 0.88)",
+                colorTextLabel:
+                  theme === "dark" ? "#f5f5f5" : "rgba(0, 0, 0, 0.88)",
+
+                colorBgElevated: theme === "dark" ? "#1a1a1a" : "#ffffff",
+                colorBorder: "#ACACAC",
+                colorInfoBorder: "#ACACAC",
+                colorBorderSecondary: theme === "dark" ? "#353535" : "#f5f5f5",
               },
             }}
           >
@@ -93,14 +128,17 @@ function App() {
                   >
                     <PageHeader />
                     <Layout
-                      style={{ padding: "0 24px 24px", minHeight: "93vh" }}
+                      style={{
+                        padding: "0 24px 24px",
+                        minHeight: "92vh",
+                      }}
                     >
                       <Content
                         style={{
                           padding: 2,
                           margin: 0,
                           height: "100%",
-                          background: "#fff",
+                          background: theme === "dark" ? "#222222 " : "#ffffff",
                         }}
                       >
                         {element}

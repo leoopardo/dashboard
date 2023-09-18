@@ -17,7 +17,6 @@ export const BreadcrumbComponent = () => {
   const [breadcrumbs, setBreadcrumbs] = useState<
     Partial<BreadcrumbItemType & BreadcrumbSeparatorType>[]
   >([{ title: "home" }]);
-
   const location = useLocation();
   const translation = useTranslation().i18n.language;
   useEffect(() => {

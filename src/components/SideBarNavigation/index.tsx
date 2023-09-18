@@ -18,6 +18,7 @@ import { useMediaQuery } from "react-responsive";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useMenu } from "../../contexts/SidebarContext";
 import { defaultTheme } from "../../styles/defaultTheme";
+import { useTheme } from "@src/contexts/ThemeContext";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -30,6 +31,7 @@ export const SidebarNavigation = () => {
   const [items, setItems] = useState<MenuItem[]>([]);
   const translation = useTranslation().i18n.language;
   const [openKeys, setOpenKeys] = useState(["institution"]);
+  const { theme } = useTheme();
   const location = useLocation();
   const { permissions } = queryClient.getQueryData(
     "validate"
@@ -87,7 +89,6 @@ export const SidebarNavigation = () => {
       { fontSize: "16px" },
       import.meta.env.VITE_APP_COMPANY_NAME
     ),
-    { type: "divider" },
     getItem("register", <FolderAddOutlined style={{ fontSize: "23px" }} />, [
       getItem(
         "organization",
@@ -217,6 +218,49 @@ export const SidebarNavigation = () => {
               display: permissions?.register?.aggregator?.users?.menu
                 ? undefined
                 : "none",
+            }
+          ),
+          getItem(
+            "aggregator_blacklist",
+            null,
+            [
+              getItem(
+                "aggregator_blacklist_blacklist",
+                null,
+                null,
+                false,
+                (e) => handleNavigate(e?.keyPath),
+                {
+                  display: permissions?.register?.aggregator?.aggregator
+                    ?.aggregator_export_csv
+                    ? undefined
+                    : "none",
+                }
+              ),
+              getItem(
+                "aggregator_blacklist_reasons",
+                null,
+                null,
+                false,
+                (e) => handleNavigate(e?.keyPath),
+                {
+                  display: permissions?.register?.aggregator?.users
+                    ?.aggregator_user_export_csv
+                    ? undefined
+                    : "none",
+                }
+              ),
+            ],
+            false,
+            undefined,
+            {
+              display:
+                permissions?.register?.aggregator?.aggregator
+                  ?.aggregator_export_csv ||
+                permissions?.register?.aggregator?.users
+                  ?.aggregator_user_export_csv
+                  ? undefined
+                  : "none",
             }
           ),
           getItem(
@@ -1364,13 +1408,13 @@ export const SidebarNavigation = () => {
         style={{
           height: "55px",
           width: isSidebarOpen ? 256 : 80,
-          borderRadius: "0",
+          borderRadius: 0,
         }}
       >
         {!isSidebarOpen ? (
-          <MenuUnfoldOutlined style={{ fontSize: "26px" }} />
+          <MenuUnfoldOutlined style={{ fontSize: "26px", color: theme === "dark" ? "#fff" : "#000" }} />
         ) : (
-          <MenuFoldOutlined style={{ fontSize: "26px" }} />
+          <MenuFoldOutlined style={{ fontSize: "26px", color: theme === "dark" ? "#fff" : "#000" }} />
         )}
       </Button>
 
@@ -1379,7 +1423,8 @@ export const SidebarNavigation = () => {
           minHeight: "100%",
           maxHeight: "100%",
           overflow: "auto",
-          backgroundColor: defaultTheme.colors.primary,
+          backgroundColor:
+            theme === "dark" ? "#222222" : defaultTheme.colors.primary,
           display: isMobile && !isSidebarOpen ? "none" : "inherit",
         }}
         openKeys={isSidebarOpen ? openKeys : undefined}

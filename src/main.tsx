@@ -5,14 +5,16 @@ import { MenuProvider } from "./contexts/SidebarContext/index.tsx";
 import { QueryClientProvider } from "react-query";
 import "./i18n.ts";
 import { queryClient } from "./services/queryClient.ts";
-
+import { StyledThemeProvider } from "./contexts/ThemeContext/index.tsx";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <QueryClientProvider client={queryClient}>
-    <MenuProvider>
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
-    </MenuProvider>
+    <StyledThemeProvider>
+      <MenuProvider>
+        <React.StrictMode>
+          <App />
+        </React.StrictMode>
+      </MenuProvider>
+    </StyledThemeProvider>
   </QueryClientProvider>
 );

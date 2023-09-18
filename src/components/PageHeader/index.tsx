@@ -1,7 +1,21 @@
-import { DownOutlined, UserOutlined } from "@ant-design/icons";
+import {
+  CheckOutlined,
+  CloseOutlined,
+  DownOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 import { Grid } from "@mui/material";
+import { useTheme } from "@src/contexts/ThemeContext";
 import { useValidate } from "@src/services/siginIn/validate";
-import { Avatar, Dropdown, MenuProps, Space, theme } from "antd";
+import {
+  Avatar,
+  Dropdown,
+  MenuProps,
+  Radio,
+  Space,
+  Switch,
+  theme as t,
+} from "antd";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
@@ -10,7 +24,7 @@ import eua from "../../assets/united-states.png";
 import { defaultTheme } from "../../styles/defaultTheme";
 import { BreadcrumbComponent } from "../Breadcrumb";
 import { EditSelfModal } from "./EditSelf";
-const { useToken } = theme;
+const { useToken } = t;
 
 export const PageHeader = () => {
   const isMobile = useMediaQuery({ maxWidth: "900px" });
@@ -20,6 +34,7 @@ export const PageHeader = () => {
   const { token } = useToken();
   const [isEditUserModalOpen, setIsEditUserModalOpen] =
     useState<boolean>(false);
+  const { setTheme, theme } = useTheme();
 
   const contentStyle = {
     backgroundColor: token.colorBgElevated,
@@ -150,16 +165,27 @@ export const PageHeader = () => {
                   {t("table.last_signin_date")}:{" "}
                   {`${new Date(
                     `${responseValidate?.last_signin_date}`
-                  ).toLocaleDateString("pt-BR", {
-                    timeZone: "UTC",
-                  })} ${new Date(
+                  ).toLocaleDateString()} ${new Date(
                     `${responseValidate?.last_signin_date}`
-                  ).toLocaleTimeString("pt-BR", { timeZone: "UTC" })}`}
+                  ).toLocaleTimeString()}`}
                 </div>
               </div>
               {React.cloneElement(menu as React.ReactElement, {
                 style: menuStyle,
               })}
+              <div style={{padding: 5}}>
+                <Radio.Group
+                defaultValue={theme}
+                buttonStyle="solid"
+                value={theme}
+                onChange={(e) => setTheme(e.target.value)}
+              >
+                <Radio.Button value="light">Light mode 🌞</Radio.Button>
+                <Radio.Button value="dark">Dark mode 🌜</Radio.Button>
+              </Radio.Group>
+              </div>
+              
+             
             </div>
           )}
         >

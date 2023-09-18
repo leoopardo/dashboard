@@ -72,6 +72,7 @@ import { AggregatorsReports } from "./Pages/register/aggregator/reports/aggregat
 import { AggregatorUsersReports } from "./Pages/register/aggregator/reports/users";
 import { MerchantBlacklistReasons } from "./Pages/register/merchant/blacklist/reasons";
 import { OrganizationBankBalance } from "./Pages/consult/organization/bankBalance";
+import { AggregatorBlacklist } from "./Pages/register/aggregator/blacklist";
 
 export const PrivateRoutes = () => {
   return (
@@ -210,6 +211,13 @@ export const PrivateRoutes = () => {
           <Route path="aggregator">
             <Route path="aggregators" element={<Aggregators />} />
             <Route path="aggregator_users" element={<AggregatorUsers />} />
+            <Route path="aggregator_blacklist">
+              <Route
+                path="aggregator_blacklist_blacklist"
+                element={<AggregatorBlacklist />}
+              />
+              <Route path="aggregator_blacklist_reasons" />
+            </Route>
             <Route path="aggregator_reports">
               <Route
                 path="aggregator_aggregators_reports"

@@ -11,6 +11,7 @@ import {
   Dropdown,
   Empty,
   Tooltip,
+  Typography,
 } from "antd";
 import moment from "moment";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
@@ -70,7 +71,7 @@ export const Mobile = (props: MobileProps) => {
                   case "createdAt":
                   case "paid_at":
                     return (
-                      <p key={label} style={{ fontSize: "12px" }}>
+                      <Typography key={label} style={{ fontSize: "12px" }}>
                         {t(`table.${label}`)}:{" "}
                         {`${
                           item[label]
@@ -79,22 +80,26 @@ export const Mobile = (props: MobileProps) => {
                                 .format("YYYY/DD/MM HH:MM")
                             : ""
                         }`}
-                      </p>
+                      </Typography>
                     );
                   case "status": {
-                    return typeof item[label] === "boolean" ? (
-                      <p key={label}>
-                        {item[label] ? t("table.active") : t("table.inactive")}
-                      </p>
+                    return typeof item[label] === "boolean" ||
+                      item[label] === 0 ||
+                      item[label] === 1 ? (
+                      <Typography key={label}>
+                        {item[label] || item[label] === 1
+                          ? t("table.active")
+                          : t("table.inactive")}
+                      </Typography>
                     ) : (
-                      <p key={label}>
+                      <Typography key={label}>
                         {t(`table.${item[label]?.toLocaleLowerCase()}`)}
-                      </p>
+                      </Typography>
                     );
                   }
                   case "delivered_at":
                     return (
-                      <p key={label} style={{ fontSize: "12px" }}>
+                      <Typography key={label} style={{ fontSize: "12px" }}>
                         {t("table.delivered_at")}:{" "}
                         {`${
                           item[label]
@@ -105,22 +110,22 @@ export const Mobile = (props: MobileProps) => {
                             ? new Date(item[label]).toLocaleTimeString()
                             : "-"
                         }`}
-                      </p>
+                      </Typography>
                     );
 
                   case "value_total":
                   case "value":
                     return (
-                      <p key={label}>
+                      <Typography key={label}>
                         {new Intl.NumberFormat("pt-BR", {
                           style: "currency",
                           currency: "BRL",
                         }).format(Number(item[label]) || 0)}
-                      </p>
+                      </Typography>
                     );
 
                   default:
-                    return <p key={label}>{item[label]}</p>;
+                    return <Typography key={label}>{item[label]}</Typography>;
                 }
               })}
             </>
@@ -156,7 +161,7 @@ export const Mobile = (props: MobileProps) => {
                           padding: 5,
                         }}
                       >
-                        <p style={{ width: "100%", textAlign: "center" }}>
+                        <Typography style={{ width: "100%", textAlign: "center" }}>
                           {item[value.name]
                             ? `${new Date(
                                 item[value.name]
@@ -164,7 +169,7 @@ export const Mobile = (props: MobileProps) => {
                                 item[value.name]
                               ).toLocaleTimeString()}`
                             : "-"}
-                        </p>
+                        </Typography>
                       </Descriptions.Item>
                     );
                   case "value":
@@ -178,7 +183,7 @@ export const Mobile = (props: MobileProps) => {
                           padding: 5,
                         }}
                       >
-                        <p
+                        <Typography
                           key={value.name}
                           style={{ width: "100%", textAlign: "center" }}
                         >
@@ -186,7 +191,7 @@ export const Mobile = (props: MobileProps) => {
                             style: "currency",
                             currency: "BRL",
                           }).format(Number(item[value.name]) || 0)}
-                        </p>
+                        </Typography>
                       </Descriptions.Item>
                     );
                   case "icon":
@@ -256,22 +261,24 @@ export const Mobile = (props: MobileProps) => {
                           padding: 5,
                         }}
                       >
-                        {typeof item[value.name] === "boolean" ? (
-                          <p
+                        {typeof item[value.name] === "boolean" ||
+                        item[value.name] == 1 ||
+                        item[value.name] == 0 ? (
+                          <Typography
                             key={value.name}
                             style={{ width: "100%", textAlign: "center" }}
                           >
-                            {item[value.name]
+                            {item[value.name] || item[value.name] == 1
                               ? t("table.active")
                               : t("table.inactive")}
-                          </p>
+                          </Typography>
                         ) : (
-                          <p
+                          <Typography
                             key={value.name}
                             style={{ width: "100%", textAlign: "center" }}
                           >
                             {t(`table.${item[value.name].toLocaleLowerCase()}`)}
-                          </p>
+                          </Typography>
                         )}
                       </Descriptions.Item>
                     );
@@ -287,14 +294,14 @@ export const Mobile = (props: MobileProps) => {
                           padding: 5,
                         }}
                       >
-                        <p
+                        <Typography
                           key={item[value.name]}
                           style={{ width: "100%", textAlign: "center" }}
                         >
                           {item[value.name]
                             ? t("table.true")
                             : t("table.false")}
-                        </p>
+                        </Typography>
                       </Descriptions.Item>
                     );
 
@@ -309,7 +316,7 @@ export const Mobile = (props: MobileProps) => {
                           padding: 5,
                         }}
                       >
-                        <p
+                        <Typography
                           key={value.name}
                           style={{ width: "100%", textAlign: "center" }}
                         >
@@ -317,7 +324,7 @@ export const Mobile = (props: MobileProps) => {
                             /(\d{3})(\d{3})(\d{3})(\d{2})/,
                             "$1.$2.$3-$4"
                           ) || "-"}
-                        </p>
+                        </Typography>
                       </Descriptions.Item>
                     );
 
@@ -341,14 +348,14 @@ export const Mobile = (props: MobileProps) => {
                         }}
                       >
                         {" "}
-                        <p
+                        <Typography
                           key={value.name}
                           style={{ width: "100%", textAlign: "center" }}
                         >
                           {Array.isArray(value.name)
                             ? t(`table.${item[value.name[0]][value.name[1]]}`)
                             : t(`table.${item[value.name]}`)}
-                        </p>
+                        </Typography>
                       </Descriptions.Item>
                     );
 
@@ -368,14 +375,14 @@ export const Mobile = (props: MobileProps) => {
                         }}
                       >
                         {" "}
-                        <p
+                        <Typography
                           key={value.name}
                           style={{ width: "100%", textAlign: "center" }}
                         >
                           {Array.isArray(value.name)
                             ? item[value.name[0]][value.name[1]]
                             : item[value.name]}
-                        </p>
+                        </Typography>
                       </Descriptions.Item>
                     );
                 }

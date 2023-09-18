@@ -112,7 +112,10 @@
     "edit_user": "Editar usuário",
     "merchant_blacklists": "Blacklist",
     "merchant_blacklist_reasons": "Motivos de blacklist",
-    "organization_bank_balance": "Saldo bancário"
+    "organization_bank_balance": "Saldo bancário",
+    "aggregator_blacklist": "Blacklist",
+    "aggregator_blacklist_blacklist": "Blacklist de agregador",
+    "aggregator_blacklist_reasons": "Motivos de blacklist"
   },
 
   "titles": {
@@ -543,7 +546,8 @@
     "password_or_username": "Senha e/ou usuário incorretos.",
     "BANK_ALREADY_CREATED": "Esse banco já foi adicionado",
     "date_1_hour": "A diferença máxima deve ser de uma hora",
-    "undefined": "Não foi possível se conectar ao servidor. Aguarde enquanto solucionamos este problema."
+    "undefined": "Não foi possível se conectar ao servidor. Aguarde enquanto solucionamos este problema.",
+    "password_must_match_/^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9]).{8,}$/_regular_expression": "A senha deve possuir 8 dígitos, letras maiúsculas e minusculas, números e caracteres especiais (!@#$%^&*)"
   },
   "logs": {
     "login": "Login",

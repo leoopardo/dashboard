@@ -7,7 +7,7 @@ import { Grid } from "@mui/material";
 import { useGetOrganizationBankStatementTotals } from "@src/services/consult/organization/bankStatement/getTotals";
 import { OrganizationBankStatementTotalsQuery } from "@src/services/types/consult/organization/bankStatement/totals.interface";
 import { defaultTheme } from "@src/styles/defaultTheme";
-import { Divider, Statistic } from "antd";
+import { Divider, Statistic, Typography } from "antd";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -64,8 +64,14 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
             alignItems: "center",
           }}
         >
-          <ArrowUpOutlined style={{ marginRight: "-5px" }} />
-          <MoneyIcon /> {t("table.in")}
+          <Typography  style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}>
+            <ArrowUpOutlined style={{ marginRight: "-5px" }} />
+            <MoneyIcon /> {t("table.in")}
+          </Typography>
         </Grid>
         {Object.keys(OrganizationBankStatementTotals).map((key) => {
           switch (key) {
@@ -153,9 +159,16 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
             alignItems: "center",
           }}
         >
-          <ArrowDownOutlined style={{ marginRight: "-5px" }} />
+              <Typography  style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}>
+            <ArrowDownOutlined style={{ marginRight: "-5px" }} />
           <MoneyIcon />
           {t("table.out")}
+          </Typography>
+          
         </Grid>
         {Object.keys(OrganizationBankStatementTotals).map((key) => {
           switch (key) {
@@ -243,7 +256,14 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
             alignItems: "center",
           }}
         >
-          <MoneyIcon /> Total
+              <Typography  style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}>
+              <MoneyIcon /> Total
+          </Typography>
+        
         </Grid>
         {Object.keys(OrganizationBankStatementTotals).map((key) => {
           switch (key) {

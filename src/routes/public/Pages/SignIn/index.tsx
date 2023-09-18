@@ -7,7 +7,7 @@ import {
 } from "@ant-design/icons";
 import { Grid } from "@mui/material";
 import { useToken } from "@src/services/siginIn/signIn";
-import { Alert, Form, Input } from "antd";
+import { Alert, Form, Input, Typography } from "antd";
 import { CheckboxChangeEvent } from "antd/es/checkbox";
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -20,6 +20,7 @@ import {
   LockIcon,
   RoundedLock,
 } from "./styles";
+import { useTheme } from "@src/contexts/ThemeContext";
 
 const Logo = import.meta.env.VITE_APP_LOGO;
 
@@ -34,11 +35,10 @@ export const Login = () => {
     username: "",
     password: "",
   });
+  const { theme } = useTheme();
 
-  const { Login, isValidateFetching, validateError, LoginError, isLoading } = useToken(
-    user,
-    rememerMe
-  );
+  const { Login, isValidateFetching, validateError, LoginError, isLoading } =
+    useToken(user, rememerMe);
 
   async function handleLogin() {
     Login();
@@ -60,9 +60,12 @@ export const Login = () => {
         lg={8}
         style={{
           height: isMobile ? "30vh" : "100vh",
-          background: isMobile
-            ? `linear-gradient(180deg, ${defaultTheme.colors.primary} 0%, ${defaultTheme.colors.secondary} 129.95%)`
-            : `linear-gradient(90deg, ${defaultTheme.colors.primary} 0%, ${defaultTheme.colors.secondary} 189.05%)`,
+          background:
+            theme === "dark"
+              ? "rgba(0, 0, 0, 0.88)"
+              : isMobile
+              ? `linear-gradient(180deg, ${defaultTheme.colors.primary} 0%, ${defaultTheme.colors.secondary} 129.95%)`
+              : `linear-gradient(90deg, ${defaultTheme.colors.primary} 0%, ${defaultTheme.colors.secondary} 189.05%)`,
         }}
       >
         <img
@@ -81,6 +84,7 @@ export const Login = () => {
           height: isMobile ? "70vh" : "100vh",
           display: "flex",
           flexDirection: "column",
+          backgroundColor: theme === "dark" ? "#2a2a2a" : "#fff",
         }}
       >
         <Grid
@@ -107,9 +111,13 @@ export const Login = () => {
             <LockIcon />
           </RoundedLock>
           {isMobile ? (
-            <h2 style={{ fontWeight: 500 }}>{t("login.sign_in")}</h2>
+            <Typography.Title level={2} style={{ fontWeight: 500 }}>
+              {t("login.sign_in")}
+            </Typography.Title>
           ) : (
-            <h1 style={{ fontWeight: 500 }}>{t("login.sign_in")}</h1>
+            <Typography.Title level={2} style={{ fontWeight: 500 }}>
+              {t("login.sign_in")}
+            </Typography.Title>
           )}
         </Grid>
         <Form layout="vertical" onFinish={handleLogin}>
@@ -232,17 +240,20 @@ export const Login = () => {
                 maxHeight: "200px",
               }}
             >
-              <p style={{ opacity: 0.6 }}>
+              <Typography style={{ opacity: 0.6 }}>
                 Copyright ©{" "}
-                <a
+                <Typography.Link
                   href="https://paybrokers.com.br/"
                   target="_blank"
-                  style={{ color: "#4a4a4a", textDecoration: "underline" }}
+                  style={{
+                    color: theme === "dark" ? "#fff" : "#4a4a4a",
+                    textDecoration: "underline",
+                  }}
                 >
                   PayBrokers
-                </a>{" "}
+                </Typography.Link>{" "}
                 2023.
-              </p>
+              </Typography>
             </Grid>
           </Grid>
         </Form>
