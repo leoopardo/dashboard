@@ -12,22 +12,18 @@ export function useCreateGeneratedDepositsReports(
   >("GeneratedDepositsReports", async () => {
     const response = await api.post(
       "report/csv/pix",
-      {},
-      {
-        params: {
-          ...body,
-          initial_date: body.initial_date
-            ? moment(body.initial_date)
-                .add(3, "hours")
-                .format("YYYY-MM-DDTHH:mm:ss.SSS")
-            : null,
-          final_date: body.final_date
-            ? moment(body.final_date)
-                .add(3, "hours")
-                .format("YYYY-MM-DDTHH:mm:ss.SSS")
-            : null,
-        },
-      }
+      {...body,
+        initial_date: body.initial_date
+          ? moment(body.initial_date)
+              .add(3, "hours")
+              .format("YYYY-MM-DDTHH:mm:ss.SSS")
+          : null,
+        final_date: body.final_date
+          ? moment(body.final_date)
+              .add(3, "hours")
+              .format("YYYY-MM-DDTHH:mm:ss.SSS")
+          : null,},
+      
     );
     await queryClient.refetchQueries({
       queryKey: ["GeneratedDepositsUserReports"],

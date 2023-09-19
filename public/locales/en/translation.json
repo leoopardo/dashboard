@@ -264,7 +264,8 @@
     "primary": "Primary",
     "secondary": "Secondary",
     "both": "Both",
-    "options": "Options"
+    "options": "Options",
+    "csv_columns": "Select the CSV columns"
   },
   "modal": {
     "confirm": "Confirm",
@@ -526,7 +527,14 @@
     "plan_type": "Plan type",
     "range_type": "Range type",
     "aggregator_id": "ID Aggregator",
-    "bank_icon": "Bank icon"
+    "bank_icon": "Bank icon",
+    "aggregator_name": "Aggregator",
+    "operator_name": "Operador",
+    "cash_in_fee_percent": "Taxa de depósito",
+    "net_value": "valor",
+    "paid_value": "Valor pago",
+    "delivered_at_secondary": "Entregue em (secundário)",
+    "v3_id": "ID V3"
   },
   "actions": {
     "details": "Details",

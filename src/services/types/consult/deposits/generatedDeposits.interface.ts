@@ -21,6 +21,8 @@ export interface generatedDepositTotalQuery {
   delivered_at?: boolean;
   buyer_name?: string;
   payer_name?: string;
+  fields?: any;
+  comma_separate_value?: boolean;
 }
 
 export interface generatedDepositRowsQuery {
