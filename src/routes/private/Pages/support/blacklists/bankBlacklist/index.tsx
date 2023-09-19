@@ -104,7 +104,7 @@ export const BankBlacklist = () => {
             endDateKeyName="end_date"
             query={query}
             setQuery={setQuery}
-            haveInitialDate
+             
           />
         </Grid>
       </Grid>
@@ -239,7 +239,7 @@ export const BankBlacklist = () => {
           setOpen={setIsFiltersOpen}
           query={query}
           setQuery={setQuery}
-          haveInitialDate
+           
           filters={["start_date", "end_date"]}
           refetch={refetchBankBlacklist}
           selectOptions={{}}

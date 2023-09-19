@@ -98,7 +98,7 @@ export const MerchantBlacklist = () => {
             endDateKeyName="final_date"
             query={query}
             setQuery={setQuery}
-            haveInitialDate
+             
           />
         </Grid>
       </Grid>
@@ -182,7 +182,7 @@ export const MerchantBlacklist = () => {
           setOpen={setIsFiltersOpen}
           query={query}
           setQuery={setQuery}
-          haveInitialDate
+           
           filters={["start_date", "end_date", "merchant_id"]}
           refetch={refetchMerchantBlacklistData}
           selectOptions={{}}

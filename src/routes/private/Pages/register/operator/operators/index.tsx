@@ -123,7 +123,7 @@ export const Operators = () => {
             endDateKeyName="end_date"
             query={query}
             setQuery={setQuery}
-            haveInitialDate
+             
           />
         </Grid>
       </Grid>
@@ -222,7 +222,7 @@ export const Operators = () => {
           setOpen={setIsFiltersOpen}
           query={query}
           setQuery={setQuery}
-          haveInitialDate
+           
           filters={["start_date", "end_date", "status"]}
           refetch={refetchOperatorData}
           selectOptions={{}}

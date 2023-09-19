@@ -77,7 +77,7 @@ export const InvalidPixKeyBlacklist = () => {
             endDateKeyName="end_date"
             query={query}
             setQuery={setQuery}
-            haveInitialDate
+             
           />
         </Grid>
       </Grid>
@@ -167,7 +167,7 @@ export const InvalidPixKeyBlacklist = () => {
           setOpen={setIsFiltersOpen}
           query={query}
           setQuery={setQuery}
-          haveInitialDate
+           
           filters={["start_date", "end_date"]}
           refetch={refetchInvalidPixKey}
           selectOptions={{}}

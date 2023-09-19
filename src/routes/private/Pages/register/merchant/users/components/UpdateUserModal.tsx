@@ -248,25 +248,27 @@ export const UpdateUserModal = ({
             onChange={handleChangeUserBody}
           />
         </Form.Item>
-        <Form.Item
-          label={t(`table.merchant`)}
-          name="merchant"
-          style={{ margin: 10 }}
-          rules={[
-            {
-              required: !body.merchant_id ? true : false,
-              message:
-                t("input.required", { field: t("table.merchant") }) || "",
-            },
-          ]}
-        >
-          <Input
-            value={body.merchant_id || ""}
-            style={{ display: "none" }}
-            name="merchant_id"
-          />
-          <MerchantSelect queryOptions={body} setQueryFunction={setBody} />
-        </Form.Item>
+        {!user.merchant_id && (
+          <Form.Item
+            label={t(`table.merchant`)}
+            name="merchant"
+            style={{ margin: 10 }}
+            rules={[
+              {
+                required: !body.merchant_id ? true : false,
+                message:
+                  t("input.required", { field: t("table.merchant") }) || "",
+              },
+            ]}
+          >
+            <Input
+              value={body.merchant_id || ""}
+              style={{ display: "none" }}
+              name="merchant_id"
+            />
+            <MerchantSelect queryOptions={body} setQueryFunction={setBody} />
+          </Form.Item>
+        )}
         <Form.Item
           label={t(`table.group`)}
           name="group_id"

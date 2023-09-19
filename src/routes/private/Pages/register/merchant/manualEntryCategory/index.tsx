@@ -100,7 +100,7 @@ export const MerchantManualEntryCategory = () => {
             endDateKeyName="end_date"
             query={query}
             setQuery={setQuery}
-            haveInitialDate
+             
           />
         </Grid>
 

@@ -260,35 +260,33 @@ export const NewUserModal = ({
             </Form.Item>
           )}
 
-        {permissions.register.aggregator.aggregator.aggregator_list && (
-          <Form.Item
-            label={t(`table.group`)}
+        <Form.Item
+          label={t(`table.group`)}
+          name="group_id"
+          style={{ margin: 10 }}
+          rules={[
+            {
+              required: !body.group_id ? true : false,
+              message: t("input.required", { field: t("input.group") }) || "",
+            },
+          ]}
+        >
+          <Input
+            value={body.group_id || ""}
+            style={{ display: "none" }}
             name="group_id"
-            style={{ margin: 10 }}
-            rules={[
-              {
-                required: !body.group_id ? true : false,
-                message: t("input.required", { field: t("input.group") }) || "",
-              },
-            ]}
-          >
-            <Input
-              value={body.group_id || ""}
-              style={{ display: "none" }}
-              name="group_id"
-            />
-            <GroupSelect
-              body={body}
-              setBody={setBody}
-              filterIdProp="aggregator_id"
-              filterIdValue={
-                user.aggregator_id ??
-                body.aggregator_id ??
-                currentUser?.aggregator.id
-              }
-            />
-          </Form.Item>
-        )}
+          />
+          <GroupSelect
+            body={body}
+            setBody={setBody}
+            filterIdProp="aggregator_id"
+            filterIdValue={
+              user.aggregator_id ??
+              body.aggregator_id ??
+              currentUser?.aggregator.id
+            }
+          />
+        </Form.Item>
 
         <Form.Item
           label={t(`table.password`)}

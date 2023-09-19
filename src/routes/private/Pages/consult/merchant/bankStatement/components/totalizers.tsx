@@ -7,7 +7,7 @@ import { Grid } from "@mui/material";
 import { useGetMerchantBankStatementTotals } from "@src/services/consult/merchant/bankStatement/getTotals";
 import { MerchantBankStatementTotalsQuery } from "@src/services/types/consult/merchant/bankStatement";
 import { defaultTheme } from "@src/styles/defaultTheme";
-import { Divider, Statistic } from "antd";
+import { Divider, Statistic, Typography } from "antd";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -90,8 +90,19 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
               alignItems: "center",
             }}
           >
-            <ArrowUpOutlined style={{ marginRight: "-5px" }} />
-            <MoneyIcon /> {t("table.in")}
+            <Typography>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <ArrowUpOutlined style={{ marginRight: "-5px" }} />
+                <MoneyIcon />
+              </div>
+              {t("table.in")}
+            </Typography>
           </Grid>
           {MerchantBankStatementTotals &&
             Object.keys(MerchantBankStatementTotals).map((key) => {
@@ -181,9 +192,19 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
               alignItems: "center",
             }}
           >
-            <ArrowDownOutlined style={{ marginRight: "-5px" }} />
-            <MoneyIcon />
-            {t("table.out")}
+            <Typography>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <ArrowDownOutlined style={{ marginRight: "-5px" }} />
+                <MoneyIcon />
+              </div>
+              {t("table.out")}
+            </Typography>
           </Grid>
           {MerchantBankStatementTotals &&
             Object.keys(MerchantBankStatementTotals).map((key) => {
@@ -244,7 +265,6 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
               }
             })}
         </Grid>
-        
       </Grid>
     </Grid>
   );

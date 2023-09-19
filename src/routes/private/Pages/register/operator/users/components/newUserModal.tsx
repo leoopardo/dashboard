@@ -52,6 +52,7 @@ export const NewUserModal = ({
   const { permissions } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
+  const user = queryClient.getQueryData("validate") as ValidateInterface;
   const { t } = useTranslation();
   const submitRef = useRef<HTMLButtonElement>(null);
   const formRef = React.useRef<FormInstance>(null);
@@ -244,24 +245,25 @@ export const NewUserModal = ({
             onChange={handleChangeUserBody}
           />
         </Form.Item>
-        {permissions.register.operator.operator.operator_list && (
-          <Form.Item
-            label={t("input.operator")}
-            name="operator_id"
-            style={{ margin: 10 }}
-            rules={[
-              {
-                required: !body.operator_id,
-                message:
-                  t("input.required", {
-                    field: t(`input.operator`),
-                  }) || "",
-              },
-            ]}
-          >
-            <OperatorSelect setQueryFunction={setBody} queryOptions={body} />
-          </Form.Item>
-        )}
+        {permissions.register.operator.operator.operator_list &&
+          !user.operator_id && (
+            <Form.Item
+              label={t("input.operator")}
+              name="operator_id"
+              style={{ margin: 10 }}
+              rules={[
+                {
+                  required: !body.operator_id,
+                  message:
+                    t("input.required", {
+                      field: t(`input.operator`),
+                    }) || "",
+                },
+              ]}
+            >
+              <OperatorSelect setQueryFunction={setBody} queryOptions={body} />
+            </Form.Item>
+          )}
 
         <Form.Item
           label={t(`table.group`)}
@@ -278,7 +280,9 @@ export const NewUserModal = ({
             body={body}
             setBody={setBody}
             filterIdProp="operator_id"
-            filterIdValue={body?.operator_id || currentUser?.operator_id}
+            filterIdValue={
+              body?.operator_id || body.operator_id || currentUser?.operator_id
+            }
           />
         </Form.Item>
         <Form.Item

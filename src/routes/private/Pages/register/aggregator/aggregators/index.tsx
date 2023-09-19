@@ -139,7 +139,7 @@ export const Aggregators = () => {
             endDateKeyName="end_date"
             query={query}
             setQuery={setQuery}
-            haveInitialDate
+             
           />
         </Grid>
       </Grid>
@@ -252,7 +252,7 @@ export const Aggregators = () => {
           setOpen={setIsFiltersOpen}
           query={query}
           setQuery={setQuery}
-          haveInitialDate
+           
           filters={["start_date", "end_date", "status"]}
           refetch={refetchAggregatorsData}
           selectOptions={{}}

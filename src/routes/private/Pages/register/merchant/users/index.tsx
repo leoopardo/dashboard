@@ -119,7 +119,7 @@ export const MerchantUser = () => {
             endDateKeyName="final_date"
             query={query}
             setQuery={setQuery}
-            haveInitialDate
+             
           />
         </Grid>
       </Grid>
@@ -232,7 +232,7 @@ export const MerchantUser = () => {
           setOpen={setIsFiltersOpen}
           query={query}
           setQuery={setQuery}
-          haveInitialDate
+           
           filters={[
             "start_date",
             "end_date",

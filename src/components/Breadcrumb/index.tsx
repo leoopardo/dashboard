@@ -19,17 +19,70 @@ export const BreadcrumbComponent = () => {
   >([{ title: "home" }]);
   const location = useLocation();
   const translation = useTranslation().i18n.language;
+
+  const isNotPath: string[] = [
+    "register",
+    "organization",
+    "organization_reports",
+    "aggregator",
+    "aggregator_blacklist",
+    "aggregator_reports",
+    "details",
+    "partner",
+    "partner_reports",
+    "operator",
+    "operator_reports",
+    "merchant",
+    "merchant_blacklists",
+    "merchant_reports",
+    "person",
+    "update",
+    "person_reports",
+    "moviment",
+    "organization_moviments",
+    "merchant_moviments",
+    "consult",
+    "consult_organization",
+    "consult_merchant",
+    "deposit",
+    "deposits_reports",
+    "withdrawals",
+    "withdrawals_reports",
+    "refunds",
+    "consult_persons",
+    "refund_reports",
+    "support",
+    "blacklists",
+    "blacklists_reports",
+    "refunded",
+    "blacklist",
+    "update",
+  ];
+
   useEffect(() => {
     const l = location.pathname.split("/");
     l.shift();
     setBreadcrumbs(
       l.map((value) => {
         return {
-          title: value.includes("%20")
-            ? value.split("%20").join(".")
-            : Number(value)
-            ? value
-            : t(`menus.${value}`),
+          title:
+            isNotPath.includes(value) || +value ? (
+              <>
+                {value.includes("%20")
+                  ? value.split("%20").join(".")
+                  : Number(value)
+                  ? value
+                  : t(`menus.${value}`)}
+              </>
+            ) : (
+              <a href={`/${l.slice(0, l.indexOf(value) + 1).join("/")}`}>
+                {value.includes("%20")
+                  ? value.split("%20").join(".")
+                  : Number(value)
+                  ? value
+                  : t(`menus.${value}`)}
+              </a>
+            ),
         };
       })
     );

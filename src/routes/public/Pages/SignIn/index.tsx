@@ -30,7 +30,7 @@ export const Login = () => {
   document.title = `Login | ${import.meta.env.VITE_APP_COMPANY_NAME}`;
   const submitRef = useRef<HTMLButtonElement>(null);
   const isMobile = useMediaQuery({ maxWidth: "900px" });
-  const [rememerMe, setRememberMe] = useState(false);
+  const [rememerMe, setRememberMe] = useState(true);
   const [user, setUser] = useState<{ username: string; password: string }>({
     username: "",
     password: "",
