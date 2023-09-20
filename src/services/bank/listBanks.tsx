@@ -7,7 +7,7 @@ export function useListBanks(params: BankQuery) {
   const { data, isFetching, error, refetch } = useQuery<
     BankResponse | null | undefined
   >("BankList", async () => {
-    const response = await api.get("config/list_banks", {
+    const response = await api.get("/config/bank_to_select", {
       params,
     });
     return response.data;

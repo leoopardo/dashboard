@@ -12,6 +12,7 @@ import {
   notification,
 } from "antd";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
@@ -30,6 +31,7 @@ interface ExportCustomreportsInterface {
   csvFields: any;
   comma: boolean;
   setIsComma: Dispatch<SetStateAction<boolean>>;
+  reportName: string;
 }
 
 type NotificationType = "success" | "info" | "warning" | "error";
@@ -47,6 +49,7 @@ export const ExportCustomReportsModal = ({
   setOpen,
   comma,
   setIsComma,
+  reportName,
 }: ExportCustomreportsInterface) => {
   const { t } = useTranslation();
   const [selectedFields, setSelectedFields] = useState<string[]>([]);
@@ -64,19 +67,19 @@ export const ExportCustomReportsModal = ({
 
   const handleCreateReport = () => {
     mutateReport();
-    localStorage.setItem("depositReportsFields", selectedFields.join("%"));
-    localStorage.setItem("coomma", `${comma}`);
+    localStorage.setItem(reportName, selectedFields.join("%"));
+    localStorage.setItem("comma", `${comma}`);
     setOpen(false);
   };
 
   useEffect(() => {
     const storage: string[] | undefined = localStorage
-      .getItem("depositReportsFields")
+      .getItem(reportName)
       ?.split("%");
 
-    console.log(storage, fields);
-
+    const commaSeparator: string | null = localStorage.getItem("comma");
     if (storage) setSelectedFields(storage);
+    if (commaSeparator) setIsComma(commaSeparator == "true");
   }, []);
 
   const openNotificationWithIcon = (type: NotificationType) => {
@@ -97,11 +100,18 @@ export const ExportCustomReportsModal = ({
     if (success) {
       openNotificationWithIcon("info");
     }
+
+    if (error) {
+      toast.error(
+        t("messages.action_error", {
+          action: t("messages.export_csv"),
+        })
+      );
+    }
   }, [error, success]);
 
   return (
     <>
-      {" "}
       {contextHolder}
       <Modal
         title={t("messages.export_csv")}
@@ -110,14 +120,14 @@ export const ExportCustomReportsModal = ({
         okButtonProps={{ disabled: selectedFields.length === 0 }}
         onOk={handleCreateReport}
       >
-        <Row gutter={[8, 8]} style={{ maxHeight: "450px", overflow: "auto" }}>
+        <Row style={{ maxHeight: "450px", overflow: "auto" }}>
           <Col span={24}>
             <Form layout="vertical">
               <Form.Item label={t("input.comma_separator")}>
                 <Radio.Group
                   options={[
-                    { label: "$ 1234,56", value: true },
-                    { label: "$ 1234.56", value: false },
+                    { label: "$1000,00", value: true },
+                    { label: "$1000.00", value: false },
                   ]}
                   onChange={(e) => setIsComma(e.target.value)}
                   value={comma}

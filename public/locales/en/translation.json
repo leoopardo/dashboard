@@ -265,7 +265,8 @@
     "secondary": "Secondary",
     "both": "Both",
     "options": "Options",
-    "csv_columns": "Select the CSV columns"
+    "csv_columns": "Select the CSV columns",
+    "comma_separator": "Decimal separator"
   },
   "modal": {
     "confirm": "Confirm",
@@ -290,7 +291,11 @@
     "new_bank_blacklist": "Add to blacklist",
     "resend_webhook": "Resend webhook",
     "update_bank": "Update bank",
-    "new_reason": "New reason"
+    "new_reason": "New reason",
+    "receiver_bank_name": "Receiver bank",
+    "payment_id": "Payment ID",
+    "receiver_email": "Receiver email",
+    "cash_out_fee_percent": "Withdraw fee"
   },
   "table": {
     "id": "ID",

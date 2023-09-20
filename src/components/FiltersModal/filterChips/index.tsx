@@ -82,14 +82,16 @@ export const FilterChips = ({
                 }
               >
                 {t(`table.date`)}:{" "}
-                {`${moment(filtersQuery[key]).format(
-                  navigator.language === 'pt-BR'
-                    ? 'DD/MM/YYYY HH:mm'
-                    : 'YYYY/MM/DD HH:mm'
-                )} - ${moment(filtersQuery[endDateKeyName]).format(
-                  navigator.language === 'pt-BR'
-                    ? 'DD/MM/YYYY HH:mm'
-                    : 'YYYY/MM/DD HH:mm'
+                {`${moment(filtersQuery[key])
+                  .subtract(3, "hours")
+                  .format(
+                    navigator.language === "pt-BR"
+                      ? "DD/MM/YYYY HH:mm"
+                      : "YYYY/MM/DD HH:mm"
+                  )} - ${moment(filtersQuery[endDateKeyName]).subtract(3, "hours").format(
+                  navigator.language === "pt-BR"
+                    ? "DD/MM/YYYY HH:mm"
+                    : "YYYY/MM/DD HH:mm"
                 )} `}
               </Tag>
             ) : (

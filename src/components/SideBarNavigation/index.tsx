@@ -710,7 +710,7 @@ export const SidebarNavigation = () => {
           display: permissions?.register?.person?.menu ? undefined : "none",
         }
       ),
-    ]),
+    ], undefined, undefined, ),
     getItem(
       "moviment",
       <DollarOutlined style={{ fontSize: "23px" }} />,

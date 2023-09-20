@@ -4,7 +4,6 @@ import {
   GetMovimentsData,
   GetMovimentsQuery,
 } from "@src/services/types/moviments/organization/getMoviments";
-import moment from "moment";
 import { useQuery } from "react-query";
 
 export function useGetOrganizationMoviments(params: GetMovimentsQuery) {
@@ -12,19 +11,7 @@ export function useGetOrganizationMoviments(params: GetMovimentsQuery) {
     GetMovimentsData | null | undefined
   >("OrganizationMoviments", async () => {
     const response = await api.get("core/entry-account/organization", {
-      params: {
-        ...params,
-        start_date: params.start_date
-          ? moment(params.start_date)
-              .add(3, "hours")
-              .format("YYYY-MM-DDTHH:mm:ss.SSS")
-          : null,
-        end_date: params.end_date
-          ? moment(params.end_date)
-              .add(3, "hours")
-              .format("YYYY-MM-DDTHH:mm:ss.SSS")
-          : null,
-      },
+      params,
     });
     return response.data;
   });

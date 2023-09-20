@@ -29,6 +29,7 @@ import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import { Mobile } from "./mobile";
 import { defaultTheme } from "@src/styles/defaultTheme";
+import { useListBanks } from "@src/services/bank/listBanks";
 
 export interface ColumnInterface {
   name: string | any;
@@ -82,12 +83,10 @@ export const CustomTable = (props: TableProps) => {
   const [columns, setColumns] = useState<ColumnsType<ColumnInterface>>([]);
   const [sortOrder] = useState(false);
   const [actions, setActions] = useState<any>([]);
-  const { BankMainteneceData } = useGetOrganizationBankMaintenece({
+  const { bankListData } = useListBanks({
     limit: 200,
     page: 1,
-    sort_field: "label_name",
-    sort_order: "DESC",
-  });
+  })
 
   useEffect(() => {
     const act: any = [];
@@ -354,7 +353,7 @@ export const CustomTable = (props: TableProps) => {
                   <Tooltip placement="topLeft" title={text} arrow>
                     <Avatar
                       src={
-                        BankMainteneceData?.itens.find(
+                        bankListData?.itens.find(
                           (bank) =>
                             bank?.label_name?.split(" ").join("_") === text
                         )?.icon_url ?? null

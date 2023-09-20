@@ -1,13 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { EyeFilled } from "@ant-design/icons";
+import { EyeFilled, FileAddOutlined } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
-import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { queryClient } from "@src/services/queryClient";
 import { useCreatePaidWithdrawalsReports } from "@src/services/reports/consult/withdrawals/paid/createGeneratedWithdrawalsReports";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Alert, Button, Input, Select } from "antd";
+import { Alert, Button, Input, Select, Tooltip } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -23,16 +22,20 @@ import { paidWithdrawalsRowsQuery } from "../../../../../../services/types/consu
 import useDebounce from "../../../../../../utils/useDebounce";
 import { ViewModal } from "../components/ViewModal";
 import { TotalizersCards } from "./components/TotalizersCards";
+import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
+import { useGetWithdrawReportFields } from "@src/services/consult/withdrawals/reportCsvFields/getReportFields";
 
 const INITIAL_QUERY: paidWithdrawalsRowsQuery = {
   page: 1,
   limit: 25,
   initial_date: moment(new Date())
     .startOf("day")
+    .add(3, "hours")
     .format("YYYY-MM-DDTHH:mm:ss.SSS"),
   final_date: moment(new Date())
     .add(1, "day")
     .startOf("day")
+    .add(3, "hours")
     .format("YYYY-MM-DDTHH:mm:ss.SSS"),
 };
 
@@ -57,12 +60,9 @@ export const PaidWithdrawals = () => {
     paidWithdrawalsRowsError,
   } = useGetRowsPaidWithdrawals(query);
 
-  const {
-    PaidWithdrawalsReportsError,
-    PaidWithdrawalsReportsIsLoading,
-    PaidWithdrawalsReportsIsSuccess,
-    PaidWithdrawalsReportsMutate,
-  } = useCreatePaidWithdrawalsReports(query);
+
+
+  const { fields } = useGetWithdrawReportFields();
 
   useEffect(() => {
     refetchPaidWithdrawalsTotalRows();
@@ -74,6 +74,21 @@ export const PaidWithdrawals = () => {
   const [search, setSearch] = useState<string | null>(null);
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const debounceSearch = useDebounce(search);
+  const [csvFields, setCsvFields] = useState<any>();
+  const [isComma, setIsComma] = useState<boolean>(true);
+  const [isExportReportsOpen, setIsExportReportsOpen] =
+    useState<boolean>(false);
+
+    const {
+      PaidWithdrawalsReportsError,
+      PaidWithdrawalsReportsIsLoading,
+      PaidWithdrawalsReportsIsSuccess,
+      PaidWithdrawalsReportsMutate,
+    } = useCreatePaidWithdrawalsReports({
+      ...query,
+      fields: { ...csvFields },
+      comma_separate_value: isComma,
+    });
 
   const columns: ColumnInterface[] = [
     { name: "_id", type: "id" },
@@ -219,16 +234,30 @@ export const PaidWithdrawals = () => {
         {permissions.report.withdraw.paid_withdraw
           .report_withdraw_paid_withdraw_export_csv && (
           <Grid item xs={12} md="auto" lg={1}>
-            <ExportReportsModal
-              disabled={
+            <Tooltip
+              placement="topRight"
+              title={
                 !paidWithdrawalsRows?.items.length || paidWithdrawalsRowsError
+                  ? t("messages.no_records_to_export")
+                  : t("messages.export_csv")
               }
-              mutateReport={() => PaidWithdrawalsReportsMutate()}
-              error={PaidWithdrawalsReportsError}
-              success={PaidWithdrawalsReportsIsSuccess}
-              loading={PaidWithdrawalsReportsIsLoading}
-              reportPath="/consult/withdrawals/withdrawals_reports/paid_withdrawals_reports"
-            />
+              arrow
+            >
+              <Button
+                onClick={() => setIsExportReportsOpen(true)}
+                style={{ width: "100%" }}
+                shape="round"
+                type="dashed"
+                size="large"
+                loading={isPaidWithdrawalsRowsFetching}
+              
+                disabled={
+                  !paidWithdrawalsRows?.items.length || paidWithdrawalsRowsError
+                }
+              >
+                <FileAddOutlined style={{ fontSize: 22 }} /> CSV
+              </Button>
+            </Tooltip>
           </Grid>
         )}
       </Grid>
@@ -263,6 +292,24 @@ export const PaidWithdrawals = () => {
           />
         </Grid>
       </Grid>
+
+      <ExportCustomReportsModal
+        open={isExportReportsOpen}
+        setOpen={setIsExportReportsOpen}
+        disabled={!paidWithdrawalsRows?.items.length || paidWithdrawalsRowsError}
+        mutateReport={() => PaidWithdrawalsReportsMutate()}
+        error={PaidWithdrawalsReportsError}
+        success={PaidWithdrawalsReportsIsSuccess}
+        loading={PaidWithdrawalsReportsIsLoading}
+        reportPath="/consult/withdrawals/withdrawals_reports/paid_withdrawals_reports"
+        fields={fields}
+        csvFields={csvFields}
+        setCsvFields={setCsvFields}
+        comma={isComma}
+        setIsComma={setIsComma}
+        reportName="PaidWithdrawalsReportsFields"
+      />
+
       {isViewModalOpen && (
         <ViewModal
           open={isViewModalOpen}

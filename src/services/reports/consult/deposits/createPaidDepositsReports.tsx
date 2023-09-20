@@ -1,6 +1,5 @@
 import { queryClient } from "@src/services/queryClient";
 import { paidDepositRowsQuery } from "@src/services/types/consult/deposits/PaidDeposits.interface";
-import moment from "moment";
 import { useMutation } from "react-query";
 import { api } from "../../../../config/api";
 
@@ -10,22 +9,10 @@ export function useCreatePaidDepositsReports(body: paidDepositRowsQuery) {
   >("PaidDepositsReports", async () => {
     const response = await api.post(
       "report/csv/pix/paid-at",
-      {},
       {
-        params: {
-          ...body,
-          initial_date: body.initial_date
-            ? moment(body.initial_date)
-                .add(3, "hours")
-                .format("YYYY-MM-DDTHH:mm:ss.SSS")
-            : null,
-          final_date: body.final_date
-            ? moment(body.final_date)
-                .add(3, "hours")
-                .format("YYYY-MM-DDTHH:mm:ss.SSS")
-            : null,
-        },
-      }
+        ...body,
+      },
+      {}
     );
     await queryClient.refetchQueries({
       queryKey: ["PaidDepositsReports"],

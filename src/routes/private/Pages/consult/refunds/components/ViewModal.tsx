@@ -1,15 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Grid } from "@mui/material";
+import { useGetRowsGeneratedDeposits } from "@src/services/consult/deposits/generatedDeposits/getRows";
+import { useGetRefund } from "@src/services/consult/refund/refundDeposits/getRefund";
 import { Descriptions, Drawer, QRCode, Spin } from "antd";
 import { Dispatch, SetStateAction, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useGetDeposit } from "../../../../../../services/consult/deposits/generatedDeposits/getDeposit";
 import { StyledSegmented } from "../deposits/components/styles";
 
 interface ViewModalProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
   open: boolean;
-  id: string;
+  item: any;
 }
 
 export const ViewModal = (props: ViewModalProps) => {
@@ -18,12 +19,17 @@ export const ViewModal = (props: ViewModalProps) => {
     props.setOpen(false);
   };
 
-  const { deposit, isDepositFetching } = useGetDeposit(props.id);
+  const { Refund, isRefundFetching } = useGetRefund(props?.item?._id);
   const [currOption, setCurrOption] = useState<any>("transaction");
+  const { RefundsRows } = useGetRowsGeneratedDeposits({
+    pix_id: props?.item?.endToEndId,
+  });
+
+  console.log(RefundsRows);
 
   return (
     <Drawer
-      title={`${t("table.details")}: (${props?.id || "-"})`}
+      title={`${t("table.details")}: (${props?.item?._id || "-"})`}
       placement="right"
       onClose={onClose}
       open={props.open}
@@ -42,7 +48,7 @@ export const ViewModal = (props: ViewModalProps) => {
               {
                 label: t("table.payer"),
                 value: "payer",
-                disabled: deposit?.status !== "PAID",
+                disabled: Refund?.status !== "PAID",
               },
             ]}
             onChange={(value) => {
@@ -50,12 +56,12 @@ export const ViewModal = (props: ViewModalProps) => {
             }}
           />
         </Grid>{" "}
-        {isDepositFetching && <Spin />}{" "}
-        {deposit && (
+        {isRefundFetching && <Spin />}{" "}
+        {Refund && (
           <Grid xs={12}>
             <Descriptions bordered style={{ margin: 0, padding: 0 }} column={1}>
               {currOption === "transaction" &&
-                Object.keys(deposit).map((key: string) => {
+                Object.keys(Refund).map((key: string) => {
                   switch (key) {
                     case "createdAt":
                     case "paid_at":
@@ -72,9 +78,9 @@ export const ViewModal = (props: ViewModalProps) => {
                           }}
                         >
                           {`${new Date(
-                            deposit[key]
+                            Refund[key]
                           ).toLocaleDateString()} ${new Date(
-                            deposit[key]
+                            Refund[key]
                           ).toLocaleTimeString()}`}
                         </Descriptions.Item>
                       );
@@ -90,7 +96,7 @@ export const ViewModal = (props: ViewModalProps) => {
                     case "payer_name":
                     case "webhook_url_optional":
                       return (
-                        deposit[key] !== "N/A" && (
+                        Refund[key] !== "N/A" && (
                           <Descriptions.Item
                             key={key}
                             label={t(`table.${key}`)}
@@ -101,7 +107,7 @@ export const ViewModal = (props: ViewModalProps) => {
                               textAlign: "center",
                             }}
                           >
-                            {deposit[key]}
+                            {Refund[key]}
                           </Descriptions.Item>
                         )
                       );
@@ -119,7 +125,7 @@ export const ViewModal = (props: ViewModalProps) => {
                             textAlign: "center",
                           }}
                         >
-                          {`${deposit[key]}`.replace(
+                          {`${Refund[key]}`.replace(
                             /(\d{3})(\d{3})(\d{3})(\d{2})/,
                             "$1.$2.$3-$4"
                           )}
@@ -138,7 +144,7 @@ export const ViewModal = (props: ViewModalProps) => {
                             textAlign: "center",
                           }}
                         >
-                          <QRCode value={deposit[key] || "-"} type="canvas" />
+                          <QRCode value={Refund[key] || "-"} type="canvas" />
                         </Descriptions.Item>
                       );
                     case "value":
@@ -157,7 +163,7 @@ export const ViewModal = (props: ViewModalProps) => {
                           {new Intl.NumberFormat("pt-BR", {
                             style: "currency",
                             currency: "BRL",
-                          }).format(Number(deposit[key]) || 0)}
+                          }).format(Number(Refund[key]) || 0)}
                         </Descriptions.Item>
                       );
 
@@ -166,7 +172,7 @@ export const ViewModal = (props: ViewModalProps) => {
                   }
                 })}
               {currOption === "buyer" &&
-                Object.keys(deposit).map((key: string) => {
+                Object.keys(Refund).map((key: string) => {
                   switch (key) {
                     case "buyer_birth_date":
                       return (
@@ -181,9 +187,9 @@ export const ViewModal = (props: ViewModalProps) => {
                           }}
                         >
                           {`${new Date(
-                            deposit[key]
+                            Refund[key]
                           ).toLocaleDateString()} ${new Date(
-                            deposit[key]
+                            Refund[key]
                           ).toLocaleTimeString()}`}
                         </Descriptions.Item>
                       );
@@ -197,7 +203,7 @@ export const ViewModal = (props: ViewModalProps) => {
                     case "buyer_street":
                     case "buyer_zip_code":
                       return (
-                        deposit[key] !== "N/A" && (
+                        Refund[key] !== "N/A" && (
                           <Descriptions.Item
                             key={key}
                             label={t(`table.${key}`)}
@@ -208,7 +214,7 @@ export const ViewModal = (props: ViewModalProps) => {
                               textAlign: "center",
                             }}
                           >
-                            {deposit[key]}
+                            {Refund[key]}
                           </Descriptions.Item>
                         )
                       );
@@ -225,7 +231,7 @@ export const ViewModal = (props: ViewModalProps) => {
                             textAlign: "center",
                           }}
                         >
-                          {`${deposit[key]}`.replace(
+                          {`${Refund[key]}`.replace(
                             /(\d{3})(\d{3})(\d{3})(\d{2})/,
                             "$1.$2.$3-$4"
                           )}
@@ -238,14 +244,14 @@ export const ViewModal = (props: ViewModalProps) => {
                 })}
 
               {currOption === "payer" &&
-                Object.keys(deposit).map((key: string) => {
+                Object.keys(Refund).map((key: string) => {
                   switch (key) {
                     case "payer_account":
                     case "payer_agency":
                     case "payer_bank":
                     case "payer_name":
                       return (
-                        deposit[key] !== "N/A" && (
+                        Refund[key] !== "N/A" && (
                           <Descriptions.Item
                             key={key}
                             label={t(`table.${key}`)}
@@ -256,7 +262,7 @@ export const ViewModal = (props: ViewModalProps) => {
                               textAlign: "center",
                             }}
                           >
-                            {deposit[key]}
+                            {Refund[key]}
                           </Descriptions.Item>
                         )
                       );
@@ -273,7 +279,7 @@ export const ViewModal = (props: ViewModalProps) => {
                             textAlign: "center",
                           }}
                         >
-                          {`${deposit[key]}`.replace(
+                          {`${Refund[key]}`.replace(
                             /(\d{3})(\d{3})(\d{3})(\d{2})/,
                             "$1.$2.$3-$4"
                           )}

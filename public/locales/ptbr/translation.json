@@ -292,7 +292,8 @@
     "secondary": "Secundário",
     "both": "Ambos",
     "options": "Opções",
-    "csv_columns": "Selecione as colunas do CSV"
+    "csv_columns": "Selecione as colunas do CSV",
+    "comma_separator": "Separador de casas decimais"
   },
   "table": {
     "id": "ID",
@@ -536,7 +537,12 @@
     "net_value": "valor",
     "paid_value": "Valor pago",
     "delivered_at_secondary": "Entregue em (secundário)",
-    "v3_id": "ID V3"
+    "v3_id": "ID V3",
+    "receiver_bank_name": "Banco recebedor",
+    "payment_id": "ID do pagamento",
+    "receiver_email": "Email do recebedor",
+    "cash_out_fee_percent": "Taxa de saque"
+
   },
   "actions": {
     "details": "Detalhes",
