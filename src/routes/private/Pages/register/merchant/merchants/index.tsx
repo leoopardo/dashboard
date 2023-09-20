@@ -30,6 +30,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { NewMerchantModal } from "./components/newMerchantModal";
+import { ViewMerchantModal } from "./components/ViewMerchantModal";
 
 const INITIAL_QUERY: MerchantsQuery = {
   limit: 25,
@@ -277,7 +278,7 @@ export const MerchantView = () => {
       )}
 
       {isViewModalOpen && (
-        <ViewModal
+        <ViewMerchantModal
           item={currentItem}
           loading={isMerchantDataFetching}
           modalName={`${t("menus.merchant")}: ${currentItem?.name}`}

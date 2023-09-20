@@ -535,11 +535,18 @@
     "bank_icon": "Bank icon",
     "aggregator_name": "Aggregator",
     "operator_name": "Operador",
-    "cash_in_fee_percent": "Taxa de depósito",
-    "net_value": "valor",
-    "paid_value": "Valor pago",
-    "delivered_at_secondary": "Entregue em (secundário)",
-    "v3_id": "ID V3"
+    "cash_in_fee_percent": "deposit fee",
+    "net_value": "value",
+    "paid_value": "Paid value",
+    "delivered_at_secondary": "Delivered at (secondary)",
+    "v3_id": "ID V3",
+    "cash_out_fee_percent": "Withdraw fee",
+    "deposit_fee": "deposit fee",
+    "fee_withdraw": "Withdraw fee",
+    "pix_refund_fee": "Refund deposit fee",
+    "under_age_verify": "Underage verify",
+    "cash_in_bank": "Deposit bank",
+    "cash_out_bank": "Withdraw fee"
   },
   "actions": {
     "details": "Details",

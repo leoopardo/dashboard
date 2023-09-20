@@ -541,8 +541,13 @@
     "receiver_bank_name": "Banco recebedor",
     "payment_id": "ID do pagamento",
     "receiver_email": "Email do recebedor",
-    "cash_out_fee_percent": "Taxa de saque"
-
+    "cash_out_fee_percent": "Taxa de saque",
+    "deposit_fee": "Taxa de depósito",
+    "fee_withdraw": "Taxa de saque",
+    "pix_refund_fee": "Taxa devolução de depósito",
+    "under_age_verify": "Verificar maioridade",
+    "cash_in_bank": "Banco de depósito",
+    "cash_out_bank": "Banco de saque"
   },
   "actions": {
     "details": "Detalhes",
