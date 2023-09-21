@@ -9,6 +9,7 @@ import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { useListBanks } from "@src/services/bank/listBanks";
 import { BankCard } from "./components/bankCard";
 import { ValuesTable } from "./components/valuesTable";
+import { ChartIn } from "./components/charts/chartIn";
 
 export const Dashboard = () => {
   const { t } = useTranslation();
@@ -115,12 +116,14 @@ export const Dashboard = () => {
               {t("table.clear_filters")}
             </Button>
           </Col>
-          <Col span={24} style={{marginTop: 16}}>
+          <Col span={24} style={{ marginTop: 16 }}>
             <ValuesTable />
           </Col>
-          
 
-        
+          <Col span={24}>
+            {" "}
+            <ChartIn />
+          </Col>
         </Row>
       </Col>
 

@@ -127,31 +127,55 @@ export const ValuesTable = () => {
               <Card
                 title={t(`table.${item.type}`)}
                 bodyStyle={{ display: "flex", flexWrap: "wrap", padding: 8 }}
-                headStyle={{padding: 8, }}
+                headStyle={{ padding: 8 }}
               >
-                <Typography.Title level={5} style={{ margin: 0,paddingRight: 24 }}>
-                  {t("table.operation_number")}: {item?.operation_number ?? 0}
+                <Typography.Title
+                  level={5}
+                  style={{ margin: 0, paddingRight: 24 }}
+                >
+                  {t("table.operation_number")}:{" "}
+                  <span style={{ textDecoration: "underline" }}>
+                    {item?.operation_number ?? 0}
+                  </span>
                 </Typography.Title>
-                <Typography.Title level={5} style={{ margin: 0, paddingRight: 24 }}>
+                <Typography.Title
+                  level={5}
+                  style={{ margin: 0, paddingRight: 24 }}
+                >
                   {t("table.value")}:{" "}
-                  {new Intl.NumberFormat("pt-BR", {
+                  <span style={{ textDecoration: "underline" }}>
+                    {new Intl.NumberFormat("pt-BR", {
                     style: "currency",
                     currency: "BRL",
                   }).format(Number(item?.value) || 0)}
+                  </span>
+                  
                 </Typography.Title>
-                <Typography.Title level={5} style={{margin: 0, paddingRight: 24 }}>
+                <Typography.Title
+                  level={5}
+                  style={{ margin: 0, paddingRight: 24 }}
+                >
                   {t("table.fee")}:{" "}
-                  {new Intl.NumberFormat("pt-BR", {
+                  <span style={{ textDecoration: "underline" }}>
+                     {new Intl.NumberFormat("pt-BR", {
                     style: "currency",
                     currency: "BRL",
                   }).format(Number(item?.fee) || 0)}
+                  </span>
+                 
                 </Typography.Title>
-                <Typography.Title level={5} style={{ margin: 0,paddingRight: 24 }}>
+                <Typography.Title
+                  level={5}
+                  style={{ margin: 0, paddingRight: 24 }}
+                >
                   {t("table.ticket")}:{" "}
-                  {new Intl.NumberFormat("pt-BR", {
+                  <span style={{ textDecoration: "underline" }}>
+                     {new Intl.NumberFormat("pt-BR", {
                     style: "currency",
                     currency: "BRL",
                   }).format(Number(item?.ticket) || 0)}
+                  </span>
+                 
                 </Typography.Title>
               </Card>
             </Col>
