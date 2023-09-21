@@ -184,6 +184,7 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
                     <Input
                       size="large"
                       style={{ width: "100%" }}
+                      disabled={withdrawUnlimited}
                       value={bodyUpdate?.cash_out_max_value}
                     />
                   }
@@ -252,6 +253,7 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
                     <Input
                       size="large"
                       style={{ width: "100%" }}
+                      disabled={payerPjUnlimited}
                       value={bodyUpdate?.cash_in_max_value_receive_by_pj}
                     />
                   }
@@ -323,6 +325,7 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
                     <Input
                       size="large"
                       style={{ width: "100%" }}
+                      disabled={differentPayerUnlimited}
                       value={
                         bodyUpdate?.cash_in_max_value_receive_by_different_payer
                       }
@@ -434,10 +437,9 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
             item
             container
             xs={12}
-         
             style={{ display: "flex", flexDirection: "row-reverse" }}
           >
-            <Grid item xs={12} md={3} style={{marginTop: "50px"}}>
+            <Grid item xs={12} md={3} style={{ marginTop: "50px" }}>
               <button type="submit" ref={submitRef} style={{ display: "none" }}>
                 Submit
               </button>

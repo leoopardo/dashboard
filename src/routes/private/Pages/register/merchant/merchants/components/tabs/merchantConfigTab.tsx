@@ -5,19 +5,9 @@ import { Grid } from "@mui/material";
 import { useMerchantConfig } from "@src/services/register/merchant/merchant/merchantConfig.tsx/getMerchantConfig";
 import { useUpdateMerchantConfig } from "@src/services/register/merchant/merchant/merchantConfig.tsx/updateMerchantConfig";
 import { IMerchantConfig } from "@src/services/types/register/merchants/merchantConfig.interface";
-import {
-  Button,
-  Checkbox,
-  Form,
-  FormInstance,
-  Input,
-  Popconfirm,
-  Select,
-} from "antd";
-import { CheckboxChangeEvent } from "antd/lib/checkbox";
+import { Button, Form, FormInstance, Input, Popconfirm, Select } from "antd";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { CurrencyInput } from "react-currency-mask";
 
 export const MerchantConfigTab = (props: { id?: string }) => {
   const formRef = useRef<FormInstance>(null);
