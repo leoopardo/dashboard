@@ -278,12 +278,7 @@ export const CredentialConfigTab = (props: { id?: string }) => {
         />
       )}
 
-      <Toast
-        actionSuccess={t("messages.updated")}
-        actionError={t("messages.update")}
-        error={UpdateError}
-        success={UpdateIsSuccess}
-      />
+    
     </Grid>
   );
 };

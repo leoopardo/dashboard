@@ -14,7 +14,6 @@ export function useUpdateOrganizationConfig(
       body,
       {}
     );
-    await queryClient.refetchQueries({ queryKey: ["OrganizationConfig"] });
     return response.data;
   });
 
