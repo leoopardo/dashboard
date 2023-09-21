@@ -18,5 +18,6 @@ export const defaultTheme: DefaultTheme = {
     pending: "#cfa913",
     waiting: "#cfa913",
     waiting_refund: "#cfa913",
+    info: "#4682B4",
   },
 };

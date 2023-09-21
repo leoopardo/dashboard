@@ -19,6 +19,7 @@ declare module "styled-components" {
       pending: string;
       waiting: string;
       waiting_refund: string;
+      info: string;
     };
   }
 }

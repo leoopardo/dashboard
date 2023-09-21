@@ -115,7 +115,8 @@
     "organization_bank_balance": "Saldo bancário",
     "aggregator_blacklist": "Blacklist",
     "aggregator_blacklist_blacklist": "Blacklist de agregador",
-    "aggregator_blacklist_reasons": "Motivos de blacklist"
+    "aggregator_blacklist_reasons": "Motivos de blacklist",
+    "dashboard": "Painel"
   },
 
   "titles": {
@@ -294,7 +295,7 @@
     "options": "Opções",
     "csv_columns": "Selecione as colunas do CSV",
     "comma_separator": "Separador de casas decimais",
-    "operation_type": "Tipo de operação", 
+    "operation_type": "Tipo de operação",
     "btg_id": "ID BTG"
   },
   "table": {
@@ -549,7 +550,13 @@
     "pix_refund_fee": "Taxa devolução de depósito",
     "under_age_verify": "Verificar maioridade",
     "cash_in_bank": "Banco de depósito",
-    "cash_out_bank": "Banco de saque"
+    "cash_out_bank": "Banco de saque",
+    "moviments": "Movimentações",
+    "deposits": "Depósitos",
+    "withdrawals": "Saques",
+    "payments": "Pagamentos",
+    "operation_number": "número de operações",
+    "ticket": "Ticket médio"
   },
   "actions": {
     "details": "Detalhes",

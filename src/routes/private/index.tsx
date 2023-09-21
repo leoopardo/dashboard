@@ -73,6 +73,7 @@ import { AggregatorUsersReports } from "./Pages/register/aggregator/reports/user
 import { MerchantBlacklistReasons } from "./Pages/register/merchant/blacklist/reasons";
 import { OrganizationBankBalance } from "./Pages/consult/organization/bankBalance";
 import { AggregatorBlacklist } from "./Pages/register/aggregator/blacklist";
+import { Dashboard } from "./Pages/dashboard";
 
 export const PrivateRoutes = () => {
   return (
@@ -82,6 +83,7 @@ export const PrivateRoutes = () => {
 
       <Route path="/">
         <Route index element={<Redirect />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="consult">
           <Route path="consult_organization">
             <Route

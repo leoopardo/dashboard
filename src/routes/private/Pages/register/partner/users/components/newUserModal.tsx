@@ -290,7 +290,7 @@ export const NewUserModal = ({
           hasFeedback
           rules={[
             {
-              required: true,
+              required: action === "create",
               message:
                 t("input.required(a)", { field: t("input.password") }) || "",
             },
@@ -322,7 +322,7 @@ export const NewUserModal = ({
           style={{ margin: 10 }}
           rules={[
             {
-              required: true,
+              required: action === "create",
               message: t("input.confirm_password") || "",
             },
             ({ getFieldValue }) => ({

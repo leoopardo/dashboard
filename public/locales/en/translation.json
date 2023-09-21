@@ -114,7 +114,8 @@
     "organization_bank_balance": "Bank balance",
     "aggregator_blacklist": "Blacklist",
     "aggregator_blacklist_blacklist": "Aggregator blacklist",
-    "aggregator_blacklist_reasons": "Blacklist reasons"
+    "aggregator_blacklist_reasons": "Blacklist reasons",
+    "dashboard": "Dashboard"
   },
 
   "titles": {
@@ -267,7 +268,7 @@
     "options": "Options",
     "csv_columns": "Select the CSV columns",
     "comma_separator": "Decimal separator",
-    "operation_type": "Operation type", 
+    "operation_type": "Operation type",
     "btg_id": "BTG ID"
   },
   "modal": {
@@ -548,7 +549,13 @@
     "pix_refund_fee": "Refund deposit fee",
     "under_age_verify": "Underage verify",
     "cash_in_bank": "Deposit bank",
-    "cash_out_bank": "Withdraw fee"
+    "cash_out_bank": "Withdraw fee",
+    "moviments": "Movements",
+    "deposits": "Deposits",
+    "withdrawals": "Withdrawals",
+    "payments": "Payments",
+    "operation_number": "Operation number",
+    "ticket": "Average ticket"
   },
   "actions": {
     "details": "Details",
