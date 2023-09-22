@@ -5,7 +5,7 @@ import { Doughnut } from "react-chartjs-2";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 
-export const ChartIn = () => {
+export const ChartOut = () => {
   const { t } = useTranslation();
   const [oneByOne, setOneByOne] = useState<boolean>(false);
   const isMobile = useMediaQuery({ maxWidth: "750px" });
@@ -111,7 +111,7 @@ export const ChartIn = () => {
               width: "100%",
             }}
           >
-            <Typography.Title level={5}>CONVERSÃO DE ENTRADA</Typography.Title>
+            <Typography.Title level={5}>CONVERSÃO DE SAIDA</Typography.Title>
 
             <Button
               shape="circle"

@@ -9,6 +9,7 @@ import {
   MenuUnfoldOutlined,
   NotificationOutlined,
 } from "@ant-design/icons";
+import { useTheme } from "@src/contexts/ThemeContext";
 import { queryClient } from "@src/services/queryClient";
 import { ValidateInterface } from "@src/services/types/validate.interface";
 import { Button, Menu, MenuProps } from "antd";
@@ -18,7 +19,6 @@ import { useMediaQuery } from "react-responsive";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useMenu } from "../../contexts/SidebarContext";
 import { defaultTheme } from "../../styles/defaultTheme";
-import { useTheme } from "@src/contexts/ThemeContext";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -81,11 +81,11 @@ export const SidebarNavigation = () => {
 
   const i: MenuItem[] = [
     getItem(
-      "institution",
+      "dashboard",
       null,
       null,
-      true,
-      undefined,
+      false,
+      () => navigate("/dashboard"),
       { fontSize: "16px" },
       import.meta.env.VITE_APP_COMPANY_NAME
     ),

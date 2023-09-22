@@ -10,6 +10,9 @@ import { useListBanks } from "@src/services/bank/listBanks";
 import { BankCard } from "./components/bankCard";
 import { ValuesTable } from "./components/valuesTable";
 import { ChartIn } from "./components/charts/chartIn";
+import { ChartOut } from "./components/charts/chartOut";
+import { TabsTable } from "./components/TabsTable";
+import { MerchantsBalance } from "./components/merchantsBalance";
 
 export const Dashboard = () => {
   const { t } = useTranslation();
@@ -121,9 +124,21 @@ export const Dashboard = () => {
           </Col>
 
           <Col span={24}>
-            {" "}
-            <ChartIn />
+            <Row gutter={[16, 16]}>
+              <ChartIn />
+              <ChartOut />
+            </Row>
           </Col>
+        </Row>
+
+        <Row style={{ marginTop: 16 }}>
+          <Col span={24}>
+            <TabsTable />
+          </Col>
+        </Row>
+
+        <Row style={{ marginTop: 16 }}>
+          <MerchantsBalance />
         </Row>
       </Col>
 

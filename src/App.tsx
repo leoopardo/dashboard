@@ -152,7 +152,7 @@ function App() {
                           padding: 2,
                           margin: 0,
                           height: "100%",
-                          background: theme === "dark" ? "#222222 " : "#ffffff",
+                          background: theme === "dark" ? "#222222 " : "#fdfdfd",
                         }}
                       >
                         {element}

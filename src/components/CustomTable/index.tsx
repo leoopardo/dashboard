@@ -7,7 +7,8 @@ import {
   InfoCircleTwoTone,
 } from "@ant-design/icons";
 import { Grid } from "@mui/material";
-import { useGetOrganizationBankMaintenece } from "@src/services/register/organization/bankMaitenence/getBanks";
+import { useListBanks } from "@src/services/bank/listBanks";
+import { defaultTheme } from "@src/styles/defaultTheme";
 import {
   Avatar,
   Button,
@@ -28,8 +29,6 @@ import { toast } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import { Mobile } from "./mobile";
-import { defaultTheme } from "@src/styles/defaultTheme";
-import { useListBanks } from "@src/services/bank/listBanks";
 
 export interface ColumnInterface {
   name: string | any;
@@ -75,6 +74,7 @@ interface TableProps {
   setIsConfirmOpen?: Dispatch<SetStateAction<boolean>>;
   itemToAction?: string | null;
   onConfirmAction?: () => void;
+  disableScrollToTop?: boolean
 }
 
 export const CustomTable = (props: TableProps) => {
@@ -86,7 +86,7 @@ export const CustomTable = (props: TableProps) => {
   const { bankListData } = useListBanks({
     limit: 200,
     page: 1,
-  })
+  });
 
   useEffect(() => {
     const act: any = [];
@@ -123,11 +123,14 @@ export const CustomTable = (props: TableProps) => {
   }, [sortOrder]);
 
   useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: "smooth",
-    });
+    if(!props.disableScrollToTop){
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+      });
+    }
+    
   }, [props.query]);
 
   useEffect(() => {
@@ -684,6 +687,7 @@ export const CustomTable = (props: TableProps) => {
         <Grid container>
           <Grid item xs={12}>
             <Table
+            
               locale={{
                 emptyText: props.error ? (
                   <div style={{ display: "flex", justifyContent: "center" }}>
@@ -735,6 +739,7 @@ export const CustomTable = (props: TableProps) => {
                 defaultPageSize: 25,
                 onShowSizeChange: (_current, size) =>
                   props.setQuery((state: any) => ({ ...state, limit: size })),
+                style: { display: props.removePagination ? "none" : undefined },
               }}
               sortDirections={["ascend", "descend"]}
               dataSource={props?.error ? [] : props?.items ?? []}

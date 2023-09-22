@@ -556,7 +556,16 @@
     "withdrawals": "Saques",
     "payments": "Pagamentos",
     "operation_number": "número de operações",
-    "ticket": "Ticket médio"
+    "ticket": "Ticket médio",
+    "not_paid": "Não pagos",
+    "others": "Outros",
+    "financial_movements": "Movimentações financeiras",
+    "operation_moviments": "Movimentações de operação",
+    "fees": "Taxas",
+    "merchants_balance": "Saldos de empresas",
+    "payment": "Pagamento",
+    "security": "Segurança",
+    "total": "Total"
   },
   "actions": {
     "details": "Detalhes",

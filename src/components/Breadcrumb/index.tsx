@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Breadcrumb } from "antd";
+import { Breadcrumb, Typography } from "antd";
 import {
   BreadcrumbItemType,
   BreadcrumbSeparatorType,
@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import { useLocation } from "react-router-dom";
 import { useMenu } from "../../contexts/SidebarContext";
+import { HomeOutlined } from "@ant-design/icons";
 
 export const BreadcrumbComponent = () => {
   const { t } = useTranslation();
@@ -16,7 +17,7 @@ export const BreadcrumbComponent = () => {
   const isMobile = useMediaQuery({ maxWidth: "750px" });
   const [breadcrumbs, setBreadcrumbs] = useState<
     Partial<BreadcrumbItemType & BreadcrumbSeparatorType>[]
-  >([{ title: "home" }]);
+  >([{ title: <HomeOutlined style={{ fontSize: 16 }} /> }]);
   const location = useLocation();
   const translation = useTranslation().i18n.language;
 
@@ -63,27 +64,53 @@ export const BreadcrumbComponent = () => {
     const l = location.pathname.split("/");
     l.shift();
     setBreadcrumbs(
-      l.map((value) => {
-        return {
-          title:
-            isNotPath.includes(value) || +value ? (
-              <>
-                {value.includes("%20")
-                  ? value.split("%20").join(".")
-                  : Number(value)
-                  ? value
-                  : t(`menus.${value}`)}
-              </>
-            ) : (
-              <a href={`/${l.slice(0, l.indexOf(value) + 1).join("/")}`}>
-                {value.includes("%20")
-                  ? value.split("%20").join(".")
-                  : Number(value)
-                  ? value
-                  : t(`menus.${value}`)}
-              </a>
-            ),
-        };
+      l.map((value, index) => {
+        switch (value) {
+          case "dashboard":
+            return {
+              title: (
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                 
+                  <Typography.Title level={4} style={{margin: 0}}>
+                  <HomeOutlined style={{ fontSize: 18, marginRight: 8 }} />/ {import.meta.env.VITE_APP_COMPANY_NAME}
+                  </Typography.Title>
+                </div>
+              ),
+            };
+
+          default:
+            return {
+              title:
+                isNotPath.includes(value) || +value ? (
+                  <>
+                    {index === 0 && (
+                      <>
+                        <a href="/dashboard">
+                          <HomeOutlined style={{ fontSize: 16 }} />
+                        </a>{" "}
+                        /{" "}
+                      </>
+                    )}
+                    {value.includes("%20")
+                      ? value.split("%20").join(".")
+                      : Number(value)
+                      ? value
+                      : t(`menus.${value}`)}
+                  </>
+                ) : (
+                  <>
+                    {index === 1 && <HomeOutlined />}
+                    <a href={`/${l.slice(0, l.indexOf(value) + 1).join("/")}`}>
+                      {value.includes("%20")
+                        ? value.split("%20").join(".")
+                        : Number(value)
+                        ? value
+                        : t(`menus.${value}`)}
+                    </a>
+                  </>
+                ),
+            };
+        }
       })
     );
 

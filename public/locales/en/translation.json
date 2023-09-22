@@ -555,7 +555,16 @@
     "withdrawals": "Withdrawals",
     "payments": "Payments",
     "operation_number": "Operation number",
-    "ticket": "Average ticket"
+    "ticket": "Average ticket",
+    "not_paid": "Not paid",
+    "others": "Others",
+    "financial_movements": "Financial movements",
+    "operation_moviments": "Operation movements",
+    "fees": "Fees",
+    "merchants_balance": "Merchants balance",
+    "payment": "Payment",
+    "security": "Security",
+    "total": "Total"
   },
   "actions": {
     "details": "Details",
