@@ -13,20 +13,49 @@ import { ChartIn } from "./components/charts/chartIn";
 import { ChartOut } from "./components/charts/chartOut";
 import { TabsTable } from "./components/TabsTable";
 import { MerchantsBalance } from "./components/merchantsBalance";
+import { queryClient } from "@src/services/queryClient";
+import { ValidateInterface } from "@src/services/types/validate.interface";
+import moment from "moment";
+import { useGetMerchantBankStatementTotals } from "@src/services/consult/merchant/bankStatement/getTotals";
+import { MerchantBankStatementTotalsQuery } from "@src/services/types/consult/merchant/bankStatement";
+
+const INITIAL_QUERY = {
+  start_date: moment(new Date())
+    .startOf("day")
+    .add(3, "hours")
+    .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+  end_date: moment(new Date())
+    .add(1, "day")
+    .startOf("day")
+    .add(3, "hours")
+    .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+};
 
 export const Dashboard = () => {
   const { t } = useTranslation();
+  const { permissions } = queryClient.getQueryData(
+    "validate"
+  ) as ValidateInterface;
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
-  const [query, setQuery] = useState<any>({});
+  const [query, setQuery] =
+    useState<MerchantBankStatementTotalsQuery>(INITIAL_QUERY);
   const { bankListData } = useListBanks({
     limit: 200,
     page: 1,
   });
 
+  const { refetchMerchantBankStatementTotalsTotal } =
+    useGetMerchantBankStatementTotals(query);
+
   return (
     <Row style={{ padding: 20 }}>
-      {true && <OrganizationBalance />}
-      {true && <MerchantBalance />}
+      {permissions.report.paybrokers.balance.report_paybrokers_balance_list && (
+        <OrganizationBalance />
+      )}
+      {permissions.report.merchant.balance.report_merchant_balance_list && (
+        <MerchantBalance />
+      )}
+
       <Col span={24} style={{ marginTop: 40, padding: 15 }}>
         <Row gutter={[4, 4]} align="middle">
           <Row style={{ width: "100%", marginBottom: 16 }} gutter={[16, 16]}>
@@ -98,6 +127,7 @@ export const Dashboard = () => {
               endDateKeyName="end_date"
               query={query}
               setQuery={setQuery}
+              haveInitialDate
             />
           </Col>
           <Col xs={{ span: 24 }} md={{ span: 4 }}>
@@ -105,7 +135,7 @@ export const Dashboard = () => {
               type="dashed"
               danger
               onClick={() => {
-                setQuery({});
+                setQuery(INITIAL_QUERY);
               }}
               style={{
                 height: 40,
@@ -120,7 +150,7 @@ export const Dashboard = () => {
             </Button>
           </Col>
           <Col span={24} style={{ marginTop: 16 }}>
-            <ValuesTable />
+            <ValuesTable query={query} />
           </Col>
 
           <Col span={24}>
@@ -155,13 +185,12 @@ export const Dashboard = () => {
             "partner_id",
             "merchant_id",
           ]}
-          refetch={() => {
-            return "";
-          }}
+          refetch={refetchMerchantBankStatementTotalsTotal}
           selectOptions={{}}
           startDateKeyName="start_date"
           endDateKeyName="end_date"
-          initialQuery={{}}
+          initialQuery={INITIAL_QUERY}
+          haveInitialDate
         />
       )}
     </Row>

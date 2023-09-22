@@ -1,11 +1,33 @@
+import { useGetMerchantBankStatementTotals } from "@src/services/consult/merchant/bankStatement/getTotals";
 import { Card, Col, Row, Table, Typography } from "antd";
 import { ColumnsType, TableProps } from "antd/es/table";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 
-export const ValuesTable = () => {
+interface ValuesTableInterface {
+  query: {
+    start_date: string;
+    end_date: string;
+    page?: number;
+    limit?: number;
+    sort_field?: string;
+    sort_order?: string;
+  };
+}
+
+export const ValuesTable = ({ query }: ValuesTableInterface) => {
   const { t } = useTranslation();
   const isMobile = useMediaQuery({ maxWidth: "750px" });
+  const {
+    MerchantBankStatementTotals,
+    isMerchantBankStatementTotalsFetching,
+    refetchMerchantBankStatementTotalsTotal,
+  } = useGetMerchantBankStatementTotals(query);
+
+  useEffect(() => {
+    refetchMerchantBankStatementTotalsTotal();
+  }, [query]);
 
   interface DataType {
     type: string;
@@ -73,53 +95,56 @@ export const ValuesTable = () => {
     },
   ];
 
-  const data: {
-    type: string;
-    operation_number: number;
-    value: number;
-    ticket: number;
-    fee: number;
-    key: string;
-  }[] = [
+  const [data, setData] = useState<
     {
-      key: "1",
-      type: "moviments",
-      operation_number: 6325,
-      value: 613325.89,
-      ticket: 256360.22,
-      fee: 113325.89,
-    },
-    {
-      key: "2",
-      type: "deposits",
-      operation_number: 6325,
-      value: 613325.89,
-      ticket: 256360.22,
-      fee: 113325.89,
-    },
-    {
-      key: "3",
-      type: "withdrawals",
-      operation_number: 6325,
-      value: 613325.89,
-      ticket: 256360.22,
-      fee: 113325.89,
-    },
-    {
-      key: "4",
-      type: "payments",
-      operation_number: 6325,
-      value: 613325.89,
-      ticket: 256360.22,
-      fee: 113325.89,
-    },
-  ];
+      type: string;
+      operation_number: number;
+      value: number;
+      ticket: number;
+      fee: number;
+      key: string;
+    }[]
+  >([]);
+
+  useEffect(() => {
+    if (!isMerchantBankStatementTotalsFetching && MerchantBankStatementTotals)
+      setData([
+        {
+          key: "2",
+          type: "deposits",
+          operation_number: MerchantBankStatementTotals?.number_in ?? 0,
+          value: MerchantBankStatementTotals?.value_in ?? 0,
+          ticket: MerchantBankStatementTotals?.average_ticket_in ?? 0,
+          fee: MerchantBankStatementTotals?.fee_in ?? 0,
+        },
+        {
+          key: "3",
+          type: "withdrawals",
+          operation_number: MerchantBankStatementTotals?.number_out ?? 0,
+          value: MerchantBankStatementTotals?.value_out ?? 0,
+          ticket: MerchantBankStatementTotals?.average_ticket_out ?? 0,
+          fee: MerchantBankStatementTotals?.fee_out ?? 0,
+        },
+        {
+          key: "4",
+          type: "total",
+          operation_number: MerchantBankStatementTotals?.number_total ?? 0,
+          value: MerchantBankStatementTotals?.value_total ?? 0,
+          ticket: MerchantBankStatementTotals?.fee_total ?? 0,
+          fee: MerchantBankStatementTotals?.fee_total ?? 0,
+        },
+      ]);
+  }, [MerchantBankStatementTotals]);
 
   return (
     <>
       {/* <Typography.Title level={2}>Transações</Typography.Title> */}
       {!isMobile ? (
-        <Table columns={columns} dataSource={data} />
+        <Table
+          columns={columns}
+          dataSource={data}
+          loading={isMerchantBankStatementTotalsFetching}
+        />
       ) : (
         <Row gutter={[8, 8]}>
           {data.map((item) => (
@@ -145,11 +170,10 @@ export const ValuesTable = () => {
                   {t("table.value")}:{" "}
                   <span style={{ textDecoration: "underline" }}>
                     {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "BRL",
-                  }).format(Number(item?.value) || 0)}
+                      style: "currency",
+                      currency: "BRL",
+                    }).format(Number(item?.value) || 0)}
                   </span>
-                  
                 </Typography.Title>
                 <Typography.Title
                   level={5}
@@ -157,12 +181,11 @@ export const ValuesTable = () => {
                 >
                   {t("table.fee")}:{" "}
                   <span style={{ textDecoration: "underline" }}>
-                     {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "BRL",
-                  }).format(Number(item?.fee) || 0)}
+                    {new Intl.NumberFormat("pt-BR", {
+                      style: "currency",
+                      currency: "BRL",
+                    }).format(Number(item?.fee) || 0)}
                   </span>
-                 
                 </Typography.Title>
                 <Typography.Title
                   level={5}
@@ -170,12 +193,11 @@ export const ValuesTable = () => {
                 >
                   {t("table.ticket")}:{" "}
                   <span style={{ textDecoration: "underline" }}>
-                     {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "BRL",
-                  }).format(Number(item?.ticket) || 0)}
+                    {new Intl.NumberFormat("pt-BR", {
+                      style: "currency",
+                      currency: "BRL",
+                    }).format(Number(item?.ticket) || 0)}
                   </span>
-                 
                 </Typography.Title>
               </Card>
             </Col>

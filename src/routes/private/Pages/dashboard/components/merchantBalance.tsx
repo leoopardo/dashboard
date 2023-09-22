@@ -1,5 +1,6 @@
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
-import PaidIcon from "@mui/icons-material/Paid";
+import { useGetMerchantBalance } from "@src/services/consult/merchant/balance/getMerchantBalance";
+import { MerchantBalanceQuery } from "@src/services/types/consult/merchant/balance";
 import { defaultTheme } from "@src/styles/defaultTheme";
 import { Card, Col, Layout, Row, Statistic, Typography } from "antd";
 import { useState } from "react";
@@ -10,13 +11,24 @@ export const MerchantBalance = () => {
     "real" | "dolar" | "euro" | "btc"
   >("real");
   const [show, setShow] = useState<boolean>(true);
-
   const isMobile = useMediaQuery({ maxWidth: "750px" });
+  const INITIAL_QUERY: MerchantBalanceQuery = {
+    page: 1,
+    limit: 25,
+  };
+  const [query, setQuery] = useState<MerchantBalanceQuery>(INITIAL_QUERY);
+  const { MerchantBalance, isMerchantBalanceFetching } =
+    useGetMerchantBalance(query);
+
   return (
     <Layout style={{ margin: -28, padding: 28 }}>
       <Row align="middle" style={{ width: "100%" }} gutter={[8, 8]}>
-        <Col xs={{ span: 24 }} md={{ span: 4 }}>
-          <Card>
+        <Col
+          xs={{ span: 24 }}
+          md={{ span: 4 }}
+          style={{ minWidth: isMerchantBalanceFetching ? "222px" : undefined }}
+        >
+          <Card >
             <Typography.Title
               level={3}
               style={{
@@ -34,8 +46,6 @@ export const MerchantBalance = () => {
                   justifyContent: !isMobile ? "center" : "space-between",
                 }}
               >
-                <PaidIcon style={{ marginRight: 8 }} />
-
                 {isMobile && (
                   <>
                     {show ? (
@@ -53,12 +63,16 @@ export const MerchantBalance = () => {
 
         {show && (
           <>
-            <Col xs={{ span: 24 }} md={{ span: 5 }}>
-              <Card bordered={false}>
+            <Col xs={{ span: 24 }} md={{ span: 5 }} style={{ minWidth: isMerchantBalanceFetching ? "220px" : undefined }}>
+              <Card
+                bordered={false}
+                loading={isMerchantBalanceFetching}
+                style={{ minWidth: "100%" }}
+              >
                 {isHoverCurrency === "real" ? (
                   <Statistic
                     title="Conta transacional"
-                    value={7325256.32}
+                    value={MerchantBalance?.balance_to_transactions ?? 0}
                     precision={2}
                     prefix="R$"
                     valueStyle={{
@@ -70,7 +84,7 @@ export const MerchantBalance = () => {
                   <>
                     <Statistic
                       title="Conta transacional"
-                      value={7325256.32}
+                      value={MerchantBalance?.balance_to_transactions ?? 0}
                       precision={2}
                       prefix="R$"
                       valueStyle={{
@@ -80,7 +94,7 @@ export const MerchantBalance = () => {
                   </>
                 )}
 
-                {isHoverCurrency === "dolar" ? (
+                {/* {isHoverCurrency === "dolar" ? (
                   <Typography.Title
                     level={3}
                     style={{
@@ -168,15 +182,15 @@ export const MerchantBalance = () => {
                       currency: "BTC",
                     }).format(1347148.8)}
                   </Typography.Title>
-                )}
+                )} */}
               </Card>
             </Col>
-            <Col xs={{ span: 24 }} md={{ span: 5 }}>
-              <Card bordered={false}>
+            <Col xs={{ span: 24 }} md={{ span: 5 }} style={{ minWidth: isMerchantBalanceFetching ? "220px" : undefined }}>
+              <Card bordered={false} loading={isMerchantBalanceFetching}>
                 {isHoverCurrency === "real" ? (
                   <Statistic
                     title="Conta pagamento"
-                    value={7325256.32}
+                    value={MerchantBalance?.balance_to_payment ?? 0}
                     precision={2}
                     prefix="R$"
                     valueStyle={{
@@ -188,7 +202,7 @@ export const MerchantBalance = () => {
                   <>
                     <Statistic
                       title="Conta pagamento"
-                      value={7325256.32}
+                      value={MerchantBalance?.balance_to_payment ?? 0}
                       precision={2}
                       prefix="R$"
                       valueStyle={{
@@ -198,7 +212,7 @@ export const MerchantBalance = () => {
                   </>
                 )}
 
-                {isHoverCurrency === "dolar" ? (
+                {/* {isHoverCurrency === "dolar" ? (
                   <Typography.Title
                     level={3}
                     style={{
@@ -286,15 +300,15 @@ export const MerchantBalance = () => {
                       currency: "BTC",
                     }).format(1347148.8)}
                   </Typography.Title>
-                )}
+                )} */}
               </Card>
             </Col>
-            <Col xs={{ span: 24 }} md={{ span: 5 }}>
-              <Card bordered={false}>
+            <Col xs={{ span: 24 }} md={{ span: 5 }} style={{ minWidth: isMerchantBalanceFetching ? "220px" : undefined }}>
+              <Card bordered={false} loading={isMerchantBalanceFetching}>
                 {isHoverCurrency === "real" ? (
                   <Statistic
                     title="Conta Segurança"
-                    value={7325256.32}
+                    value={MerchantBalance?.balance_reserved ?? 0}
                     precision={2}
                     prefix="R$"
                     valueStyle={{
@@ -316,7 +330,7 @@ export const MerchantBalance = () => {
                   </>
                 )}
 
-                {isHoverCurrency === "dolar" ? (
+                {/* {isHoverCurrency === "dolar" ? (
                   <Typography.Title
                     level={3}
                     style={{
@@ -404,15 +418,15 @@ export const MerchantBalance = () => {
                       currency: "BTC",
                     }).format(1347148.8)}
                   </Typography.Title>
-                )}
+                )} */}
               </Card>
             </Col>
-            <Col xs={{ span: 24 }} md={{ span: 5 }}>
-              <Card bordered={false}>
+            <Col xs={{ span: 24 }} md={{ span: 5 }} style={{ minWidth: isMerchantBalanceFetching ? "220px" : undefined }}>
+              <Card bordered={false} loading={isMerchantBalanceFetching}>
                 {isHoverCurrency === "real" ? (
                   <Statistic
                     title="Total"
-                    value={7325256.32}
+                    value={MerchantBalance?.balance_reserved_total ?? 0}
                     precision={2}
                     prefix="R$"
                     valueStyle={{
@@ -424,7 +438,7 @@ export const MerchantBalance = () => {
                   <>
                     <Statistic
                       title="Total"
-                      value={7325256.32}
+                      value={MerchantBalance?.balance_reserved_total ?? 0}
                       precision={2}
                       prefix="R$"
                       valueStyle={{
@@ -434,7 +448,7 @@ export const MerchantBalance = () => {
                   </>
                 )}
 
-                {isHoverCurrency === "dolar" ? (
+                {/* {isHoverCurrency === "dolar" ? (
                   <Typography.Title
                     level={3}
                     style={{
@@ -522,7 +536,7 @@ export const MerchantBalance = () => {
                       currency: "BTC",
                     }).format(1347148.8)}
                   </Typography.Title>
-                )}
+                )} */}
               </Card>
             </Col>
           </>

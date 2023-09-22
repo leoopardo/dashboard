@@ -1,11 +1,18 @@
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import PaidIcon from "@mui/icons-material/Paid";
+import { useGetOrganizationBalance } from "@src/services/consult/organization/balance/getPerBank";
 import { defaultTheme } from "@src/styles/defaultTheme";
 import { Card, Col, Divider, Layout, Row, Statistic, Typography } from "antd";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
 
 export const OrganizationBalance = () => {
+  const {
+    OrganizationBalance,
+    OrganizationBalanceError,
+    isOrganizationBalanceFetching,
+    refetchOrganizationBalance,
+  } = useGetOrganizationBalance();
   const [isHoverCurrency, setIsHoverCurrency] = useState<
     "real" | "dolar" | "euro" | "btc"
   >("real");
@@ -34,7 +41,7 @@ export const OrganizationBalance = () => {
                   justifyContent: !isMobile ? "center" : "space-between",
                 }}
               >
-                <PaidIcon style={{ marginRight: 8 }} />
+                
                 {isMobile && (
                   <>
                     {show ? (
@@ -52,12 +59,13 @@ export const OrganizationBalance = () => {
         {show && (
           <>
             {" "}
-            <Col xs={{ span: 24 }} md={{ span: 5 }}>
-              <Card bordered={false}>
+            <Col xs={{ span: 24 }} md={{ span: 5 }}   style={{ minWidth: isOrganizationBalanceFetching ? "222px" : undefined }}>
+              <Card bordered={false} loading={isOrganizationBalanceFetching}>
                 {isHoverCurrency === "real" ? (
                   <Statistic
                     title="Conta transacional"
-                    value={7325256.32}
+                    value={OrganizationBalance?.balance_to_transactions ?? 0}
+                    loading={isOrganizationBalanceFetching}
                     precision={2}
                     prefix="R$"
                     valueStyle={{
@@ -69,7 +77,8 @@ export const OrganizationBalance = () => {
                   <>
                     <Statistic
                       title="Conta transacional"
-                      value={7325256.32}
+                      value={OrganizationBalance?.balance_to_transactions ?? 0}
+                      loading={isOrganizationBalanceFetching}
                       precision={2}
                       prefix="R$"
                       valueStyle={{
@@ -79,7 +88,7 @@ export const OrganizationBalance = () => {
                   </>
                 )}
 
-                {isHoverCurrency === "dolar" ? (
+                {/* {isHoverCurrency === "dolar" ? (
                   <Typography.Title
                     level={3}
                     style={{
@@ -93,7 +102,9 @@ export const OrganizationBalance = () => {
                     {new Intl.NumberFormat("en-IN", {
                       style: "currency",
                       currency: "USD",
-                    }).format(1479969.35)}
+                    }).format(
+                      OrganizationBalance?.balance_to_transactions ?? 0
+                    )}
                   </Typography.Title>
                 ) : (
                   <Typography.Title
@@ -105,7 +116,9 @@ export const OrganizationBalance = () => {
                     {new Intl.NumberFormat("en-IN", {
                       style: "currency",
                       currency: "USD",
-                    }).format(1479969.35)}
+                    }).format(
+                      OrganizationBalance?.balance_to_transactions ?? 0
+                    )}
                   </Typography.Title>
                 )}
 
@@ -123,7 +136,9 @@ export const OrganizationBalance = () => {
                     {new Intl.NumberFormat("pt-BR", {
                       style: "currency",
                       currency: "EUR",
-                    }).format(1347148.8)}
+                    }).format(
+                      OrganizationBalance?.balance_to_transactions ?? 0
+                    )}
                   </Typography.Title>
                 ) : (
                   <Typography.Title
@@ -135,7 +150,9 @@ export const OrganizationBalance = () => {
                     {new Intl.NumberFormat("pt-BR", {
                       style: "currency",
                       currency: "EUR",
-                    }).format(1347148.8)}
+                    }).format(
+                      OrganizationBalance?.balance_to_transactions ?? 0
+                    )}
                   </Typography.Title>
                 )}
 
@@ -153,7 +170,9 @@ export const OrganizationBalance = () => {
                     {new Intl.NumberFormat("pt-BR", {
                       style: "currency",
                       currency: "BTC",
-                    }).format(1347148.8)}
+                    }).format(
+                      OrganizationBalance?.balance_to_transactions ?? 0
+                    )}
                   </Typography.Title>
                 ) : (
                   <Typography.Title
@@ -165,17 +184,19 @@ export const OrganizationBalance = () => {
                     {new Intl.NumberFormat("pt-BR", {
                       style: "currency",
                       currency: "BTC",
-                    }).format(1347148.8)}
+                    }).format(
+                      OrganizationBalance?.balance_to_transactions ?? 0
+                    )}
                   </Typography.Title>
-                )}
+                )} */}
               </Card>
             </Col>
-            <Col xs={{ span: 24 }} md={{ span: 5 }}>
-              <Card bordered={false}>
+            <Col xs={{ span: 24 }} md={{ span: 5 }}  style={{ minWidth: isOrganizationBalanceFetching ? "220px" : undefined }}>
+              <Card bordered={false} loading={isOrganizationBalanceFetching}>
                 {isHoverCurrency === "real" ? (
                   <Statistic
                     title="Conta pagamento"
-                    value={7325256.32}
+                    value={OrganizationBalance?.balance_to_payment ?? 0}
                     precision={2}
                     prefix="R$"
                     valueStyle={{
@@ -187,7 +208,7 @@ export const OrganizationBalance = () => {
                   <>
                     <Statistic
                       title="Conta pagamento"
-                      value={7325256.32}
+                      value={OrganizationBalance?.balance_to_payment ?? 0}
                       precision={2}
                       prefix="R$"
                       valueStyle={{
@@ -197,7 +218,7 @@ export const OrganizationBalance = () => {
                   </>
                 )}
 
-                {isHoverCurrency === "dolar" ? (
+                {/* {isHoverCurrency === "dolar" ? (
                   <Typography.Title
                     level={3}
                     style={{
@@ -211,7 +232,7 @@ export const OrganizationBalance = () => {
                     {new Intl.NumberFormat("en-IN", {
                       style: "currency",
                       currency: "USD",
-                    }).format(1479969.35)}
+                    }).format(OrganizationBalance?.balance_to_payment ?? 0)}
                   </Typography.Title>
                 ) : (
                   <Typography.Title
@@ -223,7 +244,7 @@ export const OrganizationBalance = () => {
                     {new Intl.NumberFormat("en-IN", {
                       style: "currency",
                       currency: "USD",
-                    }).format(1479969.35)}
+                    }).format(OrganizationBalance?.balance_to_payment ?? 0)}
                   </Typography.Title>
                 )}
 
@@ -241,7 +262,7 @@ export const OrganizationBalance = () => {
                     {new Intl.NumberFormat("pt-BR", {
                       style: "currency",
                       currency: "EUR",
-                    }).format(1347148.8)}
+                    }).format(OrganizationBalance?.balance_to_payment ?? 0)}
                   </Typography.Title>
                 ) : (
                   <Typography.Title
@@ -253,7 +274,7 @@ export const OrganizationBalance = () => {
                     {new Intl.NumberFormat("pt-BR", {
                       style: "currency",
                       currency: "EUR",
-                    }).format(1347148.8)}
+                    }).format(OrganizationBalance?.balance_to_payment ?? 0)}
                   </Typography.Title>
                 )}
 
@@ -271,7 +292,7 @@ export const OrganizationBalance = () => {
                     {new Intl.NumberFormat("pt-BR", {
                       style: "currency",
                       currency: "BTC",
-                    }).format(1347148.8)}
+                    }).format(OrganizationBalance?.balance_to_payment ?? 0)}
                   </Typography.Title>
                 ) : (
                   <Typography.Title
@@ -283,17 +304,17 @@ export const OrganizationBalance = () => {
                     {new Intl.NumberFormat("pt-BR", {
                       style: "currency",
                       currency: "BTC",
-                    }).format(1347148.8)}
+                    }).format(OrganizationBalance?.balance_to_payment ?? 0)}
                   </Typography.Title>
-                )}
+                )} */}
               </Card>
             </Col>
-            <Col xs={{ span: 24 }} md={{ span: 5 }}>
-              <Card bordered={false}>
+            <Col xs={{ span: 24 }} md={{ span: 5 }} style={{ minWidth: isOrganizationBalanceFetching ? "220px" : undefined }}>
+              <Card bordered={false} loading={isOrganizationBalanceFetching}>
                 {isHoverCurrency === "real" ? (
                   <Statistic
                     title="Conta Segurança"
-                    value={7325256.32}
+                    value={OrganizationBalance?.balance_reserved ?? 0}
                     precision={2}
                     prefix="R$"
                     valueStyle={{
@@ -305,7 +326,7 @@ export const OrganizationBalance = () => {
                   <>
                     <Statistic
                       title="Conta Segurança"
-                      value={7325256.32}
+                      value={OrganizationBalance?.balance_reserved ?? 0}
                       precision={2}
                       prefix="R$"
                       valueStyle={{
@@ -314,7 +335,7 @@ export const OrganizationBalance = () => {
                     />
                   </>
                 )}
-
+{/* 
                 {isHoverCurrency === "dolar" ? (
                   <Typography.Title
                     level={3}
@@ -329,7 +350,7 @@ export const OrganizationBalance = () => {
                     {new Intl.NumberFormat("en-IN", {
                       style: "currency",
                       currency: "USD",
-                    }).format(1479969.35)}
+                    }).format(OrganizationBalance?.balance_reserved ?? 0)}
                   </Typography.Title>
                 ) : (
                   <Typography.Title
@@ -341,7 +362,7 @@ export const OrganizationBalance = () => {
                     {new Intl.NumberFormat("en-IN", {
                       style: "currency",
                       currency: "USD",
-                    }).format(1479969.35)}
+                    }).format(OrganizationBalance?.balance_reserved ?? 0)}
                   </Typography.Title>
                 )}
 
@@ -359,7 +380,7 @@ export const OrganizationBalance = () => {
                     {new Intl.NumberFormat("pt-BR", {
                       style: "currency",
                       currency: "EUR",
-                    }).format(1347148.8)}
+                    }).format(OrganizationBalance?.balance_reserved ?? 0)}
                   </Typography.Title>
                 ) : (
                   <Typography.Title
@@ -371,7 +392,7 @@ export const OrganizationBalance = () => {
                     {new Intl.NumberFormat("pt-BR", {
                       style: "currency",
                       currency: "EUR",
-                    }).format(1347148.8)}
+                    }).format(OrganizationBalance?.balance_reserved ?? 0)}
                   </Typography.Title>
                 )}
 
@@ -389,7 +410,7 @@ export const OrganizationBalance = () => {
                     {new Intl.NumberFormat("pt-BR", {
                       style: "currency",
                       currency: "BTC",
-                    }).format(1347148.8)}
+                    }).format(OrganizationBalance?.balance_reserved ?? 0)}
                   </Typography.Title>
                 ) : (
                   <Typography.Title
@@ -401,17 +422,17 @@ export const OrganizationBalance = () => {
                     {new Intl.NumberFormat("pt-BR", {
                       style: "currency",
                       currency: "BTC",
-                    }).format(1347148.8)}
+                    }).format(OrganizationBalance?.balance_reserved ?? 0)}
                   </Typography.Title>
-                )}
+                )} */}
               </Card>
             </Col>
-            <Col xs={{ span: 24 }} md={{ span: 5 }}>
-              <Card bordered={false}>
+            <Col xs={{ span: 24 }} md={{ span: 5 }} style={{ minWidth: isOrganizationBalanceFetching ? "220px" : undefined }}>
+              <Card bordered={false} loading={isOrganizationBalanceFetching}>
                 {isHoverCurrency === "real" ? (
                   <Statistic
                     title="Total"
-                    value={7325256.32}
+                    value={OrganizationBalance?.balance_total ?? 0}
                     precision={2}
                     prefix="R$"
                     valueStyle={{
@@ -423,7 +444,7 @@ export const OrganizationBalance = () => {
                   <>
                     <Statistic
                       title="Total"
-                      value={7325256.32}
+                      value={OrganizationBalance?.balance_total ?? 0}
                       precision={2}
                       prefix="R$"
                       valueStyle={{
@@ -432,7 +453,7 @@ export const OrganizationBalance = () => {
                     />
                   </>
                 )}
-
+{/* 
                 {isHoverCurrency === "dolar" ? (
                   <Typography.Title
                     level={3}
@@ -447,7 +468,7 @@ export const OrganizationBalance = () => {
                     {new Intl.NumberFormat("en-IN", {
                       style: "currency",
                       currency: "USD",
-                    }).format(1479969.35)}
+                    }).format(OrganizationBalance?.balance_total ?? 0)}
                   </Typography.Title>
                 ) : (
                   <Typography.Title
@@ -459,7 +480,7 @@ export const OrganizationBalance = () => {
                     {new Intl.NumberFormat("en-IN", {
                       style: "currency",
                       currency: "USD",
-                    }).format(1479969.35)}
+                    }).format(OrganizationBalance?.balance_total ?? 0)}
                   </Typography.Title>
                 )}
 
@@ -477,7 +498,7 @@ export const OrganizationBalance = () => {
                     {new Intl.NumberFormat("pt-BR", {
                       style: "currency",
                       currency: "EUR",
-                    }).format(1347148.8)}
+                    }).format(OrganizationBalance?.balance_total ?? 0)}
                   </Typography.Title>
                 ) : (
                   <Typography.Title
@@ -489,7 +510,7 @@ export const OrganizationBalance = () => {
                     {new Intl.NumberFormat("pt-BR", {
                       style: "currency",
                       currency: "EUR",
-                    }).format(1347148.8)}
+                    }).format(OrganizationBalance?.balance_total ?? 0)}
                   </Typography.Title>
                 )}
 
@@ -507,7 +528,7 @@ export const OrganizationBalance = () => {
                     {new Intl.NumberFormat("pt-BR", {
                       style: "currency",
                       currency: "BTC",
-                    }).format(1347148.8)}
+                    }).format(OrganizationBalance?.balance_total ?? 0)}
                   </Typography.Title>
                 ) : (
                   <Typography.Title
@@ -519,19 +540,19 @@ export const OrganizationBalance = () => {
                     {new Intl.NumberFormat("pt-BR", {
                       style: "currency",
                       currency: "BTC",
-                    }).format(1347148.8)}
+                    }).format(OrganizationBalance?.balance_total ?? 0)}
                   </Typography.Title>
-                )}
+                )} */}
               </Card>
             </Col>
-            
           </>
-        )}<Col span={24}>
-        <Divider
-          style={{ width: "100%", margin: 20, marginTop: 5 }}
-          orientation="left"
-        />
-      </Col>
+        )}
+        <Col span={24}>
+          <Divider
+            style={{ width: "100%", margin: 20, marginTop: 5 }}
+            orientation="left"
+          />
+        </Col>
       </Row>
     </Layout>
   );
