@@ -26,7 +26,6 @@ export const MerchantSelect = ({
     useListMerchants(query);
   const [value, setValue] = useState<any>(null);
   const debounceSearch = useDebounce(query.name);
-
   useEffect(() => {
     if (!value) {
       const initial = merchantsData?.items.find(
