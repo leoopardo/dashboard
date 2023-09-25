@@ -230,6 +230,11 @@ export interface ValidateInterface {
           report_paybrokers_bank_history_list: boolean;
           report_paybrokers_bank_history_export_csv: boolean;
         };
+        bank_balance: {
+          menu: boolean;
+          report_paybrokers_bank_balance_history_list: boolean;
+          report_paybrokers_bank_balance_list: boolean
+        }
       };
       merchant: {
         menu: boolean;

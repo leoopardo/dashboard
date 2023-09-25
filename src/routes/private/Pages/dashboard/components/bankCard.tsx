@@ -1,76 +1,144 @@
+import { ReloadOutlined } from "@ant-design/icons";
+import { useGetBankBalance } from "@src/services/consult/organization/bankBalance/getBankBalance";
 import { BankItem } from "@src/services/types/banks.interface";
 import { defaultTheme } from "@src/styles/defaultTheme";
-import { Card, Col, Statistic, Tooltip, Typography } from "antd";
+import { Card, Col, Spin, Statistic, Tooltip, Typography } from "antd";
 import { motion } from "framer-motion";
+import moment from "moment";
 
 interface BankcardInterface {
   bank?: BankItem;
 }
 
 export const BankCard = ({ bank }: BankcardInterface) => {
+  const {
+    OrganizationBankBalance,
+    isOrganizationBankBalanceFetching,
+    OrganizationBankBalanceError,
+    refetchOrganizationBankBalance,
+  } = useGetBankBalance({ bank: bank?.bank?.toLocaleLowerCase() });
+
+  console.log(OrganizationBankBalance);
+
   return (
-    <Col xs={{ span: 24 }} md={{ span: 4 }}>
-      <Card
-        headStyle={{ padding: 0 }}
-        bordered={false}
-        title={
-          <Tooltip title={bank?.label_name} placement="right">
-            <motion.div
-              animate={{
-                backgroundImage: [
-                  `linear-gradient(#5a5a5acc, ${defaultTheme.colors.primary}), url(${bank?.icon_url})`,
-                  `linear-gradient(${defaultTheme.colors.primary}, #5a5a5acc), url(${bank?.icon_url})`,
-                ],
-                transition: {
-                  duration: 4,
-                  delay: 1,
-                  repeat: Infinity,
-                  repeatType: "reverse",
-                  type: "keyframes",
-                },
+    <>
+      {OrganizationBankBalance && !OrganizationBankBalanceError && (
+        <Col xs={{ span: 24 }} md={{ span: 4 }}>
+          <Card
+            loading={isOrganizationBankBalanceFetching}
+            headStyle={{ padding: 0 }}
+            bordered={false}
+            title={
+              <motion.div
+                animate={{
+                  backgroundImage: [
+                    `linear-gradient(#5a5a5acc, ${defaultTheme.colors.primary}), url(${bank?.icon_url})`,
+                    `linear-gradient(${defaultTheme.colors.primary}, #5a5a5acc), url(${bank?.icon_url})`,
+                  ],
+                  transition: {
+                    duration: 4,
+                    delay: 1,
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                    type: "keyframes",
+                  },
+                }}
+                style={{
+                  width: "100%",
+                  height: "80px",
+                  backgroundPosition: "center",
+                  backgroundSize: "cover",
+                  backgroundRepeat: "no-repeat",
+                  padding: 0,
+                  margin: 0,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  borderTopLeftRadius: 8,
+                  borderTopRightRadius: 8,
+                }}
+              >
+                {isOrganizationBankBalanceFetching ? (
+                  <Spin
+                    size="small"
+                    style={{
+                      position: "absolute",
+                      right: 8,
+                      top: 8,
+                      color: "#fff",
+                      cursor: "pointer",
+                    }}
+                  />
+                ) : (
+                  <ReloadOutlined
+                    style={{
+                      position: "absolute",
+                      right: 8,
+                      top: 8,
+                      color: "#fff",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => refetchOrganizationBankBalance()}
+                  />
+                )}
+
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Tooltip title={bank?.label_name} placement="right">
+                    <Typography.Title level={3} style={{ color: "#fff" }}>
+                      {bank?.label_name}
+                    </Typography.Title>
+                  </Tooltip>
+
+                  <Typography.Text
+                    mark={
+                      moment(new Date()).format("YYYY-MM-DDTHH:mm:00.000") >
+                      moment(new Date(OrganizationBankBalance?.date_checked))
+                        .add(20, "minutes")
+                        .format("YYYY-MM-DDTHH:mm:00.000")
+                    }
+                    style={{ color: "#d6d6d6", fontSize: "12px" }}
+                  >
+                    {moment(
+                      new Date(OrganizationBankBalance?.date_checked)
+                    ).format(
+                      navigator.language === "pt-BR"
+                        ? "DD/MM/YYYY HH:mm"
+                        : "YYYY/MM/DD HH:mm"
+                    )}
+                  </Typography.Text>
+                </div>
+              </motion.div>
+            }
+          >
+            <Statistic
+              title="Total:"
+              value={OrganizationBankBalance?.value}
+              precision={2}
+              prefix="R$"
+              valueStyle={{
+                fontSize: "16px",
               }}
-              style={{
-                width: "100%",
-                height: "80px",
-                backgroundPosition: "center",
-                backgroundSize: "cover",
-                backgroundRepeat: "no-repeat",
-                padding: 0,
-                margin: 0,
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                borderTopLeftRadius: 8,
-                borderTopRightRadius: 8,
+            />
+            <Statistic
+              title="Valor bloqueado:"
+              value={OrganizationBankBalance?.value_blocked}
+              precision={2}
+              prefix="R$"
+              valueStyle={{
+                fontSize: "14px",
+                color: defaultTheme.colors.error,
               }}
-            >
-              <Typography.Title level={3} style={{ color: "#fff" }}>
-                {bank?.label_name}
-              </Typography.Title>
-            </motion.div>
-          </Tooltip>
-        }
-      >
-        <Statistic
-          title="Total"
-          value={7325256.32}
-          precision={2}
-          prefix="R$"
-          valueStyle={{
-            fontSize: "16px",
-          }}
-        />
-        <Statistic
-          title="Valor bloqueado"
-          value={7325256.32}
-          precision={2}
-          prefix="R$"
-          valueStyle={{
-            fontSize: "14px",
-            color: defaultTheme.colors.error,
-          }}
-        />
-      </Card>
-    </Col>
+            />
+          </Card>
+        </Col>
+      )}
+    </>
   );
 };

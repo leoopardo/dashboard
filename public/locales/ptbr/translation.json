@@ -565,7 +565,10 @@
     "merchants_balance": "Saldos de empresas",
     "payment": "Pagamento",
     "security": "Segurança",
-    "total": "Total"
+    "total": "Total",
+    "deposit_conversion": "Conversão de entrada",
+    "withdraw_conversion": "Conversão de saída",
+    "empty_conversion": "Nenhum valor de conversão encontrado"
   },
   "actions": {
     "details": "Detalhes",

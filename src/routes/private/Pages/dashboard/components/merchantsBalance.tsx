@@ -1,49 +1,12 @@
 import { CustomTable } from "@src/components/CustomTable";
+import { useGetMerchantBalance } from "@src/services/consult/merchant/balance/getMerchantBalance";
 import { Col, Divider, Typography } from "antd";
 import { useTranslation } from "react-i18next";
 
 export const MerchantsBalance = () => {
   const { t } = useTranslation();
-  const OperationMoviments = {
-    total: 5,
-    items: [
-      {
-        merchant: "Empresa 1",
-        transaction: 1000,
-        payment: 1000,
-        security: 1000,
-        total: 1000,
-      },
-      {
-        merchant: "Empresa 2",
-        transaction: 1000,
-        payment: 1000,
-        security: 1000,
-        total: 1000,
-      },
-      {
-        merchant: "Empresa 3",
-        transaction: 1000,
-        payment: 1000,
-        security: 1000,
-        total: 1000,
-      },
-      {
-        merchant: "Empresa 4",
-        transaction: 1000,
-        payment: 1000,
-        security: 1000,
-        total: 1000,
-      },
-      {
-        merchant: "Empresa 5",
-        transaction: 1000,
-        payment: 1000,
-        security: 1000,
-        total: 1000,
-      },
-    ],
-  };
+  const { MerchantBalance, isMerchantBalanceFetching } = useGetMerchantBalance({ limit: 25, page: 1 });
+
   return (
     <Col span={24}>
       <Divider orientation="left">
@@ -60,17 +23,16 @@ export const MerchantsBalance = () => {
           return;
         }}
         actions={[]}
-        data={OperationMoviments}
-        items={OperationMoviments.items}
+        data={MerchantBalance}
+        loading={isMerchantBalanceFetching}
+        items={MerchantBalance?.items}
         error={false}
         columns={[
-          { name: "merchant", type: "text" },
-          { name: "transaction", type: "value" },
-          { name: "payment", type: "value" },
-          { name: "security", type: "value" },
-          { name: "total", type: "value" },
+          { name: "merchant_name", type: "text" },
+          { name: "balance_to_transactions", type: "value" },
+          { name: "balance_to_payment", type: "value" },
+          { name: "balance_reserved", type: "value" },
         ]}
-        loading={false}
         label={["merchant", "value"]}
         disableScrollToTop
       />
