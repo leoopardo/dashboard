@@ -55,6 +55,13 @@ export const AggregatorSelect = ({
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const val = event?.target?.value;
     setQuery((state) => ({ ...state, name: val }));
+    if (!val) {
+      setQueryFunction((state: any) => ({
+        ...state,
+        aggregator_id: undefined,
+      }));
+      setValue(undefined);
+    }
   };
 
   return (
@@ -71,13 +78,18 @@ export const AggregatorSelect = ({
         setValue(e);
       }}
       style={{ width: "100%", height: 40 }}
-      onSelect={(value) =>
+      onSelect={(value) => {
         setQueryFunction((state: any) => ({
           ...state,
           aggregator_id: value,
           group_id: null,
-        }))
-      }
+        }));
+        setValue(
+          AggregatorsData?.items.find(
+            (aggregator) => aggregator.id === value
+          )?.name
+        );
+      }}
       onInputKeyDown={(event: any) => {
         handleChange(event);
       }}

@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { AggregatorSelect } from "@src/components/Selects/aggregatorSelect";
 import { OperatorSelect } from "@src/components/Selects/operatorSelect";
 import { ReasonSelect } from "@src/components/Selects/reasonSelect";
 import { useListClientClientBanks } from "@src/services/bank/listClientBanks";
@@ -17,7 +18,7 @@ import {
   Select,
   Switch,
 } from "antd";
-import { Dispatch, SetStateAction, useRef } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import ReactInputMask from "react-input-mask";
 import { MerchantSelect } from "../../Selects/merchantSelect";
@@ -41,6 +42,7 @@ interface mutateProps {
   submitLoading: boolean;
   success: boolean;
   error: any;
+  clear?: any;
 }
 
 export const MutateModal = ({
@@ -54,10 +56,12 @@ export const MutateModal = ({
   selectOptions,
   modalName,
   submitLoading,
+  clear,
 }: mutateProps) => {
   const { permissions } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
+  const user = queryClient.getQueryData("validate") as ValidateInterface;
   const { t } = useTranslation();
   const formRef = useRef<FormInstance>(null);
   const submitRef = useRef<HTMLButtonElement>(null);
@@ -74,6 +78,28 @@ export const MutateModal = ({
       [event.target.name]: event.target.value,
     }));
   };
+
+  useEffect(() => {
+    if (clear) clear();
+  }, []);
+
+  useEffect(() => {
+    if (body?.partner) {
+      setBody((state: any) => ({ ...state, partner_id: state?.partner?.id }));
+    }
+    if (body?.operator) {
+      setBody((state: any) => ({ ...state, operator_id: state?.operator?.id }));
+    }
+    if (body?.aggregator) {
+      setBody((state: any) => ({
+        ...state,
+        aggregator_id: state?.aggregator?.id,
+      }));
+    }
+    if (body?.merchant) {
+      setBody((state: any) => ({ ...state, merchant_id: state?.merchant?.id }));
+    }
+  }, []);
 
   return (
     <Drawer
@@ -135,7 +161,10 @@ export const MutateModal = ({
               } else return;
 
             case "partner_id":
-              if (permissions.register.partner.partner.partner_list) {
+              if (
+                permissions.register.partner.partner.partner_list &&
+                !user.partner_id
+              ) {
                 return (
                   <Form.Item
                     label={t(`table.${field.label}`)}
@@ -143,10 +172,10 @@ export const MutateModal = ({
                     style={{ margin: 10 }}
                     rules={[
                       {
-                        required: field.required,
+                        required: field.required && !body?.partner_id,
                         message:
                           t("input.required", {
-                            field: t(`input.${field.label}`),
+                            field: t(`table.${field.label}`),
                           }) || "",
                       },
                     ]}
@@ -157,7 +186,37 @@ export const MutateModal = ({
                     />
                   </Form.Item>
                 );
-              } else return;
+              }
+              return;
+
+            case "aggregator_id":
+              if (
+                permissions.register.aggregator.aggregator.aggregator_list &&
+                !user?.aggregator_id
+              ) {
+                return (
+                  <Form.Item
+                    label={t(`table.${field.label}`)}
+                    name={field.label}
+                    style={{ margin: 10 }}
+                    rules={[
+                      {
+                        required: field.required && !body?.aggregator_id,
+                        message:
+                          t("input.required", {
+                            field: t(`input.${field.label}`),
+                          }) || "",
+                      },
+                    ]}
+                  >
+                    <AggregatorSelect
+                      setQueryFunction={setBody}
+                      aggregatorId={body?.aggregator?.id ?? undefined}
+                    />
+                  </Form.Item>
+                );
+              }
+              return;
 
             case "reason":
               return (
@@ -207,7 +266,10 @@ export const MutateModal = ({
               );
 
             case "operator_id":
-              if (permissions.register.operator.operator.operator_list) {
+              if (
+                permissions.register.operator.operator.operator_list &&
+                !user?.operator_id
+              ) {
                 return (
                   <Form.Item
                     label={t(`table.${field.label}`)}
@@ -229,7 +291,8 @@ export const MutateModal = ({
                     />
                   </Form.Item>
                 );
-              } else return;
+              }
+              return;
 
             case "status":
             case "cash_in":

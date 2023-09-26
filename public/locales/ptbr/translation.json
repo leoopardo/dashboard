@@ -214,7 +214,8 @@
     "new_bank_blacklist": "Adicionar à blacklist",
     "resend_webhook": "Reenviar webhook",
     "update_bank": "Atualizar banco",
-    "new_reason": "Novo motivo"
+    "new_reason": "Novo motivo",
+    "modal_create_merchant": "Criar empresa"
   },
   "input": {
     "required": "Por favor, insira o {{field}}",

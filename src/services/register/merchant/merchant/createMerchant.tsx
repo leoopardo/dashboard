@@ -1,11 +1,11 @@
-import { api } from "../../../../config/api";
+import { MerchantsItem } from "@src/services/types/register/merchants/merchantsRegister.interface";
 import { useMutation } from "react-query";
-import { NewUserInterface } from "../../../../routes/private/Pages/register/organization/users/components/newUserModal";
+import { api } from "../../../../config/api";
 import { queryClient } from "../../../queryClient";
 
-export function useCreateMerchant(body: NewUserInterface) {
-  const { isLoading, error, mutate, isSuccess } = useMutation<
-    NewUserInterface | null | undefined
+export function useCreateMerchant(body: MerchantsItem) {
+  const { isLoading, error, mutate, isSuccess, reset } = useMutation<
+  MerchantsItem | null | undefined
   >("createMerchant", async () => {
     const response = await api.post("core/merchant/create", body, {});
     await queryClient.refetchQueries({ queryKey: ["MerchantsRegister"] });
@@ -16,11 +16,12 @@ export function useCreateMerchant(body: NewUserInterface) {
   const CreateIsLoading = isLoading;
   const CreateError = error;
   const CreateIsSuccess = isSuccess;
+  const ClearCreate = reset
 
   return {
     CreateIsLoading,
     CreateError,
     CreateMutate,
-    CreateIsSuccess,
+    CreateIsSuccess,ClearCreate
   };
 }

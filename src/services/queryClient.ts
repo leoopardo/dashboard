@@ -2,17 +2,22 @@
 import { toast } from "react-hot-toast";
 import { QueryCache, QueryClient } from "react-query";
 
+let unauthorizedNotificationShown = false; // Variável para controlar se a notificação já foi exibida
+
 export const queryClient = new QueryClient({
   queryCache: new QueryCache({
     onError: (err: any) => {
       if (
         err.response.status === 401 &&
-        err.request.responseURL.split("token/")[1] !== "validate"
+        err.request.responseURL.split("token/")[1] !== "validate" &&
+        !unauthorizedNotificationShown // Verifica se a notificação já foi exibida
       ) {
         localStorage.removeItem("token");
         sessionStorage.removeItem("token");
         queryClient.refetchQueries(["validate"]);
         toast.error("Token expirado");
+        unauthorizedNotificationShown = true; // Marca que a notificação foi exibida
+        setTimeout(() => {unauthorizedNotificationShown = false}, 3000)
       }
     },
   }),

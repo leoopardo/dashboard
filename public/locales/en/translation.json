@@ -269,7 +269,7 @@
     "csv_columns": "Select the CSV columns",
     "comma_separator": "Decimal separator",
     "operation_type": "Operation type",
-    "btg_id": "BTG ID"
+    "btg_id": "BTG ID",
   },
   "modal": {
     "confirm": "Confirm",
@@ -298,7 +298,8 @@
     "receiver_bank_name": "Receiver bank",
     "payment_id": "Payment ID",
     "receiver_email": "Receiver email",
-    "cash_out_fee_percent": "Withdraw fee"
+    "cash_out_fee_percent": "Withdraw fee",
+    "modal_create_merchant": "Create merchant"
   },
   "table": {
     "id": "ID",

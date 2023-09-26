@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
+  BankOutlined,
   EditOutlined,
   EyeFilled,
   ToolOutlined,
@@ -10,7 +11,6 @@ import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
 import { MutateModal } from "@components/Modals/mutateGenericModal";
-import { ViewModal } from "@components/Modals/viewGenericModal";
 import { Toast } from "@components/Toast";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
@@ -29,8 +29,9 @@ import { Button, Input } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { NewMerchantModal } from "./components/newMerchantModal";
 import { ViewMerchantModal } from "./components/ViewMerchantModal";
+import { useCreateMerchant } from "@src/services/register/merchant/merchant/createMerchant";
+import { UpdateBanks } from "./components/updatebanks";
 
 const INITIAL_QUERY: MerchantsQuery = {
   limit: 25,
@@ -43,6 +44,7 @@ export const MerchantView = () => {
   const { permissions } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
+  const user = queryClient.getQueryData("validate") as ValidateInterface;
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [query, setQuery] = useState<MerchantsQuery>(INITIAL_QUERY);
@@ -57,11 +59,23 @@ export const MerchantView = () => {
   const [isNewMerchantModal, setIsNewMerchantModal] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [currentItem, setCurrentItem] = useState<MerchantsItem | null>(null);
+  const [isUpdatebankOpen, setIsUpdateBankOpen] = useState<boolean>(false);
   const [updateBody, setUpdateBody] = useState<MerchantsItem>({
     ...currentItem,
     merchant_id: currentItem?.id,
   });
+  const [createBody, setCreateBody] = useState<MerchantsItem>({
+    ...currentItem,
+    partner_id: user?.partner_id,
+  });
 
+  const {
+    CreateError,
+    CreateIsLoading,
+    CreateIsSuccess,
+    CreateMutate,
+    ClearCreate,
+  } = useCreateMerchant(createBody);
   const {
     UpdateError,
     UpdateIsLoading,
@@ -143,7 +157,6 @@ export const MerchantView = () => {
             endDateKeyName="end_date"
             query={query}
             setQuery={setQuery}
-             
           />
         </Grid>
       </Grid>
@@ -186,6 +199,27 @@ export const MerchantView = () => {
               type="primary"
               loading={isMerchantDataFetching}
               onClick={() => {
+                setIsUpdateBankOpen(true);
+              }}
+              style={{
+                height: 40,
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <BankOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
+              {`${t("buttons.update")} ${t("table.bank")}`}
+            </Button>
+          </Grid>
+        )}
+        {permissions.register.merchant.merchant.merchant_create && (
+          <Grid item xs={12} md={3} lg={2}>
+            <Button
+              type="primary"
+              loading={isMerchantDataFetching}
+              onClick={() => {
                 MerchantReset();
                 setIsNewMerchantModal(true);
               }}
@@ -198,7 +232,7 @@ export const MerchantView = () => {
               }}
             >
               <UserAddOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
-              {`${t("buttons.create")} ${t("buttons.new_user")}`}
+              {`${t("buttons.create")} ${t("table.merchant")}`}
             </Button>
           </Grid>
         )}
@@ -263,7 +297,11 @@ export const MerchantView = () => {
           fields={[
             { label: "name", required: false },
             { label: "domain", required: false },
-            { label: "partner_id", required: false },
+            { label: "v3_id", required: false },
+            { label: "partner_id", required: true },
+            { label: "aggregator_id", required: false },
+            { label: "operator_id", required: false },
+            { label: "cnpj", required: false },
             { label: "cellphone", required: false },
             { label: "email", required: false },
           ]}
@@ -274,6 +312,7 @@ export const MerchantView = () => {
           submitLoading={UpdateIsLoading}
           error={UpdateError}
           success={UpdateIsSuccess}
+          clear={UpdateReset}
         />
       )}
 
@@ -285,6 +324,10 @@ export const MerchantView = () => {
           open={isViewModalOpen}
           setOpen={setIsViewModalOpen}
         />
+      )}
+
+      {isUpdatebankOpen && (
+        <UpdateBanks open={isUpdatebankOpen} setOpen={setIsUpdateBankOpen} />
       )}
 
       {isFiltersOpen && (
@@ -308,9 +351,29 @@ export const MerchantView = () => {
         />
       )}
       {isNewMerchantModal && (
-        <NewMerchantModal
+        <MutateModal
+          type="create"
           open={isNewMerchantModal}
           setOpen={setIsNewMerchantModal}
+          fields={[
+            { label: "name", required: true },
+            { label: "domain", required: true },
+            { label: "v3_id", required: false },
+            { label: "partner_id", required: true },
+            { label: "aggregator_id", required: false },
+            { label: "operator_id", required: false },
+            { label: "cnpj", required: false },
+            { label: "cellphone", required: false },
+            { label: "email", required: false },
+          ]}
+          body={createBody}
+          setBody={setCreateBody}
+          modalName={t("modal.modal_create_merchant")}
+          submit={CreateMutate}
+          submitLoading={CreateIsLoading}
+          error={CreateError}
+          success={CreateIsSuccess}
+          clear={ClearCreate}
         />
       )}
 
