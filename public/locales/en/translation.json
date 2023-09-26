@@ -269,7 +269,7 @@
     "csv_columns": "Select the CSV columns",
     "comma_separator": "Decimal separator",
     "operation_type": "Operation type",
-    "btg_id": "BTG ID",
+    "btg_id": "BTG ID"
   },
   "modal": {
     "confirm": "Confirm",
