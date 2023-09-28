@@ -568,7 +568,11 @@
     "total": "Total",
     "deposit_conversion": "Deposit conversion",
     "withdraw_conversion": "Withdraw conversion",
-    "empty_conversion": "No conversion values found"
+    "empty_conversion": "No conversion values found",
+    "deposit_bank": "Deposit bank",
+    "withdraw_bank": "Withdraw bank",
+    "aggregator": "Aggregator",
+    "operator": "Operator"
   },
   "actions": {
     "details": "Details",

@@ -569,7 +569,11 @@
     "total": "Total",
     "deposit_conversion": "Conversão de entrada",
     "withdraw_conversion": "Conversão de saída",
-    "empty_conversion": "Nenhum valor de conversão encontrado"
+    "empty_conversion": "Nenhum valor de conversão encontrado",
+    "deposit_bank": "Banco depósito",
+    "withdraw_bank": "Banco saque",
+    "aggregator": "Agregador",
+    "operator": "Operador"
   },
   "actions": {
     "details": "Detalhes",

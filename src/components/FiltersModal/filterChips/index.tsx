@@ -1,5 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { CloseCircleOutlined } from "@ant-design/icons";
+import { queryClient } from "@src/services/queryClient";
+import { AggregatorsResponse } from "@src/services/types/register/aggregators/aggregators.interface";
+import { MerchantsResponse } from "@src/services/types/register/merchants/merchantsRegister.interface";
+import { OperatorsResponse } from "@src/services/types/register/operators/operators.interface";
+import { PartnersResponse } from "@src/services/types/register/partners/partners.interface";
 import { Space, Tag } from "antd";
 import moment from "moment";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
@@ -22,10 +27,19 @@ export const FilterChips = ({
   haveInitialDate,
 }: FilterChipsProps) => {
   const { t } = useTranslation();
+  const merchants = queryClient.getQueryData(
+    "MerchantList"
+  ) as MerchantsResponse;
+  const partners = queryClient.getQueryData("listPartners") as PartnersResponse;
+  const aggregators = queryClient.getQueryData(
+    "listAggregator"
+  ) as AggregatorsResponse;
+  const operators = queryClient.getQueryData(
+    "listOperators"
+  ) as OperatorsResponse;
+
   const [filtersQuery, setFiltersQuery] = useState<any>(query);
-
   const isMobile = useMediaQuery({ maxWidth: "400px" });
-
   const deleteFilter = (key: string) => {
     if (query[key]) {
       const q = { ...filtersQuery, limit: 25, page: 1 };
@@ -68,12 +82,14 @@ export const FilterChips = ({
                       delete q[endDateKeyName];
                       if (haveInitialDate) {
                         q[key] = moment(new Date())
-                          .startOf("day").add(3, "hours")
+                          .startOf("day")
+                          .add(3, "hours")
                           .format("YYYY-MM-DDTHH:mm:ss.SSS");
 
                         q[endDateKeyName] = moment(new Date())
                           .add(1, "day")
-                          .startOf("day").add(3, "hours")
+                          .startOf("day")
+                          .add(3, "hours")
                           .format("YYYY-MM-DDTHH:mm:ss.SSS");
                       }
                       setQuery(q);
@@ -88,11 +104,13 @@ export const FilterChips = ({
                     navigator.language === "pt-BR"
                       ? "DD/MM/YYYY HH:mm"
                       : "YYYY/MM/DD HH:mm"
-                  )} - ${moment(filtersQuery[endDateKeyName]).subtract(3, "hours").format(
-                  navigator.language === "pt-BR"
-                    ? "DD/MM/YYYY HH:mm"
-                    : "YYYY/MM/DD HH:mm"
-                )} `}
+                  )} - ${moment(filtersQuery[endDateKeyName])
+                  .subtract(3, "hours")
+                  .format(
+                    navigator.language === "pt-BR"
+                      ? "DD/MM/YYYY HH:mm"
+                      : "YYYY/MM/DD HH:mm"
+                  )} `}
               </Tag>
             ) : (
               <></>
@@ -121,6 +139,62 @@ export const FilterChips = ({
               >
                 {t(`table.age`)}: {filtersQuery.age_start} -{" "}
                 {filtersQuery.age_end}
+              </Tag>
+            );
+
+          case "merchant_id":
+            return (
+              <Tag
+                key={key}
+                color="cyan"
+                icon={<CloseCircleOutlined onClick={() => deleteFilter(key)} />}
+              >
+                {t(`table.merchant`)}:{" "}
+                {merchants?.items?.find(
+                  (merch) => merch.id === filtersQuery?.merchant_id
+                )?.name ?? "-"}
+              </Tag>
+            );
+
+          case "partner_id":
+            return (
+              <Tag
+                key={key}
+                color="cyan"
+                icon={<CloseCircleOutlined onClick={() => deleteFilter(key)} />}
+              >
+                {t(`table.partner`)}:{" "}
+                {partners?.items?.find(
+                  (part) => part.id === filtersQuery?.partner_id
+                )?.name ?? "-"}
+              </Tag>
+            );
+
+          case "operator_id":
+            return (
+              <Tag
+                key={key}
+                color="cyan"
+                icon={<CloseCircleOutlined onClick={() => deleteFilter(key)} />}
+              >
+                {t(`table.operator`)}:{" "}
+                {operators?.items?.find(
+                  (op) => op.id === filtersQuery?.operator_id
+                )?.name ?? "-"}
+              </Tag>
+            );
+
+          case "aggregator_id":
+            return (
+              <Tag
+                key={key}
+                color="cyan"
+                icon={<CloseCircleOutlined onClick={() => deleteFilter(key)} />}
+              >
+                {t(`table.aggregator`)}:{" "}
+                {aggregators?.items?.find(
+                  (aggreg) => aggreg.id === filtersQuery?.aggregator_id
+                )?.name ?? "-"}
               </Tag>
             );
 
@@ -186,13 +260,21 @@ export const FilterChips = ({
             );
           default:
             return (
-              <Tag
-                key={key}
-                color="cyan"
-                icon={<CloseCircleOutlined onClick={() => deleteFilter(key)} />}
-              >
-                {t(`table.${key}`)}: {filtersQuery[key]}
-              </Tag>
+              <>
+                {filtersQuery[key] ? (
+                  <Tag
+                    key={key}
+                    color="cyan"
+                    icon={
+                      <CloseCircleOutlined onClick={() => deleteFilter(key)} />
+                    }
+                  >
+                    {t(`table.${key}`)}: {filtersQuery[key]}
+                  </Tag>
+                ) : (
+                  <></>
+                )}
+              </>
             );
         }
       })}

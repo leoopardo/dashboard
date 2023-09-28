@@ -23,7 +23,7 @@ export const BanksTab = (props: { id?: string }) => {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const { isMerchantBankFetching, merchantBankData, refetchMerchantBankData } =
     useMerchantBankConfig(props.id);
-  const { UpdateError, UpdateIsSuccess, UpdateMutate } =
+  const { UpdateBankError, UpdateBankIsSuccess, UpdateMutate } =
     useUpdateBankConfig(body);
 
   useEffect(() => {
@@ -48,7 +48,7 @@ export const BanksTab = (props: { id?: string }) => {
 
   useEffect(() => {
     refetchMerchantBankData();
-  }, [UpdateIsSuccess]);
+  }, [UpdateBankIsSuccess]);
 
   return (
     <Form
@@ -88,7 +88,7 @@ export const BanksTab = (props: { id?: string }) => {
         xs={12}
         style={{ display: "flex", flexDirection: "row-reverse" }}
       >
-        <Grid item xs={12} md={4} lg={2}>
+        <Grid item xs={12} md={4} lg={4}>
           <Popconfirm
             title={t("messages.confirm_action_title", {
               action: t("messages.update"),
@@ -123,8 +123,8 @@ export const BanksTab = (props: { id?: string }) => {
       <Toast
         actionSuccess={t("messages.updated")}
         actionError={t("messages.update")}
-        error={UpdateError}
-        success={UpdateIsSuccess}
+        error={UpdateBankError}
+        success={UpdateBankIsSuccess}
       />
     </Form>
   );

@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useGetOperator } from "@src/services/register/operator/getOperators";
+import { useListOperators } from "@src/services/register/operator/listOperators";
 import { OperatorQuery } from "@src/services/types/register/operators/operators.interface";
 import useDebounce from "@src/utils/useDebounce";
 import { AutoComplete, Empty } from "antd";
@@ -22,25 +23,25 @@ export const OperatorSelect = ({
     limit: 200,
     name: "",
   });
-  const { OperatorData, refetchOperatorData, OperatorDataError } =
-    useGetOperator(query);
+  const { operatorsData, refetcOperators, operatorsError } =
+    useListOperators(query);
   const [value, setValue] = useState<any>(null);
   const debounceSearch = useDebounce(query.name);
 
   useEffect(() => {
-    if (OperatorData && !value) {
-      const initial = OperatorData?.items.find(
+    if (operatorsData && !value) {
+      const initial = operatorsData?.items.find(
         (operator) => operator.id === queryOptions?.operator?.id
       );
       if (initial) {
         setValue(initial?.name);
       }
     }
-  }, [queryOptions, OperatorData]);
+  }, [queryOptions, operatorsData]);
 
   useEffect(() => {
-    if (OperatorData) {
-      const initial = OperatorData?.items.find(
+    if (operatorsData) {
+      const initial = operatorsData?.items.find(
         (operator) => operator.id === queryOptions?.operator?.id
       );
       if (initial) {
@@ -52,12 +53,13 @@ export const OperatorSelect = ({
   useEffect(() => {
     setQuery((state) => ({
       ...state,
-      aggregator_id: queryOptions?.aggregator_id ?? queryOptions?.aggregator?.id,
+      aggregator_id:
+        queryOptions?.aggregator_id ?? queryOptions?.aggregator?.id,
     }));
   }, [debounceSearch, queryOptions]);
 
   useEffect(() => {
-    refetchOperatorData();
+    refetcOperators();
   }, [query]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -79,9 +81,9 @@ export const OperatorSelect = ({
     <AutoComplete
       size="large"
       options={
-        OperatorDataError
+        operatorsError
           ? []
-          : OperatorData?.items?.map((item, index) => {
+          : operatorsData?.items?.map((item, index) => {
               return { key: index, value: item.id, label: item.name };
             }) ?? []
       }
@@ -98,7 +100,7 @@ export const OperatorSelect = ({
           group_id: null,
         }));
         setValue(
-          OperatorData?.items.find((operator) => operator.id === value)?.name
+          operatorsData?.items.find((operator) => operator.id === value)?.name
         );
       }}
       onInputKeyDown={(event: any) => {

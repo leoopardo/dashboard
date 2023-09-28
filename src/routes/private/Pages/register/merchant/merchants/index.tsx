@@ -32,6 +32,7 @@ import { useNavigate } from "react-router-dom";
 import { ViewMerchantModal } from "./components/ViewMerchantModal";
 import { useCreateMerchant } from "@src/services/register/merchant/merchant/createMerchant";
 import { UpdateBanks } from "./components/updatebanks";
+import { useUpdateBankConfig } from "@src/services/register/merchant/merchant/bankConfig/updateBankConfig";
 
 const INITIAL_QUERY: MerchantsQuery = {
   limit: 25,
@@ -102,7 +103,12 @@ export const MerchantView = () => {
     { name: ["partner", "name"], head: "partner", type: "text" },
     {
       name: ["merchantConfig", "cash_in_bank"],
-      head: "bank",
+      head: "deposit_bank",
+      type: "bankNameToIcon",
+    },
+    {
+      name: ["merchantConfig", "cash_out_bank"],
+      head: "withdraw_bank",
       type: "bankNameToIcon",
     },
     { name: "status", type: "status" },
@@ -193,7 +199,7 @@ export const MerchantView = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        {permissions.register.merchant.merchant.merchant_create && (
+        {permissions.register.merchant.merchant.merchant_config_banks && (
           <Grid item xs={12} md={3} lg={2}>
             <Button
               type="primary"
@@ -383,6 +389,8 @@ export const MerchantView = () => {
         error={UpdateError}
         success={UpdateIsSuccess}
       />
+
+     
     </Grid>
   );
 };
