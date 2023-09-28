@@ -57,7 +57,9 @@ export const BreadcrumbComponent = () => {
     "blacklists_reports",
     "refunded",
     "blacklist",
-    "update","api_logs"
+    "update",
+    "api_logs",
+    "person_blacklist",
   ];
 
   useEffect(() => {
@@ -69,10 +71,16 @@ export const BreadcrumbComponent = () => {
           case "dashboard":
             return {
               title: (
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-                 
-                  <Typography.Title level={4} style={{margin: 0}}>
-                  <HomeOutlined style={{ fontSize: 18, marginRight: 8 }} />/ {import.meta.env.VITE_APP_COMPANY_NAME}
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Typography.Title level={4} style={{ margin: 0 }}>
+                    <HomeOutlined style={{ fontSize: 18, marginRight: 8 }} />/{" "}
+                    {import.meta.env.VITE_APP_COMPANY_NAME}
                   </Typography.Title>
                 </div>
               ),

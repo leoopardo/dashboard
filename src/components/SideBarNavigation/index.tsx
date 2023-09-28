@@ -520,6 +520,18 @@ export const SidebarNavigation = () => {
                 }
               ),
               getItem(
+                "import_merchant_blacklist",
+                null,
+                null,
+                false,
+                (e) => handleNavigate(e?.keyPath),
+                {
+                  display: permissions?.register?.merchant?.blacklist?.menu
+                    ? undefined
+                    : "none",
+                }
+              ),
+              getItem(
                 "merchant_blacklist_reasons",
                 null,
                 null,
@@ -649,9 +661,45 @@ export const SidebarNavigation = () => {
             getItem(
               "person_blacklist",
               null,
-              null,
+              [
+                getItem(
+                  "upload_person_blacklist",
+                  null,
+                  null,
+                  false,
+                  (e) => handleNavigate(e?.keyPath),
+                  {
+                    display: permissions?.register?.person?.person?.menu
+                      ? undefined
+                      : "none",
+                  }
+                ),getItem(
+                  "person_blacklist_uploads",
+                  null,
+                  null,
+                  false,
+                  (e) => handleNavigate(e?.keyPath),
+                  {
+                    display: permissions?.register?.person?.person?.menu
+                      ? undefined
+                      : "none",
+                  }
+                ),
+                getItem(
+                  "person_blacklist_reasons",
+                  null,
+                  null,
+                  false,
+                  (e) => handleNavigate(e?.keyPath),
+                  {
+                    display: permissions?.register?.person?.person?.menu
+                      ? undefined
+                      : "none",
+                  }
+                ),
+              ],
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.register?.person?.blacklist?.menu
                   ? undefined
@@ -1395,8 +1443,7 @@ export const SidebarNavigation = () => {
               false,
               (e) => handleNavigate(e?.keyPath),
               {
-                display: permissions?.support?.logs?.auth_logs
-                .menu
+                display: permissions?.support?.logs?.auth_logs.menu
                   ? undefined
                   : "none",
               }

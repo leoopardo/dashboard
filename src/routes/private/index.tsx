@@ -75,6 +75,9 @@ import { OrganizationBankBalance } from "./Pages/consult/organization/bankBalanc
 import { AggregatorBlacklist } from "./Pages/register/aggregator/blacklist";
 import { Dashboard } from "./Pages/dashboard";
 import { AuthLogs } from "./Pages/support/apiLogs/AuthLogs";
+import { ImportBlacklist } from "./Pages/register/merchant/blacklist/importBlacklist";
+import { ImportPersonsBlacklist } from "./Pages/register/persons/blacklist/importBlacklist";
+import { PersonBlacklistUploads } from "./Pages/register/persons/blacklist/uploads";
 
 export const PrivateRoutes = () => {
   return (
@@ -271,10 +274,14 @@ export const PrivateRoutes = () => {
               <Route
                 path="merchant_blacklist"
                 element={<MerchantBlacklist />}
-              />{" "}
+              />
               <Route
                 path="merchant_blacklist_reasons"
                 element={<MerchantBlacklistReasons />}
+              />
+              <Route
+                path="import_merchant_blacklist"
+                element={<ImportBlacklist />}
               />
             </Route>
             <Route path="fee_plans" element={<MerchantFeePlans />} />
@@ -303,6 +310,15 @@ export const PrivateRoutes = () => {
             </Route>
             <Route path="whitelist" element={<PixKeyWhitelist />} />
             <Route path="person_accounts" element={<CostumerBanks />} />
+            <Route path="person_blacklist">
+              <Route
+                path="upload_person_blacklist"
+                element={<ImportPersonsBlacklist />}
+              /> <Route
+              path="person_blacklist_uploads"
+              element={<PersonBlacklistUploads />}
+            />
+            </Route>
             <Route path="person_reports">
               <Route
                 path="person_persons_reports"

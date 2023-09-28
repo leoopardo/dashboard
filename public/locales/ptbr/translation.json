@@ -117,7 +117,11 @@
     "aggregator_blacklist_blacklist": "Blacklist de agregador",
     "aggregator_blacklist_reasons": "Motivos de blacklist",
     "dashboard": "Painel",
-    "authentication_logs":"Logs de autenticação"
+    "authentication_logs": "Logs de autenticação",
+    "import_merchant_blacklist": "Importar blacklist",
+    "upload_person_blacklist": "Importar blacklist",
+    "person_blacklist_uploads": "Verificar uploads",
+    "person_blacklist_reasons": "Motivos de blacklist"
   },
 
   "titles": {
@@ -145,7 +149,7 @@
     "yes_confirm": "Sim, confirmar",
     "yes_create": "Sim, criar",
     "uploaded": "Upload realizado",
-    "upload": "upload",
+    "upload": "subir",
     "deleted": "Deletado",
     "delete": "Deletar",
     "checked": "Dhecado",
@@ -189,7 +193,8 @@
     "create_bank_blacklist": "Adicionar à blacklist",
     "new_fee": "Criar taxa",
     "add_fee": "Adicionar taxa",
-    "new_reason": "Novo motivo"
+    "new_reason": "Novo motivo",
+    "sample_file": "arquivo exemplo"
   },
   "modal": {
     "confirm": "Confirmar",
@@ -574,7 +579,14 @@
     "deposit_bank": "Banco depósito",
     "withdraw_bank": "Banco saque",
     "aggregator": "Agregador",
-    "operator": "Operador"
+    "operator": "Operador",
+    "add_row": "Adicionar linha",
+    "upload_file": "Fazer upload",
+    "total_rows": "Total de linhas",
+    "failed_rows": "Linhas com erro",
+    "created_by_ip": "Ip do criador",
+    "WAITING": "Aguardando",
+    "created_by": "Criado por"
   },
   "actions": {
     "details": "Detalhes",
