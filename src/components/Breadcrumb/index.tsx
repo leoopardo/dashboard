@@ -57,7 +57,7 @@ export const BreadcrumbComponent = () => {
     "blacklists_reports",
     "refunded",
     "blacklist",
-    "update",
+    "update","api_logs"
   ];
 
   useEffect(() => {
@@ -99,7 +99,7 @@ export const BreadcrumbComponent = () => {
                   </>
                 ) : (
                   <>
-                    {index === 1 && <HomeOutlined />}
+                    {index === 0 && <HomeOutlined />}
                     <a href={`/${l.slice(0, l.indexOf(value) + 1).join("/")}`}>
                       {value.includes("%20")
                         ? value.split("%20").join(".")

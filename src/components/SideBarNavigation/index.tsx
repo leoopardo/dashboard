@@ -79,6 +79,8 @@ export const SidebarNavigation = () => {
     } as MenuItem;
   }
 
+  console.log(permissions);
+
   const i: MenuItem[] = [
     getItem(
       "dashboard",
@@ -89,628 +91,642 @@ export const SidebarNavigation = () => {
       { fontSize: "16px" },
       import.meta.env.VITE_APP_COMPANY_NAME
     ),
-    getItem("register", <FolderAddOutlined style={{ fontSize: "23px" }} />, [
-      getItem(
-        "organization",
-        null,
-        [
-          getItem(
-            "users",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath),
-            {
-              display: permissions?.register?.paybrokers?.users?.menu
-                ? undefined
-                : "none",
-            }
-          ),
-          getItem(
-            "categories",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath),
-            {
-              display: permissions?.register?.paybrokers?.release_category?.menu
-                ? undefined
-                : "none",
-            }
-          ),
-          getItem(
-            "bank_maintain",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath),
-            {
-              display: permissions?.register?.paybrokers?.banks_maintain?.menu
-                ? undefined
-                : "none",
-            }
-          ),
-          getItem(
-            "general_configs",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath),
-            {
-              display: permissions?.register?.paybrokers?.general_configs?.menu
-                ? undefined
-                : "none",
-            }
-          ),
-          getItem(
-            "organization_reports",
-            null,
-            [
-              getItem(
-                "organization_reports_users",
-                null,
-                null,
-                false,
-                (e) => handleNavigate(e?.keyPath),
-                {
-                  display: permissions?.register?.paybrokers?.users
-                    ?.paybrokers_user_export_csv
-                    ? undefined
-                    : "none",
-                }
-              ),
-              getItem(
-                "organization_reports_categories",
-                null,
-                null,
-                false,
-                (e) => handleNavigate(e?.keyPath),
-                {
-                  display: permissions?.register?.paybrokers?.release_category
+    getItem(
+      "register",
+      <FolderAddOutlined style={{ fontSize: "23px" }} />,
+      [
+        getItem(
+          "organization",
+          null,
+          [
+            getItem(
+              "users",
+              null,
+              null,
+              false,
+              (e) => handleNavigate(e?.keyPath),
+              {
+                display: permissions?.register?.paybrokers?.users?.menu
+                  ? undefined
+                  : "none",
+              }
+            ),
+            getItem(
+              "categories",
+              null,
+              null,
+              false,
+              (e) => handleNavigate(e?.keyPath),
+              {
+                display: permissions?.register?.paybrokers?.release_category
+                  ?.menu
+                  ? undefined
+                  : "none",
+              }
+            ),
+            getItem(
+              "bank_maintain",
+              null,
+              null,
+              false,
+              (e) => handleNavigate(e?.keyPath),
+              {
+                display: permissions?.register?.paybrokers?.banks_maintain?.menu
+                  ? undefined
+                  : "none",
+              }
+            ),
+            getItem(
+              "general_configs",
+              null,
+              null,
+              false,
+              (e) => handleNavigate(e?.keyPath),
+              {
+                display: permissions?.register?.paybrokers?.general_configs
+                  ?.menu
+                  ? undefined
+                  : "none",
+              }
+            ),
+            getItem(
+              "organization_reports",
+              null,
+              [
+                getItem(
+                  "organization_reports_users",
+                  null,
+                  null,
+                  false,
+                  (e) => handleNavigate(e?.keyPath),
+                  {
+                    display: permissions?.register?.paybrokers?.users
+                      ?.paybrokers_user_export_csv
+                      ? undefined
+                      : "none",
+                  }
+                ),
+                getItem(
+                  "organization_reports_categories",
+                  null,
+                  null,
+                  false,
+                  (e) => handleNavigate(e?.keyPath),
+                  {
+                    display: permissions?.register?.paybrokers?.release_category
+                      ?.paybrokers_release_category_export_csv
+                      ? undefined
+                      : "none",
+                  }
+                ),
+              ],
+              false,
+              undefined,
+              {
+                display:
+                  permissions?.register?.paybrokers?.users
+                    ?.paybrokers_user_export_csv ||
+                  permissions?.register?.paybrokers?.release_category
                     ?.paybrokers_release_category_export_csv
                     ? undefined
                     : "none",
-                }
-              ),
-            ],
-            false,
-            undefined,
-            {
-              display:
-                permissions?.register?.paybrokers?.users
-                  ?.paybrokers_user_export_csv ||
-                permissions?.register?.paybrokers?.release_category
-                  ?.paybrokers_release_category_export_csv
+              }
+            ),
+          ],
+          undefined,
+          undefined,
+          {
+            display: permissions?.register?.paybrokers?.menu
+              ? undefined
+              : "none",
+          }
+        ),
+        getItem(
+          "aggregator",
+          null,
+          [
+            getItem(
+              "aggregators",
+              null,
+              null,
+              false,
+              (e) => handleNavigate(e?.keyPath),
+              {
+                display: permissions?.register?.aggregator?.aggregator?.menu
                   ? undefined
                   : "none",
-            }
-          ),
-        ],
-        undefined,
-        undefined,
-        {
-          display: permissions?.register?.paybrokers?.menu ? undefined : "none",
-        }
-      ),
-      getItem(
-        "aggregator",
-        null,
-        [
-          getItem(
-            "aggregators",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath),
-            {
-              display: permissions?.register?.aggregator?.aggregator?.menu
-                ? undefined
-                : "none",
-            }
-          ),
-          getItem(
-            "aggregator_users",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath),
-            {
-              display: permissions?.register?.aggregator?.users?.menu
-                ? undefined
-                : "none",
-            }
-          ),
-          getItem(
-            "aggregator_blacklist",
-            null,
-            [
-              getItem(
-                "aggregator_blacklist_blacklist",
-                null,
-                null,
-                false,
-                (e) => handleNavigate(e?.keyPath),
-                {
-                  display: permissions?.register?.aggregator?.aggregator
-                    ?.aggregator_export_csv
-                    ? undefined
-                    : "none",
-                }
-              ),
-              getItem(
-                "aggregator_blacklist_reasons",
-                null,
-                null,
-                false,
-                (e) => handleNavigate(e?.keyPath),
-                {
-                  display: permissions?.register?.aggregator?.users
+              }
+            ),
+            getItem(
+              "aggregator_users",
+              null,
+              null,
+              false,
+              (e) => handleNavigate(e?.keyPath),
+              {
+                display: permissions?.register?.aggregator?.users?.menu
+                  ? undefined
+                  : "none",
+              }
+            ),
+            getItem(
+              "aggregator_blacklist",
+              null,
+              [
+                getItem(
+                  "aggregator_blacklist_blacklist",
+                  null,
+                  null,
+                  false,
+                  (e) => handleNavigate(e?.keyPath),
+                  {
+                    display: permissions?.register?.aggregator?.aggregator
+                      ?.aggregator_export_csv
+                      ? undefined
+                      : "none",
+                  }
+                ),
+                getItem(
+                  "aggregator_blacklist_reasons",
+                  null,
+                  null,
+                  false,
+                  (e) => handleNavigate(e?.keyPath),
+                  {
+                    display: permissions?.register?.aggregator?.users
+                      ?.aggregator_user_export_csv
+                      ? undefined
+                      : "none",
+                  }
+                ),
+              ],
+              false,
+              undefined,
+              {
+                display:
+                  permissions?.register?.aggregator?.aggregator
+                    ?.aggregator_export_csv ||
+                  permissions?.register?.aggregator?.users
                     ?.aggregator_user_export_csv
                     ? undefined
                     : "none",
-                }
-              ),
-            ],
-            false,
-            undefined,
-            {
-              display:
-                permissions?.register?.aggregator?.aggregator
-                  ?.aggregator_export_csv ||
-                permissions?.register?.aggregator?.users
-                  ?.aggregator_user_export_csv
-                  ? undefined
-                  : "none",
-            }
-          ),
-          getItem(
-            "aggregator_reports",
-            null,
-            [
-              getItem(
-                "aggregator_aggregators_reports",
-                null,
-                null,
-                false,
-                (e) => handleNavigate(e?.keyPath),
-                {
-                  display: permissions?.register?.aggregator?.aggregator
-                    ?.aggregator_export_csv
-                    ? undefined
-                    : "none",
-                }
-              ),
-              getItem(
-                "aggregator_users_reports",
-                null,
-                null,
-                false,
-                (e) => handleNavigate(e?.keyPath),
-                {
-                  display: permissions?.register?.aggregator?.users
+              }
+            ),
+            getItem(
+              "aggregator_reports",
+              null,
+              [
+                getItem(
+                  "aggregator_aggregators_reports",
+                  null,
+                  null,
+                  false,
+                  (e) => handleNavigate(e?.keyPath),
+                  {
+                    display: permissions?.register?.aggregator?.aggregator
+                      ?.aggregator_export_csv
+                      ? undefined
+                      : "none",
+                  }
+                ),
+                getItem(
+                  "aggregator_users_reports",
+                  null,
+                  null,
+                  false,
+                  (e) => handleNavigate(e?.keyPath),
+                  {
+                    display: permissions?.register?.aggregator?.users
+                      ?.aggregator_user_export_csv
+                      ? undefined
+                      : "none",
+                  }
+                ),
+              ],
+              false,
+              undefined,
+              {
+                display:
+                  permissions?.register?.aggregator?.aggregator
+                    ?.aggregator_export_csv ||
+                  permissions?.register?.aggregator?.users
                     ?.aggregator_user_export_csv
                     ? undefined
                     : "none",
-                }
-              ),
-            ],
-            false,
-            undefined,
-            {
-              display:
-                permissions?.register?.aggregator?.aggregator
-                  ?.aggregator_export_csv ||
-                permissions?.register?.aggregator?.users
-                  ?.aggregator_user_export_csv
+              }
+            ),
+          ],
+          undefined,
+          undefined,
+          {
+            display: permissions?.register?.aggregator?.menu
+              ? undefined
+              : "none",
+          }
+        ),
+        getItem(
+          "partner",
+          null,
+          [
+            getItem(
+              "partners",
+              null,
+              null,
+              false,
+              (e) => handleNavigate(e?.keyPath),
+              {
+                display: permissions?.register?.partner?.partner?.menu
                   ? undefined
                   : "none",
-            }
-          ),
-        ],
-        undefined,
-        undefined,
-        {
-          display: permissions?.register?.aggregator?.menu ? undefined : "none",
-        }
-      ),
-      getItem(
-        "partner",
-        null,
-        [
-          getItem(
-            "partners",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath),
-            {
-              display: permissions?.register?.partner?.partner?.menu
-                ? undefined
-                : "none",
-            }
-          ),
-          getItem(
-            "partner_users",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath),
-            {
-              display: permissions?.register?.partner?.users?.menu
-                ? undefined
-                : "none",
-            }
-          ),
-          getItem(
-            "partner_reports",
-            null,
-            [
-              getItem(
-                "partner_partners_reports",
-                null,
-                null,
-                false,
-                (e) => handleNavigate(e?.keyPath),
-                {
-                  display: permissions?.register?.partner?.partner
-                    ?.partner_export_csv
-                    ? undefined
-                    : "none",
-                }
-              ),
-              getItem(
-                "partner_users_reports",
-                null,
-                null,
-                false,
-                (e) => handleNavigate(e?.keyPath),
-                {
-                  display: permissions?.register?.partner?.users
-                    ?.partner_user_export_csv
-                    ? undefined
-                    : "none",
-                }
-              ),
-            ],
-            false,
-            undefined,
-            {
-              display:
-                permissions?.register?.partner?.partner?.partner_export_csv ||
-                permissions?.register?.partner?.users?.partner_user_export_csv
+              }
+            ),
+            getItem(
+              "partner_users",
+              null,
+              null,
+              false,
+              (e) => handleNavigate(e?.keyPath),
+              {
+                display: permissions?.register?.partner?.users?.menu
                   ? undefined
                   : "none",
-            }
-          ),
-        ],
-        undefined,
-        undefined,
-        {
-          display: permissions?.register?.partner?.menu ? undefined : "none",
-        }
-      ),
-      getItem(
-        "operator",
-        null,
-        [
-          getItem(
-            "operators",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath),
-            {
-              display: permissions?.register?.operator?.operator?.menu
-                ? undefined
-                : "none",
-            }
-          ),
-          getItem(
-            "operator_users",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath),
-            {
-              display: permissions?.register?.operator?.users?.menu
-                ? undefined
-                : "none",
-            }
-          ),
-          getItem(
-            "operator_reports",
-            null,
-            [
-              getItem(
-                "operator_operators_reports",
-                null,
-                null,
-                false,
-                (e) => handleNavigate(e?.keyPath),
-                {
-                  display: permissions?.register?.operator?.operator
-                    ?.operator_export_csv
+              }
+            ),
+            getItem(
+              "partner_reports",
+              null,
+              [
+                getItem(
+                  "partner_partners_reports",
+                  null,
+                  null,
+                  false,
+                  (e) => handleNavigate(e?.keyPath),
+                  {
+                    display: permissions?.register?.partner?.partner
+                      ?.partner_export_csv
+                      ? undefined
+                      : "none",
+                  }
+                ),
+                getItem(
+                  "partner_users_reports",
+                  null,
+                  null,
+                  false,
+                  (e) => handleNavigate(e?.keyPath),
+                  {
+                    display: permissions?.register?.partner?.users
+                      ?.partner_user_export_csv
+                      ? undefined
+                      : "none",
+                  }
+                ),
+              ],
+              false,
+              undefined,
+              {
+                display:
+                  permissions?.register?.partner?.partner?.partner_export_csv ||
+                  permissions?.register?.partner?.users?.partner_user_export_csv
                     ? undefined
                     : "none",
-                }
-              ),
-              getItem(
-                "operator_users_reports",
-                null,
-                null,
-                false,
-                (e) => handleNavigate(e?.keyPath),
-                {
-                  display: permissions?.register?.operator?.users
+              }
+            ),
+          ],
+          undefined,
+          undefined,
+          {
+            display: permissions?.register?.partner?.menu ? undefined : "none",
+          }
+        ),
+        getItem(
+          "operator",
+          null,
+          [
+            getItem(
+              "operators",
+              null,
+              null,
+              false,
+              (e) => handleNavigate(e?.keyPath),
+              {
+                display: permissions?.register?.operator?.operator?.menu
+                  ? undefined
+                  : "none",
+              }
+            ),
+            getItem(
+              "operator_users",
+              null,
+              null,
+              false,
+              (e) => handleNavigate(e?.keyPath),
+              {
+                display: permissions?.register?.operator?.users?.menu
+                  ? undefined
+                  : "none",
+              }
+            ),
+            getItem(
+              "operator_reports",
+              null,
+              [
+                getItem(
+                  "operator_operators_reports",
+                  null,
+                  null,
+                  false,
+                  (e) => handleNavigate(e?.keyPath),
+                  {
+                    display: permissions?.register?.operator?.operator
+                      ?.operator_export_csv
+                      ? undefined
+                      : "none",
+                  }
+                ),
+                getItem(
+                  "operator_users_reports",
+                  null,
+                  null,
+                  false,
+                  (e) => handleNavigate(e?.keyPath),
+                  {
+                    display: permissions?.register?.operator?.users
+                      ?.operator_user_export_csv
+                      ? undefined
+                      : "none",
+                  }
+                ),
+              ],
+              false,
+              undefined,
+              {
+                display:
+                  permissions?.register?.operator?.operator
+                    ?.operator_export_csv ||
+                  permissions?.register?.operator?.users
                     ?.operator_user_export_csv
                     ? undefined
                     : "none",
-                }
-              ),
-            ],
-            false,
-            undefined,
-            {
-              display:
-                permissions?.register?.operator?.operator
-                  ?.operator_export_csv ||
-                permissions?.register?.operator?.users?.operator_user_export_csv
-                  ? undefined
-                  : "none",
-            }
-          ),
-        ],
-        undefined,
-        undefined,
-        {
-          display: permissions?.register?.operator?.menu ? undefined : "none",
-        }
-      ),
-      getItem(
-        "merchant",
-        null,
-        [
-          getItem(
-            "merchants",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath),
-            {
-              display: permissions?.register?.merchant?.merchant?.menu
-                ? undefined
-                : "none",
-            }
-          ),
-          getItem(
-            "merchant_users",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath),
-            {
-              display: permissions?.register?.merchant?.users?.menu
-                ? undefined
-                : "none",
-            }
-          ),
-          getItem("merchant_blacklists", null, [
+              }
+            ),
+          ],
+          undefined,
+          undefined,
+          {
+            display: permissions?.register?.operator?.menu ? undefined : "none",
+          }
+        ),
+        getItem(
+          "merchant",
+          null,
+          [
             getItem(
-              "merchant_blacklist",
+              "merchants",
               null,
               null,
               false,
               (e) => handleNavigate(e?.keyPath),
               {
-                display: permissions?.register?.merchant?.blacklist?.menu
+                display: permissions?.register?.merchant?.merchant?.menu
                   ? undefined
                   : "none",
               }
             ),
             getItem(
-              "merchant_blacklist_reasons",
+              "merchant_users",
               null,
               null,
               false,
               (e) => handleNavigate(e?.keyPath),
               {
-                display: permissions?.register?.merchant?.blacklist?.menu
+                display: permissions?.register?.merchant?.users?.menu
                   ? undefined
                   : "none",
               }
             ),
-          ]),
-          getItem(
-            "manual_entry_category",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath),
-            {
-              display: permissions?.register?.merchant?.release_category?.menu
-                ? undefined
-                : "none",
-            }
-          ),
-          getItem(
-            "fee_plans",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath),
-            {
-              display: permissions?.register?.merchant?.fee_plans?.menu
-                ? undefined
-                : "none",
-            }
-          ),
-          getItem(
-            "merchant_reports",
-            null,
-            [
+            getItem("merchant_blacklists", null, [
               getItem(
-                "merchant_merchants_reports",
+                "merchant_blacklist",
                 null,
                 null,
                 false,
                 (e) => handleNavigate(e?.keyPath),
                 {
-                  display: permissions?.register?.merchant?.merchant
-                    ?.merchant_export_csv
+                  display: permissions?.register?.merchant?.blacklist?.menu
                     ? undefined
                     : "none",
                 }
               ),
               getItem(
-                "merchant_users_reports",
+                "merchant_blacklist_reasons",
                 null,
                 null,
                 false,
                 (e) => handleNavigate(e?.keyPath),
                 {
-                  display: permissions?.register?.merchant?.users
+                  display: permissions?.register?.merchant?.blacklist?.menu
+                    ? undefined
+                    : "none",
+                }
+              ),
+            ]),
+            getItem(
+              "manual_entry_category",
+              null,
+              null,
+              false,
+              (e) => handleNavigate(e?.keyPath),
+              {
+                display: permissions?.register?.merchant?.release_category?.menu
+                  ? undefined
+                  : "none",
+              }
+            ),
+            getItem(
+              "fee_plans",
+              null,
+              null,
+              false,
+              (e) => handleNavigate(e?.keyPath),
+              {
+                display: permissions?.register?.merchant?.fee_plans?.menu
+                  ? undefined
+                  : "none",
+              }
+            ),
+            getItem(
+              "merchant_reports",
+              null,
+              [
+                getItem(
+                  "merchant_merchants_reports",
+                  null,
+                  null,
+                  false,
+                  (e) => handleNavigate(e?.keyPath),
+                  {
+                    display: permissions?.register?.merchant?.merchant
+                      ?.merchant_export_csv
+                      ? undefined
+                      : "none",
+                  }
+                ),
+                getItem(
+                  "merchant_users_reports",
+                  null,
+                  null,
+                  false,
+                  (e) => handleNavigate(e?.keyPath),
+                  {
+                    display: permissions?.register?.merchant?.users
+                      ?.merchant_user_export_csv
+                      ? undefined
+                      : "none",
+                  }
+                ),
+              ],
+              false,
+              undefined,
+              {
+                display:
+                  permissions?.register?.merchant?.merchant
+                    ?.merchant_export_csv ||
+                  permissions?.register?.merchant?.users
                     ?.merchant_user_export_csv
                     ? undefined
                     : "none",
-                }
-              ),
-            ],
-            false,
-            undefined,
-            {
-              display:
-                permissions?.register?.merchant?.merchant
-                  ?.merchant_export_csv ||
-                permissions?.register?.merchant?.users?.merchant_user_export_csv
+              }
+            ),
+          ],
+          undefined,
+          undefined,
+          {
+            display: permissions?.register?.merchant?.menu ? undefined : "none",
+          }
+        ),
+        getItem(
+          "person",
+          null,
+          [
+            getItem(
+              "persons",
+              null,
+              null,
+              false,
+              (e) => handleNavigate(e?.keyPath),
+              {
+                display: permissions?.register?.person?.person?.menu
                   ? undefined
                   : "none",
-            }
-          ),
-        ],
-        undefined,
-        undefined,
-        {
-          display: permissions?.register?.merchant?.menu ? undefined : "none",
-        }
-      ),
-      getItem(
-        "person",
-        null,
-        [
-          getItem(
-            "persons",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath),
-            {
-              display: permissions?.register?.person?.person?.menu
-                ? undefined
-                : "none",
-            }
-          ),
-          getItem(
-            "whitelist",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath),
-            {
-              display: permissions?.register?.person?.pix_whitelist?.menu
-                ? undefined
-                : "none",
-            }
-          ),
-          getItem(
-            "person_accounts",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath),
-            {
-              display: permissions?.register?.person?.client_banks?.menu
-                ? undefined
-                : "none",
-            }
-          ),
-          getItem(
-            "person_blacklist",
-            null,
-            null,
-            false,
-            (e) => handleNavigate(e?.keyPath),
-            {
-              display: permissions?.register?.person?.blacklist?.menu
-                ? undefined
-                : "none",
-            }
-          ),
-          getItem(
-            "person_reports",
-            null,
-            [
-              getItem(
-                "person_persons_reports",
-                null,
-                null,
-                false,
-                (e) => handleNavigate(e?.keyPath),
-                {
-                  display: permissions?.register?.person?.person
-                    ?.person_person_export_csv
-                    ? undefined
-                    : "none",
-                }
-              ),
-              getItem(
-                "client_bank_reports",
-                null,
-                null,
-                false,
-                (e) => handleNavigate(e?.keyPath),
-                {
-                  display: permissions?.register?.person?.client_banks
-                    ?.person_client_banks_export_csv
-                    ? undefined
-                    : "none",
-                }
-              ),
-              getItem(
-                "pix_whitelist_reports",
-                null,
-                null,
-                false,
-                (e) => handleNavigate(e?.keyPath),
-                {
-                  display: permissions?.register?.person?.pix_whitelist
+              }
+            ),
+            getItem(
+              "whitelist",
+              null,
+              null,
+              false,
+              (e) => handleNavigate(e?.keyPath),
+              {
+                display: permissions?.register?.person?.pix_whitelist?.menu
+                  ? undefined
+                  : "none",
+              }
+            ),
+            getItem(
+              "person_accounts",
+              null,
+              null,
+              false,
+              (e) => handleNavigate(e?.keyPath),
+              {
+                display: permissions?.register?.person?.client_banks?.menu
+                  ? undefined
+                  : "none",
+              }
+            ),
+            getItem(
+              "person_blacklist",
+              null,
+              null,
+              false,
+              (e) => handleNavigate(e?.keyPath),
+              {
+                display: permissions?.register?.person?.blacklist?.menu
+                  ? undefined
+                  : "none",
+              }
+            ),
+            getItem(
+              "person_reports",
+              null,
+              [
+                getItem(
+                  "person_persons_reports",
+                  null,
+                  null,
+                  false,
+                  (e) => handleNavigate(e?.keyPath),
+                  {
+                    display: permissions?.register?.person?.person
+                      ?.person_person_export_csv
+                      ? undefined
+                      : "none",
+                  }
+                ),
+                getItem(
+                  "client_bank_reports",
+                  null,
+                  null,
+                  false,
+                  (e) => handleNavigate(e?.keyPath),
+                  {
+                    display: permissions?.register?.person?.client_banks
+                      ?.person_client_banks_export_csv
+                      ? undefined
+                      : "none",
+                  }
+                ),
+                getItem(
+                  "pix_whitelist_reports",
+                  null,
+                  null,
+                  false,
+                  (e) => handleNavigate(e?.keyPath),
+                  {
+                    display: permissions?.register?.person?.pix_whitelist
+                      ?.person_pix_whitelist_export_csv
+                      ? undefined
+                      : "none",
+                  }
+                ),
+              ],
+              false,
+              undefined,
+              {
+                display:
+                  permissions?.register?.person?.person
+                    ?.person_person_export_csv ||
+                  permissions?.register?.person?.client_banks
+                    ?.person_client_banks_export_csv ||
+                  permissions?.register?.person?.pix_whitelist
                     ?.person_pix_whitelist_export_csv
                     ? undefined
                     : "none",
-                }
-              ),
-            ],
-            false,
-            undefined,
-            {
-              display:
-                permissions?.register?.person?.person
-                  ?.person_person_export_csv ||
-                permissions?.register?.person?.client_banks
-                  ?.person_client_banks_export_csv ||
-                permissions?.register?.person?.pix_whitelist
-                  ?.person_pix_whitelist_export_csv
-                  ? undefined
-                  : "none",
-            }
-          ),
-        ],
-        undefined,
-        undefined,
-        {
-          display: permissions?.register?.person?.menu ? undefined : "none",
-        }
-      ),
-    ], undefined, undefined, ),
+              }
+            ),
+          ],
+          undefined,
+          undefined,
+          {
+            display: permissions?.register?.person?.menu ? undefined : "none",
+          }
+        ),
+      ],
+      undefined,
+      undefined
+    ),
     getItem(
       "moviment",
       <DollarOutlined style={{ fontSize: "23px" }} />,
@@ -1348,19 +1364,48 @@ export const SidebarNavigation = () => {
           "api_logs",
           null,
           [
-            getItem("error_logs_deposits", null, null, false, (e) =>
-              handleNavigate(e?.keyPath)
+            getItem(
+              "error_logs_deposits",
+              null,
+              null,
+              false,
+              (e) => handleNavigate(e?.keyPath),
+              {
+                display: permissions?.support?.logs?.deposit_error_logs.menu
+                  ? undefined
+                  : "none",
+              }
             ),
-            getItem("error_logs_withdrawals", null, null, false, (e) =>
-              handleNavigate(e?.keyPath)
+            getItem(
+              "error_logs_withdrawals",
+              null,
+              null,
+              false,
+              (e) => handleNavigate(e?.keyPath),
+              {
+                display: permissions?.support?.logs?.withdraw_error_logs.menu
+                  ? undefined
+                  : "none",
+              }
+            ),
+            getItem(
+              "authentication_logs",
+              null,
+              null,
+              false,
+              (e) => handleNavigate(e?.keyPath),
+              {
+                display: permissions?.support?.logs?.auth_logs
+                .menu
+                  ? undefined
+                  : "none",
+              }
             ),
           ],
           undefined,
           undefined,
           {
-            display: permissions?.report?.deposit?.deposit_error_logs?.menu
-              ? undefined
-              : "none",
+            display: permissions?.support?.logs?.menu ? undefined : "none",
           }
         ),
       ],
@@ -1412,9 +1457,19 @@ export const SidebarNavigation = () => {
         }}
       >
         {!isSidebarOpen ? (
-          <MenuUnfoldOutlined style={{ fontSize: "26px", color: theme === "dark" ? "#fff" : "#000" }} />
+          <MenuUnfoldOutlined
+            style={{
+              fontSize: "26px",
+              color: theme === "dark" ? "#fff" : "#000",
+            }}
+          />
         ) : (
-          <MenuFoldOutlined style={{ fontSize: "26px", color: theme === "dark" ? "#fff" : "#000" }} />
+          <MenuFoldOutlined
+            style={{
+              fontSize: "26px",
+              color: theme === "dark" ? "#fff" : "#000",
+            }}
+          />
         )}
       </Button>
 

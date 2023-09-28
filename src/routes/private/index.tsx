@@ -74,6 +74,7 @@ import { MerchantBlacklistReasons } from "./Pages/register/merchant/blacklist/re
 import { OrganizationBankBalance } from "./Pages/consult/organization/bankBalance";
 import { AggregatorBlacklist } from "./Pages/register/aggregator/blacklist";
 import { Dashboard } from "./Pages/dashboard";
+import { AuthLogs } from "./Pages/support/apiLogs/AuthLogs";
 
 export const PrivateRoutes = () => {
   return (
@@ -343,6 +344,7 @@ export const PrivateRoutes = () => {
         </Route>
         <Route path="support">
           <Route path="api_logs">
+            <Route path="authentication_logs" element={<AuthLogs />} />
             <Route path="error_logs_deposits" element={<DepositsErrors />} />
             <Route
               path="error_logs_withdrawals"

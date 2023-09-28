@@ -186,6 +186,22 @@ export const ViewModal = ({
                       : t(`table.${sortItems[key.toLocaleLowerCase()]}`)}
                   </Descriptions.Item>
                 );
+
+                case "success":
+                  return (
+                    <Descriptions.Item
+                      key={key}
+                      label={t(`table.${key}`)}
+                      labelStyle={{
+                        maxWidth: "120px !important",
+                        margin: 0,
+                        padding: 0,
+                        textAlign: "center",
+                      }}
+                    >
+                      {t(`table.${sortItems[key]}`)}
+                    </Descriptions.Item>
+                  );
               case "flag_pep":
               case "flag_aux_gov":
               case "black_list":

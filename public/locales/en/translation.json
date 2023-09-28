@@ -115,7 +115,8 @@
     "aggregator_blacklist": "Blacklist",
     "aggregator_blacklist_blacklist": "Aggregator blacklist",
     "aggregator_blacklist_reasons": "Blacklist reasons",
-    "dashboard": "Dashboard"
+    "dashboard": "Dashboard",
+    "authentication_logs":"Authentication logs"
   },
 
   "titles": {
