@@ -270,6 +270,7 @@
     "deposit_bank": "Banco depósito",
     "withdraw_bank": "Banco saque",
     "cpf": "CPF",
+    "document": "CPF",
     "deposit_fee_type": "Tipo de taxa de depósito",
     "deposit_fee_plan": "Plano de taxa de depósito",
     "deposit_fee_percent": "Percentual de taxa de depósito",

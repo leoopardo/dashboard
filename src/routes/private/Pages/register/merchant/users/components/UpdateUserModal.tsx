@@ -194,6 +194,7 @@ export const UpdateUserModal = ({
           <Input
             size="large"
             name="username"
+            autoComplete="new-password"
             value={body.username}
             onChange={handleChangeUserBody}
           />
@@ -246,6 +247,7 @@ export const UpdateUserModal = ({
           <Input
             size="large"
             name="email"
+            autoComplete="new-password"
             value={body.cellphone}
             onChange={handleChangeUserBody}
           />
@@ -328,6 +330,7 @@ export const UpdateUserModal = ({
             type="password"
             size="large"
             name="password"
+            autoComplete="new-password"
             value={body.username}
             onChange={handleChangeUserBody}
           />

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { DeleteOutlined, MoreOutlined, PlusOutlined } from "@ant-design/icons";
+import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import { Grid } from "@mui/material";
 import { FiltersModal } from "@src/components/FiltersModal";
@@ -8,11 +8,10 @@ import { MutateModal } from "@src/components/Modals/mutateGenericModal";
 import { Toast } from "@src/components/Toast";
 import { useCreateSelfExclusion } from "@src/services/register/aggregator/selfExclusion/createSelfExclusion";
 import { useGetSelfExclusion } from "@src/services/register/aggregator/selfExclusion/getSelfExclusion";
-import { useCreatePersonBlacklistReason } from "@src/services/register/persons/blacklist/createReason";
 import { useDeletePersonReason } from "@src/services/register/persons/blacklist/deleteReason";
 import {
-  CreateSelfExclusion,
-  SelfExclusionQuery,
+    CreateSelfExclusion,
+    SelfExclusionQuery,
 } from "@src/services/types/register/aggregators/selfExclusion/getSelfExclusion";
 import { PersonBlacklistReasonsItem } from "@src/services/types/register/persons/blacklist/reasons.interface";
 import { Button } from "antd";

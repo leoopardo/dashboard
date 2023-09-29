@@ -144,7 +144,7 @@ function App() {
                     <Layout
                       style={{
                         padding: "0 24px 24px",
-                        minHeight: "92vh",
+                        minHeight: "94vh",
                       }}
                     >
                       <Content

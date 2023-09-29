@@ -28,6 +28,7 @@ import { MerchantSelect } from "../../Selects/merchantSelect";
 import { PartnerSelect } from "../../Selects/partnerSelect";
 import { StyleWrapperDatePicker } from "@src/components/FiltersModal/styles";
 import dayjs from "dayjs";
+import moment from "moment";
 const { RangePicker } = DatePicker;
 
 interface mutateProps {
@@ -177,8 +178,12 @@ export const MutateModal = ({
                       popupStyle={{ marginLeft: "40px" }}
                       showTime
                       value={[
-                        body?.start_date ? dayjs(body?.start_date) : null,
-                        body?.end_date ? dayjs(body?.end_date) : null,
+                        body?.start_date
+                          ? dayjs(body?.start_date).subtract(3, "hours")
+                          : null,
+                        body?.end_date
+                          ? dayjs(body?.end_date).subtract(3, "hours")
+                          : null,
                       ]}
                       clearIcon={<></>}
                       placeholder={[
@@ -190,10 +195,12 @@ export const MutateModal = ({
                         setBody((state: any) => ({
                           ...state,
                           start_date: startDate
-                            ? startDate.format("YYYY-MM-DDTHH:mm:00.000")
+                            ? moment(startDate)
+                                .add(3, "hours")
+                                .format("YYYY-MM-DDTHH:mm:00.000")
                             : null,
                           end_date: endDate
-                            ? endDate.format("YYYY-MM-DDTHH:mm:59.999")
+                            ? endDate.add(3, "hours").format("YYYY-MM-DDTHH:mm:59.999")
                             : null,
                         }));
                         formRef?.current?.validateFields();

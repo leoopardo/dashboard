@@ -242,6 +242,7 @@
     "deposit_bank": "Deposit bank",
     "withdraw_bank": "Withdraw bank",
     "cpf": "CPF",
+    "document": "CPF",
     "deposit_fee_type": "Deposit fee type",
     "deposit_fee_plan": "Deposit fee plan",
     "deposit_fee_percent": "Deposit fee percent",

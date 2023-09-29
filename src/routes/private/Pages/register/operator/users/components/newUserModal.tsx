@@ -80,7 +80,8 @@ export const NewUserModal = ({
       currentUser &&
       setUpdateBody &&
       setIsValidateTokenOpen &&
-      setCurrentUser && action === "update"
+      setCurrentUser &&
+      action === "update"
     ) {
       setUpdateBody(body);
       setCurrentUser(null);
@@ -126,7 +127,9 @@ export const NewUserModal = ({
         if (setCurrentUser) setCurrentUser(null);
       }}
       bodyStyle={{ overflowX: "hidden" }}
-      title={action === "update" ? t("buttons.update_user") : t("buttons.new_user")}
+      title={
+        action === "update" ? t("buttons.update_user") : t("buttons.new_user")
+      }
       footer={
         <Button
           loading={action === "update" ? updateLoading : isLoading}
@@ -191,6 +194,7 @@ export const NewUserModal = ({
           <Input
             size="large"
             name="username"
+            autoComplete="new-password"
             value={body.username}
             onChange={handleChangeUserBody}
           />
@@ -243,6 +247,7 @@ export const NewUserModal = ({
           <Input
             size="large"
             name="email"
+            autoComplete="new-password"
             value={body.cellphone}
             onChange={handleChangeUserBody}
           />
@@ -316,6 +321,7 @@ export const NewUserModal = ({
             type="password"
             size="large"
             name="password"
+            autoComplete="new-password"
             value={body.username}
             onChange={handleChangeUserBody}
           />
