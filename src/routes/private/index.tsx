@@ -78,6 +78,8 @@ import { AuthLogs } from "./Pages/support/apiLogs/AuthLogs";
 import { ImportBlacklist } from "./Pages/register/merchant/blacklist/importBlacklist";
 import { ImportPersonsBlacklist } from "./Pages/register/persons/blacklist/importBlacklist";
 import { PersonBlacklistUploads } from "./Pages/register/persons/blacklist/uploads";
+import { PersonBlacklistReasons } from "./Pages/register/persons/blacklist/blacklistReasons";
+import { AggregatorSelfExclusion } from "./Pages/register/aggregator/selfExclusion";
 
 export const PrivateRoutes = () => {
   return (
@@ -217,6 +219,10 @@ export const PrivateRoutes = () => {
           <Route path="aggregator">
             <Route path="aggregators" element={<Aggregators />} />
             <Route path="aggregator_users" element={<AggregatorUsers />} />
+            <Route
+              path="self_exclusion"
+              element={<AggregatorSelfExclusion />}
+            />
             <Route path="aggregator_blacklist">
               <Route
                 path="aggregator_blacklist_blacklist"
@@ -314,10 +320,15 @@ export const PrivateRoutes = () => {
               <Route
                 path="upload_person_blacklist"
                 element={<ImportPersonsBlacklist />}
-              /> <Route
-              path="person_blacklist_uploads"
-              element={<PersonBlacklistUploads />}
-            />
+              />{" "}
+              <Route
+                path="person_blacklist_uploads"
+                element={<PersonBlacklistUploads />}
+              />
+              <Route
+                path="person_blacklist_reasons"
+                element={<PersonBlacklistReasons />}
+              />
             </Route>
             <Route path="person_reports">
               <Route

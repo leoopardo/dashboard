@@ -73,7 +73,7 @@ export const UpdateUserModal = ({
       currentUser &&
       setUpdateBody &&
       setIsValidateTokenOpen &&
-      setCurrentUser
+      setCurrentUser && action === "update"
     ) {
       setUpdateBody(body);
       setCurrentUser(null);
@@ -94,7 +94,7 @@ export const UpdateUserModal = ({
   }, [responseValidate]);
 
   useEffect(() => {
-    if (currentUser)
+    if (currentUser && action === "update")
       setBody((state) => ({
         ...state,
         name: currentUser.name,
@@ -129,16 +129,16 @@ export const UpdateUserModal = ({
         if (setCurrentUser) setCurrentUser(null);
       }}
       bodyStyle={{ overflowX: "hidden" }}
-      title={currentUser ? t("buttons.update_user") : t("buttons.new_user")}
+      title={action === "update" ? t("buttons.update_user") : t("buttons.new_user")}
       footer={
         <Button
-          loading={currentUser ? updateIsLoading : isLoading}
+          loading={action === "update" ? updateIsLoading : isLoading}
           type="primary"
           style={{ width: "100%" }}
           size="large"
           onClick={() => submitRef.current?.click()}
         >
-          {currentUser ? t("buttons.update") : t("buttons.create")}
+          {action === "update" ? t("buttons.update") : t("buttons.create")}
         </Button>
       }
     >
@@ -146,16 +146,18 @@ export const UpdateUserModal = ({
         ref={formRef}
         layout="vertical"
         initialValues={
-          currentUser ?? {
-            name: "",
-            username: "",
-            password: "",
-            group_id: 0,
-            status: true,
-            type: 2,
-          }
+          action === "create"
+            ? {}
+            : currentUser ?? {
+                name: "",
+                username: "",
+                password: "",
+                group_id: 0,
+                status: true,
+                type: 2,
+              }
         }
-        disabled={currentUser ? updateIsLoading : isLoading}
+        disabled={action === "update" ? updateIsLoading : isLoading}
         onFinish={CreateUser}
       >
         <Form.Item

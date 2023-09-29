@@ -1,10 +1,11 @@
-import { ReloadOutlined } from "@ant-design/icons";
+import { InfoCircleFilled, ReloadOutlined } from "@ant-design/icons";
 import { useGetBankBalance } from "@src/services/consult/organization/bankBalance/getBankBalance";
 import { BankItem } from "@src/services/types/banks.interface";
 import { defaultTheme } from "@src/styles/defaultTheme";
 import { Card, Col, Spin, Statistic, Tooltip, Typography } from "antd";
 import { motion } from "framer-motion";
 import moment from "moment";
+import { useTranslation } from "react-i18next";
 
 interface BankcardInterface {
   bank?: BankItem;
@@ -18,7 +19,7 @@ export const BankCard = ({ bank }: BankcardInterface) => {
     refetchOrganizationBankBalance,
   } = useGetBankBalance({ bank: bank?.bank?.toLocaleLowerCase() });
 
-  console.log(OrganizationBankBalance);
+  const { t } = useTranslation();
 
   return (
     <>
@@ -95,24 +96,35 @@ export const BankCard = ({ bank }: BankcardInterface) => {
                       {bank?.label_name}
                     </Typography.Title>
                   </Tooltip>
-
-                  <Typography.Text
-                    mark={
-                      moment(new Date()).format("YYYY-MM-DDTHH:mm:00.000") >
-                      moment(new Date(OrganizationBankBalance?.date_checked))
-                        .add(20, "minutes")
-                        .format("YYYY-MM-DDTHH:mm:00.000")
-                    }
-                    style={{ color: "#d6d6d6", fontSize: "12px" }}
-                  >
-                    {moment(
-                      new Date(OrganizationBankBalance?.date_checked)
-                    ).format(
-                      navigator.language === "pt-BR"
-                        ? "DD/MM/YYYY HH:mm"
-                        : "YYYY/MM/DD HH:mm"
-                    )}
-                  </Typography.Text>
+                  <div style={{ display: "flex" }}>
+                    <Typography.Text
+                      mark={
+                        moment(new Date()).format("YYYY-MM-DDTHH:mm:00.000") >
+                        moment(new Date(OrganizationBankBalance?.date_checked))
+                          .add(20, "minutes")
+                          .format("YYYY-MM-DDTHH:mm:00.000")
+                      }
+                      style={{ color: "#d6d6d6", fontSize: "12px" }}
+                    >
+                      {moment(
+                        new Date(OrganizationBankBalance?.date_checked)
+                      ).format(
+                        navigator.language === "pt-BR"
+                          ? "DD/MM/YYYY HH:mm"
+                          : "YYYY/MM/DD HH:mm"
+                      )}
+                      {moment(new Date()).format("YYYY-MM-DDTHH:mm:00.000") >
+                        moment(new Date(OrganizationBankBalance?.date_checked))
+                          .add(20, "minutes")
+                          .format("YYYY-MM-DDTHH:mm:00.000") && (
+                        <Tooltip title={t("messages.20_minutes_consult")}>
+                          <InfoCircleFilled
+                            style={{ marginLeft: 5, paddingRight: 5 }}
+                          />
+                        </Tooltip>
+                      )}
+                    </Typography.Text>
+                  </div>
                 </div>
               </motion.div>
             }

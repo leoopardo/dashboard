@@ -106,8 +106,8 @@ export const MerchantFeePlans = () => {
         </Grid>
         <Grid item xs={12} md={6} lg={8}>
           <FilterChips
-            startDateKeyName="initial_date"
-            endDateKeyName="final_date"
+            startDateKeyName="start_date"
+            endDateKeyName="end_date"
             query={query}
             setQuery={setQuery}
              

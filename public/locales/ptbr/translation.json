@@ -121,7 +121,8 @@
     "import_merchant_blacklist": "Importar blacklist",
     "upload_person_blacklist": "Importar blacklist",
     "person_blacklist_uploads": "Verificar uploads",
-    "person_blacklist_reasons": "Motivos de blacklist"
+    "person_blacklist_reasons": "Motivos de blacklist",
+    "self_exclusion": "Auto exclusão"
   },
 
   "titles": {
@@ -162,7 +163,8 @@
     "creating_csv": "Gerando CSV",
     "creating_csv_message": "O arquivo CSV está sendo sendo gerado. Você pode acompanhar o processamento navegando para:",
     "export_csv": "Gerar relatório CSV",
-    "no_records_to_export": "Não há registros para gerar um CSV"
+    "no_records_to_export": "Não há registros para gerar um CSV",
+    "20_minutes_consult": "Consulta realizada a mais de 20 minutos"
   },
   "login": {
     "sign_in": "Faça login",
@@ -194,7 +196,8 @@
     "new_fee": "Criar taxa",
     "add_fee": "Adicionar taxa",
     "new_reason": "Novo motivo",
-    "sample_file": "arquivo exemplo"
+    "sample_file": "arquivo exemplo",
+    "create_self_exclusion": "Criar auto exclusão"
   },
   "modal": {
     "confirm": "Confirmar",
@@ -413,6 +416,7 @@
     "active": "Ativo",
     "inactive": "Inativo",
     "organization_id": "ID da organização",
+    "organization": "Organização",
     "icon_url": "Logo",
     "label_name": "Nome do banco",
     "priority": "Prioridade",
@@ -586,7 +590,10 @@
     "failed_rows": "Linhas com erro",
     "created_by_ip": "Ip do criador",
     "WAITING": "Aguardando",
-    "created_by": "Criado por"
+    "created_by": "Criado por",
+    "reason_name": "Motivo",
+    "start_date": "Data inicial",
+    "end_date": "Data final"
   },
   "actions": {
     "details": "Detalhes",

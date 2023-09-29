@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { PieChartOutlined, SmallDashOutlined } from "@ant-design/icons";
+import { useTheme } from "@src/contexts/ThemeContext";
 import { useGetTotalGeneratedDeposits } from "@src/services/consult/deposits/generatedDeposits/getTotal";
 import { generatedDepositTotalQuery } from "@src/services/types/consult/deposits/generatedDeposits.interface";
 import { Button, Card, Col, Empty, Row, Spin, Typography } from "antd";
@@ -28,6 +29,7 @@ export const ChartIn = ({ query }: ChartInInterface) => {
 
   const { depositsTotal, isDepositsTotalFetching, refetchDepositsTotal } =
     useGetTotalGeneratedDeposits(formatedQuery);
+  const { theme } = useTheme();
 
   useEffect(() => {
     setFormatedQuery({
@@ -258,11 +260,26 @@ export const ChartIn = ({ query }: ChartInInterface) => {
                             labels: {
                               textAlign: "center",
                               usePointStyle: true,
+                              color: theme === "dark" ? "#fff" : "#000",
                             },
                           },
                         },
                       }}
                     />
+                    <Typography.Title
+                      level={5}
+                      style={{
+                        position: "absolute",
+                        top: 173,
+                        maxWidth: "110px",
+                        textAlign: "center",
+                      }}
+                    >
+                      {new Intl.NumberFormat("pt-BR", {
+                        style: "currency",
+                        currency: "BRL",
+                      }).format(depositsTotal?.transaction_value || 0)}
+                    </Typography.Title>
                   </Col>
                 ) : (
                   <>
@@ -282,6 +299,7 @@ export const ChartIn = ({ query }: ChartInInterface) => {
                               labels: {
                                 textAlign: "center",
                                 usePointStyle: true,
+                                color: theme === "dark" ? "#fff" : "#000",
                               },
                             },
                           },
@@ -304,6 +322,7 @@ export const ChartIn = ({ query }: ChartInInterface) => {
                               labels: {
                                 textAlign: "center",
                                 usePointStyle: true,
+                                color: theme === "dark" ? "#fff" : "#000",
                               },
                             },
                           },
@@ -326,6 +345,7 @@ export const ChartIn = ({ query }: ChartInInterface) => {
                               labels: {
                                 textAlign: "center",
                                 usePointStyle: true,
+                                color: theme === "dark" ? "#fff" : "#000",
                               },
                             },
                           },
@@ -349,6 +369,7 @@ export const ChartIn = ({ query }: ChartInInterface) => {
                                 textAlign: "center",
                                 usePointStyle: true,
                                 font: { size: 9 },
+                                color: theme === "dark" ? "#fff" : "#000",
                               },
                             },
                           },

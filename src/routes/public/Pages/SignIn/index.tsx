@@ -21,6 +21,7 @@ import {
   RoundedLock,
 } from "./styles";
 import { useTheme } from "@src/contexts/ThemeContext";
+import { motion } from "framer-motion";
 
 const Logo = import.meta.env.VITE_APP_LOGO;
 
@@ -68,10 +69,17 @@ export const Login = () => {
               : `linear-gradient(90deg, ${defaultTheme.colors.primary} 0%, ${defaultTheme.colors.secondary} 189.05%)`,
         }}
       >
-        <img
+        <motion.img
           src={Logo}
-          alt="logo"
-          style={{ width: "80%", maxWidth: "400px" }}
+          initial={{
+            opacity: 0,
+          }}
+          animate={{
+            opacity: 1,
+            transition: {
+              duration: 1,
+            }
+          }}style={{ width: "80%", maxWidth: "400px" }}
         />
       </HalfHover>
       <Grid

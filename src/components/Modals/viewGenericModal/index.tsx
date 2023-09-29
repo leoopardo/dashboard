@@ -80,7 +80,7 @@ export const ViewModal = ({
         email: item?.email,
         status: item?.status,
         aggregator: item?.aggregator?.name,
-        partner: item?.partner.name,
+        partner: item?.partner?.name,
         operator: item?.operator?.name,
         merchant: item?.merchant?.name,
         group: item?.permission_group?.name,

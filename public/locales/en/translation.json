@@ -120,7 +120,8 @@
     "import_merchant_blacklist": "Import blacklist",
     "upload_person_blacklist": "Import blacklist",
     "person_blacklist_uploads": "Check uploads",
-    "person_blacklist_reasons": "Blacklist reasons"
+    "person_blacklist_reasons": "Blacklist reasons",
+    "self_exclusion": "Self exclusion"
   },
 
   "titles": {
@@ -161,7 +162,8 @@
     "creating_csv": "Generating CSV",
     "creating_csv_message": "The CSV file is being generated. You can view the process by navigating to:",
     "export_csv": "Generate CSV report",
-    "no_records_to_export": "No records to export"
+    "no_records_to_export": "No records to export",
+    "20_minutes_consult": "The consultation has been ongoing for over 20 minutes."
   },
   "login": {
     "sign_in": "Sign in",
@@ -193,7 +195,8 @@
     "new_fee": "Create fee",
     "add_fee": "Add fee",
     "new_reason": "Novo motivo",
-    "sample_file": "sample file"
+    "sample_file": "sample file",
+    "create_self_exclusion": "Create self exclusion"
   },
   "input": {
     "required": "Please input the {{field}}",
@@ -415,6 +418,7 @@
     "active": "Ativo",
     "inactive": "Inativo",
     "organization_id": "Organization ID",
+    "organization": "Organization",
     "icon_url": "Logo",
     "label_name": "Bank name",
     "priority": "Priority",
@@ -585,7 +589,10 @@
     "failed_rows": "Failed rows",
     "created_by_ip": "Created by ip",
     "WAITING": "Waiting",
-    "created_by": "Created by"
+    "created_by": "Created by",
+    "reason_name": "Reason",
+    "start_date": "Start date",
+    "end_date": "End date"
   },
   "actions": {
     "details": "Details",

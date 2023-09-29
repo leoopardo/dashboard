@@ -228,6 +228,17 @@ export const SidebarNavigation = () => {
                   ? undefined
                   : "none",
               }
+            ),getItem(
+              "self_exclusion",
+              null,
+              null,
+              false,
+              (e) => handleNavigate(e?.keyPath),
+              {
+                display: permissions?.register?.aggregator?.self_exclusion?.menu
+                  ? undefined
+                  : "none",
+              }
             ),
             getItem(
               "aggregator_blacklist",

@@ -10,6 +10,8 @@ import {
   AutoComplete,
   Avatar,
   Button,
+  ConfigProvider,
+  DatePicker,
   Drawer,
   Empty,
   Form,
@@ -18,11 +20,15 @@ import {
   Select,
   Switch,
 } from "antd";
+import locale from "antd/locale/pt_BR";
 import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import ReactInputMask from "react-input-mask";
 import { MerchantSelect } from "../../Selects/merchantSelect";
 import { PartnerSelect } from "../../Selects/partnerSelect";
+import { StyleWrapperDatePicker } from "@src/components/FiltersModal/styles";
+import dayjs from "dayjs";
+const { RangePicker } = DatePicker;
 
 interface mutateProps {
   type: "create" | "update";
@@ -43,6 +49,7 @@ interface mutateProps {
   success: boolean;
   error: any;
   clear?: any;
+  submitText?: string;
 }
 
 export const MutateModal = ({
@@ -57,6 +64,7 @@ export const MutateModal = ({
   modalName,
   submitLoading,
   clear,
+  submitText,
 }: mutateProps) => {
   const { permissions } = queryClient.getQueryData(
     "validate"
@@ -101,6 +109,16 @@ export const MutateModal = ({
     }
   }, []);
 
+  const panelRender = (panelNode: any) => (
+    <StyleWrapperDatePicker>{panelNode}</StyleWrapperDatePicker>
+  );
+
+  useEffect(() => {
+    if (type === "create") {
+      setBody({});
+    }
+  }, [open]);
+
   return (
     <Drawer
       open={open}
@@ -119,7 +137,11 @@ export const MutateModal = ({
           size="large"
           onClick={() => submitRef.current?.click()}
         >
-          {type == "create" ? t("buttons.create") : t("buttons.update")}
+          {submitText
+            ? submitText
+            : type == "create"
+            ? t("buttons.create")
+            : t("buttons.update")}
         </Button>
       }
     >
@@ -135,6 +157,51 @@ export const MutateModal = ({
       >
         {fields.map((field) => {
           switch (field.label) {
+            case "date":
+              return (
+                <Form.Item
+                  label={t("table.date")}
+                  style={{ margin: 10 }}
+                  name="date"
+                  rules={[{ required: field.required }]}
+                >
+                  <ConfigProvider locale={locale}>
+                    <RangePicker
+                      size="large"
+                      panelRender={panelRender}
+                      format={
+                        navigator.language === "pt-BR"
+                          ? "DD/MM/YYYY HH:mm"
+                          : "YYYY/MM/DD HH:mm"
+                      }
+                      popupStyle={{ marginLeft: "40px" }}
+                      showTime
+                      value={[
+                        body?.start_date ? dayjs(body?.start_date) : null,
+                        body?.end_date ? dayjs(body?.end_date) : null,
+                      ]}
+                      clearIcon={<></>}
+                      placeholder={[
+                        t("table.initial_date"),
+                        t("table.final_date"),
+                      ]}
+                      onChange={(value: any) => {
+                        const [startDate, endDate] = value;
+                        setBody((state: any) => ({
+                          ...state,
+                          start_date: startDate
+                            ? startDate.format("YYYY-MM-DDTHH:mm:00.000")
+                            : null,
+                          end_date: endDate
+                            ? endDate.format("YYYY-MM-DDTHH:mm:59.999")
+                            : null,
+                        }));
+                        formRef?.current?.validateFields();
+                      }}
+                    />
+                  </ConfigProvider>
+                </Form.Item>
+              );
             case "merchant_id":
               if (permissions.register.merchant.merchant.merchant_list) {
                 return (
@@ -511,6 +578,31 @@ export const MutateModal = ({
                         country: option,
                       }));
                     }}
+                  />
+                </Form.Item>
+              );
+
+            case "person_reason":
+              return (
+                <Form.Item
+                  label={t(`table.reason`)}
+                  name="reason"
+                  style={{ margin: 10 }}
+                  rules={[
+                    {
+                      required: field.required,
+                      message:
+                        t("input.required", {
+                          field: t(`table.reason`),
+                        }) || "",
+                    },
+                  ]}
+                >
+                  <Input
+                    size="large"
+                    name="reason"
+                    value={body?.reason}
+                    onChange={handleChange}
                   />
                 </Form.Item>
               );

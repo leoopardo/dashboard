@@ -122,6 +122,14 @@ export interface ValidateInterface {
           menu: boolean;
           aggregator_config_update: boolean;
         };
+        self_exclusion: {
+          aggregator_self_exclusion_create: boolean;
+          aggregator_self_exclusion_delete: boolean;
+          aggregator_self_exclusion_export_csv: boolean;
+          aggregator_self_exclusion_list: boolean;
+          aggregator_self_exclusion_update: boolean;
+          menu: boolean;
+        };
       };
       operator: {
         menu: boolean;

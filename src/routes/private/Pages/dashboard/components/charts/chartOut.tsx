@@ -1,5 +1,5 @@
 import { PieChartOutlined, SmallDashOutlined } from "@ant-design/icons";
-import { useGetTotalGeneratedDeposits } from "@src/services/consult/deposits/generatedDeposits/getTotal";
+import { useTheme } from "@src/contexts/ThemeContext";
 import { useGetTotalGeneratedWithdrawals } from "@src/services/consult/withdrawals/generatedWithdrawals/getTotal";
 import { generatedDepositTotalQuery } from "@src/services/types/consult/deposits/generatedDeposits.interface";
 import { Button, Card, Col, Empty, Row, Spin, Typography } from "antd";
@@ -16,21 +16,17 @@ export const ChartOut = ({ query }: ChartInInterface) => {
   const { t } = useTranslation();
   const [oneByOne, setOneByOne] = useState<boolean>(false);
   const isMobile = useMediaQuery({ maxWidth: "750px" });
-  const [formatedQuery, setFormatedQuery] =
-    useState<generatedDepositTotalQuery>({
-      ...query,
-      start_date: undefined,
-      end_date: undefined,
-      initial_date: query?.start_date,
-      final_date: query?.end_date,
-    });
+  const [, setFormatedQuery] = useState<generatedDepositTotalQuery>({
+    ...query,
+    start_date: undefined,
+    end_date: undefined,
+    initial_date: query?.start_date,
+    final_date: query?.end_date,
+  });
 
-  const {
-    WithdrawalsTotal,
-    WithdrawalsTotalError,
-    isWithdrawalsTotalFetching,
-    refetchWithdrawalsTotal,
-  } = useGetTotalGeneratedWithdrawals(query);
+  const { WithdrawalsTotal, isWithdrawalsTotalFetching } =
+    useGetTotalGeneratedWithdrawals(query);
+  const { theme } = useTheme();
 
   useEffect(() => {
     setFormatedQuery({
@@ -220,7 +216,8 @@ export const ChartOut = ({ query }: ChartInInterface) => {
               {oneByOne ? <PieChartOutlined /> : <SmallDashOutlined />}
             </Button>
           </div>
-        } bodyStyle={{
+        }
+        bodyStyle={{
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -256,11 +253,26 @@ export const ChartOut = ({ query }: ChartInInterface) => {
                             labels: {
                               textAlign: "center",
                               usePointStyle: true,
+                              color: theme === "dark" ? "#fff" : "#000",
                             },
                           },
                         },
                       }}
                     />
+                    <Typography.Title
+                      level={5}
+                      style={{
+                        position: "absolute",
+                        top: 173,
+                        maxWidth: "110px",
+                        textAlign: "center",
+                      }}
+                    >
+                      {new Intl.NumberFormat("pt-BR", {
+                        style: "currency",
+                        currency: "BRL",
+                      }).format(WithdrawalsTotal?.transaction_value || 0)}
+                    </Typography.Title>
                   </Col>
                 ) : (
                   <>
@@ -280,6 +292,7 @@ export const ChartOut = ({ query }: ChartInInterface) => {
                               labels: {
                                 textAlign: "center",
                                 usePointStyle: true,
+                                color: theme === "dark" ? "#fff" : "#000",
                               },
                             },
                           },
@@ -302,6 +315,7 @@ export const ChartOut = ({ query }: ChartInInterface) => {
                               labels: {
                                 textAlign: "center",
                                 usePointStyle: true,
+                                color: theme === "dark" ? "#fff" : "#000",
                               },
                             },
                           },
@@ -324,6 +338,7 @@ export const ChartOut = ({ query }: ChartInInterface) => {
                               labels: {
                                 textAlign: "center",
                                 usePointStyle: true,
+                                color: theme === "dark" ? "#fff" : "#000",
                               },
                             },
                           },
@@ -347,6 +362,7 @@ export const ChartOut = ({ query }: ChartInInterface) => {
                                 textAlign: "center",
                                 usePointStyle: true,
                                 font: { size: 9 },
+                                color: theme === "dark" ? "#fff" : "#000",
                               },
                             },
                           },
