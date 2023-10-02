@@ -775,11 +775,13 @@ export const CustomTable = (props: TableProps) => {
               }}
               sortDirections={["ascend", "descend"]}
               dataSource={
-                props.loading
-                  ? undefined
+                !props?.items
+                  ? []
+                  : props.loading
+                  ? []
                   : props?.error
-                  ? undefined
-                  : sanitazerData(props?.items) ?? undefined
+                  ? []
+                  : sanitazerData(props?.items) ?? []
               }
               rowSelection={
                 props?.checkbox
