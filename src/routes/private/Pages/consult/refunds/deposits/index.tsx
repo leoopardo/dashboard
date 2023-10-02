@@ -15,25 +15,39 @@ import { FiltersModal } from "../../../../../../components/FiltersModal";
 import { FilterChips } from "../../../../../../components/FiltersModal/filterChips";
 import { useGetRowsRefundDeposits } from "../../../../../../services/consult/refund/refundDeposits/getRows";
 import { useGetTotalRefundDeposits } from "../../../../../../services/consult/refund/refundDeposits/getTotal";
-import { refundDepositsQuery } from "../../../../../../services/types/consult/refunds/refundsDeposits.interface";
+import {
+  refundDepositRowsItems,
+  refundDepositsQuery,
+} from "../../../../../../services/types/consult/refunds/refundsDeposits.interface";
 import useDebounce from "../../../../../../utils/useDebounce";
 import { ViewModal } from "../components/ViewModal";
 import { TotalizersCards } from "./components/TotalizersCards";
-import { EyeFilled } from "@ant-design/icons";
+import { EyeFilled, ShopOutlined } from "@ant-design/icons";
+import { queryClient } from "@src/services/queryClient";
+import { ValidateInterface } from "@src/services/types/validate.interface";
+import { Confirmation } from "@src/components/Modals/confirmation";
+import { useCreateDepositrefund } from "@src/services/consult/refund/refundDeposits/createRefund";
+import { Toast } from "@src/components/Toast";
+import { useUpatePayToMerchant } from "@src/services/consult/refund/refundDeposits/updaterefundToMerchant";
 
 const INITIAL_QUERY: refundDepositsQuery = {
   page: 1,
   limit: 25,
   start_date: moment(new Date())
-    .startOf("day").add(3, "hours")
+    .startOf("day")
+    .add(3, "hours")
     .format("YYYY-MM-DDTHH:mm:ss.SSS"),
   end_date: moment(new Date())
     .add(1, "day")
-    .startOf("day").add(3, "hours")
+    .startOf("day")
+    .add(3, "hours")
     .format("YYYY-MM-DDTHH:mm:ss.SSS"),
 };
 
 export const RefundDeposits = () => {
+  const { permissions } = queryClient.getQueryData(
+    "validate"
+  ) as ValidateInterface;
   const { t } = useTranslation();
   const [query, setQuery] = useState<refundDepositsQuery>(INITIAL_QUERY);
   const {
@@ -54,11 +68,26 @@ export const RefundDeposits = () => {
   }, [query]);
 
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
-  const [currentItem, setCurrentItem] = useState<any>();
+  const [isRefundModalOpen, setIsRefundModalOpen] = useState<boolean>(false);
+  const [isPayToMerchantModalOpen, setIsPayToMerchantModalOpen] =
+    useState<boolean>(false);
+  const [currentItem, setCurrentItem] =
+    useState<refundDepositRowsItems | null>();
   const [searchOption, setSearchOption] = useState<string | null>(null);
   const [search, setSearch] = useState<string | null>(null);
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const debounceSearch = useDebounce(search);
+
+  const { error, isLoading, isSuccess, mutate } = useCreateDepositrefund(
+    currentItem?._id
+  );
+
+  const {
+    payToMerchantIsLoading,
+    payToMerchantSuccess,
+    payToMerchanterror,
+    payToMerchantMutate,
+  } = useUpatePayToMerchant(currentItem?._id);
 
   const columns: ColumnInterface[] = [
     { name: "pix_id", type: "id" },
@@ -214,11 +243,22 @@ export const RefundDeposits = () => {
                 icon: <EyeFilled style={{ fontSize: "18px" }} />,
                 onClick: () => setIsViewModalOpen(true),
               },
-              {
+              permissions?.report?.chargeback?.deposit_chargeback
+                ?.report_chargeback_deposit_chargeback_refund && {
                 label: "refund",
                 icon: <ReplayIcon style={{ fontSize: "18px" }} />,
-                onClick: () => setIsViewModalOpen(true),
-                disabled: (item) => !["WAITING", "ERROR"].includes(item?.status),
+                onClick: () => setIsRefundModalOpen(true),
+                disabled: (item) =>
+                  !["WAITING", "ERROR"].includes(item?.status),
+              },
+
+            permissions?.report?.chargeback?.deposit_chargeback
+                ?.report_chargeback_deposit_chargeback_paid_to_merchant && {
+                label: "pay_to_merchant",
+                icon: <ShopOutlined style={{ fontSize: "18px" }} />,
+                onClick: () => setIsPayToMerchantModalOpen(true),
+                disabled: (item) =>
+                  !["WAITING", "ERROR"].includes(item?.status),
               },
             ]}
             removeTotal
@@ -226,11 +266,39 @@ export const RefundDeposits = () => {
           />
         </Grid>
       </Grid>
+
+      {isRefundModalOpen && (
+        <Confirmation
+          open={isRefundModalOpen}
+          setOpen={setIsRefundModalOpen}
+          submit={mutate}
+          title={t("actions.refund")}
+          description={`${t("messages.are_you_sure", {
+            action: t("actions.refund").toLocaleLowerCase(),
+            itens: currentItem?._id,
+          })}`}
+          loading={isLoading}
+        />
+      )}
+      {isPayToMerchantModalOpen && (
+        <Confirmation
+          open={isPayToMerchantModalOpen}
+          setOpen={setIsPayToMerchantModalOpen}
+          submit={payToMerchantMutate}
+          title={t("actions.pay_to_merchant")}
+          description={`${t("messages.are_you_sure", {
+            action: t("actions.pay_to_merchant").toLocaleLowerCase(),
+            itens: currentItem?._id,
+          })}`}
+          loading={isLoading}
+        />
+      )}
       {isViewModalOpen && (
         <ViewModal
           open={isViewModalOpen}
           setOpen={setIsViewModalOpen}
           item={currentItem}
+          type="Refund"
         />
       )}
       {isFiltersOpen && (
@@ -273,6 +341,19 @@ export const RefundDeposits = () => {
           initialQuery={INITIAL_QUERY}
         />
       )}
+
+      <Toast
+        actionError={t("messages.refund")}
+        actionSuccess={t("messages.refunded")}
+        error={error}
+        success={isSuccess}
+      />
+        <Toast
+        actionError={t("messages.refund")}
+        actionSuccess={t("messages.refunded")}
+        error={payToMerchanterror}
+        success={payToMerchantSuccess}
+      />
     </Grid>
   );
 };

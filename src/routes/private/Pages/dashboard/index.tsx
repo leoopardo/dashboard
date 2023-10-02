@@ -52,16 +52,26 @@ export const Dashboard = () => {
   return (
     <Row style={{ padding: 20 }}>
       <Col span={24}>
-        {permissions.report.paybrokers.balance
-          .report_paybrokers_balance_list && <OrganizationBalance />}
+        {permissions?.report?.paybrokers?.balance
+          ?.report_paybrokers_balance_list && <OrganizationBalance />}
       </Col>
       <Col span={24}>
-        {permissions.report.merchant.balance.report_merchant_balance_list && (
+        {permissions?.report?.merchant?.balance?.report_merchant_balance_list && (
           <MerchantBalance />
         )}
       </Col>
 
-      <Col span={24} style={{ marginTop: 40, padding: 15 }}>
+      <Col
+        span={24}
+        style={{
+          marginTop:
+            permissions?.report?.merchant?.balance?.report_merchant_balance_list ||
+            permissions?.report?.paybrokers?.balance?.report_paybrokers_balance_list
+              ? 40
+              : 0,
+          padding: 15,
+        }}
+      >
         {permissions?.report?.paybrokers?.bank_balance?.menu && (
           <Row gutter={[4, 4]} align="middle">
             <Row style={{ width: "100%", marginBottom: 16 }} gutter={[16, 16]}>
@@ -133,7 +143,7 @@ export const Dashboard = () => {
           </Row>
         )}
 
-        <Row style={{ marginTop: 16 }}>
+        <Row style={{ marginTop:permissions?.report?.paybrokers?.bank_balance?.menu ? 16 : -65 }}>
           <Layout
             style={{
               width: "100%",

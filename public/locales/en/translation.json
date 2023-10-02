@@ -155,6 +155,8 @@
     "delete": "Delete",
     "checked": "Checked",
     "check": "Check",
+    "refunded": "Refunded",
+    "refund": "refund",
     "upload_label": "Click or drag file to this area to upload",
     "upload_description": "Support for a single upload. Files types: pdf, png and docx.",
     "min_value_higher_then_zero": "The value of this field must be greater than 0",
@@ -594,7 +596,8 @@
     "created_by": "Created by",
     "reason_name": "Reason",
     "start_date": "Start date",
-    "end_date": "End date"
+    "end_date": "End date",
+    "origin_transaction": "Orignin transaction"
   },
   "actions": {
     "details": "Details",
@@ -603,7 +606,9 @@
     "configs": "Configuration",
     "delete": "Delete",
     "check": "Check",
-    "download": "Download"
+    "download": "Download",
+    "refund": "refund",
+    "pay_to_merchant": "Pay merchant"
   },
   "error": {
     "400": "Any records found.",

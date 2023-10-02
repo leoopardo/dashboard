@@ -513,6 +513,7 @@ export const CustomTable = (props: TableProps) => {
               render: (_a: any, record: any) => (
                 <div style={{ width: "100%", textAlign: "center" }}>
                   <Dropdown
+                    trigger={["click"]}
                     key={column?.name}
                     menu={{
                       items: actions.map((action: actionsInterface) => {

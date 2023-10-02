@@ -152,6 +152,8 @@
     "yes_create": "Sim, criar",
     "uploaded": "Upload realizado",
     "upload": "subir",
+    "refunded": "Reembolsado",
+    "refund": "reembolsar",
     "deleted": "Deletado",
     "delete": "Deletar",
     "checked": "Dhecado",
@@ -595,7 +597,8 @@
     "created_by": "Criado por",
     "reason_name": "Motivo",
     "start_date": "Data inicial",
-    "end_date": "Data final"
+    "end_date": "Data final",
+    "origin_transaction": "Transação de origem"
   },
   "actions": {
     "details": "Detalhes",
@@ -604,7 +607,9 @@
     "configs": "Configurações",
     "delete": "Deletar",
     "check": "Checar",
-    "download": "Baixar"
+    "download": "Baixar",
+    "refund": "Reembolsar",
+    "pay_to_merchant": "Pagar empresa"
   },
   "error": {
     "400": "Nenhum dado encontrado.",
