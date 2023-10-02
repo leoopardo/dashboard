@@ -24,7 +24,7 @@ export const BankCard = ({ bank }: BankcardInterface) => {
   return (
     <>
       {OrganizationBankBalance && !OrganizationBankBalanceError && (
-        <Col xs={{ span: 24 }} md={{ span: 4 }}>
+        <Col xs={{ span: 24 }} md={{ span: 8 }} lg={{span: 4}}>
           <Card
             loading={isOrganizationBankBalanceFetching}
             headStyle={{ padding: 0 }}

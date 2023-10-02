@@ -121,7 +121,8 @@
     "upload_person_blacklist": "Import blacklist",
     "person_blacklist_uploads": "Check uploads",
     "person_blacklist_reasons": "Blacklist reasons",
-    "self_exclusion": "Self exclusion"
+    "self_exclusion": "Self exclusion",
+    "self_exclusion_reports": "Self exclusion reports"
   },
 
   "titles": {

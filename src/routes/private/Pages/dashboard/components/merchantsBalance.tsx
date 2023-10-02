@@ -1,12 +1,19 @@
 import { CustomTable } from "@src/components/CustomTable";
 import { useGetMerchantBalance } from "@src/services/consult/merchant/balance/getMerchantBalance";
+import { MerchantBalanceQuery } from "@src/services/types/consult/merchant/balance";
 import { Col, Divider, Typography } from "antd";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 export const MerchantsBalance = () => {
   const { t } = useTranslation();
-  const { MerchantBalance, isMerchantBalanceFetching } = useGetMerchantBalance({ limit: 25, page: 1 });
-
+  const INITIAL_QUERY: MerchantBalanceQuery = {
+    page: 1,
+    limit: 25,
+  };
+  const [query, setQuery] = useState<MerchantBalanceQuery>(INITIAL_QUERY);
+  const { MerchantBalance, isMerchantBalanceFetching } =
+    useGetMerchantBalance(query);
   return (
     <Col span={24}>
       <Divider orientation="left">
@@ -15,13 +22,11 @@ export const MerchantsBalance = () => {
         </Typography.Title>
       </Divider>
       <CustomTable
-        query={{}}
+        query={query}
         setCurrentItem={() => {
           return;
         }}
-        setQuery={() => {
-          return;
-        }}
+        setQuery={setQuery}
         actions={[]}
         data={MerchantBalance}
         loading={isMerchantBalanceFetching}

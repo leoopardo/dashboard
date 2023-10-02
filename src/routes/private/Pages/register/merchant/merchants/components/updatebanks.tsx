@@ -4,6 +4,7 @@ import { Toast } from "@src/components/Toast";
 import { useListBanks } from "@src/services/bank/listBanks";
 import { useUpdateBankConfig } from "@src/services/register/merchant/merchant/bankConfig/updateBankConfig";
 import { IMerchantBankUpdate } from "@src/services/types/register/merchants/merchantBankConfig.interface";
+import { MerchantsItem } from "@src/services/types/register/merchants/merchantsRegister.interface";
 import { Avatar, Button, Drawer, Form, Radio, Select } from "antd";
 import { FormInstance } from "antd/lib/form/Form";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
@@ -13,9 +14,10 @@ import { useTranslation } from "react-i18next";
 interface UpdateBanksInterface {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
+  items: MerchantsItem[] | null;
 }
 
-export const UpdateBanks = ({ open, setOpen }: UpdateBanksInterface) => {
+export const UpdateBanks = ({ open, setOpen, items }: UpdateBanksInterface) => {
   const { t } = useTranslation();
   const formRef = useRef<FormInstance>(null);
   const submitRef = useRef<HTMLButtonElement>(null);
@@ -27,7 +29,10 @@ export const UpdateBanks = ({ open, setOpen }: UpdateBanksInterface) => {
     reset,
     UpdateBankIsSuccess,
     UpdateBankError,
-  } = useUpdateBankConfig(body);
+  } = useUpdateBankConfig({
+    ...body,
+    merchants_ids: items?.map((merchant) => merchant?.id),
+  });
   const [all, setAll] = useState<"all" | "partner">("all");
 
   useEffect(() => {
@@ -132,7 +137,7 @@ export const UpdateBanks = ({ open, setOpen }: UpdateBanksInterface) => {
                 }) ?? []
               }
               onChange={(value) =>
-                setBody((state) => ({ ...state, cash_in_bank: value }))
+                setBody((state) => ({ ...state, cash_out_bank: value }))
               }
             />
           </Form.Item>

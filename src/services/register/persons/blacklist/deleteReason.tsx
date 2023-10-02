@@ -4,7 +4,7 @@ import { useMutation } from "react-query";
 
 export function useDeletePersonReason(id?: string) {
   const { isLoading, error, mutate, isSuccess } = useMutation<null | undefined>(
-    "deleteMerchantsFeePlans",
+    "deletePersonReason",
     async () => {
       const response = await api.delete(`customer/blacklist-reason/${id}`, {});
       await queryClient.refetchQueries({ queryKey: ["PersonBlacklistReasons"] });

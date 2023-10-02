@@ -4,16 +4,20 @@ import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import { Grid } from "@mui/material";
 import { FiltersModal } from "@src/components/FiltersModal";
 import { FilterChips } from "@src/components/FiltersModal/filterChips";
+import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
 import { Toast } from "@src/components/Toast";
+import { queryClient } from "@src/services/queryClient";
 import { useCreateSelfExclusion } from "@src/services/register/aggregator/selfExclusion/createSelfExclusion";
+import { useDeleteSelfExclusion } from "@src/services/register/aggregator/selfExclusion/deleteSelfExclusion";
 import { useGetSelfExclusion } from "@src/services/register/aggregator/selfExclusion/getSelfExclusion";
-import { useDeletePersonReason } from "@src/services/register/persons/blacklist/deleteReason";
+import { useCreateSelfExclusionReports } from "@src/services/reports/register/aggregators/createSelfExclusionReports";
 import {
-    CreateSelfExclusion,
-    SelfExclusionQuery,
+  CreateSelfExclusion,
+  SelfExclusionItem,
+  SelfExclusionQuery,
 } from "@src/services/types/register/aggregators/selfExclusion/getSelfExclusion";
-import { PersonBlacklistReasonsItem } from "@src/services/types/register/persons/blacklist/reasons.interface";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 import { Button } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
@@ -25,6 +29,9 @@ const INITIAL_QUERY: SelfExclusionQuery = {
 };
 
 export const AggregatorSelfExclusion = () => {
+  const { permissions } = queryClient.getQueryData(
+    "validate"
+  ) as ValidateInterface;
   const [query, setQuery] = useState<SelfExclusionQuery>(INITIAL_QUERY);
   const { t } = useTranslation();
   const {
@@ -33,6 +40,13 @@ export const AggregatorSelfExclusion = () => {
     SelfExclusionDataError,
     refetchSelfExclusionData,
   } = useGetSelfExclusion(query);
+
+  const {
+    SelfExclusionReportsError,
+    SelfExclusionReportsIsLoading,
+    SelfExclusionReportsIsSuccess,
+    SelfExclusionReportsMutate,
+  } = useCreateSelfExclusionReports(query);
 
   const [isCreateSelfExclusionOpen, setIsCreateSelfExclusionOpen] =
     useState(false);
@@ -48,16 +62,17 @@ export const AggregatorSelfExclusion = () => {
       .format("YYYY-MM-DDTHH:mm:ss.SSS"),
   };
   const [body, setBody] = useState<CreateSelfExclusion>(initialBody);
-  const [currentItem, setCurrentItem] =
-    useState<PersonBlacklistReasonsItem | null>(null);
+  const [currentItem, setCurrentItem] = useState<SelfExclusionItem | null>(
+    null
+  );
   const { error, isLoading, isSuccess, mutate } = useCreateSelfExclusion(body);
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false);
   const {
-    deletePersonReasonError,
-    deletePersonReasonIsSuccess,
-    deletePersonReasonMutate,
-  } = useDeletePersonReason(currentItem?.id);
+    deleteSelfExclusionError,
+    deleteSelfExclusionIsSuccess,
+    deleteSelfExclusionMutate,
+  } = useDeleteSelfExclusion(currentItem?._id);
 
   const columns: ColumnInterface[] = [
     { name: "document", type: "document" },
@@ -97,31 +112,48 @@ export const AggregatorSelfExclusion = () => {
             {t("table.filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={6} lg={8}>
+        <Grid item xs={12} md={6} lg={7}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
             query={query}
             setQuery={setQuery}
           />
-        </Grid>{" "}
-        <Grid item xs={12} md={4} lg={2}>
-          <Button
-            size="large"
-            style={{
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-            loading={isSelfExclusionDataFetching}
-            type="default"
-            onClick={() => setIsCreateSelfExclusionOpen(true)}
-          >
-            <PlusOutlined style={{ fontSize: 20 }} />{" "}
-            {t("buttons.create_self_exclusion")}
-          </Button>
         </Grid>
+        {permissions.register.aggregator.self_exclusion
+          .aggregator_self_exclusion_create && (
+          <Grid item xs={12} md={4} lg={2}>
+            <Button
+              size="large"
+              style={{
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+              loading={isSelfExclusionDataFetching}
+              type="default"
+              onClick={() => setIsCreateSelfExclusionOpen(true)}
+            >
+              <PlusOutlined style={{ fontSize: 20 }} />{" "}
+              {t("buttons.create_self_exclusion")}
+            </Button>
+          </Grid>
+        )}
+
+        {permissions.register.aggregator.self_exclusion
+          .aggregator_self_exclusion_export_csv && (
+          <Grid item xs={12} md={1}>
+            <ExportReportsModal
+              disabled={!SelfExclusionData?.total || SelfExclusionDataError}
+              mutateReport={() => SelfExclusionReportsMutate()}
+              error={SelfExclusionReportsError}
+              success={SelfExclusionReportsIsSuccess}
+              loading={SelfExclusionReportsIsLoading}
+              reportPath="/register/aggregator/aggregator_reports/self_exclusion_reports"
+            />
+          </Grid>
+        )}
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -145,8 +177,8 @@ export const AggregatorSelfExclusion = () => {
             ]}
             isConfirmOpen={isDeleteOpen}
             setIsConfirmOpen={setIsDeleteOpen}
-            itemToAction={currentItem?.reason}
-            onConfirmAction={() => deletePersonReasonMutate()}
+            itemToAction={currentItem?.document}
+            onConfirmAction={() => deleteSelfExclusionMutate()}
           />
         </Grid>
       </Grid>
@@ -195,8 +227,8 @@ export const AggregatorSelfExclusion = () => {
       <Toast
         actionError={t("messages.delete").toLowerCase()}
         actionSuccess={t("messages.deleted")}
-        error={deletePersonReasonError}
-        success={deletePersonReasonIsSuccess}
+        error={deleteSelfExclusionError}
+        success={deleteSelfExclusionIsSuccess}
       />
     </Grid>
   );
