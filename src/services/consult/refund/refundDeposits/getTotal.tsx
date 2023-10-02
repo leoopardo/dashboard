@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import moment from "moment";
 import { useEffect, useState } from "react";
 import { api } from "../../../../config/api";
 import {
@@ -17,15 +16,7 @@ export function useGetTotalRefundDeposits(params: refundDepositsQuery) {
     try {
       setIsFetching(true);
       const response = await api.get("refund/pix/total", {
-        params: {
-          ...params,
-          start_date: moment(params.start_date)
-            .add(3, "hours")
-            .format("YYYY-MM-DDTHH:mm:ss.SSS"),
-          end_date: moment(params.end_date)
-            .add(3, "hours")
-            .format("YYYY-MM-DDTHH:mm:ss.SSS"),
-        },
+        params,
       });
       setData(response.data);
     } catch (error) {

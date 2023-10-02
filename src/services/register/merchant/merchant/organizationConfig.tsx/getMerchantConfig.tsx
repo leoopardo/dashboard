@@ -17,6 +17,7 @@ export function useOrganizationConfig(id?: string) {
         refetchInterval: false,
         refetchIntervalInBackground: false,
         refetchOnMount: false,
+        refetchOnWindowFocus: false
       }
     );
 

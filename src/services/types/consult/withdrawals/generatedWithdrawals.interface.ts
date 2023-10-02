@@ -59,7 +59,9 @@ export interface generatedWithdrawalsRowsQuery {
   value_end?: number;
   buyer_name?: string;
   payer_name?: string;
-  created_at?: boolean
+  created_at?: boolean;
+  fields?: any;
+  comma_separate_value?: boolean;
 }
 
 export interface generatedWithdrawalsTotal {

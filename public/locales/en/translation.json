@@ -114,7 +114,14 @@
     "organization_bank_balance": "Bank balance",
     "aggregator_blacklist": "Blacklist",
     "aggregator_blacklist_blacklist": "Aggregator blacklist",
-    "aggregator_blacklist_reasons": "Blacklist reasons"
+    "aggregator_blacklist_reasons": "Blacklist reasons",
+    "dashboard": "Dashboard",
+    "authentication_logs": "Authentication logs",
+    "import_merchant_blacklist": "Import blacklist",
+    "upload_person_blacklist": "Import blacklist",
+    "person_blacklist_uploads": "Check uploads",
+    "person_blacklist_reasons": "Blacklist reasons",
+    "self_exclusion": "Self exclusion"
   },
 
   "titles": {
@@ -155,7 +162,8 @@
     "creating_csv": "Generating CSV",
     "creating_csv_message": "The CSV file is being generated. You can view the process by navigating to:",
     "export_csv": "Generate CSV report",
-    "no_records_to_export": "No records to export"
+    "no_records_to_export": "No records to export",
+    "20_minutes_consult": "The consultation has been ongoing for over 20 minutes."
   },
   "login": {
     "sign_in": "Sign in",
@@ -186,7 +194,9 @@
     "create_bank_blacklist": "Add to blacklist",
     "new_fee": "Create fee",
     "add_fee": "Add fee",
-    "new_reason": "Novo motivo"
+    "new_reason": "Novo motivo",
+    "sample_file": "sample file",
+    "create_self_exclusion": "Create self exclusion"
   },
   "input": {
     "required": "Please input the {{field}}",
@@ -232,6 +242,7 @@
     "deposit_bank": "Deposit bank",
     "withdraw_bank": "Withdraw bank",
     "cpf": "CPF",
+    "document": "CPF",
     "deposit_fee_type": "Deposit fee type",
     "deposit_fee_plan": "Deposit fee plan",
     "deposit_fee_percent": "Deposit fee percent",
@@ -265,7 +276,10 @@
     "secondary": "Secondary",
     "both": "Both",
     "options": "Options",
-    "csv_columns": "Select the CSV columns"
+    "csv_columns": "Select the CSV columns",
+    "comma_separator": "Decimal separator",
+    "operation_type": "Operation type",
+    "btg_id": "BTG ID"
   },
   "modal": {
     "confirm": "Confirm",
@@ -290,7 +304,12 @@
     "new_bank_blacklist": "Add to blacklist",
     "resend_webhook": "Resend webhook",
     "update_bank": "Update bank",
-    "new_reason": "New reason"
+    "new_reason": "New reason",
+    "receiver_bank_name": "Receiver bank",
+    "payment_id": "Payment ID",
+    "receiver_email": "Receiver email",
+    "cash_out_fee_percent": "Withdraw fee",
+    "modal_create_merchant": "Create merchant"
   },
   "table": {
     "id": "ID",
@@ -400,6 +419,7 @@
     "active": "Ativo",
     "inactive": "Inativo",
     "organization_id": "Organization ID",
+    "organization": "Organization",
     "icon_url": "Logo",
     "label_name": "Bank name",
     "priority": "Priority",
@@ -530,11 +550,50 @@
     "bank_icon": "Bank icon",
     "aggregator_name": "Aggregator",
     "operator_name": "Operador",
-    "cash_in_fee_percent": "Taxa de depósito",
-    "net_value": "valor",
-    "paid_value": "Valor pago",
-    "delivered_at_secondary": "Entregue em (secundário)",
-    "v3_id": "ID V3"
+    "cash_in_fee_percent": "deposit fee",
+    "net_value": "value",
+    "paid_value": "Paid value",
+    "delivered_at_secondary": "Delivered at (secondary)",
+    "v3_id": "ID V3",
+    "cash_out_fee_percent": "Withdraw fee",
+    "deposit_fee": "deposit fee",
+    "fee_withdraw": "Withdraw fee",
+    "pix_refund_fee": "Refund deposit fee",
+    "under_age_verify": "Underage verify",
+    "cash_in_bank": "Deposit bank",
+    "cash_out_bank": "Withdraw fee",
+    "moviments": "Movements",
+    "deposits": "Deposits",
+    "withdrawals": "Withdrawals",
+    "payments": "Payments",
+    "operation_number": "Operation number",
+    "ticket": "Average ticket",
+    "not_paid": "Not paid",
+    "others": "Others",
+    "financial_movements": "Financial movements",
+    "operation_moviments": "Operation movements",
+    "fees": "Fees",
+    "merchants_balance": "Merchants balance",
+    "payment": "Payment",
+    "security": "Security",
+    "total": "Total",
+    "deposit_conversion": "Deposit conversion",
+    "withdraw_conversion": "Withdraw conversion",
+    "empty_conversion": "No conversion values found",
+    "deposit_bank": "Deposit bank",
+    "withdraw_bank": "Withdraw bank",
+    "aggregator": "Aggregator",
+    "operator": "Operator",
+    "add_row": "Add row",
+    "upload_file": "Upload file",
+    "total_rows": "Total rows",
+    "failed_rows": "Failed rows",
+    "created_by_ip": "Created by ip",
+    "WAITING": "Waiting",
+    "created_by": "Created by",
+    "reason_name": "Reason",
+    "start_date": "Start date",
+    "end_date": "End date"
   },
   "actions": {
     "details": "Details",

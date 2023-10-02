@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Descriptions, Drawer, Pagination, Spin, Table } from "antd";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 interface viewProps {
@@ -18,7 +18,7 @@ interface FeeTableProps {
     range_fee: number;
     range_value: number;
     range_limit: number;
-  }>
+  }>;
 }
 
 export const ViewModal = ({
@@ -30,6 +30,8 @@ export const ViewModal = ({
 }: viewProps) => {
   const { t } = useTranslation();
   const [feePage, setFeePage] = useState(1);
+
+  const [sortItems, setSortItems] = useState<any>(undefined);
   const listItems = (items: any, atual: any, limit: number) => {
     const result = [];
     const totalPage = Math.ceil(items?.length / limit);
@@ -50,24 +52,46 @@ export const ViewModal = ({
   const FeeTable: React.FC<FeeTableProps> = ({ data }) => {
     const columns = [
       {
-        title: `${t('table.fee')} (%)`,
-        dataIndex: 'range_fee',
-        key: 'range_fee',
+        title: `${t("table.fee")} (%)`,
+        dataIndex: "range_fee",
+        key: "range_fee",
       },
       {
-        title: t('input.minimum_value'),
-        dataIndex: 'range_value',
-        key: 'range_value',
+        title: t("input.minimum_value"),
+        dataIndex: "range_value",
+        key: "range_value",
       },
       {
-        title: t('table.limit'),
-        dataIndex: 'range_limit',
-        key: 'range_limit',
+        title: t("table.limit"),
+        dataIndex: "range_limit",
+        key: "range_limit",
       },
     ];
-  
+
     return <Table pagination={false} dataSource={data} columns={columns} />;
   };
+
+  useEffect(() => {
+    if (item?.username) {
+      setSortItems({
+        name: item?.name,
+        username: item?.username,
+        cellphone: item?.cellphone,
+        email: item?.email,
+        status: item?.status,
+        aggregator: item?.aggregator?.name,
+        partner: item?.partner?.name,
+        operator: item?.operator?.name,
+        merchant: item?.merchant?.name,
+        group: item?.permission_group?.name,
+        created_at: item?.created_at ?? item.createdAt,
+        updated_at: item?.updated_at ?? item.updatedAt,
+        last_signin_date: item?.last_signin_date ?? item.last_check,
+      });
+    } else {
+      setSortItems({ ...item });
+    }
+  }, [item]);
 
   return (
     <Drawer
@@ -81,8 +105,24 @@ export const ViewModal = ({
       {loading && <Spin tip={t("messages.loading")} />}
       <Descriptions bordered style={{ margin: 0, padding: 0 }} column={1}>
         {item &&
-          Object.keys(item).map((key: string) => {
-            if (typeof item[key] === ("object" || "array")) return;
+          sortItems &&
+          Object.keys(sortItems).map((key: string) => {
+            if (
+              [
+                'group_id',
+                'merchant_id',
+                'organization_id',
+                'partner_id',
+                'profile_type_id',
+              ].includes(key)
+            ) {
+              return;
+            }
+
+            if (!sortItems[key]) {
+              return;
+            }
+            if (typeof sortItems[key] === ("object" || "array")) return;
             switch (key) {
               case "created_at":
               case "createdAt":
@@ -101,8 +141,10 @@ export const ViewModal = ({
                       textAlign: "center",
                     }}
                   >
-                    {`${new Date(item[key]).toLocaleDateString()} ${new Date(
-                      item[key]
+                    {`${new Date(
+                      sortItems[key]
+                    ).toLocaleDateString()} ${new Date(
+                      sortItems[key]
                     ).toLocaleTimeString()}`}
                   </Descriptions.Item>
                 );
@@ -119,7 +161,7 @@ export const ViewModal = ({
                       textAlign: "center",
                     }}
                   >
-                    {`${new Date(item[key]).toLocaleDateString("pt-BR", {
+                    {`${new Date(sortItems[key]).toLocaleDateString("pt-BR", {
                       timeZone: "UTC",
                     })}`}
                   </Descriptions.Item>
@@ -137,13 +179,29 @@ export const ViewModal = ({
                       textAlign: "center",
                     }}
                   >
-                    {typeof item[key] === "boolean"
-                      ? item[key]
+                    {typeof sortItems[key] === "boolean"
+                      ? sortItems[key]
                         ? t("table.active")
                         : t("table.inactive")
-                      : t(`table.${item[key.toLocaleLowerCase()]}`)}
+                      : t(`table.${sortItems[key.toLocaleLowerCase()]}`)}
                   </Descriptions.Item>
                 );
+
+                case "success":
+                  return (
+                    <Descriptions.Item
+                      key={key}
+                      label={t(`table.${key}`)}
+                      labelStyle={{
+                        maxWidth: "120px !important",
+                        margin: 0,
+                        padding: 0,
+                        textAlign: "center",
+                      }}
+                    >
+                      {t(`table.${sortItems[key]}`)}
+                    </Descriptions.Item>
+                  );
               case "flag_pep":
               case "flag_aux_gov":
               case "black_list":
@@ -158,7 +216,7 @@ export const ViewModal = ({
                       textAlign: "center",
                     }}
                   >
-                    {item[key] ? t("table.true") : t("table.false")}
+                    {sortItems[key] ? t("table.true") : t("table.false")}
                   </Descriptions.Item>
                 );
 
@@ -174,9 +232,9 @@ export const ViewModal = ({
                       textAlign: "center",
                     }}
                   >
-                    {typeof item[key] === "boolean"
-                      ? t(`table.${item[key]}`)
-                      : t(`table.${item[key.toLocaleLowerCase()]}`)}
+                    {typeof sortItems[key] === "boolean"
+                      ? t(`table.${sortItems[key]}`)
+                      : t(`table.${sortItems[key.toLocaleLowerCase()]}`)}
                   </Descriptions.Item>
                 );
 
@@ -192,7 +250,7 @@ export const ViewModal = ({
                       textAlign: "center",
                     }}
                   >
-                    {item[key] ?? "-"}
+                    {sortItems[key] ?? "-"}
                   </Descriptions.Item>
                 );
             }
@@ -200,24 +258,31 @@ export const ViewModal = ({
       </Descriptions>
 
       {item?.merchant_fee_plans_details && (
-        <div style={{marginTop: '20px'}}>
-          <span style={{fontWeight: 'bold', padding: '0 10px'}}>Taxas</span>
-          <FeeTable 
-          data={listItems(item?.merchant_fee_plans_details, feePage, 5)} />
-          <div style={{display: 'flex', justifyContent: 'flex-end', marginRight: '10px'}}>
-          <Pagination
+        <div style={{ marginTop: "20px" }}>
+          <span style={{ fontWeight: "bold", padding: "0 10px" }}>Taxas</span>
+          <FeeTable
+            data={listItems(item?.merchant_fee_plans_details, feePage, 5)}
+          />
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              marginRight: "10px",
+            }}
+          >
+            <Pagination
               size="small"
               total={Number(item?.merchant_fee_plans_details.length)}
               current={feePage}
               pageSize={5}
-              style={{ marginTop: '10px'}}
+              style={{ marginTop: "10px" }}
               onChange={(page) => {
                 setFeePage(page);
               }}
             />
           </div>
         </div>
-        )}
+      )}
     </Drawer>
   );
 };

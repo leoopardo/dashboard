@@ -5,11 +5,13 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useGetDeposit } from "../../../../../../services/consult/deposits/generatedDeposits/getDeposit";
 import { StyledSegmented } from "../deposits/components/styles";
+import { useGetRowsGeneratedDeposits } from "@src/services/consult/deposits/generatedDeposits/getRows";
+import { useGetRefund } from "@src/services/consult/refund/refundDeposits/getRefund";
 
 interface ViewModalProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
   open: boolean;
-  id: string;
+  item: any;
 }
 
 export const ViewModal = (props: ViewModalProps) => {
@@ -18,12 +20,17 @@ export const ViewModal = (props: ViewModalProps) => {
     props.setOpen(false);
   };
 
-  const { deposit, isDepositFetching } = useGetDeposit(props.id);
+  const { Refund } = useGetRefund(props?.item?._id);
   const [currOption, setCurrOption] = useState<any>("transaction");
+  const { depositsRows } = useGetRowsGeneratedDeposits({
+    pix_id: props?.item?.endToEndId,
+  });
+
+  console.log(depositsRows);
 
   return (
     <Drawer
-      title={`${t("table.details")}: (${props?.id || "-"})`}
+      title={`${t("table.details")}: (${props?.item?._id || "-"})`}
       placement="right"
       onClose={onClose}
       open={props.open}

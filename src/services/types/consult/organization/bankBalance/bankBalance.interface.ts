@@ -11,3 +11,12 @@ export interface BankBalanceDataInterface {
   banks: BankBalanceItemInterface[];
   total: number;
 }
+
+export interface BankBalanceInterface {
+  cc: string;
+  cnpj: string;
+  date_checked: string;
+  name: string;
+  value: number;
+  value_blocked: number;
+}

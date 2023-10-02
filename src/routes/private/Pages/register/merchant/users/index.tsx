@@ -115,11 +115,10 @@ export const MerchantUser = () => {
         </Grid>
         <Grid item xs={12} md={8} lg={10}>
           <FilterChips
-            startDateKeyName="initial_date"
-            endDateKeyName="final_date"
+            startDateKeyName="start_date"
+            endDateKeyName="end_date"
             query={query}
             setQuery={setQuery}
-             
           />
         </Grid>
       </Grid>
@@ -252,7 +251,7 @@ export const MerchantUser = () => {
         <ViewModal
           item={currentItem}
           loading={isUsersDataFetching}
-          modalName={`${t("menus.merchant")}: ${currentItem?.name}`}
+          modalName={`${t("login.user")}: ${currentItem?.name}`}
           open={isViewModalOpen}
           setOpen={setIsViewModalOpen}
         />

@@ -16,6 +16,8 @@ export function useGetMerchantBankStatementTotals(
       params,
     });
     return response.data;
+  }, {
+    
   });
 
   const MerchantBankStatementTotals = data;

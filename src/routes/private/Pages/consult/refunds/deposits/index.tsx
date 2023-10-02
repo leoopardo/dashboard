@@ -19,16 +19,17 @@ import { refundDepositsQuery } from "../../../../../../services/types/consult/re
 import useDebounce from "../../../../../../utils/useDebounce";
 import { ViewModal } from "../components/ViewModal";
 import { TotalizersCards } from "./components/TotalizersCards";
+import { EyeFilled } from "@ant-design/icons";
 
 const INITIAL_QUERY: refundDepositsQuery = {
   page: 1,
   limit: 25,
   start_date: moment(new Date())
-    .startOf("day")
+    .startOf("day").add(3, "hours")
     .format("YYYY-MM-DDTHH:mm:ss.SSS"),
   end_date: moment(new Date())
     .add(1, "day")
-    .startOf("day")
+    .startOf("day").add(3, "hours")
     .format("YYYY-MM-DDTHH:mm:ss.SSS"),
 };
 
@@ -208,16 +209,16 @@ export const RefundDeposits = () => {
             columns={columns}
             loading={isRefundDepositsRowsFetching}
             actions={[
-              // {
-              //   label: "details",
-              //   icon: <EyeFilled style={{ fontSize: "18px" }} />,
-              //   onClick: () => setIsViewModalOpen(true),
-              // },
+              {
+                label: "details",
+                icon: <EyeFilled style={{ fontSize: "18px" }} />,
+                onClick: () => setIsViewModalOpen(true),
+              },
               {
                 label: "refund",
                 icon: <ReplayIcon style={{ fontSize: "18px" }} />,
                 onClick: () => setIsViewModalOpen(true),
-                disabled: (item) => ["WAITING", "ERROR"].includes(item?.status),
+                disabled: (item) => !["WAITING", "ERROR"].includes(item?.status),
               },
             ]}
             removeTotal
@@ -229,7 +230,7 @@ export const RefundDeposits = () => {
         <ViewModal
           open={isViewModalOpen}
           setOpen={setIsViewModalOpen}
-          id={currentItem?._id}
+          item={currentItem}
         />
       )}
       {isFiltersOpen && (

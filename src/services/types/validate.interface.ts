@@ -122,6 +122,14 @@ export interface ValidateInterface {
           menu: boolean;
           aggregator_config_update: boolean;
         };
+        self_exclusion: {
+          aggregator_self_exclusion_create: boolean;
+          aggregator_self_exclusion_delete: boolean;
+          aggregator_self_exclusion_export_csv: boolean;
+          aggregator_self_exclusion_list: boolean;
+          aggregator_self_exclusion_update: boolean;
+          menu: boolean;
+        };
       };
       operator: {
         menu: boolean;
@@ -229,6 +237,11 @@ export interface ValidateInterface {
           menu: boolean;
           report_paybrokers_bank_history_list: boolean;
           report_paybrokers_bank_history_export_csv: boolean;
+        };
+        bank_balance: {
+          menu: boolean;
+          report_paybrokers_bank_balance_history_list: boolean;
+          report_paybrokers_bank_balance_list: boolean;
         };
       };
       merchant: {
@@ -383,6 +396,23 @@ export interface ValidateInterface {
           support_blacklist_invalid_pix_keys_check: boolean;
           support_blacklist_invalid_pix_keys_delete: boolean;
           support_blacklist_invalid_pix_keys_export_csv: boolean;
+        };
+      };
+      logs: {
+        menu: boolean;
+        auth_logs: {
+          menu: boolean;
+          support_logs_api_auth_list: boolean;
+        };
+        deposit_error_logs: {
+          menu: boolean;
+          report_deposit_error_logs_export_csv: boolean;
+          report_deposit_error_logs_list: boolean;
+        };
+        withdraw_error_logs: {
+          menu: boolean;
+          report_withdraw_error_logs_export_csv: boolean;
+          report_withdraw_error_logs_list: boolean;
         };
       };
     };

@@ -29,11 +29,11 @@ const INITIAL_QUERY: generatedDepositTotalQuery = {
   limit: 25,
   delivered_at: false,
   initial_date: moment(new Date())
-    .startOf("day")
+    .startOf("day").add(3, "hours")
     .format("YYYY-MM-DDTHH:mm:ss.SSS"),
   final_date: moment(new Date())
     .add(1, "day")
-    .startOf("day")
+    .startOf("day").add(3, "hours")
     .format("YYYY-MM-DDTHH:mm:ss.SSS"),
 };
 

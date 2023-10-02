@@ -10,11 +10,13 @@ import { PartnerQuery } from "../../../services/types/register/partners/partners
 interface PartnerSelectProps {
   setQueryFunction: Dispatch<SetStateAction<any>>;
   queryOptions: any;
+  disabled?: boolean;
 }
 
 export const PartnerSelect = ({
   setQueryFunction,
   queryOptions,
+  disabled,
 }: PartnerSelectProps) => {
   const { t } = useTranslation();
   const [query, setQuery] = useState<PartnerQuery>({
@@ -68,6 +70,7 @@ export const PartnerSelect = ({
           return { key: index, value: item.id, label: item.name };
         }) ?? []
       }
+      disabled={disabled}
       notFoundContent={<Empty />}
       value={value}
       style={{ width: "100%", height: 40 }}

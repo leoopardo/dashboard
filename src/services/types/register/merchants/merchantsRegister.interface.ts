@@ -39,6 +39,7 @@ export interface MerchantsItem {
   status?: boolean;
   update_at?: string;
   merchant_id?: number;
+  partner_id?: number
 }
 
 export interface MerchantsResponse {

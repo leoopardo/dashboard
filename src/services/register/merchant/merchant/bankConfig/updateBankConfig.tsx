@@ -4,7 +4,7 @@ import { IMerchantBankUpdate } from "@src/services/types/register/merchants/merc
 import { useMutation } from "react-query";
 
 export function useUpdateBankConfig(body?: IMerchantBankUpdate | null) {
-  const { isLoading, error, mutate, isSuccess } = useMutation<
+  const { isLoading, error, mutate, isSuccess, reset } = useMutation<
     IMerchantBankUpdate | null | undefined
   >("UpdateMerchantBankConfig", async () => {
     const response = await api.put(
@@ -12,19 +12,19 @@ export function useUpdateBankConfig(body?: IMerchantBankUpdate | null) {
       body,
       {}
     );
-    await queryClient.refetchQueries({ queryKey: ["MerchantBankConfig"] });
+    await queryClient.refetchQueries({ queryKey: ["MerchantsRegister"] });
     return response.data;
   });
 
   const UpdateMutate = mutate;
   const UpdateIsLoading = isLoading;
-  const UpdateError = error;
-  const UpdateIsSuccess = isSuccess;
+  const UpdateBankError = error;
+  const UpdateBankIsSuccess = isSuccess;
 
   return {
     UpdateMutate,
     UpdateIsLoading,
-    UpdateError,
-    UpdateIsSuccess,
+    UpdateBankError,
+    UpdateBankIsSuccess,reset
   };
 }

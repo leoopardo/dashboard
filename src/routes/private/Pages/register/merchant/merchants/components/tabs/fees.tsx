@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Toast } from "@components/Toast";
 import { Grid } from "@mui/material";
-import { CurrencyInput } from "@src/components/CurrencyInput";
 import { useGetDepositFeePlansRegister } from "@src/services/register/merchant/feePlans/getDepositFeePlans";
 import { useGetWithdrawFeePlansRegister } from "@src/services/register/merchant/feePlans/getWithdrawFeePlans";
 import { useMerchantFeesConfig } from "@src/services/register/merchant/merchant/feesConfig/getFeesConfig";
@@ -16,10 +15,13 @@ import {
   Form,
   FormInstance,
   Input,
+  InputNumber,
   Popconfirm,
   Select,
+  Typography,
 } from "antd";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { CurrencyInput } from "react-currency-mask";
 import { useTranslation } from "react-i18next";
 
 export const FeesTab = (props: { id?: string }) => {
@@ -143,18 +145,18 @@ export const FeesTab = (props: { id?: string }) => {
     >
       <Grid container spacing={1}>
         <Grid item xs={12}>
-          <p>
+          <Typography>
             {t("titles.current_deposit_fee")}:{" "}
             {merchantFeesData?.fees?.cashin_pix_fee_percent}%{" "}
-          </p>
-          <p>
+          </Typography>
+          <Typography>
             {t("titles.current_withdraw_fee")}:{" "}
             {merchantFeesData?.fees?.customer_withdraw_fee_percent}%{" "}
-          </p>
-          <p>
+          </Typography>
+          <Typography>
             {t("titles.current_deposit_refund_fee")}:{" "}
             {merchantFeesData?.fees?.pix_refund_fee_percent}%{" "}
-          </p>
+          </Typography>
         </Grid>
 
         <Divider orientation="left">{t("menus.deposit")}</Divider>
@@ -251,19 +253,20 @@ export const FeesTab = (props: { id?: string }) => {
             ]}
           >
             <CurrencyInput
-              disabled={body?.cashin_pix_fee_type === "PERCENT"}
-              value={body?.cashin_pix_fee_value}
-              onChange={(value) => {
-                setBody((state) => ({
-                  ...state,
-                  cashin_pix_fee_value: Number(value),
-                }));
-
+              onChangeValue={(_event, originalValue) => {
                 setBodyUpdate((state) => ({
                   ...state,
-                  cashin_pix_fee_value: Number(value),
+                  cashin_pix_fee_value: +originalValue,
                 }));
               }}
+              InputElement={
+                <Input
+                  size="large"
+                  style={{ width: "100%" }}
+                  disabled={body?.cashin_pix_fee_type === "PERCENT"}
+                  value={body?.cashin_pix_fee_value}
+                />
+              }
             />
           </Form.Item>
         </Grid>
@@ -273,19 +276,22 @@ export const FeesTab = (props: { id?: string }) => {
             label={t("input.deposit_fee_minimum_value")}
             name="cashin_pix_fee_min"
           >
-            <CurrencyInput
-              value={body?.cashin_pix_fee_min}
-              onChange={(value) => {
-                setBody((state) => ({
-                  ...state,
-                  cashin_pix_fee_min: value,
-                }));
+             <CurrencyInput
+              onChangeValue={(_event, originalValue) => {
                 setBodyUpdate((state) => ({
                   ...state,
-                  cashin_pix_fee_min: value,
+                  cashin_pix_fee_min: +originalValue,
                 }));
               }}
+              InputElement={
+                <Input
+                  size="large"
+                  style={{ width: "100%" }}
+                  value={body?.cashin_pix_fee_min}
+                />
+              }
             />
+          
           </Form.Item>
         </Grid>
 
@@ -393,21 +399,23 @@ export const FeesTab = (props: { id?: string }) => {
               },
             ]}
           >
-            <CurrencyInput
-              disabled={body?.customer_withdraw_fee_type === "PERCENT"}
-              value={body?.customer_withdraw_fee_value}
-              onChange={(value) => {
-                setBody((state) => ({
-                  ...state,
-                  customer_withdraw_fee_value: Number(value),
-                }));
-
+              <CurrencyInput
+              onChangeValue={(_event, originalValue) => {
                 setBodyUpdate((state) => ({
                   ...state,
-                  customer_withdraw_fee_value: Number(value),
+                  customer_withdraw_fee_value: +originalValue,
                 }));
               }}
+              InputElement={
+                <Input
+                disabled={body?.customer_withdraw_fee_type === "PERCENT"}
+                  size="large"
+                  style={{ width: "100%" }}
+                  value={body?.customer_withdraw_fee_value}
+                />
+              }
             />
+           
           </Form.Item>
         </Grid>
 
@@ -416,19 +424,21 @@ export const FeesTab = (props: { id?: string }) => {
             label={t("input.withdraw_fee_minimum_value")}
             name="customer_withdraw_fee_min"
           >
-            <CurrencyInput
-              value={body?.customer_withdraw_fee_min}
-              onChange={(value) => {
-                setBody((state) => ({
-                  ...state,
-                  customer_withdraw_fee_min: value,
-                }));
+                <CurrencyInput
+              onChangeValue={(_event, originalValue) => {
                 setBodyUpdate((state) => ({
                   ...state,
-                  customer_withdraw_fee_min: value,
+                  customer_withdraw_fee_min: +originalValue,
                 }));
               }}
-            />
+              InputElement={
+                <Input
+                  size="large"
+                  style={{ width: "100%" }}
+                  value={body?.customer_withdraw_fee_min}
+                />
+              }
+            /> 
           </Form.Item>
         </Grid>
 
@@ -507,19 +517,21 @@ export const FeesTab = (props: { id?: string }) => {
               },
             ]}
           >
-            <CurrencyInput
-              disabled={body?.pix_refund_fee_type === "PERCENT"}
-              value={body?.pix_refund_fee_value}
-              onChange={(value) => {
-                setBody((state) => ({
-                  ...state,
-                  pix_refund_fee_value: value,
-                }));
+                <CurrencyInput
+              onChangeValue={(_event, originalValue) => {
                 setBodyUpdate((state) => ({
                   ...state,
-                  pix_refund_fee_value: value,
+                  pix_refund_fee_value: +originalValue,
                 }));
               }}
+              InputElement={
+                <Input
+                  size="large"
+                  style={{ width: "100%" }}
+                   disabled={body?.pix_refund_fee_type === "PERCENT"}
+                  value={body?.pix_refund_fee_value}
+                />
+              }
             />
           </Form.Item>
         </Grid>
@@ -529,18 +541,20 @@ export const FeesTab = (props: { id?: string }) => {
             label={t("input.deposit_refund_fee_minimum_value")}
             name="pix_refund_fee_min"
           >
-            <CurrencyInput
-              value={Number(body?.pix_refund_fee_min)}
-              onChange={(value) => {
-                setBody((state) => ({
-                  ...state,
-                  pix_refund_fee_value: value,
-                }));
+               <CurrencyInput
+              onChangeValue={(_event, originalValue) => {
                 setBodyUpdate((state) => ({
                   ...state,
-                  pix_refund_fee_value: value,
+                  pix_refund_fee_min: +originalValue,
                 }));
               }}
+              InputElement={
+                <Input
+                  size="large"
+                  style={{ width: "100%" }}
+                  value={body?.pix_refund_fee_min}
+                />
+              }
             />
           </Form.Item>
         </Grid>

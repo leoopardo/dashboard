@@ -4,41 +4,28 @@ import {
   AggregatorQuery,
   AggregatorsResponse,
 } from "@src/services/types/register/aggregators/aggregators.interface";
-import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import { api } from "../../../config/api";
 
 export function useListAggregators(params: AggregatorQuery) {
-  const [data, setData] = useState<AggregatorsResponse | null>(null);
-  const [error, setError] = useState<any>(null);
-  const [isFetching, setIsFetching] = useState<boolean>(false);
+  const { data, isFetching, error, refetch } = useQuery<
+  AggregatorsResponse | null | undefined
+>("listAggregator", async () => {
+  const response = await api.get("core/aggregator", {
+    params,
+  });
+  return response.data;
+});
 
-  const fetchAggregators = async () => {
-    try {
-      setIsFetching(true);
-      const response = await api.get("core/aggregator", {
-        params,
-      });
-      setData(response.data);
-    } catch (error) {
-      setError(error);
-    } finally {
-      setIsFetching(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchAggregators();
-  }, [params]);
-
-  const partnersData = data;
+  const aggregatorsData = data;
   const isAggregatorsFetching = isFetching;
-  const partnersError: any = error;
-  const refetcAggregators = fetchAggregators;
+  const aggregatorsError: any = error;
+  const refetcAggregators = refetch;
 
   return {
-    partnersData,
+    aggregatorsData,
     isAggregatorsFetching,
-    partnersError,
+    aggregatorsError,
     refetcAggregators,
   };
 }

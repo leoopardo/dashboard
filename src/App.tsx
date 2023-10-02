@@ -144,7 +144,7 @@ function App() {
                     <Layout
                       style={{
                         padding: "0 24px 24px",
-                        minHeight: "92vh",
+                        minHeight: "94vh",
                       }}
                     >
                       <Content
@@ -152,7 +152,7 @@ function App() {
                           padding: 2,
                           margin: 0,
                           height: "100%",
-                          background: theme === "dark" ? "#222222 " : "#ffffff",
+                          background: theme === "dark" ? "#222222 " : "#fdfdfd",
                         }}
                       >
                         {element}

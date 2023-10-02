@@ -6,7 +6,7 @@ import { Grid } from "@mui/material";
 import { useMerchantBankConfig } from "@services/register/merchant/merchant/bankConfig/getBankConfig";
 import { useUpdateBankConfig } from "@src/services/register/merchant/merchant/bankConfig/updateBankConfig";
 import { IMerchantBankUpdate } from "@src/services/types/register/merchants/merchantBankConfig.interface";
-import { Button, Form, FormInstance, Popconfirm } from "antd";
+import { Button, Form, FormInstance, Popconfirm, Typography } from "antd";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -23,7 +23,7 @@ export const BanksTab = (props: { id?: string }) => {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const { isMerchantBankFetching, merchantBankData, refetchMerchantBankData } =
     useMerchantBankConfig(props.id);
-  const { UpdateError, UpdateIsSuccess, UpdateMutate } =
+  const { UpdateBankError, UpdateBankIsSuccess, UpdateMutate } =
     useUpdateBankConfig(body);
 
   useEffect(() => {
@@ -48,7 +48,7 @@ export const BanksTab = (props: { id?: string }) => {
 
   useEffect(() => {
     refetchMerchantBankData();
-  }, [UpdateIsSuccess]);
+  }, [UpdateBankIsSuccess]);
 
   return (
     <Form
@@ -58,8 +58,8 @@ export const BanksTab = (props: { id?: string }) => {
     >
       <Grid container spacing={1}>
         <Grid item xs={12}>
-          <p>Banco Deposito: {merchantBankData?.merchantConfig.cash_in_bank}</p>
-          <p>Banco Saque: {merchantBankData?.merchantConfig.cash_out_bank}</p>
+          <Typography>{t("input.deposit_bank")}: {merchantBankData?.merchantConfig.cash_in_bank}</Typography>
+          <Typography>{t("input.withdraw_bank")}: {merchantBankData?.merchantConfig.cash_out_bank}</Typography>
         </Grid>
         <Grid item xs={12} md={4}>
           <Form.Item label={t("input.deposit_bank")} name="cash_in_bank">
@@ -88,7 +88,7 @@ export const BanksTab = (props: { id?: string }) => {
         xs={12}
         style={{ display: "flex", flexDirection: "row-reverse" }}
       >
-        <Grid item xs={12} md={4} lg={2}>
+        <Grid item xs={12} md={4} lg={4}>
           <Popconfirm
             title={t("messages.confirm_action_title", {
               action: t("messages.update"),
@@ -123,8 +123,8 @@ export const BanksTab = (props: { id?: string }) => {
       <Toast
         actionSuccess={t("messages.updated")}
         actionError={t("messages.update")}
-        error={UpdateError}
-        success={UpdateIsSuccess}
+        error={UpdateBankError}
+        success={UpdateBankIsSuccess}
       />
     </Form>
   );

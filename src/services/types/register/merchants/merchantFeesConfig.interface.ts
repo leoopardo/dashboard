@@ -14,7 +14,7 @@ export interface IMerchantFeesProps {
   merchant_withdraw_fee_percent?: number;
   merchant_withdraw_fee_type?: string;
   merchant_withdraw_fee_value?: number;
-  pix_refund_fee_min?: string;
+  pix_refund_fee_min?: number;
   pix_refund_fee_percent?: number;
   pix_refund_fee_type?: string;
   pix_refund_fee_value?: number;

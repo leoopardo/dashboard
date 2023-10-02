@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { AggregatorSelect } from "@src/components/Selects/aggregatorSelect";
 import { OperatorSelect } from "@src/components/Selects/operatorSelect";
 import { ReasonSelect } from "@src/components/Selects/reasonSelect";
 import { useListClientClientBanks } from "@src/services/bank/listClientBanks";
@@ -9,6 +10,8 @@ import {
   AutoComplete,
   Avatar,
   Button,
+  ConfigProvider,
+  DatePicker,
   Drawer,
   Empty,
   Form,
@@ -17,11 +20,16 @@ import {
   Select,
   Switch,
 } from "antd";
-import { Dispatch, SetStateAction, useRef } from "react";
+import locale from "antd/locale/pt_BR";
+import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import ReactInputMask from "react-input-mask";
 import { MerchantSelect } from "../../Selects/merchantSelect";
 import { PartnerSelect } from "../../Selects/partnerSelect";
+import { StyleWrapperDatePicker } from "@src/components/FiltersModal/styles";
+import dayjs from "dayjs";
+import moment from "moment";
+const { RangePicker } = DatePicker;
 
 interface mutateProps {
   type: "create" | "update";
@@ -41,6 +49,8 @@ interface mutateProps {
   submitLoading: boolean;
   success: boolean;
   error: any;
+  clear?: any;
+  submitText?: string;
 }
 
 export const MutateModal = ({
@@ -54,10 +64,13 @@ export const MutateModal = ({
   selectOptions,
   modalName,
   submitLoading,
+  clear,
+  submitText,
 }: mutateProps) => {
   const { permissions } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
+  const user = queryClient.getQueryData("validate") as ValidateInterface;
   const { t } = useTranslation();
   const formRef = useRef<FormInstance>(null);
   const submitRef = useRef<HTMLButtonElement>(null);
@@ -74,6 +87,38 @@ export const MutateModal = ({
       [event.target.name]: event.target.value,
     }));
   };
+
+  useEffect(() => {
+    if (clear) clear();
+  }, []);
+
+  useEffect(() => {
+    if (body?.partner) {
+      setBody((state: any) => ({ ...state, partner_id: state?.partner?.id }));
+    }
+    if (body?.operator) {
+      setBody((state: any) => ({ ...state, operator_id: state?.operator?.id }));
+    }
+    if (body?.aggregator) {
+      setBody((state: any) => ({
+        ...state,
+        aggregator_id: state?.aggregator?.id,
+      }));
+    }
+    if (body?.merchant) {
+      setBody((state: any) => ({ ...state, merchant_id: state?.merchant?.id }));
+    }
+  }, []);
+
+  const panelRender = (panelNode: any) => (
+    <StyleWrapperDatePicker>{panelNode}</StyleWrapperDatePicker>
+  );
+
+  useEffect(() => {
+    if (type === "create") {
+      setBody({});
+    }
+  }, [open]);
 
   return (
     <Drawer
@@ -93,7 +138,11 @@ export const MutateModal = ({
           size="large"
           onClick={() => submitRef.current?.click()}
         >
-          {type == "create" ? t("buttons.create") : t("buttons.update")}
+          {submitText
+            ? submitText
+            : type == "create"
+            ? t("buttons.create")
+            : t("buttons.update")}
         </Button>
       }
     >
@@ -109,6 +158,57 @@ export const MutateModal = ({
       >
         {fields.map((field) => {
           switch (field.label) {
+            case "date":
+              return (
+                <Form.Item
+                  label={t("table.date")}
+                  style={{ margin: 10 }}
+                  name="date"
+                  rules={[{ required: field.required }]}
+                >
+                  <ConfigProvider locale={locale}>
+                    <RangePicker
+                      size="large"
+                      panelRender={panelRender}
+                      format={
+                        navigator.language === "pt-BR"
+                          ? "DD/MM/YYYY HH:mm"
+                          : "YYYY/MM/DD HH:mm"
+                      }
+                      popupStyle={{ marginLeft: "40px" }}
+                      showTime
+                      value={[
+                        body?.start_date
+                          ? dayjs(body?.start_date).subtract(3, "hours")
+                          : null,
+                        body?.end_date
+                          ? dayjs(body?.end_date).subtract(3, "hours")
+                          : null,
+                      ]}
+                      clearIcon={<></>}
+                      placeholder={[
+                        t("table.initial_date"),
+                        t("table.final_date"),
+                      ]}
+                      onChange={(value: any) => {
+                        const [startDate, endDate] = value;
+                        setBody((state: any) => ({
+                          ...state,
+                          start_date: startDate
+                            ? moment(startDate)
+                                .add(3, "hours")
+                                .format("YYYY-MM-DDTHH:mm:00.000")
+                            : null,
+                          end_date: endDate
+                            ? endDate.add(3, "hours").format("YYYY-MM-DDTHH:mm:59.999")
+                            : null,
+                        }));
+                        formRef?.current?.validateFields();
+                      }}
+                    />
+                  </ConfigProvider>
+                </Form.Item>
+              );
             case "merchant_id":
               if (permissions.register.merchant.merchant.merchant_list) {
                 return (
@@ -135,7 +235,10 @@ export const MutateModal = ({
               } else return;
 
             case "partner_id":
-              if (permissions.register.partner.partner.partner_list) {
+              if (
+                permissions.register.partner.partner.partner_list &&
+                !user.partner_id
+              ) {
                 return (
                   <Form.Item
                     label={t(`table.${field.label}`)}
@@ -143,10 +246,10 @@ export const MutateModal = ({
                     style={{ margin: 10 }}
                     rules={[
                       {
-                        required: field.required,
+                        required: field.required && !body?.partner_id,
                         message:
                           t("input.required", {
-                            field: t(`input.${field.label}`),
+                            field: t(`table.${field.label}`),
                           }) || "",
                       },
                     ]}
@@ -157,7 +260,37 @@ export const MutateModal = ({
                     />
                   </Form.Item>
                 );
-              } else return;
+              }
+              return;
+
+            case "aggregator_id":
+              if (
+                permissions.register.aggregator.aggregator.aggregator_list &&
+                !user?.aggregator_id
+              ) {
+                return (
+                  <Form.Item
+                    label={t(`table.${field.label}`)}
+                    name={field.label}
+                    style={{ margin: 10 }}
+                    rules={[
+                      {
+                        required: field.required && !body?.aggregator_id,
+                        message:
+                          t("input.required", {
+                            field: t(`input.${field.label}`),
+                          }) || "",
+                      },
+                    ]}
+                  >
+                    <AggregatorSelect
+                      setQueryFunction={setBody}
+                      aggregatorId={body?.aggregator?.id ?? undefined}
+                    />
+                  </Form.Item>
+                );
+              }
+              return;
 
             case "reason":
               return (
@@ -207,7 +340,10 @@ export const MutateModal = ({
               );
 
             case "operator_id":
-              if (permissions.register.operator.operator.operator_list) {
+              if (
+                permissions.register.operator.operator.operator_list &&
+                !user?.operator_id
+              ) {
                 return (
                   <Form.Item
                     label={t(`table.${field.label}`)}
@@ -229,7 +365,8 @@ export const MutateModal = ({
                     />
                   </Form.Item>
                 );
-              } else return;
+              }
+              return;
 
             case "status":
             case "cash_in":
@@ -448,6 +585,31 @@ export const MutateModal = ({
                         country: option,
                       }));
                     }}
+                  />
+                </Form.Item>
+              );
+
+            case "person_reason":
+              return (
+                <Form.Item
+                  label={t(`table.reason`)}
+                  name="reason"
+                  style={{ margin: 10 }}
+                  rules={[
+                    {
+                      required: field.required,
+                      message:
+                        t("input.required", {
+                          field: t(`table.reason`),
+                        }) || "",
+                    },
+                  ]}
+                >
+                  <Input
+                    size="large"
+                    name="reason"
+                    value={body?.reason}
+                    onChange={handleChange}
                   />
                 </Form.Item>
               );

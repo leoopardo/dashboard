@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { EyeFilled } from "@ant-design/icons";
+import { EyeFilled, FileAddOutlined } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { queryClient } from "@src/services/queryClient";
 import { useCreatePaidDepositsReports } from "@src/services/reports/consult/deposits/createPaidDepositsReports";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Alert, Button, Input, Select } from "antd";
+import { Alert, Button, Input, Select, Tooltip } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -23,16 +23,18 @@ import { paidDepositRowsQuery } from "../../../../../../services/types/consult/d
 import useDebounce from "../../../../../../utils/useDebounce";
 import { ViewModal } from "../components/ViewModal";
 import { TotalizersCards } from "./components/TotalizersCards";
+import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
+import { useGetDepositReportFields } from "@src/services/consult/deposits/reportCsvFields/getReportFields";
 
 const INITIAL_QUERY: paidDepositRowsQuery = {
   page: 1,
   limit: 25,
   initial_date: moment(new Date())
-    .startOf("day")
+    .startOf("day").add(3, "hours")
     .format("YYYY-MM-DDTHH:mm:ss.SSS"),
   final_date: moment(new Date())
     .add(1, "day")
-    .startOf("day")
+    .startOf("day").add(3, "hours")
     .format("YYYY-MM-DDTHH:mm:ss.SSS"),
 };
 
@@ -42,18 +44,28 @@ export const PaidDeposits = () => {
   ) as ValidateInterface;
   const { t } = useTranslation();
   const [query, setQuery] = useState<paidDepositRowsQuery>(INITIAL_QUERY);
+  const [isExportReportsOpen, setIsExportReportsOpen] =
+    useState<boolean>(false);
+  const [csvFields, setCsvFields] = useState<any>();
+  const [isComma, setIsComma] = useState<boolean>(true);
   const { paidTotal, paidTotalError, isPaidTotalFetching, refetchPaidTotal } =
     useGetTotalPaidDeposits(query);
 
-  const { paidRows, isPaidRowsFetching, refetchPaidTotalRows } =
+  const { paidRows, isPaidRowsFetching, refetchPaidTotalRows, paidRowsError } =
     useGetRowsPaidDeposits(query);
+
+  const { fields } = useGetDepositReportFields();
 
   const {
     PaidDepositsReportsError,
     PaidDepositsReportsIsLoading,
     PaidDepositsReportsIsSuccess,
     PaidDepositsReportsMutate,
-  } = useCreatePaidDepositsReports(query);
+  } = useCreatePaidDepositsReports({
+    ...query,
+    fields: { ...csvFields },
+    comma_separate_value: isComma,
+  });
 
   useEffect(() => {
     refetchPaidTotalRows();
@@ -200,14 +212,27 @@ export const PaidDeposits = () => {
         {permissions.report.deposit.paid_deposit
           .report_deposit_paid_deposit_export_csv && (
           <Grid item xs={12} md="auto" lg={1}>
-            <ExportReportsModal
-              disabled={!paidRows?.items.length}
-              mutateReport={() => PaidDepositsReportsMutate()}
-              error={PaidDepositsReportsError}
-              success={PaidDepositsReportsIsSuccess}
-              loading={PaidDepositsReportsIsLoading}
-              reportPath="/consult/deposit/deposits_reports/Paid_deposits_reports"
-            />
+            <Tooltip
+              placement="topRight"
+              title={
+                !paidRows?.items.length || paidRowsError
+                  ? t("messages.no_records_to_export")
+                  : t("messages.export_csv")
+              }
+              arrow
+            >
+              <Button
+                onClick={() => setIsExportReportsOpen(true)}
+                style={{ width: "100%" }}
+                shape="round"
+                type="dashed"
+                size="large"
+                loading={isPaidRowsFetching}
+                disabled={!paidRows?.items.length || paidRowsError}
+              >
+                <FileAddOutlined style={{ fontSize: 22 }} /> CSV
+              </Button>
+            </Tooltip>
           </Grid>
         )}
       </Grid>
@@ -223,6 +248,7 @@ export const PaidDeposits = () => {
             items={paidRows?.items}
             columns={columns}
             loading={isPaidRowsFetching}
+            error={paidRowsError}
             actions={[
               {
                 label: "details",
@@ -248,6 +274,24 @@ export const PaidDeposits = () => {
           id={currentItem?._id}
         />
       )}
+
+      <ExportCustomReportsModal
+        open={isExportReportsOpen}
+        setOpen={setIsExportReportsOpen}
+        disabled={!paidRows?.items.length || paidRowsError}
+        mutateReport={() => PaidDepositsReportsMutate()}
+        error={PaidDepositsReportsError}
+        success={PaidDepositsReportsIsSuccess}
+        loading={PaidDepositsReportsIsLoading}
+        reportPath="/consult/deposit/deposits_reports/paid_deposits_reports"
+        fields={fields}
+        csvFields={csvFields}
+        setCsvFields={setCsvFields}
+        comma={isComma}
+        setIsComma={setIsComma}
+        reportName="paidDepositsReportsFields"
+      />
+
       {isFiltersOpen && (
         <FiltersModal
           maxRange

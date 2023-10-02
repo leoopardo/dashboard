@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import moment from "moment";
 import { useQuery } from "react-query";
 import { api } from "../../../../config/api";
 import {
@@ -16,19 +15,7 @@ export function useGetRowsGeneratedDeposits(
     "depositsRows",
     async () => {
       const response = await api.get("report/pix/rows", {
-        params: {
-          ...params,
-          initial_date: params.initial_date
-            ? moment(params.initial_date)
-                .add(3, "hours")
-                .format("YYYY-MM-DDTHH:mm:ss.SSS")
-            : null,
-          final_date: params.initial_date
-            ? moment(params.final_date)
-                .add(3, "hours")
-                .format("YYYY-MM-DDTHH:mm:ss.SSS")
-            : null,
-        },
+        params,
       });
       return response.data;
     },

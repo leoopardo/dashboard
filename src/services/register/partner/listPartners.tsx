@@ -6,34 +6,22 @@ import {
   PartnerQuery,
   PartnersResponse,
 } from "../../types/register/partners/partners.interface";
+import { useQuery } from "react-query";
 
 export function useListPartners(params: PartnerQuery) {
-  const [data, setData] = useState<PartnersResponse | null>(null);
-  const [error, setError] = useState<any>(null);
-  const [isFetching, setIsFetching] = useState<boolean>(false);
-
-  const fetchPartners = async () => {
-    try {
-      setIsFetching(true);
-      const response = await api.get("core/partner", {
-        params,
-      });
-      setData(response.data);
-    } catch (error) {
-      setError(error);
-    } finally {
-      setIsFetching(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchPartners();
-  }, [params]);
+  const { data, isFetching, error, refetch } = useQuery<
+  PartnersResponse | null | undefined
+>("listPartners", async () => {
+  const response = await api.get("core/partner", {
+    params,
+  });
+  return response.data;
+});
 
   const partnersData = data;
   const isPartnersFetching = isFetching;
   const partnersError: any = error;
-  const refetcPartners = fetchPartners;
+  const refetcPartners = refetch;
 
   return {
     partnersData,

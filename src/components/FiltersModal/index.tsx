@@ -97,10 +97,10 @@ export const FiltersModal = ({
       sort_order: null,
       sort_field: null,
       [startDateKeyName]: query[startDateKeyName]
-        ? moment(query[startDateKeyName])
+        ? moment(query[startDateKeyName]).subtract(3, "hours")
         : null,
       [endDateKeyName]: query[endDateKeyName]
-        ? moment(query[endDateKeyName])
+        ? moment(query[endDateKeyName]).subtract(3, "hours")
         : null,
     });
   }, [query]);
@@ -202,8 +202,21 @@ export const FiltersModal = ({
         initialValues={filtersQuery}
         layout="vertical"
         onFinish={() => {
-          setQuery({ ...filtersQuery, page: 1, limit: 25 });
-
+          setQuery({
+            ...filtersQuery,
+            [startDateKeyName]: filtersQuery[startDateKeyName]
+              ? moment(filtersQuery[startDateKeyName])
+                  .add(3, "hours")
+                  .format("YYYY-MM-DDTHH:mm:00.000")
+              : undefined,
+            [endDateKeyName]: filtersQuery[endDateKeyName]
+              ? moment(filtersQuery[endDateKeyName])
+                  .add(3, "hours")
+                  .format("YYYY-MM-DDTHH:mm:00.000")
+              : undefined,
+            page: 1,
+            limit: 25,
+          });
           setOpen(false);
         }}
       >

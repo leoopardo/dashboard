@@ -64,3 +64,28 @@ export interface refundDepositRowsItems {
   value: number;
   _id: string;
 }
+
+export interface refundById {
+  _id: string;
+  endToEndId: string;
+  bank: string;
+  buyer_document: string;
+  buyer_name: string;
+  createdAt: string;
+  merchant_id: number;
+  merchant_name: string;
+  organization_id: number;
+  partner_id: number;
+  partner_name: string;
+  payer_document: string;
+  payer_name:string;
+  pix_id: string;
+  reason: string;
+  refund_fee: number;
+  refund_id: string;
+  status: string;
+  txid: string;
+  value: number;
+  refund_date: string;
+  rtrId: string;
+}

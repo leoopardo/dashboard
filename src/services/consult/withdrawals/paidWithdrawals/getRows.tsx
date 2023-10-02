@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import moment from "moment";
 import { api } from "../../../../config/api";
 
 import { useQuery } from "react-query";
@@ -14,15 +13,7 @@ export function useGetRowsPaidWithdrawals(params: paidWithdrawalsRowsQuery) {
     "paidWithdrawalsRows",
     async () => {
       const response = await api.get("report/withdraw/rows/paid-at", {
-        params: {
-          ...params,
-          initial_date: moment(params.initial_date)
-            .add(3, "hours")
-            .format("YYYY-MM-DDTHH:mm:ss.SSS"),
-          final_date: moment(params.final_date)
-            .add(3, "hours")
-            .format("YYYY-MM-DDTHH:mm:ss.SSS"),
-        },
+        params,
       });
       return response.data;
     },

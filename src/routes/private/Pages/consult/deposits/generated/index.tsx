@@ -3,9 +3,10 @@
 import { EyeFilled, FileAddOutlined, SettingFilled } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid, Tooltip } from "@mui/material";
-import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
+import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
 import { Toast } from "@src/components/Toast";
 import { useCreateSendWebhook } from "@src/services/consult/deposits/generatedDeposits/resendWebhook";
+import { useGetDepositReportFields } from "@src/services/consult/deposits/reportCsvFields/getReportFields";
 import { queryClient } from "@src/services/queryClient";
 import { useCreateGeneratedDepositsReports } from "@src/services/reports/consult/deposits/createGeneratedDepositsReports";
 import { ResendWebhookBody } from "@src/services/types/consult/deposits/createResendWebhook.interface";
@@ -14,6 +15,7 @@ import { Alert, Button, Col, Input, Row, Select, Space } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useMediaQuery } from "react-responsive";
 import {
   ColumnInterface,
   CustomTable,
@@ -28,19 +30,18 @@ import { ResendWebhookModal } from "../components/ResendWebhookModal";
 import { ViewModal } from "../components/ViewModal";
 import { WebhookModal } from "../components/webhooksModal";
 import { TotalizersCards } from "./components/TotalizersCards";
-import { useMediaQuery } from "react-responsive";
-import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
-import { useGetDepositReportFields } from "@src/services/consult/deposits/reportCsvFields/getReportFields";
 
 const INITIAL_QUERY: generatedDepositTotalQuery = {
   page: 1,
   limit: 25,
   initial_date: moment(new Date())
     .startOf("day")
+    .add(3, "hours")
     .format("YYYY-MM-DDTHH:mm:ss.SSS"),
   final_date: moment(new Date())
     .add(1, "day")
     .startOf("day")
+    .add(3, "hours")
     .format("YYYY-MM-DDTHH:mm:ss.SSS"),
 };
 
@@ -78,8 +79,9 @@ export const GeneratedDeposits = () => {
   const [search, setSearch] = useState<string | null>(null);
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [csvFields, setCsvFields] = useState<any>();
-  const [isComma, setIsComma] = useState(true);
-  const [isExportReportsOpen, setIsExportReportsOpen] = useState(false);
+  const [isComma, setIsComma] = useState<boolean>(true);
+  const [isExportReportsOpen, setIsExportReportsOpen] =
+    useState<boolean>(false);
   const debounceSearch = useDebounce(search);
 
   const {
@@ -269,7 +271,7 @@ export const GeneratedDeposits = () => {
           </Col>
         )}
 
-        <Col xs={{ span: 24 }} md={{ span: 4 }}>
+        <Col xs={{ span: 24 }} md={{ span: 5 }} lg={{ span: 4 }}>
           <Button
             type="dashed"
             loading={isDepositsRowsFetching}
@@ -315,7 +317,7 @@ export const GeneratedDeposits = () => {
 
         {permissions.report.deposit.generated_deposit
           .report_deposit_generated_deposit_export_csv && (
-          <Col xs={{ span: 24 }} md={{ span: 2 }}>
+          <Col xs={{ span: 24 }} md={{ span: 3 }} lg={{ span: 2 }}>
             <Tooltip
               placement="top-end"
               title={
@@ -332,7 +334,7 @@ export const GeneratedDeposits = () => {
                 type="dashed"
                 size="large"
                 loading={GeneratedDepositsReportsIsLoading}
-                // disabled={!depositsRows?.items.length || depositsRowsError}
+                disabled={!depositsRows?.items.length || depositsRowsError}
               >
                 <FileAddOutlined style={{ fontSize: 22 }} /> CSV
               </Button>
@@ -389,23 +391,24 @@ export const GeneratedDeposits = () => {
           id={currentItem?._id}
         />
       )}
-    
-        <ExportCustomReportsModal
-          open={isExportReportsOpen}
-          setOpen={setIsExportReportsOpen}
-          disabled={!depositsRows?.items.length || depositsRowsError}
-          mutateReport={() => GeneratedDepositsReportsMutate()}
-          error={GeneratedDepositsReportsError}
-          success={GeneratedDepositsReportsIsSuccess}
-          loading={GeneratedDepositsReportsIsLoading}
-          reportPath="/consult/deposit/deposits_reports/generated_deposits_reports"
-          fields={fields}
-          csvFields={csvFields}
-          setCsvFields={setCsvFields}
-          comma={isComma}
-          setIsComma={setIsComma}
-        />
-   
+
+      <ExportCustomReportsModal
+        open={isExportReportsOpen}
+        setOpen={setIsExportReportsOpen}
+        disabled={!depositsRows?.items.length || depositsRowsError}
+        mutateReport={() => GeneratedDepositsReportsMutate()}
+        error={GeneratedDepositsReportsError}
+        success={GeneratedDepositsReportsIsSuccess}
+        loading={GeneratedDepositsReportsIsLoading}
+        reportPath="/consult/deposit/deposits_reports/generated_deposits_reports"
+        fields={fields}
+        csvFields={csvFields}
+        setCsvFields={setCsvFields}
+        comma={isComma}
+        setIsComma={setIsComma}
+        reportName="depositReportsFields"
+      />
+
       {isFiltersOpen && (
         <FiltersModal
           maxRange

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface paidWithdrawalsTotalQuery {
   page: number;
   limit: number;
@@ -46,6 +47,8 @@ export interface paidWithdrawalsRowsQuery {
   value_end?: number;
   buyer_name?: string;
   payer_name?: string;
+  fields?: any;
+  comma_separate_value?: boolean;
 }
 
 export interface paidWithdrawalsTotal {

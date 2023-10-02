@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useGetAggregators } from "@src/services/register/aggregator/getAggregators";
+import { useListAggregators } from "@src/services/register/aggregator/listAggregators";
 import { AggregatorQuery } from "@src/services/types/register/aggregators/aggregators.interface";
 import useDebounce from "@src/utils/useDebounce";
 import { AutoComplete, Empty } from "antd";
@@ -22,24 +23,24 @@ export const AggregatorSelect = ({
     limit: 200,
     name: "",
   });
-  const { AggregatorsData, refetchAggregatorsData } = useGetAggregators(query);
+  const { aggregatorsData, refetcAggregators } = useListAggregators(query);
   const [value, setValue] = useState<any>(null);
   const debounceSearch = useDebounce(query.name);
 
   useEffect(() => {
-    if (AggregatorsData && !value) {
-      const initial = AggregatorsData?.items.find(
+    if (aggregatorsData && !value) {
+      const initial = aggregatorsData?.items.find(
         (aggregator) => aggregator.id === aggregatorId
       );
       if (initial) {
         setValue(initial?.name);
       }
     }
-  }, [aggregatorId, AggregatorsData]);
+  }, [aggregatorId, aggregatorsData]);
 
   useEffect(() => {
-    if (AggregatorsData) {
-      const initial = AggregatorsData?.items.find(
+    if (aggregatorsData) {
+      const initial = aggregatorsData?.items.find(
         (aggregator) => aggregator.id === aggregatorId
       );
       if (initial) {
@@ -49,19 +50,26 @@ export const AggregatorSelect = ({
   }, [aggregatorId]);
 
   useEffect(() => {
-    refetchAggregatorsData();
+    refetcAggregators();
   }, [debounceSearch]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const val = event?.target?.value;
     setQuery((state) => ({ ...state, name: val }));
+    if (!val) {
+      setQueryFunction((state: any) => ({
+        ...state,
+        aggregator_id: undefined,
+      }));
+      setValue(undefined);
+    }
   };
 
   return (
     <AutoComplete
       size="large"
       options={
-        AggregatorsData?.items?.map((item, index) => {
+        aggregatorsData?.items?.map((item, index) => {
           return { key: index, value: item.id, label: item.name };
         }) ?? []
       }
@@ -71,13 +79,17 @@ export const AggregatorSelect = ({
         setValue(e);
       }}
       style={{ width: "100%", height: 40 }}
-      onSelect={(value) =>
+      onSelect={(value) => {
         setQueryFunction((state: any) => ({
           ...state,
           aggregator_id: value,
           group_id: null,
-        }))
-      }
+        }));
+        setValue(
+          aggregatorsData?.items.find((aggregator) => aggregator.id === value)
+            ?.name
+        );
+      }}
       onInputKeyDown={(event: any) => {
         handleChange(event);
       }}

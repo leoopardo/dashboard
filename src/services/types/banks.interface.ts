@@ -8,12 +8,14 @@ export interface BankQuery {
 export interface BankItem {
   id: number;
   label_name: string;
+  bank: string;
   icon_url: string;
   account: number;
   agency: number;
   priority: number;
   bank_fee: number;
   internal_account_number: number;
+  img: string;
   cash_in: boolean;
   cash_out: boolean;
   status: boolean;
@@ -37,7 +39,7 @@ export interface ClientBankQuery {
   page: number;
   limit: number;
   sort_field?: string;
-  sort_order?: "ASC" | "DESC"
+  sort_order?: "ASC" | "DESC";
 }
 
 export interface ClientBankItem {

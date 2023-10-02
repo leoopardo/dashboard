@@ -115,7 +115,14 @@
     "organization_bank_balance": "Saldo bancário",
     "aggregator_blacklist": "Blacklist",
     "aggregator_blacklist_blacklist": "Blacklist de agregador",
-    "aggregator_blacklist_reasons": "Motivos de blacklist"
+    "aggregator_blacklist_reasons": "Motivos de blacklist",
+    "dashboard": "Painel",
+    "authentication_logs": "Logs de autenticação",
+    "import_merchant_blacklist": "Importar blacklist",
+    "upload_person_blacklist": "Importar blacklist",
+    "person_blacklist_uploads": "Verificar uploads",
+    "person_blacklist_reasons": "Motivos de blacklist",
+    "self_exclusion": "Auto exclusão"
   },
 
   "titles": {
@@ -143,7 +150,7 @@
     "yes_confirm": "Sim, confirmar",
     "yes_create": "Sim, criar",
     "uploaded": "Upload realizado",
-    "upload": "upload",
+    "upload": "subir",
     "deleted": "Deletado",
     "delete": "Deletar",
     "checked": "Dhecado",
@@ -156,7 +163,8 @@
     "creating_csv": "Gerando CSV",
     "creating_csv_message": "O arquivo CSV está sendo sendo gerado. Você pode acompanhar o processamento navegando para:",
     "export_csv": "Gerar relatório CSV",
-    "no_records_to_export": "Não há registros para gerar um CSV"
+    "no_records_to_export": "Não há registros para gerar um CSV",
+    "20_minutes_consult": "Consulta realizada a mais de 20 minutos"
   },
   "login": {
     "sign_in": "Faça login",
@@ -187,7 +195,9 @@
     "create_bank_blacklist": "Adicionar à blacklist",
     "new_fee": "Criar taxa",
     "add_fee": "Adicionar taxa",
-    "new_reason": "Novo motivo"
+    "new_reason": "Novo motivo",
+    "sample_file": "arquivo exemplo",
+    "create_self_exclusion": "Criar auto exclusão"
   },
   "modal": {
     "confirm": "Confirmar",
@@ -213,7 +223,8 @@
     "new_bank_blacklist": "Adicionar à blacklist",
     "resend_webhook": "Reenviar webhook",
     "update_bank": "Atualizar banco",
-    "new_reason": "Novo motivo"
+    "new_reason": "Novo motivo",
+    "modal_create_merchant": "Criar empresa"
   },
   "input": {
     "required": "Por favor, insira o {{field}}",
@@ -259,6 +270,7 @@
     "deposit_bank": "Banco depósito",
     "withdraw_bank": "Banco saque",
     "cpf": "CPF",
+    "document": "CPF",
     "deposit_fee_type": "Tipo de taxa de depósito",
     "deposit_fee_plan": "Plano de taxa de depósito",
     "deposit_fee_percent": "Percentual de taxa de depósito",
@@ -292,7 +304,10 @@
     "secondary": "Secundário",
     "both": "Ambos",
     "options": "Opções",
-    "csv_columns": "Selecione as colunas do CSV"
+    "csv_columns": "Selecione as colunas do CSV",
+    "comma_separator": "Separador de casas decimais",
+    "operation_type": "Tipo de operação",
+    "btg_id": "ID BTG"
   },
   "table": {
     "id": "ID",
@@ -402,6 +417,7 @@
     "active": "Ativo",
     "inactive": "Inativo",
     "organization_id": "ID da organização",
+    "organization": "Organização",
     "icon_url": "Logo",
     "label_name": "Nome do banco",
     "priority": "Prioridade",
@@ -536,7 +552,49 @@
     "net_value": "valor",
     "paid_value": "Valor pago",
     "delivered_at_secondary": "Entregue em (secundário)",
-    "v3_id": "ID V3"
+    "v3_id": "ID V3",
+    "receiver_bank_name": "Banco recebedor",
+    "payment_id": "ID do pagamento",
+    "receiver_email": "Email do recebedor",
+    "cash_out_fee_percent": "Taxa de saque",
+    "deposit_fee": "Taxa de depósito",
+    "fee_withdraw": "Taxa de saque",
+    "pix_refund_fee": "Taxa devolução de depósito",
+    "under_age_verify": "Verificar maioridade",
+    "cash_in_bank": "Banco de depósito",
+    "cash_out_bank": "Banco de saque",
+    "moviments": "Movimentações",
+    "deposits": "Depósitos",
+    "withdrawals": "Saques",
+    "payments": "Pagamentos",
+    "operation_number": "número de operações",
+    "ticket": "Ticket médio",
+    "not_paid": "Não pagos",
+    "others": "Outros",
+    "financial_movements": "Movimentações financeiras",
+    "operation_moviments": "Movimentações de operação",
+    "fees": "Taxas",
+    "merchants_balance": "Saldos de empresas",
+    "payment": "Pagamento",
+    "security": "Segurança",
+    "total": "Total",
+    "deposit_conversion": "Conversão de entrada",
+    "withdraw_conversion": "Conversão de saída",
+    "empty_conversion": "Nenhum valor de conversão encontrado",
+    "deposit_bank": "Banco depósito",
+    "withdraw_bank": "Banco saque",
+    "aggregator": "Agregador",
+    "operator": "Operador",
+    "add_row": "Adicionar linha",
+    "upload_file": "Fazer upload",
+    "total_rows": "Total de linhas",
+    "failed_rows": "Linhas com erro",
+    "created_by_ip": "Ip do criador",
+    "WAITING": "Aguardando",
+    "created_by": "Criado por",
+    "reason_name": "Motivo",
+    "start_date": "Data inicial",
+    "end_date": "Data final"
   },
   "actions": {
     "details": "Detalhes",

@@ -1,6 +1,7 @@
 export interface OperatorQuery {
   operator_id?: number;
   start_date?: string;
+  aggregator_id?: string;
   end_date?: string;
   name?: string;
   status?: string;
