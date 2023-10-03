@@ -115,7 +115,6 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
       status: organizationConfigData?.status,
     });
   }, [organizationConfigData]);
-  console.log(bodyUpdate);
 
   return (
     <>

@@ -3,9 +3,13 @@
 import { EyeFilled } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
+import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { useGetRefundDepositsManual } from "@src/services/consult/refund/refundDepositsManual/getRows";
 import { useGetTotalRefundDepositManual } from "@src/services/consult/refund/refundDepositsManual/getTotal";
-import { Alert, Button, Input, Select } from "antd";
+import { queryClient } from "@src/services/queryClient";
+import { useCreateRefundManualDepositsReports } from "@src/services/reports/consult/refund/manualDeposits/createRefundManualDepositReports";
+import { ValidateInterface } from "@src/services/types/validate.interface";
+import { Button, Input, Select } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -24,29 +28,41 @@ const INITIAL_QUERY: refundDepositsQuery = {
   page: 1,
   limit: 25,
   start_date: moment(new Date())
-    .startOf("day").add(3, "hours")
+    .startOf("day")
+    .add(3, "hours")
     .format("YYYY-MM-DDTHH:mm:ss.SSS"),
   end_date: moment(new Date())
     .add(1, "day")
-    .startOf("day").add(3, "hours")
+    .startOf("day")
+    .add(3, "hours")
     .format("YYYY-MM-DDTHH:mm:ss.SSS"),
 };
 
 export const RefundDepositsManual = () => {
+  const { permissions } = queryClient.getQueryData(
+    "validate"
+  ) as ValidateInterface;
   const { t } = useTranslation();
   const [query, setQuery] = useState<refundDepositsQuery>(INITIAL_QUERY);
   const {
     isRefundDepositManualTotalFetching,
     refetchRefundDepositManualTotal,
     refundDepositManualTotal,
-    refundDepositManualTotalError,
   } = useGetTotalRefundDepositManual(query);
 
   const {
     isRefundDepositsManualFetching,
     refetchRefundDepositsManual,
     refundDepositsManual,
+    refundDepositsManualError,
   } = useGetRefundDepositsManual(query);
+
+  const {
+    RefundManualDepositsReportsError,
+    RefundManualDepositsReportsIsLoading,
+    RefundManualDepositsReportsIsSuccess,
+    RefundManualDepositsReportsMutate,
+  } = useCreateRefundManualDepositsReports(query);
 
   useEffect(() => {
     refetchRefundDepositsManual();
@@ -89,20 +105,6 @@ export const RefundDepositsManual = () => {
 
   return (
     <Grid container style={{ padding: "25px" }}>
-      <Grid container>
-        {refundDepositManualTotalError ? (
-          <Grid item xs={12} style={{ marginBottom: "10px" }}>
-            <Alert
-              message={refundDepositManualTotalError?.message}
-              type="error"
-              closable
-            />
-          </Grid>
-        ) : (
-          <></>
-        )}
-      </Grid>
-
       <TotalizersCards
         data={refundDepositManualTotal}
         fetchData={refetchRefundDepositManualTotal}
@@ -182,12 +184,33 @@ export const RefundDepositsManual = () => {
               setSearchOption(null);
               setSearch("");
             }}
-            style={{ height: 40, display: "flex", alignItems: "center" }}
+            style={{
+              height: 40,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "100%",
+            }}
           >
             <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
             {t("table.clear_filters")}
           </Button>
         </Grid>
+        {permissions?.report?.chargeback?.deposit_chargeback
+          ?.report_chargeback_deposit_chargeback_export_csv && (
+          <Grid item xs={12} md="auto">
+            <ExportReportsModal
+              disabled={
+                !refundDepositsManual?.total || refundDepositsManualError
+              }
+              mutateReport={() => RefundManualDepositsReportsMutate()}
+              error={RefundManualDepositsReportsError}
+              success={RefundManualDepositsReportsIsSuccess}
+              loading={RefundManualDepositsReportsIsLoading}
+              reportPath="/consult/refunds/refund_reports/refund_manual_reports"
+            />
+          </Grid>
+        )}
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -200,6 +223,7 @@ export const RefundDepositsManual = () => {
             items={refundDepositsManual?.items}
             columns={columns}
             loading={isRefundDepositsManualFetching}
+            error={refundDepositsManualError}
             actions={[
               {
                 label: "details",
@@ -228,7 +252,8 @@ export const RefundDepositsManual = () => {
         <ViewModal
           open={isViewModalOpen}
           setOpen={setIsViewModalOpen}
-          id={currentItem?._id}
+          item={currentItem}
+          type="manual"
         />
       )}
       {isFiltersOpen && (

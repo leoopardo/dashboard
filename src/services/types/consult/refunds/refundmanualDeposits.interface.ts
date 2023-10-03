@@ -1,4 +1,4 @@
-export interface refundDepositsQuery {
+export interface refundManualDepositsQuery {
   page: number;
   limit: number;
   sort_order?: "DESC" | "ASC";
@@ -34,7 +34,7 @@ export interface refundDepositsQuery {
   payer_name?: string;
 }
 
-export interface refundDepositTotal {
+export interface refundManualDepositTotal {
   transactions_total: number;
   transactions_value: number;
   waiting_total: number;
@@ -49,13 +49,13 @@ export interface refundDepositTotal {
   paid_to_merchant_value: number;
 }
 
-export interface refundDepositRowsResponse {
+export interface refundManualDepositRowsResponse {
   limit: number;
   page: number;
   total: number;
-  items: refundDepositRowsItems[];
+  items: refundManualDepositRowsItems[];
 }
-export interface refundDepositRowsItems {
+export interface refundManualDepositRowsItems {
   buyer_document: string;
   buyer_name: string;
   createdAt: string;

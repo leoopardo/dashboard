@@ -7,7 +7,15 @@ import { useCreateOperatorUser } from "@src/services/register/operator/users/cre
 import { useUpdateOperatorUser } from "@src/services/register/operator/users/updateUser";
 import { OperatorItem } from "@src/services/types/register/operators/operators.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Drawer, Form, FormInstance, Input } from "antd";
+import {
+  Button,
+  Drawer,
+  Form,
+  FormInstance,
+  Input,
+  Switch,
+  Typography,
+} from "antd";
 import React, {
   Dispatch,
   SetStateAction,
@@ -61,7 +69,6 @@ export const NewUserModal = ({
   const [body, setBody] = useState<NewUserInterface>({
     name: "",
     username: "",
-    password: "",
     group_id: 0,
     status: true,
     type: 2,
@@ -117,6 +124,12 @@ export const NewUserModal = ({
       });
     }
   }, [action]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      setOpen(false);
+    }
+  }, [isSuccess]);
 
   return (
     <Drawer
@@ -291,6 +304,28 @@ export const NewUserModal = ({
               body?.operator_id || body.operator_id || currentUser?.operator_id
             }
           />
+        </Form.Item>
+
+        <Form.Item
+          label={t("table.status")}
+          name="status"
+          style={{ margin: 10 }}
+        >
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            <Typography style={{ marginRight: 8 }}>
+              {t("table.inactive")}
+            </Typography>
+            <Switch
+              disabled={action === "create"}
+              checked={body?.status}
+              onChange={(checked) =>
+                setBody((state) => ({ ...state, status: checked }))
+              }
+            />{" "}
+            <Typography style={{ marginLeft: 8 }}>
+              {t("table.active")}
+            </Typography>
+          </div>
         </Form.Item>
         <Form.Item
           label={t(`table.password`)}

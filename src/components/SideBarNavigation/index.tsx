@@ -79,8 +79,6 @@ export const SidebarNavigation = () => {
     } as MenuItem;
   }
 
-  console.log(permissions);
-
   const i: MenuItem[] = [
     getItem(
       "dashboard",

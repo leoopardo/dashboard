@@ -3,7 +3,7 @@
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { api } from "../../../../config/api";
-import { refundWithdrawalsQuery } from "../../../types/consult/refunds/refundWithdrawals.interface";
+import { refundWithdrawalsQuery } from "../../../types/consult/refunds/refundmanualDeposits.interface";
 import { refundDepositTotal } from "../../../types/consult/refunds/refundsDeposits.interface";
 
 export function useGetTotalRefundWithdrawals(params: refundWithdrawalsQuery) {
@@ -14,16 +14,8 @@ export function useGetTotalRefundWithdrawals(params: refundWithdrawalsQuery) {
   const fetchTotalWithdrawals = async () => {
     try {
       setIsFetching(true);
-      const response = await api.get("refund/pix/total", {
-        params: {
-          ...params,
-          start_date: moment(params.start_date)
-            .add(3, "hours")
-            .format("YYYY-MM-DDTHH:mm:ss.SSS"),
-          end_date: moment(params.end_date)
-            .add(3, "hours")
-            .format("YYYY-MM-DDTHH:mm:ss.SSS"),
-        },
+      const response = await api.get("refund/withdraw/total", {
+        params,
       });
       setData(response.data);
     } catch (error) {

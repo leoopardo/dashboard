@@ -1,9 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
+import { EyeFilled, ShopOutlined } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import ReplayIcon from "@mui/icons-material/Replay";
 import { Grid } from "@mui/material";
-import { Alert, Button, Input, Select } from "antd";
+import { Confirmation } from "@src/components/Modals/confirmation";
+import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
+import { Toast } from "@src/components/Toast";
+import { useCreateDepositrefund } from "@src/services/consult/refund/refundDeposits/createRefund";
+import { useUpatePayToMerchant } from "@src/services/consult/refund/refundDeposits/updateRefundToMerchant";
+import { queryClient } from "@src/services/queryClient";
+import { useCreateRefundDepositsReports } from "@src/services/reports/consult/refund/deposit/createRefundDepositReports";
+import { ValidateInterface } from "@src/services/types/validate.interface";
+import { Button, Input, Select } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -22,13 +31,6 @@ import {
 import useDebounce from "../../../../../../utils/useDebounce";
 import { ViewModal } from "../components/ViewModal";
 import { TotalizersCards } from "./components/TotalizersCards";
-import { EyeFilled, ShopOutlined } from "@ant-design/icons";
-import { queryClient } from "@src/services/queryClient";
-import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Confirmation } from "@src/components/Modals/confirmation";
-import { useCreateDepositrefund } from "@src/services/consult/refund/refundDeposits/createRefund";
-import { Toast } from "@src/components/Toast";
-import { useUpatePayToMerchant } from "@src/services/consult/refund/refundDeposits/updaterefundToMerchant";
 
 const INITIAL_QUERY: refundDepositsQuery = {
   page: 1,
@@ -61,6 +63,7 @@ export const RefundDeposits = () => {
     refundDepositsRows,
     isRefundDepositsRowsFetching,
     refetchRefundDepositsTotalRows,
+    refundDepositsRowsError,
   } = useGetRowsRefundDeposits(query);
 
   useEffect(() => {
@@ -83,11 +86,17 @@ export const RefundDeposits = () => {
   );
 
   const {
-    payToMerchantIsLoading,
     payToMerchantSuccess,
     payToMerchanterror,
     payToMerchantMutate,
   } = useUpatePayToMerchant(currentItem?._id);
+
+  const {
+    RefundDepositsReportsError,
+    RefundDepositsReportsIsLoading,
+    RefundDepositsReportsIsSuccess,
+    RefundDepositsReportsMutate,
+  } = useCreateRefundDepositsReports(query);
 
   const columns: ColumnInterface[] = [
     { name: "pix_id", type: "id" },
@@ -119,20 +128,6 @@ export const RefundDeposits = () => {
 
   return (
     <Grid container style={{ padding: "25px" }}>
-      <Grid container>
-        {refundDepositsTotalError ? (
-          <Grid item xs={12} style={{ marginBottom: "10px" }}>
-            <Alert
-              message={refundDepositsTotalError?.message}
-              type="error"
-              closable
-            />
-          </Grid>
-        ) : (
-          <></>
-        )}
-      </Grid>
-
       <TotalizersCards
         data={refundDepositsTotal}
         fetchData={refetchRefundDepositsTotal}
@@ -224,6 +219,19 @@ export const RefundDeposits = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
+        {permissions?.report?.chargeback?.deposit_chargeback
+          ?.report_chargeback_deposit_chargeback_export_csv && (
+          <Grid item xs={12} md="auto">
+            <ExportReportsModal
+              disabled={!refundDepositsRows?.total || refundDepositsRowsError}
+              mutateReport={() => RefundDepositsReportsMutate()}
+              error={RefundDepositsReportsError}
+              success={RefundDepositsReportsIsSuccess}
+              loading={RefundDepositsReportsIsLoading}
+              reportPath="/consult/refunds/refund_reports/refund_deposits_reports"
+            />
+          </Grid>
+        )}
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -252,7 +260,7 @@ export const RefundDeposits = () => {
                   !["WAITING", "ERROR"].includes(item?.status),
               },
 
-            permissions?.report?.chargeback?.deposit_chargeback
+              permissions?.report?.chargeback?.deposit_chargeback
                 ?.report_chargeback_deposit_chargeback_paid_to_merchant && {
                 label: "pay_to_merchant",
                 icon: <ShopOutlined style={{ fontSize: "18px" }} />,
@@ -348,7 +356,7 @@ export const RefundDeposits = () => {
         error={error}
         success={isSuccess}
       />
-        <Toast
+      <Toast
         actionError={t("messages.refund")}
         actionSuccess={t("messages.refunded")}
         error={payToMerchanterror}

@@ -54,7 +54,6 @@ export const UpdateUserModal = ({
   const [body, setBody] = useState<MerchantUserBodyItem>({
     name: "",
     username: "",
-    password: "",
     group_id: 0,
     status: true,
     type: 2,

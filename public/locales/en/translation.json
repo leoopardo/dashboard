@@ -597,7 +597,12 @@
     "reason_name": "Reason",
     "start_date": "Start date",
     "end_date": "End date",
-    "origin_transaction": "Orignin transaction"
+    "origin_transaction": "Orignin transaction",
+    "refund_to_merchant": "Refund to merchant",
+    "refund_id": "Refund ID",
+    "refund_date": "Refund date",
+    "blacklist_data": "Locks data",
+    "limits_data": "limits data"
   },
   "actions": {
     "details": "Details",

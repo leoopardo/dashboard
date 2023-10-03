@@ -15,7 +15,7 @@ import { generatedWithdrawalsRowsQuery } from "@src/services/types/consult/withd
 import { PersonsQuery } from "@src/services/types/register/persons/persons.interface";
 import { Descriptions, Empty, Spin, Tabs, TabsProps, Upload } from "antd";
 import moment from "moment";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import { useParams } from "react-router-dom";
@@ -33,6 +33,9 @@ export const PersonDetails = () => {
     sort_order: "DESC",
     cpf: cpf?.split(" ").join("."),
   };
+  const [personData, setPersonData] = useState({});
+  const [blacklistData, setBlacklistData] = useState({});
+  const [LimitsData, setLimitsData] = useState({});
   const { PersonsData, isPersonsDataFetching } = useGetPersons(query);
 
   ///// generated deposits ------------------
@@ -103,10 +106,47 @@ export const PersonDetails = () => {
 
   const { Files, isFilesFetching } = useGetFiles(cpf?.split(" ").join("."));
 
+  useEffect(() => {
+    if (!isPersonsDataFetching && PersonsData?.items[0]) {
+      setPersonData({
+        _id: PersonsData?.items[0]._id,
+        status: PersonsData?.items[0].situation_text,
+        cpf: PersonsData?.items[0].cpf,
+        state: PersonsData?.items[0].state,
+        name: PersonsData?.items[0].name,
+        city: PersonsData?.items[0].city,
+        mother_name: PersonsData?.items[0].mother_name,
+        neighborhood: PersonsData?.items[0].neighborhood,
+        birth_date: PersonsData?.items[0].birth_date,
+        createdAt: PersonsData?.items[0].createdAt,
+        gender: PersonsData?.items[0].gender,
+        updatedAt: PersonsData?.items[0].updatedAt,
+        email: PersonsData?.items[0].email,
+        last_check: PersonsData?.items[0].last_check,
+        cellphone: PersonsData?.items[0].cellphone,
+      });
+
+      setBlacklistData({
+        black_list: PersonsData?.items[0].black_list,
+        black_list_reason: PersonsData?.items[0].black_list_reason,
+        black_list_description: PersonsData?.items[0].black_list_description,
+        flag_pep: PersonsData?.items[0].flag_pep,
+        flag_aux_gov: PersonsData?.items[0].flag_aux_gov,
+        flag_alert: PersonsData?.items[0].flag_alert,
+      });
+      setLimitsData({
+        cash_in_max_value: PersonsData?.items[0].cash_in_max_value,
+        cash_out_max_value: PersonsData?.items[0].cash_out_max_value,
+        cash_out_transaction_limit:
+          PersonsData?.items[0].cash_out_transaction_limit,
+      });
+    }
+  }, [PersonsData?.items[0]]);
+
   const items: TabsProps["items"] = [
     {
       key: "1",
-      label: t("table.details"),
+      label: t("table.general_data"),
       children: isPersonsDataFetching ? (
         <div
           style={{
@@ -120,98 +160,215 @@ export const PersonDetails = () => {
           <Spin size="large" />
         </div>
       ) : (
-        <Descriptions
-          bordered
-          style={{ margin: 0, padding: 0 }}
-          column={isMobile ? 1 : 3}
-        >
-          {PersonsData?.items[0] &&
-            Object.keys(PersonsData?.items[0]).map((key: string, index) => {
-              switch (key) {
-                case "createdAt":
-                case "last_check":
-                case "updatedAt":
-                  return (
-                    <Descriptions.Item
-                      key={key}
-                      label={t(`table.${key}`)}
-                      labelStyle={{
-                        maxWidth: "120px !important",
-                        margin: 0,
-                        padding: 0,
-                        textAlign: "center",
-                      }}
-                    >
-                      {`${new Date(
-                        PersonsData?.items[0][key] ?? ""
-                      ).toLocaleDateString()} ${new Date(
-                        PersonsData?.items[0][key] ?? ""
-                      ).toLocaleTimeString()}`}
-                    </Descriptions.Item>
-                  );
+        <Grid container spacing={1} display="flex" justifyContent="center">
+          <Grid item md={10} xs={12}>
+            <Descriptions
+              bordered
+              style={{ margin: 0, padding: 0 }}
+              column={isMobile ? 1 : 2}
+            >
+              {!isPersonsDataFetching &&
+                Object.keys(personData).map((key, index) => {
+                  switch (key) {
+                    case "birth_date":
+                      return (
+                        <Descriptions.Item
+                          key={key}
+                          label={t(`table.${key}`)}
+                          labelStyle={{
+                            maxWidth: "120px !important",
+                            margin: 0,
+                            padding: 0,
+                            textAlign: "center",
+                          }}
+                        >
+                          {`${new Date(
+                            PersonsData?.items[0][key] ?? ""
+                          ).toLocaleDateString("pt-BR", {
+                            timeZone: "UTC",
+                          })}`}
+                        </Descriptions.Item>
+                      );
 
-                case "birth_date":
-                  return (
-                    <Descriptions.Item
-                      key={key}
-                      label={t(`table.${key}`)}
-                      labelStyle={{
-                        maxWidth: "120px !important",
-                        margin: 0,
-                        padding: 0,
-                        textAlign: "center",
-                      }}
-                    >
-                      {`${new Date(
-                        PersonsData?.items[0][key] ?? ""
-                      ).toLocaleDateString("pt-BR", {
-                        timeZone: "UTC",
-                      })}`}
-                    </Descriptions.Item>
-                  );
+                    case "createdAt":
+                    case "last_check":
+                    case "updatedAt":
+                      return (
+                        <Descriptions.Item
+                          key={key}
+                          label={t(`table.${key}`)}
+                          labelStyle={{
+                            maxWidth: "120px !important",
+                            margin: 0,
+                            padding: 0,
+                            textAlign: "center",
+                          }}
+                        >
+                          {`${new Date(
+                            PersonsData?.items[0][key] ?? ""
+                          ).toLocaleDateString()} ${new Date(
+                            PersonsData?.items[0][key] ?? ""
+                          ).toLocaleTimeString()}`}
+                        </Descriptions.Item>
+                      );
 
-                case "flag_pep":
-                case "flag_aux_gov":
-                case "black_list":
-                  return (
-                    <Descriptions.Item
-                      key={key}
-                      label={t(`table.${key}`)}
-                      labelStyle={{
-                        maxWidth: "120px !important",
-                        margin: 0,
-                        padding: 0,
-                        textAlign: "center",
-                      }}
-                    >
-                      {PersonsData?.items[0][key]
-                        ? t("table.true")
-                        : t("table.false")}
-                    </Descriptions.Item>
-                  );
+                    case "flag_pep":
+                    case "flag_aux_gov":
+                    case "black_list":
+                      return (
+                        <Descriptions.Item
+                          key={key}
+                          label={t(`table.${key}`)}
+                          labelStyle={{
+                            maxWidth: "120px !important",
+                            margin: 0,
+                            padding: 0,
+                            textAlign: "center",
+                          }}
+                        >
+                          {PersonsData?.items[0][key]
+                            ? t("table.true")
+                            : t("table.false")}
+                        </Descriptions.Item>
+                      );
 
-                default:
-                  return (
-                    <Descriptions.Item
-                      key={index}
-                      label={t(`table.${key}`)}
-                      labelStyle={{
-                        maxWidth: "120px !important",
-                        margin: 0,
-                        padding: 0,
-                        textAlign: "center",
-                      }}
-                    >
-                      {(PersonsData?.items[0] as any)[key] ?? "-"}
-                    </Descriptions.Item>
-                  );
-              }
-            })}
-        </Descriptions>
+                    default:
+                      return (
+                        <Descriptions.Item
+                          key={index}
+                          label={t(`table.${key}`)}
+                          labelStyle={{
+                            maxWidth: "120px !important",
+                            margin: 0,
+                            padding: 0,
+                            textAlign: "center",
+                          }}
+                        >
+                          {(PersonsData?.items[0] as any)[key] ?? "-"}
+                        </Descriptions.Item>
+                      );
+                  }
+                })}
+            </Descriptions>
+          </Grid>
+        </Grid>
       ),
     },
     {
       key: "2",
+      label: t("table.blacklist_data"),
+      children: isPersonsDataFetching ? (
+        <div
+          style={{
+            height: "70vh",
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Spin size="large" />
+        </div>
+      ) : (
+        <Grid container spacing={1} display="flex" justifyContent="center">
+          <Grid item md={8} xs={12}>
+            <Descriptions bordered style={{ margin: 0, padding: 0 }} column={1}>
+              {!isPersonsDataFetching &&
+                Object.keys(blacklistData).map((key, index) => {
+                  switch (key) {
+                    case "flag_pep":
+                    case "flag_aux_gov":
+                    case "black_list":
+                      return (
+                        <Descriptions.Item
+                          key={key}
+                          label={t(`table.${key}`)}
+                          labelStyle={{
+                            maxWidth: "120px !important",
+                            margin: 0,
+                            padding: 0,
+                            textAlign: "center",
+                          }}
+                        >
+                          {PersonsData?.items[0][key]
+                            ? t("table.true")
+                            : t("table.false")}
+                        </Descriptions.Item>
+                      );
+
+                    default:
+                      return (
+                        <Descriptions.Item
+                          key={index}
+                          label={t(`table.${key}`)}
+                          labelStyle={{
+                            maxWidth: "120px !important",
+                            margin: 0,
+                            padding: 0,
+                            textAlign: "center",
+                          }}
+                        >
+                          {(PersonsData?.items[0] as any)[key] ?? "-"}
+                        </Descriptions.Item>
+                      );
+                  }
+                })}
+            </Descriptions>
+          </Grid>
+        </Grid>
+      ),
+    },
+    {
+      key: "3",
+      label: t("table.limits_data"),
+      children: isPersonsDataFetching ? (
+        <div
+          style={{
+            height: "70vh",
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Spin size="large" />
+        </div>
+      ) : (
+        <Grid container spacing={1} display="flex" justifyContent="center">
+          <Grid item md={8} xs={12}>
+            <Descriptions bordered style={{ margin: 0, padding: 0 }} column={1}>
+              {!isPersonsDataFetching &&
+                Object.keys(LimitsData).map((key, index) => {
+                  switch (key) {
+                    default:
+                      return (
+                        <Descriptions.Item
+                          key={index}
+                          label={t(`table.${key}`)}
+                          labelStyle={{
+                            maxWidth: "120px !important",
+                            margin: 0,
+                            padding: 0,
+                            textAlign: "center",
+                          }}
+                        >
+                          {(PersonsData?.items[0] as any)[key]
+                            ? new Intl.NumberFormat("pt-BR", {
+                                style: "currency",
+                                currency: "BRL",
+                              }).format((PersonsData?.items[0] as any)[key])
+                            : "-"}
+                        </Descriptions.Item>
+                      );
+                  }
+                })}
+            </Descriptions>
+          </Grid>
+        </Grid>
+      ),
+    },
+    {
+      key: "4",
       label: t("table.attachments"),
       children: isFilesFetching ? (
         <div
@@ -259,7 +416,7 @@ export const PersonDetails = () => {
       ),
     },
     {
-      key: "3",
+      key: "5",
       label: t("menus.generated_deposits"),
       children: (
         <>
@@ -306,7 +463,7 @@ export const PersonDetails = () => {
       ),
     },
     {
-      key: "4",
+      key: "6",
       label: t("menus.paid_deposits"),
       children: (
         <>
@@ -353,7 +510,7 @@ export const PersonDetails = () => {
       ),
     },
     {
-      key: "5",
+      key: "7",
       label: t("menus.withdrawals"),
       children: (
         <>

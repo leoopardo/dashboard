@@ -5,7 +5,7 @@ import { api } from "../../../../config/api";
 import {
   refundWithdrawalsQuery,
   refundWithdrawalsRowsResponse,
-} from "../../../types/consult/refunds/refundWithdrawals.interface";
+} from "../../../types/consult/refunds/refundmanualDeposits.interface";
 
 export function useGetRowsRefundWithdrawals(params: refundWithdrawalsQuery) {
   const { data, isFetching, error, refetch } = useQuery<
@@ -13,16 +13,8 @@ export function useGetRowsRefundWithdrawals(params: refundWithdrawalsQuery) {
   >(
     "refundWithdrawalsRows",
     async () => {
-      const response = await api.get("refund/pix/rows", {
-        params: {
-          ...params,
-          start_date: moment(params.start_date)
-            .add(3, "hours")
-            .format("YYYY-MM-DDTHH:mm:ss.SSS"),
-          end_date: moment(params.end_date)
-            .add(3, "hours")
-            .format("YYYY-MM-DDTHH:mm:ssSSS"),
-        },
+      const response = await api.get("refund/withdraw/rows", {
+        params,
       });
       return response.data;
     },

@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { api } from "../../../../config/api";
-import moment from "moment";
-import { refundWithdrawalsQuery } from "../../../types/consult/refunds/refundWithdrawals.interface";
+import { refundManualDepositsQuery } from "../../../types/consult/refunds/refundmanualDeposits.interface";
 import { refundDepositTotal } from "../../../types/consult/refunds/refundsDeposits.interface";
 
-export function useGetTotalRefundDepositManual(params: refundWithdrawalsQuery) {
+export function useGetTotalRefundDepositManual(params: refundManualDepositsQuery) {
   const [data, setData] = useState<refundDepositTotal | null>(null);
   const [error, setError] = useState<any>(null);
   const [isFetching, setIsFetching] = useState<boolean>(false);
@@ -12,16 +11,8 @@ export function useGetTotalRefundDepositManual(params: refundWithdrawalsQuery) {
   const fetchTotalDepositManual = async () => {
     try {
       setIsFetching(true);
-      const response = await api.get("refund/pix/total", {
-        params: {
-          ...params,
-          start_date: moment(params.start_date)
-            .add(3, "hours")
-            .format("YYYY-MM-DDTHH:mm:ss.SSS"),
-          end_date: moment(params.end_date)
-            .add(3, "hours")
-            .format("YYYY-MM-DDTHH:mm:ss.SSS"),
-        },
+      const response = await api.get("refund/pix-manual/total", {
+        params,
       });
       setData(response.data);
     } catch (error) {
