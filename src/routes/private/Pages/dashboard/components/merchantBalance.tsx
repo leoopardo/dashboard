@@ -22,7 +22,7 @@ export const MerchantBalance = () => {
 
   return (
     <Layout style={{ margin: -28, padding: 28 }}>
-      <Row align="middle" style={{ width: "100%" }} gutter={[8, 8]}>
+      <Row align="middle" style={{ width: "100%", maxWidth: "1600px" }} gutter={[8, 8]}>
         <Col
           xs={{ span: 24 }}
           md={{ span: 4 }}

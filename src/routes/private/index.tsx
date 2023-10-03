@@ -80,6 +80,7 @@ import { ImportPersonsBlacklist } from "./Pages/register/persons/blacklist/impor
 import { PersonBlacklistUploads } from "./Pages/register/persons/blacklist/uploads";
 import { PersonBlacklistReasons } from "./Pages/register/persons/blacklist/blacklistReasons";
 import { AggregatorSelfExclusion } from "./Pages/register/aggregator/selfExclusion";
+import { SelfExclusionReports } from "./Pages/register/aggregator/reports/selfExclusion";
 
 export const PrivateRoutes = () => {
   return (
@@ -238,6 +239,10 @@ export const PrivateRoutes = () => {
               <Route
                 path="aggregator_users_reports"
                 element={<AggregatorUsersReports />}
+              />{" "}
+              <Route
+                path="self_exclusion_reports"
+                element={<SelfExclusionReports />}
               />
             </Route>
           </Route>

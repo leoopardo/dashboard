@@ -228,7 +228,8 @@ export const SidebarNavigation = () => {
                   ? undefined
                   : "none",
               }
-            ),getItem(
+            ),
+            getItem(
               "self_exclusion",
               null,
               null,
@@ -309,6 +310,19 @@ export const SidebarNavigation = () => {
                   {
                     display: permissions?.register?.aggregator?.users
                       ?.aggregator_user_export_csv
+                      ? undefined
+                      : "none",
+                  }
+                ),
+                getItem(
+                  "self_exclusion_reports",
+                  null,
+                  null,
+                  false,
+                  (e) => handleNavigate(e?.keyPath),
+                  {
+                    display: permissions?.register?.aggregator?.self_exclusion
+                      .aggregator_self_exclusion_export_csv
                       ? undefined
                       : "none",
                   }
@@ -684,7 +698,8 @@ export const SidebarNavigation = () => {
                       ? undefined
                       : "none",
                   }
-                ),getItem(
+                ),
+                getItem(
                   "person_blacklist_uploads",
                   null,
                   null,

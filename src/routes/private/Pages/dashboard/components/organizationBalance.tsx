@@ -19,8 +19,8 @@ export const OrganizationBalance = () => {
   const [show, setShow] = useState<boolean>(true);
   const isMobile = useMediaQuery({ maxWidth: "750px" });
   return (
-    <Layout style={{ margin: -28, padding: 20 }}>
-      <Row align="middle" style={{ width: "100%" }} gutter={[8, 8]}>
+    <Layout style={{ margin: -28, padding: 20, display: "flex", justifyContent: "center" }}>
+      <Row align="middle" style={{ width: "100%", maxWidth: "1600px"  }} gutter={[8, 8]}>
         <Col xs={{ span: 24 }} md={{ span: 4 }}>
           <Card>
             <Typography.Title

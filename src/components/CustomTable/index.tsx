@@ -74,7 +74,9 @@ interface TableProps {
   setIsConfirmOpen?: Dispatch<SetStateAction<boolean>>;
   itemToAction?: string | null;
   onConfirmAction?: () => void;
-  disableScrollToTop?: boolean
+  disableScrollToTop?: boolean;
+  checkbox?: boolean;
+  setSelectedRows?: Dispatch<SetStateAction<any[] | null>>;
 }
 
 export const CustomTable = (props: TableProps) => {
@@ -123,15 +125,45 @@ export const CustomTable = (props: TableProps) => {
   }, [sortOrder]);
 
   useEffect(() => {
-    if(!props.disableScrollToTop){
+    if (!props.disableScrollToTop) {
       window.scrollTo({
         top: 0,
         left: 0,
         behavior: "smooth",
       });
     }
-    
   }, [props.query]);
+
+  const sanitazerData = (result: any) => {
+    let helper;
+    if (Array.isArray(result)) helper = result;
+    else helper = [result];
+
+    if (props?.checkbox) {
+      const newObj = helper.map((item) => {
+        return {
+          ...item,
+          key: item?.id || item?._id,
+        };
+      });
+
+      return newObj;
+    }
+
+    const newObj = helper.map((item) => {
+      return {
+        ...item,
+      };
+    });
+
+    return newObj;
+  };
+
+  const rowSelection = {
+    onChange: (_selectedRowKeys: any, selectedRows: any) => {
+      props.setSelectedRows ? props?.setSelectedRows(selectedRows) : undefined;
+    },
+  };
 
   useEffect(() => {
     setColumns(
@@ -481,6 +513,7 @@ export const CustomTable = (props: TableProps) => {
               render: (_a: any, record: any) => (
                 <div style={{ width: "100%", textAlign: "center" }}>
                   <Dropdown
+                    trigger={["click"]}
                     key={column?.name}
                     menu={{
                       items: actions.map((action: actionsInterface) => {
@@ -687,7 +720,6 @@ export const CustomTable = (props: TableProps) => {
         <Grid container>
           <Grid item xs={12}>
             <Table
-            
               locale={{
                 emptyText: props.error ? (
                   <div style={{ display: "flex", justifyContent: "center" }}>
@@ -742,7 +774,23 @@ export const CustomTable = (props: TableProps) => {
                 style: { display: props.removePagination ? "none" : undefined },
               }}
               sortDirections={["ascend", "descend"]}
-              dataSource={props?.error ? [] : props?.items ?? []}
+              dataSource={
+                !props?.items
+                  ? []
+                  : props.loading
+                  ? []
+                  : props?.error
+                  ? []
+                  : sanitazerData(props?.items) ?? []
+              }
+              rowSelection={
+                props?.checkbox
+                  ? {
+                      type: "checkbox",
+                      ...rowSelection,
+                    }
+                  : undefined
+              }
               direction="ltr"
               columns={columns}
               loading={props.loading}

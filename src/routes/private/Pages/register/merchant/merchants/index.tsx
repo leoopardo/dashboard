@@ -94,6 +94,9 @@ export const MerchantView = () => {
   const [search, setSearch] = useState<string>("");
   const [isConfigOpen, setIsConfigOpen] = useState(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
+  const [selectedItems, setSelectedItems] = useState<MerchantsItem[] | null>(
+    null
+  );
   const debounceSearch = useDebounce(search);
 
   const columns: ColumnInterface[] = [
@@ -269,6 +272,8 @@ export const MerchantView = () => {
             columns={columns}
             loading={isMerchantDataFetching}
             label={["name", "username"]}
+            checkbox
+            setSelectedRows={setSelectedItems}
             actions={[
               {
                 label: "details",
@@ -333,7 +338,11 @@ export const MerchantView = () => {
       )}
 
       {isUpdatebankOpen && (
-        <UpdateBanks open={isUpdatebankOpen} setOpen={setIsUpdateBankOpen} />
+        <UpdateBanks
+          open={isUpdatebankOpen}
+          setOpen={setIsUpdateBankOpen}
+          items={selectedItems}
+        />
       )}
 
       {isFiltersOpen && (
@@ -389,8 +398,6 @@ export const MerchantView = () => {
         error={UpdateError}
         success={UpdateIsSuccess}
       />
-
-     
     </Grid>
   );
 };
