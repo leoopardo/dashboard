@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Toast } from "@src/components/Toast";
+import { ValidateToken } from "@src/components/ValidateToken";
 import { useGetSelf } from "@src/services/getSelf";
 import { useUpdateSelf } from "@src/services/getSelf/update";
 import { UpdateSelf } from "@src/services/types/register/self/self.interface";
-import { Button, Drawer, Form, FormInstance, Input } from "antd";
+import { Button, Drawer, Form, FormInstance, Input, Spin, Typography } from "antd";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import ReactInputMask from "react-input-mask";
 
 interface EditSelfModalInterface {
   open: boolean;
@@ -25,9 +27,16 @@ export const EditSelfModal = ({
   const [, setCantSubmit] = useState<boolean>(true);
   const formRef = useRef<FormInstance>(null);
   const submitRef = useRef<HTMLButtonElement>(null);
+  const [isValidateTokenOpen, setIsValidateTokenOpen] =
+    useState<boolean>(false);
+  const [tokenState, setTokenState] = useState<string>("");
   // const submitRef = useRef<HTMLButtonElement>(null);
 
-  const { error, isLoading, isSuccess, mutate, reset } = useUpdateSelf(body);
+  const { error, isLoading, isSuccess, mutate, reset } = useUpdateSelf({
+    ...body,
+    cellphone: Self?.cellphone !== body.cellphone ? body.cellphone : undefined,
+    validation_token: tokenState,
+  });
 
   const handleChangeUserBody = (event: any) => {
     setBody((state) => ({ ...state, [event.target.name]: event.target.value }));
@@ -35,7 +44,7 @@ export const EditSelfModal = ({
 
   useEffect(() => {
     setBody({ cellphone: Self?.cellphone, email: Self?.email });
-  }, [Self]);
+  }, [Self, open]);
 
   useEffect(() => {
     if (isSuccess) {
@@ -44,6 +53,12 @@ export const EditSelfModal = ({
       refetchSelf();
     }
   }, [isSuccess]);
+
+  useEffect(() => {
+    if (open === true) {
+      refetchSelf();
+    }
+  }, [open]);
 
   return (
     <Drawer
@@ -64,13 +79,26 @@ export const EditSelfModal = ({
         </Button>
       }
     >
-      {!SelfFetching && (
+      {SelfFetching ? (
+        <div
+          style={{
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Spin size="large" tip={t("table.loading")} />
+        </div>
+      ) : (
         <Form
           ref={formRef}
           layout="vertical"
-          initialValues={{ ...Self }}
+          initialValues={Self ?? {}}
           onFinish={() => {
             if (Self?.cellphone !== body?.cellphone) {
+              setIsValidateTokenOpen(true);
               return;
             }
             mutate();
@@ -84,13 +112,37 @@ export const EditSelfModal = ({
               onChange={handleChangeUserBody}
             />
           </Form.Item>
-          <Form.Item label={t("table.cellphone")}>
-            <Input
-              size="large"
-              name="cellphone"
-              value={body?.cellphone}
-              onChange={handleChangeUserBody}
-            />
+          <Form.Item
+          label={t(`table.cellphone`)}
+          name="cellphone"
+          rules={[
+            {
+              pattern: /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{4}[-\s.]?[0-9]{4,6}$/,
+              message:
+                t("input.invalid", {
+                  field: t("input.number"),
+                }) || "",
+            },
+          ]}
+        >
+          <ReactInputMask
+            value={body.cellphone}
+            mask="+9999999999999"
+            onChange={(event: any) => {
+              const value = event.target.value.replace(/[^\d]/g, "");
+              if (!value) {
+                delete body.cellphone;
+              }
+              setBody((state: any) => ({
+                ...state,
+                cellphone: `+${value}`,
+              }));
+            }}
+          >
+            <Input size="large" type="string" name="cellphone"  />
+           
+          </ReactInputMask>
+          <Typography.Text>Número com DDD. (554599999999)</Typography.Text>
           </Form.Item>
           <Form.Item
             label={t(`table.password`)}
@@ -141,7 +193,6 @@ export const EditSelfModal = ({
                 },
               }),
             ]}
-            
           >
             <Input.Password
               type="password"
@@ -165,6 +216,20 @@ export const EditSelfModal = ({
         error={error}
         success={isSuccess}
       />
+
+      {isValidateTokenOpen && (
+        <ValidateToken
+          open={isValidateTokenOpen}
+          setIsOpen={setIsValidateTokenOpen}
+          setTokenState={setTokenState}
+          tokenState={tokenState}
+          action="USER_UPDATE_SELF_PHONE"
+          body={body}
+          error={error}
+          success={isSuccess}
+          submit={mutate}
+        />
+      )}
     </Drawer>
   );
 };

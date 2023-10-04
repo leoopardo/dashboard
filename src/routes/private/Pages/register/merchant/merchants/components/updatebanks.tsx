@@ -94,7 +94,7 @@ export const UpdateBanks = ({ open, setOpen, items }: UpdateBanksInterface) => {
                 bankListData?.itens?.map((item, index) => {
                   return {
                     key: index,
-                    value: item.label_name,
+                    value: item.bank,
                     label: (
                       <>
                         <Avatar
@@ -123,7 +123,7 @@ export const UpdateBanks = ({ open, setOpen, items }: UpdateBanksInterface) => {
                 bankListData?.itens?.map((item, index) => {
                   return {
                     key: index,
-                    value: item.label_name,
+                    value: item.bank,
                     label: (
                       <>
                         <Avatar

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { GroupSelect } from "@components/Selects/groupSelect";
 import { useCreateOrganizationUser } from "@services/register/organization/users/createUser";
@@ -74,10 +75,10 @@ export const NewUserModal = ({
     organization_id: responseValidate?.organization_id,
   });
 
-  const { mutate, error, isLoading, isSuccess } =
-    useCreateOrganizationUser({...body});
-  const { updateError, updateLoading, updateSuccess } =
-    useUpdateOrganizationUser(body);
+  const { mutate, error, isLoading, isSuccess } = useCreateOrganizationUser({
+    ...body,
+  });
+  const { updateLoading } = useUpdateOrganizationUser(body);
 
   function handleChangeUserBody(event: any) {
     setBody((state) => ({ ...state, [event.target.name]: event.target.value }));
@@ -187,7 +188,7 @@ export const NewUserModal = ({
           style={{ margin: 10 }}
           rules={[
             {
-              required: true,
+              required: action === "create",
               message: t("input.required", { field: t("input.name") }) || "",
             },
           ]}
@@ -205,7 +206,7 @@ export const NewUserModal = ({
           style={{ margin: 10 }}
           rules={[
             {
-              required: true,
+              required: action === "create",
               message:
                 t("input.required", { field: t("input.username") }) || "",
             },
@@ -279,7 +280,7 @@ export const NewUserModal = ({
           style={{ margin: 10 }}
           rules={[
             {
-              required: !body.group_id ? true : false,
+              required: !body.group_id && action === "create" ? true : false,
               message: t("input.required", { field: t("input.group") }) || "",
             },
           ]}
@@ -395,12 +396,6 @@ export const NewUserModal = ({
         actionError={t("messages.create")}
         error={error}
         success={isSuccess}
-      />
-      <Toast
-        actionSuccess={t("messages.updated")}
-        actionError={t("messages.update")}
-        error={updateError}
-        success={updateSuccess}
       />
     </Drawer>
   );

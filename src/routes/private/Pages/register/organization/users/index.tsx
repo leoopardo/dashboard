@@ -20,6 +20,7 @@ import { Button, Input } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { NewUserInterface, NewUserModal } from "./components/newUserModal";
+import { Toast } from "@src/components/Toast";
 
 const INITIAL_QUERY: OrganizationUserQuery = {
   limit: 25,
@@ -68,7 +69,6 @@ export const OrganizationUser = () => {
       name: ["permission_group", "name"],
       head: "group",
       type: "text",
-      sort: true,
     },
     { name: "email", type: "text" },
     { name: "status", type: "status" },
@@ -266,6 +266,13 @@ export const OrganizationUser = () => {
           submit={handleUpdateTokenValidate}
         />
       )}
+
+<Toast
+        actionSuccess={t("messages.updated")}
+        actionError={t("messages.update")}
+        error={updateError}
+        success={updateSuccess}
+      />
       {isViewModalOpen && (
         <ViewModal
           item={currentItem}

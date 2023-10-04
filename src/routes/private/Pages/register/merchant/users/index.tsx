@@ -23,6 +23,7 @@ import { Button, Input } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { UpdateUserModal } from "./components/UpdateUserModal";
+import { Toast } from "@src/components/Toast";
 
 const INITIAL_QUERY: MerchantUsersQuery = {
   limit: 25,
@@ -69,7 +70,7 @@ export const MerchantUser = () => {
   const columns: ColumnInterface[] = [
     { name: "id", type: "id", sort: true },
     { name: "name", type: "text", sort: true },
-    {name: ["permission_group", "name"], head: "group", type: "text" },
+    { name: ["permission_group", "name"], head: "group", type: "text" },
     { name: "email", type: "text" },
     { name: "last_signin_date", type: "date" },
     { name: "created_at", type: "date", sort: true },
@@ -100,7 +101,7 @@ export const MerchantUser = () => {
     <Grid container style={{ padding: "25px" }}>
       <Grid
         container
-        style={{  display: "flex", alignItems: "center" }}
+        style={{ display: "flex", alignItems: "center" }}
         spacing={1}
       >
         <Grid item xs={12} md={4} lg={2}>
@@ -231,7 +232,6 @@ export const MerchantUser = () => {
           setOpen={setIsFiltersOpen}
           query={query}
           setQuery={setQuery}
-           
           filters={[
             "start_date",
             "end_date",
@@ -270,6 +270,13 @@ export const MerchantUser = () => {
           submit={handleUpdateTokenValidate}
         />
       )}
+
+      <Toast
+        actionSuccess={t("messages.updated")}
+        actionError={t("messages.update")}
+        error={updateError}
+        success={updateIsSuccess}
+      />
 
       {isNewUserModal && (
         <UpdateUserModal

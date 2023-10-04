@@ -6,9 +6,11 @@ import {
 } from "@ant-design/icons";
 import { Toast } from "@src/components/Toast";
 import { useUpdateMerchantBlacklist } from "@src/services/register/merchant/blacklist/uploadBlacklistFile";
+import { useUpdatePersonsBlacklist } from "@src/services/register/persons/blacklist/uploadBlacklistFile";
 import {
   Button,
   Col,
+  Empty,
   Form,
   Input,
   InputRef,
@@ -16,12 +18,14 @@ import {
   Row,
   Table,
   Upload,
+  notification,
 } from "antd";
 import { FormInstance } from "antd/lib/form/Form";
 import { unparse } from "papaparse";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useCSVDownloader, usePapaParse } from "react-papaparse";
+import { useNavigate } from "react-router-dom";
 
 const EditableContext = React.createContext<FormInstance<any> | null>(null);
 
@@ -134,6 +138,7 @@ type ColumnTypes = Exclude<EditableTableProps["columns"], undefined>;
 
 export const ImportPersonsBlacklist = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const { readRemoteFile } = usePapaParse();
   const initialData: DataType[] = [
     {
@@ -143,12 +148,38 @@ export const ImportPersonsBlacklist = () => {
       DESCRIPTION: "Solicitado pelo merchant xyz",
     },
   ];
-  const [dataSource, setDataSource] = useState<DataType[]>(initialData);
+  const [dataSource, setDataSource] = useState<DataType[]>([]);
   const [body, setBody] = useState<{ content: string }>({ content: "" });
   const { error, isLoading, isSuccess, mutate } =
-    useUpdateMerchantBlacklist(body);
+    useUpdatePersonsBlacklist(body);
   const uploadRef = useRef<HTMLButtonElement | null>(null);
   const { CSVDownloader } = useCSVDownloader();
+
+  const [api, contextHolder] = notification.useNotification();
+
+  const openNotificationWithIcon = () => {
+    const BtnNavigate = (
+      <Button
+        onClick={() =>
+          navigate("/register/person/person_blacklist/person_blacklist_uploads")
+        }
+      >
+        Uploads
+      </Button>
+    );
+    api.info({
+      message: t("messages.creating_csv"),
+      description: t("messages.creating_csv_message"),
+      duration: 0,
+      btn: BtnNavigate,
+    });
+  };
+
+  useEffect(() => {
+    if (isSuccess) {
+      openNotificationWithIcon();
+    }
+  }, [error, isSuccess]);
 
   const handleDelete = (key: React.Key) => {
     const newData = dataSource.filter((item) => item.key !== key);
@@ -244,11 +275,15 @@ export const ImportPersonsBlacklist = () => {
     const base64Encoded = btoa(csvData.replace(/(\r\n|\n|\r)/gm, "\n"));
 
     setBody({ content: base64Encoded });
+
+    console.log(dataSource);
+
     mutate();
   };
 
   return (
     <Row style={{ padding: 25 }}>
+      {contextHolder}
       <Col span={24} style={{ marginBottom: 8 }}>
         <Row gutter={[8, 8]} style={{ width: "100%" }}>
           <Col xs={{ span: 24 }} md={{ span: 6 }} lg={{ span: 4 }}>
@@ -259,7 +294,7 @@ export const ImportPersonsBlacklist = () => {
               }}
               size="large"
               icon={<UploadOutlined />}
-              onClick={() =>uploadRef && uploadRef.current?.click()}
+              onClick={() => uploadRef && uploadRef.current?.click()}
             >
               {t("table.upload_file")}
             </Button>
@@ -314,7 +349,8 @@ export const ImportPersonsBlacklist = () => {
           </Col>
           <Col
             xs={{ span: 24 }}
-            md={{ span: 6 }} lg={{ span: 4 }}
+            md={{ span: 6 }}
+            lg={{ span: 4 }}
             style={{
               height: "40px",
               display: "flex",
@@ -358,7 +394,7 @@ export const ImportPersonsBlacklist = () => {
               </a>
             </CSVDownloader>
           </Col>
-          <Col xs={{ span: 0 }} md={{ span:0 }} lg={{ span: 8 }} />
+          <Col xs={{ span: 0 }} md={{ span: 0 }} lg={{ span: 8 }} />
           <Col xs={{ span: 24 }} md={{ span: 6 }} lg={{ span: 4 }}>
             <Button
               size="large"
@@ -389,6 +425,15 @@ export const ImportPersonsBlacklist = () => {
           bordered
           dataSource={dataSource}
           columns={columns as ColumnTypes}
+          locale={{
+            emptyText: (
+              <Empty
+                style={{ padding: 15, paddingBottom: 30 }}
+                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                description={t("messages.empty_table_data")}
+              />
+            ),
+          }}
         />
       </Col>
 

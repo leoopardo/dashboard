@@ -12,7 +12,15 @@ import {
 } from "@services/types/register/merchants/merchantUsers.interface";
 import { queryClient } from "@src/services/queryClient";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Drawer, Form, FormInstance, Input, Switch, Typography } from "antd";
+import {
+  Button,
+  Drawer,
+  Form,
+  FormInstance,
+  Input,
+  Switch,
+  Typography,
+} from "antd";
 import React, {
   Dispatch,
   SetStateAction,
@@ -72,7 +80,8 @@ export const UpdateUserModal = ({
       currentUser &&
       setUpdateBody &&
       setIsValidateTokenOpen &&
-      setCurrentUser && action === "update"
+      setCurrentUser &&
+      action === "update"
     ) {
       setUpdateBody(body);
       setCurrentUser(null);
@@ -134,7 +143,9 @@ export const UpdateUserModal = ({
         if (setCurrentUser) setCurrentUser(null);
       }}
       bodyStyle={{ overflowX: "hidden" }}
-      title={action === "update" ? t("buttons.update_user") : t("buttons.new_user")}
+      title={
+        action === "update" ? t("buttons.update_user") : t("buttons.new_user")
+      }
       footer={
         <Button
           loading={action === "update" ? updateIsLoading : isLoading}
@@ -171,7 +182,7 @@ export const UpdateUserModal = ({
           style={{ margin: 10 }}
           rules={[
             {
-              required: true,
+              required: action === "create",
               message: t("input.required", { field: t("input.name") }) || "",
             },
           ]}
@@ -189,7 +200,7 @@ export const UpdateUserModal = ({
           style={{ margin: 10 }}
           rules={[
             {
-              required: true,
+              required: action === "create",
               message:
                 t("input.required", { field: t("input.username") }) || "",
             },
@@ -264,7 +275,8 @@ export const UpdateUserModal = ({
             style={{ margin: 10 }}
             rules={[
               {
-                required: !body.merchant_id ? true : false,
+                required:
+                  !body.merchant_id && action === "create" ? true : false,
                 message:
                   t("input.required", { field: t("table.merchant") }) || "",
               },
@@ -284,7 +296,7 @@ export const UpdateUserModal = ({
           style={{ margin: 10 }}
           rules={[
             {
-              required: !body.group_id ? true : false,
+              required: !body.group_id && action === "create" ? true : false,
               message: t("input.required", { field: t("input.group") }) || "",
             },
           ]}
@@ -312,7 +324,7 @@ export const UpdateUserModal = ({
           style={{ margin: 10 }}
         >
           <div style={{ display: "flex", flexDirection: "row" }}>
-            <Typography  style={{ marginRight: 8 }}>
+            <Typography style={{ marginRight: 8 }}>
               {t("table.inactive")}
             </Typography>
             <Switch
@@ -404,12 +416,6 @@ export const UpdateUserModal = ({
         actionError={t("messages.create")}
         error={error}
         success={isSuccess}
-      />
-      <Toast
-        actionSuccess={t("messages.updated")}
-        actionError={t("messages.update")}
-        error={updateError}
-        success={updateIsSuccess}
       />
     </Drawer>
   );
