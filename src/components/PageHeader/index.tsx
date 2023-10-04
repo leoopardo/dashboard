@@ -1,8 +1,6 @@
 import {
-  CheckOutlined,
-  CloseOutlined,
   DownOutlined,
-  UserOutlined,
+  UserOutlined
 } from "@ant-design/icons";
 import { Grid } from "@mui/material";
 import { useTheme } from "@src/contexts/ThemeContext";
@@ -13,8 +11,7 @@ import {
   MenuProps,
   Radio,
   Space,
-  Switch,
-  theme as t,
+  theme as t
 } from "antd";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -203,13 +200,13 @@ export const PageHeader = () => {
           </Avatar>
         </Dropdown>
       </Grid>
-      {isEditUserModalOpen && (
+   
         <EditSelfModal
           open={isEditUserModalOpen}
           setOpen={setIsEditUserModalOpen}
           self={responseValidate}
         />
-      )}
+     
     </Grid>
   ) : (
     <Grid
@@ -336,13 +333,13 @@ export const PageHeader = () => {
         <BreadcrumbComponent />
       </Grid>
 
-      {isEditUserModalOpen && (
+
         <EditSelfModal
           open={isEditUserModalOpen}
           setOpen={setIsEditUserModalOpen}
           self={responseValidate}
         />
-      )}
+      
     </Grid>
   );
 };

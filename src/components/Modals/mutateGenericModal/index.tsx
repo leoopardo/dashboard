@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { StyleWrapperDatePicker } from "@src/components/FiltersModal/styles";
 import { AggregatorSelect } from "@src/components/Selects/aggregatorSelect";
 import { OperatorSelect } from "@src/components/Selects/operatorSelect";
-import { ReasonSelect } from "@src/components/Selects/reasonSelect";
 import { useListClientClientBanks } from "@src/services/bank/listClientBanks";
 import { queryClient } from "@src/services/queryClient";
+import { useGetRowsMerchantBlacklistReasons } from "@src/services/register/merchant/blacklist/getMerchantBlacklistReason";
 import { useGetrefetchCountries } from "@src/services/states_cities/getCountries";
 import { ValidateInterface } from "@src/services/types/validate.interface";
 import {
@@ -21,14 +22,13 @@ import {
   Switch,
 } from "antd";
 import locale from "antd/locale/pt_BR";
+import dayjs from "dayjs";
+import moment from "moment";
 import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import ReactInputMask from "react-input-mask";
 import { MerchantSelect } from "../../Selects/merchantSelect";
 import { PartnerSelect } from "../../Selects/partnerSelect";
-import { StyleWrapperDatePicker } from "@src/components/FiltersModal/styles";
-import dayjs from "dayjs";
-import moment from "moment";
 const { RangePicker } = DatePicker;
 
 interface mutateProps {
@@ -80,6 +80,10 @@ export const MutateModal = ({
       page: 1,
       limit: 200,
     });
+  const { merchantBlacklistData } = useGetRowsMerchantBlacklistReasons({
+    limit: 200,
+    page: 1,
+  });
 
   const handleChange = (event: any) => {
     setBody((state: any) => ({
@@ -200,7 +204,9 @@ export const MutateModal = ({
                                 .format("YYYY-MM-DDTHH:mm:00.000")
                             : null,
                           end_date: endDate
-                            ? endDate.add(3, "hours").format("YYYY-MM-DDTHH:mm:59.999")
+                            ? endDate
+                                .add(3, "hours")
+                                .format("YYYY-MM-DDTHH:mm:59.999")
                             : null,
                         }));
                         formRef?.current?.validateFields();
@@ -308,12 +314,25 @@ export const MutateModal = ({
                     },
                   ]}
                 >
-                  <ReasonSelect
-                    setQueryFunction={setBody}
-                    queryOptions={body}
+                  <Select
+                    size="large"
+                    options={merchantBlacklistData?.items.map((reason) => {
+                      return {
+                        label: reason.reason_name,
+                        value: reason._id,
+                      };
+                    })}
+                    value={body[field.label]}
+                    onChange={(value) =>
+                      setBody((state: any) => ({
+                        ...state,
+                        reason_id: value,
+                      }))
+                    }
                   />
                 </Form.Item>
               );
+
             case "new_reason":
               return (
                 <Form.Item

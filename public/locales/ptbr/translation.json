@@ -158,6 +158,8 @@
     "delete": "Deletar",
     "checked": "Dhecado",
     "check": "Checar",
+    "validated": "Validado",
+    "validate": "validar",
     "upload_label": "Clique ou arraste e solte o arquivo para esta área",
     "upload_description": "Suporte para um arquivo por vês, nos formatos: pdf, png e docx.",
     "min_value_higher_then_zero": "O valor desse campo deve ser maior que 0",
@@ -167,7 +169,9 @@
     "creating_csv_message": "O arquivo CSV está sendo sendo gerado. Você pode acompanhar o processamento navegando para:",
     "export_csv": "Gerar relatório CSV",
     "no_records_to_export": "Não há registros para gerar um CSV",
-    "20_minutes_consult": "Consulta realizada a mais de 20 minutos"
+    "20_minutes_consult": "Consulta realizada a mais de 20 minutos",
+    "validate_phone_text": "Seu telefone ainda não foi validado, este primeiro token realizará a validação do seu número. Após isso receberá um token para confirmar a ação realizada.",
+    "validate_text": "Insira o token para confirmar a ação"
   },
   "login": {
     "sign_in": "Faça login",

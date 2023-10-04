@@ -256,19 +256,6 @@ export const SidebarNavigation = () => {
                       : "none",
                   }
                 ),
-                getItem(
-                  "aggregator_blacklist_reasons",
-                  null,
-                  null,
-                  false,
-                  (e) => handleNavigate(e?.keyPath),
-                  {
-                    display: permissions?.register?.aggregator?.users
-                      ?.aggregator_user_export_csv
-                      ? undefined
-                      : "none",
-                  }
-                ),
               ],
               false,
               undefined,
@@ -657,18 +644,18 @@ export const SidebarNavigation = () => {
                   : "none",
               }
             ),
-            getItem(
-              "whitelist",
-              null,
-              null,
-              false,
-              (e) => handleNavigate(e?.keyPath),
-              {
-                display: permissions?.register?.person?.pix_whitelist?.menu
-                  ? undefined
-                  : "none",
-              }
-            ),
+            // getItem(
+            //   "whitelist",
+            //   null,
+            //   null,
+            //   false,
+            //   (e) => handleNavigate(e?.keyPath),
+            //   {
+            //     display: permissions?.register?.person?.pix_whitelist?.menu
+            //       ? undefined
+            //       : "none",
+            //   }
+            // ),
             getItem(
               "person_accounts",
               null,
@@ -760,19 +747,19 @@ export const SidebarNavigation = () => {
                       : "none",
                   }
                 ),
-                getItem(
-                  "pix_whitelist_reports",
-                  null,
-                  null,
-                  false,
-                  (e) => handleNavigate(e?.keyPath),
-                  {
-                    display: permissions?.register?.person?.pix_whitelist
-                      ?.person_pix_whitelist_export_csv
-                      ? undefined
-                      : "none",
-                  }
-                ),
+                // getItem(
+                //   "pix_whitelist_reports",
+                //   null,
+                //   null,
+                //   false,
+                //   (e) => handleNavigate(e?.keyPath),
+                //   {
+                //     display: permissions?.register?.person?.pix_whitelist
+                //       ?.person_pix_whitelist_export_csv
+                //       ? undefined
+                //       : "none",
+                //   }
+                // ),
               ],
               false,
               undefined,

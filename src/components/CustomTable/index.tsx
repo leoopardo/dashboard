@@ -779,7 +779,7 @@ export const CustomTable = (props: TableProps) => {
               actions={actions}
               setCurrentItem={props.setCurrentItem}
               checkbox={props?.checkbox}
-              setSelectedRows={props.setSelectedRows}
+              setSelectedRows={props?.setSelectedRows}
             />
           </Grid>
           {!props.removePagination && (

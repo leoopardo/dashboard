@@ -41,4 +41,5 @@ export interface UpdateSelf{
   email?: string;
   cellphone?: string;
   password?: string;
+  validation_token?: string,
 }

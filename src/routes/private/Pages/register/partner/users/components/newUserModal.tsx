@@ -196,7 +196,7 @@ export const NewUserModal = ({
           style={{ margin: 10 }}
           rules={[
             {
-              required: true,
+              required: action === "create",
               message:
                 t("input.required", { field: t("input.username") }) || "",
             },
@@ -263,7 +263,7 @@ export const NewUserModal = ({
             style={{ margin: 10 }}
             rules={[
               {
-                required: !body.partner_id ? true : false,
+                required: !body.partner_id && action === "create" ? true : false,
                 message:
                   t("input.required", { field: t("input.partner") }) || "",
               },
@@ -282,7 +282,7 @@ export const NewUserModal = ({
           style={{ margin: 10 }}
           rules={[
             {
-              required: !body.group_id ? true : false,
+              required: !body.group_id && action === "create" ? true : false,
               message: t("input.required", { field: t("input.group") }) || "",
             },
           ]}
@@ -401,12 +401,7 @@ export const NewUserModal = ({
         error={error}
         success={isSuccess}
       />
-      <Toast
-        actionSuccess={t("messages.updated")}
-        actionError={t("messages.update")}
-        error={updateError}
-        success={updateSuccess}
-      />
+    
     </Drawer>
   );
 };

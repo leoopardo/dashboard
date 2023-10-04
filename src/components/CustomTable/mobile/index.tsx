@@ -61,7 +61,7 @@ export const Mobile = (props: MobileProps) => {
                           src={
                             bankListData?.itens.find(
                               (bank) =>
-                                bank.label_name?.split(" ").join("_") ===
+                                bank?.label_name?.split(" ").join("_") ===
                                 item[label]
                             )?.icon_url ?? null
                           }
@@ -176,13 +176,13 @@ export const Mobile = (props: MobileProps) => {
 
           children: (
             <Descriptions bordered style={{ margin: 0, padding: 0 }}>
-              {props.columns.map((value) => {
+              {props?.columns?.map((value) => {
                 switch (value.type) {
                   case "date":
                     return (
                       <Descriptions.Item
-                        key={value.name}
-                        label={t(`table.${value.head ?? value.name}`)}
+                        key={value?.name}
+                        label={t(`table.${value?.head ?? value?.name}`)}
                         labelStyle={{
                           maxWidth: "100px",
                           margin: 0,
@@ -192,11 +192,11 @@ export const Mobile = (props: MobileProps) => {
                         <Typography
                           style={{ width: "100%", textAlign: "center" }}
                         >
-                          {item[value.name]
+                          {item[value?.name]
                             ? `${new Date(
-                                item[value.name]
+                                item[value?.name]
                               ).toLocaleDateString()} ${new Date(
-                                item[value.name]
+                                item[value?.name]
                               ).toLocaleTimeString()}`
                             : "-"}
                         </Typography>
@@ -205,8 +205,8 @@ export const Mobile = (props: MobileProps) => {
                   case "value":
                     return (
                       <Descriptions.Item
-                        key={value.name}
-                        label={t(`table.${value.head ?? value.name}`)}
+                        key={value?.name}
+                        label={t(`table.${value.head ?? value?.name}`)}
                         labelStyle={{
                           maxWidth: "100px",
                           margin: 0,
@@ -214,21 +214,21 @@ export const Mobile = (props: MobileProps) => {
                         }}
                       >
                         <Typography
-                          key={value.name}
+                          key={value?.name}
                           style={{ width: "100%", textAlign: "center" }}
                         >
                           {new Intl.NumberFormat("pt-BR", {
                             style: "currency",
                             currency: "BRL",
-                          }).format(Number(item[value.name]) || 0)}
+                          }).format(Number(item[value?.name]) || 0)}
                         </Typography>
                       </Descriptions.Item>
                     );
                   case "icon":
                     return (
                       <Descriptions.Item
-                        key={value.name}
-                        label={t(`table.${value.head ?? value.name}`)}
+                        key={value?.name}
+                        label={t(`table.${value.head ?? value?.name}`)}
                         labelStyle={{
                           maxWidth: "100px",
                           margin: 0,
@@ -237,7 +237,7 @@ export const Mobile = (props: MobileProps) => {
                       >
                         <div style={{ width: "100%", textAlign: "center" }}>
                           <Avatar
-                            src={item[value.name]}
+                            src={item[value?.name]}
                             size="large"
                             shape="square"
                           />
@@ -248,8 +248,8 @@ export const Mobile = (props: MobileProps) => {
                   case "bankNameToIcon":
                     return (
                       <Descriptions.Item
-                        key={value.name}
-                        label={t(`table.${value.head ?? value.name}`)}
+                        key={value?.name}
+                        label={t(`table.${value?.head ?? value?.name}`)}
                         labelStyle={{
                           maxWidth: "100px",
                           margin: 0,
@@ -259,24 +259,24 @@ export const Mobile = (props: MobileProps) => {
                         <div style={{ width: "100%", textAlign: "center" }}>
                           <Tooltip
                             placement="topLeft"
-                            title={item[value.name]}
+                            title={item[value?.name]}
                             arrow
                           >
                             <Avatar
                               src={
-                                Array.isArray(value.name)
+                                Array.isArray(value?.name) && item[value?.name[0]]
                                   ? bankListData?.itens.find(
                                       (bank) =>
-                                        bank.label_name
+                                        bank?.label_name
                                           ?.split(" ")
                                           .join("_") ===
-                                        item[value.name[0]][value.name[1]]
+                                        item[value?.name[0]][value?.name[1]]
                                     )?.icon_url ?? null
                                   : bankListData?.itens.find(
                                       (bank) =>
                                         bank.label_name
                                           ?.split(" ")
-                                          .join("_") === item[value.name]
+                                          .join("_") === item[value?.name]
                                     )?.icon_url ?? null
                               }
                               size="large"
@@ -292,31 +292,33 @@ export const Mobile = (props: MobileProps) => {
                   case "status":
                     return (
                       <Descriptions.Item
-                        key={value.name}
-                        label={t(`table.${value.head ?? value.name}`)}
+                        key={value?.name}
+                        label={t(`table.${value?.head ?? value?.name}`)}
                         labelStyle={{
                           maxWidth: "100px",
                           margin: 0,
                           padding: 5,
                         }}
                       >
-                        {typeof item[value.name] === "boolean" ||
-                        item[value.name] == 1 ||
-                        item[value.name] == 0 ? (
+                        {typeof item[value?.name] === "boolean" ||
+                        item[value?.name] == 1 ||
+                        item[value?.name] == 0 ? (
                           <Typography
-                            key={value.name}
+                            key={value?.name}
                             style={{ width: "100%", textAlign: "center" }}
                           >
-                            {item[value.name] || item[value.name] == 1
+                            {item[value?.name] || item[value?.name] == 1
                               ? t("table.active")
                               : t("table.inactive")}
                           </Typography>
                         ) : (
                           <Typography
-                            key={value.name}
+                            key={value?.name}
                             style={{ width: "100%", textAlign: "center" }}
                           >
-                            {t(`table.${item[value.name].toLocaleLowerCase()}`)}
+                            {t(
+                              `table.${item[value?.name].toLocaleLowerCase()}`
+                            )}
                           </Typography>
                         )}
                       </Descriptions.Item>
@@ -325,8 +327,8 @@ export const Mobile = (props: MobileProps) => {
                   case "boolean":
                     return (
                       <Descriptions.Item
-                        key={value.name}
-                        label={t(`table.${value.head ?? value.name}`)}
+                        key={value?.name}
+                        label={t(`table.${value?.head ?? value?.name}`)}
                         labelStyle={{
                           maxWidth: "100px",
                           margin: 0,
@@ -334,10 +336,10 @@ export const Mobile = (props: MobileProps) => {
                         }}
                       >
                         <Typography
-                          key={item[value.name]}
+                          key={item[value?.name]}
                           style={{ width: "100%", textAlign: "center" }}
                         >
-                          {item[value.name]
+                          {item[value?.name]
                             ? t("table.true")
                             : t("table.false")}
                         </Typography>
@@ -347,8 +349,8 @@ export const Mobile = (props: MobileProps) => {
                   case "document":
                     return (
                       <Descriptions.Item
-                        key={value.name}
-                        label={t(`table.${value.head ?? value.name}`)}
+                        key={value?.name}
+                        label={t(`table.${value?.head ?? value?.name}`)}
                         labelStyle={{
                           maxWidth: "100px",
                           margin: 0,
@@ -356,10 +358,10 @@ export const Mobile = (props: MobileProps) => {
                         }}
                       >
                         <Typography
-                          key={value.name}
+                          key={value?.name}
                           style={{ width: "100%", textAlign: "center" }}
                         >
-                          {`${item[value.name]}`?.replace(
+                          {`${item[value?.name]}`?.replace(
                             /(\d{3})(\d{3})(\d{3})(\d{2})/,
                             "$1.$2.$3-$4"
                           ) || "-"}
@@ -375,11 +377,11 @@ export const Mobile = (props: MobileProps) => {
                     return (
                       <Descriptions.Item
                         key={
-                          Array.isArray(value.name)
-                            ? value.name + `${Math.random()}`
-                            : value.name
+                          Array.isArray(value?.name) && item[value?.name[0]]
+                            ? value?.name + `${Math.random()}`
+                            : value?.name
                         }
-                        label={t(`table.${value.head ?? value.name}`)}
+                        label={t(`table.${value?.head ?? value?.name}`)}
                         labelStyle={{
                           maxWidth: "100px",
                           margin: 0,
@@ -388,12 +390,12 @@ export const Mobile = (props: MobileProps) => {
                       >
                         {" "}
                         <Typography
-                          key={value.name}
+                          key={value?.name}
                           style={{ width: "100%", textAlign: "center" }}
                         >
-                          {Array.isArray(value.name)
-                            ? t(`table.${item[value.name[0]][value.name[1]]}`)
-                            : t(`table.${item[value.name]}`)}
+                          {Array.isArray(value?.name) && item[value?.name[0]]
+                            ? t(`table.${item[value?.name[0]][value?.name[1]]}`)
+                            : t(`table.${item[value?.name]}`)}
                         </Typography>
                       </Descriptions.Item>
                     );
@@ -402,24 +404,32 @@ export const Mobile = (props: MobileProps) => {
                     return (
                       <Descriptions.Item
                         key={
-                          Array.isArray(value.name)
-                            ? value.name + `${Math.random()}`
-                            : value.name
+                          Array.isArray(value?.name) && item[value?.name[0]]
+                            ? value?.name + `${Math.random()}`
+                            : value?.name
                         }
-                        label={t(`table.${value.head ?? value.name}`)}
+                        label={t(`table.${value?.head ?? value?.name}`)}
                         labelStyle={{
                           maxWidth: "100px",
                           margin: 0,
                           padding: 5,
                         }}
                       >
-                        {" "}
                         <Typography
-                          key={value.name}
+                          key={value?.name}
                           style={{ width: "100%", textAlign: "center" }}
+                          onClick={() =>
+                            console.log(
+                              Array.isArray(value?.name) && item[value?.name[0]]
+                                ? item[value?.name[0]][value?.name[1]]
+                                : item[value?.name]
+                            )
+                          }
                         >
-                          {Array.isArray(value.name)
-                            ? item[value.name[0]][value.name[1]]
+                          {Array.isArray(value?.name) && item[value?.name[0]] && item[value?.name[0]]
+                            ? item[value?.name[0]][value?.name[1]]
+                            : !item[value.name]
+                            ? "-"
                             : item[value.name]}
                         </Typography>
                       </Descriptions.Item>

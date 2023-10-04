@@ -18,6 +18,7 @@ import { Button, Input } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { NewUserInterface, NewUserModal } from "./components/newUserModal";
+import { Toast } from "@src/components/Toast";
 
 const INITIAL_QUERY: PartnerQuery = {
   limit: 25,
@@ -71,7 +72,7 @@ export const AggregatorUsers = () => {
   useEffect(() => {
     if (!debounceSearch) {
       const q = { ...query };
-      delete q.name;
+      delete q?.name;
       return setQuery(q);
     }
     setQuery((state) => ({ ...state, name: debounceSearch }));
@@ -191,7 +192,7 @@ export const AggregatorUsers = () => {
                   setIsViewModalOpen(true);
                 },
               },
-              permissions.register.aggregator.users.aggregator_user_update && {
+              permissions?.register?.aggregator?.users?.aggregator_user_update && {
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
                 onClick: () => {
@@ -257,6 +258,13 @@ export const AggregatorUsers = () => {
           submit={handleUpdateTokenValidate}
         />
       )}
+       <Toast
+        actionSuccess={t("messages.updated")}
+        actionError={t("messages.update")}
+        error={updateError}
+        success={updateSuccess}
+      />
+      
       {isViewModalOpen && (
         <ViewModal
           item={currentItem}

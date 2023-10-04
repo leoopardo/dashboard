@@ -156,6 +156,8 @@
     "checked": "Checked",
     "check": "Check",
     "refunded": "Refunded",
+    "validated": "Validated",
+    "validate": "Validate",
     "refund": "refund",
     "upload_label": "Click or drag file to this area to upload",
     "upload_description": "Support for a single upload. Files types: pdf, png and docx.",
@@ -166,7 +168,9 @@
     "creating_csv_message": "The CSV file is being generated. You can view the process by navigating to:",
     "export_csv": "Generate CSV report",
     "no_records_to_export": "No records to export",
-    "20_minutes_consult": "The consultation has been ongoing for over 20 minutes."
+    "20_minutes_consult": "The consultation has been ongoing for over 20 minutes.",
+    "validate_phone_text": "Your phone nomber are not validated, this first token will validate your number. After that, you will receive a token to confirm the action performed.",
+    "validate_text": "Insert token to confirm action."
   },
   "login": {
     "sign_in": "Sign in",

@@ -10,15 +10,13 @@ import useDebounce from "@utils/useDebounce";
 import { Button, Input } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
 import { ReasonSelect } from "@src/components/Selects/reasonSelect";
 import { useGetAggregatorsBlacklist } from "@src/services/register/aggregator/blacklist/getAggregatorsBlacklist";
 import { useCreateMerchantBlacklist } from "@src/services/register/merchant/blacklist/createMerchantBlacklist";
 import { AggregatorBlacklistQuery } from "@src/services/types/register/aggregators/aggregatorBlacklist.interface";
-import {
-    MerchantBlacklistItem
-} from "@src/services/types/register/merchants/merchantBlacklist.interface";
+import { MerchantBlacklistItem } from "@src/services/types/register/merchants/merchantBlacklist.interface";
+import { useCreateAggregatorBlacklist } from "@src/services/register/aggregator/blacklist/createAggregatorBlacklist";
 
 const INITIAL_QUERY: AggregatorBlacklistQuery = {
   limit: 25,
@@ -49,17 +47,17 @@ export const AggregatorBlacklist = () => {
   );
 
   const { error, isLoading, isSuccess, mutate } =
-    useCreateMerchantBlacklist(body);
+  useCreateAggregatorBlacklist(body);
   const [search, setSearch] = useState<string>("");
   const debounceSearch = useDebounce(search);
 
   const columns: ColumnInterface[] = [
     { name: "cpf", type: "id" },
     { name: "merchant_name", type: "text" },
-    { name: "reason", type: "text",sort: true },
+    { name: "reason", type: "text", sort: true },
     { name: "description", type: "text" },
     { name: "create_user_name", type: "text" },
-    { name: "createdAt", type: "date",sort: true },
+    { name: "createdAt", type: "date", sort: true },
   ];
 
   useEffect(() => {
@@ -74,6 +72,8 @@ export const AggregatorBlacklist = () => {
     }
     setQuery((state) => ({ ...state, cpf: debounceSearch }));
   }, [debounceSearch]);
+
+  console.log(body);
 
   return (
     <Grid container style={{ padding: "25px" }}>
@@ -98,7 +98,6 @@ export const AggregatorBlacklist = () => {
             endDateKeyName="final_date"
             query={query}
             setQuery={setQuery}
-             
           />
         </Grid>
       </Grid>
@@ -182,7 +181,6 @@ export const AggregatorBlacklist = () => {
           setOpen={setIsFiltersOpen}
           query={query}
           setQuery={setQuery}
-           
           filters={["start_date", "end_date", "merchant_id"]}
           refetch={refetchAggregatorsBlacklistData}
           selectOptions={{}}
