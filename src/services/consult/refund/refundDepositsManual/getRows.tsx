@@ -1,4 +1,3 @@
-import moment from "moment";
 import { useQuery } from "react-query";
 import { api } from "../../../../config/api";
 import {

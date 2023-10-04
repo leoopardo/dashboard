@@ -59,6 +59,8 @@ export const SidebarNavigation = () => {
     navigate(pathArray.reverse().join("/"));
   }
 
+  console.log(permissions);
+
   function getItem(
     key: React.Key,
     icon?: React.ReactNode,
@@ -836,6 +838,21 @@ export const SidebarNavigation = () => {
           [
             getItem(
               "merchant_manual_moviments",
+              null,
+              null,
+              false,
+              (e) => handleNavigate(e?.keyPath),
+              {
+                display: permissions?.transactions?.merchant
+                  ?.manual_transactions?.menu
+                  ? undefined
+                  : "none",
+              }
+            ),
+
+            //ajustar permissões 
+            getItem(
+              "between_accounts_transfers",
               null,
               null,
               false,

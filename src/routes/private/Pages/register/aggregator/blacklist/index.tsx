@@ -6,17 +6,16 @@ import { FilterChips } from "@components/FiltersModal/filterChips";
 import { ViewModal } from "@components/Modals/viewGenericModal";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
+import { MutateModal } from "@src/components/Modals/mutateGenericModal";
+import { ReasonSelect } from "@src/components/Selects/reasonSelect";
+import { useCreateAggregatorBlacklist } from "@src/services/register/aggregator/blacklist/createAggregatorBlacklist";
+import { useGetAggregatorsBlacklist } from "@src/services/register/aggregator/blacklist/getAggregatorsBlacklist";
+import { AggregatorBlacklistQuery } from "@src/services/types/register/aggregators/aggregatorBlacklist.interface";
+import { MerchantBlacklistItem } from "@src/services/types/register/merchants/merchantBlacklist.interface";
 import useDebounce from "@utils/useDebounce";
 import { Button, Input } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { MutateModal } from "@src/components/Modals/mutateGenericModal";
-import { ReasonSelect } from "@src/components/Selects/reasonSelect";
-import { useGetAggregatorsBlacklist } from "@src/services/register/aggregator/blacklist/getAggregatorsBlacklist";
-import { useCreateMerchantBlacklist } from "@src/services/register/merchant/blacklist/createMerchantBlacklist";
-import { AggregatorBlacklistQuery } from "@src/services/types/register/aggregators/aggregatorBlacklist.interface";
-import { MerchantBlacklistItem } from "@src/services/types/register/merchants/merchantBlacklist.interface";
-import { useCreateAggregatorBlacklist } from "@src/services/register/aggregator/blacklist/createAggregatorBlacklist";
 
 const INITIAL_QUERY: AggregatorBlacklistQuery = {
   limit: 25,
@@ -83,8 +82,8 @@ export const AggregatorBlacklist = () => {
         spacing={1}
       >
         <Grid item xs={12} md={4} lg={2}>
-          <Button
-            style={{ width: "100%", height: 40 }}
+           <Button size="large"
+            style={{ width: "100%" }}
             loading={isAggregatorsBlacklistDataFetching}
             type="primary"
             onClick={() => setIsFiltersOpen(true)}

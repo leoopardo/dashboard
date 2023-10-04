@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { OrganizationPerBankItem } from "@src/services/types/consult/organization/bankStatement/perBank";
 import { OrganizationBankStatementTotalsQuery } from "@src/services/types/consult/organization/bankStatement/totals.interface";
-import moment from "moment";
 import { useQuery } from "react-query";
 import { api } from "../../../../config/api";
 
@@ -14,7 +13,7 @@ export function useGetOrganizationPerbank(
     const response = await api.get(
       "account/report/paybrokers-account/total/per-bank",
       {
-        params
+        params,
       }
     );
 

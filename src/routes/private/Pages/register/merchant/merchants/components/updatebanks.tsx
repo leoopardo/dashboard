@@ -1,4 +1,3 @@
-import { BanksSelect } from "@src/components/Selects/bankSelect";
 import { PartnerSelect } from "@src/components/Selects/partnerSelect";
 import { Toast } from "@src/components/Toast";
 import { useListBanks } from "@src/services/bank/listBanks";
@@ -8,7 +7,6 @@ import { MerchantsItem } from "@src/services/types/register/merchants/merchantsR
 import { Avatar, Button, Drawer, Form, Radio, Select } from "antd";
 import { FormInstance } from "antd/lib/form/Form";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
-import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 
 interface UpdateBanksInterface {

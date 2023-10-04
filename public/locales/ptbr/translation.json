@@ -124,7 +124,8 @@
     "person_blacklist_reasons": "Motivos de blacklist",
     "self_exclusion": "Auto exclusão",
     "self_exclusion_reports": "Auto exclusão",
-    "merchant_transfers": "Transferências entre empresas "
+    "merchant_transfers": "Transferências entre empresas ",
+    "between_accounts_transfers": "Transferências entre contas"
   },
 
   "titles": {
@@ -614,7 +615,8 @@
     "merchant_destination": "Empresa destino",
     "account_origin": "Conta origem",
     "account_destination": "Conta destino",
-    "user": "Usuário"
+    "user": "Usuário",
+    "transfer": "Transferência"
   },
   "actions": {
     "details": "Detalhes",

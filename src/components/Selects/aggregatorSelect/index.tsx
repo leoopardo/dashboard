@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useGetAggregators } from "@src/services/register/aggregator/getAggregators";
 import { useListAggregators } from "@src/services/register/aggregator/listAggregators";
 import { AggregatorQuery } from "@src/services/types/register/aggregators/aggregators.interface";
 import useDebounce from "@src/utils/useDebounce";

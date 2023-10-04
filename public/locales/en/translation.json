@@ -123,7 +123,8 @@
     "person_blacklist_reasons": "Blacklist reasons",
     "self_exclusion": "Self exclusion",
     "self_exclusion_reports": "Self exclusion reports",
-    "merchant_transfers": "Transfers between merchants"
+    "merchant_transfers": "Transfers between merchants",
+    "between_accounts_transfers": "Transfers between accounts"
   },
 
   "titles": {
@@ -613,7 +614,8 @@
     "merchant_destination": "Merchant to",
     "account_origin": "Account from",
     "account_destination": "Account to",
-    "user": "User"
+    "user": "User",
+    "transfer": "Transfer"
   },
   "actions": {
     "details": "Details",

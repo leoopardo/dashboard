@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable eqeqeq */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable consistent-return */
@@ -7,7 +8,7 @@ import { BankOutlined } from "@ant-design/icons";
 import { useListBanks } from "@src/services/bank/listBanks";
 import { useGetmerchantFeeRegister } from "@src/services/register/merchant/feePlans/getMerchantFees";
 import { Avatar, Descriptions, Drawer, Spin, Tooltip } from "antd";
-import { Dispatch, SetStateAction, useEffect } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { useTranslation } from "react-i18next";
 
 interface viewProps {
@@ -33,7 +34,7 @@ export const ViewMerchantModal = ({
   const { bankListData } = useListBanks({
     limit: 200,
     page: 1,
-  })
+  });
   return (
     <Drawer
       open={open}
@@ -177,45 +178,51 @@ export const ViewMerchantModal = ({
         >
           {item?.operator?.name ?? "-"}
         </Descriptions.Item>
-        {merchantFeeData && <Descriptions.Item
-          label={t("table.deposit_fee")}
-          labelStyle={{
-            maxWidth: "120px !important",
-            margin: 0,
-            padding: 0,
-            textAlign: "center",
-          }}
-        >
-          {merchantFeeData?.fees?.cashin_pix_fee_percent
-            ? `${merchantFeeData.fees?.cashin_pix_fee_percent}%`
-            : "-"}
-        </Descriptions.Item>}
-        {merchantFeeData && <Descriptions.Item
-          label={t("table.fee_withdraw")}
-          labelStyle={{
-            maxWidth: "120px !important",
-            margin: 0,
-            padding: 0,
-            textAlign: "center",
-          }}
-        >
-          {merchantFeeData?.fees?.merchant_withdraw_fee_percent
-            ? `${merchantFeeData?.fees?.merchant_withdraw_fee_percent}%`
-            : "-"}
-        </Descriptions.Item>}
-        {merchantFeeData && <Descriptions.Item
-          label={t("table.pix_refund_fee")}
-          labelStyle={{
-            maxWidth: "120px !important",
-            margin: 0,
-            padding: 0,
-            textAlign: "center",
-          }}
-        >
-          {merchantFeeData?.fees?.pix_refund_fee_percent
-            ? `${merchantFeeData?.fees?.pix_refund_fee_percent}%`
-            : "-"}
-        </Descriptions.Item>}
+        {merchantFeeData && (
+          <Descriptions.Item
+            label={t("table.deposit_fee")}
+            labelStyle={{
+              maxWidth: "120px !important",
+              margin: 0,
+              padding: 0,
+              textAlign: "center",
+            }}
+          >
+            {merchantFeeData?.fees?.cashin_pix_fee_percent
+              ? `${merchantFeeData.fees?.cashin_pix_fee_percent}%`
+              : "-"}
+          </Descriptions.Item>
+        )}
+        {merchantFeeData && (
+          <Descriptions.Item
+            label={t("table.fee_withdraw")}
+            labelStyle={{
+              maxWidth: "120px !important",
+              margin: 0,
+              padding: 0,
+              textAlign: "center",
+            }}
+          >
+            {merchantFeeData?.fees?.merchant_withdraw_fee_percent
+              ? `${merchantFeeData?.fees?.merchant_withdraw_fee_percent}%`
+              : "-"}
+          </Descriptions.Item>
+        )}
+        {merchantFeeData && (
+          <Descriptions.Item
+            label={t("table.pix_refund_fee")}
+            labelStyle={{
+              maxWidth: "120px !important",
+              margin: 0,
+              padding: 0,
+              textAlign: "center",
+            }}
+          >
+            {merchantFeeData?.fees?.pix_refund_fee_percent
+              ? `${merchantFeeData?.fees?.pix_refund_fee_percent}%`
+              : "-"}
+          </Descriptions.Item>
+        )}
         <Descriptions.Item
           label={t("table.under_age_verify")}
           labelStyle={{

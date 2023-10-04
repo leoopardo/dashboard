@@ -3,7 +3,8 @@
 import { EyeFilled, FileAddOutlined } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
-import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
+import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
+import { useGetDepositReportFields } from "@src/services/consult/deposits/reportCsvFields/getReportFields";
 import { queryClient } from "@src/services/queryClient";
 import { useCreatePaidDepositsReports } from "@src/services/reports/consult/deposits/createPaidDepositsReports";
 import { ValidateInterface } from "@src/services/types/validate.interface";
@@ -23,8 +24,6 @@ import { paidDepositRowsQuery } from "../../../../../../services/types/consult/d
 import useDebounce from "../../../../../../utils/useDebounce";
 import { ViewModal } from "../components/ViewModal";
 import { TotalizersCards } from "./components/TotalizersCards";
-import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
-import { useGetDepositReportFields } from "@src/services/consult/deposits/reportCsvFields/getReportFields";
 
 const INITIAL_QUERY: paidDepositRowsQuery = {
   page: 1,
@@ -133,8 +132,8 @@ export const PaidDeposits = () => {
         spacing={1}
       >
         <Grid item xs={12} md={4} lg={2}>
-          <Button
-            style={{ width: "100%", height: 40 }}
+           <Button size="large"
+            style={{ width: "100%" }}
             loading={isPaidRowsFetching || isPaidTotalFetching}
             type="primary"
             onClick={() => setIsFiltersOpen(true)}

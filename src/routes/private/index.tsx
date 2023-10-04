@@ -84,6 +84,7 @@ import { SelfExclusionReports } from "./Pages/register/aggregator/reports/selfEx
 import { TransferToAggregators } from "./Pages/moviments/merchantsTransfers/aggregators";
 import { TransferToOperators } from "./Pages/moviments/merchantsTransfers/operators";
 import { TransferToOrganizations } from "./Pages/moviments/merchantsTransfers/organization";
+import { TransfersBetweenAccounts } from "./Pages/moviments/merchants/betweenAccounts";
 
 export const PrivateRoutes = () => {
   return (
@@ -374,6 +375,10 @@ export const PrivateRoutes = () => {
             <Route
               path="merchant_moviments_reports"
               element={<MerchantManualReports />}
+            />
+            <Route
+              path="between_accounts_transfers"
+              element={<TransfersBetweenAccounts />}
             />
           </Route>
           <Route path="merchant_transfers">

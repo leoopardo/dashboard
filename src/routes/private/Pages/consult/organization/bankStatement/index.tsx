@@ -83,8 +83,8 @@ export const OrganizationBankStatement = () => {
         spacing={1}
       >
         <Grid item xs={12} md={2} lg={2}>
-          <Button
-            style={{ width: "100%", height: 40 }}
+           <Button size="large"
+            style={{ width: "100%" }}
             type="primary"
             onClick={() => setIsFiltersOpen(true)}
           >

@@ -39,7 +39,6 @@ type NotificationType = "success" | "info" | "warning" | "error";
 export const ExportCustomReportsModal = ({
   error,
   fields,
-  loading,
   mutateReport,
   reportPath,
   success,

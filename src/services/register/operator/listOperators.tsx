@@ -4,9 +4,8 @@ import {
   OperatorQuery,
   OperatorsResponse,
 } from "@src/services/types/register/operators/operators.interface";
-import { useEffect, useState } from "react";
-import { api } from "../../../config/api";
 import { useQuery } from "react-query";
+import { api } from "../../../config/api";
 
 export function useListOperators(params: OperatorQuery) {
   const { data, isFetching, error, refetch } = useQuery<

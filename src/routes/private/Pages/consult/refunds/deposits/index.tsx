@@ -54,7 +54,6 @@ export const RefundDeposits = () => {
   const [query, setQuery] = useState<refundDepositsQuery>(INITIAL_QUERY);
   const {
     refundDepositsTotal,
-    refundDepositsTotalError,
     isRefundDepositsTotalFetching,
     refetchRefundDepositsTotal,
   } = useGetTotalRefundDeposits(query);

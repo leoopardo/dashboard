@@ -6,7 +6,7 @@ import { useGetMerchantBankStatementTotals } from "@src/services/consult/merchan
 import { queryClient } from "@src/services/queryClient";
 import { MerchantBankStatementTotalsQuery } from "@src/services/types/consult/merchant/bankStatement";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Col, Divider, Layout, Row } from "antd";
+import { Button, Col, Layout, Row } from "antd";
 import moment from "moment";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -44,7 +44,6 @@ export const Dashboard = () => {
     page: 1,
   });
 
-
   const { refetchMerchantBankStatementTotalsTotal } =
     useGetMerchantBankStatementTotals(query);
 
@@ -55,17 +54,18 @@ export const Dashboard = () => {
           ?.report_paybrokers_balance_list && <OrganizationBalance />}
       </Col>
       <Col span={24}>
-        {permissions?.report?.merchant?.balance?.report_merchant_balance_list && (
-          <MerchantBalance />
-        )}
+        {permissions?.report?.merchant?.balance
+          ?.report_merchant_balance_list && <MerchantBalance />}
       </Col>
 
       <Col
         span={24}
         style={{
           marginTop:
-            permissions?.report?.merchant?.balance?.report_merchant_balance_list ||
-            permissions?.report?.paybrokers?.balance?.report_paybrokers_balance_list
+            permissions?.report?.merchant?.balance
+              ?.report_merchant_balance_list ||
+            permissions?.report?.paybrokers?.balance
+              ?.report_paybrokers_balance_list
               ? 40
               : 0,
           padding: 15,
@@ -142,7 +142,13 @@ export const Dashboard = () => {
           </Row>
         )}
 
-        <Row style={{ marginTop:permissions?.report?.paybrokers?.bank_balance?.menu ? 16 : -65 }}>
+        <Row
+          style={{
+            marginTop: permissions?.report?.paybrokers?.bank_balance?.menu
+              ? 16
+              : -65,
+          }}
+        >
           <Layout
             style={{
               width: "100%",

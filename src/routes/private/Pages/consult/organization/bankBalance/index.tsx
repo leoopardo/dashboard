@@ -5,9 +5,7 @@ import { Avatar, Card, Col, Result, Row, Typography } from "antd";
 export const OrganizationBankBalance = () => {
   const {
     OrganizationBankBalance,
-    OrganizationBankBalanceError,
-    isOrganizationBankBalanceFetching,
-    refetchOrganizationBankBalance,
+    
   } = useGetOrganizationBankBalance();
   const { BankMainteneceData } = useGetOrganizationBankMaintenece({
     limit: 200,

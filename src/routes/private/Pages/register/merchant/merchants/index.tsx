@@ -22,6 +22,7 @@ import {
 } from "@services/types/register/merchants/merchantsRegister.interface";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { queryClient } from "@src/services/queryClient";
+import { useCreateMerchant } from "@src/services/register/merchant/merchant/createMerchant";
 import { useCreateMerchantReports } from "@src/services/reports/register/merchant/createMerchantReports";
 import { ValidateInterface } from "@src/services/types/validate.interface";
 import useDebounce from "@utils/useDebounce";
@@ -30,9 +31,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { ViewMerchantModal } from "./components/ViewMerchantModal";
-import { useCreateMerchant } from "@src/services/register/merchant/merchant/createMerchant";
 import { UpdateBanks } from "./components/updatebanks";
-import { useUpdateBankConfig } from "@src/services/register/merchant/merchant/bankConfig/updateBankConfig";
 
 const INITIAL_QUERY: MerchantsQuery = {
   limit: 25,
@@ -152,7 +151,8 @@ export const MerchantView = () => {
       >
         <Grid item xs={12} md={4} lg={2}>
           <Button
-            style={{ width: "100%", height: 40 }}
+            size="large"
+            style={{ width: "100%" }}
             loading={isMerchantDataFetching}
             type="primary"
             onClick={() => setIsFiltersOpen(true)}

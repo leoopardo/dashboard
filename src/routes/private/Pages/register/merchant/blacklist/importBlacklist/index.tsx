@@ -4,6 +4,7 @@ import {
   SendOutlined,
   UploadOutlined,
 } from "@ant-design/icons";
+import { Toast } from "@src/components/Toast";
 import { useUpdateMerchantBlacklist } from "@src/services/register/merchant/blacklist/uploadBlacklistFile";
 import {
   Button,
@@ -17,13 +18,10 @@ import {
   Upload,
 } from "antd";
 import { FormInstance } from "antd/lib/form/Form";
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { useCSVDownloader, usePapaParse } from "react-papaparse";
 import { unparse } from "papaparse";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Toast } from "@src/components/Toast";
-import { useMediaQuery } from "react-responsive";
-import { CompoundedComponent } from "antd/es/float-button/interface";
+import { useCSVDownloader, usePapaParse } from "react-papaparse";
 
 const EditableContext = React.createContext<FormInstance<any> | null>(null);
 
@@ -147,7 +145,6 @@ export const ImportBlacklist = () => {
   ];
   const [dataSource, setDataSource] = useState<DataType[]>(initialData);
   const [body, setBody] = useState<{ content: string }>({ content: "" });
-  const isMobile = useMediaQuery({ maxWidth: "750px" });
   const { error, isLoading, isSuccess, mutate } =
     useUpdateMerchantBlacklist(body);
   const uploadRef = useRef<HTMLButtonElement | null>(null);
@@ -201,7 +198,6 @@ export const ImportBlacklist = () => {
       DESCRIPTION: "Solicitado pelo merchant xyz",
     };
     setDataSource([...dataSource, newData]);
-  
   };
 
   const handleSave = (row: DataType) => {
@@ -263,7 +259,7 @@ export const ImportBlacklist = () => {
               }}
               size="large"
               icon={<UploadOutlined />}
-              onClick={() =>uploadRef && uploadRef.current?.click()}
+              onClick={() => uploadRef && uploadRef.current?.click()}
             >
               {t("table.upload_file")}
             </Button>
@@ -318,7 +314,8 @@ export const ImportBlacklist = () => {
           </Col>
           <Col
             xs={{ span: 24 }}
-            md={{ span: 6 }} lg={{ span: 4 }}
+            md={{ span: 6 }}
+            lg={{ span: 4 }}
             style={{
               height: "40px",
               display: "flex",
@@ -362,7 +359,7 @@ export const ImportBlacklist = () => {
               </a>
             </CSVDownloader>
           </Col>
-          <Col xs={{ span: 0 }} md={{ span:0 }} lg={{ span: 8 }} />
+          <Col xs={{ span: 0 }} md={{ span: 0 }} lg={{ span: 8 }} />
           <Col xs={{ span: 24 }} md={{ span: 6 }} lg={{ span: 4 }}>
             <Button
               size="large"

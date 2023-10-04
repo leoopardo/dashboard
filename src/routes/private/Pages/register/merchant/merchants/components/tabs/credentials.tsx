@@ -4,7 +4,6 @@ import { EditOutlined, EyeFilled, PlusOutlined } from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import { MutateModal } from "@components/Modals/mutateGenericModal";
 import { ViewModal } from "@components/Modals/viewGenericModal";
-import { Toast } from "@components/Toast";
 import { ValidateToken } from "@components/ValidateToken";
 import { Grid } from "@mui/material";
 import { MerchantsItem } from "@services/types/register/merchants/merchantsRegister.interface";
@@ -277,8 +276,6 @@ export const CredentialConfigTab = (props: { id?: string }) => {
           }}
         />
       )}
-
-    
     </Grid>
   );
 };
