@@ -24,3 +24,14 @@ export interface AggregatorBlacklistData {
   total: number;
   limit: number;
 }
+
+
+export interface AggregatorBlacklistReasonItem {
+  reason: string;
+}
+export interface AggregatorBlacklistReasonData {
+  items: AggregatorBlacklistReasonItem[];
+  page: number;
+  total: number;
+  limit: number;
+}
