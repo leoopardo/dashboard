@@ -122,7 +122,8 @@
     "person_blacklist_uploads": "Check uploads",
     "person_blacklist_reasons": "Blacklist reasons",
     "self_exclusion": "Self exclusion",
-    "self_exclusion_reports": "Self exclusion reports"
+    "self_exclusion_reports": "Self exclusion reports",
+    "merchant_transfers": "Transfers between merchants"
   },
 
   "titles": {
@@ -203,7 +204,8 @@
     "add_fee": "Add fee",
     "new_reason": "Novo motivo",
     "sample_file": "sample file",
-    "create_self_exclusion": "Create self exclusion"
+    "create_self_exclusion": "Create self exclusion",
+    "transfers": "Transfers"
   },
   "input": {
     "required": "Please input the {{field}}",
@@ -606,7 +608,12 @@
     "refund_id": "Refund ID",
     "refund_date": "Refund date",
     "blacklist_data": "Locks data",
-    "limits_data": "limits data"
+    "limits_data": "limits data",
+    "merchant_origin": "Merchant from",
+    "merchant_destination": "Merchant to",
+    "account_origin": "Account from",
+    "account_destination": "Account to",
+    "user": "User"
   },
   "actions": {
     "details": "Details",

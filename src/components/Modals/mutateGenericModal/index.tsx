@@ -29,6 +29,8 @@ import { useTranslation } from "react-i18next";
 import ReactInputMask from "react-input-mask";
 import { MerchantSelect } from "../../Selects/merchantSelect";
 import { PartnerSelect } from "../../Selects/partnerSelect";
+import { CurrencyInput } from "react-currency-mask";
+
 const { RangePicker } = DatePicker;
 
 interface mutateProps {
@@ -629,6 +631,51 @@ export const MutateModal = ({
                     name="reason"
                     value={body?.reason}
                     onChange={handleChange}
+                  />
+                </Form.Item>
+              );
+
+            case "description":
+              return (
+                <Form.Item
+                  label={t(`table.${field.label}`)}
+                  name={field.label}
+                  style={{ margin: 10 }}
+                  help=""
+                >
+                  <Input.TextArea
+                    size="large"
+                    name="description"
+                    value={body?.description}
+                    rows={3}
+                    onChange={handleChange}
+                  />
+                </Form.Item>
+              );
+
+            case "value":
+              return (
+                <Form.Item
+                  label={t(`table.${field.label}`)}
+                  name={field.label}
+                  style={{ margin: 10 }}
+                  help=""
+                >
+                  <CurrencyInput
+                    onChangeValue={(_event, originalValue) => {
+                      setBody((state: any) => ({
+                        ...state,
+                        value: +originalValue,
+                      }));
+                    }}
+                    InputElement={
+                      <Input
+                        size="large"
+                        style={{ width: "100%" }}
+                        disabled={body?.cashin_pix_fee_type === "PERCENT"}
+                        value={body?.cashin_pix_fee_value}
+                      />
+                    }
                   />
                 </Form.Item>
               );

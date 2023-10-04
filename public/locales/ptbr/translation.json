@@ -123,7 +123,8 @@
     "person_blacklist_uploads": "Verificar uploads",
     "person_blacklist_reasons": "Motivos de blacklist",
     "self_exclusion": "Auto exclusão",
-    "self_exclusion_reports": "Auto exclusão"
+    "self_exclusion_reports": "Auto exclusão",
+    "merchant_transfers": "Transferências entre empresas "
   },
 
   "titles": {
@@ -204,7 +205,8 @@
     "add_fee": "Adicionar taxa",
     "new_reason": "Novo motivo",
     "sample_file": "arquivo exemplo",
-    "create_self_exclusion": "Criar auto exclusão"
+    "create_self_exclusion": "Criar auto exclusão",
+    "transfers": "Transferências"
   },
   "modal": {
     "confirm": "Confirmar",
@@ -607,7 +609,12 @@
     "refund_id": "ID da devolução",
     "refund_date": "Data de devolução",
     "blacklist_data": "Dados de bloqueio",
-    "limits_data": "Dados de limites"
+    "limits_data": "Dados de limites",
+    "merchant_origin": "Empresa origem",
+    "merchant_destination": "Empresa destino",
+    "account_origin": "Conta origem",
+    "account_destination": "Conta destino",
+    "user": "Usuário"
   },
   "actions": {
     "details": "Detalhes",
