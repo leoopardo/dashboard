@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import { useGetMerchantBalance } from "@src/services/consult/merchant/balance/getMerchantBalance";
 import { MerchantBalanceQuery } from "@src/services/types/consult/merchant/balance";
@@ -7,28 +8,36 @@ import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
 
 export const MerchantBalance = () => {
-  const [isHoverCurrency, setIsHoverCurrency] = useState<
-    "real" | "dolar" | "euro" | "btc"
-  >("real");
+  const [
+    isHoverCurrency,
+    //setIsHoverCurrency
+  ] = useState<"real" | "dolar" | "euro" | "btc">("real");
   const [show, setShow] = useState<boolean>(true);
   const isMobile = useMediaQuery({ maxWidth: "750px" });
   const INITIAL_QUERY: MerchantBalanceQuery = {
     page: 1,
     limit: 25,
   };
-  const [query, setQuery] = useState<MerchantBalanceQuery>(INITIAL_QUERY);
+  const [
+    query,
+    //setQuery
+  ] = useState<MerchantBalanceQuery>(INITIAL_QUERY);
   const { MerchantBalance, isMerchantBalanceFetching } =
     useGetMerchantBalance(query);
 
   return (
     <Layout style={{ margin: -28, padding: 28 }}>
-      <Row align="middle" style={{ width: "100%", maxWidth: "1600px" }} gutter={[8, 8]}>
+      <Row
+        align="middle"
+        style={{ width: "100%", maxWidth: "1600px" }}
+        gutter={[8, 8]}
+      >
         <Col
           xs={{ span: 24 }}
           md={{ span: 4 }}
           style={{ minWidth: isMerchantBalanceFetching ? "222px" : undefined }}
         >
-          <Card >
+          <Card>
             <Typography.Title
               level={3}
               style={{
@@ -63,7 +72,13 @@ export const MerchantBalance = () => {
 
         {show && (
           <>
-            <Col xs={{ span: 24 }} md={{ span: 5 }} style={{ minWidth: isMerchantBalanceFetching ? "220px" : undefined }}>
+            <Col
+              xs={{ span: 24 }}
+              md={{ span: 5 }}
+              style={{
+                minWidth: isMerchantBalanceFetching ? "220px" : undefined,
+              }}
+            >
               <Card
                 bordered={false}
                 loading={isMerchantBalanceFetching}
@@ -185,7 +200,13 @@ export const MerchantBalance = () => {
                 )} */}
               </Card>
             </Col>
-            <Col xs={{ span: 24 }} md={{ span: 5 }} style={{ minWidth: isMerchantBalanceFetching ? "220px" : undefined }}>
+            <Col
+              xs={{ span: 24 }}
+              md={{ span: 5 }}
+              style={{
+                minWidth: isMerchantBalanceFetching ? "220px" : undefined,
+              }}
+            >
               <Card bordered={false} loading={isMerchantBalanceFetching}>
                 {isHoverCurrency === "real" ? (
                   <Statistic
@@ -303,7 +324,13 @@ export const MerchantBalance = () => {
                 )} */}
               </Card>
             </Col>
-            <Col xs={{ span: 24 }} md={{ span: 5 }} style={{ minWidth: isMerchantBalanceFetching ? "220px" : undefined }}>
+            <Col
+              xs={{ span: 24 }}
+              md={{ span: 5 }}
+              style={{
+                minWidth: isMerchantBalanceFetching ? "220px" : undefined,
+              }}
+            >
               <Card bordered={false} loading={isMerchantBalanceFetching}>
                 {isHoverCurrency === "real" ? (
                   <Statistic
@@ -421,7 +448,13 @@ export const MerchantBalance = () => {
                 )} */}
               </Card>
             </Col>
-            <Col xs={{ span: 24 }} md={{ span: 5 }} style={{ minWidth: isMerchantBalanceFetching ? "220px" : undefined }}>
+            <Col
+              xs={{ span: 24 }}
+              md={{ span: 5 }}
+              style={{
+                minWidth: isMerchantBalanceFetching ? "220px" : undefined,
+              }}
+            >
               <Card bordered={false} loading={isMerchantBalanceFetching}>
                 {isHoverCurrency === "real" ? (
                   <Statistic

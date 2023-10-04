@@ -5,7 +5,6 @@ import {
   UploadOutlined,
 } from "@ant-design/icons";
 import { Toast } from "@src/components/Toast";
-import { useUpdateMerchantBlacklist } from "@src/services/register/merchant/blacklist/uploadBlacklistFile";
 import { useUpdatePersonsBlacklist } from "@src/services/register/persons/blacklist/uploadBlacklistFile";
 import {
   Button,

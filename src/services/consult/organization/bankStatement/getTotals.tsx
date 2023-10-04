@@ -3,7 +3,6 @@ import {
   OrganizationBankStatementTotalsQuery,
   OrganizationBankStatementTotalsResponse,
 } from "@src/services/types/consult/organization/bankStatement/totals.interface";
-import moment from "moment";
 import { useQuery } from "react-query";
 import { api } from "../../../../config/api";
 
@@ -14,7 +13,7 @@ export function useGetOrganizationBankStatementTotals(
     OrganizationBankStatementTotalsResponse | null | undefined
   >("organizationBankStatementTotals", async () => {
     const response = await api.get("account/report/paybrokers-account/total", {
-      params
+      params,
     });
     return response.data;
   });

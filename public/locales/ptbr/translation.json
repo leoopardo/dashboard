@@ -123,7 +123,8 @@
     "person_blacklist_uploads": "Verificar uploads",
     "person_blacklist_reasons": "Motivos de blacklist",
     "self_exclusion": "Auto exclusão",
-    "self_exclusion_reports": "Auto exclusão"
+    "self_exclusion_reports": "Auto exclusão",
+    "between_accounts_transfers": "Transferências entre contas"
   },
 
   "titles": {
@@ -607,7 +608,8 @@
     "refund_id": "ID da devolução",
     "refund_date": "Data de devolução",
     "blacklist_data": "Dados de bloqueio",
-    "limits_data": "Dados de limites"
+    "limits_data": "Dados de limites",
+    "transfer": "Transferência"
   },
   "actions": {
     "details": "Detalhes",

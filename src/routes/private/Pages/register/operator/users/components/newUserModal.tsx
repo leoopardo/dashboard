@@ -75,8 +75,7 @@ export const NewUserModal = ({
   });
 
   const { mutate, error, isLoading, isSuccess } = useCreateOperatorUser(body);
-  const { updateError, updateLoading, updateSuccess } =
-    useUpdateOperatorUser(body);
+  const { updateLoading } = useUpdateOperatorUser(body);
 
   function handleChangeUserBody(event: any) {
     setBody((state) => ({ ...state, [event.target.name]: event.target.value }));

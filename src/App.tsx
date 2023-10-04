@@ -9,16 +9,15 @@ import { ThemeProvider } from "styled-components";
 import { PageHeader } from "./components/PageHeader/index.tsx";
 import { SidebarNavigation } from "./components/SideBarNavigation/index.tsx";
 import { useMenu } from "./contexts/SidebarContext/index.tsx";
+import {
+  useTheme
+} from "./contexts/ThemeContext/index.tsx";
 import i18n from "./i18n";
 import { PrivateRoutes } from "./routes/private";
 import { PublicRoutes } from "./routes/public";
 import { useValidate } from "./services/siginIn/validate.tsx";
 import { defaultTheme } from "./styles/defaultTheme/index.ts";
 import { GlobalStyle } from "./styles/globalStyles.ts";
-import {
-  StyledThemeProvider,
-  useTheme,
-} from "./contexts/ThemeContext/index.tsx";
 const Logo = import.meta.env.VITE_APP_ICON;
 
 function App() {

@@ -68,8 +68,7 @@ export const UpdateUserModal = ({
 
   const { mutate, error, isLoading, isSuccess, reset } =
     useCreateMerchantUser(body);
-  const { updateError, updateIsLoading, updateIsSuccess } =
-    useUpdateMerchant(body);
+  const { updateIsLoading } = useUpdateMerchant(body);
 
   function handleChangeUserBody(event: any) {
     setBody((state) => ({ ...state, [event.target.name]: event.target.value }));

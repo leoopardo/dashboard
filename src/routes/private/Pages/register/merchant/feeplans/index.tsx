@@ -95,8 +95,8 @@ export const MerchantFeePlans = () => {
         spacing={1}
       >
         <Grid item xs={12} md={3} lg={2}>
-          <Button
-            style={{ width: "100%", height: 40 }}
+           <Button size="large"
+            style={{ width: "100%" }}
             loading={isFeePlansDataFetching}
             type="primary"
             onClick={() => setIsFiltersOpen(true)}

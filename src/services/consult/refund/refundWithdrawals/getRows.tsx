@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import moment from "moment";
-import { useQuery } from "react-query";
-import { api } from "../../../../config/api";
 import {
   refundWithdrawalsQuery,
   refundWithdrawalsRowsResponse,
-} from "../../../types/consult/refunds/refundmanualDeposits.interface";
+} from "@src/services/types/consult/refunds/refundWithdrawals.interface copy";
+import { useQuery } from "react-query";
+import { api } from "../../../../config/api";
 
 export function useGetRowsRefundWithdrawals(params: refundWithdrawalsQuery) {
   const { data, isFetching, error, refetch } = useQuery<

@@ -76,7 +76,7 @@ export const NewUserModal = ({
 
   const { mutate, error, isLoading, isSuccess, reset } =
     useCreateAggregatorUser(body);
-  const { updateError, updateLoading, updateSuccess } =
+  const {  updateLoading } =
     useUpdateAggregatorUser(body);
 
   function handleChangeUserBody(event: any) {

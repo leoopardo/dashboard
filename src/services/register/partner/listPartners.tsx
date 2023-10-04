@@ -1,12 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import { api } from "../../../config/api";
 import {
   PartnerQuery,
   PartnersResponse,
 } from "../../types/register/partners/partners.interface";
-import { useQuery } from "react-query";
 
 export function useListPartners(params: PartnerQuery) {
   const { data, isFetching, error, refetch } = useQuery<

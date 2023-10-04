@@ -74,8 +74,7 @@ export const NewUserModal = ({
   });
 
   const { mutate, error, isLoading, isSuccess } = useCreatePartnerUser(body);
-  const { updateError, updateLoading, updateSuccess } =
-    useUpdatePartnerUser(body);
+  const { updateLoading } = useUpdatePartnerUser(body);
 
   function handleChangeUserBody(event: any) {
     setBody((state) => ({ ...state, [event.target.name]: event.target.value }));
@@ -263,7 +262,8 @@ export const NewUserModal = ({
             style={{ margin: 10 }}
             rules={[
               {
-                required: !body.partner_id && action === "create" ? true : false,
+                required:
+                  !body.partner_id && action === "create" ? true : false,
                 message:
                   t("input.required", { field: t("input.partner") }) || "",
               },
@@ -401,7 +401,6 @@ export const NewUserModal = ({
         error={error}
         success={isSuccess}
       />
-    
     </Drawer>
   );
 };

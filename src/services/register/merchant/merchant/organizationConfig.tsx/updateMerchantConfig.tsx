@@ -1,5 +1,4 @@
 import { api } from "@config/api";
-import { queryClient } from "@src/services/queryClient";
 import { IMerchantUpdateConfig } from "@src/services/types/register/merchants/merchantConfig.interface";
 import { useMutation } from "react-query";
 

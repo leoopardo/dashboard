@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useGetOperator } from "@src/services/register/operator/getOperators";
 import { useListOperators } from "@src/services/register/operator/listOperators";
 import { OperatorQuery } from "@src/services/types/register/operators/operators.interface";
 import useDebounce from "@src/utils/useDebounce";

@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
-import PaidIcon from "@mui/icons-material/Paid";
 import { useGetOrganizationBalance } from "@src/services/consult/organization/balance/getPerBank";
 import { defaultTheme } from "@src/styles/defaultTheme";
 import { Card, Col, Divider, Layout, Row, Statistic, Typography } from "antd";
@@ -9,18 +9,29 @@ import { useMediaQuery } from "react-responsive";
 export const OrganizationBalance = () => {
   const {
     OrganizationBalance,
-    OrganizationBalanceError,
+
     isOrganizationBalanceFetching,
-    refetchOrganizationBalance,
   } = useGetOrganizationBalance();
-  const [isHoverCurrency, setIsHoverCurrency] = useState<
-    "real" | "dolar" | "euro" | "btc"
-  >("real");
+  const [
+    isHoverCurrency,
+    //setIsHoverCurrency
+  ] = useState<"real" | "dolar" | "euro" | "btc">("real");
   const [show, setShow] = useState<boolean>(true);
   const isMobile = useMediaQuery({ maxWidth: "750px" });
   return (
-    <Layout style={{ margin: -28, padding: 20, display: "flex", justifyContent: "center" }}>
-      <Row align="middle" style={{ width: "100%", maxWidth: "1600px"  }} gutter={[8, 8]}>
+    <Layout
+      style={{
+        margin: -28,
+        padding: 20,
+        display: "flex",
+        justifyContent: "center",
+      }}
+    >
+      <Row
+        align="middle"
+        style={{ width: "100%", maxWidth: "1600px" }}
+        gutter={[8, 8]}
+      >
         <Col xs={{ span: 24 }} md={{ span: 4 }}>
           <Card>
             <Typography.Title
@@ -41,7 +52,6 @@ export const OrganizationBalance = () => {
                   justifyContent: !isMobile ? "center" : "space-between",
                 }}
               >
-                
                 {isMobile && (
                   <>
                     {show ? (
@@ -59,7 +69,13 @@ export const OrganizationBalance = () => {
         {show && (
           <>
             {" "}
-            <Col xs={{ span: 24 }} md={{ span: 5 }}   style={{ minWidth: isOrganizationBalanceFetching ? "222px" : undefined }}>
+            <Col
+              xs={{ span: 24 }}
+              md={{ span: 5 }}
+              style={{
+                minWidth: isOrganizationBalanceFetching ? "222px" : undefined,
+              }}
+            >
               <Card bordered={false} loading={isOrganizationBalanceFetching}>
                 {isHoverCurrency === "real" ? (
                   <Statistic
@@ -191,7 +207,13 @@ export const OrganizationBalance = () => {
                 )} */}
               </Card>
             </Col>
-            <Col xs={{ span: 24 }} md={{ span: 5 }}  style={{ minWidth: isOrganizationBalanceFetching ? "220px" : undefined }}>
+            <Col
+              xs={{ span: 24 }}
+              md={{ span: 5 }}
+              style={{
+                minWidth: isOrganizationBalanceFetching ? "220px" : undefined,
+              }}
+            >
               <Card bordered={false} loading={isOrganizationBalanceFetching}>
                 {isHoverCurrency === "real" ? (
                   <Statistic
@@ -309,7 +331,13 @@ export const OrganizationBalance = () => {
                 )} */}
               </Card>
             </Col>
-            <Col xs={{ span: 24 }} md={{ span: 5 }} style={{ minWidth: isOrganizationBalanceFetching ? "220px" : undefined }}>
+            <Col
+              xs={{ span: 24 }}
+              md={{ span: 5 }}
+              style={{
+                minWidth: isOrganizationBalanceFetching ? "220px" : undefined,
+              }}
+            >
               <Card bordered={false} loading={isOrganizationBalanceFetching}>
                 {isHoverCurrency === "real" ? (
                   <Statistic
@@ -335,7 +363,7 @@ export const OrganizationBalance = () => {
                     />
                   </>
                 )}
-{/* 
+                {/* 
                 {isHoverCurrency === "dolar" ? (
                   <Typography.Title
                     level={3}
@@ -427,7 +455,13 @@ export const OrganizationBalance = () => {
                 )} */}
               </Card>
             </Col>
-            <Col xs={{ span: 24 }} md={{ span: 5 }} style={{ minWidth: isOrganizationBalanceFetching ? "220px" : undefined }}>
+            <Col
+              xs={{ span: 24 }}
+              md={{ span: 5 }}
+              style={{
+                minWidth: isOrganizationBalanceFetching ? "220px" : undefined,
+              }}
+            >
               <Card bordered={false} loading={isOrganizationBalanceFetching}>
                 {isHoverCurrency === "real" ? (
                   <Statistic
@@ -453,7 +487,7 @@ export const OrganizationBalance = () => {
                     />
                   </>
                 )}
-{/* 
+                {/* 
                 {isHoverCurrency === "dolar" ? (
                   <Typography.Title
                     level={3}

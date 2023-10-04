@@ -95,7 +95,7 @@ export const GeneratedDeposits = () => {
     comma_separate_value: isComma,
   });
 
-  const { fields, isFieldsFetching } = useGetDepositReportFields();
+  const { fields } = useGetDepositReportFields();
 
   const [webhookBody, setWebhookBody] = useState<ResendWebhookBody>({
     start_date: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss.SSS"),
@@ -171,8 +171,8 @@ export const GeneratedDeposits = () => {
         style={{ width: "100%" }}
       >
         <Col xs={{ span: 24 }} md={{ span: 4 }}>
-          <Button
-            style={{ width: "100%", height: 40 }}
+           <Button size="large"
+            style={{ width: "100%" }}
             loading={isDepositsRowsFetching || isDepositsTotalFetching}
             type="primary"
             onClick={() => setIsFiltersOpen(true)}
