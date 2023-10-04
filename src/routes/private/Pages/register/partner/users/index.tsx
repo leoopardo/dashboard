@@ -9,6 +9,7 @@ import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
+import { Toast } from "@src/components/Toast";
 import { queryClient } from "@src/services/queryClient";
 import { useGetPartnerUsers } from "@src/services/register/partner/users/getPartnerUsers";
 import { useUpdatePartnerUser } from "@src/services/register/partner/users/updateUser";
@@ -269,6 +270,12 @@ export const PartnerUsers = () => {
           submit={handleUpdateTokenValidate}
         />
       )}
+      <Toast
+        actionSuccess={t("messages.updated")}
+        actionError={t("messages.update")}
+        error={updateError}
+        success={updateSuccess}
+      />
       {isViewModalOpen && (
         <ViewModal
           item={currentItem}

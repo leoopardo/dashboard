@@ -315,7 +315,10 @@
     "csv_columns": "Selecione as colunas do CSV",
     "comma_separator": "Separador de casas decimais",
     "operation_type": "Tipo de operação",
-    "btg_id": "ID BTG"
+    "btg_id": "ID BTG",
+    "origin_account": "Conta origem",
+    "final_account": "Conta destino",
+    "value": "Valor"
   },
   "table": {
     "id": "ID",
@@ -609,7 +612,9 @@
     "refund_date": "Data de devolução",
     "blacklist_data": "Dados de bloqueio",
     "limits_data": "Dados de limites",
-    "transfer": "Transferência"
+    "transfer": "Transferência",
+    "origin_account": "Conta origem",
+    "final_account": "Conta destino"
   },
   "actions": {
     "details": "Detalhes",
