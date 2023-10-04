@@ -16,6 +16,7 @@ export function useGetSelf() {
       refetchInterval: false,
       refetchIntervalInBackground: false,
       refetchOnMount: false,
+      enabled: false
     }
   );
 

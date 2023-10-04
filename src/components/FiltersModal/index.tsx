@@ -539,6 +539,33 @@ export const FiltersModal = ({
                   />
                 </Form.Item>
               );
+
+            case "status":
+              return (
+                <Form.Item
+                  label={t(`table.${filter}`)}
+                  name={filter}
+                  style={{ margin: 10 }}
+                >
+                  <Select
+                    size="large"
+                    style={{ width: "100%", height: "40px" }}
+                    placeholder={t("table.status")}
+                    options={[
+                      { value: "true", label: t("table.active") },
+                      { value: "false", label: t("table.inactive") },
+                    ]}
+                    value={filtersQuery?.status ?? null}
+                    onChange={(value) => {
+                      setFiltersQuery((state: any) => ({
+                        ...state,
+                        status: value,
+                      }));
+                    }}
+                  />
+                </Form.Item>
+              );
+
             case endDateKeyName:
               return;
 

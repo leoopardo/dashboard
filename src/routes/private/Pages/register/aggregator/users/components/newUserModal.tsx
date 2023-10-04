@@ -8,7 +8,15 @@ import { useCreateAggregatorUser } from "@src/services/register/aggregator/users
 import { useUpdateAggregatorUser } from "@src/services/register/aggregator/users/updateUser";
 import { OrganizationUserItem } from "@src/services/types/register/organization/organizationUsers.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Drawer, Form, FormInstance, Input } from "antd";
+import {
+  Button,
+  Drawer,
+  Form,
+  FormInstance,
+  Input,
+  Switch,
+  Typography,
+} from "antd";
 import React, {
   Dispatch,
   SetStateAction,
@@ -30,7 +38,7 @@ interface NewuserModalprops {
 export interface NewUserInterface {
   name: string;
   username: string;
-  password: string;
+  password?: string;
   email?: string;
   cellphone?: string;
   group_id: number;
@@ -61,7 +69,6 @@ export const NewUserModal = ({
   const [body, setBody] = useState<NewUserInterface>({
     name: "",
     username: "",
-    password: "",
     group_id: 0,
     status: true,
     type: 2,
@@ -81,7 +88,8 @@ export const NewUserModal = ({
       currentUser &&
       setUpdateBody &&
       setIsValidateTokenOpen &&
-      setCurrentUser && action === "update"
+      setCurrentUser &&
+      action === "update"
     ) {
       setUpdateBody(body);
       setCurrentUser(null);
@@ -118,6 +126,12 @@ export const NewUserModal = ({
     }
   }, [action]);
 
+  useEffect(() => {
+    if (isSuccess) {
+      setOpen(false);
+    }
+  }, [isSuccess]);
+
   return (
     <Drawer
       open={open}
@@ -127,7 +141,9 @@ export const NewUserModal = ({
         if (setCurrentUser) setCurrentUser(null);
       }}
       bodyStyle={{ overflowX: "hidden" }}
-      title={action === "update" ? t("buttons.update_user") : t("buttons.new_user")}
+      title={
+        action === "update" ? t("buttons.update_user") : t("buttons.new_user")
+      }
       footer={
         <Button
           loading={action === "update" ? updateLoading : isLoading}
@@ -290,6 +306,27 @@ export const NewUserModal = ({
               currentUser?.aggregator.id
             }
           />
+        </Form.Item>
+        <Form.Item
+          label={t("table.status")}
+          name="status"
+          style={{ margin: 10 }}
+        >
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            <Typography style={{ marginRight: 8 }}>
+              {t("table.inactive")}
+            </Typography>
+            <Switch
+              disabled={action === "create"}
+              checked={body?.status}
+              onChange={(checked) =>
+                setBody((state) => ({ ...state, status: checked }))
+              }
+            />{" "}
+            <Typography style={{ marginLeft: 8 }}>
+              {t("table.active")}
+            </Typography>
+          </div>
         </Form.Item>
 
         <Form.Item

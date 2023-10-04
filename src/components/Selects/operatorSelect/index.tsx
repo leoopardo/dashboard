@@ -75,8 +75,6 @@ export const OperatorSelect = ({
     }
   };
 
-  console.log(queryOptions);
-
   return (
     <AutoComplete
       size="large"

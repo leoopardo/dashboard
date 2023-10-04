@@ -60,7 +60,7 @@ export const ViewModal = (props: ViewModalProps) => {
           />
         </Grid>{" "}
         {isRefundFetching && <Spin />}{" "}
-        {Refund && (
+        {props.type === "Refund" && Refund && (
           <Grid xs={12}>
             <Descriptions bordered style={{ margin: 0, padding: 0 }} column={1}>
               {currOption === "transaction" &&

@@ -5,7 +5,15 @@ import { useUpdateOrganizationUser } from "@services/register/organization/users
 import { Toast } from "@src/components/Toast";
 import { useValidate } from "@src/services/siginIn/validate";
 import { OrganizationUserItem } from "@src/services/types/register/organization/organizationUsers.interface";
-import { Button, Drawer, Form, FormInstance, Input } from "antd";
+import {
+  Button,
+  Drawer,
+  Form,
+  FormInstance,
+  Input,
+  Switch,
+  Typography,
+} from "antd";
 import React, {
   Dispatch,
   SetStateAction,
@@ -60,7 +68,6 @@ export const NewUserModal = ({
   const [body, setBody] = useState<NewUserInterface>({
     name: "",
     username: "",
-    password: "",
     group_id: 0,
     status: true,
     type: 2,
@@ -68,7 +75,7 @@ export const NewUserModal = ({
   });
 
   const { mutate, error, isLoading, isSuccess } =
-    useCreateOrganizationUser(body);
+    useCreateOrganizationUser({...body});
   const { updateError, updateLoading, updateSuccess } =
     useUpdateOrganizationUser(body);
 
@@ -81,7 +88,8 @@ export const NewUserModal = ({
       currentUser &&
       setUpdateBody &&
       setIsValidateTokenOpen &&
-      setCurrentUser && action === "update"
+      setCurrentUser &&
+      action === "update"
     ) {
       setUpdateBody(body);
       setCurrentUser(null);
@@ -90,7 +98,6 @@ export const NewUserModal = ({
       return;
     }
     mutate();
-    setOpen(false);
     setBody({});
   }
 
@@ -126,6 +133,12 @@ export const NewUserModal = ({
     }
   }, [action]);
 
+  useEffect(() => {
+    if (isSuccess) {
+      setOpen(false);
+    }
+  }, [isSuccess]);
+
   return (
     <Drawer
       open={open}
@@ -135,7 +148,9 @@ export const NewUserModal = ({
         if (setCurrentUser) setCurrentUser(null);
       }}
       bodyStyle={{ overflowX: "hidden" }}
-      title={action === "update" ? t("buttons.update_user") : t("buttons.new_user")}
+      title={
+        action === "update" ? t("buttons.update_user") : t("buttons.new_user")
+      }
       footer={
         <Button
           loading={action === "update" ? updateLoading : isLoading}
@@ -280,6 +295,28 @@ export const NewUserModal = ({
             filterIdProp="organization_id"
             filterIdValue={responseValidate?.organization_id}
           />
+        </Form.Item>
+
+        <Form.Item
+          label={t("table.status")}
+          name="status"
+          style={{ margin: 10 }}
+        >
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            <Typography style={{ marginRight: 8 }}>
+              {t("table.inactive")}
+            </Typography>
+            <Switch
+              disabled={action === "create"}
+              checked={body?.status}
+              onChange={(checked) =>
+                setBody((state) => ({ ...state, status: checked }))
+              }
+            />{" "}
+            <Typography style={{ marginLeft: 8 }}>
+              {t("table.active")}
+            </Typography>
+          </div>
         </Form.Item>
 
         <Form.Item

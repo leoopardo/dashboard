@@ -1,10 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { BankOutlined, EllipsisOutlined } from "@ant-design/icons";
-import { useGetOrganizationBankMaintenece } from "@src/services/register/organization/bankMaitenence/getBanks";
+import { useListBanks } from "@src/services/bank/listBanks";
 import {
   Avatar,
   Button,
+  Checkbox,
   Collapse,
   CollapseProps,
   Descriptions,
@@ -24,25 +25,30 @@ interface MobileProps {
   label: any;
   actions: any;
   setCurrentItem: Dispatch<SetStateAction<any>>;
+  checkbox?: boolean;
+  setSelectedRows?: Dispatch<SetStateAction<any[] | null>>;
 }
 
 export const Mobile = (props: MobileProps) => {
   const { t } = useTranslation();
   const [active, setActive] = useState<string | string[]>([]);
   const [items, setItems] = useState<CollapseProps["items"]>([]);
-  const { BankMainteneceData } = useGetOrganizationBankMaintenece({
+  const [checkedRows, setCheckedRows] = useState<any[]>([]);
+  const { bankListData } = useListBanks({
     limit: 200,
     page: 1,
-    sort_field: "label_name",
-    sort_order: "DESC",
   });
+
+  useEffect(() => {
+    if (props.setSelectedRows) props.setSelectedRows(checkedRows);
+  }, [checkedRows]);
 
   useEffect(() => {
     setItems(
       props?.items?.map((item: any) => {
         return {
           key: item.id ?? item._id,
-
+          collapsible: "icon",
           label: (
             <>
               {props?.label?.map((label: string) => {
@@ -53,7 +59,7 @@ export const Mobile = (props: MobileProps) => {
                       <Tooltip placement="topLeft" title={item[label]} arrow>
                         <Avatar
                           src={
-                            BankMainteneceData?.itens.find(
+                            bankListData?.itens.find(
                               (bank) =>
                                 bank.label_name?.split(" ").join("_") ===
                                 item[label]
@@ -66,6 +72,7 @@ export const Mobile = (props: MobileProps) => {
                         </Avatar>
                       </Tooltip>
                     );
+
                   case "merchant_name":
                     return ` - ${item[label]}`;
                   case "createdAt":
@@ -132,6 +139,27 @@ export const Mobile = (props: MobileProps) => {
           ),
           extra: props.actions.length ? (
             <>
+              {props.checkbox && (
+                <Checkbox
+                  style={{ marginRight: 16 }}
+                  onChange={(event) => {
+                    const arr = checkedRows;
+                    if (!event.target.checked) {
+                      arr.splice(
+                        arr?.find((i: any) => i?.id === item?.id) ?? 0,
+                        1
+                      );
+
+                      setCheckedRows(arr);
+                      console.log(checkedRows, "removed");
+                      return;
+                    }
+                    arr.push(item);
+                    setCheckedRows(item);
+                    console.log(checkedRows);
+                  }}
+                />
+              )}
               <Dropdown
                 menu={{ items: props.actions }}
                 arrow
@@ -161,7 +189,9 @@ export const Mobile = (props: MobileProps) => {
                           padding: 5,
                         }}
                       >
-                        <Typography style={{ width: "100%", textAlign: "center" }}>
+                        <Typography
+                          style={{ width: "100%", textAlign: "center" }}
+                        >
                           {item[value.name]
                             ? `${new Date(
                                 item[value.name]
@@ -234,11 +264,20 @@ export const Mobile = (props: MobileProps) => {
                           >
                             <Avatar
                               src={
-                                BankMainteneceData?.itens.find(
-                                  (bank) =>
-                                    bank.label_name?.split(" ").join("_") ===
-                                    item[value.name]
-                                )?.icon_url ?? null
+                                Array.isArray(value.name)
+                                  ? bankListData?.itens.find(
+                                      (bank) =>
+                                        bank.label_name
+                                          ?.split(" ")
+                                          .join("_") ===
+                                        item[value.name[0]][value.name[1]]
+                                    )?.icon_url ?? null
+                                  : bankListData?.itens.find(
+                                      (bank) =>
+                                        bank.label_name
+                                          ?.split(" ")
+                                          .join("_") === item[value.name]
+                                    )?.icon_url ?? null
                               }
                               size="large"
                               shape="square"

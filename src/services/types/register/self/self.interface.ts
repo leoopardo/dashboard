@@ -36,3 +36,9 @@ export interface SelfInterface {
     created_at: string;
   };
 }
+
+export interface UpdateSelf{
+  email?: string;
+  cellphone?: string;
+  password?: string;
+}

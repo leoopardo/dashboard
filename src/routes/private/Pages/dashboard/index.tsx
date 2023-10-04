@@ -44,7 +44,6 @@ export const Dashboard = () => {
     page: 1,
   });
 
-  console.log(permissions);
 
   const { refetchMerchantBankStatementTotalsTotal } =
     useGetMerchantBankStatementTotals(query);

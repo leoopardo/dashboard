@@ -598,7 +598,12 @@
     "reason_name": "Motivo",
     "start_date": "Data inicial",
     "end_date": "Data final",
-    "origin_transaction": "Transação de origem"
+    "origin_transaction": "Transação de origem",
+    "refund_to_merchant": "Devolvido para empresa",
+    "refund_id": "ID da devolução",
+    "refund_date": "Data de devolução",
+    "blacklist_data": "Dados de bloqueio",
+    "limits_data": "Dados de limites"
   },
   "actions": {
     "details": "Detalhes",

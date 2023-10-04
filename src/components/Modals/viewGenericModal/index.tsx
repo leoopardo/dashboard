@@ -78,7 +78,7 @@ export const ViewModal = ({
         username: item?.username,
         cellphone: item?.cellphone,
         email: item?.email,
-        status: item?.status,
+        status: item?.status ? "active" : "inactive",
         aggregator: item?.aggregator?.name,
         partner: item?.partner?.name,
         operator: item?.operator?.name,

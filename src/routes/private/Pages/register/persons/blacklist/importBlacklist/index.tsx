@@ -198,7 +198,6 @@ export const ImportPersonsBlacklist = () => {
       DESCRIPTION: "Solicitado pelo merchant xyz",
     };
     setDataSource([...dataSource, newData]);
-    console.log(dataSource);
   };
 
   const handleSave = (row: DataType) => {

@@ -71,6 +71,7 @@ export const OrganizationUser = () => {
       sort: true,
     },
     { name: "email", type: "text" },
+    { name: "status", type: "status" },
     { name: "created_at", type: "date", sort: true },
   ];
 
@@ -113,7 +114,6 @@ export const OrganizationUser = () => {
             endDateKeyName="end_date"
             query={query}
             setQuery={setQuery}
-             
           />
         </Grid>
       </Grid>
@@ -188,7 +188,6 @@ export const OrganizationUser = () => {
 
       <Grid container style={{ marginTop: "15px" }}>
         <Grid item xs={12}>
-          {" "}
           <CustomTable
             query={query}
             setCurrentItem={setCurrentItem}

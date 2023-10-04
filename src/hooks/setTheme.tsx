@@ -11,7 +11,5 @@ export const useSetTheme = () => {
     localStorage.setItem("theme", currentTheme);
   }, [currentTheme]);
 
-  console.log(currentTheme, localStorage.getItem("theme"));
-
   return { currentTheme, setCurrentTheme };
 };

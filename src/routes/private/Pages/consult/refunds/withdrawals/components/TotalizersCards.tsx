@@ -26,35 +26,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
       justify="center"
       style={{ width: "100%" }}
     >
-      {(props.query.status === "REFUNDED" || !props.query.status) && (
-        <Col
-          style={{ maxWidth: "220px" }}
-          xs={{ span: isMobile ? 10 : undefined }}
-        >
-          <Card
-            bordered={false}
-            style={{ height: isMobile ? "100%" : undefined }}
-          >
-            <Statistic
-              loading={props.loading}
-              title={`${t("table.refunded")}: ${
-                props?.data?.refunded_total || 0
-              }`}
-              value={new Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(props?.data?.refunded_value || 0)}
-              precision={2}
-              valueStyle={{
-                color: defaultTheme.colors.success,
-                fontSize: isMobile ? "12px" : "18px",
-                wordBreak: "break-all",
-              }}
-              suffix=""
-            />
-          </Card>
-        </Col>
-      )}
+      
       {(props.query.status === "PAID_TO_MERCHANT" || !props.query.status) && (
         <Col
           style={{ maxWidth: "220px" }}
@@ -139,7 +111,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
           </Card>
         </Col>
       )}
-      {(props.query.status === "PENDING" || !props.query.status) && (
+      {(props.query.status === "WAITING" || !props.query.status) && (
         <Col
           style={{ maxWidth: "220px" }}
           xs={{ span: isMobile ? 10 : undefined }}
@@ -150,7 +122,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
           >
             <Statistic
               loading={props.loading}
-              title={`${t("table.pending")}: ${
+              title={`${t("table.waiting")}: ${
                 props?.data?.waiting_total || 0
               }`}
               value={new Intl.NumberFormat("pt-BR", {

@@ -3,9 +3,14 @@
 import { EyeFilled } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
+import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { useGetRowsRefundWithdrawals } from "@src/services/consult/refund/refundWithdrawals/getRows";
 import { useGetTotalRefundWithdrawals } from "@src/services/consult/refund/refundWithdrawals/getTotal";
-import { Alert, Button, Input, Select } from "antd";
+import { queryClient } from "@src/services/queryClient";
+import { useCreateRefundWithdrawalsReports } from "@src/services/reports/consult/refund/withdrawals/createRefundWithdrawalsReports";
+import { refundWithdrawalsQuery } from "@src/services/types/consult/refunds/refundWithdrawals.interface copy";
+import { ValidateInterface } from "@src/services/types/validate.interface";
+import { Button, Input, Select } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -15,26 +20,30 @@ import {
 } from "../../../../../../components/CustomTable";
 import { FiltersModal } from "../../../../../../components/FiltersModal";
 import { FilterChips } from "../../../../../../components/FiltersModal/filterChips";
-import { refundDepositsQuery } from "../../../../../../services/types/consult/refunds/refundsDeposits.interface";
 import useDebounce from "../../../../../../utils/useDebounce";
 import { ViewModal } from "../components/ViewModal";
 import { TotalizersCards } from "./components/TotalizersCards";
 
-const INITIAL_QUERY: refundDepositsQuery = {
+const INITIAL_QUERY: refundWithdrawalsQuery = {
   page: 1,
   limit: 25,
   start_date: moment(new Date())
-    .startOf("day").add(3, "hours")
+    .startOf("day")
+    .add(3, "hours")
     .format("YYYY-MM-DDTHH:mm:ss.SSS"),
   end_date: moment(new Date())
     .add(1, "day")
-    .startOf("day").add(3, "hours")
+    .startOf("day")
+    .add(3, "hours")
     .format("YYYY-MM-DDTHH:mm:ss.SSS"),
 };
 
 export const RefundWithdrawals = () => {
+  const { permissions } = queryClient.getQueryData(
+    "validate"
+  ) as ValidateInterface;
   const { t } = useTranslation();
-  const [query, setQuery] = useState<refundDepositsQuery>(INITIAL_QUERY);
+  const [query, setQuery] = useState<refundWithdrawalsQuery>(INITIAL_QUERY);
   const {
     isRefundWithdrawalsTotalFetching,
     refetchRefundWithdrawalsTotal,
@@ -46,7 +55,15 @@ export const RefundWithdrawals = () => {
     isRefundWithdrawalsFetching,
     refetchRefundWithdrawals,
     refundWithdrawals,
+    refundWithdrawalsError,
   } = useGetRowsRefundWithdrawals(query);
+
+  const {
+    RefundWithdrawalsReportsError,
+    RefundWithdrawalsReportsIsLoading,
+    RefundWithdrawalsReportsIsSuccess,
+    RefundWithdrawalsReportsMutate,
+  } = useCreateRefundWithdrawalsReports(query);
 
   useEffect(() => {
     refetchRefundWithdrawals();
@@ -60,15 +77,16 @@ export const RefundWithdrawals = () => {
   const debounceSearch = useDebounce(search);
 
   const columns: ColumnInterface[] = [
-    { name: "pix_id", type: "id" },
     { name: "endToEndId", type: "id" },
+    { name: "rtrId", head: "refund_id", type: "id" },
+    { name: "bank", type: "bankNameToIcon" },
     { name: "merchant_name", type: "text" },
     { name: "value", type: "value" },
     { name: "createdAt", type: "date" },
-    { name: "delivered_at", type: "date" },
-    { name: "buyer_name", type: "text" },
-    { name: "buyer_document", type: "document" },
-    { name: "status", type: "document" },
+    { name: "refund_date", type: "date" },
+    { name: "receiver_name", type: "text" },
+    { name: "receiver_document", type: "document" },
+    { name: "status", type: "status" },
   ];
 
   useEffect(() => {
@@ -89,20 +107,6 @@ export const RefundWithdrawals = () => {
 
   return (
     <Grid container style={{ padding: "25px" }}>
-      <Grid container>
-        {refundWithdrawalsTotalError ? (
-          <Grid item xs={12} style={{ marginBottom: "10px" }}>
-            <Alert
-              message={refundWithdrawalsTotalError?.message}
-              type="error"
-              closable
-            />
-          </Grid>
-        ) : (
-          <></>
-        )}
-      </Grid>
-
       <TotalizersCards
         data={refundWithdrawalsTotal}
         fetchData={refetchRefundWithdrawalsTotal}
@@ -187,6 +191,20 @@ export const RefundWithdrawals = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
+
+        {permissions?.report?.chargeback?.deposit_chargeback
+          ?.report_chargeback_deposit_chargeback_export_csv && (
+          <Grid item xs={12} md="auto">
+            <ExportReportsModal
+              disabled={!refundWithdrawals?.total || refundWithdrawalsError}
+              mutateReport={() => RefundWithdrawalsReportsMutate()}
+              error={RefundWithdrawalsReportsError}
+              success={RefundWithdrawalsReportsIsSuccess}
+              loading={RefundWithdrawalsReportsIsLoading}
+              reportPath="/consult/refunds/refund_reports/refund_withdrawals_reports"
+            />
+          </Grid>
+        )}
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -199,6 +217,7 @@ export const RefundWithdrawals = () => {
             items={refundWithdrawals?.items}
             columns={columns}
             loading={isRefundWithdrawalsFetching}
+            error={refundWithdrawalsError}
             actions={[
               {
                 label: "details",
@@ -227,7 +246,8 @@ export const RefundWithdrawals = () => {
         <ViewModal
           open={isViewModalOpen}
           setOpen={setIsViewModalOpen}
-          id={currentItem?._id}
+          item={currentItem}
+          type="withdraw"
         />
       )}
       {isFiltersOpen && (

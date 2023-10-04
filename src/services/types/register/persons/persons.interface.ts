@@ -25,6 +25,7 @@ export interface PersonsItem {
   situation_text?: string;
   situation_code?: string;
   name?: string;
+  email?: string;
   birth_date?: string;
   mother_name?: string;
   black_list?: boolean;
