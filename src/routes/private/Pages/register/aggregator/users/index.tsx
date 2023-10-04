@@ -72,7 +72,7 @@ export const AggregatorUsers = () => {
   useEffect(() => {
     if (!debounceSearch) {
       const q = { ...query };
-      delete q.name;
+      delete q?.name;
       return setQuery(q);
     }
     setQuery((state) => ({ ...state, name: debounceSearch }));
@@ -192,7 +192,7 @@ export const AggregatorUsers = () => {
                   setIsViewModalOpen(true);
                 },
               },
-              permissions.register.aggregator.users.aggregator_user_update && {
+              permissions?.register?.aggregator?.users?.aggregator_user_update && {
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
                 onClick: () => {
