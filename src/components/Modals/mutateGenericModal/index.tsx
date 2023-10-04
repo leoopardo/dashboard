@@ -30,7 +30,6 @@ import ReactInputMask from "react-input-mask";
 import { MerchantSelect } from "../../Selects/merchantSelect";
 import { PartnerSelect } from "../../Selects/partnerSelect";
 import { CurrencyInput } from "react-currency-mask";
-
 const { RangePicker } = DatePicker;
 
 interface mutateProps {
@@ -330,6 +329,40 @@ export const MutateModal = ({
                         ...state,
                         reason_id: value,
                       }))
+                    }
+                  />
+                </Form.Item>
+              );
+
+            case "value":
+              return (
+                <Form.Item
+                  label={t(`table.${field.label}`)}
+                  name={field.label}
+                  style={{ margin: 10 }}
+                  rules={[
+                    {
+                      required: field.required,
+                      message:
+                        t("input.required", {
+                          field: t(`input.${field.label}`),
+                        }) || "",
+                    },
+                  ]}
+                >
+                  <CurrencyInput
+                    onChangeValue={(_event, originalValue) => {
+                      setBody((state: any) => ({
+                        ...state,
+                        [field.label]: +originalValue,
+                      }));
+                    }}
+                    InputElement={
+                      <Input
+                        size="large"
+                        style={{ width: "100%" }}
+                        value={body[field.label]}
+                      />
                     }
                   />
                 </Form.Item>
@@ -653,32 +686,6 @@ export const MutateModal = ({
                 </Form.Item>
               );
 
-            case "value":
-              return (
-                <Form.Item
-                  label={t(`table.${field.label}`)}
-                  name={field.label}
-                  style={{ margin: 10 }}
-                  help=""
-                >
-                  <CurrencyInput
-                    onChangeValue={(_event, originalValue) => {
-                      setBody((state: any) => ({
-                        ...state,
-                        value: +originalValue,
-                      }));
-                    }}
-                    InputElement={
-                      <Input
-                        size="large"
-                        style={{ width: "100%" }}
-                        disabled={body?.cashin_pix_fee_type === "PERCENT"}
-                        value={body?.cashin_pix_fee_value}
-                      />
-                    }
-                  />
-                </Form.Item>
-              );
 
             default:
               if (field.selectOption) {
@@ -732,7 +739,7 @@ export const MutateModal = ({
                   <Input
                     size="large"
                     name={field.label}
-                    value={body[field.label]}
+                    value={body[field.label] ?? null}
                     onChange={handleChange}
                   />
                 </Form.Item>

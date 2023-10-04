@@ -289,7 +289,10 @@
     "csv_columns": "Select the CSV columns",
     "comma_separator": "Decimal separator",
     "operation_type": "Operation type",
-    "btg_id": "BTG ID"
+    "btg_id": "BTG ID",
+    "origin_account": "Origin account",
+    "final_account": "Final account",
+    "value": "Value"
   },
   "modal": {
     "confirm": "Confirm",
@@ -615,7 +618,9 @@
     "account_origin": "Account from",
     "account_destination": "Account to",
     "user": "User",
-    "transfer": "Transfer"
+    "transfer": "Transfer",
+    "origin_account": "Origin account",
+    "final_account": "Final account"
   },
   "actions": {
     "details": "Details",

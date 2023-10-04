@@ -206,7 +206,7 @@ export const MerchantManual = () => {
             {t("table.filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={5} lg={6}>
+        <Grid item xs={12} md={4} lg={7}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
@@ -215,7 +215,7 @@ export const MerchantManual = () => {
             haveInitialDate
           />
         </Grid>
-        <Grid item xs={12} md={2} lg={2}>
+        <Grid item xs={12} md={3} lg={2}>
           <Button
             type="dashed"
             loading={isMerchantMovimentsDataFetching}
@@ -237,7 +237,7 @@ export const MerchantManual = () => {
         </Grid>
         {permissions.transactions.merchant.manual_transactions
           .merchant_manual_transactions_export_csv && (
-          <Grid item xs={12} md="auto">
+          <Grid item xs={12} md={2} lg={1}>
             <ExportReportsModal
               disabled={!MerchantMovimentsData?.total || MerchantMovimentsDataError}
               mutateReport={() => MerchantManualReportsMutate()}

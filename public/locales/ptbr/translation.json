@@ -317,7 +317,10 @@
     "csv_columns": "Selecione as colunas do CSV",
     "comma_separator": "Separador de casas decimais",
     "operation_type": "Tipo de operação",
-    "btg_id": "ID BTG"
+    "btg_id": "ID BTG",
+    "origin_account": "Conta origem",
+    "final_account": "Conta destino",
+    "value": "Valor"
   },
   "table": {
     "id": "ID",
@@ -616,7 +619,9 @@
     "account_origin": "Conta origem",
     "account_destination": "Conta destino",
     "user": "Usuário",
-    "transfer": "Transferência"
+    "transfer": "Transferência",
+    "origin_account": "Conta origem",
+    "final_account": "Conta destino"
   },
   "actions": {
     "details": "Detalhes",

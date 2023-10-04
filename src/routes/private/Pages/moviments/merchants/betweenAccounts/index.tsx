@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { ArrowUpOutlined, DollarOutlined, EyeFilled } from "@ant-design/icons";
-import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { CustomTable } from "@src/components/CustomTable";
 import { FiltersModal } from "@src/components/FiltersModal";
 import { FilterChips } from "@src/components/FiltersModal/filterChips";
+import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
+import { MutateModal } from "@src/components/Modals/mutateGenericModal";
+import { TransferBetweenAccountsbody } from "@src/services/types/moviments/merchant/transferBetweenAccounts.interface";
 import { Button, Col, Row } from "antd";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -18,16 +20,17 @@ export const TransfersBetweenAccounts = () => {
     page: 1,
   };
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
+  const [body, setBody] = useState<TransferBetweenAccountsbody | null>({
+    final_account: "",
+    origin_account: "",
+  });
   const [
     ,
     // isViewModalOpen
     setIsViewModalOpen,
   ] = useState<boolean>(false);
-  const [
-    ,
-    //isNewTransferModalOpen
-    setIsNewtransferModalOpen,
-  ] = useState<boolean>(false);
+  const [isNewTransferModalOpen, setIsNewTransferModalOpen] =
+    useState<boolean>(false);
   const [
     ,
     //currentItem
@@ -50,7 +53,7 @@ export const TransfersBetweenAccounts = () => {
             {t("table.filters")}
           </Button>
         </Col>
-        <Col xs={{ span: 24 }} md={{ span: 12 }}>
+        <Col xs={{ span: 24 }} md={{ span: 11 }} lg={14}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
@@ -58,32 +61,13 @@ export const TransfersBetweenAccounts = () => {
             setQuery={setQuery}
           />
         </Col>
-        <Col xs={{ span: 24 }} md={{ span: 4 }}>
-          <Button
-            type="dashed"
-            loading={false}
-            danger
-            onClick={() => {
-              setQuery({});
-            }}
-            style={{
-              height: 40,
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
-            {t("table.clear_filters")}
-          </Button>
-        </Col>
-        <Col xs={{ span: 24 }} md={{ span: 4 }}>
+
+        <Col xs={{ span: 24 }} md={{ span: 6 }} lg={4}>
           <Button
             type="default"
             loading={false}
             onClick={() => {
-              setIsNewtransferModalOpen(true);
+              setIsNewTransferModalOpen(true);
             }}
             style={{
               height: 40,
@@ -99,6 +83,20 @@ export const TransfersBetweenAccounts = () => {
             <DollarOutlined style={{ fontSize: 22 }} /> {t("table.transfer")}
           </Button>
         </Col>
+        {true && (
+          <Col xs={{ span: 24 }} md={{ span: 2 }}>
+            <ExportReportsModal
+              disabled={true}
+              mutateReport={() => {
+                return;
+              }}
+              error={false}
+              success={false}
+              loading={false}
+              reportPath="/register/aggregator/aggregator_reports/aggregator_aggregators_reports"
+            />
+          </Col>
+        )}
       </Row>
 
       <Row>
@@ -148,6 +146,34 @@ export const TransfersBetweenAccounts = () => {
           startDateKeyName="start_date"
           endDateKeyName="end_date"
           initialQuery={INITIAL_QUERY}
+        />
+      )}
+      {isNewTransferModalOpen && (
+        <MutateModal
+          type="create"
+          open={isNewTransferModalOpen}
+          setOpen={setIsNewTransferModalOpen}
+          fields={[
+            {
+              label: "origin_account",
+              required: true,
+              selectOption: true,
+            },
+            { label: "final_account", required: true, selectOption: true },
+            { label: "value", required: true },
+            { label: "description", required: true },
+          ]}
+          body={body}
+          setBody={setBody}
+          selectOptions={{}}
+          modalName={t("table.transfer")}
+          submit={() => {
+            return;
+          }}
+          submitLoading={false}
+          error={false}
+          success={false}
+          submitText={`${t("buttons.create")}`}
         />
       )}
     </Row>
