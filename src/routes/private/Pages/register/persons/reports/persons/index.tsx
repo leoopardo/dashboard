@@ -9,8 +9,9 @@ import { ReportsQuery } from "@src/services/types/reports/reports.interface";
 import { FiltersModal } from "@src/components/FiltersModal";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { CustomTable } from "@src/components/CustomTable";
-import { DownloadOutlined } from "@ant-design/icons";
+import { DownloadOutlined, EyeFilled } from "@ant-design/icons";
 import { useGetPersonsReports } from "@src/services/reports/register/persons/persons/getPersonsReports";
+import { ViewModal } from "@src/components/Modals/viewGenericModal";
 
 export const PersonsReports = () => {
   const INITIAL_QUERY: ReportsQuery = {
@@ -18,8 +19,9 @@ export const PersonsReports = () => {
     page: 1,
   };
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [query, setQuery] = useState<ReportsQuery>(INITIAL_QUERY);
-  const [, setCurrentItem] = useState<any>();
+  const [currentItem, setCurrentItem] = useState<any>();
 
   const {
     PersonsReportsData,
@@ -41,7 +43,8 @@ export const PersonsReports = () => {
         spacing={1}
       >
         <Grid item xs={12} md={4} lg={2}>
-           <Button size="large"
+          <Button
+            size="large"
             style={{ width: "100%" }}
             loading={isPersonsReportsDataFetching}
             type="primary"
@@ -97,16 +100,21 @@ export const PersonsReports = () => {
                 },
                 disabled: (item) => item.status !== "COMPLETED",
               },
+              {
+                label: "details",
+                icon: <EyeFilled style={{ fontSize: "20px" }} />,
+                onClick: () => setIsViewModalOpen(true),
+              },
             ]}
             data={PersonsReportsData}
             items={PersonsReportsData?.items}
             error={PersonsReportsDataError}
             columns={[
-              { name: "_id", type: "id",sort: true },
-              { name: "createdAt", type: "date",sort: true },
+              { name: "_id", type: "id", sort: true },
+              { name: "createdAt", type: "date", sort: true },
               { name: "created_by_name", type: "text" },
-              { name: "rows", type: "text",sort: true  },
-              { name: "progress", type: "progress",sort: true },
+              { name: "rows", type: "text", sort: true },
+              { name: "progress", type: "progress", sort: true },
             ]}
             loading={isPersonsReportsDataFetching}
             label={["createdAt", "progress"]}
@@ -128,6 +136,15 @@ export const PersonsReports = () => {
           startDateKeyName="start_date"
           endDateKeyName="end_date"
           initialQuery={INITIAL_QUERY}
+        />
+      )}
+      {isViewModalOpen && (
+        <ViewModal
+          open={isViewModalOpen}
+          setOpen={setIsViewModalOpen}
+          item={currentItem}
+          loading={false}
+          modalName={t("modal.report_details")}
         />
       )}
     </Grid>

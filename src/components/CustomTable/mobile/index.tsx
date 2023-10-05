@@ -264,7 +264,8 @@ export const Mobile = (props: MobileProps) => {
                           >
                             <Avatar
                               src={
-                                Array.isArray(value?.name) && item[value?.name[0]]
+                                Array.isArray(value?.name) &&
+                                item[value?.name[0]]
                                   ? bankListData?.itens.find(
                                       (bank) =>
                                         bank?.label_name
@@ -426,7 +427,9 @@ export const Mobile = (props: MobileProps) => {
                             )
                           }
                         >
-                          {Array.isArray(value?.name) && item[value?.name[0]] && item[value?.name[0]]
+                          {Array.isArray(value?.name) &&
+                          item[value?.name[0]] &&
+                          item[value?.name[0]]
                             ? item[value?.name[0]][value?.name[1]]
                             : !item[value.name]
                             ? "-"
@@ -447,15 +450,16 @@ export const Mobile = (props: MobileProps) => {
     setActive(key);
   };
   return props?.items?.length >= 1 ? (
-    <>
+    <div style={{ width: "100%" }}>
       <Collapse
         expandIconPosition="end"
         items={items}
         onChange={onChange}
         activeKey={active}
-        style={{ width: "100%" }}
+        style={{ width: "100%", minWidth: "100%" }}
+        size="small"
       />
-    </>
+    </div>
   ) : (
     <Empty
       style={{ padding: 15, paddingBottom: 30 }}

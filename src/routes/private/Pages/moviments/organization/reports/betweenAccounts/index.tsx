@@ -1,37 +1,38 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { DownloadOutlined } from "@ant-design/icons";
+import { DownloadOutlined, EyeFilled } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { CustomTable } from "@src/components/CustomTable";
 import { FiltersModal } from "@src/components/FiltersModal";
 import { FilterChips } from "@src/components/FiltersModal/filterChips";
-import { useGetMerchantManualReports } from "@src/services/reports/moviments/merchant/getManualTransactionReports";
+import { ViewModal } from "@src/components/Modals/viewGenericModal";
+import { useGetOrganizationTransferBetweenAccountsReports } from "@src/services/reports/moviments/organization/getTransferBetweenAccountsReports";
 import { ReportsQuery } from "@src/services/types/reports/reports.interface";
 import { Button } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-export const MerchantManualReports = () => {
+export const OrganizationTransferBetweenAccountsReports = () => {
   const INITIAL_QUERY: ReportsQuery = {
     limit: 25,
     page: 1,
   };
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [query, setQuery] = useState<ReportsQuery>(INITIAL_QUERY);
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [currentItem, setCurrentItem] = useState<any>();
   const [, setDisable] = useState<boolean>(false);
 
   const {
-    MerchantManualReportsData,
-    MerchantManualReportsDataError,
-    isMerchantManualReportsDataFetching,
-    refetchMerchantManualReportsData,
-  } = useGetMerchantManualReports(query);
+    TransferBetweenAccountsReportsData,
+    TransferBetweenAccountsReportsDataError,
+    isTransferBetweenAccountsReportsDataFetching,
+    refetchTransferBetweenAccountsReportsData,
+  } = useGetOrganizationTransferBetweenAccountsReports(query);
 
   useEffect(() => {
-    refetchMerchantManualReportsData();
+    refetchTransferBetweenAccountsReportsData();
   }, [query]);
 
   useEffect(() => {
@@ -47,9 +48,10 @@ export const MerchantManualReports = () => {
         spacing={1}
       >
         <Grid item xs={12} md={4} lg={2}>
-           <Button size="large"
+          <Button
+            size="large"
             style={{ width: "100%" }}
-            loading={isMerchantManualReportsDataFetching}
+            loading={isTransferBetweenAccountsReportsDataFetching}
             type="primary"
             onClick={() => setIsFiltersOpen(true)}
           >
@@ -67,7 +69,7 @@ export const MerchantManualReports = () => {
         <Grid item xs={12} md={2} lg={2}>
           <Button
             type="dashed"
-            loading={isMerchantManualReportsDataFetching}
+            loading={isTransferBetweenAccountsReportsDataFetching}
             danger
             onClick={() => {
               setQuery(INITIAL_QUERY);
@@ -103,18 +105,23 @@ export const MerchantManualReports = () => {
                 },
                 disabled: (item) => item.status !== "COMPLETED",
               },
+              {
+                label: "details",
+                icon: <EyeFilled style={{ fontSize: "20px" }} />,
+                onClick: () => setIsViewModalOpen(true),
+              },
             ]}
-            data={MerchantManualReportsData}
-            items={MerchantManualReportsData?.items}
-            error={MerchantManualReportsDataError}
+            data={TransferBetweenAccountsReportsData}
+            items={TransferBetweenAccountsReportsData?.items}
+            error={TransferBetweenAccountsReportsDataError}
             columns={[
-              { name: "_id", type: "id" },
-              { name: "createdAt", type: "date" },
+              { name: "_id", type: "id", sort: true },
+              { name: "createdAt", type: "date", sort: true },
               { name: "created_by_name", type: "text" },
               { name: "rows", type: "text" },
               { name: "progress", type: "progress" },
             ]}
-            loading={isMerchantManualReportsDataFetching}
+            loading={isTransferBetweenAccountsReportsDataFetching}
             label={["createdAt", "progress"]}
           />
         </Grid>
@@ -134,6 +141,15 @@ export const MerchantManualReports = () => {
           startDateKeyName="start_date"
           endDateKeyName="end_date"
           initialQuery={INITIAL_QUERY}
+        />
+      )}
+      {isViewModalOpen && (
+        <ViewModal
+          open={isViewModalOpen}
+          setOpen={setIsViewModalOpen}
+          item={currentItem}
+          loading={false}
+          modalName={t("modal.report_details")}
         />
       )}
     </Grid>

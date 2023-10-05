@@ -809,12 +809,56 @@ export const SidebarNavigation = () => {
                   : "none",
               }
             ),
+            //ajustar permissões
             getItem(
-              "organization_moviments_reports",
+              "organization_transfer_between_accounts",
               null,
               null,
               false,
               (e) => handleNavigate(e?.keyPath),
+              {
+                display: permissions?.transactions?.paybrokers
+                  ?.manual_transactions?.menu
+                  ? undefined
+                  : "none",
+              }
+            ),
+            getItem(
+              "organization_moviments_reports",
+              null,
+              [
+                getItem(
+                  "organization_manual_moviments_reports",
+                  null,
+                  null,
+                  false,
+                  (e) => handleNavigate(e?.keyPath),
+                  {
+                    display: permissions?.transactions?.paybrokers
+                      ?.manual_transactions
+                      ?.paybrokers_manual_transactions_export_csv
+                      ? undefined
+                      : "none",
+                  }
+                ),
+                //ajustar permisssões
+                getItem(
+                  "organization_transfer_between_accounts_reports",
+                  null,
+                  null,
+                  false,
+                  (e) => handleNavigate(e?.keyPath),
+                  {
+                    display: permissions?.transactions?.paybrokers
+                      ?.manual_transactions
+                      ?.paybrokers_manual_transactions_export_csv
+                      ? undefined
+                      : "none",
+                  }
+                ),
+              ],
+              false,
+              undefined,
               {
                 display: permissions?.transactions?.paybrokers
                   ?.manual_transactions
@@ -850,7 +894,7 @@ export const SidebarNavigation = () => {
               }
             ),
 
-            //ajustar permissões 
+            //ajustar permissões
             getItem(
               "between_accounts_transfers",
               null,
@@ -867,9 +911,38 @@ export const SidebarNavigation = () => {
             getItem(
               "merchant_moviments_reports",
               null,
-              null,
+              [
+                getItem(
+                  "merchant_manual_moviments_reports",
+                  null,
+                  null,
+                  false,
+                  (e) => handleNavigate(e?.keyPath),
+                  {
+                    display: permissions?.transactions?.merchant
+                      ?.manual_transactions
+                      ?.merchant_manual_transactions_export_csv
+                      ? undefined
+                      : "none",
+                  }
+                ),
+                getItem(
+                  "merchant_between_accounts_reports",
+                  null,
+                  null,
+                  false,
+                  (e) => handleNavigate(e?.keyPath),
+                  {
+                    display: permissions?.transactions?.merchant
+                      ?.manual_transactions
+                      ?.merchant_manual_transactions_export_csv
+                      ? undefined
+                      : "none",
+                  }
+                ),
+              ],
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.transactions?.merchant
                   ?.manual_transactions?.merchant_manual_transactions_export_csv

@@ -1,11 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { DownloadOutlined } from "@ant-design/icons";
+import { DownloadOutlined, EyeFilled } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { CustomTable } from "@src/components/CustomTable";
 import { FiltersModal } from "@src/components/FiltersModal";
 import { FilterChips } from "@src/components/FiltersModal/filterChips";
+import { ViewModal } from "@src/components/Modals/viewGenericModal";
 import { useGetPaidDepositsReports } from "@src/services/reports/consult/deposits/getPaidDeposits";
 import { ReportsQuery } from "@src/services/types/reports/reports.interface";
 import { Button } from "antd";
@@ -19,7 +20,8 @@ export const PaidDepositsReports = () => {
   };
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [query, setQuery] = useState<ReportsQuery>(INITIAL_QUERY);
-  const [, setCurrentItem] = useState<any>();
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
+  const [currentItem, setCurrentItem] = useState<any>();
 
   const {
     PaidDepositsReportsData,
@@ -41,7 +43,8 @@ export const PaidDepositsReports = () => {
         spacing={1}
       >
         <Grid item xs={12} md={4} lg={2}>
-           <Button size="large"
+          <Button
+            size="large"
             style={{ width: "100%" }}
             loading={isPaidDepositsReportsDataFetching}
             type="primary"
@@ -97,6 +100,11 @@ export const PaidDepositsReports = () => {
                 },
                 disabled: (item) => item.status !== "COMPLETED",
               },
+              {
+                label: "details",
+                icon: <EyeFilled style={{ fontSize: "20px" }} />,
+                onClick: () => setIsViewModalOpen(true),
+              },
             ]}
             data={PaidDepositsReportsData}
             items={PaidDepositsReportsData?.items}
@@ -128,6 +136,15 @@ export const PaidDepositsReports = () => {
           startDateKeyName="start_date"
           endDateKeyName="end_date"
           initialQuery={INITIAL_QUERY}
+        />
+      )}
+      {isViewModalOpen && (
+        <ViewModal
+          open={isViewModalOpen}
+          setOpen={setIsViewModalOpen}
+          item={currentItem}
+          loading={false}
+          modalName={t("modal.report_details")}
         />
       )}
     </Grid>

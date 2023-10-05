@@ -9,89 +9,64 @@ import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
 import { Toast } from "@src/components/Toast";
-import { useCreateTransferBetweenAccounts } from "@src/services/moviments/merchants/betweenAccounts/createTransferBetweenAccounts";
-import { useGetTransferBetweenAccounts } from "@src/services/moviments/merchants/betweenAccounts/getTransfersBetweenAccounts";
+import { useCreateOrganizationTransferBetweenAccounts } from "@src/services/moviments/organization/betweenAccounts/createTransferBetweenAccounts";
+import { useGetOrganizationTransferBetweenAccounts } from "@src/services/moviments/organization/betweenAccounts/getTransfersBetweenAccounts";
 import { queryClient } from "@src/services/queryClient";
-import { useCreateMerchantTransferBetweenAccountsReports } from "@src/services/reports/moviments/merchant/createTransferBetweenAccountsReports";
+import { useCreateOrganizationTransferBetweenAccountsReports } from "@src/services/reports/moviments/organization/createTransferBetweenAccountsReports";
 import {
-  MerchantTransferBetweenAccountsQuery,
-  TransferBetweenAccountsbody,
-} from "@src/services/types/moviments/merchant/transferBetweenAccounts.interface";
+  OrganizationTransferBetweenAccountsQuery,
+  OrganizationTransferBetweenAccountsbody,
+} from "@src/services/types/moviments/organization/transferBetweenAccounts.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
 import { Button, Col, Row } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-export const TransfersBetweenAccounts = () => {
+export const OrganizationTransfersBetweenAccounts = () => {
   const { permissions } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
   const user = queryClient.getQueryData("validate") as ValidateInterface;
-  const INITIAL_QUERY: MerchantTransferBetweenAccountsQuery = {
+  const INITIAL_QUERY: OrganizationTransferBetweenAccountsQuery = {
     limit: 25,
     page: 1,
   };
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
-  const [body, setBody] = useState<TransferBetweenAccountsbody | null>({
-    from: "",
-    to: "",
-    merchant_id: user?.merchant_id ?? undefined,
-  });
+  const [body, setBody] =
+    useState<OrganizationTransferBetweenAccountsbody | null>({
+      from: "",
+      to: "",
+    });
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const [isNewTransferModalOpen, setIsNewTransferModalOpen] =
     useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<any>({});
   const [query, setQuery] =
-    useState<MerchantTransferBetweenAccountsQuery>(INITIAL_QUERY);
+    useState<OrganizationTransferBetweenAccountsQuery>(INITIAL_QUERY);
   const { t } = useTranslation();
   const {
     TransferBetweenAccountsData,
     TransferBetweenAccountsDataError,
     isTransferBetweenAccountsDataFetching,
     refetchTransferBetweenAccountsData,
-  } = useGetTransferBetweenAccounts(query);
+  } = useGetOrganizationTransferBetweenAccounts(query);
 
   const { error, isLoading, isSuccess, mutate } =
-    useCreateTransferBetweenAccounts(body);
+    useCreateOrganizationTransferBetweenAccounts({
+      ...body,
+      organization_id: user?.organization_id,
+    });
 
   const {
-    MerchantTransferBetweenAccountsError,
-    MerchantTransferBetweenAccountsIsLoading,
-    MerchantTransferBetweenAccountsIsSuccess,
-    MerchantTransferBetweenAccountsMutate,
-  } = useCreateMerchantTransferBetweenAccountsReports(query);
-
-  const fieldsIfNotMerch = [
-    {
-      label: "merchant_id",
-      required: true,
-    },
-    {
-      label: "from",
-      required: true,
-      selectOption: true,
-    },
-    { label: "to", required: true, selectOption: true },
-    { label: "value", required: true },
-  ];
-  const fieldMerch = [
-    {
-      label: "from",
-      required: true,
-      selectOption: true,
-    },
-    { label: "to", required: true, selectOption: true },
-    { label: "value", required: true },
-  ];
+    organizationTransferBetweenAccountsError,
+    organizationTransferBetweenAccountsIsLoading,
+    organizationTransferBetweenAccountsIsSuccess,
+    organizationTransferBetweenAccountsMutate,
+  } = useCreateOrganizationTransferBetweenAccountsReports(query);
 
   useEffect(() => {
     refetchTransferBetweenAccountsData();
   }, [query]);
-
-  useEffect(() => {
-    setBody((state) => ({ ...state, merchant_id: user?.merchant_id }));
-  }, [user]);
-
 
   return (
     <Row style={{ padding: 25 }}>
@@ -116,7 +91,7 @@ export const TransfersBetweenAccounts = () => {
           />
         </Col>
 
-        <Col xs={{ span: 24 }} md={{ span: 7 }} lg={{span: 4}}>
+        <Col xs={{ span: 24 }} md={{ span: 7 }} lg={{ span: 4 }}>
           <Button
             type="default"
             loading={false}
@@ -139,25 +114,25 @@ export const TransfersBetweenAccounts = () => {
         </Col>
 
         {/* arrumar permissões */}
-        {permissions?.transactions?.merchant?.internal_transfers
-          ?.merchant_internal_transfers_export_csv && (
+        {permissions?.transactions?.paybrokers?.internal_transfers
+          ?.paybrokers_internal_transfers_export_csv && (
           <Col xs={{ span: 24 }} md={{ span: 3 }} lg={{ span: 2 }}>
             <ExportReportsModal
               disabled={
                 !TransferBetweenAccountsData?.items ||
-                MerchantTransferBetweenAccountsError
+                organizationTransferBetweenAccountsError
               }
-              mutateReport={() => MerchantTransferBetweenAccountsMutate()}
-              error={MerchantTransferBetweenAccountsError}
-              success={MerchantTransferBetweenAccountsIsSuccess}
-              loading={MerchantTransferBetweenAccountsIsLoading}
-              reportPath="/moviment/merchant_moviments/merchant_moviments_reports/merchant_between_accounts_reports"
+              mutateReport={() => organizationTransferBetweenAccountsMutate()}
+              error={organizationTransferBetweenAccountsError}
+              success={organizationTransferBetweenAccountsIsSuccess}
+              loading={organizationTransferBetweenAccountsIsLoading}
+              reportPath="/moviment/organization_moviments/organization_moviments_reports/organization_transfer_between_accounts_reports"
             />
           </Col>
         )}
       </Row>
 
-      <Row style={{width: "100%"}}>
+      <Row style={{ width: "100%" }}>
         <Col span={24}>
           <CustomTable
             query={query}
@@ -180,14 +155,12 @@ export const TransfersBetweenAccounts = () => {
               { name: "from", type: "translate" },
               { name: "to", type: "translate" },
               { name: "user_name", type: "text" },
-              { name: "partner_name", type: "text" },
-              { name: "merchant_name", type: "text" },
               { name: "value", type: "value" },
               { name: "status", type: "status" },
               { name: "createdAt", type: "date", sort: true },
             ]}
             loading={isTransferBetweenAccountsDataFetching}
-            label={["merchant_name", "to", "from", "value"]}
+            label={["organization_name", "to", "from", "value"]}
           />
         </Col>
       </Row>
@@ -197,7 +170,7 @@ export const TransfersBetweenAccounts = () => {
           setOpen={setIsFiltersOpen}
           query={query}
           setQuery={setQuery}
-          filters={["start_date", "end_date", "merchant_id", "value_start"]}
+          filters={["start_date", "end_date", "organization_id", "value_start"]}
           refetch={() => {
             return "";
           }}
@@ -211,10 +184,18 @@ export const TransfersBetweenAccounts = () => {
         <MutateModal
           type="create"
           validateToken
-          validateTokenAction="MERCHANT_BALANCE_TRANSFER_CREATE"
+          validateTokenAction="ORGANIZATION_BALANCE_TRANSFER_CREATE"
           open={isNewTransferModalOpen}
           setOpen={setIsNewTransferModalOpen}
-          fields={user?.merchant_id ? fieldMerch : fieldsIfNotMerch}
+          fields={[
+            {
+              label: "from",
+              required: true,
+              selectOption: true,
+            },
+            { label: "to", required: true, selectOption: true },
+            { label: "value", required: true },
+          ]}
           body={body}
           setBody={setBody}
           selectOptions={{

@@ -125,7 +125,12 @@
     "self_exclusion": "Auto exclusão",
     "self_exclusion_reports": "Auto exclusão",
     "merchant_transfers": "Transferências entre empresas ",
-    "between_accounts_transfers": "Transferências entre contas"
+    "between_accounts_transfers": "Transferências entre contas",
+    "merchant_manual_moviments_reports": "Movimentações manual",
+    "merchant_between_accounts_reports": "Transferências entre contas",
+    "organization_transfer_between_accounts": "Transferências entre contas",
+    "organization_manual_moviments_reports": "Lançamentos manuais",
+    "organization_transfer_between_accounts_reports": "Transferências entre contas"
   },
 
   "titles": {
@@ -234,7 +239,8 @@
     "resend_webhook": "Reenviar webhook",
     "update_bank": "Atualizar banco",
     "new_reason": "Novo motivo",
-    "modal_create_merchant": "Criar empresa"
+    "modal_create_merchant": "Criar empresa",
+    "report_details": "Detalhes do relatório"
   },
   "input": {
     "required": "Por favor, insira o {{field}}",
@@ -320,7 +326,9 @@
     "btg_id": "ID BTG",
     "origin_account": "Conta origem",
     "final_account": "Conta destino",
-    "value": "Valor"
+    "value": "Valor",
+    "from": "Origem",
+    "to": "Destino"
   },
   "table": {
     "id": "ID",
@@ -621,7 +629,22 @@
     "user": "Usuário",
     "transfer": "Transferência",
     "origin_account": "Conta origem",
-    "final_account": "Conta destino"
+    "final_account": "Conta destino",
+    "from": "Origem",
+    "to": "Destino",
+    "organization_name": "Organização",
+    "start_date_filter": "Data inicial",
+    "end_date_filter": "Data final",
+    "user_organization_id": "ID da organização",
+    "user_organization_name": "Organização",
+    "completed": "Completo",
+    "report_url": "Baixar",
+    "download": "Baixar",
+    "merchant_id_filter": "Filtro: ID do merchant",
+    "createdBy": "Criado por",
+    "organization_id_filter": "Filtro: ID da organização",
+    "initial_date_filter": "Data inicial",
+    "final_date_filter": "Data final"
   },
   "actions": {
     "details": "Detalhes",

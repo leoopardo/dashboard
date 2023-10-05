@@ -770,7 +770,10 @@ export const CustomTable = (props: TableProps) => {
           </Grid>
         </Grid>
       ) : (
-        <Grid container style={{ display: "flex", justifyContent: "center" }}>
+        <Grid
+          container
+          style={{ display: "flex", justifyContent: "center", width: "100%" }}
+        >
           <Grid item xs={12}>
             <Mobile
               columns={props?.columns}

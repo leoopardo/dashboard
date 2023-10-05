@@ -173,7 +173,7 @@ export const AggregatorSelfExclusion = () => {
                 icon: <DeleteOutlined style={{ fontSize: 22 }} />,
                 label: "delete",
                 onClick: () => setIsDeleteOpen(true),
-              },
+              }, 
             ]}
             isConfirmOpen={isDeleteOpen}
             setIsConfirmOpen={setIsDeleteOpen}

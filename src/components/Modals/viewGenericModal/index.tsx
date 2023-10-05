@@ -1,5 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Descriptions, Drawer, Pagination, Spin, Table } from "antd";
+import { DownloadOutlined } from "@ant-design/icons";
+import { defaultTheme } from "@src/styles/defaultTheme";
+import {
+  Button,
+  Descriptions,
+  Drawer,
+  Pagination,
+  Progress,
+  Spin,
+  Table,
+  Typography,
+} from "antd";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -109,11 +120,11 @@ export const ViewModal = ({
           Object.keys(sortItems).map((key: string) => {
             if (
               [
-                'group_id',
-                'merchant_id',
-                'organization_id',
-                'partner_id',
-                'profile_type_id',
+                "group_id",
+                "merchant_id",
+                "organization_id",
+                "partner_id",
+                "profile_type_id",
               ].includes(key)
             ) {
               return;
@@ -130,6 +141,10 @@ export const ViewModal = ({
               case "updatedAt":
               case "updated_at":
               case "last_signin_date":
+              case "start_date_filter":
+              case "end_date_filter":
+              case "initial_date_filter":
+              case "final_date_filter":
                 return (
                   <Descriptions.Item
                     key={key}
@@ -179,29 +194,64 @@ export const ViewModal = ({
                       textAlign: "center",
                     }}
                   >
-                    {typeof sortItems[key] === "boolean"
-                      ? sortItems[key]
-                        ? t("table.active")
-                        : t("table.inactive")
-                      : t(`table.${sortItems[key.toLocaleLowerCase()]}`)}
+                    <Typography.Title
+                      level={5}
+                      style={{
+                        color: (defaultTheme.colors as any)[
+                          sortItems[key].toLocaleLowerCase()
+                        ],
+                      }}
+                    >
+                      {typeof sortItems[key] === "boolean"
+                        ? sortItems[key]
+                          ? t("table.active")
+                          : t("table.inactive")
+                        : t(`table.${sortItems[key].toLocaleLowerCase()}`)}
+                    </Typography.Title>
                   </Descriptions.Item>
                 );
 
-                case "success":
-                  return (
-                    <Descriptions.Item
-                      key={key}
-                      label={t(`table.${key}`)}
-                      labelStyle={{
-                        maxWidth: "120px !important",
-                        margin: 0,
-                        padding: 0,
-                        textAlign: "center",
-                      }}
-                    >
-                      {t(`table.${sortItems[key]}`)}
-                    </Descriptions.Item>
-                  );
+              case "progress":
+                return (
+                  <Descriptions.Item
+                    key={key}
+                    label={t(`table.${key}`)}
+                    labelStyle={{
+                      maxWidth: "120px !important",
+                      margin: 0,
+                      padding: 0,
+                      textAlign: "center",
+                    }}
+                  >
+                    <Progress
+                      percent={sortItems?.progress.split("/")[0]}
+                      status={
+                        sortItems.status === "ERROR" ||
+                        sortItems.status === "CANCELED"
+                          ? "exception"
+                          : sortItems.status === "COMPLETED"
+                          ? "success"
+                          : "active"
+                      }
+                    />
+                  </Descriptions.Item>
+                );
+
+              case "success":
+                return (
+                  <Descriptions.Item
+                    key={key}
+                    label={t(`table.${key}`)}
+                    labelStyle={{
+                      maxWidth: "120px !important",
+                      margin: 0,
+                      padding: 0,
+                      textAlign: "center",
+                    }}
+                  >
+                    {t(`table.${sortItems[key]}`)}
+                  </Descriptions.Item>
+                );
               case "flag_pep":
               case "flag_aux_gov":
               case "black_list":
@@ -234,9 +284,55 @@ export const ViewModal = ({
                   >
                     {typeof sortItems[key] === "boolean"
                       ? t(`table.${sortItems[key]}`)
-                      : t(`table.${sortItems[key.toLocaleLowerCase()]}`)}
+                      : t(`table.${sortItems[key].toLocaleLowerCase()}`)}
                   </Descriptions.Item>
                 );
+
+              case "to":
+              case "from":
+                return (
+                  <Descriptions.Item
+                    key={key}
+                    label={t(`table.${key}`)}
+                    labelStyle={{
+                      maxWidth: "120px !important",
+                      margin: 0,
+                      padding: 0,
+                      textAlign: "center",
+                    }}
+                  >
+                    {sortItems[key] ? t(`table.${sortItems[key]}`) : "-"}
+                  </Descriptions.Item>
+                );
+              case "report_url":
+              case "file_url":
+                return (
+                  <Descriptions.Item
+                    key={key}
+                    label={t(`table.${key}`)}
+                    labelStyle={{
+                      maxWidth: "120px !important",
+                      margin: 0,
+                      padding: 0,
+                      textAlign: "center",
+                    }}
+                  >
+                    <Button
+                      type="primary"
+                      style={{ width: "100%" }}
+                      disabled={!sortItems[key]}
+                      onClick={() => window.location.assign(sortItems[key])}
+                    >
+                      <DownloadOutlined />
+                      {t("table.download")}
+                    </Button>
+                  </Descriptions.Item>
+                );
+
+              case "sort_order_filter":
+              case "sort_field_filter":
+              case "createdById":
+                return;
 
               default:
                 return (

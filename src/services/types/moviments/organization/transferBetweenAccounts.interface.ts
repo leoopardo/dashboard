@@ -1,12 +1,12 @@
-export interface TransferBetweenAccountsbody {
+export interface OrganizationTransferBetweenAccountsbody {
   from?: string;
   to?: string;
   value?: number;
   validation_token?: string;
-  merchant_id?: number;
+  organization_id?: number | string;
 }
 
-export interface MerchantTransferBetweenAccountsQuery {
+export interface OrganizationTransferBetweenAccountsQuery {
   from?: string;
   to?: string;
   start_date?: string;
@@ -16,7 +16,7 @@ export interface MerchantTransferBetweenAccountsQuery {
   merchant_id?: string
 }
 
-export interface MerchantTransferBetweenAccountsItem {
+export interface OrganizationTransferBetweenAccountsItem {
   _id: string;
   merchant_id: number;
   merchant_name: string;
@@ -38,11 +38,11 @@ export interface MerchantTransferBetweenAccountsItem {
   __v: number;
 }
 
-export interface MerchantTransferBetweenAccountsData {
+export interface OrganizationTransferBetweenAccountsData {
   limit: number;
   page: number;
   total_canceled: number;
   total_processing: number;
   total_success: number;
-  items: MerchantTransferBetweenAccountsItem[];
+  items: OrganizationTransferBetweenAccountsItem[];
 }
