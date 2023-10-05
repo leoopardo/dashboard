@@ -311,7 +311,7 @@ export const UpdateUserModal = ({
             filterIdProp="merchant_id"
             filterIdValue={
               user.merchant_id ??
-              body?.organization_id ??
+              body?.merchant_id ??
               currentUser?.merchant.id
             }
           />
