@@ -129,24 +129,24 @@ export const ForgotMyPassword = () => {
                     textAlign: isMobile ? "center" : undefined,
                   }}
                 >
-                  Digite seu email abaixo para enviarmos um email de
-                  recuperação.
+                  Digite seu usuário abaixo para verificarmos se sua conta
+                  possui email ou telefone validado.
                 </Typography.Title>
                 <Form
                   layout="vertical"
                   style={{ marginTop: 16, width: isMobile ? "90%" : "100%" }}
                 >
-                  <Form.Item label="Email">
-                    <Input   disabled
+                  <Form.Item label="Usuário">
+                    <Input
+                      disabled
                       style={{ width: "100%" }}
                       size="large"
-                      placeholder="exemplo@email.com"
+                      placeholder="ExemploDeUsuário"
                     />
                   </Form.Item>
 
                   <Form.Item>
                     <Button
-                    
                       size="large"
                       type="primary"
                       style={{ width: "100%" }}
