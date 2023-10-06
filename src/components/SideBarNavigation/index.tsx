@@ -1030,48 +1030,12 @@ export const SidebarNavigation = () => {
         getItem(
           "merchant_transfers",
           null,
-          [
-            getItem(
-              "aggregators",
-              null,
-              null,
-              false,
-              (e) => handleNavigate(e?.keyPath),
-              {
-                display: permissions?.transactions?.merchant?.menu
-                  ? undefined
-                  : "none",
-              }
-            ),
-            getItem(
-              "operators",
-              null,
-              null,
-              false,
-              (e) => handleNavigate(e?.keyPath),
-              {
-                display: permissions?.transactions?.merchant?.menu
-                  ? undefined
-                  : "none",
-              }
-            ),
-            getItem(
-              "organization",
-              null,
-              null,
-              false,
-              (e) => handleNavigate(e?.keyPath),
-              {
-                display: permissions?.transactions?.merchant?.menu
-                  ? undefined
-                  : "none",
-              }
-            ),
-          ],
+          null,
           false,
-          undefined,
+          (e) => handleNavigate(e?.keyPath),
           {
-            display: permissions?.transactions?.merchant?.menu
+            display: permissions?.transactions?.merchant?.manual_transactions
+              ?.menu
               ? undefined
               : "none",
           }

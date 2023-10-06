@@ -41,6 +41,12 @@ interface mutateProps {
     required: boolean;
     selectOption?: boolean;
     feesDetails?: boolean;
+    asyncOption?: {
+      options?: any[];
+      optionLabel?: string;
+      optionValue?: string;
+      bodyProp?: string;
+    };
   }[];
   modalName: string;
   selectOptions?: any;
@@ -380,6 +386,7 @@ export const MutateModal = ({
                   ]}
                 >
                   <CurrencyInput
+                    value={body[field.label]}
                     onChangeValue={(_event, originalValue) => {
                       setBody((state: any) => ({
                         ...state,
@@ -390,7 +397,6 @@ export const MutateModal = ({
                       <Input
                         size="large"
                         style={{ width: "100%" }}
-                        value={body[field.label]}
                       />
                     }
                   />
@@ -734,7 +740,16 @@ export const MutateModal = ({
                   >
                     <Select
                       size="large"
-                      options={selectOptions ? selectOptions[field.label] : []}
+                      options={
+                        selectOptions
+                          ? selectOptions[field.label]?.map((option: any) => {
+                              return {
+                                value: option,
+                                label: t(`table.${option.toLowerCase()}`),
+                              };
+                            })
+                          : []
+                      }
                       notFoundContent={<Empty />}
                       value={body[field.label] || null}
                       onChange={(value) => {
@@ -749,6 +764,54 @@ export const MutateModal = ({
                   </Form.Item>
                 );
               }
+
+              if (field.asyncOption) {
+                return (
+                  <Form.Item
+                    label={t(`input.${field.label}`)}
+                    name={field.label}
+                    style={{ margin: 10 }}
+                    rules={[
+                      {
+                        required: field.required,
+                        message:
+                          t("input.required", {
+                            field: t(`input.${field.label}`),
+                          }) || "",
+                      },
+                    ]}
+                  >
+                    <Select
+                      size="large"
+                      options={
+                        field?.asyncOption
+                          ? field?.asyncOption?.options?.map((option: any) => {
+                              return {
+                                value:
+                                  option[field?.asyncOption?.optionValue || ""],
+                                label:
+                                  option[field?.asyncOption?.optionLabel || ""],
+                              };
+                            })
+                          : []
+                      }
+                      notFoundContent={<Empty />}
+                      value={
+                        body[field?.asyncOption?.optionValue || ""] || null
+                      }
+                      onChange={(value) => {
+                        setBody((state: any) => ({
+                          ...state,
+                          [field?.asyncOption?.bodyProp || ""]: value,
+                        }));
+                      }}
+                      style={{ width: "100%", height: 40 }}
+                      placeholder={t(`table.${field.label}`)}
+                    />
+                  </Form.Item>
+                );
+              }
+
               return (
                 <Form.Item
                   label={t(`table.${field.label}`)}

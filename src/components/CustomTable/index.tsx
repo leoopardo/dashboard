@@ -426,7 +426,7 @@ export const CustomTable = (props: TableProps) => {
                           fontWeight: 600,
                         }}
                       >
-                        {t(`table.${text?.toLocaleLowerCase()}`)}
+                        {text ? t(`table.${text?.toLocaleLowerCase()}`) : '-'}
                       </Typography>
                     ),
                 };

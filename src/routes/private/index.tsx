@@ -35,9 +35,6 @@ import { TransfersBetweenAccounts } from "./Pages/moviments/merchants/betweenAcc
 import { MerchantManual } from "./Pages/moviments/merchants/manual";
 import { TransferBetweenAccountsReports } from "./Pages/moviments/merchants/reports/betweenAccounts";
 import { MerchantManualReports } from "./Pages/moviments/merchants/reports/manual";
-import { TransferToAggregators } from "./Pages/moviments/merchantsTransfers/aggregators";
-import { TransferToOperators } from "./Pages/moviments/merchantsTransfers/operators";
-import { TransferToOrganizations } from "./Pages/moviments/merchantsTransfers/organization";
 import { OrganizationTransfersBetweenAccounts } from "./Pages/moviments/organization/betweenAccounts";
 import { OrgonizationManual } from "./Pages/moviments/organization/manual";
 import { OrganizationTransferBetweenAccountsReports } from "./Pages/moviments/organization/reports/betweenAccounts";
@@ -91,6 +88,7 @@ import { BankBlacklist } from "./Pages/support/blacklists/bankBlacklist";
 import { InvalidPixKeyBlacklist } from "./Pages/support/blacklists/invalidPixKey";
 import { BankBlackistReports } from "./Pages/support/blacklists/reports/bankBlacklist";
 import { ThirdPartKeyBlacklist } from "./Pages/support/blacklists/thirdPartKey";
+import { TransferBetweenMerchants } from "./Pages/moviments/merchantsTransfers";
 import { Redirect } from "./redirect";
 
 export const PrivateRoutes = () => {
@@ -422,6 +420,7 @@ export const PrivateRoutes = () => {
               element={<TransfersBetweenAccounts />}
             />
           </Route>
+          <Route path="merchant_transfers"  element={<TransferBetweenMerchants />} />
           {/* movimentações de agregador */}
           <Route path="aggregator_moviments">
             <Route
@@ -436,11 +435,6 @@ export const PrivateRoutes = () => {
             </Route>
           </Route>
 
-          <Route path="merchant_transfers">
-            <Route path="aggregators" element={<TransferToAggregators />} />
-            <Route path="operators" element={<TransferToOperators />} />
-            <Route path="organization" element={<TransferToOrganizations />} />
-          </Route>
         </Route>
         {/* Suporte */}
         <Route path="support">

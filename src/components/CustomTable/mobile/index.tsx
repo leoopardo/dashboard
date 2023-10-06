@@ -110,11 +110,11 @@ export const Mobile = (props: MobileProps) => {
                         {t("table.delivered_at")}:{" "}
                         {`${
                           item[label]
-                            ? new Date(item[label]).toLocaleDateString()
+                            ? new Date(item[label])?.toLocaleDateString()
                             : ""
                         } ${
                           item[label]
-                            ? new Date(item[label]).toLocaleTimeString()
+                            ? new Date(item[label])?.toLocaleTimeString()
                             : "-"
                         }`}
                       </Typography>
@@ -195,9 +195,9 @@ export const Mobile = (props: MobileProps) => {
                           {item[value?.name]
                             ? `${new Date(
                                 item[value?.name]
-                              ).toLocaleDateString()} ${new Date(
+                              )?.toLocaleDateString()} ${new Date(
                                 item[value?.name]
-                              ).toLocaleTimeString()}`
+                              )?.toLocaleTimeString()}`
                             : "-"}
                         </Typography>
                       </Descriptions.Item>
@@ -317,9 +317,9 @@ export const Mobile = (props: MobileProps) => {
                             key={value?.name}
                             style={{ width: "100%", textAlign: "center" }}
                           >
-                            {t(
-                              `table.${item[value?.name].toLocaleLowerCase()}`
-                            )}
+                            {item[value?.name] ? t(
+                              `table.${item[value?.name]?.toLocaleLowerCase()}`
+                            ) : "-"}
                           </Typography>
                         )}
                       </Descriptions.Item>

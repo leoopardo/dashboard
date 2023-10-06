@@ -94,8 +94,6 @@ export const FiltersModal = ({
       ...query,
       page: null,
       limit: null,
-      sort_order: null,
-      sort_field: null,
       [startDateKeyName]: query[startDateKeyName]
         ? moment(query[startDateKeyName]).subtract(3, "hours")
         : null,
