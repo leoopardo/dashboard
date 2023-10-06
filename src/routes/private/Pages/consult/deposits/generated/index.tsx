@@ -139,7 +139,7 @@ export const GeneratedDeposits = () => {
   }, [debounceSearch, searchOption]);
 
   return (
-    <Row gutter={[8, 8]} align="middle" style={{ padding: "25px" }}>
+    <Row gutter={[8, 8]} align="middle" justify="center" style={{ padding: "25px" }}>
       <Grid container>
         {depositsTotalError ? (
           <Grid item xs={12} style={{ marginBottom: "10px" }}>

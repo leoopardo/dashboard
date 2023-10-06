@@ -72,8 +72,16 @@ export const Dashboard = () => {
         }}
       >
         {permissions?.report?.paybrokers?.bank_balance?.menu && (
-          <Row gutter={[4, 4]} align="middle">
-            <Row style={{ width: "100%", marginBottom: 16 }} gutter={[16, 16]}>
+          <Row gutter={[8, 4]} align="middle" justify="center">
+            <Row
+              style={{
+                width: "100%",
+                marginBottom: 16,
+                display: "flex",
+                justifyContent: "center",
+              }}
+              gutter={[16, 16]}
+            >
               <>
                 {bankListData?.itens.map((bank) => (
                   <BankCard bank={bank} />

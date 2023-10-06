@@ -545,22 +545,52 @@ export const FiltersModal = ({
                   name={filter}
                   style={{ margin: 10 }}
                 >
-                  <Select
-                    size="large"
-                    style={{ width: "100%", height: "40px" }}
-                    placeholder={t("table.status")}
-                    options={[
-                      { value: "true", label: t("table.active") },
-                      { value: "false", label: t("table.inactive") },
-                    ]}
-                    value={filtersQuery?.status ?? null}
-                    onChange={(value) => {
-                      setFiltersQuery((state: any) => ({
-                        ...state,
-                        status: value,
-                      }));
-                    }}
-                  />
+                  {!selectOptions[filter] ? (
+                    <Select
+                      size="large"
+                      style={{ width: "100%", height: "40px" }}
+                      placeholder={t("table.status")}
+                      options={[
+                        { value: "true", label: t("table.active") },
+                        { value: "false", label: t("table.inactive") },
+                      ]}
+                      value={filtersQuery?.status ?? null}
+                      onChange={(value) => {
+                        setFiltersQuery((state: any) => ({
+                          ...state,
+                          status: value,
+                        }));
+                      }}
+                    />
+                  ) : (
+                    <Select
+                      size="large"
+                      style={{ width: "100%", height: "40px" }}
+                      placeholder={t(`table.${filter}`)}
+                      value={filtersQuery[filter] ?? null}
+                      onChange={(value) => {
+                        setFiltersQuery((state: any) => ({
+                          ...state,
+                          [filter]: value,
+                        }));
+                      }}
+                      options={
+                        selectOptions[filter]?.map((option: any) => {
+                          return {
+                            value: option,
+                            label:
+                              filter === "status"
+                                ? option == "true"
+                                  ? t("table.active")
+                                  : option == "false"
+                                  ? t("table.inactive")
+                                  : t(`table.${option.toLowerCase()}`)
+                                : t(`table.${option.toLowerCase()}`),
+                          };
+                        }) ?? []
+                      }
+                    />
+                  )}
                 </Form.Item>
               );
 

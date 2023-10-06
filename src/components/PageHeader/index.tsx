@@ -1,18 +1,8 @@
-import {
-  DownOutlined,
-  UserOutlined
-} from "@ant-design/icons";
+import { DownOutlined, UserOutlined } from "@ant-design/icons";
 import { Grid } from "@mui/material";
 import { useTheme } from "@src/contexts/ThemeContext";
 import { useValidate } from "@src/services/siginIn/validate";
-import {
-  Avatar,
-  Dropdown,
-  MenuProps,
-  Radio,
-  Space,
-  theme as t
-} from "antd";
+import { Avatar, Dropdown, MenuProps, Radio, Space, theme as t } from "antd";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
@@ -21,6 +11,8 @@ import eua from "../../assets/united-states.png";
 import { defaultTheme } from "../../styles/defaultTheme";
 import { BreadcrumbComponent } from "../Breadcrumb";
 import { EditSelfModal } from "./EditSelf";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
+import LightModeIcon from "@mui/icons-material/LightMode";
 const { useToken } = t;
 
 export const PageHeader = () => {
@@ -170,19 +162,36 @@ export const PageHeader = () => {
               {React.cloneElement(menu as React.ReactElement, {
                 style: menuStyle,
               })}
-              <div style={{padding: 5}}>
+              <div style={{ padding: 5 }}>
                 <Radio.Group
-                defaultValue={theme}
-                buttonStyle="solid"
-                value={theme}
-                onChange={(e) => setTheme(e.target.value)}
-              >
-                <Radio.Button value="light">Light mode 🌞</Radio.Button>
-                <Radio.Button value="dark">Dark mode 🌜</Radio.Button>
-              </Radio.Group>
+                  defaultValue={theme}
+                  buttonStyle="solid"
+                  value={theme}
+                  onChange={(e) => setTheme(e.target.value)}
+                >
+                  <Radio.Button value="light">
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
+                      {t("buttons.light")} <LightModeIcon style={{marginLeft: 8}}/>
+                    </div>
+                  </Radio.Button>
+                  <Radio.Button value="dark">
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
+                     {t("buttons.dark")} <DarkModeIcon style={{marginLeft: 8}}/>{" "}
+                    </div>
+                    
+                  </Radio.Button>
+                </Radio.Group>
               </div>
-              
-             
             </div>
           )}
         >
@@ -200,13 +209,12 @@ export const PageHeader = () => {
           </Avatar>
         </Dropdown>
       </Grid>
-   
-        <EditSelfModal
-          open={isEditUserModalOpen}
-          setOpen={setIsEditUserModalOpen}
-          self={responseValidate}
-        />
-     
+
+      <EditSelfModal
+        open={isEditUserModalOpen}
+        setOpen={setIsEditUserModalOpen}
+        self={responseValidate}
+      />
     </Grid>
   ) : (
     <Grid
@@ -333,13 +341,11 @@ export const PageHeader = () => {
         <BreadcrumbComponent />
       </Grid>
 
-
-        <EditSelfModal
-          open={isEditUserModalOpen}
-          setOpen={setIsEditUserModalOpen}
-          self={responseValidate}
-        />
-      
+      <EditSelfModal
+        open={isEditUserModalOpen}
+        setOpen={setIsEditUserModalOpen}
+        self={responseValidate}
+      />
     </Grid>
   );
 };

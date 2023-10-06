@@ -216,7 +216,9 @@
     "new_reason": "Novo motivo",
     "sample_file": "arquivo exemplo",
     "create_self_exclusion": "Criar auto exclusão",
-    "transfers": "Transferências"
+    "transfers": "Transferências",
+    "dark": "Tema escuro",
+    "light": "Tema claro"
   },
   "modal": {
     "confirm": "Confirmar",
