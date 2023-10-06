@@ -1,6 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { InfoCircleFilled, ReloadOutlined } from "@ant-design/icons";
 import { useGetBankBalance } from "@src/services/consult/organization/bankBalance/getBankBalance";
-import { BankItem } from "@src/services/types/banks.interface";
 import { defaultTheme } from "@src/styles/defaultTheme";
 import {
   Card,
