@@ -130,7 +130,11 @@
     "merchant_between_accounts_reports": "Transferências entre contas",
     "organization_transfer_between_accounts": "Transferências entre contas",
     "organization_manual_moviments_reports": "Lançamentos manuais",
-    "organization_transfer_between_accounts_reports": "Transferências entre contas"
+    "organization_transfer_between_accounts_reports": "Transferências entre contas",
+    "aggregator_moviments": "Agregador",
+    "aggregator_transfer_between_accounts": "Transferência entre contas",
+    "aggregator_moviments_reports": "Relatórios",
+    "aggregator_transfer_between_accounts_reports": "Transferência entre contas"
   },
 
   "titles": {
@@ -644,7 +648,8 @@
     "createdBy": "Criado por",
     "organization_id_filter": "Filtro: ID da organização",
     "initial_date_filter": "Data inicial",
-    "final_date_filter": "Data final"
+    "final_date_filter": "Data final",
+    "waiting_ref": "Aguard. dev."
   },
   "actions": {
     "details": "Detalhes",

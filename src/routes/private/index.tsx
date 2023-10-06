@@ -88,6 +88,8 @@ import { InvalidPixKeyBlacklist } from "./Pages/support/blacklists/invalidPixKey
 import { BankBlackistReports } from "./Pages/support/blacklists/reports/bankBlacklist";
 import { ThirdPartKeyBlacklist } from "./Pages/support/blacklists/thirdPartKey";
 import { Redirect } from "./redirect";
+import { AggregatorTransfersBetweenAccounts } from "./Pages/moviments/aggregator/betweenAccounts";
+import { AggregatorTransferBetweenAccountsReports } from "./Pages/moviments/aggregator/reports/betweenAccounts";
 
 export const PrivateRoutes = () => {
   return (
@@ -97,8 +99,12 @@ export const PrivateRoutes = () => {
 
       <Route path="/">
         <Route index element={<Redirect />} />
+        {/* Dashboard */}
         <Route path="/dashboard" element={<Dashboard />} />
+
+        {/* Consultas */}
         <Route path="consult">
+          {/* Consultas de Organização */}
           <Route path="consult_organization">
             <Route
               path="organization_bank_statement"
@@ -121,7 +127,7 @@ export const PrivateRoutes = () => {
               element={<ConsultOrganizationReports />}
             />
           </Route>
-
+          {/*Consultas de Empresa */}
           <Route path="consult_merchant">
             <Route
               path="merchant_bank_statement"
@@ -134,7 +140,7 @@ export const PrivateRoutes = () => {
               element={<ConsultMerchantReports />}
             />
           </Route>
-
+          {/* Depósitos */}
           <Route path="deposit">
             <Route path="generated_deposits" element={<GeneratedDeposits />} />
             <Route path="paid_deposits" element={<PaidDeposits />} />
@@ -154,7 +160,7 @@ export const PrivateRoutes = () => {
               />
             </Route>
           </Route>
-
+          {/* Saques */}
           <Route path="withdrawals">
             <Route
               path="generated_withdrawals"
@@ -177,7 +183,7 @@ export const PrivateRoutes = () => {
               />
             </Route>
           </Route>
-
+          {/* Devoluções */}
           <Route path="refunds">
             <Route path="refund_deposits" element={<RefundDeposits />} />
             <Route path="withdrawals" element={<RefundWithdrawals />} />
@@ -201,13 +207,14 @@ export const PrivateRoutes = () => {
               />
             </Route>
           </Route>
-
+          {/* checar cpf */}
           <Route path="consult_persons">
             <Route path="check_cpf" element={<CheckDocument />} />
           </Route>
         </Route>
-
+        {/* cadastros */}
         <Route path="register">
+          {/* cadastros de organização */}
           <Route path="organization">
             <Route path="users" element={<OrganizationUser />} />
             <Route path="categories" element={<OrganizationCategories />} />
@@ -224,6 +231,7 @@ export const PrivateRoutes = () => {
               />
             </Route>
           </Route>
+          {/* cadastros de agregadores */}
           <Route path="aggregator">
             <Route path="aggregators" element={<Aggregators />} />
             <Route path="aggregator_users" element={<AggregatorUsers />} />
@@ -253,6 +261,7 @@ export const PrivateRoutes = () => {
               />
             </Route>
           </Route>
+          {/* cadastros de plataformas */}
           <Route path="partner">
             <Route path="partners" element={<Partners />} />
             <Route path="partner_users" element={<PartnerUsers />} />
@@ -267,6 +276,7 @@ export const PrivateRoutes = () => {
               />
             </Route>
           </Route>
+          {/*cadastros de operadores */}
           <Route path="operator">
             <Route path="operators" element={<Operators />} />
             <Route path="operator_users" element={<OperatorUsers />} />
@@ -281,6 +291,7 @@ export const PrivateRoutes = () => {
               />
             </Route>
           </Route>
+          {/* cadastros de empresas */}
           <Route path="merchant">
             <Route path="merchants">
               <Route index element={<MerchantView />} />
@@ -318,6 +329,8 @@ export const PrivateRoutes = () => {
               />
             </Route>
           </Route>
+
+          {/* cadastros de pessos */}
           <Route path="person">
             <Route path="persons">
               <Route index element={<Persons />} />
@@ -358,8 +371,9 @@ export const PrivateRoutes = () => {
             </Route>
           </Route>
         </Route>
-
+        {/* movimentações */}
         <Route path="moviment">
+          {/* movimentações de organização */}
           <Route path="organization_moviments">
             <Route
               path="organization_manual_moviments"
@@ -380,6 +394,7 @@ export const PrivateRoutes = () => {
               element={<OrganizationTransfersBetweenAccounts />}
             />
           </Route>
+          {/* movimentções de empresa */}
           <Route path="merchant_moviments">
             <Route
               path="merchant_manual_moviments"
@@ -400,13 +415,29 @@ export const PrivateRoutes = () => {
               element={<TransfersBetweenAccounts />}
             />
           </Route>
+          {/* movimentações de agregador */}
+          <Route path="aggregator_moviments">
+            <Route
+              path="aggregator_transfer_between_accounts"
+              element={<AggregatorTransfersBetweenAccounts />}
+            />
+            <Route path="aggregator_moviments_reports">
+              <Route
+                path="aggregator_transfer_between_accounts_reports"
+                element={<AggregatorTransferBetweenAccountsReports />}
+              />
+            </Route>
+          </Route>
+
           <Route path="merchant_transfers">
             <Route path="aggregators" element={<TransferToAggregators />} />
             <Route path="operators" element={<TransferToOperators />} />
             <Route path="organization" element={<TransferToOrganizations />} />
           </Route>
         </Route>
+        {/* Suporte */}
         <Route path="support">
+          {/* Logs de API */}
           <Route path="api_logs">
             <Route path="authentication_logs" element={<AuthLogs />} />
             <Route path="error_logs_deposits" element={<DepositsErrors />} />
@@ -415,6 +446,7 @@ export const PrivateRoutes = () => {
               element={<WithdrawalsErrors />}
             />
           </Route>
+          {/* Blacklists */}
           <Route path="blacklists">
             <Route path="bank_institutions" element={<BankBlacklist />} />
             <Route

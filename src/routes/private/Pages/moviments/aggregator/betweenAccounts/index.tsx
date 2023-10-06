@@ -9,89 +9,67 @@ import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
 import { Toast } from "@src/components/Toast";
-import { useCreateTransferBetweenAccounts } from "@src/services/moviments/merchants/betweenAccounts/createTransferBetweenAccounts";
-import { useGetTransferBetweenAccounts } from "@src/services/moviments/merchants/betweenAccounts/getTransfersBetweenAccounts";
+import { useCreateAggregatorTransferBetweenAccounts } from "@src/services/moviments/aggregator/betweenAccounts/createTransferBetweenAccounts";
+import { useGetAggregatorTransferBetweenAccounts } from "@src/services/moviments/aggregator/betweenAccounts/getTransfersBetweenAccounts";
 import { queryClient } from "@src/services/queryClient";
-import { useCreateMerchantTransferBetweenAccountsReports } from "@src/services/reports/moviments/merchant/createTransferBetweenAccountsReports";
+import { useCreateAggregatorTransferBetweenAccountsReports } from "@src/services/reports/moviments/aggregator/createTransferBetweenAccountsReports";
 import {
-  MerchantTransferBetweenAccountsQuery,
-  TransferBetweenAccountsbody,
-} from "@src/services/types/moviments/merchant/transferBetweenAccounts.interface";
+  AggregatorTransferBetweenAccountsQuery,
+  AggregatorTransferBetweenAccountsbody,
+} from "@src/services/types/moviments/aggregator/transferBetweenAccounts.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
 import { defaultTheme } from "@src/styles/defaultTheme";
 import { Button, Card, Col, Row, Statistic } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-export const TransfersBetweenAccounts = () => {
+export const AggregatorTransfersBetweenAccounts = () => {
   const { permissions } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
   const user = queryClient.getQueryData("validate") as ValidateInterface;
-  const INITIAL_QUERY: MerchantTransferBetweenAccountsQuery = {
+  const INITIAL_QUERY: AggregatorTransferBetweenAccountsQuery = {
     limit: 25,
     page: 1,
   };
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
-  const [body, setBody] = useState<TransferBetweenAccountsbody | null>({
-    from: "",
-    to: "",
-    merchant_id: user?.merchant_id ?? undefined,
-  });
+  const [body, setBody] =
+    useState<AggregatorTransferBetweenAccountsbody | null>({
+      from: "",
+      to: "",
+    });
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const [isNewTransferModalOpen, setIsNewTransferModalOpen] =
     useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<any>({});
   const [query, setQuery] =
-    useState<MerchantTransferBetweenAccountsQuery>(INITIAL_QUERY);
+    useState<AggregatorTransferBetweenAccountsQuery>(INITIAL_QUERY);
   const { t } = useTranslation();
   const {
     TransferBetweenAccountsData,
     TransferBetweenAccountsDataError,
     isTransferBetweenAccountsDataFetching,
     refetchTransferBetweenAccountsData,
-  } = useGetTransferBetweenAccounts(query);
+  } = useGetAggregatorTransferBetweenAccounts(query);
 
   const { error, isLoading, isSuccess, mutate } =
-    useCreateTransferBetweenAccounts(body);
+    useCreateAggregatorTransferBetweenAccounts({
+      ...body,
+      aggregator_id: user?.aggregator_id || body?.aggregator_id,
+    });
 
   const {
-    MerchantTransferBetweenAccountsError,
-    MerchantTransferBetweenAccountsIsLoading,
-    MerchantTransferBetweenAccountsIsSuccess,
-    MerchantTransferBetweenAccountsMutate,
-  } = useCreateMerchantTransferBetweenAccountsReports(query);
-
-  const fieldsIfNotMerch = [
-    {
-      label: "merchant_id",
-      required: true,
-    },
-    {
-      label: "from",
-      required: true,
-      selectOption: true,
-    },
-    { label: "to", required: true, selectOption: true },
-    { label: "value", required: true },
-  ];
-  const fieldMerch = [
-    {
-      label: "from",
-      required: true,
-      selectOption: true,
-    },
-    { label: "to", required: true, selectOption: true },
-    { label: "value", required: true },
-  ];
+    AggregatorTransferBetweenAccountsError,
+    AggregatorTransferBetweenAccountsIsLoading,
+    AggregatorTransferBetweenAccountsIsSuccess,
+    AggregatorTransferBetweenAccountsMutate,
+  } = useCreateAggregatorTransferBetweenAccountsReports(query);
 
   useEffect(() => {
     refetchTransferBetweenAccountsData();
   }, [query]);
 
-  useEffect(() => {
-    setBody((state) => ({ ...state, merchant_id: user?.merchant_id }));
-  }, [user]);
+  console.log(body);
 
   return (
     <Row style={{ padding: 25 }}>
@@ -191,19 +169,19 @@ export const TransfersBetweenAccounts = () => {
         </Col>
 
         {/* arrumar permissões */}
-        {permissions?.transactions?.merchant?.internal_transfers
-          ?.merchant_internal_transfers_export_csv && (
+        {permissions?.transactions?.paybrokers?.internal_transfers
+          ?.paybrokers_internal_transfers_export_csv && (
           <Col xs={{ span: 24 }} md={{ span: 3 }} lg={{ span: 2 }}>
             <ExportReportsModal
               disabled={
                 !TransferBetweenAccountsData?.items ||
-                MerchantTransferBetweenAccountsError
+                AggregatorTransferBetweenAccountsError
               }
-              mutateReport={() => MerchantTransferBetweenAccountsMutate()}
-              error={MerchantTransferBetweenAccountsError}
-              success={MerchantTransferBetweenAccountsIsSuccess}
-              loading={MerchantTransferBetweenAccountsIsLoading}
-              reportPath="/moviment/merchant_moviments/merchant_moviments_reports/merchant_between_accounts_reports"
+              mutateReport={() => AggregatorTransferBetweenAccountsMutate()}
+              error={AggregatorTransferBetweenAccountsError}
+              success={AggregatorTransferBetweenAccountsIsSuccess}
+              loading={AggregatorTransferBetweenAccountsIsLoading}
+              reportPath="/moviment/aggregator_moviments/aggregator_moviments_reports/aggregator_transfer_between_accounts_reports"
             />
           </Col>
         )}
@@ -231,15 +209,14 @@ export const TransfersBetweenAccounts = () => {
               { name: "_id", type: "id", sort: true },
               { name: "from", type: "translate" },
               { name: "to", type: "translate" },
+              { name: "aggregator_name", type: "text" },
               { name: "user_name", type: "text" },
-              { name: "partner_name", type: "text" },
-              { name: "merchant_name", type: "text" },
               { name: "value", type: "value" },
               { name: "status", type: "status" },
               { name: "createdAt", type: "date", sort: true },
             ]}
             loading={isTransferBetweenAccountsDataFetching}
-            label={["merchant_name", "to", "from", "value"]}
+            label={["Aggregator_name", "to", "from", "value"]}
           />
         </Col>
       </Row>
@@ -249,17 +226,17 @@ export const TransfersBetweenAccounts = () => {
           setOpen={setIsFiltersOpen}
           query={query}
           setQuery={setQuery}
-          filters={["start_date", "end_date", "merchant_id", "from", "to" ]}
+          filters={["start_date", "end_date", "aggregator_id", "from", "to"]}
           refetch={() => {
             return "";
           }}
           selectOptions={{
-           
             from: [
               "balance_reserved",
               "balance_to_payment",
               "balance_to_transactions",
-            ], to: [
+            ],
+            to: [
               "balance_reserved",
               "balance_to_payment",
               "balance_to_transactions",
@@ -274,10 +251,31 @@ export const TransfersBetweenAccounts = () => {
         <MutateModal
           type="create"
           validateToken
-          validateTokenAction="MERCHANT_BALANCE_TRANSFER_CREATE"
+          validateTokenAction="AGGREGATOR_BALANCE_TRANSFER_CREATE"
           open={isNewTransferModalOpen}
           setOpen={setIsNewTransferModalOpen}
-          fields={user?.merchant_id ? fieldMerch : fieldsIfNotMerch}
+          fields={
+            user?.aggregator_id
+              ? [
+                  {
+                    label: "from",
+                    required: true,
+                    selectOption: true,
+                  },
+                  { label: "to", required: true, selectOption: true },
+                  { label: "value", required: true },
+                ]
+              : [
+                  { label: "aggregator_id", required: true },
+                  {
+                    label: "from",
+                    required: true,
+                    selectOption: true,
+                  },
+                  { label: "to", required: true, selectOption: true },
+                  { label: "value", required: true },
+                ]
+          }
           body={body}
           setBody={setBody}
           selectOptions={{

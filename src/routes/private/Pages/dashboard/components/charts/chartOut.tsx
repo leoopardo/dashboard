@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { PieChartOutlined, SmallDashOutlined } from "@ant-design/icons";
 import { useTheme } from "@src/contexts/ThemeContext";
 import { useGetTotalGeneratedWithdrawals } from "@src/services/consult/withdrawals/generatedWithdrawals/getTotal";
@@ -257,6 +258,7 @@ export const ChartOut = ({ query }: ChartInInterface) => {
                             },
                           },
                         },
+                        cutout: "80%",
                       }}
                     />
                     <Typography.Title
@@ -292,10 +294,12 @@ export const ChartOut = ({ query }: ChartInInterface) => {
                               labels: {
                                 textAlign: "center",
                                 usePointStyle: true,
+                                font: { size: 10 },
                                 color: theme === "dark" ? "#fff" : "#000",
                               },
                             },
                           },
+                          cutout: "80%",
                         }}
                       />
                     </Col>
@@ -315,10 +319,12 @@ export const ChartOut = ({ query }: ChartInInterface) => {
                               labels: {
                                 textAlign: "center",
                                 usePointStyle: true,
+                                font: { size: 10 },
                                 color: theme === "dark" ? "#fff" : "#000",
                               },
                             },
                           },
+                          cutout: "80%",
                         }}
                       />
                     </Col>
@@ -338,10 +344,12 @@ export const ChartOut = ({ query }: ChartInInterface) => {
                               labels: {
                                 textAlign: "center",
                                 usePointStyle: true,
+                                font: { size: 10 },
                                 color: theme === "dark" ? "#fff" : "#000",
                               },
                             },
                           },
+                          cutout: "80%",
                         }}
                       />
                     </Col>
@@ -366,6 +374,7 @@ export const ChartOut = ({ query }: ChartInInterface) => {
                               },
                             },
                           },
+                          cutout: "80%",
                         }}
                       />
                     </Col>

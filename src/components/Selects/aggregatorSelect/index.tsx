@@ -82,7 +82,7 @@ export const AggregatorSelect = ({
         setQueryFunction((state: any) => ({
           ...state,
           aggregator_id: value,
-          group_id: null,
+          group_id: undefined,
         }));
         setValue(
           aggregatorsData?.items.find((aggregator) => aggregator.id === value)

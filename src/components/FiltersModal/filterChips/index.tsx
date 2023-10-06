@@ -228,6 +228,8 @@ export const FilterChips = ({
             );
 
           case "gender":
+          case "to":
+          case "from":
             return (
               <Tag
                 key={key}

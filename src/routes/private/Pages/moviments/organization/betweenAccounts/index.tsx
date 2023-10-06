@@ -18,7 +18,8 @@ import {
   OrganizationTransferBetweenAccountsbody,
 } from "@src/services/types/moviments/organization/transferBetweenAccounts.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Col, Row } from "antd";
+import { defaultTheme } from "@src/styles/defaultTheme";
+import { Button, Card, Col, Row, Statistic } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -70,6 +71,58 @@ export const OrganizationTransfersBetweenAccounts = () => {
 
   return (
     <Row style={{ padding: 25 }}>
+      <Row
+        gutter={[8, 8]}
+        style={{
+          width: "100%",
+          marginBottom: 16,
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <Col xs={{ span: 24 }} md={{ span: 4 }}>
+          <Card bordered={false} style={{ width: "100%" }}>
+            <Statistic
+              title={t("table.success")}
+              value={new Intl.NumberFormat("pt-BR", {
+                style: "currency",
+                currency: "BRL",
+              }).format(TransferBetweenAccountsData?.total_success || 0)}
+              precision={2}
+              valueStyle={{ color: defaultTheme.colors.success }}
+              loading={isTransferBetweenAccountsDataFetching}
+            />
+          </Card>
+        </Col>
+        <Col xs={{ span: 24 }} md={{ span: 4 }}>
+          <Card bordered={false} style={{ width: "100%" }}>
+            <Statistic
+              title={t("table.processing")}
+              value={new Intl.NumberFormat("pt-BR", {
+                style: "currency",
+                currency: "BRL",
+              }).format(TransferBetweenAccountsData?.total_processing || 0)}
+              precision={2}
+              valueStyle={{ color: defaultTheme.colors.processing }}
+              loading={isTransferBetweenAccountsDataFetching}
+            />
+          </Card>
+        </Col>
+        <Col xs={{ span: 24 }} md={{ span: 4 }}>
+          <Card bordered={false} style={{ width: "100%" }}>
+            <Statistic
+              title={t("table.canceled")}
+              value={new Intl.NumberFormat("pt-BR", {
+                style: "currency",
+                currency: "BRL",
+              }).format(TransferBetweenAccountsData?.total_canceled || 0)}
+              precision={2}
+              valueStyle={{ color: defaultTheme.colors.canceled }}
+              loading={isTransferBetweenAccountsDataFetching}
+            />
+          </Card>
+        </Col>
+      </Row>
       <Row gutter={[8, 8]} style={{ width: "100%", marginBottom: 16 }}>
         <Col xs={{ span: 24 }} md={{ span: 4 }}>
           <Button
@@ -170,11 +223,22 @@ export const OrganizationTransfersBetweenAccounts = () => {
           setOpen={setIsFiltersOpen}
           query={query}
           setQuery={setQuery}
-          filters={["start_date", "end_date", "organization_id", "value_start"]}
+          filters={["start_date", "end_date", "from", "to"]}
           refetch={() => {
             return "";
           }}
-          selectOptions={{}}
+          selectOptions={{
+            from: [
+              "balance_reserved",
+              "balance_to_payment",
+              "balance_to_transactions",
+            ],
+            to: [
+              "balance_reserved",
+              "balance_to_payment",
+              "balance_to_transactions",
+            ],
+          }}
           startDateKeyName="start_date"
           endDateKeyName="end_date"
           initialQuery={INITIAL_QUERY}

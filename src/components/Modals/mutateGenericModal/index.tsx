@@ -318,7 +318,10 @@ export const MutateModal = ({
                   >
                     <AggregatorSelect
                       setQueryFunction={setBody}
-                      aggregatorId={body?.aggregator?.id ?? undefined}
+                      aggregatorId={
+                        (body?.aggregator?.id || body?.aggregator_id) ??
+                        undefined
+                      }
                     />
                   </Form.Item>
                 );

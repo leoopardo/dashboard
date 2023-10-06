@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { queryClient } from "@src/services/queryClient";
-import { OrganizationTransferBetweenAccountsQuery } from "@src/services/types/moviments/organization/transferBetweenAccounts.interface";
+import { MerchantTransferBetweenAccountsQuery } from "@src/services/types/moviments/merchant/transferBetweenAccounts.interface";
 import { ReportsItem } from "@src/services/types/reports/reports.interface";
 import { useMutation } from "react-query";
 import { api } from "../../../../config/api";
 
 export function useCreateMerchantTransferBetweenAccountsReports(
-  body: OrganizationTransferBetweenAccountsQuery
+  body: MerchantTransferBetweenAccountsQuery
 ) {
   const { isLoading, error, mutate, isSuccess } = useMutation<
     ReportsItem | null | undefined
