@@ -20,7 +20,18 @@ export const ForgotMyPassword = () => {
   const isMobile = useMediaQuery({ maxWidth: "750px" });
 
   return (
+    <>
+     <img
+        src={import.meta.env.VITE_APP_ICON}
+        style={{
+          position: "fixed",
+          width: "105vh",
+          left: "-12vw",
+          top: 25
+        }}
+      />
     <Layout className="layout" style={{ height: "100vh" }}>
+     
       <Breadcrumb style={{ margin: "16px 64px", fontSize: isMobile ? 14 : 18 }}>
         <Breadcrumb.Item href="/">
           <div
@@ -178,5 +189,7 @@ export const ForgotMyPassword = () => {
         </Typography>
       </Footer>
     </Layout>
+    </>
+    
   );
 };
