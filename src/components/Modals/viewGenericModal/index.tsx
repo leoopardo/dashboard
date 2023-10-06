@@ -183,7 +183,7 @@ export const ViewModal = ({
                       ? sortItems[key]
                         ? t("table.active")
                         : t("table.inactive")
-                      : t(`table.${sortItems[key.toLocaleLowerCase()]}`)}
+                      : t(`table.${sortItems[key].toLocaleLowerCase()}`)}
                   </Descriptions.Item>
                 );
 

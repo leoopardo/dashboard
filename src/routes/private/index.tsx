@@ -81,10 +81,8 @@ import { PersonBlacklistUploads } from "./Pages/register/persons/blacklist/uploa
 import { PersonBlacklistReasons } from "./Pages/register/persons/blacklist/blacklistReasons";
 import { AggregatorSelfExclusion } from "./Pages/register/aggregator/selfExclusion";
 import { SelfExclusionReports } from "./Pages/register/aggregator/reports/selfExclusion";
-import { TransferToAggregators } from "./Pages/moviments/merchantsTransfers/aggregators";
-import { TransferToOperators } from "./Pages/moviments/merchantsTransfers/operators";
-import { TransferToOrganizations } from "./Pages/moviments/merchantsTransfers/organization";
 import { TransfersBetweenAccounts } from "./Pages/moviments/merchants/betweenAccounts";
+import { TransferBetweenMerchants } from "./Pages/moviments/merchantsTransfers";
 
 export const PrivateRoutes = () => {
   return (
@@ -381,20 +379,7 @@ export const PrivateRoutes = () => {
               element={<TransfersBetweenAccounts />}
             />
           </Route>
-          <Route path="merchant_transfers">
-            <Route
-              path="aggregators"
-              element={<TransferToAggregators />}
-            />
-            <Route
-              path="operators"
-              element={<TransferToOperators />}
-            />
-             <Route
-              path="organization"
-              element={<TransferToOrganizations />}
-            />
-          </Route>
+          <Route path="merchant_transfers"  element={<TransferBetweenMerchants />} />
         </Route>
         <Route path="support">
           <Route path="api_logs">

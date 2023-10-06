@@ -320,7 +320,11 @@
     "btg_id": "ID BTG",
     "origin_account": "Conta origem",
     "final_account": "Conta destino",
-    "value": "Valor"
+    "value": "Valor",
+    "merchant_origin": "Empresa origem",
+    "merchant_destination": "Empresa destino",
+    "debit_balance_type": "Tipo saldo origem",
+    "credit_balance_type": "Tipo saldo destino"
   },
   "table": {
     "id": "ID",
@@ -616,12 +620,20 @@
     "limits_data": "Dados de limites",
     "merchant_origin": "Empresa origem",
     "merchant_destination": "Empresa destino",
-    "account_origin": "Conta origem",
-    "account_destination": "Conta destino",
+    "debit_balance_type": "Tipo saldo origem",
+    "credit_balance_type": "Tipo saldo destino",
     "user": "Usuário",
     "transfer": "Transferência",
     "origin_account": "Conta origem",
-    "final_account": "Conta destino"
+    "final_account": "Conta destino",
+    "organization_name": "Organização",
+    "merchant_origin_id": "ID Empresa origem",
+    "merchant_destination_id": "ID Empresa destino",
+    "debit_merchant_name": "Empresa origem",
+    "credit_merchant_name": "Empresa destino",
+    "total_canceled": "Canceladas",
+    "total_processing": "Processando",
+    "total_success": "Sucesso"
   },
   "actions": {
     "details": "Detalhes",
