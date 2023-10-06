@@ -1,25 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { EyeFilled } from "@ant-design/icons";
+import { ArrowUpOutlined, DollarOutlined, EyeFilled } from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
 import { ValidateToken } from "@components/ValidateToken";
-import { ArrowUpOutlined, DollarOutlined } from "@ant-design/icons";
 import { Grid } from "@mui/material";
-import { ArrowDownOutlined } from "@ant-design/icons";
+import { MutateModal } from "@src/components/Modals/mutateGenericModal";
+import { ViewModal } from "@src/components/Modals/viewGenericModal";
+import { Toast } from "@src/components/Toast";
+import { useListMerchants } from "@src/services/merchant/listMerchants";
 import { useCreateTransferBetweenMerchants } from "@src/services/moviments/transfersMerchants/createTransferBetweenMerchants";
 import { useGetTransferBetweenMerchants } from "@src/services/moviments/transfersMerchants/getTransferBetweenMerchants";
-import { ViewModal } from "@src/components/Modals/viewGenericModal";
-import { queryClient } from "@src/services/queryClient";
-import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Row, Col, Statistic, Card } from "antd";
+import { GetTransferMerchantQuery } from "@src/services/types/moviments/transfersMerchants/getTransferBetweenMerchants.interface";
+import { Button, Card, Col, Row, Statistic } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Toast } from "@src/components/Toast";
-import { MutateModal } from "@src/components/Modals/mutateGenericModal";
-import { useListMerchants } from "@src/services/merchant/listMerchants";
-import { GetTransferMerchantQuery } from "@src/services/types/moviments/transfersMerchants/getTransferBetweenMerchants.interface";
 
 const INITIAL_QUERY: GetTransferMerchantQuery = {
   limit: 25,
@@ -29,9 +25,9 @@ const INITIAL_QUERY: GetTransferMerchantQuery = {
 };
 
 export const TransferBetweenMerchants = () => {
-  const { permissions } = queryClient.getQueryData(
-    "validate"
-  ) as ValidateInterface;
+  // const { permissions } = queryClient.getQueryData(
+  //   "validate"
+  // ) as ValidateInterface;
   const [query, setQuery] = useState<GetTransferMerchantQuery>(INITIAL_QUERY);
   const { t } = useTranslation();
   const [transferBody, setTransferBody] = useState<any | null>({
