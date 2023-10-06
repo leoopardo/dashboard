@@ -21,7 +21,7 @@ export const ForgotMyPassword = () => {
 
   return (
     <>
-     <img
+    {import.meta.env.VITE_APP_COMPANY_NAME === "Paybrokers" &&  <img
         src={import.meta.env.VITE_APP_ICON}
         style={{
           position: "fixed",
@@ -29,7 +29,8 @@ export const ForgotMyPassword = () => {
           left: "-12vw",
           top: 25
         }}
-      />
+      />}
+    
     <Layout className="layout" style={{ height: "100vh" }}>
      
       <Breadcrumb style={{ margin: "16px 64px", fontSize: isMobile ? 14 : 18 }}>
