@@ -1,23 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { FC, useEffect } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { Login } from "./Pages/SignIn";
+import { ForgotMyPassword } from "./Pages/forgotMyPassword";
 
-interface PublicRoutesProps {
-  route: string | undefined;
-}
-
-export const PublicRoutes: FC<PublicRoutesProps> = (props) => {
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (props.route) {
-      navigate(props.route);
-    }
-  }, []);
-
+export const PublicRoutes = () => {
   return (
     <Routes>
+      <Route path="*" element={<Navigate to={"login"} />} />
       <Route path="login" element={<Login />} />
+      <Route path="forgot_my_password" element={<ForgotMyPassword />} />
     </Routes>
   );
 };

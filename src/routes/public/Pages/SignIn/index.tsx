@@ -78,8 +78,9 @@ export const Login = () => {
             opacity: 1,
             transition: {
               duration: 1,
-            }
-          }}style={{ width: "80%", maxWidth: "400px" }}
+            },
+          }}
+          style={{ width: "80%", maxWidth: "400px" }}
         />
       </HalfHover>
       <Grid
@@ -217,7 +218,11 @@ export const Login = () => {
                 </CustomCheckbox>
               </Form.Item>
             </Grid>
-            <Grid item xs={8}>
+            <Grid
+              item
+              xs={8}
+              style={{ display: "flex", flexDirection: "column" }}
+            >
               <Form.Item>
                 <button
                   type="submit"
@@ -235,6 +240,12 @@ export const Login = () => {
                   {t("login.access")}
                 </CustButton>
               </Form.Item>
+              <Typography.Link
+                style={{ textAlign: "center", width: "100%", marginTop: -16 }}
+                href="/forgot_my_password"
+              >
+                {t("messages.forgot_password")}
+              </Typography.Link>
             </Grid>
             <Grid
               container

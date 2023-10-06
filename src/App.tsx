@@ -56,7 +56,7 @@ function App() {
   useEffect(() => {
     async function signInStorage() {
       if (validateError) {
-        setElement(<PublicRoutes route="/login" />);
+        setElement(<PublicRoutes />);
         return;
       }
       if (isSuccess) {

@@ -181,7 +181,8 @@
     "no_records_to_export": "No records to export",
     "20_minutes_consult": "The consultation has been ongoing for over 20 minutes.",
     "validate_phone_text": "Your phone nomber are not validated, this first token will validate your number. After that, you will receive a token to confirm the action performed.",
-    "validate_text": "Insert token to confirm action."
+    "validate_text": "Insert token to confirm action.",
+    "forgot_password": "Forgot my password"
   },
   "login": {
     "sign_in": "Sign in",
@@ -642,7 +643,7 @@
     "merchant_origin_id": "ID Merchant from",
     "merchant_destination_id": "ID Merchant to",
     "debit_merchant_name": "Merchant from",
-    "credit_merchant_name":"Merchant to",
+    "credit_merchant_name": "Merchant to",
     "total_canceled": "Canceled",
     "total_processing": "Processing",
     "total_success": "Success",

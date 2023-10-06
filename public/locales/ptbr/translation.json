@@ -182,7 +182,8 @@
     "no_records_to_export": "Não há registros para gerar um CSV",
     "20_minutes_consult": "Consulta realizada a mais de 20 minutos",
     "validate_phone_text": "Seu telefone ainda não foi validado, este primeiro token realizará a validação do seu número. Após isso receberá um token para confirmar a ação realizada.",
-    "validate_text": "Insira o token para confirmar a ação"
+    "validate_text": "Insira o token para confirmar a ação",
+    "forgot_password":"Esqueci minha senha"
   },
   "login": {
     "sign_in": "Faça login",
