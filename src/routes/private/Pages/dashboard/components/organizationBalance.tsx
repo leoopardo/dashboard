@@ -4,9 +4,11 @@ import { useGetOrganizationBalance } from "@src/services/consult/organization/ba
 import { defaultTheme } from "@src/styles/defaultTheme";
 import { Card, Col, Divider, Layout, Row, Statistic, Typography } from "antd";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 
 export const OrganizationBalance = () => {
+  const { t } = useTranslation();
   const {
     OrganizationBalance,
 
@@ -62,7 +64,7 @@ export const OrganizationBalance = () => {
                   </>
                 )}
               </div>
-              Saldos organização
+              {t("table.organization_balance")}
             </Typography.Title>
           </Card>
         </Col>
@@ -79,7 +81,7 @@ export const OrganizationBalance = () => {
               <Card bordered={false} loading={isOrganizationBalanceFetching}>
                 {isHoverCurrency === "real" ? (
                   <Statistic
-                    title="Conta transacional"
+                    title={t("table.balance_to_transactions")}
                     value={OrganizationBalance?.balance_to_transactions ?? 0}
                     loading={isOrganizationBalanceFetching}
                     precision={2}
@@ -92,7 +94,7 @@ export const OrganizationBalance = () => {
                 ) : (
                   <>
                     <Statistic
-                      title="Conta transacional"
+                      title={t("table.balance_to_transactions")}
                       value={OrganizationBalance?.balance_to_transactions ?? 0}
                       loading={isOrganizationBalanceFetching}
                       precision={2}
@@ -217,7 +219,7 @@ export const OrganizationBalance = () => {
               <Card bordered={false} loading={isOrganizationBalanceFetching}>
                 {isHoverCurrency === "real" ? (
                   <Statistic
-                    title="Conta pagamento"
+                    title={t("table.balance_to_payment")}
                     value={OrganizationBalance?.balance_to_payment ?? 0}
                     precision={2}
                     prefix="R$"
@@ -229,7 +231,7 @@ export const OrganizationBalance = () => {
                 ) : (
                   <>
                     <Statistic
-                      title="Conta pagamento"
+                      title={t("table.balance_to_payment")}
                       value={OrganizationBalance?.balance_to_payment ?? 0}
                       precision={2}
                       prefix="R$"
@@ -341,7 +343,7 @@ export const OrganizationBalance = () => {
               <Card bordered={false} loading={isOrganizationBalanceFetching}>
                 {isHoverCurrency === "real" ? (
                   <Statistic
-                    title="Conta Segurança"
+                    title={t("table.balance_reserved")}
                     value={OrganizationBalance?.balance_reserved ?? 0}
                     precision={2}
                     prefix="R$"
@@ -353,7 +355,7 @@ export const OrganizationBalance = () => {
                 ) : (
                   <>
                     <Statistic
-                      title="Conta Segurança"
+                      title={t("table.balance_reserved")}
                       value={OrganizationBalance?.balance_reserved ?? 0}
                       precision={2}
                       prefix="R$"

@@ -5,9 +5,11 @@ import { MerchantBalanceQuery } from "@src/services/types/consult/merchant/balan
 import { defaultTheme } from "@src/styles/defaultTheme";
 import { Card, Col, Layout, Row, Statistic, Typography } from "antd";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 
 export const MerchantBalance = () => {
+  const { t } = useTranslation();
   const [
     isHoverCurrency,
     //setIsHoverCurrency
@@ -65,7 +67,7 @@ export const MerchantBalance = () => {
                   </>
                 )}
               </div>
-              Saldos Empresa
+              {t("table.merchant_balance")}
             </Typography.Title>
           </Card>
         </Col>
@@ -86,7 +88,7 @@ export const MerchantBalance = () => {
               >
                 {isHoverCurrency === "real" ? (
                   <Statistic
-                    title="Conta transacional"
+                    title={t("table.balance_to_transactions")}
                     value={MerchantBalance?.balance_to_transactions ?? 0}
                     precision={2}
                     prefix="R$"
@@ -98,7 +100,7 @@ export const MerchantBalance = () => {
                 ) : (
                   <>
                     <Statistic
-                      title="Conta transacional"
+                      title={t("table.balance_to_transactions")}
                       value={MerchantBalance?.balance_to_transactions ?? 0}
                       precision={2}
                       prefix="R$"
@@ -210,7 +212,7 @@ export const MerchantBalance = () => {
               <Card bordered={false} loading={isMerchantBalanceFetching}>
                 {isHoverCurrency === "real" ? (
                   <Statistic
-                    title="Conta pagamento"
+                    title={t("table.balance_to_payment")}
                     value={MerchantBalance?.balance_to_payment ?? 0}
                     precision={2}
                     prefix="R$"
@@ -222,7 +224,7 @@ export const MerchantBalance = () => {
                 ) : (
                   <>
                     <Statistic
-                      title="Conta pagamento"
+                      title={t("table.balance_to_payment")}
                       value={MerchantBalance?.balance_to_payment ?? 0}
                       precision={2}
                       prefix="R$"
@@ -334,7 +336,7 @@ export const MerchantBalance = () => {
               <Card bordered={false} loading={isMerchantBalanceFetching}>
                 {isHoverCurrency === "real" ? (
                   <Statistic
-                    title="Conta Segurança"
+                    title={t("table.balance_reserved")}
                     value={MerchantBalance?.balance_reserved ?? 0}
                     precision={2}
                     prefix="R$"
@@ -346,7 +348,7 @@ export const MerchantBalance = () => {
                 ) : (
                   <>
                     <Statistic
-                      title="Conta Segurança"
+                      title={t("table.balance_reserved")}
                       value={7325256.32}
                       precision={2}
                       prefix="R$"

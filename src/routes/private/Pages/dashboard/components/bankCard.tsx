@@ -141,7 +141,7 @@ export const BankCard = ({ bank }: BankcardInterface) => {
               }}
             />
             <Statistic
-              title="Valor bloqueado:"
+              title={`${t("table.blocked_value")}:`}
               value={OrganizationBankBalance?.value_blocked}
               precision={2}
               prefix="R$"

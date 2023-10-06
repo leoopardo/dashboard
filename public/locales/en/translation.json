@@ -650,7 +650,10 @@
     "webhook_type": "Webhook type",
     "multiple": "Multiple",
     "single": "Single",
-    "failed": "Failed"
+    "failed": "Failed",
+    "organization_balance": "Organization balance",
+    "merchant_balance": "Merchant balance",
+    "blocked_value": "Blocked value"
   },
   "actions": {
     "details": "Details",

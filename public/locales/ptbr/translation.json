@@ -653,7 +653,10 @@
     "webhook_type": "Tipo de webhook",
     "multiple": "Multiplos",
     "single": "Único",
-    "failed": "Falha"
+    "failed": "Falha",
+    "organization_balance": "Saldos organização",
+    "merchant_balance": "Saldos empresa",
+    "blocked_value": "Valor bloqueado"
   },
   "actions": {
     "details": "Detalhes",
