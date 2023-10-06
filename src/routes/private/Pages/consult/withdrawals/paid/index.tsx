@@ -3,10 +3,12 @@
 import { EyeFilled, FileAddOutlined } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
+import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
+import { useGetWithdrawReportFields } from "@src/services/consult/withdrawals/reportCsvFields/getReportFields";
 import { queryClient } from "@src/services/queryClient";
 import { useCreatePaidWithdrawalsReports } from "@src/services/reports/consult/withdrawals/paid/createGeneratedWithdrawalsReports";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Alert, Button, Input, Select, Tooltip } from "antd";
+import { Button, Input, Select, Tooltip } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -22,8 +24,6 @@ import { paidWithdrawalsRowsQuery } from "../../../../../../services/types/consu
 import useDebounce from "../../../../../../utils/useDebounce";
 import { ViewModal } from "../components/ViewModal";
 import { TotalizersCards } from "./components/TotalizersCards";
-import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
-import { useGetWithdrawReportFields } from "@src/services/consult/withdrawals/reportCsvFields/getReportFields";
 
 const INITIAL_QUERY: paidWithdrawalsRowsQuery = {
   page: 1,
@@ -48,7 +48,6 @@ export const PaidWithdrawals = () => {
   const [query, setQuery] = useState<paidWithdrawalsRowsQuery>(INITIAL_QUERY);
   const {
     PaidWithdrawalsTotal,
-    PaidWithdrawalsTotalError,
     isPaidWithdrawalsTotalFetching,
     refetchPaidWithdrawalsTotal,
   } = useGetTotalPaidWithdrawals(query);
@@ -59,8 +58,6 @@ export const PaidWithdrawals = () => {
     refetchPaidWithdrawalsTotalRows,
     paidWithdrawalsRowsError,
   } = useGetRowsPaidWithdrawals(query);
-
-
 
   const { fields } = useGetWithdrawReportFields();
 
@@ -79,16 +76,16 @@ export const PaidWithdrawals = () => {
   const [isExportReportsOpen, setIsExportReportsOpen] =
     useState<boolean>(false);
 
-    const {
-      PaidWithdrawalsReportsError,
-      PaidWithdrawalsReportsIsLoading,
-      PaidWithdrawalsReportsIsSuccess,
-      PaidWithdrawalsReportsMutate,
-    } = useCreatePaidWithdrawalsReports({
-      ...query,
-      fields: { ...csvFields },
-      comma_separate_value: isComma,
-    });
+  const {
+    PaidWithdrawalsReportsError,
+    PaidWithdrawalsReportsIsLoading,
+    PaidWithdrawalsReportsIsSuccess,
+    PaidWithdrawalsReportsMutate,
+  } = useCreatePaidWithdrawalsReports({
+    ...query,
+    fields: { ...csvFields },
+    comma_separate_value: isComma,
+  });
 
   const columns: ColumnInterface[] = [
     { name: "_id", type: "id" },
@@ -122,20 +119,6 @@ export const PaidWithdrawals = () => {
 
   return (
     <Grid container style={{ padding: "25px" }}>
-      <Grid container>
-        {PaidWithdrawalsTotalError ? (
-          <Grid item xs={12} style={{ marginBottom: "10px" }}>
-            <Alert
-              message={PaidWithdrawalsTotalError?.message}
-              type="error"
-              closable
-            />
-          </Grid>
-        ) : (
-          <></>
-        )}
-      </Grid>
-
       {permissions.report.withdraw.paid_withdraw
         .report_withdraw_paid_withdraw_list_totals && (
         <TotalizersCards
@@ -250,7 +233,6 @@ export const PaidWithdrawals = () => {
                 type="dashed"
                 size="large"
                 loading={isPaidWithdrawalsRowsFetching}
-              
                 disabled={
                   !paidWithdrawalsRows?.items.length || paidWithdrawalsRowsError
                 }
@@ -296,7 +278,9 @@ export const PaidWithdrawals = () => {
       <ExportCustomReportsModal
         open={isExportReportsOpen}
         setOpen={setIsExportReportsOpen}
-        disabled={!paidWithdrawalsRows?.items.length || paidWithdrawalsRowsError}
+        disabled={
+          !paidWithdrawalsRows?.items.length || paidWithdrawalsRowsError
+        }
         mutateReport={() => PaidWithdrawalsReportsMutate()}
         error={PaidWithdrawalsReportsError}
         success={PaidWithdrawalsReportsIsSuccess}

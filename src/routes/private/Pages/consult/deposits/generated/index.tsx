@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { EyeFilled, FileAddOutlined, SettingFilled } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
-import { Grid, Tooltip } from "@mui/material";
+import { Tooltip } from "@mui/material";
 import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
 import { Toast } from "@src/components/Toast";
 import { useCreateSendWebhook } from "@src/services/consult/deposits/generatedDeposits/resendWebhook";
@@ -11,7 +11,7 @@ import { queryClient } from "@src/services/queryClient";
 import { useCreateGeneratedDepositsReports } from "@src/services/reports/consult/deposits/createGeneratedDepositsReports";
 import { ResendWebhookBody } from "@src/services/types/consult/deposits/createResendWebhook.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Alert, Button, Col, Input, Row, Select, Space } from "antd";
+import { Button, Col, Input, Row, Select, Space } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -54,7 +54,6 @@ export const GeneratedDeposits = () => {
   const [query, setQuery] = useState<generatedDepositTotalQuery>(INITIAL_QUERY);
   const {
     depositsTotal,
-    depositsTotalError,
     isDepositsTotalFetching,
     refetchDepositsTotal,
   } = useGetTotalGeneratedDeposits(query);
@@ -140,20 +139,7 @@ export const GeneratedDeposits = () => {
 
   return (
     <Row gutter={[8, 8]} align="middle" justify="center" style={{ padding: "25px" }}>
-      <Grid container>
-        {depositsTotalError ? (
-          <Grid item xs={12} style={{ marginBottom: "10px" }}>
-            <Alert
-              message={depositsTotalError?.message}
-              type="error"
-              closable
-            />
-          </Grid>
-        ) : (
-          <></>
-        )}
-      </Grid>
-
+    
       {permissions.report.deposit.generated_deposit
         .report_deposit_generated_deposit_list_totals && (
         <TotalizersCards

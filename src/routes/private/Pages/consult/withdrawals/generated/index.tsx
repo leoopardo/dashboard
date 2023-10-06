@@ -13,7 +13,7 @@ import { queryClient } from "@src/services/queryClient";
 import { useCreateGeneratedWithdrawalsReports } from "@src/services/reports/consult/withdrawals/generated/createGeneratedWithdrawalsReports";
 import { ResendWebhookBody } from "@src/services/types/consult/deposits/createResendWebhook.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Alert, Button, Input, Select, Tooltip } from "antd";
+import { Button, Input, Select, Tooltip } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -54,7 +54,6 @@ export const GeneratedWithdrawals = () => {
     useState<generatedWithdrawalsRowsQuery>(INITIAL_QUERY);
   const {
     WithdrawalsTotal,
-    WithdrawalsTotalError,
     isWithdrawalsTotalFetching,
     refetchWithdrawalsTotal,
   } = useGetTotalGeneratedWithdrawals(query);
@@ -142,19 +141,6 @@ export const GeneratedWithdrawals = () => {
 
   return (
     <Grid container style={{ padding: "25px" }}>
-      <Grid container>
-        {WithdrawalsTotalError ? (
-          <Grid item xs={12} style={{ marginBottom: "10px" }}>
-            <Alert
-              message={WithdrawalsTotalError?.message}
-              type="error"
-              closable
-            />
-          </Grid>
-        ) : (
-          <></>
-        )}
-      </Grid>
       {permissions.report.withdraw.generated_withdraw
         .report_withdraw_generated_withdraw_list_totals && (
         <TotalizersCards

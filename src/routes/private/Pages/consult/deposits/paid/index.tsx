@@ -8,7 +8,7 @@ import { useGetDepositReportFields } from "@src/services/consult/deposits/report
 import { queryClient } from "@src/services/queryClient";
 import { useCreatePaidDepositsReports } from "@src/services/reports/consult/deposits/createPaidDepositsReports";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Alert, Button, Input, Select, Tooltip } from "antd";
+import { Button, Input, Select, Tooltip } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -29,11 +29,13 @@ const INITIAL_QUERY: paidDepositRowsQuery = {
   page: 1,
   limit: 25,
   initial_date: moment(new Date())
-    .startOf("day").add(3, "hours")
+    .startOf("day")
+    .add(3, "hours")
     .format("YYYY-MM-DDTHH:mm:ss.SSS"),
   final_date: moment(new Date())
     .add(1, "day")
-    .startOf("day").add(3, "hours")
+    .startOf("day")
+    .add(3, "hours")
     .format("YYYY-MM-DDTHH:mm:ss.SSS"),
 };
 
@@ -47,7 +49,7 @@ export const PaidDeposits = () => {
     useState<boolean>(false);
   const [csvFields, setCsvFields] = useState<any>();
   const [isComma, setIsComma] = useState<boolean>(true);
-  const { paidTotal, paidTotalError, isPaidTotalFetching, refetchPaidTotal } =
+  const { paidTotal,  isPaidTotalFetching, refetchPaidTotal } =
     useGetTotalPaidDeposits(query);
 
   const { paidRows, isPaidRowsFetching, refetchPaidTotalRows, paidRowsError } =
@@ -107,15 +109,6 @@ export const PaidDeposits = () => {
 
   return (
     <Grid container style={{ padding: "25px" }}>
-      <Grid container>
-        {paidTotalError ? (
-          <Grid item xs={12} style={{ marginBottom: "10px" }}>
-            <Alert message={paidTotalError?.message} type="error" closable />
-          </Grid>
-        ) : (
-          <></>
-        )}
-      </Grid>
       {permissions.report.deposit.paid_deposit
         .report_deposit_paid_deposit_list_totals && (
         <TotalizersCards
@@ -132,7 +125,8 @@ export const PaidDeposits = () => {
         spacing={1}
       >
         <Grid item xs={12} md={4} lg={2}>
-           <Button size="large"
+          <Button
+            size="large"
             style={{ width: "100%" }}
             loading={isPaidRowsFetching || isPaidTotalFetching}
             type="primary"

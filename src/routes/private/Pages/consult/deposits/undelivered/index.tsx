@@ -7,7 +7,7 @@ import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { queryClient } from "@src/services/queryClient";
 import { useCreateGeneratedDepositsReports } from "@src/services/reports/consult/deposits/createGeneratedDepositsReports";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Alert, Button, Input, Select } from "antd";
+import { Button, Input, Select } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -29,11 +29,13 @@ const INITIAL_QUERY: generatedDepositTotalQuery = {
   limit: 25,
   delivered_at: false,
   initial_date: moment(new Date())
-    .startOf("day").add(3, "hours")
+    .startOf("day")
+    .add(3, "hours")
     .format("YYYY-MM-DDTHH:mm:ss.SSS"),
   final_date: moment(new Date())
     .add(1, "day")
-    .startOf("day").add(3, "hours")
+    .startOf("day")
+    .add(3, "hours")
     .format("YYYY-MM-DDTHH:mm:ss.SSS"),
 };
 
@@ -44,12 +46,8 @@ export const UndeliveredDeposits = () => {
 
   const { t } = useTranslation();
   const [query, setQuery] = useState<generatedDepositTotalQuery>(INITIAL_QUERY);
-  const {
-    depositsTotal,
-    depositsTotalError,
-    isDepositsTotalFetching,
-    refetchDepositsTotal,
-  } = useGetTotalGeneratedDeposits(query);
+  const { depositsTotal, isDepositsTotalFetching, refetchDepositsTotal } =
+    useGetTotalGeneratedDeposits(query);
 
   const {
     depositsRows,
@@ -106,20 +104,6 @@ export const UndeliveredDeposits = () => {
 
   return (
     <Grid container style={{ padding: "25px" }}>
-      <Grid container>
-        {depositsTotalError ? (
-          <Grid item xs={12} style={{ marginBottom: "10px" }}>
-            <Alert
-              message={depositsTotalError?.message}
-              type="error"
-              closable
-            />
-          </Grid>
-        ) : (
-          <></>
-        )}
-      </Grid>
-
       {permissions.report.deposit.undelivered_deposit
         .report_deposit_undelivered_deposit_list_totals && (
         <TotalizersCards
