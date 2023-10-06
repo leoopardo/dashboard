@@ -1,9 +1,8 @@
+import { ReloadOutlined } from "@ant-design/icons";
 import { useListBanks } from "@src/services/bank/listBanks";
+import { queryClient } from "@src/services/queryClient";
 import { Button, Col, Row } from "antd";
 import { BankCard } from "./components/bankCard";
-import { ReloadOutlined } from "@ant-design/icons";
-import { useGetBankBalance } from "@src/services/consult/organization/bankBalance/getBankBalance";
-import { queryClient } from "@src/services/queryClient";
 
 export const OrganizationBankBalance = () => {
   const { bankListData, isBankListFetching } = useListBanks({
@@ -16,7 +15,7 @@ export const OrganizationBankBalance = () => {
       style={{ padding: "25px", display: "flex", justifyContent: "center" }}
       gutter={[16, 16]}
     >
-      <Col span={24} style={{display: "flex", flexDirection: "row-reverse"}}>
+      <Col span={24} style={{ display: "flex", flexDirection: "row-reverse" }}>
         <Button
           shape="circle"
           loading={isBankListFetching}
