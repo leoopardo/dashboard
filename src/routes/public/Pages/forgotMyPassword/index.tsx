@@ -21,15 +21,7 @@ export const ForgotMyPassword = () => {
 
   return (
     <>
-    {import.meta.env.VITE_APP_COMPANY_NAME === "Paybrokers" &&  <img
-        src={import.meta.env.VITE_APP_ICON}
-        style={{
-          position: "fixed",
-          width: "105vh",
-          left: "-12vw",
-          top: 25
-        }}
-      />}
+ 
     
     <Layout className="layout" style={{ height: "100vh" }}>
      
