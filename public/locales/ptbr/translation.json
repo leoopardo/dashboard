@@ -649,7 +649,11 @@
     "organization_id_filter": "Filtro: ID da organização",
     "initial_date_filter": "Data inicial",
     "final_date_filter": "Data final",
-    "waiting_ref": "Aguard. dev."
+    "waiting_ref": "Aguard. dev.",
+    "webhook_type": "Tipo de webhook",
+    "multiple": "Multiplos",
+    "single": "Único",
+    "failed": "Falha"
   },
   "actions": {
     "details": "Detalhes",

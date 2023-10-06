@@ -4,6 +4,7 @@ import { GeneratedDeposits } from "./Pages/consult/deposits/generated";
 import { PaidDeposits } from "./Pages/consult/deposits/paid";
 import { GeneratedDepositsReports } from "./Pages/consult/deposits/reports/generatedDeposits";
 import { PaidDepositsReports } from "./Pages/consult/deposits/reports/paidDeposits";
+import { DepositsWebhooks } from "./Pages/consult/deposits/reports/webhooks";
 import { UndeliveredDeposits } from "./Pages/consult/deposits/undelivered";
 import { MerchantBalance } from "./Pages/consult/merchant/balance";
 import { MerchantBankStatement } from "./Pages/consult/merchant/bankStatement";
@@ -25,8 +26,11 @@ import { GeneratedWithdrawals } from "./Pages/consult/withdrawals/generated";
 import { PaidWithdrawals } from "./Pages/consult/withdrawals/paid";
 import { GeneratedWithdrawalsReports } from "./Pages/consult/withdrawals/reports/generatedWithdrawals";
 import { PaidWithdrawalsReports } from "./Pages/consult/withdrawals/reports/paidWithdrawals";
+import { WithdrawWebhooks } from "./Pages/consult/withdrawals/reports/webhooks";
 import { UndeliveredWithdrawals } from "./Pages/consult/withdrawals/undelivered";
 import { Dashboard } from "./Pages/dashboard";
+import { AggregatorTransfersBetweenAccounts } from "./Pages/moviments/aggregator/betweenAccounts";
+import { AggregatorTransferBetweenAccountsReports } from "./Pages/moviments/aggregator/reports/betweenAccounts";
 import { TransfersBetweenAccounts } from "./Pages/moviments/merchants/betweenAccounts";
 import { MerchantManual } from "./Pages/moviments/merchants/manual";
 import { TransferBetweenAccountsReports } from "./Pages/moviments/merchants/reports/betweenAccounts";
@@ -88,8 +92,6 @@ import { InvalidPixKeyBlacklist } from "./Pages/support/blacklists/invalidPixKey
 import { BankBlackistReports } from "./Pages/support/blacklists/reports/bankBlacklist";
 import { ThirdPartKeyBlacklist } from "./Pages/support/blacklists/thirdPartKey";
 import { Redirect } from "./redirect";
-import { AggregatorTransfersBetweenAccounts } from "./Pages/moviments/aggregator/betweenAccounts";
-import { AggregatorTransferBetweenAccountsReports } from "./Pages/moviments/aggregator/reports/betweenAccounts";
 
 export const PrivateRoutes = () => {
   return (
@@ -140,7 +142,7 @@ export const PrivateRoutes = () => {
               element={<ConsultMerchantReports />}
             />
           </Route>
-          {/* Depósitos */}
+          {/*Consultas de Depósitos */}
           <Route path="deposit">
             <Route path="generated_deposits" element={<GeneratedDeposits />} />
             <Route path="paid_deposits" element={<PaidDeposits />} />
@@ -158,9 +160,10 @@ export const PrivateRoutes = () => {
                 path="paid_deposits_reports"
                 element={<PaidDepositsReports />}
               />
+              <Route path="webhooks_reports" element={<DepositsWebhooks />} />
             </Route>
           </Route>
-          {/* Saques */}
+          {/*Consultas de Saques */}
           <Route path="withdrawals">
             <Route
               path="generated_withdrawals"
@@ -181,9 +184,13 @@ export const PrivateRoutes = () => {
                 path="paid_withdrawals_reports"
                 element={<PaidWithdrawalsReports />}
               />
+                 <Route
+                path="withdrawals_webhooks_reports"
+                element={<WithdrawWebhooks />}
+              />
             </Route>
           </Route>
-          {/* Devoluções */}
+          {/*Consultas de Devoluções */}
           <Route path="refunds">
             <Route path="refund_deposits" element={<RefundDeposits />} />
             <Route path="withdrawals" element={<RefundWithdrawals />} />

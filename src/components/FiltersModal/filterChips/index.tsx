@@ -260,6 +260,9 @@ export const FilterChips = ({
                 )}
               </Tag>
             );
+
+          case "log_type":
+            return;
           default:
             return (
               <>
