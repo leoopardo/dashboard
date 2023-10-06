@@ -6,6 +6,7 @@ import { Card, Col, Spin, Statistic, Tooltip, Typography } from "antd";
 import { motion } from "framer-motion";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
+import { useMediaQuery } from "react-responsive";
 
 interface BankcardInterface {
   bank?: BankItem;
@@ -18,13 +19,13 @@ export const BankCard = ({ bank }: BankcardInterface) => {
     OrganizationBankBalanceError,
     refetchOrganizationBankBalance,
   } = useGetBankBalance({ bank: bank?.bank?.toLocaleLowerCase() });
-
+  const isTablet = useMediaQuery({ maxWidth: "1199px" });
   const { t } = useTranslation();
 
   return (
     <>
       {OrganizationBankBalance && !OrganizationBankBalanceError && (
-        <Col xs={{ span: 24 }} md={{ span: 8 }} lg={{span: 4}}>
+        <Col xs={{ span: 24 }} md={{ span: 8 }} lg={{ span: isTablet ? 8 : 4 }}>
           <Card
             loading={isOrganizationBankBalanceFetching}
             headStyle={{ padding: 0 }}
@@ -78,6 +79,7 @@ export const BankCard = ({ bank }: BankcardInterface) => {
                       top: 8,
                       color: "#fff",
                       cursor: "pointer",
+                      fontSize: 14,
                     }}
                     onClick={() => refetchOrganizationBankBalance()}
                   />
@@ -139,7 +141,7 @@ export const BankCard = ({ bank }: BankcardInterface) => {
               }}
             />
             <Statistic
-              title="Valor bloqueado:"
+              title={`${t("table.blocked_value")}:`}
               value={OrganizationBankBalance?.value_blocked}
               precision={2}
               prefix="R$"

@@ -228,6 +228,8 @@ export const FilterChips = ({
             );
 
           case "gender":
+          case "to":
+          case "from":
             return (
               <Tag
                 key={key}
@@ -258,6 +260,9 @@ export const FilterChips = ({
                 )}
               </Tag>
             );
+
+          case "log_type":
+            return;
           default:
             return (
               <>

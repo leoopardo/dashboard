@@ -1,7 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { StyleWrapperDatePicker } from "@src/components/FiltersModal/styles";
 import { AggregatorSelect } from "@src/components/Selects/aggregatorSelect";
 import { OperatorSelect } from "@src/components/Selects/operatorSelect";
+import { ValidateToken } from "@src/components/ValidateToken";
 import { useListClientClientBanks } from "@src/services/bank/listClientBanks";
 import { queryClient } from "@src/services/queryClient";
 import { useGetRowsMerchantBlacklistReasons } from "@src/services/register/merchant/blacklist/getMerchantBlacklistReason";
@@ -24,12 +26,12 @@ import {
 import locale from "antd/locale/pt_BR";
 import dayjs from "dayjs";
 import moment from "moment";
-import { Dispatch, SetStateAction, useEffect, useRef } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import { CurrencyInput } from "react-currency-mask";
 import { useTranslation } from "react-i18next";
 import ReactInputMask from "react-input-mask";
 import { MerchantSelect } from "../../Selects/merchantSelect";
 import { PartnerSelect } from "../../Selects/partnerSelect";
-import { CurrencyInput } from "react-currency-mask";
 const { RangePicker } = DatePicker;
 
 interface mutateProps {
@@ -58,6 +60,8 @@ interface mutateProps {
   error: any;
   clear?: any;
   submitText?: string;
+  validateToken?: boolean;
+  validateTokenAction?: string;
 }
 
 export const MutateModal = ({
@@ -73,6 +77,9 @@ export const MutateModal = ({
   submitLoading,
   clear,
   submitText,
+  validateToken,
+  validateTokenAction,
+  success,
 }: mutateProps) => {
   const { permissions } = queryClient.getQueryData(
     "validate"
@@ -82,6 +89,9 @@ export const MutateModal = ({
   const formRef = useRef<FormInstance>(null);
   const submitRef = useRef<HTMLButtonElement>(null);
   const { Countries } = useGetrefetchCountries();
+  const [tokenState, setTokenState] = useState<string>("");
+  const [isValidateTokenOpen, setIsValidateTokenOpen] =
+    useState<boolean>(false);
   const { clientbankListData, isClientBankListFetching } =
     useListClientClientBanks({
       page: 1,
@@ -131,6 +141,18 @@ export const MutateModal = ({
     }
   }, [open]);
 
+  useEffect(() => {
+    if (validateToken) {
+      setBody((state: any) => ({ ...state, validation_token: tokenState }));
+    }
+  }, [tokenState]);
+
+  useEffect(() => {
+    if (tokenState && success) {
+      setOpen(false);
+    }
+  }, [success]);
+
   return (
     <Drawer
       open={open}
@@ -163,6 +185,10 @@ export const MutateModal = ({
         initialValues={type === "update" ? body : {}}
         disabled={submitLoading}
         onFinish={() => {
+          if (validateToken) {
+            setIsValidateTokenOpen(true);
+            return;
+          }
           submit();
           setOpen(false);
         }}
@@ -231,7 +257,7 @@ export const MutateModal = ({
                     style={{ margin: 10 }}
                     rules={[
                       {
-                        required: field.required,
+                        required: field.required && !body.merchant_id,
                         message:
                           t("input.required", {
                             field: t(`input.${field.label}`),
@@ -298,7 +324,10 @@ export const MutateModal = ({
                   >
                     <AggregatorSelect
                       setQueryFunction={setBody}
-                      aggregatorId={body?.aggregator?.id ?? undefined}
+                      aggregatorId={
+                        (body?.aggregator?.id || body?.aggregator_id) ??
+                        undefined
+                      }
                     />
                   </Form.Item>
                 );
@@ -348,7 +377,7 @@ export const MutateModal = ({
                   style={{ margin: 10 }}
                   rules={[
                     {
-                      required: body[field.label] ? false : true,
+                      required: field.required && !body.value,
                       message:
                         t("input.required", {
                           field: t(`input.${field.label}`),
@@ -814,6 +843,20 @@ export const MutateModal = ({
           </button>
         </Form.Item>
       </Form>
+
+      {isValidateTokenOpen && (
+        <ValidateToken
+          action={`${validateTokenAction}`}
+          open={isValidateTokenOpen}
+          setIsOpen={setIsValidateTokenOpen}
+          setTokenState={setTokenState}
+          tokenState={tokenState}
+          submit={submit}
+          body={body}
+          error={false}
+          success={false}
+        />
+      )}
     </Drawer>
   );
 };

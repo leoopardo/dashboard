@@ -9,8 +9,9 @@ import { ReportsQuery } from "@src/services/types/reports/reports.interface";
 import { FiltersModal } from "@src/components/FiltersModal";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { CustomTable } from "@src/components/CustomTable";
-import { DownloadOutlined } from "@ant-design/icons";
+import { DownloadOutlined, EyeFilled } from "@ant-design/icons";
 import { useGetCustomerBanksReports } from "@src/services/reports/register/persons/customerBanks/getCustomerBanksReports";
+import { ViewModal } from "@src/components/Modals/viewGenericModal";
 
 export const CustomerBanksReports = () => {
   const INITIAL_QUERY: ReportsQuery = {
@@ -19,7 +20,8 @@ export const CustomerBanksReports = () => {
   };
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [query, setQuery] = useState<ReportsQuery>(INITIAL_QUERY);
-  const [, setCurrentItem] = useState<any>();
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
+  const [currentItem, setCurrentItem] = useState<any>();
 
   const {
     CustomerBanksReportsData,
@@ -96,6 +98,10 @@ export const CustomerBanksReports = () => {
                     window.location.assign(item?.report_url);
                 },
                 disabled: (item) => item.status !== "COMPLETED",
+              },   {
+                label: 'details',
+                icon: <EyeFilled style={{ fontSize: '20px' }} />,
+                onClick: () => setIsViewModalOpen(true),
               },
             ]}
             data={CustomerBanksReportsData}
@@ -128,6 +134,15 @@ export const CustomerBanksReports = () => {
           startDateKeyName="start_date"
           endDateKeyName="end_date"
           initialQuery={INITIAL_QUERY}
+        />
+      )}
+      {isViewModalOpen && (
+        <ViewModal
+          open={isViewModalOpen}
+          setOpen={setIsViewModalOpen}
+          item={currentItem}
+          loading={false}
+          modalName={t('modal.report_details')}
         />
       )}
     </Grid>

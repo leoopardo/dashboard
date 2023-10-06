@@ -9,8 +9,8 @@ export function useCreateTransferBetweenAccounts(
   const { isLoading, error, mutate, isSuccess } = useMutation<
     TransferBetweenAccountsbody | null | undefined
   >("createTransferBetweenAccounts", async () => {
-    const response = await api.post("core/entry-account/create", body, {});
-    await queryClient.refetchQueries({ queryKey: ["MerchantMoviments"] });
+    const response = await api.post("core/merchant/account/balance/transfer/create", body, {});
+    await queryClient.refetchQueries({ queryKey: ["getTransferBetweenMerchantAccounts"] });
     return response.data;
   });
 

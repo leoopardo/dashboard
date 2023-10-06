@@ -290,7 +290,7 @@ export const ValidateToken = ({
           </Grid>
         </>
       ) : (
-        <Typography.Title>
+        <Typography.Title level={4}>
           Seu usuário não possui nenhum telefone cadastrado
         </Typography.Title>
       )}

@@ -1,11 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { DownloadOutlined } from "@ant-design/icons";
+import { DownloadOutlined, EyeFilled } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { CustomTable } from "@src/components/CustomTable";
 import { FiltersModal } from "@src/components/FiltersModal";
 import { FilterChips } from "@src/components/FiltersModal/filterChips";
+import { ViewModal } from "@src/components/Modals/viewGenericModal";
 import { useGetPartnersReports } from "@src/services/reports/register/partner/getPartnerReports";
 import { ReportsQuery } from "@src/services/types/reports/reports.interface";
 import { Button } from "antd";
@@ -19,6 +20,7 @@ export const PartnerReports = () => {
   };
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [query, setQuery] = useState<ReportsQuery>(INITIAL_QUERY);
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [currentItem, setCurrentItem] = useState<any>();
   const [, setDisable] = useState<boolean>(false);
 
@@ -102,6 +104,11 @@ export const PartnerReports = () => {
                 },
                 disabled: (item) => item.status !== "COMPLETED",
               },
+              {
+                label: 'details',
+                icon: <EyeFilled style={{ fontSize: '20px' }} />,
+                onClick: () => setIsViewModalOpen(true),
+              },
             ]}
             data={PartnersReportsData}
             items={PartnersReportsData?.items}
@@ -133,6 +140,15 @@ export const PartnerReports = () => {
           startDateKeyName="start_date"
           endDateKeyName="end_date"
           initialQuery={INITIAL_QUERY}
+        />
+      )}
+      {isViewModalOpen && (
+        <ViewModal
+          open={isViewModalOpen}
+          setOpen={setIsViewModalOpen}
+          item={currentItem}
+          loading={false}
+          modalName={t('modal.report_details')}
         />
       )}
     </Grid>

@@ -1,6 +1,5 @@
 import { queryClient } from "@src/services/queryClient";
 import { GetMerchantMovimentsQuery } from "@src/services/types/moviments/merchant/getMoviments";
-import moment from "moment";
 import { useMutation } from "react-query";
 import { api } from "../../../../config/api";
 
@@ -14,18 +13,8 @@ export function useCreateMerchantManualReports(
       "core/csv/merchant/entry-account",
       {
         ...body,
-        start_date: body.start_date
-          ? moment(body.start_date)
-              .add(3, "hours")
-              .format("YYYY-MM-DDTHH:mm:ss.SSS")
-          : null,
-        end_date: body.end_date
-          ? moment(body.end_date)
-              .add(3, "hours")
-              .format("YYYY-MM-DDTHH:mm:ss.SSS")
-          : null,
       },
-      {  params: body,}
+      { params: body }
     );
     await queryClient.refetchQueries({
       queryKey: ["MerchantManualReports"],

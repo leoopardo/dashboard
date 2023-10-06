@@ -125,7 +125,16 @@
     "self_exclusion": "Auto exclusão",
     "self_exclusion_reports": "Auto exclusão",
     "merchant_transfers": "Transferências entre empresas ",
-    "between_accounts_transfers": "Transferências entre contas"
+    "between_accounts_transfers": "Transferências entre contas",
+    "merchant_manual_moviments_reports": "Movimentações manual",
+    "merchant_between_accounts_reports": "Transferências entre contas",
+    "organization_transfer_between_accounts": "Transferências entre contas",
+    "organization_manual_moviments_reports": "Lançamentos manuais",
+    "organization_transfer_between_accounts_reports": "Transferências entre contas",
+    "aggregator_moviments": "Agregador",
+    "aggregator_transfer_between_accounts": "Transferência entre contas",
+    "aggregator_moviments_reports": "Relatórios",
+    "aggregator_transfer_between_accounts_reports": "Transferência entre contas"
   },
 
   "titles": {
@@ -234,7 +243,8 @@
     "resend_webhook": "Reenviar webhook",
     "update_bank": "Atualizar banco",
     "new_reason": "Novo motivo",
-    "modal_create_merchant": "Criar empresa"
+    "modal_create_merchant": "Criar empresa",
+    "report_details": "Detalhes do relatório"
   },
   "input": {
     "required": "Por favor, insira o {{field}}",
@@ -324,7 +334,9 @@
     "merchant_origin": "Empresa origem",
     "merchant_destination": "Empresa destino",
     "debit_balance_type": "Tipo saldo origem",
-    "credit_balance_type": "Tipo saldo destino"
+    "credit_balance_type": "Tipo saldo destino",
+    "from": "Origem",
+    "to": "Destino"
   },
   "table": {
     "id": "ID",
@@ -626,14 +638,36 @@
     "transfer": "Transferência",
     "origin_account": "Conta origem",
     "final_account": "Conta destino",
-    "organization_name": "Organização",
     "merchant_origin_id": "ID Empresa origem",
     "merchant_destination_id": "ID Empresa destino",
     "debit_merchant_name": "Empresa origem",
     "credit_merchant_name": "Empresa destino",
     "total_canceled": "Canceladas",
     "total_processing": "Processando",
-    "total_success": "Sucesso"
+    "total_success": "Sucesso",
+    "from": "Origem",
+    "to": "Destino",
+    "organization_name": "Organização",
+    "start_date_filter": "Data inicial",
+    "end_date_filter": "Data final",
+    "user_organization_id": "ID da organização",
+    "user_organization_name": "Organização",
+    "completed": "Completo",
+    "report_url": "Baixar",
+    "download": "Baixar",
+    "merchant_id_filter": "Filtro: ID do merchant",
+    "createdBy": "Criado por",
+    "organization_id_filter": "Filtro: ID da organização",
+    "initial_date_filter": "Data inicial",
+    "final_date_filter": "Data final",
+    "waiting_ref": "Aguard. dev.",
+    "webhook_type": "Tipo de webhook",
+    "multiple": "Multiplos",
+    "single": "Único",
+    "failed": "Falha",
+    "organization_balance": "Saldos organização",
+    "merchant_balance": "Saldos empresa",
+    "blocked_value": "Valor bloqueado"
   },
   "actions": {
     "details": "Detalhes",

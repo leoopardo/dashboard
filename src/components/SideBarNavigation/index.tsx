@@ -91,10 +91,12 @@ export const SidebarNavigation = () => {
       { fontSize: "16px" },
       import.meta.env.VITE_APP_COMPANY_NAME
     ),
+    // - CADASTROS
     getItem(
       "register",
       <FolderAddOutlined style={{ fontSize: "23px" }} />,
       [
+        // - CADASTROS DE ORGANIZAÇÃO
         getItem(
           "organization",
           null,
@@ -201,6 +203,7 @@ export const SidebarNavigation = () => {
               : "none",
           }
         ),
+        // - CADASTROS DE AGREGADORES
         getItem(
           "aggregator",
           null,
@@ -336,6 +339,7 @@ export const SidebarNavigation = () => {
               : "none",
           }
         ),
+        // - CADASTROS DE PLATAFORMAS
         getItem(
           "partner",
           null,
@@ -412,6 +416,7 @@ export const SidebarNavigation = () => {
             display: permissions?.register?.partner?.menu ? undefined : "none",
           }
         ),
+        // - CADASTROS DE OPERADORES
         getItem(
           "operator",
           null,
@@ -490,6 +495,7 @@ export const SidebarNavigation = () => {
             display: permissions?.register?.operator?.menu ? undefined : "none",
           }
         ),
+        // - CADASTROS DE EMPRESAS
         getItem(
           "merchant",
           null,
@@ -630,6 +636,7 @@ export const SidebarNavigation = () => {
             display: permissions?.register?.merchant?.menu ? undefined : "none",
           }
         ),
+        // - CADASTROS DE PESSOAS
         getItem(
           "person",
           null,
@@ -788,10 +795,12 @@ export const SidebarNavigation = () => {
       undefined,
       undefined
     ),
+    // - MOVIMENTAÇÕES
     getItem(
       "moviment",
       <DollarOutlined style={{ fontSize: "23px" }} />,
       [
+        // - MOVIMENTAÇÕES DE ORGANIZAÇÃO
         getItem(
           "organization_moviments",
           null,
@@ -809,12 +818,56 @@ export const SidebarNavigation = () => {
                   : "none",
               }
             ),
+            //ajustar permissões
             getItem(
-              "organization_moviments_reports",
+              "organization_transfer_between_accounts",
               null,
               null,
               false,
               (e) => handleNavigate(e?.keyPath),
+              {
+                display: permissions?.transactions?.paybrokers
+                  ?.manual_transactions?.menu
+                  ? undefined
+                  : "none",
+              }
+            ),
+            getItem(
+              "organization_moviments_reports",
+              null,
+              [
+                getItem(
+                  "organization_manual_moviments_reports",
+                  null,
+                  null,
+                  false,
+                  (e) => handleNavigate(e?.keyPath),
+                  {
+                    display: permissions?.transactions?.paybrokers
+                      ?.manual_transactions
+                      ?.paybrokers_manual_transactions_export_csv
+                      ? undefined
+                      : "none",
+                  }
+                ),
+                //ajustar permisssões
+                getItem(
+                  "organization_transfer_between_accounts_reports",
+                  null,
+                  null,
+                  false,
+                  (e) => handleNavigate(e?.keyPath),
+                  {
+                    display: permissions?.transactions?.paybrokers
+                      ?.manual_transactions
+                      ?.paybrokers_manual_transactions_export_csv
+                      ? undefined
+                      : "none",
+                  }
+                ),
+              ],
+              false,
+              undefined,
               {
                 display: permissions?.transactions?.paybrokers
                   ?.manual_transactions
@@ -832,6 +885,65 @@ export const SidebarNavigation = () => {
               : "none",
           }
         ),
+        // - MOVIMENTAÇÕES DE AGREGADOR
+        getItem(
+          "aggregator_moviments",
+          null,
+          [
+            //ajustar permissões
+            getItem(
+              "aggregator_transfer_between_accounts",
+              null,
+              null,
+              false,
+              (e) => handleNavigate(e?.keyPath),
+              {
+                display: permissions?.transactions?.paybrokers
+                  ?.manual_transactions?.menu
+                  ? undefined
+                  : "none",
+              }
+            ),
+            getItem(
+              "aggregator_moviments_reports",
+              null,
+              [
+                //ajustar permisssões
+                getItem(
+                  "aggregator_transfer_between_accounts_reports",
+                  null,
+                  null,
+                  false,
+                  (e) => handleNavigate(e?.keyPath),
+                  {
+                    display: permissions?.transactions?.paybrokers
+                      ?.manual_transactions
+                      ?.paybrokers_manual_transactions_export_csv
+                      ? undefined
+                      : "none",
+                  }
+                ),
+              ],
+              false,
+              undefined,
+              {
+                display: permissions?.transactions?.paybrokers
+                  ?.manual_transactions
+                  ?.paybrokers_manual_transactions_export_csv
+                  ? undefined
+                  : "none",
+              }
+            ),
+          ],
+          false,
+          undefined,
+          {
+            display: permissions?.transactions?.paybrokers?.menu
+              ? undefined
+              : "none",
+          }
+        ),
+        // - MOVIMENTAÇÕES DE EMPRESA
         getItem(
           "merchant_moviments",
           null,
@@ -867,9 +979,38 @@ export const SidebarNavigation = () => {
             getItem(
               "merchant_moviments_reports",
               null,
-              null,
+              [
+                getItem(
+                  "merchant_manual_moviments_reports",
+                  null,
+                  null,
+                  false,
+                  (e) => handleNavigate(e?.keyPath),
+                  {
+                    display: permissions?.transactions?.merchant
+                      ?.manual_transactions
+                      ?.merchant_manual_transactions_export_csv
+                      ? undefined
+                      : "none",
+                  }
+                ),
+                getItem(
+                  "merchant_between_accounts_reports",
+                  null,
+                  null,
+                  false,
+                  (e) => handleNavigate(e?.keyPath),
+                  {
+                    display: permissions?.transactions?.merchant
+                      ?.manual_transactions
+                      ?.merchant_manual_transactions_export_csv
+                      ? undefined
+                      : "none",
+                  }
+                ),
+              ],
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.transactions?.merchant
                   ?.manual_transactions?.merchant_manual_transactions_export_csv
@@ -906,10 +1047,12 @@ export const SidebarNavigation = () => {
         display: permissions?.transactions?.menu ? undefined : "none",
       }
     ),
+    // - CONSULTAS
     getItem(
       "consult",
       <FileSearchOutlined style={{ fontSize: "23px" }} />,
       [
+        // - CONSULTAS DE ORGANIZAÇÃO
         getItem(
           "consult_organization",
           null,
@@ -982,6 +1125,8 @@ export const SidebarNavigation = () => {
             display: permissions?.report?.paybrokers?.menu ? undefined : "none",
           }
         ),
+
+        // - CONSULTAS DE EMPRESA
         getItem(
           "consult_merchant",
           null,
@@ -1042,6 +1187,7 @@ export const SidebarNavigation = () => {
             display: permissions?.report?.merchant?.menu ? undefined : "none",
           }
         ),
+        // - CONSULTAS DE DEPÓSITOS
         getItem(
           "deposit",
           null,
@@ -1143,6 +1289,7 @@ export const SidebarNavigation = () => {
             display: permissions?.report?.deposit?.menu ? undefined : "none",
           }
         ),
+        // - CONSULTAS DE SAQUES
         getItem(
           "withdrawals",
           null,
@@ -1245,6 +1392,7 @@ export const SidebarNavigation = () => {
             display: permissions?.report?.withdraw?.menu ? undefined : "none",
           }
         ),
+        // - CONSULTAS DE DEVOLUÇÕES
         getItem(
           "refunds",
           null,
@@ -1350,6 +1498,7 @@ export const SidebarNavigation = () => {
             display: permissions?.report?.chargeback?.menu ? undefined : "none",
           }
         ),
+        // - CONSULTAS DE PESSOAS
         getItem(
           "consult_persons",
           null,
@@ -1380,10 +1529,12 @@ export const SidebarNavigation = () => {
         display: permissions?.report?.menu ? undefined : "none",
       }
     ),
+    // - SUPORTE
     getItem(
       "support",
       <NotificationOutlined style={{ fontSize: "23px" }} />,
       [
+        // - BLACKLISTS
         getItem(
           "blacklists",
           null,
@@ -1449,6 +1600,8 @@ export const SidebarNavigation = () => {
             display: permissions?.support?.blacklist?.menu ? undefined : "none",
           }
         ),
+
+        // - LOGS DE API
         getItem(
           "api_logs",
           null,

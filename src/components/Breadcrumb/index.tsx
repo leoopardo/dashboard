@@ -60,6 +60,11 @@ export const BreadcrumbComponent = () => {
     "update",
     "api_logs",
     "person_blacklist",
+    "aggregator_moviments",
+    "aggregator_moviments_reports",
+    "merchant_moviments_reports",
+    "organization_moviments_reports"
+
   ];
 
   useEffect(() => {

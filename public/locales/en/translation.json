@@ -124,7 +124,16 @@
     "self_exclusion": "Self exclusion",
     "self_exclusion_reports": "Self exclusion reports",
     "merchant_transfers": "Transfers between merchants",
-    "between_accounts_transfers": "Transfers between accounts"
+    "between_accounts_transfers": "Transfers between accounts",
+    "merchant_manual_moviments_reports": "Manual moviments",
+    "merchant_between_accounts_reports": "Transfer between accounts",
+    "organization_transfer_between_accounts": "Transfer between accounts",
+    "organization_manual_moviments_reports": "Manual transactions",
+    "organization_transfer_between_accounts_reports": "Transfer between accounts",
+    "aggregator_moviments": "Aggregator",
+    "aggregator_transfer_between_accounts": "Transfer between accounts",
+    "aggregator_moviments_reports": "Reports",
+    "aggregator_transfer_between_accounts_reports": "Transfer between accounts"
   },
 
   "titles": {
@@ -296,7 +305,10 @@
     "merchant_origin": "Origin merchant",
     "merchant_destination": "Destination merchant",
     "debit_balance_type": "Origin balance type",
-    "credit_balance_type": "Target balance type"
+    "credit_balance_type": "Target balance type",
+    "from": "From",
+    "to": "To",
+    "organization_name": "Organization"
   },
   "modal": {
     "confirm": "Confirm",
@@ -326,7 +338,8 @@
     "payment_id": "Payment ID",
     "receiver_email": "Receiver email",
     "cash_out_fee_percent": "Withdraw fee",
-    "modal_create_merchant": "Create merchant"
+    "modal_create_merchant": "Create merchant",
+    "report_details": "Report details"
   },
   "table": {
     "id": "ID",
@@ -632,7 +645,27 @@
     "credit_merchant_name":"Merchant to",
     "total_canceled": "Canceled",
     "total_processing": "Processing",
-    "total_success": "Success"
+    "total_success": "Success",
+    "start_date_filter": "Start date",
+    "end_date_filter": "End date",
+    "user_organization_id": "Organizatio ID",
+    "user_organization_name": "Organization",
+    "completed": "Completed",
+    "report_url": "Download",
+    "download": "Download",
+    "merchant_id_filter": "Filter: Merchant ID",
+    "createdBy": "Created by",
+    "organization_id_filter": "Filter: Organization ID",
+    "initial_date_filter": "Start date",
+    "final_date_filter": "Final date",
+    "waiting_ref": "Wait. ref.",
+    "webhook_type": "Webhook type",
+    "multiple": "Multiple",
+    "single": "Single",
+    "failed": "Failed",
+    "organization_balance": "Organization balance",
+    "merchant_balance": "Merchant balance",
+    "blocked_value": "Blocked value"
   },
   "actions": {
     "details": "Details",

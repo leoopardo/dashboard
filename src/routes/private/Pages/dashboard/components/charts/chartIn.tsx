@@ -175,10 +175,10 @@ export const ChartIn = ({ query }: ChartInInterface) => {
   };
   const notPaid = {
     labels: [
-      `${t("table.waiting_refund")}: ${new Intl.NumberFormat("pt-BR", {
+      `${t("table.waiting_ref")}: ${new Intl.NumberFormat("pt-BR", {
         style: "currency",
         currency: "BRL",
-      }).format(depositsTotal?.waiting_value || 0)}`,
+      }).format(depositsTotal?.awaiting_refund_value || 0)}`,
     ],
     datasets: [
       {
@@ -264,6 +264,7 @@ export const ChartIn = ({ query }: ChartInInterface) => {
                             },
                           },
                         },
+                        cutout: "80%"
                       }}
                     />
                     <Typography.Title
@@ -271,7 +272,7 @@ export const ChartIn = ({ query }: ChartInInterface) => {
                       style={{
                         position: "absolute",
                         top: 173,
-                        maxWidth: "110px",
+                        maxWidth: "150px",
                         textAlign: "center",
                       }}
                     >
@@ -299,10 +300,12 @@ export const ChartIn = ({ query }: ChartInInterface) => {
                               labels: {
                                 textAlign: "center",
                                 usePointStyle: true,
+                                font: { size: 10 },
                                 color: theme === "dark" ? "#fff" : "#000",
                               },
                             },
                           },
+                          cutout: "80%"
                         }}
                       />
                     </Col>
@@ -322,10 +325,11 @@ export const ChartIn = ({ query }: ChartInInterface) => {
                               labels: {
                                 textAlign: "center",
                                 usePointStyle: true,
+                                font: { size: 10 },
                                 color: theme === "dark" ? "#fff" : "#000",
                               },
                             },
-                          },
+                          }, cutout: "80%"
                         }}
                       />
                     </Col>
@@ -345,10 +349,11 @@ export const ChartIn = ({ query }: ChartInInterface) => {
                               labels: {
                                 textAlign: "center",
                                 usePointStyle: true,
+                                font: { size: 10 },
                                 color: theme === "dark" ? "#fff" : "#000",
                               },
                             },
-                          },
+                          }, cutout: "80%"
                         }}
                       />
                     </Col>
@@ -372,7 +377,7 @@ export const ChartIn = ({ query }: ChartInInterface) => {
                                 color: theme === "dark" ? "#fff" : "#000",
                               },
                             },
-                          },
+                          }, cutout: "80%"
                         }}
                       />
                     </Col>
