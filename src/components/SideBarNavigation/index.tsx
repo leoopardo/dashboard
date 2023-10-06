@@ -524,7 +524,31 @@ export const SidebarNavigation = () => {
                   : "none",
               }
             ),
-            getItem("merchant_blacklists", null, [
+           
+            getItem(
+              "manual_entry_category",
+              null,
+              null,
+              false,
+              (e) => handleNavigate(e?.keyPath),
+              {
+                display: permissions?.register?.merchant?.release_category?.menu
+                  ? undefined
+                  : "none",
+              }
+            ),
+            getItem(
+              "fee_plans",
+              null,
+              null,
+              false,
+              (e) => handleNavigate(e?.keyPath),
+              {
+                display: permissions?.register?.merchant?.fee_plans?.menu
+                  ? undefined
+                  : "none",
+              }
+            ), getItem("merchant_blacklists", null, [
               getItem(
                 "merchant_blacklist",
                 null,
@@ -562,30 +586,6 @@ export const SidebarNavigation = () => {
                 }
               ),
             ]),
-            getItem(
-              "manual_entry_category",
-              null,
-              null,
-              false,
-              (e) => handleNavigate(e?.keyPath),
-              {
-                display: permissions?.register?.merchant?.release_category?.menu
-                  ? undefined
-                  : "none",
-              }
-            ),
-            getItem(
-              "fee_plans",
-              null,
-              null,
-              false,
-              (e) => handleNavigate(e?.keyPath),
-              {
-                display: permissions?.register?.merchant?.fee_plans?.menu
-                  ? undefined
-                  : "none",
-              }
-            ),
             getItem(
               "merchant_reports",
               null,
