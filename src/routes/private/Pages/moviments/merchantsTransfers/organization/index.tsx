@@ -1,16 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { EditOutlined, EyeFilled, UserAddOutlined } from "@ant-design/icons";
+import { EyeFilled, UserAddOutlined } from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
-import { ValidateToken } from "@components/ValidateToken";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { useGetRowsOrganizationUsers } from "@services/register/organization/users/getUsers";
 import { useUpdateOrganizationUser } from "@services/register/organization/users/updateUser";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
+import { Toast } from "@src/components/Toast";
 import { queryClient } from "@src/services/queryClient";
 import { useCreateOrganizationReports } from "@src/services/reports/register/organization/createUserReports";
 import { OrganizationUserQuery } from "@src/services/types/register/organization/organizationUsers.interface";
@@ -19,7 +19,6 @@ import useDebounce from "@utils/useDebounce";
 import { Button, Input } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Toast } from "@src/components/Toast";
 
 const INITIAL_QUERY: OrganizationUserQuery = {
   limit: 25,
@@ -37,27 +36,24 @@ export const TransferToOrganizations = () => {
   const { UsersData, UsersDataError, isUsersDataFetching, refetchUsersData } =
     useGetRowsOrganizationUsers(query);
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
-  const [isNewUserModal, setIsNewUserModal] = useState<boolean>(false);
+  const [_isNewUserModal, setIsNewUserModal] = useState<boolean>(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<any>(null);
   const [search, setSearch] = useState<string>("");
   const debounceSearch = useDebounce(search);
-  const [updateUserBody, setUpdateUserBody] = useState<any | null>(
-    null
-  );
-  const [tokenState, setTokenState] = useState<string>("");
-  const { updateSuccess, updateError, updateMutate, updateReset } =
-    useUpdateOrganizationUser({
-      ...updateUserBody,
-      validation_token: tokenState,
-    });
+  const [updateUserBody, _setUpdateUserBody] = useState<any | null>(null);
+  const [tokenState, _setTokenState] = useState<string>("");
+  const { updateSuccess, updateError } = useUpdateOrganizationUser({
+    ...updateUserBody,
+    validation_token: tokenState,
+  });
   const {
     OrganizationReportsError,
     OrganizationReportsIsLoading,
     OrganizationReportsIsSuccess,
     OrganizationReportsMutate,
   } = useCreateOrganizationReports(query);
-  const [action, setAction] = useState<"create" | "update">("create");
+  const [_action, setAction] = useState<"create" | "update">("create");
 
   const columns: ColumnInterface[] = [
     { name: "id", type: "id", sort: true },
@@ -70,7 +66,6 @@ export const TransferToOrganizations = () => {
     { name: "name", type: "text", head: "value", sort: true },
     { name: "created_at", type: "date", sort: true },
     { name: "status", type: "status" },
-   
   ];
 
   useEffect(() => {
@@ -86,9 +81,9 @@ export const TransferToOrganizations = () => {
     setQuery((state) => ({ ...state, name: debounceSearch }));
   }, [debounceSearch]);
 
-  const handleUpdateTokenValidate = () => {
-    updateMutate();
-  };
+  // const handleUpdateTokenValidate = () => {
+  //   updateMutate();
+  // };
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid
@@ -232,7 +227,7 @@ export const TransferToOrganizations = () => {
         />
       )}
 
-    {/*   {isValidateTokenOpen && (
+      {/*   {isValidateTokenOpen && (
         <ValidateToken
           action="USER_UPDATE"
           body={updateUserBody}
