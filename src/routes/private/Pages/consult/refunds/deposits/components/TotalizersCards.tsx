@@ -7,6 +7,7 @@ import {
   refundDepositsQuery,
 } from "../../../../../../../services/types/consult/refunds/refundsDeposits.interface";
 import { defaultTheme } from "../../../../../../../styles/defaultTheme";
+import { useTheme } from "@src/contexts/ThemeContext";
 
 interface TotalizersInterface {
   data: refundDepositTotal | null | undefined;
@@ -18,6 +19,7 @@ interface TotalizersInterface {
 export const TotalizersCards = (props: TotalizersInterface) => {
   const { t } = useTranslation();
   const isMobile = useMediaQuery({ maxWidth: "900px" });
+  const { theme } = useTheme();
 
   return (
     <Row
@@ -182,7 +184,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
             }).format(props?.data?.transactions_value || 0)}
             precision={2}
             valueStyle={{
-              color: defaultTheme.colors.dark,
+              color: theme === "dark" ? "#fff" : defaultTheme.colors.dark,
               fontSize: isMobile ? "12px" : "18px",
               wordBreak: "break-all",
             }}

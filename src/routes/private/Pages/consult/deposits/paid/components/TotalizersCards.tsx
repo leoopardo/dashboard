@@ -7,6 +7,7 @@ import {
   paidDepositTotal,
 } from "../../../../../../../services/types/consult/deposits/PaidDeposits.interface";
 import { defaultTheme } from "../../../../../../../styles/defaultTheme";
+import { useTheme } from "@src/contexts/ThemeContext";
 
 interface TotalizersInterface {
   data: paidDepositTotal | null | undefined;
@@ -18,6 +19,7 @@ interface TotalizersInterface {
 export const TotalizersCards = (props: TotalizersInterface) => {
   const isMobile = useMediaQuery({ maxWidth: "900px" });
   const { t } = useTranslation();
+  const { theme } = useTheme();
   return (
     <Row
       gutter={[8, 8]}
@@ -63,7 +65,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
             }).format(props?.data?.transaction_value || 0)}
             precision={2}
             valueStyle={{
-              color: defaultTheme.colors.dark,
+              color: theme === "dark" ? "#fff" : defaultTheme.colors.dark,
               fontSize: isMobile ? "12px" : "18px",
               wordBreak: "break-all",
             }}

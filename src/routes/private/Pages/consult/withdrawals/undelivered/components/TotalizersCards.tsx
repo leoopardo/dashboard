@@ -7,6 +7,7 @@ import {
   generatedWithdrawalsTotal,
 } from "../../../../../../../services/types/consult/withdrawals/generatedWithdrawals.interface";
 import { defaultTheme } from "../../../../../../../styles/defaultTheme";
+import { useTheme } from "@src/contexts/ThemeContext";
 
 interface TotalizersInterface {
   data: generatedWithdrawalsTotal | null | undefined;
@@ -18,6 +19,7 @@ interface TotalizersInterface {
 export const TotalizersCards = (props: TotalizersInterface) => {
   const { t } = useTranslation();
   const isMobile = useMediaQuery({ maxWidth: "900px" });
+  const { theme } = useTheme();
 
   return (
     <Row
@@ -236,7 +238,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
             }).format(props?.data?.transaction_value || 0)}
             precision={2}
             valueStyle={{
-              color: defaultTheme.colors.dark,
+              color: theme === "dark" ? "#fff" : defaultTheme.colors.dark,
               fontSize: isMobile ? "12px" : "18px",
               wordBreak: "break-all",
             }}

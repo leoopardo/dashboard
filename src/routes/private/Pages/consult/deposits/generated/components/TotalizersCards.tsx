@@ -1,4 +1,5 @@
 import { ReloadOutlined } from "@ant-design/icons";
+import { useTheme } from "@src/contexts/ThemeContext";
 import { Button, Card, Col, Row, Statistic } from "antd";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
@@ -18,6 +19,7 @@ interface TotalizersInterface {
 export const TotalizersCards = (props: TotalizersInterface) => {
   const isMobile = useMediaQuery({ maxWidth: "900px" });
   const { t } = useTranslation();
+  const { theme } = useTheme();
 
   return (
     <Row gutter={[8, 8]} justify="center" align="middle">
@@ -192,7 +194,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
             }).format(props?.data?.transaction_value || 0)}
             precision={2}
             valueStyle={{
-              color: defaultTheme.colors.dark,
+              color: theme === "dark" ? "#fff" : defaultTheme.colors.dark,
               fontSize: isMobile ? "12px" : "18px",
               wordBreak: "break-all",
             }}
