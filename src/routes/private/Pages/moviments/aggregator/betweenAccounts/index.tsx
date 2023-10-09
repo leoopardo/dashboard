@@ -69,8 +69,7 @@ export const AggregatorTransfersBetweenAccounts = () => {
     refetchTransferBetweenAccountsData();
   }, [query]);
 
-  console.log(body);
-
+ 
   return (
     <Row style={{ padding: 25 }}>
       <Row

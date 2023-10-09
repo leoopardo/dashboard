@@ -59,8 +59,6 @@ export const SidebarNavigation = () => {
     navigate(pathArray.reverse().join("/"));
   }
 
-  console.log(permissions);
-
   function getItem(
     key: React.Key,
     icon?: React.ReactNode,

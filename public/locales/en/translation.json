@@ -188,7 +188,9 @@
     "20_minutes_consult": "The consultation has been ongoing for over 20 minutes.",
     "validate_phone_text": "Your phone nomber are not validated, this first token will validate your number. After that, you will receive a token to confirm the action performed.",
     "validate_text": "Insert token to confirm action.",
-    "forgot_password": "Forgot my password"
+    "forgot_password": "Forgot my password",
+    "preview_csv": "Preview CSV",
+    "preview_file": "preview file"
   },
   "login": {
     "sign_in": "Sign in",

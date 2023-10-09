@@ -86,8 +86,6 @@ export const AggregatorBlacklist = () => {
     setQuery((state) => ({ ...state, cpf: debounceSearch }));
   }, [debounceSearch]);
 
-  console.log(permissions);
-
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid
