@@ -7,10 +7,13 @@ import { FilterChips } from "@components/FiltersModal/filterChips";
 import { ValidateToken } from "@components/ValidateToken";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
+import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
+import { Toast } from "@src/components/Toast";
 import { queryClient } from "@src/services/queryClient";
 import { useGetAggregatorUsers } from "@src/services/register/aggregator/users/getAggregatorUsers";
 import { useUpdateAggregatorUser } from "@src/services/register/aggregator/users/updateUser";
+import { useCreateAggregatorUsersReports } from "@src/services/reports/register/aggregators/createAggregatorUsersReports";
 import { PartnerQuery } from "@src/services/types/register/partners/partners.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
 import useDebounce from "@utils/useDebounce";
@@ -18,7 +21,6 @@ import { Button, Input } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { NewUserInterface, NewUserModal } from "./components/newUserModal";
-import { Toast } from "@src/components/Toast";
 
 const INITIAL_QUERY: PartnerQuery = {
   limit: 25,
@@ -64,6 +66,13 @@ export const AggregatorUsers = () => {
     { name: "status", type: "status" },
     { name: "created_at", type: "date", sort: true },
   ];
+
+  const {
+    AggregatorUsersReportsError,
+    AggregatorUsersReportsIsLoading,
+    AggregatorUsersReportsIsSuccess,
+    AggregatorUsersReportsMutate,
+  } = useCreateAggregatorUsersReports(query);
 
   useEffect(() => {
     refetchUsersData();
@@ -163,18 +172,18 @@ export const AggregatorUsers = () => {
             </Button>
           </Grid>
         )}
-        {/* {permissions.register.aggregator.users.aggregator_user_export_csv && (
+        {permissions.register.aggregator.users.aggregator_user_export_csv && (
           <Grid item xs={12} md="auto">
             <ExportReportsModal
-              disabled={!UsersData?.total || AggregatorsDataError}
-              mutateReport={() => AggregatorReportsMutate()}
-              error={AggregatorReportsError}
-              success={AggregatorReportsIsSuccess}
-              loading={AggregatorReportsIsLoading}
-              reportPath="/register/aggregator/aggregator_reports/aggregator_aggregators_reports"
+              disabled={!UsersData?.total || UsersDataError}
+              mutateReport={() => AggregatorUsersReportsMutate()}
+              error={AggregatorUsersReportsError}
+              success={AggregatorUsersReportsIsSuccess}
+              loading={AggregatorUsersReportsIsLoading}
+              reportPath="/register/aggregator/aggregator_reports/aggregator_users_reports"
             />
           </Grid>
-        )} */}
+        )}
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -192,7 +201,8 @@ export const AggregatorUsers = () => {
                   setIsViewModalOpen(true);
                 },
               },
-              permissions?.register?.aggregator?.users?.aggregator_user_update && {
+              permissions?.register?.aggregator?.users
+                ?.aggregator_user_update && {
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
                 onClick: () => {
@@ -258,13 +268,13 @@ export const AggregatorUsers = () => {
           submit={handleUpdateTokenValidate}
         />
       )}
-       <Toast
+      <Toast
         actionSuccess={t("messages.updated")}
         actionError={t("messages.update")}
         error={updateError}
         success={updateSuccess}
       />
-      
+
       {isViewModalOpen && (
         <ViewModal
           item={currentItem}

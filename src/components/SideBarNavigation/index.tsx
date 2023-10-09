@@ -582,18 +582,19 @@ export const SidebarNavigation = () => {
                 false,
                 (e) => handleNavigate(e?.keyPath),
                 {
-                  display: permissions?.register?.merchant?.blacklist?.menu
+                  display: permissions?.register?.merchant?.blacklist?.merchant_blacklist_create
                     ? undefined
                     : "none",
                 }
-              ),  getItem(
+              ),
+              getItem(
                 "uploads_merchant_blacklist",
                 null,
                 null,
                 false,
                 (e) => handleNavigate(e?.keyPath),
                 {
-                  display: permissions?.register?.merchant?.blacklist?.menu
+                  display: permissions?.register?.merchant?.blacklist?.merchant_blacklist_create
                     ? undefined
                     : "none",
                 }
