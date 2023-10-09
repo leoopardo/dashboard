@@ -56,23 +56,21 @@ export const TransferBetweenMerchants = () => {
   });
 console.log({query})
   const columns: ColumnInterface[] = [
-    { name: "id", type: "id", sort: true },
+    { name: "_id", type: "id"},
     {
       name: "debit_merchant_name",
       type: "text",
-      head: "merchant_origin",
-      sort: true,
+      head: "merchant_origin"
     },
-    { name: "debit_balance_type", type: "status", sort: true },
+    { name: "debit_balance_type", type: "status" },
     {
       name: "credit_merchant_name",
       type: "text",
       head: "merchant_destination",
-      sort: true,
     },
-    { name: "credit_balance_type", type: "status", sort: true },
-    { name: "user_name", type: "text", sort: true },
-    { name: "value", type: "value", sort: true },
+    { name: "credit_balance_type", type: "status" },
+    { name: "user_name", type: "text" },
+    { name: "value", type: "value" },
     { name: "createdAt", type: "date", sort: true },
     { name: "status", type: "status" },
   ];
