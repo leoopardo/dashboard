@@ -95,3 +95,8 @@ export interface refundById {
   refund_date: string;
   rtrId: string;
 }
+
+export interface UpdateMerchantRefundBody {
+  merchant_id?: string;
+  endToEndId?: string;
+}

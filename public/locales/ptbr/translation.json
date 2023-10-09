@@ -683,7 +683,9 @@
     "check": "Checar",
     "download": "Baixar",
     "refund": "Reembolsar",
-    "pay_to_merchant": "Pagar empresa"
+    "pay_to_merchant": "Pagar empresa",
+    "refresh": "Refresh status",
+    "edit_merchant": "Edit merchant"
   },
   "error": {
     "400": "Nenhum dado encontrado.",

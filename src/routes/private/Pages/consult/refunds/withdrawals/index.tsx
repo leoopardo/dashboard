@@ -2,13 +2,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { EyeFilled } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
+import ReplayIcon from "@mui/icons-material/Replay";
 import { Grid } from "@mui/material";
+import { Confirmation } from "@src/components/Modals/confirmation";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
+import { useCreateWithdrawrefund } from "@src/services/consult/refund/refundWithdrawals/createRefund";
 import { useGetRowsRefundWithdrawals } from "@src/services/consult/refund/refundWithdrawals/getRows";
 import { useGetTotalRefundWithdrawals } from "@src/services/consult/refund/refundWithdrawals/getTotal";
 import { queryClient } from "@src/services/queryClient";
 import { useCreateRefundWithdrawalsReports } from "@src/services/reports/consult/refund/withdrawals/createRefundWithdrawalsReports";
-import { refundWithdrawalsQuery } from "@src/services/types/consult/refunds/refundWithdrawals.interface copy";
+import { refundWithdrawalsQuery } from "@src/services/types/consult/refunds/refundWithdrawals.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
 import { Button, Input, Select } from "antd";
 import moment from "moment";
@@ -48,7 +51,6 @@ export const RefundWithdrawals = () => {
     isRefundWithdrawalsTotalFetching,
     refetchRefundWithdrawalsTotal,
     refundWithdrawalsTotal,
-    
   } = useGetTotalRefundWithdrawals(query);
 
   const {
@@ -74,7 +76,10 @@ export const RefundWithdrawals = () => {
   const [searchOption, setSearchOption] = useState<string | null>(null);
   const [search, setSearch] = useState<string | null>(null);
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
+  const [isRefundModalOpen, setIsRefundModalOpen] = useState<boolean>(false);
   const debounceSearch = useDebounce(search);
+
+  const { mutate, isLoading } = useCreateWithdrawrefund(currentItem?._id);
 
   const columns: ColumnInterface[] = [
     { name: "endToEndId", type: "id" },
@@ -120,7 +125,8 @@ export const RefundWithdrawals = () => {
         spacing={1}
       >
         <Grid item xs={12} md={4} lg={2}>
-           <Button size="large"
+          <Button
+            size="large"
             style={{ width: "100%" }}
             loading={
               isRefundWithdrawalsFetching || isRefundWithdrawalsTotalFetching
@@ -224,12 +230,15 @@ export const RefundWithdrawals = () => {
                 icon: <EyeFilled style={{ fontSize: "18px" }} />,
                 onClick: () => setIsViewModalOpen(true),
               },
-              /*  {
+              {
                 label: "refund",
                 icon: <ReplayIcon style={{ fontSize: "18px" }} />,
-                onClick: () => setIsViewModalOpen(true),
-                disabled: (item) => ["WAITING", "ERROR"].includes(item?.status),
-              }, */
+                onClick: () => setIsRefundModalOpen(true),
+                disabled: (item) =>
+                  !permissions.report.chargeback.withdraw_chargeback
+                    .report_chargeback_withdraw_chargeback_paid_to_merchant &&
+                  !["WAITING", "ERROR"].includes(item?.status),
+              },
             ]}
             removeTotal
             label={[
@@ -248,6 +257,20 @@ export const RefundWithdrawals = () => {
           setOpen={setIsViewModalOpen}
           item={currentItem}
           type="withdraw"
+        />
+      )}
+
+      {isRefundModalOpen && (
+        <Confirmation
+          open={isRefundModalOpen}
+          setOpen={setIsRefundModalOpen}
+          submit={mutate}
+          title={t("actions.refund")}
+          description={`${t("messages.are_you_sure", {
+            action: t("actions.refund").toLocaleLowerCase(),
+            itens: currentItem?._id,
+          })}`}
+          loading={isLoading}
         />
       )}
       {isFiltersOpen && (

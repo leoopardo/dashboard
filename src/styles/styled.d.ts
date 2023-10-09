@@ -6,7 +6,8 @@ declare module "styled-components" {
       dark: string;
       primary: string;
       secondary: string;
-
+      refund_to_merchant: string;
+      refunded: string;
       success: string;
       refunded_withdraw: string;
       completed: string;

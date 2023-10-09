@@ -2,7 +2,7 @@
 import {
   refundWithdrawalsQuery,
   refundWithdrawalsRowsResponse,
-} from "@src/services/types/consult/refunds/refundWithdrawals.interface copy";
+} from "@src/services/types/consult/refunds/refundWithdrawals.interface";
 import { useQuery } from "react-query";
 import { api } from "../../../../config/api";
 

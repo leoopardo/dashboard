@@ -10,6 +10,8 @@ export const defaultTheme: DefaultTheme = {
     paid: "#3f8600",
     refund: "#3f8600",
     refunded_withdraw: "#3f8600",
+    refunded: "#3f8600",
+    refund_to_merchant: "#3f8600",
     completed: "#3f8600",
     error: "#cf1322",
     canceled: "#cf1322",

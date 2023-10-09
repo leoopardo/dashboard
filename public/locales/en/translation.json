@@ -681,7 +681,10 @@
     "check": "Check",
     "download": "Download",
     "refund": "refund",
-    "pay_to_merchant": "Pay merchant"
+    "pay_to_merchant": "Pay merchant",
+    "refresh": "Refresh status",
+    "edit_merchant": "Edit merchant"
+
   },
   "error": {
     "400": "Any records found.",

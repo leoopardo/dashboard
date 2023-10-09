@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { refundWithdrawalsQuery } from "@src/services/types/consult/refunds/refundWithdrawals.interface copy";
+import { refundWithdrawalsQuery } from "@src/services/types/consult/refunds/refundWithdrawals.interface";
 import { useEffect, useState } from "react";
 import { api } from "../../../../config/api";
 import { refundDepositTotal } from "../../../types/consult/refunds/refundsDeposits.interface";

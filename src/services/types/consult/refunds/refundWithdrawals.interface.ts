@@ -64,3 +64,19 @@ export interface refundWithdrawalsRowsItems {
   value: number;
   _id: string;
 }
+export interface refundWithdrawById {
+  bank: string;
+  createdAt: string;
+  endToEndId: string;
+  merchant_id: number;
+  merchant_name: string;
+  organization_id: number;
+  partner_id: number;
+  partner_name: string;
+  receiver_document: string;
+  receiver_name: string;
+  refund_date: string;
+  status: string;
+  value: number;
+  _id:string;
+}

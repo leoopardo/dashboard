@@ -1,13 +1,28 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { EyeFilled } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  EyeFilled,
+  ReloadOutlined,
+  ShopOutlined,
+} from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
+import ReplayIcon from "@mui/icons-material/Replay";
 import { Grid } from "@mui/material";
+import { Confirmation } from "@src/components/Modals/confirmation";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
+import { MutateModal } from "@src/components/Modals/mutateGenericModal";
+import { useCreatePayToMerchantRefund } from "@src/services/consult/refund/refundDepositsManual/createPayToMerchant";
+import { useCreatePixManualRefund } from "@src/services/consult/refund/refundDepositsManual/createRefund";
+import { useDeletePixManualRefund } from "@src/services/consult/refund/refundDepositsManual/deleteRefund";
+import { useGetRefundStatusManual } from "@src/services/consult/refund/refundDepositsManual/getRefreshStatus";
 import { useGetRefundDepositsManual } from "@src/services/consult/refund/refundDepositsManual/getRows";
 import { useGetTotalRefundDepositManual } from "@src/services/consult/refund/refundDepositsManual/getTotal";
+import { useUpdateMerchantRefund } from "@src/services/consult/refund/refundDepositsManual/updateMerchant";
 import { queryClient } from "@src/services/queryClient";
 import { useCreateRefundManualDepositsReports } from "@src/services/reports/consult/refund/manualDeposits/createRefundManualDepositReports";
+import { UpdateMerchantRefundBody } from "@src/services/types/consult/refunds/refundmanualDeposits.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
 import { Button, Input, Select } from "antd";
 import moment from "moment";
@@ -73,7 +88,33 @@ export const RefundDepositsManual = () => {
   const [searchOption, setSearchOption] = useState<string | null>(null);
   const [search, setSearch] = useState<string | null>(null);
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
+  const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false);
+  const [isRefundModalOpen, setIsRefundModalOpen] = useState<boolean>(false);
+  const [isPayMerchantModalOpen, setIsPayMerchantModalOpen] =
+    useState<boolean>(false);
+  const [isUpdateMerchantModalOpen, setIsUpdateMerchantModalOpen] =
+    useState<boolean>(false);
   const debounceSearch = useDebounce(search);
+  const [updateBody, setUpdateBody] = useState<UpdateMerchantRefundBody>({
+    endToEndId: currentItem?.endToEndId,
+    merchant_id: currentItem?.merchant_id,
+  });
+  const { mutate, isLoading } = useCreatePixManualRefund(currentItem._id);
+  const { isPayToMerchantLoading, mutatePayToMerchant } =
+    useCreatePayToMerchantRefund(currentItem._id);
+  const { isDeleteLoading, mutateDelete } = useDeletePixManualRefund(
+    currentItem._id
+  );
+  const { refetchRefundStatusManual } = useGetRefundStatusManual(
+    currentItem._id
+  );
+
+  const {
+    mutateUpdateMerchant,
+    UpdateMerchantError,
+    isUpdateMerchantLoading,
+    isUpdateMerchantSuccess,
+  } = useUpdateMerchantRefund(updateBody);
 
   const columns: ColumnInterface[] = [
     { name: "pix_id", type: "id" },
@@ -118,7 +159,8 @@ export const RefundDepositsManual = () => {
         spacing={1}
       >
         <Grid item xs={12} md={4} lg={2}>
-           <Button size="large"
+          <Button
+            size="large"
             style={{ width: "100%" }}
             loading={
               isRefundDepositsManualFetching ||
@@ -230,12 +272,52 @@ export const RefundDepositsManual = () => {
                 icon: <EyeFilled style={{ fontSize: "18px" }} />,
                 onClick: () => setIsViewModalOpen(true),
               },
-              /*  {
+              {
+                label: "refresh",
+                icon: <ReloadOutlined style={{ fontSize: "18px" }} />,
+                onClick: () => refetchRefundStatusManual(),
+                disabled: (item) =>
+                  !permissions?.report?.chargeback?.manual_deposit_chargeback
+                    ?.report_chargeback_manual_deposit_chargeback_validate_status &&
+                  !["PROCESSING"].includes(item?.status),
+              },
+              {
                 label: "refund",
                 icon: <ReplayIcon style={{ fontSize: "18px" }} />,
-                onClick: () => setIsViewModalOpen(true),
-                disabled: (item) => ["WAITING", "ERROR"].includes(item?.status),
-              }, */
+                onClick: () => setIsRefundModalOpen(true),
+                disabled: (item) =>
+                  !permissions?.report?.chargeback?.manual_deposit_chargeback
+                    ?.report_chargeback_manual_deposit_chargeback_refund &&
+                  !currentItem.merchant_id &&
+                  !["WAITING", "ERROR"].includes(item?.status),
+              },
+              {
+                label: "pay_to_merchant",
+                icon: <ShopOutlined style={{ fontSize: "18px" }} />,
+                onClick: () => setIsPayMerchantModalOpen(true),
+                disabled: (item) =>
+                  !permissions?.report?.chargeback?.manual_deposit_chargeback
+                    ?.report_chargeback_manual_deposit_chargeback_paid_to_merchant &&
+                  !currentItem.merchant_id &&
+                  !["WAITING", "ERROR"].includes(item?.status),
+              },
+              {
+                label: "edit_merchant",
+                icon: <EditOutlined style={{ fontSize: "18px" }} />,
+                onClick: () => setIsPayMerchantModalOpen(true),
+                disabled: () =>
+                  !permissions?.report?.chargeback?.manual_deposit_chargeback
+                    ?.report_chargeback_manual_deposit_chargeback_update_merchant,
+              },
+              {
+                label: "delete",
+                icon: <DeleteOutlined style={{ fontSize: "18px" }} />,
+                onClick: () => setIsPayMerchantModalOpen(true),
+                disabled: (item) =>
+                  !permissions?.report?.chargeback?.manual_deposit_chargeback
+                    ?.report_chargeback_manual_deposit_chargeback_delete &&
+                  !["WAITING", "ERROR"].includes(item?.status),
+              },
             ]}
             removeTotal
             label={[
@@ -256,6 +338,65 @@ export const RefundDepositsManual = () => {
           type="manual"
         />
       )}
+
+      {isRefundModalOpen && (
+        <Confirmation
+          open={isRefundModalOpen}
+          setOpen={setIsRefundModalOpen}
+          submit={mutate}
+          title={t("actions.refund")}
+          description={`${t("messages.are_you_sure", {
+            action: t("actions.refund").toLocaleLowerCase(),
+            itens: currentItem?._id,
+          })}`}
+          loading={isLoading}
+        />
+      )}
+
+      {isPayMerchantModalOpen && (
+        <Confirmation
+          open={isPayMerchantModalOpen}
+          setOpen={setIsPayMerchantModalOpen}
+          submit={mutatePayToMerchant}
+          title={t("actions.pay_to_merchant")}
+          description={`${t("messages.are_you_sure", {
+            action: t("actions.pay_to_merchant").toLocaleLowerCase(),
+            itens: currentItem?._id,
+          })}`}
+          loading={isPayToMerchantLoading}
+        />
+      )}
+
+      {isDeleteOpen && (
+        <Confirmation
+          open={isDeleteOpen}
+          setOpen={setIsDeleteOpen}
+          submit={mutateDelete}
+          title={t("actions.delete")}
+          description={`${t("messages.are_you_sure", {
+            action: t("actions.delete").toLocaleLowerCase(),
+            itens: currentItem?._id,
+          })}`}
+          loading={isDeleteLoading}
+        />
+      )}
+
+      {isUpdateMerchantModalOpen && (
+        <MutateModal
+          type="update"
+          open={isUpdateMerchantModalOpen}
+          setOpen={setIsUpdateMerchantModalOpen}
+          fields={[{ label: "merchant_id", required: true }]}
+          body={updateBody}
+          setBody={setUpdateBody}
+          modalName={t("modal.update_aggregator")}
+          submit={mutateUpdateMerchant}
+          submitLoading={isUpdateMerchantLoading}
+          error={UpdateMerchantError}
+          success={isUpdateMerchantSuccess}
+        />
+      )}
+
       {isFiltersOpen && (
         <FiltersModal
           open={isFiltersOpen}
