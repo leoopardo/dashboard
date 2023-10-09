@@ -35,6 +35,7 @@ import { TransfersBetweenAccounts } from "./Pages/moviments/merchants/betweenAcc
 import { MerchantManual } from "./Pages/moviments/merchants/manual";
 import { TransferBetweenAccountsReports } from "./Pages/moviments/merchants/reports/betweenAccounts";
 import { MerchantManualReports } from "./Pages/moviments/merchants/reports/manual";
+import { TransferBetweenMerchants } from "./Pages/moviments/merchantsTransfers";
 import { OrganizationTransfersBetweenAccounts } from "./Pages/moviments/organization/betweenAccounts";
 import { OrgonizationManual } from "./Pages/moviments/organization/manual";
 import { OrganizationTransferBetweenAccountsReports } from "./Pages/moviments/organization/reports/betweenAccounts";
@@ -42,6 +43,7 @@ import { OrganizationManualReports } from "./Pages/moviments/organization/report
 import { Aggregators } from "./Pages/register/aggregator/aggregators";
 import { AggregatorBlacklist } from "./Pages/register/aggregator/blacklist";
 import { AggregatorsReports } from "./Pages/register/aggregator/reports/aggregators";
+import { AggregatorsBlacklistReports } from "./Pages/register/aggregator/reports/blacklist";
 import { SelfExclusionReports } from "./Pages/register/aggregator/reports/selfExclusion";
 import { AggregatorUsersReports } from "./Pages/register/aggregator/reports/users";
 import { AggregatorSelfExclusion } from "./Pages/register/aggregator/selfExclusion";
@@ -53,6 +55,7 @@ import { MerchantFeePlans } from "./Pages/register/merchant/feeplans";
 import { MerchantManualEntryCategory } from "./Pages/register/merchant/manualEntryCategory";
 import { MerchantView } from "./Pages/register/merchant/merchants";
 import { MerchantConfigs } from "./Pages/register/merchant/merchants/components/merchantConfigs";
+import { MerchantBlacklistReports } from "./Pages/register/merchant/reports/blacklist";
 import { MerchantReports } from "./Pages/register/merchant/reports/merchant";
 import { MerchantUserReports } from "./Pages/register/merchant/reports/user";
 import { MerchantUser } from "./Pages/register/merchant/users";
@@ -88,7 +91,6 @@ import { BankBlacklist } from "./Pages/support/blacklists/bankBlacklist";
 import { InvalidPixKeyBlacklist } from "./Pages/support/blacklists/invalidPixKey";
 import { BankBlackistReports } from "./Pages/support/blacklists/reports/bankBlacklist";
 import { ThirdPartKeyBlacklist } from "./Pages/support/blacklists/thirdPartKey";
-import { TransferBetweenMerchants } from "./Pages/moviments/merchantsTransfers";
 import { Redirect } from "./redirect";
 
 export const PrivateRoutes = () => {
@@ -182,7 +184,7 @@ export const PrivateRoutes = () => {
                 path="paid_withdrawals_reports"
                 element={<PaidWithdrawalsReports />}
               />
-                 <Route
+              <Route
                 path="withdrawals_webhooks_reports"
                 element={<WithdrawWebhooks />}
               />
@@ -264,6 +266,10 @@ export const PrivateRoutes = () => {
                 path="self_exclusion_reports"
                 element={<SelfExclusionReports />}
               />
+              <Route
+                path="aggregator_blacklist_reports"
+                element={<AggregatorsBlacklistReports />}
+              />
             </Route>
           </Route>
           {/* cadastros de plataformas */}
@@ -331,6 +337,10 @@ export const PrivateRoutes = () => {
               <Route
                 path="merchant_users_reports"
                 element={<MerchantUserReports />}
+              />
+              <Route
+                path="merchant_blacklist_reports"
+                element={<MerchantBlacklistReports />}
               />
             </Route>
           </Route>
@@ -420,7 +430,10 @@ export const PrivateRoutes = () => {
               element={<TransfersBetweenAccounts />}
             />
           </Route>
-          <Route path="merchant_transfers"  element={<TransferBetweenMerchants />} />
+          <Route
+            path="merchant_transfers"
+            element={<TransferBetweenMerchants />}
+          />
           {/* movimentações de agregador */}
           <Route path="aggregator_moviments">
             <Route
@@ -434,7 +447,6 @@ export const PrivateRoutes = () => {
               />
             </Route>
           </Route>
-
         </Route>
         {/* Suporte */}
         <Route path="support">

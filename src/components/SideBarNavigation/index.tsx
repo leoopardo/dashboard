@@ -305,6 +305,19 @@ export const SidebarNavigation = () => {
                   }
                 ),
                 getItem(
+                  "aggregator_blacklist_reports",
+                  null,
+                  null,
+                  false,
+                  (e) => handleNavigate(e?.keyPath),
+                  {
+                    display: permissions?.register?.aggregator?.blacklist
+                      .aggregator_blacklist_export_csv
+                      ? undefined
+                      : "none",
+                  }
+                ),
+                getItem(
                   "self_exclusion_reports",
                   null,
                   null,
@@ -524,7 +537,7 @@ export const SidebarNavigation = () => {
                   : "none",
               }
             ),
-           
+
             getItem(
               "manual_entry_category",
               null,
@@ -548,7 +561,8 @@ export const SidebarNavigation = () => {
                   ? undefined
                   : "none",
               }
-            ), getItem("merchant_blacklists", null, [
+            ),
+            getItem("merchant_blacklists", null, [
               getItem(
                 "merchant_blacklist",
                 null,
@@ -612,6 +626,19 @@ export const SidebarNavigation = () => {
                   {
                     display: permissions?.register?.merchant?.users
                       ?.merchant_user_export_csv
+                      ? undefined
+                      : "none",
+                  }
+                ),
+                getItem(
+                  "merchant_blacklist_reports",
+                  null,
+                  null,
+                  false,
+                  (e) => handleNavigate(e?.keyPath),
+                  {
+                    display: permissions?.register?.merchant?.blacklist
+                      .merchant_blacklist_export_csv
                       ? undefined
                       : "none",
                   }

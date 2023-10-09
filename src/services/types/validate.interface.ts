@@ -130,6 +130,13 @@ export interface ValidateInterface {
           aggregator_self_exclusion_update: boolean;
           menu: boolean;
         };
+        blacklist: {
+          aggregator_blacklist_create: boolean;
+          aggregator_blacklist_delete: boolean;
+          aggregator_blacklist_export_csv: boolean;
+          aggregator_blacklist_list: boolean;
+          menu: boolean;
+        };
       };
       operator: {
         menu: boolean;

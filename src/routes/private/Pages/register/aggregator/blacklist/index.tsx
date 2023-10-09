@@ -6,12 +6,16 @@ import { FilterChips } from "@components/FiltersModal/filterChips";
 import { ViewModal } from "@components/Modals/viewGenericModal";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
+import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
 import { ReasonSelect } from "@src/components/Selects/reasonSelect";
+import { queryClient } from "@src/services/queryClient";
 import { useCreateAggregatorBlacklist } from "@src/services/register/aggregator/blacklist/createAggregatorBlacklist";
 import { useGetAggregatorsBlacklist } from "@src/services/register/aggregator/blacklist/getAggregatorsBlacklist";
+import { useCreateAggregatorBlacklistReports } from "@src/services/reports/register/aggregators/createAggregatorBlacklistReports";
 import { AggregatorBlacklistQuery } from "@src/services/types/register/aggregators/aggregatorBlacklist.interface";
 import { MerchantBlacklistItem } from "@src/services/types/register/merchants/merchantBlacklist.interface";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 import useDebounce from "@utils/useDebounce";
 import { Button, Input } from "antd";
 import { useEffect, useState } from "react";
@@ -25,6 +29,9 @@ const INITIAL_QUERY: AggregatorBlacklistQuery = {
 };
 
 export const AggregatorBlacklist = () => {
+  const { permissions } = queryClient.getQueryData(
+    "validate"
+  ) as ValidateInterface;
   const [query, setQuery] = useState<AggregatorBlacklistQuery>(INITIAL_QUERY);
   const { t } = useTranslation();
   const {
@@ -45,8 +52,15 @@ export const AggregatorBlacklist = () => {
     null
   );
 
+  const {
+    AggregatorReportsError,
+    AggregatorReportsIsLoading,
+    AggregatorReportsIsSuccess,
+    AggregatorReportsMutate,
+  } = useCreateAggregatorBlacklistReports(query);
+
   const { error, isLoading, isSuccess, mutate } =
-  useCreateAggregatorBlacklist(body);
+    useCreateAggregatorBlacklist(body);
   const [search, setSearch] = useState<string>("");
   const debounceSearch = useDebounce(search);
 
@@ -72,7 +86,7 @@ export const AggregatorBlacklist = () => {
     setQuery((state) => ({ ...state, cpf: debounceSearch }));
   }, [debounceSearch]);
 
-  console.log(body);
+  console.log(permissions);
 
   return (
     <Grid container style={{ padding: "25px" }}>
@@ -82,7 +96,8 @@ export const AggregatorBlacklist = () => {
         spacing={1}
       >
         <Grid item xs={12} md={4} lg={2}>
-           <Button size="large"
+          <Button
+            size="large"
             style={{ width: "100%" }}
             loading={isAggregatorsBlacklistDataFetching}
             type="primary"
@@ -93,8 +108,8 @@ export const AggregatorBlacklist = () => {
         </Grid>
         <Grid item xs={12} md={8} lg={10}>
           <FilterChips
-            startDateKeyName="initial_date"
-            endDateKeyName="final_date"
+            startDateKeyName="start_date"
+            endDateKeyName="end_date"
             query={query}
             setQuery={setQuery}
           />
@@ -138,23 +153,43 @@ export const AggregatorBlacklist = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={3} lg={2}>
-          <Button
-            type="primary"
-            loading={isAggregatorsBlacklistDataFetching}
-            onClick={() => setIsUpdateModalOpen(true)}
-            style={{
-              height: 40,
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <PlusOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
-            {t("buttons.create_bank_blacklist")}
-          </Button>
-        </Grid>
+        {permissions.register.aggregator.blacklist
+          .aggregator_blacklist_create && (
+          <Grid item xs={12} md={3} lg={2}>
+            <Button
+              type="primary"
+              loading={isAggregatorsBlacklistDataFetching}
+              onClick={() => setIsUpdateModalOpen(true)}
+              style={{
+                height: 40,
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <PlusOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
+              {t("buttons.create_bank_blacklist")}
+            </Button>
+          </Grid>
+        )}
+
+        {permissions.register.aggregator.blacklist
+          .aggregator_blacklist_export_csv && (
+          <Grid item xs={12} md={2}>
+            <ExportReportsModal
+              disabled={
+                !AggregatorsBlacklistData?.total ||
+                AggregatorsBlacklistDataError
+              }
+              mutateReport={() => AggregatorReportsMutate()}
+              error={AggregatorReportsError}
+              success={AggregatorReportsIsSuccess}
+              loading={AggregatorReportsIsLoading}
+              reportPath="/register/aggregator/aggregator_reports/aggregator_blacklist_reports"
+            />
+          </Grid>
+        )}
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>

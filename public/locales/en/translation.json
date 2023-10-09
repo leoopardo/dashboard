@@ -133,7 +133,9 @@
     "aggregator_moviments": "Aggregator",
     "aggregator_transfer_between_accounts": "Transfer between accounts",
     "aggregator_moviments_reports": "Reports",
-    "aggregator_transfer_between_accounts_reports": "Transfer between accounts"
+    "aggregator_transfer_between_accounts_reports": "Transfer between accounts",
+    "aggregator_blacklist_reports": "Blackist",
+    "merchant_blacklist_reports": "Blacklist"
   },
 
   "titles": {
@@ -216,7 +218,9 @@
     "new_reason": "Novo motivo",
     "sample_file": "sample file",
     "create_self_exclusion": "Create self exclusion",
-    "transfers": "Transfers"
+    "transfers": "Transfers",
+    "dark": "Dark theme",
+    "light": "Light theme"
   },
   "input": {
     "required": "Please input the {{field}}",
