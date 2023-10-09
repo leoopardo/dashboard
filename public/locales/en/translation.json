@@ -675,7 +675,8 @@
     "merchant_balance": "Merchant balance",
     "blocked_value": "Blocked value",
     "completed_rows": "Completed rows",
-    "processed_rows": "Processed rows"
+    "processed_rows": "Processed rows",
+    "refunded_withdraw": "Refunded"
   },
   "actions": {
     "details": "Details",
