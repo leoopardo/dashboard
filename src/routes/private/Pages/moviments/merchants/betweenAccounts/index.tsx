@@ -228,7 +228,7 @@ export const TransfersBetweenAccounts = () => {
             items={TransferBetweenAccountsData?.items}
             error={TransferBetweenAccountsDataError}
             columns={[
-              { name: "_id", type: "id", sort: true },
+              { name: "_id", type: "id" },
               { name: "from", type: "translate" },
               { name: "to", type: "translate" },
               { name: "user_name", type: "text" },
