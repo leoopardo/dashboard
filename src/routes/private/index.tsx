@@ -92,6 +92,7 @@ import { InvalidPixKeyBlacklist } from "./Pages/support/blacklists/invalidPixKey
 import { BankBlackistReports } from "./Pages/support/blacklists/reports/bankBlacklist";
 import { ThirdPartKeyBlacklist } from "./Pages/support/blacklists/thirdPartKey";
 import { Redirect } from "./redirect";
+import { MerchantsBlacklistUploads } from "./Pages/register/merchant/blacklist/uploads";
 
 export const PrivateRoutes = () => {
   return (
@@ -322,6 +323,10 @@ export const PrivateRoutes = () => {
               <Route
                 path="import_merchant_blacklist"
                 element={<ImportBlacklist />}
+              />
+               <Route
+                path="uploads_merchant_blacklist"
+                element={<MerchantsBlacklistUploads />}
               />
             </Route>
             <Route path="fee_plans" element={<MerchantFeePlans />} />

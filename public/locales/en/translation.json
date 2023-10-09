@@ -135,7 +135,8 @@
     "aggregator_moviments_reports": "Reports",
     "aggregator_transfer_between_accounts_reports": "Transfer between accounts",
     "aggregator_blacklist_reports": "Blackist",
-    "merchant_blacklist_reports": "Blacklist"
+    "merchant_blacklist_reports": "Blacklist",
+    "uploads_merchant_blacklist": "Blacklist uploads"
   },
 
   "titles": {
@@ -670,7 +671,9 @@
     "failed": "Failed",
     "organization_balance": "Organization balance",
     "merchant_balance": "Merchant balance",
-    "blocked_value": "Blocked value"
+    "blocked_value": "Blocked value",
+    "completed_rows": "Completed rows",
+    "processed_rows": "Processed rows"
   },
   "actions": {
     "details": "Details",
