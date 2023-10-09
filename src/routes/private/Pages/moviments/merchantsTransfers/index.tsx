@@ -54,7 +54,6 @@ export const TransferBetweenMerchants = () => {
     ...transferBody,
     validation_token: tokenState,
   });
-console.log({query})
   const columns: ColumnInterface[] = [
     { name: "_id", type: "id"},
     {

@@ -58,8 +58,8 @@ export const BanksTab = (props: { id?: string }) => {
     >
       <Grid container spacing={1}>
         <Grid item xs={12}>
-          <Typography>{t("input.deposit_bank")}: {merchantBankData?.merchantConfig.cash_in_bank}</Typography>
-          <Typography>{t("input.withdraw_bank")}: {merchantBankData?.merchantConfig.cash_out_bank}</Typography>
+          <Typography>{t("input.deposit_bank")}: {merchantBankData?.merchantConfig?.cash_in_bank}</Typography>
+          <Typography>{t("input.withdraw_bank")}: {merchantBankData?.merchantConfig?.cash_out_bank}</Typography>
         </Grid>
         <Grid item xs={12} md={4}>
           <Form.Item label={t("input.deposit_bank")} name="cash_in_bank">

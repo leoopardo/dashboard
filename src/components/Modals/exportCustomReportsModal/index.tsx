@@ -1,7 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { DownloadOutlined } from "@ant-design/icons";
 import {
   Button,
   Col,
-  Descriptions,
   Form,
   Modal,
   Radio,
@@ -14,6 +16,7 @@ import {
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
+import { useCSVDownloader } from "react-papaparse";
 import { useNavigate } from "react-router-dom";
 
 interface ExportCustomreportsInterface {
@@ -51,7 +54,10 @@ export const ExportCustomReportsModal = ({
   reportName,
 }: ExportCustomreportsInterface) => {
   const { t } = useTranslation();
+
+  const { CSVDownloader } = useCSVDownloader();
   const [selectedFields, setSelectedFields] = useState<string[]>([]);
+  const [preview, setPreview] = useState<any>();
   const navigate = useNavigate();
 
   const [api, contextHolder] = notification.useNotification();
@@ -80,6 +86,25 @@ export const ExportCustomReportsModal = ({
     if (storage) setSelectedFields(storage);
     if (commaSeparator) setIsComma(commaSeparator == "true");
   }, []);
+
+  useEffect(() => {
+    const obj1: any = {};
+    const obj2: any = {};
+    const obj3: any = {};
+
+    for (const field in selectedFields) {
+      obj1[t(`table.${selectedFields[field]}`)] = `${t(
+        `table.${selectedFields[field]}`
+      )} 1`;
+      obj2[t(`table.${selectedFields[field]}`)] = `${t(
+        `table.${selectedFields[field]}`
+      )} 2`;
+      obj3[t(`table.${selectedFields[field]}`)] = `${t(
+        `table.${selectedFields[field]}`
+      )} 3`;
+    }
+    setPreview([obj1, obj2, obj3]);
+  }, [selectedFields]);
 
   const openNotificationWithIcon = (type: NotificationType) => {
     const BtnNavigate = (
@@ -160,19 +185,20 @@ export const ExportCustomReportsModal = ({
             </Form>
           </Col>
           {selectedFields.length >= 1 && (
-            <Col span={24} style={{ maxWidth: "100%", overflow: "auto" }}>
-              <Typography>Prévia do CSV</Typography>
-              <Descriptions
-                column={selectedFields.length}
-                bordered
-                layout="vertical"
+            <Col span={24}>
+              <Typography>{t("messages.preview_csv")}</Typography>
+              <CSVDownloader
+                filename="preview"
+                config={{
+                  delimiter: ";",
+                }}
+                data={preview}
               >
-                {selectedFields.map((field) => (
-                  <Descriptions.Item label={t(`table.${field}`)}>
-                    {t(`table.${field}`)} data
-                  </Descriptions.Item>
-                ))}
-              </Descriptions>
+                <a>
+                  <DownloadOutlined style={{ fontSize: 18, marginRight: 8 }} />
+                  {t("actions.download")} {t("messages.preview_file")}
+                </a>
+              </CSVDownloader>
             </Col>
           )}
         </Row>
