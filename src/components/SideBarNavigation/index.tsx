@@ -1686,6 +1686,40 @@ export const SidebarNavigation = () => {
             display: permissions?.support?.logs?.menu ? undefined : "none",
           }
         ),
+
+         // - Contestação
+         getItem(
+          "contestation",
+          null,
+          [
+            getItem(
+              "deposit",
+              null,
+              [
+                getItem("uploads", null, null, false, (e) =>
+                  handleNavigate(e?.keyPath)
+                ),
+                getItem("import_csv", null, null, false, (e) =>
+                handleNavigate(e?.keyPath)
+              ),
+              ],
+              undefined,
+              undefined,
+              {
+                display: permissions?.support?.blacklist?.banks
+                  ?.support_blacklist_bank_export_csv
+                  ? undefined
+                  : "none",
+              }
+            ),
+          ],
+          undefined,
+          undefined,
+          {
+            display: permissions?.support?.blacklist?.menu ? undefined : "none",
+          }
+        ),
+
       ],
       undefined,
       undefined,

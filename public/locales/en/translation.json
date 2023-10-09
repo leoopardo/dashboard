@@ -136,7 +136,10 @@
     "aggregator_transfer_between_accounts_reports": "Transfer between accounts",
     "aggregator_blacklist_reports": "Blackist",
     "merchant_blacklist_reports": "Blacklist",
-    "uploads_merchant_blacklist": "Blacklist uploads"
+    "uploads_merchant_blacklist": "Blacklist uploads",
+    "contestation": "Contestation",
+    "uploads": "Uploads",
+    "import_csv": "Import csv"
   },
 
   "titles": {

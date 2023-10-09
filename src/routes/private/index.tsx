@@ -93,6 +93,8 @@ import { BankBlackistReports } from "./Pages/support/blacklists/reports/bankBlac
 import { ThirdPartKeyBlacklist } from "./Pages/support/blacklists/thirdPartKey";
 import { Redirect } from "./redirect";
 import { MerchantsBlacklistUploads } from "./Pages/register/merchant/blacklist/uploads";
+import { ContestationUploads } from "./Pages/support/contastation/uploads";
+import { ImportContastationDeposit } from "./Pages/support/contastation/importCSV";
 
 export const PrivateRoutes = () => {
   return (
@@ -324,7 +326,7 @@ export const PrivateRoutes = () => {
                 path="import_merchant_blacklist"
                 element={<ImportBlacklist />}
               />
-               <Route
+              <Route
                 path="uploads_merchant_blacklist"
                 element={<MerchantsBlacklistUploads />}
               />
@@ -480,6 +482,13 @@ export const PrivateRoutes = () => {
                 path="bank_institutions_reports"
                 element={<BankBlackistReports />}
               />
+            </Route>
+          </Route>
+          {/* Contastations */}
+          <Route path="contestation">
+            <Route path="deposit">
+              <Route path="uploads" element={<ContestationUploads />} />
+              <Route path="import_csv" element={<ImportContastationDeposit />} />
             </Route>
           </Route>
         </Route>
