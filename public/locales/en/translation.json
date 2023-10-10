@@ -679,7 +679,9 @@
     "blocked_value": "Blocked value",
     "completed_rows": "Completed rows",
     "processed_rows": "Processed rows",
-    "refunded_withdraw": "Refunded"
+    "refunded_withdraw": "Refunded",
+    "debit_merchant_id": "ID Merchant from",
+    "credit_merchant_id": "ID Merchant to"
   },
   "actions": {
     "details": "Details",

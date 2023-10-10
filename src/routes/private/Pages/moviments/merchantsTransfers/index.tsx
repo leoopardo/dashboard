@@ -55,7 +55,7 @@ export const TransferBetweenMerchants = () => {
     validation_token: tokenState,
   });
   const columns: ColumnInterface[] = [
-    { name: "_id", type: "id"},
+    { name: "_id", type: "id", sort: true },
     {
       name: "debit_merchant_name",
       type: "text",
@@ -208,7 +208,7 @@ export const TransferBetweenMerchants = () => {
           setOpen={setIsFiltersOpen}
           query={query}
           setQuery={setQuery}
-          filters={["start_date", "end_date", "merchant_id"]}
+          filters={["start_date", "end_date", "merchant_id", "organization_id"]}
           refetch={refetchTransferMerchantsData}
           selectOptions={{}}
           startDateKeyName="start_date"
