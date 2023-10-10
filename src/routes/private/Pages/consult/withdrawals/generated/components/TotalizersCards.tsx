@@ -215,7 +215,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
               }).format(props?.data?.created_value || 0)}
               precision={2}
               valueStyle={{
-                color: defaultTheme.colors.warnning,
+                color: defaultTheme.colors.info,
                 fontSize: isMobile ? "12px" : "18px",
                 wordBreak: "break-all",
               }}

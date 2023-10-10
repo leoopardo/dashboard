@@ -680,7 +680,8 @@
     "merchant_balance": "Saldos empresa",
     "blocked_value": "Valor bloqueado",
     "completed_rows": "Linhas completas",
-    "processed_rows": "Linhas processadas"
+    "processed_rows": "Linhas processadas",
+    "refunded_withdraw": "Devolvido"
   },
   "actions": {
     "details": "Detalhes",

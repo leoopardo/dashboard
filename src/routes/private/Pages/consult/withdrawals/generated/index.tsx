@@ -377,10 +377,12 @@ export const GeneratedWithdrawals = () => {
           selectOptions={{
             status: [
               "PAID",
-              "REFUNDED",
-              "EXPIRED",
+              "REFUNDED_WITHDRAW",
               "CANCELED",
-              "WAITING",
+              "PROCESSING",
+              "PENDING",
+              "IN_ANALYSIS",
+              "CREATED",
               "WAITING_REFUND",
             ],
             gender: ["MALE", "FEMALE", "OTHER"],

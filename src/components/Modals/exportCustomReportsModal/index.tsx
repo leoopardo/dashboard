@@ -164,7 +164,11 @@ export const ExportCustomReportsModal = ({
                   <Select
                     style={{ width: "100%" }}
                     options={fields?.map((field) => {
-                      return { title: field, value: t(`table.${field}`) };
+                      return {
+                        title: field,
+                        value: t(`table.${field}`),
+                        
+                      };
                     })}
                     value={selectedFields.map((field) => {
                       return { title: field, value: t(`table.${field}`) };
