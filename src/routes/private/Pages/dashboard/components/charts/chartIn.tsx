@@ -31,20 +31,6 @@ export const ChartIn = ({ query }: ChartInInterface) => {
     useGetTotalGeneratedDeposits(formatedQuery);
   const { theme } = useTheme();
 
-  useEffect(() => {
-    setFormatedQuery({
-      ...query,
-      start_date: undefined,
-      end_date: undefined,
-      initial_date: query?.start_date,
-      final_date: query?.end_date,
-    });
-  }, [query]);
-
-  useEffect(() => {
-    refetchDepositsTotal();
-  }, [formatedQuery]);
-
   const data = {
     labels: [
       `${t("table.paid")}: ${new Intl.NumberFormat("pt-BR", {
