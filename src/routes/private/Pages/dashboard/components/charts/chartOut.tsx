@@ -2,9 +2,9 @@
 import { PieChartOutlined, SmallDashOutlined } from "@ant-design/icons";
 import { useTheme } from "@src/contexts/ThemeContext";
 import { useGetTotalGeneratedWithdrawals } from "@src/services/consult/withdrawals/generatedWithdrawals/getTotal";
-import { generatedDepositTotalQuery } from "@src/services/types/consult/deposits/generatedDeposits.interface";
+import { generatedWithdrawalsRowsQuery } from "@src/services/types/consult/withdrawals/generatedWithdrawals.interface";
 import { Button, Card, Col, Empty, Row, Spin, Typography } from "antd";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Doughnut } from "react-chartjs-2";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
@@ -17,27 +17,20 @@ export const ChartOut = ({ query }: ChartInInterface) => {
   const { t } = useTranslation();
   const [oneByOne, setOneByOne] = useState<boolean>(false);
   const isMobile = useMediaQuery({ maxWidth: "750px" });
-  const [, setFormatedQuery] = useState<generatedDepositTotalQuery>({
-    ...query,
-    start_date: undefined,
-    end_date: undefined,
-    initial_date: query?.start_date,
-    final_date: query?.end_date,
-  });
-
-  const { WithdrawalsTotal, isWithdrawalsTotalFetching } =
-    useGetTotalGeneratedWithdrawals(query);
-  const { theme } = useTheme();
-
-  useEffect(() => {
-    setFormatedQuery({
+  const [formatedQuery] =
+    useState<generatedWithdrawalsRowsQuery>({
       ...query,
       start_date: undefined,
       end_date: undefined,
       initial_date: query?.start_date,
       final_date: query?.end_date,
     });
-  }, [query]);
+
+
+  const { WithdrawalsTotal, isWithdrawalsTotalFetching } =
+    useGetTotalGeneratedWithdrawals(formatedQuery);
+  const { theme } = useTheme();
+
 
   const data = {
     labels: [

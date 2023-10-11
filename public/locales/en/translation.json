@@ -320,7 +320,8 @@
     "credit_balance_type": "Target balance type",
     "from": "From",
     "to": "To",
-    "organization_name": "Organization"
+    "organization_name": "Organization",
+    "can_be_deleted_only_by_organization": "Organization can delete"
   },
   "modal": {
     "confirm": "Confirm",
@@ -680,7 +681,10 @@
     "blocked_value": "Blocked value",
     "completed_rows": "Completed rows",
     "processed_rows": "Processed rows",
-    "refunded_withdraw": "Refunded"
+    "refunded_withdraw": "Refunded",
+    "debit_merchant_id": "ID Merchant from",
+    "credit_merchant_id": "ID Merchant to",
+    "can_be_deleted_only_by_organization": "Organization can delete"
   },
   "actions": {
     "details": "Details",

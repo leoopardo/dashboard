@@ -5,6 +5,8 @@ import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
 import { ViewModal } from "@components/Modals/viewGenericModal";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
+import { DeleteOutlined } from "@ant-design/icons";
+import { Confirmation } from "@src/components/Modals/confirmation";
 import { Grid } from "@mui/material";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
@@ -21,6 +23,7 @@ import { ValidateInterface } from "@src/services/types/validate.interface";
 import useDebounce from "@utils/useDebounce";
 import { Button, Input } from "antd";
 import { useEffect, useState } from "react";
+import { useDeleteMechantBlacklist } from "@src/services/register/merchant/blacklist/deleteMerchantBlacklist";
 import { useTranslation } from "react-i18next";
 
 const INITIAL_QUERY: MerchantBlacklistQuery = {
@@ -31,7 +34,7 @@ const INITIAL_QUERY: MerchantBlacklistQuery = {
 };
 
 export const MerchantBlacklist = () => {
-  const { permissions } = queryClient.getQueryData(
+  const { permissions, type, merchant_id } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
   const [query, setQuery] = useState<MerchantBlacklistQuery>(INITIAL_QUERY);
@@ -50,10 +53,10 @@ export const MerchantBlacklist = () => {
     reason: "",
     description: "",
   });
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [currentItem, setCurrentItem] = useState<MerchantBlacklistItem | null>(
     null
   );
-
   const { error, isLoading, isSuccess, mutate } =
     useCreateMerchantBlacklist(body);
   const [search, setSearch] = useState<string>("");
@@ -65,14 +68,45 @@ export const MerchantBlacklist = () => {
     MerchantBlacklistReportsMutate,
   } = useCreateMerchantBlacklistReports(query);
 
+  const { isDeleteLoading, mutateDelete } =
+    useDeleteMechantBlacklist({ cpf: currentItem?.cpf });
+
   const columns: ColumnInterface[] = [
     { name: "cpf", type: "id" },
     { name: "merchant_name", type: "text" },
     { name: "reason", type: "text", sort: true },
     { name: "description", type: "text" },
     { name: "create_user_name", type: "text" },
+    { name: "can_be_deleted_only_by_organization", type: "text" },
     { name: "createdAt", type: "date", sort: true },
   ];
+
+  const handleRenderColumns = () => {
+    const columns: {label: string, required: boolean, selectOption?: boolean}[] = [
+      { label: "cpf", required: true },
+      { label: "reason", required: true },
+      { label: "description", required: true },
+      
+    ];
+
+    if (!merchant_id) {
+      columns.unshift({
+        label: "merchant_id",
+        required: true,
+        selectOption: true,
+      });
+    }
+
+    if (type === 1 || type === 2) {
+      columns.unshift({
+        label: "can_be_deleted_only_by_organization",
+        required: true,
+        selectOption: true,
+      });
+    }
+
+    return columns;
+  };
 
   useEffect(() => {
     refetchMerchantBlacklistData();
@@ -86,7 +120,12 @@ export const MerchantBlacklist = () => {
     }
     setQuery((state) => ({ ...state, cpf: debounceSearch }));
   }, [debounceSearch]);
-
+  console.log(
+    "test",
+    !permissions?.register?.merchant?.blacklist?.merchant_blacklist_delete &&
+      !currentItem?.can_be_deleted_only_by_organization &&
+      /* type !== 1 && */ type !== 2
+  );
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid
@@ -201,7 +240,19 @@ export const MerchantBlacklist = () => {
             columns={columns}
             loading={isMerchantBlacklistDataFetching}
             label={["cpf", "merchant_name"]}
-            actions={[]}
+            actions={[
+              {
+                label: "delete",
+                icon: <DeleteOutlined style={{ fontSize: "18px" }} />,
+                onClick: () => setIsDeleteOpen(true),
+                disabled: (item) =>
+                  !permissions?.register?.merchant?.blacklist
+                    ?.merchant_blacklist_delete &&
+                  !item?.can_be_deleted_only_by_organization &&
+                  type !== 1 &&
+                  type !== 2,
+              },
+            ]}
           />
         </Grid>
       </Grid>
@@ -221,21 +272,43 @@ export const MerchantBlacklist = () => {
         />
       )}
 
+      {isDeleteOpen && (
+        <Confirmation
+          open={isDeleteOpen}
+          setOpen={setIsDeleteOpen}
+          submit={mutateDelete}
+          title={t("actions.delete")}
+          description={`${t("messages.are_you_sure", {
+            action: t("actions.delete").toLocaleLowerCase(),
+            itens: currentItem?.cpf,
+          })}`}
+          loading={isDeleteLoading}
+        />
+      )}
+
       {isUpdateModalOpen && (
         <MutateModal
           type="create"
           open={isUpdateModalOpen}
           setOpen={setIsUpdateModalOpen}
-          fields={[
-            { label: "cpf", required: true },
-            { label: "reason", required: true },
-            { label: "description", required: true },
-          ]}
+          fields={handleRenderColumns()}
           body={body}
           setBody={setBody}
           modalName={t("modal.new_bank_blacklist")}
           submit={mutate}
           submitLoading={isLoading}
+          selectOptions={{
+            can_be_deleted_only_by_organization: [
+              {
+                label: 'true',
+                value: 'true',
+              },
+              {
+                label: 'false',
+                value: 'false',
+              },
+            ],
+          }}
           error={error}
           success={isSuccess}
         />
