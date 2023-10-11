@@ -21,6 +21,8 @@ import useDebounce from "@utils/useDebounce";
 import { Button, Input } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { TotalizersCards } from "./components/totalizersCards";
+import { useGetOperatorTotal } from "@src/services/register/operator/getOperatorsTotal";
 
 const INITIAL_QUERY: OperatorQuery = {
   limit: 25,
@@ -41,7 +43,15 @@ export const Operators = () => {
     OperatorDataError,
     isOperatorDataFetching,
     refetchOperatorData,
+    isSuccessOperatorData
   } = useGetOperator(query);
+
+  const {
+    OperatorTotalData,
+    isOperatorTotalDataFetching,
+    isSuccessOperatorTotalData,
+    refetchOperatorTotalData,
+  } = useGetOperatorTotal(query);
 
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [isNewCategorieModal, setIsNewCategorieModal] =
@@ -81,7 +91,12 @@ export const Operators = () => {
   ];
 
   useEffect(() => {
-    refetchOperatorData();
+    if(isSuccessOperatorData) {
+      refetchOperatorData();
+    }
+    if(isSuccessOperatorTotalData){
+      refetchOperatorTotalData();
+    }
   }, [query]);
 
   useEffect(() => {
@@ -102,13 +117,19 @@ export const Operators = () => {
 
   return (
     <Grid container style={{ padding: "25px" }}>
+      <TotalizersCards
+        params={query}
+        loading={isOperatorTotalDataFetching}
+        data={OperatorTotalData || undefined}
+      />
       <Grid
         container
         style={{ display: "flex", alignItems: "center" }}
         spacing={1}
       >
         <Grid item xs={12} md={4} lg={2}>
-           <Button size="large"
+          <Button
+            size="large"
             style={{ width: "100%" }}
             loading={isOperatorDataFetching}
             type="primary"
@@ -123,7 +144,6 @@ export const Operators = () => {
             endDateKeyName="end_date"
             query={query}
             setQuery={setQuery}
-             
           />
         </Grid>
       </Grid>
@@ -222,7 +242,6 @@ export const Operators = () => {
           setOpen={setIsFiltersOpen}
           query={query}
           setQuery={setQuery}
-           
           filters={["start_date", "end_date", "status"]}
           refetch={refetchOperatorData}
           selectOptions={{}}
