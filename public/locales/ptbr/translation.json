@@ -348,7 +348,8 @@
     "debit_balance_type": "Tipo saldo origem",
     "credit_balance_type": "Tipo saldo destino",
     "from": "Origem",
-    "to": "Destino"
+    "to": "Destino",
+    "can_be_deleted_only_by_organization": "Organização pode deletar"
   },
   "table": {
     "id": "ID",
@@ -684,7 +685,8 @@
     "processed_rows": "Linhas processadas",
     "refunded_withdraw": "Devolvido",
     "debit_merchant_id": "ID Empresa origem",
-    "credit_merchant_id": "ID Empresa destino"
+    "credit_merchant_id": "ID Empresa destino",
+    "can_be_deleted_only_by_organization": "Organização pode deletar"
   },
   "actions": {
     "details": "Detalhes",

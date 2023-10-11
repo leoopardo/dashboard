@@ -10,7 +10,9 @@ import { ViewModal } from "@src/components/Modals/viewGenericModal";
 import { useGetMerchantBlacklistReports } from "@src/services/reports/register/merchant/getMerchantBlacklistReports";
 import { ReportsQuery } from "@src/services/types/reports/reports.interface";
 import { Button } from "antd";
+import { queryClient } from "@src/services/queryClient";
 import { useEffect, useState } from "react";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 import { useTranslation } from "react-i18next";
 
 export const MerchantBlacklistReports = () => {
@@ -18,6 +20,9 @@ export const MerchantBlacklistReports = () => {
     limit: 25,
     page: 1,
   };
+  const { permissions, type, merchant_id } = queryClient.getQueryData(
+    "validate"
+  ) as ValidateInterface;
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [query, setQuery] = useState<ReportsQuery>(INITIAL_QUERY);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
@@ -109,6 +114,7 @@ export const MerchantBlacklistReports = () => {
                 label: "details",
                 icon: <EyeFilled style={{ fontSize: "20px" }} />,
                 onClick: () => setIsViewModalOpen(true),
+                disabled: () => type !== 1 && type !== 2,
               },
             ]}
             data={MerchantBlacklistReportsData}
@@ -116,9 +122,11 @@ export const MerchantBlacklistReports = () => {
             error={MerchantBlacklistReportsDataError}
             columns={[
               { name: "_id", type: "id", sort: true },
+              { name: "merchant_id", type: "text", sort: true },
               { name: "createdAt", type: "date", sort: true },
               { name: "created_by_name", type: "text" },
               { name: "rows", type: "text" },
+              { name: "can_be_deleted_only_by_organization", type: "boolean" },
               { name: "progress", type: "progress" },
             ]}
             loading={isMerchantBlacklistReportsDataFetching}

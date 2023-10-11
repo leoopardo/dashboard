@@ -588,7 +588,7 @@ export const MutateModal = ({
                       ["production"]?.map((item, index) => ({
                         key: index,
                         value: item,
-                        label: `${t(`table.${item.toLocaleLowerCase()}`)}`,
+                        label: `${t(`table.${item?.toLocaleLowerCase()}`)}`,
                       })) ?? []
                     }
                     value={body?.cashin_pix_fee_type || null}
@@ -744,8 +744,8 @@ export const MutateModal = ({
                         selectOptions
                           ? selectOptions[field.label]?.map((option: any) => {
                               return {
-                                value: option,
-                                label: t(`table.${option.toLowerCase()}`),
+                                value: option?.value,
+                                label: t(`table.${option?.label?.toLowerCase()}`),
                               };
                             })
                           : []

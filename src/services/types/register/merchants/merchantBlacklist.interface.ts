@@ -19,6 +19,7 @@ export interface MerchantBlacklistItem {
   description?: string;
   merchant_id?: number;
   merchant_name?: string;
+  can_be_deleted_only_by_organization?: boolean;
   reason?: string;
 }
 export interface MerchantBlacklistResponse {
