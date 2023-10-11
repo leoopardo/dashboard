@@ -25,12 +25,12 @@ export const TotalizersCards = (props: TotalizersInterface) => {
       gutter={[8, 8]}
       justify="center"
       align="middle"
-      style={{ width: "100%" }}
+      style={{ width: "100%", marginBottom: 8 }}
     >
       {(props.query.status === "PAID" || !props.query.status) && (
         <Col
           style={{ maxWidth: "220px" }}
-          xs={{ span: isMobile ? 10 : undefined }}
+          xs={{ span: isMobile ? 11 : undefined }}
         >
           <Card bordered={false}>
             <Statistic
@@ -53,7 +53,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
       )}
       <Col
         style={{ maxWidth: "220px" }}
-        xs={{ span: isMobile ? 10 : undefined }}
+        xs={{ span: isMobile ? 11 : undefined }}
       >
         <Card bordered={false}>
           <Statistic
@@ -73,8 +73,8 @@ export const TotalizersCards = (props: TotalizersInterface) => {
         </Card>
       </Col>
       <Col
-        style={{ maxWidth: "220px" }}
-        xs={{ span: isMobile ? 10 : undefined }}
+        style={{ maxWidth: "220px", display: "flex", justifyContent: "center" }}
+        xs={{ span: isMobile ? 24 : undefined }}
       >
         <Button
           shape="circle"

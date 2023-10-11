@@ -139,7 +139,8 @@
     "uploads_merchant_blacklist": "Blacklist uploads",
     "contestation": "Contestation",
     "uploads": "Uploads",
-    "import_csv": "Import csv"
+    "import_csv": "Import csv",
+    "update_aggregator": "Update agregator"
   },
 
   "titles": {
@@ -693,7 +694,6 @@
     "pay_to_merchant": "Pay merchant",
     "refresh": "Refresh status",
     "edit_merchant": "Edit merchant"
-
   },
   "error": {
     "400": "Any records found.",
@@ -726,6 +726,8 @@
     "bs2_filial_03": "Bs2 bank 3",
     "mercado_pago": "Mercado Pago bank",
     "pay365": "Pay365 bank",
-    "pixsbrasil": "PIXS Brasil"
+    "pixsbrasil": "PIXS Brasil",
+    "fastcash": "FastCash",
+    "btg": "BTG"
   }
 }

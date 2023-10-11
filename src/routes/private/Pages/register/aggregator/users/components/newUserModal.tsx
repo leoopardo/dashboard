@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { GroupSelect } from "@components/Selects/groupSelect";
+import { CellphoneInput } from "@src/components/Inputs/CellphoneInput";
 import { AggregatorSelect } from "@src/components/Selects/aggregatorSelect";
 import { Toast } from "@src/components/Toast";
 import { queryClient } from "@src/services/queryClient";
@@ -72,12 +73,12 @@ export const NewUserModal = ({
     group_id: 0,
     status: true,
     type: 2,
+    cellphone: currentUser?.cellphone,
   });
 
   const { mutate, error, isLoading, isSuccess, reset } =
     useCreateAggregatorUser(body);
-  const {  updateLoading } =
-    useUpdateAggregatorUser(body);
+  const { updateLoading } = useUpdateAggregatorUser(body);
 
   function handleChangeUserBody(event: any) {
     setBody((state) => ({ ...state, [event.target.name]: event.target.value }));
@@ -102,15 +103,11 @@ export const NewUserModal = ({
 
   useEffect(() => {
     if (currentUser && action === "update")
-      setBody((state) => ({
-        ...state,
-        name: currentUser.name,
-        group_id: currentUser.group_id,
-        user_id: currentUser.id,
-        status: currentUser.status,
-        username: currentUser.username,
+      setBody(() => ({
+        ...currentUser,
       }));
   }, [currentUser]);
+
 
   useEffect(() => {
     reset();
@@ -217,23 +214,8 @@ export const NewUserModal = ({
           label={t(`table.cellphone`)}
           name="cellphone"
           style={{ margin: 10 }}
-          rules={[
-            {
-              pattern: /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{4}[-\s.]?[0-9]{4,6}$/,
-              message:
-                t("input.invalid", {
-                  field: t("input.number"),
-                }) || "",
-            },
-          ]}
         >
-          <Input
-            size="large"
-            type="string"
-            name="cellphone"
-            value={body.cellphone}
-            onChange={handleChangeUserBody}
-          />
+          <CellphoneInput body={body} setBody={setBody} />
         </Form.Item>
         <Form.Item
           label={t(`table.email`)}

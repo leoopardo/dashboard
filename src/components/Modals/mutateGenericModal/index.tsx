@@ -32,6 +32,7 @@ import { useTranslation } from "react-i18next";
 import ReactInputMask from "react-input-mask";
 import { MerchantSelect } from "../../Selects/merchantSelect";
 import { PartnerSelect } from "../../Selects/partnerSelect";
+import { CellphoneInput } from "@src/components/Inputs/CellphoneInput";
 const { RangePicker } = DatePicker;
 
 interface mutateProps {
@@ -394,10 +395,7 @@ export const MutateModal = ({
                       }));
                     }}
                     InputElement={
-                      <Input
-                        size="large"
-                        style={{ width: "100%" }}
-                      />
+                      <Input size="large" style={{ width: "100%" }} />
                     }
                   />
                 </Form.Item>
@@ -519,22 +517,7 @@ export const MutateModal = ({
                   style={{ margin: 10 }}
                   help=""
                 >
-                  <ReactInputMask
-                    value={body[field.label]}
-                    mask="+9999999999999"
-                    onChange={(event) => {
-                      const value = event.target.value.replace(/[^\d]/g, "");
-                      if (!value) {
-                        delete body[field.label];
-                      }
-                      setBody((state: any) => ({
-                        ...state,
-                        [field.label]: `+${value}`,
-                      }));
-                    }}
-                  >
-                    <Input size="large" />
-                  </ReactInputMask>
+                  <CellphoneInput body={body} setBody={setBody} />
                 </Form.Item>
               );
             case "bank_name":

@@ -3,6 +3,7 @@
 import { GroupSelect } from "@components/Selects/groupSelect";
 import { useCreateOrganizationUser } from "@services/register/organization/users/createUser";
 import { useUpdateOrganizationUser } from "@services/register/organization/users/updateUser";
+import { CellphoneInput } from "@src/components/Inputs/CellphoneInput";
 import { Toast } from "@src/components/Toast";
 import { useValidate } from "@src/services/siginIn/validate";
 import { OrganizationUserItem } from "@src/services/types/register/organization/organizationUsers.interface";
@@ -23,7 +24,6 @@ import React, {
   useState,
 } from "react";
 import { useTranslation } from "react-i18next";
-import ReactInputMask from "react-input-mask";
 interface NewuserModalprops {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -73,6 +73,7 @@ export const NewUserModal = ({
     status: true,
     type: 2,
     organization_id: responseValidate?.organization_id,
+    cellphone: currentUser?.cellphone,
   });
 
   const { mutate, error, isLoading, isSuccess } = useCreateOrganizationUser({
@@ -113,11 +114,13 @@ export const NewUserModal = ({
     if (currentUser && action === "update")
       setBody((state) => ({
         ...state,
-        name: currentUser.name,
-        group_id: currentUser.group_id,
-        user_id: currentUser.id,
-        status: currentUser.status,
-        username: currentUser.username,
+        name: currentUser?.name,
+        group_id: currentUser?.group_id,
+        user_id: currentUser?.id,
+        status: currentUser?.status,
+        username: currentUser?.username,
+        cellphone: currentUser?.cellphone,
+        email: currentUser?.email
       }));
   }, [currentUser]);
 
@@ -170,14 +173,7 @@ export const NewUserModal = ({
         initialValues={
           action === "create"
             ? {}
-            : currentUser ?? {
-                name: "",
-                username: "",
-                password: "",
-                group_id: 0,
-                status: true,
-                type: 2,
-              }
+            : currentUser ?? body
         }
         disabled={currentUser ? updateLoading : isLoading}
         onFinish={CreateUser}
@@ -225,32 +221,8 @@ export const NewUserModal = ({
           label={t(`table.cellphone`)}
           name="cellphone"
           style={{ margin: 10 }}
-          rules={[
-            {
-              pattern: /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{4}[-\s.]?[0-9]{4,6}$/,
-              message:
-                t("input.invalid", {
-                  field: t("input.number"),
-                }) || "",
-            },
-          ]}
         >
-          <ReactInputMask
-            value={body.cellphone}
-            mask="+9999999999999"
-            onChange={(event: any) => {
-              const value = event.target.value.replace(/[^\d]/g, "");
-              if (!value) {
-                delete body.cellphone;
-              }
-              setBody((state: any) => ({
-                ...state,
-                cellphone: `+${value}`,
-              }));
-            }}
-          >
-            <Input size="large" type="string" name="cellphone" />
-          </ReactInputMask>
+          <CellphoneInput body={body || currentUser} setBody={setBody} />
         </Form.Item>
         <Form.Item
           label={t(`table.email`)}

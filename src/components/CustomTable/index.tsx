@@ -125,14 +125,14 @@ export const CustomTable = (props: TableProps) => {
   }, [sortOrder]);
 
   useEffect(() => {
-    if (!props.disableScrollToTop) {
+    if (!props.disableScrollToTop ) {
       window.scrollTo({
         top: 0,
         left: 0,
         behavior: "smooth",
       });
     }
-  }, [props.query]);
+  }, [props.query.page]);
 
   const rowSelection = {
     onChange: (_selectedRowKeys: any, selectedRows: any) => {
@@ -426,7 +426,7 @@ export const CustomTable = (props: TableProps) => {
                           fontWeight: 600,
                         }}
                       >
-                        {text ? t(`table.${text?.toLocaleLowerCase()}`) : '-'}
+                        {text ? t(`table.${text?.toLocaleLowerCase()}`) : "-"}
                       </Typography>
                     ),
                 };
@@ -506,6 +506,7 @@ export const CustomTable = (props: TableProps) => {
                           onClick: () => {
                             if (action && action.onClick) {
                               action.onClick(record);
+                              
                             }
                           },
                         };
@@ -787,11 +788,24 @@ export const CustomTable = (props: TableProps) => {
           </Grid>
           {!props.removePagination && (
             <Pagination
-              current={Number(props?.query?.page)}
-              pageSize={Number(props?.query?.limit)}
+              style={{ marginTop: 8 }}
+              current={Number(props?.query?.page ?? 1)}
+              pageSize={Number(props?.query?.limit ?? 25)}
               onChange={(page) => {
                 props.setQuery((state: any) => ({ ...state, page }));
               }}
+              showTotal={(total, range) => {
+                return props.removeTotal
+                  ? `${range[0]} - ${range[1]}`
+                  : `${range[0]} - ${range[1]} de ${total}`;
+              }}
+              total={
+                props.removeTotal
+                  ? props?.items?.length < props?.data?.limit
+                    ? props?.data?.limit * props?.data?.page
+                    : props?.data?.limit * props?.data?.page + 1
+                  : props?.data?.total
+              }
             />
           )}
         </Grid>

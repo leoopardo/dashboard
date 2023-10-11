@@ -41,6 +41,7 @@ import { OrgonizationManual } from "./Pages/moviments/organization/manual";
 import { OrganizationTransferBetweenAccountsReports } from "./Pages/moviments/organization/reports/betweenAccounts";
 import { OrganizationManualReports } from "./Pages/moviments/organization/reports/manual";
 import { Aggregators } from "./Pages/register/aggregator/aggregators";
+import { UpdateAggregator } from "./Pages/register/aggregator/aggregators/updateAggregator";
 import { AggregatorBlacklist } from "./Pages/register/aggregator/blacklist";
 import { AggregatorsReports } from "./Pages/register/aggregator/reports/aggregators";
 import { AggregatorsBlacklistReports } from "./Pages/register/aggregator/reports/blacklist";
@@ -51,6 +52,7 @@ import { AggregatorUsers } from "./Pages/register/aggregator/users";
 import { MerchantBlacklist } from "./Pages/register/merchant/blacklist";
 import { ImportBlacklist } from "./Pages/register/merchant/blacklist/importBlacklist";
 import { MerchantBlacklistReasons } from "./Pages/register/merchant/blacklist/reasons";
+import { MerchantsBlacklistUploads } from "./Pages/register/merchant/blacklist/uploads";
 import { MerchantFeePlans } from "./Pages/register/merchant/feeplans";
 import { MerchantManualEntryCategory } from "./Pages/register/merchant/manualEntryCategory";
 import { MerchantView } from "./Pages/register/merchant/merchants";
@@ -91,10 +93,9 @@ import { BankBlacklist } from "./Pages/support/blacklists/bankBlacklist";
 import { InvalidPixKeyBlacklist } from "./Pages/support/blacklists/invalidPixKey";
 import { BankBlackistReports } from "./Pages/support/blacklists/reports/bankBlacklist";
 import { ThirdPartKeyBlacklist } from "./Pages/support/blacklists/thirdPartKey";
-import { Redirect } from "./redirect";
-import { MerchantsBlacklistUploads } from "./Pages/register/merchant/blacklist/uploads";
-import { ContestationUploads } from "./Pages/support/contastation/uploads";
 import { ImportContastationDeposit } from "./Pages/support/contastation/importCSV";
+import { ContestationUploads } from "./Pages/support/contastation/uploads";
+import { Redirect } from "./redirect";
 
 export const PrivateRoutes = () => {
   return (
@@ -243,7 +244,11 @@ export const PrivateRoutes = () => {
           </Route>
           {/* cadastros de agregadores */}
           <Route path="aggregator">
-            <Route path="aggregators" element={<Aggregators />} />
+            <Route path="aggregators">
+              <Route index element={<Aggregators />} />
+              <Route path="update_aggregator" element={<UpdateAggregator />} />
+            </Route>
+
             <Route path="aggregator_users" element={<AggregatorUsers />} />
             <Route
               path="self_exclusion"
@@ -488,7 +493,10 @@ export const PrivateRoutes = () => {
           <Route path="contestation">
             <Route path="deposit">
               <Route path="uploads" element={<ContestationUploads />} />
-              <Route path="import_csv" element={<ImportContastationDeposit />} />
+              <Route
+                path="import_csv"
+                element={<ImportContastationDeposit />}
+              />
             </Route>
           </Route>
         </Route>

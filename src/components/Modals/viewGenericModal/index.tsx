@@ -197,16 +197,16 @@ export const ViewModal = ({
                     <Typography.Title
                       level={5}
                       style={{
-                        color: (defaultTheme.colors as any)[
-                          sortItems[key].toLocaleLowerCase()
-                        ],
+                        color: typeof sortItems[key] === "string" ? (defaultTheme.colors as any)[
+                          sortItems[key]?.toLocaleLowerCase() 
+                        ]: undefined,
                       }}
                     >
-                      {typeof sortItems[key] === "boolean"
-                        ? sortItems[key]
+                      {(typeof sortItems[key] === "boolean" || sortItems[key] === 1 || sortItems[key] === 2)
+                        ? sortItems[key] || sortItems[key] === 1
                           ? t("table.active")
                           : t("table.inactive")
-                        : t(`table.${sortItems[key].toLocaleLowerCase()}`)}
+                        : t(`table.${sortItems[key]?.toLocaleLowerCase()}`)}
                     </Typography.Title>
                   </Descriptions.Item>
                 );
@@ -284,7 +284,7 @@ export const ViewModal = ({
                   >
                     {typeof sortItems[key] === "boolean"
                       ? t(`table.${sortItems[key]}`)
-                      : t(`table.${sortItems[key].toLocaleLowerCase()}`)}
+                      : t(`table.${sortItems[key]?.toLocaleLowerCase()}`)}
                   </Descriptions.Item>
                 );
 

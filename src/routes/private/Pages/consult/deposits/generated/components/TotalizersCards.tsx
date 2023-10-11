@@ -22,11 +22,16 @@ export const TotalizersCards = (props: TotalizersInterface) => {
   const { theme } = useTheme();
 
   return (
-    <Row gutter={[8, 8]} justify="center" align="middle">
+    <Row
+      gutter={[8, 8]}
+      justify="center"
+      align="middle"
+      style={{ marginBottom: 8 }}
+    >
       {(props.query.status === "PAID" || !props.query.status) && (
         <Col
           style={{ maxWidth: "220px" }}
-          xs={{ span: isMobile ? 10 : undefined }}
+          xs={{ span: isMobile ? 11 : undefined }}
         >
           <Card bordered={false}>
             <Statistic
@@ -54,7 +59,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
             maxWidth: "220px",
             minWidth: !isMobile ? "200px" : undefined,
           }}
-          xs={{ span: isMobile ? 10 : undefined }}
+          xs={{ span: isMobile ? 11 : undefined }}
         >
           <Card bordered={false}>
             <Statistic
@@ -80,7 +85,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
       {(props.query.status === "CANCELED" || !props.query.status) && (
         <Col
           style={{ maxWidth: "220px" }}
-          xs={{ span: isMobile ? 10 : undefined }}
+          xs={{ span: isMobile ? 11 : undefined }}
         >
           <Card bordered={false}>
             <Statistic
@@ -106,7 +111,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
       {(props.query.status === "EXPIRED" || !props.query.status) && (
         <Col
           style={{ maxWidth: "220px" }}
-          xs={{ span: isMobile ? 10 : undefined }}
+          xs={{ span: isMobile ? 11 : undefined }}
         >
           <Card bordered={false}>
             <Statistic
@@ -131,7 +136,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
       {(props.query.status === "WAITING" || !props.query.status) && (
         <Col
           style={{ maxWidth: "220px" }}
-          xs={{ span: isMobile ? 10 : undefined }}
+          xs={{ span: isMobile ? 11 : undefined }}
         >
           <Card bordered={false}>
             <Statistic
@@ -157,7 +162,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
       {(props.query.status === "AWAITING_REFUND" || !props.query.status) && (
         <Col
           style={{ maxWidth: "220px" }}
-          xs={{ span: isMobile ? 10 : undefined }}
+          xs={{ span: isMobile ? 11 : undefined }}
         >
           <Card bordered={false}>
             <Statistic
@@ -182,7 +187,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
 
       <Col
         style={{ maxWidth: "220px" }}
-        xs={{ span: isMobile ? 10 : undefined }}
+        xs={{ span: isMobile ? 11 : undefined }}
       >
         <Card bordered={false}>
           <Statistic
@@ -202,8 +207,8 @@ export const TotalizersCards = (props: TotalizersInterface) => {
         </Card>
       </Col>
       <Col
-        style={{ maxWidth: "200px" }}
-        xs={{ span: isMobile ? 10 : undefined }}
+        style={{ maxWidth: "200px", display: "flex", justifyContent: "center" }}
+        xs={{ span: isMobile ? 11 : undefined }}
       >
         <Button
           shape="circle"

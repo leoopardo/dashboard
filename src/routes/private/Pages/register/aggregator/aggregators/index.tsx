@@ -23,6 +23,7 @@ import useDebounce from "@utils/useDebounce";
 import { Button, Input } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 const INITIAL_QUERY: AggregatorQuery = {
   limit: 25,
@@ -37,7 +38,7 @@ export const Aggregators = () => {
   ) as ValidateInterface;
   const [query, setQuery] = useState<AggregatorQuery>(INITIAL_QUERY);
   const { t } = useTranslation();
-
+  const navigate = useNavigate();
   const {
     AggregatorsData,
     AggregatorsDataError,
@@ -115,7 +116,6 @@ export const Aggregators = () => {
     });
   }, [currentItem]);
 
-
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid
@@ -124,7 +124,8 @@ export const Aggregators = () => {
         spacing={1}
       >
         <Grid item xs={12} md={4} lg={2}>
-           <Button size="large"
+          <Button
+            size="large"
             style={{ width: "100%" }}
             loading={isAggregatorsDataFetching}
             type="primary"
@@ -139,7 +140,6 @@ export const Aggregators = () => {
             endDateKeyName="end_date"
             query={query}
             setQuery={setQuery}
-             
           />
         </Grid>
       </Grid>
@@ -230,9 +230,9 @@ export const Aggregators = () => {
               permissions.register.aggregator.aggregator.aggregator_update && {
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
-                onClick: () => {
+                onClick: (item) => {
                   UpdateReset();
-                  setIsUpdateCategorieModalOpen(true);
+                  navigate("update_aggregator", { state: item });
                 },
               },
             ]}
@@ -252,7 +252,6 @@ export const Aggregators = () => {
           setOpen={setIsFiltersOpen}
           query={query}
           setQuery={setQuery}
-           
           filters={["start_date", "end_date", "status"]}
           refetch={refetchAggregatorsData}
           selectOptions={{}}
@@ -313,12 +312,7 @@ export const Aggregators = () => {
           setOpen={setIsViewModalOpen}
         />
       )}
-      <Toast
-        actionSuccess={t("messages.updated")}
-        actionError={t("messages.update")}
-        error={UpdateError}
-        success={UpdateIsSuccess}
-      />
+    
       <Toast
         actionSuccess={t("messages.created")}
         actionError={t("messages.create")}

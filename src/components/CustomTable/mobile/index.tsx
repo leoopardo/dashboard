@@ -17,7 +17,7 @@ import {
 import moment from "moment";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { ColumnInterface } from "..";
+import { ColumnInterface, actionsInterface } from "..";
 
 interface MobileProps {
   columns: ColumnInterface[];
@@ -160,11 +160,37 @@ export const Mobile = (props: MobileProps) => {
                   }}
                 />
               )}
-              <Dropdown
-                menu={{ items: props.actions }}
-                arrow
-                onOpenChange={() => props.setCurrentItem(item)}
-              >
+               <Dropdown
+                    trigger={["click"]}
+                    menu={{
+                      items: props.actions.map((action: actionsInterface) => {
+                        let disable = false;
+
+                        if (action.disabled) {
+                          action.disabled(item)
+                            ? (disable = true)
+                            : (disable = false);
+                        }
+
+                        return {
+                          ...action,
+                          disabled: disable,
+                          onClick: () => {
+                            if (action && action.onClick) {
+                              action.onClick(item);
+                              
+                            }
+                          },
+                        };
+                      }),
+                    }}
+                    onOpenChange={(open) => {
+                      if (open) {
+                        props.setCurrentItem(item);
+                      }
+                    }}
+                    arrow
+                  >
                 <Button style={{ width: "45px" }}>
                   <EllipsisOutlined />
                 </Button>

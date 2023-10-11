@@ -10,6 +10,7 @@ import {
   MerchantUserBodyItem,
   MerchantUsersItem,
 } from "@services/types/register/merchants/merchantUsers.interface";
+import { CellphoneInput } from "@src/components/Inputs/CellphoneInput";
 import { queryClient } from "@src/services/queryClient";
 import { ValidateInterface } from "@src/services/types/validate.interface";
 import {
@@ -29,7 +30,6 @@ import React, {
   useState,
 } from "react";
 import { useTranslation } from "react-i18next";
-import ReactInputMask from "react-input-mask";
 
 interface NewuserModalprops {
   open: boolean;
@@ -64,6 +64,7 @@ export const UpdateUserModal = ({
     status: true,
     type: 2,
     merchant_id: currentUser?.merchant_id,
+    cellphone: currentUser?.cellphone,
   });
 
   const { mutate, error, isLoading, isSuccess, reset } =
@@ -110,6 +111,8 @@ export const UpdateUserModal = ({
         status: currentUser.status,
         username: currentUser.username,
         merchant_id: currentUser.merchant_id,
+        cellphone: currentUser?.cellphone,
+        email: currentUser?.email,
       }));
   }, [currentUser]);
 
@@ -218,32 +221,8 @@ export const UpdateUserModal = ({
           label={t(`table.cellphone`)}
           name="cellphone"
           style={{ margin: 10 }}
-          rules={[
-            {
-              pattern: /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{4}[-\s.]?[0-9]{4,6}$/,
-              message:
-                t("input.invalid", {
-                  field: t("input.number"),
-                }) || "",
-            },
-          ]}
         >
-          <ReactInputMask
-            value={body.cellphone}
-            mask="+9999999999999"
-            onChange={(event: any) => {
-              const value = event.target.value.replace(/[^\d]/g, "");
-              if (!value) {
-                delete body.cellphone;
-              }
-              setBody((state: any) => ({
-                ...state,
-                cellphone: `+${value}`,
-              }));
-            }}
-          >
-            <Input size="large" type="string" name="cellphone" />
-          </ReactInputMask>
+          <CellphoneInput body={body} setBody={setBody} />
         </Form.Item>
         <Form.Item
           label={t(`table.email`)}
@@ -310,9 +289,7 @@ export const UpdateUserModal = ({
             setBody={setBody}
             filterIdProp="merchant_id"
             filterIdValue={
-              user.merchant_id ??
-              body?.merchant_id ??
-              currentUser?.merchant.id
+              user.merchant_id ?? body?.merchant_id ?? currentUser?.merchant.id
             }
           />
         </Form.Item>

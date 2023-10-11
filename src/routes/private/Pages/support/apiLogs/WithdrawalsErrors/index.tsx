@@ -14,7 +14,7 @@ import {
   DepositLogsItem,
   DepositsLogsStepsTotalQuery,
 } from "@src/services/types/support/apiLogs/depositsError.interface";
-import { Avatar, Button, Card, Statistic } from "antd";
+import { Avatar, Button, Card, Col, Row, Statistic } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -75,21 +75,13 @@ export const WithdrawalsErrors = () => {
   return (
     <Grid container style={{ padding: "25px" }}>
       {WithdrawalsErrorsTotal && WithdrawalsErrorsTotal?.length >= 1 && (
-        <Grid
-          container
-          item
-          xs={12}
-          style={{ display: "flex", justifyContent: "center" }}
+        <Row
+          style={{ display: "flex", justifyContent: "center", width: "100%" }}
+          gutter={[8, 8]}
+          align="middle"
         >
           {WithdrawalsErrorsTotal?.map((error) => (
-            <Grid
-              xs={5}
-              md="auto"
-              style={{
-                marginRight: "7px",
-                marginBottom: "7px",
-              }}
-            >
+            <Col >
               <Card bordered={false}>
                 <Statistic
                   loading={isWithdrawalsErrorsTotalFetching}
@@ -114,21 +106,23 @@ export const WithdrawalsErrors = () => {
                   }
                 />
               </Card>
-            </Grid>
+            </Col>
           ))}
-          <Grid item xs={12} md="auto">
+          <Col span="auto">
             <Button
               style={{ width: "100%" }}
               size="large"
+              shape="circle"
+              type="dashed"
               loading={isWithdrawalsErrorsTotalFetching}
               onClickCapture={() => {
                 refetchWithdrawalsErrorsTotal();
               }}
             >
-              <ReloadOutlined /> {t("buttons.refresh")}
+              <ReloadOutlined />
             </Button>
-          </Grid>
-        </Grid>
+          </Col>
+        </Row>
       )}
 
       <Grid
@@ -144,7 +138,8 @@ export const WithdrawalsErrors = () => {
         spacing={1}
       >
         <Grid item xs={12} md={4} lg={2}>
-           <Button size="large"
+          <Button
+            size="large"
             style={{ width: "100%" }}
             loading={isWithdrawalsErrorsTotalFetching}
             type="primary"
