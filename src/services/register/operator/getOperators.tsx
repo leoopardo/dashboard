@@ -7,7 +7,7 @@ import {
 import { useQuery } from "react-query";
 
 export function useGetOperator(params: OperatorQuery) {
-  const { data, isFetching, error, refetch } = useQuery<
+  const { data, isFetching, error, refetch, isSuccess } = useQuery<
     OperatorsResponse | null | undefined
   >("Operator", async () => {
     const response = await api.get("core/operator", {
@@ -17,12 +17,14 @@ export function useGetOperator(params: OperatorQuery) {
   });
 
   const OperatorData = data;
+  const isSuccessOperatorData = isSuccess;
   const isOperatorDataFetching = isFetching;
   const OperatorDataError: any = error;
   const refetchOperatorData = refetch;
   return {
     OperatorData,
     isOperatorDataFetching,
+    isSuccessOperatorData,
     OperatorDataError,
     refetchOperatorData,
   };

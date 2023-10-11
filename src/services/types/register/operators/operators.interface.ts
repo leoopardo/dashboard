@@ -35,3 +35,10 @@ export interface OperatorsResponse {
   page: number;
   items: OperatorItem[];
 }
+
+export interface OperatorsTotalResponse {
+  registered_operators_totals: number;
+  active_operators_totals: number;
+  inactive_operators_totals: number;
+  linked_merchants_total: number;
+}

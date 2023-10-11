@@ -145,7 +145,11 @@
   "titles": {
     "current_deposit_fee": "Current deposit fee",
     "current_withdraw_fee": "Current withdraw fee",
-    "current_deposit_refund_fee": "Current deposit refund fee"
+    "current_deposit_refund_fee": "Current deposit refund fee",
+    "total_operators_registred": "Total operators registred",
+    "total_operators_registred_active": "Total operators registred active",
+    "total_operators_registred_inactive": "Total operators registred inactive",
+    "total_merchants": "Total merchants"
   },
 
   "messages": {

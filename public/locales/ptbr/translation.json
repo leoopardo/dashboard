@@ -146,7 +146,11 @@
   "titles": {
     "current_deposit_fee": "Taxa de depósito atual",
     "current_withdraw_fee": "Taxa de saque atual",
-    "current_deposit_refund_fee": "Taxa de deposito devolvido atual"
+    "current_deposit_refund_fee": "Taxa de deposito devolvido atual",
+    "total_operators_registred": "Total de operadores cadastrados",
+    "total_operators_registred_active": "Total de operadores cadastrados ativos",
+    "total_operators_registred_inactive": "Total de operadores cadastrados inativos",
+    "total_merchants": "Total de merchants"
   },
 
   "messages": {
