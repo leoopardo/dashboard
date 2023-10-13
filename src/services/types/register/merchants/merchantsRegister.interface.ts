@@ -52,3 +52,11 @@ export interface MerchantsResponse {
   page: number;
   items: MerchantsItem[];
 }
+
+export interface MerchantsTotalResponse {
+  registered_merchant_totals: number;
+  active_merchant_totals: number;
+  inactive_merchant_totals: number;
+  onboarding_merchant_totals: number;
+  expired_merchant_totals: number;
+}

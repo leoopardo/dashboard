@@ -32,3 +32,11 @@ export interface AggregatorsResponse {
   page: number;
   items: AggregatorItem[];
 }
+
+export interface AggregatorsTotalResponse {
+  registered_aggregators_totals: number;
+  active_aggregators_totals: number;
+  inactive_aggregators_totals: number;
+  linked_operators_total: number;
+  linked_merchants_total: number;
+}

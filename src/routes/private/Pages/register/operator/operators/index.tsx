@@ -22,6 +22,8 @@ import { Button, Input } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { TotalizersCards } from "./components/totalizersCards";
+import { useGetOperatorTotal } from "@src/services/register/operator/getOperatorsTotal";
 
 const INITIAL_QUERY: OperatorQuery = {
   limit: 25,
@@ -42,7 +44,15 @@ export const Operators = () => {
     OperatorDataError,
     isOperatorDataFetching,
     refetchOperatorData,
+    isSuccessOperatorData
   } = useGetOperator(query);
+
+  const {
+    OperatorTotalData,
+    isOperatorTotalDataFetching,
+    isSuccessOperatorTotalData,
+    refetchOperatorTotalData,
+  } = useGetOperatorTotal(query);
 
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [isNewCategorieModal, setIsNewCategorieModal] =
@@ -82,7 +92,12 @@ export const Operators = () => {
   ];
 
   useEffect(() => {
-    refetchOperatorData();
+    if(isSuccessOperatorData) {
+      refetchOperatorData();
+    }
+    if(isSuccessOperatorTotalData){
+      refetchOperatorTotalData();
+    }
   }, [query]);
 
   useEffect(() => {
@@ -103,6 +118,11 @@ export const Operators = () => {
 
   return (
     <Grid container style={{ padding: "25px" }}>
+      <TotalizersCards
+        params={query}
+        loading={isOperatorTotalDataFetching}
+        data={OperatorTotalData || undefined}
+      />
       <Grid
         container
         style={{ display: "flex", alignItems: "center" }}

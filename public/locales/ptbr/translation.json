@@ -148,7 +148,12 @@
   "titles": {
     "current_deposit_fee": "Taxa de depósito atual",
     "current_withdraw_fee": "Taxa de saque atual",
-    "current_deposit_refund_fee": "Taxa de deposito devolvido atual"
+    "current_deposit_refund_fee": "Taxa de deposito devolvido atual",
+    "total_registred": "Total de {{entity}} cadastrados",
+    "total_onboarding": "Total de {{entity}} onboarding",
+    "total_registred_active": "Total de {{entity}} cadastrados ativos",
+    "total_registred_inactive": "Total de {{entity}} cadastrados inativos",
+    "total": "Total de {{entity}}"
   },
 
   "messages": {

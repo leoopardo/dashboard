@@ -18,12 +18,14 @@ import {
   AggregatorItem,
   AggregatorQuery,
 } from "@src/services/types/register/aggregators/aggregators.interface";
+import { useGetAggregatorsTotals } from "@src/services/register/aggregator/getAggregatorsTotals";
 import { ValidateInterface } from "@src/services/types/validate.interface";
 import useDebounce from "@utils/useDebounce";
 import { Button, Input } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { TotalizersCards } from "./components/totalizersCards";
 
 const INITIAL_QUERY: AggregatorQuery = {
   limit: 25,
@@ -43,8 +45,16 @@ export const Aggregators = () => {
     AggregatorsData,
     AggregatorsDataError,
     isAggregatorsDataFetching,
+    isSuccessAggregatorsData,
     refetchAggregatorsData,
   } = useGetAggregators(query);
+
+  const {
+    AggregatorsTotalsData,
+    isAggregatorsTotalsDataFetching,
+    isSuccessAggregatorsTotalsData,
+    refetchAggregatorsTotalsData,
+  } = useGetAggregatorsTotals(query);
 
   const {
     AggregatorReportsError,
@@ -97,7 +107,8 @@ export const Aggregators = () => {
   ];
 
   useEffect(() => {
-    refetchAggregatorsData();
+    isSuccessAggregatorsTotalsData && refetchAggregatorsTotalsData();
+    isSuccessAggregatorsData && refetchAggregatorsData();
   }, [query]);
 
   useEffect(() => {
@@ -118,6 +129,11 @@ export const Aggregators = () => {
 
   return (
     <Grid container style={{ padding: "25px" }}>
+      <TotalizersCards
+        params={query}
+        loading={isAggregatorsTotalsDataFetching}
+        data={AggregatorsTotalsData || undefined}
+      />
       <Grid
         container
         style={{ display: "flex", alignItems: "center" }}

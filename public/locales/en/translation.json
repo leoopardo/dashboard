@@ -147,7 +147,12 @@
   "titles": {
     "current_deposit_fee": "Current deposit fee",
     "current_withdraw_fee": "Current withdraw fee",
-    "current_deposit_refund_fee": "Current deposit refund fee"
+    "current_deposit_refund_fee": "Current deposit refund fee",
+    "total_registred": "Total {{entity}} registred",
+    "total_onboarding": "Total {{entity}} onboarding",
+    "total_registred_active": "Total {{entity}} registred active",
+    "total_registred_inactive": "Total {{entity}} registred inactive",
+    "total": "Total {{entity}}"
   },
 
   "messages": {

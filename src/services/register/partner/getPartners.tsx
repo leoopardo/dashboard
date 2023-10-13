@@ -7,7 +7,7 @@ import {
 import { useQuery } from "react-query";
 
 export function useGetPartners(params: PartnerQuery) {
-  const { data, isFetching, error, refetch } = useQuery<
+  const { data, isFetching, error, refetch, isSuccess } = useQuery<
     PartnersResponse | null | undefined
   >("Partners", async () => {
     const response = await api.get("core/partner", {
@@ -17,12 +17,14 @@ export function useGetPartners(params: PartnerQuery) {
   });
 
   const PartnersData = data;
+  const isSuccessPartnersData = isSuccess;
   const isPartnersDataFetching = isFetching;
   const PartnersDataError: any = error;
   const refetchPartnersData = refetch;
   return {
     PartnersData,
     isPartnersDataFetching,
+    isSuccessPartnersData,
     PartnersDataError,
     refetchPartnersData,
   };

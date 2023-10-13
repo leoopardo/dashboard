@@ -9,7 +9,7 @@ import useDebounce from "@utils/useDebounce";
 import { Button, Input } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-
+import { useGetPartnersTotals } from "@src/services/register/partner/getPartnersTotals";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
 
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
@@ -26,6 +26,7 @@ import {
 } from "@src/services/types/register/partners/partners.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
 import { useNavigate } from "react-router-dom";
+import { TotalizersCards } from "./components/totalizersCards";
 
 const INITIAL_QUERY: PartnerQuery = {
   limit: 25,
@@ -46,9 +47,16 @@ export const Partners = () => {
     PartnersData,
     PartnersDataError,
     isPartnersDataFetching,
+    isSuccessPartnersData,
     refetchPartnersData,
   } = useGetPartners(query);
 
+  const {
+    PartnersTotalsData,
+    isPartnersTotalsDataFetching,
+    isSuccessPartnersTotalsData,
+    refetchPartnersTotalsData,
+  } = useGetPartnersTotals(query);
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [isNewCategorieModal, setIsNewCategorieModal] =
     useState<boolean>(false);
@@ -90,7 +98,9 @@ export const Partners = () => {
   ];
 
   useEffect(() => {
-    refetchPartnersData();
+    
+    isSuccessPartnersTotalsData && refetchPartnersTotalsData()
+    isSuccessPartnersData && refetchPartnersData();
   }, [query]);
 
   useEffect(() => {
@@ -111,6 +121,11 @@ export const Partners = () => {
 
   return (
     <Grid container style={{ padding: "25px" }}>
+      <TotalizersCards
+        params={query}
+        loading={isPartnersTotalsDataFetching}
+        data={PartnersTotalsData || undefined}
+      />
       <Grid
         container
         style={{ display: "flex", alignItems: "center" }}

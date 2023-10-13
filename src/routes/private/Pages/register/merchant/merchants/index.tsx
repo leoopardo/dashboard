@@ -32,6 +32,8 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { ViewMerchantModal } from "./components/ViewMerchantModal";
 import { UpdateBanks } from "./components/updatebanks";
+import { useGetMerchantsTotals } from "@src/services/register/merchant/merchant/getMerchantsTotals";
+import { TotalizersCards } from "./components/totalizersCards";
 
 const INITIAL_QUERY: MerchantsQuery = {
   limit: 25,
@@ -52,8 +54,17 @@ export const MerchantView = () => {
     MerchantData,
     MerchantDataError,
     isMerchantDataFetching,
+    isSuccessMerchantData,
     refetchMerchantData,
   } = useGetRowsMerchantRegister(query);
+
+  const {
+    MerchantTotalsData,
+    isMerchantTotalsDataFetching,
+    isSuccessMerchantTotalsData,
+    refetchMerchantTotalsData,
+  } = useGetMerchantsTotals(query);
+
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [isNewMerchantModal, setIsNewMerchantModal] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
@@ -122,7 +133,8 @@ export const MerchantView = () => {
   }, [isConfigOpen]);
 
   useEffect(() => {
-    refetchMerchantData();
+    isSuccessMerchantData && refetchMerchantData();
+    isSuccessMerchantTotalsData && refetchMerchantTotalsData();
   }, [query]);
 
   useEffect(() => {
@@ -143,6 +155,11 @@ export const MerchantView = () => {
 
   return (
     <Grid container style={{ padding: "25px" }}>
+      <TotalizersCards
+        params={query}
+        loading={isMerchantTotalsDataFetching}
+        data={MerchantTotalsData || undefined}
+      />
       <Grid
         container
         style={{ display: "flex", alignItems: "center" }}

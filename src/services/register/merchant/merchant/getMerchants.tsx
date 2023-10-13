@@ -7,7 +7,7 @@ import {
 import { useQuery } from "react-query";
 
 export function useGetRowsMerchantRegister(params: MerchantsQuery) {
-  const { data, isFetching, error, refetch } = useQuery<
+  const { data, isFetching, error, refetch, isSuccess } = useQuery<
     MerchantsResponse | null | undefined
   >(
     "MerchantsRegister",
@@ -25,12 +25,14 @@ export function useGetRowsMerchantRegister(params: MerchantsQuery) {
   );
 
   const MerchantData = data;
+  const isSuccessMerchantData = isSuccess;
   const isMerchantDataFetching = isFetching;
   const MerchantDataError: any = error;
   const refetchMerchantData = refetch;
   return {
     MerchantData,
     isMerchantDataFetching,
+    isSuccessMerchantData,
     MerchantDataError,
     refetchMerchantData,
   };
