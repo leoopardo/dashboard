@@ -185,7 +185,7 @@
     "validated": "Validado",
     "validate": "validar",
     "upload_label": "Clique ou arraste e solte o arquivo para esta área",
-    "upload_description": "Suporte para um arquivo por vês, nos formatos: pdf, png e docx.",
+    "upload_description": "Suporte para um arquivo por vez, nos formatos: pdf, png e docx.",
     "min_value_higher_then_zero": "O valor desse campo deve ser maior que 0",
     "create_csv": "Criar CSV",
     "csv_confirm": "Deseja criar um CSV com os filtros selecionados?",
