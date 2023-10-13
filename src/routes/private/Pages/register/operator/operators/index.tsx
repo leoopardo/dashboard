@@ -21,6 +21,7 @@ import useDebounce from "@utils/useDebounce";
 import { Button, Input } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 const INITIAL_QUERY: OperatorQuery = {
   limit: 25,
@@ -35,7 +36,7 @@ export const Operators = () => {
   ) as ValidateInterface;
   const [query, setQuery] = useState<OperatorQuery>(INITIAL_QUERY);
   const { t } = useTranslation();
-
+  const navigate = useNavigate();
   const {
     OperatorData,
     OperatorDataError,
@@ -108,7 +109,8 @@ export const Operators = () => {
         spacing={1}
       >
         <Grid item xs={12} md={4} lg={2}>
-           <Button size="large"
+          <Button
+            size="large"
             style={{ width: "100%" }}
             loading={isOperatorDataFetching}
             type="primary"
@@ -123,7 +125,6 @@ export const Operators = () => {
             endDateKeyName="end_date"
             query={query}
             setQuery={setQuery}
-             
           />
         </Grid>
       </Grid>
@@ -194,15 +195,15 @@ export const Operators = () => {
               {
                 label: "details",
                 icon: <EyeFilled style={{ fontSize: "20px" }} />,
-                onClick: () => {
-                  setIsViewModalOpen(true);
+                onClick: (item) => {
+                  navigate("details", { state: item });
                 },
               },
               permissions.register.operator.operator.operator_update && {
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
-                onClick: () => {
-                  setIsUpdateCategorieModalOpen(true);
+                onClick: (item) => {
+                  navigate("update", { state: item });
                 },
               },
             ]}
@@ -222,7 +223,6 @@ export const Operators = () => {
           setOpen={setIsFiltersOpen}
           query={query}
           setQuery={setQuery}
-           
           filters={["start_date", "end_date", "status"]}
           refetch={refetchOperatorData}
           selectOptions={{}}

@@ -25,6 +25,7 @@ import {
   PartnerQuery,
 } from "@src/services/types/register/partners/partners.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
+import { useNavigate } from "react-router-dom";
 
 const INITIAL_QUERY: PartnerQuery = {
   limit: 25,
@@ -37,7 +38,7 @@ export const Partners = () => {
   const { permissions } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
-
+  const navigate = useNavigate();
   const [query, setQuery] = useState<PartnerQuery>(INITIAL_QUERY);
   const { t } = useTranslation();
 
@@ -116,7 +117,8 @@ export const Partners = () => {
         spacing={1}
       >
         <Grid item xs={12} md={4} lg={2}>
-           <Button size="large"
+          <Button
+            size="large"
             style={{ width: "100%" }}
             loading={isPartnersDataFetching}
             type="primary"
@@ -214,15 +216,15 @@ export const Partners = () => {
               {
                 label: "details",
                 icon: <EyeFilled style={{ fontSize: "20px" }} />,
-                onClick: () => {
-                  setIsViewModalOpen(true);
+                onClick: (item) => {
+                  navigate("details", { state: item });
                 },
               },
               permissions.register.partner.partner.partner_update && {
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
-                onClick: () => {
-                  setIsUpdateCategorieModalOpen(true);
+                onClick: (item) => {
+                  navigate("update", { state: item });
                 },
               },
             ]}

@@ -28,6 +28,7 @@ export interface MerchantsQuery {
 export interface MerchantsItem {
   cellphone?: string;
   created_at?: string;
+  v3_id?: string;
   cnpj?: string;
   domain?: string;
   email?: string | null;
@@ -39,7 +40,10 @@ export interface MerchantsItem {
   status?: boolean;
   update_at?: string;
   merchant_id?: number;
-  partner_id?: number
+  partner_id?: number;
+  aggregator_id?: number;
+  operator_id?: number;
+  country?: string
 }
 
 export interface MerchantsResponse {

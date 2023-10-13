@@ -16,6 +16,7 @@ interface FilterChipsProps {
   startDateKeyName: string;
   endDateKeyName: string;
   haveInitialDate?: boolean;
+  disabled?: string[];
 }
 
 export const FilterChips = ({
@@ -24,6 +25,7 @@ export const FilterChips = ({
   endDateKeyName,
   startDateKeyName,
   haveInitialDate,
+  disabled,
 }: FilterChipsProps) => {
   const { t } = useTranslation();
   const merchants = queryClient.getQueryData(
@@ -71,6 +73,7 @@ export const FilterChips = ({
                     textOverflow: "ellipsis",
                     overflow: "hidden",
                     wordBreak: "break-all",
+                    display: disabled?.includes(key) ? "none" : undefined
                   }}
                   color="cyan"
                   icon={
@@ -132,6 +135,7 @@ export const FilterChips = ({
                     textOverflow: "ellipsis",
                     overflow: "hidden",
                     wordBreak: "break-all",
+                    display: disabled?.includes(key) ? "none" : undefined
                   }}
                   icon={
                     <CloseCircleOutlined
@@ -159,6 +163,7 @@ export const FilterChips = ({
                     textOverflow: "ellipsis",
                     overflow: "hidden",
                     wordBreak: "break-all",
+                    display: disabled?.includes(key) ? "none" : undefined
                   }}
                   key={key}
                   color="cyan"
@@ -184,6 +189,7 @@ export const FilterChips = ({
                     textOverflow: "ellipsis",
                     overflow: "hidden",
                     wordBreak: "break-all",
+                    display: disabled?.includes(key) ? "none" : undefined
                   }}
                   key={key}
                   color="cyan"
@@ -209,6 +215,7 @@ export const FilterChips = ({
                     textOverflow: "ellipsis",
                     overflow: "hidden",
                     wordBreak: "break-all",
+                    display: disabled?.includes(key) ? "none" : undefined
                   }}
                   key={key}
                   color="cyan"
@@ -234,6 +241,7 @@ export const FilterChips = ({
                     textOverflow: "ellipsis",
                     overflow: "hidden",
                     wordBreak: "break-all",
+                    display: disabled?.includes(key) ? "none" : undefined
                   }}
                   key={key}
                   color="cyan"
@@ -259,6 +267,7 @@ export const FilterChips = ({
                     textOverflow: "ellipsis",
                     overflow: "hidden",
                     wordBreak: "break-all",
+                    display: disabled?.includes(key) ? "none" : undefined
                   }}
                   key={key}
                   color="cyan"
@@ -299,6 +308,7 @@ export const FilterChips = ({
                     textOverflow: "ellipsis",
                     overflow: "hidden",
                     wordBreak: "break-all",
+                    display: disabled?.includes(key) ? "none" : undefined
                   }}
                   key={key}
                   color="cyan"
@@ -321,6 +331,7 @@ export const FilterChips = ({
                     textOverflow: "ellipsis",
                     overflow: "hidden",
                     wordBreak: "break-all",
+                    display: disabled?.includes(key) ? "none" : undefined
                   }}
                   key={key}
                   color="cyan"
@@ -354,6 +365,7 @@ export const FilterChips = ({
                       textOverflow: "ellipsis",
                       overflow: "hidden",
                       wordBreak: "break-all",
+                      display: disabled?.includes(key) ? "none" : undefined
                     }}
                     key={key}
                     color="cyan"

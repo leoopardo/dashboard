@@ -54,7 +54,6 @@ export const MerchantView = () => {
     isMerchantDataFetching,
     refetchMerchantData,
   } = useGetRowsMerchantRegister(query);
-
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [isNewMerchantModal, setIsNewMerchantModal] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
@@ -171,7 +170,7 @@ export const MerchantView = () => {
       </Grid>
 
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
-        <Grid item xs={12} md={4} lg={4}>
+        <Grid item xs={12} md={6} lg={4}>
           <Input
             size="large"
             value={search}
@@ -181,7 +180,7 @@ export const MerchantView = () => {
             }}
           />
         </Grid>
-        <Grid item xs={12} md={3} lg={2}>
+        <Grid item xs={12} md={4} lg={2}>
           <Button
             type="dashed"
             loading={isMerchantDataFetching}
@@ -203,7 +202,7 @@ export const MerchantView = () => {
           </Button>
         </Grid>
         {permissions.register.merchant.merchant.merchant_config_banks && (
-          <Grid item xs={12} md={3} lg={2}>
+          <Grid item xs={12} md={4} lg={2}>
             <Button
               type="primary"
               loading={isMerchantDataFetching}
@@ -224,7 +223,7 @@ export const MerchantView = () => {
           </Grid>
         )}
         {permissions.register.merchant.merchant.merchant_create && (
-          <Grid item xs={12} md={3} lg={2}>
+          <Grid item xs={12} md={4} lg={2}>
             <Button
               type="primary"
               loading={isMerchantDataFetching}
@@ -247,7 +246,7 @@ export const MerchantView = () => {
         )}
 
         {permissions.register.merchant.merchant.merchant_export_csv && (
-          <Grid item xs={12} md="auto">
+          <Grid item xs={12} md={4} lg={2}>
             <ExportReportsModal
               disabled={!MerchantData?.total || MerchantDataError}
               mutateReport={() => MerchantReportsMutate()}
@@ -278,16 +277,16 @@ export const MerchantView = () => {
               {
                 label: "details",
                 icon: <EyeFilled style={{ fontSize: "20px" }} />,
-                onClick: () => {
-                  setIsViewModalOpen(true);
+                onClick: (item) => {
+                  navigate("details", { state: item });
                 },
               },
               permissions.register.merchant.merchant.merchant_update && {
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
-                onClick: () => {
+                onClick: (item) => {
                   UpdateReset();
-                  setIsUpdateModalOpen(true);
+                  navigate("update", { state: item });
                 },
               },
               {

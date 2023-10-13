@@ -140,7 +140,8 @@
     "contestation": "Contestation",
     "uploads": "Uploads",
     "import_csv": "Import csv",
-    "update_aggregator": "Update agregator"
+    "update_aggregator": "Update agregator",
+    "details": "Details"
   },
 
   "titles": {
@@ -227,7 +228,8 @@
     "create_self_exclusion": "Create self exclusion",
     "transfers": "Transfers",
     "dark": "Dark theme",
-    "light": "Light theme"
+    "light": "Light theme",
+    "responsible": "responsible"
   },
   "input": {
     "required": "Please input the {{field}}",
@@ -352,7 +354,9 @@
     "receiver_email": "Receiver email",
     "cash_out_fee_percent": "Withdraw fee",
     "modal_create_merchant": "Create merchant",
-    "report_details": "Report details"
+    "report_details": "Report details",
+    "new_responsible": "New responsible",
+    "update_responsible": "Update responsible"
   },
   "table": {
     "id": "ID",
@@ -684,7 +688,15 @@
     "refunded_withdraw": "Refunded",
     "debit_merchant_id": "ID Merchant from",
     "credit_merchant_id": "ID Merchant to",
-    "can_be_deleted_only_by_organization": "Organization can delete"
+    "can_be_deleted_only_by_organization": "Organization can delete",
+    "aggregator_data": "Aggregator data",
+    "responsibles": "Responsibles",
+    "linked_merchants_total": "Linked merchants",
+    "linked_operators_total": "Linked operators",
+    "position": "Position",
+    "operator_data": "Operator data",
+    "merchant_data": "Merchant data",
+    "partner_data": "Partner data"
   },
   "actions": {
     "details": "Details",

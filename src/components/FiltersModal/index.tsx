@@ -54,6 +54,7 @@ interface FilterModalProps {
   haveInitialDate?: boolean;
   initialQuery: any;
   maxRange?: boolean;
+  disabled?: string[];
 }
 
 export const FiltersModal = ({
@@ -68,6 +69,7 @@ export const FiltersModal = ({
   haveInitialDate,
   maxRange,
   initialQuery,
+  disabled,
 }: FilterModalProps) => {
   const { permissions } = queryClient.getQueryData(
     "validate"
@@ -191,6 +193,7 @@ export const FiltersModal = ({
             startDateKeyName={startDateKeyName}
             endDateKeyName={endDateKeyName}
             haveInitialDate={haveInitialDate}
+            disabled={disabled}
           />
         </Grid>
       </Grid>

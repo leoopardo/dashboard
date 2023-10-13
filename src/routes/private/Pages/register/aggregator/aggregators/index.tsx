@@ -223,8 +223,8 @@ export const Aggregators = () => {
               {
                 label: "details",
                 icon: <EyeFilled style={{ fontSize: "20px" }} />,
-                onClick: () => {
-                  setIsViewModalOpen(true);
+                onClick: (item) => {
+                  navigate("details", { state: item });
                 },
               },
               permissions.register.aggregator.aggregator.aggregator_update && {
@@ -312,7 +312,7 @@ export const Aggregators = () => {
           setOpen={setIsViewModalOpen}
         />
       )}
-    
+
       <Toast
         actionSuccess={t("messages.created")}
         actionError={t("messages.create")}
