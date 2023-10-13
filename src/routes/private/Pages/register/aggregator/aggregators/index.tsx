@@ -248,7 +248,7 @@ export const Aggregators = () => {
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
                 onClick: (item) => {
                   UpdateReset();
-                  navigate("update_aggregator", { state: item });
+                  navigate("update", { state: item });
                 },
               },
             ]}

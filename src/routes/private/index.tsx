@@ -253,7 +253,7 @@ export const PrivateRoutes = () => {
           <Route path="aggregator">
             <Route path="aggregators">
               <Route index element={<Aggregators />} />
-              <Route path="update_aggregator" element={<UpdateAggregator />} />
+              <Route path="update" element={<UpdateAggregator />} />
               <Route path="details" element={<AggregatorDetails />} />
             </Route>
 
