@@ -32,3 +32,11 @@ export interface PartnersResponse {
   page: number;
   items: PartnerItem[];
 }
+
+export interface PartnerTotalResponse {
+  registered_partners_totals: number;
+  active_partners_totals: number;
+  inactive_partners_totals: number;
+  linked_merchants_total: number;
+}
+
