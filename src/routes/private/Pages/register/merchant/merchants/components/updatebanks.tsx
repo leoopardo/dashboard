@@ -98,17 +98,19 @@ export const UpdateBanks = ({
           </Button>
         }
       >
-        <Radio.Group
-          onChange={(e) => {
-            setAll(e.target.value);
-            if (e.target.value === "all")
-              setBody((state) => ({ ...state, partner_id: undefined }));
-          }}
-          value={all}
-        >
-          <Radio value="all">Todas as empresas</Radio>
-          <Radio value="partner">Plataforma</Radio>
-        </Radio.Group>
+        {!items?.length && !body.merchants_ids?.length && (
+          <Radio.Group
+            onChange={(e) => {
+              setAll(e.target.value);
+              if (e.target.value === "all")
+                setBody((state) => ({ ...state, partner_id: undefined }));
+            }}
+            value={all}
+          >
+            <Radio value="all">Todas as empresas</Radio>
+            <Radio value="partner">Plataforma</Radio>
+          </Radio.Group>
+        )}
         <Form
           ref={formRef}
           layout="vertical"
