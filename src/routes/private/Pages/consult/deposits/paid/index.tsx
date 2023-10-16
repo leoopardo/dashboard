@@ -21,7 +21,6 @@ import { FilterChips } from "../../../../../../components/FiltersModal/filterChi
 import { useGetRowsPaidDeposits } from "../../../../../../services/consult/deposits/paidDeposits/getRows";
 import { useGetTotalPaidDeposits } from "../../../../../../services/consult/deposits/paidDeposits/getTotal";
 import { paidDepositRowsQuery } from "../../../../../../services/types/consult/deposits/PaidDeposits.interface";
-import useDebounce from "../../../../../../utils/useDebounce";
 import { ViewModal } from "../components/ViewModal";
 import { TotalizersCards } from "./components/TotalizersCards";
 
@@ -49,7 +48,7 @@ export const PaidDeposits = () => {
     useState<boolean>(false);
   const [csvFields, setCsvFields] = useState<any>();
   const [isComma, setIsComma] = useState<boolean>(true);
-  const { paidTotal,  isPaidTotalFetching, refetchPaidTotal } =
+  const { paidTotal, isPaidTotalFetching, refetchPaidTotal } =
     useGetTotalPaidDeposits(query);
 
   const { paidRows, isPaidRowsFetching, refetchPaidTotalRows, paidRowsError } =
@@ -77,7 +76,6 @@ export const PaidDeposits = () => {
   const [searchOption, setSearchOption] = useState<string | null>(null);
   const [search, setSearch] = useState<string | null>("");
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
-  const debounceSearch = useDebounce(search);
 
   const columns: ColumnInterface[] = [
     { name: "_id", type: "id" },
@@ -90,22 +88,6 @@ export const PaidDeposits = () => {
     { name: "buyer_document", type: "document" },
     { name: "status", type: "status" },
   ];
-
-  useEffect(() => {
-    const q = { ...query };
-    delete q.pix_id;
-    delete q.endToEndId;
-    delete q.txid;
-    delete q.reference_id;
-    delete q.buyer_document;
-    delete q.payer_document;
-    delete q.buyer_name;
-    delete q.payer_name;
-
-    if (debounceSearch && searchOption) {
-      setQuery(() => ({ ...q, [searchOption]: debounceSearch }));
-    }
-  }, [debounceSearch, searchOption]);
 
   return (
     <Grid container style={{ padding: "25px" }}>
@@ -171,13 +153,19 @@ export const PaidDeposits = () => {
           />
         </Grid>
         <Grid item xs={12} md={4} lg={4}>
-          <Input
+          <Input.Search
             placeholder="Pesquisa"
             size="large"
             value={search || ""}
             disabled={!searchOption}
             style={{ width: "100%" }}
             onChange={(event) => setSearch(event.target.value)}
+            onSearch={(value) =>
+              setQuery((state) => ({
+                ...state,
+                [`${searchOption}`]: value,
+              }))
+            }
           />
         </Grid>
         <Grid item xs={12} md={2} lg={2}>

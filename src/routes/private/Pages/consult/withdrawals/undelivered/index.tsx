@@ -20,7 +20,6 @@ import {
 import { FiltersModal } from "../../../../../../components/FiltersModal";
 import { FilterChips } from "../../../../../../components/FiltersModal/filterChips";
 import { generatedWithdrawalsRowsQuery } from "../../../../../../services/types/consult/withdrawals/generatedWithdrawals.interface";
-import useDebounce from "../../../../../../utils/useDebounce";
 import { ViewModal } from "../components/ViewModal";
 import { TotalizersCards } from "./components/TotalizersCards";
 
@@ -73,7 +72,6 @@ export const UndeliveredWithdrawals = () => {
   const [searchOption, setSearchOption] = useState<string | null>(null);
   const [search, setSearch] = useState<string | null>(null);
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
-  const debounceSearch = useDebounce(search);
 
   const columns: ColumnInterface[] = [
     { name: "_id", type: "id" },
@@ -88,21 +86,6 @@ export const UndeliveredWithdrawals = () => {
     { name: "pix_key", type: "text" },
     { name: "status", type: "status" },
   ];
-
-  useEffect(() => {
-    const q = { ...query };
-    delete q.pix_id;
-    delete q.endToEndId;
-    delete q.txid;
-    delete q.reference_id;
-    delete q.buyer_document;
-    delete q.buyer_name;
-    delete q.payer_name;
-
-    if (debounceSearch && searchOption) {
-      setQuery(() => ({ ...q, [searchOption]: debounceSearch }));
-    }
-  }, [debounceSearch, searchOption]);
 
   return (
     <Grid container style={{ padding: "25px" }}>
@@ -167,13 +150,19 @@ export const UndeliveredWithdrawals = () => {
           />
         </Grid>
         <Grid item xs={12} md={4} lg={4}>
-          <Input
+          <Input.Search
             placeholder="Pesquisa"
             size="large"
-            disabled={!searchOption}
             value={search || ""}
+            disabled={!searchOption}
             style={{ width: "100%" }}
             onChange={(event) => setSearch(event.target.value)}
+            onSearch={(value) =>
+              setQuery((state) => ({
+                ...state,
+                [`${searchOption}`]: value,
+              }))
+            }
           />
         </Grid>
         <Grid item xs={12} md={2} lg={2}>

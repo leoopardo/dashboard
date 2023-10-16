@@ -24,7 +24,6 @@ import {
 import { FiltersModal } from "../../../../../../components/FiltersModal";
 import { FilterChips } from "../../../../../../components/FiltersModal/filterChips";
 import { generatedWithdrawalsRowsQuery } from "../../../../../../services/types/consult/withdrawals/generatedWithdrawals.interface";
-import useDebounce from "../../../../../../utils/useDebounce";
 import { ResendWebhookModal } from "../../deposits/components/ResendWebhookModal";
 import { ViewModal } from "../components/ViewModal";
 import { WebhookModal } from "../components/webhooksModal";
@@ -81,8 +80,6 @@ export const GeneratedWithdrawals = () => {
   const [isComma, setIsComma] = useState<boolean>(true);
   const [isExportReportsOpen, setIsExportReportsOpen] =
     useState<boolean>(false);
-  const debounceSearch = useDebounce(search);
-
   const {
     GeneratedWithdrawalsReportsError,
     GeneratedWithdrawalsReportsIsLoading,
@@ -122,22 +119,6 @@ export const GeneratedWithdrawals = () => {
     { name: "pix_key", type: "text" },
     { name: "status", type: "status" },
   ];
-
-  useEffect(() => {
-    const q = { ...query };
-    delete q.pix_id;
-    delete q.endToEndId;
-    delete q.txid;
-    delete q.reference_id;
-    delete q.buyer_document;
-    delete q.receiver_document;
-    delete q.buyer_name;
-    delete q.payer_name;
-
-    if (debounceSearch && searchOption) {
-      setQuery(() => ({ ...q, [searchOption]: debounceSearch }));
-    }
-  }, [debounceSearch, searchOption]);
 
   return (
     <Grid container style={{ padding: "25px" }}>
@@ -201,13 +182,19 @@ export const GeneratedWithdrawals = () => {
           />
         </Grid>
         <Grid item xs={12} md={4} lg={4}>
-          <Input
+          <Input.Search
             placeholder="Pesquisa"
             size="large"
-            disabled={!searchOption}
             value={search || ""}
+            disabled={!searchOption}
             style={{ width: "100%" }}
             onChange={(event) => setSearch(event.target.value)}
+            onSearch={(value) =>
+              setQuery((state) => ({
+                ...state,
+                [`${searchOption}`]: value,
+              }))
+            }
           />
         </Grid>
         <Grid item xs={12} md={3} lg={2}>

@@ -21,7 +21,6 @@ import { FilterChips } from "../../../../../../components/FiltersModal/filterChi
 import { useGetRowsPaidWithdrawals } from "../../../../../../services/consult/withdrawals/paidWithdrawals/getRows";
 import { useGetTotalPaidWithdrawals } from "../../../../../../services/consult/withdrawals/paidWithdrawals/getTotal";
 import { paidWithdrawalsRowsQuery } from "../../../../../../services/types/consult/withdrawals/paidWithdrawals.interface";
-import useDebounce from "../../../../../../utils/useDebounce";
 import { ViewModal } from "../components/ViewModal";
 import { TotalizersCards } from "./components/TotalizersCards";
 
@@ -70,7 +69,6 @@ export const PaidWithdrawals = () => {
   const [searchOption, setSearchOption] = useState<string | null>(null);
   const [search, setSearch] = useState<string | null>(null);
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
-  const debounceSearch = useDebounce(search);
   const [csvFields, setCsvFields] = useState<any>();
   const [isComma, setIsComma] = useState<boolean>(true);
   const [isExportReportsOpen, setIsExportReportsOpen] =
@@ -100,22 +98,6 @@ export const PaidWithdrawals = () => {
     { name: "pix_key", type: "text" },
     { name: "status", type: "status" },
   ];
-
-  useEffect(() => {
-    const q = { ...query };
-    delete q.pix_id;
-    delete q.endToEndId;
-    delete q.txid;
-    delete q.reference_id;
-    delete q.buyer_document;
-    delete q.payer_document;
-    delete q.buyer_name;
-    delete q.payer_name;
-
-    if (debounceSearch && searchOption) {
-      setQuery(() => ({ ...q, [searchOption]: debounceSearch }));
-    }
-  }, [debounceSearch, searchOption]);
 
   return (
     <Grid container style={{ padding: "25px" }}>
@@ -182,13 +164,19 @@ export const PaidWithdrawals = () => {
           />
         </Grid>
         <Grid item xs={12} md={4} lg={4}>
-          <Input
+          <Input.Search
             placeholder="Pesquisa"
             size="large"
-            disabled={!searchOption}
             value={search || ""}
+            disabled={!searchOption}
             style={{ width: "100%" }}
             onChange={(event) => setSearch(event.target.value)}
+            onSearch={(value) =>
+              setQuery((state) => ({
+                ...state,
+                [`${searchOption}`]: value,
+              }))
+            }
           />
         </Grid>
         <Grid item xs={12} md={3} lg={2}>

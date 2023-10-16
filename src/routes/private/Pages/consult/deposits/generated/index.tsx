@@ -25,7 +25,6 @@ import { FilterChips } from "../../../../../../components/FiltersModal/filterChi
 import { useGetRowsGeneratedDeposits } from "../../../../../../services/consult/deposits/generatedDeposits/getRows";
 import { useGetTotalGeneratedDeposits } from "../../../../../../services/consult/deposits/generatedDeposits/getTotal";
 import { generatedDepositTotalQuery } from "../../../../../../services/types/consult/deposits/generatedDeposits.interface";
-import useDebounce from "../../../../../../utils/useDebounce";
 import { ResendWebhookModal } from "../components/ResendWebhookModal";
 import { ViewModal } from "../components/ViewModal";
 import { WebhookModal } from "../components/webhooksModal";
@@ -52,11 +51,8 @@ export const GeneratedDeposits = () => {
   const isMobile = useMediaQuery({ maxWidth: "750px" });
   const { t } = useTranslation();
   const [query, setQuery] = useState<generatedDepositTotalQuery>(INITIAL_QUERY);
-  const {
-    depositsTotal,
-    isDepositsTotalFetching,
-    refetchDepositsTotal,
-  } = useGetTotalGeneratedDeposits(query);
+  const { depositsTotal, isDepositsTotalFetching, refetchDepositsTotal } =
+    useGetTotalGeneratedDeposits(query);
 
   const {
     depositsRows,
@@ -81,8 +77,6 @@ export const GeneratedDeposits = () => {
   const [isComma, setIsComma] = useState<boolean>(true);
   const [isExportReportsOpen, setIsExportReportsOpen] =
     useState<boolean>(false);
-  const debounceSearch = useDebounce(search);
-
   const {
     GeneratedDepositsReportsError,
     GeneratedDepositsReportsIsLoading,
@@ -121,25 +115,13 @@ export const GeneratedDeposits = () => {
     { name: "status", type: "status" },
   ];
 
-  useEffect(() => {
-    const q = { ...query };
-    delete q.pix_id;
-    delete q.endToEndId;
-    delete q.txid;
-    delete q.reference_id;
-    delete q.buyer_document;
-    delete q.payer_document;
-    delete q.buyer_name;
-    delete q.payer_name;
-
-    if (debounceSearch && searchOption) {
-      setQuery(() => ({ ...q, [searchOption]: debounceSearch }));
-    }
-  }, [debounceSearch, searchOption]);
-
   return (
-    <Row gutter={[8, 8]} align="middle" justify="center" style={{ padding: "25px" }}>
-    
+    <Row
+      gutter={[8, 8]}
+      align="middle"
+      justify="center"
+      style={{ padding: "25px" }}
+    >
       {permissions.report.deposit.generated_deposit
         .report_deposit_generated_deposit_list_totals && (
         <TotalizersCards
@@ -157,7 +139,8 @@ export const GeneratedDeposits = () => {
         style={{ width: "100%" }}
       >
         <Col xs={{ span: 24 }} md={{ span: 4 }}>
-           <Button size="large"
+          <Button
+            size="large"
             style={{ width: "100%" }}
             loading={isDepositsRowsFetching || isDepositsTotalFetching}
             type="primary"
@@ -208,13 +191,19 @@ export const GeneratedDeposits = () => {
                 ]}
               />
 
-              <Input
+              <Input.Search
                 placeholder="Pesquisa"
                 size="large"
                 value={search || ""}
                 disabled={!searchOption}
                 style={{ width: "100%" }}
                 onChange={(event) => setSearch(event.target.value)}
+                onSearch={(value) =>
+                  setQuery((state) => ({
+                    ...state,
+                    [`${searchOption}`]: value,
+                  }))
+                }
               />
             </Space.Compact>
           )}
@@ -246,14 +235,20 @@ export const GeneratedDeposits = () => {
 
         {isMobile && (
           <Col xs={{ span: 24 }}>
-            <Input
-              placeholder="Pesquisa"
-              size="large"
-              value={search || ""}
-              disabled={!searchOption}
-              style={{ width: "100%" }}
-              onChange={(event) => setSearch(event.target.value)}
-            />
+            <Input.Search
+                placeholder="Pesquisa"
+                size="large"
+                value={search || ""}
+                disabled={!searchOption}
+                style={{ width: "100%" }}
+                onChange={(event) => setSearch(event.target.value)}
+                onSearch={(value) =>
+                  setQuery((state) => ({
+                    ...state,
+                    [`${searchOption}`]: value,
+                  }))
+                }
+              />
           </Col>
         )}
 
