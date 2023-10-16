@@ -26,7 +26,7 @@ import { useCreateMerchant } from "@src/services/register/merchant/merchant/crea
 import { useGetMerchantsTotals } from "@src/services/register/merchant/merchant/getMerchantsTotals";
 import { useCreateMerchantReports } from "@src/services/reports/register/merchant/createMerchantReports";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Input, InputRef } from "antd";
+import { Button, Input } from "antd";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -99,7 +99,7 @@ export const MerchantView = () => {
     MerchantReportsMutate,
     MerchantReset,
   } = useCreateMerchantReports(query);
-  const [search, setSearch] = useState<string>("");
+  const [, setSearch] = useState<string>("");
   const [isConfigOpen, setIsConfigOpen] = useState(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [selectedItems, setSelectedItems] = useState<

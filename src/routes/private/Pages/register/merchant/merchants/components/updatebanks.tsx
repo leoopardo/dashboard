@@ -4,10 +4,13 @@ import { PartnerSelect } from "@src/components/Selects/partnerSelect";
 import { Toast } from "@src/components/Toast";
 import { useListBanks } from "@src/services/bank/listBanks";
 import { useListMerchants } from "@src/services/merchant/listMerchants";
+import { queryClient } from "@src/services/queryClient";
 import { useUpdateBankConfig } from "@src/services/register/merchant/merchant/bankConfig/updateBankConfig";
-import { useGetRowsMerchantRegister } from "@src/services/register/merchant/merchant/getMerchants";
 import { IMerchantBankUpdate } from "@src/services/types/register/merchants/merchantBankConfig.interface";
-import { MerchantsItem } from "@src/services/types/register/merchants/merchantsRegister.interface";
+import {
+  MerchantsItem,
+  MerchantsResponse,
+} from "@src/services/types/register/merchants/merchantsRegister.interface";
 import { Avatar, Button, Drawer, Form, Radio, Select } from "antd";
 import { FormInstance } from "antd/lib/form/Form";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
@@ -54,12 +57,8 @@ export const UpdateBanks = ({
   });
 
   const { merchantsData } = useListMerchants(query);
-  const { MerchantData, isMerchantDataFetching } = useGetRowsMerchantRegister({
-    page: 1,
-    limit: 200,
-    sort_order: "ASC",
-    sort_field: "name",
-  });
+  const MerchantData: MerchantsResponse | undefined =
+    queryClient.getQueryData("MerchantsRegister");
 
   const [all, setAll] = useState<"all" | "partner">("all");
 
@@ -76,8 +75,6 @@ export const UpdateBanks = ({
       reset();
     }
   }, [UpdateBankIsSuccess]);
-
-  console.log(body);
 
   return (
     <>
@@ -129,7 +126,6 @@ export const UpdateBanks = ({
             <Select
               mode="multiple"
               size="large"
-              loading={isMerchantDataFetching}
               value={body.merchants_ids}
               onChange={(value) => {
                 setBody((state) => ({ ...state, merchants_ids: value }));
