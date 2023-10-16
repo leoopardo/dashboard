@@ -32,35 +32,66 @@ import {
   Tabs,
   TabsProps,
 } from "antd";
+import { EyeFilled } from "@ant-design/icons";
+import { CustomTable, ColumnInterface } from "@src/components/CustomTable";
+import { ViewModal } from "./components/ViewModal";
 import Dragger from "antd/es/upload/Dragger";
 import dayjs from "dayjs";
 import moment from "moment";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useGetPersonHistory } from "@src/services/register/persons/persons/getPersonsHistory";
 import ReactInputMask from "react-input-mask";
+import { useGetPersonHistoryDetails } from "@src/services/register/persons/persons/getPersonsHistory";
 import { useParams } from "react-router-dom";
+import { FilterChips } from "@src/components/FiltersModal/filterChips";
+import { FiltersModal } from "@src/components/FiltersModal";
+
+const INITIAL_QUERY: PersonsQuery = {
+  limit: 25,
+  page: 1,
+  sort_field: "created_at",
+  sort_order: "DESC",
+};
 
 export const PersonUpdate = () => {
   const [body, setBody] = useState<PersonsItem | undefined>(undefined);
+  const [currentObj, setCurrentObj] = useState<any | undefined>(undefined);
   const [currState, setCurrState] = useState<string | undefined>("");
   const [fileBody, setFileBody] = useState<CreateFileInterface | null>(null);
   const [isConfirmOpen, setIsConfirmOpen] = useState<boolean>(false);
+  const [isViewOpen, setIsViewOpen] = useState<boolean>(false);
+  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [deleteFileId, setDeleteFileId] = useState<string>("");
   const submitRef1 = useRef<HTMLButtonElement>(null);
   const { t } = useTranslation();
   const { cpf } = useParams();
-  const query: PersonsQuery = {
+  const [query, setQuery] = useState<PersonsQuery>({
     limit: 25,
     page: 1,
     sort_field: "created_at",
     sort_order: "DESC",
     cpf: cpf?.split(" ").join("."),
-  };
+  });
   const { states } = useGetStates();
   const { cities, refetchCities } = useGetCities(currState);
   const { PersonsData, isPersonsDataFetching } = useGetPersons(query);
   const { BlacklistReasons } = useGetBlacklistReasons({ limit: 200, page: 1 });
+  const {
+    PersonsHistoryData,
+    PersonsHistoryDataError,
+    isPersonsHistoryDataFetching,
+    refetchHistoryPersonsData,
+  } = useGetPersonHistory(
+    { ...query, cpf: undefined },
+    cpf?.split(" ").join(".") || ""
+  );
 
+  const { refetchHistoryPersonsDetailsData } = useGetPersonHistoryDetails(
+    { ...query, cpf: undefined },
+    cpf?.split(" ").join(".") || "",
+    currentObj?._id
+  );
   const { UpdateMutate, UpdateError, UpdateIsLoading, UpdateIsSuccess } =
     useUpdatePerson(body, cpf?.split(" ").join("."));
 
@@ -71,11 +102,22 @@ export const PersonUpdate = () => {
   const { DeleteFileError, DeleteFileIsSuccess, DeleteFileMutate } =
     useDeleteDeleteFile(cpf?.split(" ").join("."), deleteFileId);
 
-  ///// attachments -------------------------
-
   const { Files, isFilesFetching, refetchFiles } = useGetFiles(
     PersonsData?.items[0]?.cpf
   );
+
+  const columns: ColumnInterface[] = [
+    { name: "_id", type: "id", sort: true },
+    { name: "cpf", type: "document" },
+    { name: "user_name", type: "text", sort: true },
+    { name: "step", type: "translate", sort: true },
+    { name: "createdAt", type: "date", sort: true },
+  ];
+
+  const onChangeConfigs = (event: any) => {
+    const { value } = event.target;
+    setBody((state) => ({ ...state, [event.target.name]: value }));
+  };
 
   useEffect(() => {
     setBody(PersonsData?.items[0]);
@@ -84,23 +126,29 @@ export const PersonUpdate = () => {
   }, [PersonsData]);
 
   useEffect(() => {
+    refetchHistoryPersonsData();
+  }, [query]);
+
+  useEffect(() => {
+    if (currentObj && isViewOpen) {
+      refetchHistoryPersonsDetailsData();
+    }
+  }, [isViewOpen]);
+
+  useEffect(() => {
     refetchCities();
   }, [currState]);
 
   useEffect(() => {
     if (deleteFileId) DeleteFileMutate();
   }, [deleteFileId]);
+
   useEffect(() => {
     if (fileBody?.base64_file) {
       FileMutate();
       setFileBody({ base64_file: "", file_name: "" });
     }
   }, [fileBody]);
-
-  const onChangeConfigs = (event: any) => {
-    const { value } = event.target;
-    setBody((state) => ({ ...state, [event.target.name]: value }));
-  };
 
   const items: TabsProps["items"] = [
     {
@@ -767,6 +815,104 @@ export const PersonUpdate = () => {
                 description={t("error.400")}
               />
             </Grid>
+          )}
+        </Grid>
+      ),
+    },
+    {
+      key: "5",
+      label: t("table.historic"),
+      children: isFilesFetching ? (
+        <div
+          style={{
+            height: "100%",
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Spin size="large" />
+        </div>
+      ) : (
+        <Grid container spacing={1}>
+          <Grid
+            container
+            style={{ display: "flex", alignItems: "center" }}
+            spacing={1}
+          >
+            <Grid item xs={12} md={4} lg={2}>
+              <Button
+                size="large"
+                style={{ width: "100%" }}
+                loading={isPersonsDataFetching}
+                type="primary"
+                onClick={() => setIsFiltersOpen(true)}
+              >
+                {t("table.filters")}
+              </Button>
+            </Grid>
+            <Grid item xs={12} md={8} lg={10}>
+              <FilterChips
+                startDateKeyName="initial_date"
+                endDateKeyName="final_date"
+                query={query}
+                setQuery={setQuery}
+              />
+            </Grid>
+          </Grid>
+          <Grid xs={12} item>
+            <CustomTable
+              query={query}
+              setCurrentItem={setCurrentObj}
+              setQuery={setQuery}
+              actions={[
+                {
+                  label: "details",
+                  icon: <EyeFilled style={{ fontSize: "20px" }} />,
+                  onClick: () => setIsViewOpen(true),
+                },
+              ]}
+              data={PersonsHistoryData}
+              items={PersonsHistoryData?.items}
+              error={PersonsHistoryDataError}
+              columns={columns}
+              loading={isPersonsHistoryDataFetching}
+              label={["user_name", "step"]}
+            />
+          </Grid>
+
+          {isViewOpen && (
+            <ViewModal
+              cpf={currentObj?.cpf}
+              id={currentObj?._id}
+              open={isViewOpen}
+              setOpen={setIsViewOpen}
+              query={query}
+            />
+          )}
+
+          {isFiltersOpen && (
+            <FiltersModal
+              open={isFiltersOpen}
+              setOpen={setIsFiltersOpen}
+              query={query}
+              setQuery={setQuery}
+              filters={["initial_date", "final_date", "step"]}
+              refetch={refetchHistoryPersonsData}
+              selectOptions={{
+                step: [
+                  "UPDATE_CPF",
+                  "CREATE_CPF",
+                  "UPDATE_FILE",
+                  "CREATE_FILE",
+                  "DELETE_FILE",
+                ],
+              }}
+              startDateKeyName="initial_date"
+              endDateKeyName="final_date"
+              initialQuery={INITIAL_QUERY}
+            />
           )}
         </Grid>
       ),
