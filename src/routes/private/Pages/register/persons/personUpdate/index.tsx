@@ -107,11 +107,11 @@ export const PersonUpdate = () => {
   );
 
   const columns: ColumnInterface[] = [
-    { name: "_id", type: "id", sort: true },
+    { name: "_id", type: "id" },
     { name: "cpf", type: "document" },
-    { name: "user_name", type: "text", sort: true },
-    { name: "step", type: "translate", sort: true },
-    { name: "createdAt", type: "date", sort: true },
+    { name: "user_name", type: "text" },
+    { name: "step", type: "translate" },
+    { name: "createdAt", type: "date" },
   ];
 
   const onChangeConfigs = (event: any) => {
