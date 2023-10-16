@@ -697,6 +697,16 @@
     "debit_merchant_id": "ID Empresa origem",
     "credit_merchant_id": "ID Empresa destino",
     "can_be_deleted_only_by_organization": "Organização pode deletar",
+    "file_url": "Arquivo",
+    "previous_data": "Anterior à alteração",
+    "data_later": "Posterior à alteração",
+    "historic": "Historico",
+    "general": "Geral",
+    "delete_file": "Deletar arquivo",
+    "create_file": "Criar arquivo",
+    "update_file": "Atualizar arquivo",
+    "create_cpf": "Criar CPF",
+    "update_cpf": "Atualizar CPF",
     "aggregator_data": "Dados do agregador",
     "responsibles": "Responsáveis",
     "linked_merchants_total": "Empresas atreladas",
@@ -753,6 +763,11 @@
     "pay365": "banco Pay365",
     "pixsbrasil": "PIXS Brasil",
     "fastcash": "FastCash",
-    "btg": "BTG"
+    "btg": "BTG",
+    "delete_file": "Deletar arquivo",
+    "create_file": "Criar arquivo",
+    "update_file": "Atualizar arquivo",
+    "create_cpf": "Criar CPF",
+    "update_cpf": "Atualizar CPF"
   }
 }

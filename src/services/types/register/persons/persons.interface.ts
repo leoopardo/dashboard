@@ -85,3 +85,43 @@ export interface PersonBlacklistReason {
     createdAt: string;
   }[];
 }
+
+export interface PersonHistory {
+  _id: string;
+  cpf: string;
+  step: string;
+  user_id: number;
+  user_name: string;
+  ip: string;
+  data_before?: {
+    _id: string;
+    cpf: string;
+    file_url: string;
+    file_name: string;
+    createdAt: string;
+    updatedAt: string;
+    __v?: number;
+  } | null;
+  data_later?: {
+    _id: string;
+    cpf: string;
+    file_url: string;
+    file_name: string;
+    createdAt: string;
+    updatedAt: string;
+    __v?: number;
+  } | null;
+  payload?: {
+    cpf: string;
+    file_id: string;
+  };
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface PersonHistoryResponse {
+  total: number;
+  limit: number;
+  page: number;
+  items: PersonHistory[];
+}
