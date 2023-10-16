@@ -23,17 +23,16 @@ import {
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { queryClient } from "@src/services/queryClient";
 import { useCreateMerchant } from "@src/services/register/merchant/merchant/createMerchant";
+import { useGetMerchantsTotals } from "@src/services/register/merchant/merchant/getMerchantsTotals";
 import { useCreateMerchantReports } from "@src/services/reports/register/merchant/createMerchantReports";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import useDebounce from "@utils/useDebounce";
-import { Button, Input } from "antd";
-import { useEffect, useState } from "react";
+import { Button, Input, InputRef } from "antd";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { ViewMerchantModal } from "./components/ViewMerchantModal";
-import { UpdateBanks } from "./components/updatebanks";
-import { useGetMerchantsTotals } from "@src/services/register/merchant/merchant/getMerchantsTotals";
 import { TotalizersCards } from "./components/totalizersCards";
+import { UpdateBanks } from "./components/updatebanks";
 
 const INITIAL_QUERY: MerchantsQuery = {
   limit: 25,
@@ -103,10 +102,10 @@ export const MerchantView = () => {
   const [search, setSearch] = useState<string>("");
   const [isConfigOpen, setIsConfigOpen] = useState(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
-  const [selectedItems, setSelectedItems] = useState<MerchantsItem[] | null>(
-    null
-  );
-  const debounceSearch = useDebounce(search);
+  const [selectedItems, setSelectedItems] = useState<
+    (MerchantsItem | undefined | { id: number })[] | null | undefined
+  >(null);
+  const searchref = useRef<any>(null);
 
   const columns: ColumnInterface[] = [
     { name: "id", type: "id", sort: true },
@@ -144,15 +143,6 @@ export const MerchantView = () => {
     });
   }, [currentItem]);
 
-  useEffect(() => {
-    if (!debounceSearch) {
-      const q = { ...query };
-      delete q.name;
-      return setQuery(q);
-    }
-    setQuery((state: any) => ({ ...state, name: debounceSearch }));
-  }, [debounceSearch]);
-
   return (
     <Grid container style={{ padding: "25px" }}>
       <TotalizersCards
@@ -188,13 +178,13 @@ export const MerchantView = () => {
 
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
         <Grid item xs={12} md={6} lg={4}>
-          <Input
+          <Input.Search
             size="large"
-            value={search}
+            ref={searchref}
             placeholder={t("table.name") || ""}
-            onChange={(event) => {
-              setSearch(event.target.value);
-            }}
+            onSearch={(value) =>
+              setQuery((state) => ({ ...state, name: value }))
+            }
           />
         </Grid>
         <Grid item xs={12} md={4} lg={2}>
@@ -204,6 +194,12 @@ export const MerchantView = () => {
             danger
             onClick={() => {
               setQuery(INITIAL_QUERY);
+
+              setTimeout(() => {
+                searchref.current.input.value = "";
+                
+              }, 1000);
+
               setSearch("");
             }}
             style={{
@@ -290,6 +286,7 @@ export const MerchantView = () => {
             label={["name", "username"]}
             checkbox
             setSelectedRows={setSelectedItems}
+            selectedKeys={selectedItems}
             actions={[
               {
                 label: "details",
@@ -358,6 +355,7 @@ export const MerchantView = () => {
           open={isUpdatebankOpen}
           setOpen={setIsUpdateBankOpen}
           items={selectedItems}
+          setItems={setSelectedItems}
         />
       )}
 

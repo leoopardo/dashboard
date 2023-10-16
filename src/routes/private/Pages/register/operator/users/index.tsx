@@ -8,15 +8,14 @@ import { ValidateToken } from "@components/ValidateToken";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
+import { Toast } from "@src/components/Toast";
 import { useGetOperatorUsers } from "@src/services/register/operator/users/getOperatorUsers";
 import { useUpdateOperatorUser } from "@src/services/register/operator/users/updateUser";
 import { PartnerQuery } from "@src/services/types/register/partners/partners.interface";
-import useDebounce from "@utils/useDebounce";
 import { Button, Input } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { NewUserInterface, NewUserModal } from "./components/newUserModal";
-import { Toast } from "@src/components/Toast";
 
 const INITIAL_QUERY: PartnerQuery = {
   limit: 25,
@@ -34,7 +33,6 @@ export const OperatorUsers = () => {
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<any>(null);
   const [search, setSearch] = useState<string>("");
-  const debounceSearch = useDebounce(search);
   const [updateUserBody, setUpdateUserBody] = useState<NewUserInterface | null>(
     null
   );
@@ -63,15 +61,6 @@ export const OperatorUsers = () => {
     refetchUsersData();
   }, [query]);
 
-  useEffect(() => {
-    if (!debounceSearch) {
-      const q = { ...query };
-      delete q.name;
-      return setQuery(q);
-    }
-    setQuery((state) => ({ ...state, name: debounceSearch }));
-  }, [debounceSearch]);
-
   const handleUpdateTokenValidate = () => {
     updateMutate();
   };
@@ -99,20 +88,20 @@ export const OperatorUsers = () => {
             endDateKeyName="end_date"
             query={query}
             setQuery={setQuery}
-             
           />
         </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
         <Grid item xs={12} md={4} lg={4}>
-          <Input
+          <Input.Search
             size="large"
             value={search}
             placeholder={t("table.name") || ""}
             onChange={(event) => {
               setSearch(event.target.value);
             }}
+            onSearch={() => setQuery((state) => ({ ...state, name: search }))}
           />
         </Grid>
         <Grid item xs={12} md={3} lg={2}>
@@ -198,7 +187,6 @@ export const OperatorUsers = () => {
           setOpen={setIsFiltersOpen}
           query={query}
           setQuery={setQuery}
-           
           filters={[
             "start_date",
             "end_date",

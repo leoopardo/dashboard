@@ -5,12 +5,11 @@ import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
-import useDebounce from "@utils/useDebounce";
+import { ViewModal } from "@src/components/Modals/viewGenericModal";
+import { useGetPartnersTotals } from "@src/services/register/partner/getPartnersTotals";
 import { Button, Input } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useGetPartnersTotals } from "@src/services/register/partner/getPartnersTotals";
-import { ViewModal } from "@src/components/Modals/viewGenericModal";
 
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
@@ -65,7 +64,6 @@ export const Partners = () => {
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<PartnerItem | null>(null);
   const [search, setSearch] = useState<string>("");
-  const debounceSearch = useDebounce(search);
   const [createBody, setCreateBody] = useState<PartnerItem>({
     name: "",
     cnpj: "",
@@ -98,19 +96,9 @@ export const Partners = () => {
   ];
 
   useEffect(() => {
-    
-    isSuccessPartnersTotalsData && refetchPartnersTotalsData()
+    isSuccessPartnersTotalsData && refetchPartnersTotalsData();
     isSuccessPartnersData && refetchPartnersData();
   }, [query]);
-
-  useEffect(() => {
-    if (!debounceSearch) {
-      const q = { ...query };
-      delete q.name;
-      return setQuery(q);
-    }
-    setQuery((state) => ({ ...state, name: debounceSearch }));
-  }, [debounceSearch]);
 
   useEffect(() => {
     setUpdateBody({
@@ -154,13 +142,14 @@ export const Partners = () => {
 
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
         <Grid item xs={12} md={4} lg={4}>
-          <Input
+          <Input.Search
             size="large"
             value={search}
             placeholder={t("table.name") || ""}
             onChange={(event) => {
               setSearch(event.target.value);
             }}
+            onSearch={() => setQuery((state) => ({ ...state, name: search }))}
           />
         </Grid>
         <Grid item xs={12} md={3} lg={2}>

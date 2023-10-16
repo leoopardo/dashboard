@@ -12,15 +12,14 @@ import { Toast } from "@src/components/Toast";
 import { queryClient } from "@src/services/queryClient";
 import { useCreateAggregator } from "@src/services/register/aggregator/createAggregator";
 import { useGetAggregators } from "@src/services/register/aggregator/getAggregators";
+import { useGetAggregatorsTotals } from "@src/services/register/aggregator/getAggregatorsTotals";
 import { useUpdateAggregator } from "@src/services/register/aggregator/updateAggregator";
 import { useCreateAggregatorReports } from "@src/services/reports/register/aggregators/createAggregatorReports";
 import {
   AggregatorItem,
   AggregatorQuery,
 } from "@src/services/types/register/aggregators/aggregators.interface";
-import { useGetAggregatorsTotals } from "@src/services/register/aggregator/getAggregatorsTotals";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import useDebounce from "@utils/useDebounce";
 import { Button, Input } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -71,7 +70,6 @@ export const Aggregators = () => {
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<AggregatorItem | null>(null);
   const [search, setSearch] = useState<string>("");
-  const debounceSearch = useDebounce(search);
   const [createBody, setCreateBody] = useState<AggregatorItem>({
     name: "",
     cnpj: "",
@@ -110,15 +108,6 @@ export const Aggregators = () => {
     isSuccessAggregatorsTotalsData && refetchAggregatorsTotalsData();
     isSuccessAggregatorsData && refetchAggregatorsData();
   }, [query]);
-
-  useEffect(() => {
-    if (!debounceSearch) {
-      const q = { ...query };
-      delete q.name;
-      return setQuery(q);
-    }
-    setQuery((state) => ({ ...state, name: debounceSearch }));
-  }, [debounceSearch]);
 
   useEffect(() => {
     setUpdateBody({
@@ -162,13 +151,14 @@ export const Aggregators = () => {
 
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
         <Grid item xs={12} md={4} lg={4}>
-          <Input
+          <Input.Search
             size="large"
             value={search}
             placeholder={t("table.name") || ""}
             onChange={(event) => {
               setSearch(event.target.value);
             }}
+            onSearch={() => setQuery((state) => ({ ...state, name: search }))}
           />
         </Grid>
         <Grid item xs={12} md={3} lg={2}>
