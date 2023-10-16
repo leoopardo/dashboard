@@ -22,7 +22,6 @@ import {
   OrganizationCategoriesQuery,
 } from "@src/services/types/register/organization/organizationCategories.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import useDebounce from "@utils/useDebounce";
 import { Button, Input } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -59,7 +58,6 @@ export const OrganizationCategories = () => {
   const [currentItem, setCurrentItem] =
     useState<OrganizationCategoriesItem | null>(null);
   const [search, setSearch] = useState<string>("");
-  const debounceSearch = useDebounce(search);
   const [createBody, setCreateBody] = useState<{
     name: string;
     description: string;
@@ -95,15 +93,6 @@ export const OrganizationCategories = () => {
   }, [query]);
 
   useEffect(() => {
-    if (!debounceSearch) {
-      const q = { ...query };
-      delete q.name;
-      return setQuery(q);
-    }
-    setQuery((state) => ({ ...state, name: debounceSearch }));
-  }, [debounceSearch]);
-
-  useEffect(() => {
     setUpdateBody({
       ...currentItem,
       entry_account_category_id: currentItem?.id,
@@ -118,7 +107,8 @@ export const OrganizationCategories = () => {
         spacing={1}
       >
         <Grid item xs={12} md={4} lg={2}>
-           <Button size="large"
+          <Button
+            size="large"
             style={{ width: "100%" }}
             loading={isCategoriesDataFetching}
             type="primary"
@@ -139,13 +129,14 @@ export const OrganizationCategories = () => {
 
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
         <Grid item xs={12} md={4} lg={4}>
-          <Input
+          <Input.Search
             size="large"
             value={search}
             placeholder={t("table.name") || ""}
             onChange={(event) => {
               setSearch(event.target.value);
             }}
+            onSearch={() => setQuery((state) => ({ ...state, name: search }))}
           />
         </Grid>
         <Grid item xs={12} md={3} lg={2}>
@@ -196,7 +187,7 @@ export const OrganizationCategories = () => {
           .paybrokers_release_category_export_csv && (
           <Grid item xs={12} md="auto">
             <ExportReportsModal
-              disabled={!CategoriesData?.total || CategoriesDataError }
+              disabled={!CategoriesData?.total || CategoriesDataError}
               mutateReport={() => CategoryReportsMutate()}
               error={CategoryReportsError}
               success={CategoryReportsIsSuccess}

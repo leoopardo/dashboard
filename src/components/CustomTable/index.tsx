@@ -76,7 +76,8 @@ interface TableProps {
   onConfirmAction?: () => void;
   disableScrollToTop?: boolean;
   checkbox?: boolean;
-  setSelectedRows?: Dispatch<SetStateAction<any[] | null>>;
+  setSelectedRows?: Dispatch<SetStateAction<any>>;
+  selectedKeys?: any[] | null;
 }
 
 export const CustomTable = (props: TableProps) => {
@@ -125,7 +126,7 @@ export const CustomTable = (props: TableProps) => {
   }, [sortOrder]);
 
   useEffect(() => {
-    if (!props.disableScrollToTop ) {
+    if (!props.disableScrollToTop) {
       window.scrollTo({
         top: 0,
         left: 0,
@@ -506,7 +507,6 @@ export const CustomTable = (props: TableProps) => {
                           onClick: () => {
                             if (action && action.onClick) {
                               action.onClick(record);
-                              
                             }
                           },
                         };
@@ -755,6 +755,9 @@ export const CustomTable = (props: TableProps) => {
                 props?.checkbox
                   ? {
                       type: "checkbox",
+                      selectedRowKeys: props.selectedKeys?.map(
+                        (item) => item?.id ?? item?._id ?? Math.random() * 100
+                      ),
                       ...rowSelection,
                     }
                   : undefined

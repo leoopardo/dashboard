@@ -1,7 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { PartnerSelect } from "@src/components/Selects/partnerSelect";
 import { Toast } from "@src/components/Toast";
 import { useListBanks } from "@src/services/bank/listBanks";
+import { useListMerchants } from "@src/services/merchant/listMerchants";
 import { useUpdateBankConfig } from "@src/services/register/merchant/merchant/bankConfig/updateBankConfig";
+import { useGetRowsMerchantRegister } from "@src/services/register/merchant/merchant/getMerchants";
 import { IMerchantBankUpdate } from "@src/services/types/register/merchants/merchantBankConfig.interface";
 import { MerchantsItem } from "@src/services/types/register/merchants/merchantsRegister.interface";
 import { Avatar, Button, Drawer, Form, Radio, Select } from "antd";
@@ -12,14 +16,26 @@ import { useTranslation } from "react-i18next";
 interface UpdateBanksInterface {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
-  items: MerchantsItem[] | null;
+  items: (MerchantsItem | undefined)[] | null | undefined;
+  setItems: Dispatch<
+    SetStateAction<
+      (MerchantsItem | undefined | { id: number })[] | null | undefined
+    >
+  >;
 }
 
-export const UpdateBanks = ({ open, setOpen, items }: UpdateBanksInterface) => {
+export const UpdateBanks = ({
+  open,
+  setOpen,
+  items,
+  setItems,
+}: UpdateBanksInterface) => {
   const { t } = useTranslation();
   const formRef = useRef<FormInstance>(null);
   const submitRef = useRef<HTMLButtonElement>(null);
-  const [body, setBody] = useState<IMerchantBankUpdate>({});
+  const [body, setBody] = useState<IMerchantBankUpdate>({
+    merchants_ids: items?.map((merchant) => merchant?.id),
+  });
   const { bankListData } = useListBanks({ limit: 200, page: 1 });
   const {
     UpdateIsLoading,
@@ -29,9 +45,30 @@ export const UpdateBanks = ({ open, setOpen, items }: UpdateBanksInterface) => {
     UpdateBankError,
   } = useUpdateBankConfig({
     ...body,
-    merchants_ids: items?.map((merchant) => merchant?.id),
   });
+  const [query] = useState<any>({
+    page: 1,
+    limit: 200,
+    sort_order: "ASC",
+    sort_field: "name",
+  });
+
+  const { merchantsData } = useListMerchants(query);
+  const { MerchantData, isMerchantDataFetching } = useGetRowsMerchantRegister({
+    page: 1,
+    limit: 200,
+    sort_order: "ASC",
+    sort_field: "name",
+  });
+
   const [all, setAll] = useState<"all" | "partner">("all");
+
+  useEffect(() => {
+    setBody((state) => ({
+      ...state,
+      merchants_ids: items?.map((merchant) => merchant?.id),
+    }));
+  }, [items]);
 
   useEffect(() => {
     if (UpdateBankIsSuccess) {
@@ -39,6 +76,8 @@ export const UpdateBanks = ({ open, setOpen, items }: UpdateBanksInterface) => {
       reset();
     }
   }, [UpdateBankIsSuccess]);
+
+  console.log(body);
 
   return (
     <>
@@ -77,10 +116,49 @@ export const UpdateBanks = ({ open, setOpen, items }: UpdateBanksInterface) => {
           ref={formRef}
           layout="vertical"
           disabled={UpdateIsLoading}
+          initialValues={body}
           onFinish={() => {
             UpdateMutate();
           }}
         >
+          <Form.Item
+            label={t(`table.merchant`)}
+            name="merchants_ids"
+            style={{ margin: 10 }}
+          >
+            <Select
+              mode="multiple"
+              size="large"
+              loading={isMerchantDataFetching}
+              value={body.merchants_ids}
+              onChange={(value) => {
+                setBody((state) => ({ ...state, merchants_ids: value }));
+                setItems(
+                  value.map((id) => {
+                    return (
+                      MerchantData?.items.find((merch) => merch.id === id) ?? {
+                        id,
+                      }
+                    );
+                  })
+                );
+                console.log(value);
+              }}
+              options={merchantsData?.items.map((merch) => {
+                return {
+                  label: merch.name,
+                  value: merch.id,
+                };
+              })}
+              filterOption={(input, option) => {
+                return (
+                  `${option?.label}`
+                    ?.toLowerCase()
+                    ?.indexOf(input?.toLowerCase()) >= 0
+                );
+              }}
+            />
+          </Form.Item>
           <Form.Item
             label={t(`input.deposit_bank`)}
             name="deposit"

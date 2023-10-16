@@ -22,7 +22,10 @@ export const Confirmation = ({
     <Modal
       title={title}
       open={open}
-      onOk={() => submit}
+      onOk={() => {
+        submit();
+        setOpen(false);
+      }}
       onCancel={() => setOpen(false)}
       confirmLoading={loading}
     >

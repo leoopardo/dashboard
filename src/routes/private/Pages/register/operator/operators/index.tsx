@@ -11,18 +11,18 @@ import { Toast } from "@src/components/Toast";
 import { queryClient } from "@src/services/queryClient";
 import { useCreateOperator } from "@src/services/register/operator/createOperator";
 import { useGetOperator } from "@src/services/register/operator/getOperators";
+import { useGetOperatorTotal } from "@src/services/register/operator/getOperatorsTotal";
 import { useUpdateOperator } from "@src/services/register/operator/updateOperator";
 import {
   OperatorItem,
   OperatorQuery,
 } from "@src/services/types/register/operators/operators.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import useDebounce from "@utils/useDebounce";
 import { Button, Input } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import { TotalizersCards } from "./components/totalizersCards";
-import { useGetOperatorTotal } from "@src/services/register/operator/getOperatorsTotal";
 
 const INITIAL_QUERY: OperatorQuery = {
   limit: 25,
@@ -37,13 +37,13 @@ export const Operators = () => {
   ) as ValidateInterface;
   const [query, setQuery] = useState<OperatorQuery>(INITIAL_QUERY);
   const { t } = useTranslation();
-
+  const navigate = useNavigate();
   const {
     OperatorData,
     OperatorDataError,
     isOperatorDataFetching,
     refetchOperatorData,
-    isSuccessOperatorData
+    isSuccessOperatorData,
   } = useGetOperator(query);
 
   const {
@@ -61,7 +61,6 @@ export const Operators = () => {
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<OperatorItem | null>(null);
   const [search, setSearch] = useState<string>("");
-  const debounceSearch = useDebounce(search);
   const [createBody, setCreateBody] = useState<OperatorItem>({
     name: "",
     cnpj: "",
@@ -91,22 +90,13 @@ export const Operators = () => {
   ];
 
   useEffect(() => {
-    if(isSuccessOperatorData) {
+    if (isSuccessOperatorData) {
       refetchOperatorData();
     }
-    if(isSuccessOperatorTotalData){
+    if (isSuccessOperatorTotalData) {
       refetchOperatorTotalData();
     }
   }, [query]);
-
-  useEffect(() => {
-    if (!debounceSearch) {
-      const q = { ...query };
-      delete q.name;
-      return setQuery(q);
-    }
-    setQuery((state) => ({ ...state, name: debounceSearch }));
-  }, [debounceSearch]);
 
   useEffect(() => {
     setUpdateBody({
@@ -150,13 +140,14 @@ export const Operators = () => {
 
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
         <Grid item xs={12} md={4} lg={4}>
-          <Input
+          <Input.Search
             size="large"
             value={search}
             placeholder={t("table.name") || ""}
             onChange={(event) => {
               setSearch(event.target.value);
             }}
+            onSearch={() => setQuery((state) => ({ ...state, name: search }))}
           />
         </Grid>
         <Grid item xs={12} md={3} lg={2}>
@@ -214,15 +205,15 @@ export const Operators = () => {
               {
                 label: "details",
                 icon: <EyeFilled style={{ fontSize: "20px" }} />,
-                onClick: () => {
-                  setIsViewModalOpen(true);
+                onClick: (item) => {
+                  navigate("details", { state: item });
                 },
               },
               permissions.register.operator.operator.operator_update && {
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
-                onClick: () => {
-                  setIsUpdateCategorieModalOpen(true);
+                onClick: (item) => {
+                  navigate("update", { state: item });
                 },
               },
             ]}

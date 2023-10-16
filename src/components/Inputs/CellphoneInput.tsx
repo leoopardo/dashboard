@@ -16,19 +16,26 @@ export const CellphoneInput = ({ body, setBody }: CellphoneInterface) => {
   const [codeFlag, setCodeFlag] = useState<any>(null);
   const { Countries } = useGetrefetchCountries();
   const countries = Country.getAllCountries();
-  const [DDI, setDDI] = useState<string>("");
+  const [DDI, setDDI] = useState<string | undefined>(undefined);
   const [search, setSearch] = useState<string>("");
   const [number, setNumber] = useState<string>("");
+  const [started, setStarted] = useState<boolean>(false);
 
   useEffect(() => {
-    setCodeFlag(
-      Countries?.map((c) => {
-        return {
-          phoneCode: countries?.find((c2) => c2.isoCode === c.cca2)?.phonecode,
-          flag: c.flags.svg,
-        };
-      })
-    );
+    if (Countries && countries && !started) {
+      setCodeFlag(
+        Countries?.filter((item, index, self) => {
+          return self.indexOf(item) === index;
+        }).map((c) => {
+          return {
+            phoneCode: countries?.find((c2) => c2.isoCode === c.cca2)
+              ?.phonecode,
+            flag: c.flags.svg,
+          };
+        })
+      );
+      setStarted(true);
+    }
   }, [Countries, countries]);
 
   useEffect;
@@ -53,7 +60,10 @@ export const CellphoneInput = ({ body, setBody }: CellphoneInterface) => {
   }, []);
 
   useEffect(() => {
-    setBody((state: any) => ({ ...state, cellphone: `${DDI}${number}` }));
+    setBody((state: any) => ({
+      ...state,
+      cellphone: DDI && number ? `${DDI}${number}` : undefined,
+    }));
   }, [DDI, number]);
 
   function getCellphoneFormat() {
@@ -129,10 +139,33 @@ export const CellphoneInput = ({ body, setBody }: CellphoneInterface) => {
             value: `+${item.phoneCode.split("+")}`,
           };
         })}
-        onChange={(value) => setSearch(value)}
+        filterOption={(inputValue, option) =>
+          `+${option?.value}`
+            ?.toUpperCase()
+            .indexOf(inputValue.toUpperCase()) !== -1
+        }
+        onChange={(value) => {
+          if (!value) {
+            setDDI(undefined);
+          }
+          setSearch(value);
+        }}
         onSelect={(value) => setDDI(value)}
-        placeholder="+00"
-      />
+      >
+        <Input
+          size="large"
+          prefix={
+            <Avatar
+              style={{ height: 25, width: 25 }}
+              src={
+                codeFlag?.find(
+                  (item: any) => item?.phoneCode === DDI?.split("+")[1]
+                )?.flag
+              }
+            />
+          }
+        />
+      </AutoComplete>
       <ReactInputMask
         value={number}
         mask={getCellphoneFormat()}

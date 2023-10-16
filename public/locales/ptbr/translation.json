@@ -141,7 +141,8 @@
     "contestation": "Contestação",
     "uploads": "Uploads",
     "import_csv": "Importar csv",
-    "update_aggregator": "Atualizar agregador"
+    "update_aggregator": "Atualizar agregador",
+    "details": "Detalhes"
   },
 
   "titles": {
@@ -184,7 +185,7 @@
     "validated": "Validado",
     "validate": "validar",
     "upload_label": "Clique ou arraste e solte o arquivo para esta área",
-    "upload_description": "Suporte para um arquivo por vês, nos formatos: pdf, png e docx.",
+    "upload_description": "Suporte para um arquivo por vez, nos formatos: pdf, png e docx.",
     "min_value_higher_then_zero": "O valor desse campo deve ser maior que 0",
     "create_csv": "Criar CSV",
     "csv_confirm": "Deseja criar um CSV com os filtros selecionados?",
@@ -233,7 +234,8 @@
     "create_self_exclusion": "Criar auto exclusão",
     "transfers": "Transferências",
     "dark": "Tema escuro",
-    "light": "Tema claro"
+    "light": "Tema claro",
+    "responsible": "responsável"
   },
   "modal": {
     "confirm": "Confirmar",
@@ -261,7 +263,9 @@
     "update_bank": "Atualizar banco",
     "new_reason": "Novo motivo",
     "modal_create_merchant": "Criar empresa",
-    "report_details": "Detalhes do relatório"
+    "report_details": "Detalhes do relatório",
+    "new_responsible": "Novo responsável",
+    "update_responsible": "Editar responsável"
   },
   "input": {
     "required": "Por favor, insira o {{field}}",
@@ -702,7 +706,15 @@
     "create_file": "Criar arquivo",
     "update_file": "Atualizar arquivo",
     "create_cpf": "Criar CPF",
-    "update_cpf": "Atualizar CPF"
+    "update_cpf": "Atualizar CPF",
+    "aggregator_data": "Dados do agregador",
+    "responsibles": "Responsáveis",
+    "linked_merchants_total": "Empresas atreladas",
+    "linked_operators_total": "Operadores atrelados",
+    "position": "Cargo",
+    "operator_data": "Dados de operador",
+    "merchant_data": "Dados de empresa",
+    "partner_data": "Dados de plataforma"
   },
   "actions": {
     "details": "Detalhes",

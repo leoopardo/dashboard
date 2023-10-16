@@ -25,7 +25,8 @@ export const queryClient = new QueryClient({
     queries: {
       refetchOnMount: "always",
       retry: false,
-      refetchOnWindowFocus: false
+      refetchOnWindowFocus: false,
+      
     },
   },
 });

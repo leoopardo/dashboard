@@ -42,6 +42,7 @@ import { OrganizationTransferBetweenAccountsReports } from "./Pages/moviments/or
 import { OrganizationManualReports } from "./Pages/moviments/organization/reports/manual";
 import { Aggregators } from "./Pages/register/aggregator/aggregators";
 import { UpdateAggregator } from "./Pages/register/aggregator/aggregators/updateAggregator";
+import { AggregatorDetails } from "./Pages/register/aggregator/aggregators/viewAggregator";
 import { AggregatorBlacklist } from "./Pages/register/aggregator/blacklist";
 import { AggregatorsReports } from "./Pages/register/aggregator/reports/aggregators";
 import { AggregatorsBlacklistReports } from "./Pages/register/aggregator/reports/blacklist";
@@ -57,11 +58,15 @@ import { MerchantFeePlans } from "./Pages/register/merchant/feeplans";
 import { MerchantManualEntryCategory } from "./Pages/register/merchant/manualEntryCategory";
 import { MerchantView } from "./Pages/register/merchant/merchants";
 import { MerchantConfigs } from "./Pages/register/merchant/merchants/components/merchantConfigs";
+import { UpdateMerchant } from "./Pages/register/merchant/merchants/updateMerchant";
+import { MerchantDetails } from "./Pages/register/merchant/merchants/viewMerchant";
 import { MerchantBlacklistReports } from "./Pages/register/merchant/reports/blacklist";
 import { MerchantReports } from "./Pages/register/merchant/reports/merchant";
 import { MerchantUserReports } from "./Pages/register/merchant/reports/user";
 import { MerchantUser } from "./Pages/register/merchant/users";
 import { Operators } from "./Pages/register/operator/operators";
+import { UpdateOperator } from "./Pages/register/operator/operators/updateOperator";
+import { OperatorDetails } from "./Pages/register/operator/operators/viewOperator";
 import { OperatorReports } from "./Pages/register/operator/reports/operator";
 import { OperatorUsersReports } from "./Pages/register/operator/reports/users";
 import { OperatorUsers } from "./Pages/register/operator/users";
@@ -72,6 +77,8 @@ import { OrganizationCategoriesReports } from "./Pages/register/organization/rep
 import { OrganizationUserReports } from "./Pages/register/organization/reports/user";
 import { OrganizationUser } from "./Pages/register/organization/users";
 import { Partners } from "./Pages/register/partner/partners";
+import { UpdatePartner } from "./Pages/register/partner/partners/updatePartner";
+import { PartnerDetails } from "./Pages/register/partner/partners/viewPartner";
 import { PartnerReports } from "./Pages/register/partner/reports/partner";
 import { PartnerUsersReports } from "./Pages/register/partner/reports/users";
 import { PartnerUsers } from "./Pages/register/partner/users";
@@ -246,7 +253,8 @@ export const PrivateRoutes = () => {
           <Route path="aggregator">
             <Route path="aggregators">
               <Route index element={<Aggregators />} />
-              <Route path="update_aggregator" element={<UpdateAggregator />} />
+              <Route path="update" element={<UpdateAggregator />} />
+              <Route path="details" element={<AggregatorDetails />} />
             </Route>
 
             <Route path="aggregator_users" element={<AggregatorUsers />} />
@@ -282,7 +290,11 @@ export const PrivateRoutes = () => {
           </Route>
           {/* cadastros de plataformas */}
           <Route path="partner">
-            <Route path="partners" element={<Partners />} />
+            <Route path="partners">
+              <Route index element={<Partners />} />
+              <Route path="details" element={<PartnerDetails />} />
+              <Route path="update" element={<UpdatePartner />} />
+            </Route>
             <Route path="partner_users" element={<PartnerUsers />} />
             <Route path="partner_reports">
               <Route
@@ -297,7 +309,11 @@ export const PrivateRoutes = () => {
           </Route>
           {/*cadastros de operadores */}
           <Route path="operator">
-            <Route path="operators" element={<Operators />} />
+            <Route path="operators">
+              <Route index element={<Operators />} />
+              <Route path="update" element={<UpdateOperator />} />
+              <Route path="details" element={<OperatorDetails />} />
+            </Route>
             <Route path="operator_users" element={<OperatorUsers />} />
             <Route path="operator_reports">
               <Route
@@ -315,6 +331,8 @@ export const PrivateRoutes = () => {
             <Route path="merchants">
               <Route index element={<MerchantView />} />
               <Route path=":id" element={<MerchantConfigs />} />
+              <Route path="details" element={<MerchantDetails />} />
+              <Route path="update" element={<UpdateMerchant />} />
             </Route>
             <Route path="merchant_users" element={<MerchantUser />} />
 

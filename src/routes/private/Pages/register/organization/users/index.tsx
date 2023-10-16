@@ -11,16 +11,15 @@ import { useGetRowsOrganizationUsers } from "@services/register/organization/use
 import { useUpdateOrganizationUser } from "@services/register/organization/users/updateUser";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
+import { Toast } from "@src/components/Toast";
 import { queryClient } from "@src/services/queryClient";
 import { useCreateOrganizationReports } from "@src/services/reports/register/organization/createUserReports";
 import { OrganizationUserQuery } from "@src/services/types/register/organization/organizationUsers.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import useDebounce from "@utils/useDebounce";
 import { Button, Input } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { NewUserInterface, NewUserModal } from "./components/newUserModal";
-import { Toast } from "@src/components/Toast";
 
 const INITIAL_QUERY: OrganizationUserQuery = {
   limit: 25,
@@ -42,7 +41,6 @@ export const OrganizationUser = () => {
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<any>(null);
   const [search, setSearch] = useState<string>("");
-  const debounceSearch = useDebounce(search);
   const [updateUserBody, setUpdateUserBody] = useState<NewUserInterface | null>(
     null
   );
@@ -79,15 +77,6 @@ export const OrganizationUser = () => {
     refetchUsersData();
   }, [query]);
 
-  useEffect(() => {
-    if (!debounceSearch) {
-      const q = { ...query };
-      delete q.name;
-      return setQuery(q);
-    }
-    setQuery((state) => ({ ...state, name: debounceSearch }));
-  }, [debounceSearch]);
-
   const handleUpdateTokenValidate = () => {
     updateMutate();
   };
@@ -120,13 +109,14 @@ export const OrganizationUser = () => {
 
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
         <Grid item xs={12} md={4} lg={4}>
-          <Input
+        <Input.Search
             size="large"
             value={search}
             placeholder={t("table.name") || ""}
             onChange={(event) => {
               setSearch(event.target.value);
             }}
+            onSearch={() => setQuery((state) => ({ ...state, name: search }))}
           />
         </Grid>
         <Grid item xs={12} md={3} lg={2}>
