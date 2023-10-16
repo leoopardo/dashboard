@@ -84,7 +84,7 @@ export const Dashboard = () => {
             >
               <>
                 {bankListData?.itens.map((bank) => (
-                  <BankCard bank={bank} />
+                  <BankCard bank={bank} key={bank.id} />
                 ))}
               </>
             </Row>

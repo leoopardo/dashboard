@@ -35,7 +35,6 @@ import {
 import { FiltersModal } from "../../../../../../components/FiltersModal";
 import { FilterChips } from "../../../../../../components/FiltersModal/filterChips";
 import { refundDepositsQuery } from "../../../../../../services/types/consult/refunds/refundsDeposits.interface";
-import useDebounce from "../../../../../../utils/useDebounce";
 import { ViewModal } from "../components/ViewModal";
 import { TotalizersCards } from "./components/TotalizersCards";
 
@@ -94,7 +93,6 @@ export const RefundDepositsManual = () => {
     useState<boolean>(false);
   const [isUpdateMerchantModalOpen, setIsUpdateMerchantModalOpen] =
     useState<boolean>(false);
-  const debounceSearch = useDebounce(search);
   const [updateBody, setUpdateBody] = useState<UpdateMerchantRefundBody>({
     endToEndId: currentItem?.endToEndId,
     merchant_id: currentItem?.merchant_id,
@@ -127,22 +125,6 @@ export const RefundDepositsManual = () => {
     { name: "buyer_document", type: "document" },
     { name: "status", type: "document" },
   ];
-
-  useEffect(() => {
-    const q = { ...query };
-    delete q.pix_id;
-    delete q.endToEndId;
-    delete q.txid;
-    delete q.reference_id;
-    delete q.buyer_document;
-    delete q.payer_document;
-    delete q.buyer_name;
-    delete q.payer_name;
-
-    if (debounceSearch && searchOption) {
-      setQuery(() => ({ ...q, [searchOption]: debounceSearch }));
-    }
-  }, [debounceSearch, searchOption]);
 
   return (
     <Grid container style={{ padding: "25px" }}>
@@ -207,13 +189,16 @@ export const RefundDepositsManual = () => {
           />
         </Grid>
         <Grid item xs={12} md={4} lg={4}>
-          <Input
+          <Input.Search
             placeholder="Pesquisa"
             size="large"
             disabled={!searchOption}
             value={search || ""}
-            style={{ height: "40px", width: "100%" }}
+            style={{ width: "100%" }}
             onChange={(event) => setSearch(event.target.value)}
+            onSearch={(value) =>
+              setQuery((state) => ({ ...state, [`${searchOption}`]: value }))
+            }
           />
         </Grid>
         <Grid item xs={12} md={2} lg={2}>

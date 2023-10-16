@@ -149,7 +149,7 @@ export const ValuesTable = ({ query }: ValuesTableInterface) => {
       ) : (
         <Row gutter={[8, 8]}>
           {data.map((item) => (
-            <Col span={24}>
+            <Col span={24} key={item.key}>
               <Card
                 title={t(`table.${item.type}`)}
                 bodyStyle={{ display: "flex", flexWrap: "wrap", padding: 8 }}

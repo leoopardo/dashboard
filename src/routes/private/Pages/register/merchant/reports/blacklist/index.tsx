@@ -20,7 +20,7 @@ export const MerchantBlacklistReports = () => {
     limit: 25,
     page: 1,
   };
-  const { permissions, type, merchant_id } = queryClient.getQueryData(
+  const {type } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);

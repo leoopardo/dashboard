@@ -5,7 +5,7 @@ import { useTheme } from "@src/contexts/ThemeContext";
 import { useGetTotalGeneratedDeposits } from "@src/services/consult/deposits/generatedDeposits/getTotal";
 import { generatedDepositTotalQuery } from "@src/services/types/consult/deposits/generatedDeposits.interface";
 import { Button, Card, Col, Empty, Row, Spin, Typography } from "antd";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Doughnut } from "react-chartjs-2";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
@@ -18,7 +18,7 @@ export const ChartIn = ({ query }: ChartInInterface) => {
   const { t } = useTranslation();
   const [oneByOne, setOneByOne] = useState<boolean>(false);
   const isMobile = useMediaQuery({ maxWidth: "750px" });
-  const [formatedQuery, setFormatedQuery] =
+  const [formatedQuery] =
     useState<generatedDepositTotalQuery>({
       ...query,
       start_date: undefined,
@@ -27,7 +27,7 @@ export const ChartIn = ({ query }: ChartInInterface) => {
       final_date: query?.end_date,
     });
 
-  const { depositsTotal, isDepositsTotalFetching, refetchDepositsTotal } =
+  const { depositsTotal, isDepositsTotalFetching } =
     useGetTotalGeneratedDeposits(formatedQuery);
   const { theme } = useTheme();
 

@@ -191,7 +191,9 @@ export const CustomTable = (props: TableProps) => {
                 ? () => {
                     props.setQuery((state: any) => ({
                       ...state,
-                      sort_field: column?.name,
+                      sort_field: Array.isArray(column?.name)
+                        ? column?.name[1]
+                        : column?.name,
                       sort_order:
                         props.query.sort_order === "DESC" ? "ASC" : "DESC",
                       page: 1,
@@ -234,7 +236,9 @@ export const CustomTable = (props: TableProps) => {
                 ? () => {
                     props.setQuery((state: any) => ({
                       ...state,
-                      sort_field: column?.name,
+                       sort_field: Array.isArray(column?.name)
+                        ? column?.name[1]
+                        : column?.name,
                       sort_order:
                         props.query.sort_order === "DESC" ? "ASC" : "DESC",
                       page: 1,
@@ -271,7 +275,9 @@ export const CustomTable = (props: TableProps) => {
                 ? () => {
                     props.setQuery((state: any) => ({
                       ...state,
-                      sort_field: column?.name,
+                       sort_field: Array.isArray(column?.name)
+                        ? column?.name[1]
+                        : column?.name,
                       sort_order:
                         props.query.sort_order === "DESC" ? "ASC" : "DESC",
                       page: 1,
@@ -307,7 +313,9 @@ export const CustomTable = (props: TableProps) => {
                 ? () => {
                     props.setQuery((state: any) => ({
                       ...state,
-                      sort_field: column?.name,
+                       sort_field: Array.isArray(column?.name)
+                        ? column?.name[1]
+                        : column?.name,
                       sort_order:
                         props.query.sort_order === "DESC" ? "ASC" : "DESC",
                       page: 1,
@@ -337,7 +345,9 @@ export const CustomTable = (props: TableProps) => {
                 ? () => {
                     props.setQuery((state: any) => ({
                       ...state,
-                      sort_field: column?.name,
+                       sort_field: Array.isArray(column?.name)
+                        ? column?.name[1]
+                        : column?.name,
                       sort_order:
                         props.query.sort_order === "DESC" ? "ASC" : "DESC",
                       page: 1,
@@ -381,7 +391,9 @@ export const CustomTable = (props: TableProps) => {
                 ? () => {
                     props.setQuery((state: any) => ({
                       ...state,
-                      sort_field: column?.name,
+                       sort_field: Array.isArray(column?.name)
+                        ? column?.name[1]
+                        : column?.name,
                       sort_order:
                         props.query.sort_order === "DESC" ? "ASC" : "DESC",
                       page: 1,
@@ -436,7 +448,9 @@ export const CustomTable = (props: TableProps) => {
                 ? () => {
                     props.setQuery((state: any) => ({
                       ...state,
-                      sort_field: column?.name,
+                       sort_field: Array.isArray(column?.name)
+                        ? column?.name[1]
+                        : column?.name,
                       sort_order:
                         props.query.sort_order === "DESC" ? "ASC" : "DESC",
                       page: 1,
@@ -470,7 +484,9 @@ export const CustomTable = (props: TableProps) => {
                 ? () => {
                     props.setQuery((state: any) => ({
                       ...state,
-                      sort_field: column?.name,
+                       sort_field: Array.isArray(column?.name)
+                        ? column?.name[1]
+                        : column?.name,
                       sort_order:
                         props.query.sort_order === "DESC" ? "ASC" : "DESC",
                       page: 1,
@@ -550,7 +566,9 @@ export const CustomTable = (props: TableProps) => {
                 ? () => {
                     props.setQuery((state: any) => ({
                       ...state,
-                      sort_field: column?.name,
+                       sort_field: Array.isArray(column?.name)
+                        ? column?.name[1]
+                        : column?.name,
                       sort_order:
                         props.query.sort_order === "DESC" ? "ASC" : "DESC",
                       page: 1,
@@ -581,7 +599,9 @@ export const CustomTable = (props: TableProps) => {
                 ? () => {
                     props.setQuery((state: any) => ({
                       ...state,
-                      sort_field: column?.name,
+                       sort_field: Array.isArray(column?.name)
+                        ? column?.name[1]
+                        : column?.name,
                       sort_order:
                         props.query.sort_order === "DESC" ? "ASC" : "DESC",
                       page: 1,
@@ -645,7 +665,9 @@ export const CustomTable = (props: TableProps) => {
                 ? () => {
                     props.setQuery((state: any) => ({
                       ...state,
-                      sort_field: column?.name,
+                       sort_field: Array.isArray(column?.name)
+                        ? column?.name[1]
+                        : column?.name,
                       sort_order:
                         props.query.sort_order === "DESC" ? "ASC" : "DESC",
                       page: 1,
@@ -675,7 +697,9 @@ export const CustomTable = (props: TableProps) => {
                 ? () => {
                     props.setQuery((state: any) => ({
                       ...state,
-                      sort_field: column?.name,
+                       sort_field: Array.isArray(column?.name)
+                        ? column?.name[1]
+                        : column?.name,
                       sort_order:
                         props.query.sort_order === "DESC" ? "ASC" : "DESC",
                       page: 1,

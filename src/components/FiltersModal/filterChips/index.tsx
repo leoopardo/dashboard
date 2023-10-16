@@ -65,7 +65,7 @@ export const FilterChips = ({
         switch (key) {
           case startDateKeyName:
             return query[startDateKeyName] ? (
-              <Col>
+              <Col key={key}>
                 <Tag
                   key={key}
                   style={{
@@ -126,7 +126,7 @@ export const FilterChips = ({
 
           case "age_start":
             return (
-              <Col>
+              <Col key={key}>
                 <Tag
                   key={key}
                   color="cyan"
@@ -156,7 +156,7 @@ export const FilterChips = ({
 
           case "merchant_id":
             return (
-              <Col>
+              <Col key={key}>
                 <Tag
                   style={{
                     width: "100%",
@@ -181,7 +181,7 @@ export const FilterChips = ({
 
           case "partner_id":
             return (
-              <Col>
+              <Col key={key}>
                 {" "}
                 <Tag
                   style={{
@@ -207,7 +207,7 @@ export const FilterChips = ({
 
           case "operator_id":
             return (
-              <Col>
+              <Col key={key}>
                 {" "}
                 <Tag
                   style={{
@@ -233,7 +233,7 @@ export const FilterChips = ({
 
           case "aggregator_id":
             return (
-              <Col>
+              <Col key={key}>
                 {" "}
                 <Tag
                   style={{
@@ -259,7 +259,7 @@ export const FilterChips = ({
 
           case "value_start":
             return (
-              <Col>
+              <Col key={key}>
                 {" "}
                 <Tag
                   style={{
@@ -300,7 +300,7 @@ export const FilterChips = ({
           case "to":
           case "from":
             return (
-              <Col>
+              <Col key={key}>
                 {" "}
                 <Tag
                   style={{
@@ -324,7 +324,7 @@ export const FilterChips = ({
 
           case "status":
             return (
-              <Col>
+              <Col key={key}>
                 <Tag
                   style={{
                     width: "100%",
@@ -357,7 +357,7 @@ export const FilterChips = ({
             return;
           default:
             return (
-              <Col>
+              <Col key={key}>
                 {filtersQuery[key] ? (
                   <Tag
                     style={{
