@@ -238,7 +238,7 @@ export const CustomTable = (props: TableProps) => {
                 ) : (
                   <Typography
                     key={column?.name}
-                    style={{ width: "100%", textAlign: "center" }}
+                    style={{ width: "100%", textAlign: "center", minWidth: 50  }}
                   >
                     -
                   </Typography>
