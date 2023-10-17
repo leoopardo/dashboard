@@ -98,9 +98,12 @@ export const UpdateBanks = ({
           </Button>
         }
       >
-        {!items?.length && !body.merchants_ids?.length && (
+        {(body?.merchants_ids?.length === 0 || !body.merchants_ids) && (
           <Radio.Group
             onChange={(e) => {
+              const b = { ...body };
+              delete b?.merchants_ids;
+              setBody(b);
               setAll(e.target.value);
               if (e.target.value === "all")
                 setBody((state) => ({ ...state, partner_id: undefined }));
@@ -215,17 +218,20 @@ export const UpdateBanks = ({
               }
             />
           </Form.Item>
-          <Form.Item
-            label={t(`table.partner`)}
-            name="withdraw"
-            style={{ margin: 10 }}
-          >
-            <PartnerSelect
-              queryOptions={body}
-              setQueryFunction={setBody}
-              disabled={all === "all"}
-            />
-          </Form.Item>
+          {(body?.merchants_ids?.length === 0 || !body.merchants_ids) && (
+            <Form.Item
+              label={t(`table.partner`)}
+              name="withdraw"
+              style={{ margin: 10 }}
+            >
+              <PartnerSelect
+                queryOptions={body}
+                setQueryFunction={setBody}
+                disabled={all === "all"}
+              />
+            </Form.Item>
+          )}
+
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
             <button type="submit" ref={submitRef} style={{ display: "none" }}>
               Submit

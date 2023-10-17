@@ -35,6 +35,7 @@ export interface ColumnInterface {
   head?: string;
   type:
     | "id"
+    | "birth"
     | "text"
     | "translate"
     | "date"
@@ -156,6 +157,7 @@ export const CustomTable = (props: TableProps) => {
                 ? column?.name + `${Math.random()}`
                 : column?.name,
               dataIndex: column?.name,
+              width: 150,
               render: (text: string) => (
                 <div
                   key={column?.name}
@@ -207,9 +209,19 @@ export const CustomTable = (props: TableProps) => {
           case "date":
             return {
               title: (
-                <Typography style={{ width: "100%", textAlign: "center" }}>
-                  {t(`table.${column?.head || column?.name}`)}
-                </Typography>
+                <Tooltip title={t(`table.${column?.head || column?.name}`)}>
+                  <Typography
+                    style={{
+                      width: "100%",
+                      maxHeight: "50px",
+                      overflow: "hidden",
+                      textAlign: "center",
+                      textOverflow: "ellipsis",
+                    }}
+                  >
+                    {t(`table.${column?.head || column?.name}`)}
+                  </Typography>
+                </Tooltip>
               ),
               key: Array.isArray(column?.name)
                 ? column?.name + `${Math.random()}`
@@ -219,7 +231,7 @@ export const CustomTable = (props: TableProps) => {
                 text ? (
                   <Typography
                     key={column?.name}
-                    style={{ width: "100%", textAlign: "center" }}
+                    style={{ width: "100%", textAlign: "center", minWidth: 50 }}
                   >{`${new Date(text).toLocaleDateString()} ${new Date(
                     text
                   ).toLocaleTimeString()}`}</Typography>
@@ -236,7 +248,7 @@ export const CustomTable = (props: TableProps) => {
                 ? () => {
                     props.setQuery((state: any) => ({
                       ...state,
-                       sort_field: Array.isArray(column?.name)
+                      sort_field: Array.isArray(column?.name)
                         ? column?.name[1]
                         : column?.name,
                       sort_order:
@@ -252,9 +264,19 @@ export const CustomTable = (props: TableProps) => {
           case "value":
             return {
               title: (
-                <Typography style={{ width: "100%", textAlign: "center" }}>
-                  {t(`table.${column?.head ?? column?.name}`)}
-                </Typography>
+                <Tooltip title={t(`table.${column?.head || column?.name}`)}>
+                  <Typography
+                    style={{
+                      width: "100%",
+                      maxHeight: "50px",
+                      overflow: "hidden",
+                      textAlign: "center",
+                      textOverflow: "ellipsis",
+                    }}
+                  >
+                    {t(`table.${column?.head || column?.name}`)}
+                  </Typography>
+                </Tooltip>
               ),
               key: Array.isArray(column?.name)
                 ? column?.name + `${Math.random()}`
@@ -275,7 +297,7 @@ export const CustomTable = (props: TableProps) => {
                 ? () => {
                     props.setQuery((state: any) => ({
                       ...state,
-                       sort_field: Array.isArray(column?.name)
+                      sort_field: Array.isArray(column?.name)
                         ? column?.name[1]
                         : column?.name,
                       sort_order:
@@ -290,9 +312,19 @@ export const CustomTable = (props: TableProps) => {
           case "document":
             return {
               title: (
-                <Typography style={{ width: "100%", textAlign: "center" }}>
-                  {t(`table.${column?.head ?? column?.name}`)}
-                </Typography>
+                <Tooltip title={t(`table.${column?.head || column?.name}`)}>
+                  <Typography
+                    style={{
+                      width: "100%",
+                      maxHeight: "50px",
+                      overflow: "hidden",
+                      textAlign: "center",
+                      textOverflow: "ellipsis",
+                    }}
+                  >
+                    {t(`table.${column?.head || column?.name}`)}
+                  </Typography>
+                </Tooltip>
               ),
               key: Array.isArray(column?.name)
                 ? column?.name + `${Math.random()}`
@@ -301,7 +333,7 @@ export const CustomTable = (props: TableProps) => {
               render: (text: string) => (
                 <Typography
                   key={column?.name}
-                  style={{ width: "100%", textAlign: "center" }}
+                  style={{ width: "100%", textAlign: "center", minWidth: 50 }}
                 >
                   {`${text}`?.replace(
                     /(\d{3})(\d{3})(\d{3})(\d{2})/,
@@ -313,7 +345,7 @@ export const CustomTable = (props: TableProps) => {
                 ? () => {
                     props.setQuery((state: any) => ({
                       ...state,
-                       sort_field: Array.isArray(column?.name)
+                      sort_field: Array.isArray(column?.name)
                         ? column?.name[1]
                         : column?.name,
                       sort_order:
@@ -328,9 +360,19 @@ export const CustomTable = (props: TableProps) => {
           case "icon":
             return {
               title: (
-                <Typography style={{ width: "100%", textAlign: "center" }}>
-                  {t(`table.${column?.head ?? column?.name}`)}
-                </Typography>
+                <Tooltip title={t(`table.${column?.head || column?.name}`)}>
+                  <Typography
+                    style={{
+                      width: "100%",
+                      maxHeight: "50px",
+                      overflow: "hidden",
+                      textAlign: "center",
+                      textOverflow: "ellipsis",
+                    }}
+                  >
+                    {t(`table.${column?.head || column?.name}`)}
+                  </Typography>
+                </Tooltip>
               ),
               key: Array.isArray(column?.name)
                 ? column?.name + `${Math.random()}`
@@ -345,7 +387,7 @@ export const CustomTable = (props: TableProps) => {
                 ? () => {
                     props.setQuery((state: any) => ({
                       ...state,
-                       sort_field: Array.isArray(column?.name)
+                      sort_field: Array.isArray(column?.name)
                         ? column?.name[1]
                         : column?.name,
                       sort_order:
@@ -361,9 +403,19 @@ export const CustomTable = (props: TableProps) => {
           case "bankNameToIcon":
             return {
               title: (
-                <Typography style={{ width: "100%", textAlign: "center" }}>
-                  {t(`table.${column?.head ?? column?.name}`)}
-                </Typography>
+                <Tooltip title={t(`table.${column?.head || column?.name}`)}>
+                  <Typography
+                    style={{
+                      width: "100%",
+                      maxHeight: "50px",
+                      overflow: "hidden",
+                      textAlign: "center",
+                      textOverflow: "ellipsis",
+                    }}
+                  >
+                    {t(`table.${column?.head || column?.name}`)}
+                  </Typography>
+                </Tooltip>
               ),
               key: Array.isArray(column?.name)
                 ? column?.name + `${Math.random()}`
@@ -391,7 +443,7 @@ export const CustomTable = (props: TableProps) => {
                 ? () => {
                     props.setQuery((state: any) => ({
                       ...state,
-                       sort_field: Array.isArray(column?.name)
+                      sort_field: Array.isArray(column?.name)
                         ? column?.name[1]
                         : column?.name,
                       sort_order:
@@ -407,9 +459,19 @@ export const CustomTable = (props: TableProps) => {
           case "status":
             return {
               title: (
-                <Typography style={{ width: "100%", textAlign: "center" }}>
-                  {t(`table.${column?.head ?? column?.name}`)}
-                </Typography>
+                <Tooltip title={t(`table.${column?.head || column?.name}`)}>
+                  <Typography
+                    style={{
+                      width: "100%",
+                      maxHeight: "50px",
+                      overflow: "hidden",
+                      textAlign: "center",
+                      textOverflow: "ellipsis",
+                    }}
+                  >
+                    {t(`table.${column?.head || column?.name}`)}
+                  </Typography>
+                </Tooltip>
               ),
               key: Array.isArray(column?.name)
                 ? column?.name + `${Math.random()}`
@@ -448,7 +510,7 @@ export const CustomTable = (props: TableProps) => {
                 ? () => {
                     props.setQuery((state: any) => ({
                       ...state,
-                       sort_field: Array.isArray(column?.name)
+                      sort_field: Array.isArray(column?.name)
                         ? column?.name[1]
                         : column?.name,
                       sort_order:
@@ -464,9 +526,19 @@ export const CustomTable = (props: TableProps) => {
           case "boolean":
             return {
               title: (
-                <Typography style={{ width: "100%", textAlign: "center" }}>
-                  {t(`table.${column?.head ?? column?.name}`)}
-                </Typography>
+                <Tooltip title={t(`table.${column?.head || column?.name}`)}>
+                  <Typography
+                    style={{
+                      width: "100%",
+                      maxHeight: "50px",
+                      overflow: "hidden",
+                      textAlign: "center",
+                      textOverflow: "ellipsis",
+                    }}
+                  >
+                    {t(`table.${column?.head || column?.name}`)}
+                  </Typography>
+                </Tooltip>
               ),
               key: Array.isArray(column?.name)
                 ? column?.name + `${Math.random()}`
@@ -475,7 +547,7 @@ export const CustomTable = (props: TableProps) => {
               render: (text: string) => (
                 <Typography
                   key={column?.name}
-                  style={{ width: "100%", textAlign: "center" }}
+                  style={{ width: "100%", textAlign: "center", minWidth: 50 }}
                 >
                   {text ? t("table.true") : t("table.false")}
                 </Typography>
@@ -484,11 +556,68 @@ export const CustomTable = (props: TableProps) => {
                 ? () => {
                     props.setQuery((state: any) => ({
                       ...state,
-                       sort_field: Array.isArray(column?.name)
+                      sort_field: Array.isArray(column?.name)
                         ? column?.name[1]
                         : column?.name,
                       sort_order:
                         props.query.sort_order === "DESC" ? "ASC" : "DESC",
+                      page: 1,
+                    }));
+
+                    return 0;
+                  }
+                : undefined,
+            };
+
+          case "birth":
+            return {
+              title: (
+                <Tooltip title={t(`table.${column?.head || column?.name}`)}>
+                  <Typography
+                    style={{
+                      width: "100%",
+                      maxHeight: "50px",
+                      overflow: "hidden",
+                      textAlign: "center",
+                      textOverflow: "ellipsis",
+                    }}
+                  >
+                    {t(`table.${column?.head || column?.name}`)}
+                  </Typography>
+                </Tooltip>
+              ),
+              key: Array.isArray(column?.name)
+                ? `${column?.name}-${Math.random()}`
+                : column?.name,
+              dataIndex: column?.name,
+              render: (text) =>
+                text ? (
+                  <Typography
+                    key={column?.name}
+                    style={{ width: "100%", textAlign: "center", minWidth: 80 }}
+                  >
+                    {`${new Date(text)?.toLocaleDateString("pt-BR", {
+                      timeZone: "UTC",
+                    })} `}
+                  </Typography>
+                ) : (
+                  <Typography
+                    key={column?.name}
+                    style={{ width: "100%", textAlign: "center" }}
+                  >
+                    -
+                  </Typography>
+                ),
+
+              sorter: column?.sort
+                ? () => {
+                    props?.setQuery((state: any) => ({
+                      ...state,
+                      sort_field: Array.isArray(column?.name)
+                        ? column.name[1]
+                        : column?.name,
+                      sort_order:
+                        props?.query?.sort_order === "DESC" ? "ASC" : "DESC",
                       page: 1,
                     }));
 
@@ -549,24 +678,57 @@ export const CustomTable = (props: TableProps) => {
           case "text":
             return {
               title: (
-                <Typography style={{ width: "100%", textAlign: "center" }}>
-                  {t(`table.${column?.head || column?.name}`)}
-                </Typography>
+                <Tooltip title={t(`table.${column?.head || column?.name}`)}>
+                  <Typography
+                    style={{
+                      width: "100%",
+                      maxHeight: "50px",
+                      overflow: "hidden",
+                      textAlign: "center",
+                      textOverflow: "ellipsis",
+                    }}
+                  >
+                    {t(`table.${column?.head || column?.name}`)}
+                  </Typography>
+                </Tooltip>
               ),
               key: Array.isArray(column?.name)
                 ? column?.name + `${Math.random()}`
                 : column?.name,
               dataIndex: column?.name,
-              render: (text: string) => (
-                <Typography style={{ width: "100%", textAlign: "center" }}>
-                  {text ?? "-"}
-                </Typography>
-              ),
+              render: (text: string) =>
+                text && text.length > 15 ? (
+                  <Tooltip title={text}>
+                    <p
+                      style={{
+                        width: "100%",
+                        textAlign: "center",
+                        minWidth: 50,
+                      }}
+                    >
+                      {text
+                        ? text.length > 15
+                          ? `${`${text}`.substring(0, 15)}...`
+                          : text
+                        : "-"}
+                    </p>
+                  </Tooltip>
+                ) : (
+                  <p
+                    style={{
+                      width: "100%",
+                      textAlign: "center",
+                      minWidth: 50,
+                    }}
+                  >
+                    {text ?? "-"}
+                  </p>
+                ),
               sorter: column.sort
                 ? () => {
                     props.setQuery((state: any) => ({
                       ...state,
-                       sort_field: Array.isArray(column?.name)
+                      sort_field: Array.isArray(column?.name)
                         ? column?.name[1]
                         : column?.name,
                       sort_order:
@@ -599,7 +761,7 @@ export const CustomTable = (props: TableProps) => {
                 ? () => {
                     props.setQuery((state: any) => ({
                       ...state,
-                       sort_field: Array.isArray(column?.name)
+                      sort_field: Array.isArray(column?.name)
                         ? column?.name[1]
                         : column?.name,
                       sort_order:
@@ -665,7 +827,7 @@ export const CustomTable = (props: TableProps) => {
                 ? () => {
                     props.setQuery((state: any) => ({
                       ...state,
-                       sort_field: Array.isArray(column?.name)
+                      sort_field: Array.isArray(column?.name)
                         ? column?.name[1]
                         : column?.name,
                       sort_order:
@@ -697,7 +859,7 @@ export const CustomTable = (props: TableProps) => {
                 ? () => {
                     props.setQuery((state: any) => ({
                       ...state,
-                       sort_field: Array.isArray(column?.name)
+                      sort_field: Array.isArray(column?.name)
                         ? column?.name[1]
                         : column?.name,
                       sort_order:
@@ -720,6 +882,8 @@ export const CustomTable = (props: TableProps) => {
         <Grid container>
           <Grid item xs={12}>
             <Table
+              size="middle"
+              tableLayout="auto"
               locale={{
                 emptyText: props.error ? (
                   <div style={{ display: "flex", justifyContent: "center" }}>

@@ -9,9 +9,7 @@ import { ThemeProvider } from "styled-components";
 import { PageHeader } from "./components/PageHeader/index.tsx";
 import { SidebarNavigation } from "./components/SideBarNavigation/index.tsx";
 import { useMenu } from "./contexts/SidebarContext/index.tsx";
-import {
-  useTheme
-} from "./contexts/ThemeContext/index.tsx";
+import { useTheme } from "./contexts/ThemeContext/index.tsx";
 import i18n from "./i18n";
 import { PrivateRoutes } from "./routes/private";
 import { PublicRoutes } from "./routes/public";
@@ -96,9 +94,10 @@ function App() {
                   colorTextLightSolid: "rgba(0, 0, 0, 0.88)",
                 },
                 Select: {
-                  controlItemBgActive:theme === "dark"
-                  ? "#303030"
-                  : defaultTheme.colors.secondary,
+                  controlItemBgActive:
+                    theme === "dark"
+                      ? "#303030"
+                      : defaultTheme.colors.secondary,
                 },
               },
               token: {
@@ -127,7 +126,7 @@ function App() {
             {isSuccess ? (
               <Layout>
                 <Layout>
-                  <SidebarNavigation />
+                    <SidebarNavigation />
 
                   <div
                     style={{

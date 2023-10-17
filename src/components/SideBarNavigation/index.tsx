@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
@@ -12,8 +13,8 @@ import {
 import { useTheme } from "@src/contexts/ThemeContext";
 import { queryClient } from "@src/services/queryClient";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Menu, MenuProps } from "antd";
-import React, { useEffect, useState } from "react";
+import { Button, Menu, MenuProps, TourProps } from "antd";
+import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -33,6 +34,7 @@ export const SidebarNavigation = () => {
   const [openKeys, setOpenKeys] = useState(["institution"]);
   const { theme } = useTheme();
   const location = useLocation();
+  const ref1 = useRef(null);
   const { permissions } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
@@ -580,7 +582,8 @@ export const SidebarNavigation = () => {
                 false,
                 (e) => handleNavigate(e?.keyPath),
                 {
-                  display: permissions?.register?.merchant?.blacklist?.merchant_blacklist_create
+                  display: permissions?.register?.merchant?.blacklist
+                    ?.merchant_blacklist_create
                     ? undefined
                     : "none",
                 }
@@ -592,7 +595,8 @@ export const SidebarNavigation = () => {
                 false,
                 (e) => handleNavigate(e?.keyPath),
                 {
-                  display: permissions?.register?.merchant?.blacklist?.merchant_blacklist_create
+                  display: permissions?.register?.merchant?.blacklist
+                    ?.merchant_blacklist_create
                     ? undefined
                     : "none",
                 }
@@ -1687,8 +1691,8 @@ export const SidebarNavigation = () => {
           }
         ),
 
-         // - Contestação
-         getItem(
+        // - Contestação
+        getItem(
           "contestation",
           null,
           [
@@ -1700,8 +1704,8 @@ export const SidebarNavigation = () => {
                   handleNavigate(e?.keyPath)
                 ),
                 getItem("import_csv", null, null, false, (e) =>
-                handleNavigate(e?.keyPath)
-              ),
+                  handleNavigate(e?.keyPath)
+                ),
               ],
               undefined,
               undefined,
@@ -1719,7 +1723,6 @@ export const SidebarNavigation = () => {
             display: permissions?.support?.blacklist?.menu ? undefined : "none",
           }
         ),
-
       ],
       undefined,
       undefined,
@@ -1750,6 +1753,31 @@ export const SidebarNavigation = () => {
     handleChangeSidebar(collapsed);
   };
 
+  const steps: TourProps["steps"] = [
+    {
+      title: "Expansão do menu lateral",
+      description: "Alterne o modo do menu para expandido ou compacto",
+      style: {marginLeft: 10},
+      // cover: (
+      //   <img
+      //     alt="tour.png"
+      //     src="https://user-images.githubusercontent.com/5378891/197385811-55df8480-7ff4-44bd-9d43-a7dade598d70.png"
+      //   />
+      // ),
+      target: () => ref1.current,
+    },
+    // {
+    //   title: 'Save',
+    //   description: 'Save your changes.',
+    //   target: () => ref2.current,
+    // },
+    // {
+    //   title: 'Other Actions',
+    //   description: 'Click to see other actions.',
+    //   target: () => ref3.current,
+    // },
+  ];
+
   return (
     <div
       style={{
@@ -1759,7 +1787,9 @@ export const SidebarNavigation = () => {
         zIndex: 999,
       }}
     >
+      {/* <Tour open={true} onClose={() => {}} steps={steps} /> */}
       <Button
+        ref={ref1}
         type={isMobile && !isSidebarOpen ? "ghost" : "primary"}
         onClick={toggleCollapsed}
         style={{
