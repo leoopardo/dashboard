@@ -1,3 +1,4 @@
+/* eslint-disable no-empty-pattern */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Spin } from "antd";
 import { useEffect } from "react";
@@ -5,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 
 export const Redirect = () => {
   const navigate = useNavigate();
-
   useEffect(() => {
     navigate("/dashboard");
   }, []);

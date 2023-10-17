@@ -1,6 +1,10 @@
+/* eslint-disable no-empty-pattern */
 import { DownOutlined, UserOutlined } from "@ant-design/icons";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
+import LightModeIcon from "@mui/icons-material/LightMode";
 import { Grid } from "@mui/material";
 import { useTheme } from "@src/contexts/ThemeContext";
+import { useGetSelf } from "@src/services/getSelf";
 import { useValidate } from "@src/services/siginIn/validate";
 import { Avatar, Dropdown, MenuProps, Radio, Space, theme as t } from "antd";
 import React, { useState } from "react";
@@ -11,11 +15,10 @@ import eua from "../../assets/united-states.png";
 import { defaultTheme } from "../../styles/defaultTheme";
 import { BreadcrumbComponent } from "../Breadcrumb";
 import { EditSelfModal } from "./EditSelf";
-import DarkModeIcon from "@mui/icons-material/DarkMode";
-import LightModeIcon from "@mui/icons-material/LightMode";
 const { useToken } = t;
 
 export const PageHeader = () => {
+  
   const isMobile = useMediaQuery({ maxWidth: "900px" });
   const { t, i18n } = useTranslation();
   const { responseValidate } = useValidate();
@@ -24,6 +27,7 @@ export const PageHeader = () => {
   const [isEditUserModalOpen, setIsEditUserModalOpen] =
     useState<boolean>(false);
   const { setTheme, theme } = useTheme();
+  const { refetchSelf } = useGetSelf();
 
   const contentStyle = {
     backgroundColor: token.colorBgElevated,
@@ -112,6 +116,7 @@ export const PageHeader = () => {
           menu={{ items: userItems }}
           arrow
           placement="bottomRight"
+          onOpenChange={() => refetchSelf()}
           dropdownRender={(menu) => (
             <div style={contentStyle}>
               <div
@@ -176,7 +181,8 @@ export const PageHeader = () => {
                         alignItems: "center",
                       }}
                     >
-                      {t("buttons.light")} <LightModeIcon style={{marginLeft: 8}}/>
+                      {t("buttons.light")}{" "}
+                      <LightModeIcon style={{ marginLeft: 8 }} />
                     </div>
                   </Radio.Button>
                   <Radio.Button value="dark">
@@ -186,9 +192,9 @@ export const PageHeader = () => {
                         alignItems: "center",
                       }}
                     >
-                     {t("buttons.dark")} <DarkModeIcon style={{marginLeft: 8}}/>{" "}
+                      {t("buttons.dark")}{" "}
+                      <DarkModeIcon style={{ marginLeft: 8 }} />{" "}
                     </div>
-                    
                   </Radio.Button>
                 </Radio.Group>
               </div>
@@ -210,11 +216,13 @@ export const PageHeader = () => {
         </Dropdown>
       </Grid>
 
-      <EditSelfModal
-        open={isEditUserModalOpen}
-        setOpen={setIsEditUserModalOpen}
-        self={responseValidate}
-      />
+      {isEditUserModalOpen && (
+        <EditSelfModal
+          open={isEditUserModalOpen}
+          setOpen={setIsEditUserModalOpen}
+          self={responseValidate}
+        />
+      )}
     </Grid>
   ) : (
     <Grid
