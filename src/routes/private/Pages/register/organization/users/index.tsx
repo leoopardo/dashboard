@@ -1,7 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { EditOutlined, EyeFilled, UserAddOutlined } from "@ant-design/icons";
-import { ColumnInterface, CustomTable } from "@components/CustomTable";
+import {
+  EditOutlined,
+  EyeFilled,
+  InfoCircleOutlined,
+  UserAddOutlined,
+} from "@ant-design/icons";
+import { CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
 import { ValidateToken } from "@components/ValidateToken";
@@ -16,8 +21,8 @@ import { queryClient } from "@src/services/queryClient";
 import { useCreateOrganizationReports } from "@src/services/reports/register/organization/createUserReports";
 import { OrganizationUserQuery } from "@src/services/types/register/organization/organizationUsers.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Input } from "antd";
-import { useEffect, useState } from "react";
+import { Button, Input, Tooltip, Tour, TourProps, Typography } from "antd";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { NewUserInterface, NewUserModal } from "./components/newUserModal";
 
@@ -60,19 +65,6 @@ export const OrganizationUser = () => {
   } = useCreateOrganizationReports(query);
   const [action, setAction] = useState<"create" | "update">("create");
 
-  const columns: ColumnInterface[] = [
-    { name: "id", type: "id", sort: true },
-    { name: "name", type: "text", sort: true },
-    {
-      name: ["permission_group", "name"],
-      head: "group",
-      type: "text",
-    },
-    { name: "email", type: "text" },
-    { name: "status", type: "status" },
-    { name: "created_at", type: "date", sort: true },
-  ];
-
   useEffect(() => {
     refetchUsersData();
   }, [query]);
@@ -80,15 +72,123 @@ export const OrganizationUser = () => {
   const handleUpdateTokenValidate = () => {
     updateMutate();
   };
+
+  // TUOR -----------------------------------------------
+  
+  const [isTuorOpen, setIsTuorOpen] = useState<boolean>(false);
+  const ref1 = useRef(null);
+  const ref2 = useRef(null);
+  const ref3 = useRef(null);
+  const ref4 = useRef(null);
+  const ref5 = useRef(null);
+  const refId = useRef(null);
+  const refName = useRef(null);
+  const refGroup = useRef(null);
+  const refStatus = useRef(null);
+  const refEmail = useRef(null);
+  const refCreatedAt = useRef(null);
+  const steps: TourProps["steps"] = [
+    {
+      title: "Usuários de organização.",
+      description: "Aqui você gerencia os usuários da sua organização.",
+    },
+    {
+      title: "Filtros de pesquisa.",
+      description: "Aplique filtros específicos na pesquisa por usuário.",
+      target: () => ref1.current,
+    },
+    {
+      title: "Pesquisa por nome.",
+      description: "Procure determinado usuário pelo nome.",
+      target: () => ref2.current,
+    },
+    {
+      title: "Remoção dos filtros.",
+      description:
+        "Remova os filtros aplicados e volte a busca para o estado inicial.",
+      target: () => ref3.current,
+    },
+  ];
+
+  if (permissions.register.paybrokers.users.paybrokers_user_create) {
+    steps.push({
+      title: "Cadastre usuários.",
+      description:
+        "Cadastre novos usuários para acessar o painel da sua organização e defina suas permissões.",
+      target: () => ref4.current,
+    });
+  }
+  if (permissions.register.paybrokers.users.paybrokers_user_export_csv) {
+    steps.push({
+      title: "Gere relatórios",
+      description: (
+        <Typography>
+          Gere relatórios dos usuários da sua organização de acordo com os
+          filtros selecionados. O relatório poderá ser baixado na pagina:{" "}
+          <Typography.Link
+            href="/register/organization/organization_reports/organization_reports_users"
+            target="_blank"
+          >
+            Organização | Relatórios | Usuários
+          </Typography.Link>
+        </Typography>
+      ),
+      target: () => ref5.current,
+    });
+  }
+
+  steps.push(
+    {
+      title: "ID",
+      description:
+        "Número de identificação do usuário junto ao cadastro da Organização",
+      target: () => refId.current,
+    },
+    {
+      title: "Nome",
+      description: "Nome do usuário",
+      target: () => refName.current,
+    },
+    {
+      title: "Grupo",
+      description: "Grupo de acessos e permissões que o usuário está vinculado",
+      target: () => refGroup.current,
+    },
+    {
+      title: "Email",
+      description: "Email de cadastro do usuário.",
+      target: () => refEmail.current,
+    },
+    {
+      title: "Situação",
+      description: "Situação do cadastro do usuário (ativo ou inativo).",
+      target: () => refStatus.current,
+    },
+    {
+      title: "Criado em",
+      description: "Data de criação do usuário",
+      target: () => refCreatedAt.current,
+    }
+  );
+  // TUOR -----------------------------------------------
+
   return (
     <Grid container style={{ padding: "25px" }}>
+      <Tour
+        open={isTuorOpen}
+        onClose={() => setIsTuorOpen(false)}
+        steps={steps}
+        animated
+      />
       <Grid
         container
         style={{ display: "flex", alignItems: "center" }}
         spacing={1}
       >
         <Grid item xs={12} md={4} lg={2}>
-           <Button size="large"
+          <Button
+            ref={ref1}
+            size="large"
             style={{ width: "100%" }}
             loading={isUsersDataFetching}
             type="primary"
@@ -97,7 +197,7 @@ export const OrganizationUser = () => {
             {t("table.filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={8} lg={10}>
+        <Grid item xs={12} md={7} lg={9}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
@@ -105,11 +205,25 @@ export const OrganizationUser = () => {
             setQuery={setQuery}
           />
         </Grid>
+        <Grid
+          xs={12}
+          md={1}
+          style={{ display: "flex", justifyContent: "flex-end" }}
+        >
+          <Tooltip title="Ajuda">
+            <Button
+              type="link"
+              onClick={() => setIsTuorOpen((state) => !state)}
+            >
+              <InfoCircleOutlined />
+            </Button>
+          </Tooltip>
+        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
-        <Grid item xs={12} md={4} lg={4}>
-        <Input.Search
+        <Grid item xs={12} md={4} lg={4} ref={ref2}>
+          <Input.Search
             size="large"
             value={search}
             placeholder={t("table.name") || ""}
@@ -121,6 +235,7 @@ export const OrganizationUser = () => {
         </Grid>
         <Grid item xs={12} md={3} lg={2}>
           <Button
+            ref={ref3}
             type="dashed"
             loading={isUsersDataFetching}
             danger
@@ -143,6 +258,7 @@ export const OrganizationUser = () => {
         {permissions.register.paybrokers.users.paybrokers_user_create && (
           <Grid item xs={12} md={3} lg={2}>
             <Button
+              ref={ref4}
               type="primary"
               loading={isUsersDataFetching}
               onClick={() => {
@@ -163,7 +279,7 @@ export const OrganizationUser = () => {
           </Grid>
         )}
         {permissions.register.paybrokers.users.paybrokers_user_export_csv && (
-          <Grid item xs={12} md="auto">
+          <Grid item xs={12} md="auto" ref={ref5}>
             <ExportReportsModal
               disabled={!UsersData?.total || UsersDataError}
               mutateReport={() => OrganizationReportsMutate()}
@@ -203,7 +319,24 @@ export const OrganizationUser = () => {
             data={UsersData}
             items={UsersData?.items}
             error={UsersDataError}
-            columns={columns}
+            columns={[
+              { name: "id", type: "id", sort: true, key: refId },
+              { name: "name", type: "text", sort: true, key: refName },
+              {
+                name: ["permission_group", "name"],
+                head: "group",
+                type: "text",
+                key: refGroup,
+              },
+              { name: "email", type: "text", key: refEmail },
+              { name: "status", type: "status", key: refStatus },
+              {
+                name: "created_at",
+                type: "date",
+                sort: true,
+                key: refCreatedAt,
+              },
+            ]}
             loading={isUsersDataFetching}
             label={["name", "username"]}
           />
@@ -216,15 +349,7 @@ export const OrganizationUser = () => {
           setOpen={setIsFiltersOpen}
           query={query}
           setQuery={setQuery}
-          filters={[
-            "start_date",
-            "end_date",
-            "status",
-            "partner_id",
-            "merchant_id",
-            "aggregator_id",
-            "operator_id",
-          ]}
+          filters={["start_date", "end_date", "status"]}
           refetch={refetchUsersData}
           selectOptions={{}}
           startDateKeyName="start_date"
@@ -257,7 +382,7 @@ export const OrganizationUser = () => {
         />
       )}
 
-<Toast
+      <Toast
         actionSuccess={t("messages.updated")}
         actionError={t("messages.update")}
         error={updateError}

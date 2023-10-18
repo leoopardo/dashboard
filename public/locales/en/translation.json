@@ -141,7 +141,8 @@
     "uploads": "Uploads",
     "import_csv": "Import csv",
     "update_aggregator": "Update agregator",
-    "details": "Details"
+    "details": "Details",
+    "Wiki": "Wiki"
   },
 
   "titles": {
@@ -765,5 +766,10 @@
     "update_file": "Update file",
     "create_cpf": "Create document",
     "update_cpf": "Update document"
+  },
+  "wiki": {
+    "categories_description": "This feature enables the registration of categories for manual entries made by the organization. These categorizations are used to identify the reasons for the entries.",
+    "search_filter": "Search filters",
+    "search_filter_description": "Apply specific filters in the user search."
   }
 }
