@@ -264,6 +264,7 @@ export const Persons = () => {
             columns={columns}
             loading={isPersonsDataFetching}
             label={["name", "description"]}
+            removeTotal
           />
         </Grid>
       </Grid>

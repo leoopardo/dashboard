@@ -142,7 +142,8 @@
     "uploads": "Uploads",
     "import_csv": "Importar csv",
     "update_aggregator": "Atualizar agregador",
-    "details": "Detalhes"
+    "details": "Detalhes",
+    "Wiki": "Wiki"
   },
 
   "titles": {
@@ -769,5 +770,10 @@
     "update_file": "Atualizar arquivo",
     "create_cpf": "Criar CPF",
     "update_cpf": "Atualizar CPF"
+  },
+  "wiki": {
+    "categories_description": "Esta funcionalidade viabiliza o cadastro de categorias de lançamentos manuais realizados pela organização. As categorizações servem para identificação dos motivos dos lançamentos.",
+    "search_filter": "Filtros de pesquisa",
+    "search_filter_description": "Aplique filtros específicos na pesquisa por usuário."
   }
 }
