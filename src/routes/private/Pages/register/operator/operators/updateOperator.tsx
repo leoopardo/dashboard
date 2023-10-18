@@ -14,6 +14,7 @@ import { FilterChips } from "@src/components/FiltersModal/filterChips";
 import { CellphoneInput } from "@src/components/Inputs/CellphoneInput";
 import { Confirmation } from "@src/components/Modals/confirmation";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
+import { AggregatorSelect } from "@src/components/Selects/aggregatorSelect";
 import { Toast } from "@src/components/Toast";
 import { queryClient } from "@src/services/queryClient";
 import { useDeleteOperatorAttachment } from "@src/services/register/operator/attachments/deleteAttachment";
@@ -248,7 +249,7 @@ export const UpdateOperator = () => {
             </Col>
             <Col xs={{ span: 24 }} md={{ span: 6 }}>
               <Form.Item label={t("table.cellphone")} name="name">
-                <CellphoneInput body={OperatorBody} setBody={setOperatorBody} />
+                <CellphoneInput body={OperatorBody ?? location?.state?.cellphone} setBody={setOperatorBody} />
               </Form.Item>
             </Col>
             <Col xs={{ span: 24 }} md={{ span: 6 }}>
@@ -280,17 +281,27 @@ export const UpdateOperator = () => {
                           {country?.name.common}
                         </Typography>
                       ),
-                      value: country.name.common
+                      value: country.name.common,
                     };
                   })}
                   filterOption={(inputValue, option) =>
-                    option?.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+                    option?.value
+                      .toUpperCase()
+                      .indexOf(inputValue.toUpperCase()) !== -1
                   }
                   size="large"
                   value={OperatorBody?.country}
                   onChange={(value) =>
                     setOperatorBody((state) => ({ ...state, country: value }))
                   }
+                />
+              </Form.Item>
+            </Col>
+            <Col xs={{ span: 24 }} md={{ span: 6 }}>
+              <Form.Item label={t("table.aggregator")} name="aggregator_id">
+                <AggregatorSelect
+                  aggregatorId={OperatorBody.aggregator_id ?? location?.state?.aggregator_id}
+                  setQueryFunction={setOperatorBody}
                 />
               </Form.Item>
             </Col>

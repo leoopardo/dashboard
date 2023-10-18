@@ -56,8 +56,6 @@ export const Operators = () => {
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [isNewCategorieModal, setIsNewCategorieModal] =
     useState<boolean>(false);
-  const [isUpdateCategorieModalOpen, setIsUpdateCategorieModalOpen] =
-    useState<boolean>(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<OperatorItem | null>(null);
   const [search, setSearch] = useState<string>("");
@@ -79,7 +77,7 @@ export const Operators = () => {
     OperatorIsSuccess,
   } = useCreateOperator(createBody);
 
-  const { UpdateError, UpdateIsLoading, UpdateMutate, UpdateIsSuccess } =
+  const { UpdateError, UpdateIsSuccess } =
     useUpdateOperator(updateBody);
 
   const columns: ColumnInterface[] = [
@@ -253,6 +251,7 @@ export const Operators = () => {
             { label: "cellphone", required: false },
             { label: "email", required: false },
             { label: "country", required: true },
+            { label: "aggregator_id", required: false },
           ]}
           body={createBody}
           setBody={setCreateBody}
@@ -261,27 +260,6 @@ export const Operators = () => {
           submitLoading={OperatorIsLoading}
           error={OperatorError}
           success={OperatorIsSuccess}
-        />
-      )}
-      {isUpdateCategorieModalOpen && (
-        <MutateModal
-          type="update"
-          open={isUpdateCategorieModalOpen}
-          setOpen={setIsUpdateCategorieModalOpen}
-          fields={[
-            { label: "name", required: false },
-            { label: "cnpj", required: false },
-            { label: "cellphone", required: false },
-            { label: "email", required: false },
-            { label: "country", required: false },
-          ]}
-          body={updateBody}
-          setBody={setUpdateBody}
-          modalName={t("modal.update_operator")}
-          submit={UpdateMutate}
-          submitLoading={UpdateIsLoading}
-          error={UpdateError}
-          success={UpdateIsSuccess}
         />
       )}
       {isViewModalOpen && (

@@ -37,7 +37,7 @@ export const OperatorDetails = () => {
   };
 
   console.log(location.state);
-  
+
   const [responsibleQuery, setResponsibleQuery] =
     useState<OperatorResponsiblesQuery>(INITIAL_RESPONSIBLE_QUERY);
   const [, setCurrentResponsible] = useState<OperatorResponsiblesItem | null>(
@@ -122,6 +122,18 @@ export const OperatorDetails = () => {
             {location?.state?.cellphone ?? "-"}
           </Descriptions.Item>
           <Descriptions.Item
+            key={"aggregator_id"}
+            label={t(`table.aggregator_name`)}
+            labelStyle={{
+              maxWidth: "120px !important",
+              margin: 0,
+              padding: 0,
+              textAlign: "center",
+            }}
+          >
+            {location?.state?.aggregator_name ?? "-"}
+          </Descriptions.Item>
+          <Descriptions.Item
             key={"status"}
             label={t(`table.status`)}
             labelStyle={{
@@ -135,7 +147,6 @@ export const OperatorDetails = () => {
               ? t("table.active")
               : t("table.inactive")}
           </Descriptions.Item>
-         
         </Descriptions>
       ),
     },
