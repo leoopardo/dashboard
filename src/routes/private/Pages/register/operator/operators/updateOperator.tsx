@@ -324,7 +324,7 @@ export const UpdateOperator = () => {
                 onClick={() => submitRef.current?.click()}
                 loading={UpdateIsLoading}
               >
-                {t("buttons.update")} {t("table.Operator")}
+                {t("buttons.update")} {t("table.operator")}
               </Button>
             </Col>
           </Row>
