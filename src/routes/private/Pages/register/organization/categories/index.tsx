@@ -1,10 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { EditOutlined, EyeFilled, UserAddOutlined } from "@ant-design/icons";
-import { ColumnInterface, CustomTable } from "@components/CustomTable";
+import {
+  EditOutlined,
+  EyeFilled,
+  InfoCircleOutlined,
+  UserAddOutlined,
+} from "@ant-design/icons";
+import { CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
-import { Grid } from "@mui/material";
+import { Grid, Tooltip } from "@mui/material";
 import { useGetOrganizationCategories } from "@services/register/organization/categories/getCategories";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
@@ -22,8 +27,8 @@ import {
   OrganizationCategoriesQuery,
 } from "@src/services/types/register/organization/organizationCategories.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Input } from "antd";
-import { useEffect, useState } from "react";
+import { Button, Input, Tour, TourProps, Typography } from "antd";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 const INITIAL_QUERY: OrganizationCategoriesQuery = {
@@ -80,14 +85,6 @@ export const OrganizationCategories = () => {
     CategoryReportsMutate,
   } = useCreateOrganizationCategoryReports(query);
 
-  const columns: ColumnInterface[] = [
-    { name: "id", type: "id", sort: true },
-    { name: "name", type: "text", sort: true },
-    { name: "description", type: "text", sort: true },
-    { name: "status", type: "status", sort: true },
-    { name: "created_at", type: "date", sort: true },
-  ];
-
   useEffect(() => {
     refetchCategoriesData();
   }, [query]);
@@ -99,8 +96,109 @@ export const OrganizationCategories = () => {
     });
   }, [currentItem]);
 
+  const [isTuorOpen, setIsTuorOpen] = useState<boolean>(false);
+  const ref1 = useRef(null);
+  const ref2 = useRef(null);
+  const ref3 = useRef(null);
+  const ref4 = useRef(null);
+  const ref5 = useRef(null);
+  const refId = useRef(null);
+  const refName = useRef(null);
+  const refDescription = useRef(null);
+  const refStatus = useRef(null);
+  const refCreatedAt = useRef(null);
+  const steps: TourProps["steps"] = [
+    {
+      title: t("menus.categories"),
+      description: t("wiki.categories_description")},
+    {
+      title: t("wiki.search_filter"),
+      description: t("wiki.search_filter_description"),
+      target: () => ref1.current,
+    },
+    {
+      title: "Pesquisa por nome.",
+      description: "Procure determinada categoria pelo nome.",
+      target: () => ref2.current,
+    },
+    {
+      title: "Remoção dos filtros.",
+      description:
+        "Remova os filtros aplicados e volte a busca para o estado inicial.",
+      target: () => ref3.current,
+    },
+  ];
+
+  if (
+    permissions.register.paybrokers.release_category
+      .paybrokers_release_category_create
+  ) {
+    steps.push({
+      title: "Cadastre categorias.",
+      description: "Cadastre novas categorias de lançamentos manuais.",
+      target: () => ref4.current,
+    });
+  }
+  if (
+    permissions.register.paybrokers.release_category
+      .paybrokers_release_category_export_csv
+  ) {
+    steps.push({
+      title: "Gere relatórios",
+      description: (
+        <Typography>
+          Gere relatórios das categorias de lançamento manual de acordo com os
+          filtros selecionados. O relatório poderá ser baixado na pagina:{" "}
+          <Typography.Link
+            href="/register/organization/organization_reports/organization_reports_categories"
+            target="_blank"
+          >
+            Organização | Relatórios | Usuários
+          </Typography.Link>
+        </Typography>
+      ),
+      target: () => ref5.current,
+    });
+  }
+
+  steps.push(
+    {
+      title: "ID",
+      description:
+        "Número de identificação do usuário junto ao cadastro da Organização",
+      target: () => refId.current,
+    },
+    {
+      title: "Nome",
+      description: "Nome da categoria de lançamento manual.",
+      target: () => refName.current,
+    },
+    {
+      title: "Descrição",
+      description: "Descrição da categoria de lançamento manual.",
+      target: () => refDescription.current,
+    },
+    {
+      title: "Situação",
+      description: "Situação do cadastro da categoria (ativa ou inativa).",
+      target: () => refStatus.current,
+    },
+    {
+      title: "Criado em",
+      description: "Data de criação da categoria.",
+      target: () => refCreatedAt.current,
+    }
+  );
+  // TUOR -----------------------------------------------
+
   return (
     <Grid container style={{ padding: "25px" }}>
+      <Tour
+        open={isTuorOpen}
+        onClose={() => setIsTuorOpen(false)}
+        steps={steps}
+        animated
+      />
       <Grid
         container
         style={{ display: "flex", alignItems: "center" }}
@@ -108,6 +206,7 @@ export const OrganizationCategories = () => {
       >
         <Grid item xs={12} md={4} lg={2}>
           <Button
+            ref={ref1}
             size="large"
             style={{ width: "100%" }}
             loading={isCategoriesDataFetching}
@@ -117,7 +216,7 @@ export const OrganizationCategories = () => {
             {t("table.filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={8} lg={10}>
+        <Grid item xs={12} md={7} lg={9}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
@@ -125,10 +224,24 @@ export const OrganizationCategories = () => {
             setQuery={setQuery}
           />
         </Grid>
+        <Grid
+          xs={12}
+          md={1}
+          style={{ display: "flex", justifyContent: "flex-end" }}
+        >
+          <Tooltip title="Ajuda">
+            <Button
+              type="link"
+              onClick={() => setIsTuorOpen((state) => !state)}
+            >
+              <InfoCircleOutlined />
+            </Button>
+          </Tooltip>
+        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
-        <Grid item xs={12} md={4} lg={4}>
+        <Grid item xs={12} md={4} lg={4} ref={ref2}>
           <Input.Search
             size="large"
             value={search}
@@ -141,6 +254,7 @@ export const OrganizationCategories = () => {
         </Grid>
         <Grid item xs={12} md={3} lg={2}>
           <Button
+            ref={ref3}
             type="dashed"
             loading={isCategoriesDataFetching}
             danger
@@ -164,6 +278,7 @@ export const OrganizationCategories = () => {
           .paybrokers_release_category_create && (
           <Grid item xs={12} md={3} lg={2}>
             <Button
+              ref={ref4}
               type="primary"
               loading={isCategoriesDataFetching}
               onClick={() => {
@@ -185,7 +300,7 @@ export const OrganizationCategories = () => {
 
         {permissions.register.paybrokers.release_category
           .paybrokers_release_category_export_csv && (
-          <Grid item xs={12} md="auto">
+          <Grid item xs={12} md="auto" ref={ref5}>
             <ExportReportsModal
               disabled={!CategoriesData?.total || CategoriesDataError}
               mutateReport={() => CategoryReportsMutate()}
@@ -225,7 +340,23 @@ export const OrganizationCategories = () => {
             data={CategoriesData}
             items={CategoriesData?.items}
             error={CategoriesDataError}
-            columns={columns}
+            columns={[
+              { name: "id", type: "id", sort: true, key: refId },
+              { name: "name", type: "text", sort: true, key: refName },
+              {
+                name: "description",
+                type: "text",
+                sort: true,
+                key: refDescription,
+              },
+              { name: "status", type: "status", sort: true, key: refStatus },
+              {
+                name: "created_at",
+                type: "date",
+                sort: true,
+                key: refCreatedAt,
+              },
+            ]}
             loading={isCategoriesDataFetching}
             label={["name", "description"]}
           />

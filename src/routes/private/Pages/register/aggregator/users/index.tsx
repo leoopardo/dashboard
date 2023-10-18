@@ -34,7 +34,6 @@ export const AggregatorUsers = () => {
   ) as ValidateInterface;
   const [query, setQuery] = useState<PartnerQuery>(INITIAL_QUERY);
   const { t } = useTranslation();
-
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [isNewUserModal, setIsNewUserModal] = useState<boolean>(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
