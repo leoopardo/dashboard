@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { InfoCircleOutlined } from "@ant-design/icons";
 import { Grid } from "@mui/material";
 import { Toast } from "@src/components/Toast";
+import { TuorComponent } from "@src/components/Tuor";
 import { queryClient } from "@src/services/queryClient";
 import { useGetGeneralconfigs } from "@src/services/register/organization/generalConfigs/getGeneralConfigs";
 import { useUpdateOrganizationGeneralConfigs } from "@src/services/register/organization/generalConfigs/updateGeneralConfigs";
@@ -15,6 +17,7 @@ import {
   Select,
   Tabs,
   TabsProps,
+  Tooltip,
 } from "antd";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -26,8 +29,16 @@ export const GeneralConfigs = () => {
 
   const { t } = useTranslation();
   const { data, isFetching } = useGetGeneralconfigs();
+  const [activeKey, setactiveKey] = useState<"1" | "2">(
+    permissions.register.paybrokers.general_configs
+      .general_configs_update_financial
+      ? "1"
+      : "2"
+  );
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  const onChange = () => {};
+  const onChange = (key: "1" | "2") => {
+    setactiveKey(key);
+  };
   const formRef = useRef<FormInstance>(null);
   const [body, setBody] = useState<OrganizationGeneralConfigs>({ ...data });
   const [isConfirmOpen, setIsConfirmOpen] = useState<boolean>(false);
@@ -44,6 +55,30 @@ export const GeneralConfigs = () => {
     formRef.current?.setFieldsValue(data);
   }, [data]);
 
+  const [isTuorOpen, setIsTuorOpen] = useState<boolean>(false);
+  const refCashInMaxValue = useRef(null);
+  const refCashInReceiveByPj = useRef(null);
+  const refCashInMaxValueReceiveByPj = useRef(null);
+  const refCashInReceiveByDiffrentPayer = useRef(null);
+  const refCashInMaxValueReceiveByDiffrentPayer = useRef(null);
+  const refCashOutMaxValue = useRef(null);
+  const refCashInMaxValueByMonth = useRef(null);
+  const refCashOutMaxValueByMonth = useRef(null);
+  const refCashInPermission = useRef(null);
+  const refAutoSwitchBanks = useRef(null);
+  const refCashOutPermission = useRef(null);
+  const refCheckLast = useRef(null);
+  const refCallbackDeposit = useRef(null);
+  const refCallbackWithdraw = useRef(null);
+  const refCashInDisabledMessage = useRef(null);
+  const refCashOutDisabledMessage = useRef(null);
+  const reftimeToPreventRepeatedWithdraw = useRef(null);
+  const refMaxValueToSwitchBankAcc = useRef(null);
+  const refMinValueToSwitchBankAcc = useRef(null);
+  const refCheckLastWaitinPix = useRef(null);
+  const refPaybrokersQrCode = useRef(null);
+  const refTimeReceiveAfterExpire = useRef(null);
+
   const items: TabsProps["items"] = [
     {
       key: "1",
@@ -51,7 +86,7 @@ export const GeneralConfigs = () => {
       children: (
         <Form ref={formRef} layout="vertical" initialValues={data ? data : {}}>
           <Grid container spacing={1}>
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} md={4} ref={refCashInMaxValue}>
               <Form.Item
                 label={t("input.cash_in_max_value")}
                 name="cash_in_max_value"
@@ -64,7 +99,7 @@ export const GeneralConfigs = () => {
                 />
               </Form.Item>
             </Grid>
-            <Grid item xs={12} md={2}>
+            <Grid item xs={12} md={2} ref={refCashInReceiveByPj}>
               <Form.Item
                 label={t("input.cash_in_receive_by_pj")}
                 name="cash_in_receive_by_pj"
@@ -85,7 +120,7 @@ export const GeneralConfigs = () => {
                 />
               </Form.Item>
             </Grid>
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} md={4} ref={refCashInMaxValueReceiveByPj}>
               <Form.Item
                 label={t("input.cash_in_max_value_receive_by_pj")}
                 name="cash_in_max_value_receive_by_pj"
@@ -98,7 +133,7 @@ export const GeneralConfigs = () => {
                 />
               </Form.Item>
             </Grid>
-            <Grid item xs={12} md={2}>
+            <Grid item xs={12} md={2} ref={refCashInReceiveByDiffrentPayer}>
               <Form.Item
                 label={t("input.cash_in_receive_by_different_payer")}
                 name="cash_in_receive_by_different_payer"
@@ -119,7 +154,12 @@ export const GeneralConfigs = () => {
                 />
               </Form.Item>
             </Grid>
-            <Grid item xs={12} md={4}>
+            <Grid
+              item
+              xs={12}
+              md={4}
+              ref={refCashInMaxValueReceiveByDiffrentPayer}
+            >
               <Form.Item
                 label={t("input.cash_in_max_value_receive_by_different_payer")}
                 name="cash_in_max_value_receive_by_different_payer"
@@ -132,7 +172,7 @@ export const GeneralConfigs = () => {
                 />
               </Form.Item>
             </Grid>
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} md={4} ref={refCashOutMaxValue}>
               <Form.Item
                 label={t("input.cash_out_max_value")}
                 name="cash_out_max_value"
@@ -145,7 +185,7 @@ export const GeneralConfigs = () => {
                 />
               </Form.Item>
             </Grid>
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} md={4} ref={refCashInMaxValueByMonth}>
               <Form.Item
                 label={t("input.cash_in_max_value_by_month")}
                 name="cash_in_max_value_by_month"
@@ -158,7 +198,7 @@ export const GeneralConfigs = () => {
                 />
               </Form.Item>
             </Grid>
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} md={4} ref={refCashOutMaxValueByMonth}>
               <Form.Item
                 label={t("input.cash_out_max_value_by_month")}
                 name="cash_out_max_value_by_month"
@@ -194,7 +234,7 @@ export const GeneralConfigs = () => {
             spacing={1}
             style={{ display: "flex", alignItems: "flex-end" }}
           >
-            <Grid item xs={12} md={2}>
+            <Grid item xs={12} md={2} ref={refCashInPermission}>
               <Form.Item
                 label={t("input.cash_in_permission")}
                 name="cash_in_permission"
@@ -215,7 +255,7 @@ export const GeneralConfigs = () => {
                 />
               </Form.Item>
             </Grid>{" "}
-            <Grid item xs={12} md={2}>
+            <Grid item xs={12} md={2} ref={refAutoSwitchBanks}>
               <Form.Item
                 label={t("input.auto_switch_bank_acc")}
                 name="auto_switch_bank_acc"
@@ -236,7 +276,7 @@ export const GeneralConfigs = () => {
                 />
               </Form.Item>
             </Grid>{" "}
-            <Grid item xs={12} md={2}>
+            <Grid item xs={12} md={2} ref={refCashOutPermission}>
               <Form.Item
                 label={t("input.cash_out_permission")}
                 name="cash_out_permission"
@@ -257,7 +297,7 @@ export const GeneralConfigs = () => {
                 />
               </Form.Item>
             </Grid>{" "}
-            <Grid item xs={12} md={2}>
+            <Grid item xs={12} md={2} ref={refCheckLast}>
               <Form.Item
                 label={t("input.check_last_waiting_pix")}
                 name="check_last_waiting_pix"
@@ -278,7 +318,7 @@ export const GeneralConfigs = () => {
                 />
               </Form.Item>
             </Grid>
-            <Grid item xs={12} md={2}>
+            <Grid item xs={12} md={2} ref={refCallbackDeposit}>
               <Form.Item
                 label={t("input.callback_deposit_api_enable")}
                 name="callback_deposit_api_enable"
@@ -299,7 +339,7 @@ export const GeneralConfigs = () => {
                 />
               </Form.Item>
             </Grid>
-            <Grid item xs={12} md={2}>
+            <Grid item xs={12} md={2} ref={refCallbackWithdraw}>
               <Form.Item
                 label={t("input.callback_withdraw_api_enable")}
                 name="callback_withdraw_api_enable"
@@ -320,7 +360,7 @@ export const GeneralConfigs = () => {
                 />
               </Form.Item>
             </Grid>
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} md={4} ref={refCashInDisabledMessage}>
               <Form.Item
                 label={t("input.cash_in_disabled_message")}
                 name="cash_in_disabled_message"
@@ -333,7 +373,7 @@ export const GeneralConfigs = () => {
                 />
               </Form.Item>
             </Grid>
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} md={4} ref={refCashOutDisabledMessage}>
               <Form.Item
                 label={t("input.cash_out_disabled_message")}
                 name="cash_out_disabled_message"
@@ -346,7 +386,7 @@ export const GeneralConfigs = () => {
                 />
               </Form.Item>
             </Grid>
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} md={4} ref={reftimeToPreventRepeatedWithdraw}>
               <Form.Item
                 label={t("input.time_to_prevent_repeated_withdraw_minutes")}
                 name="time_to_prevent_repeated_withdraw_minutes"
@@ -359,7 +399,7 @@ export const GeneralConfigs = () => {
                 />
               </Form.Item>
             </Grid>
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} md={4} ref={refMaxValueToSwitchBankAcc}>
               <Form.Item
                 label={t("input.max_value_to_switch_bank_acc")}
                 name="max_value_to_switch_bank_acc"
@@ -373,7 +413,7 @@ export const GeneralConfigs = () => {
                 />
               </Form.Item>
             </Grid>
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} md={4} ref={refMinValueToSwitchBankAcc}>
               <Form.Item
                 label={t("input.min_value_to_switch_bank_acc")}
                 name="min_value_to_switch_bank_acc"
@@ -387,7 +427,7 @@ export const GeneralConfigs = () => {
                 />
               </Form.Item>
             </Grid>
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} md={4} ref={refCheckLastWaitinPix}>
               <Form.Item
                 label={t("input.check_last_waiting_pix_time_minutes")}
                 name="check_last_waiting_pix_time_minutes"
@@ -400,7 +440,7 @@ export const GeneralConfigs = () => {
                 />
               </Form.Item>
             </Grid>
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} md={4} ref={refPaybrokersQrCode}>
               <Form.Item
                 label={t("input.paybrokers_qr_code_expire_hours")}
                 name="paybrokers_qr_code_expire_hours"
@@ -413,7 +453,7 @@ export const GeneralConfigs = () => {
                 />
               </Form.Item>
             </Grid>
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} md={4} ref={refTimeReceiveAfterExpire}>
               <Form.Item
                 label={t("input.time_receive_after_expire_qr_code_hours")}
                 name="time_receive_after_expire_qr_code_hours"
@@ -449,6 +489,24 @@ export const GeneralConfigs = () => {
         display: "flex",
       }}
     >
+      <Grid
+        item
+        xs={12}
+        md={12}
+        style={{ display: "flex", justifyContent: "flex-end" }}
+      >
+        <Tooltip title="Ajuda">
+          <Button
+            type="link"
+            onClick={() => {
+              setactiveKey("1");
+              setIsTuorOpen((state) => !state);
+            }}
+          >
+            <InfoCircleOutlined />
+          </Button>
+        </Tooltip>
+      </Grid>
       <Grid item xs={12}>
         <Tabs
           defaultActiveKey={
@@ -457,8 +515,9 @@ export const GeneralConfigs = () => {
               ? "1"
               : "2"
           }
+          activeKey={activeKey}
           items={items}
-          onChange={onChange}
+          onChange={(key: any) => onChange(key)}
         />
       </Grid>
       <Grid
@@ -506,6 +565,141 @@ export const GeneralConfigs = () => {
         actionError={t("messages.update")}
         error={updateError}
         success={updateSuccess}
+      />
+
+      <TuorComponent
+        open={isTuorOpen}
+        setOpen={setIsTuorOpen}
+        steps={[
+          {
+            title: t("input.cash_in_max_value"),
+            description: t("wiki.cash_in_max_value_description"),
+            target: () => refCashInMaxValue.current,
+          },
+          {
+            title: t("input.cash_in_receive_by_pj"),
+            description: t("wiki.cash_in_receive_by_pj_description"),
+            target: () => refCashInReceiveByPj.current,
+          },
+          {
+            title: t("input.cash_in_max_value_receive_by_pj"),
+            description: t("wiki.cash_in_max_value_receive_by_pj_description"),
+            target: () => refCashInMaxValueReceiveByPj.current,
+          },
+          {
+            title: t("input.cash_in_receive_by_different_payer"),
+            description: t(
+              "wiki.cash_in_receive_by_different_payer_description"
+            ),
+            target: () => refCashInReceiveByDiffrentPayer.current,
+          },
+          {
+            title: t("input.cash_in_max_value_receive_by_different_payer"),
+            description: t(
+              "wiki.cash_in_max_value_receive_by_different_payer_description"
+            ),
+            target: () => refCashInMaxValueReceiveByDiffrentPayer.current,
+          },
+          {
+            title: t("input.cash_out_max_value"),
+            description: t("wiki.cash_out_max_value_description"),
+            target: () => refCashOutMaxValue.current,
+          },
+          {
+            title: t("input.cash_in_max_value_by_month"),
+            description: t("wiki.cash_in_max_value_by_month_description"),
+            target: () => refCashInMaxValueByMonth.current,
+          },
+          {
+            title: t("input.cash_out_max_value_by_month"),
+            description: t("wiki.cash_out_max_value_by_month_description"),
+            target: () => refCashOutMaxValueByMonth.current,
+            nextButtonProps: {
+              onClick: () => setactiveKey("2"),
+            },
+          },
+          {
+            title: t("input.cash_in_permission"),
+            description: t("wiki.cash_in_permission_description"),
+            target: () => refCashInPermission.current,
+            prevButtonProps: {
+              onClick: () => setactiveKey("1"),
+            },
+          },
+          {
+            title: t("input.auto_switch_bank_acc"),
+            description: t("wiki.auto_switch_bank_acc_description"),
+            target: () => refAutoSwitchBanks.current,
+          },
+          {
+            title: t("input.cash_out_permission"),
+            description: t("wiki.cash_out_permission_description"),
+            target: () => refCashOutPermission.current,
+          },
+          {
+            title: t("input.check_last_waiting_pix"),
+            description: t("wiki.check_last_waiting_pix_description"),
+            target: () => refCheckLast.current,
+          },
+          {
+            title: t("input.callback_deposit_api_enable"),
+            description: t("wiki.callback_deposit_api_enable_description"),
+            target: () => refCallbackDeposit.current,
+          },
+          {
+            title: t("input.callback_withdraw_api_enable"),
+            description: t("wiki.callback_withdraw_api_enable_description"),
+            target: () => refCallbackWithdraw.current,
+          },
+          {
+            title: t("input.cash_in_disabled_message"),
+            description: t("wiki.cash_in_disabled_message_description"),
+            target: () => refCashInDisabledMessage.current,
+          },
+          {
+            title: t("input.cash_out_disabled_message"),
+            description: t("wiki.cash_out_disabled_message_description"),
+            target: () => refCashOutDisabledMessage.current,
+          },
+          {
+            title: t("input.time_to_prevent_repeated_withdraw_minutes"),
+            description: t(
+              "wiki.time_to_prevent_repeated_withdraw_minutes_description"
+            ),
+            target: () => reftimeToPreventRepeatedWithdraw.current,
+          },
+          {
+            title: t("input.max_value_to_switch_bank_acc"),
+            description: t(
+              "wiki.max_value_to_switch_bank_acc_description"
+            ),
+            target: () => refMaxValueToSwitchBankAcc.current,
+          },
+          {
+            title: t("input.min_value_to_switch_bank_acc"),
+            description: t("wiki.min_value_to_switch_bank_acc_description"),
+            target: () => refMinValueToSwitchBankAcc.current,
+          },
+          {
+            title: t("input.check_last_waiting_pix_time_minutes"),
+            description: t("wiki.check_last_waiting_pix_time_minutes_description"),
+            target: () => refCheckLastWaitinPix.current,
+          },
+          {
+            title: t("input.paybrokers_qr_code_expire_hours"),
+            description: t("wiki.paybrokers_qr_code_expire_hours_description"),
+            target: () => refPaybrokersQrCode.current,
+          },
+          {
+            title: t("input.time_receive_after_expire_qr_code_hours"),
+            description: t("wiki.time_receive_after_expire_qr_code_hours_description"),
+            target: () => refTimeReceiveAfterExpire.current,
+          },
+        ]}
+        pageStep={{
+          title: t("menus.general_configs"),
+          description: t("wiki.general_configs_description"),
+        }}
       />
     </Grid>
   );

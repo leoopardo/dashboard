@@ -17,11 +17,12 @@ import { useUpdateOrganizationUser } from "@services/register/organization/users
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
 import { Toast } from "@src/components/Toast";
+import { TuorComponent } from "@src/components/Tuor";
 import { queryClient } from "@src/services/queryClient";
 import { useCreateOrganizationReports } from "@src/services/reports/register/organization/createUserReports";
 import { OrganizationUserQuery } from "@src/services/types/register/organization/organizationUsers.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Input, Tooltip, Tour, TourProps, Typography } from "antd";
+import { Button, Input, Tooltip, Typography } from "antd";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { NewUserInterface, NewUserModal } from "./components/newUserModal";
@@ -74,7 +75,7 @@ export const OrganizationUser = () => {
   };
 
   // TUOR -----------------------------------------------
-  
+
   const [isTuorOpen, setIsTuorOpen] = useState<boolean>(false);
   const ref1 = useRef(null);
   const ref2 = useRef(null);
@@ -87,99 +88,9 @@ export const OrganizationUser = () => {
   const refStatus = useRef(null);
   const refEmail = useRef(null);
   const refCreatedAt = useRef(null);
-  const steps: TourProps["steps"] = [
-    {
-      title: "Usuários de organização.",
-      description: "Aqui você gerencia os usuários da sua organização.",
-    },
-    {
-      title: "Filtros de pesquisa.",
-      description: "Aplique filtros específicos na pesquisa por usuário.",
-      target: () => ref1.current,
-    },
-    {
-      title: "Pesquisa por nome.",
-      description: "Procure determinado usuário pelo nome.",
-      target: () => ref2.current,
-    },
-    {
-      title: "Remoção dos filtros.",
-      description:
-        "Remova os filtros aplicados e volte a busca para o estado inicial.",
-      target: () => ref3.current,
-    },
-  ];
-
-  if (permissions.register.paybrokers.users.paybrokers_user_create) {
-    steps.push({
-      title: "Cadastre usuários.",
-      description:
-        "Cadastre novos usuários para acessar o painel da sua organização e defina suas permissões.",
-      target: () => ref4.current,
-    });
-  }
-  if (permissions.register.paybrokers.users.paybrokers_user_export_csv) {
-    steps.push({
-      title: "Gere relatórios",
-      description: (
-        <Typography>
-          Gere relatórios dos usuários da sua organização de acordo com os
-          filtros selecionados. O relatório poderá ser baixado na pagina:{" "}
-          <Typography.Link
-            href="/register/organization/organization_reports/organization_reports_users"
-            target="_blank"
-          >
-            Organização | Relatórios | Usuários
-          </Typography.Link>
-        </Typography>
-      ),
-      target: () => ref5.current,
-    });
-  }
-
-  steps.push(
-    {
-      title: "ID",
-      description:
-        "Número de identificação do usuário junto ao cadastro da Organização",
-      target: () => refId.current,
-    },
-    {
-      title: "Nome",
-      description: "Nome do usuário",
-      target: () => refName.current,
-    },
-    {
-      title: "Grupo",
-      description: "Grupo de acessos e permissões que o usuário está vinculado",
-      target: () => refGroup.current,
-    },
-    {
-      title: "Email",
-      description: "Email de cadastro do usuário.",
-      target: () => refEmail.current,
-    },
-    {
-      title: "Situação",
-      description: "Situação do cadastro do usuário (ativo ou inativo).",
-      target: () => refStatus.current,
-    },
-    {
-      title: "Criado em",
-      description: "Data de criação do usuário",
-      target: () => refCreatedAt.current,
-    }
-  );
-  // TUOR -----------------------------------------------
 
   return (
     <Grid container style={{ padding: "25px" }}>
-      <Tour
-        open={isTuorOpen}
-        onClose={() => setIsTuorOpen(false)}
-        steps={steps}
-        animated
-      />
       <Grid
         container
         style={{ display: "flex", alignItems: "center" }}
@@ -206,6 +117,7 @@ export const OrganizationUser = () => {
           />
         </Grid>
         <Grid
+        item
           xs={12}
           md={1}
           style={{ display: "flex", justifyContent: "flex-end" }}
@@ -397,6 +309,75 @@ export const OrganizationUser = () => {
           setOpen={setIsViewModalOpen}
         />
       )}
+
+      <TuorComponent
+        open={isTuorOpen}
+        setOpen={setIsTuorOpen}
+        searchFilterStepRef={ref1}
+        searchByNameStepRef={ref2}
+        removeFiltersStepRef={ref3}
+        createRegisterStep={
+          permissions.register.paybrokers.users.paybrokers_user_create && {
+            title: t("wiki.register_users"),
+            description: t("wiki.register_users_descriptions"),
+            target: () => ref4.current,
+          }
+        }
+        exportCsvStep={
+          permissions.register.paybrokers.users.paybrokers_user_export_csv && {
+            title: t("wiki.generate_reports"),
+            description: (
+              <Typography>
+                {t("wiki.generate_reports_descriptions")}{" "}
+                <Typography.Link
+                  href="/register/organization/organization_reports/organization_reports_users"
+                  target="_blank"
+                >
+                  {t("menus.organization")} | {t("menus.reports")} |{" "}
+                  {t("menus.users")}
+                </Typography.Link>
+              </Typography>
+            ),
+            target: () => ref5.current,
+          }
+        }
+        steps={[
+          {
+            title: t("table.id"),
+            description: t("wiki.id_description"),
+            target: () => refId.current,
+          },
+          {
+            title: t("table.name"),
+            description: t("wiki.user_name_description"),
+            target: () => refName.current,
+          },
+          {
+            title: t("table.group"),
+            description: t("wiki.group_description"),
+            target: () => refGroup.current,
+          },
+          {
+            title: t("table.email"),
+            description: t("wiki.email_description"),
+            target: () => refEmail.current,
+          },
+          {
+            title: t("table.status"),
+            description: t("wiki.status_description"),
+            target: () => refStatus.current,
+          },
+          {
+            title: t("table.createdAt"),
+            description: t("wiki.created_at_description"),
+            target: () => refCreatedAt.current,
+          },
+        ]}
+        pageStep={{
+          title: t("wiki.organization_users"),
+          description: t("wiki.organization_users_description"),
+        }}
+      />
     </Grid>
   );
 };
