@@ -9,7 +9,7 @@ import { CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
-import { Grid, Tooltip } from "@mui/material";
+import { Grid } from "@mui/material";
 import { useGetOrganizationCategories } from "@services/register/organization/categories/getCategories";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
@@ -28,7 +28,7 @@ import {
   OrganizationCategoriesQuery,
 } from "@src/services/types/register/organization/organizationCategories.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Input, Typography } from "antd";
+import { Button, Input, Tooltip, Typography } from "antd";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -137,7 +137,7 @@ export const OrganizationCategories = () => {
           />
         </Grid>
         <Grid
-        item
+          item
           xs={12}
           md={1}
           style={{ display: "flex", justifyContent: "flex-end" }}
@@ -411,8 +411,8 @@ export const OrganizationCategories = () => {
           },
         ]}
         pageStep={{
-          title: t("wiki.organization_users"),
-          description: t("wiki.organization_users_description"),
+          title: t("menus.categories"),
+          description: t("wiki.organization_categories_description"),
         }}
       />
     </Grid>
