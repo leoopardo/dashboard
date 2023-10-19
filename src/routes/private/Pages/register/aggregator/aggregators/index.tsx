@@ -1,5 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { EditOutlined, EyeFilled, UserAddOutlined } from "@ant-design/icons";
+import {
+  EditOutlined,
+  EyeFilled,
+  InfoCircleOutlined,
+  UserAddOutlined,
+} from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
@@ -20,11 +25,13 @@ import {
   AggregatorQuery,
 } from "@src/services/types/register/aggregators/aggregators.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Input } from "antd";
-import { useEffect, useState } from "react";
+import { Button, Input, Tooltip, Typography } from "antd";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { TotalizersCards } from "./components/totalizersCards";
+import { TuorComponent } from "@src/components/Tuor";
+import { defaultTheme } from "@src/styles/defaultTheme";
 
 const INITIAL_QUERY: AggregatorQuery = {
   limit: 25,
@@ -97,13 +104,6 @@ export const Aggregators = () => {
     UpdateReset,
   } = useUpdateAggregator(updateBody);
 
-  const columns: ColumnInterface[] = [
-    { name: "id", type: "id", sort: true },
-    { name: "name", type: "text", sort: true },
-    { name: "status", type: "status", sort: true },
-    { name: "created_at", type: "date", sort: true },
-  ];
-
   useEffect(() => {
     isSuccessAggregatorsTotalsData && refetchAggregatorsTotalsData();
     isSuccessAggregatorsData && refetchAggregatorsData();
@@ -116,13 +116,40 @@ export const Aggregators = () => {
     });
   }, [currentItem]);
 
+  const [isTuorOpen, setIsTuorOpen] = useState<boolean>(false);
+  const ref = useRef(null);
+  const ref1 = useRef(null);
+  const ref2 = useRef(null);
+  const ref3 = useRef(null);
+  const ref4 = useRef(null);
+  const ref5 = useRef(null);
+  const refId = useRef(null);
+  const refName = useRef(null);
+  const refStatus = useRef(null);
+  const refCreatedAt = useRef(null);
+
   return (
     <Grid container style={{ padding: "25px" }}>
-      <TotalizersCards
-        params={query}
-        loading={isAggregatorsTotalsDataFetching}
-        data={AggregatorsTotalsData || undefined}
-      />
+      <Grid
+        item
+        xs={12}
+        md={12}
+        style={{ display: "flex", justifyContent: "flex-end" }}
+      >
+        <Tooltip title="Ajuda">
+          <Button type="link" onClick={() => setIsTuorOpen((state) => !state)}>
+            <InfoCircleOutlined />
+          </Button>
+        </Tooltip>
+      </Grid>
+      <Grid item xs={12} ref={ref}>
+        <TotalizersCards
+          params={query}
+          loading={isAggregatorsTotalsDataFetching}
+          data={AggregatorsTotalsData || undefined}
+        />
+      </Grid>
+
       <Grid
         container
         style={{ display: "flex", alignItems: "center" }}
@@ -130,6 +157,7 @@ export const Aggregators = () => {
       >
         <Grid item xs={12} md={4} lg={2}>
           <Button
+            ref={ref1}
             size="large"
             style={{ width: "100%" }}
             loading={isAggregatorsDataFetching}
@@ -150,7 +178,7 @@ export const Aggregators = () => {
       </Grid>
 
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
-        <Grid item xs={12} md={4} lg={4}>
+        <Grid item xs={12} md={4} lg={4} ref={ref2}>
           <Input.Search
             size="large"
             value={search}
@@ -163,6 +191,7 @@ export const Aggregators = () => {
         </Grid>
         <Grid item xs={12} md={3} lg={2}>
           <Button
+            ref={ref3}
             type="dashed"
             loading={isAggregatorsDataFetching}
             danger
@@ -185,6 +214,7 @@ export const Aggregators = () => {
         {permissions.register.aggregator.aggregator.aggregator_create && (
           <Grid item xs={12} md={3} lg={2}>
             <Button
+              ref={ref4}
               type="primary"
               loading={isAggregatorsDataFetching}
               onClick={() => {
@@ -205,7 +235,7 @@ export const Aggregators = () => {
           </Grid>
         )}
         {permissions.register.aggregator.aggregator.aggregator_export_csv && (
-          <Grid item xs={12} md="auto">
+          <Grid item xs={12} md="auto" ref={ref5}>
             <ExportReportsModal
               disabled={!AggregatorsData?.total || AggregatorsDataError}
               mutateReport={() => AggregatorReportsMutate()}
@@ -245,7 +275,17 @@ export const Aggregators = () => {
             data={AggregatorsData}
             items={AggregatorsData?.items}
             error={AggregatorsDataError}
-            columns={columns}
+            columns={[
+              { name: "id", type: "id", sort: true, key: refId },
+              { name: "name", type: "text", sort: true, key: refName },
+              { name: "status", type: "status", sort: true, key: refStatus },
+              {
+                name: "created_at",
+                type: "date",
+                sort: true,
+                key: refCreatedAt,
+              },
+            ]}
             loading={isAggregatorsDataFetching}
             label={["name", "description"]}
           />
@@ -324,6 +364,104 @@ export const Aggregators = () => {
         actionError={t("messages.create")}
         error={AggregatorError}
         success={AggregatorIsSuccess}
+      />
+      <TuorComponent
+        open={isTuorOpen}
+        setOpen={setIsTuorOpen}
+        searchFilterStepRef={ref1}
+        searchByNameStepRef={ref2}
+        removeFiltersStepRef={ref3}
+        createRegisterStep={
+          permissions.register.paybrokers.release_category
+            .paybrokers_release_category_create && {
+            title: t("wiki.register_categories"),
+            description: t("wiki.register_categories_description"),
+            target: () => ref4.current,
+          }
+        }
+        exportCsvStep={
+          permissions.register.paybrokers.release_category
+            .paybrokers_release_category_export_csv && {
+            title: t("wiki.generate_reports"),
+            description: (
+              <Typography>
+                {t("wiki.generate_reports_descriptions")}{" "}
+                <Typography.Link
+                  href="/register/aggregator/aggregator_reports/aggregator_aggregators_reports"
+                  target="_blank"
+                >
+                  {t("menus.aggregators")} | {t("menus.reports")} |{" "}
+                  {t("menus.aggregators")}
+                </Typography.Link>
+              </Typography>
+            ),
+            target: () => ref5.current,
+          }
+        }
+        steps={[
+          {
+            title: t("wiki.totalizers"),
+            description: (
+              <Typography>
+                {t("wiki.totalizers_description")}
+                <Typography>
+                  <span style={{ color: defaultTheme.colors.info }}>
+                    {t("titles.total_registred", {
+                      entity: t("menus.aggregator")?.toLowerCase(),
+                    })}
+                    :
+                  </span>
+                  {t("wiki.entity_total")}
+                </Typography>
+                <Typography>
+                  <span style={{ color: defaultTheme.colors.success }}>
+                    {t("titles.total_registred_active", {
+                      entity: t("menus.aggregator")?.toLowerCase(),
+                    })}
+                    :
+                  </span>
+                  {t("wiki.entity_active")}
+                </Typography>
+                <Typography>
+                  <span style={{ color: defaultTheme.colors.waiting }}>
+                    {t("titles.total_registred_inactive", {
+                      entity: t("menus.aggregator")?.toLowerCase(),
+                    })}
+                    :
+                  </span>
+                  {t("wiki.entity_inactive")}
+                </Typography>
+              </Typography>
+            ),
+            target: () => ref.current,
+          },
+
+          {
+            title: t("table.id"),
+            description: t("wiki.id_description"),
+            target: () => refId.current,
+          },
+          {
+            title: t("table.name"),
+            description: t("wiki.aggregator_name_description"),
+            target: () => refName.current,
+          },
+          {
+            title: t("table.status"),
+            description: t("wiki.status_description"),
+            target: () => refStatus.current,
+          },
+
+          {
+            title: t("table.createdAt"),
+            description: t("wiki.created_at_description"),
+            target: () => refCreatedAt.current,
+          },
+        ]}
+        pageStep={{
+          title: t("menus.aggregators"),
+          description: t("wiki.aggregators_description"),
+        }}
       />
     </Grid>
   );
