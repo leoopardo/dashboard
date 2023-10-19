@@ -1,8 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { EditFilled } from "@ant-design/icons";
-import { ColumnInterface, CustomTable } from "@components/CustomTable";
+import { EditFilled, InfoCircleOutlined } from "@ant-design/icons";
+import { CustomTable } from "@components/CustomTable";
 import { Grid } from "@mui/material";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
+import { TuorComponent } from "@src/components/Tuor";
 import { queryClient } from "@src/services/queryClient";
 import { useGetOrganizationBankMaintenece } from "@src/services/register/organization/bankMaitenence/getBanks";
 import { useUpdateBank } from "@src/services/register/organization/bankMaitenence/updateBank";
@@ -11,7 +12,8 @@ import {
   BankMaintenenceQuery,
 } from "@src/services/types/register/organization/bankMaintenence.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { useEffect, useState } from "react";
+import { Button, Tooltip } from "antd";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 const INITIAL_QUERY: BankMaintenenceQuery = {
@@ -47,18 +49,18 @@ export const BankMaintenence = () => {
   const { updateBank, updateBankError, updateBankLoading, updateBankSuccess } =
     useUpdateBank(updateBody, currentItem?.id);
 
-  const columns: ColumnInterface[] = [
-    { name: "icon_url", type: "icon" },
-    { name: "label_name", type: "text",sort: true },
-    { name: "priority", type: "text" },
-    { name: "agency", type: "text" },
-    { name: "account", type: "text" },
-    { name: "status", type: "status" },
-    { name: "bank_fee", type: "text" },
-    { name: "cash_in", type: "boolean" },
-    { name: "cash_out", type: "boolean" },
-    { name: "created_at", type: "date",sort: true },
-  ];
+  const [isTuorOpen, setIsTuorOpen] = useState<boolean>(false);
+
+  const refLogo = useRef(null);
+  const refBankName = useRef(null);
+  const refPriority = useRef(null);
+  const refAgency = useRef(null);
+  const refAccount = useRef(null);
+  const refStatus = useRef(null);
+  const refBankFee = useRef(null);
+  const refCashIn = useRef(null);
+  const refCashOut = useRef(null);
+  const refCreatedAt = useRef(null);
 
   useEffect(() => {
     refetchBankMainteneceData();
@@ -69,6 +71,18 @@ export const BankMaintenence = () => {
 
   return (
     <Grid container style={{ padding: "25px" }}>
+      <Grid
+        item
+        xs={12}
+        md={12}
+        style={{ display: "flex", justifyContent: "flex-end" }}
+      >
+        <Tooltip title="Ajuda">
+          <Button type="link" onClick={() => setIsTuorOpen((state) => !state)}>
+            <InfoCircleOutlined />
+          </Button>
+        </Tooltip>
+      </Grid>
       <Grid container>
         <Grid item xs={12}>
           {" "}
@@ -79,7 +93,28 @@ export const BankMaintenence = () => {
             data={BankMainteneceData}
             items={BankMainteneceData?.itens}
             error={BankMainteneceDataError}
-            columns={columns}
+            columns={[
+              { name: "icon_url", type: "icon", key: refLogo },
+              {
+                name: "label_name",
+                type: "text",
+                sort: true,
+                key: refBankName,
+              },
+              { name: "priority", type: "text", key: refPriority },
+              { name: "agency", type: "text", key: refAgency },
+              { name: "account", type: "text", key: refAccount },
+              { name: "status", type: "status", key: refStatus },
+              { name: "bank_fee", type: "text", key: refBankFee },
+              { name: "cash_in", type: "boolean", key: refCashIn },
+              { name: "cash_out", type: "boolean", key: refCashOut },
+              {
+                name: "created_at",
+                type: "date",
+                sort: true,
+                key: refCreatedAt,
+              },
+            ]}
             actions={
               permissions.register.paybrokers.banks_maintain
                 .banks_maintain_update
@@ -124,6 +159,66 @@ export const BankMaintenence = () => {
           success={updateBankSuccess}
         />
       )}
+      <TuorComponent
+        open={isTuorOpen}
+        setOpen={setIsTuorOpen}
+        steps={[
+          {
+            title: t("table.icon_url"),
+            description: t("wiki.logo_description"),
+            target: () => refLogo.current,
+          },
+          {
+            title: t("table.bank_name"),
+            description: t("wiki.bank_name_description"),
+            target: () => refBankName.current,
+          },
+          {
+            title: t("table.priority"),
+            description: t("wiki.priority_description"),
+            target: () => refPriority.current,
+          },
+          {
+            title: t("table.agency"),
+            description: t("wiki.agency_description"),
+            target: () => refAgency.current,
+          },
+          {
+            title: t("table.account"),
+            description: t("wiki.account_description"),
+            target: () => refAccount.current,
+          },
+          {
+            title: t("table.status"),
+            description: t("wiki.status_description"),
+            target: () => refStatus.current,
+          },
+          {
+            title: t("table.bank_fee"),
+            description: t("wiki.bank_fee_description"),
+            target: () => refBankFee.current,
+          },
+          {
+            title: t("table.cash_in"),
+            description: t("wiki.cash_in_description"),
+            target: () => refCashIn.current,
+          },
+          {
+            title: t("table.cash_out"),
+            description: t("wiki.cash_out_description"),
+            target: () => refCashOut.current,
+          },
+          {
+            title: t("table.createdAt"),
+            description: t("wiki.created_at_description"),
+            target: () => refCreatedAt.current,
+          },
+        ]}
+        pageStep={{
+          title: t("menus.bank_maintain"),
+          description: t("wiki.bank_maintain_description"),
+        }}
+      />
     </Grid>
   );
 };

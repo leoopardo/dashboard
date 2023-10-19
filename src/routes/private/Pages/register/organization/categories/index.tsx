@@ -15,6 +15,7 @@ import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
 import { Toast } from "@src/components/Toast";
+import { TuorComponent } from "@src/components/Tuor";
 import { queryClient } from "@src/services/queryClient";
 import { useCreateOrganizationCategory } from "@src/services/register/organization/categories/createCategorie";
 import {
@@ -27,7 +28,7 @@ import {
   OrganizationCategoriesQuery,
 } from "@src/services/types/register/organization/organizationCategories.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Input, Tour, TourProps, Typography } from "antd";
+import { Button, Input, Typography } from "antd";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -107,98 +108,9 @@ export const OrganizationCategories = () => {
   const refDescription = useRef(null);
   const refStatus = useRef(null);
   const refCreatedAt = useRef(null);
-  const steps: TourProps["steps"] = [
-    {
-      title: t("menus.categories"),
-      description: t("wiki.categories_description")},
-    {
-      title: t("wiki.search_filter"),
-      description: t("wiki.search_filter_description"),
-      target: () => ref1.current,
-    },
-    {
-      title: "Pesquisa por nome.",
-      description: "Procure determinada categoria pelo nome.",
-      target: () => ref2.current,
-    },
-    {
-      title: "Remoção dos filtros.",
-      description:
-        "Remova os filtros aplicados e volte a busca para o estado inicial.",
-      target: () => ref3.current,
-    },
-  ];
-
-  if (
-    permissions.register.paybrokers.release_category
-      .paybrokers_release_category_create
-  ) {
-    steps.push({
-      title: "Cadastre categorias.",
-      description: "Cadastre novas categorias de lançamentos manuais.",
-      target: () => ref4.current,
-    });
-  }
-  if (
-    permissions.register.paybrokers.release_category
-      .paybrokers_release_category_export_csv
-  ) {
-    steps.push({
-      title: "Gere relatórios",
-      description: (
-        <Typography>
-          Gere relatórios das categorias de lançamento manual de acordo com os
-          filtros selecionados. O relatório poderá ser baixado na pagina:{" "}
-          <Typography.Link
-            href="/register/organization/organization_reports/organization_reports_categories"
-            target="_blank"
-          >
-            Organização | Relatórios | Usuários
-          </Typography.Link>
-        </Typography>
-      ),
-      target: () => ref5.current,
-    });
-  }
-
-  steps.push(
-    {
-      title: "ID",
-      description:
-        "Número de identificação do usuário junto ao cadastro da Organização",
-      target: () => refId.current,
-    },
-    {
-      title: "Nome",
-      description: "Nome da categoria de lançamento manual.",
-      target: () => refName.current,
-    },
-    {
-      title: "Descrição",
-      description: "Descrição da categoria de lançamento manual.",
-      target: () => refDescription.current,
-    },
-    {
-      title: "Situação",
-      description: "Situação do cadastro da categoria (ativa ou inativa).",
-      target: () => refStatus.current,
-    },
-    {
-      title: "Criado em",
-      description: "Data de criação da categoria.",
-      target: () => refCreatedAt.current,
-    }
-  );
-  // TUOR -----------------------------------------------
 
   return (
     <Grid container style={{ padding: "25px" }}>
-      <Tour
-        open={isTuorOpen}
-        onClose={() => setIsTuorOpen(false)}
-        steps={steps}
-        animated
-      />
       <Grid
         container
         style={{ display: "flex", alignItems: "center" }}
@@ -225,6 +137,7 @@ export const OrganizationCategories = () => {
           />
         </Grid>
         <Grid
+        item
           xs={12}
           md={1}
           style={{ display: "flex", justifyContent: "flex-end" }}
@@ -435,6 +348,72 @@ export const OrganizationCategories = () => {
         actionError={t("messages.create")}
         error={error}
         success={isSuccess}
+      />
+      <TuorComponent
+        open={isTuorOpen}
+        setOpen={setIsTuorOpen}
+        searchFilterStepRef={ref1}
+        searchByNameStepRef={ref2}
+        removeFiltersStepRef={ref3}
+        createRegisterStep={
+          permissions.register.paybrokers.release_category
+            .paybrokers_release_category_create && {
+            title: t("wiki.register_categories"),
+            description: t("wiki.register_categories_description"),
+            target: () => ref4.current,
+          }
+        }
+        exportCsvStep={
+          permissions.register.paybrokers.release_category
+            .paybrokers_release_category_export_csv && {
+            title: t("wiki.generate_reports"),
+            description: (
+              <Typography>
+                {t("wiki.generate_reports_descriptions")}{" "}
+                <Typography.Link
+                  href="/register/organization/organization_reports/organization_reports_categories"
+                  target="_blank"
+                >
+                  {t("menus.organization")} | {t("menus.reports")} |{" "}
+                  {t("menus.categories")}
+                </Typography.Link>
+              </Typography>
+            ),
+            target: () => ref5.current,
+          }
+        }
+        steps={[
+          {
+            title: t("table.id"),
+            description: t("wiki.id_description"),
+            target: () => refId.current,
+          },
+          {
+            title: t("table.name"),
+            description: t("wiki.category_name_description"),
+            target: () => refName.current,
+          },
+          {
+            title: t("table.description"),
+            description: t("wiki.description_description"),
+            target: () => refDescription.current,
+          },
+          {
+            title: t("table.status"),
+            description: t("wiki.status_description"),
+            target: () => refStatus.current,
+          },
+
+          {
+            title: t("table.createdAt"),
+            description: t("wiki.created_at_description"),
+            target: () => refCreatedAt.current,
+          },
+        ]}
+        pageStep={{
+          title: t("wiki.organization_users"),
+          description: t("wiki.organization_users_description"),
+        }}
       />
     </Grid>
   );
