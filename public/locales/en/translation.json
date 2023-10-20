@@ -235,7 +235,8 @@
     "transfers": "Transfers",
     "dark": "Dark theme",
     "light": "Light theme",
-    "responsible": "responsible"
+    "responsible": "responsible",
+    "help": "Help"
   },
   "input": {
     "required": "Please input the {{field}}",
@@ -789,7 +790,7 @@
     "email_description": "User's registration email",
     "status_description": "Registration status (active or inactive)",
     "created_at_description": "Date of record creation",
-    "description_description": "Manual Entry Category Description.",
+    "description_description": "Brief description to explain the purpose of the registration.",
     "register_categories": "Register categories.",
     "register_categories_description": "Register new manual entry categories.",
     "bank_maintain_description": "This feature is used to perform maintenance on the banks that provide services to the Organization. It allows you to edit their information.",
@@ -830,6 +831,28 @@
     "entity_active": "Number of active entities.",
     "entity_inactive": "Number of entities that have been inactivated.",
     "aggregator_name_description": "Name registered for the aggregator.",
-    "aggregators_description": "Here you manage the aggregators that use the dashboard."
+    "aggregators_description": "Here you manage the aggregators that use the dashboard.",
+    "aggregator_users_description": "Here you manage the users who access your aggregator dashboard and define their permissions.",
+    "register_aggregator_users_descriptions": "Register new users to access your dashboard and define their permissions.",
+    "aggregator_user_name_description": "User's name",
+    "aggregator_group_description": "Group of permissions and accesses to which the user is linked.",
+    "aggregator_description": "Aggregator to which the user is linked.",
+    "last_signin_date_description": "Date of the user's last access to the system.",
+    "self_exclusion_description": "Through this feature, a person can request self-inclusion in the blacklist for a period of time. This function prevents any operations from being performed with a specific CPF during that period.",
+    "register_self_exclusion": "Create Self-Exclusion",
+    "register_self_exclusion_descriptions": "Opens a modal to add a CPF to the blacklist and select the period of time during which the person will be restricted.",
+    "document_description": "Individual's Registration (CPF)",
+    "merchant_description": "Company linked to the registration",
+    "organization_description": "Organization linked to the registration",
+    "partner_description": "Platform linked to the registration",
+    "start_date_description": "Initial date selected during the registration creation",
+    "end_date_description": "End date selected during the registration creation",
+    "search_by_reason": "Search by Reason",
+    "search_by_reason_description": "Filter to search for blocks by reason",
+    "search_by_cpf": "Search by Individual's Registration (CPF)",
+    "search_by_cpf_description": "Filter to enter and search for a block by Individual's Registration (CPF)",
+    "reason_description": "Reason that led to the block of that Individual's Registration (CPF)",
+    "create_user_name_description": "Name of the user who blocked that Individual's Registration (CPF)",
+    "aggregator_blacklist_description": "Here you manage the list of blockages by Individual's Registration (CPF)."
   }
 }

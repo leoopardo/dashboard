@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { PlusOutlined } from "@ant-design/icons";
+import { InfoCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
@@ -9,6 +9,7 @@ import { Grid } from "@mui/material";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
 import { ReasonSelect } from "@src/components/Selects/reasonSelect";
+import { TuorComponent } from "@src/components/Tuor";
 import { queryClient } from "@src/services/queryClient";
 import { useCreateAggregatorBlacklist } from "@src/services/register/aggregator/blacklist/createAggregatorBlacklist";
 import { useGetAggregatorsBlacklist } from "@src/services/register/aggregator/blacklist/getAggregatorsBlacklist";
@@ -17,8 +18,8 @@ import { AggregatorBlacklistQuery } from "@src/services/types/register/aggregato
 import { MerchantBlacklistItem } from "@src/services/types/register/merchants/merchantBlacklist.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
 import useDebounce from "@utils/useDebounce";
-import { Button, Input } from "antd";
-import { useEffect, useState } from "react";
+import { Button, Input, Tooltip, Typography } from "antd";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 const INITIAL_QUERY: AggregatorBlacklistQuery = {
@@ -64,15 +65,6 @@ export const AggregatorBlacklist = () => {
   const [search, setSearch] = useState<string>("");
   const debounceSearch = useDebounce(search);
 
-  const columns: ColumnInterface[] = [
-    { name: "cpf", type: "id" },
-    { name: "merchant_name", type: "text" },
-    { name: "reason", type: "text", sort: true },
-    { name: "description", type: "text" },
-    { name: "create_user_name", type: "text" },
-    { name: "createdAt", type: "date", sort: true },
-  ];
-
   useEffect(() => {
     refetchAggregatorsBlacklistData();
   }, [query]);
@@ -86,15 +78,30 @@ export const AggregatorBlacklist = () => {
     setQuery((state) => ({ ...state, cpf: debounceSearch }));
   }, [debounceSearch]);
 
+  const [isTuorOpen, setIsTuorOpen] = useState<boolean>(false);
+  const ref1 = useRef(null);
+  const ref2 = useRef(null);
+  const ref3 = useRef(null);
+  const ref4 = useRef(null);
+  const ref5 = useRef(null);
+  const ref6 = useRef(null);
+  const refDoc = useRef(null);
+  const refMerchant = useRef(null);
+  const refReason = useRef(null);
+  const refDescription = useRef(null);
+  const refWhoAdd = useRef(null);
+  const refCreatedAt = useRef(null);
+
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid
         container
-        style={{ marginTop: "20px", display: "flex", alignItems: "center" }}
+        style={{ display: "flex", alignItems: "center" }}
         spacing={1}
       >
         <Grid item xs={12} md={4} lg={2}>
           <Button
+            ref={ref1}
             size="large"
             style={{ width: "100%" }}
             loading={isAggregatorsBlacklistDataFetching}
@@ -104,7 +111,7 @@ export const AggregatorBlacklist = () => {
             {t("table.filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={8} lg={10}>
+        <Grid item xs={12} md={7} lg={9}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
@@ -112,13 +119,33 @@ export const AggregatorBlacklist = () => {
             setQuery={setQuery}
           />
         </Grid>
+        <Grid
+          item
+          xs={12}
+          md={1}
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            marginTop: -20,
+            marginBottom: 20,
+          }}
+        >
+          <Tooltip title={t("buttons.help")}>
+            <Button
+              type="link"
+              onClick={() => setIsTuorOpen((state) => !state)}
+            >
+              <InfoCircleOutlined />
+            </Button>
+          </Tooltip>
+        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
-        <Grid item xs={12} md={2} lg={2}>
+        <Grid item xs={12} md={2} lg={2} ref={ref2}>
           <ReasonSelect queryOptions={query} setQueryFunction={setQuery} />
         </Grid>
-        <Grid item xs={12} md={4} lg={4}>
+        <Grid item xs={12} md={4} lg={4} ref={ref3}>
           <Input
             size="large"
             placeholder={t("table.cpf") || ""}
@@ -130,6 +157,7 @@ export const AggregatorBlacklist = () => {
         </Grid>
         <Grid item xs={12} md={3} lg={2}>
           <Button
+            ref={ref4}
             type="dashed"
             loading={isAggregatorsBlacklistDataFetching}
             danger
@@ -155,6 +183,7 @@ export const AggregatorBlacklist = () => {
           .aggregator_blacklist_create && (
           <Grid item xs={12} md={3} lg={2}>
             <Button
+              ref={ref5}
               type="primary"
               loading={isAggregatorsBlacklistDataFetching}
               onClick={() => setIsUpdateModalOpen(true)}
@@ -174,7 +203,7 @@ export const AggregatorBlacklist = () => {
 
         {permissions.register.aggregator.blacklist
           .aggregator_blacklist_export_csv && (
-          <Grid item xs={12} md={2}>
+          <Grid item xs={12} md={2} ref={ref6}>
             <ExportReportsModal
               disabled={
                 !AggregatorsBlacklistData?.total ||
@@ -199,7 +228,19 @@ export const AggregatorBlacklist = () => {
             data={AggregatorsBlacklistData}
             items={AggregatorsBlacklistData?.items}
             error={AggregatorsBlacklistDataError}
-            columns={columns}
+            columns={[
+              { name: "cpf", type: "id", key: refDoc },
+              { name: "merchant_name", type: "text", key: refMerchant },
+              { name: "reason", type: "text", sort: true, key: refReason },
+              { name: "description", type: "text", key: refDescription },
+              { name: "create_user_name", type: "text", key: refWhoAdd },
+              {
+                name: "createdAt",
+                type: "date",
+                sort: true,
+                key: refCreatedAt,
+              },
+            ]}
             loading={isAggregatorsBlacklistDataFetching}
             label={["cpf", "merchant_name"]}
             actions={[]}
@@ -251,6 +292,83 @@ export const AggregatorBlacklist = () => {
           setOpen={setIsViewModalOpen}
         />
       )}
+      <TuorComponent
+        open={isTuorOpen}
+        setOpen={setIsTuorOpen}
+        searchFilterStepRef={ref1}
+        removeFiltersStepRef={ref4}
+        createRegisterStep={
+          permissions.register.aggregator.users.aggregator_user_create && {
+            title: t("wiki.register_self_exclusion"),
+            description: t("wiki.register_self_exclusion_descriptions"),
+            target: () => ref5.current,
+          }
+        }
+        exportCsvStep={
+          permissions.register.aggregator.users.aggregator_user_export_csv && {
+            title: t("wiki.generate_reports"),
+            description: (
+              <Typography>
+                {t("wiki.generate_reports_descriptions")}{" "}
+                <Typography.Link
+                  href="/register/aggregator/aggregator_reports/aggregator_blacklist_reports"
+                  target="_blank"
+                >
+                  {t("menus.aggregators")} | {t("menus.reports")} |{" "}
+                  {t("menus.aggregator_blacklist_blacklist")}
+                </Typography.Link>
+              </Typography>
+            ),
+            target: () => ref6.current,
+          }
+        }
+        steps={[
+          {
+            title: t("wiki.search_by_reason"),
+            description: t("wiki.search_by_reason_description"),
+            target: () => ref2.current,
+          },
+          {
+            title: t("wiki.search_by_cpf"),
+            description: t("wiki.search_by_cpf_description"),
+            target: () => ref3.current,
+          },
+          {
+            title: t("table.document"),
+            description: t("wiki.document_description"),
+            target: () => refDoc.current,
+          },
+          {
+            title: t("table.merchant"),
+            description: t("wiki.merchant_description"),
+            target: () => refMerchant.current,
+          },
+          {
+            title: t("table.reason"),
+            description: t("wiki.reason_description"),
+            target: () => refReason.current,
+          },
+          {
+            title: t("table.description"),
+            description: t("wiki.description_description"),
+            target: () => refDescription.current,
+          },
+          {
+            title: t("table.create_user_name"),
+            description: t("wiki.create_user_name_description"),
+            target: () => refWhoAdd.current,
+          },
+          {
+            title: t("table.createdAt"),
+            description: t("wiki.created_at_description"),
+            target: () => refCreatedAt.current,
+          },
+        ]}
+        pageStep={{
+          title: t("menus.aggregator_blacklist_blacklist"),
+          description: t("wiki.aggregator_blacklist_description"),
+        }}
+      />
     </Grid>
   );
 };

@@ -142,7 +142,7 @@ export const OrganizationCategories = () => {
           md={1}
           style={{ display: "flex", justifyContent: "flex-end" }}
         >
-          <Tooltip title="Ajuda">
+          <Tooltip title={t("buttons.help")}>
             <Button
               type="link"
               onClick={() => setIsTuorOpen((state) => !state)}

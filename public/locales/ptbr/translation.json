@@ -236,7 +236,8 @@
     "transfers": "Transferências",
     "dark": "Tema escuro",
     "light": "Tema claro",
-    "responsible": "responsável"
+    "responsible": "responsável",
+    "help": "Ajuda"
   },
   "modal": {
     "confirm": "Confirmar",
@@ -793,7 +794,7 @@
     "email_description": "Email de cadastro do usuário.",
     "status_description": "Situação do cadastro (ativo ou inativo).",
     "created_at_description": "Data de criação do registro",
-    "description_description": "Descrição da categoria de lançamento manual.",
+    "description_description": "Breve descrição para explicar a criação do registro.",
     "register_categories": "Cadastre categorias.",
     "register_categories_description": "Cadastre novas categorias de lançamentos manuais.",
     "bank_maintain_description": "Através desta funcionalidade são realizadas manutenções nos bancos que prestam serviços para a Organização. É possível realizar a edição de informações dos mesmos.",
@@ -834,6 +835,28 @@
     "entity_active": "Número de entidades que se encontram ativas.",
     "entity_inactive": "Número de entidades que foram inativadas.",
     "aggregator_name_description": "Nome cadastrado para o agregador",
-    "aggregators_description": "Aqui você gerencia os agregadores que fazem a utilização do painel."
+    "aggregators_description": "Aqui você gerencia os agregadores que fazem a utilização do painel.",
+    "aggregator_users_description": "Aqui você gerencia os usuários que fazem acesso ao seu painel de agregador e define suas permissões.",
+    "register_aggregator_users_descriptions": "Cadastre novos usuários para acessar o seu painel definindo suas permissões.",
+    "aggregator_user_name_description": "Nome do usuário",
+    "aggregator_group_description": "Grupo de permissões e acessos que o usuário está vinculado.",
+    "aggregator_description": "Agregador vinculado ao registro.",
+    "last_signin_date_description": "Data de ultimo acesso do usuário junto ao sistema.",
+    "self_exclusion_description": "Através desta funcionalidade, uma pessoa pode solicitar a auto-inserção na blacklist por um período de tempo, essa função serve para que não seja realizada nenhum tipo de operação por determinado CPF naquele período.",
+    "register_self_exclusion": "Criar auto exclusão",
+    "register_self_exclusion_descriptions": "Abre um modal para realizar a adição de um CPF na blacklist e selecionar o período de tempo que essa pessoa ficará restrita.",
+    "document_description": "Cadastro de pessoa física (CPF)",
+    "merchant_description": "Empresa vinculada ao registro",
+    "organization_description": "Organização vinculada a registro",
+    "partner_description": "Plataforma vinculada ao registro",
+    "start_date_description": "Data inicial selecionada durante a criação do registro",
+    "end_date_description": "Data final selecionada na criação do registro",
+    "search_by_reason": "Pesquisa por motivo",
+    "search_by_reason_description": "Filtro para pesquisar bloqueios pelo motivo",
+    "search_by_cpf": "Pesquisa por CPF",
+    "search_by_cpf_description": "Filtro para digitar e buscar um bloqueio por CPF",
+    "reason_description": "Motivo que levou ao bloqueio daquele CPF",
+    "create_user_name_description": "Nome do usuário que realizou o bloqueio daquele CPF",
+    "aggregator_blacklist_description": "Aqui você gerencia a lista de bloqueios por CPF"
   }
 }

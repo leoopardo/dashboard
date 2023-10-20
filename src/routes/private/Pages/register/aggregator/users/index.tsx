@@ -1,7 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { EditOutlined, EyeFilled, UserAddOutlined } from "@ant-design/icons";
-import { ColumnInterface, CustomTable } from "@components/CustomTable";
+import {
+  EditOutlined,
+  EyeFilled,
+  InfoCircleOutlined,
+  UserAddOutlined,
+} from "@ant-design/icons";
+import { CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
 import { ValidateToken } from "@components/ValidateToken";
@@ -10,14 +15,15 @@ import { Grid } from "@mui/material";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
 import { Toast } from "@src/components/Toast";
+import { TuorComponent } from "@src/components/Tuor";
 import { queryClient } from "@src/services/queryClient";
 import { useGetAggregatorUsers } from "@src/services/register/aggregator/users/getAggregatorUsers";
 import { useUpdateAggregatorUser } from "@src/services/register/aggregator/users/updateUser";
 import { useCreateAggregatorUsersReports } from "@src/services/reports/register/aggregators/createAggregatorUsersReports";
 import { PartnerQuery } from "@src/services/types/register/partners/partners.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Input } from "antd";
-import { useEffect, useState } from "react";
+import { Button, Input, Tooltip, Typography } from "antd";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { NewUserInterface, NewUserModal } from "./components/newUserModal";
 
@@ -54,16 +60,6 @@ export const AggregatorUsers = () => {
     });
   const [action, setAction] = useState<"create" | "update">("create");
 
-  const columns: ColumnInterface[] = [
-    { name: "id", type: "id", sort: true },
-    { name: "name", type: "text", sort: true },
-    { name: ["permission_group", "name"], head: "group", type: "text" },
-    { name: ["partner", "name"], head: "partner", type: "text" },
-    { name: "last_signin_date", type: "date" },
-    { name: "status", type: "status" },
-    { name: "created_at", type: "date", sort: true },
-  ];
-
   const {
     AggregatorUsersReportsError,
     AggregatorUsersReportsIsLoading,
@@ -78,6 +74,21 @@ export const AggregatorUsers = () => {
   const handleUpdateTokenValidate = () => {
     updateMutate();
   };
+
+  const [isTuorOpen, setIsTuorOpen] = useState<boolean>(false);
+  const ref1 = useRef(null);
+  const ref2 = useRef(null);
+  const ref3 = useRef(null);
+  const ref4 = useRef(null);
+  const ref5 = useRef(null);
+  const refId = useRef(null);
+  const refName = useRef(null);
+  const refGroup = useRef(null);
+  const refPartner = useRef(null);
+  const refLast = useRef(null);
+  const refStatus = useRef(null);
+  const refCreatedAt = useRef(null);
+
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid
@@ -87,6 +98,7 @@ export const AggregatorUsers = () => {
       >
         <Grid item xs={12} md={4} lg={2}>
           <Button
+            ref={ref1}
             size="large"
             style={{ width: "100%" }}
             loading={isUsersDataFetching}
@@ -96,7 +108,7 @@ export const AggregatorUsers = () => {
             {t("table.filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={8} lg={10}>
+        <Grid item xs={12} md={7} lg={9}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
@@ -104,10 +116,25 @@ export const AggregatorUsers = () => {
             setQuery={setQuery}
           />
         </Grid>
+        <Grid
+          item
+          xs={12}
+          md={1}
+          style={{ display: "flex", justifyContent: "flex-end" }}
+        >
+          <Tooltip title={t("buttons.help")}>
+            <Button
+              type="link"
+              onClick={() => setIsTuorOpen((state) => !state)}
+            >
+              <InfoCircleOutlined />
+            </Button>
+          </Tooltip>
+        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
-        <Grid item xs={12} md={4} lg={4}>
+        <Grid item xs={12} md={4} lg={4} ref={ref2}>
           <Input.Search
             size="large"
             value={search}
@@ -120,6 +147,7 @@ export const AggregatorUsers = () => {
         </Grid>
         <Grid item xs={12} md={3} lg={2}>
           <Button
+            ref={ref3}
             size="large"
             type="dashed"
             loading={isUsersDataFetching}
@@ -142,6 +170,7 @@ export const AggregatorUsers = () => {
         {permissions.register.aggregator.users.aggregator_user_create && (
           <Grid item xs={12} md={3} lg={2}>
             <Button
+              ref={ref4}
               type="primary"
               loading={isUsersDataFetching}
               onClick={() => {
@@ -162,7 +191,7 @@ export const AggregatorUsers = () => {
           </Grid>
         )}
         {permissions.register.aggregator.users.aggregator_user_export_csv && (
-          <Grid item xs={12} md="auto">
+          <Grid item xs={12} md="auto" ref={ref5}>
             <ExportReportsModal
               disabled={!UsersData?.total || UsersDataError}
               mutateReport={() => AggregatorUsersReportsMutate()}
@@ -204,7 +233,30 @@ export const AggregatorUsers = () => {
             data={UsersData}
             items={UsersData?.items}
             error={UsersDataError}
-            columns={columns}
+            columns={[
+              { name: "id", type: "id", sort: true, key: refId },
+              { name: "name", type: "text", sort: true, key: refName },
+              {
+                name: ["permission_group", "name"],
+                head: "group",
+                type: "text",
+                key: refGroup,
+              },
+              {
+                name: ["aggregator", "name"],
+                head: "aggregator",
+                type: "text",
+                key: refPartner,
+              },
+              { name: "last_signin_date", type: "date", key: refLast },
+              { name: "status", type: "status", key: refStatus },
+              {
+                name: "created_at",
+                type: "date",
+                sort: true,
+                key: refCreatedAt,
+              },
+            ]}
             loading={isUsersDataFetching}
             label={["name", "username"]}
           />
@@ -273,6 +325,80 @@ export const AggregatorUsers = () => {
           setOpen={setIsViewModalOpen}
         />
       )}
+
+      <TuorComponent
+        open={isTuorOpen}
+        setOpen={setIsTuorOpen}
+        searchFilterStepRef={ref1}
+        searchByNameStepRef={ref2}
+        removeFiltersStepRef={ref3}
+        createRegisterStep={
+          permissions.register.aggregator.users.aggregator_user_create && {
+            title: t("wiki.register_users"),
+            description: t("wiki.register_aggregator_users_descriptions"),
+            target: () => ref4.current,
+          }
+        }
+        exportCsvStep={
+          permissions.register.aggregator.users.aggregator_user_export_csv && {
+            title: t("wiki.generate_reports"),
+            description: (
+              <Typography>
+                {t("wiki.generate_reports_descriptions")}{" "}
+                <Typography.Link
+                  href="/register/aggregator/aggregator_reports/aggregator_users_reports"
+                  target="_blank"
+                >
+                  {t("menus.aggregators")} | {t("menus.reports")} |{" "}
+                  {t("menus.aggregator_users")}
+                </Typography.Link>
+              </Typography>
+            ),
+            target: () => ref5.current,
+          }
+        }
+        steps={[
+          {
+            title: t("table.id"),
+            description: t("wiki.id_description"),
+            target: () => refId.current,
+          },
+          {
+            title: t("table.name"),
+            description: t("wiki.aggregator_user_name_description"),
+            target: () => refName.current,
+          },
+          {
+            title: t("table.group"),
+            description: t("wiki.aggregator_group_description"),
+            target: () => refGroup.current,
+          },
+          {
+            title: t("table.aggregator"),
+            description: t("wiki.aggregator_description"),
+            target: () => refPartner.current,
+          },
+          {
+            title: t("table.last_signin_date"),
+            description: t("wiki.last_signin_date_description"),
+            target: () => refLast.current,
+          },
+          {
+            title: t("table.status"),
+            description: t("wiki.status_description"),
+            target: () => refStatus.current,
+          },
+          {
+            title: t("table.createdAt"),
+            description: t("wiki.created_at_description"),
+            target: () => refCreatedAt.current,
+          },
+        ]}
+        pageStep={{
+          title: t("menus.aggregator_users"),
+          description: t("wiki.aggregator_users_description"),
+        }}
+      />
     </Grid>
   );
 };

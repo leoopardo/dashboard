@@ -5,7 +5,7 @@ import {
   InfoCircleOutlined,
   UserAddOutlined,
 } from "@ant-design/icons";
-import { ColumnInterface, CustomTable } from "@components/CustomTable";
+import { CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
@@ -14,6 +14,7 @@ import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
 import { Toast } from "@src/components/Toast";
+import { TuorComponent } from "@src/components/Tuor";
 import { queryClient } from "@src/services/queryClient";
 import { useCreateAggregator } from "@src/services/register/aggregator/createAggregator";
 import { useGetAggregators } from "@src/services/register/aggregator/getAggregators";
@@ -25,13 +26,12 @@ import {
   AggregatorQuery,
 } from "@src/services/types/register/aggregators/aggregators.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
+import { defaultTheme } from "@src/styles/defaultTheme";
 import { Button, Input, Tooltip, Typography } from "antd";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { TotalizersCards } from "./components/totalizersCards";
-import { TuorComponent } from "@src/components/Tuor";
-import { defaultTheme } from "@src/styles/defaultTheme";
 
 const INITIAL_QUERY: AggregatorQuery = {
   limit: 25,
@@ -136,7 +136,7 @@ export const Aggregators = () => {
         md={12}
         style={{ display: "flex", justifyContent: "flex-end" }}
       >
-        <Tooltip title="Ajuda">
+        <Tooltip title={t("buttons.help")}>
           <Button type="link" onClick={() => setIsTuorOpen((state) => !state)}>
             <InfoCircleOutlined />
           </Button>

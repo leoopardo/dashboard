@@ -189,7 +189,7 @@ export const Dashboard = () => {
         <div
           style={{ width: "100%", display: "flex", justifyContent: "flex-end" }}
         >
-          <Tooltip title="Ajuda">
+          <Tooltip title={t("buttons.help")}>
             <Button
               type="link"
               onClick={() => setIsTuorOpen((state) => !state)}
