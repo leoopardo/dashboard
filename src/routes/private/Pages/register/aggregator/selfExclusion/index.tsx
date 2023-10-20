@@ -1,12 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
-import { ColumnInterface, CustomTable } from "@components/CustomTable";
+import {
+  DeleteOutlined,
+  InfoCircleOutlined,
+  PlusOutlined,
+} from "@ant-design/icons";
+import { CustomTable } from "@components/CustomTable";
 import { Grid } from "@mui/material";
 import { FiltersModal } from "@src/components/FiltersModal";
 import { FilterChips } from "@src/components/FiltersModal/filterChips";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
 import { Toast } from "@src/components/Toast";
+import { TuorComponent } from "@src/components/Tuor";
 import { queryClient } from "@src/services/queryClient";
 import { useCreateSelfExclusion } from "@src/services/register/aggregator/selfExclusion/createSelfExclusion";
 import { useDeleteSelfExclusion } from "@src/services/register/aggregator/selfExclusion/deleteSelfExclusion";
@@ -18,9 +23,9 @@ import {
   SelfExclusionQuery,
 } from "@src/services/types/register/aggregators/selfExclusion/getSelfExclusion";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button } from "antd";
+import { Button, Tooltip, Typography } from "antd";
 import moment from "moment";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 const INITIAL_QUERY: SelfExclusionQuery = {
@@ -74,18 +79,6 @@ export const AggregatorSelfExclusion = () => {
     deleteSelfExclusionMutate,
   } = useDeleteSelfExclusion(currentItem?._id);
 
-  const columns: ColumnInterface[] = [
-    { name: "document", type: "document" },
-    { name: "merchant_name", type: "text" },
-    { name: "organization_name", head: "organization", type: "text" },
-    { name: "partner_name", type: "text" },
-    { name: "aggregator_name", type: "text" },
-    { name: "status", type: "status" },
-    { name: "start_date", type: "date" },
-    { name: "end_date", type: "date" },
-    { name: "createdAt", type: "date" },
-  ];
-
   useEffect(() => {
     refetchSelfExclusionData();
   }, [query]);
@@ -94,8 +87,39 @@ export const AggregatorSelfExclusion = () => {
     setBody(initialBody);
   }, [isCreateSelfExclusionOpen]);
 
+  const [isTuorOpen, setIsTuorOpen] = useState<boolean>(false);
+  const ref1 = useRef(null);
+  const ref2 = useRef(null);
+  const ref3 = useRef(null);
+  const refDoc = useRef(null);
+  const refMerchant = useRef(null);
+  const refOrganization = useRef(null);
+  const refPartner = useRef(null);
+  const refAggregator = useRef(null);
+  const refStatus = useRef(null);
+  const refStartDate = useRef(null);
+  const refEndDate = useRef(null);
+  const refCreatedAt = useRef(null);
+
   return (
     <Grid container style={{ padding: "25px" }}>
+      <Grid
+        item
+        xs={12}
+        md={12}
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          marginTop: -20,
+          marginBottom: 20,
+        }}
+      >
+        <Tooltip title={t("buttons.help")}>
+          <Button type="link" onClick={() => setIsTuorOpen((state) => !state)}>
+            <InfoCircleOutlined />
+          </Button>
+        </Tooltip>
+      </Grid>
       <Grid
         container
         style={{ display: "flex", alignItems: "center" }}
@@ -103,6 +127,7 @@ export const AggregatorSelfExclusion = () => {
       >
         <Grid item xs={12} md={2} lg={2}>
           <Button
+            ref={ref1}
             size="large"
             style={{ width: "100%" }}
             loading={isSelfExclusionDataFetching}
@@ -124,6 +149,7 @@ export const AggregatorSelfExclusion = () => {
           .aggregator_self_exclusion_create && (
           <Grid item xs={12} md={4} lg={2}>
             <Button
+              ref={ref2}
               size="large"
               style={{
                 width: "100%",
@@ -143,7 +169,7 @@ export const AggregatorSelfExclusion = () => {
 
         {permissions.register.aggregator.self_exclusion
           .aggregator_self_exclusion_export_csv && (
-          <Grid item xs={12} md={1}>
+          <Grid item xs={12} md={1} ref={ref3}>
             <ExportReportsModal
               disabled={!SelfExclusionData?.total || SelfExclusionDataError}
               mutateReport={() => SelfExclusionReportsMutate()}
@@ -165,7 +191,22 @@ export const AggregatorSelfExclusion = () => {
             data={SelfExclusionData}
             items={SelfExclusionData?.items}
             error={SelfExclusionDataError}
-            columns={columns}
+            columns={[
+              { name: "document", type: "document", key: refDoc },
+              { name: "merchant_name", type: "text", key: refMerchant },
+              {
+                name: "organization_name",
+                head: "organization",
+                type: "text",
+                key: refOrganization,
+              },
+              { name: "partner_name", type: "text", key: refPartner },
+              { name: "aggregator_name", type: "text", key: refAggregator },
+              { name: "status", type: "status", key: refStatus },
+              { name: "start_date", type: "date", key: refStartDate },
+              { name: "end_date", type: "date", key: refEndDate },
+              { name: "createdAt", type: "date", key: refCreatedAt },
+            ]}
             loading={isSelfExclusionDataFetching}
             label={["cpf", "merchant_name"]}
             actions={[
@@ -173,7 +214,7 @@ export const AggregatorSelfExclusion = () => {
                 icon: <DeleteOutlined style={{ fontSize: 22 }} />,
                 label: "delete",
                 onClick: () => setIsDeleteOpen(true),
-              }, 
+              },
             ]}
             isConfirmOpen={isDeleteOpen}
             setIsConfirmOpen={setIsDeleteOpen}
@@ -229,6 +270,87 @@ export const AggregatorSelfExclusion = () => {
         actionSuccess={t("messages.deleted")}
         error={deleteSelfExclusionError}
         success={deleteSelfExclusionIsSuccess}
+      />
+      <TuorComponent
+        open={isTuorOpen}
+        setOpen={setIsTuorOpen}
+        searchFilterStepRef={ref1}
+        createRegisterStep={
+          permissions.register.aggregator.users.aggregator_user_create && {
+            title: t("wiki.register_self_exclusion"),
+            description: t("wiki.register_self_exclusion_descriptions"),
+            target: () => ref2.current,
+          }
+        }
+        exportCsvStep={
+          permissions.register.aggregator.users.aggregator_user_export_csv && {
+            title: t("wiki.generate_reports"),
+            description: (
+              <Typography>
+                {t("wiki.generate_reports_descriptions")}{" "}
+                <Typography.Link
+                  href="/register/aggregator/aggregator_reports/self_exclusion_reports"
+                  target="_blank"
+                >
+                  {t("menus.aggregators")} | {t("menus.reports")} |{" "}
+                  {t("menus.self_exclusion")}
+                </Typography.Link>
+              </Typography>
+            ),
+            target: () => ref3.current,
+          }
+        }
+        steps={[
+          {
+            title: t("table.document"),
+            description: t("wiki.document_description"),
+            target: () => refDoc.current,
+          },
+          {
+            title: t("table.merchant"),
+            description: t("wiki.merchant_description"),
+            target: () => refMerchant.current,
+          },
+          {
+            title: t("table.organization"),
+            description: t("wiki.organization_description"),
+            target: () => refOrganization.current,
+          },
+          {
+            title: t("table.partner"),
+            description: t("wiki.partner_description"),
+            target: () => refPartner.current,
+          },
+          {
+            title: t("table.aggregator"),
+            description: t("wiki.aggregator_description"),
+            target: () => refAggregator.current,
+          },
+          {
+            title: t("table.status"),
+            description: t("wiki.status_description"),
+            target: () => refStatus.current,
+          },
+          {
+            title: t("table.start_date"),
+            description: t("wiki.start_date_description"),
+            target: () => refStartDate.current,
+          },
+          {
+            title: t("table.end_date"),
+            description: t("wiki.end_date_description"),
+            target: () => refEndDate.current,
+          },
+          {
+            title: t("table.createdAt"),
+            description: t("wiki.created_at_description"),
+            target: () => refCreatedAt.current,
+          },
+        ]}
+        pageStep={{
+          title: t("menus.self_exclusion"),
+          description: t("wiki.self_exclusion_description"),
+        }}
       />
     </Grid>
   );
