@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { InfoCircleOutlined, PlusOutlined } from "@ant-design/icons";
-import { ColumnInterface, CustomTable } from "@components/CustomTable";
+import { CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
 import { ViewModal } from "@components/Modals/viewGenericModal";
