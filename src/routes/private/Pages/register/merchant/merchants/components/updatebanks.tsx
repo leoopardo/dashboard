@@ -77,8 +77,6 @@ export const UpdateBanks = ({
     }
   }, [UpdateBankIsSuccess]);
 
-  console.log(body);
-
   return (
     <>
       <Drawer

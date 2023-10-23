@@ -1,9 +1,9 @@
 export type IDepositFeePlansDetails = {
-  id: number;
-  merchant_fee_plans_id: number;
-  range_fee: number;
-  range_value: number;
-  range_limit: number;
+  id?: number;
+  fee_plans_id?: number;
+  range_fee?: number;
+  range_value?: number;
+  range_limit?: number;
 };
 
 export interface IDepositFeeItem {
@@ -21,7 +21,14 @@ export interface IDepositFeeResponse {
   total: number;
   limit: number;
   page: number;
-  merchant_fee_plans: IDepositFeeItem[];
+  items: IDepositFeeItem[];
+}
+
+export interface IFeePlansDetailsResponse {
+  total: number;
+  limit: number;
+  page: number;
+  items: IDepositFeeItem[];
 }
 
 export interface IMerchantFee {
