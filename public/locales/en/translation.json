@@ -853,6 +853,8 @@
     "search_by_cpf_description": "Filter to enter and search for a block by Individual's Registration (CPF)",
     "reason_description": "Reason that led to the block of that Individual's Registration (CPF)",
     "create_user_name_description": "Name of the user who blocked that Individual's Registration (CPF)",
-    "aggregator_blacklist_description": "Here you manage the list of blockages by Individual's Registration (CPF)."
+    "aggregator_blacklist_description": "Here you manage the list of blockages by Individual's Registration (CPF).",
+    "partner_name_description": "Name registered for the platform.",
+    "partners_description": "Here you manage the platforms that use the dashboard."
   }
 }

@@ -857,6 +857,8 @@
     "search_by_cpf_description": "Filtro para digitar e buscar um bloqueio por CPF",
     "reason_description": "Motivo que levou ao bloqueio daquele CPF",
     "create_user_name_description": "Nome do usuário que realizou o bloqueio daquele CPF",
-    "aggregator_blacklist_description": "Aqui você gerencia a lista de bloqueios por CPF"
+    "aggregator_blacklist_description": "Aqui você gerencia a lista de bloqueios por CPF",
+    "partner_name_description": "Nome cadastrado para a plataforma."
+  , "partners_description": "Aqui você gerencia as plataformas que fazem uso do painel."
   }
 }
