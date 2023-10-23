@@ -49,6 +49,7 @@ export interface ColumnInterface {
     | "bankNameToIcon"
     | "progress";
   sort?: boolean;
+  key?: any;
 }
 
 export interface actionsInterface {
@@ -149,7 +150,10 @@ export const CustomTable = (props: TableProps) => {
           case "id":
             return {
               title: (
-                <Typography style={{ width: "100%", textAlign: "center" }}>
+                <Typography
+                  style={{ width: "100%", textAlign: "center" }}
+                  ref={column.key}
+                >
                   {t(`table.${column?.head || column?.name}`)}
                 </Typography>
               ),
@@ -209,7 +213,9 @@ export const CustomTable = (props: TableProps) => {
           case "date":
             return {
               title: (
-                <Tooltip title={t(`table.${column?.head || column?.name}`)}>
+                <Tooltip
+                  title={t(`table.${column?.head || column?.name}`)}
+                >
                   <Typography
                     style={{
                       width: "100%",
@@ -218,6 +224,7 @@ export const CustomTable = (props: TableProps) => {
                       textAlign: "center",
                       textOverflow: "ellipsis",
                     }}
+                    ref={column.key}
                   >
                     {t(`table.${column?.head || column?.name}`)}
                   </Typography>
@@ -238,7 +245,7 @@ export const CustomTable = (props: TableProps) => {
                 ) : (
                   <Typography
                     key={column?.name}
-                    style={{ width: "100%", textAlign: "center", minWidth: 50  }}
+                    style={{ width: "100%", textAlign: "center", minWidth: 50 }}
                   >
                     -
                   </Typography>
@@ -266,6 +273,7 @@ export const CustomTable = (props: TableProps) => {
               title: (
                 <Tooltip title={t(`table.${column?.head || column?.name}`)}>
                   <Typography
+                    ref={column.key}
                     style={{
                       width: "100%",
                       maxHeight: "50px",
@@ -314,6 +322,7 @@ export const CustomTable = (props: TableProps) => {
               title: (
                 <Tooltip title={t(`table.${column?.head || column?.name}`)}>
                   <Typography
+                    ref={column.key}
                     style={{
                       width: "100%",
                       maxHeight: "50px",
@@ -362,6 +371,7 @@ export const CustomTable = (props: TableProps) => {
               title: (
                 <Tooltip title={t(`table.${column?.head || column?.name}`)}>
                   <Typography
+                    ref={column.key}
                     style={{
                       width: "100%",
                       maxHeight: "50px",
@@ -405,6 +415,7 @@ export const CustomTable = (props: TableProps) => {
               title: (
                 <Tooltip title={t(`table.${column?.head || column?.name}`)}>
                   <Typography
+                    ref={column.key}
                     style={{
                       width: "100%",
                       maxHeight: "50px",
@@ -461,6 +472,7 @@ export const CustomTable = (props: TableProps) => {
               title: (
                 <Tooltip title={t(`table.${column?.head || column?.name}`)}>
                   <Typography
+                    ref={column.key}
                     style={{
                       width: "100%",
                       maxHeight: "50px",
@@ -528,6 +540,7 @@ export const CustomTable = (props: TableProps) => {
               title: (
                 <Tooltip title={t(`table.${column?.head || column?.name}`)}>
                   <Typography
+                    ref={column.key}
                     style={{
                       width: "100%",
                       maxHeight: "50px",
@@ -574,6 +587,7 @@ export const CustomTable = (props: TableProps) => {
               title: (
                 <Tooltip title={t(`table.${column?.head || column?.name}`)}>
                   <Typography
+                    ref={column.key}
                     style={{
                       width: "100%",
                       maxHeight: "50px",
@@ -632,7 +646,10 @@ export const CustomTable = (props: TableProps) => {
               key: column?.name,
               dataIndex: column?.name,
               render: (_a: any, record: any) => (
-                <div style={{ width: "100%", textAlign: "center" }}>
+                <div
+                  style={{ width: "100%", textAlign: "center" }}
+                  ref={column.key}
+                >
                   <Dropdown
                     trigger={["click"]}
                     key={column?.name}
@@ -680,6 +697,7 @@ export const CustomTable = (props: TableProps) => {
               title: (
                 <Tooltip title={t(`table.${column?.head || column?.name}`)}>
                   <Typography
+                    ref={column.key}
                     style={{
                       width: "100%",
                       maxHeight: "50px",
@@ -699,7 +717,7 @@ export const CustomTable = (props: TableProps) => {
               render: (text: string) =>
                 text && text.length > 15 ? (
                   <Tooltip title={text}>
-                    <p
+                    <Typography
                       style={{
                         width: "100%",
                         textAlign: "center",
@@ -711,10 +729,10 @@ export const CustomTable = (props: TableProps) => {
                           ? `${`${text}`.substring(0, 15)}...`
                           : text
                         : "-"}
-                    </p>
+                    </Typography>
                   </Tooltip>
                 ) : (
-                  <p
+                  <Typography
                     style={{
                       width: "100%",
                       textAlign: "center",
@@ -722,7 +740,7 @@ export const CustomTable = (props: TableProps) => {
                     }}
                   >
                     {text ?? "-"}
-                  </p>
+                  </Typography>
                 ),
               sorter: column.sort
                 ? () => {
@@ -744,7 +762,10 @@ export const CustomTable = (props: TableProps) => {
           case "translate":
             return {
               title: (
-                <Typography style={{ width: "100%", textAlign: "center" }}>
+                <Typography
+                  style={{ width: "100%", textAlign: "center" }}
+                  ref={column.key}
+                >
                   {t(`table.${column?.head || column?.name}`)}
                 </Typography>
               ),
@@ -777,7 +798,10 @@ export const CustomTable = (props: TableProps) => {
           case "progress":
             return {
               title: (
-                <Typography style={{ width: "100%", textAlign: "center" }}>
+                <Typography
+                  style={{ width: "100%", textAlign: "center" }}
+                  ref={column.key}
+                >
                   {t(`table.${column?.head ?? column?.name}`)}
                 </Typography>
               ),
@@ -842,7 +866,10 @@ export const CustomTable = (props: TableProps) => {
           default:
             return {
               title: (
-                <Typography style={{ width: "100%", textAlign: "center" }}>
+                <Typography
+                  style={{ width: "100%", textAlign: "center" }}
+                  ref={column.key}
+                >
                   {t(`table.${column?.head ?? column?.name}`)}
                 </Typography>
               ),

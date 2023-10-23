@@ -91,7 +91,10 @@ function App() {
                       : defaultTheme.colors.secondary,
                 },
                 Button: {
-                  colorTextLightSolid: "rgba(0, 0, 0, 0.88)",
+                  colorTextLightSolid:
+                    import.meta.env.VITE_APP_BUTTON === "dark"
+                      ? "rgba(0, 0, 0, 0.88)"
+                      : "#fff",
                 },
                 Select: {
                   controlItemBgActive:
@@ -126,7 +129,7 @@ function App() {
             {isSuccess ? (
               <Layout>
                 <Layout>
-                    <SidebarNavigation />
+                  <SidebarNavigation />
 
                   <div
                     style={{

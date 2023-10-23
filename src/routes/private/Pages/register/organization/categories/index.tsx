@@ -1,6 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { EditOutlined, EyeFilled, UserAddOutlined } from "@ant-design/icons";
-import { ColumnInterface, CustomTable } from "@components/CustomTable";
+import {
+  EditOutlined,
+  EyeFilled,
+  InfoCircleOutlined,
+  UserAddOutlined,
+} from "@ant-design/icons";
+import { CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
@@ -10,6 +15,7 @@ import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
 import { Toast } from "@src/components/Toast";
+import { TuorComponent } from "@src/components/Tuor";
 import { queryClient } from "@src/services/queryClient";
 import { useCreateOrganizationCategory } from "@src/services/register/organization/categories/createCategorie";
 import {
@@ -22,8 +28,8 @@ import {
   OrganizationCategoriesQuery,
 } from "@src/services/types/register/organization/organizationCategories.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Input } from "antd";
-import { useEffect, useState } from "react";
+import { Button, Input, Tooltip, Typography } from "antd";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 const INITIAL_QUERY: OrganizationCategoriesQuery = {
@@ -80,14 +86,6 @@ export const OrganizationCategories = () => {
     CategoryReportsMutate,
   } = useCreateOrganizationCategoryReports(query);
 
-  const columns: ColumnInterface[] = [
-    { name: "id", type: "id", sort: true },
-    { name: "name", type: "text", sort: true },
-    { name: "description", type: "text", sort: true },
-    { name: "status", type: "status", sort: true },
-    { name: "created_at", type: "date", sort: true },
-  ];
-
   useEffect(() => {
     refetchCategoriesData();
   }, [query]);
@@ -99,6 +97,18 @@ export const OrganizationCategories = () => {
     });
   }, [currentItem]);
 
+  const [isTuorOpen, setIsTuorOpen] = useState<boolean>(false);
+  const ref1 = useRef(null);
+  const ref2 = useRef(null);
+  const ref3 = useRef(null);
+  const ref4 = useRef(null);
+  const ref5 = useRef(null);
+  const refId = useRef(null);
+  const refName = useRef(null);
+  const refDescription = useRef(null);
+  const refStatus = useRef(null);
+  const refCreatedAt = useRef(null);
+
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid
@@ -108,6 +118,7 @@ export const OrganizationCategories = () => {
       >
         <Grid item xs={12} md={4} lg={2}>
           <Button
+            ref={ref1}
             size="large"
             style={{ width: "100%" }}
             loading={isCategoriesDataFetching}
@@ -117,7 +128,7 @@ export const OrganizationCategories = () => {
             {t("table.filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={8} lg={10}>
+        <Grid item xs={12} md={7} lg={9}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
@@ -125,10 +136,25 @@ export const OrganizationCategories = () => {
             setQuery={setQuery}
           />
         </Grid>
+        <Grid
+          item
+          xs={12}
+          md={1}
+          style={{ display: "flex", justifyContent: "flex-end" }}
+        >
+          <Tooltip title={t("buttons.help")}>
+            <Button
+              type="link"
+              onClick={() => setIsTuorOpen((state) => !state)}
+            >
+              <InfoCircleOutlined />
+            </Button>
+          </Tooltip>
+        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
-        <Grid item xs={12} md={4} lg={4}>
+        <Grid item xs={12} md={4} lg={4} ref={ref2}>
           <Input.Search
             size="large"
             value={search}
@@ -141,6 +167,7 @@ export const OrganizationCategories = () => {
         </Grid>
         <Grid item xs={12} md={3} lg={2}>
           <Button
+            ref={ref3}
             type="dashed"
             loading={isCategoriesDataFetching}
             danger
@@ -164,6 +191,7 @@ export const OrganizationCategories = () => {
           .paybrokers_release_category_create && (
           <Grid item xs={12} md={3} lg={2}>
             <Button
+              ref={ref4}
               type="primary"
               loading={isCategoriesDataFetching}
               onClick={() => {
@@ -185,7 +213,7 @@ export const OrganizationCategories = () => {
 
         {permissions.register.paybrokers.release_category
           .paybrokers_release_category_export_csv && (
-          <Grid item xs={12} md="auto">
+          <Grid item xs={12} md="auto" ref={ref5}>
             <ExportReportsModal
               disabled={!CategoriesData?.total || CategoriesDataError}
               mutateReport={() => CategoryReportsMutate()}
@@ -225,7 +253,23 @@ export const OrganizationCategories = () => {
             data={CategoriesData}
             items={CategoriesData?.items}
             error={CategoriesDataError}
-            columns={columns}
+            columns={[
+              { name: "id", type: "id", sort: true, key: refId },
+              { name: "name", type: "text", sort: true, key: refName },
+              {
+                name: "description",
+                type: "text",
+                sort: true,
+                key: refDescription,
+              },
+              { name: "status", type: "status", sort: true, key: refStatus },
+              {
+                name: "created_at",
+                type: "date",
+                sort: true,
+                key: refCreatedAt,
+              },
+            ]}
             loading={isCategoriesDataFetching}
             label={["name", "description"]}
           />
@@ -304,6 +348,72 @@ export const OrganizationCategories = () => {
         actionError={t("messages.create")}
         error={error}
         success={isSuccess}
+      />
+      <TuorComponent
+        open={isTuorOpen}
+        setOpen={setIsTuorOpen}
+        searchFilterStepRef={ref1}
+        searchByNameStepRef={ref2}
+        removeFiltersStepRef={ref3}
+        createRegisterStep={
+          permissions.register.paybrokers.release_category
+            .paybrokers_release_category_create && {
+            title: t("wiki.register_categories"),
+            description: t("wiki.register_categories_description"),
+            target: () => ref4.current,
+          }
+        }
+        exportCsvStep={
+          permissions.register.paybrokers.release_category
+            .paybrokers_release_category_export_csv && {
+            title: t("wiki.generate_reports"),
+            description: (
+              <Typography>
+                {t("wiki.generate_reports_descriptions")}{" "}
+                <Typography.Link
+                  href="/register/organization/organization_reports/organization_reports_categories"
+                  target="_blank"
+                >
+                  {t("menus.organization")} | {t("menus.reports")} |{" "}
+                  {t("menus.categories")}
+                </Typography.Link>
+              </Typography>
+            ),
+            target: () => ref5.current,
+          }
+        }
+        steps={[
+          {
+            title: t("table.id"),
+            description: t("wiki.id_description"),
+            target: () => refId.current,
+          },
+          {
+            title: t("table.name"),
+            description: t("wiki.category_name_description"),
+            target: () => refName.current,
+          },
+          {
+            title: t("table.description"),
+            description: t("wiki.description_description"),
+            target: () => refDescription.current,
+          },
+          {
+            title: t("table.status"),
+            description: t("wiki.status_description"),
+            target: () => refStatus.current,
+          },
+
+          {
+            title: t("table.createdAt"),
+            description: t("wiki.created_at_description"),
+            target: () => refCreatedAt.current,
+          },
+        ]}
+        pageStep={{
+          title: t("menus.categories"),
+          description: t("wiki.organization_categories_description"),
+        }}
       />
     </Grid>
   );
