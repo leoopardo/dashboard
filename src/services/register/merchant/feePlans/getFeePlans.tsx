@@ -11,7 +11,7 @@ export function useGetFeePlansRegister(params?: MerchantsQuery) {
   >(
     "MerchantsFeePlans",
     async () => {
-      const response = await api.get("core/merchant_fee_plans", {
+      const response = await api.get("core/fee_plans", {
         params,
       });
       return response.data;

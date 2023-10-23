@@ -1,8 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
+import { DeleteOutlined, PlusOutlined, EditOutlined } from "@ant-design/icons";
 import { Grid } from "@mui/material";
-import { IDepositFeeItem } from "@src/services/types/register/merchants/merchantFeePlans.interface";
+import {
+  IDepositFeeItem,
+  IDepositFeePlansDetails,
+} from "@src/services/types/register/merchants/merchantFeePlans.interface";
 import {
   Button,
   Drawer,
@@ -14,6 +17,7 @@ import {
   Pagination,
   Select,
   Space,
+  Table,
 } from "antd";
 import {
   ChangeEvent,
@@ -24,6 +28,7 @@ import {
   useState,
 } from "react";
 import { useTranslation } from "react-i18next";
+import { useGetFeePlansDetails } from "@src/services/register/merchant/feePlans/getFeePlansDetails";
 
 interface NewuserModalprops {
   open: boolean;
@@ -39,6 +44,10 @@ interface NewuserModalprops {
   loading: boolean;
   action: "create" | "update";
 }
+
+interface ICreateDetails extends IDepositFeePlansDetails {
+  length?: number;
+}
 export const UpdateFeePlanModal = ({
   open,
   setOpen,
@@ -53,14 +62,26 @@ export const UpdateFeePlanModal = ({
   loading,
   action,
 }: NewuserModalprops) => {
+  const { Column } = Table;
   const { t } = useTranslation();
   const submitRef = useRef<HTMLButtonElement>(null);
   const formRef = useRef<FormInstance>(null);
   const divRef = useRef<HTMLDivElement>(null);
   const formFeesRef = useRef<FormInstance>(null);
-
+  const [createFeeDetails, setCreateFeeDetails] = useState<ICreateDetails | []>(
+    []
+  );
+  const [feeToUpdate, setFeeToUpdate] = useState<string>(
+    ''
+  );
+  console.log({feeToUpdate})
+  const {
+    feePlansDetailsData,
+    isFeePlansDetailsDataFetching,
+    refetchFeePlansDetailsData,
+  } = useGetFeePlansDetails({ fee_plans_id: currentUser?.id });
   const [feePage, setFeePage] = useState(1);
-
+  const test = true
   const handleChangeUserBody = (event: ChangeEvent<HTMLInputElement>) => {
     if (setUpdateBody) {
       setUpdateBody((state) => ({
@@ -86,6 +107,16 @@ export const UpdateFeePlanModal = ({
     }
 
     return result;
+  };
+
+  const handleChangeCreateFee = (
+    event: ChangeEvent<HTMLInputElement>,
+    field: "range_fee" | "range_value" | "range_limit"
+  ) => {
+    setCreateFeeDetails((state) => ({
+      ...state,
+      [field]: event,
+    }));
   };
   const handleChangeFee = (
     event: ChangeEvent<HTMLInputElement>,
@@ -134,20 +165,8 @@ export const UpdateFeePlanModal = ({
   }
 
   useEffect(() => {
-    if (currentUser && currentUser?.merchant_fee_plans_details) {
-      const currentFeesDetails = currentUser?.merchant_fee_plans_details.map(
-        (item) => {
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          const { id, merchant_fee_plans_id, ...rest } = item;
-
-          return rest;
-        }
-      );
-      return setFees(currentFeesDetails ?? []);
-    }
-
-    return setFees([]);
-  }, [currentUser]);
+    setFees(feePlansDetailsData?.items ?? []);
+  }, [currentUser, feePlansDetailsData]);
 
   useEffect(() => {
     if (action === "create") {
@@ -158,6 +177,10 @@ export const UpdateFeePlanModal = ({
     }
   }, [action]);
 
+  useEffect(() => {
+    refetchFeePlansDetailsData();
+  }, []);
+
   return (
     <Drawer
       open={open}
@@ -167,7 +190,6 @@ export const UpdateFeePlanModal = ({
         if (setCurrentUser) setCurrentUser(null);
       }}
       bodyStyle={{ overflowX: "hidden" }}
-      size="default"
       title={t("buttons.new_fee")}
       footer={
         <Button
@@ -185,7 +207,6 @@ export const UpdateFeePlanModal = ({
         style={{
           maxHeight: "95%",
           overflowY: "auto",
-          width: "340px",
           paddingRight: "15px",
         }}
         ref={divRef}
@@ -339,35 +360,35 @@ export const UpdateFeePlanModal = ({
               placeholder={t(`input.range_type`)}
             />
           </Form.Item>
-
-          <Grid
-            container
-            justifyContent={"flex-end"}
-            style={{ paddingRight: "10px" }}
-          >
-            <Button
-              type="dashed"
-              onClick={() => {
-                setFees((state: any) => [
-                  ...state,
-                  {
-                    range_fee: 0,
-                    range_value: 0,
-                    range_limit: 0,
-                    id: Math.random() * 10000000000000,
-                  },
-                ]);
-                divRef.current?.scrollTo({
-                  top: 5000,
-                  left: 5000,
-                  behavior: "smooth",
-                });
-              }}
+          {action === "update" && (
+            <Grid
+              container
+              justifyContent={"flex-end"}
+              style={{ paddingRight: "10px" }}
             >
-              <PlusOutlined />
-              {t("buttons.add_fee")}
-            </Button>
-          </Grid>
+              <Button
+                type="dashed"
+                onClick={() => {
+                  setCreateFeeDetails([
+                    {
+                      range_fee: 0,
+                      range_value: 0,
+                      range_limit: 0,
+                      id: Math.random() * 10000000000000,
+                    },
+                  ]);
+                  divRef.current?.scrollTo({
+                    top: 5000,
+                    left: 5000,
+                    behavior: "smooth",
+                  });
+                }}
+              >
+                <PlusOutlined />
+                {t("buttons.add_fee")}
+              </Button>
+            </Grid>
+          )}
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
             <button type="submit" ref={submitRef} style={{ display: "none" }}>
               Submit
@@ -375,12 +396,12 @@ export const UpdateFeePlanModal = ({
           </Form.Item>
         </Form>
 
-        {fees.length !== 0 &&
-          listItems(fees, feePage, 2)?.map((fee: any) => (
+        {createFeeDetails?.length !== 0 &&
+          listItems(createFeeDetails, feePage, 2)?.map((fee: any) => (
             <Grid container style={{ marginTop: "-20px" }}>
               <Form
                 layout="vertical"
-                initialValues={listItems(fees, feePage, 2).find(
+                initialValues={listItems(createFeeDetails, feePage, 2).find(
                   (f) => f.id === fee.id
                 )}
               >
@@ -390,7 +411,7 @@ export const UpdateFeePlanModal = ({
                       <InputNumber
                         value={fee?.range_fee}
                         onChange={(event) => {
-                          handleChangeFee(event, fee.id, "range_fee");
+                          handleChangeCreateFee(event, "range_fee");
                         }}
                       />
                     </Form.Item>
@@ -401,7 +422,7 @@ export const UpdateFeePlanModal = ({
                         style={{ width: "100%" }}
                         value={fee?.range_value}
                         onChange={(event) =>
-                          handleChangeFee(event, fee.id, "range_value")
+                          handleChangeCreateFee(event, "range_value")
                         }
                       />
                     </Form.Item>
@@ -411,7 +432,7 @@ export const UpdateFeePlanModal = ({
                       <InputNumber
                         value={fee?.range_limit}
                         onChange={(event) =>
-                          handleChangeFee(event, fee.id, "range_limit")
+                          handleChangeCreateFee(event, "range_limit")
                         }
                       />
                     </Form.Item>
@@ -419,12 +440,28 @@ export const UpdateFeePlanModal = ({
                   <Grid
                     item
                     container
-                    xs={2}
+                    xs={1}
+                    justifyContent={"center"}
+                    style={{ marginLeft: 10 }}
+                  >
+                    <PlusOutlined
+                      onClick={() => setCreateFeeDetails([])}
+                      style={{
+                        fontSize: "20px",
+                        cursor: "pointer",
+                        color: "blue",
+                      }}
+                    />
+                  </Grid>
+                  <Grid
+                    item
+                    container
+                    xs={1}
                     justifyContent={"center"}
                     style={{ marginLeft: 10 }}
                   >
                     <DeleteOutlined
-                      onClick={() => handleDeleteFee(fee.id)}
+                      onClick={() => setCreateFeeDetails([])}
                       style={{
                         fontSize: "20px",
                         cursor: "pointer",
@@ -436,6 +473,134 @@ export const UpdateFeePlanModal = ({
               </Form>
             </Grid>
           ))}
+
+        {fees?.length !== 0 && (
+          <>
+            <Table dataSource={fees}>
+              {test ? (
+                <InputNumber value={"test"}
+                />
+              ) : (
+                <Column
+                  title={t("table.fee")}
+                  dataIndex="range_fee"
+                  key="range_fee"
+                />
+              )}
+              <Column
+                title={t("input.minimum_value")}
+                dataIndex="range_value"
+                key="range_value"
+              />
+              <Column
+                title={t("table.limit")}
+                dataIndex="range_limit"
+                key="range_limit"
+              />
+              <Column
+                title="Action"
+                key="action"
+                render={(_: any, record: any) => (
+                  <Space size="middle">
+                    <EditOutlined
+                      onClick={() => setFeeToUpdate(record.id)}
+                      style={{
+                        fontSize: "20px",
+                        cursor: "pointer",
+                        color: "blue",
+                      }}
+                    />
+                    <DeleteOutlined
+                      onClick={() => setCreateFeeDetails([])}
+                      style={{
+                        fontSize: "20px",
+                        cursor: "pointer",
+                        color: "red",
+                      }}
+                    />
+                  </Space>
+                )}
+              />
+            </Table>
+
+            {listItems(fees, feePage, 2)?.map((fee: any) => (
+              <Grid container style={{ marginTop: "-20px" }}>
+                <Form
+                  layout="vertical"
+                  initialValues={listItems(fees, feePage, 2).find(
+                    (f) => f.id === fee.id
+                  )}
+                >
+                  <Space.Compact size="large">
+                    <Grid item xs={2}>
+                      <Form.Item label={`${t("table.fee")}:`}>
+                        <InputNumber
+                          value={fee?.range_fee}
+                          onChange={(event) => {
+                            handleChangeCreateFee(event, "range_fee");
+                          }}
+                        />
+                      </Form.Item>
+                    </Grid>
+                    <Grid item xs={5}>
+                      <Form.Item label={`${t("input.minimum_value")}:`}>
+                        <InputNumber
+                          style={{ width: "100%" }}
+                          value={fee?.range_value}
+                          onChange={(event) =>
+                            handleChangeCreateFee(event, "range_value")
+                          }
+                        />
+                      </Form.Item>
+                    </Grid>
+                    <Grid item xs={3}>
+                      <Form.Item label={`${t("table.limit")}:`}>
+                        <InputNumber
+                          value={fee?.range_limit}
+                          onChange={(event) =>
+                            handleChangeCreateFee(event, "range_limit")
+                          }
+                        />
+                      </Form.Item>
+                    </Grid>
+                    <Grid
+                      item
+                      container
+                      xs={1}
+                      justifyContent={"center"}
+                      style={{ marginLeft: 10 }}
+                    >
+                      <PlusOutlined
+                        onClick={() => setCreateFeeDetails([])}
+                        style={{
+                          fontSize: "20px",
+                          cursor: "pointer",
+                          color: "blue",
+                        }}
+                      />
+                    </Grid>
+                    <Grid
+                      item
+                      container
+                      xs={1}
+                      justifyContent={"center"}
+                      style={{ marginLeft: 10 }}
+                    >
+                      <DeleteOutlined
+                        onClick={() => setCreateFeeDetails([])}
+                        style={{
+                          fontSize: "20px",
+                          cursor: "pointer",
+                          color: "red",
+                        }}
+                      />
+                    </Grid>
+                  </Space.Compact>
+                </Form>
+              </Grid>
+            ))}
+          </>
+        )}
 
         {fees.length > 2 && (
           <Grid

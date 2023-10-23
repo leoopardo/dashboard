@@ -6,8 +6,10 @@ export function useDeleteMerchantFeePlan(id?: string) {
   const { isLoading, error, mutate, isSuccess } = useMutation<
     null | undefined
   >("deleteMerchantsFeePlans", async () => {
-    const response = await api.delete(`core/merchant_fee_plans/${Number(id)}`, {
-    
+    const response = await api.delete('core/fee_plans/delete', {
+      data: {
+        fee_plan_id: Number(id)
+      }
     });
     await queryClient.refetchQueries({ queryKey: ["MerchantsFeePlans"] });
     return response.data;

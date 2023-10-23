@@ -144,7 +144,7 @@ export const MerchantFeePlans = () => {
             setCurrentItem={setCurrentItem}
             setQuery={setQuery}
             data={feePlansData}
-            items={feePlansData?.merchant_fee_plans}
+            items={feePlansData?.items}
             error={feePlansDataError}
             columns={columns}
             loading={isFeePlansDataFetching}
