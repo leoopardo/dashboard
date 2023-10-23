@@ -110,7 +110,6 @@ export const PersonDetails = () => {
     if (!isPersonsDataFetching && PersonsData?.items[0]) {
       setPersonData({
         _id: PersonsData?.items[0]._id,
-        status: PersonsData?.items[0].situation_text,
         cpf: PersonsData?.items[0].cpf,
         state: PersonsData?.items[0].state,
         name: PersonsData?.items[0].name,
@@ -121,6 +120,7 @@ export const PersonDetails = () => {
         createdAt: PersonsData?.items[0].createdAt,
         gender: PersonsData?.items[0].gender,
         updatedAt: PersonsData?.items[0].updatedAt,
+        situation_text: PersonsData?.items[0].situation_text,
         email: PersonsData?.items[0].email,
         last_check: PersonsData?.items[0].last_check,
         cellphone: PersonsData?.items[0].cellphone,
