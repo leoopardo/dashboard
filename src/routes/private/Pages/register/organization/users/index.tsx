@@ -14,6 +14,7 @@ import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { useGetRowsOrganizationUsers } from "@services/register/organization/users/getUsers";
 import { useUpdateOrganizationUser } from "@services/register/organization/users/updateUser";
+import { Search } from "@src/components/Inputs/search";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
 import { Toast } from "@src/components/Toast";
@@ -22,7 +23,7 @@ import { queryClient } from "@src/services/queryClient";
 import { useCreateOrganizationReports } from "@src/services/reports/register/organization/createUserReports";
 import { OrganizationUserQuery } from "@src/services/types/register/organization/organizationUsers.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Input, Tooltip, Typography } from "antd";
+import { Button, Tooltip, Typography } from "antd";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { NewUserInterface, NewUserModal } from "./components/newUserModal";
@@ -46,7 +47,6 @@ export const OrganizationUser = () => {
   const [isNewUserModal, setIsNewUserModal] = useState<boolean>(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<any>(null);
-  const [search, setSearch] = useState<string>("");
   const [updateUserBody, setUpdateUserBody] = useState<NewUserInterface | null>(
     null
   );
@@ -117,7 +117,7 @@ export const OrganizationUser = () => {
           />
         </Grid>
         <Grid
-        item
+          item
           xs={12}
           md={1}
           style={{ display: "flex", justifyContent: "flex-end" }}
@@ -135,15 +135,7 @@ export const OrganizationUser = () => {
 
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
         <Grid item xs={12} md={4} lg={4} ref={ref2}>
-          <Input.Search
-            size="large"
-            value={search}
-            placeholder={t("table.name") || ""}
-            onChange={(event) => {
-              setSearch(event.target.value);
-            }}
-            onSearch={() => setQuery((state) => ({ ...state, name: search }))}
-          />
+          <Search query={query} setQuery={setQuery} searchOption="name" />
         </Grid>
         <Grid item xs={12} md={3} lg={2}>
           <Button
@@ -153,7 +145,6 @@ export const OrganizationUser = () => {
             danger
             onClick={() => {
               setQuery(INITIAL_QUERY);
-              setSearch("");
             }}
             style={{
               height: 40,

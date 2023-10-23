@@ -3,8 +3,8 @@ export interface refundDepositsQuery {
   limit: number;
   sort_order?: "DESC" | "ASC";
   sort_field?: "string";
-  start_date: string;
-  end_date: string;
+  start_date?: string;
+  end_date?: string;
   status?:
     | "REFUNDED"
     | "PAID_TO_MERCHANT"
@@ -32,6 +32,7 @@ export interface refundDepositsQuery {
   value_end?: number;
   buyer_name?: string;
   payer_name?: string;
+  rtrid?: string;
 }
 
 export interface refundDepositTotal {
@@ -95,4 +96,3 @@ export interface refundById {
   refund_date: string;
   rtrId: string;
 }
-

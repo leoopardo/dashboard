@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { DeleteOutlined, PlusOutlined, EditOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
 import { Grid } from "@mui/material";
+import { useGetFeePlansDetails } from "@src/services/register/merchant/feePlans/getFeePlansDetails";
 import {
   IDepositFeeItem,
   IDepositFeePlansDetails,
@@ -28,7 +29,6 @@ import {
   useState,
 } from "react";
 import { useTranslation } from "react-i18next";
-import { useGetFeePlansDetails } from "@src/services/register/merchant/feePlans/getFeePlansDetails";
 
 interface NewuserModalprops {
   open: boolean;
@@ -67,21 +67,15 @@ export const UpdateFeePlanModal = ({
   const submitRef = useRef<HTMLButtonElement>(null);
   const formRef = useRef<FormInstance>(null);
   const divRef = useRef<HTMLDivElement>(null);
-  const formFeesRef = useRef<FormInstance>(null);
   const [createFeeDetails, setCreateFeeDetails] = useState<ICreateDetails | []>(
     []
   );
-  const [feeToUpdate, setFeeToUpdate] = useState<string>(
-    ''
-  );
-  console.log({feeToUpdate})
-  const {
-    feePlansDetailsData,
-    isFeePlansDetailsDataFetching,
-    refetchFeePlansDetailsData,
-  } = useGetFeePlansDetails({ fee_plans_id: currentUser?.id });
+  const [feeToUpdate, setFeeToUpdate] = useState<string>("");
+  console.log({ feeToUpdate });
+  const { feePlansDetailsData, refetchFeePlansDetailsData } =
+    useGetFeePlansDetails({ fee_plans_id: currentUser?.id });
   const [feePage, setFeePage] = useState(1);
-  const test = true
+  const test = true;
   const handleChangeUserBody = (event: ChangeEvent<HTMLInputElement>) => {
     if (setUpdateBody) {
       setUpdateBody((state) => ({
@@ -118,44 +112,44 @@ export const UpdateFeePlanModal = ({
       [field]: event,
     }));
   };
-  const handleChangeFee = (
-    event: ChangeEvent<HTMLInputElement>,
-    id: number,
-    field: "range_fee" | "range_value" | "range_limit"
-  ) => {
-    if (fees.some((fee: any) => fee.id === id)) {
-      const newFeeValue = {
-        ...fees.find((fee: any) => fee.id === id),
-        [field]: event,
-      };
+  // const handleChangeFee = (
+  //   event: ChangeEvent<HTMLInputElement>,
+  //   id: number,
+  //   field: "range_fee" | "range_value" | "range_limit"
+  // ) => {
+  //   if (fees.some((fee: any) => fee.id === id)) {
+  //     const newFeeValue = {
+  //       ...fees.find((fee: any) => fee.id === id),
+  //       [field]: event,
+  //     };
 
-      const f = [...fees];
-      const foundedIndex = f.findIndex((fee) => fee.id === id);
+  //     const f = [...fees];
+  //     const foundedIndex = f.findIndex((fee) => fee.id === id);
 
-      f[foundedIndex] = newFeeValue;
+  //     f[foundedIndex] = newFeeValue;
 
-      setFees(f);
-      formFeesRef.current?.setFieldsValue((state: any) => ({
-        ...state,
-        f,
-      }));
-    }
-  };
+  //     setFees(f);
+  //     formFeesRef.current?.setFieldsValue((state: any) => ({
+  //       ...state,
+  //       f,
+  //     }));
+  //   }
+  // };
 
-  const handleDeleteFee = (id: number) => {
-    const updatedFees = fees.filter((fee: any) => fee.id !== id);
+  // const handleDeleteFee = (id: number) => {
+  //   const updatedFees = fees.filter((fee: any) => fee.id !== id);
 
-    formFeesRef.current?.setFieldsValue((state: any) => ({
-      ...state,
-      merchant_fee_plans_details: updatedFees,
-    }));
+  //   formFeesRef.current?.setFieldsValue((state: any) => ({
+  //     ...state,
+  //     merchant_fee_plans_details: updatedFees,
+  //   }));
 
-    setFees(updatedFees);
+  //   setFees(updatedFees);
 
-    if (fees.length < 4) {
-      setFeePage(1);
-    }
-  };
+  //   if (fees.length < 4) {
+  //     setFeePage(1);
+  //   }
+  // };
 
   function CreateUser() {
     mutate();
@@ -478,8 +472,7 @@ export const UpdateFeePlanModal = ({
           <>
             <Table dataSource={fees}>
               {test ? (
-                <InputNumber value={"test"}
-                />
+                <InputNumber value={"test"} />
               ) : (
                 <Column
                   title={t("table.fee")}

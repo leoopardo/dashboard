@@ -5,6 +5,7 @@ import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
+import { Search } from "@src/components/Inputs/search";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
@@ -19,8 +20,7 @@ import {
   PersonsQuery,
 } from "@src/services/types/register/persons/persons.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import useDebounce from "@utils/useDebounce";
-import { Button, Input, Select, Space } from "antd";
+import { Button, Select } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -49,11 +49,9 @@ export const Persons = () => {
   const [updateBody, setUpdateBody] = useState<PersonsItem>({
     ...currentItem,
   });
-  const [search, setSearch] = useState<string>("");
-  const debounceSearch = useDebounce(search);
   const [searchOption, setSearchOption] = useState<
-    "cpf" | "name" | "email" | "cellphone" | null
-  >(null);
+    "cpf" | "name" | "email" | "cellphone" | undefined
+  >(undefined);
 
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -94,12 +92,6 @@ export const Persons = () => {
   useEffect(() => {
     refetchPersonsData();
   }, [query]);
-
-  useEffect(() => {
-    if (searchOption) {
-      setQuery((state) => ({ ...state, [searchOption]: debounceSearch }));
-    }
-  }, [debounceSearch]);
 
   useEffect(() => {
     setUpdateBody({
@@ -169,17 +161,11 @@ export const Persons = () => {
           />
         </Grid>
         <Grid item xs={12} md={4} lg={4}>
-          <Space.Compact style={{ width: "100%" }} size="large">
-            <Input
-              placeholder="Pesquisa"
-              size="large"
-              disabled={!searchOption}
-              style={{ width: "100%" }}
-              onChange={(event) => {
-                setSearch(event.target.value);
-              }}
-            />
-          </Space.Compact>
+          <Search
+            query={query}
+            setQuery={setQuery}
+            searchOption={searchOption}
+          />
         </Grid>
         <Grid item xs={12} md={3} lg={2}>
           <Button
@@ -188,7 +174,7 @@ export const Persons = () => {
             danger
             onClick={() => {
               setQuery(INITIAL_QUERY);
-              setSearch("");
+              setSearchOption(undefined);
             }}
             style={{
               height: 40,

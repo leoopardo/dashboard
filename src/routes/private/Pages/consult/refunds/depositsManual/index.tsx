@@ -22,7 +22,10 @@ import { useGetTotalRefundDepositManual } from "@src/services/consult/refund/ref
 import { useUpdateMerchantRefund } from "@src/services/consult/refund/refundDepositsManual/updateMerchant";
 import { queryClient } from "@src/services/queryClient";
 import { useCreateRefundManualDepositsReports } from "@src/services/reports/consult/refund/manualDeposits/createRefundManualDepositReports";
-import { UpdateMerchantRefundBody } from "@src/services/types/consult/refunds/refundmanualDeposits.interface";
+import {
+  UpdateMerchantRefundBody,
+  refundManualDepositsQuery,
+} from "@src/services/types/consult/refunds/refundmanualDeposits.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
 import { Button, Input, Select } from "antd";
 import moment from "moment";
@@ -34,11 +37,10 @@ import {
 } from "../../../../../../components/CustomTable";
 import { FiltersModal } from "../../../../../../components/FiltersModal";
 import { FilterChips } from "../../../../../../components/FiltersModal/filterChips";
-import { refundDepositsQuery } from "../../../../../../services/types/consult/refunds/refundsDeposits.interface";
 import { ViewModal } from "../components/ViewModal";
 import { TotalizersCards } from "./components/TotalizersCards";
 
-const INITIAL_QUERY: refundDepositsQuery = {
+const INITIAL_QUERY: refundManualDepositsQuery = {
   page: 1,
   limit: 25,
   start_date: moment(new Date())
@@ -57,7 +59,7 @@ export const RefundDepositsManual = () => {
     "validate"
   ) as ValidateInterface;
   const { t } = useTranslation();
-  const [query, setQuery] = useState<refundDepositsQuery>(INITIAL_QUERY);
+  const [query, setQuery] = useState<refundManualDepositsQuery>(INITIAL_QUERY);
   const {
     isRefundDepositManualTotalFetching,
     refetchRefundDepositManualTotal,
@@ -97,14 +99,14 @@ export const RefundDepositsManual = () => {
     endToEndId: currentItem?.endToEndId,
     merchant_id: currentItem?.merchant_id,
   });
-  const { mutate, isLoading } = useCreatePixManualRefund(currentItem._id);
+  const { mutate, isLoading } = useCreatePixManualRefund(currentItem?._id);
   const { isPayToMerchantLoading, mutatePayToMerchant } =
-    useCreatePayToMerchantRefund(currentItem._id);
+    useCreatePayToMerchantRefund(currentItem?._id);
   const { isDeleteLoading, mutateDelete } = useDeletePixManualRefund(
-    currentItem._id
+    currentItem?._id
   );
   const { refetchRefundStatusManual } = useGetRefundStatusManual(
-    currentItem._id
+    currentItem?._id
   );
 
   const {
@@ -171,20 +173,34 @@ export const RefundDepositsManual = () => {
             style={{ width: "100%", height: "35px" }}
             size="large"
             onChange={(value) => {
+              delete query.rtrid;
+              delete query.endToEndId;
+              delete query.payer_document;
+              delete query.payer_name;
+              if (["rtrid", "endToEndId"].includes(value)) {
+                delete query?.start_date;
+                delete query?.end_date;
+              } else {
+                setQuery((state) => ({
+                  start_date: moment(new Date()).format(
+                    "YYYY-MM-DDTHH:mm:ss.SSS"
+                  ),
+                  end_date: moment(new Date())
+                    .add(1, "hour")
+                    .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+                  ...state,
+                }));
+              }
               setSearchOption(value);
               setSearch("");
             }}
             value={searchOption}
             placeholder={t("input.options")}
             options={[
-              { value: "pix_id", label: t("table.pix_id") },
+              { value: "rtrid", label: t("table.refund_id") },
               { value: "endToEndId", label: t("table.endToEndId") },
               { value: "payer_document", label: t("table.payer_document") },
-              { value: "buyer_document", label: t("table.buyer_document") },
-              { value: "buyer_name", label: t("table.buyer_name") },
               { value: "payer_name", label: t("table.payer_name") },
-              { value: "txid", label: t("table.txid") },
-              { value: "reference_id", label: t("table.reference_id") },
             ]}
           />
         </Grid>

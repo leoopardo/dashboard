@@ -713,7 +713,8 @@
     "position": "Position",
     "operator_data": "Operator data",
     "merchant_data": "Merchant data",
-    "partner_data": "Partner data"
+    "partner_data": "Partner data",
+    "rtrid": "Refund id"
   },
   "actions": {
     "details": "Details",

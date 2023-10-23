@@ -24,8 +24,8 @@ export interface paidWithdrawalsRowsQuery {
   limit: number;
   sort_order?: "DESC" | "ASC";
   sort_field?: "string";
-  initial_date: string;
-  final_date: string;
+  initial_date?: string;
+  final_date?: string;
   status?: "PAID";
   endToEndId?: string;
   txid?: string;
@@ -49,6 +49,11 @@ export interface paidWithdrawalsRowsQuery {
   payer_name?: string;
   fields?: any;
   comma_separate_value?: boolean;
+  organization_id?: string;
+  payment_id?: string;
+  receiver_document?: string;
+  receiver_name?: string;
+  description?: string
 }
 
 export interface paidWithdrawalsTotal {

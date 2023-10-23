@@ -230,7 +230,7 @@ export const FiltersModal = ({
                   style={{ margin: 10 }}
                   name={startDateKeyName}
                   rules={[
-                    { required: haveInitialDate },
+                    { required: haveInitialDate && !filtersQuery[startDateKeyName] },
                     {
                       validator: () => {
                         if (

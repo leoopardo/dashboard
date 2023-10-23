@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface generatedWithdrawalsTotalQuery {
   page: number;
   limit: number;
@@ -62,6 +63,10 @@ export interface generatedWithdrawalsRowsQuery {
   created_at?: boolean;
   fields?: any;
   comma_separate_value?: boolean;
+  organization_id?: string;
+  payment_id?: string;
+  receiver_name?: string;
+  description?: string;
 }
 
 export interface generatedWithdrawalsTotal {

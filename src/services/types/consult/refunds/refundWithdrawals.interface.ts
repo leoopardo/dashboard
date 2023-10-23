@@ -3,8 +3,8 @@ export interface refundWithdrawalsQuery {
   limit: number;
   sort_order?: "DESC" | "ASC";
   sort_field?: "string";
-  start_date: string;
-  end_date: string;
+  start_date?: string;
+  end_date?: string;
   status?: "REFUNDED" | "PAID_TO_MERCHANT" | "ERROR" | "PROCESSING" | "PENDING";
   endToEndId?: string;
   txid?: string;
@@ -15,6 +15,8 @@ export interface refundWithdrawalsQuery {
   partner_id?: number;
   buyer_document?: number;
   payer_document?: number;
+  receiver_document?: number;
+  receiver_name?: number;
   payer_bank?: number;
   age_start?: number;
   age_end?: number;
@@ -26,6 +28,7 @@ export interface refundWithdrawalsQuery {
   value_end?: number;
   buyer_name?: string;
   payer_name?: string;
+  rtrid?: string;
 }
 
 export interface refundWithdrawalsTotal {
@@ -78,5 +81,5 @@ export interface refundWithdrawById {
   refund_date: string;
   status: string;
   value: number;
-  _id:string;
+  _id: string;
 }

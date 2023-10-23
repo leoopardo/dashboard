@@ -3,11 +3,12 @@
 import { EyeFilled } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
+import { Search } from "@src/components/Inputs/search";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { queryClient } from "@src/services/queryClient";
 import { useCreateGeneratedDepositsReports } from "@src/services/reports/consult/deposits/createGeneratedDepositsReports";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Input, Select } from "antd";
+import { Button, Select } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -68,8 +69,9 @@ export const UndeliveredDeposits = () => {
 
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<any>();
-  const [searchOption, setSearchOption] = useState<string | null>(null);
-  const [search, setSearch] = useState<string | null>(null);
+  const [searchOption, setSearchOption] = useState<string | undefined>(
+    undefined
+  );
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
 
   const columns: ColumnInterface[] = [
@@ -118,7 +120,11 @@ export const UndeliveredDeposits = () => {
             endDateKeyName="final_date"
             query={query}
             setQuery={setQuery}
-            haveInitialDate
+            haveInitialDate={
+              !["pix_id", "endToEndId", "txid", "reference_id"].includes(
+                searchOption as any
+              )
+            }
           />
         </Grid>
       </Grid>
@@ -129,8 +135,33 @@ export const UndeliveredDeposits = () => {
             style={{ width: "100%" }}
             size="large"
             onChange={(value) => {
+              delete query.pix_id;
+              delete query.endToEndId;
+              delete query.txid;
+              delete query.reference_id;
+              delete query.payer_document;
+              delete query.buyer_document;
+              delete query.buyer_name;
+              delete query.payer_name;
+              delete query.description;
+
+              if (
+                ["pix_id", "endToEndId", "txid", "reference_id"].includes(value)
+              ) {
+                delete query.initial_date;
+                delete query.final_date;
+              } else {
+                setQuery((state) => ({
+                  initial_date: moment(new Date()).format(
+                    "YYYY-MM-DDTHH:mm:ss.SSS"
+                  ),
+                  final_date: moment(new Date())
+                    .add(1, "hour")
+                    .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+                  ...state,
+                }));
+              }
               setSearchOption(value);
-              setSearch("");
             }}
             value={searchOption}
             placeholder={t("input.options")}
@@ -148,19 +179,10 @@ export const UndeliveredDeposits = () => {
           />
         </Grid>
         <Grid item xs={12} md={4} lg={4}>
-          <Input.Search
-            placeholder="Pesquisa"
-            size="large"
-            value={search || ""}
-            disabled={!searchOption}
-            style={{ width: "100%" }}
-            onChange={(event) => setSearch(event.target.value)}
-            onSearch={(value) =>
-              setQuery((state) => ({
-                ...state,
-                [`${searchOption}`]: value,
-              }))
-            }
+          <Search
+            query={query}
+            setQuery={setQuery}
+            searchOption={searchOption}
           />
         </Grid>
         <Grid item xs={12} md={2} lg={2}>
@@ -171,8 +193,7 @@ export const UndeliveredDeposits = () => {
             danger
             onClick={() => {
               setQuery(INITIAL_QUERY);
-              setSearchOption(null);
-              setSearch(null);
+              setSearchOption(undefined);
             }}
             style={{
               display: "flex",
@@ -243,7 +264,11 @@ export const UndeliveredDeposits = () => {
           setOpen={setIsFiltersOpen}
           query={query}
           setQuery={setQuery}
-          haveInitialDate
+          haveInitialDate={
+            !["pix_id", "endToEndId", "txid", "reference_id"].includes(
+              searchOption as any
+            )
+          }
           filters={[
             "initial_date",
             "final_date",

@@ -7,12 +7,13 @@ import { FilterChips } from "@components/FiltersModal/filterChips";
 import { ValidateToken } from "@components/ValidateToken";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
+import { Search } from "@src/components/Inputs/search";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
 import { Toast } from "@src/components/Toast";
 import { useGetOperatorUsers } from "@src/services/register/operator/users/getOperatorUsers";
 import { useUpdateOperatorUser } from "@src/services/register/operator/users/updateUser";
 import { PartnerQuery } from "@src/services/types/register/partners/partners.interface";
-import { Button, Input } from "antd";
+import { Button } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { NewUserInterface, NewUserModal } from "./components/newUserModal";
@@ -32,7 +33,6 @@ export const OperatorUsers = () => {
   const [isNewUserModal, setIsNewUserModal] = useState<boolean>(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<any>(null);
-  const [search, setSearch] = useState<string>("");
   const [updateUserBody, setUpdateUserBody] = useState<NewUserInterface | null>(
     null
   );
@@ -94,15 +94,7 @@ export const OperatorUsers = () => {
 
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
         <Grid item xs={12} md={4} lg={4}>
-          <Input.Search
-            size="large"
-            value={search}
-            placeholder={t("table.name") || ""}
-            onChange={(event) => {
-              setSearch(event.target.value);
-            }}
-            onSearch={() => setQuery((state) => ({ ...state, name: search }))}
-          />
+          <Search query={query} setQuery={setQuery} searchOption="name" />
         </Grid>
         <Grid item xs={12} md={3} lg={2}>
           <Button
@@ -112,7 +104,6 @@ export const OperatorUsers = () => {
             danger
             onClick={() => {
               setQuery(INITIAL_QUERY);
-              setSearch("");
             }}
             style={{
               width: "100%",

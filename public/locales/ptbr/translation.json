@@ -716,7 +716,8 @@
     "position": "Cargo",
     "operator_data": "Dados de operador",
     "merchant_data": "Dados de empresa",
-    "partner_data": "Dados de plataforma"
+    "partner_data": "Dados de plataforma",
+    "rtrid": "ID da devolução"
   },
   "actions": {
     "details": "Detalhes",

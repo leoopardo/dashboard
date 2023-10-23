@@ -7,6 +7,7 @@ import { ViewModal } from "@components/Modals/viewGenericModal";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { useGetRowsMerchantUsers } from "@services/register/merchant/users/getUsers";
+import { Search } from "@src/components/Inputs/search";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { Toast } from "@src/components/Toast";
 import { ValidateToken } from "@src/components/ValidateToken";
@@ -19,7 +20,7 @@ import {
   MerchantUsersQuery,
 } from "@src/services/types/register/merchants/merchantUsers.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Input } from "antd";
+import { Button } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { UpdateUserModal } from "./components/UpdateUserModal";
@@ -52,7 +53,6 @@ export const MerchantUser = () => {
   const [currentItem, setCurrentItem] = useState<MerchantUsersItem | null>(
     null
   );
-  const [search, setSearch] = useState<string>("");
   const { updateError, updateIsSuccess, updateMutate, updateReset } =
     useUpdateMerchant({
       ...updateUserBody,
@@ -116,15 +116,7 @@ export const MerchantUser = () => {
 
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
         <Grid item xs={12} md={4} lg={4}>
-          <Input.Search
-            size="large"
-            value={search}
-            placeholder={t("table.name") || ""}
-            onChange={(event) => {
-              setSearch(event.target.value);
-            }}
-            onSearch={() => setQuery((state) => ({ ...state, name: search }))}
-          />
+          <Search query={query} setQuery={setQuery} searchOption="name" />
         </Grid>
         <Grid item xs={12} md={3} lg={2}>
           <Button
@@ -133,7 +125,6 @@ export const MerchantUser = () => {
             danger
             onClick={() => {
               setQuery(INITIAL_QUERY);
-              setSearch("");
             }}
             style={{
               height: 40,

@@ -184,7 +184,7 @@ export const FeesTab = (props: { id?: string }) => {
             label={t("input.deposit_fee_plan")}
             name="cashin_pix_fee_plan_id"
           >
-            <Select
+            {/* <Select
               size="large"
               options={
                 depositFeePlansData?.merchant_fee_plans?.map((item, index) => ({
@@ -204,7 +204,7 @@ export const FeesTab = (props: { id?: string }) => {
                   cashin_pix_fee_plan_id: Number(value),
                 }));
               }}
-            />
+            /> */}
           </Form.Item>
         </Grid>
 
@@ -328,7 +328,7 @@ export const FeesTab = (props: { id?: string }) => {
             label={t("input.withdraw_fee_plan")}
             name="customer_withdraw_fee_plan_id"
           >
-            <Select
+            {/* <Select
               size="large"
               options={
                 withdrawFeePlansData?.merchant_fee_plans?.map(
@@ -350,7 +350,7 @@ export const FeesTab = (props: { id?: string }) => {
                   customer_withdraw_fee_plan_id: Number(value),
                 }));
               }}
-            />
+            /> */}
           </Form.Item>
         </Grid>
 
