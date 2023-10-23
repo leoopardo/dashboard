@@ -381,11 +381,11 @@ export const Partners = () => {
               <Typography>
                 {t("wiki.generate_reports_descriptions")}{" "}
                 <Typography.Link
-                  href="/register/aggregator/aggregator_reports/aggregator_aggregators_reports"
+                  href="/register/partner/partner_reports/partner_partners_reports"
                   target="_blank"
                 >
-                  {t("menus.aggregators")} | {t("menus.reports")} |{" "}
-                  {t("menus.aggregators")}
+                  {t("menus.partner")} | {t("menus.reports")} |{" "}
+                  {t("menus.partner_partners_reports")}
                 </Typography.Link>
               </Typography>
             ),
