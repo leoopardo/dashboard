@@ -176,7 +176,7 @@ export const OperatorUsers = () => {
             error={UsersDataError}
             columns={columns}
             loading={isUsersDataFetching}
-            label={["name", "username"]}
+            label={["name", "username", "profileType", "updated_at"]}
           />
         </Grid>
       </Grid>

@@ -283,7 +283,7 @@ export const MerchantView = () => {
             error={MerchantDataError}
             columns={columns}
             loading={isMerchantDataFetching}
-            label={["name", "username"]}
+            label={["name", "merchantConfig.cash_in_bank", "merchantConfig.cash_out_bank"]}
             checkbox
             setSelectedRows={setSelectedItems}
             selectedKeys={selectedItems}

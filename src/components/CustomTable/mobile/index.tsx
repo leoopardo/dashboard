@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { BankOutlined, EllipsisOutlined } from "@ant-design/icons";
+import { BankOutlined, EllipsisOutlined, ArrowUpOutlined, ArrowDownOutlined } from "@ant-design/icons";
 import { useListBanks } from "@src/services/bank/listBanks";
 import {
   Avatar,
@@ -39,6 +39,15 @@ export const Mobile = (props: MobileProps) => {
     page: 1,
   });
 
+  const renderTableCell = (string: string, row: Record<string, any>): string | undefined => {
+    if (typeof string === "string" && string.split('.')[1] && row[`${string.split('.')[0]}`] !== null) {
+      console.log('test', row[`${string.split('.')[0]}`][`${string.split('.')[1]}`])
+      return row[`${string.split('.')[0]}`][`${string.split('.')[1]}`];
+    }
+  
+    return row[`${string}`] || undefined;
+  };
+
   useEffect(() => {
     if (props.setSelectedRows) props.setSelectedRows(checkedRows);
   }, [checkedRows]);
@@ -73,10 +82,54 @@ export const Mobile = (props: MobileProps) => {
                       </Tooltip>
                     );
 
+                    case "merchantConfig.cash_in_bank":
+                      return (
+                        <Tooltip placement="topLeft" title={item[label]} arrow>
+                          <ArrowUpOutlined style={{color: 'lightgreen', paddingTop: 5}} />
+                          <Avatar
+                            src={
+                              bankListData?.itens.find(
+                                (bank) =>
+                                  bank?.label_name?.split(".").join("_") ===
+                                  item?.merchantConfig?.cash_in_bank
+                              )?.icon_url ?? null
+                            }
+                            size="small"
+                            shape="square"
+                          >
+                            <BankOutlined />
+                          </Avatar>
+                        </Tooltip>
+                      );
+
+                      case "merchantConfig.cash_out_bank":
+                      return (
+                        <Tooltip placement="topLeft" title={item[label]} arrow>
+                           <ArrowDownOutlined style={{color: 'red', paddingLeft: 5, paddingTop: 5}} />
+                          <Avatar
+                            src={
+                              bankListData?.itens.find(
+                                (bank) =>
+                                  bank?.label_name?.split(".").join("_") ===
+                                  item?.merchantConfig?.cash_out_bank
+                              )?.icon_url ?? null
+                            }
+                            size="small"
+                            shape="square"
+                          >
+                            <BankOutlined />
+                          </Avatar>
+                        </Tooltip>
+                      );
+  
+
                   case "merchant_name":
                     return ` - ${item[label]}`;
+
                   case "createdAt":
                   case "paid_at":
+                  case "updated_at":
+
                     return (
                       <Typography key={label} style={{ fontSize: "12px" }}>
                         {t(`table.${label}`)}:{" "}
@@ -104,6 +157,7 @@ export const Mobile = (props: MobileProps) => {
                       </Typography>
                     );
                   }
+
                   case "delivered_at":
                     return (
                       <Typography key={label} style={{ fontSize: "12px" }}>
@@ -119,6 +173,12 @@ export const Mobile = (props: MobileProps) => {
                         }`}
                       </Typography>
                     );
+
+                    case "profileType":
+                    return (
+                      <Typography key={label}>{t(`table.${item?.profileType?.name.toString().toLowerCase()}`)}</Typography>
+                    );
+
 
                   case "value_total":
                   case "value":
