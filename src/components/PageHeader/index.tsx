@@ -18,8 +18,7 @@ import { EditSelfModal } from "./EditSelf";
 const { useToken } = t;
 
 export const PageHeader = () => {
-  
-  const isMobile = useMediaQuery({ maxWidth: "900px" });
+  const isMobile = useMediaQuery({ maxWidth: "950px" });
   const { t, i18n } = useTranslation();
   const { responseValidate } = useValidate();
   const translation = useTranslation().i18n.language;
@@ -228,14 +227,14 @@ export const PageHeader = () => {
     <Grid
       container
       style={{
-        width: "100%",
+        width: "97vw",
         display: isMobile ? "inherit" : "none",
       }}
     >
       <Grid
         item
-        xs={11}
-        md={2}
+        xs={12}
+        md={12}
         lg={2}
         style={{
           display: "flex",

@@ -13,6 +13,7 @@ import {
   Col,
   Layout,
   Row,
+  Tabs,
   Tooltip,
   Tour,
   TourProps,
@@ -58,6 +59,13 @@ export const Dashboard = () => {
     limit: 200,
     page: 1,
   });
+  const [activeKey, setActiveKey] = useState<string>(
+    permissions?.report?.paybrokers?.balance?.report_paybrokers_balance_list
+      ? "1"
+      : permissions?.report?.merchant?.balance?.report_merchant_balance_list
+      ? "2"
+      : ""
+  );
 
   const { refetchMerchantBankStatementTotalsTotal } =
     useGetMerchantBankStatementTotals(query);
@@ -96,6 +104,9 @@ export const Dashboard = () => {
         </Typography>
       ),
       target: () => ref1.current,
+      nextButtonProps: {
+        onClick: () => setActiveKey("2"),
+      },
     });
   }
 
@@ -123,6 +134,9 @@ export const Dashboard = () => {
         </Typography>
       ),
       target: () => ref2.current,
+      prevButtonProps: {
+        onClick: () => setActiveKey("1"),
+      },
     });
   }
 
@@ -164,14 +178,53 @@ export const Dashboard = () => {
         steps={steps}
         animated
       />
-      <Col span={24} ref={ref1}>
-        {permissions?.report?.paybrokers?.balance
-          ?.report_paybrokers_balance_list && <OrganizationBalance />}
-      </Col>
-      <Col span={24} ref={ref2}>
-        {permissions?.report?.merchant?.balance
-          ?.report_merchant_balance_list && <MerchantBalance />}
-      </Col>
+      <Layout
+        style={{
+          margin: -28,
+          padding: 20,
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <Tabs
+          activeKey={activeKey}
+          onChange={(value) => {
+            setActiveKey(value);
+          }}
+          items={[
+            {
+              key: "1",
+              label: t("table.organization_balance"),
+              children: (
+                <Col span={24} ref={ref1}>
+                  <OrganizationBalance />
+                </Col>
+              ),
+              style: {
+                display: !permissions?.report?.paybrokers?.balance
+                  ?.report_paybrokers_balance_list
+                  ? "none"
+                  : undefined,
+              },
+            },
+            {
+              key: "2",
+              label: t("table.merchant_balance"),
+              children: (
+                <Col span={24} ref={ref2}>
+                  <MerchantBalance />
+                </Col>
+              ),
+              style: {
+                display: !permissions?.report?.merchant?.balance
+                  ?.report_merchant_balance_list
+                  ? "none"
+                  : undefined,
+              },
+            },
+          ]}
+        />
+      </Layout>
 
       <Col
         span={24}
@@ -186,9 +239,15 @@ export const Dashboard = () => {
           padding: 15,
         }}
       >
-        <div
-          style={{ width: "100%", display: "flex", justifyContent: "flex-end" }}
+        <Col
+          span={24}
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "space-between",
+          }}
         >
+          <Typography.Title level={3}>Saldos bancários</Typography.Title>
           <Tooltip title={t("buttons.help")}>
             <Button
               type="link"
@@ -197,7 +256,7 @@ export const Dashboard = () => {
               <InfoCircleOutlined />
             </Button>
           </Tooltip>
-        </div>
+        </Col>
 
         {permissions?.report?.paybrokers?.bank_balance?.menu && (
           <Row gutter={[8, 4]} align="middle" justify="center">
@@ -206,7 +265,6 @@ export const Dashboard = () => {
                 width: "100%",
                 marginBottom: 16,
                 display: "flex",
-                justifyContent: "center",
               }}
               gutter={[16, 16]}
               ref={ref3}

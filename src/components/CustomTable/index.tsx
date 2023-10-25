@@ -14,7 +14,6 @@ import {
   Button,
   Dropdown,
   Empty,
-  Input,
   Modal,
   Pagination,
   Progress,
@@ -161,37 +160,19 @@ export const CustomTable = (props: TableProps) => {
                 ? column?.name + `${Math.random()}`
                 : column?.name,
               dataIndex: column?.name,
-              width: 150,
+              width: 60,
               render: (text: string) => (
-                <div
-                  key={column?.name}
-                  style={{
-                    width: "100%",
-
-                    textAlign: "center",
-                  }}
-                >
-                  <Input
-                    size="large"
-                    addonAfter={
-                      <CopyToClipboard text={text}>
-                        <Button
-                          size="small"
-                          type="ghost"
-                          onClick={() => toast.success(t("table.copied"))}
-                        >
-                          <CopyOutlined />
-                        </Button>
-                      </CopyToClipboard>
-                    }
-                    style={{
-                      maxWidth: "250px",
-                      textOverflow: "ellipsis",
-                    }}
-                    value={text}
-                    readOnly
-                  />
-                </div>
+                <Tooltip title={text}>
+                  <CopyToClipboard text={text}>
+                    <Button
+                      size="large"
+                      type="ghost"
+                      onClick={() => toast.success(t("table.copied"))}
+                    >
+                      <CopyOutlined />
+                    </Button>
+                  </CopyToClipboard>
+                </Tooltip>
               ),
               sorter: column.sort
                 ? () => {
@@ -213,9 +194,7 @@ export const CustomTable = (props: TableProps) => {
           case "date":
             return {
               title: (
-                <Tooltip
-                  title={t(`table.${column?.head || column?.name}`)}
-                >
+                <Tooltip title={t(`table.${column?.head || column?.name}`)}>
                   <Typography
                     style={{
                       width: "100%",

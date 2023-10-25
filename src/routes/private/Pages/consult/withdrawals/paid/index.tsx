@@ -3,12 +3,13 @@
 import { EyeFilled, FileAddOutlined } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
+import { Search } from "@src/components/Inputs/search";
 import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
 import { useGetWithdrawReportFields } from "@src/services/consult/withdrawals/reportCsvFields/getReportFields";
 import { queryClient } from "@src/services/queryClient";
 import { useCreatePaidWithdrawalsReports } from "@src/services/reports/consult/withdrawals/paid/createGeneratedWithdrawalsReports";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Input, Select, Tooltip } from "antd";
+import { Button, Select, Tooltip } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -66,8 +67,9 @@ export const PaidWithdrawals = () => {
 
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<any>();
-  const [searchOption, setSearchOption] = useState<string | null>(null);
-  const [search, setSearch] = useState<string | null>(null);
+  const [searchOption, setSearchOption] = useState<string | undefined>(
+    undefined
+  );
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [csvFields, setCsvFields] = useState<any>();
   const [isComma, setIsComma] = useState<boolean>(true);
@@ -182,7 +184,6 @@ export const PaidWithdrawals = () => {
                 }));
               }
               setSearchOption(value);
-              setSearch("");
             }}
             value={searchOption}
             placeholder={t("input.options")}
@@ -201,19 +202,10 @@ export const PaidWithdrawals = () => {
           />
         </Grid>
         <Grid item xs={12} md={4} lg={4}>
-          <Input.Search
-            placeholder="Pesquisa"
-            size="large"
-            value={search || ""}
-            disabled={!searchOption}
-            style={{ width: "100%" }}
-            onChange={(event) => setSearch(event.target.value)}
-            onSearch={(value) =>
-              setQuery((state) => ({
-                ...state,
-                [`${searchOption}`]: value,
-              }))
-            }
+          <Search
+            query={query}
+            setQuery={setQuery}
+            searchOption={searchOption}
           />
         </Grid>
         <Grid item xs={12} md={3} lg={2}>
@@ -224,8 +216,7 @@ export const PaidWithdrawals = () => {
             danger
             onClick={() => {
               setQuery(INITIAL_QUERY);
-              setSearchOption(null);
-              setSearch("");
+              setSearchOption(undefined);
             }}
             style={{
               display: "flex",

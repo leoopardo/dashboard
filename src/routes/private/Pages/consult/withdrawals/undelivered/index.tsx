@@ -3,13 +3,14 @@
 import { EyeFilled } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
+import { Search } from "@src/components/Inputs/search";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { useGetRowsGeneratedWithdrawals } from "@src/services/consult/withdrawals/generatedWithdrawals/getRows";
 import { useGetTotalGeneratedWithdrawals } from "@src/services/consult/withdrawals/generatedWithdrawals/getTotal";
 import { queryClient } from "@src/services/queryClient";
 import { useCreateGeneratedWithdrawalsReports } from "@src/services/reports/consult/withdrawals/generated/createGeneratedWithdrawalsReports";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Input, Select } from "antd";
+import { Button, Select } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -69,8 +70,9 @@ export const UndeliveredWithdrawals = () => {
 
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<any>();
-  const [searchOption, setSearchOption] = useState<string | null>(null);
-  const [search, setSearch] = useState<string | null>(null);
+  const [searchOption, setSearchOption] = useState<string | undefined>(
+    undefined
+  );
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
 
   const columns: ColumnInterface[] = [
@@ -168,7 +170,6 @@ export const UndeliveredWithdrawals = () => {
                 }));
               }
               setSearchOption(value);
-              setSearch("");
             }}
             value={searchOption}
             placeholder={t("input.options")}
@@ -187,19 +188,10 @@ export const UndeliveredWithdrawals = () => {
           />
         </Grid>
         <Grid item xs={12} md={4} lg={4}>
-          <Input.Search
-            placeholder="Pesquisa"
-            size="large"
-            value={search || ""}
-            disabled={!searchOption}
-            style={{ width: "100%" }}
-            onChange={(event) => setSearch(event.target.value)}
-            onSearch={(value) =>
-              setQuery((state) => ({
-                ...state,
-                [`${searchOption}`]: value,
-              }))
-            }
+          <Search
+            query={query}
+            setQuery={setQuery}
+            searchOption={searchOption}
           />
         </Grid>
         <Grid item xs={12} md={2} lg={2}>
@@ -210,8 +202,7 @@ export const UndeliveredWithdrawals = () => {
             danger
             onClick={() => {
               setQuery(INITIAL_QUERY);
-              setSearchOption(null);
-              setSearch("");
+              setSearchOption(undefined);
             }}
             style={{
               display: "flex",

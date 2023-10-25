@@ -20,7 +20,7 @@ const Logo = import.meta.env.VITE_APP_ICON;
 
 function App() {
   const { t } = useTranslation();
-  const isMobile = useMediaQuery({ maxWidth: "900px" });
+  const isMobile = useMediaQuery({ maxWidth: "950px" });
   const { isSidebarOpen } = useMenu();
   const { Content } = Layout;
   const [isIconSet, setIsIconSet] = useState<boolean>(false);

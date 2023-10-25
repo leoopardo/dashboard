@@ -26,7 +26,7 @@ type MenuItem = Required<MenuProps>["items"][number];
 export const SidebarNavigation = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const isMobile = useMediaQuery({ maxWidth: "900px" });
+  const isMobile = useMediaQuery({ maxWidth: "950px" });
   const [collapsed, setCollapsed] = useState(true);
   const { handleChangeSidebar, isSidebarOpen } = useMenu();
   const [items, setItems] = useState<MenuItem[]>([]);
