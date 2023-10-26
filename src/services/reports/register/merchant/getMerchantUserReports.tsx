@@ -24,7 +24,7 @@ export function useGetMerchantUserReports(params: ReportsQuery) {
     },
     {
       refetchInterval: loadData?.items.find(
-        (item) => item?.status === "WAITING"
+        (item) => item?.status !== "COMPLETED"
       )
         ? 10000
         : undefined,

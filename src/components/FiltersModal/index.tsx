@@ -230,7 +230,10 @@ export const FiltersModal = ({
                   style={{ margin: 10 }}
                   name={startDateKeyName}
                   rules={[
-                    { required: haveInitialDate && !filtersQuery[startDateKeyName] },
+                    {
+                      required:
+                        haveInitialDate && !filtersQuery[startDateKeyName],
+                    },
                     {
                       validator: () => {
                         if (
@@ -550,7 +553,9 @@ export const FiltersModal = ({
                 >
                   {!selectOptions[filter] ? (
                     <Select
+                      showSearch
                       size="large"
+                      removeIcon={<>x</>}
                       style={{ width: "100%", height: "40px" }}
                       placeholder={t("table.status")}
                       options={[
@@ -578,7 +583,10 @@ export const FiltersModal = ({
                         }));
                       }}
                       options={
-                        selectOptions[filter]?.map((option: any) => {
+                        ["", ...selectOptions[filter]]?.map((option: any) => {
+                          if (option === "") {
+                            return { value: "", label: "" };
+                          }
                           return {
                             value: option,
                             label:
@@ -611,15 +619,19 @@ export const FiltersModal = ({
                     size="large"
                     style={{ width: "100%", height: "40px" }}
                     placeholder={t(`table.${filter}`)}
-                    value={filtersQuery[filter] ?? null}
+                    value={[filtersQuery[filter]] ?? null}
                     onChange={(value) => {
                       setFiltersQuery((state: any) => ({
                         ...state,
                         [filter]: value,
                       }));
                     }}
+                    showSearch
                     options={
-                      selectOptions[filter]?.map((option: any) => {
+                      ["", ...selectOptions[filter]]?.map((option: any) => {
+                        if (option === "") {
+                          return { value: "", label: "" };
+                        }
                         return {
                           value: option,
                           label:
