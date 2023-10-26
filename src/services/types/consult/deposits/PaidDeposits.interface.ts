@@ -47,6 +47,7 @@ export interface paidDepositRowsQuery {
   payer_name?: string;
   fields?: any;
   comma_separate_value?: boolean;
+  description?: string;
 }
 
 export interface paidDepositTotal {

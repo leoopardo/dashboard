@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface generatedDepositTotalQuery {
   page?: number;
   limit?: number;
@@ -23,6 +24,7 @@ export interface generatedDepositTotalQuery {
   payer_name?: string;
   fields?: any;
   comma_separate_value?: boolean;
+  description?: string;
 }
 
 export interface generatedDepositRowsQuery {

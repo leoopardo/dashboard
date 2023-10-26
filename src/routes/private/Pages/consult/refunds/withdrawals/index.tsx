@@ -125,7 +125,11 @@ export const RefundWithdrawals = () => {
             endDateKeyName="end_date"
             query={query}
             setQuery={setQuery}
-            haveInitialDate
+            haveInitialDate={
+              !["pix_id", "endToEndId", "reference_id", "rtrid"].includes(
+                searchOption as any
+              )
+            }
           />
         </Grid>
       </Grid>
@@ -136,6 +140,30 @@ export const RefundWithdrawals = () => {
             style={{ width: "100%", height: "35px" }}
             size="large"
             onChange={(value) => {
+              delete query.pix_id;
+              delete query.endToEndId;
+              delete query.rtrid;
+              delete query.reference_id;
+              delete query.receiver_document;
+              delete query.receiver_name;
+              if (
+                ["pix_id", "endToEndId", "reference_id", "rtrid"].includes(
+                  value
+                )
+              ) {
+                delete query.start_date;
+                delete query.end_date;
+              } else {
+                setQuery((state) => ({
+                  start_date: moment(new Date()).format(
+                    "YYYY-MM-DDTHH:mm:ss.SSS"
+                  ),
+                  end_date: moment(new Date())
+                    .add(1, "hour")
+                    .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+                  ...state,
+                }));
+              }
               setSearchOption(value);
               setSearch("");
             }}
@@ -144,12 +172,13 @@ export const RefundWithdrawals = () => {
             options={[
               { value: "pix_id", label: t("table.pix_id") },
               { value: "endToEndId", label: t("table.endToEndId") },
-              { value: "payer_document", label: t("table.payer_document") },
-              { value: "buyer_document", label: t("table.buyer_document") },
-              { value: "buyer_name", label: t("table.buyer_name") },
-              { value: "payer_name", label: t("table.payer_name") },
-              { value: "txid", label: t("table.txid") },
+              { value: "rtrid", label: t("table.refund_id") },
               { value: "reference_id", label: t("table.reference_id") },
+              {
+                value: "receiver_document",
+                label: t("table.receiver_document"),
+              },
+              { value: "receiver_name", label: t("table.receiver_name") },
             ]}
           />
         </Grid>
@@ -264,7 +293,11 @@ export const RefundWithdrawals = () => {
           setOpen={setIsFiltersOpen}
           query={query}
           setQuery={setQuery}
-          haveInitialDate
+          haveInitialDate={
+            !["pix_id", "endToEndId", "reference_id", "rtrid"].includes(
+              searchOption as any
+            )
+          }
           filters={[
             "start_date",
             "end_date",

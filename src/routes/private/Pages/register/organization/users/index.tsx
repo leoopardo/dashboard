@@ -1,7 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { EditOutlined, EyeFilled, UserAddOutlined } from "@ant-design/icons";
-import { ColumnInterface, CustomTable } from "@components/CustomTable";
+import {
+  EditOutlined,
+  EyeFilled,
+  InfoCircleOutlined,
+  UserAddOutlined,
+} from "@ant-design/icons";
+import { CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
 import { ValidateToken } from "@components/ValidateToken";
@@ -9,15 +14,17 @@ import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { useGetRowsOrganizationUsers } from "@services/register/organization/users/getUsers";
 import { useUpdateOrganizationUser } from "@services/register/organization/users/updateUser";
+import { Search } from "@src/components/Inputs/search";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
 import { Toast } from "@src/components/Toast";
+import { TuorComponent } from "@src/components/Tuor";
 import { queryClient } from "@src/services/queryClient";
 import { useCreateOrganizationReports } from "@src/services/reports/register/organization/createUserReports";
 import { OrganizationUserQuery } from "@src/services/types/register/organization/organizationUsers.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Input } from "antd";
-import { useEffect, useState } from "react";
+import { Button, Tooltip, Typography } from "antd";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { NewUserInterface, NewUserModal } from "./components/newUserModal";
 
@@ -40,7 +47,6 @@ export const OrganizationUser = () => {
   const [isNewUserModal, setIsNewUserModal] = useState<boolean>(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<any>(null);
-  const [search, setSearch] = useState<string>("");
   const [updateUserBody, setUpdateUserBody] = useState<NewUserInterface | null>(
     null
   );
@@ -60,19 +66,6 @@ export const OrganizationUser = () => {
   } = useCreateOrganizationReports(query);
   const [action, setAction] = useState<"create" | "update">("create");
 
-  const columns: ColumnInterface[] = [
-    { name: "id", type: "id", sort: true },
-    { name: "name", type: "text", sort: true },
-    {
-      name: ["permission_group", "name"],
-      head: "group",
-      type: "text",
-    },
-    { name: "email", type: "text" },
-    { name: "status", type: "status" },
-    { name: "created_at", type: "date", sort: true },
-  ];
-
   useEffect(() => {
     refetchUsersData();
   }, [query]);
@@ -80,6 +73,22 @@ export const OrganizationUser = () => {
   const handleUpdateTokenValidate = () => {
     updateMutate();
   };
+
+  // TUOR -----------------------------------------------
+
+  const [isTuorOpen, setIsTuorOpen] = useState<boolean>(false);
+  const ref1 = useRef(null);
+  const ref2 = useRef(null);
+  const ref3 = useRef(null);
+  const ref4 = useRef(null);
+  const ref5 = useRef(null);
+  const refId = useRef(null);
+  const refName = useRef(null);
+  const refGroup = useRef(null);
+  const refStatus = useRef(null);
+  const refEmail = useRef(null);
+  const refCreatedAt = useRef(null);
+
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid
@@ -88,7 +97,9 @@ export const OrganizationUser = () => {
         spacing={1}
       >
         <Grid item xs={12} md={4} lg={2}>
-           <Button size="large"
+          <Button
+            ref={ref1}
+            size="large"
             style={{ width: "100%" }}
             loading={isUsersDataFetching}
             type="primary"
@@ -97,7 +108,7 @@ export const OrganizationUser = () => {
             {t("table.filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={8} lg={10}>
+        <Grid item xs={12} md={7} lg={9}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
@@ -105,28 +116,35 @@ export const OrganizationUser = () => {
             setQuery={setQuery}
           />
         </Grid>
+        <Grid
+          item
+          xs={12}
+          md={1}
+          style={{ display: "flex", justifyContent: "flex-end" }}
+        >
+          <Tooltip title={t("buttons.help")}>
+            <Button
+              type="link"
+              onClick={() => setIsTuorOpen((state) => !state)}
+            >
+              <InfoCircleOutlined />
+            </Button>
+          </Tooltip>
+        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
-        <Grid item xs={12} md={4} lg={4}>
-        <Input.Search
-            size="large"
-            value={search}
-            placeholder={t("table.name") || ""}
-            onChange={(event) => {
-              setSearch(event.target.value);
-            }}
-            onSearch={() => setQuery((state) => ({ ...state, name: search }))}
-          />
+        <Grid item xs={12} md={4} lg={4} ref={ref2}>
+          <Search query={query} setQuery={setQuery} searchOption="name" />
         </Grid>
         <Grid item xs={12} md={3} lg={2}>
           <Button
+            ref={ref3}
             type="dashed"
             loading={isUsersDataFetching}
             danger
             onClick={() => {
               setQuery(INITIAL_QUERY);
-              setSearch("");
             }}
             style={{
               height: 40,
@@ -143,6 +161,7 @@ export const OrganizationUser = () => {
         {permissions.register.paybrokers.users.paybrokers_user_create && (
           <Grid item xs={12} md={3} lg={2}>
             <Button
+              ref={ref4}
               type="primary"
               loading={isUsersDataFetching}
               onClick={() => {
@@ -163,7 +182,7 @@ export const OrganizationUser = () => {
           </Grid>
         )}
         {permissions.register.paybrokers.users.paybrokers_user_export_csv && (
-          <Grid item xs={12} md="auto">
+          <Grid item xs={12} md="auto" ref={ref5}>
             <ExportReportsModal
               disabled={!UsersData?.total || UsersDataError}
               mutateReport={() => OrganizationReportsMutate()}
@@ -203,7 +222,24 @@ export const OrganizationUser = () => {
             data={UsersData}
             items={UsersData?.items}
             error={UsersDataError}
-            columns={columns}
+            columns={[
+              { name: "id", type: "id", sort: true, key: refId },
+              { name: "name", type: "text", sort: true, key: refName },
+              {
+                name: ["permission_group", "name"],
+                head: "group",
+                type: "text",
+                key: refGroup,
+              },
+              { name: "email", type: "text", key: refEmail },
+              { name: "status", type: "status", key: refStatus },
+              {
+                name: "created_at",
+                type: "date",
+                sort: true,
+                key: refCreatedAt,
+              },
+            ]}
             loading={isUsersDataFetching}
             label={["name", "username", "profileType", "updated_at" ]}
           />
@@ -216,15 +252,7 @@ export const OrganizationUser = () => {
           setOpen={setIsFiltersOpen}
           query={query}
           setQuery={setQuery}
-          filters={[
-            "start_date",
-            "end_date",
-            "status",
-            "partner_id",
-            "merchant_id",
-            "aggregator_id",
-            "operator_id",
-          ]}
+          filters={["start_date", "end_date", "status"]}
           refetch={refetchUsersData}
           selectOptions={{}}
           startDateKeyName="start_date"
@@ -257,7 +285,7 @@ export const OrganizationUser = () => {
         />
       )}
 
-<Toast
+      <Toast
         actionSuccess={t("messages.updated")}
         actionError={t("messages.update")}
         error={updateError}
@@ -272,6 +300,75 @@ export const OrganizationUser = () => {
           setOpen={setIsViewModalOpen}
         />
       )}
+
+      <TuorComponent
+        open={isTuorOpen}
+        setOpen={setIsTuorOpen}
+        searchFilterStepRef={ref1}
+        searchByNameStepRef={ref2}
+        removeFiltersStepRef={ref3}
+        createRegisterStep={
+          permissions.register.paybrokers.users.paybrokers_user_create && {
+            title: t("wiki.register_users"),
+            description: t("wiki.register_users_descriptions"),
+            target: () => ref4.current,
+          }
+        }
+        exportCsvStep={
+          permissions.register.paybrokers.users.paybrokers_user_export_csv && {
+            title: t("wiki.generate_reports"),
+            description: (
+              <Typography>
+                {t("wiki.generate_reports_descriptions")}{" "}
+                <Typography.Link
+                  href="/register/organization/organization_reports/organization_reports_users"
+                  target="_blank"
+                >
+                  {t("menus.organization")} | {t("menus.reports")} |{" "}
+                  {t("menus.users")}
+                </Typography.Link>
+              </Typography>
+            ),
+            target: () => ref5.current,
+          }
+        }
+        steps={[
+          {
+            title: t("table.id"),
+            description: t("wiki.id_description"),
+            target: () => refId.current,
+          },
+          {
+            title: t("table.name"),
+            description: t("wiki.user_name_description"),
+            target: () => refName.current,
+          },
+          {
+            title: t("table.group"),
+            description: t("wiki.group_description"),
+            target: () => refGroup.current,
+          },
+          {
+            title: t("table.email"),
+            description: t("wiki.email_description"),
+            target: () => refEmail.current,
+          },
+          {
+            title: t("table.status"),
+            description: t("wiki.status_description"),
+            target: () => refStatus.current,
+          },
+          {
+            title: t("table.createdAt"),
+            description: t("wiki.created_at_description"),
+            target: () => refCreatedAt.current,
+          },
+        ]}
+        pageStep={{
+          title: t("wiki.organization_users"),
+          description: t("wiki.organization_users_description"),
+        }}
+      />
     </Grid>
   );
 };

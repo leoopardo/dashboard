@@ -3,12 +3,13 @@
 import { EyeFilled, FileAddOutlined } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
+import { Search } from "@src/components/Inputs/search";
 import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
 import { useGetWithdrawReportFields } from "@src/services/consult/withdrawals/reportCsvFields/getReportFields";
 import { queryClient } from "@src/services/queryClient";
 import { useCreatePaidWithdrawalsReports } from "@src/services/reports/consult/withdrawals/paid/createGeneratedWithdrawalsReports";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Input, Select, Tooltip } from "antd";
+import { Button, Select, Tooltip } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -66,8 +67,9 @@ export const PaidWithdrawals = () => {
 
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<any>();
-  const [searchOption, setSearchOption] = useState<string | null>(null);
-  const [search, setSearch] = useState<string | null>(null);
+  const [searchOption, setSearchOption] = useState<string | undefined>(
+    undefined
+  );
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [csvFields, setCsvFields] = useState<any>();
   const [isComma, setIsComma] = useState<boolean>(true);
@@ -135,7 +137,14 @@ export const PaidWithdrawals = () => {
             endDateKeyName="final_date"
             query={query}
             setQuery={setQuery}
-            haveInitialDate
+            haveInitialDate={
+              ![
+                "organization_id",
+                "endToEndId",
+                "payment_id",
+                "reference_id",
+              ].includes(searchOption as any)
+            }
           />
         </Grid>
       </Grid>
@@ -146,37 +155,57 @@ export const PaidWithdrawals = () => {
             style={{ width: "100%" }}
             size="large"
             onChange={(value) => {
+              delete query.organization_id;
+              delete query.endToEndId;
+              delete query.payment_id;
+              delete query.reference_id;
+              delete query.receiver_document;
+              delete query.receiver_name;
+              delete query.description;
+              if (
+                [
+                  "organization_id",
+                  "endToEndId",
+                  "payment_id",
+                  "reference_id",
+                ].includes(value)
+              ) {
+                delete query.initial_date;
+                delete query.final_date;
+              } else {
+                setQuery((state) => ({
+                  initial_date: moment(new Date()).format(
+                    "YYYY-MM-DDTHH:mm:ss.SSS"
+                  ),
+                  final_date: moment(new Date())
+                    .add(1, "hour")
+                    .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+                  ...state,
+                }));
+              }
               setSearchOption(value);
-              setSearch("");
             }}
             value={searchOption}
             placeholder={t("input.options")}
             options={[
-              { value: "pix_id", label: t("table.pix_id") },
+              { value: "organization_id", label: t("table.organization_id") },
               { value: "endToEndId", label: t("table.endToEndId") },
-              { value: "payer_document", label: t("table.payer_document") },
-              { value: "buyer_document", label: t("table.buyer_document") },
-              { value: "buyer_name", label: t("table.buyer_name") },
-              { value: "payer_name", label: t("table.payer_name") },
-              { value: "txid", label: t("table.txid") },
+              { value: "payment_id", label: t("table.payment_id") },
               { value: "reference_id", label: t("table.reference_id") },
+              {
+                value: "receiver_document",
+                label: t("table.receiver_document"),
+              },
+              { value: "receiver_name", label: t("table.receiver_name") },
+              { value: "description", label: t("table.description") },
             ]}
           />
         </Grid>
         <Grid item xs={12} md={4} lg={4}>
-          <Input.Search
-            placeholder="Pesquisa"
-            size="large"
-            value={search || ""}
-            disabled={!searchOption}
-            style={{ width: "100%" }}
-            onChange={(event) => setSearch(event.target.value)}
-            onSearch={(value) =>
-              setQuery((state) => ({
-                ...state,
-                [`${searchOption}`]: value,
-              }))
-            }
+          <Search
+            query={query}
+            setQuery={setQuery}
+            searchOption={searchOption}
           />
         </Grid>
         <Grid item xs={12} md={3} lg={2}>
@@ -187,8 +216,7 @@ export const PaidWithdrawals = () => {
             danger
             onClick={() => {
               setQuery(INITIAL_QUERY);
-              setSearchOption(null);
-              setSearch("");
+              setSearchOption(undefined);
             }}
             style={{
               display: "flex",
@@ -296,7 +324,14 @@ export const PaidWithdrawals = () => {
           setOpen={setIsFiltersOpen}
           query={query}
           setQuery={setQuery}
-          haveInitialDate
+          haveInitialDate={
+            ![
+              "organization_id",
+              "endToEndId",
+              "payment_id",
+              "reference_id",
+            ].includes(searchOption as any)
+          }
           filters={[
             "initial_date",
             "final_date",

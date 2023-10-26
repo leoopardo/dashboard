@@ -1,19 +1,26 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { EditOutlined, EyeFilled, UserAddOutlined } from "@ant-design/icons";
-import { ColumnInterface, CustomTable } from "@components/CustomTable";
+import {
+  EditOutlined,
+  EyeFilled,
+  InfoCircleOutlined,
+  UserAddOutlined,
+} from "@ant-design/icons";
+import { CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
 import { useGetPartnersTotals } from "@src/services/register/partner/getPartnersTotals";
-import { Button, Input } from "antd";
-import { useEffect, useState } from "react";
+import { Button, Tooltip, Typography } from "antd";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import { Search } from "@src/components/Inputs/search";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
 import { Toast } from "@src/components/Toast";
+import { TuorComponent } from "@src/components/Tuor";
 import { queryClient } from "@src/services/queryClient";
 import { useCreatePartner } from "@src/services/register/partner/createPartner";
 import { useGetPartners } from "@src/services/register/partner/getPartners";
@@ -24,6 +31,7 @@ import {
   PartnerQuery,
 } from "@src/services/types/register/partners/partners.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
+import { defaultTheme } from "@src/styles/defaultTheme";
 import { useNavigate } from "react-router-dom";
 import { TotalizersCards } from "./components/totalizersCards";
 
@@ -63,7 +71,6 @@ export const Partners = () => {
     useState<boolean>(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<PartnerItem | null>(null);
-  const [search, setSearch] = useState<string>("");
   const [createBody, setCreateBody] = useState<PartnerItem>({
     name: "",
     cnpj: "",
@@ -88,13 +95,6 @@ export const Partners = () => {
   const { UpdateError, UpdateIsLoading, UpdateMutate, UpdateIsSuccess } =
     useUpdatePartner(updateBody);
 
-  const columns: ColumnInterface[] = [
-    { name: "id", type: "id", sort: true },
-    { name: "name", type: "text", sort: true },
-    { name: "status", type: "status" },
-    { name: "created_at", type: "date", sort: true },
-  ];
-
   useEffect(() => {
     isSuccessPartnersTotalsData && refetchPartnersTotalsData();
     isSuccessPartnersData && refetchPartnersData();
@@ -107,13 +107,40 @@ export const Partners = () => {
     });
   }, [currentItem]);
 
+  const [isTuorOpen, setIsTuorOpen] = useState<boolean>(false);
+  const ref = useRef(null);
+  const ref1 = useRef(null);
+  const ref2 = useRef(null);
+  const ref3 = useRef(null);
+  const ref4 = useRef(null);
+  const ref5 = useRef(null);
+  const refId = useRef(null);
+  const refName = useRef(null);
+  const refStatus = useRef(null);
+  const refCreatedAt = useRef(null);
+
   return (
     <Grid container style={{ padding: "25px" }}>
-      <TotalizersCards
-        params={query}
-        loading={isPartnersTotalsDataFetching}
-        data={PartnersTotalsData || undefined}
-      />
+      <Grid
+        item
+        xs={12}
+        md={12}
+        style={{ display: "flex", justifyContent: "flex-end" }}
+      >
+        <Tooltip title={t("buttons.help")}>
+          <Button type="link" onClick={() => setIsTuorOpen((state) => !state)}>
+            <InfoCircleOutlined />
+          </Button>
+        </Tooltip>
+      </Grid>
+      <Grid item xs={12} ref={ref}>
+        <TotalizersCards
+          params={query}
+          loading={isPartnersTotalsDataFetching}
+          data={PartnersTotalsData || undefined}
+        />
+      </Grid>
+
       <Grid
         container
         style={{ display: "flex", alignItems: "center" }}
@@ -121,6 +148,7 @@ export const Partners = () => {
       >
         <Grid item xs={12} md={4} lg={2}>
           <Button
+            ref={ref1}
             size="large"
             style={{ width: "100%" }}
             loading={isPartnersDataFetching}
@@ -139,27 +167,18 @@ export const Partners = () => {
           />
         </Grid>
       </Grid>
-
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
-        <Grid item xs={12} md={4} lg={4}>
-          <Input.Search
-            size="large"
-            value={search}
-            placeholder={t("table.name") || ""}
-            onChange={(event) => {
-              setSearch(event.target.value);
-            }}
-            onSearch={() => setQuery((state) => ({ ...state, name: search }))}
-          />
+        <Grid item xs={12} md={4} lg={4} ref={ref2}>
+          <Search query={query} setQuery={setQuery} searchOption="name" />
         </Grid>
         <Grid item xs={12} md={3} lg={2}>
           <Button
+            ref={ref3}
             type="dashed"
             loading={isPartnersDataFetching}
             danger
             onClick={() => {
               setQuery(INITIAL_QUERY);
-              setSearch("");
             }}
             style={{
               height: 40,
@@ -176,6 +195,7 @@ export const Partners = () => {
         {permissions.register.partner.partner.partner_create && (
           <Grid item xs={12} md={3} lg={2}>
             <Button
+              ref={ref4}
               type="primary"
               loading={isPartnersDataFetching}
               onClick={() => {
@@ -196,7 +216,7 @@ export const Partners = () => {
         )}
 
         {permissions.register.partner.partner.partner_export_csv && (
-          <Grid item xs={12} md="auto">
+          <Grid item xs={12} md="auto" ref={ref5}>
             <ExportReportsModal
               disabled={!PartnersData?.total || PartnersDataError}
               mutateReport={() => PartnerReportsMutate()}
@@ -235,7 +255,17 @@ export const Partners = () => {
             data={PartnersData}
             items={PartnersData?.items}
             error={PartnersDataError}
-            columns={columns}
+            columns={[
+              { name: "id", type: "id", sort: true, key: refId },
+              { name: "name", type: "text", sort: true, key: refName },
+              { name: "status", type: "status", key: refStatus },
+              {
+                name: "created_at",
+                type: "date",
+                sort: true,
+                key: refCreatedAt,
+              },
+            ]}
             loading={isPartnersDataFetching}
             label={["name", "description"]}
           />
@@ -319,6 +349,104 @@ export const Partners = () => {
         actionError={t("messages.create")}
         error={PartnerError}
         success={PartnerIsSuccess}
+      />
+      <TuorComponent
+        open={isTuorOpen}
+        setOpen={setIsTuorOpen}
+        searchFilterStepRef={ref1}
+        searchByNameStepRef={ref2}
+        removeFiltersStepRef={ref3}
+        createRegisterStep={
+          permissions.register.paybrokers.release_category
+            .paybrokers_release_category_create && {
+            title: t("wiki.register_categories"),
+            description: t("wiki.register_categories_description"),
+            target: () => ref4.current,
+          }
+        }
+        exportCsvStep={
+          permissions.register.paybrokers.release_category
+            .paybrokers_release_category_export_csv && {
+            title: t("wiki.generate_reports"),
+            description: (
+              <Typography>
+                {t("wiki.generate_reports_descriptions")}{" "}
+                <Typography.Link
+                  href="/register/partner/partner_reports/partner_partners_reports"
+                  target="_blank"
+                >
+                  {t("menus.partner")} | {t("menus.reports")} |{" "}
+                  {t("menus.partner_partners_reports")}
+                </Typography.Link>
+              </Typography>
+            ),
+            target: () => ref5.current,
+          }
+        }
+        steps={[
+          {
+            title: t("wiki.totalizers"),
+            description: (
+              <Typography>
+                {t("wiki.totalizers_description")}
+                <Typography>
+                  <span style={{ color: defaultTheme.colors.info }}>
+                    {t("titles.total_registred", {
+                      entity: t("menus.partners")?.toLowerCase(),
+                    })}
+                    :
+                  </span>
+                  {t("wiki.entity_total")}
+                </Typography>
+                <Typography>
+                  <span style={{ color: defaultTheme.colors.success }}>
+                    {t("titles.total_registred_active", {
+                      entity: t("menus.partners")?.toLowerCase(),
+                    })}
+                    :
+                  </span>
+                  {t("wiki.entity_active")}
+                </Typography>
+                <Typography>
+                  <span style={{ color: defaultTheme.colors.waiting }}>
+                    {t("titles.total_registred_inactive", {
+                      entity: t("menus.partners")?.toLowerCase(),
+                    })}
+                    :
+                  </span>
+                  {t("wiki.entity_inactive")}
+                </Typography>
+              </Typography>
+            ),
+            target: () => ref.current,
+          },
+
+          {
+            title: t("table.id"),
+            description: t("wiki.id_description"),
+            target: () => refId.current,
+          },
+          {
+            title: t("table.name"),
+            description: t("wiki.partner_name_description"),
+            target: () => refName.current,
+          },
+          {
+            title: t("table.status"),
+            description: t("wiki.status_description"),
+            target: () => refStatus.current,
+          },
+
+          {
+            title: t("table.createdAt"),
+            description: t("wiki.created_at_description"),
+            target: () => refCreatedAt.current,
+          },
+        ]}
+        pageStep={{
+          title: t("menus.partners"),
+          description: t("wiki.partners_description"),
+        }}
       />
     </Grid>
   );

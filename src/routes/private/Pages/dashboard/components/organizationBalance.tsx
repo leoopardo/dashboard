@@ -1,11 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import { useGetOrganizationBalance } from "@src/services/consult/organization/balance/getPerBank";
 import { defaultTheme } from "@src/styles/defaultTheme";
-import { Card, Col, Divider, Layout, Row, Statistic, Typography } from "antd";
+import { Card, Col, Row, Statistic } from "antd";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useMediaQuery } from "react-responsive";
 
 export const OrganizationBalance = () => {
   const { t } = useTranslation();
@@ -18,68 +16,38 @@ export const OrganizationBalance = () => {
     isHoverCurrency,
     //setIsHoverCurrency
   ] = useState<"real" | "dolar" | "euro" | "btc">("real");
-  const [show, setShow] = useState<boolean>(true);
-  const isMobile = useMediaQuery({ maxWidth: "750px" });
+  const [show] = useState<boolean>(true);
   return (
-    <Layout
-      style={{
-        margin: -28,
-        padding: 20,
-        display: "flex",
-        justifyContent: "center",
-      }}
+    <Row
+      align="middle"
+      style={{ width: "100%", maxWidth: "1600px" }}
+      gutter={[8, 8]}
     >
-      <Row
-        align="middle"
-        style={{ width: "100%", maxWidth: "1600px" }}
-        gutter={[8, 8]}
-      >
-        <Col xs={{ span: 24 }} md={{ span: 4 }}>
-          <Card>
-            <Typography.Title
-              level={3}
-              style={{
-                display: "flex",
-                justifyContent: "space-around",
-                flexDirection: "column",
-                color: defaultTheme.colors.secondary,
-                textAlign: "center",
-              }}
-            >
-              {" "}
-              <div
-                style={{
-                  width: "100%",
-                  display: "flex",
-                  justifyContent: !isMobile ? "center" : "space-between",
-                }}
-              >
-                {isMobile && (
-                  <>
-                    {show ? (
-                      <EyeInvisibleOutlined onClick={() => setShow(false)} />
-                    ) : (
-                      <EyeOutlined onClick={() => setShow(true)} />
-                    )}
-                  </>
-                )}
-              </div>
-              {t("table.organization_balance")}
-            </Typography.Title>
-          </Card>
-        </Col>
-        {show && (
-          <>
-            {" "}
-            <Col
-              xs={{ span: 24 }}
-              md={{ span: 5 }}
-              style={{
-                minWidth: isOrganizationBalanceFetching ? "222px" : undefined,
-              }}
-            >
-              <Card bordered={false} loading={isOrganizationBalanceFetching}>
-                {isHoverCurrency === "real" ? (
+      {show && (
+        <>
+          {" "}
+          <Col
+            xs={{ span: 24 }}
+               md={{ span: 6 }}
+            style={{
+              minWidth: isOrganizationBalanceFetching ? "222px" : undefined,
+            }}
+          >
+            <Card bordered={false} loading={isOrganizationBalanceFetching}>
+              {isHoverCurrency === "real" ? (
+                <Statistic
+                  title={t("table.balance_to_transactions")}
+                  value={OrganizationBalance?.balance_to_transactions ?? 0}
+                  loading={isOrganizationBalanceFetching}
+                  precision={2}
+                  prefix="R$"
+                  valueStyle={{
+                    color: defaultTheme.colors.info,
+                    fontSize: "22px",
+                  }}
+                />
+              ) : (
+                <>
                   <Statistic
                     title={t("table.balance_to_transactions")}
                     value={OrganizationBalance?.balance_to_transactions ?? 0}
@@ -87,26 +55,13 @@ export const OrganizationBalance = () => {
                     precision={2}
                     prefix="R$"
                     valueStyle={{
-                      color: defaultTheme.colors.info,
-                      fontSize: "22px",
+                      fontSize: "16px",
                     }}
                   />
-                ) : (
-                  <>
-                    <Statistic
-                      title={t("table.balance_to_transactions")}
-                      value={OrganizationBalance?.balance_to_transactions ?? 0}
-                      loading={isOrganizationBalanceFetching}
-                      precision={2}
-                      prefix="R$"
-                      valueStyle={{
-                        fontSize: "16px",
-                      }}
-                    />
-                  </>
-                )}
+                </>
+              )}
 
-                {/* {isHoverCurrency === "dolar" ? (
+              {/* {isHoverCurrency === "dolar" ? (
                   <Typography.Title
                     level={3}
                     style={{
@@ -207,42 +162,42 @@ export const OrganizationBalance = () => {
                     )}
                   </Typography.Title>
                 )} */}
-              </Card>
-            </Col>
-            <Col
-              xs={{ span: 24 }}
-              md={{ span: 5 }}
-              style={{
-                minWidth: isOrganizationBalanceFetching ? "220px" : undefined,
-              }}
-            >
-              <Card bordered={false} loading={isOrganizationBalanceFetching}>
-                {isHoverCurrency === "real" ? (
+            </Card>
+          </Col>
+          <Col
+            xs={{ span: 24 }}
+               md={{ span: 6 }}
+            style={{
+              minWidth: isOrganizationBalanceFetching ? "220px" : undefined,
+            }}
+          >
+            <Card bordered={false} loading={isOrganizationBalanceFetching}>
+              {isHoverCurrency === "real" ? (
+                <Statistic
+                  title={t("table.balance_to_payment")}
+                  value={OrganizationBalance?.balance_to_payment ?? 0}
+                  precision={2}
+                  prefix="R$"
+                  valueStyle={{
+                    color: defaultTheme.colors.error,
+                    fontSize: "22px",
+                  }}
+                />
+              ) : (
+                <>
                   <Statistic
                     title={t("table.balance_to_payment")}
                     value={OrganizationBalance?.balance_to_payment ?? 0}
                     precision={2}
                     prefix="R$"
                     valueStyle={{
-                      color: defaultTheme.colors.error,
-                      fontSize: "22px",
+                      fontSize: "16px",
                     }}
                   />
-                ) : (
-                  <>
-                    <Statistic
-                      title={t("table.balance_to_payment")}
-                      value={OrganizationBalance?.balance_to_payment ?? 0}
-                      precision={2}
-                      prefix="R$"
-                      valueStyle={{
-                        fontSize: "16px",
-                      }}
-                    />
-                  </>
-                )}
+                </>
+              )}
 
-                {/* {isHoverCurrency === "dolar" ? (
+              {/* {isHoverCurrency === "dolar" ? (
                   <Typography.Title
                     level={3}
                     style={{
@@ -331,41 +286,41 @@ export const OrganizationBalance = () => {
                     }).format(OrganizationBalance?.balance_to_payment ?? 0)}
                   </Typography.Title>
                 )} */}
-              </Card>
-            </Col>
-            <Col
-              xs={{ span: 24 }}
-              md={{ span: 5 }}
-              style={{
-                minWidth: isOrganizationBalanceFetching ? "220px" : undefined,
-              }}
-            >
-              <Card bordered={false} loading={isOrganizationBalanceFetching}>
-                {isHoverCurrency === "real" ? (
+            </Card>
+          </Col>
+          <Col
+            xs={{ span: 24 }}
+               md={{ span: 6 }}
+            style={{
+              minWidth: isOrganizationBalanceFetching ? "220px" : undefined,
+            }}
+          >
+            <Card bordered={false} loading={isOrganizationBalanceFetching}>
+              {isHoverCurrency === "real" ? (
+                <Statistic
+                  title={t("table.balance_reserved")}
+                  value={OrganizationBalance?.balance_reserved ?? 0}
+                  precision={2}
+                  prefix="R$"
+                  valueStyle={{
+                    color: defaultTheme.colors.waiting,
+                    fontSize: "22px",
+                  }}
+                />
+              ) : (
+                <>
                   <Statistic
                     title={t("table.balance_reserved")}
                     value={OrganizationBalance?.balance_reserved ?? 0}
                     precision={2}
                     prefix="R$"
                     valueStyle={{
-                      color: defaultTheme.colors.waiting,
-                      fontSize: "22px",
+                      fontSize: "16px",
                     }}
                   />
-                ) : (
-                  <>
-                    <Statistic
-                      title={t("table.balance_reserved")}
-                      value={OrganizationBalance?.balance_reserved ?? 0}
-                      precision={2}
-                      prefix="R$"
-                      valueStyle={{
-                        fontSize: "16px",
-                      }}
-                    />
-                  </>
-                )}
-                {/* 
+                </>
+              )}
+              {/* 
                 {isHoverCurrency === "dolar" ? (
                   <Typography.Title
                     level={3}
@@ -455,41 +410,41 @@ export const OrganizationBalance = () => {
                     }).format(OrganizationBalance?.balance_reserved ?? 0)}
                   </Typography.Title>
                 )} */}
-              </Card>
-            </Col>
-            <Col
-              xs={{ span: 24 }}
-              md={{ span: 5 }}
-              style={{
-                minWidth: isOrganizationBalanceFetching ? "220px" : undefined,
-              }}
-            >
-              <Card bordered={false} loading={isOrganizationBalanceFetching}>
-                {isHoverCurrency === "real" ? (
+            </Card>
+          </Col>
+          <Col
+            xs={{ span: 24 }}
+               md={{ span: 6 }}
+            style={{
+              minWidth: isOrganizationBalanceFetching ? "220px" : undefined,
+            }}
+          >
+            <Card bordered={false} loading={isOrganizationBalanceFetching}>
+              {isHoverCurrency === "real" ? (
+                <Statistic
+                  title="Total"
+                  value={OrganizationBalance?.balance_total ?? 0}
+                  precision={2}
+                  prefix="R$"
+                  valueStyle={{
+                    color: defaultTheme.colors.secondary,
+                    fontSize: "22px",
+                  }}
+                />
+              ) : (
+                <>
                   <Statistic
                     title="Total"
                     value={OrganizationBalance?.balance_total ?? 0}
                     precision={2}
                     prefix="R$"
                     valueStyle={{
-                      color: defaultTheme.colors.secondary,
-                      fontSize: "22px",
+                      fontSize: "16px",
                     }}
                   />
-                ) : (
-                  <>
-                    <Statistic
-                      title="Total"
-                      value={OrganizationBalance?.balance_total ?? 0}
-                      precision={2}
-                      prefix="R$"
-                      valueStyle={{
-                        fontSize: "16px",
-                      }}
-                    />
-                  </>
-                )}
-                {/* 
+                </>
+              )}
+              {/* 
                 {isHoverCurrency === "dolar" ? (
                   <Typography.Title
                     level={3}
@@ -579,17 +534,10 @@ export const OrganizationBalance = () => {
                     }).format(OrganizationBalance?.balance_total ?? 0)}
                   </Typography.Title>
                 )} */}
-              </Card>
-            </Col>
-          </>
-        )}
-        <Col span={24}>
-          <Divider
-            style={{ width: "100%", margin: 20, marginTop: 5 }}
-            orientation="left"
-          />
-        </Col>
-      </Row>
-    </Layout>
+            </Card>
+          </Col>
+        </>
+      )}
+    </Row>
   );
 };

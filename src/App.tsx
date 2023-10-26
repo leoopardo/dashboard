@@ -20,7 +20,7 @@ const Logo = import.meta.env.VITE_APP_ICON;
 
 function App() {
   const { t } = useTranslation();
-  const isMobile = useMediaQuery({ maxWidth: "900px" });
+  const isMobile = useMediaQuery({ maxWidth: "950px" });
   const { isSidebarOpen } = useMenu();
   const { Content } = Layout;
   const [isIconSet, setIsIconSet] = useState<boolean>(false);
@@ -91,7 +91,10 @@ function App() {
                       : defaultTheme.colors.secondary,
                 },
                 Button: {
-                  colorTextLightSolid: "rgba(0, 0, 0, 0.88)",
+                  colorTextLightSolid:
+                    import.meta.env.VITE_APP_BUTTON === "dark"
+                      ? "rgba(0, 0, 0, 0.88)"
+                      : "#fff",
                 },
                 Select: {
                   controlItemBgActive:
@@ -126,7 +129,7 @@ function App() {
             {isSuccess ? (
               <Layout>
                 <Layout>
-                    <SidebarNavigation />
+                  <SidebarNavigation />
 
                   <div
                     style={{

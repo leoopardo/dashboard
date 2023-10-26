@@ -5,6 +5,7 @@ import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
+import { Search } from "@src/components/Inputs/search";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
 import { Toast } from "@src/components/Toast";
@@ -18,7 +19,7 @@ import {
   OperatorQuery,
 } from "@src/services/types/register/operators/operators.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Input } from "antd";
+import { Button } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -58,7 +59,6 @@ export const Operators = () => {
     useState<boolean>(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<OperatorItem | null>(null);
-  const [search, setSearch] = useState<string>("");
   const [createBody, setCreateBody] = useState<OperatorItem>({
     name: "",
     cnpj: "",
@@ -77,8 +77,7 @@ export const Operators = () => {
     OperatorIsSuccess,
   } = useCreateOperator(createBody);
 
-  const { UpdateError, UpdateIsSuccess } =
-    useUpdateOperator(updateBody);
+  const { UpdateError, UpdateIsSuccess } = useUpdateOperator(updateBody);
 
   const columns: ColumnInterface[] = [
     { name: "id", type: "id", sort: true },
@@ -138,15 +137,7 @@ export const Operators = () => {
 
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
         <Grid item xs={12} md={4} lg={4}>
-          <Input.Search
-            size="large"
-            value={search}
-            placeholder={t("table.name") || ""}
-            onChange={(event) => {
-              setSearch(event.target.value);
-            }}
-            onSearch={() => setQuery((state) => ({ ...state, name: search }))}
-          />
+          <Search query={query} setQuery={setQuery} searchOption="name" />
         </Grid>
         <Grid item xs={12} md={3} lg={2}>
           <Button
@@ -155,7 +146,6 @@ export const Operators = () => {
             danger
             onClick={() => {
               setQuery(INITIAL_QUERY);
-              setSearch("");
             }}
             style={{
               height: 40,
