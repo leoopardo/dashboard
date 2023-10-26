@@ -14,6 +14,7 @@ import {
   Collapse,
   CollapseProps,
   Descriptions,
+  Divider,
   Dropdown,
   Empty,
   Tooltip,
@@ -57,6 +58,15 @@ export const Mobile = (props: MobileProps) => {
           label: (
             <>
               {props?.label?.map((label: string) => {
+                if (label.split(".").length === 2) {
+                  return (
+                    <Typography>
+                      <span>{t(`table.${label.split(".")[0]}`)}: </span>
+                      {item[label.split(".")[0]][label.split(".")[1]]}
+                      <Divider style={{ margin: 2, padding: 2 }} dashed />
+                    </Typography>
+                  );
+                }
                 switch (label) {
                   case "bank":
                   case "bank_name":
@@ -134,7 +144,7 @@ export const Mobile = (props: MobileProps) => {
                   case "updated_at":
                     return (
                       <Typography key={label} style={{ fontSize: "12px" }}>
-                        {t(`table.${label}`)}:{" "}
+                        <span> {t(`table.${label}`)}: </span>
                         {`${
                           item[label]
                             ? moment(item[label])
@@ -199,7 +209,14 @@ export const Mobile = (props: MobileProps) => {
                     );
 
                   default:
-                    return <Typography key={label}>{item[label]}</Typography>;
+                    return (
+                      <>
+                        <Typography key={label}>
+                          <span>{t(`table.${label}`)}:</span> {item[label]}
+                        </Typography>
+                        <Divider style={{ margin: 2, padding: 2 }} dashed />
+                      </>
+                    );
                 }
               })}
             </>

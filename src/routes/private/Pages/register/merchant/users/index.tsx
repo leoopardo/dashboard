@@ -185,7 +185,7 @@ export const MerchantUser = () => {
             error={UsersDataError}
             columns={columns}
             loading={isUsersDataFetching}
-            label={["name", "username", "profileType", "updated_at"]}
+            label={["name", "username", "merchant.name", "updated_at"]}
             actions={[
               {
                 label: "details",

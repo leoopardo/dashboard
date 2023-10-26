@@ -202,7 +202,7 @@ export const PartnerUsers = () => {
             error={UsersDataError}
             columns={columns}
             loading={isUsersDataFetching}
-            label={["name", "username","profileType", "updated_at"]}
+            label={["name", "username","partner.name", "updated_at"]}
           />
         </Grid>
       </Grid>
