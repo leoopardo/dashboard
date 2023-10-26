@@ -43,6 +43,13 @@ export const MerchantConfigs = () => {
     return "1";
   };
 
+  const initialItems = (items: TabsProps["items"]) => {
+   const currentItems= items?.filter((item) => item?.style?.display !== "none");
+
+   return currentItems
+
+  }
+
   const items: TabsProps["items"] = [
     {
       key: "1",
@@ -128,7 +135,7 @@ export const MerchantConfigs = () => {
       <Grid item xs={12}>
         <Tabs
           defaultActiveKey={initialTab()}
-          items={items}
+          items={initialItems(items)}
           onChange={onChange}
         />
       </Grid>
