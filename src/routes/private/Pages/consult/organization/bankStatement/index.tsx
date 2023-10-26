@@ -142,7 +142,8 @@ export const OrganizationBankStatement = () => {
       </Grid>
       <Totalizers query={query} />
 
-      {true && (
+      {OrganizationBankStatementTotals.result_total > 0 &&
+        !isOrganizationBankStatementTotalsFetching && (
           <Grid
             container
             style={{
