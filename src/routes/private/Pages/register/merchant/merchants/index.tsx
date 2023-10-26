@@ -125,6 +125,7 @@ export const MerchantView = () => {
     { name: "status", type: "status" },
     { name: "created_at", type: "date", sort: true },
   ];
+  console.log(selectedItems, "aqui");
 
   useEffect(() => {
     const id = currentItem?.id;
@@ -194,10 +195,8 @@ export const MerchantView = () => {
             danger
             onClick={() => {
               setQuery(INITIAL_QUERY);
-
               setTimeout(() => {
                 searchref.current.input.value = "";
-                
               }, 1000);
 
               setSearch("");
@@ -283,7 +282,11 @@ export const MerchantView = () => {
             error={MerchantDataError}
             columns={columns}
             loading={isMerchantDataFetching}
-            label={["name", "merchantConfig.cash_in_bank", "merchantConfig.cash_out_bank"]}
+            label={[
+              "name",
+              "merchantConfig.cash_in_bank",
+              "merchantConfig.cash_out_bank",
+            ]}
             checkbox
             setSelectedRows={setSelectedItems}
             selectedKeys={selectedItems}
