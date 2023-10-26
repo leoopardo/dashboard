@@ -5,6 +5,7 @@ import { Grid } from "@mui/material";
 import { CustomTable } from "@src/components/CustomTable";
 import { FiltersModal } from "@src/components/FiltersModal";
 import { FilterChips } from "@src/components/FiltersModal/filterChips";
+import { Search } from "@src/components/Inputs/search";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
 import { Toast } from "@src/components/Toast";
@@ -18,8 +19,7 @@ import {
   BankBlacklistQuery,
 } from "@src/services/types/support/blacklists/bankBlacklist.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import useDebounce from "@src/utils/useDebounce";
-import { Button, Input, Select } from "antd";
+import { Button, Select } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -34,9 +34,10 @@ export const BankBlacklist = () => {
   const [query, setQuery] = useState<BankBlacklistQuery>(INITIAL_QUERY);
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [isCreateOpen, setIsCreateOpen] = useState<boolean>(false);
-  const [searchOption, setSearchOption] = useState<string | null>(null);
+  const [searchOption, setSearchOption] = useState<string | undefined>(
+    undefined
+  );
   const [isConfirmOpen, setIsConfirmOpen] = useState<boolean>(false);
-  const [search, setSearch] = useState<string>("");
   const [currentItem, setCurrentItem] = useState<BankBlacklistItem | null>(
     null
   );
@@ -44,7 +45,6 @@ export const BankBlacklist = () => {
     bank_name: "",
     ispb: "",
   });
-  const debounceSearch = useDebounce(search);
   const { t } = useTranslation();
   const {
     BankBlacklist,
@@ -71,16 +71,6 @@ export const BankBlacklist = () => {
     refetchBankBlacklist();
   }, [query]);
 
-  useEffect(() => {
-    if (!debounceSearch) {
-      const q = { ...query };
-      return setQuery(q);
-    }
-    if (searchOption && search) {
-      setQuery((state) => ({ ...state, [searchOption]: debounceSearch }));
-    }
-  }, [debounceSearch]);
-
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid
@@ -89,7 +79,8 @@ export const BankBlacklist = () => {
         spacing={1}
       >
         <Grid item xs={12} md={4} lg={2}>
-           <Button size="large"
+          <Button
+            size="large"
             style={{ width: "100%" }}
             loading={isBankBlacklistFetching}
             type="primary"
@@ -104,7 +95,6 @@ export const BankBlacklist = () => {
             endDateKeyName="end_date"
             query={query}
             setQuery={setQuery}
-             
           />
         </Grid>
       </Grid>
@@ -115,7 +105,6 @@ export const BankBlacklist = () => {
             size="large"
             onChange={(value) => {
               setSearchOption(value);
-              setSearch("");
             }}
             value={searchOption}
             placeholder={t("input.options")}
@@ -126,14 +115,10 @@ export const BankBlacklist = () => {
           />
         </Grid>
         <Grid item xs={12} md={3} lg={4}>
-          <Input
-            disabled={!searchOption}
-            size="large"
-            value={search}
-            placeholder={t("table.bank_name") || ""}
-            onChange={(event) => {
-              setSearch(event.target.value);
-            }}
+          <Search
+            query={query}
+            setQuery={setQuery}
+            searchOption={searchOption}
           />
         </Grid>
         <Grid item xs={12} md={3} lg={2}>
@@ -144,8 +129,7 @@ export const BankBlacklist = () => {
             size="large"
             onClick={() => {
               setQuery(INITIAL_QUERY);
-              setSearch("");
-              setSearchOption(null);
+              setSearchOption(undefined);
             }}
             style={{
               width: "100%",
@@ -239,7 +223,6 @@ export const BankBlacklist = () => {
           setOpen={setIsFiltersOpen}
           query={query}
           setQuery={setQuery}
-           
           filters={["start_date", "end_date"]}
           refetch={refetchBankBlacklist}
           selectOptions={{}}
