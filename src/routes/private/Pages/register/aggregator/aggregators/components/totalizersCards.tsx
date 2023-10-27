@@ -89,7 +89,7 @@ export const TotalizersCards = (props: {
         <Card bordered={false}>
           <Statistic
             loading={props?.loading}
-            title={t("titles.total_registred_active", {
+            title={t("titles.total_aggregator_active", {
               entity: t("menus.aggregator")?.toLowerCase(),
             })}
             style={{ maxWidth: 200, minHeight: 75 }}
@@ -106,7 +106,7 @@ export const TotalizersCards = (props: {
         <Card bordered={false}>
           <Statistic
             loading={props?.loading}
-            title={t("titles.total_registred_inactive", {
+            title={t("titles.total_aggregator_inactive", {
               entity: t("menus.aggregator")?.toLowerCase(),
             })}
             style={{ maxWidth: 200, minHeight: 75 }}

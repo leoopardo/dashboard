@@ -156,7 +156,7 @@ export const OrganizationBankStatement = () => {
               option={{
                 legend: {
                   textStyle: {
-                    color: "#b3b3b3",
+                    color: "#c5c5c5",
                   },
                 },
                 color: [

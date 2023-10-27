@@ -33,6 +33,7 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { TotalizersCards } from "./components/totalizersCards";
+import { useMediaQuery } from "react-responsive";
 
 const INITIAL_QUERY: AggregatorQuery = {
   limit: 25,
@@ -46,6 +47,7 @@ export const Aggregators = () => {
     "validate"
   ) as ValidateInterface;
   const [query, setQuery] = useState<AggregatorQuery>(INITIAL_QUERY);
+  const isMobile = useMediaQuery({ maxWidth: "950px" });
   const { t } = useTranslation();
   const navigate = useNavigate();
   const {
@@ -153,7 +155,7 @@ export const Aggregators = () => {
       <Grid
         container
         style={{ display: "flex", alignItems: "center" }}
-        mt="-80px"
+        mt={!isMobile ? "-80px" : undefined}
         spacing={1}
       >
         <Grid item xs={12} md={4} lg={2}>
@@ -426,7 +428,7 @@ export const Aggregators = () => {
               </Typography>
             ),
             target: () => ref.current,
-            style: {maxHeight: "120px"}
+            style: { maxHeight: "120px" },
           },
 
           {

@@ -24,6 +24,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { TotalizersCards } from "./components/totalizersCards";
+import { useMediaQuery } from "react-responsive";
 
 const INITIAL_QUERY: OperatorQuery = {
   limit: 25,
@@ -36,6 +37,7 @@ export const Operators = () => {
   const { permissions } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
+  const isMobile = useMediaQuery({ maxWidth: "950px" });
   const [query, setQuery] = useState<OperatorQuery>(INITIAL_QUERY);
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -113,6 +115,7 @@ export const Operators = () => {
         container
         style={{ display: "flex", alignItems: "center" }}
         spacing={1}
+        mt={!isMobile ? "-80px" : undefined}
       >
         <Grid item xs={12} md={4} lg={2}>
           <Button

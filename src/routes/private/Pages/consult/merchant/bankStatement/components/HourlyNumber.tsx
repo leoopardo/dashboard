@@ -53,7 +53,9 @@ export function MerchantNumberLineChart({
           },
         },
         legend: {
-          data: [t("table.number_in"), t("table.number_out")],
+          data: [t("table.number_in"), t("table.number_out")], textStyle: {
+            color: "#a0a0a0",
+          },
         },
         toolbox: {
           feature: {

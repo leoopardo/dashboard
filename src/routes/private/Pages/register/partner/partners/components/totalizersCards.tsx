@@ -1,6 +1,7 @@
 import { Card, Statistic } from "antd";
 import { Grid } from "@mui/material";
 import { defaultTheme } from "@src/styles/defaultTheme";
+import ReactECharts from "echarts-for-react";
 import { PartnerTotalResponse, PartnerQuery } from "@src/services/types/register/partners/partners.interface";
 import { t } from "i18next";
 
@@ -11,7 +12,63 @@ export const TotalizersCards = (props: {
 }) => {
   return (
     <Grid container spacing={1} justifyContent={"center"} mb={2}>
-      <Grid item xs={12} md="auto">
+      <Grid item xs={12} md={2} style={{ marginTop: "-80px" }}>
+        <ReactECharts
+          option={{
+            tooltip: {
+              trigger: "item",
+            },
+            legend: {
+              selectedMode: false,
+              show: false,
+            },
+            color: ["#91cc75", "#fac858"],
+
+            series: [
+              {
+                name: t("menus.partners"),
+                type: "pie",
+                radius: ["40%", "70%"],
+                center: ["50%", "70%"],
+                // adjust the start angle
+                startAngle: 180,
+                label: {
+                  show: false,
+                },
+                data: [
+                  {
+                    value: props?.data?.active_partners_totals,
+                    name: t("table.active"),
+                  },
+                  {
+                    value: props?.data?.inactive_partners_totals,
+                    name: t("table.inactive"),
+                  },
+                  {
+                    // make an record to fill the bottom 50%
+                    value:
+                      (props?.data?.active_partners_totals || 0) +
+                      (props?.data?.inactive_partners_totals || 0),
+                    itemStyle: {
+                      top: "-20%",
+                      color: "none",
+                      decal: {
+                        symbol: "none",
+                      },
+                    },
+                    label: {
+                      show: false,
+                    },
+                  },
+                ],
+              },
+            ],
+          }}
+          opts={{ renderer: "svg" }}
+          lazyUpdate
+        />
+      </Grid>
+      <Grid item xs={12} md={2}>
         <Card bordered={false}>
           <Statistic
             loading={props?.loading}
@@ -23,7 +80,7 @@ export const TotalizersCards = (props: {
           />
         </Card>
       </Grid>
-      <Grid item xs={12} md="auto">
+      <Grid item xs={12} md={2}>
         <Card bordered={false}>
           <Statistic
             loading={props?.loading}
@@ -38,7 +95,7 @@ export const TotalizersCards = (props: {
           />
         </Card>
       </Grid>
-      <Grid item xs={12} md="auto">
+      <Grid item xs={12} md={2}>
         <Card bordered={false}>
           <Statistic
             loading={props?.loading}
@@ -53,7 +110,7 @@ export const TotalizersCards = (props: {
           />
         </Card>
       </Grid>
-      <Grid item xs={12} md="auto">
+      <Grid item xs={12} md={2}>
         <Card bordered={false}>
           <Statistic
             loading={props?.loading}

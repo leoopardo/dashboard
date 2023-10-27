@@ -54,7 +54,9 @@ export function MerchantHourlyLineChart({
           },
         },
         legend: {
-          data: [t("table.value_in"), t("table.value_out")],
+          data: [t("table.value_in"), t("table.value_out")], textStyle: {
+            color: "#a0a0a0",
+          },
         },
         toolbox: {
           feature: {
