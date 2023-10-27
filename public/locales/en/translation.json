@@ -198,7 +198,9 @@
     "validate_text": "Insert token to confirm action.",
     "forgot_password": "Forgot my password",
     "preview_csv": "Preview CSV",
-    "preview_file": "preview file"
+    "preview_file": "preview file",
+    "value_chart_area": "Value chart area",
+    "operations_number_chart_area": "Operation number chart area"
   },
   "login": {
     "sign_in": "Sign in",
@@ -714,7 +716,8 @@
     "operator_data": "Operator data",
     "merchant_data": "Merchant data",
     "partner_data": "Partner data",
-    "rtrid": "Refund id"
+    "rtrid": "Refund id",
+    "result": "Result"
   },
   "actions": {
     "details": "Details",

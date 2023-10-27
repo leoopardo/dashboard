@@ -153,6 +153,7 @@ export const Aggregators = () => {
       <Grid
         container
         style={{ display: "flex", alignItems: "center" }}
+        mt="-80px"
         spacing={1}
       >
         <Grid item xs={12} md={4} lg={2}>
@@ -425,6 +426,7 @@ export const Aggregators = () => {
               </Typography>
             ),
             target: () => ref.current,
+            style: {maxHeight: "120px"}
           },
 
           {

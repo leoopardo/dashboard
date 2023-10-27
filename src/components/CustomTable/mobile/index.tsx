@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
+  ArrowDownOutlined,
+  ArrowUpOutlined,
   BankOutlined,
   EllipsisOutlined,
-  ArrowUpOutlined,
-  ArrowDownOutlined,
 } from "@ant-design/icons";
 import { useListBanks } from "@src/services/bank/listBanks";
 import {
@@ -59,6 +59,60 @@ export const Mobile = (props: MobileProps) => {
             <>
               {props?.label?.map((label: string) => {
                 if (label.split(".").length === 2) {
+                  if (
+                    !item[label.split(".")[0]] ||
+                    !item[label.split(".")[0]][label.split(".")[1]]
+                  ) {
+                    return;
+                  }
+                  if (label.split(".")[1] === "cash_in_bank") {
+                    return (
+                      <Tooltip placement="topLeft" title={item[label]} arrow>
+                        <ArrowUpOutlined
+                          style={{ color: "lightgreen", paddingTop: 5 }}
+                        />
+                        <Avatar
+                          src={
+                            bankListData?.itens.find(
+                              (bank) =>
+                                bank?.label_name?.split(".").join("_") ===
+                                item?.merchantConfig?.cash_in_bank
+                            )?.icon_url ?? null
+                          }
+                          size="small"
+                          shape="square"
+                        >
+                          <BankOutlined />
+                        </Avatar>
+                      </Tooltip>
+                    );
+                  }
+                  if (label.split(".")[1] === "cash_out_bank") {
+                    return (
+                      <Tooltip placement="topLeft" title={item[label]} arrow>
+                        <ArrowDownOutlined
+                          style={{
+                            color: "red",
+                            paddingLeft: 5,
+                            paddingTop: 5,
+                          }}
+                        />
+                        <Avatar
+                          src={
+                            bankListData?.itens.find(
+                              (bank) =>
+                                bank?.label_name?.split(".").join("_") ===
+                                item?.merchantConfig?.cash_out_bank
+                            )?.icon_url ?? null
+                          }
+                          size="small"
+                          shape="square"
+                        >
+                          <BankOutlined />
+                        </Avatar>
+                      </Tooltip>
+                    );
+                  }
                   return (
                     <Typography>
                       <span>{t(`table.${label.split(".")[0]}`)}: </span>
@@ -81,54 +135,6 @@ export const Mobile = (props: MobileProps) => {
                             )?.icon_url ?? null
                           }
                           size="large"
-                          shape="square"
-                        >
-                          <BankOutlined />
-                        </Avatar>
-                      </Tooltip>
-                    );
-
-                  case "merchantConfig.cash_in_bank":
-                    return (
-                      <Tooltip placement="topLeft" title={item[label]} arrow>
-                        <ArrowUpOutlined
-                          style={{ color: "lightgreen", paddingTop: 5 }}
-                        />
-                        <Avatar
-                          src={
-                            bankListData?.itens.find(
-                              (bank) =>
-                                bank?.label_name?.split(".").join("_") ===
-                                item?.merchantConfig?.cash_in_bank
-                            )?.icon_url ?? null
-                          }
-                          size="small"
-                          shape="square"
-                        >
-                          <BankOutlined />
-                        </Avatar>
-                      </Tooltip>
-                    );
-
-                  case "merchantConfig.cash_out_bank":
-                    return (
-                      <Tooltip placement="topLeft" title={item[label]} arrow>
-                        <ArrowDownOutlined
-                          style={{
-                            color: "red",
-                            paddingLeft: 5,
-                            paddingTop: 5,
-                          }}
-                        />
-                        <Avatar
-                          src={
-                            bankListData?.itens.find(
-                              (bank) =>
-                                bank?.label_name?.split(".").join("_") ===
-                                item?.merchantConfig?.cash_out_bank
-                            )?.icon_url ?? null
-                          }
-                          size="small"
                           shape="square"
                         >
                           <BankOutlined />

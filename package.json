@@ -23,6 +23,8 @@
     "chart.js": "^4.3.0",
     "country-state-city": "^3.2.1",
     "dayjs": "^1.8.30",
+    "echarts": "^5.4.3",
+    "echarts-for-react": "^3.0.2",
     "framer-motion": "^10.16.4",
     "i18next": "^22.5.0",
     "i18next-browser-languagedetector": "^7.0.2",

@@ -23,5 +23,10 @@ export const defaultTheme: DefaultTheme = {
     waiting: "#cfa913",
     waiting_refund: "#cfa913",
     info: "#4682B4",
+
+    chartGreen: "#60873e",
+    chartBlue: "#5f8aad",
+    chartYellow: "#d1b95a",
+    chartRed: "#cf4a55",
   },
 };

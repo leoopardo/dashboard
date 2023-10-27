@@ -199,7 +199,9 @@
     "validate_text": "Insira o token para confirmar a ação",
     "forgot_password": "Esqueci minha senha",
     "preview_csv": "Prévia do CSV",
-    "preview_file": "arquivo prévia"
+    "preview_file": "arquivo prévia",
+    "value_chart_area": "Gráfico de valores",
+    "operations_number_chart_area": "Gráfico de número de operações"
   },
   "login": {
     "sign_in": "Faça login",
@@ -717,7 +719,8 @@
     "operator_data": "Dados de operador",
     "merchant_data": "Dados de empresa",
     "partner_data": "Dados de plataforma",
-    "rtrid": "ID da devolução"
+    "rtrid": "ID da devolução",
+    "result": "Resultado"
   },
   "actions": {
     "details": "Detalhes",

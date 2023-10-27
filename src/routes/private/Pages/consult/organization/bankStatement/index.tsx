@@ -12,25 +12,23 @@ import { queryClient } from "@src/services/queryClient";
 import { useCreateBankStatementReports } from "@src/services/reports/consult/organization/createBankStatementReports";
 import { OrganizationBankStatementTotalsQuery } from "@src/services/types/consult/organization/bankStatement/totals.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Divider, Spin } from "antd";
+import { defaultTheme } from "@src/styles/defaultTheme";
+import { Button, Spin } from "antd";
+import ReactECharts from "echarts-for-react";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useMediaQuery } from "react-responsive";
-import { PieBankfee } from "./components/PieBankFee";
-import { PieFee } from "./components/PieFee";
-import { PieNumber } from "./components/PieNumber";
-import { PieResult } from "./components/PieResult";
-import { PieChart } from "./components/PieValue";
 import { Totalizers } from "./components/Totalizers";
 
 const INITIAL_QUERY: OrganizationBankStatementTotalsQuery = {
   start_date: moment(new Date())
-    .startOf("day").add(3, "hours")
+    .startOf("day")
+    .add(3, "hours")
     .format("YYYY-MM-DDTHH:mm:ss.SSS"),
   end_date: moment(new Date())
     .add(1, "day")
-    .startOf("day").add(3, "hours")
+    .startOf("day")
+    .add(3, "hours")
     .format("YYYY-MM-DDTHH:mm:ss.SSS"),
 };
 
@@ -38,8 +36,6 @@ export const OrganizationBankStatement = () => {
   const { permissions } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
-
-  const isMobile = useMediaQuery({ maxWidth: "900px" });
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [, setCurrentItem] = useState<any>();
   const { t } = useTranslation();
@@ -83,7 +79,8 @@ export const OrganizationBankStatement = () => {
         spacing={1}
       >
         <Grid item xs={12} md={2} lg={2}>
-           <Button size="large"
+          <Button
+            size="large"
             style={{ width: "100%" }}
             type="primary"
             onClick={() => setIsFiltersOpen(true)}
@@ -130,7 +127,9 @@ export const OrganizationBankStatement = () => {
           .report_paybrokers_extract_export_csv && (
           <Grid item xs={12} md="auto" lg={1}>
             <ExportReportsModal
-              disabled={!OrganizationPerbank?.length || OrganizationPerbankError}
+              disabled={
+                !OrganizationPerbank?.length || OrganizationPerbankError
+              }
               mutateReport={() => BankStatementReportsMutate()}
               error={BankStatementReportsError}
               success={BankStatementReportsIsSuccess}
@@ -142,51 +141,83 @@ export const OrganizationBankStatement = () => {
       </Grid>
       <Totalizers query={query} />
 
-      {OrganizationBankStatementTotals.result_total > 0 &&
-        !isOrganizationBankStatementTotalsFetching && (
-          <Grid
-            container
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignContent: "center",
-              marginTop: "50px",
-            }}
-          >
-            <Grid xs={12} md={2}>
-              <PieNumber items={OrganizationBankStatementTotals} />
-            </Grid>
-            {!isMobile && (
-              <Grid
-                item
-                xs={1}
-                style={{
-                  height: "100%",
-                  display: "flex",
-                  justifyContent: "center",
-                }}
-              >
-                <Divider
-                  type="vertical"
-                  style={{ height: !isMobile ? "100%" : "150px" }}
-                />
-              </Grid>
-            )}
-
-            <Grid xs={6} md={2}>
-              <PieChart items={OrganizationBankStatementTotals} />
-            </Grid>
-            <Grid xs={6} md={2}>
-              <PieFee items={OrganizationBankStatementTotals} />
-            </Grid>
-            <Grid xs={6} md={2}>
-              <PieBankfee items={OrganizationBankStatementTotals} />
-            </Grid>
-            <Grid xs={6} md={2}>
-              <PieResult items={OrganizationBankStatementTotals} />
-            </Grid>
+      {true && (
+        <Grid
+          container
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignContent: "center",
+            marginTop: "50px",
+          }}
+        >
+          <Grid item xs={12}>
+            <ReactECharts
+              option={{
+                legend: {
+                  textStyle: {
+                    color: "#b3b3b3",
+                  },
+                },
+                color: [
+                  defaultTheme.colors.chartGreen,
+                  defaultTheme.colors.chartRed,
+                  defaultTheme.colors.chartBlue,
+                ],
+                tooltip: {},
+                dataset: {
+                  source: [
+                    [
+                      "product",
+                      t("table.in"),
+                      t("table.out"),
+                      t("table.total"),
+                    ],
+                    [
+                      t("table.operation_number"),
+                      OrganizationBankStatementTotals.number_in,
+                      OrganizationBankStatementTotals.number_out,
+                      OrganizationBankStatementTotals.number_total,
+                    ],
+                    [
+                      t("table.value"),
+                      OrganizationBankStatementTotals.value_in,
+                      OrganizationBankStatementTotals.value_out,
+                      OrganizationBankStatementTotals.value_total,
+                    ],
+                    [
+                      t("table.fee"),
+                      OrganizationBankStatementTotals.fee_in,
+                      OrganizationBankStatementTotals.fee_out,
+                      OrganizationBankStatementTotals.fee_total,
+                    ],
+                    [
+                      t("table.bank_fee"),
+                      OrganizationBankStatementTotals.bank_fee_in,
+                      OrganizationBankStatementTotals.bank_fee_out,
+                      OrganizationBankStatementTotals.bank_fee_total,
+                    ],
+                    [
+                      t("table.result"),
+                      OrganizationBankStatementTotals.result_in,
+                      OrganizationBankStatementTotals.result_out,
+                      OrganizationBankStatementTotals.result_total,
+                    ],
+                  ],
+                },
+                xAxis: { type: "category" },
+                yAxis: {},
+                // Declare several bar series, each will be mapped
+                // to a column of dataset.source by default.
+                series: [{ type: "bar" }, { type: "bar" }, { type: "bar" }],
+              }}
+              opts={{ renderer: "svg" }}
+              lazyUpdate
+            />
           </Grid>
-        )}
+         
+        </Grid>
+      )}
       {isOrganizationBankStatementTotalsFetching && (
         <Grid container>
           <Grid

@@ -23,6 +23,10 @@ declare module "styled-components" {
       waiting: string;
       waiting_refund: string;
       info: string;
+      chartGreen: string;
+      chartYellow: string;
+      chartBlue: string;
+      chartRed: string;
     };
   }
 }
