@@ -1,16 +1,16 @@
 import { api } from "@config/api";
 import { queryClient } from "@services/queryClient";
-import { IDepositFeeItem } from "@src/services/types/register/merchants/merchantFeePlans.interface";
+import { IDepositFeePlansDetails } from "@src/services/types/register/merchants/merchantFeePlans.interface";
 import { useMutation } from "react-query";
 
-export function useUpdateMerchantFeePlan(
-  body?: IDepositFeeItem | null
+export function useUpdateMerchantFeePlanDetails(
+  body?: IDepositFeePlansDetails | null
 ) {
   const { isLoading, error, mutate, isSuccess } = useMutation<
-    IDepositFeeItem | null | undefined
-  >("UpdateMerchantsFeePlans", async () => {
-    const response = await api.put('core/fee_plans/update', body, {});
-    await queryClient.refetchQueries({ queryKey: ["MerchantsFeePlans"] });
+    IDepositFeePlansDetails | null | undefined
+  >("UpdateMerchantsFeePlansDetails", async () => {
+    const response = await api.put(`core/fee_plans_details/update`, body, {});
+    await queryClient.refetchQueries({ queryKey: ["MerchantsFeePlansDetails"] });
     return response.data;
   });
 

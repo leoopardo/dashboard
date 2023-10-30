@@ -24,6 +24,7 @@ import { MerchantManualEntryCategoryQuery } from "@services/types/register/merch
 import { Button } from "antd";
 import { useDeleteMerchantFeePlan } from "@services/register/merchant/feePlans/deleteFeePlans";
 import { UpdateFeePlanModal } from "./components/UpdateFeePlanModal";
+import { useGetFeePlansDetails } from "@src/services/register/merchant/feePlans/getFeePlansDetails";
 
 const INITIAL_QUERY: MerchantManualEntryCategoryQuery = {
   limit: 25,
@@ -39,7 +40,6 @@ export const MerchantFeePlans = () => {
   const [body, setBody] = useState<IDepositFeeItem | null>({
     name: null,
     plan_type: null,
-    merchant_fee_plans_details: [],
     transaction_type: null,
     range_type: null,
   });
@@ -59,18 +59,18 @@ export const MerchantFeePlans = () => {
   } = useDeleteMerchantFeePlan(currentItem?.id);
   const { mutate, error, isLoading, isSuccess } = useCreateMerchantFeePlans({
     ...body,
-    merchant_fee_plans_details: fees,
   });
   const { updateError, updateIsLoading, updateIsSuccess, updateMutate } =
-    useUpdateMerchantFeePlan(currentItem?.id, {
+    useUpdateMerchantFeePlan({
       ...body,
-      merchant_fee_plans_details: fees && fees.length > 0 ? fees : [],
+      fee_plan_id: currentItem?.id
     });
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const {feePlansDetailsData, refetchFeePlansDetailsData} = useGetFeePlansDetails({fee_plans_id: currentItem?.id})
 
   const columns: ColumnInterface[] = [
     { name: "id", type: "id", sort: true },
@@ -86,7 +86,9 @@ export const MerchantFeePlans = () => {
 
   useEffect(() => {
     setUpdateBody(currentItem);
+    refetchFeePlansDetailsData()
   }, [currentItem]);
+
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid
@@ -218,6 +220,7 @@ export const MerchantFeePlans = () => {
           setFees={setFees}
           body={body}
           setBody={setBody}
+          setUpdateBody={setBody}
           fees={fees}
           loading={updateIsLoading}
           mutate={updateMutate}
@@ -228,7 +231,7 @@ export const MerchantFeePlans = () => {
         <ViewModal
           open={isViewModalOpen}
           setOpen={setIsViewModalOpen}
-          item={currentItem}
+          item={{...currentItem, merchant_fee_plans_details: feePlansDetailsData?.items}}
           loading={isFeePlansDataFetching}
           modalName={`${t("menus.fee_plans")}: ${currentItem?.name}`}
         />
