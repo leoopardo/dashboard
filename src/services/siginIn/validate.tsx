@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { api } from "../../config/api";
 import { ValidateInterface } from "../types/validate.interface";
+import secureLocalStorage from "react-secure-storage";
 
 export function useValidate(rememberMe?: boolean, token?: string) {
   const { data, isFetching, error, refetch, isSuccess } = useQuery<
@@ -15,7 +16,7 @@ export function useValidate(rememberMe?: boolean, token?: string) {
         headers: {
           Authorization: `Bearer ${
             token ??
-            localStorage.getItem("token") ??
+            secureLocalStorage.getItem("token") ??
             sessionStorage.getItem("token")
           }`,
         },
@@ -31,7 +32,7 @@ export function useValidate(rememberMe?: boolean, token?: string) {
     if (isSuccess)
       api.defaults.headers.Authorization = `Bearer ${
         token ??
-        localStorage.getItem("token") ??
+        secureLocalStorage.getItem("token") ??
         sessionStorage.getItem("token")
       }`;
   }, [isSuccess]);

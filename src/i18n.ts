@@ -19,6 +19,12 @@ i18n
     interpolation: {
       escapeValue: false,
     },
+    detection: {
+      order: ["localStorage", "navigator"],
+      lookupQuerystring: "lng",
+      lookupLocalStorage: "dash_v6_language",
+      caches: ["localStorage"],
+    },
   });
 
 export default i18n;

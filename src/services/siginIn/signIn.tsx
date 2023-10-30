@@ -4,6 +4,7 @@ import { useMutation } from "react-query";
 import { api } from "../../config/api";
 import { queryClient } from "../queryClient";
 import { useValidate } from "./validate";
+import secureLocalStorage from "react-secure-storage";
 
 interface TokenInterface {
   token: string;
@@ -23,11 +24,11 @@ export function useToken(
         auth: user,
       }
     );
-    localStorage.removeItem("token");
+    secureLocalStorage.removeItem("token");
     sessionStorage.removeItem("token");
 
     if (rememberMe) {
-      localStorage.setItem("token", response.data.token);
+      secureLocalStorage.setItem("token", response.data.token);
     }
     sessionStorage.setItem("token", response.data.token);
 

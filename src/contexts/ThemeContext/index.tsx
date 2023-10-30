@@ -1,6 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createContext, useContext, useEffect, useState } from "react";
+import secureLocalStorage from "react-secure-storage"
 
 interface ThemeContext {
   setTheme(theme: "dark" | "light"): void;
@@ -13,11 +14,11 @@ export const StyledThemeProvider = ({ children }: any) => {
   const [theme, setTheme] = useState<"dark" | "light">("light");
 
   useEffect(() => {
-    setTheme(localStorage.getItem("theme") === "dark" ? "dark" : "light");
+    setTheme(secureLocalStorage.getItem("theme") === "dark" ? "dark" : "light");
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("theme", theme);
+    secureLocalStorage.setItem("theme", theme);
   }, [theme]);
 
   return (

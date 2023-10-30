@@ -18,6 +18,7 @@ import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useCSVDownloader } from "react-papaparse";
 import { useNavigate } from "react-router-dom";
+import secureLocalStorage from "react-secure-storage";
 
 interface ExportCustomreportsInterface {
   mutateReport: () => void;
@@ -72,17 +73,21 @@ export const ExportCustomReportsModal = ({
 
   const handleCreateReport = () => {
     mutateReport();
-    localStorage.setItem(reportName, selectedFields.join("%"));
-    localStorage.setItem("comma", `${comma}`);
+    secureLocalStorage.setItem(reportName, selectedFields.join("%"));
+    secureLocalStorage.setItem("comma", `${comma}`);
     setOpen(false);
   };
 
   useEffect(() => {
-    const storage: string[] | undefined = localStorage
-      .getItem(reportName)
-      ?.split("%");
+    const storage: string[] | undefined = secureLocalStorage?.getItem(
+      reportName
+    )
+      ? `${secureLocalStorage?.getItem(reportName)}`?.split("%")
+      : undefined;
 
-    const commaSeparator: string | null = localStorage.getItem("comma");
+    const commaSeparator: string | null = `${secureLocalStorage.getItem(
+      "comma"
+    )}`;
     if (storage) setSelectedFields(storage);
     if (commaSeparator) setIsComma(commaSeparator == "true");
   }, []);
@@ -167,7 +172,6 @@ export const ExportCustomReportsModal = ({
                       return {
                         title: field,
                         value: t(`table.${field}`),
-                        
                       };
                     })}
                     value={selectedFields.map((field) => {
