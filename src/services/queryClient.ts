@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { toast } from "react-hot-toast";
 import { QueryCache, QueryClient } from "react-query";
+import secureLocalStorage from "react-secure-storage"
 
 let unauthorizedNotificationShown = false; // Variável para controlar se a notificação já foi exibida
 
@@ -12,7 +13,7 @@ export const queryClient = new QueryClient({
         err.request.responseURL.split("token/")[1] !== "validate" &&
         !unauthorizedNotificationShown // Verifica se a notificação já foi exibida
       ) {
-        localStorage.removeItem("token");
+        secureLocalStorage.removeItem("token");
         sessionStorage.removeItem("token");
         queryClient.refetchQueries(["validate"]);
         toast.error("Token expirado");

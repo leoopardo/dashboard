@@ -20,6 +20,7 @@ import { useMediaQuery } from "react-responsive";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useMenu } from "../../contexts/SidebarContext";
 import { defaultTheme } from "../../styles/defaultTheme";
+import secureLocalStorage from "react-secure-storage";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -1741,7 +1742,7 @@ export const SidebarNavigation = () => {
       null,
       false,
       () => {
-        localStorage.removeItem("token");
+        secureLocalStorage.removeItem("token");
         sessionStorage.removeItem("token");
         queryClient.refetchQueries(["validate"]);
       },

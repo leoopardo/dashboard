@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import PBLogo from "@assets/icon.png";
 import { ConfigProvider, Layout, Spin } from "antd";
 import { useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
@@ -16,7 +17,7 @@ import { PublicRoutes } from "./routes/public";
 import { useValidate } from "./services/siginIn/validate.tsx";
 import { defaultTheme } from "./styles/defaultTheme/index.ts";
 import { GlobalStyle } from "./styles/globalStyles.ts";
-const Logo = import.meta.env.VITE_APP_ICON;
+const Logo = import.meta.env.VITE_APP_ICON ?? PBLogo;
 
 function App() {
   const { t } = useTranslation();
@@ -104,8 +105,8 @@ function App() {
                 },
                 Table: {
                   controlItemBgActive: defaultTheme.colors.secondary,
-                  controlItemBgActiveHover: "#c0c0c09f"
-                }
+                  controlItemBgActiveHover: "#c0c0c09f",
+                },
               },
               token: {
                 colorPrimary: defaultTheme.colors.secondary,

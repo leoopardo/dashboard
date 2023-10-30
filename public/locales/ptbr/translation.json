@@ -723,7 +723,8 @@
     "merchant_data": "Dados de empresa",
     "partner_data": "Dados de plataforma",
     "rtrid": "ID da devolução",
-    "result": "Resultado"
+    "result": "Resultado",
+    "fastpix_in_bank": "Banco FastPix"
   },
   "actions": {
     "details": "Detalhes",

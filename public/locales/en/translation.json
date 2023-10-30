@@ -718,7 +718,8 @@
     "merchant_data": "Merchant data",
     "partner_data": "Partner data",
     "rtrid": "Refund id",
-    "result": "Result"
+    "result": "Result",
+    "fastpix_in_bank": "FastPix bank"
   },
   "actions": {
     "details": "Details",

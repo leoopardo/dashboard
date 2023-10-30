@@ -5,10 +5,13 @@ import {
   LoginOutlined,
   UserOutlined,
 } from "@ant-design/icons";
+import PbLogo from "@assets/logo.png";
 import { Grid } from "@mui/material";
+import { useTheme } from "@src/contexts/ThemeContext";
 import { useToken } from "@src/services/siginIn/signIn";
 import { Alert, Form, Input, Typography } from "antd";
 import { CheckboxChangeEvent } from "antd/es/checkbox";
+import { motion } from "framer-motion";
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
@@ -20,10 +23,8 @@ import {
   LockIcon,
   RoundedLock,
 } from "./styles";
-import { useTheme } from "@src/contexts/ThemeContext";
-import { motion } from "framer-motion";
 
-const Logo = import.meta.env.VITE_APP_LOGO;
+const Logo = import.meta.env.VITE_APP_LOGO ?? PbLogo;
 
 export const Login = () => {
   const { t } = useTranslation();
