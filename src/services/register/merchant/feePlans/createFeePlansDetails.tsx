@@ -4,7 +4,7 @@ import { IDepositFeePlansDetails } from "@src/services/types/register/merchants/
 import { useMutation } from "react-query";
 import { queryClient } from "../../../queryClient";
 
-export function useCreateMerchantFeePlans(body: IDepositFeePlansDetails | null) {
+export function useCreateMerchantFeePlansDetails(body: IDepositFeePlansDetails | null) {
   const { isLoading, error, mutate, isSuccess } = useMutation<
     IDepositFeePlansDetails | null | undefined
   >("CreateMerchantsFeePlansDetails", async () => {
@@ -13,10 +13,13 @@ export function useCreateMerchantFeePlans(body: IDepositFeePlansDetails | null) 
     return response.data;
   });
 
+  const createFeePlansDetailsFetching = mutate
+  const isLoadingcreateFeePlansDetails = isLoading
+
   return {
-    isLoading,
+    isLoadingcreateFeePlansDetails,
     error,
-    mutate,
+    createFeePlansDetailsFetching,
     isSuccess,
   };
 }
