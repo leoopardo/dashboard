@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { DownloadOutlined, EyeFilled } from "@ant-design/icons";
+import { useEffect, useState } from "react";
+import { DownloadOutlined, EyeFilled, ReloadOutlined } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { CustomTable } from "@src/components/CustomTable";
@@ -10,7 +11,6 @@ import { ViewModal } from "@src/components/Modals/viewGenericModal";
 import { useGetAggregatorUsersReports } from "@src/services/reports/register/aggregators/getAggregatorUsersReports";
 import { ReportsQuery } from "@src/services/types/reports/reports.interface";
 import { Button } from "antd";
-import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 export const AggregatorUsersReports = () => {
@@ -58,7 +58,7 @@ export const AggregatorUsersReports = () => {
             {t("table.filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={6} lg={8}>
+        <Grid item xs={12} md={5} lg={7}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
@@ -84,6 +84,20 @@ export const AggregatorUsersReports = () => {
           >
             <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
             {t("table.clear_filters")}
+          </Button>
+        </Grid>
+        <Grid item xs={12} md="auto">
+          <Button
+            style={{
+              width: "100%",
+              height: 40,
+            }}
+            loading={isAggregatorUsersReportsDataFetching}
+            shape="round"
+            type="dashed"
+            onClick={refetchAggregatorUsersReportsData}
+          >
+            {!isAggregatorUsersReportsDataFetching && <ReloadOutlined />}
           </Button>
         </Grid>
       </Grid>
