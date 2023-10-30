@@ -332,7 +332,8 @@
     "from": "From",
     "to": "To",
     "organization_name": "Organization",
-    "can_be_deleted_only_by_organization": "Organization can delete"
+    "can_be_deleted_only_by_organization": "Organization can delete",
+    "fastpix_in_bank": "FastPix bank"
   },
   "modal": {
     "confirm": "Confirm",
