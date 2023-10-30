@@ -1,6 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { BankOutlined, EllipsisOutlined, ArrowUpOutlined, ArrowDownOutlined } from "@ant-design/icons";
+import {
+  ArrowDownOutlined,
+  ArrowUpOutlined,
+  BankOutlined,
+  EllipsisOutlined,
+} from "@ant-design/icons";
 import { useListBanks } from "@src/services/bank/listBanks";
 import {
   Avatar,
@@ -9,6 +14,7 @@ import {
   Collapse,
   CollapseProps,
   Descriptions,
+  Divider,
   Dropdown,
   Empty,
   Tooltip,
@@ -27,6 +33,7 @@ interface MobileProps {
   setCurrentItem: Dispatch<SetStateAction<any>>;
   checkbox?: boolean;
   setSelectedRows?: Dispatch<SetStateAction<any[] | null>>;
+  selectedKeys?: any;
 }
 
 export const Mobile = (props: MobileProps) => {
@@ -38,16 +45,6 @@ export const Mobile = (props: MobileProps) => {
     limit: 200,
     page: 1,
   });
-
-  const renderTableCell = (string: string, row: Record<string, any>): string | undefined => {
-    if (typeof string === "string" && string.split('.')[1] && row[`${string.split('.')[0]}`] !== null) {
-      console.log('test', row[`${string.split('.')[0]}`][`${string.split('.')[1]}`])
-      return row[`${string.split('.')[0]}`][`${string.split('.')[1]}`];
-    }
-  
-    return row[`${string}`] || undefined;
-  };
-
   useEffect(() => {
     if (props.setSelectedRows) props.setSelectedRows(checkedRows);
   }, [checkedRows]);
@@ -61,6 +58,69 @@ export const Mobile = (props: MobileProps) => {
           label: (
             <>
               {props?.label?.map((label: string) => {
+                if (label.split(".").length === 2) {
+                  if (
+                    !item[label.split(".")[0]] ||
+                    !item[label.split(".")[0]][label.split(".")[1]]
+                  ) {
+                    return;
+                  }
+                  if (label.split(".")[1] === "cash_in_bank") {
+                    return (
+                      <Tooltip placement="topLeft" title={item[label]} arrow>
+                        <ArrowUpOutlined
+                          style={{ color: "lightgreen", paddingTop: 5 }}
+                        />
+                        <Avatar
+                          src={
+                            bankListData?.itens.find(
+                              (bank) =>
+                                bank?.label_name?.split(".").join("_") ===
+                                item?.merchantConfig?.cash_in_bank
+                            )?.icon_url ?? null
+                          }
+                          size="small"
+                          shape="square"
+                        >
+                          <BankOutlined />
+                        </Avatar>
+                      </Tooltip>
+                    );
+                  }
+                  if (label.split(".")[1] === "cash_out_bank") {
+                    return (
+                      <Tooltip placement="topLeft" title={item[label]} arrow>
+                        <ArrowDownOutlined
+                          style={{
+                            color: "red",
+                            paddingLeft: 5,
+                            paddingTop: 5,
+                          }}
+                        />
+                        <Avatar
+                          src={
+                            bankListData?.itens.find(
+                              (bank) =>
+                                bank?.label_name?.split(".").join("_") ===
+                                item?.merchantConfig?.cash_out_bank
+                            )?.icon_url ?? null
+                          }
+                          size="small"
+                          shape="square"
+                        >
+                          <BankOutlined />
+                        </Avatar>
+                      </Tooltip>
+                    );
+                  }
+                  return (
+                    <Typography>
+                      <span>{t(`table.${label.split(".")[0]}`)}: </span>
+                      {item[label.split(".")[0]][label.split(".")[1]]}
+                      <Divider style={{ margin: 2, padding: 2 }} dashed />
+                    </Typography>
+                  );
+                }
                 switch (label) {
                   case "bank":
                   case "bank_name":
@@ -82,57 +142,15 @@ export const Mobile = (props: MobileProps) => {
                       </Tooltip>
                     );
 
-                    case "merchantConfig.cash_in_bank":
-                      return (
-                        <Tooltip placement="topLeft" title={item[label]} arrow>
-                          <ArrowUpOutlined style={{color: 'lightgreen', paddingTop: 5}} />
-                          <Avatar
-                            src={
-                              bankListData?.itens.find(
-                                (bank) =>
-                                  bank?.label_name?.split(".").join("_") ===
-                                  item?.merchantConfig?.cash_in_bank
-                              )?.icon_url ?? null
-                            }
-                            size="small"
-                            shape="square"
-                          >
-                            <BankOutlined />
-                          </Avatar>
-                        </Tooltip>
-                      );
-
-                      case "merchantConfig.cash_out_bank":
-                      return (
-                        <Tooltip placement="topLeft" title={item[label]} arrow>
-                           <ArrowDownOutlined style={{color: 'red', paddingLeft: 5, paddingTop: 5}} />
-                          <Avatar
-                            src={
-                              bankListData?.itens.find(
-                                (bank) =>
-                                  bank?.label_name?.split(".").join("_") ===
-                                  item?.merchantConfig?.cash_out_bank
-                              )?.icon_url ?? null
-                            }
-                            size="small"
-                            shape="square"
-                          >
-                            <BankOutlined />
-                          </Avatar>
-                        </Tooltip>
-                      );
-  
-
                   case "merchant_name":
                     return ` - ${item[label]}`;
 
                   case "createdAt":
                   case "paid_at":
                   case "updated_at":
-
                     return (
                       <Typography key={label} style={{ fontSize: "12px" }}>
-                        {t(`table.${label}`)}:{" "}
+                        <span> {t(`table.${label}`)}: </span>
                         {`${
                           item[label]
                             ? moment(item[label])
@@ -174,11 +192,16 @@ export const Mobile = (props: MobileProps) => {
                       </Typography>
                     );
 
-                    case "profileType":
+                  case "profileType":
                     return (
-                      <Typography key={label}>{t(`table.${item?.profileType?.name.toString().toLowerCase()}`)}</Typography>
+                      <Typography key={label}>
+                        {t(
+                          `table.${item?.profileType?.name
+                            .toString()
+                            .toLowerCase()}`
+                        )}
+                      </Typography>
                     );
-
 
                   case "value_total":
                   case "value":
@@ -192,7 +215,14 @@ export const Mobile = (props: MobileProps) => {
                     );
 
                   default:
-                    return <Typography key={label}>{item[label]}</Typography>;
+                    return (
+                      <>
+                        <Typography key={label}>
+                          <span>{t(`table.${label}`)}:</span> {item[label]}
+                        </Typography>
+                        <Divider style={{ margin: 2, padding: 2 }} dashed />
+                      </>
+                    );
                 }
               })}
             </>
@@ -203,54 +233,47 @@ export const Mobile = (props: MobileProps) => {
                 <Checkbox
                   style={{ marginRight: 16 }}
                   onChange={(event) => {
-                    const arr = checkedRows;
                     if (!event.target.checked) {
-                      arr.splice(
-                        arr?.find((i: any) => i?.id === item?.id) ?? 0,
-                        1
-                      );
-
-                      setCheckedRows(arr);
-                      console.log(checkedRows, "removed");
+                      setCheckedRows((state) => {
+                        state.splice(state.indexOf(item), 1);
+                        return [...state];
+                      });
                       return;
                     }
-                    arr.push(item);
-                    setCheckedRows(item);
-                    console.log(checkedRows);
+                    setCheckedRows((state) => [...state, item]);
                   }}
                 />
               )}
-               <Dropdown
-                    trigger={["click"]}
-                    menu={{
-                      items: props.actions.map((action: actionsInterface) => {
-                        let disable = false;
+              <Dropdown
+                trigger={["click"]}
+                menu={{
+                  items: props.actions.map((action: actionsInterface) => {
+                    let disable = false;
 
-                        if (action.disabled) {
-                          action.disabled(item)
-                            ? (disable = true)
-                            : (disable = false);
+                    if (action.disabled) {
+                      action.disabled(item)
+                        ? (disable = true)
+                        : (disable = false);
+                    }
+
+                    return {
+                      ...action,
+                      disabled: disable,
+                      onClick: () => {
+                        if (action && action.onClick) {
+                          action.onClick(item);
                         }
-
-                        return {
-                          ...action,
-                          disabled: disable,
-                          onClick: () => {
-                            if (action && action.onClick) {
-                              action.onClick(item);
-                              
-                            }
-                          },
-                        };
-                      }),
-                    }}
-                    onOpenChange={(open) => {
-                      if (open) {
-                        props.setCurrentItem(item);
-                      }
-                    }}
-                    arrow
-                  >
+                      },
+                    };
+                  }),
+                }}
+                onOpenChange={(open) => {
+                  if (open) {
+                    props.setCurrentItem(item);
+                  }
+                }}
+                arrow
+              >
                 <Button style={{ width: "45px" }}>
                   <EllipsisOutlined />
                 </Button>
@@ -403,9 +426,13 @@ export const Mobile = (props: MobileProps) => {
                             key={value?.name}
                             style={{ width: "100%", textAlign: "center" }}
                           >
-                            {item[value?.name] ? t(
-                              `table.${item[value?.name]?.toLocaleLowerCase()}`
-                            ) : "-"}
+                            {item[value?.name]
+                              ? t(
+                                  `table.${item[
+                                    value?.name
+                                  ]?.toLocaleLowerCase()}`
+                                )
+                              : "-"}
                           </Typography>
                         )}
                       </Descriptions.Item>

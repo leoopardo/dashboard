@@ -68,8 +68,8 @@ export const MerchantUser = () => {
   const columns: ColumnInterface[] = [
     { name: "id", type: "id", sort: true },
     { name: "name", type: "text", sort: true },
+    { name: ["merchant", "name"], head: "merchant", type: "text" },
     { name: ["permission_group", "name"], head: "group", type: "text" },
-    { name: "email", type: "text" },
     { name: "last_signin_date", type: "date" },
     { name: "created_at", type: "date", sort: true },
   ];
@@ -185,7 +185,7 @@ export const MerchantUser = () => {
             error={UsersDataError}
             columns={columns}
             loading={isUsersDataFetching}
-            label={["name", "username", "profileType", "updated_at"]}
+            label={["name", "username", "merchant.name", "updated_at"]}
             actions={[
               {
                 label: "details",

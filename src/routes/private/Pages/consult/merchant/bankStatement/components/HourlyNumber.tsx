@@ -1,5 +1,4 @@
 import { MerchantHourlyItem } from "@src/services/types/consult/merchant/bankStatement";
-import { defaultTheme } from "@src/styles/defaultTheme";
 import {
   CategoryScale,
   Chart as ChartJS,
@@ -10,10 +9,10 @@ import {
   Title,
   Tooltip,
 } from "chart.js";
+import * as echarts from "echarts";
+import ReactECharts from "echarts-for-react";
 import moment from "moment";
-import { Line } from "react-chartjs-2";
 import { useTranslation } from "react-i18next";
-import { useMediaQuery } from "react-responsive";
 
 ChartJS.register(
   CategoryScale,
@@ -33,45 +32,113 @@ export function MerchantNumberLineChart({
   items,
 }: OrganizationHistoryLineChartInterface) {
   const { t } = useTranslation();
-  const isMobile = useMediaQuery({ maxWidth: "750px" });
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: "top" as const,
-      },
-      title: {
-        display: true,
-      },
-    },
-  };
-
-  const data = {
-    labels: items?.map((item) => moment(item.date).format("DD/MM HH:00")),
-    datasets: [
-      {
-        label: t("table.number_out"),
-        data: items?.map((item) => item.number_out),
-        borderColor: "rgb(255, 99, 132)",
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
-      },
-      {
-        label: t("table.number_in"),
-        data: items?.map((item) => item.number_in),
-        borderColor: defaultTheme.colors.paid,
-        backgroundColor: "rgba(75, 192, 192, 0.2)",
-      },
-    ],
-  };
   return (
-    <Line
-      options={{
-        ...options,
+    <ReactECharts
+      option={{
+        color: ["#80FFA5", "#FF0087"],
+        title: {
+          text: t("messages.operations_number_chart_area"),
+          textStyle: {
+            color: "#a0a0a0",
+          },
+          show: false
+        },
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            type: "cross",
+            label: {
+              backgroundColor: "#6a7985",
+            },
+          },
+        },
+        legend: {
+          data: [t("table.number_in"), t("table.number_out")], textStyle: {
+            color: "#a0a0a0",
+          },
+        },
+        toolbox: {
+          feature: {
+            saveAsImage: {},
+          },
+        },
+        grid: {
+          left: "3%",
+          right: "4%",
+          bottom: "3%",
+          containLabel: true,
+        },
+        xAxis: [
+          {
+            type: "category",
+            boundaryGap: false,
+            data: items?.map((item) => moment(item.date).format("DD/MM HH:00")),
+          },
+        ],
+        yAxis: [
+          {
+            type: "value",
+          },
+        ],
+        series: [
+          {
+            name: t("table.number_in"),
+            type: "line",
+            stack: "Total",
+            smooth: true,
+            lineStyle: {
+              width: 0,
+            },
+            showSymbol: false,
+            areaStyle: {
+              opacity: 0.8,
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                {
+                  offset: 0,
+                  color: "rgb(128, 255, 165)",
+                },
+                {
+                  offset: 1,
+                  color: "rgb(1, 191, 236)",
+                },
+              ]),
+            },
+            emphasis: {
+              focus: "series",
+            },
+            data: items?.map((item) => item.number_in),
+          },
+          {
+            name: t("table.number_out"),
+            type: "line",
+            stack: "Total",
+            smooth: true,
+            lineStyle: {
+              width: 0,
+            },
+            showSymbol: false,
+            areaStyle: {
+              opacity: 0.8,
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                {
+                  offset: 0,
+                  color: "rgb(255, 0, 135)",
+                },
+                {
+                  offset: 1,
+                  color: "rgb(135, 0, 157)",
+                },
+              ]),
+            },
+            emphasis: {
+              focus: "series",
+            },
+            data: items?.map((item) => item.number_out),
+          },
+        ],
       }}
-      data={data}
-      width={1800}
-      height={isMobile ? 2000 : 500}
-      style={{marginTop: -40}}
+      opts={{ renderer: "svg" }}
+      lazyUpdate
     />
   );
 }

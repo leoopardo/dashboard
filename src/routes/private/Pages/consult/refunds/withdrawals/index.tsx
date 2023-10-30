@@ -4,6 +4,7 @@ import { EyeFilled } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import ReplayIcon from "@mui/icons-material/Replay";
 import { Grid } from "@mui/material";
+import { Search } from "@src/components/Inputs/search";
 import { Confirmation } from "@src/components/Modals/confirmation";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { useCreateWithdrawrefund } from "@src/services/consult/refund/refundWithdrawals/createRefund";
@@ -13,7 +14,7 @@ import { queryClient } from "@src/services/queryClient";
 import { useCreateRefundWithdrawalsReports } from "@src/services/reports/consult/refund/withdrawals/createRefundWithdrawalsReports";
 import { refundWithdrawalsQuery } from "@src/services/types/consult/refunds/refundWithdrawals.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Input, Select } from "antd";
+import { Button, Select } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -72,8 +73,9 @@ export const RefundWithdrawals = () => {
 
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<any>();
-  const [searchOption, setSearchOption] = useState<string | null>(null);
-  const [search, setSearch] = useState<string | null>(null);
+  const [searchOption, setSearchOption] = useState<string | undefined>(
+    undefined
+  );
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [isRefundModalOpen, setIsRefundModalOpen] = useState<boolean>(false);
 
@@ -165,7 +167,6 @@ export const RefundWithdrawals = () => {
                 }));
               }
               setSearchOption(value);
-              setSearch("");
             }}
             value={searchOption}
             placeholder={t("input.options")}
@@ -183,16 +184,10 @@ export const RefundWithdrawals = () => {
           />
         </Grid>
         <Grid item xs={12} md={4} lg={4}>
-          <Input.Search
-            placeholder="Pesquisa"
-            size="large"
-            disabled={!searchOption}
-            value={search || ""}
-            style={{ width: "100%" }}
-            onChange={(event) => setSearch(event.target.value)}
-            onSearch={(value) =>
-              setQuery((state) => ({ ...state, [`${searchOption}`]: value }))
-            }
+          <Search
+            query={query}
+            setQuery={setQuery}
+            searchOption={searchOption}
           />
         </Grid>
         <Grid item xs={12} md={2} lg={2}>
@@ -202,8 +197,7 @@ export const RefundWithdrawals = () => {
             danger
             onClick={() => {
               setQuery(INITIAL_QUERY);
-              setSearchOption(null);
-              setSearch("");
+              setSearchOption(undefined);
             }}
             style={{ height: 40, display: "flex", alignItems: "center" }}
           >

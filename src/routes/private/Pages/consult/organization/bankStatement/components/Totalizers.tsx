@@ -64,11 +64,13 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
             alignItems: "center",
           }}
         >
-          <Typography  style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}>
+          <Typography
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             <ArrowUpOutlined style={{ marginRight: "-5px" }} />
             <MoneyIcon /> {t("table.in")}
           </Typography>
@@ -159,16 +161,17 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
             alignItems: "center",
           }}
         >
-              <Typography  style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}>
+          <Typography
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             <ArrowDownOutlined style={{ marginRight: "-5px" }} />
-          <MoneyIcon />
-          {t("table.out")}
+            <MoneyIcon />
+            {t("table.out")}
           </Typography>
-          
         </Grid>
         {Object.keys(OrganizationBankStatementTotals).map((key) => {
           switch (key) {
@@ -256,14 +259,15 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
             alignItems: "center",
           }}
         >
-              <Typography  style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}>
-              <MoneyIcon /> Total
+          <Typography
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <MoneyIcon /> Total
           </Typography>
-        
         </Grid>
         {Object.keys(OrganizationBankStatementTotals).map((key) => {
           switch (key) {

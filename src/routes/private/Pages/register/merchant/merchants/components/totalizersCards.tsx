@@ -1,21 +1,87 @@
 import { Card, Statistic } from "antd";
 import { Grid } from "@mui/material";
 import { defaultTheme } from "@src/styles/defaultTheme";
-import { MerchantsTotalResponse, MerchantsQuery } from "@src/services/types/register/merchants/merchantsRegister.interface";
+import ReactECharts from "echarts-for-react";
+import {
+  MerchantsTotalResponse,
+  MerchantsQuery,
+} from "@src/services/types/register/merchants/merchantsRegister.interface";
 import { t } from "i18next";
 
 export const TotalizersCards = (props: {
   params: MerchantsQuery;
   data?: MerchantsTotalResponse;
-  loading: boolean
+  loading: boolean;
 }) => {
+  
   return (
     <Grid container spacing={1} justifyContent={"center"} mb={2}>
-      <Grid item xs={12} md="auto">
+      <Grid item xs={12} md={2} style={{ marginTop: "-80px" }}>
+        <ReactECharts
+          option={{
+            tooltip: {
+              trigger: "item",
+            },
+            legend: {
+              selectedMode: false,
+              show: false,
+            },
+            color: ["#91cc75", "#fac858", "#ea7ccc"],
+
+            series: [
+              {
+                name: t("menus.merchants"),
+                type: "pie",
+                radius: ["40%", "70%"],
+                center: ["50%", "70%"],
+                // adjust the start angle
+                startAngle: 180,
+                label: {
+                  show: false,
+                },
+                data: [ 
+                  {
+                    value: props?.data?.active_merchant_totals,
+                    name: t("table.active"),
+                  },
+                  {
+                    value: props?.data?.inactive_merchant_totals,
+                    name: t("table.inactive"),
+                  },{
+                    value: props?.data?.onboarding_merchant_totals,
+                    name: "Onboarding",
+                  },
+                  {
+                    // make an record to fill the bottom 50%
+                    value:
+                      (props?.data?.active_merchant_totals || 0) +
+                      (props?.data?.inactive_merchant_totals || 0) + (props?.data?.onboarding_merchant_totals || 0),
+                    itemStyle: {
+                      top: "-20%",
+                      color: "none",
+                      decal: {
+                        symbol: "none",
+                      },
+                    },
+                    label: {
+                      show: false,
+                    },
+                  },
+                ],
+              },
+            ],
+          }}
+          opts={{ renderer: "svg" }}
+          lazyUpdate
+        />
+      </Grid>
+      <Grid item xs={12} md={2}>
         <Card bordered={false}>
           <Statistic
             loading={props?.loading}
-            title={t("titles.total_registred", {entity: t('menus.merchants')?.toLowerCase()})}
+            title={t("titles.total_registred", {
+              entity: t("menus.merchants")?.toLowerCase(),
+            })}
             style={{ maxWidth: 200, minHeight: 75 }}
             value={props?.data?.registered_merchant_totals}
             precision={0}
@@ -23,26 +89,30 @@ export const TotalizersCards = (props: {
           />
         </Card>
       </Grid>
-      <Grid item xs={12} md="auto">
+      <Grid item xs={12} md={2}>
         <Card bordered={false}>
           <Statistic
             loading={props?.loading}
-            title={t("titles.total_onboarding", {entity: t('menus.merchants')?.toLowerCase()})}
+            title={t("titles.total_onboarding", {
+              entity: t("menus.merchants")?.toLowerCase(),
+            })}
             style={{ maxWidth: 200, minHeight: 75 }}
             value={props?.data?.onboarding_merchant_totals}
             precision={0}
             valueStyle={{
-              color: defaultTheme.colors.dark,
+              color: "#ea7ccc",
               fontSize: "24px",
             }}
           />
         </Card>
       </Grid>
-      <Grid item xs={12} md="auto">
+      <Grid item xs={12} md={2}>
         <Card bordered={false}>
           <Statistic
             loading={props?.loading}
-            title={t("titles.total_registred_active", {entity: t('menus.merchants')?.toLowerCase()})}
+            title={t("titles.total_registred_active", {
+              entity: t("menus.merchants")?.toLowerCase(),
+            })}
             style={{ maxWidth: 200, minHeight: 75 }}
             value={props?.data?.active_merchant_totals}
             precision={0}
@@ -53,11 +123,13 @@ export const TotalizersCards = (props: {
           />
         </Card>
       </Grid>
-      <Grid item xs={12} md="auto">
+      <Grid item xs={12} md={2}>
         <Card bordered={false}>
           <Statistic
             loading={props?.loading}
-            title={t("titles.total_registred_inactive", {entity: t('menus.merchants')?.toLowerCase()})}
+            title={t("titles.total_registred_inactive", {
+              entity: t("menus.merchants")?.toLowerCase(),
+            })}
             style={{ maxWidth: 200, minHeight: 75 }}
             value={props?.data?.inactive_merchant_totals}
             precision={0}
@@ -68,11 +140,13 @@ export const TotalizersCards = (props: {
           />
         </Card>
       </Grid>
-      <Grid item xs={12} md="auto">
+      <Grid item xs={12} md={2}>
         <Card bordered={false}>
           <Statistic
             loading={props?.loading}
-            title={t("titles.total", {entity: t('menus.merchants')?.toLowerCase()})}
+            title={t("titles.total", {
+              entity: t("menus.merchants")?.toLowerCase(),
+            })}
             style={{ maxWidth: 200, minHeight: 75 }}
             value={props?.data?.expired_merchant_totals}
             precision={0}

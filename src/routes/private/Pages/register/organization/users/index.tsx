@@ -231,7 +231,7 @@ export const OrganizationUser = () => {
                 type: "text",
                 key: refGroup,
               },
-              { name: "email", type: "text", key: refEmail },
+              { name: "last_signin_date", type: "date", key: refEmail },
               { name: "status", type: "status", key: refStatus },
               {
                 name: "created_at",
@@ -241,7 +241,7 @@ export const OrganizationUser = () => {
               },
             ]}
             loading={isUsersDataFetching}
-            label={["name", "username", "profileType", "updated_at" ]}
+            label={["name", "username", "updated_at" ]}
           />
         </Grid>
       </Grid>
@@ -349,8 +349,8 @@ export const OrganizationUser = () => {
             target: () => refGroup.current,
           },
           {
-            title: t("table.email"),
-            description: t("wiki.email_description"),
+            title: t("table.last_signin_date"),
+            description: t("wiki.last_sign_in_description"),
             target: () => refEmail.current,
           },
           {

@@ -249,7 +249,7 @@ export const AggregatorUsers = () => {
               },
             ]}
             loading={isUsersDataFetching}
-            label={["name", "username", "profileType", "updated_at" ]}
+            label={["name", "username", "aggregator.name", "updated_at" ]}
           />
         </Grid>
       </Grid>

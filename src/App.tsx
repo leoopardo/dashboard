@@ -102,6 +102,10 @@ function App() {
                       ? "#303030"
                       : defaultTheme.colors.secondary,
                 },
+                Table: {
+                  controlItemBgActive: defaultTheme.colors.secondary,
+                  controlItemBgActiveHover: "#c0c0c09f"
+                }
               },
               token: {
                 colorPrimary: defaultTheme.colors.secondary,

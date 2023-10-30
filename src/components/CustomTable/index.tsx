@@ -78,7 +78,7 @@ interface TableProps {
   disableScrollToTop?: boolean;
   checkbox?: boolean;
   setSelectedRows?: Dispatch<SetStateAction<any>>;
-  selectedKeys?: any[] | null;
+  selectedKeys?: any;
 }
 
 export const CustomTable = (props: TableProps) => {
@@ -950,7 +950,8 @@ export const CustomTable = (props: TableProps) => {
                   ? {
                       type: "checkbox",
                       selectedRowKeys: props.selectedKeys?.map(
-                        (item) => item?.id ?? item?._id ?? Math.random() * 100
+                        (item: any) =>
+                          item?.id ?? item?._id ?? Math.random() * 100
                       ),
                       ...rowSelection,
                     }
@@ -981,6 +982,7 @@ export const CustomTable = (props: TableProps) => {
               setCurrentItem={props.setCurrentItem}
               checkbox={props?.checkbox}
               setSelectedRows={props?.setSelectedRows}
+              selectedKeys={props?.selectedKeys}
             />
           </Grid>
           {!props.removePagination && (

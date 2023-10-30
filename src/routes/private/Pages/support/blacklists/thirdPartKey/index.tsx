@@ -5,6 +5,7 @@ import { Grid } from "@mui/material";
 import { CustomTable } from "@src/components/CustomTable";
 import { FiltersModal } from "@src/components/FiltersModal";
 import { FilterChips } from "@src/components/FiltersModal/filterChips";
+import { Search } from "@src/components/Inputs/search";
 import { Toast } from "@src/components/Toast";
 import { useDeleteThirdPartKey } from "@src/services/support/blacklists/thirdPartKey/deleteThirdPartKey";
 import { useGetThirdPartKey } from "@src/services/support/blacklists/thirdPartKey/getThirdPartKey";
@@ -12,8 +13,7 @@ import {
   ThirdPartItem,
   ThirdPartQuery,
 } from "@src/services/types/support/blacklists/thirdPartKey.interface";
-import useDebounce from "@src/utils/useDebounce";
-import { Button, Input, Select } from "antd";
+import { Button, Select } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -24,11 +24,11 @@ export const ThirdPartKeyBlacklist = () => {
   };
   const [query, setQuery] = useState<ThirdPartQuery>(INITIAL_QUERY);
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
-  const [searchOption, setSearchOption] = useState<string | null>(null);
+  const [searchOption, setSearchOption] = useState<string | undefined>(
+    undefined
+  );
   const [isConfirmOpen, setIsConfirmOpen] = useState<boolean>(false);
-  const [search, setSearch] = useState<string>("");
   const [currentItem, setCurrentItem] = useState<ThirdPartItem | null>(null);
-  const debounceSearch = useDebounce(search);
   const { t } = useTranslation();
   const {
     ThirdPartKey,
@@ -45,16 +45,6 @@ export const ThirdPartKeyBlacklist = () => {
     refetchThirdPartKey();
   }, [query]);
 
-  useEffect(() => {
-    if (!debounceSearch) {
-      const q = { ...query };
-      return setQuery(q);
-    }
-    if (searchOption && search) {
-      setQuery((state) => ({ ...state, [searchOption]: debounceSearch }));
-    }
-  }, [debounceSearch]);
-
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid
@@ -63,7 +53,8 @@ export const ThirdPartKeyBlacklist = () => {
         spacing={1}
       >
         <Grid item xs={12} md={4} lg={2}>
-           <Button size="large"
+          <Button
+            size="large"
             style={{ width: "100%" }}
             loading={isThirdPartKeyFetching}
             type="primary"
@@ -78,7 +69,6 @@ export const ThirdPartKeyBlacklist = () => {
             endDateKeyName="end_date"
             query={query}
             setQuery={setQuery}
-             
           />
         </Grid>
       </Grid>
@@ -89,7 +79,6 @@ export const ThirdPartKeyBlacklist = () => {
             size="large"
             onChange={(value) => {
               setSearchOption(value);
-              setSearch("");
             }}
             value={searchOption}
             placeholder={t("input.options")}
@@ -100,14 +89,10 @@ export const ThirdPartKeyBlacklist = () => {
           />
         </Grid>
         <Grid item xs={12} md={4} lg={4}>
-          <Input
-            disabled={!searchOption}
-            size="large"
-            value={search}
-            placeholder={searchOption ? t(`table.${searchOption}`) ?? "" : ""}
-            onChange={(event) => {
-              setSearch(event.target.value);
-            }}
+          <Search
+            query={query}
+            setQuery={setQuery}
+            searchOption={searchOption}
           />
         </Grid>
         <Grid item xs={12} md={3} lg={2}>
@@ -118,8 +103,7 @@ export const ThirdPartKeyBlacklist = () => {
             size="large"
             onClick={() => {
               setQuery(INITIAL_QUERY);
-              setSearch("");
-              setSearchOption(null);
+              setSearchOption(undefined);
             }}
             style={{
               width: "100%",
@@ -175,7 +159,6 @@ export const ThirdPartKeyBlacklist = () => {
           setOpen={setIsFiltersOpen}
           query={query}
           setQuery={setQuery}
-           
           filters={["start_date", "end_date"]}
           refetch={refetchThirdPartKey}
           selectOptions={{}}
