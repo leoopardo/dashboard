@@ -12,7 +12,7 @@ export const TotalizersCards = (props: {
 }) => {
   return (
     <Grid container spacing={1} justifyContent={"center"} mb={2}>
-      <Grid item xs={12} md={2} style={{ marginTop: "-80px" }}>
+      <Grid item xs={12} md={2} style={{ marginTop: "-90px" }}>
         <ReactECharts
           option={{
             tooltip: {
