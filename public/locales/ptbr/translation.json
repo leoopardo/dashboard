@@ -366,7 +366,11 @@
     "from": "Origem",
     "to": "Destino",
     "can_be_deleted_only_by_organization": "Organização pode deletar",
-    "fastpix_in_bank": "Banco FastPix"
+    "fastpix_in_bank": "Banco FastPix",
+    "fastpix_in_permission": "Permissão de FastPix",
+    "fastpix_in_type": "Tipo de FastPix",
+    "fastpix_in_max_value": "Valor máximo de FastPix",
+    "fastpix_in_fixed_min_value": "Valor mínimo de FastPix"
   },
   "table": {
     "id": "ID",
@@ -626,7 +630,7 @@
     "deposits": "Depósitos",
     "withdrawals": "Saques",
     "payments": "Pagamentos",
-    "operation_number": "número de operações",
+    "operation_number": "Número de operações",
     "ticket": "Ticket médio",
     "not_paid": "Não pagos",
     "others": "Outros",
@@ -724,7 +728,12 @@
     "partner_data": "Dados de plataforma",
     "rtrid": "ID da devolução",
     "result": "Resultado",
-    "fastpix_in_bank": "Banco FastPix"
+    "fastpix_in_bank": "Banco FastPix",
+    "fixed": "Fixo",
+    "free": "Livre",
+    "available_balance": "Saldo disponível",
+    "operations_value": "Valor de operações"
+
   },
   "actions": {
     "details": "Detalhes",

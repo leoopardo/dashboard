@@ -333,7 +333,11 @@
     "to": "To",
     "organization_name": "Organization",
     "can_be_deleted_only_by_organization": "Organization can delete",
-    "fastpix_in_bank": "FastPix bank"
+    "fastpix_in_bank": "FastPix bank",
+    "fastpix_in_permission": "FastPix permission",
+    "fastpix_in_type": "FastPix type",
+    "fastpix_in_max_value": "FastPix min. value",
+    "fastpix_in_fixed_min_value": "FastPix max. value"
   },
   "modal": {
     "confirm": "Confirm",
@@ -719,7 +723,11 @@
     "partner_data": "Partner data",
     "rtrid": "Refund id",
     "result": "Result",
-    "fastpix_in_bank": "FastPix bank"
+    "fastpix_in_bank": "FastPix bank",
+    "fixed": "Fixed",
+    "free": "Free",
+    "available_balance": "Avaliable balance",
+    "operations_value": "Operations value"
   },
   "actions": {
     "details": "Details",
