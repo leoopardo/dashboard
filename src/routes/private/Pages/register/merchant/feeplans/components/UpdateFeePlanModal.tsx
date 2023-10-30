@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { Grid } from "@mui/material";
+import { useCreateMerchantFeePlansDetails } from "@src/services/register/merchant/feePlans/createFeePlansDetails";
 import { useGetFeePlansDetails } from "@src/services/register/merchant/feePlans/getFeePlansDetails";
 import {
   IDepositFeeItem,
@@ -26,7 +27,6 @@ import {
   useRef,
   useState,
 } from "react";
-import { useCreateMerchantFeePlansDetails } from "@src/services/register/merchant/feePlans/createFeePlansDetails";
 import { useTranslation } from "react-i18next";
 import TableEditable from "./TableEditable";
 
@@ -70,7 +70,7 @@ export const UpdateFeePlanModal = ({
     useState<ICreateDetails | null>(null);
   const { feePlansDetailsData, refetchFeePlansDetailsData } =
     useGetFeePlansDetails({ fee_plans_id: currentUser?.id });
-  const [feePage, setFeePage] = useState(1);
+  const [feePage] = useState(1);
   const { createFeePlansDetailsFetching, isSuccess } =
     useCreateMerchantFeePlansDetails(createFeeDetails ?? null);
   const handleChangeUserBody = (event: ChangeEvent<HTMLInputElement>) => {
@@ -132,7 +132,7 @@ export const UpdateFeePlanModal = ({
     if (isSuccess) {
       setCreateFeeDetails(null);
     }
-  }, [isSuccess])
+  }, [isSuccess]);
 
   useEffect(() => {
     refetchFeePlansDetailsData();

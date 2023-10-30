@@ -1,23 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from "react";
 import {
-  Form,
-  Input,
-  InputNumber,
-  Popconfirm,
-  Typography,
-  Table,
-  Space,
-} from "antd";
-import { IDepositFeePlansDetails } from "@src/services/types/register/merchants/merchantFeePlans.interface";
-import {
-  EditOutlined,
-  DeleteOutlined,
   CheckOutlined,
   CloseOutlined,
+  DeleteOutlined,
+  EditOutlined,
 } from "@ant-design/icons";
-import { useUpdateMerchantFeePlanDetails } from "@src/services/register/merchant/feePlans/updateFeePlansDetails";
 import { useDeleteFeePlanDetail } from "@src/services/register/merchant/feePlans/deleteFeePlansDetails";
+import { useUpdateMerchantFeePlanDetails } from "@src/services/register/merchant/feePlans/updateFeePlansDetails";
+import { IDepositFeePlansDetails } from "@src/services/types/register/merchants/merchantFeePlans.interface";
+import {
+  Form,
+  InputNumber,
+  Popconfirm,
+  Space,
+  Table
+} from "antd";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 interface TableEditableProps {
@@ -83,7 +81,7 @@ const TableEditable: React.FC<TableEditableProps> = ({ feeDetails }) => {
     useUpdateMerchantFeePlanDetails(body);
   const isEditing = (record: IDepositFeePlansDetails) =>
     record.id === editingKey;
-  const { deleteFeePlanDetailMutate, deleteFeePlanDetailIsSuccess } =
+  const { deleteFeePlanDetailMutate } =
     useDeleteFeePlanDetail(rowId);
 
   const edit = (record: any) => {
