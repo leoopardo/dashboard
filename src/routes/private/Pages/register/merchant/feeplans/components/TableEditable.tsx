@@ -2,10 +2,8 @@
 import React, { useEffect, useState } from "react";
 import {
   Form,
-  Input,
   InputNumber,
   Popconfirm,
-  Typography,
   Table,
   Space,
 } from "antd";
@@ -83,7 +81,7 @@ const TableEditable: React.FC<TableEditableProps> = ({ feeDetails }) => {
     useUpdateMerchantFeePlanDetails(body);
   const isEditing = (record: IDepositFeePlansDetails) =>
     record.id === editingKey;
-  const { deleteFeePlanDetailMutate, deleteFeePlanDetailIsSuccess } =
+  const { deleteFeePlanDetailMutate } =
     useDeleteFeePlanDetail(rowId);
 
   const edit = (record: any) => {

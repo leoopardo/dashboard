@@ -70,7 +70,7 @@ export const UpdateFeePlanModal = ({
     useState<ICreateDetails | null>(null);
   const { feePlansDetailsData, refetchFeePlansDetailsData } =
     useGetFeePlansDetails({ fee_plans_id: currentUser?.id });
-  const [feePage, setFeePage] = useState(1);
+  const [feePage] = useState(1);
   const { createFeePlansDetailsFetching, isSuccess } =
     useCreateMerchantFeePlansDetails(createFeeDetails ?? null);
   const handleChangeUserBody = (event: ChangeEvent<HTMLInputElement>) => {
