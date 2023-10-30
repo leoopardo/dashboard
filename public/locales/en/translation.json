@@ -859,6 +859,7 @@
     "create_user_name_description": "Name of the user who blocked that Individual's Registration (CPF)",
     "aggregator_blacklist_description": "Here you manage the list of blockages by Individual's Registration (CPF).",
     "partner_name_description": "Name registered for the platform.",
-    "partners_description": "Here you manage the platforms that use the dashboard."
+    "partners_description": "Here you manage the platforms that use the dashboard.",
+    "update_table_button": "Update table data."
   }
 }

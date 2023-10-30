@@ -208,7 +208,7 @@ export const GeneratedWithdrawals = () => {
             value={searchOption}
             placeholder={t("input.options")}
             options={[
-              { value: "organization_id", label: t("table.organization_id") },
+              { value: "withdraw_id", label: t("table.organization_id") },
               { value: "endToEndId", label: t("table.endToEndId") },
               { value: "payment_id", label: t("table.payment_id") },
               { value: "reference_id", label: t("table.reference_id") },

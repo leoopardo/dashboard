@@ -46,7 +46,9 @@ export interface ColumnInterface {
     | "icon"
     | "boolean"
     | "bankNameToIcon"
-    | "progress";
+    | "progress"
+    | "merchant_name"
+    | "partner_name"
   sort?: boolean;
   key?: any;
 }
@@ -825,6 +827,78 @@ export const CustomTable = (props: TableProps) => {
                     </Grid>
                   )}
                 </Grid>
+              ),
+              sorter: column.sort
+                ? () => {
+                    props.setQuery((state: any) => ({
+                      ...state,
+                      sort_field: Array.isArray(column?.name)
+                        ? column?.name[1]
+                        : column?.name,
+                      sort_order:
+                        props.query.sort_order === "DESC" ? "ASC" : "DESC",
+                      page: 1,
+                    }));
+
+                    return 0;
+                  }
+                : undefined,
+            };
+
+           case "merchant_name":
+            return {
+              title: (
+                <Typography
+                  style={{ width: "100%", textAlign: "center" }}
+                  ref={column.key}
+                >
+                  {t(`table.${column?.head ?? column?.name}`)}
+                </Typography>
+              ),
+              key: Array.isArray(column?.name)
+                ? column?.name + `${Math.random()}`
+                : column?.name,
+              dataIndex: column?.name,
+              render: (_a: any, record: any) => (
+                <Typography style={{ width: "100%", textAlign: "center" }}>
+                  {record["merchant_name"] || record["merchant_id"] || '-'}
+                </Typography>
+              ),
+              sorter: column.sort
+                ? () => {
+                    props.setQuery((state: any) => ({
+                      ...state,
+                      sort_field: Array.isArray(column?.name)
+                        ? column?.name[1]
+                        : column?.name,
+                      sort_order:
+                        props.query.sort_order === "DESC" ? "ASC" : "DESC",
+                      page: 1,
+                    }));
+
+                    return 0;
+                  }
+                : undefined,
+            };
+
+            case "partner_name":
+            return {
+              title: (
+                <Typography
+                  style={{ width: "100%", textAlign: "center" }}
+                  ref={column.key}
+                >
+                  {t(`table.${column?.head ?? column?.name}`)}
+                </Typography>
+              ),
+              key: Array.isArray(column?.name)
+                ? column?.name + `${Math.random()}`
+                : column?.name,
+              dataIndex: column?.name,
+              render: (_a: any, record: any) => (
+                <Typography style={{ width: "100%", textAlign: "center" }}>
+                  {record["partner_name"] || record["partner_id"] || "-"}
+                </Typography>
               ),
               sorter: column.sort
                 ? () => {

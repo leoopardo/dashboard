@@ -1,5 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { EditFilled, InfoCircleOutlined } from "@ant-design/icons";
+import {
+  EditFilled,
+  InfoCircleOutlined,
+  ReloadOutlined,
+} from "@ant-design/icons";
 import { CustomTable } from "@components/CustomTable";
 import { Grid } from "@mui/material";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
@@ -12,7 +16,7 @@ import {
   BankMaintenenceQuery,
 } from "@src/services/types/register/organization/bankMaintenence.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Tooltip } from "antd";
+import { Button, Tooltip, Row } from "antd";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -50,7 +54,7 @@ export const BankMaintenence = () => {
     useUpdateBank(updateBody, currentItem?.id);
 
   const [isTuorOpen, setIsTuorOpen] = useState<boolean>(false);
-
+  const refRefresh = useRef(null);
   const refLogo = useRef(null);
   const refBankName = useRef(null);
   const refPriority = useRef(null);
@@ -83,9 +87,22 @@ export const BankMaintenence = () => {
           </Button>
         </Tooltip>
       </Grid>
+      <Row justify="end" style={{width: '100%', marginBottom: 10}}>
+        <Grid xs={12} md="auto" lg={1}>
+          <Button
+            ref={refRefresh}
+            style={{ width: "100%", height: "40px", justifyContent: "center" }}
+            loading={isBankMainteneceDataFetching}
+            shape="round"
+            type="dashed"
+            onClick={refetchBankMainteneceData}
+          >
+            {!isBankMainteneceDataFetching && <ReloadOutlined />}
+          </Button>
+        </Grid>
+      </Row>
       <Grid container>
         <Grid item xs={12}>
-          {" "}
           <CustomTable
             query={query}
             setCurrentItem={setCurrentItem}
@@ -162,6 +179,7 @@ export const BankMaintenence = () => {
       <TuorComponent
         open={isTuorOpen}
         setOpen={setIsTuorOpen}
+        refreshStepRef={refRefresh}
         steps={[
           {
             title: t("table.icon_url"),

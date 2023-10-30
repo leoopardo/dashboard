@@ -865,6 +865,7 @@
     "create_user_name_description": "Nome do usuário que realizou o bloqueio daquele CPF",
     "aggregator_blacklist_description": "Aqui você gerencia a lista de bloqueios por CPF",
     "partner_name_description": "Nome cadastrado para a plataforma."
-  , "partners_description": "Aqui você gerencia as plataformas que fazem uso do painel."
+  , "partners_description": "Aqui você gerencia as plataformas que fazem uso do painel.",
+    "update_table_button": "Atualize os dados da tabela."
   }
 }
