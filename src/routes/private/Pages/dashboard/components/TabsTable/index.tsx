@@ -20,7 +20,7 @@ export const TabsTable = ({ query }: TableProps) => {
   );
   return (
     <>
-      <Row>
+      <Row gutter={[8,8]}>
         <Col span={22}>
           <Typography.Title level={3}>Ranking</Typography.Title>
         </Col>
