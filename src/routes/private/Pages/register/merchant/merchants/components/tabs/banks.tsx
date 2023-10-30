@@ -20,6 +20,9 @@ export const BanksTab = (props: { id?: string }) => {
   const [withdrawBank, setWithdrawBank] = useState<
     { bank?: string } | undefined
   >();
+  const [fastPixBank, setFastPixBank] = useState<
+  { bank?: string } | undefined
+>();
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const { isMerchantBankFetching, merchantBankData, refetchMerchantBankData } =
     useMerchantBankConfig(props.id);
@@ -40,6 +43,7 @@ export const BanksTab = (props: { id?: string }) => {
       merchants_ids: [Number(props?.id)],
       cash_in_bank: merchantBankData?.merchantConfig?.cash_in_bank,
       cash_out_bank: merchantBankData?.merchantConfig?.cash_out_bank,
+      fastpix_in_bank: merchantBankData?.merchantConfig?.fastpix_in_bank,
     }));
 
     setDepositBank({ bank: merchantBankData?.merchantConfig?.cash_in_bank });
@@ -78,6 +82,16 @@ export const BanksTab = (props: { id?: string }) => {
               queryOptions={withdrawBank?.bank}
               setCurrentValue={setWithdrawBank}
               setQueryFunction={setWithdrawBank}
+            />
+          </Form.Item>
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <Form.Item label={t("input.fastpix_in_bank")} name="fastpix_in_bank">
+            <BanksSelect
+              currentValue={fastPixBank?.bank}
+              queryOptions={fastPixBank?.bank}
+              setCurrentValue={setFastPixBank}
+              setQueryFunction={setFastPixBank}
             />
           </Form.Item>
         </Grid>

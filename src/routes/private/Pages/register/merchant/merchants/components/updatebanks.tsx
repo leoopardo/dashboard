@@ -218,6 +218,35 @@ export const UpdateBanks = ({
               }
             />
           </Form.Item>
+          <Form.Item
+            label={t(`input.fastpix_in_bank`)}
+            name="fastpix_in_bank"
+            style={{ margin: 10 }}
+          >
+            <Select
+              size="large"
+              options={
+                bankListData?.itens?.map((item, index) => {
+                  return {
+                    key: index,
+                    value: item.bank,
+                    label: (
+                      <>
+                        <Avatar
+                          src={item.icon_url}
+                          style={{ marginRight: 10 }}
+                        />
+                        {item.label_name}
+                      </>
+                    ),
+                  };
+                }) ?? []
+              }
+              onChange={(value) =>
+                setBody((state) => ({ ...state, cash_in_bank: value }))
+              }
+            />
+          </Form.Item>
           {(body?.merchants_ids?.length === 0 || !body.merchants_ids) && (
             <Form.Item
               label={t(`table.partner`)}

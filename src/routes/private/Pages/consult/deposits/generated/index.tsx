@@ -129,7 +129,10 @@ export const GeneratedDeposits = () => {
         .report_deposit_generated_deposit_list_totals && (
         <TotalizersCards
           data={depositsTotal}
-          fetchData={refetchDepositsTotal}
+          fetchData={() => {
+            refetchDepositsTotal();
+            refetchDepositsTotalRows();
+          }}
           loading={isDepositsTotalFetching}
           query={query}
         />

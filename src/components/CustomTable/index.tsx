@@ -415,20 +415,28 @@ export const CustomTable = (props: TableProps) => {
               dataIndex: column?.name,
               render: (text: string) => (
                 <div style={{ width: "100%", textAlign: "center" }}>
-                  <Tooltip placement="topLeft" title={text} arrow>
-                    <Avatar
-                      src={
-                        bankListData?.itens.find(
-                          (bank) =>
-                            bank?.label_name?.split(" ").join("_") === text
-                        )?.icon_url ?? null
-                      }
-                      size="large"
-                      shape="square"
-                    >
-                      <BankOutlined />
-                    </Avatar>
-                  </Tooltip>
+                  {bankListData?.itens.find(
+                    (bank) => bank?.label_name?.split(" ").join("_") === text
+                  )?.icon_url ? (
+                    <Tooltip placement="topLeft" title={text} arrow>
+                      <Avatar
+                        src={
+                          bankListData?.itens.find(
+                            (bank) =>
+                              bank?.label_name?.split(" ").join("_") === text
+                          )?.icon_url ?? null
+                        }
+                        size="large"
+                        shape="square"
+                      >
+                        <BankOutlined />
+                      </Avatar>
+                    </Tooltip>
+                  ) : text ? (
+                    <Typography>{text}</Typography>
+                  ) : (
+                    <Typography style={{minWidth: "30px"}}>-</Typography>
+                  )}
                 </div>
               ),
               sorter: column.sort

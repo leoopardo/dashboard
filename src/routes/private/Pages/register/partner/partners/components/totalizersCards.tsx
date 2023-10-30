@@ -4,15 +4,25 @@ import { defaultTheme } from "@src/styles/defaultTheme";
 import ReactECharts from "echarts-for-react";
 import { PartnerTotalResponse, PartnerQuery } from "@src/services/types/register/partners/partners.interface";
 import { t } from "i18next";
+import { useMediaQuery } from "react-responsive";
 
 export const TotalizersCards = (props: {
   params: PartnerQuery;
   data?: PartnerTotalResponse;
   loading: boolean
 }) => {
+  const isMobile = useMediaQuery({ maxWidth: "950px" });
   return (
     <Grid container spacing={1} justifyContent={"center"} mb={2}>
-      <Grid item xs={12} md={2} style={{ marginTop: "-80px" }}>
+      <Grid
+        item
+        xs={12}
+        md={2}
+        style={{
+          marginTop: "-90px",
+          marginBottom: isMobile ? "-60px" : undefined,
+        }}
+      >
         <ReactECharts
           option={{
             tooltip: {

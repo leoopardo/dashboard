@@ -124,6 +124,11 @@ export const MerchantView = () => {
       head: "withdraw_bank",
       type: "bankNameToIcon",
     },
+    {
+      name: ["merchantConfig", "fastpix_in_bank"],
+      head: "fastpix_in_bank",
+      type: "bankNameToIcon",
+    },
     { name: "status", type: "status" },
     { name: "created_at", type: "date", sort: true },
   ];

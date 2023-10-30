@@ -1,21 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from "react";
+import {
+  CheckOutlined,
+  CloseOutlined,
+  DeleteOutlined,
+  EditOutlined,
+} from "@ant-design/icons";
+import { useDeleteFeePlanDetail } from "@src/services/register/merchant/feePlans/deleteFeePlansDetails";
+import { useUpdateMerchantFeePlanDetails } from "@src/services/register/merchant/feePlans/updateFeePlansDetails";
+import { IDepositFeePlansDetails } from "@src/services/types/register/merchants/merchantFeePlans.interface";
 import {
   Form,
   InputNumber,
   Popconfirm,
-  Table,
   Space,
+  Table
 } from "antd";
-import { IDepositFeePlansDetails } from "@src/services/types/register/merchants/merchantFeePlans.interface";
-import {
-  EditOutlined,
-  DeleteOutlined,
-  CheckOutlined,
-  CloseOutlined,
-} from "@ant-design/icons";
-import { useUpdateMerchantFeePlanDetails } from "@src/services/register/merchant/feePlans/updateFeePlansDetails";
-import { useDeleteFeePlanDetail } from "@src/services/register/merchant/feePlans/deleteFeePlansDetails";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 interface TableEditableProps {
