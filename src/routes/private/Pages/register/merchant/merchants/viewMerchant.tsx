@@ -65,7 +65,7 @@ export const MerchantDetails = () => {
       label: t("table.merchant_data"),
       children: (
         <Row gutter={[8, 8]}>
-          <Col xs={{span: 24}} md={{span: 8}}>
+          <Col xs={{ span: 24 }} md={{ span: 8 }}>
             <Descriptions column={1} bordered>
               <Descriptions.Item
                 key={"id"}
@@ -101,7 +101,19 @@ export const MerchantDetails = () => {
                   textAlign: "center",
                 }}
               >
-                {location?.state?.cnpj ?? "-"}
+                {location?.state?.cnpj || "-"}
+              </Descriptions.Item>
+              <Descriptions.Item
+                key={"domain"}
+                label={t(`table.domain`)}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {location?.state?.domain?.name || "-"}
               </Descriptions.Item>
               <Descriptions.Item
                 key={"email"}
@@ -129,9 +141,9 @@ export const MerchantDetails = () => {
               </Descriptions.Item>
             </Descriptions>
           </Col>
-          <Col xs={{span: 24}} md={{span: 8}}>
+          <Col xs={{ span: 24 }} md={{ span: 8 }}>
             <Descriptions column={1} bordered>
-            <Descriptions.Item
+              <Descriptions.Item
                 key={"v3_id"}
                 label={t(`table.v3_id`)}
                 labelStyle={{
@@ -208,7 +220,7 @@ export const MerchantDetails = () => {
           {(location?.state?.aggregator ||
             location?.state?.partner ||
             location?.state?.operator) && (
-            <Col xs={{span: 24}} md={{span: 8}}>
+            <Col xs={{ span: 24 }} md={{ span: 8 }}>
               <Descriptions column={1} bordered>
                 {location?.state?.aggregator && (
                   <Descriptions.Item
@@ -252,6 +264,38 @@ export const MerchantDetails = () => {
                     {location?.state?.operator?.name}
                   </Descriptions.Item>
                 )}
+                <Descriptions.Item
+                  key={"createdAt"}
+                  label={t(`table.created_at`)}
+                  labelStyle={{
+                    maxWidth: "120px !important",
+                    margin: 0,
+                    padding: 0,
+                    textAlign: "center",
+                  }}
+                >
+                  {`${new Date(
+                    location?.state?.created_at
+                  ).toLocaleDateString()} ${new Date(
+                    location?.state?.created_at
+                  ).toLocaleTimeString()}`}
+                </Descriptions.Item>
+                <Descriptions.Item
+                  key={"updated_at"}
+                  label={t(`table.updated_at`)}
+                  labelStyle={{
+                    maxWidth: "120px !important",
+                    margin: 0,
+                    padding: 0,
+                    textAlign: "center",
+                  }}
+                >
+                  {`${new Date(
+                    location?.state?.updated_at
+                  ).toLocaleDateString()} ${new Date(
+                    location?.state?.updated_at
+                  ).toLocaleTimeString()}`}
+                </Descriptions.Item>
               </Descriptions>
             </Col>
           )}

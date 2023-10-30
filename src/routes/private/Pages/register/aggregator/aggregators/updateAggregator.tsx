@@ -46,6 +46,7 @@ import {
   Input,
   Row,
   Spin,
+  Switch,
   Tabs,
   TabsProps,
   Typography,
@@ -290,13 +291,28 @@ export const UpdateAggregator = () => {
                     };
                   })}
                   filterOption={(inputValue, option) =>
-                    option?.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+                    option?.value
+                      .toUpperCase()
+                      .indexOf(inputValue.toUpperCase()) !== -1
                   }
                   size="large"
                   value={aggregatorBody?.country}
                   onChange={(value) =>
                     setAggregatorBody((state) => ({ ...state, country: value }))
                   }
+                />
+              </Form.Item>
+            </Col>{" "}
+            <Col xs={{ span: 24 }} md={{ span: 6 }}>
+              <Form.Item label={t("table.status")} name="status" valuePropName="checked">
+                <Switch
+                  checked={aggregatorBody?.status}
+                  onChange={(checked) => {
+                    setAggregatorBody((state) => ({
+                      ...state,
+                      status: checked,
+                    }));
+                  }}
                 />
               </Form.Item>
             </Col>

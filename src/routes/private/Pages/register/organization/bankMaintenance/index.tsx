@@ -161,6 +161,8 @@ export const BankMaintenence = () => {
             { label: "icon_url", required: false },
             { label: "priority", required: false },
             { label: "bank_fee", required: false },
+            { label: "agency", required: false },
+            { label: "account", required: false },
             { label: "internal_account_number", required: false },
             { label: "cash_in", required: false },
             { label: "cash_out", required: false },

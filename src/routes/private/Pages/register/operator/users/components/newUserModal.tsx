@@ -195,27 +195,29 @@ export const NewUserModal = ({
             onChange={handleChangeUserBody}
           />
         </Form.Item>
-        <Form.Item
-          label={t(`table.username`)}
-          name="username"
-          style={{ margin: 10 }}
-          rules={[
-            {
-              required: action === "create",
-              message:
-                t("input.required", { field: t("input.username") }) || "",
-            },
-            { min: 4, message: t("input.min_of", { min: 4 }) || "" },
-          ]}
-        >
-          <Input
-            size="large"
+        {action === "create" && (
+          <Form.Item
+            label={t(`table.username`)}
             name="username"
-            autoComplete="new-password"
-            value={body.username}
-            onChange={handleChangeUserBody}
-          />
-        </Form.Item>
+            style={{ margin: 10 }}
+            rules={[
+              {
+                required: action === "create",
+                message:
+                  t("input.required", { field: t("input.username") }) || "",
+              },
+              { min: 4, message: t("input.min_of", { min: 4 }) || "" },
+            ]}
+          >
+            <Input
+              size="large"
+              name="username"
+              autoComplete="new-password"
+              value={body.username}
+              onChange={handleChangeUserBody}
+            />
+          </Form.Item>
+        )}
         <Form.Item
           label={t(`table.cellphone`)}
           name="cellphone"

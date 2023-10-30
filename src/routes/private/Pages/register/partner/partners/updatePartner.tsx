@@ -46,6 +46,7 @@ import {
   Input,
   Row,
   Spin,
+  Switch,
   Tabs,
   TabsProps,
   Typography,
@@ -293,6 +294,19 @@ export const UpdatePartner = () => {
                   onChange={(value) =>
                     setPartnerBody((state) => ({ ...state, country: value }))
                   }
+                />
+              </Form.Item>
+            </Col>
+            <Col xs={{ span: 24 }} md={{ span: 2 }}>
+              <Form.Item label={t("table.status")} name="status" valuePropName="checked">
+                <Switch
+                  checked={partnerBody?.status}
+                  onChange={(checked) => {
+                    setPartnerBody((state) => ({
+                      ...state,
+                      status: checked,
+                    }));
+                  }}
                 />
               </Form.Item>
             </Col>

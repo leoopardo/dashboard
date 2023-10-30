@@ -58,106 +58,145 @@ export const AggregatorDetails = () => {
       key: "1",
       label: t("table.aggregator_data"),
       children: (
-        <Descriptions column={3} bordered>
-          <Descriptions.Item
-            key={"id"}
-            label={t(`table.id`)}
-            labelStyle={{
-              maxWidth: "120px !important",
-              margin: 0,
-              padding: 0,
-              textAlign: "center",
-            }}
-          >
-            {location?.state?.id ?? "-"}
-          </Descriptions.Item>
-          <Descriptions.Item
-            key={"name"}
-            label={t(`table.name`)}
-            labelStyle={{
-              maxWidth: "120px !important",
-              margin: 0,
-              padding: 0,
-              textAlign: "center",
-            }}
-          >
-            {location?.state?.name ?? "-"}
-          </Descriptions.Item>
-          <Descriptions.Item
-            key={"cnpj"}
-            label={t(`table.cnpj`)}
-            labelStyle={{
-              maxWidth: "120px !important",
-              margin: 0,
-              padding: 0,
-              textAlign: "center",
-            }}
-          >
-            {location?.state?.cnpj ?? "-"}
-          </Descriptions.Item>
-          <Descriptions.Item
-            key={"email"}
-            label={t(`table.email`)}
-            labelStyle={{
-              maxWidth: "120px !important",
-              margin: 0,
-              padding: 0,
-              textAlign: "center",
-            }}
-          >
-            {location?.state?.email ?? "-"}
-          </Descriptions.Item>
-          <Descriptions.Item
-            key={"cellphone"}
-            label={t(`table.cellphone`)}
-            labelStyle={{
-              maxWidth: "120px !important",
-              margin: 0,
-              padding: 0,
-              textAlign: "center",
-            }}
-          >
-            {location?.state?.cellphone ?? "-"}
-          </Descriptions.Item>
-          <Descriptions.Item
-            key={"status"}
-            label={t(`table.status`)}
-            labelStyle={{
-              maxWidth: "120px !important",
-              margin: 0,
-              padding: 0,
-              textAlign: "center",
-            }}
-          >
-            {location?.state?.status === 1
-              ? t("table.active")
-              : t("table.inactive")}
-          </Descriptions.Item>
-          <Descriptions.Item
-            key={"linked_merchants_total"}
-            label={t(`table.linked_merchants_total`)}
-            labelStyle={{
-              maxWidth: "120px !important",
-              margin: 0,
-              padding: 0,
-              textAlign: "center",
-            }}
-          >
-            {location?.state?.linked_merchants_total ?? 0}
-          </Descriptions.Item>
-          <Descriptions.Item
-            key={"linked_operators_total"}
-            label={t(`table.linked_operators_total`)}
-            labelStyle={{
-              maxWidth: "120px !important",
-              margin: 0,
-              padding: 0,
-              textAlign: "center",
-            }}
-          >
-            {location?.state?.linked_operators_total ?? 0}
-          </Descriptions.Item>
-        </Descriptions>
+        <Row gutter={[8, 8]}>
+          <Col xs={{ span: 24 }} md={{ span: 8 }}>
+            <Descriptions column={1} bordered>
+              <Descriptions.Item
+                key={"id"}
+                label={t(`table.id`)}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {location?.state?.id ?? "-"}
+              </Descriptions.Item>
+              <Descriptions.Item
+                key={"name"}
+                label={t(`table.name`)}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {location?.state?.name ?? "-"}
+              </Descriptions.Item>
+              <Descriptions.Item
+                key={"cnpj"}
+                label={t(`table.cnpj`)}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {location?.state?.cnpj ?? "-"}
+              </Descriptions.Item>
+             
+            </Descriptions>
+          </Col>
+          <Col xs={{ span: 24 }} md={{ span: 8 }}>
+            <Descriptions column={1} bordered>
+              <Descriptions.Item
+                key={"email"}
+                label={t(`table.email`)}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {location?.state?.email ?? "-"}
+              </Descriptions.Item>
+              <Descriptions.Item
+                key={"cellphone"}
+                label={t(`table.cellphone`)}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {location?.state?.cellphone ?? "-"}
+              </Descriptions.Item>
+              <Descriptions.Item
+                key={"country"}
+                label={t(`table.country`)}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {location?.state.country ?? "-"}
+              </Descriptions.Item>
+            </Descriptions>
+          </Col>
+          <Col xs={{ span: 24 }} md={{ span: 8 }}>
+            <Descriptions column={1} bordered>
+              <Descriptions.Item
+                key={"status"}
+                label={t(`table.status`)}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {location?.state?.status === 1
+                  ? t("table.active")
+                  : t("table.inactive")}
+              </Descriptions.Item>
+              <Descriptions.Item
+                key={"linked_merchants_total"}
+                label={t(`table.linked_merchants_total`)}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {location?.state?.linked_merchants_total ?? 0}
+              </Descriptions.Item>
+              <Descriptions.Item
+                key={"linked_operators_total"}
+                label={t(`table.linked_operators_total`)}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {location?.state?.linked_operators_total ?? 0}
+              </Descriptions.Item>
+              <Descriptions.Item
+                key={"createdAt"}
+                label={t(`table.created_at`)}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {`${new Date(location?.state?.created_at).toLocaleDateString()} ${new Date(
+                    location?.state?.created_at
+                  ).toLocaleTimeString()}`}
+              </Descriptions.Item>
+            </Descriptions>
+          </Col>
+        </Row>
       ),
     },
     {
