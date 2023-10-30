@@ -1,4 +1,8 @@
-import { InfoCircleOutlined } from "@ant-design/icons";
+import {
+  BarChartOutlined,
+  DashOutlined,
+  InfoCircleOutlined,
+} from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { FiltersModal } from "@src/components/FiltersModal";
 import { FilterChips } from "@src/components/FiltersModal/filterChips";
@@ -24,12 +28,14 @@ import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { TabsTable } from "./components/TabsTable";
 import { BankCard } from "./components/bankCard";
+import { BankBalanceChart } from "./components/charts/bankBalanceChart";
 import { ChartIn } from "./components/charts/chartIn";
 import { ChartOut } from "./components/charts/chartOut";
 import { MerchantBalance } from "./components/merchantBalance";
 import { MerchantsBalance } from "./components/merchantsBalance";
 import { OrganizationBalance } from "./components/organizationBalance";
 import { ValuesTable } from "./components/valuesTable";
+import secureLocalStorage from "react-secure-storage";
 
 const INITIAL_QUERY = {
   start_date: moment(new Date())
@@ -49,6 +55,9 @@ export const Dashboard = () => {
     "validate"
   ) as ValidateInterface;
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
+  const [isBankChart, setIsBankChart] = useState<boolean>(
+    secureLocalStorage.getItem("isBankChart") === "true"
+  );
   const [query, setQuery] =
     useState<MerchantBankStatementTotalsQuery>(INITIAL_QUERY);
   const [isTuorOpen, setIsTuorOpen] = useState<boolean>(false);
@@ -206,6 +215,9 @@ export const Dashboard = () => {
                   ? "none"
                   : undefined,
               },
+              disabled:
+                !permissions?.report?.paybrokers?.balance
+                  ?.report_paybrokers_balance_list,
             },
             {
               key: "2",
@@ -221,6 +233,9 @@ export const Dashboard = () => {
                   ? "none"
                   : undefined,
               },
+              disabled:
+                !permissions?.report?.merchant?.balance
+                  ?.report_merchant_balance_list,
             },
           ]}
         />
@@ -239,27 +254,66 @@ export const Dashboard = () => {
           padding: 15,
         }}
       >
-        <Col
-          span={24}
-          style={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "space-between",
-          }}
-        >
-          <Typography.Title level={3}>Saldos bancários</Typography.Title>
-          <Tooltip title={t("buttons.help")}>
-            <Button
-              type="link"
-              onClick={() => setIsTuorOpen((state) => !state)}
-            >
-              <InfoCircleOutlined />
-            </Button>
-          </Tooltip>
-        </Col>
+        {!permissions?.report?.paybrokers?.bank_balance?.menu && (
+          <Col
+            span={24}
+            style={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "flex-end",
+              marginTop: "-25px",
+            }}
+          >
+            <Tooltip title={t("buttons.help")}>
+              <Button
+                type="link"
+                onClick={() => setIsTuorOpen((state) => !state)}
+              >
+                <InfoCircleOutlined />
+              </Button>
+            </Tooltip>
+          </Col>
+        )}
 
         {permissions?.report?.paybrokers?.bank_balance?.menu && (
-          <Row gutter={[8, 4]} align="middle" justify="center">
+          <>
+            <Col
+              span={24}
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
+              <Typography.Title level={3}>
+                {t("menus.organization_bank_balance")}
+              </Typography.Title>
+              <div>
+                <Tooltip title={t("buttons.help")}>
+                  <Button
+                    type="link"
+                    onClick={() => setIsTuorOpen((state) => !state)}
+                  >
+                    <InfoCircleOutlined />
+                  </Button>
+                </Tooltip>
+                <Button
+                  shape="circle"
+                  onClick={() => {
+                    if (isBankChart) {
+                      setIsBankChart(false);
+                      secureLocalStorage.setItem("isBankChart", "false");
+                    }
+                    else {
+                      setIsBankChart(true);
+                      secureLocalStorage.setItem("isBankChart", "true");
+                    }
+                  }}
+                >
+                  {!isBankChart ? <BarChartOutlined /> : <DashOutlined />}
+                </Button>
+              </div>
+            </Col>
             <Row
               style={{
                 width: "100%",
@@ -269,73 +323,81 @@ export const Dashboard = () => {
               gutter={[16, 16]}
               ref={ref3}
             >
-              <>
-                {bankListData?.itens.map((bank) => (
-                  <BankCard bank={bank} key={bank.id} />
-                ))}
-              </>
+              {isBankChart && (
+                <Col span={24}>
+                  <BankBalanceChart />
+                </Col>
+              )}
+              {!isBankChart && (
+                <>
+                  {bankListData?.itens.map((bank) => (
+                    <BankCard bank={bank} key={bank.id} />
+                  ))}
+                </>
+              )}
             </Row>
-
-            <Layout
-              style={{
-                width: "100%",
-                marginLeft: "-40px",
-                marginRight: "-40px",
-                padding: 25,
-              }}
-            >
-              <Row gutter={[4, 4]} align="middle">
-                <Col xs={{ span: 24 }} md={{ span: 4 }}>
-                  <Button
-                    style={{ width: "100%", height: 40 }}
-                    type="primary"
-                    onClick={() => setIsFiltersOpen(true)}
-                  >
-                    {t("table.filters")}
-                  </Button>
-                </Col>
-                <Col xs={{ span: 24 }} md={{ span: 16 }}>
-                  <FilterChips
-                    startDateKeyName="start_date"
-                    endDateKeyName="end_date"
-                    query={query}
-                    setQuery={setQuery}
-                    haveInitialDate
-                  />
-                </Col>
-                <Col xs={{ span: 24 }} md={{ span: 4 }}>
-                  <Button
-                    type="dashed"
-                    danger
-                    onClick={() => {
-                      setQuery(INITIAL_QUERY);
-                    }}
-                    style={{
-                      height: 40,
-                      width: "100%",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
-                    {t("table.clear_filters")}
-                  </Button>
-                </Col>
-                <Col span={24} style={{ marginTop: 16, marginBottom: 16 }}>
-                  <ValuesTable query={query} />
-                </Col>
-              </Row>
-            </Layout>
-
-            <Col span={24} style={{ paddingTop: "20px" }}>
-              <Row gutter={[16, 16]}>
-                <ChartIn query={query} />
-                <ChartOut query={query} />
-              </Row>
-            </Col>
-          </Row>
+          </>
         )}
+        <Row gutter={[8, 4]} align="middle" justify="center">
+          <Layout
+            style={{
+              width: "100%",
+              marginLeft: "-40px",
+              marginRight: "-40px",
+              padding: 25,
+            }}
+          >
+            <Row gutter={[4, 4]} align="middle">
+              <Col xs={{ span: 24 }} md={{ span: 4 }}>
+                <Button
+                  style={{ width: "100%", height: 40 }}
+                  type="primary"
+                  onClick={() => setIsFiltersOpen(true)}
+                >
+                  {t("table.filters")}
+                </Button>
+              </Col>
+              <Col xs={{ span: 24 }} md={{ span: 16 }}>
+                <FilterChips
+                  startDateKeyName="start_date"
+                  endDateKeyName="end_date"
+                  query={query}
+                  setQuery={setQuery}
+                  haveInitialDate
+                />
+              </Col>
+              <Col xs={{ span: 24 }} md={{ span: 4 }}>
+                <Button
+                  type="dashed"
+                  danger
+                  onClick={() => {
+                    setQuery(INITIAL_QUERY);
+                  }}
+                  style={{
+                    height: 40,
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
+                  {t("table.clear_filters")}
+                </Button>
+              </Col>
+              <Col span={24} style={{ marginTop: 16, marginBottom: 16 }}>
+                <ValuesTable query={query} />
+              </Col>
+            </Row>
+          </Layout>
+
+          <Col span={24} style={{ paddingTop: "20px" }}>
+            <Row gutter={[16, 16]}>
+              <ChartIn query={query} />
+              <ChartOut query={query} />
+            </Row>
+          </Col>
+        </Row>
 
         <Row
           style={{
@@ -359,7 +421,7 @@ export const Dashboard = () => {
 
         <Row style={{ marginTop: 16 }}>
           <Col span={24}>
-            <TabsTable />
+            <TabsTable query={query}/>
           </Col>
         </Row>
       </Col>

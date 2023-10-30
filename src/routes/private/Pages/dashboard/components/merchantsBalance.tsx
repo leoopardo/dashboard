@@ -40,6 +40,7 @@ export const MerchantsBalance = () => {
         ]}
         label={["merchant", "value"]}
         disableScrollToTop
+        removePagination
       />
     </Col>
   );

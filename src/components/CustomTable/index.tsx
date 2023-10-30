@@ -898,6 +898,7 @@ export const CustomTable = (props: TableProps) => {
             <Table
               size="middle"
               tableLayout="auto"
+              
               locale={{
                 emptyText: props.error ? (
                   <div style={{ display: "flex", justifyContent: "center" }}>
