@@ -307,6 +307,8 @@ export const FiltersModal = ({
               } else return;
 
             case "bank":
+            case "cash_in_bank":
+            case "cash_out_bank":
               return (
                 <Form.Item
                   label={t(`table.${filter}`)}
@@ -316,6 +318,7 @@ export const FiltersModal = ({
                   <BanksSelect
                     queryOptions={filtersQuery}
                     setQueryFunction={setFiltersQuery}
+                    field={filter}
                   />
                 </Form.Item>
               );

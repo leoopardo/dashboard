@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useListBanks } from "@src/services/bank/listBanks";
 import { AutoComplete, Avatar, Empty } from "antd";
@@ -8,9 +9,10 @@ import { MerchantQuery } from "../../../services/types/register/merchants/mercha
 interface BankSelectProps {
   setQueryFunction: Dispatch<SetStateAction<any>>;
   queryOptions?: any;
-  onChange?: (value: string) => void
-  currentValue?: any
+  onChange?: (value: string) => void;
+  currentValue?: any;
   setCurrentValue?: Dispatch<SetStateAction<any>>;
+  field?: string;
 }
 
 export const BanksSelect = ({
@@ -18,20 +20,21 @@ export const BanksSelect = ({
   queryOptions,
   currentValue,
   setCurrentValue,
+  field,
 }: BankSelectProps) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   const [query] = useState<MerchantQuery>({
     page: 1,
     limit: 200,
   });
-  const { bankListData } =
-    useListBanks(query);
+  const { bankListData } = useListBanks(query);
   const [value, setValue] = useState<any>(null);
 
   useEffect(() => {
     setValue(
-      bankListData?.itens.find((bank) => bank?.label_name === queryOptions?.bank)
-        ?.label_name
+      bankListData?.itens.find(
+        (bank) => bank?.label_name === queryOptions[field ?? "bank"]
+      )?.label_name
     );
   }, [bankListData, queryOptions]);
 
@@ -55,9 +58,14 @@ export const BanksSelect = ({
       notFoundContent={<Empty />}
       value={currentValue || value}
       style={{ width: "100%", height: 40 }}
-      onChange={(value) => setCurrentValue ? setCurrentValue(value) : setValue(value)}
+      onChange={(value) =>
+        setCurrentValue ? setCurrentValue(value) : setValue(value)
+      }
       onSelect={(value) =>
-        setQueryFunction((state: any) => ({ ...state, bank: value }))
+        setQueryFunction((state: any) => ({
+          ...state,
+          [field ?? "bank"]: value,
+        }))
       }
       placeholder={t("table.bank")}
     />
