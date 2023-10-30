@@ -13,6 +13,7 @@ interface TuorComponentInterface {
   searchByNameStepRef?: any;
   removeFiltersStepRef?: any;
   createRegisterStep?: any;
+  refreshStepRef?: any;
   exportCsvStep?: any;
 }
 
@@ -25,6 +26,7 @@ export const TuorComponent = ({
   createRegisterStep,
   searchFilterStepRef,
   searchByNameStepRef,
+  refreshStepRef,
   removeFiltersStepRef,
 }: TuorComponentInterface) => {
   const { t, i18n } = useTranslation();
@@ -59,8 +61,19 @@ export const TuorComponent = ({
     if (createRegisterStep) {
       CSteps.push(createRegisterStep);
     }
+
+  
     if (exportCsvStep) {
       CSteps.push(exportCsvStep);
+    }
+    
+    if (refreshStepRef) {
+      console.log('tttest')
+      CSteps.push({
+        title: t("buttons.update"),
+        description: t("wiki.update_table_button"),
+        target: () => refreshStepRef?.current,
+      });
     }
     setCurrentSteps([...CSteps, ...(steps as any)]);
   }, [i18n.language]);

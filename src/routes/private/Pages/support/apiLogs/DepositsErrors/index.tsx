@@ -166,13 +166,13 @@ export const DepositsErrors = () => {
             setCurrentItem={setCurrentItem}
             setQuery={setQuery}
             data={DepositsErrorsLogs}
-            items={DepositsErrorsLogs?.items}
+            items={DepositsErrorsLogs?.items }
             error={DepositsErrorsLogsError}
             removeTotal
             columns={[
-              { name: "_id", type: "id", sort: true },
-              { name: "merchant_id", type: "text" },
-              { name: "partner_id", type: "text" },
+              { name: "_id", type: "id",  sort: true },
+              { name: "merchant_name", head:"merchant", type: "merchant_name" },
+              { name: "partner_name", head:"partner", type: "partner_name" },
               { name: "document", type: "document" },
               { name: "error_message", type: "text" },
               { name: "step", type: "text", sort: true },

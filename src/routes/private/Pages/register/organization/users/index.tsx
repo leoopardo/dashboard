@@ -5,6 +5,7 @@ import {
   EyeFilled,
   InfoCircleOutlined,
   UserAddOutlined,
+  ReloadOutlined,
 } from "@ant-design/icons";
 import { CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
@@ -82,6 +83,7 @@ export const OrganizationUser = () => {
   const ref3 = useRef(null);
   const ref4 = useRef(null);
   const ref5 = useRef(null);
+  const ref6 = useRef(null);
   const refId = useRef(null);
   const refName = useRef(null);
   const refGroup = useRef(null);
@@ -134,7 +136,7 @@ export const OrganizationUser = () => {
       </Grid>
 
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
-        <Grid item xs={12} md={4} lg={4} ref={ref2}>
+        <Grid item xs={12} md={3} lg={4} ref={ref2}>
           <Search query={query} setQuery={setQuery} searchOption="name" />
         </Grid>
         <Grid item xs={12} md={3} lg={2}>
@@ -193,6 +195,19 @@ export const OrganizationUser = () => {
             />
           </Grid>
         )}
+
+        <Grid item xs={12} md="auto">
+          <Button
+            ref={ref6}
+            style={{ width: "100%", height: "40px", justifyContent: "center" }}
+            loading={isUsersDataFetching}
+            shape="round"
+            type="dashed"
+            onClick={refetchUsersData}
+          >
+            {!isUsersDataFetching && <ReloadOutlined />}
+          </Button>
+        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -241,7 +256,7 @@ export const OrganizationUser = () => {
               },
             ]}
             loading={isUsersDataFetching}
-            label={["name", "username", "updated_at" ]}
+            label={["name", "username", "updated_at"]}
           />
         </Grid>
       </Grid>
@@ -332,6 +347,7 @@ export const OrganizationUser = () => {
             target: () => ref5.current,
           }
         }
+        refreshStepRef={ref6}
         steps={[
           {
             title: t("table.id"),

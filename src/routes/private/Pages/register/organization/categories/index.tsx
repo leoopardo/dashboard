@@ -4,6 +4,7 @@ import {
   EyeFilled,
   InfoCircleOutlined,
   UserAddOutlined,
+  ReloadOutlined,
 } from "@ant-design/icons";
 import { CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
@@ -103,6 +104,7 @@ export const OrganizationCategories = () => {
   const ref3 = useRef(null);
   const ref4 = useRef(null);
   const ref5 = useRef(null);
+  const ref6 = useRef(null);
   const refId = useRef(null);
   const refName = useRef(null);
   const refDescription = useRef(null);
@@ -157,7 +159,7 @@ export const OrganizationCategories = () => {
         <Grid item xs={12} md={4} lg={4} ref={ref2}>
           <Search query={query} setQuery={setQuery} searchOption="name" />
         </Grid>
-        <Grid item xs={12} md={3} lg={2}>
+        <Grid item xs={12} md={2} lg={2}>
           <Button
             ref={ref3}
             type="dashed"
@@ -215,6 +217,19 @@ export const OrganizationCategories = () => {
             />
           </Grid>
         )}
+
+        <Grid item xs={12} md="auto">
+          <Button
+          ref={ref6}
+            style={{ width: "100%", height: "40px", justifyContent: "center" }}
+            loading={isCategoriesDataFetching}
+            shape="round"
+            type="dashed"
+            onClick={refetchCategoriesData}
+          >
+            {!isCategoriesDataFetching && <ReloadOutlined />}
+          </Button>
+        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -346,6 +361,7 @@ export const OrganizationCategories = () => {
         searchFilterStepRef={ref1}
         searchByNameStepRef={ref2}
         removeFiltersStepRef={ref3}
+        refreshStepRef={ref6}
         createRegisterStep={
           permissions.register.paybrokers.release_category
             .paybrokers_release_category_create && {

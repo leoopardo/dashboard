@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { DownloadOutlined, EyeFilled } from "@ant-design/icons";
+import { DownloadOutlined, EyeFilled, ReloadOutlined } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { CustomTable } from "@src/components/CustomTable";
@@ -42,13 +42,10 @@ export const OrganizationUserReports = () => {
   const { t } = useTranslation();
   return (
     <Grid container style={{ padding: "25px" }}>
-      <Grid
-        container
-        style={{ display: "flex", alignItems: "center" }}
-        spacing={1}
-      >
+      <Grid container spacing={1}>
         <Grid item xs={12} md={4} lg={2}>
-           <Button size="large"
+          <Button
+            size="large"
             style={{ width: "100%" }}
             loading={isUsersReportsDataFetching}
             type="primary"
@@ -57,7 +54,7 @@ export const OrganizationUserReports = () => {
             {t("table.filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={6} lg={8}>
+        <Grid item xs={12} md={5} lg={7}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
@@ -85,6 +82,22 @@ export const OrganizationUserReports = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
+        <Grid xs={12} md={1} lg={1}>
+          <Button
+            style={{
+              width: "100%",
+              height: 40,
+              marginLeft: 10,
+              marginTop: 10
+            }}
+            loading={isUsersReportsDataFetching}
+            shape="round"
+            type="dashed"
+            onClick={refetchUsersReportsData}
+          >
+            {!isUsersReportsDataFetching && <ReloadOutlined />}
+          </Button>
+        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -103,9 +116,10 @@ export const OrganizationUserReports = () => {
                     window.location.assign(item?.report_url);
                 },
                 disabled: (item) => item.status !== "COMPLETED",
-              },   {
-                label: 'details',
-                icon: <EyeFilled style={{ fontSize: '20px' }} />,
+              },
+              {
+                label: "details",
+                icon: <EyeFilled style={{ fontSize: "20px" }} />,
                 onClick: () => setIsViewModalOpen(true),
               },
             ]}
@@ -113,8 +127,8 @@ export const OrganizationUserReports = () => {
             items={UsersReportsData?.items}
             error={UsersReportsDataError}
             columns={[
-              { name: "_id", type: "id",sort: true },
-              { name: "createdAt", type: "date",sort: true },
+              { name: "_id", type: "id", sort: true },
+              { name: "createdAt", type: "date", sort: true },
               { name: "created_by_name", type: "text" },
               { name: "rows", type: "text" },
               { name: "progress", type: "progress" },
@@ -147,7 +161,7 @@ export const OrganizationUserReports = () => {
           setOpen={setIsViewModalOpen}
           item={currentItem}
           loading={false}
-          modalName={t('modal.report_details')}
+          modalName={t("modal.report_details")}
         />
       )}
     </Grid>
