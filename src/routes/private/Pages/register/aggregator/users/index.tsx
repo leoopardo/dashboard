@@ -5,7 +5,6 @@ import {
   EyeFilled,
   InfoCircleOutlined,
   UserAddOutlined,
-  ReloadOutlined
 } from "@ant-design/icons";
 import { CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
@@ -82,7 +81,6 @@ export const AggregatorUsers = () => {
   const ref3 = useRef(null);
   const ref4 = useRef(null);
   const ref5 = useRef(null);
-  const ref6 = useRef(null);
   const refId = useRef(null);
   const refName = useRef(null);
   const refGroup = useRef(null);
@@ -136,7 +134,7 @@ export const AggregatorUsers = () => {
       </Grid>
 
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
-        <Grid item xs={12} md={4} lg={4} ref={ref2}>
+        <Grid item xs={12} md={5} lg={5} ref={ref2}>
           <Search query={query} setQuery={setQuery} searchOption="name" />
         </Grid>
         <Grid item xs={12} md={3} lg={2}>
@@ -196,20 +194,6 @@ export const AggregatorUsers = () => {
           </Grid>
         )}
 
-        <Grid item xs={12} md="auto" ref={ref6}>
-          <Button
-            style={{
-              width: "100%",
-              height: 40,
-            }}
-            loading={isUsersDataFetching}
-            shape="round"
-            type="dashed"
-            onClick={refetchUsersData}
-          >
-            {!isUsersDataFetching && <ReloadOutlined />}
-          </Button>
-        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -347,7 +331,6 @@ export const AggregatorUsers = () => {
             target: () => ref4.current,
           }
         }
-        refreshStepRef={ref6}
         exportCsvStep={
           permissions.register.aggregator.users.aggregator_user_export_csv && {
             title: t("wiki.generate_reports"),

@@ -4,7 +4,6 @@ import {
   EditOutlined,
   EyeFilled,
   UserAddOutlined,
-  ReloadOutlined,
 } from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
@@ -175,21 +174,7 @@ export const PartnerUsers = () => {
             />
           </Grid>
         )}
-
-        <Grid item xs={12} md="auto">
-          <Button
-            style={{
-              width: "100%",
-              height: 40,
-            }}
-            loading={isUsersDataFetching}
-            shape="round"
-            type="dashed"
-            onClick={refetchUsersData}
-          >
-            {!isUsersDataFetching && <ReloadOutlined />}
-          </Button>
-        </Grid>
+        
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>

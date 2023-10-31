@@ -107,7 +107,7 @@ export const MerchantFeePlans = () => {
             {t("table.filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={5} lg={7}>
+        <Grid item xs={12} md={6} lg={8}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
@@ -139,27 +139,6 @@ export const MerchantFeePlans = () => {
           </Button>
         </Grid>
 
-        <Grid
-          container
-          item
-          xs={12}
-          md="auto"
-          lg={1}
-          style={{ marginLeft: "auto" }}
-        >
-          <Button
-            style={{
-              width: "100%",
-              height: 40,
-            }}
-            loading={isFeePlansDataFetching}
-            shape="round"
-            type="dashed"
-            onClick={refetchFeePlansData}
-          >
-            {!isFeePlansDataFetching && <ReloadOutlined />}
-          </Button>
-        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>

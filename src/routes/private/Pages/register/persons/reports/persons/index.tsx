@@ -9,7 +9,7 @@ import { ReportsQuery } from "@src/services/types/reports/reports.interface";
 import { FiltersModal } from "@src/components/FiltersModal";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { CustomTable } from "@src/components/CustomTable";
-import { DownloadOutlined, EyeFilled, ReloadOutlined } from "@ant-design/icons";
+import { DownloadOutlined, EyeFilled } from "@ant-design/icons";
 import { useGetPersonsReports } from "@src/services/reports/register/persons/persons/getPersonsReports";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
 
@@ -53,7 +53,7 @@ export const PersonsReports = () => {
             {t("table.filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={5} lg={7}>
+        <Grid item xs={12} md={6} lg={8}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
@@ -81,27 +81,7 @@ export const PersonsReports = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        <Grid
-          container
-          item
-          xs={12}
-          md="auto"
-          lg={1}
-          style={{ marginLeft: "auto" }}
-        >
-          <Button
-            style={{
-              width: "100%",
-              height: 40,
-            }}
-            loading={isPersonsReportsDataFetching}
-            shape="round"
-            type="dashed"
-            onClick={refetchPersonsReportsData}
-          >
-            {!isPersonsReportsDataFetching && <ReloadOutlined />}
-          </Button>
-        </Grid>
+        
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>

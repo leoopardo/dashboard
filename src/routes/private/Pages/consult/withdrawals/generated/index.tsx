@@ -1,6 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { EyeFilled, FileAddOutlined, SettingFilled } from "@ant-design/icons";
+import {
+  EyeFilled,
+  FileAddOutlined,
+  SettingFilled,
+  ReloadOutlined,
+} from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { Search } from "@src/components/Inputs/search";
@@ -128,7 +133,10 @@ export const GeneratedWithdrawals = () => {
         .report_withdraw_generated_withdraw_list_totals && (
         <TotalizersCards
           data={WithdrawalsTotal}
-          fetchData={refetchWithdrawalsTotal}
+          fetchData={() => {
+            refetchWithdrawalsTotal();
+            refetchWithdrawalsTotalRows();
+          }}
           loading={isWithdrawalsTotalFetching}
           query={query}
         />
@@ -169,7 +177,7 @@ export const GeneratedWithdrawals = () => {
       </Grid>
 
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
-        <Grid item xs={12} md={2} lg={2}>
+        <Grid item xs={12} md={4} lg={2}>
           <Select
             style={{ width: "100%" }}
             size="large"
@@ -221,7 +229,7 @@ export const GeneratedWithdrawals = () => {
             ]}
           />
         </Grid>
-        <Grid item xs={12} md={4} lg={4}>
+        <Grid item xs={12} md={5} lg={3}>
           <Search
             query={query}
             setQuery={setQuery}
@@ -251,7 +259,7 @@ export const GeneratedWithdrawals = () => {
         </Grid>
         {permissions.report.withdraw.generated_withdraw
           .report_withdraw_generated_withdraw_resend_notification && (
-          <Grid item xs={12} md={2} lg={2}>
+          <Grid item xs={12} md={4} lg={2}>
             <Button
               type="primary"
               loading={isWithdrawalsRowsFetching}
@@ -273,7 +281,7 @@ export const GeneratedWithdrawals = () => {
 
         {permissions.report.withdraw.generated_withdraw
           .report_withdraw_generated_withdraw_export_csv && (
-          <Grid item xs={12} md="auto" lg={1}>
+          <Grid item xs={12} md={4} lg={1}>
             <Tooltip
               placement="topRight"
               title={
@@ -297,6 +305,21 @@ export const GeneratedWithdrawals = () => {
             </Tooltip>
           </Grid>
         )}
+
+        <Grid item xs={12} md={4} lg={2}>
+          <Button
+            size="large"
+            type="primary"
+            style={{ width: "100%" }}
+            loading={isWithdrawalsRowsFetching || isWithdrawalsTotalFetching}
+            onClickCapture={() => {
+              refetchWithdrawalsTotalRows();
+              refetchWithdrawalsTotal();
+            }}
+          >
+            <ReloadOutlined /> {t("buttons.refresh")}
+          </Button>
+        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>

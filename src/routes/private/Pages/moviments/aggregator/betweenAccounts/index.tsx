@@ -140,7 +140,7 @@ export const AggregatorTransfersBetweenAccounts = () => {
             {t("table.filters")}
           </Button>
         </Col>
-        <Col xs={{ span: 24 }} md={{ span: 7 }} lg={11}>
+        <Col xs={{ span: 24 }} md={{ span: 6 }} lg={9}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
@@ -189,18 +189,17 @@ export const AggregatorTransfersBetweenAccounts = () => {
           </Col>
         )}
 
-        <Col xs={{ span: 24 }} md={{ span: 3 }} lg={{ span: 2 }}>
+<Col xs={{ span: 24 }} md={{ span: 3 }} lg={{ span: 4 }}>
           <Button
-            style={{
-              width: "100%",
-              height: 40,
-            }}
+            size="large"
+            type="primary"
+            style={{ width: "100%" }}
             loading={isTransferBetweenAccountsDataFetching}
-            shape="round"
-            type="dashed"
-            onClick={refetchTransferBetweenAccountsData}
+            onClickCapture={() => {
+              refetchTransferBetweenAccountsData();
+            }}
           >
-            {!isTransferBetweenAccountsDataFetching && <ReloadOutlined />}
+            <ReloadOutlined /> {t("buttons.refresh")}
           </Button>
         </Col>
       </Row>

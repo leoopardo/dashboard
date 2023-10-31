@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { EyeFilled, ShopOutlined } from "@ant-design/icons";
+import { EyeFilled, ShopOutlined, ReloadOutlined } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import ReplayIcon from "@mui/icons-material/Replay";
 import { Grid } from "@mui/material";
@@ -110,7 +110,10 @@ export const RefundDeposits = () => {
     <Grid container style={{ padding: "25px" }}>
       <TotalizersCards
         data={refundDepositsTotal}
-        fetchData={refetchRefundDepositsTotal}
+        fetchData={() => {
+          refetchRefundDepositsTotal()
+          refetchRefundDepositsTotalRows()
+        }}
         loading={isRefundDepositsTotalFetching}
         query={query}
       />
@@ -232,6 +235,25 @@ export const RefundDeposits = () => {
             />
           </Grid>
         )}
+
+<Grid item xs={12} md={2} lg={2}>
+          <Button
+            size="large"
+            type="primary"
+            style={{ width: "100%" }}
+            loading={
+              isRefundDepositsRowsFetching || isRefundDepositsTotalFetching
+            }
+            onClickCapture={() => {
+              refetchRefundDepositsTotalRows();
+              refetchRefundDepositsTotal();
+            }}
+          >
+            {!isRefundDepositsRowsFetching &&
+              !isRefundDepositsTotalFetching && <ReloadOutlined />}{" "}
+            {t("buttons.refresh")}
+          </Button>
+        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>

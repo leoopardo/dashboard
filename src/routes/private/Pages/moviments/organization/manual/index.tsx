@@ -200,7 +200,7 @@ export const OrgonizationManual = () => {
             {t("table.filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={4} lg={5}>
+        <Grid item xs={12} md={3} lg={4}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
@@ -250,16 +250,15 @@ export const OrgonizationManual = () => {
           style={{ marginLeft: "auto" }}
         >
           <Button
-            style={{
-              width: "100%",
-              height: 40,
-            }}
+            size="large"
+            type="primary"
+            style={{ width: "100%" }}
             loading={isOrganizationMovimentsDataFetching}
-            shape="round"
-            type="dashed"
-            onClick={refetchOrganizationMovimentsData}
+            onClickCapture={() => {
+              refetchOrganizationMovimentsData();
+            }}
           >
-            {!isOrganizationMovimentsDataFetching && <ReloadOutlined />}
+            <ReloadOutlined /> {t("buttons.refresh")}
           </Button>
         </Grid>
       </Grid>

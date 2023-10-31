@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { EyeFilled, FileAddOutlined } from "@ant-design/icons";
+import { EyeFilled, FileAddOutlined, ReloadOutlined } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { Search } from "@src/components/Inputs/search";
@@ -97,7 +97,10 @@ export const PaidDeposits = () => {
         .report_deposit_paid_deposit_list_totals && (
         <TotalizersCards
           data={paidTotal}
-          fetchData={refetchPaidTotal}
+          fetchData={() => {
+            refetchPaidTotal();
+            refetchPaidTotalRows();
+          }}
           loading={isPaidTotalFetching}
           query={query}
         />
@@ -237,6 +240,20 @@ export const PaidDeposits = () => {
             </Tooltip>
           </Grid>
         )}
+        <Grid item xs={12} md="auto" lg={1}>
+          <Button
+            size="large"
+            type="primary"
+            style={{ width: "100%" }}
+            loading={isPaidTotalFetching || isPaidRowsFetching}
+            onClickCapture={() => {
+              refetchPaidTotalRows();
+              refetchPaidTotal();
+            }}
+          >
+            <ReloadOutlined /> {t("buttons.refresh")}
+          </Button>
+        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>

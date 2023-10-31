@@ -195,7 +195,7 @@ export const MerchantManual = () => {
         style={{ display: "flex", alignItems: "center" }}
         spacing={1}
       >
-        <Grid item xs={12} md={3} lg={2}>
+        <Grid item xs={12} md={2} lg={2}>
           <Button
             size="large"
             style={{ width: "100%" }}
@@ -206,7 +206,7 @@ export const MerchantManual = () => {
             {t("table.filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={3} lg={5}>
+        <Grid item xs={12} md={3} lg={4}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
@@ -215,7 +215,7 @@ export const MerchantManual = () => {
             haveInitialDate
           />
         </Grid>
-        <Grid item xs={12} md={3} lg={2}>
+        <Grid item xs={12} md={2} lg={2}>
           <Button
             type="dashed"
             loading={isMerchantMovimentsDataFetching}
@@ -253,22 +253,19 @@ export const MerchantManual = () => {
           item
           xs={12}
           md="auto"
-          lg={1}
+          lg={2}
           style={{ marginLeft: "auto" }}
         >
           <Button
-            style={{
-              width: "100%",
-              height: 40,
-            }}
+            size="large"
+            type="primary"
+            style={{ width: "100%" }}
             loading={isMerchantMovimentsDataFetching}
-            shape="round"
-            type="dashed"
-            onClick={refetchMerchantMovimentsData}
+            onClickCapture={() => {
+              refetchMerchantMovimentsData();
+            }}
           >
-            {!isMerchantMovimentsDataFetching && (
-              <ReloadOutlined />
-            )}
+            <ReloadOutlined /> {t("buttons.refresh")}
           </Button>
         </Grid>
       </Grid>

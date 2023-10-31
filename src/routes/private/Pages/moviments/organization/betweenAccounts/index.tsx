@@ -1,7 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { ArrowUpOutlined, DollarOutlined, EyeFilled, ReloadOutlined } from "@ant-design/icons";
+import {
+  ArrowUpOutlined,
+  DollarOutlined,
+  EyeFilled,
+  ReloadOutlined,
+} from "@ant-design/icons";
 import { CustomTable } from "@src/components/CustomTable";
 import { FiltersModal } from "@src/components/FiltersModal";
 import { FilterChips } from "@src/components/FiltersModal/filterChips";
@@ -135,7 +140,7 @@ export const OrganizationTransfersBetweenAccounts = () => {
             {t("table.filters")}
           </Button>
         </Col>
-        <Col xs={{ span: 24 }} md={{ span: 7 }} lg={12}>
+        <Col xs={{ span: 24 }} md={{ span: 5 }} lg={10}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
@@ -169,7 +174,7 @@ export const OrganizationTransfersBetweenAccounts = () => {
         {/* arrumar permissões */}
         {permissions?.transactions?.paybrokers?.internal_transfers
           ?.paybrokers_internal_transfers_export_csv && (
-          <Col xs={{ span: 24 }} md={{ span: 3 }} lg={{ span: 2 }}>
+          <Col xs={{ span: 24 }} md={{ span: 4 }} lg={{ span: 2 }}>
             <ExportReportsModal
               disabled={
                 !TransferBetweenAccountsData?.items ||
@@ -184,20 +189,19 @@ export const OrganizationTransfersBetweenAccounts = () => {
           </Col>
         )}
 
-<Col xs={{ span: 24 }} md={{ span: 3 }} lg={{ span: 2 }}>
+        <Col xs={{ span: 24 }} md={{ span: 4 }} lg={{ span: 4 }}>
           <Button
-            style={{
-              width: "100%",
-              height: 40,
-            }}
+            size="large"
+            type="primary"
+            style={{ width: "100%" }}
             loading={isTransferBetweenAccountsDataFetching}
-            shape="round"
-            type="dashed"
-            onClick={refetchTransferBetweenAccountsData}
+            onClickCapture={() => {
+              refetchTransferBetweenAccountsData();
+            }}
           >
-            {!isTransferBetweenAccountsDataFetching && <ReloadOutlined />}
+            <ReloadOutlined /> {t("buttons.refresh")}
           </Button>
-          </Col>
+        </Col>
       </Row>
 
       <Row style={{ width: "100%" }}>
@@ -220,7 +224,7 @@ export const OrganizationTransfersBetweenAccounts = () => {
             error={TransferBetweenAccountsDataError}
             columns={[
               { name: "_id", type: "id" },
-              { name: "from", type: "translate", },
+              { name: "from", type: "translate" },
               { name: "to", type: "translate" },
               { name: "user_name", type: "text" },
               { name: "value", type: "value" },

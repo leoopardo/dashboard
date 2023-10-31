@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { EyeFilled, FileAddOutlined } from "@ant-design/icons";
+import { EyeFilled, FileAddOutlined, ReloadOutlined } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { Search } from "@src/components/Inputs/search";
@@ -107,7 +107,10 @@ export const PaidWithdrawals = () => {
         .report_withdraw_paid_withdraw_list_totals && (
         <TotalizersCards
           data={PaidWithdrawalsTotal}
-          fetchData={refetchPaidWithdrawalsTotal}
+          fetchData={() => {
+            refetchPaidWithdrawalsTotal();
+            refetchPaidWithdrawalsTotalRows();
+          }}
           loading={isPaidWithdrawalsTotalFetching}
           query={query}
         />
@@ -208,7 +211,7 @@ export const PaidWithdrawals = () => {
             searchOption={searchOption}
           />
         </Grid>
-        <Grid item xs={12} md={3} lg={2}>
+        <Grid item xs={12} md={2} lg={2}>
           <Button
             size="large"
             type="dashed"
@@ -258,11 +261,29 @@ export const PaidWithdrawals = () => {
             </Tooltip>
           </Grid>
         )}
+
+        <Grid item xs={12} md={2} lg={2}>
+          <Button
+            size="large"
+            type="primary"
+            style={{ width: "100%" }}
+            loading={
+              isPaidWithdrawalsRowsFetching || isPaidWithdrawalsTotalFetching
+            }
+            onClickCapture={() => {
+              refetchPaidWithdrawalsTotalRows();
+              refetchPaidWithdrawalsTotal();
+            }}
+          >
+            {!isPaidWithdrawalsRowsFetching &&
+              !isPaidWithdrawalsTotalFetching && <ReloadOutlined />}{" "}
+            {t("buttons.refresh")}
+          </Button>
+        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
         <Grid item xs={12}>
-          {" "}
           <CustomTable
             query={query}
             setCurrentItem={setCurrentItem}

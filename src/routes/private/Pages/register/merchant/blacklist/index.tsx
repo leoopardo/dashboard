@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { PlusOutlined, ReloadOutlined } from "@ant-design/icons";
+import { PlusOutlined } from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
@@ -123,12 +123,7 @@ export const MerchantBlacklist = () => {
     }
     setQuery((state) => ({ ...state, cpf: debounceSearch }));
   }, [debounceSearch]);
-  console.log(
-    "test",
-    !permissions?.register?.merchant?.blacklist?.merchant_blacklist_delete &&
-      !currentItem?.can_be_deleted_only_by_organization &&
-      /* type !== 1 && */ type !== 2
-  );
+
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid
@@ -161,7 +156,7 @@ export const MerchantBlacklist = () => {
         <Grid item xs={12} md={2} lg={2}>
           <ReasonSelect queryOptions={query} setQueryFunction={setQuery} />
         </Grid>
-        <Grid item xs={12} md={4} lg={3}>
+        <Grid item xs={12} md={4} lg={4}>
           <Input
             size="large"
             placeholder={t("table.cpf") || ""}
@@ -230,27 +225,6 @@ export const MerchantBlacklist = () => {
           </Grid>
         )}
 
-        <Grid
-          container
-          item
-          xs={12}
-          md="auto"
-          lg={1}
-          style={{ marginLeft: "auto" }}
-        >
-          <Button
-            style={{
-              width: "100%",
-              height: 40,
-            }}
-            loading={isMerchantBlacklistDataFetching}
-            shape="round"
-            type="dashed"
-            onClick={refetchMerchantBlacklistData}
-          >
-            {!isMerchantBlacklistDataFetching && <ReloadOutlined />}
-          </Button>
-        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>

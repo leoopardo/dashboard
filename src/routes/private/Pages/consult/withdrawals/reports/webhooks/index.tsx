@@ -1,10 +1,13 @@
-import { EyeFilled } from "@ant-design/icons";
+import { EyeFilled, ReloadOutlined } from "@ant-design/icons";
 import { CustomTable } from "@src/components/CustomTable";
 import { FiltersModal } from "@src/components/FiltersModal";
 import { FilterChips } from "@src/components/FiltersModal/filterChips";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
 import { useGetWithdrawWebhooks } from "@src/services/consult/withdrawals/webhooks/getDepositsWebhooks";
-import { DepositWebhooksItem, DepositWebhooksQuery } from "@src/services/types/consult/deposits/webhooks.interface";
+import {
+  DepositWebhooksItem,
+  DepositWebhooksQuery,
+} from "@src/services/types/consult/deposits/webhooks.interface";
 
 import { Button, Col, Row, Tabs } from "antd";
 import { useEffect, useState } from "react";
@@ -55,7 +58,7 @@ export const WithdrawWebhooks = () => {
             {t("table.filters")}
           </Button>
         </Col>
-        <Col xs={{ span: 24 }} md={{ span: 20 }}>
+        <Col xs={{ span: 24 }} md={{ span: 16 }} lg={{ span: 18 }}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
@@ -64,6 +67,7 @@ export const WithdrawWebhooks = () => {
             haveInitialDate
           />
         </Col>
+       
       </Row>
 
       <Row

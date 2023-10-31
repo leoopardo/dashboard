@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { EyeFilled } from "@ant-design/icons";
+import { EyeFilled, ReloadOutlined } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import ReplayIcon from "@mui/icons-material/Replay";
 import { Grid } from "@mui/material";
@@ -98,7 +98,10 @@ export const RefundWithdrawals = () => {
     <Grid container style={{ padding: "25px" }}>
       <TotalizersCards
         data={refundWithdrawalsTotal}
-        fetchData={refetchRefundWithdrawalsTotal}
+        fetchData={() => {
+          refetchRefundWithdrawalsTotal();
+          refetchRefundWithdrawals();
+        }}
         loading={isRefundWithdrawalsTotalFetching}
         query={query}
       />
@@ -183,7 +186,7 @@ export const RefundWithdrawals = () => {
             ]}
           />
         </Grid>
-        <Grid item xs={12} md={4} lg={4}>
+        <Grid item xs={12} md={3} lg={4}>
           <Search
             query={query}
             setQuery={setQuery}
@@ -219,6 +222,25 @@ export const RefundWithdrawals = () => {
             />
           </Grid>
         )}
+
+        <Grid item xs={12} md={2} lg={2}>
+          <Button
+            size="large"
+            type="primary"
+            style={{ width: "100%" }}
+            loading={
+              isRefundWithdrawalsFetching || isRefundWithdrawalsTotalFetching
+            }
+            onClickCapture={() => {
+              refetchRefundWithdrawals();
+              refetchRefundWithdrawalsTotal();
+            }}
+          >
+            {!isRefundWithdrawalsFetching &&
+              !isRefundWithdrawalsTotalFetching && <ReloadOutlined />}{" "}
+            {t("buttons.refresh")}
+          </Button>
+        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>

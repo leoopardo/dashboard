@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { EyeFilled, FileAddOutlined, SettingFilled } from "@ant-design/icons";
+import { EyeFilled, FileAddOutlined, SettingFilled, ReloadOutlined } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Tooltip } from "@mui/material";
 import { Search } from "@src/components/Inputs/search";
@@ -131,7 +131,6 @@ export const GeneratedDeposits = () => {
           data={depositsTotal}
           fetchData={() => {
             refetchDepositsTotal();
-            refetchDepositsTotalRows();
           }}
           loading={isDepositsTotalFetching}
           query={query}
@@ -176,7 +175,7 @@ export const GeneratedDeposits = () => {
         style={{ width: "100%" }}
         gutter={[8, 8]}
       >
-        <Col xs={{ span: 24 }} md={{ span: 12 }}>
+        <Col xs={{ span: 24 }} md={{ span: 18 }} lg={{span: 9}}>
           {!isMobile && (
             <Space.Compact style={{ width: "100%" }} size="large">
               <Select
@@ -293,7 +292,7 @@ export const GeneratedDeposits = () => {
         </Col>
         {permissions.report.deposit.generated_deposit
           .report_deposit_generated_deposit_resend_notification && (
-          <Col xs={{ span: 24 }} md={{ span: 4 }}>
+          <Col xs={{ span: 24 }} md={{ span: 8 }} lg={{span: 4}}>
             <Button
               type="primary"
               loading={isDepositsRowsFetching}
@@ -315,7 +314,7 @@ export const GeneratedDeposits = () => {
 
         {permissions.report.deposit.generated_deposit
           .report_deposit_generated_deposit_export_csv && (
-          <Col xs={{ span: 24 }} md={{ span: 3 }} lg={{ span: 2 }}>
+          <Col xs={{ span: 24 }} md={{ span: 6 }} lg={{span: 2}}>
             <Tooltip
               placement="top-end"
               title={
@@ -339,6 +338,21 @@ export const GeneratedDeposits = () => {
             </Tooltip>
           </Col>
         )}
+
+        <Col xs={{ span: 24 }} md={{ span: 8 }} lg={{span: 4}}>
+          <Button
+            size="large"
+            type="primary"
+            style={{ width: "100%" }}
+            loading={isDepositsRowsFetching || isDepositsTotalFetching}
+            onClickCapture={() => {
+              refetchDepositsTotalRows();
+              refetchDepositsTotal()
+            }}
+          >
+            <ReloadOutlined /> {t("buttons.refresh")}
+          </Button>
+        </Col>
       </Row>
 
       <Row style={{ width: "100%" }}>
