@@ -24,6 +24,7 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { CreateMovimentModal } from "../../components/createMovimentModal";
+import { useGetRowsMerchantManualEntryCategory } from "@src/services/register/merchant/manualEntryCategory/getManualEntryCategory";
 
 export const MerchantManual = () => {
   const { permissions } = queryClient.getQueryData(
@@ -36,11 +37,13 @@ export const MerchantManual = () => {
     sort_field: "createdAt",
     sort_order: "DESC",
     start_date: moment(new Date())
-      .startOf("day").add(3, "hours")
+      .startOf("day")
+      .add(3, "hours")
       .format("YYYY-MM-DDTHH:mm:ss.SSS"),
     end_date: moment(new Date())
       .add(1, "day")
-      .startOf("day").add(3, "hours")
+      .startOf("day")
+      .add(3, "hours")
       .format("YYYY-MM-DDTHH:mm:ss.SSS"),
   };
   const [tokenState, setTokenState] = useState<string>("");
@@ -70,6 +73,13 @@ export const MerchantManual = () => {
     MerchantManualReportsIsSuccess,
     MerchantManualReportsMutate,
   } = useCreateMerchantManualReports(query);
+
+  const { categoryData } = useGetRowsMerchantManualEntryCategory({
+    limit: 200,
+    page: 1,
+    sort_field: "created_at",
+    sort_order: "DESC"
+  });
 
   const { mutate, error, isSuccess } =
     useCreateMerchantManualTransaction(operationInBody);
@@ -239,7 +249,9 @@ export const MerchantManual = () => {
           .merchant_manual_transactions_export_csv && (
           <Grid item xs={12} md={2} lg={1}>
             <ExportReportsModal
-              disabled={!MerchantMovimentsData?.total || MerchantMovimentsDataError}
+              disabled={
+                !MerchantMovimentsData?.total || MerchantMovimentsDataError
+              }
               mutateReport={() => MerchantManualReportsMutate()}
               error={MerchantManualReportsError}
               success={MerchantManualReportsIsSuccess}
@@ -309,10 +321,15 @@ export const MerchantManual = () => {
           query={query}
           setQuery={setQuery}
           haveInitialDate
-          filters={["start_date", "end_date"]}
+          filters={["start_date", "end_date", "status", "category_id", "type"]}
           refetch={refetchMerchantMovimentsData}
           selectOptions={{
-            status: [],
+            status: ["PROCESSING", "SUCCESS", "CANCELED"],
+            category_id:
+            categoryData?.items?.map((category) => {
+                return { label: category?.name, value: category?.id };
+              }) || [],
+            type: ["in", "out"],
           }}
           startDateKeyName="start_date"
           endDateKeyName="end_date"

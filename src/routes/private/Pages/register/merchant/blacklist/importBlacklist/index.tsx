@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {
   AppstoreAddOutlined,
   DownloadOutlined,
@@ -244,8 +248,14 @@ export const ImportBlacklist = () => {
     const base64Encoded = btoa(csvData.replace(/(\r\n|\n|\r)/gm, "\n"));
 
     setBody({ content: base64Encoded });
-    mutate();
   };
+
+  useEffect(() => {
+    if (body.content) {
+      mutate();
+      setBody({ content: "" });
+    }
+  }, [body]);
 
   return (
     <Row style={{ padding: 25 }}>

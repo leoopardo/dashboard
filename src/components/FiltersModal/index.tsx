@@ -591,15 +591,15 @@ export const FiltersModal = ({
                             return { value: "", label: "" };
                           }
                           return {
-                            value: option,
+                            value: option?.value || option,
                             label:
-                              filter === "status"
+                              option?.label || filter === "status"
                                 ? option == "true"
                                   ? t("table.active")
                                   : option == "false"
                                   ? t("table.inactive")
-                                  : t(`table.${option.toLowerCase()}`)
-                                : t(`table.${option.toLowerCase()}`),
+                                  : t(`table.${option?.toLowerCase()}`)
+                                : t(`table.${option?.toLowerCase()}`),
                           };
                         }) ?? []
                       }
@@ -636,17 +636,20 @@ export const FiltersModal = ({
                           return { value: "", label: "" };
                         }
                         return {
-                          value: option,
-                          label:
-                            filter === "step"
-                              ? t(`logs.${option.toLowerCase()}`)
-                              : filter === "status"
-                              ? option == "true"
-                                ? t("table.active")
-                                : option == "false"
-                                ? t("table.inactive")
-                                : t(`table.${option.toLowerCase()}`)
-                              : t(`table.${option.toLowerCase()}`),
+                          value: option?.value || option,
+                          label: option?.label
+                            ? option.label
+                            : filter === "step"
+                            ? t(`logs.${option?.toLowerCase()}`)
+                            : Number(option) || option == 0
+                            ? option
+                            : filter === "status"
+                            ? option == "true"
+                              ? t("table.active")
+                              : option == "false"
+                              ? t("table.inactive")
+                              : t(`table.${option?.toLowerCase()}`)
+                            : t(`table.${option?.toLowerCase()}`),
                         };
                       }) ?? []
                     }

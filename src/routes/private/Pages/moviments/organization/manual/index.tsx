@@ -22,6 +22,7 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { CreateMovimentModal } from "../../components/createMovimentModal";
+import { useGetOrganizationCategories } from "@src/services/register/organization/categories/getCategories";
 
 export const OrgonizationManual = () => {
   const { permissions } = queryClient.getQueryData(
@@ -34,11 +35,13 @@ export const OrgonizationManual = () => {
     sort_field: "createdAt",
     sort_order: "DESC",
     start_date: moment(new Date())
-      .startOf("day").add(3, "hours")
+      .startOf("day")
+      .add(3, "hours")
       .format("YYYY-MM-DDTHH:mm:ss.SSS"),
     end_date: moment(new Date())
       .add(1, "day")
-      .startOf("day").add(3, "hours")
+      .startOf("day")
+      .add(3, "hours")
       .format("YYYY-MM-DDTHH:mm:ss.SSS"),
   };
   const [tokenState, setTokenState] = useState<string>("");
@@ -70,6 +73,11 @@ export const OrgonizationManual = () => {
     OrganizationManualReportsIsSuccess,
     OrganizationManualReportsMutate,
   } = useCreateOrganizationManualReports(query);
+
+  const { CategoriesData } = useGetOrganizationCategories({
+    limit: 200,
+    page: 1,
+  });
 
   useEffect(() => {
     refetchOrganizationMovimentsData();
@@ -233,7 +241,10 @@ export const OrgonizationManual = () => {
           .paybrokers_manual_transactions_export_csv && (
           <Grid item xs={12} md="auto">
             <ExportReportsModal
-             disabled={!OrganizationMovimentsData?.total || OrganizationMovimentsDataError}
+              disabled={
+                !OrganizationMovimentsData?.total ||
+                OrganizationMovimentsDataError
+              }
               mutateReport={() => OrganizationManualReportsMutate()}
               error={OrganizationManualReportsError}
               success={OrganizationManualReportsIsSuccess}
@@ -295,10 +306,15 @@ export const OrgonizationManual = () => {
           query={query}
           setQuery={setQuery}
           haveInitialDate
-          filters={["start_date", "end_date"]}
+          filters={["start_date", "end_date", "status", "category_id", "type"]}
           refetch={refetchOrganizationMovimentsData}
           selectOptions={{
-            status: [],
+            status: ["PROCESSING", "SUCCESS", "CANCELED"],
+            category_id:
+              CategoriesData?.items?.map((category) => {
+                return { label: category?.name, value: category?.id };
+              }) || [],
+              type: ["in", "out"]
           }}
           startDateKeyName="start_date"
           endDateKeyName="end_date"

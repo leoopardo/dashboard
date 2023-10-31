@@ -1,20 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import {
+  DeleteOutlined,
   EditOutlined,
   EyeFilled,
   PlusOutlined,
-  DeleteOutlined,
-  ReloadOutlined
+  ReloadOutlined,
 } from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
 import { Grid } from "@mui/material";
-import { ViewModal } from "@src/components/Modals/viewGenericModal";
-import { Toast } from "@src/components/Toast";
 import { useCreateMerchantFeePlans } from "@services/register/merchant/feePlans/createFeePlans";
+import { useDeleteMerchantFeePlan } from "@services/register/merchant/feePlans/deleteFeePlans";
 import { useGetFeePlansRegister } from "@services/register/merchant/feePlans/getFeePlans";
 import { useUpdateMerchantFeePlan } from "@services/register/merchant/feePlans/updateFeePlans";
 import {
@@ -22,10 +19,13 @@ import {
   IDepositFeePlansDetails,
 } from "@services/types/register/merchants/merchantFeePlans.interface";
 import { MerchantManualEntryCategoryQuery } from "@services/types/register/merchants/merchantManualEntryCategory.interface";
-import { Button } from "antd";
-import { useDeleteMerchantFeePlan } from "@services/register/merchant/feePlans/deleteFeePlans";
-import { UpdateFeePlanModal } from "./components/UpdateFeePlanModal";
+import { ViewModal } from "@src/components/Modals/viewGenericModal";
+import { Toast } from "@src/components/Toast";
 import { useGetFeePlansDetails } from "@src/services/register/merchant/feePlans/getFeePlansDetails";
+import { Button } from "antd";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { UpdateFeePlanModal } from "./components/UpdateFeePlanModal";
 
 const INITIAL_QUERY: MerchantManualEntryCategoryQuery = {
   limit: 25,
@@ -64,14 +64,15 @@ export const MerchantFeePlans = () => {
   const { updateError, updateIsLoading, updateIsSuccess, updateMutate } =
     useUpdateMerchantFeePlan({
       ...body,
-      fee_plan_id: currentItem?.id
+      fee_plan_id: currentItem?.id,
     });
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
-  const {feePlansDetailsData, refetchFeePlansDetailsData} = useGetFeePlansDetails({fee_plans_id: currentItem?.id})
+  const { feePlansDetailsData, refetchFeePlansDetailsData } =
+    useGetFeePlansDetails({ fee_plans_id: currentItem?.id });
 
   const columns: ColumnInterface[] = [
     { name: "id", type: "id", sort: true },
@@ -87,7 +88,7 @@ export const MerchantFeePlans = () => {
 
   useEffect(() => {
     setUpdateBody(currentItem);
-    refetchFeePlansDetailsData()
+    refetchFeePlansDetailsData();
   }, [currentItem]);
 
   return (
@@ -98,7 +99,8 @@ export const MerchantFeePlans = () => {
         spacing={1}
       >
         <Grid item xs={12} md={3} lg={2}>
-           <Button size="large"
+          <Button
+            size="large"
             style={{ width: "100%" }}
             loading={isFeePlansDataFetching}
             type="primary"
@@ -113,7 +115,6 @@ export const MerchantFeePlans = () => {
             endDateKeyName="end_date"
             query={query}
             setQuery={setQuery}
-             
           />
         </Grid>
 
@@ -188,10 +189,21 @@ export const MerchantFeePlans = () => {
           setOpen={setIsFiltersOpen}
           query={query}
           setQuery={setQuery}
-           
-          filters={["start_date", "end_date", "status"]}
+          filters={[
+            "start_date",
+            "end_date",
+            "status",
+            "plan_type",
+            "transaction_type",
+            "range_type",
+          ]}
           refetch={refetchFeePlansData}
-          selectOptions={{ status: ["true", "false"] }}
+          selectOptions={{
+            status: ["true", "false"],
+            plan_type: ["MONTHLY", "CONTINUOS"],
+            transaction_type: ["CASHIN", "CASHOUT"],
+            range_type: ["VALUE", "TRANSACTIONS"],
+          }}
           startDateKeyName="start_date"
           endDateKeyName="end_date"
           initialQuery={INITIAL_QUERY}
@@ -233,7 +245,10 @@ export const MerchantFeePlans = () => {
         <ViewModal
           open={isViewModalOpen}
           setOpen={setIsViewModalOpen}
-          item={{...currentItem, merchant_fee_plans_details: feePlansDetailsData?.items}}
+          item={{
+            ...currentItem,
+            merchant_fee_plans_details: feePlansDetailsData?.items,
+          }}
           loading={isFeePlansDataFetching}
           modalName={`${t("menus.fee_plans")}: ${currentItem?.name}`}
         />

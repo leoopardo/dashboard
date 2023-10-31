@@ -4,7 +4,7 @@ import { Button, Col, Row, Tabs, Typography } from "antd";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import secureLocalStorage from "react-secure-storage";
-import { FeeTab } from "./feesTab copy";
+import { FeeTab } from "./feesTab";
 import { FinancialMovementsTab } from "./financialMovimentsTab";
 import { OperationMovementsTab } from "./operationsNumberTab";
 

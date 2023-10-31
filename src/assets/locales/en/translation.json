@@ -727,7 +727,8 @@
     "fixed": "Fixed",
     "free": "Free",
     "available_balance": "Avaliable balance",
-    "operations_value": "Operations value"
+    "operations_value": "Operations value",
+    "category_id": "Category"
   },
   "actions": {
     "details": "Details",

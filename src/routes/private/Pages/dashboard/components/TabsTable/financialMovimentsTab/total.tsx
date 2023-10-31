@@ -35,7 +35,7 @@ export const TotalFinancial = ({ query, chart }: TableProps) => {
               },
               yAxis: {
                 type: "category",
-                data: RankingData?.map((merchant) => merchant?.name ?? "-"),
+                data: RankingData?.sort((a, b) => a.total > b.total ? 1 : -1)?.map((merchant) => merchant?.name ?? "-"),
               },
               series: [
                 {
@@ -78,7 +78,7 @@ export const TotalFinancial = ({ query, chart }: TableProps) => {
       }}
       actions={[]}
       data={RankingData}
-      items={RankingData}
+      items={RankingData?.sort((a, b) => a.total > b.total ? -1 : 1)}
       error={RankingError}
       columns={[
         { name: "name", type: "text" },

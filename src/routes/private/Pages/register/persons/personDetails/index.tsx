@@ -19,12 +19,13 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { TotalizersCards as DepositsCards } from "../../../consult/deposits/generated/components/TotalizersCards";
 import { TotalizersCards } from "../../../consult/withdrawals/generated/components/TotalizersCards";
 
 export const PersonDetails = () => {
   const { t } = useTranslation();
+  const currentData = useLocation()?.state;
   const isMobile = useMediaQuery({ maxWidth: "750px" });
   const { cpf } = useParams();
   const query: PersonsQuery = {
@@ -32,12 +33,39 @@ export const PersonDetails = () => {
     page: 1,
     sort_field: "created_at",
     sort_order: "DESC",
-    cpf: cpf?.split(" ").join("."),
+    cpf: currentData?.cpf,
   };
-  const [personData, setPersonData] = useState({});
-  const [blacklistData, setBlacklistData] = useState({});
-  const [LimitsData, setLimitsData] = useState({});
-  const { PersonsData, isPersonsDataFetching } = useGetPersons(query);
+  const [personData, setPersonData] = useState({
+    _id: currentData?._id,
+    cpf: currentData?.cpf,
+    state: currentData?.state,
+    name: currentData?.name,
+    city: currentData?.city,
+    mother_name: currentData?.mother_name,
+    neighborhood: currentData?.neighborhood,
+    birth_date: currentData?.birth_date,
+    createdAt: currentData?.createdAt,
+    gender: currentData?.gender,
+    updatedAt: currentData?.updatedAt,
+    situation_text: currentData?.situation_text,
+    email: currentData?.email,
+    last_check: currentData?.last_check,
+    cellphone: currentData?.cellphone,
+  });
+  const [blacklistData, setBlacklistData] = useState({
+    black_list: currentData?.black_list,
+    black_list_reason: currentData?.black_list_reason,
+    black_list_description: currentData?.black_list_description,
+    flag_pep: currentData?.flag_pep,
+    flag_aux_gov: currentData?.flag_aux_gov,
+    flag_alert: currentData?.flag_alert,
+  });
+  const [LimitsData, setLimitsData] = useState({
+    cash_in_max_value: currentData?.cash_in_max_value,
+    cash_out_max_value: currentData?.cash_out_max_value,
+    cash_out_transaction_limit: currentData?.cash_out_transaction_limit,
+  });
+  const { isPersonsDataFetching } = useGetPersons(query);
 
   ///// generated deposits ------------------
 
@@ -108,41 +136,40 @@ export const PersonDetails = () => {
   const { Files, isFilesFetching } = useGetFiles(cpf?.split(" ").join("."));
 
   useEffect(() => {
-    if (!isPersonsDataFetching && PersonsData?.items[0]) {
+    if (!isPersonsDataFetching && currentData) {
       setPersonData({
-        _id: PersonsData?.items[0]._id,
-        cpf: PersonsData?.items[0].cpf,
-        state: PersonsData?.items[0].state,
-        name: PersonsData?.items[0].name,
-        city: PersonsData?.items[0].city,
-        mother_name: PersonsData?.items[0].mother_name,
-        neighborhood: PersonsData?.items[0].neighborhood,
-        birth_date: PersonsData?.items[0].birth_date,
-        createdAt: PersonsData?.items[0].createdAt,
-        gender: PersonsData?.items[0].gender,
-        updatedAt: PersonsData?.items[0].updatedAt,
-        situation_text: PersonsData?.items[0].situation_text,
-        email: PersonsData?.items[0].email,
-        last_check: PersonsData?.items[0].last_check,
-        cellphone: PersonsData?.items[0].cellphone,
+        _id: currentData?._id,
+        cpf: currentData?.cpf,
+        state: currentData?.state,
+        name: currentData?.name,
+        city: currentData?.city,
+        mother_name: currentData?.mother_name,
+        neighborhood: currentData?.neighborhood,
+        birth_date: currentData?.birth_date,
+        createdAt: currentData?.createdAt,
+        gender: currentData?.gender,
+        updatedAt: currentData?.updatedAt,
+        situation_text: currentData?.situation_text,
+        email: currentData?.email,
+        last_check: currentData?.last_check,
+        cellphone: currentData?.cellphone,
       });
 
       setBlacklistData({
-        black_list: PersonsData?.items[0].black_list,
-        black_list_reason: PersonsData?.items[0].black_list_reason,
-        black_list_description: PersonsData?.items[0].black_list_description,
-        flag_pep: PersonsData?.items[0].flag_pep,
-        flag_aux_gov: PersonsData?.items[0].flag_aux_gov,
-        flag_alert: PersonsData?.items[0].flag_alert,
+        black_list: currentData?.black_list,
+        black_list_reason: currentData?.black_list_reason,
+        black_list_description: currentData?.black_list_description,
+        flag_pep: currentData?.flag_pep,
+        flag_aux_gov: currentData?.flag_aux_gov,
+        flag_alert: currentData?.flag_alert,
       });
       setLimitsData({
-        cash_in_max_value: PersonsData?.items[0].cash_in_max_value,
-        cash_out_max_value: PersonsData?.items[0].cash_out_max_value,
-        cash_out_transaction_limit:
-          PersonsData?.items[0].cash_out_transaction_limit,
+        cash_in_max_value: currentData?.cash_in_max_value,
+        cash_out_max_value: currentData?.cash_out_max_value,
+        cash_out_transaction_limit: currentData?.cash_out_transaction_limit,
       });
     }
-  }, [PersonsData?.items[0]]);
+  }, [currentData]);
 
   const items: TabsProps["items"] = [
     {
@@ -184,7 +211,7 @@ export const PersonDetails = () => {
                           }}
                         >
                           {`${new Date(
-                            PersonsData?.items[0][key] ?? ""
+                            currentData[key] ?? ""
                           ).toLocaleDateString("pt-BR", {
                             timeZone: "UTC",
                           })}`}
@@ -206,9 +233,9 @@ export const PersonDetails = () => {
                           }}
                         >
                           {`${new Date(
-                            PersonsData?.items[0][key] ?? ""
+                            currentData[key] ?? ""
                           ).toLocaleDateString()} ${new Date(
-                            PersonsData?.items[0][key] ?? ""
+                            currentData[key] ?? ""
                           ).toLocaleTimeString()}`}
                         </Descriptions.Item>
                       );
@@ -227,7 +254,7 @@ export const PersonDetails = () => {
                             textAlign: "center",
                           }}
                         >
-                          {PersonsData?.items[0][key]
+                          {currentData[key]
                             ? t("table.true")
                             : t("table.false")}
                         </Descriptions.Item>
@@ -245,7 +272,7 @@ export const PersonDetails = () => {
                             textAlign: "center",
                           }}
                         >
-                          {(PersonsData?.items[0] as any)[key] ?? "-"}
+                          {(currentData as any)[key] ?? "-"}
                         </Descriptions.Item>
                       );
                   }
@@ -291,7 +318,7 @@ export const PersonDetails = () => {
                             textAlign: "center",
                           }}
                         >
-                          {PersonsData?.items[0][key]
+                          {currentData[key]
                             ? t("table.true")
                             : t("table.false")}
                         </Descriptions.Item>
@@ -309,7 +336,7 @@ export const PersonDetails = () => {
                             textAlign: "center",
                           }}
                         >
-                          {(PersonsData?.items[0] as any)[key] ?? "-"}
+                          {(currentData as any)[key] ?? "-"}
                         </Descriptions.Item>
                       );
                   }
@@ -353,11 +380,11 @@ export const PersonDetails = () => {
                             textAlign: "center",
                           }}
                         >
-                          {(PersonsData?.items[0] as any)[key]
+                          {(currentData as any)[key]
                             ? new Intl.NumberFormat("pt-BR", {
                                 style: "currency",
                                 currency: "BRL",
-                              }).format((PersonsData?.items[0] as any)[key])
+                              }).format((currentData as any)[key])
                             : "-"}
                         </Descriptions.Item>
                       );

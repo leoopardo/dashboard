@@ -28,7 +28,7 @@ import { useNavigate } from "react-router-dom";
 const INITIAL_QUERY: PersonsQuery = {
   limit: 25,
   page: 1,
-  sort_field: "created_at",
+  sort_field: "name",
   sort_order: "DESC",
 };
 
@@ -98,23 +98,6 @@ export const Persons = () => {
       ...currentItem,
     });
   }, [currentItem]);
-
-  useEffect(() => {
-    if (isViewModalOpen)
-      navigate(
-        `${currentItem?.cpf
-          ?.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")
-          .split(".")
-          .join("%20")}`
-      );
-    if (isUpdateModalOpen)
-      navigate(
-        `update/${currentItem?.cpf
-          ?.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")
-          .split(".")
-          .join("%20")}`
-      );
-  }, [isViewModalOpen, isUpdateModalOpen]);
 
   return (
     <Grid container style={{ padding: "25px" }}>
@@ -235,13 +218,26 @@ export const Persons = () => {
               {
                 label: "details",
                 icon: <EyeFilled style={{ fontSize: "20px" }} />,
-                onClick: () => setIsViewModalOpen(true),
+                onClick: (item) =>
+                  navigate(
+                    `${item?.cpf
+                      ?.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")
+                      .split(".")
+                      .join("%20")}`,
+                    { state: item }
+                  ),
               },
               permissions.register.person.person.person_person_update && {
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
-                onClick: () => {
-                  setIsUpdateModalOpen(true);
+                onClick: (item) => {
+                  navigate(
+                    `update/${item?.cpf
+                      ?.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")
+                      .split(".")
+                      .join("%20")}`,
+                    { state: item }
+                  );
                 },
               },
             ]}
@@ -262,9 +258,25 @@ export const Persons = () => {
           setOpen={setIsFiltersOpen}
           query={query}
           setQuery={setQuery}
-          filters={["initial_date", "final_date"]}
+          filters={[
+            "initial_date",
+            "final_date",
+            "black_list",
+            "flag_pep",
+            "flag_aux_gov",
+            "flag_alert",
+            "state",
+            "city",
+            "gender",
+          ]}
           refetch={refetchPersonsData}
-          selectOptions={{}}
+          selectOptions={{
+            black_list: ["true", "false"],
+            flag_pep: ["true", "false"],
+            flag_aux_gov: ["true", "false"],
+            flag_alert: ["0", "1", "2", "3", "4", "5"],
+            gender: ["MALE", "FEMALE"],
+          }}
           startDateKeyName="initial_date"
           endDateKeyName="final_date"
           initialQuery={INITIAL_QUERY}

@@ -3,7 +3,7 @@ import { MerchantBlacklistItem } from "@src/services/types/register/merchants/me
 import { useMutation } from "react-query";
 import { queryClient } from "@src/services/queryClient";
 
-export function useCreateContestImportCsv(body: {content: string} | null) {
+export function useCreateContestImportCsv(body: {endToEndId: string} | null) {
   const { isLoading, error, mutate, isSuccess } = useMutation<
     MerchantBlacklistItem | null | undefined
   >("CreateContestImportCsv", async () => {

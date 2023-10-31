@@ -111,8 +111,8 @@ export const RefundDeposits = () => {
       <TotalizersCards
         data={refundDepositsTotal}
         fetchData={() => {
-          refetchRefundDepositsTotal()
-          refetchRefundDepositsTotalRows()
+          refetchRefundDepositsTotal();
+          refetchRefundDepositsTotalRows();
         }}
         loading={isRefundDepositsTotalFetching}
         query={query}
@@ -199,7 +199,6 @@ export const RefundDeposits = () => {
             setQuery={setQuery}
             searchOption={searchOption}
           />
-          
         </Grid>
         <Grid item xs={12} md={2} lg={2}>
           <Button
@@ -236,7 +235,7 @@ export const RefundDeposits = () => {
           </Grid>
         )}
 
-<Grid item xs={12} md={2} lg={2}>
+        <Grid item xs={12} md={2} lg={2}>
           <Button
             size="large"
             type="primary"
