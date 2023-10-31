@@ -208,7 +208,7 @@ export const TransferBetweenMerchants = () => {
           setOpen={setIsFiltersOpen}
           query={query}
           setQuery={setQuery}
-          filters={["start_date", "end_date", "merchant_id", "organization_id"]}
+          filters={["start_date", "end_date", "merchant_id"]}
           refetch={refetchTransferMerchantsData}
           selectOptions={{}}
           startDateKeyName="start_date"

@@ -28,12 +28,12 @@
     "moviments": "Lançamentos manuais",
     "moviment_reports": "Relatórios",
     "consult_organization": "Organização",
-    "organization_bank_statement": "Extrato bancário",
+    "organization_bank_statement": "Extrato",
     "organization_balance": "Saldo",
     "organization_history": "Histórico",
     "consult_organization_reports": "Relatórios",
     "consult_merchant": "Empresas",
-    "merchant_bank_statement": "Extrato bancário",
+    "merchant_bank_statement": "Extrato",
     "merchant_balance": "Saldo",
     "merchant_history": "Histórico",
     "consult_merchant_reports": "Relatórios",
@@ -732,7 +732,8 @@
     "fixed": "Fixo",
     "free": "Livre",
     "available_balance": "Saldo disponível",
-    "operations_value": "Valor de operações"
+    "operations_value": "Valor de operações",
+    "category_id": "Categoria"
 
   },
   "actions": {

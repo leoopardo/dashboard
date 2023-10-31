@@ -33,7 +33,7 @@ import { useNavigate } from "react-router-dom";
 const INITIAL_QUERY: PersonsQuery = {
   limit: 25,
   page: 1,
-  sort_field: "created_at",
+  sort_field: "name",
   sort_order: "DESC",
 };
 
@@ -284,9 +284,25 @@ export const Persons = () => {
           setOpen={setIsFiltersOpen}
           query={query}
           setQuery={setQuery}
-          filters={["initial_date", "final_date"]}
+          filters={[
+            "initial_date",
+            "final_date",
+            "black_list",
+            "flag_pep",
+            "flag_aux_gov",
+            "flag_alert",
+            "state",
+            "city",
+            "gender",
+          ]}
           refetch={refetchPersonsData}
-          selectOptions={{}}
+          selectOptions={{
+            black_list: ["true", "false"],
+            flag_pep: ["true", "false"],
+            flag_aux_gov: ["true", "false"],
+            flag_alert: ["0", "1", "2", "3", "4", "5"],
+            gender: ["MALE", "FEMALE"],
+          }}
           startDateKeyName="initial_date"
           endDateKeyName="final_date"
           initialQuery={INITIAL_QUERY}
