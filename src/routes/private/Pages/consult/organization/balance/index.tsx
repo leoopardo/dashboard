@@ -123,13 +123,7 @@ export const OrganizationBalance = () => {
         <Divider />
       </Grid>
 
-      <Grid
-        container
-        item
-        xs={12}
-        spacing={2}
-        style={{ display: "flex", alignItems: "center" }}
-      >
+      <Grid container item xs={12} spacing={2} style={{ display: "flex" }}>
         {isOrganizationBalanceFetching && (
           <Grid
             item
@@ -143,13 +137,148 @@ export const OrganizationBalance = () => {
             <Spin />
           </Grid>
         )}
-
-        <Grid item xs={12}>
-          <Descriptions
-            bordered
-            style={{ margin: 0, padding: 0 }}
-            column={isMobile ? 1 : 3}
-          >
+        <Grid item xs={12} md={4}>
+          <Descriptions bordered style={{ margin: 0, padding: 0 }} column={1}>
+            <Descriptions.Item
+              key={"in"}
+              label={t(`table.in`)}
+              labelStyle={{
+                maxWidth: "120px !important",
+                margin: 0,
+                padding: 0,
+                textAlign: "center",
+              }}
+            >
+              {new Intl.NumberFormat("pt-BR", {
+                style: "currency",
+                currency: "BRL",
+              }).format(OrganizationBalance?.in || 0)}
+            </Descriptions.Item>
+            <Descriptions.Item
+              key={"out"}
+              label={t(`table.out`)}
+              labelStyle={{
+                maxWidth: "120px !important",
+                margin: 0,
+                padding: 0,
+                textAlign: "center",
+              }}
+            >
+              {new Intl.NumberFormat("pt-BR", {
+                style: "currency",
+                currency: "BRL",
+              }).format(OrganizationBalance?.out || 0)}
+            </Descriptions.Item>
+     
+            <Descriptions.Item
+              key={"updatedAt"}
+              label={t(`table.updatedAt`)}
+              labelStyle={{
+                maxWidth: "120px !important",
+                margin: 0,
+                padding: 0,
+                textAlign: "center",
+              }}
+            >
+              {`${new Date(
+                OrganizationBalance?.updatedAt ?? ""
+              ).toLocaleDateString()} ${new Date(
+                OrganizationBalance?.updatedAt ?? ""
+              ).toLocaleTimeString()}`}
+            </Descriptions.Item>
+          </Descriptions>
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <Descriptions bordered style={{ margin: 0, padding: 0 }} column={1}>
+            <Descriptions.Item
+              key={"pix_transactions_total"}
+              label={t(`table.pix_transactions_total`)}
+              labelStyle={{
+                maxWidth: "120px !important",
+                margin: 0,
+                padding: 0,
+                textAlign: "center",
+              }}
+            >
+              {OrganizationBalance?.pix_transactions_total || 0}
+            </Descriptions.Item>
+            <Descriptions.Item
+              key={"withdraw_transactions_total"}
+              label={t(`table.withdraw_transactions_total`)}
+              labelStyle={{
+                maxWidth: "120px !important",
+                margin: 0,
+                padding: 0,
+                textAlign: "center",
+              }}
+            >
+              {OrganizationBalance?.withdraw_transactions_total || 0}
+            </Descriptions.Item>
+            <Descriptions.Item
+              key={"refund_transactions_total"}
+              label={t(`table.refund_transactions_total`)}
+              labelStyle={{
+                maxWidth: "120px !important",
+                margin: 0,
+                padding: 0,
+                textAlign: "center",
+              }}
+            >
+              {OrganizationBalance?.refund_transactions_total || 0}
+            </Descriptions.Item>
+          </Descriptions>
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <Descriptions bordered style={{ margin: 0, padding: 0 }} column={1}>
+            <Descriptions.Item
+              key={"pix_amount_fee"}
+              label={t(`table.pix_amount_fee`)}
+              labelStyle={{
+                maxWidth: "120px !important",
+                margin: 0,
+                padding: 0,
+                textAlign: "center",
+              }}
+            >
+              {new Intl.NumberFormat("pt-BR", {
+                style: "currency",
+                currency: "BRL",
+              }).format(OrganizationBalance?.pix_amount_fee || 0)}
+            </Descriptions.Item>
+            <Descriptions.Item
+              key={"withdraw_amount_fee"}
+              label={t(`table.withdraw_amount_fee`)}
+              labelStyle={{
+                maxWidth: "120px !important",
+                margin: 0,
+                padding: 0,
+                textAlign: "center",
+              }}
+            >
+               {new Intl.NumberFormat("pt-BR", {
+                style: "currency",
+                currency: "BRL",
+              }).format(OrganizationBalance?.withdraw_amount_fee || 0)}
+            </Descriptions.Item>
+            <Descriptions.Item
+              key={"refund_amount_fee"}
+              label={t(`table.refund_amount_fee`)}
+              labelStyle={{
+                maxWidth: "120px !important",
+                margin: 0,
+                padding: 0,
+                textAlign: "center",
+              }}
+            >
+               {new Intl.NumberFormat("pt-BR", {
+                style: "currency",
+                currency: "BRL",
+              }).format(OrganizationBalance?.refund_amount_fee || 0)}
+            </Descriptions.Item>
+          </Descriptions>
+        </Grid>
+        {/* <Grid item xs={12} md={4}>
+          <Descriptions bordered style={{ margin: 0, padding: 0 }} column={1}>
             {OrganizationBalance &&
               Object.keys(OrganizationBalance).map((key: string, index) => {
                 switch (key) {
@@ -174,8 +303,6 @@ export const OrganizationBalance = () => {
                       </Descriptions.Item>
                     );
 
-                  case "in":
-                  case "out":
                   case "pix_amount_fee":
                   case "refund_amount_fee":
                   case "refund_transactions_total":
@@ -224,7 +351,7 @@ export const OrganizationBalance = () => {
                 }
               })}
           </Descriptions>
-        </Grid>
+        </Grid> */}
       </Grid>
     </Grid>
   );

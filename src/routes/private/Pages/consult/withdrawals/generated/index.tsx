@@ -285,7 +285,7 @@ export const GeneratedWithdrawals = () => {
             <Tooltip
               placement="topRight"
               title={
-                !witrawalsRows?.items.length || witrawalsRowsError
+                witrawalsRows?.items.length === 0 || witrawalsRowsError
                   ? t("messages.no_records_to_export")
                   : t("messages.export_csv")
               }

@@ -222,7 +222,7 @@ export const UndeliveredWithdrawals = () => {
           .report_withdraw_undelivered_withdraw_export_csv && (
           <Grid item xs={12} md="auto" lg={2}>
             <ExportReportsModal
-              disabled={!witrawalsRows?.items.length || witrawalsRowsError}
+              disabled={witrawalsRows?.items.length === 0 || witrawalsRowsError}
               mutateReport={() => GeneratedWithdrawalsReportsMutate()}
               error={GeneratedWithdrawalsReportsError}
               success={GeneratedWithdrawalsReportsIsSuccess}

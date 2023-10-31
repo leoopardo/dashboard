@@ -5,6 +5,7 @@ import {
   CopyOutlined,
   EllipsisOutlined,
   InfoCircleTwoTone,
+  ReloadOutlined,
 } from "@ant-design/icons";
 import { Grid } from "@mui/material";
 import { useListBanks } from "@src/services/bank/listBanks";
@@ -48,7 +49,7 @@ export interface ColumnInterface {
     | "bankNameToIcon"
     | "progress"
     | "merchant_name"
-    | "partner_name"
+    | "partner_name";
   sort?: boolean;
   key?: any;
 }
@@ -81,6 +82,7 @@ interface TableProps {
   checkbox?: boolean;
   setSelectedRows?: Dispatch<SetStateAction<any>>;
   selectedKeys?: any;
+  refetch?: () => void;
 }
 
 export const CustomTable = (props: TableProps) => {
@@ -435,7 +437,7 @@ export const CustomTable = (props: TableProps) => {
                   ) : text ? (
                     <Typography>{text}</Typography>
                   ) : (
-                    <Typography style={{minWidth: "30px"}}>-</Typography>
+                    <Typography style={{ minWidth: "30px" }}>-</Typography>
                   )}
                 </div>
               ),
@@ -631,7 +633,25 @@ export const CustomTable = (props: TableProps) => {
 
           case "action":
             return {
-              title: " ",
+              title: props.refetch ? (
+                <Tooltip title={t("table.refetch_table")}>
+                  <Button
+                    type="link"
+                    onClick={() => {
+                      if (props?.refetch) props.refetch();
+                    }}
+                    style={{
+                      width: "100%",
+                      display: "flex",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <ReloadOutlined style={{ fontSize: "16px" }} />
+                  </Button>
+                </Tooltip>
+              ) : (
+                ""
+              ),
               key: column?.name,
               dataIndex: column?.name,
               render: (_a: any, record: any) => (
@@ -853,7 +873,7 @@ export const CustomTable = (props: TableProps) => {
                 : undefined,
             };
 
-           case "merchant_name":
+          case "merchant_name":
             return {
               title: (
                 <Typography
@@ -869,7 +889,7 @@ export const CustomTable = (props: TableProps) => {
               dataIndex: column?.name,
               render: (_a: any, record: any) => (
                 <Typography style={{ width: "100%", textAlign: "center" }}>
-                  {record["merchant_name"] || record["merchant_id"] || '-'}
+                  {record["merchant_name"] || record["merchant_id"] || "-"}
                 </Typography>
               ),
               sorter: column.sort
@@ -889,7 +909,7 @@ export const CustomTable = (props: TableProps) => {
                 : undefined,
             };
 
-            case "partner_name":
+          case "partner_name":
             return {
               title: (
                 <Typography
@@ -972,7 +992,6 @@ export const CustomTable = (props: TableProps) => {
             <Table
               size="middle"
               tableLayout="auto"
-              
               locale={{
                 emptyText: props.error ? (
                   <div style={{ display: "flex", justifyContent: "center" }}>

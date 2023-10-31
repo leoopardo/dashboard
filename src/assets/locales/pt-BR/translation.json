@@ -733,7 +733,8 @@
     "free": "Livre",
     "available_balance": "Saldo disponível",
     "operations_value": "Valor de operações",
-    "category_id": "Categoria"
+    "category_id": "Categoria",
+    "refetch_table": "Recarregar tabela"
 
   },
   "actions": {

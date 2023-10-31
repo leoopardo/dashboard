@@ -215,6 +215,9 @@ export const MerchantBankStatement = () => {
             "end_date",
             "payment_type",
             "bank",
+            "aggregator_id",
+            "operator_id",
+            "partner_id",
             "merchant_id",
           ]}
           refetch={refetchMerchantTransactionsTotal}

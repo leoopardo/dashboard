@@ -318,7 +318,7 @@ export const GeneratedDeposits = () => {
             <Tooltip
               placement="top-end"
               title={
-                !depositsRows?.items.length || depositsRowsError
+                depositsRows?.items.length === 0 || depositsRowsError
                   ? t("messages.no_records_to_export")
                   : t("messages.export_csv")
               }
@@ -366,6 +366,7 @@ export const GeneratedDeposits = () => {
             error={depositsRowsError}
             columns={columns}
             loading={isDepositsRowsFetching}
+            refetch={refetchDepositsTotalRows}
             actions={[
               {
                 label: "details",

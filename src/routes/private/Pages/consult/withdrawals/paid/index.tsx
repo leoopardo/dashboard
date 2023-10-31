@@ -239,7 +239,7 @@ export const PaidWithdrawals = () => {
             <Tooltip
               placement="topRight"
               title={
-                !paidWithdrawalsRows?.items.length || paidWithdrawalsRowsError
+                paidWithdrawalsRows?.items.length === 0 || paidWithdrawalsRowsError
                   ? t("messages.no_records_to_export")
                   : t("messages.export_csv")
               }

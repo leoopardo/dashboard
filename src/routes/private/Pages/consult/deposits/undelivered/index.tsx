@@ -214,7 +214,7 @@ export const UndeliveredDeposits = () => {
             .report_deposit_undelivered_deposit_export_csv && (
             <Grid item xs={12} md={6} lg={6}>
               <ExportReportsModal
-                disabled={!depositsRows?.items.length || depositsRowsError}
+                disabled={depositsRows?.items.length === 0|| depositsRowsError}
                 mutateReport={() => GeneratedDepositsReportsMutate()}
                 error={GeneratedDepositsReportsError}
                 success={GeneratedDepositsReportsIsSuccess}

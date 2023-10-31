@@ -241,7 +241,8 @@ export const RefundDepositsManual = () => {
           <Grid item xs={12} md="auto">
             <ExportReportsModal
               disabled={
-                !refundDepositsManual?.total || refundDepositsManualError
+                refundDepositsManual?.items.length === 0 ||
+                refundDepositsManualError
               }
               mutateReport={() => RefundManualDepositsReportsMutate()}
               error={RefundManualDepositsReportsError}
@@ -306,7 +307,7 @@ export const RefundDepositsManual = () => {
                 disabled: (item) =>
                   !permissions?.report?.chargeback?.manual_deposit_chargeback
                     ?.report_chargeback_manual_deposit_chargeback_refund &&
-                  !currentItem.merchant_id &&
+                  !item?.merchant_id &&
                   !["WAITING", "ERROR"].includes(item?.status),
               },
               {
@@ -316,7 +317,7 @@ export const RefundDepositsManual = () => {
                 disabled: (item) =>
                   !permissions?.report?.chargeback?.manual_deposit_chargeback
                     ?.report_chargeback_manual_deposit_chargeback_paid_to_merchant &&
-                  !currentItem.merchant_id &&
+                  !item?.merchant_id &&
                   !["WAITING", "ERROR"].includes(item?.status),
               },
               {
