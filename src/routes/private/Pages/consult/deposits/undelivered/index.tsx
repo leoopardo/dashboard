@@ -223,20 +223,6 @@ export const UndeliveredDeposits = () => {
               />
             </Grid>
           )}
-          <Grid item xs={12} md={6} lg={6}>
-            <Button
-              size="large"
-              type="primary"
-              style={{ width: "100%" }}
-              loading={isDepositsTotalFetching || isDepositsRowsFetching}
-              onClickCapture={() => {
-                refetchDepositsTotal();
-                refetchDepositsTotalRows();
-              }}
-            >
-              <ReloadOutlined /> {t("buttons.refresh")}
-            </Button>
-          </Grid>
         </Grid>
       </Grid>
 
@@ -251,6 +237,10 @@ export const UndeliveredDeposits = () => {
             columns={columns}
             loading={isDepositsRowsFetching}
             error={depositsRowsError}
+            refetch={() => {
+              refetchDepositsTotal();
+              refetchDepositsTotalRows();
+            }}
             actions={[
               {
                 label: "details",

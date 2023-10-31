@@ -164,7 +164,7 @@ export const TransfersBetweenAccounts = () => {
             {t("table.filters")}
           </Button>
         </Col>
-        <Col xs={{ span: 24 }} md={{ span: 5 }} lg={10}>
+        <Col xs={{ span: 24 }} md={{ span: 12 }}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
@@ -173,7 +173,7 @@ export const TransfersBetweenAccounts = () => {
           />
         </Col>
 
-        <Col xs={{ span: 24 }} md={{ span: 7 }} lg={{ span: 4 }}>
+        <Col xs={{ span: 24 }} md={{ span: 5 }} lg={{ span: 5 }}>
           <Button
             type="default"
             loading={false}
@@ -198,7 +198,7 @@ export const TransfersBetweenAccounts = () => {
         {/* arrumar permissões */}
         {permissions?.transactions?.merchant?.internal_transfers
           ?.merchant_internal_transfers_export_csv && (
-          <Col xs={{ span: 24 }} md={{ span: 3 }} lg={{ span: 2 }}>
+          <Col xs={{ span: 24 }} md={{ span: 3 }} lg={{ span: 3 }}>
             <ExportReportsModal
               disabled={
                 !TransferBetweenAccountsData?.items ||
@@ -212,20 +212,6 @@ export const TransfersBetweenAccounts = () => {
             />
           </Col>
         )}
-
-        <Col xs={{ span: 24 }} md={{ span: 3 }} lg={{ span: 4 }}>
-          <Button
-            size="large"
-            type="primary"
-            style={{ width: "100%" }}
-            loading={isTransferBetweenAccountsDataFetching}
-            onClickCapture={() => {
-              refetchTransferBetweenAccountsData();
-            }}
-          >
-            <ReloadOutlined /> {t("buttons.refresh")}
-          </Button>
-        </Col>
       </Row>
 
       <Row style={{ width: "100%" }}>
@@ -246,6 +232,7 @@ export const TransfersBetweenAccounts = () => {
             data={TransferBetweenAccountsData}
             items={TransferBetweenAccountsData?.items}
             error={TransferBetweenAccountsDataError}
+            refetch={refetchTransferBetweenAccountsData}
             columns={[
               { name: "_id", type: "id" },
               { name: "from", type: "translate" },

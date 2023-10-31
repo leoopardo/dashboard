@@ -216,7 +216,7 @@ export const PaidDeposits = () => {
         </Grid>
         {permissions.report.deposit.paid_deposit
           .report_deposit_paid_deposit_export_csv && (
-          <Grid item xs={12} md="auto" lg={1}>
+          <Grid item xs={12} md="auto" lg={2}>
             <Tooltip
               placement="topRight"
               title={
@@ -240,25 +240,10 @@ export const PaidDeposits = () => {
             </Tooltip>
           </Grid>
         )}
-        <Grid item xs={12} md="auto" lg={1}>
-          <Button
-            size="large"
-            type="primary"
-            style={{ width: "100%" }}
-            loading={isPaidTotalFetching || isPaidRowsFetching}
-            onClickCapture={() => {
-              refetchPaidTotalRows();
-              refetchPaidTotal();
-            }}
-          >
-            <ReloadOutlined /> {t("buttons.refresh")}
-          </Button>
-        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
         <Grid item xs={12}>
-          {" "}
           <CustomTable
             query={query}
             setCurrentItem={setCurrentItem}
@@ -268,6 +253,10 @@ export const PaidDeposits = () => {
             columns={columns}
             loading={isPaidRowsFetching}
             error={paidRowsError}
+            refetch={() => {
+              refetchPaidTotalRows();
+              refetchPaidTotal();
+            }}
             actions={[
               {
                 label: "details",

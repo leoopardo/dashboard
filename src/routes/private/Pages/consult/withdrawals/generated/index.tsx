@@ -305,26 +305,10 @@ export const GeneratedWithdrawals = () => {
             </Tooltip>
           </Grid>
         )}
-
-        <Grid item xs={12} md={4} lg={2}>
-          <Button
-            size="large"
-            type="primary"
-            style={{ width: "100%" }}
-            loading={isWithdrawalsRowsFetching || isWithdrawalsTotalFetching}
-            onClickCapture={() => {
-              refetchWithdrawalsTotalRows();
-              refetchWithdrawalsTotal();
-            }}
-          >
-            <ReloadOutlined /> {t("buttons.refresh")}
-          </Button>
-        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
         <Grid item xs={12}>
-          {" "}
           <CustomTable
             query={query}
             setCurrentItem={setCurrentItem}
@@ -334,6 +318,10 @@ export const GeneratedWithdrawals = () => {
             columns={columns}
             loading={isWithdrawalsRowsFetching}
             error={witrawalsRowsError}
+            refetch={() => {
+              refetchWithdrawalsTotalRows();
+              refetchWithdrawalsTotal();
+            }}
             actions={[
               {
                 label: "details",

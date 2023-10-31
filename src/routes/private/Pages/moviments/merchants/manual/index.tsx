@@ -247,7 +247,7 @@ export const MerchantManual = () => {
         </Grid>
         {permissions.transactions.merchant.manual_transactions
           .merchant_manual_transactions_export_csv && (
-          <Grid item xs={12} md={2} lg={1}>
+          <Grid item xs={12} md={3} lg={2}>
             <ExportReportsModal
               disabled={
                 !MerchantMovimentsData?.total || MerchantMovimentsDataError
@@ -260,31 +260,10 @@ export const MerchantManual = () => {
             />
           </Grid>
         )}
-        <Grid
-          container
-          item
-          xs={12}
-          md="auto"
-          lg={2}
-          style={{ marginLeft: "auto" }}
-        >
-          <Button
-            size="large"
-            type="primary"
-            style={{ width: "100%" }}
-            loading={isMerchantMovimentsDataFetching}
-            onClickCapture={() => {
-              refetchMerchantMovimentsData();
-            }}
-          >
-            <ReloadOutlined /> {t("buttons.refresh")}
-          </Button>
-        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
         <Grid item xs={12}>
-          {" "}
           <CustomTable
             query={query}
             setCurrentItem={setCurrentItem}
@@ -302,7 +281,8 @@ export const MerchantManual = () => {
               { name: "status", type: "status", sort: true },
             ]}
             loading={isMerchantMovimentsDataFetching}
-            actions={[]}
+            refetch={() => refetchMerchantMovimentsData()}
+            actions={[{}]}
             removeTotal
             label={[
               "bank",

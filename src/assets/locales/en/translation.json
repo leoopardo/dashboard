@@ -729,7 +729,7 @@
     "available_balance": "Avaliable balance",
     "operations_value": "Operations value",
     "category_id": "Category",
-    "refetch_table": "Reload table"
+    "refetch_data": "Reload data"
   },
   "actions": {
     "details": "Details",

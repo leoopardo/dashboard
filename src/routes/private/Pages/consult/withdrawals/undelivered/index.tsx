@@ -197,7 +197,7 @@ export const UndeliveredWithdrawals = () => {
             searchOption={searchOption}
           />
         </Grid>
-        <Grid item xs={12} md={2} lg={2}>
+        <Grid item xs={12} md={3} lg={3}>
           <Button
             size="large"
             type="dashed"
@@ -232,24 +232,6 @@ export const UndeliveredWithdrawals = () => {
           </Grid>
         )}
 
-        <Grid item xs={12} md={2} lg={2}>
-          <Button
-            size="large"
-            type="primary"
-            style={{ width: "100%" }}
-            loading={
-              isWithdrawalsRowsFetching || isWithdrawalsTotalFetching
-            }
-            onClickCapture={() => {
-              refetchWithdrawalsTotalRows();
-              refetchWithdrawalsTotal();
-            }}
-          >
-            {!isWithdrawalsRowsFetching &&
-              !isWithdrawalsTotalFetching && <ReloadOutlined />}{" "}
-            {t("buttons.refresh")}
-          </Button>
-        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -264,6 +246,10 @@ export const UndeliveredWithdrawals = () => {
             columns={columns}
             loading={isWithdrawalsRowsFetching}
             error={witrawalsRowsError}
+            refetch={() => {
+              refetchWithdrawalsTotalRows();
+              refetchWithdrawalsTotal();
+            }}
             actions={[
               {
                 label: "details",

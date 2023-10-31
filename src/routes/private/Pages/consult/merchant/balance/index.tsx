@@ -21,6 +21,7 @@ import {
   Statistic,
   Table,
   TableColumnsType,
+  Tooltip,
 } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -99,6 +100,25 @@ export const MerchantBalance = () => {
           currency: "BRL",
         }).format(value ?? 0),
     },
+    {
+      title: (
+        <Tooltip title={t("table.refetch_data")}>
+          <Button
+            type="link"
+            onClick={refetchMerchantBalance}
+            style={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <ReloadOutlined style={{ fontSize: "16px" }} />
+          </Button>
+        </Tooltip>
+      ),
+      dataIndex: "",
+      key: "",
+    },
   ];
 
   const expandedRowRender = (record: any) => {
@@ -127,8 +147,7 @@ export const MerchantBalance = () => {
         title: t("table.pix_transactions_total"),
         dataIndex: "pix_transactions_total",
         key: "pix_transactions_total",
-        render: (value) =>
-        value ?? 0,
+        render: (value) => value ?? 0,
       },
       {
         title: t("table.pix_amount_value"),
@@ -154,8 +173,7 @@ export const MerchantBalance = () => {
         title: t("table.withdraw_transactions_total"),
         dataIndex: "withdraw_transactions_total",
         key: "withdraw_transactions_total",
-        render: (value) =>
-        value ?? 0,
+        render: (value) => value ?? 0,
       },
       {
         title: t("table.withdraw_amount_value"),
@@ -181,8 +199,7 @@ export const MerchantBalance = () => {
         title: t("table.refund_transactions_total"),
         dataIndex: "refund_transactions_total",
         key: "refund_transactions_total",
-        render: (value) =>
-        value ?? 0,
+        render: (value) => value ?? 0,
       },
       {
         title: t("table.refund_amount_fee"),
@@ -194,7 +211,6 @@ export const MerchantBalance = () => {
             currency: "BRL",
           }).format(value ?? 0),
       },
-      
     ];
 
     return (

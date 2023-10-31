@@ -211,7 +211,7 @@ export const PaidWithdrawals = () => {
             searchOption={searchOption}
           />
         </Grid>
-        <Grid item xs={12} md={2} lg={2}>
+        <Grid item xs={12} md={3} lg={3}>
           <Button
             size="large"
             type="dashed"
@@ -261,25 +261,6 @@ export const PaidWithdrawals = () => {
             </Tooltip>
           </Grid>
         )}
-
-        <Grid item xs={12} md={2} lg={2}>
-          <Button
-            size="large"
-            type="primary"
-            style={{ width: "100%" }}
-            loading={
-              isPaidWithdrawalsRowsFetching || isPaidWithdrawalsTotalFetching
-            }
-            onClickCapture={() => {
-              refetchPaidWithdrawalsTotalRows();
-              refetchPaidWithdrawalsTotal();
-            }}
-          >
-            {!isPaidWithdrawalsRowsFetching &&
-              !isPaidWithdrawalsTotalFetching && <ReloadOutlined />}{" "}
-            {t("buttons.refresh")}
-          </Button>
-        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -293,6 +274,10 @@ export const PaidWithdrawals = () => {
             columns={columns}
             loading={isPaidWithdrawalsRowsFetching}
             error={paidWithdrawalsRowsError}
+            refetch={() => {
+              refetchPaidWithdrawalsTotalRows();
+              refetchPaidWithdrawalsTotal();
+            }}
             actions={[
               {
                 label: "details",
