@@ -1,6 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { EditOutlined, EyeFilled, UserAddOutlined } from "@ant-design/icons";
+import {
+  EditOutlined,
+  EyeFilled,
+  UserAddOutlined,
+  ReloadOutlined,
+} from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
@@ -135,7 +140,7 @@ export const PartnerUsers = () => {
           </Button>
         </Grid>
         {permissions.register.partner.users.partner_user_create && (
-          <Grid item xs={12} md={3} lg={2}>
+          <Grid item xs={12} md={2} lg={2}>
             <Button
               type="primary"
               loading={isUsersDataFetching}
@@ -170,6 +175,21 @@ export const PartnerUsers = () => {
             />
           </Grid>
         )}
+
+        <Grid item xs={12} md="auto">
+          <Button
+            style={{
+              width: "100%",
+              height: 40,
+            }}
+            loading={isUsersDataFetching}
+            shape="round"
+            type="dashed"
+            onClick={refetchUsersData}
+          >
+            {!isUsersDataFetching && <ReloadOutlined />}
+          </Button>
+        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -202,7 +222,7 @@ export const PartnerUsers = () => {
             error={UsersDataError}
             columns={columns}
             loading={isUsersDataFetching}
-            label={["name", "username","partner.name", "updated_at"]}
+            label={["name", "username", "partner.name", "updated_at"]}
           />
         </Grid>
       </Grid>

@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { DownloadOutlined, EyeFilled } from "@ant-design/icons";
+import { DownloadOutlined, EyeFilled, ReloadOutlined } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { CustomTable } from "@src/components/CustomTable";
@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 export const AggregatorsReports = () => {
+  const { t } = useTranslation();
   const INITIAL_QUERY: ReportsQuery = {
     limit: 25,
     page: 1,
@@ -39,7 +40,6 @@ export const AggregatorsReports = () => {
     currentItem?.report_url ? setDisable(false) : setDisable(true);
   }, [currentItem]);
 
-  const { t } = useTranslation();
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid
@@ -58,7 +58,7 @@ export const AggregatorsReports = () => {
             {t("table.filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={6} lg={8}>
+        <Grid item xs={12} md={5} lg={7}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
@@ -84,6 +84,21 @@ export const AggregatorsReports = () => {
           >
             <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
             {t("table.clear_filters")}
+          </Button>
+        </Grid>
+
+        <Grid item xs={12} md="auto">
+          <Button
+            style={{
+              width: "100%",
+              height: 40,
+            }}
+            loading={isAggregatorsReportsDataFetching}
+            shape="round"
+            type="dashed"
+            onClick={refetchAggregatorsReportsData}
+          >
+            {!isAggregatorsReportsDataFetching && <ReloadOutlined />}
           </Button>
         </Grid>
       </Grid>

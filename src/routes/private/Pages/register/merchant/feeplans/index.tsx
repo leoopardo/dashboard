@@ -6,6 +6,7 @@ import {
   EyeFilled,
   PlusOutlined,
   DeleteOutlined,
+  ReloadOutlined
 } from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
@@ -106,7 +107,7 @@ export const MerchantFeePlans = () => {
             {t("table.filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={6} lg={8}>
+        <Grid item xs={12} md={5} lg={7}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
@@ -135,6 +136,28 @@ export const MerchantFeePlans = () => {
             {`${t("buttons.create")} ${t("menus.fee_plans")
               .toString()
               .toLocaleLowerCase()}`}
+          </Button>
+        </Grid>
+
+        <Grid
+          container
+          item
+          xs={12}
+          md="auto"
+          lg={1}
+          style={{ marginLeft: "auto" }}
+        >
+          <Button
+            style={{
+              width: "100%",
+              height: 40,
+            }}
+            loading={isFeePlansDataFetching}
+            shape="round"
+            type="dashed"
+            onClick={refetchFeePlansData}
+          >
+            {!isFeePlansDataFetching && <ReloadOutlined />}
           </Button>
         </Grid>
       </Grid>

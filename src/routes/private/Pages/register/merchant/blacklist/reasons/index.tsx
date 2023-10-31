@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined, ReloadOutlined } from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
@@ -89,7 +89,7 @@ export const MerchantBlacklistReasons = () => {
             {t("table.filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={4} lg={6}>
+        <Grid item xs={12} md={3} lg={5}>
           <FilterChips
             startDateKeyName="initial_date"
             endDateKeyName="final_date"
@@ -136,6 +136,28 @@ export const MerchantBlacklistReasons = () => {
           >
             <PlusOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
             {t("buttons.new_reason")}
+          </Button>
+        </Grid>
+
+        <Grid
+          container
+          item
+          xs={12}
+          md="auto"
+          lg={1}
+          style={{ marginLeft: "auto" }}
+        >
+          <Button
+            style={{
+              width: "100%",
+              height: 40,
+            }}
+            loading={isMerchantBlacklistDataFetching}
+            shape="round"
+            type="dashed"
+            onClick={refetchMerchantBlacklistData}
+          >
+            {!isMerchantBlacklistDataFetching && <ReloadOutlined />}
           </Button>
         </Grid>
       </Grid>

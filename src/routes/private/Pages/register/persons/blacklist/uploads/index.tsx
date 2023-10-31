@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { EyeFilled } from "@ant-design/icons";
+import { EyeFilled, ReloadOutlined } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { CustomTable } from "@src/components/CustomTable";
@@ -65,7 +65,7 @@ export const PersonBlacklistUploads = () => {
             {t("table.filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={6} lg={8}>
+        <Grid item xs={12} md={5} lg={7}>
           <FilterChips
             startDateKeyName="createdat_start"
             endDateKeyName="createdat_end"
@@ -93,6 +93,27 @@ export const PersonBlacklistUploads = () => {
           >
             <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
             {t("table.clear_filters")}
+          </Button>
+        </Grid>
+        <Grid
+          container
+          item
+          xs={12}
+          md="auto"
+          lg={1}
+          style={{ marginLeft: "auto" }}
+        >
+          <Button
+            style={{
+              width: "100%",
+              height: 40,
+            }}
+            loading={isFetching}
+            shape="round"
+            type="dashed"
+            onClick={refetch}
+          >
+            {!isFetching && <ReloadOutlined />}
           </Button>
         </Grid>
       </Grid>

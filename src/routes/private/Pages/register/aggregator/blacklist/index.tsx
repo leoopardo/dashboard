@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { InfoCircleOutlined, PlusOutlined } from "@ant-design/icons";
+import { InfoCircleOutlined, PlusOutlined, ReloadOutlined } from "@ant-design/icons";
 import { CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
@@ -85,6 +85,7 @@ export const AggregatorBlacklist = () => {
   const ref4 = useRef(null);
   const ref5 = useRef(null);
   const ref6 = useRef(null);
+  const ref7 = useRef(null);
   const refDoc = useRef(null);
   const refMerchant = useRef(null);
   const refReason = useRef(null);
@@ -145,7 +146,7 @@ export const AggregatorBlacklist = () => {
         <Grid item xs={12} md={2} lg={2} ref={ref2}>
           <ReasonSelect queryOptions={query} setQueryFunction={setQuery} />
         </Grid>
-        <Grid item xs={12} md={4} lg={4} ref={ref3}>
+        <Grid item xs={12} md={3} lg={3} ref={ref3}>
           <Input
             size="large"
             placeholder={t("table.cpf") || ""}
@@ -217,6 +218,20 @@ export const AggregatorBlacklist = () => {
             />
           </Grid>
         )}
+        <Grid item xs={12} md="auto" ref={ref7}>
+          <Button
+            style={{
+              width: "100%",
+              height: 40,
+            }}
+            loading={isAggregatorsBlacklistDataFetching}
+            shape="round"
+            type="dashed"
+            onClick={refetchAggregatorsBlacklistData}
+          >
+            {!isAggregatorsBlacklistDataFetching && <ReloadOutlined />}
+          </Button>
+        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -304,6 +319,7 @@ export const AggregatorBlacklist = () => {
             target: () => ref5.current,
           }
         }
+        refreshStepRef={ref7}
         exportCsvStep={
           permissions.register.aggregator.users.aggregator_user_export_csv && {
             title: t("wiki.generate_reports"),
