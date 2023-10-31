@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { PartnerSelect } from "@src/components/Selects/partnerSelect";
 import { Toast } from "@src/components/Toast";
 import { useListBanks } from "@src/services/bank/listBanks";
 import { useListMerchants } from "@src/services/merchant/listMerchants";
@@ -295,11 +294,10 @@ export const UpdateBanks = ({
                     return;
                   }
 
-                  setQuery((state: any) => ({ ...state, name: value }));
+                  setPQuery((state: any) => ({ ...state, name: value }));
                 }}
                 onChange={(value) => {
                   setBody((state) => ({ ...state, partners_ids: value }));
-                 
                 }}
                 options={partnersData?.items.map((merch) => {
                   return {

@@ -7,5 +7,5 @@ export interface IMerchantBankUpdate {
   merchants_ids?: (number | undefined)[] | null;
   cash_in_bank?: string;
   cash_out_bank?: string;
-  partner_id?: string;
+  partners_ids?: (number | undefined)[] | null;
 }
