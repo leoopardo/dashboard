@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { EditOutlined, EyeFilled, UserAddOutlined } from "@ant-design/icons";
+import { EditOutlined, EyeFilled, UserAddOutlined, ReloadOutlined } from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
@@ -134,6 +134,20 @@ export const OperatorUsers = () => {
           >
             <UserAddOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
             {`${t("buttons.create")} ${t("buttons.new_user")}`}
+          </Button>
+        </Grid>
+        <Grid container item xs={12} md="auto" style={{marginLeft: 'auto'}}>
+          <Button
+            style={{
+              width: "100%",
+              height: 40,
+            }}
+            loading={isUsersDataFetching}
+            shape="round"
+            type="dashed"
+            onClick={refetchUsersData}
+          >
+            {!isUsersDataFetching && <ReloadOutlined />}
           </Button>
         </Grid>
       </Grid>

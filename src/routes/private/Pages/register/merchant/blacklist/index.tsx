@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined, ReloadOutlined } from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
@@ -68,8 +68,9 @@ export const MerchantBlacklist = () => {
     MerchantBlacklistReportsMutate,
   } = useCreateMerchantBlacklistReports(query);
 
-  const { isDeleteLoading, mutateDelete } =
-    useDeleteMechantBlacklist({ cpf: currentItem?.cpf });
+  const { isDeleteLoading, mutateDelete } = useDeleteMechantBlacklist({
+    cpf: currentItem?.cpf,
+  });
 
   const columns: ColumnInterface[] = [
     { name: "cpf", type: "id" },
@@ -81,11 +82,14 @@ export const MerchantBlacklist = () => {
   ];
 
   const handleRenderColumns = () => {
-    const columns: {label: string, required: boolean, selectOption?: boolean}[] = [
+    const columns: {
+      label: string;
+      required: boolean;
+      selectOption?: boolean;
+    }[] = [
       { label: "cpf", required: true },
       { label: "reason", required: true },
       { label: "description", required: true },
-      
     ];
 
     if (!merchant_id) {
@@ -157,7 +161,7 @@ export const MerchantBlacklist = () => {
         <Grid item xs={12} md={2} lg={2}>
           <ReasonSelect queryOptions={query} setQueryFunction={setQuery} />
         </Grid>
-        <Grid item xs={12} md={4} lg={4}>
+        <Grid item xs={12} md={4} lg={3}>
           <Input
             size="large"
             placeholder={t("table.cpf") || ""}
@@ -225,6 +229,28 @@ export const MerchantBlacklist = () => {
             />
           </Grid>
         )}
+
+        <Grid
+          container
+          item
+          xs={12}
+          md="auto"
+          lg={1}
+          style={{ marginLeft: "auto" }}
+        >
+          <Button
+            style={{
+              width: "100%",
+              height: 40,
+            }}
+            loading={isMerchantBlacklistDataFetching}
+            shape="round"
+            type="dashed"
+            onClick={refetchMerchantBlacklistData}
+          >
+            {!isMerchantBlacklistDataFetching && <ReloadOutlined />}
+          </Button>
+        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -299,12 +325,12 @@ export const MerchantBlacklist = () => {
           selectOptions={{
             can_be_deleted_only_by_organization: [
               {
-                label: 'true',
-                value: 'true',
+                label: "true",
+                value: "true",
               },
               {
-                label: 'false',
-                value: 'false',
+                label: "false",
+                value: "false",
               },
             ],
           }}

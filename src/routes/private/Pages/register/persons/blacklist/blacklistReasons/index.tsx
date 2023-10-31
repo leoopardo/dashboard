@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
+import { DeleteOutlined, PlusOutlined, ReloadOutlined } from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
@@ -120,6 +120,27 @@ export const PersonBlacklistReasons = () => {
           >
             <PlusOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
             {t("buttons.new_reason")}
+          </Button>
+        </Grid>
+        <Grid
+          container
+          item
+          xs={12}
+          md="auto"
+          lg={1}
+          style={{ marginLeft: "auto" }}
+        >
+          <Button
+            style={{
+              width: "100%",
+              height: 40,
+            }}
+            loading={reasonsIsFetching}
+            shape="round"
+            type="dashed"
+            onClick={refetchReasons}
+          >
+            {!reasonsIsFetching && <ReloadOutlined />}
           </Button>
         </Grid>
       </Grid>

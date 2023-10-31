@@ -6,6 +6,7 @@ import {
   EyeFilled,
   ToolOutlined,
   UserAddOutlined,
+  ReloadOutlined,
 } from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
@@ -132,7 +133,6 @@ export const MerchantView = () => {
     { name: "status", type: "status" },
     { name: "created_at", type: "date", sort: true },
   ];
-  console.log(selectedItems, "aqui");
 
   useEffect(() => {
     const id = currentItem?.id;
@@ -186,7 +186,7 @@ export const MerchantView = () => {
       </Grid>
 
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
-        <Grid item xs={12} md={6} lg={4}>
+        <Grid item xs={12} md={5} lg={3}>
           <Input.Search
             size="large"
             ref={searchref}
@@ -266,7 +266,7 @@ export const MerchantView = () => {
         )}
 
         {permissions.register.merchant.merchant.merchant_export_csv && (
-          <Grid item xs={12} md={4} lg={2}>
+          <Grid item xs={12} md={3} lg={2}>
             <ExportReportsModal
               disabled={!MerchantData?.total || MerchantDataError}
               mutateReport={() => MerchantReportsMutate()}
@@ -277,6 +277,28 @@ export const MerchantView = () => {
             />
           </Grid>
         )}
+
+        <Grid
+          container
+          item
+          xs={12}
+          md="auto"
+          lg={1}
+          style={{ marginLeft: "auto" }}
+        >
+          <Button
+            style={{
+              width: "100%",
+              height: 40,
+            }}
+            loading={isMerchantDataFetching}
+            shape="round"
+            type="dashed"
+            onClick={refetchMerchantData}
+          >
+            {!isMerchantDataFetching && <ReloadOutlined />}
+          </Button>
+        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
