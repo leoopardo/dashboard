@@ -11,7 +11,7 @@ export function useGetWithdrawFeePlansRegister(params?: MerchantsQuery) {
   >(
     "MerchantsWithdrawFeePlans",
     async () => {
-      const response = await api.get("core/merchant_fee_plans", {
+      const response = await api.get("core/fee_plans", {
         params: { transaction_type: "CASHOUT", ...params },
       });
       return response.data;

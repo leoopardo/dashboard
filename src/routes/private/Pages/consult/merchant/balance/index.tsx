@@ -89,6 +89,16 @@ export const MerchantBalance = () => {
           currency: "BRL",
         }).format(value ?? 0),
     },
+    {
+      title: t("table.balance_total"),
+      dataIndex: "balance_to_transactions_total",
+      key: "balance_to_transactions_total",
+      render: (value) =>
+        new Intl.NumberFormat("pt-BR", {
+          style: "currency",
+          currency: "BRL",
+        }).format(value ?? 0),
+    },
   ];
 
   const expandedRowRender = (record: any) => {
@@ -114,6 +124,13 @@ export const MerchantBalance = () => {
           }).format(value ?? 0),
       },
       {
+        title: t("table.pix_transactions_total"),
+        dataIndex: "pix_transactions_total",
+        key: "pix_transactions_total",
+        render: (value) =>
+        value ?? 0,
+      },
+      {
         title: t("table.pix_amount_value"),
         dataIndex: "pix_amount_value",
         key: "pix_amount_value",
@@ -132,6 +149,13 @@ export const MerchantBalance = () => {
             style: "currency",
             currency: "BRL",
           }).format(value ?? 0),
+      },
+      {
+        title: t("table.withdraw_transactions_total"),
+        dataIndex: "withdraw_transactions_total",
+        key: "withdraw_transactions_total",
+        render: (value) =>
+        value ?? 0,
       },
       {
         title: t("table.withdraw_amount_value"),
@@ -157,6 +181,8 @@ export const MerchantBalance = () => {
         title: t("table.refund_transactions_total"),
         dataIndex: "refund_transactions_total",
         key: "refund_transactions_total",
+        render: (value) =>
+        value ?? 0,
       },
       {
         title: t("table.refund_amount_fee"),
@@ -168,6 +194,7 @@ export const MerchantBalance = () => {
             currency: "BRL",
           }).format(value ?? 0),
       },
+      
     ];
 
     return (
