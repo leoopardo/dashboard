@@ -3,7 +3,7 @@ import {
   DeleteOutlined,
   EditOutlined,
   EyeFilled,
-  PlusOutlined,
+  PlusOutlined
 } from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";

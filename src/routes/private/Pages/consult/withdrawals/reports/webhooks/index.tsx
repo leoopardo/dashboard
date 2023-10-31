@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { EyeFilled } from "@ant-design/icons";
 import { CustomTable } from "@src/components/CustomTable";
 import { FiltersModal } from "@src/components/FiltersModal";
@@ -67,7 +68,6 @@ export const WithdrawWebhooks = () => {
             haveInitialDate
           />
         </Col>
-       
       </Row>
 
       <Row
