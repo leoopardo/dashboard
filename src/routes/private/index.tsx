@@ -106,7 +106,7 @@ import { Permission } from "./permission";
 import { Redirect } from "./redirect";
 
 export const PrivateRoutes = () => {
- const { permissions } = queryClient.getQueryData(
+  const { permissions } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
   return (
