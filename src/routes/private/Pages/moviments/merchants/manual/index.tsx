@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
+import { ArrowDownOutlined, ArrowUpOutlined, ReloadOutlined } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { CustomTable } from "@src/components/CustomTable";
@@ -206,7 +206,7 @@ export const MerchantManual = () => {
             {t("table.filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={4} lg={7}>
+        <Grid item xs={12} md={3} lg={5}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
@@ -248,6 +248,29 @@ export const MerchantManual = () => {
             />
           </Grid>
         )}
+        <Grid
+          container
+          item
+          xs={12}
+          md="auto"
+          lg={1}
+          style={{ marginLeft: "auto" }}
+        >
+          <Button
+            style={{
+              width: "100%",
+              height: 40,
+            }}
+            loading={isMerchantMovimentsDataFetching}
+            shape="round"
+            type="dashed"
+            onClick={refetchMerchantMovimentsData}
+          >
+            {!isMerchantMovimentsDataFetching && (
+              <ReloadOutlined />
+            )}
+          </Button>
+        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>

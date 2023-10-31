@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { ArrowUpOutlined, DollarOutlined, EyeFilled } from "@ant-design/icons";
+import { ArrowUpOutlined, DollarOutlined, EyeFilled, ReloadOutlined } from "@ant-design/icons";
 import { CustomTable } from "@src/components/CustomTable";
 import { FiltersModal } from "@src/components/FiltersModal";
 import { FilterChips } from "@src/components/FiltersModal/filterChips";
@@ -135,7 +135,7 @@ export const OrganizationTransfersBetweenAccounts = () => {
             {t("table.filters")}
           </Button>
         </Col>
-        <Col xs={{ span: 24 }} md={{ span: 9 }} lg={14}>
+        <Col xs={{ span: 24 }} md={{ span: 7 }} lg={12}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
@@ -183,6 +183,21 @@ export const OrganizationTransfersBetweenAccounts = () => {
             />
           </Col>
         )}
+
+<Col xs={{ span: 24 }} md={{ span: 3 }} lg={{ span: 2 }}>
+          <Button
+            style={{
+              width: "100%",
+              height: 40,
+            }}
+            loading={isTransferBetweenAccountsDataFetching}
+            shape="round"
+            type="dashed"
+            onClick={refetchTransferBetweenAccountsData}
+          >
+            {!isTransferBetweenAccountsDataFetching && <ReloadOutlined />}
+          </Button>
+          </Col>
       </Row>
 
       <Row style={{ width: "100%" }}>

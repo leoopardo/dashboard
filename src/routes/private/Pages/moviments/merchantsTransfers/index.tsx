@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ArrowUpOutlined, DollarOutlined, EyeFilled } from "@ant-design/icons";
+import { ArrowUpOutlined, DollarOutlined, EyeFilled, ReloadOutlined } from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
@@ -145,7 +145,7 @@ export const TransferBetweenMerchants = () => {
             {t("table.filters")}
           </Button>
         </Col>
-        <Col xs={{ span: 24 }} md={{ span: 11 }} lg={16}>
+        <Col xs={{ span: 24 }} md={{ span: 10 }} lg={12}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
@@ -175,6 +175,22 @@ export const TransferBetweenMerchants = () => {
             <DollarOutlined style={{ fontSize: 22 }} /> {t("table.transfer")}
           </Button>
         </Col>
+        <Col xs={{ span: 24 }} md={{ span: 4 }} lg={4}>
+          <Button
+            style={{
+              width: "100%",
+              height: 40,
+            }}
+            loading={isTransferMerchantsDataFetching}
+            shape="round"
+            type="dashed"
+            onClick={refetchTransferMerchantsData}
+          >
+            {!isTransferMerchantsDataFetching && (
+              <ReloadOutlined />
+            )}
+          </Button>
+          </Col>
       </Row>
 
       <Grid container style={{ marginTop: "15px" }}>
