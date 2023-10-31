@@ -30,11 +30,11 @@ import { ValidateInterface } from "@src/services/types/validate.interface";
 import { Button, Input } from "antd";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useMediaQuery } from "react-responsive";
 import { useNavigate } from "react-router-dom";
 import { ViewMerchantModal } from "./components/ViewMerchantModal";
 import { TotalizersCards } from "./components/totalizersCards";
 import { UpdateBanks } from "./components/updatebanks";
-import { useMediaQuery } from "react-responsive";
 
 const INITIAL_QUERY: MerchantsQuery = {
   limit: 25,
@@ -402,8 +402,12 @@ export const MerchantView = () => {
             "start_date",
             "end_date",
             "status",
+            "aggregator_id",
+            "operator_id",
             "partner_id",
             "merchant_id",
+            "cash_in_bank",
+            "cash_out_bank",
           ]}
           refetch={refetchMerchantData}
           selectOptions={{}}

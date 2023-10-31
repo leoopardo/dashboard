@@ -49,6 +49,7 @@ import {
   Input,
   Row,
   Spin,
+  Switch,
   Tabs,
   TabsProps,
   Typography,
@@ -227,6 +228,28 @@ export const UpdateMerchant = () => {
             </Col>
             <Col xs={{ span: 24 }} md={{ span: 4 }}>
               <Form.Item
+                label={t("table.domain")}
+                name="domain"
+                rules={[
+                  {
+                    required: true,
+                    message:
+                      t("input.required", {
+                        field: t(`input.domain`),
+                      }) || "",
+                  },
+                ]}
+              >
+                <Input
+                  name="domain"
+                  size="large"
+                  value={merchantBody?.domain}
+                  onChange={handleChangeMerchant}
+                />
+              </Form.Item>
+            </Col>
+            <Col xs={{ span: 24 }} md={{ span: 4 }}>
+              <Form.Item
                 label={t("table.cnpj")}
                 name="cnpj"
                 rules={[
@@ -319,7 +342,7 @@ export const UpdateMerchant = () => {
                 />
               </Form.Item>
             </Col>
-            <Col xs={{ span: 24 }} md={{ span: 6 }}>
+            <Col xs={{ span: 24 }} md={{ span: 4 }}>
               <Form.Item label={t("table.partner")} name="partner_id">
                 <PartnerSelect
                   queryOptions={merchantBody}
@@ -327,7 +350,7 @@ export const UpdateMerchant = () => {
                 />
               </Form.Item>
             </Col>
-            <Col xs={{ span: 24 }} md={{ span: 6 }}>
+            <Col xs={{ span: 24 }} md={{ span: 4 }}>
               <Form.Item label={t("table.aggregator")} name="aggregator_id">
                 <AggregatorSelect
                   aggregatorId={merchantBody.aggregator_id}
@@ -340,6 +363,19 @@ export const UpdateMerchant = () => {
                 <OperatorSelect
                   queryOptions={merchantBody}
                   setQueryFunction={setMerchantBody}
+                />
+              </Form.Item>
+            </Col>
+            <Col xs={{ span: 24 }} md={{ span: 2 }}>
+              <Form.Item label={t("table.status")} name="status" valuePropName="checked">
+                <Switch
+                  checked={merchantBody?.status}
+                  onChange={(checked) => {
+                    setMerchantBody((state) => ({
+                      ...state,
+                      status: checked,
+                    }));
+                  }}
                 />
               </Form.Item>
             </Col>

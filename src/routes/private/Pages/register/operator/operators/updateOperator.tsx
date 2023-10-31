@@ -47,6 +47,7 @@ import {
   Input,
   Row,
   Spin,
+  Switch,
   Tabs,
   TabsProps,
   Typography,
@@ -302,6 +303,19 @@ export const UpdateOperator = () => {
                 <AggregatorSelect
                   aggregatorId={OperatorBody.aggregator_id ?? location?.state?.aggregator_id}
                   setQueryFunction={setOperatorBody}
+                />
+              </Form.Item>
+            </Col>
+            <Col xs={{ span: 24 }} md={{ span: 2 }}>
+              <Form.Item label={t("table.status")} name="status" valuePropName="checked">
+                <Switch
+                  checked={OperatorBody?.status}
+                  onChange={(checked) => {
+                    setOperatorBody((state) => ({
+                      ...state,
+                      status: checked,
+                    }));
+                  }}
                 />
               </Form.Item>
             </Col>
