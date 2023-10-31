@@ -43,7 +43,7 @@ import { useTranslation } from "react-i18next";
 import { useGetPersonHistory } from "@src/services/register/persons/persons/getPersonsHistory";
 import ReactInputMask from "react-input-mask";
 import { useGetPersonHistoryDetails } from "@src/services/register/persons/persons/getPersonsHistory";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { FilterChips } from "@src/components/FiltersModal/filterChips";
 import { FiltersModal } from "@src/components/FiltersModal";
 
@@ -55,6 +55,7 @@ const INITIAL_QUERY: PersonsQuery = {
 };
 
 export const PersonUpdate = () => {
+  const currentData = useLocation()?.state;
   const [body, setBody] = useState<PersonsItem | undefined>(undefined);
   const [currentObj, setCurrentObj] = useState<any | undefined>(undefined);
   const [currState, setCurrState] = useState<string | undefined>("");
@@ -103,7 +104,7 @@ export const PersonUpdate = () => {
     useDeleteDeleteFile(cpf?.split(" ").join("."), deleteFileId);
 
   const { Files, isFilesFetching, refetchFiles } = useGetFiles(
-    PersonsData?.items[0]?.cpf
+    currentData?.cpf
   );
 
   const columns: ColumnInterface[] = [
@@ -120,9 +121,9 @@ export const PersonUpdate = () => {
   };
 
   useEffect(() => {
-    setBody(PersonsData?.items[0]);
+    setBody(currentData);
     refetchFiles();
-    setCurrState(PersonsData?.items[0].state);
+    setCurrState(currentData?.state);
   }, [PersonsData]);
 
   useEffect(() => {

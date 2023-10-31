@@ -267,36 +267,36 @@ export const OrganizationTransfersBetweenAccounts = () => {
               user?.type === 1
                 ? [
                     {
-                      label: t("table.balance_reserved"),
+                      label: "balance_reserved",
                       value: "balance_reserved",
                     },
                     {
-                      label: t("table.balance_to_payment"),
+                      label: "balance_to_payment",
                       value: "balance_to_payment",
                     },
                     {
-                      label: t("table.balance_to_transactions"),
+                      label: "balance_to_transactions",
                       value: "balance_to_transactions",
                     },
                   ]
                 : [
                     {
-                      label: t("table.balance_to_payment"),
+                      label: "balance_to_payment",
                       value: "balance_to_payment",
                     },
                     {
-                      label: t("table.balance_to_transactions"),
+                      label: "balance_to_transactions",
                       value: "balance_to_transactions",
                     },
                   ],
             to: [
-              { label: t("table.balance_reserved"), value: "balance_reserved" },
+              { label: "balance_reserved", value: "balance_reserved" },
               {
-                label: t("table.balance_to_payment"),
+                label: "balance_to_payment",
                 value: "balance_to_payment",
               },
               {
-                label: t("table.balance_to_transactions"),
+                label: "balance_to_transactions",
                 value: "balance_to_transactions",
               },
             ],

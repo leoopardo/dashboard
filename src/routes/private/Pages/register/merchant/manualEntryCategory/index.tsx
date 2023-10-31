@@ -1,8 +1,10 @@
-import { EditOutlined, PlusOutlined, ReloadOutlined } from "@ant-design/icons";
+import { EditOutlined, PlusOutlined } from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
+import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
+import { Search } from "@src/components/Inputs/search";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
 import { Toast } from "@src/components/Toast";
 import { queryClient } from "@src/services/queryClient";
@@ -81,11 +83,12 @@ export const MerchantManualEntryCategory = () => {
     <Grid container style={{ padding: "25px" }}>
       <Grid
         container
-        style={{ marginTop: "20px", display: "flex", alignItems: "center" }}
+        style={{ display: "flex", alignItems: "center" }}
         spacing={1}
       >
         <Grid item xs={12} md={3} lg={2}>
-           <Button size="large"
+          <Button
+            size="large"
             style={{ width: "100%" }}
             loading={isCategoryDataFetching}
             type="primary"
@@ -100,8 +103,33 @@ export const MerchantManualEntryCategory = () => {
             endDateKeyName="end_date"
             query={query}
             setQuery={setQuery}
-             
           />
+        </Grid>
+      </Grid>
+
+      <Grid container style={{ marginTop: "8px" }} spacing={1}>
+        <Grid item xs={12} md={3} lg={3}>
+          <Search query={query} setQuery={setQuery} searchOption={"name"} />
+        </Grid>
+        <Grid item xs={12} md={4} lg={2}>
+          <Button
+            type="dashed"
+            loading={isCategoryDataFetching}
+            danger
+            onClick={() => {
+              setQuery(INITIAL_QUERY);
+            }}
+            style={{
+              height: 40,
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
+            {t("table.clear_filters")}
+          </Button>
         </Grid>
 
         {permissions.register.merchant.release_category
@@ -126,27 +154,6 @@ export const MerchantManualEntryCategory = () => {
             </Button>
           </Grid>
         )}
-         <Grid
-          container
-          item
-          xs={12}
-          md="auto"
-          lg={1}
-          style={{ marginLeft: "auto" }}
-        >
-          <Button
-            style={{
-              width: "100%",
-              height: 40,
-            }}
-            loading={isCategoryDataFetching}
-            shape="round"
-            type="dashed"
-            onClick={refetchCategoryData}
-          >
-            {!isCategoryDataFetching && <ReloadOutlined />}
-          </Button>
-        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -217,6 +224,7 @@ export const MerchantManualEntryCategory = () => {
           fields={[
             { label: "name", required: true },
             { label: "description", required: true },
+            { label: "status", required: false },
           ]}
           body={updateBody}
           setBody={setUpdateBody}

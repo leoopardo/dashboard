@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
@@ -138,7 +139,7 @@ export const ImportContastationDeposit = () => {
   const { readRemoteFile } = usePapaParse();
   const initialData: DataType[] = [];
   const [dataSource, setDataSource] = useState<DataType[]>(initialData);
-  const [body, setBody] = useState<{ content: string }>({ content: "" });
+  const [body, setBody] = useState<{ endToEndId: string }>({ endToEndId: "" });
   const { error, isLoading, isSuccess, mutate } =
     useCreateContestImportCsv(body);
   const uploadRef = useRef<HTMLButtonElement | null>(null);
@@ -226,9 +227,15 @@ export const ImportContastationDeposit = () => {
     });
     const base64Encoded = btoa(csvData.replace(/(\r\n|\n|\r)/gm, "\n"));
 
-    setBody({ content: base64Encoded });
-    mutate();
+    setBody({ endToEndId: base64Encoded });
   };
+
+  useEffect(() => {
+    if (body.endToEndId) {
+      mutate();
+      setBody({ endToEndId: "" });
+    }
+  }, [body]);
 
   return (
     <Row style={{ padding: 25 }}>

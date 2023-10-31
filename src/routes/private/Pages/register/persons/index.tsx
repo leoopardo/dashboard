@@ -1,5 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { EditOutlined, EyeFilled, UserAddOutlined, ReloadOutlined } from "@ant-design/icons";
+import {
+  EditOutlined,
+  EyeFilled,
+  UserAddOutlined,
+  ReloadOutlined,
+} from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
@@ -98,23 +103,6 @@ export const Persons = () => {
       ...currentItem,
     });
   }, [currentItem]);
-
-  useEffect(() => {
-    if (isViewModalOpen)
-      navigate(
-        `${currentItem?.cpf
-          ?.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")
-          .split(".")
-          .join("%20")}`
-      );
-    if (isUpdateModalOpen)
-      navigate(
-        `update/${currentItem?.cpf
-          ?.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")
-          .split(".")
-          .join("%20")}`
-      );
-  }, [isViewModalOpen, isUpdateModalOpen]);
 
   return (
     <Grid container style={{ padding: "25px" }}>
@@ -256,13 +244,26 @@ export const Persons = () => {
               {
                 label: "details",
                 icon: <EyeFilled style={{ fontSize: "20px" }} />,
-                onClick: () => setIsViewModalOpen(true),
+                onClick: (item) =>
+                  navigate(
+                    `${item?.cpf
+                      ?.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")
+                      .split(".")
+                      .join("%20")}`,
+                    { state: item }
+                  ),
               },
               permissions.register.person.person.person_person_update && {
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
-                onClick: () => {
-                  setIsUpdateModalOpen(true);
+                onClick: (item) => {
+                  navigate(
+                    `update/${item?.cpf
+                      ?.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")
+                      .split(".")
+                      .join("%20")}`,
+                    { state: item }
+                  );
                 },
               },
             ]}
