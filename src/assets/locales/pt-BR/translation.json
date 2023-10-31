@@ -388,7 +388,7 @@
     "_id": "ID",
     "paid": "Pago",
     "txid": "TX ID",
-    "waiting": "Pendente",
+    "waiting": "Aguardando",
     "waiting_refund": "Aguardando devolução",
     "canceled": "Cancelado",
     "refunded": "Devolvido",
