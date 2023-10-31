@@ -1,4 +1,4 @@
-import { EyeFilled, ReloadOutlined } from "@ant-design/icons";
+import { EyeFilled } from "@ant-design/icons";
 import { CustomTable } from "@src/components/CustomTable";
 import { FiltersModal } from "@src/components/FiltersModal";
 import { FilterChips } from "@src/components/FiltersModal/filterChips";

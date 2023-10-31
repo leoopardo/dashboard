@@ -1,4 +1,5 @@
-import { EyeFilled, ReloadOutlined } from "@ant-design/icons";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { EyeFilled } from "@ant-design/icons";
 import { CustomTable } from "@src/components/CustomTable";
 import { FiltersModal } from "@src/components/FiltersModal";
 import { FilterChips } from "@src/components/FiltersModal/filterChips";
@@ -67,7 +68,6 @@ export const WithdrawWebhooks = () => {
             haveInitialDate
           />
         </Col>
-       
       </Row>
 
       <Row
