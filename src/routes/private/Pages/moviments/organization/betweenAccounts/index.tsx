@@ -140,7 +140,7 @@ export const OrganizationTransfersBetweenAccounts = () => {
             {t("table.filters")}
           </Button>
         </Col>
-        <Col xs={{ span: 24 }} md={{ span: 5 }} lg={10}>
+        <Col xs={{ span: 24 }} md={{ span: 6 }} lg={13}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
@@ -174,7 +174,7 @@ export const OrganizationTransfersBetweenAccounts = () => {
         {/* arrumar permissões */}
         {permissions?.transactions?.paybrokers?.internal_transfers
           ?.paybrokers_internal_transfers_export_csv && (
-          <Col xs={{ span: 24 }} md={{ span: 4 }} lg={{ span: 2 }}>
+          <Col xs={{ span: 24 }} md={{ span: 4 }} lg={{ span: 3 }}>
             <ExportReportsModal
               disabled={
                 !TransferBetweenAccountsData?.items ||
@@ -188,20 +188,6 @@ export const OrganizationTransfersBetweenAccounts = () => {
             />
           </Col>
         )}
-
-        <Col xs={{ span: 24 }} md={{ span: 4 }} lg={{ span: 4 }}>
-          <Button
-            size="large"
-            type="primary"
-            style={{ width: "100%" }}
-            loading={isTransferBetweenAccountsDataFetching}
-            onClickCapture={() => {
-              refetchTransferBetweenAccountsData();
-            }}
-          >
-            <ReloadOutlined /> {t("buttons.refresh")}
-          </Button>
-        </Col>
       </Row>
 
       <Row style={{ width: "100%" }}>
@@ -219,6 +205,7 @@ export const OrganizationTransfersBetweenAccounts = () => {
                 },
               },
             ]}
+            refetch={refetchTransferBetweenAccountsData}
             data={TransferBetweenAccountsData}
             items={TransferBetweenAccountsData?.items}
             error={TransferBetweenAccountsDataError}

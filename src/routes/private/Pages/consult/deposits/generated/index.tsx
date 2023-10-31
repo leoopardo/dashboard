@@ -314,7 +314,7 @@ export const GeneratedDeposits = () => {
 
         {permissions.report.deposit.generated_deposit
           .report_deposit_generated_deposit_export_csv && (
-          <Col xs={{ span: 24 }} md={{ span: 6 }} lg={{span: 2}}>
+          <Col xs={{ span: 24 }} md={{ span: 6 }} lg={{span: 3}}>
             <Tooltip
               placement="top-end"
               title={
@@ -338,21 +338,6 @@ export const GeneratedDeposits = () => {
             </Tooltip>
           </Col>
         )}
-
-        <Col xs={{ span: 24 }} md={{ span: 8 }} lg={{span: 4}}>
-          <Button
-            size="large"
-            type="primary"
-            style={{ width: "100%" }}
-            loading={isDepositsRowsFetching || isDepositsTotalFetching}
-            onClickCapture={() => {
-              refetchDepositsTotalRows();
-              refetchDepositsTotal()
-            }}
-          >
-            <ReloadOutlined /> {t("buttons.refresh")}
-          </Button>
-        </Col>
       </Row>
 
       <Row style={{ width: "100%" }}>
@@ -366,7 +351,10 @@ export const GeneratedDeposits = () => {
             error={depositsRowsError}
             columns={columns}
             loading={isDepositsRowsFetching}
-            refetch={refetchDepositsTotalRows}
+            refetch={() => {
+              refetchDepositsTotalRows()
+              refetchDepositsTotal()
+            }}
             actions={[
               {
                 label: "details",

@@ -202,7 +202,13 @@ export const RefundWithdrawals = () => {
               setQuery(INITIAL_QUERY);
               setSearchOption(undefined);
             }}
-            style={{ height: 40, display: "flex", alignItems: "center" }}
+            style={{
+              height: 40,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: 'center',
+              width: "100%",
+            }}
           >
             <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
             {t("table.clear_filters")}
@@ -224,25 +230,6 @@ export const RefundWithdrawals = () => {
             />
           </Grid>
         )}
-
-        <Grid item xs={12} md={2} lg={2}>
-          <Button
-            size="large"
-            type="primary"
-            style={{ width: "100%" }}
-            loading={
-              isRefundWithdrawalsFetching || isRefundWithdrawalsTotalFetching
-            }
-            onClickCapture={() => {
-              refetchRefundWithdrawals();
-              refetchRefundWithdrawalsTotal();
-            }}
-          >
-            {!isRefundWithdrawalsFetching &&
-              !isRefundWithdrawalsTotalFetching && <ReloadOutlined />}{" "}
-            {t("buttons.refresh")}
-          </Button>
-        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -256,6 +243,10 @@ export const RefundWithdrawals = () => {
             columns={columns}
             loading={isRefundWithdrawalsFetching}
             error={refundWithdrawalsError}
+            refetch={() => {
+              refetchRefundWithdrawals();
+              refetchRefundWithdrawalsTotal();
+            }}
             actions={[
               {
                 label: "details",

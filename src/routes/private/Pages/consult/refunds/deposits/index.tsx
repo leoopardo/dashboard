@@ -200,7 +200,7 @@ export const RefundDeposits = () => {
             searchOption={searchOption}
           />
         </Grid>
-        <Grid item xs={12} md={2} lg={2}>
+        <Grid item xs={12} md={3} lg={3}>
           <Button
             size="large"
             type="dashed"
@@ -235,29 +235,10 @@ export const RefundDeposits = () => {
           </Grid>
         )}
 
-        <Grid item xs={12} md={2} lg={2}>
-          <Button
-            size="large"
-            type="primary"
-            style={{ width: "100%" }}
-            loading={
-              isRefundDepositsRowsFetching || isRefundDepositsTotalFetching
-            }
-            onClickCapture={() => {
-              refetchRefundDepositsTotalRows();
-              refetchRefundDepositsTotal();
-            }}
-          >
-            {!isRefundDepositsRowsFetching &&
-              !isRefundDepositsTotalFetching && <ReloadOutlined />}{" "}
-            {t("buttons.refresh")}
-          </Button>
-        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
         <Grid item xs={12}>
-          {" "}
           <CustomTable
             query={query}
             setCurrentItem={setCurrentItem}
@@ -266,6 +247,10 @@ export const RefundDeposits = () => {
             items={refundDepositsRows?.items}
             columns={columns}
             loading={isRefundDepositsRowsFetching}
+            refetch={() => {
+              refetchRefundDepositsTotalRows();
+              refetchRefundDepositsTotal();
+            }}
             actions={[
               {
                 label: "details",

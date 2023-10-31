@@ -253,25 +253,6 @@ export const OrgonizationManual = () => {
             />
           </Grid>
         )}
-        <Grid
-          container
-          item
-          xs={12}
-          md="auto"
-          style={{ marginLeft: "auto" }}
-        >
-          <Button
-            size="large"
-            type="primary"
-            style={{ width: "100%" }}
-            loading={isOrganizationMovimentsDataFetching}
-            onClickCapture={() => {
-              refetchOrganizationMovimentsData();
-            }}
-          >
-            <ReloadOutlined /> {t("buttons.refresh")}
-          </Button>
-        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -283,6 +264,7 @@ export const OrgonizationManual = () => {
             data={OrganizationMovimentsData}
             items={OrganizationMovimentsData?.items}
             error={OrganizationMovimentsDataError}
+            refetch={refetchOrganizationMovimentsData}
             columns={[
               { name: "_id", type: "id", sort: true },
               { name: "category_name", type: "text", sort: true },
@@ -293,7 +275,7 @@ export const OrgonizationManual = () => {
               { name: "status", type: "status" },
             ]}
             loading={isOrganizationMovimentsDataFetching}
-            actions={[]}
+            actions={[{}]}
             removeTotal
             label={["bank", "user_name", "status", "createdAt", "delivered_at"]}
           />

@@ -154,7 +154,7 @@ export const TransferBetweenMerchants = () => {
             {t("table.filters")}
           </Button>
         </Col>
-        <Col xs={{ span: 24 }} md={{ span: 10 }} lg={12}>
+        <Col xs={{ span: 24 }} md={{ span: 15 }}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
@@ -163,7 +163,7 @@ export const TransferBetweenMerchants = () => {
           />
         </Col>
 
-        <Col xs={{ span: 24 }} md={{ span: 6 }} lg={4}>
+        <Col xs={{ span: 24 }} md={{ span: 5 }}>
           <Button
             type="default"
             loading={false}
@@ -184,19 +184,6 @@ export const TransferBetweenMerchants = () => {
             <DollarOutlined style={{ fontSize: 22 }} /> {t("table.transfer")}
           </Button>
         </Col>
-        <Col xs={{ span: 24 }} md={{ span: 4 }} lg={4}>
-          <Button
-            size="large"
-            type="primary"
-            style={{ width: "100%" }}
-            loading={isTransferMerchantsDataFetching}
-            onClickCapture={() => {
-              refetchTransferMerchantsData();
-            }}
-          >
-            <ReloadOutlined /> {t("buttons.refresh")}
-          </Button>
-        </Col>
       </Row>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -214,6 +201,7 @@ export const TransferBetweenMerchants = () => {
                 },
               },
             ]}
+            refetch={refetchTransferMerchantsData}
             data={transferMerchantsData}
             items={transferMerchantsData?.items}
             error={transferMerchantsDataError}

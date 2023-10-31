@@ -634,7 +634,7 @@ export const CustomTable = (props: TableProps) => {
           case "action":
             return {
               title: props.refetch ? (
-                <Tooltip title={t("table.refetch_table")}>
+                <Tooltip title={t("table.refetch_data")}>
                   <Button
                     type="link"
                     onClick={() => {

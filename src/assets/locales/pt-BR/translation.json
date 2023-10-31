@@ -734,7 +734,7 @@
     "available_balance": "Saldo disponível",
     "operations_value": "Valor de operações",
     "category_id": "Categoria",
-    "refetch_table": "Recarregar tabela"
+    "refetch_data": "Recarregar dados"
 
   },
   "actions": {
