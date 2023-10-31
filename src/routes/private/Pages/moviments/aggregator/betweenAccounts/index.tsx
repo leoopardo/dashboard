@@ -5,7 +5,6 @@ import {
   ArrowUpOutlined,
   DollarOutlined,
   EyeFilled,
-  ReloadOutlined,
 } from "@ant-design/icons";
 import { CustomTable } from "@src/components/CustomTable";
 import { FiltersModal } from "@src/components/FiltersModal";

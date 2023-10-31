@@ -103,13 +103,13 @@ import { ThirdPartKeyBlacklist } from "./Pages/support/blacklists/thirdPartKey";
 import { ImportContastationDeposit } from "./Pages/support/contastation/importCSV";
 import { ContestationUploads } from "./Pages/support/contastation/uploads";
 import { Redirect } from "./redirect";
-import { queryClient } from "@src/services/queryClient";
-import { ValidateInterface } from "@src/services/types/validate.interface";
+// import { queryClient } from "@src/services/queryClient";
+// import { ValidateInterface } from "@src/services/types/validate.interface";
 
 export const PrivateRoutes = () => {
-  const { permissions } = queryClient.getQueryData(
+ /*  const { permissions } = queryClient.getQueryData(
     "validate"
-  ) as ValidateInterface;
+  ) as ValidateInterface; */
   return (
     <Routes>
       <Route path="/login" element={<Redirect />} />
