@@ -1,7 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { ArrowUpOutlined, DollarOutlined, EyeFilled } from "@ant-design/icons";
+import {
+  ArrowUpOutlined,
+  DollarOutlined,
+  EyeFilled,
+  ReloadOutlined,
+} from "@ant-design/icons";
 import { CustomTable } from "@src/components/CustomTable";
 import { FiltersModal } from "@src/components/FiltersModal";
 import { FilterChips } from "@src/components/FiltersModal/filterChips";
@@ -159,7 +164,7 @@ export const TransfersBetweenAccounts = () => {
             {t("table.filters")}
           </Button>
         </Col>
-        <Col xs={{ span: 24 }} md={{ span: 9 }} lg={14}>
+        <Col xs={{ span: 24 }} md={{ span: 5 }} lg={10}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
@@ -207,6 +212,20 @@ export const TransfersBetweenAccounts = () => {
             />
           </Col>
         )}
+
+        <Col xs={{ span: 24 }} md={{ span: 3 }} lg={{ span: 4 }}>
+          <Button
+            size="large"
+            type="primary"
+            style={{ width: "100%" }}
+            loading={isTransferBetweenAccountsDataFetching}
+            onClickCapture={() => {
+              refetchTransferBetweenAccountsData();
+            }}
+          >
+            <ReloadOutlined /> {t("buttons.refresh")}
+          </Button>
+        </Col>
       </Row>
 
       <Row style={{ width: "100%" }}>
@@ -249,17 +268,17 @@ export const TransfersBetweenAccounts = () => {
           setOpen={setIsFiltersOpen}
           query={query}
           setQuery={setQuery}
-          filters={["start_date", "end_date", "merchant_id", "from", "to" ]}
+          filters={["start_date", "end_date", "merchant_id", "from", "to"]}
           refetch={() => {
             return "";
           }}
           selectOptions={{
-           
             from: [
               "balance_reserved",
               "balance_to_payment",
               "balance_to_transactions",
-            ], to: [
+            ],
+            to: [
               "balance_reserved",
               "balance_to_payment",
               "balance_to_transactions",

@@ -4,7 +4,6 @@ import {
   EyeFilled,
   InfoCircleOutlined,
   UserAddOutlined,
-  ReloadOutlined,
 } from "@ant-design/icons";
 import { CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
@@ -115,7 +114,6 @@ export const Partners = () => {
   const ref3 = useRef(null);
   const ref4 = useRef(null);
   const ref5 = useRef(null);
-  const ref6 = useRef(null);
   const refId = useRef(null);
   const refName = useRef(null);
   const refStatus = useRef(null);
@@ -229,21 +227,6 @@ export const Partners = () => {
             />
           </Grid>
         )}
-
-        <Grid item xs={12} md="auto" ref={ref6}>
-          <Button
-            style={{
-              width: "100%",
-              height: 40,
-            }}
-            loading={isPartnersDataFetching}
-            shape="round"
-            type="dashed"
-            onClick={refetchPartnersData}
-          >
-            {!isPartnersDataFetching && <ReloadOutlined />}
-          </Button>
-        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -381,7 +364,6 @@ export const Partners = () => {
             target: () => ref4.current,
           }
         }
-        refreshStepRef={ref6}
         exportCsvStep={
           permissions.register.paybrokers.release_category
             .paybrokers_release_category_export_csv && {

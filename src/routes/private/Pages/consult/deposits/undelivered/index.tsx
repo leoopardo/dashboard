@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { EyeFilled } from "@ant-design/icons";
+import { EyeFilled, ReloadOutlined } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { Search } from "@src/components/Inputs/search";
@@ -92,7 +92,10 @@ export const UndeliveredDeposits = () => {
         .report_deposit_undelivered_deposit_list_totals && (
         <TotalizersCards
           data={depositsTotal}
-          fetchData={refetchDepositsTotal}
+          fetchData={() => {
+            refetchDepositsTotal();
+            refetchDepositsTotalRows();
+          }}
           loading={isDepositsTotalFetching}
           query={query}
         />
@@ -178,14 +181,14 @@ export const UndeliveredDeposits = () => {
             ]}
           />
         </Grid>
-        <Grid item xs={12} md={4} lg={4}>
+        <Grid item xs={12} md={7} lg={4}>
           <Search
             query={query}
             setQuery={setQuery}
             searchOption={searchOption}
           />
         </Grid>
-        <Grid item xs={12} md={2} lg={2}>
+        <Grid item xs={12} md={3} lg={2}>
           <Button
             size="large"
             type="dashed"
@@ -206,19 +209,35 @@ export const UndeliveredDeposits = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        {permissions.report.deposit.undelivered_deposit
-          .report_deposit_undelivered_deposit_export_csv && (
-          <Grid item xs={12} md="auto" lg={1}>
-            <ExportReportsModal
-              disabled={!depositsRows?.items.length || depositsRowsError}
-              mutateReport={() => GeneratedDepositsReportsMutate()}
-              error={GeneratedDepositsReportsError}
-              success={GeneratedDepositsReportsIsSuccess}
-              loading={GeneratedDepositsReportsIsLoading}
-              reportPath="/consult/deposit/deposits_reports/generated_deposits_reports"
-            />
+        <Grid container item xs={12} md="auto" style={{ marginLeft: "auto" }} spacing={1}>
+          {permissions.report.deposit.undelivered_deposit
+            .report_deposit_undelivered_deposit_export_csv && (
+            <Grid item xs={12} md={6} lg={6}>
+              <ExportReportsModal
+                disabled={!depositsRows?.items.length || depositsRowsError}
+                mutateReport={() => GeneratedDepositsReportsMutate()}
+                error={GeneratedDepositsReportsError}
+                success={GeneratedDepositsReportsIsSuccess}
+                loading={GeneratedDepositsReportsIsLoading}
+                reportPath="/consult/deposit/deposits_reports/generated_deposits_reports"
+              />
+            </Grid>
+          )}
+          <Grid item xs={12} md={6} lg={6}>
+            <Button
+              size="large"
+              type="primary"
+              style={{ width: "100%" }}
+              loading={isDepositsTotalFetching || isDepositsRowsFetching}
+              onClickCapture={() => {
+                refetchDepositsTotal();
+                refetchDepositsTotalRows();
+              }}
+            >
+              <ReloadOutlined /> {t("buttons.refresh")}
+            </Button>
           </Grid>
-        )}
+        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>

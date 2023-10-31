@@ -86,6 +86,7 @@ export const OrganizationTransferBetweenAccountsReports = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
+
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>

@@ -1,6 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ArrowUpOutlined, DollarOutlined, EyeFilled } from "@ant-design/icons";
+import {
+  ArrowUpOutlined,
+  DollarOutlined,
+  EyeFilled,
+  ReloadOutlined,
+} from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
@@ -59,7 +64,7 @@ export const TransferBetweenMerchants = () => {
     {
       name: "debit_merchant_name",
       type: "text",
-      head: "merchant_origin"
+      head: "merchant_origin",
     },
     { name: "debit_balance_type", type: "status" },
     {
@@ -77,12 +82,12 @@ export const TransferBetweenMerchants = () => {
   const handleBalanceColor = (key: string) => {
     switch (key) {
       case "total_success":
-        return "#3f8600"
+        return "#3f8600";
       case "total_processing":
-        return "#C4B35B"
+        return "#C4B35B";
       case "total_canceled":
-        return "#cf1322"
-          
+        return "#cf1322";
+
       default:
         return;
     }
@@ -95,11 +100,18 @@ export const TransferBetweenMerchants = () => {
   useEffect(() => {
     refetchTransferMerchantsData();
   }, [query]);
-  
+
   return (
     <Row style={{ padding: 25 }}>
-
-      <Row gutter={[8, 8]} style={{ width: "100%", marginBottom: 16, justifyContent: 'center', gap: 10 }}>
+      <Row
+        gutter={[8, 8]}
+        style={{
+          width: "100%",
+          marginBottom: 16,
+          justifyContent: "center",
+          gap: 10,
+        }}
+      >
         {transferMerchantsData &&
           Object.keys(transferMerchantsData).map((key) => {
             switch (key) {
@@ -107,22 +119,20 @@ export const TransferBetweenMerchants = () => {
               case "total_canceled":
               case "total_success":
                 return (
-                  <Grid
-                    key={key}
-                    item
-                    xs={12}
-                    md="auto"
-                  >
-                    <Card bordered={false} style={{minWidth: 150}} >
-                    <Statistic
-                      valueStyle={{ color: handleBalanceColor(key), fontSize: "20px" }}
-                      title={t(`table.${key}`)}
-                      loading={isTransferMerchantsDataFetching}
-                      value={new Intl.NumberFormat("pt-BR", {
-                        style: "currency",
-                        currency: "BRL",
-                      }).format(transferMerchantsData[key] || 0)}
-                    />
+                  <Grid key={key} item xs={12} md="auto">
+                    <Card bordered={false} style={{ minWidth: 150 }}>
+                      <Statistic
+                        valueStyle={{
+                          color: handleBalanceColor(key),
+                          fontSize: "20px",
+                        }}
+                        title={t(`table.${key}`)}
+                        loading={isTransferMerchantsDataFetching}
+                        value={new Intl.NumberFormat("pt-BR", {
+                          style: "currency",
+                          currency: "BRL",
+                        }).format(transferMerchantsData[key] || 0)}
+                      />
                     </Card>
                   </Grid>
                 );
@@ -130,7 +140,6 @@ export const TransferBetweenMerchants = () => {
                 return;
             }
           })}
-
       </Row>
 
       <Row gutter={[8, 8]} style={{ width: "100%", marginBottom: 16 }}>
@@ -145,7 +154,7 @@ export const TransferBetweenMerchants = () => {
             {t("table.filters")}
           </Button>
         </Col>
-        <Col xs={{ span: 24 }} md={{ span: 11 }} lg={16}>
+        <Col xs={{ span: 24 }} md={{ span: 10 }} lg={12}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
@@ -173,6 +182,19 @@ export const TransferBetweenMerchants = () => {
               style={{ fontSize: 16, marginRight: -8, marginBottom: 12 }}
             />
             <DollarOutlined style={{ fontSize: 22 }} /> {t("table.transfer")}
+          </Button>
+        </Col>
+        <Col xs={{ span: 24 }} md={{ span: 4 }} lg={4}>
+          <Button
+            size="large"
+            type="primary"
+            style={{ width: "100%" }}
+            loading={isTransferMerchantsDataFetching}
+            onClickCapture={() => {
+              refetchTransferMerchantsData();
+            }}
+          >
+            <ReloadOutlined /> {t("buttons.refresh")}
           </Button>
         </Col>
       </Row>

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { EyeFilled } from "@ant-design/icons";
+import { EyeFilled, ReloadOutlined } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { Search } from "@src/components/Inputs/search";
@@ -95,7 +95,10 @@ export const UndeliveredWithdrawals = () => {
         .report_withdraw_undelivered_withdraw_list_totals && (
         <TotalizersCards
           data={WithdrawalsTotal}
-          fetchData={refetchWithdrawalsTotal}
+          fetchData={() => {
+            refetchWithdrawalsTotal();
+            refetchWithdrawalsTotalRows();
+          }}
           loading={isWithdrawalsTotalFetching}
           query={query}
         />
@@ -217,7 +220,7 @@ export const UndeliveredWithdrawals = () => {
         </Grid>
         {permissions.report.withdraw.undelivered_withdraw
           .report_withdraw_undelivered_withdraw_export_csv && (
-          <Grid item xs={12} md="auto" lg={1}>
+          <Grid item xs={12} md="auto" lg={2}>
             <ExportReportsModal
               disabled={!witrawalsRows?.items.length || witrawalsRowsError}
               mutateReport={() => GeneratedWithdrawalsReportsMutate()}
@@ -228,6 +231,25 @@ export const UndeliveredWithdrawals = () => {
             />
           </Grid>
         )}
+
+        <Grid item xs={12} md={2} lg={2}>
+          <Button
+            size="large"
+            type="primary"
+            style={{ width: "100%" }}
+            loading={
+              isWithdrawalsRowsFetching || isWithdrawalsTotalFetching
+            }
+            onClickCapture={() => {
+              refetchWithdrawalsTotalRows();
+              refetchWithdrawalsTotal();
+            }}
+          >
+            {!isWithdrawalsRowsFetching &&
+              !isWithdrawalsTotalFetching && <ReloadOutlined />}{" "}
+            {t("buttons.refresh")}
+          </Button>
+        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>

@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
+import { ArrowDownOutlined, ArrowUpOutlined, ReloadOutlined } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { CustomTable } from "@src/components/CustomTable";
@@ -205,7 +205,7 @@ export const MerchantManual = () => {
         style={{ display: "flex", alignItems: "center" }}
         spacing={1}
       >
-        <Grid item xs={12} md={3} lg={2}>
+        <Grid item xs={12} md={2} lg={2}>
           <Button
             size="large"
             style={{ width: "100%" }}
@@ -216,7 +216,7 @@ export const MerchantManual = () => {
             {t("table.filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={4} lg={7}>
+        <Grid item xs={12} md={3} lg={4}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
@@ -225,7 +225,7 @@ export const MerchantManual = () => {
             haveInitialDate
           />
         </Grid>
-        <Grid item xs={12} md={3} lg={2}>
+        <Grid item xs={12} md={2} lg={2}>
           <Button
             type="dashed"
             loading={isMerchantMovimentsDataFetching}
@@ -260,6 +260,26 @@ export const MerchantManual = () => {
             />
           </Grid>
         )}
+        <Grid
+          container
+          item
+          xs={12}
+          md="auto"
+          lg={2}
+          style={{ marginLeft: "auto" }}
+        >
+          <Button
+            size="large"
+            type="primary"
+            style={{ width: "100%" }}
+            loading={isMerchantMovimentsDataFetching}
+            onClickCapture={() => {
+              refetchMerchantMovimentsData();
+            }}
+          >
+            <ReloadOutlined /> {t("buttons.refresh")}
+          </Button>
+        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>

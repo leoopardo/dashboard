@@ -134,7 +134,10 @@ export const RefundDepositsManual = () => {
     <Grid container style={{ padding: "25px" }}>
       <TotalizersCards
         data={refundDepositManualTotal}
-        fetchData={refetchRefundDepositManualTotal}
+        fetchData={() => {
+          refetchRefundDepositManualTotal();
+          refetchRefundDepositsManual();
+        }}
         loading={isRefundDepositManualTotalFetching}
         query={query}
       />
@@ -248,6 +251,26 @@ export const RefundDepositsManual = () => {
             />
           </Grid>
         )}
+
+        <Grid item xs={12} md={2} lg={2}>
+          <Button
+            size="large"
+            type="primary"
+            style={{ width: "100%" }}
+            loading={
+              isRefundDepositsManualFetching ||
+              isRefundDepositManualTotalFetching
+            }
+            onClickCapture={() => {
+              refetchRefundDepositsManual();
+              refetchRefundDepositManualTotal();
+            }}
+          >
+            {!isRefundDepositsManualFetching &&
+              !isRefundDepositManualTotalFetching && <ReloadOutlined />}{" "}
+            {t("buttons.refresh")}
+          </Button>
+        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>

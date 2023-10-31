@@ -97,7 +97,7 @@ export const MerchantManualEntryCategory = () => {
             {t("table.filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={5} lg={7}>
+        <Grid item xs={12} md={6} lg={8}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"

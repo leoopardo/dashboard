@@ -6,7 +6,6 @@ import {
   EyeFilled,
   ToolOutlined,
   UserAddOutlined,
-  ReloadOutlined,
 } from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
@@ -186,7 +185,7 @@ export const MerchantView = () => {
       </Grid>
 
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
-        <Grid item xs={12} md={5} lg={3}>
+        <Grid item xs={12} md={6} lg={4}>
           <Input.Search
             size="large"
             ref={searchref}
@@ -278,27 +277,6 @@ export const MerchantView = () => {
           </Grid>
         )}
 
-        <Grid
-          container
-          item
-          xs={12}
-          md="auto"
-          lg={1}
-          style={{ marginLeft: "auto" }}
-        >
-          <Button
-            style={{
-              width: "100%",
-              height: 40,
-            }}
-            loading={isMerchantDataFetching}
-            shape="round"
-            type="dashed"
-            onClick={refetchMerchantData}
-          >
-            {!isMerchantDataFetching && <ReloadOutlined />}
-          </Button>
-        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>

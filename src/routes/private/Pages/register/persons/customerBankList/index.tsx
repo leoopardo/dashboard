@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { ReloadOutlined } from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
@@ -166,27 +165,6 @@ export const CostumerBanks = () => {
             />
           </Grid>
         )}
-         <Grid
-          container
-          item
-          xs={12}
-          md="auto"
-          lg={1}
-          style={{ marginLeft: "auto" }}
-        >
-          <Button
-            style={{
-              width: "100%",
-              height: 40,
-            }}
-            loading={isClientBankListFetching}
-            shape="round"
-            type="dashed"
-            onClick={refetchClientBankList}
-          >
-            {!isClientBankListFetching && <ReloadOutlined />}
-          </Button>
-        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>

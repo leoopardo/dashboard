@@ -1,7 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { ArrowUpOutlined, DollarOutlined, EyeFilled } from "@ant-design/icons";
+import {
+  ArrowUpOutlined,
+  DollarOutlined,
+  EyeFilled,
+  ReloadOutlined,
+} from "@ant-design/icons";
 import { CustomTable } from "@src/components/CustomTable";
 import { FiltersModal } from "@src/components/FiltersModal";
 import { FilterChips } from "@src/components/FiltersModal/filterChips";
@@ -69,7 +74,6 @@ export const AggregatorTransfersBetweenAccounts = () => {
     refetchTransferBetweenAccountsData();
   }, [query]);
 
- 
   return (
     <Row style={{ padding: 25 }}>
       <Row
@@ -136,7 +140,7 @@ export const AggregatorTransfersBetweenAccounts = () => {
             {t("table.filters")}
           </Button>
         </Col>
-        <Col xs={{ span: 24 }} md={{ span: 9 }} lg={14}>
+        <Col xs={{ span: 24 }} md={{ span: 6 }} lg={9}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
@@ -170,7 +174,7 @@ export const AggregatorTransfersBetweenAccounts = () => {
         {/* arrumar permissões */}
         {permissions?.transactions?.paybrokers?.internal_transfers
           ?.paybrokers_internal_transfers_export_csv && (
-          <Col xs={{ span: 24 }} md={{ span: 3 }} lg={{ span: 2 }}>
+          <Col xs={{ span: 24 }} md={{ span: 3 }} lg={{ span: 3 }}>
             <ExportReportsModal
               disabled={
                 !TransferBetweenAccountsData?.items ||
@@ -184,6 +188,20 @@ export const AggregatorTransfersBetweenAccounts = () => {
             />
           </Col>
         )}
+
+<Col xs={{ span: 24 }} md={{ span: 3 }} lg={{ span: 4 }}>
+          <Button
+            size="large"
+            type="primary"
+            style={{ width: "100%" }}
+            loading={isTransferBetweenAccountsDataFetching}
+            onClickCapture={() => {
+              refetchTransferBetweenAccountsData();
+            }}
+          >
+            <ReloadOutlined /> {t("buttons.refresh")}
+          </Button>
+        </Col>
       </Row>
 
       <Row style={{ width: "100%" }}>

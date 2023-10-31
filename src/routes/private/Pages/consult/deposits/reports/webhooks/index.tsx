@@ -1,4 +1,4 @@
-import { EyeFilled } from "@ant-design/icons";
+import { EyeFilled, ReloadOutlined } from "@ant-design/icons";
 import { CustomTable } from "@src/components/CustomTable";
 import { FiltersModal } from "@src/components/FiltersModal";
 import { FilterChips } from "@src/components/FiltersModal/filterChips";
@@ -57,7 +57,7 @@ export const DepositsWebhooks = () => {
             {t("table.filters")}
           </Button>
         </Col>
-        <Col xs={{ span: 24 }} md={{ span: 20 }}>
+        <Col xs={{ span: 24 }} md={{ span: 16 }} lg={{ span: 18 }}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
@@ -66,6 +66,7 @@ export const DepositsWebhooks = () => {
             haveInitialDate
           />
         </Col>
+
       </Row>
 
       <Row

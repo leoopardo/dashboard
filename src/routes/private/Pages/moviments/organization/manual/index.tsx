@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
+import { ArrowDownOutlined, ArrowUpOutlined, ReloadOutlined } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { CustomTable } from "@src/components/CustomTable";
@@ -208,7 +208,7 @@ export const OrgonizationManual = () => {
             {t("table.filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={6} lg={7}>
+        <Grid item xs={12} md={3} lg={4}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
@@ -233,13 +233,13 @@ export const OrgonizationManual = () => {
               justifyContent: "center",
             }}
           >
-            <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
+            <FilterAltOffOutlinedIcon />{" "}
             {t("table.clear_filters")}
           </Button>
         </Grid>
         {permissions.transactions.paybrokers.manual_transactions
           .paybrokers_manual_transactions_export_csv && (
-          <Grid item xs={12} md="auto" lg={1}>
+          <Grid item xs={12} md="auto">
             <ExportReportsModal
               disabled={
                 !OrganizationMovimentsData?.total ||
@@ -253,11 +253,29 @@ export const OrgonizationManual = () => {
             />
           </Grid>
         )}
+        <Grid
+          container
+          item
+          xs={12}
+          md="auto"
+          style={{ marginLeft: "auto" }}
+        >
+          <Button
+            size="large"
+            type="primary"
+            style={{ width: "100%" }}
+            loading={isOrganizationMovimentsDataFetching}
+            onClickCapture={() => {
+              refetchOrganizationMovimentsData();
+            }}
+          >
+            <ReloadOutlined /> {t("buttons.refresh")}
+          </Button>
+        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
         <Grid item xs={12}>
-          {" "}
           <CustomTable
             query={query}
             setCurrentItem={setCurrentItem}

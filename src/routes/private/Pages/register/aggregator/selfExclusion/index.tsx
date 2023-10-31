@@ -3,7 +3,6 @@ import {
   DeleteOutlined,
   InfoCircleOutlined,
   PlusOutlined,
-  ReloadOutlined
 } from "@ant-design/icons";
 import { CustomTable } from "@components/CustomTable";
 import { Grid } from "@mui/material";
@@ -92,7 +91,6 @@ export const AggregatorSelfExclusion = () => {
   const ref1 = useRef(null);
   const ref2 = useRef(null);
   const ref3 = useRef(null);
-  const ref4 = useRef(null);
   const refDoc = useRef(null);
   const refMerchant = useRef(null);
   const refOrganization = useRef(null);
@@ -139,7 +137,7 @@ export const AggregatorSelfExclusion = () => {
             {t("table.filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={5} lg={6}>
+        <Grid item xs={12} md={6} lg={7}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
@@ -182,20 +180,6 @@ export const AggregatorSelfExclusion = () => {
             />
           </Grid>
         )}
-        <Grid item xs={12} md="auto" ref={ref4}>
-          <Button
-            style={{
-              width: "100%",
-              height: 40,
-            }}
-            loading={isSelfExclusionDataFetching}
-            shape="round"
-            type="dashed"
-            onClick={refetchSelfExclusionData}
-          >
-            {!isSelfExclusionDataFetching && <ReloadOutlined />}
-          </Button>
-        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -316,7 +300,6 @@ export const AggregatorSelfExclusion = () => {
             target: () => ref3.current,
           }
         }
-        refreshStepRef={ref4}
         steps={[
           {
             title: t("table.document"),
