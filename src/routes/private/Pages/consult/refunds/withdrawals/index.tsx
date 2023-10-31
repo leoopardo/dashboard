@@ -213,7 +213,7 @@ export const RefundWithdrawals = () => {
           ?.report_chargeback_deposit_chargeback_export_csv && (
           <Grid item xs={12} md="auto">
             <ExportReportsModal
-              disabled={!refundWithdrawals?.total || refundWithdrawalsError}
+              disabled={!refundWithdrawals?.items.length|| refundWithdrawalsError}
               mutateReport={() => RefundWithdrawalsReportsMutate()}
               error={RefundWithdrawalsReportsError}
               success={RefundWithdrawalsReportsIsSuccess}

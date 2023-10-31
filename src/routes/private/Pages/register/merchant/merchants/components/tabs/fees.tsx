@@ -134,7 +134,6 @@ export const FeesTab = (props: { id?: string }) => {
   useEffect(() => {
     formRef.current?.setFieldsValue(merchantFeesData?.fees);
   }, [merchantFeesData, depositFeePlansData, withdrawFeePlansData]);
-
   return (
     <Form
       ref={formRef}
@@ -184,10 +183,10 @@ export const FeesTab = (props: { id?: string }) => {
             label={t("input.deposit_fee_plan")}
             name="cashin_pix_fee_plan_id"
           >
-            {/* <Select
+            <Select
               size="large"
               options={
-                depositFeePlansData?.merchant_fee_plans?.map((item, index) => ({
+                depositFeePlansData?.items?.map((item, index) => ({
                   key: index,
                   value: item.id,
                   label: item.name,
@@ -204,7 +203,7 @@ export const FeesTab = (props: { id?: string }) => {
                   cashin_pix_fee_plan_id: Number(value),
                 }));
               }}
-            /> */}
+            />
           </Form.Item>
         </Grid>
 
@@ -328,10 +327,10 @@ export const FeesTab = (props: { id?: string }) => {
             label={t("input.withdraw_fee_plan")}
             name="customer_withdraw_fee_plan_id"
           >
-            {/* <Select
+            <Select
               size="large"
               options={
-                withdrawFeePlansData?.merchant_fee_plans?.map(
+                withdrawFeePlansData?.items?.map(
                   (item, index) => ({
                     key: index,
                     value: item.id,
@@ -350,7 +349,7 @@ export const FeesTab = (props: { id?: string }) => {
                   customer_withdraw_fee_plan_id: Number(value),
                 }));
               }}
-            /> */}
+            />
           </Form.Item>
         </Grid>
 

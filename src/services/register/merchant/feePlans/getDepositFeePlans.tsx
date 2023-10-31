@@ -11,7 +11,7 @@ export function useGetDepositFeePlansRegister(params?: MerchantsQuery) {
   >(
     "MerchantsDepositFeePlans",
     async () => {
-      const response = await api.get("core/merchant_fee_plans", {
+      const response = await api.get("core/fee_plans", {
         params: { transaction_type: "CASHIN", ...params },
       });
       return response.data;

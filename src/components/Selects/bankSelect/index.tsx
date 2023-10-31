@@ -31,12 +31,14 @@ export const BanksSelect = ({
   const [value, setValue] = useState<any>(null);
 
   useEffect(() => {
-    setValue(
-      bankListData?.itens.find(
-        (bank) => bank?.label_name === queryOptions[field ?? "bank"]
-      )?.label_name
-    );
-  }, [bankListData, queryOptions]);
+    if (field) {
+      setValue(
+        bankListData?.itens?.find(
+          (bank) => bank?.label_name === queryOptions[field]
+        )?.label_name
+      );
+    }
+  }, [bankListData, queryOptions, field]);
 
   return (
     <AutoComplete
