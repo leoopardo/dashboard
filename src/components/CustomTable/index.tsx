@@ -593,7 +593,7 @@ export const CustomTable = (props: TableProps) => {
                 ? `${column?.name}-${Math.random()}`
                 : column?.name,
               dataIndex: column?.name,
-              render: (text) =>
+              render: (text: any) =>
                 text ? (
                   <Typography
                     key={column?.name}

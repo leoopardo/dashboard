@@ -39,7 +39,10 @@ export const OrganizationHistory = () => {
       title: t("table.created_at"),
       dataIndex: "createdAt",
       key: "createdAt",
-      render: (value) => new Date(value ?? "").toLocaleDateString(),
+      render: (value) =>
+        new Date(value ?? "").toLocaleDateString("pt-BR", {
+          timeZone: "UTC",
+        }),
     },
     {
       title: t("table.balance_to_transactions"),
