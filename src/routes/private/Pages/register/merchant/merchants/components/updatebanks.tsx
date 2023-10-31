@@ -6,6 +6,7 @@ import { useListBanks } from "@src/services/bank/listBanks";
 import { useListMerchants } from "@src/services/merchant/listMerchants";
 import { queryClient } from "@src/services/queryClient";
 import { useUpdateBankConfig } from "@src/services/register/merchant/merchant/bankConfig/updateBankConfig";
+import { useListPartners } from "@src/services/register/partner/listPartners";
 import { IMerchantBankUpdate } from "@src/services/types/register/merchants/merchantBankConfig.interface";
 import {
   MerchantsItem,
@@ -49,14 +50,24 @@ export const UpdateBanks = ({
   } = useUpdateBankConfig({
     ...body,
   });
-  const [query] = useState<any>({
+  const [query, setQuery] = useState<any>({
     page: 1,
     limit: 200,
     sort_order: "ASC",
     sort_field: "name",
   });
 
-  const { merchantsData } = useListMerchants(query);
+  const { merchantsData, isMerchantFetching, refetcMerchant } =
+    useListMerchants(query);
+  const [pQuery, setPQuery] = useState<any>({
+    page: 1,
+    limit: 200,
+    sort_order: "ASC",
+    sort_field: "name",
+  });
+
+  const { partnersData, isPartnersFetching, refetcPartners } =
+    useListPartners(pQuery);
   const MerchantData: MerchantsResponse | undefined =
     queryClient.getQueryData("MerchantsRegister");
 
@@ -131,7 +142,22 @@ export const UpdateBanks = ({
             <Select
               mode="multiple"
               size="large"
+              loading={isMerchantFetching}
+              disabled={all === "partner"}
               value={body.merchants_ids}
+              onSelect={() => {
+                delete query.name;
+                refetcMerchant();
+              }}
+              onSearch={(value) => {
+                if (value === "") {
+                  delete query.name;
+                  refetcMerchant();
+                  return;
+                }
+
+                setQuery((state: any) => ({ ...state, name: value }));
+              }}
               onChange={(value) => {
                 setBody((state) => ({ ...state, merchants_ids: value }));
                 setItems(
@@ -143,7 +169,6 @@ export const UpdateBanks = ({
                     );
                   })
                 );
-                console.log(value);
               }}
               options={merchantsData?.items.map((merch) => {
                 return {
@@ -250,13 +275,45 @@ export const UpdateBanks = ({
           {(body?.merchants_ids?.length === 0 || !body.merchants_ids) && (
             <Form.Item
               label={t(`table.partner`)}
-              name="withdraw"
+              name="partners_ids"
               style={{ margin: 10 }}
             >
-              <PartnerSelect
-                queryOptions={body}
-                setQueryFunction={setBody}
+              <Select
+                mode="multiple"
+                size="large"
+                loading={isPartnersFetching}
                 disabled={all === "all"}
+                value={body.partners_ids}
+                onSelect={() => {
+                  delete pQuery.name;
+                  refetcPartners();
+                }}
+                onSearch={(value) => {
+                  if (value === "") {
+                    delete pQuery.name;
+                    refetcMerchant();
+                    return;
+                  }
+
+                  setQuery((state: any) => ({ ...state, name: value }));
+                }}
+                onChange={(value) => {
+                  setBody((state) => ({ ...state, partners_ids: value }));
+                 
+                }}
+                options={partnersData?.items.map((merch) => {
+                  return {
+                    label: merch.name,
+                    value: merch.id,
+                  };
+                })}
+                filterOption={(input, option) => {
+                  return (
+                    `${option?.label}`
+                      ?.toLowerCase()
+                      ?.indexOf(input?.toLowerCase()) >= 0
+                  );
+                }}
               />
             </Form.Item>
           )}

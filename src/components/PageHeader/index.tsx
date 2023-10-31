@@ -47,7 +47,7 @@ export const PageHeader = () => {
       key: "pt-BR",
       label: t("menus.portuguese"),
       icon: <Avatar src={brazil} />,
-      onClick: () => changeLanguage("ptbr"),
+      onClick: () => changeLanguage("pt-BR"),
     },
     {
       key: "en",
