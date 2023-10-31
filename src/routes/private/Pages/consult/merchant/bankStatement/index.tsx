@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ReloadOutlined } from "@ant-design/icons";
+import { ReloadOutlined, EyeFilled } from "@ant-design/icons";
 import { Grid } from "@mui/material";
 import { CustomTable } from "@src/components/CustomTable";
 import { FiltersModal } from "@src/components/FiltersModal";
@@ -20,16 +20,20 @@ import { useTranslation } from "react-i18next";
 import { MerchantHourlyLineChart } from "./components/HourlyChart";
 import { Totalizers } from "./components/totalizers";
 import { MerchantNumberLineChart } from "./components/HourlyNumber";
+import { ViewModal } from "../../deposits/components/ViewModal";
+import { ViewModal as ViewWithdralModal } from "../../withdrawals/components/ViewModal";
 
 const INITIAL_QUERY: MerchantBankStatementTotalsQuery = {
   page: 1,
   limit: 25,
   start_date: moment(new Date())
-    .startOf("day").add(3, "hours")
+    .startOf("day")
+    .add(3, "hours")
     .format("YYYY-MM-DDTHH:mm:ss.SSS"),
   end_date: moment(new Date())
     .add(1, "day")
-    .startOf("day").add(3, "hours")
+    .startOf("day")
+    .add(3, "hours")
     .format("YYYY-MM-DDTHH:mm:ss.SSS"),
 };
 
@@ -38,11 +42,13 @@ export const MerchantBankStatement = () => {
     "validate"
   ) as ValidateInterface;
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
-  const [, setCurrentItem] = useState<any>();
+  const [currentItem, setCurrentItem] = useState<any>();
   const { t } = useTranslation();
   const [query, setQuery] =
     useState<MerchantBankStatementTotalsQuery>(INITIAL_QUERY);
-
+  const [isViewDepositOpen, setIsViewDepositOpen] = useState(false);
+  const [isViewWithdrawOpen, setIsViewWithdrawOpen] = useState(false);
+  console.log({ currentItem });
   const {
     isMerchantBankStatementTotalsFetching,
     refetchMerchantBankStatementTotalsTotal,
@@ -76,7 +82,8 @@ export const MerchantBankStatement = () => {
         spacing={1}
       >
         <Grid item xs={12} md={4} lg={2}>
-           <Button size="large"
+          <Button
+            size="large"
             style={{ width: "100%" }}
             type="primary"
             onClick={() => setIsFiltersOpen(true)}
@@ -124,7 +131,9 @@ export const MerchantBankStatement = () => {
           .report_merchant_extract_export_csv && (
           <Grid item xs={12} md="auto" lg={1}>
             <ExportReportsModal
-              disabled={!MerchantTransactions?.total || MerchantTransactionsError}
+              disabled={
+                !MerchantTransactions?.total || MerchantTransactionsError
+              }
               mutateReport={() => BankStatementReportsMutate()}
               error={BankStatementReportsError}
               success={BankStatementReportsIsSuccess}
@@ -196,6 +205,16 @@ export const MerchantBankStatement = () => {
               { name: "fee_percent", type: "text" },
               { name: "fee", type: "value" },
             ]}
+            actions={[
+              {
+                label: "details",
+                icon: <EyeFilled style={{ fontSize: "18px" }} />,
+                onClick: (item) =>
+                  item?.fee_type !== "IN"
+                    ? setIsViewWithdrawOpen(true)
+                    : setIsViewDepositOpen(true),
+              },
+            ]}
             loading={isMerchantTransactionsFetching}
             removeTotal
             label={["bank_name", "value", "paid_at"]}
@@ -203,6 +222,22 @@ export const MerchantBankStatement = () => {
           />
         </Grid>
       </Grid>
+
+      {isViewDepositOpen && (
+        <ViewModal
+          open={isViewDepositOpen}
+          setOpen={setIsViewDepositOpen}
+          id={currentItem?.id}
+        />
+      )}
+
+      {isViewWithdrawOpen && (
+        <ViewWithdralModal
+          open={isViewWithdrawOpen}
+          setOpen={setIsViewWithdrawOpen}
+          id={currentItem?.id}
+        />
+      )}
 
       {isFiltersOpen && (
         <FiltersModal

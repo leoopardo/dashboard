@@ -357,7 +357,7 @@ export const MerchantBalance = () => {
           </Grid>
         )}
 
-        <Grid item xs={12} md={4} lg={6}>
+        <Grid item xs={12} md={6} lg={8}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
@@ -375,19 +375,6 @@ export const MerchantBalance = () => {
             onClickCapture={() => setQuery(INITIAL_QUERY)}
           >
             {t("table.clear_filters")}
-          </Button>
-        </Grid>
-        <Grid item xs={12} md={2} lg={2}>
-          <Button
-            size="large"
-            type="primary"
-            style={{ width: "100%" }}
-            loading={isMerchantBalanceFetching}
-            onClickCapture={() => {
-              refetchMerchantBalance();
-            }}
-          >
-            <ReloadOutlined /> {t("buttons.refresh")}
           </Button>
         </Grid>
       </Grid>

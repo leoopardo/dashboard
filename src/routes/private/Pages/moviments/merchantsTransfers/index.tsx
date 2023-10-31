@@ -1,6 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ArrowUpOutlined, DollarOutlined, EyeFilled } from "@ant-design/icons";
+import {
+  ArrowUpOutlined,
+  DollarOutlined,
+  EyeFilled,
+} from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
