@@ -103,8 +103,13 @@ import { ThirdPartKeyBlacklist } from "./Pages/support/blacklists/thirdPartKey";
 import { ImportContastationDeposit } from "./Pages/support/contastation/importCSV";
 import { ContestationUploads } from "./Pages/support/contastation/uploads";
 import { Redirect } from "./redirect";
+import { queryClient } from "@src/services/queryClient";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 
 export const PrivateRoutes = () => {
+  const { permissions } = queryClient.getQueryData(
+    "validate"
+  ) as ValidateInterface;
   return (
     <Routes>
       <Route path="/login" element={<Redirect />} />
@@ -120,7 +125,7 @@ export const PrivateRoutes = () => {
           {/* Consultas de Organização */}
           <Route path="consult_organization">
             <Route
-              path="organization_bank_statement"
+              path={"organization_bank_statement"}
               element={<OrganizationBankStatement />}
             />
             <Route
