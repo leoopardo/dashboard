@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { EyeFilled, ShopOutlined, ReloadOutlined } from "@ant-design/icons";
+import { EyeFilled, ShopOutlined } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import ReplayIcon from "@mui/icons-material/Replay";
 import { Grid } from "@mui/material";
@@ -225,7 +225,10 @@ export const RefundDeposits = () => {
           ?.report_chargeback_deposit_chargeback_export_csv && (
           <Grid item xs={12} md="auto">
             <ExportReportsModal
-              disabled={refundDepositsRows?.items.length === 0 || refundDepositsRowsError}
+              disabled={
+                refundDepositsRows?.items.length === 0 ||
+                refundDepositsRowsError
+              }
               mutateReport={() => RefundDepositsReportsMutate()}
               error={RefundDepositsReportsError}
               success={RefundDepositsReportsIsSuccess}
@@ -234,7 +237,6 @@ export const RefundDeposits = () => {
             />
           </Grid>
         )}
-
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>

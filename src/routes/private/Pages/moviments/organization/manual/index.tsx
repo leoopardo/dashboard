@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { ArrowDownOutlined, ArrowUpOutlined, ReloadOutlined } from "@ant-design/icons";
+import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { CustomTable } from "@src/components/CustomTable";
@@ -10,6 +10,7 @@ import { ValidateToken } from "@src/components/ValidateToken";
 import { useGetOrganizationMoviments } from "@src/services/moviments/organization/manual/GetManualTransactions";
 import { useCreateManualTransaction } from "@src/services/moviments/organization/manual/createManualTransaction";
 import { queryClient } from "@src/services/queryClient";
+import { useGetOrganizationCategories } from "@src/services/register/organization/categories/getCategories";
 import { useCreateOrganizationManualReports } from "@src/services/reports/moviments/organization/createManualTransactionsReports";
 import { CreateManualTransaction } from "@src/services/types/moviments/organization/createManualTransaction.interface";
 import {
@@ -22,7 +23,6 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { CreateMovimentModal } from "../../components/createMovimentModal";
-import { useGetOrganizationCategories } from "@src/services/register/organization/categories/getCategories";
 
 export const OrgonizationManual = () => {
   const { permissions } = queryClient.getQueryData(

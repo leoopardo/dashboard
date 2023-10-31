@@ -751,7 +751,8 @@
     "password_or_username": "Invalid username or password",
     "BANK_ALREADY_CREATED": "Bank already created",
     "date_1_hour": "The max range is one hour",
-    "undefined": "Couldn't connect to server. Wait while we solve this problem."
+    "undefined": "Couldn't connect to server. Wait while we solve this problem.",
+    "403": "Sorry, you are not authorized to access this page."
   },
   "logs": {
     "login": "Login",

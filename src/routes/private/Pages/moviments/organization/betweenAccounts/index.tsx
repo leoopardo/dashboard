@@ -4,8 +4,7 @@
 import {
   ArrowUpOutlined,
   DollarOutlined,
-  EyeFilled,
-  ReloadOutlined,
+  EyeFilled
 } from "@ant-design/icons";
 import { CustomTable } from "@src/components/CustomTable";
 import { FiltersModal } from "@src/components/FiltersModal";

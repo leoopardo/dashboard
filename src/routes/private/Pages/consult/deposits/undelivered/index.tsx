@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { EyeFilled, ReloadOutlined } from "@ant-design/icons";
+import { EyeFilled } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { Search } from "@src/components/Inputs/search";
@@ -209,12 +209,19 @@ export const UndeliveredDeposits = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        <Grid container item xs={12} md="auto" style={{ marginLeft: "auto" }} spacing={1}>
+        <Grid
+          container
+          item
+          xs={12}
+          md="auto"
+          style={{ marginLeft: "auto" }}
+          spacing={1}
+        >
           {permissions.report.deposit.undelivered_deposit
             .report_deposit_undelivered_deposit_export_csv && (
             <Grid item xs={12} md={6} lg={6}>
               <ExportReportsModal
-                disabled={depositsRows?.items.length === 0|| depositsRowsError}
+                disabled={depositsRows?.items.length === 0 || depositsRowsError}
                 mutateReport={() => GeneratedDepositsReportsMutate()}
                 error={GeneratedDepositsReportsError}
                 success={GeneratedDepositsReportsIsSuccess}

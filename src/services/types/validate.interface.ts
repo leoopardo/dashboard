@@ -11,7 +11,6 @@ export interface ValidateInterface {
   last_signin_ip: string;
   permissions: {
     register: {
-      menu: boolean;
       paybrokers: {
         menu: boolean;
         users: {
@@ -74,6 +73,7 @@ export interface ValidateInterface {
           merchant_export_csv: boolean;
           merchant_config_banks: boolean;
           merchant_config_fees: boolean;
+          merchant_list_fees: boolean;
           merchant_config_merchant: boolean;
           merchant_config_paybrokers: boolean;
           merchant_config_credentials: boolean;
@@ -101,6 +101,14 @@ export interface ValidateInterface {
           merchant_blacklist_delete: boolean;
           merchant_blacklist_export_csv: boolean;
         };
+        black_list_reason: {
+          menu: boolean;
+          merchant_blacklist_reason_list: boolean;
+          merchant_blacklist_reason_create: boolean;
+          merchant_blacklist_reason_delete: boolean;
+          merchant_blacklist_reason_update: boolean;
+          merchant_blacklist_reason_export_csv: boolean;
+        };
       };
       aggregator: {
         menu: boolean;
@@ -122,20 +130,28 @@ export interface ValidateInterface {
           menu: boolean;
           aggregator_config_update: boolean;
         };
-        self_exclusion: {
-          aggregator_self_exclusion_create: boolean;
-          aggregator_self_exclusion_delete: boolean;
-          aggregator_self_exclusion_export_csv: boolean;
-          aggregator_self_exclusion_list: boolean;
-          aggregator_self_exclusion_update: boolean;
-          menu: boolean;
-        };
         blacklist: {
+          menu: boolean;
+          aggregator_blacklist_list: boolean;
           aggregator_blacklist_create: boolean;
           aggregator_blacklist_delete: boolean;
           aggregator_blacklist_export_csv: boolean;
-          aggregator_blacklist_list: boolean;
+        };
+        black_list_reason: {
           menu: boolean;
+          aggregator_blacklist_reason_list: boolean;
+          aggregator_blacklist_reason_create: boolean;
+          aggregator_blacklist_reason_delete: boolean;
+          aggregator_blacklist_reason_update: boolean;
+          aggregator_blacklist_reason_export_csv: boolean;
+        };
+        self_exclusion: {
+          menu: boolean;
+          aggregator_self_exclusion_list: boolean;
+          aggregator_self_exclusion_create: boolean;
+          aggregator_self_exclusion_delete: boolean;
+          aggregator_self_exclusion_update: boolean;
+          aggregator_self_exclusion_export_csv: boolean;
         };
       };
       operator: {
@@ -247,8 +263,8 @@ export interface ValidateInterface {
         };
         bank_balance: {
           menu: boolean;
-          report_paybrokers_bank_balance_history_list: boolean;
           report_paybrokers_bank_balance_list: boolean;
+          report_paybrokers_bank_balance_history_list: boolean;
         };
       };
       merchant: {
@@ -299,11 +315,6 @@ export interface ValidateInterface {
           menu: boolean;
           report_deposit_receipt_list: boolean;
         };
-        deposit_error_logs: {
-          menu: boolean;
-          report_deposit_error_logs_list: boolean;
-          report_deposit_error_logs_export_csv: boolean;
-        };
       };
       withdraw: {
         menu: boolean;
@@ -332,11 +343,6 @@ export interface ValidateInterface {
           report_withdraw_undelivered_withdraw_resend_notification: boolean;
           report_withdraw_undelivered_withdraw_logs_notification: boolean;
           report_withdraw_undelivered_withdraw_export_csv: boolean;
-        };
-        withdraw_error_logs: {
-          menu: boolean;
-          report_withdraw_error_logs_list: boolean;
-          report_withdraw_error_logs_export_csv: boolean;
         };
       };
       chargeback: {
@@ -405,21 +411,40 @@ export interface ValidateInterface {
           support_blacklist_invalid_pix_keys_export_csv: boolean;
         };
       };
+      contestation: {
+        menu: boolean;
+        deposits: {
+          menu: boolean;
+          import_csv: {
+            menu: boolean;
+            support_deposit_impugnment_import_csv: boolean;
+            support_deposit_impugnment_list: boolean;
+          };
+        };
+        withdraw: {
+          menu: boolean;
+          import_csv: {
+            menu: boolean;
+            support_withdraw_impugnment_list: boolean;
+            support_withdraw_impugnment_import_csv: boolean;
+          };
+        };
+      };
       logs: {
         menu: boolean;
-        auth_logs: {
+        withdraw_error_logs: {
           menu: boolean;
-          support_logs_api_auth_list: boolean;
+          report_withdraw_error_logs_list: boolean;
+          report_withdraw_error_logs_export_csv: boolean;
         };
         deposit_error_logs: {
           menu: boolean;
-          report_deposit_error_logs_export_csv: boolean;
           report_deposit_error_logs_list: boolean;
+          report_deposit_error_logs_export_csv: boolean;
         };
-        withdraw_error_logs: {
+        auth_logs: {
           menu: boolean;
-          report_withdraw_error_logs_export_csv: boolean;
-          report_withdraw_error_logs_list: boolean;
+          support_logs_api_auth_list: boolean;
         };
       };
     };

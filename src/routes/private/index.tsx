@@ -1,3 +1,5 @@
+import { queryClient } from "@src/services/queryClient";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 import { Route, Routes } from "react-router-dom";
 import { NotFount } from "../public/Pages/404";
 import { GeneratedDeposits } from "./Pages/consult/deposits/generated";
@@ -89,8 +91,6 @@ import { PersonBlacklistUploads } from "./Pages/register/persons/blacklist/uploa
 import { CostumerBanks } from "./Pages/register/persons/customerBankList";
 import { PersonDetails } from "./Pages/register/persons/personDetails";
 import { PersonUpdate } from "./Pages/register/persons/personUpdate";
-import { PixKeyWhitelist } from "./Pages/register/persons/pixKeyWhitelist";
-import { PixKeyWhitelistReports } from "./Pages/register/persons/reports/PixKeyWhitelist";
 import { CustomerBanksReports } from "./Pages/register/persons/reports/customerBanks";
 import { PersonsReports } from "./Pages/register/persons/reports/persons";
 import { AuthLogs } from "./Pages/support/apiLogs/AuthLogs";
@@ -102,14 +102,16 @@ import { BankBlackistReports } from "./Pages/support/blacklists/reports/bankBlac
 import { ThirdPartKeyBlacklist } from "./Pages/support/blacklists/thirdPartKey";
 import { ImportContastationDeposit } from "./Pages/support/contastation/importCSV";
 import { ContestationUploads } from "./Pages/support/contastation/uploads";
+import { Permission } from "./permission";
 import { Redirect } from "./redirect";
-import { queryClient } from "@src/services/queryClient";
-import { ValidateInterface } from "@src/services/types/validate.interface";
 
 export const PrivateRoutes = () => {
   const { permissions } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
+
+  console.log(permissions);
+
   return (
     <Routes>
       <Route path="/login" element={<Redirect />} />
@@ -126,256 +128,919 @@ export const PrivateRoutes = () => {
           <Route path="consult_organization">
             <Route
               path={"organization_bank_statement"}
-              element={<OrganizationBankStatement />}
+              element={
+                <Permission
+                  permission={permissions?.report?.paybrokers?.extract?.menu}
+                >
+                  <OrganizationBankStatement />
+                </Permission>
+              }
             />
             <Route
               path="organization_balance"
-              element={<OrganizationBalance />}
+              element={
+                <Permission
+                  permission={permissions?.report?.paybrokers?.balance?.menu}
+                >
+                  <OrganizationBalance />
+                </Permission>
+              }
             />
             <Route
               path="organization_bank_balance"
-              element={<OrganizationBankBalance />}
+              element={
+                <Permission
+                  permission={
+                    permissions?.report?.paybrokers?.bank_balance?.menu
+                  }
+                >
+                  <OrganizationBankBalance />
+                </Permission>
+              }
             />
             <Route
               path="organization_history"
-              element={<OrganizationHistory />}
+              element={
+                <Permission
+                  permission={
+                    permissions?.report?.paybrokers?.bank_history?.menu
+                  }
+                >
+                  <OrganizationHistory />
+                </Permission>
+              }
             />
             <Route
               path="consult_organization_reports"
-              element={<ConsultOrganizationReports />}
+              element={
+                <Permission
+                  permission={
+                    permissions?.report?.paybrokers?.balance
+                      ?.report_paybrokers_balance_export_csv
+                  }
+                >
+                  <ConsultOrganizationReports />
+                </Permission>
+              }
             />
           </Route>
           {/*Consultas de Empresa */}
           <Route path="consult_merchant">
             <Route
               path="merchant_bank_statement"
-              element={<MerchantBankStatement />}
+              element={
+                <Permission
+                  permission={permissions?.report?.merchant?.extract?.menu}
+                >
+                  <MerchantBankStatement />
+                </Permission>
+              }
             />
-            <Route path="merchant_balance" element={<MerchantBalance />} />
-            <Route path="merchant_history" element={<MerchantHistory />} />
+            <Route
+              path="merchant_balance"
+              element={
+                <Permission
+                  permission={permissions?.report?.merchant?.balance?.menu}
+                >
+                  <MerchantBalance />
+                </Permission>
+              }
+            />
+            <Route
+              path="merchant_history"
+              element={
+                <Permission
+                  permission={
+                    permissions?.report?.merchant?.balance_history?.menu
+                  }
+                >
+                  <MerchantHistory />
+                </Permission>
+              }
+            />
             <Route
               path="consult_merchant_reports"
-              element={<ConsultMerchantReports />}
+              element={
+                <Permission
+                  permission={
+                    permissions?.report?.merchant?.balance
+                      ?.report_merchant_balance_export_csv
+                  }
+                >
+                  <ConsultMerchantReports />
+                </Permission>
+              }
             />
           </Route>
           {/*Consultas de Depósitos */}
           <Route path="deposit">
-            <Route path="generated_deposits" element={<GeneratedDeposits />} />
-            <Route path="paid_deposits" element={<PaidDeposits />} />
+            <Route
+              path="generated_deposits"
+              element={
+                <Permission
+                  permission={
+                    permissions?.report?.deposit?.generated_deposit?.menu
+                  }
+                >
+                  <GeneratedDeposits />
+                </Permission>
+              }
+            />
+            <Route
+              path="paid_deposits"
+              element={
+                <Permission
+                  permission={permissions?.report?.deposit?.paid_deposit?.menu}
+                >
+                  <PaidDeposits />
+                </Permission>
+              }
+            />
             <Route
               path="undelivered_deposits"
-              element={<UndeliveredDeposits />}
+              element={
+                <Permission
+                  permission={
+                    permissions?.report?.deposit?.undelivered_deposit?.menu
+                  }
+                >
+                  <UndeliveredDeposits />
+                </Permission>
+              }
             />
 
             <Route path="deposits_reports">
               <Route
                 path="generated_deposits_reports"
-                element={<GeneratedDepositsReports />}
+                element={
+                  <Permission
+                    permission={
+                      permissions?.report?.deposit?.generated_deposit
+                        ?.report_deposit_generated_deposit_export_csv
+                    }
+                  >
+                    <GeneratedDepositsReports />
+                  </Permission>
+                }
               />
               <Route
                 path="paid_deposits_reports"
-                element={<PaidDepositsReports />}
+                element={
+                  <Permission
+                    permission={
+                      permissions?.report?.deposit?.paid_deposit
+                        .report_deposit_paid_deposit_export_csv
+                    }
+                  >
+                    <PaidDepositsReports />
+                  </Permission>
+                }
               />
-              <Route path="webhooks_reports" element={<DepositsWebhooks />} />
+              <Route
+                path="webhooks_reports"
+                element={
+                  <Permission
+                    permission={
+                      permissions?.report?.deposit?.generated_deposit
+                        ?.report_deposit_generated_deposit_resend_notification
+                    }
+                  >
+                    <DepositsWebhooks />
+                  </Permission>
+                }
+              />
             </Route>
           </Route>
           {/*Consultas de Saques */}
           <Route path="withdrawals">
             <Route
               path="generated_withdrawals"
-              element={<GeneratedWithdrawals />}
+              element={
+                <Permission
+                  permission={
+                    permissions?.report?.withdraw?.generated_withdraw?.menu
+                  }
+                >
+                  <GeneratedWithdrawals />
+                </Permission>
+              }
             />
-            <Route path="paid_withdrawals" element={<PaidWithdrawals />} />
+            <Route
+              path="paid_withdrawals"
+              element={
+                <Permission
+                  permission={
+                    permissions?.report?.withdraw?.paid_withdraw?.menu
+                  }
+                >
+                  <PaidWithdrawals />
+                </Permission>
+              }
+            />
             <Route
               path="undelivered_withdrawals"
-              element={<UndeliveredWithdrawals />}
+              element={
+                <Permission
+                  permission={
+                    permissions?.report?.withdraw?.undelivered_withdraw?.menu
+                  }
+                >
+                  <UndeliveredWithdrawals />
+                </Permission>
+              }
             />
 
             <Route path="withdrawals_reports">
               <Route
                 path="generated_withdrawals_reports"
-                element={<GeneratedWithdrawalsReports />}
+                element={
+                  <Permission
+                    permission={
+                      permissions?.report?.withdraw?.generated_withdraw
+                        ?.report_withdraw_generated_withdraw_export_csv
+                    }
+                  >
+                    <GeneratedWithdrawalsReports />
+                  </Permission>
+                }
               />
               <Route
                 path="paid_withdrawals_reports"
-                element={<PaidWithdrawalsReports />}
+                element={
+                  <Permission
+                    permission={
+                      permissions?.report?.withdraw?.paid_withdraw
+                        ?.report_withdraw_paid_withdraw_export_csv
+                    }
+                  >
+                    <PaidWithdrawalsReports />
+                  </Permission>
+                }
               />
               <Route
                 path="withdrawals_webhooks_reports"
-                element={<WithdrawWebhooks />}
+                element={
+                  <Permission
+                    permission={
+                      permissions?.report?.withdraw?.generated_withdraw
+                        ?.report_withdraw_generated_withdraw_resend_notification
+                    }
+                  >
+                    <WithdrawWebhooks />
+                  </Permission>
+                }
               />
             </Route>
           </Route>
           {/*Consultas de Devoluções */}
           <Route path="refunds">
-            <Route path="refund_deposits" element={<RefundDeposits />} />
-            <Route path="withdrawals" element={<RefundWithdrawals />} />
+            <Route
+              path="refund_deposits"
+              element={
+                <Permission
+                  permission={
+                    permissions?.report?.chargeback?.deposit_chargeback?.menu
+                  }
+                >
+                  <RefundDeposits />
+                </Permission>
+              }
+            />
+            <Route
+              path="withdrawals"
+              element={
+                <Permission
+                  permission={
+                    permissions?.report?.chargeback?.withdraw_chargeback?.menu
+                  }
+                >
+                  <RefundWithdrawals />
+                </Permission>
+              }
+            />
             <Route
               path="refund_manual_deposits"
-              element={<RefundDepositsManual />}
+              element={
+                <Permission
+                  permission={
+                    permissions?.report?.chargeback?.manual_deposit_chargeback
+                      .menu
+                  }
+                >
+                  <RefundDepositsManual />
+                </Permission>
+              }
             />
 
             <Route path="refund_reports">
               <Route
                 path="refund_deposits_reports"
-                element={<RefundDepositsReports />}
+                element={
+                  <Permission
+                    permission={
+                      permissions?.report?.chargeback?.deposit_chargeback
+                        ?.report_chargeback_deposit_chargeback_export_csv
+                    }
+                  >
+                    <RefundDepositsReports />
+                  </Permission>
+                }
               />
               <Route
                 path="refund_manual_reports"
-                element={<RefundManualDepositsReports />}
+                element={
+                  <Permission
+                    permission={
+                      permissions?.report?.chargeback?.manual_deposit_chargeback
+                        ?.report_chargeback_manual_deposit_chargeback_export_csv
+                    }
+                  >
+                    <RefundManualDepositsReports />
+                  </Permission>
+                }
               />
               <Route
                 path="refund_withdrawals_reports"
-                element={<RefundWithdrawalsReports />}
+                element={
+                  <Permission
+                    permission={
+                      permissions?.report?.chargeback?.withdraw_chargeback
+                        ?.report_chargeback_withdraw_chargeback_export_csv
+                    }
+                  >
+                    <RefundWithdrawalsReports />
+                  </Permission>
+                }
               />
             </Route>
           </Route>
           {/* checar cpf */}
           <Route path="consult_persons">
-            <Route path="check_cpf" element={<CheckDocument />} />
+            <Route
+              path="check_cpf"
+              element={
+                <Permission
+                  permission={permissions?.report?.person?.check_cpf?.menu}
+                >
+                  <CheckDocument />
+                </Permission>
+              }
+            />
           </Route>
         </Route>
         {/* cadastros */}
         <Route path="register">
           {/* cadastros de organização */}
           <Route path="organization">
-            <Route path="users" element={<OrganizationUser />} />
-            <Route path="categories" element={<OrganizationCategories />} />
-            <Route path="bank_maintain" element={<BankMaintenence />} />
-            <Route path="general_configs" element={<GeneralConfigs />} />
+            <Route
+              path="users"
+              element={
+                <Permission
+                  permission={permissions?.register?.paybrokers?.users?.menu}
+                >
+                  <OrganizationUser />
+                </Permission>
+              }
+            />
+            <Route
+              path="categories"
+              element={
+                <Permission
+                  permission={
+                    permissions?.register?.paybrokers?.release_category?.menu
+                  }
+                >
+                  <OrganizationCategories />
+                </Permission>
+              }
+            />
+            <Route
+              path="bank_maintain"
+              element={
+                <Permission
+                  permission={
+                    permissions?.register?.paybrokers?.banks_maintain?.menu
+                  }
+                >
+                  <BankMaintenence />
+                </Permission>
+              }
+            />
+            <Route
+              path="general_configs"
+              element={
+                <Permission
+                  permission={
+                    permissions?.register?.paybrokers?.general_configs?.menu
+                  }
+                >
+                  <GeneralConfigs />
+                </Permission>
+              }
+            />
             <Route path="organization_reports">
               <Route
                 path="organization_reports_users"
-                element={<OrganizationUserReports />}
+                element={
+                  <Permission
+                    permission={
+                      permissions?.register?.paybrokers?.users
+                        ?.paybrokers_user_export_csv
+                    }
+                  >
+                    <OrganizationUserReports />
+                  </Permission>
+                }
               />
               <Route
                 path="organization_reports_categories"
-                element={<OrganizationCategoriesReports />}
+                element={
+                  <Permission
+                    permission={
+                      permissions?.register?.paybrokers?.release_category
+                        ?.paybrokers_release_category_export_csv
+                    }
+                  >
+                    <OrganizationCategoriesReports />
+                  </Permission>
+                }
               />
             </Route>
           </Route>
           {/* cadastros de agregadores */}
           <Route path="aggregator">
             <Route path="aggregators">
-              <Route index element={<Aggregators />} />
-              <Route path="update" element={<UpdateAggregator />} />
-              <Route path="details" element={<AggregatorDetails />} />
+              <Route
+                index
+                element={
+                  <Permission
+                    permission={
+                      permissions?.register?.aggregator?.aggregator?.menu
+                    }
+                  >
+                    <Aggregators />
+                  </Permission>
+                }
+              />
+              <Route
+                path="update"
+                element={
+                  <Permission
+                    permission={
+                      permissions?.register?.aggregator?.aggregator
+                        ?.aggregator_update
+                    }
+                  >
+                    <UpdateAggregator />
+                  </Permission>
+                }
+              />
+              <Route
+                path="details"
+                element={
+                  <Permission
+                    permission={
+                      permissions?.register?.aggregator?.aggregator
+                        ?.aggregator_list
+                    }
+                  >
+                    <AggregatorDetails />
+                  </Permission>
+                }
+              />
             </Route>
 
-            <Route path="aggregator_users" element={<AggregatorUsers />} />
+            <Route
+              path="aggregator_users"
+              element={
+                <Permission
+                  permission={permissions?.register?.aggregator?.users?.menu}
+                >
+                  <AggregatorUsers />
+                </Permission>
+              }
+            />
             <Route
               path="self_exclusion"
-              element={<AggregatorSelfExclusion />}
+              element={
+                <Permission
+                  permission={
+                    permissions?.register?.aggregator?.self_exclusion?.menu
+                  }
+                >
+                  <AggregatorSelfExclusion />
+                </Permission>
+              }
             />
             <Route path="aggregator_blacklist">
               <Route
                 path="aggregator_blacklist_blacklist"
-                element={<AggregatorBlacklist />}
+                element={
+                  <Permission
+                    permission={
+                      permissions?.register?.aggregator?.blacklist?.menu
+                    }
+                  >
+                    <AggregatorBlacklist />
+                  </Permission>
+                }
               />
               <Route path="aggregator_blacklist_reasons" />
             </Route>
             <Route path="aggregator_reports">
               <Route
                 path="aggregator_aggregators_reports"
-                element={<AggregatorsReports />}
+                element={
+                  <Permission
+                    permission={
+                      permissions?.register?.aggregator?.aggregator
+                        ?.aggregator_export_csv
+                    }
+                  >
+                    <AggregatorsReports />
+                  </Permission>
+                }
               />
               <Route
                 path="aggregator_users_reports"
-                element={<AggregatorUsersReports />}
-              />{" "}
+                element={
+                  <Permission
+                    permission={
+                      permissions?.register?.aggregator?.users
+                        ?.aggregator_user_export_csv
+                    }
+                  >
+                    <AggregatorUsersReports />
+                  </Permission>
+                }
+              />
               <Route
                 path="self_exclusion_reports"
-                element={<SelfExclusionReports />}
+                element={
+                  <Permission
+                    permission={
+                      permissions?.register?.aggregator?.self_exclusion
+                        ?.aggregator_self_exclusion_export_csv
+                    }
+                  >
+                    <SelfExclusionReports />
+                  </Permission>
+                }
               />
               <Route
                 path="aggregator_blacklist_reports"
-                element={<AggregatorsBlacklistReports />}
+                element={
+                  <Permission
+                    permission={
+                      permissions?.register?.aggregator?.blacklist
+                        ?.aggregator_blacklist_export_csv
+                    }
+                  >
+                    <AggregatorsBlacklistReports />
+                  </Permission>
+                }
               />
             </Route>
           </Route>
           {/* cadastros de plataformas */}
           <Route path="partner">
             <Route path="partners">
-              <Route index element={<Partners />} />
-              <Route path="details" element={<PartnerDetails />} />
-              <Route path="update" element={<UpdatePartner />} />
+              <Route
+                index
+                element={
+                  <Permission
+                    permission={permissions?.register?.partner?.partner?.menu}
+                  >
+                    <Partners />
+                  </Permission>
+                }
+              />
+              <Route
+                path="details"
+                element={
+                  <Permission
+                    permission={
+                      permissions?.register?.partner?.partner?.partner_list
+                    }
+                  >
+                    <PartnerDetails />
+                  </Permission>
+                }
+              />
+              <Route
+                path="update"
+                element={
+                  <Permission
+                    permission={
+                      permissions?.register?.partner?.partner?.partner_update
+                    }
+                  >
+                    <UpdatePartner />
+                  </Permission>
+                }
+              />
             </Route>
-            <Route path="partner_users" element={<PartnerUsers />} />
+            <Route
+              path="partner_users"
+              element={
+                <Permission
+                  permission={permissions?.register?.partner?.users?.menu}
+                >
+                  <PartnerUsers />
+                </Permission>
+              }
+            />
             <Route path="partner_reports">
               <Route
                 path="partner_partners_reports"
-                element={<PartnerReports />}
+                element={
+                  <Permission
+                    permission={
+                      permissions?.register?.partner?.partner
+                        ?.partner_export_csv
+                    }
+                  >
+                    <PartnerReports />
+                  </Permission>
+                }
               />
               <Route
                 path="partner_users_reports"
-                element={<PartnerUsersReports />}
+                element={
+                  <Permission
+                    permission={
+                      permissions?.register?.partner?.users
+                        ?.partner_user_export_csv
+                    }
+                  >
+                    <PartnerUsersReports />
+                  </Permission>
+                }
               />
             </Route>
           </Route>
           {/*cadastros de operadores */}
           <Route path="operator">
             <Route path="operators">
-              <Route index element={<Operators />} />
-              <Route path="update" element={<UpdateOperator />} />
-              <Route path="details" element={<OperatorDetails />} />
+              <Route
+                index
+                element={
+                  <Permission
+                    permission={permissions?.register?.operator?.operator?.menu}
+                  >
+                    <Operators />
+                  </Permission>
+                }
+              />
+              <Route
+                path="update"
+                element={
+                  <Permission
+                    permission={
+                      permissions?.register?.operator?.operator?.operator_update
+                    }
+                  >
+                    <UpdateOperator />
+                  </Permission>
+                }
+              />
+              <Route
+                path="details"
+                element={
+                  <Permission
+                    permission={
+                      permissions?.register?.operator?.operator?.operator_list
+                    }
+                  >
+                    <OperatorDetails />
+                  </Permission>
+                }
+              />
             </Route>
-            <Route path="operator_users" element={<OperatorUsers />} />
+            <Route
+              path="operator_users"
+              element={
+                <Permission
+                  permission={permissions?.register?.operator?.users?.menu}
+                >
+                  <OperatorUsers />
+                </Permission>
+              }
+            />
             <Route path="operator_reports">
               <Route
                 path="operator_operators_reports"
-                element={<OperatorReports />}
+                element={
+                  <Permission
+                    permission={
+                      permissions?.register?.operator?.operator
+                        ?.operator_export_csv
+                    }
+                  >
+                    <OperatorReports />
+                  </Permission>
+                }
               />
               <Route
                 path="operator_users_reports"
-                element={<OperatorUsersReports />}
+                element={
+                  <Permission
+                    permission={
+                      permissions?.register?.operator?.users
+                        ?.operator_user_export_csv
+                    }
+                  >
+                    <OperatorUsersReports />
+                  </Permission>
+                }
               />
             </Route>
           </Route>
           {/* cadastros de empresas */}
           <Route path="merchant">
             <Route path="merchants">
-              <Route index element={<MerchantView />} />
-              <Route path=":id" element={<MerchantConfigs />} />
-              <Route path="details" element={<MerchantDetails />} />
-              <Route path="update" element={<UpdateMerchant />} />
+              <Route
+                index
+                element={
+                  <Permission
+                    permission={permissions?.register?.merchant?.merchant?.menu}
+                  >
+                    <MerchantView />
+                  </Permission>
+                }
+              />
+              <Route
+                path=":id"
+                element={
+                  <Permission
+                    permission={
+                      permissions?.register?.merchant?.merchant
+                        ?.merchant_config_banks ||
+                      permissions?.register?.merchant?.merchant
+                        ?.merchant_config_credentials ||
+                      permissions?.register?.merchant?.merchant
+                        ?.merchant_config_fees ||
+                      permissions?.register?.merchant?.merchant
+                        ?.merchant_config_ips ||
+                      permissions?.register?.merchant?.merchant
+                        ?.merchant_config_merchant ||
+                      permissions?.register?.merchant?.merchant
+                        ?.merchant_config_paybrokers
+                    }
+                  >
+                    <MerchantConfigs />
+                  </Permission>
+                }
+              />
+              <Route
+                path="details"
+                element={
+                  <Permission
+                    permission={
+                      permissions?.register?.merchant?.merchant?.merchant_list
+                    }
+                  >
+                    <MerchantDetails />
+                  </Permission>
+                }
+              />
+              <Route
+                path="update"
+                element={
+                  <Permission
+                    permission={
+                      permissions?.register?.merchant?.merchant?.merchant_update
+                    }
+                  >
+                    <UpdateMerchant />
+                  </Permission>
+                }
+              />
             </Route>
-            <Route path="merchant_users" element={<MerchantUser />} />
+            <Route
+              path="merchant_users"
+              element={
+                <Permission
+                  permission={permissions?.register?.merchant?.users?.menu}
+                >
+                  <MerchantUser />
+                </Permission>
+              }
+            />
 
             <Route path="merchant_blacklists">
               <Route
                 path="merchant_blacklist"
-                element={<MerchantBlacklist />}
+                element={
+                  <Permission
+                    permission={
+                      permissions?.register?.merchant?.blacklist?.menu
+                    }
+                  >
+                    <MerchantBlacklist />
+                  </Permission>
+                }
               />
               <Route
                 path="merchant_blacklist_reasons"
-                element={<MerchantBlacklistReasons />}
+                element={
+                  <Permission
+                    permission={
+                      permissions?.register?.merchant?.black_list_reason?.menu
+                    }
+                  >
+                    <MerchantBlacklistReasons />
+                  </Permission>
+                }
               />
               <Route
                 path="import_merchant_blacklist"
-                element={<ImportBlacklist />}
+                element={
+                  <Permission
+                    permission={
+                      permissions?.register?.merchant?.blacklist
+                        ?.merchant_blacklist_export_csv
+                    }
+                  >
+                    <ImportBlacklist />
+                  </Permission>
+                }
               />
               <Route
                 path="uploads_merchant_blacklist"
-                element={<MerchantsBlacklistUploads />}
+                element={
+                  <Permission
+                    permission={
+                      permissions?.register?.merchant?.blacklist
+                        ?.merchant_blacklist_export_csv
+                    }
+                  >
+                    <MerchantsBlacklistUploads />
+                  </Permission>
+                }
               />
             </Route>
-            <Route path="fee_plans" element={<MerchantFeePlans />} />
+            <Route
+              path="fee_plans"
+              element={
+                <Permission
+                  permission={permissions?.register?.merchant?.fee_plans?.menu}
+                >
+                  <MerchantFeePlans />
+                </Permission>
+              }
+            />
             <Route
               path="manual_entry_category"
-              element={<MerchantManualEntryCategory />}
+              element={
+                <Permission
+                  permission={
+                    permissions?.register?.merchant?.release_category?.menu
+                  }
+                >
+                  <MerchantManualEntryCategory />
+                </Permission>
+              }
             />
             <Route path="merchant_reports">
               <Route
                 path="merchant_merchants_reports"
-                element={<MerchantReports />}
+                element={
+                  <Permission
+                    permission={
+                      permissions?.register?.merchant?.merchant
+                        ?.merchant_export_csv
+                    }
+                  >
+                    <MerchantReports />
+                  </Permission>
+                }
               />
               <Route
                 path="merchant_users_reports"
-                element={<MerchantUserReports />}
+                element={
+                  <Permission
+                    permission={
+                      permissions?.register?.merchant?.users
+                        ?.merchant_user_export_csv
+                    }
+                  >
+                    <MerchantUserReports />
+                  </Permission>
+                }
               />
               <Route
                 path="merchant_blacklist_reports"
-                element={<MerchantBlacklistReports />}
+                element={
+                  <Permission
+                    permission={
+                      permissions?.register?.merchant?.blacklist
+                        ?.merchant_blacklist_export_csv
+                    }
+                  >
+                    <MerchantBlacklistReports />
+                  </Permission>
+                }
               />
             </Route>
           </Route>
@@ -383,40 +1048,120 @@ export const PrivateRoutes = () => {
           {/* cadastros de pessos */}
           <Route path="person">
             <Route path="persons">
-              <Route index element={<Persons />} />
-              <Route path=":cpf" element={<PersonDetails />} />
+              <Route
+                index
+                element={
+                  <Permission
+                    permission={permissions?.register?.person?.person?.menu}
+                  >
+                    <Persons />
+                  </Permission>
+                }
+              />
+              <Route
+                path=":cpf"
+                element={
+                  <Permission
+                    permission={
+                      permissions?.register?.person?.person?.person_person_list
+                    }
+                  >
+                    <PersonDetails />
+                  </Permission>
+                }
+              />
               <Route path="update">
-                <Route path=":cpf" element={<PersonUpdate />} />{" "}
+                <Route
+                  path=":cpf"
+                  element={
+                    <Permission
+                      permission={
+                        permissions?.register?.person?.person
+                          ?.person_person_update
+                      }
+                    >
+                      <PersonUpdate />
+                    </Permission>
+                  }
+                />
               </Route>
             </Route>
-            <Route path="whitelist" element={<PixKeyWhitelist />} />
-            <Route path="person_accounts" element={<CostumerBanks />} />
+            <Route
+              path="person_accounts"
+              element={
+                <Permission
+                  permission={permissions?.register?.person?.client_banks?.menu}
+                >
+                  <CostumerBanks />
+                </Permission>
+              }
+            />
             <Route path="person_blacklist">
               <Route
                 path="upload_person_blacklist"
-                element={<ImportPersonsBlacklist />}
-              />{" "}
+                element={
+                  <Permission
+                    permission={
+                      permissions?.register?.person?.blacklist?.import_csv
+                        .person_blacklist_import_csv
+                    }
+                  >
+                    <ImportPersonsBlacklist />
+                  </Permission>
+                }
+              />
               <Route
                 path="person_blacklist_uploads"
-                element={<PersonBlacklistUploads />}
+                element={
+                  <Permission
+                    permission={
+                      permissions?.register?.person?.blacklist?.import_csv
+                        .person_blacklist_import_csv
+                    }
+                  >
+                    <PersonBlacklistUploads />
+                  </Permission>
+                }
               />
               <Route
                 path="person_blacklist_reasons"
-                element={<PersonBlacklistReasons />}
+                element={
+                  <Permission
+                    permission={
+                      permissions?.register?.person?.blacklist.reason.menu
+                    }
+                  >
+                    <PersonBlacklistReasons />
+                  </Permission>
+                }
               />
             </Route>
             <Route path="person_reports">
               <Route
                 path="person_persons_reports"
-                element={<PersonsReports />}
+                element={
+                  <Permission
+                    permission={
+                      permissions?.register?.person?.person
+                        ?.person_person_export_csv
+                    }
+                  >
+                    <PersonsReports />
+                  </Permission>
+                }
               />
               <Route
                 path="client_bank_reports"
-                element={<CustomerBanksReports />}
-              />
-              <Route
-                path="pix_whitelist_reports"
-                element={<PixKeyWhitelistReports />}
+                element={
+                  <Permission
+                    permission={
+                      permissions?.register?.person?.client_banks
+                        ?.person_client_banks_export_csv
+                    }
+                  >
+                    <CustomerBanksReports />
+                  </Permission>
+                }
               />
             </Route>
           </Route>
@@ -427,58 +1172,149 @@ export const PrivateRoutes = () => {
           <Route path="organization_moviments">
             <Route
               path="organization_manual_moviments"
-              element={<OrgonizationManual />}
+              element={
+                <Permission
+                  permission={
+                    permissions?.transactions?.paybrokers?.manual_transactions
+                      ?.menu
+                  }
+                >
+                  <OrgonizationManual />
+                </Permission>
+              }
             />
             <Route path="organization_moviments_reports">
               <Route
                 path="organization_manual_moviments_reports"
-                element={<OrganizationManualReports />}
+                element={
+                  <Permission
+                    permission={
+                      permissions?.transactions?.paybrokers?.manual_transactions
+                        ?.paybrokers_manual_transactions_export_csv
+                    }
+                  >
+                    <OrganizationManualReports />
+                  </Permission>
+                }
               />
+              {/* arrumar permissões */}
               <Route
                 path="organization_transfer_between_accounts_reports"
-                element={<OrganizationTransferBetweenAccountsReports />}
+                element={
+                  <Permission
+                    permission={
+                      permissions?.transactions?.paybrokers?.internal_transfers
+                        .menu
+                    }
+                  >
+                    <OrganizationTransferBetweenAccountsReports />
+                  </Permission>
+                }
               />
             </Route>
+            {/* arrumar permissões */}
             <Route
               path="organization_transfer_between_accounts"
-              element={<OrganizationTransfersBetweenAccounts />}
+              element={
+                <Permission
+                  permission={
+                    permissions?.transactions?.paybrokers?.internal_transfers
+                      ?.menu
+                  }
+                >
+                  <OrganizationTransfersBetweenAccounts />
+                </Permission>
+              }
             />
           </Route>
           {/* movimentções de empresa */}
           <Route path="merchant_moviments">
             <Route
               path="merchant_manual_moviments"
-              element={<MerchantManual />}
+              element={
+                <Permission
+                  permission={
+                    permissions?.transactions?.merchant?.manual_transactions
+                      ?.menu
+                  }
+                >
+                  <MerchantManual />
+                </Permission>
+              }
             />
             <Route path="merchant_moviments_reports">
               <Route
                 path="merchant_manual_moviments_reports"
-                element={<MerchantManualReports />}
+                element={
+                  <Permission
+                    permission={
+                      permissions?.transactions?.merchant?.manual_transactions
+                        ?.merchant_manual_transactions_export_csv
+                    }
+                  >
+                    <MerchantManualReports />
+                  </Permission>
+                }
               />
+              {/* arrumar permissões */}
               <Route
                 path="merchant_between_accounts_reports"
-                element={<TransferBetweenAccountsReports />}
+                element={
+                  <Permission
+                    permission={
+                      permissions?.transactions?.merchant?.internal_transfers
+                        ?.merchant_internal_transfers_export_csv
+                    }
+                  >
+                    <TransferBetweenAccountsReports />
+                  </Permission>
+                }
               />
             </Route>
+            {/* arrumar permissões */}
             <Route
               path="between_accounts_transfers"
-              element={<TransfersBetweenAccounts />}
+              element={
+                <Permission
+                  permission={
+                    permissions?.transactions?.merchant?.internal_transfers
+                      ?.menu
+                  }
+                >
+                  <TransfersBetweenAccounts />
+                </Permission>
+              }
             />
           </Route>
+          {/* arrumar permissões */}
           <Route
             path="merchant_transfers"
-            element={<TransferBetweenMerchants />}
+            element={
+              <Permission permission={permissions?.transactions?.menu}>
+                <TransferBetweenMerchants />
+              </Permission>
+            }
           />
           {/* movimentações de agregador */}
           <Route path="aggregator_moviments">
+            {/* arrumar permissões */}
             <Route
               path="aggregator_transfer_between_accounts"
-              element={<AggregatorTransfersBetweenAccounts />}
+              element={
+                <Permission permission={permissions?.transactions?.menu}>
+                  <AggregatorTransfersBetweenAccounts />
+                </Permission>
+              }
             />
             <Route path="aggregator_moviments_reports">
+              {/* arrumar permissões */}
               <Route
                 path="aggregator_transfer_between_accounts_reports"
-                element={<AggregatorTransferBetweenAccountsReports />}
+                element={
+                  <Permission permission={permissions?.transactions?.menu}>
+                    <AggregatorTransferBetweenAccountsReports />
+                  </Permission>
+                }
               />
             </Route>
           </Route>
@@ -487,38 +1323,120 @@ export const PrivateRoutes = () => {
         <Route path="support">
           {/* Logs de API */}
           <Route path="api_logs">
-            <Route path="authentication_logs" element={<AuthLogs />} />
-            <Route path="error_logs_deposits" element={<DepositsErrors />} />
+            <Route
+              path="authentication_logs"
+              element={
+                <Permission
+                  permission={permissions?.support?.logs?.auth_logs?.menu}
+                >
+                  <AuthLogs />
+                </Permission>
+              }
+            />
+            <Route
+              path="error_logs_deposits"
+              element={
+                <Permission
+                  permission={
+                    permissions?.support?.logs?.deposit_error_logs?.menu
+                  }
+                >
+                  <DepositsErrors />
+                </Permission>
+              }
+            />
             <Route
               path="error_logs_withdrawals"
-              element={<WithdrawalsErrors />}
+              element={
+                <Permission
+                  permission={
+                    permissions?.support?.logs?.withdraw_error_logs?.menu
+                  }
+                >
+                  <WithdrawalsErrors />
+                </Permission>
+              }
             />
           </Route>
           {/* Blacklists */}
           <Route path="blacklists">
-            <Route path="bank_institutions" element={<BankBlacklist />} />
+            <Route
+              path="bank_institutions"
+              element={
+                <Permission
+                  permission={permissions?.support?.blacklist?.banks?.menu}
+                >
+                  <BankBlacklist />
+                </Permission>
+              }
+            />
             <Route
               path="third_parties_pix_key"
-              element={<ThirdPartKeyBlacklist />}
+              element={
+                <Permission
+                  permission={
+                    permissions?.support?.blacklist?.third_party_pix_keys?.menu
+                  }
+                >
+                  <ThirdPartKeyBlacklist />
+                </Permission>
+              }
             />
             <Route
               path="invalid_pix_key"
-              element={<InvalidPixKeyBlacklist />}
+              element={
+                <Permission
+                  permission={
+                    permissions?.support?.blacklist?.invalid_pix_keys?.menu
+                  }
+                >
+                  <InvalidPixKeyBlacklist />
+                </Permission>
+              }
             />
             <Route path="blacklists_reports">
               <Route
                 path="bank_institutions_reports"
-                element={<BankBlackistReports />}
+                element={
+                  <Permission
+                    permission={
+                      permissions?.support?.blacklist?.banks
+                        ?.support_blacklist_bank_export_csv
+                    }
+                  >
+                    <BankBlackistReports />
+                  </Permission>
+                }
               />
             </Route>
           </Route>
           {/* Contastations */}
           <Route path="contestation">
             <Route path="deposit">
-              <Route path="uploads" element={<ContestationUploads />} />
+              <Route
+                path="uploads"
+                element={
+                  <Permission
+                    permission={
+                      permissions?.support?.contestation?.deposits?.menu
+                    }
+                  >
+                    <ContestationUploads />
+                  </Permission>
+                }
+              />
               <Route
                 path="import_csv"
-                element={<ImportContastationDeposit />}
+                element={
+                  <Permission
+                    permission={
+                      permissions?.support?.contestation?.deposits?.import_csv
+                        .menu
+                    }
+                  >
+                    <ImportContastationDeposit />
+                  </Permission>
+                }
               />
             </Route>
           </Route>
