@@ -7,3 +7,10 @@ export interface CheckCpf {
   situation_text: string;
   black_list: boolean;
 }
+
+export interface CheckCpfDetails {
+  items: { reason: string; merchant_name: string };
+  limit: number;
+  page: number;
+  total: number;
+}

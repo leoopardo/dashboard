@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { EyeFilled } from "@ant-design/icons";
+import { EyeFilled, SendOutlined } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { Search } from "@src/components/Inputs/search";
@@ -23,6 +23,9 @@ import { FilterChips } from "../../../../../../components/FiltersModal/filterChi
 import { generatedWithdrawalsRowsQuery } from "../../../../../../services/types/consult/withdrawals/generatedWithdrawals.interface";
 import { ViewModal } from "../components/ViewModal";
 import { TotalizersCards } from "./components/TotalizersCards";
+import { ResendWebhookModal } from "../components/ResendWebhookModal";
+import { useCreateSendWithdrawWebhook } from "@src/services/consult/withdrawals/generatedWithdrawals/resendWebhook";
+import { ResendWebhookBody } from "@src/services/types/consult/deposits/createResendWebhook.interface";
 
 const INITIAL_QUERY: generatedWithdrawalsRowsQuery = {
   page: 1,
@@ -44,6 +47,21 @@ export const UndeliveredWithdrawals = () => {
   const { t } = useTranslation();
   const [query, setQuery] =
     useState<generatedWithdrawalsRowsQuery>(INITIAL_QUERY);
+  const [webhookId, setWebhookId] = useState<string>("");
+  const [isResendWebhookModalOpen, setIsResendWebhookModalOpen] =
+    useState<boolean>(false);
+  const [webhookBody, setWebhookBody] = useState<ResendWebhookBody>({
+    start_date: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss.SSS"),
+    end_date: moment(new Date())
+      .add(1, "hour")
+      .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+    merchant_id: undefined,
+    partner_id: undefined,
+    webhook_url_type: "both",
+  });
+
+  const { ResendWebIsLoading, ResendWebMutate } =
+    useCreateSendWithdrawWebhook(webhookBody);
   const {
     WithdrawalsTotal,
     isWithdrawalsTotalFetching,
@@ -190,14 +208,14 @@ export const UndeliveredWithdrawals = () => {
             ]}
           />
         </Grid>
-        <Grid item xs={12} md={4} lg={4}>
+        <Grid item xs={12} md={3} lg={3}>
           <Search
             query={query}
             setQuery={setQuery}
             searchOption={searchOption}
           />
         </Grid>
-        <Grid item xs={12} md={3} lg={3}>
+        <Grid item xs={12} md={2} lg={2}>
           <Button
             size="large"
             type="dashed"
@@ -218,6 +236,29 @@ export const UndeliveredWithdrawals = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
+
+        {permissions.report.withdraw.undelivered_withdraw
+          .report_withdraw_undelivered_withdraw_resend_notification && (
+          <Grid item xs={12} md={"auto"} lg={2}>
+            <Button
+              disabled={witrawalsRows?.items.length === 0 || witrawalsRowsError}
+              type="primary"
+              loading={isWithdrawalsTotalFetching || ResendWebIsLoading}
+              size="large"
+              onClick={() => {
+                setIsResendWebhookModalOpen(true);
+              }}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "100%",
+              }}
+            >
+              {t("modal.resend_webhook")}
+            </Button>
+          </Grid>
+        )}
         {permissions.report.withdraw.undelivered_withdraw
           .report_withdraw_undelivered_withdraw_export_csv && (
           <Grid item xs={12} md="auto" lg={2}>
@@ -235,7 +276,6 @@ export const UndeliveredWithdrawals = () => {
 
       <Grid container style={{ marginTop: "15px" }}>
         <Grid item xs={12}>
-          {" "}
           <CustomTable
             query={query}
             setCurrentItem={setCurrentItem}
@@ -254,6 +294,20 @@ export const UndeliveredWithdrawals = () => {
                 label: "details",
                 icon: <EyeFilled style={{ fontSize: "18px" }} />,
                 onClick: () => setIsViewModalOpen(true),
+              },
+              permissions.report.withdraw.undelivered_withdraw
+                .report_withdraw_undelivered_withdraw_resend_notification && {
+                label: "resend_webhook",
+                icon: <SendOutlined style={{ fontSize: "18px" }} />,
+                onClick: (item) => {
+                  setWebhookBody((state) => ({
+                    ...state,
+                    end_date: undefined,
+                    start_date: undefined,
+                  }));
+                  setWebhookId(item?._id);
+                  setIsResendWebhookModalOpen(true);
+                },
               },
             ]}
             removeTotal
@@ -320,6 +374,18 @@ export const UndeliveredWithdrawals = () => {
           startDateKeyName="initial_date"
           endDateKeyName="final_date"
           initialQuery={INITIAL_QUERY}
+        />
+      )}
+
+      {isResendWebhookModalOpen && (
+        <ResendWebhookModal
+          open={isResendWebhookModalOpen}
+          setOpen={setIsResendWebhookModalOpen}
+          body={webhookBody}
+          setBody={setWebhookBody}
+          submit={ResendWebMutate}
+          id={webhookId}
+          setId={setWebhookId}
         />
       )}
     </Grid>

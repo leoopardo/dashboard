@@ -749,7 +749,8 @@
     "pay_to_merchant": "Pagar empresa",
     "refresh": "Refresh status",
     "edit_merchant": "Edit merchant",
-    "check_payments": "Checar pagamentos"
+    "check_payments": "Checar pagamentos",
+    "resend_webhook": "Reenviar webhook"
   },
   "error": {
     "400": "Nenhum dado encontrado.",

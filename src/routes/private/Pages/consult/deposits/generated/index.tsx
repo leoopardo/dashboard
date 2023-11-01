@@ -19,7 +19,7 @@ import { ResendWebhookBody } from "@src/services/types/consult/deposits/createRe
 import { ValidateInterface } from "@src/services/types/validate.interface";
 import { Button, Col, Row, Select, Space } from "antd";
 import moment from "moment";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import {
@@ -69,8 +69,6 @@ export const GeneratedDeposits = () => {
     refetchDepositsTotalRows,
   } = useGetRowsGeneratedDeposits(query);
 
-
-
   useEffect(() => {
     refetchDepositsTotalRows();
   }, [query]);
@@ -80,7 +78,7 @@ export const GeneratedDeposits = () => {
   const [isResendWebhookModalOpen, setIsResendWebhookModalOpen] =
     useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<any>();
-  console.log({currentItem})
+  console.log({ currentItem });
   const [searchOption, setSearchOption] = useState<string | undefined>(
     undefined
   );
@@ -100,12 +98,7 @@ export const GeneratedDeposits = () => {
     comma_separate_value: isComma,
   });
 
-  const {
-    checkPaymentError,
-    checkPaymentSuccess,
-    isCheckPaymentFetching,
-    refetchCheckPayment,
-  } = useCheckPayment({txid: currentItem?.txid});
+  const { refetchCheckPayment } = useCheckPayment({ txid: currentItem?.txid });
   const { fields } = useGetDepositReportFields();
 
   const [webhookBody, setWebhookBody] = useState<ResendWebhookBody>({

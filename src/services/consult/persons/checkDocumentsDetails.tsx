@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { CheckCpf } from "@src/services/types/consult/persons/checkDocument.interface";
+import { CheckCpfDetails } from "@src/services/types/consult/persons/checkDocument.interface";
 import { useQuery } from "react-query";
 import { api } from "../../../config/api";
 
-export function useGetCheckCpf(cpf?: string) {
-  const { data, isFetching, error, refetch, isSuccess } = useQuery<
-    CheckCpf | null | undefined
+export function useGetCheckCpfDetails(cpf?: string) {
+  const { data, isFetching, error, refetch } = useQuery<
+  CheckCpfDetails | null | undefined
   >(
-    "CheckCpf",
+    "BlacklistPersonDetails",
     async () => {
-      const response = await api.get(`customer/check_cpf/${cpf}`, {});
+      const response = await api.get(`blacklist/merchant-black-list`, {params: {cpf: cpf}});
       return response.data;
     },
     {
@@ -22,11 +22,9 @@ export function useGetCheckCpf(cpf?: string) {
   const CheckCpfData = data;
   const isCheckCpfDataFetching = isFetching;
   const CheckCpfDataError: any = error;
-  const CheckCpfDataSuccess: any = isSuccess;
   const refetchCheckCpfData = refetch;
   return {
     CheckCpfData,
-    CheckCpfDataSuccess,
     isCheckCpfDataFetching,
     CheckCpfDataError,
     refetchCheckCpfData,
