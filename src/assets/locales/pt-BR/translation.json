@@ -183,7 +183,7 @@
     "refund": "reembolsar",
     "deleted": "Deletado",
     "delete": "Deletar",
-    "checked": "Dhecado",
+    "checked": "Checado",
     "check": "Checar",
     "validated": "Validado",
     "validate": "validar",
@@ -735,7 +735,8 @@
     "operations_value": "Valor de operações",
     "category_id": "Categoria",
     "refetch_data": "Recarregar dados",
-    "reference_day": "Data de referência"
+    "reference_day": "Data de referência",
+    "invalid": "Inválido"
   },
   "actions": {
     "details": "Detalhes",

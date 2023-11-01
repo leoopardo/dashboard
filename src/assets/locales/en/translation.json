@@ -730,7 +730,8 @@
     "operations_value": "Operations value",
     "category_id": "Category",
     "refetch_data": "Reload data",
-    "reference_day": "Reference day"
+    "reference_day": "Reference day",
+    "invalid": "Invalid"
   },
   "actions": {
     "details": "Details",
