@@ -1,8 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import {
+  CopyOutlined,
+  DownloadOutlined,
+  FilePdfOutlined,
+} from "@ant-design/icons";
 import { Grid } from "@mui/material";
+import { useCreateWithdrawVoucherRefund } from "@src/services/consult/withdrawals/generatedWithdrawals/generateWithdrawVoucher";
 import { useGetWithdraw } from "@src/services/consult/withdrawals/generatedWithdrawals/getWithdraw";
-import { Descriptions, Drawer, Segmented, Spin } from "antd";
+import { Button, Descriptions, Drawer, Segmented, Spin } from "antd";
 import { Dispatch, SetStateAction, useState } from "react";
+import CopyToClipboard from "react-copy-to-clipboard";
+import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 
 interface ViewModalProps {
@@ -19,6 +27,8 @@ export const ViewModal = (props: ViewModalProps) => {
 
   const { withdraw, isWithdrawFetching } = useGetWithdraw(props.id);
   const [currOption, setCurrOption] = useState<any>("transaction");
+  const { mutateWithdrawVoucher, isWithdrawVoucherLoading } =
+    useCreateWithdrawVoucherRefund(props.id);
 
   return (
     <Drawer
@@ -64,98 +74,321 @@ export const ViewModal = (props: ViewModalProps) => {
         {withdraw && (
           <Grid xs={12}>
             <Descriptions bordered style={{ margin: 0, padding: 0 }} column={1}>
-              {currOption === "transaction" &&
-                Object.keys(withdraw).map((key: string) => {
-                  switch (key) {
-                    case "createdAt":
-                    case "paid_at":
-                    case "delivered_at":
-                      return (
-                        <Descriptions.Item
-                          key={key}
-                          label={t(`table.${key}`)}
-                          labelStyle={{
-                            maxWidth: "120px !important",
-                            margin: 0,
-                            padding: 0,
-                            textAlign: "center",
-                          }}
+              {
+                currOption === "transaction" && (
+                  <>
+                    <Descriptions.Item
+                      key={"id"}
+                      label={t(`table.id`)}
+                      labelStyle={{
+                        maxWidth: "120px !important",
+                        margin: 0,
+                        padding: 0,
+                        textAlign: "center",
+                      }}
+                    >
+                      {`${withdraw?._id?.substring(0, 15)}...` ?? "-"}
+                      <CopyToClipboard text={withdraw?._id}>
+                        <Button
+                          size="large"
+                          type="ghost"
+                          onClick={() => toast.success(t("table.copied"))}
                         >
-                          {`${new Date(
-                            withdraw[key]
-                          ).toLocaleDateString()} ${new Date(
-                            withdraw[key]
-                          ).toLocaleTimeString()}`}
-                        </Descriptions.Item>
-                      );
-                    case "_id":
-                    case "merchant_name":
-                    case "bank":
-                    case "endToEndId":
-                    case "reference_id":
-                    case "description":
-                    case "webhook_url":
-                    case "receiver_name":
-                    case "webhook_url_optional":
-                      return (
-                        withdraw[key] !== "N/A" && (
-                          <Descriptions.Item
-                            key={key}
-                            label={t(`table.${key}`)}
-                            labelStyle={{
-                              maxWidth: "120px !important",
-                              margin: 0,
-                              padding: 0,
-                              textAlign: "center",
-                            }}
+                          <CopyOutlined />
+                        </Button>
+                      </CopyToClipboard>
+                    </Descriptions.Item>
+                    <Descriptions.Item
+                      key={"endToEndId"}
+                      label={t(`table.endToEndId`)}
+                      labelStyle={{
+                        maxWidth: "120px !important",
+                        margin: 0,
+                        padding: 0,
+                        textAlign: "center",
+                      }}
+                    >
+                      {withdraw?.endToEndId
+                        ? `${withdraw?.endToEndId?.substring(0, 15)}...`
+                        : "-"}
+                      {withdraw?.endToEndId && (
+                        <CopyToClipboard text={withdraw?.endToEndId}>
+                          <Button
+                            size="large"
+                            type="ghost"
+                            onClick={() => toast.success(t("table.copied"))}
                           >
-                            {withdraw[key]}
-                          </Descriptions.Item>
-                        )
-                      );
-                    case "receiver_document":
-                      return (
-                        <Descriptions.Item
-                          key={key}
-                          label={t(`table.${key}`)}
-                          labelStyle={{
-                            maxWidth: "120px !important",
-                            margin: 0,
-                            padding: 0,
-                            textAlign: "center",
-                          }}
-                        >
-                          {`${withdraw[key]}`.replace(
-                            /(\d{3})(\d{3})(\d{3})(\d{2})/,
-                            "$1.$2.$3-$4"
-                          )}
-                        </Descriptions.Item>
-                      );
+                            <CopyOutlined />
+                          </Button>
+                        </CopyToClipboard>
+                      )}
+                    </Descriptions.Item>
+                    <Descriptions.Item
+                      key={"payment_id"}
+                      label={t(`table.payment_id`)}
+                      labelStyle={{
+                        maxWidth: "120px !important",
+                        margin: 0,
+                        padding: 0,
+                        textAlign: "center",
+                      }}
+                    >
+                      {withdraw?.payment_id
+                        ? `${withdraw?.payment_id?.substring(0, 15)}...`
+                        : "-"}
+                      {withdraw?.payment_id && (
+                        <CopyToClipboard text={withdraw?.payment_id}>
+                          <Button
+                            size="large"
+                            type="ghost"
+                            onClick={() => toast.success(t("table.copied"))}
+                          >
+                            <CopyOutlined />
+                          </Button>
+                        </CopyToClipboard>
+                      )}
+                    </Descriptions.Item>
+                    <Descriptions.Item
+                      key={"bank"}
+                      label={t(`table.bank`)}
+                      labelStyle={{
+                        maxWidth: "120px !important",
+                        margin: 0,
+                        padding: 0,
+                        textAlign: "center",
+                      }}
+                    >
+                      {withdraw?.bank ?? "-"}
+                    </Descriptions.Item>
+                    <Descriptions.Item
+                      key={"value"}
+                      label={t(`table.value`)}
+                      labelStyle={{
+                        maxWidth: "120px !important",
+                        margin: 0,
+                        padding: 0,
+                        textAlign: "center",
+                      }}
+                    >
+                      {new Intl.NumberFormat("pt-BR", {
+                        style: "currency",
+                        currency: "BRL",
+                      }).format(Number(withdraw?.value) || 0)}
+                    </Descriptions.Item>
 
-                    case "value":
-                      return (
-                        <Descriptions.Item
-                          key={key}
-                          label={t(`table.${key}`)}
-                          labelStyle={{
-                            maxWidth: "120px !important",
-                            margin: 0,
-                            padding: 0,
-                            textAlign: "center",
-                          }}
+                    <Descriptions.Item
+                      key={"pix_key"}
+                      label={t(`table.pix_key`)}
+                      labelStyle={{
+                        maxWidth: "120px !important",
+                        margin: 0,
+                        padding: 0,
+                        textAlign: "center",
+                      }}
+                    >
+                      {withdraw?.pix_key ?? "-"}
+                    </Descriptions.Item>
+                    <Descriptions.Item
+                      key={"description"}
+                      label={t(`table.description`)}
+                      labelStyle={{
+                        maxWidth: "120px !important",
+                        margin: 0,
+                        padding: 0,
+                        textAlign: "center",
+                      }}
+                    >
+                      {withdraw?.description ?? "-"}
+                    </Descriptions.Item>
+                    <Descriptions.Item
+                      key={"webhook_url"}
+                      label={t(`table.webhook_url`)}
+                      labelStyle={{
+                        maxWidth: "120px !important",
+                        margin: 0,
+                        padding: 0,
+                        textAlign: "center",
+                      }}
+                    >
+                      {withdraw?.webhook_url
+                        ? `${withdraw?.webhook_url?.substring(0, 15)}...`
+                        : "-"}
+                      {withdraw?.webhook_url && (
+                        <CopyToClipboard text={withdraw?.webhook_url}>
+                          <Button
+                            size="large"
+                            type="ghost"
+                            onClick={() => toast.success(t("table.copied"))}
+                          >
+                            <CopyOutlined />
+                          </Button>
+                        </CopyToClipboard>
+                      )}
+                    </Descriptions.Item>
+                    <Descriptions.Item
+                      key={"webhook_url_optional"}
+                      label={t(`table.webhook_url_optional`)}
+                      labelStyle={{
+                        maxWidth: "120px !important",
+                        margin: 0,
+                        padding: 0,
+                        textAlign: "center",
+                      }}
+                    >
+                      {withdraw?.webhook_url_optional
+                        ? `${withdraw?.webhook_url_optional?.substring(
+                            0,
+                            15
+                          )}...`
+                        : "-"}
+                      {withdraw?.webhook_url_optional && (
+                        <CopyToClipboard text={withdraw?.webhook_url_optional}>
+                          <Button
+                            size="large"
+                            type="ghost"
+                            onClick={() => toast.success(t("table.copied"))}
+                          >
+                            <CopyOutlined />
+                          </Button>
+                        </CopyToClipboard>
+                      )}
+                    </Descriptions.Item>
+                    {!withdraw?.url_pdf ? (
+                      <Descriptions.Item
+                        key={"generate_payment_voucher"}
+                        label={t(`table.generate_payment_voucher`)}
+                        labelStyle={{
+                          maxWidth: "120px !important",
+                          margin: 0,
+                          padding: 0,
+                          textAlign: "center",
+                        }}
+                      >
+                        <Button
+                          type="dashed"
+                          onClick={() => mutateWithdrawVoucher()}
+                          loading={isWithdrawVoucherLoading}
                         >
-                          {" "}
-                          {new Intl.NumberFormat("pt-BR", {
-                            style: "currency",
-                            currency: "BRL",
-                          }).format(Number(withdraw[key]) || 0)}
-                        </Descriptions.Item>
-                      );
+                          <FilePdfOutlined />
+                          {t(`table.generate_payment_voucher`)}
+                        </Button>
+                      </Descriptions.Item>
+                    ) : (
+                      <Descriptions.Item
+                        key={"download_payment_voucher"}
+                        label={t(`table.download_payment_voucher`)}
+                        labelStyle={{
+                          maxWidth: "120px !important",
+                          margin: 0,
+                          padding: 0,
+                          textAlign: "center",
+                        }}
+                      >
+                        <Button
+                          onClick={() => {
+                            window.location.assign(withdraw?.url_pdf);
+                          }}
+                          type="primary"
+                        >
+                          <DownloadOutlined />
+                          {t(`table.download_payment_voucher`)}
+                        </Button>
+                      </Descriptions.Item>
+                    )}
+                  </>
+                )
+                // Object.keys(withdraw).map((key: string) => {
+                //   switch (key) {
+                //     case "createdAt":
+                //     case "paid_at":
+                //     case "delivered_at":
+                //       return (
+                //         <Descriptions.Item
+                //           key={key}
+                //           label={t(`table.${key}`)}
+                //           labelStyle={{
+                //             maxWidth: "120px !important",
+                //             margin: 0,
+                //             padding: 0,
+                //             textAlign: "center",
+                //           }}
+                //         >
+                //           {`${new Date(
+                //             withdraw[key]
+                //           ).toLocaleDateString()} ${new Date(
+                //             withdraw[key]
+                //           ).toLocaleTimeString()}`}
+                //         </Descriptions.Item>
+                //       );
+                //     case "_id":
+                //     case "merchant_name":
+                //     case "bank":
+                //     case "endToEndId":
+                //     case "reference_id":
+                //     case "description":
+                //     case "webhook_url":
+                //     case "receiver_name":
+                //     case "webhook_url_optional":
+                //       return (
+                //         withdraw[key] !== "N/A" && (
+                //           <Descriptions.Item
+                //             key={key}
+                //             label={t(`table.${key}`)}
+                //             labelStyle={{
+                //               maxWidth: "120px !important",
+                //               margin: 0,
+                //               padding: 0,
+                //               textAlign: "center",
+                //             }}
+                //           >
+                //             {withdraw[key]}
+                //           </Descriptions.Item>
+                //         )
+                //       );
+                //     case "receiver_document":
+                //       return (
+                //         <Descriptions.Item
+                //           key={key}
+                //           label={t(`table.${key}`)}
+                //           labelStyle={{
+                //             maxWidth: "120px !important",
+                //             margin: 0,
+                //             padding: 0,
+                //             textAlign: "center",
+                //           }}
+                //         >
+                //           {`${withdraw[key]}`.replace(
+                //             /(\d{3})(\d{3})(\d{3})(\d{2})/,
+                //             "$1.$2.$3-$4"
+                //           )}
+                //         </Descriptions.Item>
+                //       );
 
-                    default:
-                      return;
-                  }
-                })}
+                //     case "value":
+                //       return (
+                //         <Descriptions.Item
+                //           key={key}
+                //           label={t(`table.${key}`)}
+                //           labelStyle={{
+                //             maxWidth: "120px !important",
+                //             margin: 0,
+                //             padding: 0,
+                //             textAlign: "center",
+                //           }}
+                //         >
+                //           {" "}
+                //           {new Intl.NumberFormat("pt-BR", {
+                //             style: "currency",
+                //             currency: "BRL",
+                //           }).format(Number(withdraw[key]) || 0)}
+                //         </Descriptions.Item>
+                //       );
+
+                //     default:
+                //       return;
+                //   }
+                // })
+              }
               {currOption === "receiver" &&
                 Object.keys(withdraw).map((key: string) => {
                   switch (key) {

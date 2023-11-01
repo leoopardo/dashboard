@@ -667,9 +667,7 @@ export const CustomTable = (props: TableProps) => {
                         let disable = false;
 
                         if (action.disabled) {
-                          action.disabled(record)
-                            ? (disable = true)
-                            : (disable = false);
+                          disable = action.disabled(record);
                         }
 
                         return {

@@ -107,7 +107,7 @@ export const RefundDepositsManual = () => {
   const { isDeleteLoading, mutateDelete } = useDeletePixManualRefund(
     currentItem?._id
   );
-  const { refetchRefundStatusManual } = useGetRefundStatusManual(
+  const { refetchRefundStatusManual, isRefundStatusManualFetching } = useGetRefundStatusManual(
     currentItem?._id
   );
 
@@ -119,15 +119,17 @@ export const RefundDepositsManual = () => {
   } = useUpdateMerchantRefund(updateBody);
 
   const columns: ColumnInterface[] = [
-    { name: "pix_id", type: "id" },
+    { name: "_id", type: "id" },
     { name: "endToEndId", type: "id" },
+    { name: "rtrId", head: "refund_id", type: "id" },
+    { name: "bank", type: "bankNameToIcon" },
     { name: "merchant_name", type: "text" },
     { name: "value", type: "value" },
+    { name: "payer_name", type: "text" },
+    { name: "payer_document", type: "document" },
     { name: "createdAt", type: "date" },
-    { name: "delivered_at", type: "date" },
-    { name: "buyer_name", type: "text" },
-    { name: "buyer_document", type: "document" },
-    { name: "status", type: "document" },
+    { name: "refund_date", type: "date" },
+    { name: "status", type: "status" },
   ];
 
   return (
@@ -263,7 +265,7 @@ export const RefundDepositsManual = () => {
             data={refundDepositsManual}
             items={refundDepositsManual?.items}
             columns={columns}
-            loading={isRefundDepositsManualFetching}
+            loading={isRefundDepositsManualFetching || isRefundStatusManualFetching}
             error={refundDepositsManualError}
             refetch={() => {
               refetchRefundDepositsManual();
@@ -281,8 +283,8 @@ export const RefundDepositsManual = () => {
                 onClick: () => refetchRefundStatusManual(),
                 disabled: (item) =>
                   !permissions?.report?.chargeback?.manual_deposit_chargeback
-                    ?.report_chargeback_manual_deposit_chargeback_validate_status &&
-                  !["PROCESSING"].includes(item?.status),
+                    ?.report_chargeback_manual_deposit_chargeback_validate_status ||
+                  item.status !== "PROCESSING",
               },
               {
                 label: "refund",
@@ -290,8 +292,8 @@ export const RefundDepositsManual = () => {
                 onClick: () => setIsRefundModalOpen(true),
                 disabled: (item) =>
                   !permissions?.report?.chargeback?.manual_deposit_chargeback
-                    ?.report_chargeback_manual_deposit_chargeback_refund &&
-                  !item?.merchant_id &&
+                    ?.report_chargeback_manual_deposit_chargeback_refund ||
+                  !item?.merchant_id ||
                   !["WAITING", "ERROR"].includes(item?.status),
               },
               {
@@ -300,14 +302,14 @@ export const RefundDepositsManual = () => {
                 onClick: () => setIsPayMerchantModalOpen(true),
                 disabled: (item) =>
                   !permissions?.report?.chargeback?.manual_deposit_chargeback
-                    ?.report_chargeback_manual_deposit_chargeback_paid_to_merchant &&
-                  !item?.merchant_id &&
+                    ?.report_chargeback_manual_deposit_chargeback_paid_to_merchant ||
+                  !item?.merchant_id ||
                   !["WAITING", "ERROR"].includes(item?.status),
               },
               {
                 label: "edit_merchant",
                 icon: <EditOutlined style={{ fontSize: "18px" }} />,
-                onClick: () => setIsPayMerchantModalOpen(true),
+                onClick: () => setIsUpdateMerchantModalOpen(true),
                 disabled: () =>
                   !permissions?.report?.chargeback?.manual_deposit_chargeback
                     ?.report_chargeback_manual_deposit_chargeback_update_merchant,
@@ -318,7 +320,7 @@ export const RefundDepositsManual = () => {
                 onClick: () => setIsPayMerchantModalOpen(true),
                 disabled: (item) =>
                   !permissions?.report?.chargeback?.manual_deposit_chargeback
-                    ?.report_chargeback_manual_deposit_chargeback_delete &&
+                    ?.report_chargeback_manual_deposit_chargeback_delete ||
                   !["WAITING", "ERROR"].includes(item?.status),
               },
             ]}
@@ -392,7 +394,7 @@ export const RefundDepositsManual = () => {
           fields={[{ label: "merchant_id", required: true }]}
           body={updateBody}
           setBody={setUpdateBody}
-          modalName={t("modal.update_aggregator")}
+          modalName={t("modal.update_merchant")}
           submit={mutateUpdateMerchant}
           submitLoading={isUpdateMerchantLoading}
           error={UpdateMerchantError}

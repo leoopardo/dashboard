@@ -1,12 +1,29 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import {
+  CopyOutlined,
+  DownloadOutlined,
+  FilePdfOutlined,
+} from "@ant-design/icons";
 import { Grid } from "@mui/material";
+import { Toast } from "@src/components/Toast";
 import { useGetRowsGeneratedDeposits } from "@src/services/consult/deposits/generatedDeposits/getRows";
 import { useGetRefund } from "@src/services/consult/refund/refundDeposits/getRefund";
+import { useCreatePaymentVoucherRefund } from "@src/services/consult/refund/refundDepositsManual/generatePaymentVoucher";
+import { useGetRefundManualOne } from "@src/services/consult/refund/refundDepositsManual/getRefund";
 import { useGetRefundWithdrawOne } from "@src/services/consult/refund/refundWithdrawals/getRefund";
 import { defaultTheme } from "@src/styles/defaultTheme";
-import { Descriptions, Drawer, Segmented, Spin, Typography } from "antd";
+import {
+  Button,
+  Descriptions,
+  Drawer,
+  Segmented,
+  Spin,
+  Typography,
+} from "antd";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import CopyToClipboard from "react-copy-to-clipboard";
+import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 
 interface ViewModalProps {
@@ -24,6 +41,13 @@ export const ViewModal = (props: ViewModalProps) => {
 
   const { Refund, isRefundFetching } = useGetRefund(props?.item?._id);
   const { RefundWithdraw } = useGetRefundWithdrawOne(props?.item?._id);
+  const { RefundManual } = useGetRefundManualOne(props?.item?.endToEndId);
+  const {
+    mutatePaymentVoucher,
+    isPaymentVoucherLoading,
+    PaymentVoucherError,
+    isPaymentVoucherSuccess,
+  } = useCreatePaymentVoucherRefund(props?.item?.endToEndId);
   const [currOption, setCurrOption] = useState<any>("transaction");
   const { depositsRows, refetchDepositsTotalRows } =
     useGetRowsGeneratedDeposits({
@@ -52,6 +76,7 @@ export const ViewModal = (props: ViewModalProps) => {
         disabled: !depositsRows?.items[0],
       },
     ],
+    manual: [{ label: t("table.transaction"), value: "transaction" }],
   };
 
   return (
@@ -78,121 +103,382 @@ export const ViewModal = (props: ViewModalProps) => {
         {isRefundFetching && <Spin />}{" "}
         {props.type === "Refund" && Refund && (
           <Grid xs={12}>
+            {currOption === "transaction" && (
+              <Descriptions
+                bordered
+                style={{ margin: 0, padding: 0 }}
+                column={1}
+              >
+                <Descriptions.Item
+                  key={"bank"}
+                  label={t(`table.bank`)}
+                  labelStyle={{
+                    maxWidth: "120px !important",
+                    margin: 0,
+                    padding: 0,
+                    textAlign: "center",
+                  }}
+                >
+                  {Refund?.bank ?? "-"}
+                </Descriptions.Item>
+                <Descriptions.Item
+                  key={"endToEndId"}
+                  label={t(`table.endToEndId`)}
+                  labelStyle={{
+                    maxWidth: "120px !important",
+                    margin: 0,
+                    padding: 0,
+                    textAlign: "center",
+                  }}
+                >
+                  {`${Refund?.endToEndId.substring(0, 10)}...` ?? "-"}
+                  <CopyToClipboard text={Refund?.endToEndId}>
+                    <Button
+                      size="large"
+                      type="ghost"
+                      onClick={() => toast.success(t("table.copied"))}
+                    >
+                      <CopyOutlined />
+                    </Button>
+                  </CopyToClipboard>
+                </Descriptions.Item>
+                <Descriptions.Item
+                  key={"rtrId"}
+                  label={t(`table.txid`)}
+                  labelStyle={{
+                    maxWidth: "120px !important",
+                    margin: 0,
+                    padding: 0,
+                    textAlign: "center",
+                  }}
+                >
+                  {`${Refund?.txid.substring(0, 10)}...` ?? "-"}
+                  <CopyToClipboard text={Refund?.txid}>
+                    <Button
+                      size="large"
+                      type="ghost"
+                      onClick={() => toast.success(t("table.copied"))}
+                    >
+                      <CopyOutlined />
+                    </Button>
+                  </CopyToClipboard>
+                </Descriptions.Item>
+                <Descriptions.Item
+                  key={"rtrId"}
+                  label={t(`table.refund_id`)}
+                  labelStyle={{
+                    maxWidth: "120px !important",
+                    margin: 0,
+                    padding: 0,
+                    textAlign: "center",
+                  }}
+                >
+                  {`${Refund?.rtrId.substring(0, 10)}...` ?? "-"}
+                  <CopyToClipboard text={Refund?.rtrId}>
+                    <Button
+                      size="large"
+                      type="ghost"
+                      onClick={() => toast.success(t("table.copied"))}
+                    >
+                      <CopyOutlined />
+                    </Button>
+                  </CopyToClipboard>
+                </Descriptions.Item>
+                <Descriptions.Item
+                  key={"payer_name"}
+                  label={t(`table.payer_name`)}
+                  labelStyle={{
+                    maxWidth: "120px !important",
+                    margin: 0,
+                    padding: 0,
+                    textAlign: "center",
+                  }}
+                >
+                  {Refund?.payer_name ?? "-"}
+                </Descriptions.Item>
+                <Descriptions.Item
+                  key={"payer_document"}
+                  label={t(`table.payer_document`)}
+                  labelStyle={{
+                    maxWidth: "120px !important",
+                    margin: 0,
+                    padding: 0,
+                    textAlign: "center",
+                  }}
+                >
+                  {Refund?.payer_document
+                    ? Refund?.payer_document.replace(
+                        /(\d{3})(\d{3})(\d{3})(\d{2})/,
+                        "$1.$2.$3-$4"
+                      )
+                    : "-"}
+                </Descriptions.Item>
+                <Descriptions.Item
+                  key={"value"}
+                  label={t(`table.value`)}
+                  labelStyle={{
+                    maxWidth: "120px !important",
+                    margin: 0,
+                    padding: 0,
+                    textAlign: "center",
+                  }}
+                >
+                  {new Intl.NumberFormat("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
+                  }).format(Number(Refund?.value) || 0)}
+                </Descriptions.Item>
+                <Descriptions.Item
+                  key={"status"}
+                  label={t(`table.status`)}
+                  labelStyle={{
+                    maxWidth: "120px !important",
+                    margin: 0,
+                    padding: 0,
+                    textAlign: "center",
+                  }}
+                >
+                  {t(`table.${Refund?.status?.toLocaleLowerCase()}`)}
+                </Descriptions.Item>
+                <Descriptions.Item
+                  key={"partner_name"}
+                  label={t(`table.partner_name`)}
+                  labelStyle={{
+                    maxWidth: "120px !important",
+                    margin: 0,
+                    padding: 0,
+                    textAlign: "center",
+                  }}
+                >
+                  {Refund?.partner_name ?? "-"}
+                </Descriptions.Item>
+                <Descriptions.Item
+                  key={"merchant_name"}
+                  label={t(`table.merchant_name`)}
+                  labelStyle={{
+                    maxWidth: "120px !important",
+                    margin: 0,
+                    padding: 0,
+                    textAlign: "center",
+                  }}
+                >
+                  {Refund?.merchant_name ?? "-"}
+                </Descriptions.Item>
+                <Descriptions.Item
+                  key={"reason"}
+                  label={t(`table.reason`)}
+                  labelStyle={{
+                    maxWidth: "120px !important",
+                    margin: 0,
+                    padding: 0,
+                    textAlign: "center",
+                  }}
+                >
+                  {Refund?.reason ?? "-"}
+                </Descriptions.Item>
+                <Descriptions.Item
+                  key={"createdAt"}
+                  label={t(`table.createdAt`)}
+                  labelStyle={{
+                    maxWidth: "120px !important",
+                    margin: 0,
+                    padding: 0,
+                    textAlign: "center",
+                  }}
+                >
+                  {`${new Date(
+                    Refund?.createdAt
+                  ).toLocaleDateString()} ${new Date(
+                    Refund?.createdAt
+                  ).toLocaleTimeString()}`}
+                </Descriptions.Item>
+                <Descriptions.Item
+                  key={"refund_date"}
+                  label={t(`table.refund_date`)}
+                  labelStyle={{
+                    maxWidth: "120px !important",
+                    margin: 0,
+                    padding: 0,
+                    textAlign: "center",
+                  }}
+                >
+                  {`${new Date(
+                    Refund?.refund_date
+                  ).toLocaleDateString()} ${new Date(
+                    Refund?.refund_date
+                  ).toLocaleTimeString()}`}
+                </Descriptions.Item>
+              </Descriptions>
+            )}
+          </Grid>
+        )}
+        {props.type === "manual" && RefundManual && (
+          <Grid xs={12}>
             <Descriptions bordered style={{ margin: 0, padding: 0 }} column={1}>
-              {currOption === "transaction" &&
-                Object.keys(Refund).map((key: string) => {
-                  switch (key) {
-                    case "createdAt":
-                      return (
-                        <Descriptions.Item
-                          key={key}
-                          label={t(`table.${key}`)}
-                          labelStyle={{
-                            maxWidth: "120px !important",
-                            margin: 0,
-                            padding: 0,
-                            textAlign: "center",
-                          }}
-                        >
-                          {`${new Date(
-                            Refund[key]
-                          ).toLocaleDateString()} ${new Date(
-                            Refund[key]
-                          ).toLocaleTimeString()}`}
-                        </Descriptions.Item>
-                      );
-                    case "_id":
-                    case "merchant_name":
-                    case "bank":
-                    case "txid":
-                    case "buyer_name":
-                    case "payer_name":
-                      return (
-                        Refund[key] !== "N/A" && (
-                          <Descriptions.Item
-                            key={key}
-                            label={t(`table.${key}`)}
-                            labelStyle={{
-                              maxWidth: "120px !important",
-                              margin: 0,
-                              padding: 0,
-                              textAlign: "center",
-                            }}
-                          >
-                            {Refund[key]}
-                          </Descriptions.Item>
-                        )
-                      );
+              <Descriptions.Item
+                key={"bank"}
+                label={t(`table.bank`)}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {RefundManual?.bank ?? "-"}
+              </Descriptions.Item>
+              <Descriptions.Item
+                key={"endToEndId"}
+                label={t(`table.endToEndId`)}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {`${RefundManual?.endToEndId.substring(0, 10)}...` ?? "-"}
+                <CopyToClipboard text={RefundManual?.endToEndId}>
+                  <Button
+                    size="large"
+                    type="ghost"
+                    onClick={() => toast.success(t("table.copied"))}
+                  >
+                    <CopyOutlined />
+                  </Button>
+                </CopyToClipboard>
+              </Descriptions.Item>
+              <Descriptions.Item
+                key={"payer_name"}
+                label={t(`table.payer_name`)}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {RefundManual?.payer_name ?? "-"}
+              </Descriptions.Item>
+              <Descriptions.Item
+                key={"payer_document"}
+                label={t(`table.payer_document`)}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {RefundManual?.payer_document
+                  ? RefundManual?.payer_document.replace(
+                      /(\d{3})(\d{3})(\d{3})(\d{2})/,
+                      "$1.$2.$3-$4"
+                    )
+                  : "-"}
+              </Descriptions.Item>
+              <Descriptions.Item
+                key={"value"}
+                label={t(`table.value`)}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {new Intl.NumberFormat("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                }).format(Number(RefundManual?.value) || 0)}
+              </Descriptions.Item>
+              <Descriptions.Item
+                key={"status"}
+                label={t(`table.status`)}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {t(`table.${RefundManual?.status?.toLocaleLowerCase()}`)}
+              </Descriptions.Item>
 
-                    case "payer_document":
-                    case "buyer_document":
-                      return (
-                        <Descriptions.Item
-                          key={key}
-                          label={t(`table.${key}`)}
-                          labelStyle={{
-                            maxWidth: "120px !important",
-                            margin: 0,
-                            padding: 0,
-                            textAlign: "center",
-                          }}
-                        >
-                          {`${Refund[key]}`.replace(
-                            /(\d{3})(\d{3})(\d{3})(\d{2})/,
-                            "$1.$2.$3-$4"
-                          )}
-                        </Descriptions.Item>
-                      );
-                    case "status":
-                      return (
-                        Refund[key] !== "N/A" && (
-                          <Descriptions.Item
-                            key={key}
-                            label={t(`table.${key}`)}
-                            labelStyle={{
-                              maxWidth: "120px !important",
-                              margin: 0,
-                              padding: 0,
-                              textAlign: "center",
-                            }}
-                          >
-                            <Typography.Title
-                              level={5}
-                              style={{
-                                color: (defaultTheme.colors as any)[
-                                  Refund[key].toLocaleLowerCase()
-                                ],
-                              }}
-                            >
-                              {t(`table.${Refund[key].toLocaleLowerCase()}`)}
-                            </Typography.Title>
-                          </Descriptions.Item>
-                        )
-                      );
-                    case "value":
-                      return (
-                        <Descriptions.Item
-                          key={key}
-                          label={t(`table.${key}`)}
-                          labelStyle={{
-                            maxWidth: "120px !important",
-                            margin: 0,
-                            padding: 0,
-                            textAlign: "center",
-                          }}
-                        >
-                          {" "}
-                          {new Intl.NumberFormat("pt-BR", {
-                            style: "currency",
-                            currency: "BRL",
-                          }).format(Number(Refund[key]) || 0)}
-                        </Descriptions.Item>
-                      );
-
-                    default:
-                      return;
-                  }
-                })}
+              <Descriptions.Item
+                key={"createdAt"}
+                label={t(`table.createdAt`)}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {`${new Date(
+                  RefundManual?.createdAt
+                ).toLocaleDateString()} ${new Date(
+                  RefundManual?.createdAt
+                ).toLocaleTimeString()}`}
+              </Descriptions.Item>
+              <Descriptions.Item
+                key={"refund_date"}
+                label={t(`table.refund_date`)}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {`${new Date(
+                  RefundManual?.refund_date
+                ).toLocaleDateString()} ${new Date(
+                  RefundManual?.refund_date
+                ).toLocaleTimeString()}`}
+              </Descriptions.Item>
+              {!RefundManual?.url_pdf ? (
+                <Descriptions.Item
+                  key={"generate_payment_voucher"}
+                  label={t(`table.generate_payment_voucher`)}
+                  labelStyle={{
+                    maxWidth: "120px !important",
+                    margin: 0,
+                    padding: 0,
+                    textAlign: "center",
+                  }}
+                >
+                  <Button
+                    type="dashed"
+                    onClick={() => mutatePaymentVoucher()}
+                    loading={isPaymentVoucherLoading}
+                  >
+                    <FilePdfOutlined />
+                    {t(`table.generate_payment_voucher`)}
+                  </Button>
+                </Descriptions.Item>
+              ) : (
+                <Descriptions.Item
+                  key={"download_payment_voucher"}
+                  label={t(`table.download_payment_voucher`)}
+                  labelStyle={{
+                    maxWidth: "120px !important",
+                    margin: 0,
+                    padding: 0,
+                    textAlign: "center",
+                  }}
+                >
+                  <Button
+                    onClick={() => {
+                      window.location.assign(RefundManual?.url_pdf);
+                    }}
+                    type="primary"
+                  >
+                    <DownloadOutlined />
+                    {t(`table.download_payment_voucher`)}
+                  </Button>
+                </Descriptions.Item>
+              )}
             </Descriptions>
           </Grid>
         )}
@@ -409,6 +695,12 @@ export const ViewModal = (props: ViewModalProps) => {
           </Grid>
         )}
       </Grid>
+      <Toast
+        actionSuccess={t("messages.generate_voucher")}
+        actionError={t("messages.generated_voucher")}
+        error={PaymentVoucherError}
+        success={isPaymentVoucherSuccess}
+      />
     </Drawer>
   );
 };

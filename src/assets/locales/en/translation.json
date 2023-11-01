@@ -166,6 +166,8 @@
     "update": "update",
     "created": "Created",
     "updated": "Updated",
+    "generate_voucher": "generate payment voucher",
+    "generated_voucher": "Payment voucher generated",
     "confirm_action_title": "{{action}} data",
     "are_you_sure": "Do you want {{action}} the {{itens}}?",
     "yes_update": "Yes, update",
@@ -370,7 +372,8 @@
     "modal_create_merchant": "Create merchant",
     "report_details": "Report details",
     "new_responsible": "New responsible",
-    "update_responsible": "Update responsible"
+    "update_responsible": "Update responsible",
+    "update_merchant": "Update Merchant"
   },
   "table": {
     "id": "ID",
@@ -729,7 +732,9 @@
     "available_balance": "Avaliable balance",
     "operations_value": "Operations value",
     "category_id": "Category",
-    "refetch_data": "Reload data"
+    "refetch_data": "Reload data",
+    "download_payment_voucher": "Download payment voucher",
+    "generate_payment_voucher": "Generate payment voucher"
   },
   "actions": {
     "details": "Details",
@@ -742,7 +747,8 @@
     "refund": "refund",
     "pay_to_merchant": "Pay merchant",
     "refresh": "Refresh status",
-    "edit_merchant": "Edit merchant"
+    "edit_merchant": "Edit merchant",
+    "resend_webhook": "Resend webhook"
   },
   "error": {
     "400": "Any records found.",

@@ -81,50 +81,55 @@ export const Dashboard = () => {
           justifyContent: "center",
         }}
       >
-        <Tabs
-          activeKey={activeKey}
-          onChange={(value) => {
-            setActiveKey(value);
-          }}
-          items={[
-            {
-              key: "1",
-              label: t("table.organization_balance"),
-              children: (
-                <Col span={24}>
-                  <OrganizationBalance />
-                </Col>
-              ),
-              style: {
-                display: !permissions?.report?.paybrokers?.balance
-                  ?.report_paybrokers_balance_list
-                  ? "none"
-                  : undefined,
+        {(permissions?.report?.paybrokers?.balance
+          ?.report_paybrokers_balance_list ||
+          permissions?.report?.merchant?.balance
+            ?.report_merchant_balance_list) && (
+          <Tabs
+            activeKey={activeKey}
+            onChange={(value) => {
+              setActiveKey(value);
+            }}
+            items={[
+              {
+                key: "1",
+                label: t("table.organization_balance"),
+                children: (
+                  <Col span={24}>
+                    <OrganizationBalance />
+                  </Col>
+                ),
+                style: {
+                  display: !permissions?.report?.paybrokers?.balance
+                    ?.report_paybrokers_balance_list
+                    ? "none"
+                    : undefined,
+                },
+                disabled:
+                  !permissions?.report?.paybrokers?.balance
+                    ?.report_paybrokers_balance_list,
               },
-              disabled:
-                !permissions?.report?.paybrokers?.balance
-                  ?.report_paybrokers_balance_list,
-            },
-            {
-              key: "2",
-              label: t("table.merchant_balance"),
-              children: (
-                <Col span={24}>
-                  <MerchantBalance />
-                </Col>
-              ),
-              style: {
-                display: !permissions?.report?.merchant?.balance
-                  ?.report_merchant_balance_list
-                  ? "none"
-                  : undefined,
+              {
+                key: "2",
+                label: t("table.merchant_balance"),
+                children: (
+                  <Col span={24}>
+                    <MerchantBalance />
+                  </Col>
+                ),
+                style: {
+                  display: !permissions?.report?.merchant?.balance
+                    ?.report_merchant_balance_list
+                    ? "none"
+                    : undefined,
+                },
+                disabled:
+                  !permissions?.report?.merchant?.balance
+                    ?.report_merchant_balance_list,
               },
-              disabled:
-                !permissions?.report?.merchant?.balance
-                  ?.report_merchant_balance_list,
-            },
-          ]}
-        />
+            ]}
+          />
+        )}
       </Layout>
 
       <Col
@@ -380,19 +385,29 @@ export const Dashboard = () => {
             description: (
               <Typography>
                 <Typography>
-                  <span style={{ color: defaultTheme.colors.info, marginRight: "5px" }}>
+                  <span
+                    style={{
+                      color: defaultTheme.colors.info,
+                      marginRight: "5px",
+                    }}
+                  >
                     Total:
                   </span>
                   {t("wiki.bank_total_description")}
                 </Typography>
                 <Typography>
-                  <span style={{ color: defaultTheme.colors.error, marginRight: "5px" }}>
+                  <span
+                    style={{
+                      color: defaultTheme.colors.error,
+                      marginRight: "5px",
+                    }}
+                  >
                     {t("table.blocked_value")}:
                   </span>
                   {t("wiki.bank_blocked_value_description")}
                 </Typography>
                 <Typography>
-                  <span style={{marginRight: "5px"}}>
+                  <span style={{ marginRight: "5px" }}>
                     <Button
                       shape="circle"
                       onClick={() => {
@@ -407,12 +422,12 @@ export const Dashboard = () => {
                   {t("wiki.bank_chart_description")}
                 </Typography>
                 <Typography>
-                  <span style={{marginRight: "5px"}}>
+                  <span style={{ marginRight: "5px" }}>
                     <Button
                       shape="circle"
                       onClick={() => {
                         setIsBankChart(false);
-                          secureLocalStorage.setItem("isBankChart", "false");
+                        secureLocalStorage.setItem("isBankChart", "false");
                       }}
                     >
                       <DashOutlined />

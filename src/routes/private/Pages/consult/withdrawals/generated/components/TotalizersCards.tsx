@@ -141,7 +141,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
           </Card>
         </Col>
       )}
-      {(props.query.status === "PENDING" || !props.query.status) && (
+      {(props.query.status === "WAITING" || !props.query.status) && (
         <Col
           style={{ maxWidth: "220px" }}
           xs={{ span: isMobile ? 10 : undefined }}
@@ -152,7 +152,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
           >
             <Statistic
               loading={props.loading}
-              title={`${t("table.pending")}: ${
+              title={`${t("table.waiting")}: ${
                 props?.data?.pending_total || 0
               }`}
               value={new Intl.NumberFormat("pt-BR", {

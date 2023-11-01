@@ -8,7 +8,7 @@ export function useGetContestDepositsUploads(params: PersonBlacklistUploadsQuery
   const { data, isFetching, error, refetch } = useQuery<
   PersonBlacklistUploadsData | null | undefined
   >("ContestDepositsUpload", async () => {
-    const response = await api.get("/reconciliation-pix/pix/bulk/e2e", {
+    const response = await api.get("/reconciliation/pix/bulk/e2e", {
       params,
     });
     return response.data;

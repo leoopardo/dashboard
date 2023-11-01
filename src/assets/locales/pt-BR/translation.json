@@ -169,6 +169,8 @@
     "update": "atualizar",
     "created": "Criado",
     "updated": "Atualizado",
+    "generate_voucher": "Comprovante de pagamento gerado",
+    "generated_voucher": "gerar comprovante de pagamento do",
     "confirm_action_title": "{{action}} dados",
     "are_you_sure": "Deseja {{action}} {{itens}}?",
     "yes_update": "Sim, atualizar",
@@ -271,7 +273,8 @@
     "modal_create_merchant": "Criar empresa",
     "report_details": "Detalhes do relatório",
     "new_responsible": "Novo responsável",
-    "update_responsible": "Editar responsável"
+    "update_responsible": "Editar responsável",
+    "update_merchant": "Editar empresa"
   },
   "input": {
     "required": "Por favor, insira o {{field}}",
@@ -455,7 +458,7 @@
     "pix_id": "Pix ID",
     "page": "Página",
     "limit": "Limite",
-    "pending": "Pendente",
+    "pending": "Aguardando",
     "paid_to_merchant": "Pago para empresa",
     "error": "Erro",
     "success": "Sucesso",
@@ -734,7 +737,9 @@
     "available_balance": "Saldo disponível",
     "operations_value": "Valor de operações",
     "category_id": "Categoria",
-    "refetch_data": "Recarregar dados"
+    "refetch_data": "Recarregar dados",
+    "download_payment_voucher": "Baixar comprovante",
+    "generate_payment_voucher": "Gerar comprovante"
   },
   "actions": {
     "details": "Detalhes",
@@ -746,8 +751,9 @@
     "download": "Baixar",
     "refund": "Reembolsar",
     "pay_to_merchant": "Pagar empresa",
-    "refresh": "Refresh status",
-    "edit_merchant": "Edit merchant"
+    "refresh": "Atualizar status",
+    "edit_merchant": "Editar empresa",
+    "resend_webhook": "Reenviar webhook"
   },
   "error": {
     "400": "Nenhum dado encontrado.",
