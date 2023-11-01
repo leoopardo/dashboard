@@ -32,6 +32,7 @@ export const BankBlacklist = () => {
     page: 1,
   };
   const [query, setQuery] = useState<BankBlacklistQuery>(INITIAL_QUERY);
+  const { t } = useTranslation();
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [isCreateOpen, setIsCreateOpen] = useState<boolean>(false);
   const [searchOption, setSearchOption] = useState<string | undefined>(
@@ -45,7 +46,6 @@ export const BankBlacklist = () => {
     bank_name: "",
     ispb: "",
   });
-  const { t } = useTranslation();
   const {
     BankBlacklist,
     BankBlacklistError,

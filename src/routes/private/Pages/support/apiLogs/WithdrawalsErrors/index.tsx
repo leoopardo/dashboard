@@ -14,12 +14,13 @@ import {
   DepositLogsItem,
   DepositsLogsStepsTotalQuery,
 } from "@src/services/types/support/apiLogs/depositsError.interface";
-import { Avatar, Button, Card, Col, Row, Statistic } from "antd";
+import { Avatar, Button, Card, Col, Row, Statistic, Select } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { LogDetailsModal } from "../components/LogDetailsModal";
 import { LogsColors } from "../utils/logsColors";
+import { Search } from "@src/components/Inputs/search";
 
 export const WithdrawalsErrors = () => {
   const INITIAL_QUERY: DepositsLogsStepsTotalQuery = {
@@ -33,13 +34,15 @@ export const WithdrawalsErrors = () => {
       .startOf("day")
       .format("YYYY-MM-DDTHH:mm:ss.SSS"),
   };
+  const { t } = useTranslation();
   const [query, setQuery] =
     useState<DepositsLogsStepsTotalQuery>(INITIAL_QUERY);
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [currentItem, setCurrentItem] = useState<DepositLogsItem | null>(null);
   const [isDetailsOpen, setIsDetailsOpen] = useState<boolean>(false);
-
-  const { t } = useTranslation();
+  const [searchOption, setSearchOption] = useState<string | undefined>(
+    undefined
+  );
 
   const { LogsSteps, refetchLogsSteps } = useGetWithdrawLogsSteps(query);
 
@@ -81,7 +84,7 @@ export const WithdrawalsErrors = () => {
           align="middle"
         >
           {WithdrawalsErrorsTotal?.map((error) => (
-            <Col >
+            <Col>
               <Card bordered={false}>
                 <Statistic
                   loading={isWithdrawalsErrorsTotalFetching}
@@ -159,6 +162,33 @@ export const WithdrawalsErrors = () => {
         </Grid>
       </Grid>
 
+      <Grid container style={{ marginTop: "5px" }} spacing={1}>
+        <Grid item xs={12} md={2} lg={2}>
+          <Select
+            style={{ width: "100%" }}
+            size="large"
+            onChange={(value) => {
+              setSearchOption(value);
+            }}
+            value={searchOption}
+            placeholder={t("input.options")}
+            options={[
+              { value: "ip", label: t("table.ip") },
+              { value: "document", label: t("table.document") },
+              { value: "description", label: t("table.description") },
+              { value: "reference_id", label: t("table.reference_id") },
+            ]}
+          />
+        </Grid>
+        <Grid item xs={12} md={3} lg={4}>
+          <Search
+            query={query}
+            setQuery={setQuery}
+            searchOption={searchOption}
+          />
+        </Grid>
+      </Grid>
+
       <Grid container style={{ marginTop: "15px" }}>
         <Grid item xs={12}>
           <CustomTable
@@ -200,7 +230,15 @@ export const WithdrawalsErrors = () => {
           query={query}
           setQuery={setQuery}
           haveInitialDate
-          filters={["start_date", "end_date", "step"]}
+          filters={[
+            "start_date",
+            "end_date",
+            "partner_id",
+            "merchant_id",
+            "aggregator_id",
+            "operator_id",
+            "step",
+          ]}
           refetch={refetchWithdrawalsErrorsTotal}
           selectOptions={{ step: LogsSteps?.map((step) => step.step) }}
           startDateKeyName="start_date"
