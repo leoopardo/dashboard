@@ -16,6 +16,7 @@ import { Button, Empty, Table, TableColumnsType } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
+import { formatFilterDate } from "@src/utils/formatDate";
 import { MerchantHistoryLineChart } from "./components/MerchantHistoryLineChart";
 
 export const MerchantHistory = () => {
@@ -47,10 +48,10 @@ export const MerchantHistory = () => {
 
   const columns: TableColumnsType<MerchantHistoryItem> = [
     {
-      title: t("table.created_at"),
-      dataIndex: "createdAt",
-      key: "createdAt",
-      render: (value) => new Date(value ?? "").toLocaleDateString(),
+      title: t("table.reference_day"),
+      dataIndex: "reference_day",
+      key: "reference_day",
+      render: (value) => formatFilterDate(value),
     },
     {
       title: t("table.balance_to_transactions"),

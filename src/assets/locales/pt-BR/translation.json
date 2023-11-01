@@ -734,7 +734,8 @@
     "available_balance": "Saldo disponível",
     "operations_value": "Valor de operações",
     "category_id": "Categoria",
-    "refetch_data": "Recarregar dados"
+    "refetch_data": "Recarregar dados",
+    "reference_day": "Data de referência"
 
   },
   "actions": {
@@ -748,7 +749,8 @@
     "refund": "Reembolsar",
     "pay_to_merchant": "Pagar empresa",
     "refresh": "Refresh status",
-    "edit_merchant": "Edit merchant"
+    "edit_merchant": "Edit merchant",
+    "check_payments": "Checar pagamentos"
   },
   "error": {
     "400": "Nenhum dado encontrado.",

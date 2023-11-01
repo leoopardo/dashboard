@@ -729,7 +729,8 @@
     "available_balance": "Avaliable balance",
     "operations_value": "Operations value",
     "category_id": "Category",
-    "refetch_data": "Reload data"
+    "refetch_data": "Reload data",
+    "reference_day": "Reference day"
   },
   "actions": {
     "details": "Details",
@@ -742,7 +743,8 @@
     "refund": "refund",
     "pay_to_merchant": "Pay merchant",
     "refresh": "Refresh status",
-    "edit_merchant": "Edit merchant"
+    "edit_merchant": "Edit merchant",
+    "check_payments": "Check payments"
   },
   "error": {
     "400": "Any records found.",

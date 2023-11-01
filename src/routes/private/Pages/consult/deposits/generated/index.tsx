@@ -1,6 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { EyeFilled, FileAddOutlined, SettingFilled } from "@ant-design/icons";
+import {
+  EyeFilled,
+  FileAddOutlined,
+  SettingFilled,
+  CheckCircleOutlined,
+} from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Tooltip } from "@mui/material";
 import { Search } from "@src/components/Inputs/search";
@@ -14,7 +19,7 @@ import { ResendWebhookBody } from "@src/services/types/consult/deposits/createRe
 import { ValidateInterface } from "@src/services/types/validate.interface";
 import { Button, Col, Row, Select, Space } from "antd";
 import moment from "moment";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import {
@@ -30,6 +35,7 @@ import { ResendWebhookModal } from "../components/ResendWebhookModal";
 import { ViewModal } from "../components/ViewModal";
 import { WebhookModal } from "../components/webhooksModal";
 import { TotalizersCards } from "./components/TotalizersCards";
+import { useCheckPayment } from "@src/services/consult/deposits/generatedDeposits/checkPayment";
 
 const INITIAL_QUERY: generatedDepositTotalQuery = {
   page: 1,
@@ -63,6 +69,8 @@ export const GeneratedDeposits = () => {
     refetchDepositsTotalRows,
   } = useGetRowsGeneratedDeposits(query);
 
+
+
   useEffect(() => {
     refetchDepositsTotalRows();
   }, [query]);
@@ -72,6 +80,7 @@ export const GeneratedDeposits = () => {
   const [isResendWebhookModalOpen, setIsResendWebhookModalOpen] =
     useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<any>();
+  console.log({currentItem})
   const [searchOption, setSearchOption] = useState<string | undefined>(
     undefined
   );
@@ -91,6 +100,12 @@ export const GeneratedDeposits = () => {
     comma_separate_value: isComma,
   });
 
+  const {
+    checkPaymentError,
+    checkPaymentSuccess,
+    isCheckPaymentFetching,
+    refetchCheckPayment,
+  } = useCheckPayment({txid: currentItem?.txid});
   const { fields } = useGetDepositReportFields();
 
   const [webhookBody, setWebhookBody] = useState<ResendWebhookBody>({
@@ -117,7 +132,6 @@ export const GeneratedDeposits = () => {
     { name: "buyer_document", type: "document" },
     { name: "status", type: "status" },
   ];
-
   return (
     <Row
       gutter={[8, 8]}
@@ -175,7 +189,7 @@ export const GeneratedDeposits = () => {
         style={{ width: "100%" }}
         gutter={[8, 8]}
       >
-        <Col xs={{ span: 24 }} md={{ span: 18 }} lg={{span: 9}}>
+        <Col xs={{ span: 24 }} md={{ span: 18 }} lg={{ span: 9 }}>
           {!isMobile && (
             <Space.Compact style={{ width: "100%" }} size="large">
               <Select
@@ -292,7 +306,7 @@ export const GeneratedDeposits = () => {
         </Col>
         {permissions.report.deposit.generated_deposit
           .report_deposit_generated_deposit_resend_notification && (
-          <Col xs={{ span: 24 }} md={{ span: 8 }} lg={{span: 4}}>
+          <Col xs={{ span: 24 }} md={{ span: 8 }} lg={{ span: 4 }}>
             <Button
               type="primary"
               loading={isDepositsRowsFetching}
@@ -314,7 +328,7 @@ export const GeneratedDeposits = () => {
 
         {permissions.report.deposit.generated_deposit
           .report_deposit_generated_deposit_export_csv && (
-          <Col xs={{ span: 24 }} md={{ span: 6 }} lg={{span: 3}}>
+          <Col xs={{ span: 24 }} md={{ span: 6 }} lg={{ span: 3 }}>
             <Tooltip
               placement="top-end"
               title={
@@ -352,8 +366,8 @@ export const GeneratedDeposits = () => {
             columns={columns}
             loading={isDepositsRowsFetching}
             refetch={() => {
-              refetchDepositsTotalRows()
-              refetchDepositsTotal()
+              refetchDepositsTotalRows();
+              refetchDepositsTotal();
             }}
             actions={[
               {
@@ -365,6 +379,13 @@ export const GeneratedDeposits = () => {
                 label: "logs_webhooks",
                 icon: <SettingFilled style={{ fontSize: "18px" }} />,
                 onClick: () => setIsWebhookModalOpen(true),
+              },
+              {
+                label: "check_payments",
+                disabled: (item) =>
+                  !["WAITING", "EXPIRED"].includes(item?.status),
+                icon: <CheckCircleOutlined style={{ fontSize: "18px" }} />,
+                onClick: () => refetchCheckPayment(),
               },
             ]}
             removeTotal
