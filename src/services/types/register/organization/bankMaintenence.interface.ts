@@ -22,6 +22,7 @@ export interface BankMaintenenceItem {
   account_name?: string;
   account_document?: string;
   created_at?: string;
+  bank?: string;
 }
 export interface BankMaintenenceResponse {
   page: number;

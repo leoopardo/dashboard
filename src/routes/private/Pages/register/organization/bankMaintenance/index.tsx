@@ -1,8 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {
-  EditFilled,
-  InfoCircleOutlined,
-} from "@ant-design/icons";
+import { EditFilled, InfoCircleOutlined } from "@ant-design/icons";
 import { CustomTable } from "@components/CustomTable";
 import { Grid } from "@mui/material";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
@@ -46,11 +43,11 @@ export const BankMaintenence = () => {
     null
   );
 
-  const [updateBody, setUpdateBody] = useState<BankMaintenenceItem | null>(
-    currentItem
-  );
+  const [updateBody, setUpdateBody] = useState<BankMaintenenceItem | null>({
+    ...currentItem,
+  });
   const { updateBank, updateBankError, updateBankLoading, updateBankSuccess } =
-    useUpdateBank(updateBody, currentItem?.id);
+    useUpdateBank({...updateBody, id: undefined, bank: undefined, created_at: undefined}, currentItem?.id);
 
   const [isTuorOpen, setIsTuorOpen] = useState<boolean>(false);
   const refLogo = useRef(null);
@@ -85,7 +82,7 @@ export const BankMaintenence = () => {
           </Button>
         </Tooltip>
       </Grid>
-     
+
       <Grid container>
         <Grid item xs={12}>
           <CustomTable
@@ -151,6 +148,7 @@ export const BankMaintenence = () => {
             { label: "internal_account_number", required: false },
             { label: "cash_in", required: false },
             { label: "cash_out", required: false },
+            { label: "status", required: false },
             { label: "account_name", required: false },
             { label: "account_document", required: false },
           ]}

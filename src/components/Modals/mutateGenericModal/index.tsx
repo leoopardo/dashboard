@@ -13,6 +13,7 @@ import {
   AutoComplete,
   Avatar,
   Button,
+  Col,
   ConfigProvider,
   DatePicker,
   Drawer,
@@ -20,6 +21,7 @@ import {
   Form,
   FormInstance,
   Input,
+  Row,
   Select,
   Switch,
 } from "antd";
@@ -194,637 +196,698 @@ export const MutateModal = ({
           setOpen(false);
         }}
       >
-        {fields.map((field) => {
-          switch (field.label) {
-            case "date":
-              return (
-                <Form.Item
-                  label={t("table.date")}
-                  style={{ margin: 10 }}
-                  name="date"
-                  rules={[{ required: field.required }]}
-                >
-                  <ConfigProvider locale={locale}>
-                    <RangePicker
-                      size="large"
-                      panelRender={panelRender}
-                      format={
-                        navigator.language === "pt-BR"
-                          ? "DD/MM/YYYY HH:mm"
-                          : "YYYY/MM/DD HH:mm"
-                      }
-                      popupStyle={{ marginLeft: "40px" }}
-                      showTime
-                      value={[
-                        body?.start_date
-                          ? dayjs(body?.start_date).subtract(3, "hours")
-                          : null,
-                        body?.end_date
-                          ? dayjs(body?.end_date).subtract(3, "hours")
-                          : null,
+        <Row>
+          {fields.map((field) => {
+            switch (field.label) {
+              case "date":
+                return (
+                  <Col span={24}>
+                    <Form.Item
+                      label={t("table.date")}
+                      style={{ margin: 10 }}
+                      name="date"
+                      rules={[{ required: field.required }]}
+                    >
+                      <ConfigProvider locale={locale}>
+                        <RangePicker
+                          size="large"
+                          panelRender={panelRender}
+                          format={
+                            navigator.language === "pt-BR"
+                              ? "DD/MM/YYYY HH:mm"
+                              : "YYYY/MM/DD HH:mm"
+                          }
+                          popupStyle={{ marginLeft: "40px" }}
+                          showTime
+                          value={[
+                            body?.start_date
+                              ? dayjs(body?.start_date).subtract(3, "hours")
+                              : null,
+                            body?.end_date
+                              ? dayjs(body?.end_date).subtract(3, "hours")
+                              : null,
+                          ]}
+                          clearIcon={<></>}
+                          placeholder={[
+                            t("table.initial_date"),
+                            t("table.final_date"),
+                          ]}
+                          onChange={(value: any) => {
+                            const [startDate, endDate] = value;
+                            setBody((state: any) => ({
+                              ...state,
+                              start_date: startDate
+                                ? moment(startDate)
+                                    .add(3, "hours")
+                                    .format("YYYY-MM-DDTHH:mm:00.000")
+                                : null,
+                              end_date: endDate
+                                ? endDate
+                                    .add(3, "hours")
+                                    .format("YYYY-MM-DDTHH:mm:59.999")
+                                : null,
+                            }));
+                            formRef?.current?.validateFields();
+                          }}
+                        />
+                      </ConfigProvider>
+                    </Form.Item>
+                  </Col>
+                );
+              case "merchant_id":
+                if (permissions.register.merchant.merchant.merchant_list) {
+                  return (
+                    <Col span={24}>
+                      <Form.Item
+                        label={t(`table.${field.label}`)}
+                        name={field.label}
+                        style={{ margin: 10 }}
+                        rules={[
+                          {
+                            required: field.required && !body.merchant_id,
+                            message:
+                              t("input.required", {
+                                field: t(`input.${field.label}`),
+                              }) || "",
+                          },
+                        ]}
+                      >
+                        <MerchantSelect
+                          setQueryFunction={setBody}
+                          queryOptions={body}
+                        />
+                      </Form.Item>
+                    </Col>
+                  );
+                } else return;
+
+              case "partner_id":
+                if (
+                  permissions.register.partner.partner.partner_list &&
+                  !user.partner_id
+                ) {
+                  return (
+                    <Col span={24}>
+                      <Form.Item
+                        label={t(`table.${field.label}`)}
+                        name={field.label}
+                        style={{ margin: 10 }}
+                        rules={[
+                          {
+                            required: field.required && !body?.partner_id,
+                            message:
+                              t("input.required", {
+                                field: t(`table.${field.label}`),
+                              }) || "",
+                          },
+                        ]}
+                      >
+                        <PartnerSelect
+                          setQueryFunction={setBody}
+                          queryOptions={body}
+                        />
+                      </Form.Item>
+                    </Col>
+                  );
+                }
+                return;
+
+              case "aggregator_id":
+                if (
+                  permissions.register.aggregator.aggregator.aggregator_list &&
+                  !user?.aggregator_id
+                ) {
+                  return (
+                    <Col span={24}>
+                      <Form.Item
+                        label={t(`table.${field.label}`)}
+                        name={field.label}
+                        style={{ margin: 10 }}
+                        rules={[
+                          {
+                            required: field.required && !body?.aggregator_id,
+                            message:
+                              t("input.required", {
+                                field: t(`input.${field.label}`),
+                              }) || "",
+                          },
+                        ]}
+                      >
+                        <AggregatorSelect
+                          setQueryFunction={setBody}
+                          aggregatorId={
+                            (body?.aggregator?.id || body?.aggregator_id) ??
+                            undefined
+                          }
+                        />
+                      </Form.Item>
+                    </Col>
+                  );
+                }
+                return;
+
+              case "reason":
+                return (
+                  <Col span={24}>
+                    <Form.Item
+                      label={t(`table.black_list_reason`)}
+                      name={field.label}
+                      style={{ margin: 10 }}
+                      rules={[
+                        {
+                          required: field.required,
+                          message:
+                            t("input.required", {
+                              field: t(`input.${field.label}`),
+                            }) || "",
+                        },
                       ]}
-                      clearIcon={<></>}
-                      placeholder={[
-                        t("table.initial_date"),
-                        t("table.final_date"),
+                    >
+                      <Select
+                        size="large"
+                        options={merchantBlacklistData?.items.map((reason) => {
+                          return {
+                            label: reason.reason_name,
+                            value: reason._id,
+                          };
+                        })}
+                        value={body[field.label]}
+                        onChange={(value) =>
+                          setBody((state: any) => ({
+                            ...state,
+                            reason_id: value,
+                          }))
+                        }
+                      />
+                    </Form.Item>
+                  </Col>
+                );
+
+              case "value":
+                return (
+                  <Col span={24}>
+                    <Form.Item
+                      label={t(`table.${field.label}`)}
+                      name={field.label}
+                      style={{ margin: 10 }}
+                      rules={[
+                        {
+                          required: field.required && !body.value,
+                          message:
+                            t("input.required", {
+                              field: t(`input.${field.label}`),
+                            }) || "",
+                        },
                       ]}
-                      onChange={(value: any) => {
-                        const [startDate, endDate] = value;
-                        setBody((state: any) => ({
-                          ...state,
-                          start_date: startDate
-                            ? moment(startDate)
-                                .add(3, "hours")
-                                .format("YYYY-MM-DDTHH:mm:00.000")
-                            : null,
-                          end_date: endDate
-                            ? endDate
-                                .add(3, "hours")
-                                .format("YYYY-MM-DDTHH:mm:59.999")
-                            : null,
-                        }));
-                        formRef?.current?.validateFields();
-                      }}
-                    />
-                  </ConfigProvider>
-                </Form.Item>
-              );
-            case "merchant_id":
-              if (permissions.register.merchant.merchant.merchant_list) {
-                return (
-                  <Form.Item
-                    label={t(`table.${field.label}`)}
-                    name={field.label}
-                    style={{ margin: 10 }}
-                    rules={[
-                      {
-                        required: field.required && !body.merchant_id,
-                        message:
-                          t("input.required", {
-                            field: t(`input.${field.label}`),
-                          }) || "",
-                      },
-                    ]}
-                  >
-                    <MerchantSelect
-                      setQueryFunction={setBody}
-                      queryOptions={body}
-                    />
-                  </Form.Item>
+                    >
+                      <CurrencyInput
+                        value={body[field.label]}
+                        onChangeValue={(_event, originalValue) => {
+                          setBody((state: any) => ({
+                            ...state,
+                            [field.label]: +originalValue,
+                          }));
+                        }}
+                        InputElement={
+                          <Input size="large" style={{ width: "100%" }} />
+                        }
+                      />
+                    </Form.Item>
+                  </Col>
                 );
-              } else return;
 
-            case "partner_id":
-              if (
-                permissions.register.partner.partner.partner_list &&
-                !user.partner_id
-              ) {
+              case "new_reason":
                 return (
-                  <Form.Item
-                    label={t(`table.${field.label}`)}
-                    name={field.label}
-                    style={{ margin: 10 }}
-                    rules={[
-                      {
-                        required: field.required && !body?.partner_id,
-                        message:
-                          t("input.required", {
-                            field: t(`table.${field.label}`),
-                          }) || "",
-                      },
-                    ]}
-                  >
-                    <PartnerSelect
-                      setQueryFunction={setBody}
-                      queryOptions={body}
-                    />
-                  </Form.Item>
+                  <Col span={24}>
+                    <Form.Item
+                      label={t(`table.black_list_reason`)}
+                      name={field.label}
+                      style={{ margin: 10 }}
+                      rules={[
+                        {
+                          required: field.required,
+                          message:
+                            t("input.required", {
+                              field: t(`input.${field.label}`),
+                            }) || "",
+                        },
+                      ]}
+                    >
+                      <Input
+                        size="large"
+                        name="reason"
+                        value={body.reason}
+                        onChange={handleChange}
+                      />
+                    </Form.Item>
+                  </Col>
                 );
-              }
-              return;
 
-            case "aggregator_id":
-              if (
-                permissions.register.aggregator.aggregator.aggregator_list &&
-                !user?.aggregator_id
-              ) {
+              case "operator_id":
+                if (
+                  permissions.register.operator.operator.operator_list &&
+                  !user?.operator_id
+                ) {
+                  return (
+                    <Col span={24}>
+                      <Form.Item
+                        label={t(`table.${field.label}`)}
+                        name={field.label}
+                        style={{ margin: 10 }}
+                        rules={[
+                          {
+                            required: field.required,
+                            message:
+                              t("input.required", {
+                                field: t(`input.${field.label}`),
+                              }) || "",
+                          },
+                        ]}
+                      >
+                        <OperatorSelect
+                          setQueryFunction={setBody}
+                          queryOptions={body}
+                        />
+                      </Form.Item>
+                    </Col>
+                  );
+                }
+                return;
+
+              case "status":
+              case "cash_in":
+              case "cash_out":
                 return (
-                  <Form.Item
-                    label={t(`table.${field.label}`)}
-                    name={field.label}
-                    style={{ margin: 10 }}
-                    rules={[
-                      {
-                        required: field.required && !body?.aggregator_id,
-                        message:
-                          t("input.required", {
-                            field: t(`input.${field.label}`),
-                          }) || "",
-                      },
-                    ]}
-                  >
-                    <AggregatorSelect
-                      setQueryFunction={setBody}
-                      aggregatorId={
-                        (body?.aggregator?.id || body?.aggregator_id) ??
-                        undefined
-                      }
-                    />
-                  </Form.Item>
+                  <Col span={8}>
+                    <Form.Item
+                      label={t(`table.${field.label}`)}
+                      name={field.label}
+                      style={{ margin: 10 }}
+                      valuePropName="checked"
+                    >
+                      <Switch
+                        checked={body[field.label]}
+                        onChange={(e) =>
+                          setBody((state: any) => ({
+                            ...state,
+                            [field.label]: e,
+                          }))
+                        }
+                      />
+                    </Form.Item>
+                  </Col>
                 );
-              }
-              return;
-
-            case "reason":
-              return (
-                <Form.Item
-                  label={t(`table.black_list_reason`)}
-                  name={field.label}
-                  style={{ margin: 10 }}
-                  rules={[
-                    {
-                      required: field.required,
-                      message:
-                        t("input.required", {
-                          field: t(`input.${field.label}`),
-                        }) || "",
-                    },
-                  ]}
-                >
-                  <Select
-                    size="large"
-                    options={merchantBlacklistData?.items.map((reason) => {
-                      return {
-                        label: reason.reason_name,
-                        value: reason._id,
-                      };
-                    })}
-                    value={body[field.label]}
-                    onChange={(value) =>
-                      setBody((state: any) => ({
-                        ...state,
-                        reason_id: value,
-                      }))
-                    }
-                  />
-                </Form.Item>
-              );
-
-            case "value":
-              return (
-                <Form.Item
-                  label={t(`table.${field.label}`)}
-                  name={field.label}
-                  style={{ margin: 10 }}
-                  rules={[
-                    {
-                      required: field.required && !body.value,
-                      message:
-                        t("input.required", {
-                          field: t(`input.${field.label}`),
-                        }) || "",
-                    },
-                  ]}
-                >
-                  <CurrencyInput
-                    value={body[field.label]}
-                    onChangeValue={(_event, originalValue) => {
-                      setBody((state: any) => ({
-                        ...state,
-                        [field.label]: +originalValue,
-                      }));
-                    }}
-                    InputElement={
-                      <Input size="large" style={{ width: "100%" }} />
-                    }
-                  />
-                </Form.Item>
-              );
-
-            case "new_reason":
-              return (
-                <Form.Item
-                  label={t(`table.black_list_reason`)}
-                  name={field.label}
-                  style={{ margin: 10 }}
-                  rules={[
-                    {
-                      required: field.required,
-                      message:
-                        t("input.required", {
-                          field: t(`input.${field.label}`),
-                        }) || "",
-                    },
-                  ]}
-                >
-                  <Input
-                    size="large"
-                    name="reason"
-                    value={body.reason}
-                    onChange={handleChange}
-                  />
-                </Form.Item>
-              );
-
-            case "operator_id":
-              if (
-                permissions.register.operator.operator.operator_list &&
-                !user?.operator_id
-              ) {
+              case "cnpj":
                 return (
-                  <Form.Item
-                    label={t(`table.${field.label}`)}
-                    name={field.label}
-                    style={{ margin: 10 }}
-                    rules={[
-                      {
-                        required: field.required,
-                        message:
-                          t("input.required", {
-                            field: t(`input.${field.label}`),
-                          }) || "",
-                      },
-                    ]}
-                  >
-                    <OperatorSelect
-                      setQueryFunction={setBody}
-                      queryOptions={body}
-                    />
-                  </Form.Item>
+                  <Col span={24}>
+                    <Form.Item
+                      label={t(`table.${field.label}`)}
+                      name={field.label}
+                      style={{ margin: 10 }}
+                      rules={[
+                        {
+                          required: field.required,
+                          message:
+                            t("input.required", {
+                              field: t(`input.${field.label}`),
+                            }) || "",
+                        },
+                      ]}
+                    >
+                      <ReactInputMask
+                        value={body[field.label]}
+                        mask="99.999.999/9999-99"
+                        onChange={(event) => {
+                          const value = event.target.value.replace(
+                            /[^\d]/g,
+                            ""
+                          );
+                          if (!value) {
+                            delete body[field.label];
+                            return;
+                          }
+                          setBody((state: any) => ({
+                            ...state,
+                            [field.label]: value,
+                          }));
+                        }}
+                      >
+                        <Input size="large" />
+                      </ReactInputMask>
+                    </Form.Item>
+                  </Col>
                 );
-              }
-              return;
 
-            case "status":
-            case "cash_in":
-            case "cash_out":
-              return (
-                <Form.Item
-                  label={t(`table.${field.label}`)}
-                  name={field.label}
-                  style={{ margin: 10 }}
-                  valuePropName="checked"
-                >
-                  <Switch
-                    checked={body[field.label]}
-                    onChange={(e) =>
-                      setBody((state: any) => ({ ...state, [field.label]: e }))
-                    }
-                  />
-                </Form.Item>
-              );
-            case "cnpj":
-              return (
-                <Form.Item
-                  label={t(`table.${field.label}`)}
-                  name={field.label}
-                  style={{ margin: 10 }}
-                  rules={[
-                    {
-                      required: field.required,
-                      message:
-                        t("input.required", {
-                          field: t(`input.${field.label}`),
-                        }) || "",
-                    },
-                  ]}
-                >
-                  <ReactInputMask
-                    value={body[field.label]}
-                    mask="99.999.999/9999-99"
-                    onChange={(event) => {
-                      const value = event.target.value.replace(/[^\d]/g, "");
-                      if (!value) {
-                        delete body[field.label];
-                        return;
-                      }
-                      setBody((state: any) => ({
-                        ...state,
-                        [field.label]: value,
-                      }));
-                    }}
-                  >
-                    <Input size="large" />
-                  </ReactInputMask>
-                </Form.Item>
-              );
-
-            case "cellphone":
-              return (
-                <Form.Item
-                  label={t(`table.${field.label}`)}
-                  name={field.label}
-                  style={{ margin: 10 }}
-                  help=""
-                >
-                  <CellphoneInput body={body} setBody={setBody} />
-                </Form.Item>
-              );
-            case "bank_name":
-              return (
-                <Form.Item
-                  label={t(`table.${field.label}`)}
-                  name={field.label}
-                  style={{ margin: 10 }}
-                  rules={[
-                    {
-                      required: field.required,
-                      message:
-                        t("input.required", {
-                          field: t(`table.${field.label}`),
-                        }) || "",
-                    },
-                  ]}
-                >
-                  <Select
-                    size="large"
-                    options={clientbankListData?.items.map((bank: any) => {
-                      return {
-                        label: bank.bank_name,
-                        value: bank.bank_name,
-                        key: bank.ispb,
-                      };
-                    })}
-                    loading={isClientBankListFetching}
-                    onChange={(_value, option: any) => {
-                      setBody({
-                        bank_name: option.value,
-                        ispb: option.key,
-                      });
-                    }}
-                  />
-                </Form.Item>
-              );
-            case "ispb":
-              return;
-
-            case "type":
-              return (
-                <Form.Item
-                  label={t("table.type")}
-                  name="type"
-                  style={{ margin: 10 }}
-                >
-                  <Select
-                    size="large"
-                    options={
-                      ["production"]?.map((item, index) => ({
-                        key: index,
-                        value: item,
-                        label: `${t(`table.${item?.toLocaleLowerCase()}`)}`,
-                      })) ?? []
-                    }
-                    value={body?.cashin_pix_fee_type || null}
-                    onChange={(value) => {
-                      setBody((state: any) => ({
-                        ...state,
-                        [field.label]: value,
-                      }));
-                    }}
-                  />
-                </Form.Item>
-              );
-
-            case "icon_url":
-              return (
-                <Form.Item
-                  label={t(`table.${field.label}`)}
-                  name={field.label}
-                  style={{ margin: 10 }}
-                  rules={[
-                    {
-                      required: field.required,
-                      message:
-                        t("input.required", {
-                          field: t(`input.${field.label}`),
-                        }) || "",
-                    },
-                  ]}
-                >
-                  <Input
-                    size="large"
-                    name={field.label}
-                    value={body[field.label]}
-                    onChange={handleChange}
-                    suffix={<Avatar src={body[field.label]} shape="square" />}
-                  />
-                </Form.Item>
-              );
-
-            case "country":
-              return (
-                <Form.Item
-                  label={t(`table.${field.label}`)}
-                  name={field.label}
-                  style={{ margin: 10 }}
-                  rules={[
-                    {
-                      required: field.required,
-                      message:
-                        t("input.required", {
-                          field: t(`input.${field.label}`),
-                        }) || "",
-                    },
-                  ]}
-                >
-                  <AutoComplete
-                    size="large"
-                    options={
-                      Countries?.map((item, index) => {
-                        return {
-                          key: index,
-                          value: item?.name.common,
-                          label: (
-                            <>
-                              <Avatar
-                                src={item.flags.svg}
-                                style={{ margin: 5 }}
-                              />
-                              {item?.name.common}
-                            </>
-                          ),
-                        };
-                      }) ?? []
-                    }
-                    filterOption={(inputValue, option) =>
-                      option?.value
-                        .toUpperCase()
-                        .indexOf(inputValue.toUpperCase()) !== -1
-                    }
-                    onSelect={(option) => {
-                      setBody((state: any) => ({
-                        ...state,
-                        country: option,
-                      }));
-                    }}
-                  />
-                </Form.Item>
-              );
-
-            case "person_reason":
-              return (
-                <Form.Item
-                  label={t(`table.reason`)}
-                  name="reason"
-                  style={{ margin: 10 }}
-                  rules={[
-                    {
-                      required: field.required,
-                      message:
-                        t("input.required", {
-                          field: t(`table.reason`),
-                        }) || "",
-                    },
-                  ]}
-                >
-                  <Input
-                    size="large"
-                    name="reason"
-                    value={body?.reason}
-                    onChange={handleChange}
-                  />
-                </Form.Item>
-              );
-
-            case "description":
-              return (
-                <Form.Item
-                  label={t(`table.${field.label}`)}
-                  name={field.label}
-                  style={{ margin: 10 }}
-                  help=""
-                >
-                  <Input.TextArea
-                    size="large"
-                    name="description"
-                    value={body?.description}
-                    rows={3}
-                    onChange={handleChange}
-                  />
-                </Form.Item>
-              );
-
-            default:
-              if (field.selectOption) {
+              case "cellphone":
                 return (
-                  <Form.Item
-                    label={t(`input.${field.label}`)}
-                    name={field.label}
-                    style={{ margin: 10 }}
-                    rules={[
-                      {
-                        required: field.required,
-                        message:
-                          t("input.required", {
-                            field: t(`input.${field.label}`),
-                          }) || "",
-                      },
-                    ]}
-                  >
-                    <Select
-                      size="large"
-                      options={
-                        selectOptions
-                          ? selectOptions[field.label]?.map((option: any) => {
-                              return {
-                                value: option?.value,
-                                label: t(`table.${option?.label?.toLowerCase()}`),
-                              };
-                            })
-                          : []
-                      }
-                      notFoundContent={<Empty />}
-                      value={body[field.label] || null}
-                      onChange={(value) => {
-                        setBody((state: any) => ({
-                          ...state,
-                          [field.label]: value,
-                        }));
-                      }}
-                      style={{ width: "100%", height: 40 }}
-                      placeholder={t(`table.${field.label}`)}
-                    />
-                  </Form.Item>
+                  <Col span={24}>
+                    <Form.Item
+                      label={t(`table.${field.label}`)}
+                      name={field.label}
+                      style={{ margin: 10 }}
+                      help=""
+                    >
+                      <CellphoneInput body={body} setBody={setBody} />
+                    </Form.Item>
+                  </Col>
                 );
-              }
-
-              if (field.asyncOption) {
+              case "bank_name":
                 return (
-                  <Form.Item
-                    label={t(`input.${field.label}`)}
-                    name={field.label}
-                    style={{ margin: 10 }}
-                    rules={[
-                      {
-                        required: field.required,
-                        message:
-                          t("input.required", {
-                            field: t(`input.${field.label}`),
-                          }) || "",
-                      },
-                    ]}
-                  >
-                    <Select
-                      size="large"
-                      options={
-                        field?.asyncOption
-                          ? field?.asyncOption?.options?.map((option: any) => {
-                              return {
-                                value:
-                                  option[field?.asyncOption?.optionValue || ""],
-                                label:
-                                  option[field?.asyncOption?.optionLabel || ""],
-                              };
-                            })
-                          : []
-                      }
-                      notFoundContent={<Empty />}
-                      value={
-                        body[field?.asyncOption?.optionValue || ""] || null
-                      }
-                      onChange={(value) => {
-                        setBody((state: any) => ({
-                          ...state,
-                          [field?.asyncOption?.bodyProp || ""]: value,
-                        }));
-                      }}
-                      style={{ width: "100%", height: 40 }}
-                      placeholder={t(`table.${field.label}`)}
-                    />
-                  </Form.Item>
+                  <Col span={24}>
+                    <Form.Item
+                      label={t(`table.${field.label}`)}
+                      name={field.label}
+                      style={{ margin: 10 }}
+                      rules={[
+                        {
+                          required: field.required,
+                          message:
+                            t("input.required", {
+                              field: t(`table.${field.label}`),
+                            }) || "",
+                        },
+                      ]}
+                    >
+                      <Select
+                        size="large"
+                        options={clientbankListData?.items.map((bank: any) => {
+                          return {
+                            label: bank.bank_name,
+                            value: bank.bank_name,
+                            key: bank.ispb,
+                          };
+                        })}
+                        loading={isClientBankListFetching}
+                        onChange={(_value, option: any) => {
+                          setBody({
+                            bank_name: option.value,
+                            ispb: option.key,
+                          });
+                        }}
+                      />
+                    </Form.Item>
+                  </Col>
                 );
-              }
+              case "ispb":
+                return;
 
-              return (
-                <Form.Item
-                  label={t(`table.${field.label}`)}
-                  name={field.label}
-                  style={{ margin: 10 }}
-                  rules={[
-                    {
-                      required: field.required,
-                      message:
-                        t("input.required", {
-                          field: t(`input.${field.label}`),
-                        }) || "",
-                    },
-                  ]}
-                >
-                  <Input
-                    size="large"
-                    name={field.label}
-                    value={body[field.label] ?? null}
-                    onChange={handleChange}
-                  />
-                </Form.Item>
-              );
-          }
-        })}
-        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <button type="submit" ref={submitRef} style={{ display: "none" }}>
-            Submit
-          </button>
-        </Form.Item>
+              case "type":
+                return (
+                  <Col span={24}>
+                    <Form.Item
+                      label={t("table.type")}
+                      name="type"
+                      style={{ margin: 10 }}
+                    >
+                      <Select
+                        size="large"
+                        options={
+                          ["production"]?.map((item, index) => ({
+                            key: index,
+                            value: item,
+                            label: `${t(`table.${item?.toLocaleLowerCase()}`)}`,
+                          })) ?? []
+                        }
+                        value={body?.cashin_pix_fee_type || null}
+                        onChange={(value) => {
+                          setBody((state: any) => ({
+                            ...state,
+                            [field.label]: value,
+                          }));
+                        }}
+                      />
+                    </Form.Item>
+                  </Col>
+                );
+
+              case "icon_url":
+                return (
+                  <Col span={24}>
+                    <Form.Item
+                      label={t(`table.${field.label}`)}
+                      name={field.label}
+                      style={{ margin: 10 }}
+                      rules={[
+                        {
+                          required: field.required,
+                          message:
+                            t("input.required", {
+                              field: t(`input.${field.label}`),
+                            }) || "",
+                        },
+                      ]}
+                    >
+                      <Input
+                        size="large"
+                        name={field.label}
+                        value={body[field.label]}
+                        onChange={handleChange}
+                        suffix={
+                          <Avatar src={body[field.label]} shape="square" />
+                        }
+                      />
+                    </Form.Item>
+                  </Col>
+                );
+
+              case "country":
+                return (
+                  <Col span={24}>
+                    <Form.Item
+                      label={t(`table.${field.label}`)}
+                      name={field.label}
+                      style={{ margin: 10 }}
+                      rules={[
+                        {
+                          required: field.required,
+                          message:
+                            t("input.required", {
+                              field: t(`input.${field.label}`),
+                            }) || "",
+                        },
+                      ]}
+                    >
+                      <AutoComplete
+                        size="large"
+                        options={
+                          Countries?.map((item, index) => {
+                            return {
+                              key: index,
+                              value: item?.name.common,
+                              label: (
+                                <>
+                                  <Avatar
+                                    src={item.flags.svg}
+                                    style={{ margin: 5 }}
+                                  />
+                                  {item?.name.common}
+                                </>
+                              ),
+                            };
+                          }) ?? []
+                        }
+                        filterOption={(inputValue, option) =>
+                          option?.value
+                            .toUpperCase()
+                            .indexOf(inputValue.toUpperCase()) !== -1
+                        }
+                        onSelect={(option) => {
+                          setBody((state: any) => ({
+                            ...state,
+                            country: option,
+                          }));
+                        }}
+                      />
+                    </Form.Item>
+                  </Col>
+                );
+
+              case "person_reason":
+                return (
+                  <Col span={24}>
+                    {" "}
+                    <Form.Item
+                      label={t(`table.reason`)}
+                      name="reason"
+                      style={{ margin: 10 }}
+                      rules={[
+                        {
+                          required: field.required,
+                          message:
+                            t("input.required", {
+                              field: t(`table.reason`),
+                            }) || "",
+                        },
+                      ]}
+                    >
+                      <Input
+                        size="large"
+                        name="reason"
+                        value={body?.reason}
+                        onChange={handleChange}
+                      />
+                    </Form.Item>
+                  </Col>
+                );
+
+              case "description":
+                return (
+                  <Col span={24}>
+                    <Form.Item
+                      label={t(`table.${field.label}`)}
+                      name={field.label}
+                      style={{ margin: 10 }}
+                      help=""
+                    >
+                      <Input.TextArea
+                        size="large"
+                        name="description"
+                        value={body?.description}
+                        rows={3}
+                        onChange={handleChange}
+                      />
+                    </Form.Item>
+                  </Col>
+                );
+
+              default:
+                if (field.selectOption) {
+                  return (
+                    <Col span={24}>
+                      <Form.Item
+                        label={t(`input.${field.label}`)}
+                        name={field.label}
+                        style={{ margin: 10 }}
+                        rules={[
+                          {
+                            required: field.required,
+                            message:
+                              t("input.required", {
+                                field: t(`input.${field.label}`),
+                              }) || "",
+                          },
+                        ]}
+                      >
+                        <Select
+                          size="large"
+                          options={
+                            selectOptions
+                              ? selectOptions[field.label]?.map(
+                                  (option: any) => {
+                                    return {
+                                      value: option?.value,
+                                      label: t(
+                                        `table.${option?.label?.toLowerCase()}`
+                                      ),
+                                    };
+                                  }
+                                )
+                              : []
+                          }
+                          notFoundContent={<Empty />}
+                          value={body[field.label] || null}
+                          onChange={(value) => {
+                            setBody((state: any) => ({
+                              ...state,
+                              [field.label]: value,
+                            }));
+                          }}
+                          style={{ width: "100%", height: 40 }}
+                          placeholder={t(`table.${field.label}`)}
+                        />
+                      </Form.Item>
+                    </Col>
+                  );
+                }
+
+                if (field.asyncOption) {
+                  return (
+                    <Col span={24}>
+                      <Form.Item
+                        label={t(`input.${field.label}`)}
+                        name={field.label}
+                        style={{ margin: 10 }}
+                        rules={[
+                          {
+                            required: field.required,
+                            message:
+                              t("input.required", {
+                                field: t(`input.${field.label}`),
+                              }) || "",
+                          },
+                        ]}
+                      >
+                        <Select
+                          size="large"
+                          options={
+                            field?.asyncOption
+                              ? field?.asyncOption?.options?.map(
+                                  (option: any) => {
+                                    return {
+                                      value:
+                                        option[
+                                          field?.asyncOption?.optionValue || ""
+                                        ],
+                                      label:
+                                        option[
+                                          field?.asyncOption?.optionLabel || ""
+                                        ],
+                                    };
+                                  }
+                                )
+                              : []
+                          }
+                          notFoundContent={<Empty />}
+                          value={
+                            body[field?.asyncOption?.optionValue || ""] || null
+                          }
+                          onChange={(value) => {
+                            setBody((state: any) => ({
+                              ...state,
+                              [field?.asyncOption?.bodyProp || ""]: value,
+                            }));
+                          }}
+                          style={{ width: "100%", height: 40 }}
+                          placeholder={t(`table.${field.label}`)}
+                        />
+                      </Form.Item>
+                    </Col>
+                  );
+                }
+
+                return (
+                  <Col span={24}>
+                    <Form.Item
+                      label={t(`table.${field.label}`)}
+                      name={field.label}
+                      style={{ margin: 10 }}
+                      rules={[
+                        {
+                          required: field.required,
+                          message:
+                            t("input.required", {
+                              field: t(`input.${field.label}`),
+                            }) || "",
+                        },
+                      ]}
+                    >
+                      <Input
+                        size="large"
+                        name={field.label}
+                        value={body[field.label] ?? null}
+                        onChange={handleChange}
+                      />
+                    </Form.Item>
+                  </Col>
+                );
+            }
+          })}
+          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+            <button type="submit" ref={submitRef} style={{ display: "none" }}>
+              Submit
+            </button>
+          </Form.Item>
+        </Row>
       </Form>
 
       {isValidateTokenOpen && (
