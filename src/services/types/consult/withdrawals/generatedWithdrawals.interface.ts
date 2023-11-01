@@ -37,7 +37,7 @@ export interface generatedWithdrawalsRowsQuery {
     | "REFUNDED_WITHDRAW"
     | "CANCELED"
     | "PROCESSING"
-    | "PENDING"
+    | "WAITING"
     | "IN_ANALYSIS"
     | "CREATED";
   endToEndId?: string;
@@ -149,4 +149,5 @@ export interface getWithdraw {
   receiver_bank_name: string;
   paid_at: string;
   delivered_at: string;
+  url_pdf: string
 }

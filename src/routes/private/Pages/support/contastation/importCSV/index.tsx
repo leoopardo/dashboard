@@ -139,7 +139,7 @@ export const ImportContastationDeposit = () => {
   const { readRemoteFile } = usePapaParse();
   const initialData: DataType[] = [];
   const [dataSource, setDataSource] = useState<DataType[]>(initialData);
-  const [body, setBody] = useState<{ endToEndId: string }>({ endToEndId: "" });
+  const [body, setBody] = useState<{ content: string }>({ content: "" });
   const { error, isLoading, isSuccess, mutate } =
     useCreateContestImportCsv(body);
   const uploadRef = useRef<HTMLButtonElement | null>(null);
@@ -227,13 +227,13 @@ export const ImportContastationDeposit = () => {
     });
     const base64Encoded = btoa(csvData.replace(/(\r\n|\n|\r)/gm, "\n"));
 
-    setBody({ endToEndId: base64Encoded });
+    setBody({ content: base64Encoded });
   };
 
   useEffect(() => {
-    if (body.endToEndId) {
+    if (body.content) {
       mutate();
-      setBody({ endToEndId: "" });
+      setBody({ content: "" });
     }
   }, [body]);
 

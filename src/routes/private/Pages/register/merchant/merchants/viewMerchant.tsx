@@ -7,6 +7,7 @@ import { FiltersModal } from "@src/components/FiltersModal";
 import { FilterChips } from "@src/components/FiltersModal/filterChips";
 import { useListBanks } from "@src/services/bank/listBanks";
 import { useGetMerchantAttachments } from "@src/services/register/merchant/attachments/getAttachments";
+import { useMerchantFeesConfig } from "@src/services/register/merchant/merchant/feesConfig/getFeesConfig";
 import { useGetMerchantResponsibles } from "@src/services/register/merchant/responsibles/getResponsibles";
 import {
   MerchantResponsiblesItem,
@@ -58,6 +59,7 @@ export const MerchantDetails = () => {
 
   const { MerchantAttachmentsData, isMerchantAttachmentsDataFetching } =
     useGetMerchantAttachments({ merchant_id: location.state.id });
+  const { merchantFeesData } = useMerchantFeesConfig(location.state.id);
 
   const items: TabsProps["items"] = [
     {
@@ -304,6 +306,260 @@ export const MerchantDetails = () => {
     },
     {
       key: "2",
+      label: t("table.fee"),
+      children: (
+        <Row gutter={[8, 8]}>
+          <Col span={24}>
+            <Descriptions column={3} bordered>
+              <Descriptions.Item
+                key={"merchant_withdraw_fee_type"}
+                label={`${t(`table.merchant_withdraw_fee_type`)}`}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {merchantFeesData?.fees?.merchant_withdraw_fee_type
+                  ? t(
+                      `table.${merchantFeesData?.fees?.merchant_withdraw_fee_type.toLocaleLowerCase()}`
+                    )
+                  : "-"}
+              </Descriptions.Item>
+              <Descriptions.Item
+                key={"merchant_withdraw_fee_percent"}
+                label={`${t(`table.merchant_withdraw_fee_percent`)}`}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {merchantFeesData?.fees?.merchant_withdraw_fee_percent
+                  ? `${merchantFeesData?.fees?.merchant_withdraw_fee_percent}%`
+                  : "-"}
+              </Descriptions.Item>
+
+              <Descriptions.Item
+                key={"merchant_withdraw_fee_value"}
+                label={`${t(`table.merchant_withdraw_fee_value`)}`}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                  {new Intl.NumberFormat("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                }).format(
+                  Number(merchantFeesData?.fees?.merchant_withdraw_fee_value) || 0
+                )}
+              </Descriptions.Item>
+              <Descriptions.Item
+                key={"cashin_pix_fee_type"}
+                label={`${t(`table.cashin_pix_fee_type`)}`}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {merchantFeesData?.fees?.cashin_pix_fee_type
+                  ? t(
+                      `table.${merchantFeesData?.fees?.cashin_pix_fee_type.toLocaleLowerCase()}`
+                    )
+                  : "-"}
+              </Descriptions.Item>
+              <Descriptions.Item
+                key={"cashin_pix_fee_percent"}
+                label={`${t(`table.cashin_pix_fee_percent`)}`}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {merchantFeesData?.fees?.cashin_pix_fee_percent
+                  ? `${merchantFeesData?.fees?.cashin_pix_fee_percent}%`
+                  : "-"}
+              </Descriptions.Item>
+
+              <Descriptions.Item
+                key={"cashin_pix_fee_value"}
+                label={`${t(`table.cashin_pix_fee_value`)}`}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                 {new Intl.NumberFormat("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                }).format(
+                  Number(merchantFeesData?.fees?.cashin_pix_fee_value) || 0
+                )}
+              </Descriptions.Item>
+              <Descriptions.Item
+                key={"customer_withdraw_fee_type"}
+                label={`${t(`table.customer_withdraw_fee_type`)}`}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {merchantFeesData?.fees?.customer_withdraw_fee_type
+                  ? t(
+                      `table.${merchantFeesData?.fees?.customer_withdraw_fee_type.toLocaleLowerCase()}`
+                    )
+                  : "-"}
+              </Descriptions.Item>
+              <Descriptions.Item
+                key={"customer_withdraw_fee_percent"}
+                label={`${t(`table.customer_withdraw_fee_percent`)}`}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {merchantFeesData?.fees?.customer_withdraw_fee_percent
+                  ? `${merchantFeesData?.fees?.customer_withdraw_fee_percent}%`
+                  : "-"}
+              </Descriptions.Item>
+
+              <Descriptions.Item
+                key={"customer_withdraw_fee_value"}
+                label={`${t(`table.customer_withdraw_fee_value`)}`}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                 {new Intl.NumberFormat("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                }).format(
+                  Number(merchantFeesData?.fees?.customer_withdraw_fee_value) || 0
+                )}
+              </Descriptions.Item>
+
+              <Descriptions.Item
+                key={"fastpix_in_fee_type"}
+                label={`${t(`table.fastpix_in_fee_type`)}`}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {merchantFeesData?.fees?.fastpix_in_fee_type
+                  ? t(
+                      `table.${merchantFeesData?.fees?.fastpix_in_fee_type.toLocaleLowerCase()}`
+                    )
+                  : "-"}
+              </Descriptions.Item>
+              <Descriptions.Item
+                key={"fastpix_in_fee_percent"}
+                label={`${t(`table.fastpix_in_fee_percent`)}`}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {merchantFeesData?.fees?.fastpix_in_fee_percent
+                  ? `${merchantFeesData?.fees?.fastpix_in_fee_percent}%`
+                  : "-"}
+              </Descriptions.Item>
+
+              <Descriptions.Item
+                key={"fastpix_in_fee_value"}
+                label={`${t(`table.fastpix_in_fee_value`)}`}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {new Intl.NumberFormat("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                }).format(
+                  Number(merchantFeesData?.fees?.fastpix_in_fee_value) || 0
+                )}
+              </Descriptions.Item>
+
+              <Descriptions.Item
+                key={"fastpix_refund_fee_type"}
+                label={`${t(`table.fastpix_refund_fee_type`)}`}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {merchantFeesData?.fees?.fastpix_refund_fee_type
+                  ? t(
+                      `table.${merchantFeesData?.fees?.fastpix_refund_fee_type.toLocaleLowerCase()}`
+                    )
+                  : "-"}
+              </Descriptions.Item>
+              <Descriptions.Item
+                key={"fastpix_refund_fee_percent"}
+                label={`${t(`table.fastpix_refund_fee_percent`)}`}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {merchantFeesData?.fees?.fastpix_refund_fee_percent
+                  ? `${merchantFeesData?.fees?.fastpix_refund_fee_percent}%`
+                  : "-"}
+              </Descriptions.Item>
+
+              <Descriptions.Item
+                key={"fastpix_refund_fee_value"}
+                label={`${t(`table.fastpix_refund_fee_value`)}`}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {new Intl.NumberFormat("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                }).format(
+                  Number(merchantFeesData?.fees?.fastpix_refund_fee_value) || 0
+                )}
+              </Descriptions.Item>
+            </Descriptions>
+          </Col>
+        </Row>
+      ),
+    },
+    {
+      key: "3",
       label: t("table.responsibles"),
       children: (
         <Row gutter={[8, 16]} style={{ width: "100%" }}>
@@ -370,7 +626,7 @@ export const MerchantDetails = () => {
       ),
     },
     {
-      key: "3",
+      key: "4",
       label: t("table.attachments"),
       children: isMerchantAttachmentsDataFetching ? (
         <div

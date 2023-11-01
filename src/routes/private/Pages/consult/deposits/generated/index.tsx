@@ -1,16 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
+  CheckCircleOutlined,
   EyeFilled,
   FileAddOutlined,
+  SendOutlined,
   SettingFilled,
-  CheckCircleOutlined,
 } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Tooltip } from "@mui/material";
 import { Search } from "@src/components/Inputs/search";
 import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
 import { Toast } from "@src/components/Toast";
+import { useCheckPayment } from "@src/services/consult/deposits/generatedDeposits/checkPayment";
 import { useCreateSendWebhook } from "@src/services/consult/deposits/generatedDeposits/resendWebhook";
 import { useGetDepositReportFields } from "@src/services/consult/deposits/reportCsvFields/getReportFields";
 import { queryClient } from "@src/services/queryClient";
@@ -35,7 +37,6 @@ import { ResendWebhookModal } from "../components/ResendWebhookModal";
 import { ViewModal } from "../components/ViewModal";
 import { WebhookModal } from "../components/webhooksModal";
 import { TotalizersCards } from "./components/TotalizersCards";
-import { useCheckPayment } from "@src/services/consult/deposits/generatedDeposits/checkPayment";
 
 const INITIAL_QUERY: generatedDepositTotalQuery = {
   page: 1,
@@ -111,8 +112,9 @@ export const GeneratedDeposits = () => {
     webhook_url_type: "both",
   });
 
+  const [webhookId, setWebhookId] = useState<string>("");
   const { ResendWebMutate, ResendWebError, ResendWebIsSuccess } =
-    useCreateSendWebhook(webhookBody);
+    useCreateSendWebhook(webhookBody, webhookId);
 
   const columns: ColumnInterface[] = [
     { name: "_id", type: "id" },
@@ -374,6 +376,22 @@ export const GeneratedDeposits = () => {
                 icon: <SettingFilled style={{ fontSize: "18px" }} />,
                 onClick: () => setIsWebhookModalOpen(true),
               },
+              permissions.report.deposit.paid_deposit
+                .report_deposit_paid_deposit_resend_notification && {
+                label: "resend_webhook",
+                icon: <SendOutlined style={{ fontSize: "18px" }} />,
+                onClick: (item) => {
+                  console.log(item);
+                  setWebhookBody((state) => ({
+                    ...state,
+                    end_date: undefined,
+                    start_date: undefined,
+                  }));
+                  setWebhookId(item?._id);
+                  setIsResendWebhookModalOpen(true);
+                },
+                disabled: (item) => item.status !== "PAID",
+              },
               {
                 label: "check_payments",
                 disabled: (item) =>
@@ -477,6 +495,8 @@ export const GeneratedDeposits = () => {
           body={webhookBody}
           setBody={setWebhookBody}
           submit={ResendWebMutate}
+          id={webhookId}
+          setId={setWebhookId}
         />
       )}
       <Toast
