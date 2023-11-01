@@ -25,6 +25,7 @@ export interface generatedDepositTotalQuery {
   fields?: any;
   comma_separate_value?: boolean;
   description?: string;
+  delivered_at_secondary?: boolean;
 }
 
 export interface generatedDepositRowsQuery {

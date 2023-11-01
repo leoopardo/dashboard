@@ -206,7 +206,7 @@ export const RefundWithdrawals = () => {
               height: 40,
               display: "flex",
               alignItems: "center",
-              justifyContent: 'center',
+              justifyContent: "center",
               width: "100%",
             }}
           >

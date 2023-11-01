@@ -5,7 +5,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 interface TuorComponentInterface {
-  steps: TourProps["steps"] | [];
+  steps: TourProps["steps"] | [] | any[];
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   pageStep: { title: string; description: any };
@@ -62,20 +62,26 @@ export const TuorComponent = ({
       CSteps.push(createRegisterStep);
     }
 
-  
     if (exportCsvStep) {
       CSteps.push(exportCsvStep);
     }
-    
+
     if (refreshStepRef) {
-      console.log('tttest')
+      console.log("tttest");
       CSteps.push({
         title: t("buttons.update"),
         description: t("wiki.update_table_button"),
         target: () => refreshStepRef?.current,
       });
     }
-    setCurrentSteps([...CSteps, ...(steps as any)]);
+    setCurrentSteps([
+      ...CSteps,
+      ...(steps?.filter((step) => {
+        if (step) {
+          return step;
+        }
+      }) as any),
+    ]);
   }, [i18n.language]);
 
   return (

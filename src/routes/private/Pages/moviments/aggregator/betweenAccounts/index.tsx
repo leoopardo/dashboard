@@ -187,7 +187,6 @@ export const AggregatorTransfersBetweenAccounts = () => {
             />
           </Col>
         )}
-
       </Row>
 
       <Row style={{ width: "100%" }}>

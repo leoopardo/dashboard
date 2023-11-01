@@ -12,6 +12,7 @@ import { useGetSelf } from "@src/services/getSelf";
 import { useGetMerchantMoviments } from "@src/services/moviments/merchants/manual/GetManualTransactions";
 import { useCreateMerchantManualTransaction } from "@src/services/moviments/merchants/manual/createManualTransaction";
 import { queryClient } from "@src/services/queryClient";
+import { useGetRowsMerchantManualEntryCategory } from "@src/services/register/merchant/manualEntryCategory/getManualEntryCategory";
 import { useCreateMerchantManualReports } from "@src/services/reports/moviments/merchant/createManualTransactionsReports";
 import { CreateMerchantManualTransaction } from "@src/services/types/moviments/merchant/createManualTransaction.interface";
 import {
@@ -24,7 +25,6 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { CreateMovimentModal } from "../../components/createMovimentModal";
-import { useGetRowsMerchantManualEntryCategory } from "@src/services/register/merchant/manualEntryCategory/getManualEntryCategory";
 
 export const MerchantManual = () => {
   const { permissions } = queryClient.getQueryData(
@@ -78,7 +78,7 @@ export const MerchantManual = () => {
     limit: 200,
     page: 1,
     sort_field: "created_at",
-    sort_order: "DESC"
+    sort_order: "DESC",
   });
 
   const { mutate, error, isSuccess } =
@@ -306,7 +306,7 @@ export const MerchantManual = () => {
           selectOptions={{
             status: ["PROCESSING", "SUCCESS", "CANCELED"],
             category_id:
-            categoryData?.items?.map((category) => {
+              categoryData?.items?.map((category) => {
                 return { label: category?.name, value: category?.id };
               }) || [],
             type: ["in", "out"],

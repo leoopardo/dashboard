@@ -225,7 +225,10 @@ export const RefundDeposits = () => {
           ?.report_chargeback_deposit_chargeback_export_csv && (
           <Grid item xs={12} md="auto">
             <ExportReportsModal
-              disabled={refundDepositsRows?.items.length === 0 || refundDepositsRowsError}
+              disabled={
+                refundDepositsRows?.items.length === 0 ||
+                refundDepositsRowsError
+              }
               mutateReport={() => RefundDepositsReportsMutate()}
               error={RefundDepositsReportsError}
               success={RefundDepositsReportsIsSuccess}
@@ -234,7 +237,6 @@ export const RefundDeposits = () => {
             />
           </Grid>
         )}
-
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>

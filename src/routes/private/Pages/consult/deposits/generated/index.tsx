@@ -308,6 +308,7 @@ export const GeneratedDeposits = () => {
           .report_deposit_generated_deposit_resend_notification && (
           <Col xs={{ span: 24 }} md={{ span: 8 }} lg={{ span: 4 }}>
             <Button
+              disabled={depositsRows?.items.length === 0 || depositsRowsError}
               type="primary"
               loading={isDepositsRowsFetching}
               size="large"

@@ -231,7 +231,6 @@ export const UndeliveredWithdrawals = () => {
             />
           </Grid>
         )}
-
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>

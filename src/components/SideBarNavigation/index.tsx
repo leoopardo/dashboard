@@ -71,7 +71,8 @@ export const SidebarNavigation = () => {
     disabled?: boolean,
     onClick?: (e: any) => void | null,
     style?: any,
-    label?: React.ReactNode
+    label?: React.ReactNode,
+    theme?: string
   ): MenuItem {
     return {
       key,
@@ -81,6 +82,7 @@ export const SidebarNavigation = () => {
       disabled,
       onClick,
       style,
+      theme
     } as MenuItem;
   }
 
@@ -92,7 +94,8 @@ export const SidebarNavigation = () => {
       false,
       () => navigate("/dashboard"),
       { fontSize: "16px" },
-      import.meta.env.VITE_APP_COMPANY_NAME
+      import.meta.env.VITE_APP_COMPANY_NAME,
+      "dark"
     ),
     // - CADASTROS
     getItem(

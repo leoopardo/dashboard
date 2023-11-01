@@ -26,6 +26,8 @@ interface ResendWebhookModalInterface {
   setBody: Dispatch<SetStateAction<ResendWebhookBody>>;
   body: ResendWebhookBody;
   submit: () => void;
+  id?: string;
+  setId?: Dispatch<SetStateAction<string>>;
 }
 
 export const ResendWebhookModal = ({
@@ -34,6 +36,8 @@ export const ResendWebhookModal = ({
   submit,
   body,
   setBody,
+  id,
+  setId,
 }: ResendWebhookModalInterface) => {
   const { permissions } = queryClient.getQueryData(
     "validate"
@@ -45,11 +49,15 @@ export const ResendWebhookModal = ({
   const handleChange = (event: any) => {
     setBody((state) => ({ ...state, [event.target.name]: event.target.value }));
   };
-
   return (
     <Drawer
       open={open}
-      onClose={() => setOpen(false)}
+      onClose={() => {
+        setOpen(false);
+        if (setId) {
+          setId("");
+        }
+      }}
       title={t("modal.resend_webhook")}
       placement="right"
       bodyStyle={{ overflowX: "hidden" }}
@@ -71,6 +79,9 @@ export const ResendWebhookModal = ({
         onFinish={() => {
           submit();
           setOpen(false);
+          if (setId) {
+            setId("");
+          }
         }}
       >
         <Form.Item label={t("input.webhook_type")} style={{ margin: 10 }}>
@@ -90,73 +101,81 @@ export const ResendWebhookModal = ({
             <Radio value="both">{t("input.both")}</Radio>
           </Radio.Group>
         </Form.Item>
-        <Form.Item
-          label={t("table.date")}
-          style={{ margin: 10 }}
-          name="start_date"
-          rules={[
-            {
-              validator: () => {
-                if (
-                  body.end_date >
-                  moment(new Date(body.start_date))
-                    .add(2, "hours")
-                    .format("YYYY-MM-DDTHH:mm:00.000")
-                ) {
-                  return Promise.reject(t("error.date_1_hour"));
-                } else return Promise.resolve();
-              },
-            },
-          ]}
-        >
-          <ConfigProvider locale={locale}>
-            <RangePicker
-              size="small"
-              format="YYYY-MM-DD HH:mm:ss"
-              showTime
-              value={[
-                dayjs(body.start_date, "YYYY-MM-DD HH:mm:ss"),
-                dayjs(body.end_date, "YYYY-MM-DD HH:mm:ss"),
+        {!id && (
+          <>
+            <Form.Item
+              label={t("table.date")}
+              style={{ margin: 10 }}
+              name="start_date"
+              rules={[
+                {
+                  validator: () => {
+                    if (
+                      body?.end_date &&
+                      body?.end_date >
+                        moment(new Date(body?.start_date as any))
+                          .add(2, "hours")
+                          .format("YYYY-MM-DDTHH:mm:00.000")
+                    ) {
+                      return Promise.reject(t("error.date_1_hour"));
+                    } else return Promise.resolve();
+                  },
+                },
               ]}
-              clearIcon={<></>}
-              popupStyle={{ marginLeft: "40px" }}
-              style={{
-                width: "100%",
-                height: "40px",
-              }}
-              placeholder={[t("table.initial_date"), t("table.final_date")]}
-              onChange={(value: any) => {
-                setBody((state: any) => ({
-                  ...state,
-                  start_date: moment(value[0]?.$d).format(
-                    "YYYY-MM-DDTHH:mm:ss.SSS"
-                  ),
-                  end_date: moment(value[1]?.$d).format(
-                    "YYYY-MM-DDTHH:mm:ss.SSS"
-                  ),
-                }));
-                formRef?.current?.validateFields();
-              }}
-            />
-          </ConfigProvider>
-        </Form.Item>
-        {permissions.register.partner.partner.partner_list && (
-          <Form.Item
-            label={t("table.partner")}
-            style={{ margin: 10 }}
-            rules={[{ required: !body.partner_id }]}
-          >
-            <PartnerSelect queryOptions={body} setQueryFunction={setBody} />
-          </Form.Item>
-        )}
-        {permissions.register.merchant.merchant.merchant_list && (
-          <Form.Item
-            label={t("table.merchant")}
-            style={{ margin: 10 }}
-            rules={[{ required: !body.merchant_id }]}
-          >
-            <MerchantSelect queryOptions={body} setQueryFunction={setBody} />
-          </Form.Item>
+            >
+              <ConfigProvider locale={locale}>
+                <RangePicker
+                  size="small"
+                  format="YYYY-MM-DD HH:mm:ss"
+                  showTime
+                  value={[
+                    dayjs(body.start_date, "YYYY-MM-DD HH:mm:ss"),
+                    dayjs(body.end_date, "YYYY-MM-DD HH:mm:ss"),
+                  ]}
+                  clearIcon={<></>}
+                  popupStyle={{ marginLeft: "40px" }}
+                  style={{
+                    width: "100%",
+                    height: "40px",
+                  }}
+                  placeholder={[t("table.initial_date"), t("table.final_date")]}
+                  onChange={(value: any) => {
+                    setBody((state: any) => ({
+                      ...state,
+                      start_date: moment(value[0]?.$d).format(
+                        "YYYY-MM-DDTHH:mm:ss.SSS"
+                      ),
+                      end_date: moment(value[1]?.$d).format(
+                        "YYYY-MM-DDTHH:mm:ss.SSS"
+                      ),
+                    }));
+                    formRef?.current?.validateFields();
+                  }}
+                />
+              </ConfigProvider>
+            </Form.Item>
+            {permissions.register.partner.partner.partner_list && (
+              <Form.Item
+                label={t("table.partner")}
+                style={{ margin: 10 }}
+                rules={[{ required: !body.partner_id }]}
+              >
+                <PartnerSelect queryOptions={body} setQueryFunction={setBody} />
+              </Form.Item>
+            )}
+            {permissions.register.merchant.merchant.merchant_list && (
+              <Form.Item
+                label={t("table.merchant")}
+                style={{ margin: 10 }}
+                rules={[{ required: !body.merchant_id }]}
+              >
+                <MerchantSelect
+                  queryOptions={body}
+                  setQueryFunction={setBody}
+                />
+              </Form.Item>
+            )}
+          </>
         )}
 
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>

@@ -225,6 +225,7 @@ export const GeneratedWithdrawals = () => {
               },
               { value: "receiver_name", label: t("table.receiver_name") },
               { value: "description", label: t("table.description") },
+              { value: "pix_key", label: t("table.pix_key") },
             ]}
           />
         </Grid>
