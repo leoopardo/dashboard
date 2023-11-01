@@ -896,6 +896,16 @@
     "aggregator_blacklist_description": "Here you manage the list of blockages by Individual's Registration (CPF).",
     "partner_name_description": "Name registered for the platform.",
     "partners_description": "Here you manage the platforms that use the dashboard.",
-    "update_table_button": "Update table data."
+    "update_table_button": "Update table data.",
+    "dashboard_description": "Here you will find your main totals.",
+    "balance": "Balances",
+    "balance_description": "The main balances available in your account.",
+    "balance_transaction": "Available balance for transactions mediated by the organization.",
+    "balance_payment": "Balance available for payments to suppliers mediated by the Organization.",
+    "balance_reserved": "Reserved balance value, which does not contribute to the available balances used for operations. It is a balance consolidated by the Organization.",
+    "bank_total_description": "Brings the total balance value of the Organization along with the IP. This value is the total balance of transactions carried out by the organization through the IP in question.",
+    "bank_blocked_value_description": "Brings the value blocked for future operations of the Organization, which has been safeguarded by the IP.",
+    "bank_chart_description": "Switches the view from Grid to a bar chart.",
+    "bank_card_description": "Switches the view from Grid to bank cards."
   }
 }
