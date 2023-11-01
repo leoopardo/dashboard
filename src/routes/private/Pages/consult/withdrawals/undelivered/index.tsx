@@ -95,8 +95,12 @@ export const UndeliveredWithdrawals = () => {
   });
 
   const [webhookId, setWebhookId] = useState<string>("");
-  const { ResendWebMutate, ResendWebError, ResendWebIsSuccess } =
-    useCreateSendWithdrawWebhook(webhookBody, webhookId);
+  const {
+    ResendWebMutate,
+    ResendWebError,
+    ResendWebIsSuccess,
+    ResendWebIsLoading,
+  } = useCreateSendWithdrawWebhook(webhookBody, webhookId);
 
   const columns: ColumnInterface[] = [
     { name: "_id", type: "id" },
@@ -213,7 +217,7 @@ export const UndeliveredWithdrawals = () => {
             ]}
           />
         </Grid>
-        <Grid item xs={12} md={4} lg={4}>
+        <Grid item xs={12} md={3} lg={3}>
           <Search
             query={query}
             setQuery={setQuery}
@@ -241,12 +245,14 @@ export const UndeliveredWithdrawals = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        {permissions.report.withdraw.generated_withdraw
-          .report_withdraw_generated_withdraw_resend_notification && (
-          <Grid item xs={12} md={4} lg={2}>
+
+        {permissions.report.withdraw.undelivered_withdraw
+          .report_withdraw_undelivered_withdraw_resend_notification && (
+          <Grid item xs={12} md={"auto"} lg={2}>
             <Button
+              disabled={witrawalsRows?.items.length === 0 || witrawalsRowsError}
               type="primary"
-              loading={isWithdrawalsRowsFetching}
+              loading={isWithdrawalsTotalFetching || ResendWebIsLoading}
               size="large"
               onClick={() => {
                 setIsResendWebhookModalOpen(true);
@@ -262,7 +268,6 @@ export const UndeliveredWithdrawals = () => {
             </Button>
           </Grid>
         )}
-
         {permissions.report.withdraw.undelivered_withdraw
           .report_withdraw_undelivered_withdraw_export_csv && (
           <Grid item xs={12} md="auto" lg={1}>
@@ -280,7 +285,6 @@ export const UndeliveredWithdrawals = () => {
 
       <Grid container style={{ marginTop: "15px" }}>
         <Grid item xs={12}>
-          {" "}
           <CustomTable
             query={query}
             setCurrentItem={setCurrentItem}

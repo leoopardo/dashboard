@@ -734,7 +734,8 @@
     "category_id": "Category",
     "refetch_data": "Reload data",
     "download_payment_voucher": "Download payment voucher",
-    "generate_payment_voucher": "Generate payment voucher"
+    "generate_payment_voucher": "Generate payment voucher",
+    "reference_day": "Reference day"
   },
   "actions": {
     "details": "Details",
@@ -748,6 +749,7 @@
     "pay_to_merchant": "Pay merchant",
     "refresh": "Refresh status",
     "edit_merchant": "Edit merchant",
+    "check_payments": "Check payments",
     "resend_webhook": "Resend webhook"
   },
   "error": {

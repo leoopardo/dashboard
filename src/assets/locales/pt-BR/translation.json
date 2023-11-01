@@ -739,7 +739,8 @@
     "category_id": "Categoria",
     "refetch_data": "Recarregar dados",
     "download_payment_voucher": "Baixar comprovante",
-    "generate_payment_voucher": "Gerar comprovante"
+    "generate_payment_voucher": "Gerar comprovante",
+    "reference_day": "Data de referência"
   },
   "actions": {
     "details": "Detalhes",
@@ -753,6 +754,7 @@
     "pay_to_merchant": "Pagar empresa",
     "refresh": "Atualizar status",
     "edit_merchant": "Editar empresa",
+    "check_payments": "Checar pagamentos",
     "resend_webhook": "Reenviar webhook"
   },
   "error": {

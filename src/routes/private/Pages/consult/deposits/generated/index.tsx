@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
+  CheckCircleOutlined,
   EyeFilled,
   FileAddOutlined,
   SendOutlined,
@@ -11,6 +12,7 @@ import { Tooltip } from "@mui/material";
 import { Search } from "@src/components/Inputs/search";
 import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
 import { Toast } from "@src/components/Toast";
+import { useCheckPayment } from "@src/services/consult/deposits/generatedDeposits/checkPayment";
 import { useCreateSendWebhook } from "@src/services/consult/deposits/generatedDeposits/resendWebhook";
 import { useGetDepositReportFields } from "@src/services/consult/deposits/reportCsvFields/getReportFields";
 import { queryClient } from "@src/services/queryClient";
@@ -77,6 +79,7 @@ export const GeneratedDeposits = () => {
   const [isResendWebhookModalOpen, setIsResendWebhookModalOpen] =
     useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<any>();
+  console.log({ currentItem });
   const [searchOption, setSearchOption] = useState<string | undefined>(
     undefined
   );
@@ -96,6 +99,7 @@ export const GeneratedDeposits = () => {
     comma_separate_value: isComma,
   });
 
+  const { refetchCheckPayment } = useCheckPayment({ txid: currentItem?.txid });
   const { fields } = useGetDepositReportFields();
 
   const [webhookBody, setWebhookBody] = useState<ResendWebhookBody>({
@@ -123,7 +127,6 @@ export const GeneratedDeposits = () => {
     { name: "buyer_document", type: "document" },
     { name: "status", type: "status" },
   ];
-
   return (
     <Row
       gutter={[8, 8]}
@@ -388,6 +391,13 @@ export const GeneratedDeposits = () => {
                   setIsResendWebhookModalOpen(true);
                 },
                 disabled: (item) => item.status !== "PAID",
+              },
+              {
+                label: "check_payments",
+                disabled: (item) =>
+                  !["WAITING", "EXPIRED"].includes(item?.status),
+                icon: <CheckCircleOutlined style={{ fontSize: "18px" }} />,
+                onClick: () => refetchCheckPayment(),
               },
             ]}
             removeTotal

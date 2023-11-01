@@ -7,16 +7,21 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import ReactInputMask from "react-input-mask";
 import { useMediaQuery } from "react-responsive";
+import { ViewModal } from "./components/ViewModal";
 
 export const CheckDocument = () => {
+  const { t } = useTranslation();
   const [search, setSearch] = useState<string>("");
-
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const isMobile = useMediaQuery({ maxWidth: "750px" });
 
-  const { CheckCpfData, isCheckCpfDataFetching, refetchCheckCpfData } =
-    useGetCheckCpf(search);
+  const {
+    CheckCpfData,
+    isCheckCpfDataFetching,
+    refetchCheckCpfData,
+    CheckCpfDataSuccess,
+  } = useGetCheckCpf(search);
 
-  const { t } = useTranslation();
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
@@ -64,6 +69,17 @@ export const CheckDocument = () => {
         </Grid>
       </Grid>
       <Grid container style={{ marginTop: "25px" }}>
+        {CheckCpfDataSuccess && (
+          <Grid
+            container
+            item
+            xs={12}
+            justifyContent={"flex-end"}
+            style={{ marginBottom: 10 }}
+          >
+            <Button onClick={() => setIsViewModalOpen(true)}>{t('table.details')}</Button>
+          </Grid>
+        )}
         <Grid item xs={12}>
           <Descriptions
             bordered
@@ -85,9 +101,11 @@ export const CheckDocument = () => {
                           textAlign: "center",
                         }}
                       >
-                        {`${new Date(
-                          CheckCpfData[key] ?? ""
-                        ).toLocaleDateString("pt-BR", { timeZone: "UTC" })}`}
+                        {CheckCpfData[key]
+                          ? `${new Date(
+                              CheckCpfData[key] ?? ""
+                            ).toLocaleDateString("pt-BR", { timeZone: "UTC" })}`
+                          : "-"}
                       </Descriptions.Item>
                     );
 
@@ -146,6 +164,15 @@ export const CheckDocument = () => {
           </Descriptions>
         </Grid>
       </Grid>
+
+      {isViewModalOpen && (
+        <ViewModal
+          modalName={`Blacklist: ${CheckCpfData?.cpf}`}
+          open={isViewModalOpen}
+          setOpen={setIsViewModalOpen}
+          cpf={CheckCpfData?.cpf}
+        />
+      )}
     </Grid>
   );
 };
