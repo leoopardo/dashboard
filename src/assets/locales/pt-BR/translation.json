@@ -735,7 +735,6 @@
     "operations_value": "Valor de operações",
     "category_id": "Categoria",
     "refetch_data": "Recarregar dados"
-
   },
   "actions": {
     "details": "Detalhes",
@@ -878,8 +877,19 @@
     "reason_description": "Motivo que levou ao bloqueio daquele CPF",
     "create_user_name_description": "Nome do usuário que realizou o bloqueio daquele CPF",
     "aggregator_blacklist_description": "Aqui você gerencia a lista de bloqueios por CPF",
-    "partner_name_description": "Nome cadastrado para a plataforma."
-  , "partners_description": "Aqui você gerencia as plataformas que fazem uso do painel.",
-    "update_table_button": "Atualize os dados da tabela."
+    "partner_name_description": "Nome cadastrado para a plataforma.",
+    "partners_description": "Aqui você gerencia as plataformas que fazem uso do painel.",
+    "update_table_button": "Atualize os dados da tabela.",
+
+    "dashboard_description": "Aqui você encontra seus principais totalizadores.",
+    "balance": "Saldos",
+    "balance_description": "Os principais saldos disponíveis na sua conta.",
+    "balance_transaction": "Valor de saldo disponível para as movimentações necessárias para as transações mediadas pela organização.",
+    "balance_payment": "Saldo disponível para pagamentos à fornecedores intermediados pela Organização.",
+    "balance_reserved": "Valor de saldo reservado, este por sua vez não complementa os saldos disponíveis utilizados para operações. É um saldo consolidado pela Organização.",
+    "bank_total_description": "Traz o valor de saldo total da Organização junto com a IP. Esse valor é o valor total do saldo de movimentações realizadas pela organização através da IP em questão.",
+    "bank_blocked_value_description": "Traz o valor bloqueado para operações futuras da Organização que foi resguardado pela IP.",
+    "bank_chart_description": "Altera a vizualização do Grid para um gráfico em barras.",
+    "bank_card_description": "Altera a vizualização do Grid para cards de bancos."
   }
 }

@@ -6,26 +6,18 @@ import {
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { FiltersModal } from "@src/components/FiltersModal";
 import { FilterChips } from "@src/components/FiltersModal/filterChips";
+import { TuorComponent } from "@src/components/Tuor";
 import { useListBanks } from "@src/services/bank/listBanks";
 import { useGetMerchantBankStatementTotals } from "@src/services/consult/merchant/bankStatement/getTotals";
 import { queryClient } from "@src/services/queryClient";
 import { MerchantBankStatementTotalsQuery } from "@src/services/types/consult/merchant/bankStatement";
 import { ValidateInterface } from "@src/services/types/validate.interface";
 import { defaultTheme } from "@src/styles/defaultTheme";
-import {
-  Button,
-  Col,
-  Layout,
-  Row,
-  Tabs,
-  Tooltip,
-  Tour,
-  TourProps,
-  Typography,
-} from "antd";
+import { Button, Col, Layout, Row, Tabs, Tooltip, Typography } from "antd";
 import moment from "moment";
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import secureLocalStorage from "react-secure-storage";
 import { TabsTable } from "./components/TabsTable";
 import { BankCard } from "./components/bankCard";
 import { BankBalanceChart } from "./components/charts/bankBalanceChart";
@@ -35,7 +27,6 @@ import { MerchantBalance } from "./components/merchantBalance";
 import { MerchantsBalance } from "./components/merchantsBalance";
 import { OrganizationBalance } from "./components/organizationBalance";
 import { ValuesTable } from "./components/valuesTable";
-import secureLocalStorage from "react-secure-storage";
 
 const INITIAL_QUERY = {
   start_date: moment(new Date())
@@ -79,115 +70,10 @@ export const Dashboard = () => {
   const { refetchMerchantBankStatementTotalsTotal } =
     useGetMerchantBankStatementTotals(query);
 
-  // TUOR --------------------------------------
-  const steps: TourProps["steps"] = [
-    {
-      title: "Painel.",
-      description: "Aqui você encontra seus principais totalizadores.",
-    },
-  ];
-
-  if (
-    permissions?.report?.paybrokers?.balance?.report_paybrokers_balance_list
-  ) {
-    steps.splice(1, 0, {
-      title: "Saldos da organização",
-      description: (
-        <Typography>
-          Os principais saldos dispóniveis na sua organização.
-          <Typography>
-            <span style={{ color: defaultTheme.colors.info }}>
-              Saldo transação:
-            </span>
-          </Typography>
-          <Typography>
-            <span style={{ color: defaultTheme.colors.error }}>
-              Saldo pagamento:
-            </span>
-          </Typography>
-          <Typography>
-            <span style={{ color: defaultTheme.colors.pending }}>
-              Saldo reservado:
-            </span>
-          </Typography>
-        </Typography>
-      ),
-      target: () => ref1.current,
-      nextButtonProps: {
-        onClick: () => setActiveKey("2"),
-      },
-    });
-  }
-
-  if (permissions?.report?.merchant?.balance?.report_merchant_balance_list) {
-    steps.splice(2, 0, {
-      title: "Saldos da empresa",
-      description: (
-        <Typography>
-          Os principais saldos dispóniveis na sua empresa.
-          <Typography>
-            <span style={{ color: defaultTheme.colors.info }}>
-              Saldo transação:
-            </span>
-          </Typography>
-          <Typography>
-            <span style={{ color: defaultTheme.colors.error }}>
-              Saldo pagamento:
-            </span>
-          </Typography>
-          <Typography>
-            <span style={{ color: defaultTheme.colors.pending }}>
-              Saldo reservado:
-            </span>
-          </Typography>
-        </Typography>
-      ),
-      target: () => ref2.current,
-      prevButtonProps: {
-        onClick: () => setActiveKey("1"),
-      },
-    });
-  }
-
-  if (permissions?.report?.merchant?.balance?.report_merchant_balance_list) {
-    steps.splice(3, 0, {
-      title: "Saldos bancários",
-      description: (
-        <Typography>
-          <Typography>
-            <span style={{ color: defaultTheme.colors.info }}>Total:</span>O
-            valor total disponível naquele banco;
-          </Typography>
-          <Typography>
-            <span style={{ color: defaultTheme.colors.error }}>
-              Valor bloqueado:
-            </span>
-            O valor bloqueado (indisponível) naquele banco;
-          </Typography>
-          <Typography>
-            <span style={{ color: defaultTheme.colors.pending }}>
-              Data de pesquisa:
-            </span>
-            Pode estar marcada em amarelo caso aquela pesquisa tenha sido
-            realizada a mais de 20 minutos.
-          </Typography>
-        </Typography>
-      ),
-      target: () => ref3.current,
-    });
-  }
-
-  // TUOR --------------------------------------
-
   return (
     <Row style={{ padding: 20 }}>
-      <Tour
-        open={isTuorOpen}
-        onClose={() => setIsTuorOpen(false)}
-        steps={steps}
-        animated
-      />
       <Layout
+        ref={ref1}
         style={{
           margin: -28,
           padding: 20,
@@ -205,7 +91,7 @@ export const Dashboard = () => {
               key: "1",
               label: t("table.organization_balance"),
               children: (
-                <Col span={24} ref={ref1}>
+                <Col span={24}>
                   <OrganizationBalance />
                 </Col>
               ),
@@ -223,7 +109,7 @@ export const Dashboard = () => {
               key: "2",
               label: t("table.merchant_balance"),
               children: (
-                <Col span={24} ref={ref2}>
+                <Col span={24}>
                   <MerchantBalance />
                 </Col>
               ),
@@ -276,7 +162,7 @@ export const Dashboard = () => {
         )}
 
         {permissions?.report?.paybrokers?.bank_balance?.menu && (
-          <>
+          <div>
             <Col
               span={24}
               style={{
@@ -285,7 +171,7 @@ export const Dashboard = () => {
                 justifyContent: "space-between",
               }}
             >
-              <Typography.Title level={3}>
+              <Typography.Title level={3} ref={ref2}>
                 {t("menus.organization_bank_balance")}
               </Typography.Title>
               <div>
@@ -303,8 +189,7 @@ export const Dashboard = () => {
                     if (isBankChart) {
                       setIsBankChart(false);
                       secureLocalStorage.setItem("isBankChart", "false");
-                    }
-                    else {
+                    } else {
                       setIsBankChart(true);
                       secureLocalStorage.setItem("isBankChart", "true");
                     }
@@ -336,7 +221,7 @@ export const Dashboard = () => {
                 </>
               )}
             </Row>
-          </>
+          </div>
         )}
         <Row gutter={[8, 4]} align="middle" justify="center">
           <Layout
@@ -421,7 +306,7 @@ export const Dashboard = () => {
 
         <Row style={{ marginTop: 16 }}>
           <Col span={24}>
-            <TabsTable query={query}/>
+            <TabsTable query={query} />
           </Col>
         </Row>
       </Col>
@@ -453,6 +338,99 @@ export const Dashboard = () => {
           haveInitialDate
         />
       )}
+      <TuorComponent
+        open={isTuorOpen}
+        setOpen={setIsTuorOpen}
+        steps={[
+          (permissions?.report?.merchant?.balance
+            ?.report_merchant_balance_list ||
+            permissions?.report?.paybrokers?.balance
+              ?.report_paybrokers_balance_list) && {
+            title: t("wiki.balance"),
+            description: (
+              <Typography>
+                {t("wiki.balance_description")}
+                <Typography>
+                  <span style={{ color: defaultTheme.colors.info }}>
+                    {t("table.balance_to_transactions")}:
+                  </span>{" "}
+                  {t("wiki.balance_transaction")}
+                </Typography>
+                <Typography>
+                  <span style={{ color: defaultTheme.colors.error }}>
+                    {t("table.balance_to_payment")}:
+                  </span>
+                  {t("wiki.balance_payment")}
+                </Typography>
+                <Typography>
+                  <span style={{ color: defaultTheme.colors.pending }}>
+                    {t("table.balance_reserved")}:
+                  </span>{" "}
+                  {t("wiki.balance_reserved")}
+                </Typography>
+              </Typography>
+            ),
+            target: () => ref1.current,
+            nextButtonProps: {
+              onClick: () => setActiveKey("2"),
+            },
+          },
+          permissions.report.paybrokers.bank_balance.menu && {
+            title: t("menus.organization_bank_balance"),
+            description: (
+              <Typography>
+                <Typography>
+                  <span style={{ color: defaultTheme.colors.info, marginRight: "5px" }}>
+                    Total:
+                  </span>
+                  {t("wiki.bank_total_description")}
+                </Typography>
+                <Typography>
+                  <span style={{ color: defaultTheme.colors.error, marginRight: "5px" }}>
+                    {t("table.blocked_value")}:
+                  </span>
+                  {t("wiki.bank_blocked_value_description")}
+                </Typography>
+                <Typography>
+                  <span style={{marginRight: "5px"}}>
+                    <Button
+                      shape="circle"
+                      onClick={() => {
+                        setIsBankChart(true);
+                        secureLocalStorage.setItem("isBankChart", "true");
+                      }}
+                    >
+                      <BarChartOutlined />
+                    </Button>
+                    :
+                  </span>
+                  {t("wiki.bank_chart_description")}
+                </Typography>
+                <Typography>
+                  <span style={{marginRight: "5px"}}>
+                    <Button
+                      shape="circle"
+                      onClick={() => {
+                        setIsBankChart(false);
+                          secureLocalStorage.setItem("isBankChart", "false");
+                      }}
+                    >
+                      <DashOutlined />
+                    </Button>
+                    :
+                  </span>
+                  {t("wiki.bank_card_description")}
+                </Typography>
+              </Typography>
+            ),
+            target: () => ref2.current,
+          },
+        ]}
+        pageStep={{
+          title: t("menus.dashboard"),
+          description: t("wiki.dashboard_description"),
+        }}
+      />
     </Row>
   );
 };
