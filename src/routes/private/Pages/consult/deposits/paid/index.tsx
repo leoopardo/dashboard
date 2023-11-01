@@ -1,13 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { EyeFilled, FileAddOutlined } from "@ant-design/icons";
+import {
+  EyeFilled,
+  FileAddOutlined,
+  SendOutlined,
+  SettingFilled,
+} from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { Search } from "@src/components/Inputs/search";
 import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
+import { Toast } from "@src/components/Toast";
+import { useCreateSendWebhook } from "@src/services/consult/deposits/generatedDeposits/resendWebhook";
 import { useGetDepositReportFields } from "@src/services/consult/deposits/reportCsvFields/getReportFields";
 import { queryClient } from "@src/services/queryClient";
 import { useCreatePaidDepositsReports } from "@src/services/reports/consult/deposits/createPaidDepositsReports";
+import { ResendWebhookBody } from "@src/services/types/consult/deposits/createResendWebhook.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
 import { Button, Select, Tooltip } from "antd";
 import moment from "moment";
@@ -22,7 +30,9 @@ import { FilterChips } from "../../../../../../components/FiltersModal/filterChi
 import { useGetRowsPaidDeposits } from "../../../../../../services/consult/deposits/paidDeposits/getRows";
 import { useGetTotalPaidDeposits } from "../../../../../../services/consult/deposits/paidDeposits/getTotal";
 import { paidDepositRowsQuery } from "../../../../../../services/types/consult/deposits/PaidDeposits.interface";
+import { ResendWebhookModal } from "../components/ResendWebhookModal";
 import { ViewModal } from "../components/ViewModal";
+import { WebhookModal } from "../components/webhooksModal";
 import { TotalizersCards } from "./components/TotalizersCards";
 
 const INITIAL_QUERY: paidDepositRowsQuery = {
@@ -51,11 +61,26 @@ export const PaidDeposits = () => {
   const [isComma, setIsComma] = useState<boolean>(true);
   const { paidTotal, isPaidTotalFetching, refetchPaidTotal } =
     useGetTotalPaidDeposits(query);
-
+  const [isWebhookModalOpen, setIsWebhookModalOpen] = useState<boolean>(false);
+  const [isResendWebhookModalOpen, setIsResendWebhookModalOpen] =
+    useState<boolean>(false);
   const { paidRows, isPaidRowsFetching, refetchPaidTotalRows, paidRowsError } =
     useGetRowsPaidDeposits(query);
 
   const { fields } = useGetDepositReportFields();
+
+  const [webhookBody, setWebhookBody] = useState<ResendWebhookBody>({
+    start_date: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss.SSS"),
+    end_date: moment(new Date())
+      .add(1, "hour")
+      .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+    merchant_id: undefined,
+    partner_id: undefined,
+    webhook_url_type: "both",
+  });
+  const [webhookId, setWebhookId] = useState<string>("");
+  const { ResendWebMutate, ResendWebError, ResendWebIsSuccess } =
+    useCreateSendWebhook(webhookBody, webhookId);
 
   const {
     PaidDepositsReportsError,
@@ -214,9 +239,32 @@ export const PaidDeposits = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
+        {permissions.report.deposit.generated_deposit
+          .report_deposit_generated_deposit_resend_notification && (
+          <Grid item xs={12} md={"auto"} lg={2}>
+            <Button
+              disabled={paidRows?.items.length === 0 || paidRowsError}
+              type="primary"
+              loading={isPaidRowsFetching}
+              size="large"
+              onClick={() => {
+                setIsResendWebhookModalOpen(true);
+              }}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "100%",
+              }}
+            >
+              {t("modal.resend_webhook")}
+            </Button>
+          </Grid>
+        )}
+
         {permissions.report.deposit.paid_deposit
           .report_deposit_paid_deposit_export_csv && (
-          <Grid item xs={12} md="auto" lg={2}>
+          <Grid item xs={12} md={1} lg={1}>
             <Tooltip
               placement="topRight"
               title={
@@ -233,7 +281,7 @@ export const PaidDeposits = () => {
                 type="dashed"
                 size="large"
                 loading={isPaidRowsFetching}
-                disabled={!paidRows?.items.length || paidRowsError}
+                disabled={paidRows?.items.length === 0 || paidRowsError}
               >
                 <FileAddOutlined style={{ fontSize: 22 }} /> CSV
               </Button>
@@ -262,6 +310,26 @@ export const PaidDeposits = () => {
                 label: "details",
                 icon: <EyeFilled style={{ fontSize: "18px" }} />,
                 onClick: () => setIsViewModalOpen(true),
+              },
+              {
+                label: "logs_webhooks",
+                icon: <SettingFilled style={{ fontSize: "18px" }} />,
+                onClick: () => setIsWebhookModalOpen(true),
+              },
+              permissions.report.deposit.paid_deposit
+                .report_deposit_paid_deposit_resend_notification && {
+                label: "resend_webhook",
+                icon: <SendOutlined style={{ fontSize: "18px" }} />,
+                onClick: (item) => {
+                  console.log(item);
+                  setWebhookBody((state) => ({
+                    ...state,
+                    end_date: undefined,
+                    start_date: undefined,
+                  }));
+                  setWebhookId(item?._id);
+                  setIsResendWebhookModalOpen(true);
+                },
               },
             ]}
             removeTotal
@@ -345,6 +413,31 @@ export const PaidDeposits = () => {
           initialQuery={INITIAL_QUERY}
         />
       )}
+      {isWebhookModalOpen && (
+        <WebhookModal
+          open={isWebhookModalOpen}
+          setOpen={setIsWebhookModalOpen}
+          id={currentItem?._id}
+        />
+      )}
+      {isResendWebhookModalOpen && (
+        <ResendWebhookModal
+          open={isResendWebhookModalOpen}
+          setOpen={setIsResendWebhookModalOpen}
+          body={webhookBody}
+          setBody={setWebhookBody}
+          submit={ResendWebMutate}
+          id={webhookId}
+          setId={setWebhookId}
+        />
+      )}
+
+      <Toast
+        actionSuccess={t("messages.created")}
+        actionError={t("messages.create")}
+        error={ResendWebError}
+        success={ResendWebIsSuccess}
+      />
     </Grid>
   );
 };

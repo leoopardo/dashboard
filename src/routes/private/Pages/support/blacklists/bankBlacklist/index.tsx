@@ -196,7 +196,7 @@ export const BankBlacklist = () => {
             ]}
             loading={isBankBlacklistFetching}
             actions={
-              permissions.support.blacklist.banks.support_blacklist_bank_create
+              permissions.support.blacklist.banks.support_blacklist_bank_delete
                 ? [
                     {
                       label: "delete",

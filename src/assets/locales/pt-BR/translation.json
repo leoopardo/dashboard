@@ -397,7 +397,7 @@
     "partner_name": "Plataforma",
     "partner_id": "ID Plataforma",
     "details": "Detalhes",
-    "reference_id": "Reference ID",
+    "reference_id": "ID do cliente",
     "endToEndId": "EndToEnd ID",
     "payer_document": "Documento do pagador",
     "description": "Descrição",

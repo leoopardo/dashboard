@@ -1,14 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { EyeFilled } from "@ant-design/icons";
+import { EyeFilled, SendOutlined, SettingFilled } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { Search } from "@src/components/Inputs/search";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
+import { Toast } from "@src/components/Toast";
+import { useCreateSendWebhook } from "@src/services/consult/deposits/generatedDeposits/resendWebhook";
 import { queryClient } from "@src/services/queryClient";
 import { useCreateGeneratedDepositsReports } from "@src/services/reports/consult/deposits/createGeneratedDepositsReports";
+import { ResendWebhookBody } from "@src/services/types/consult/deposits/createResendWebhook.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Select } from "antd";
+import { Button, Select, Tabs } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -21,7 +24,9 @@ import { FilterChips } from "../../../../../../components/FiltersModal/filterChi
 import { useGetRowsGeneratedDeposits } from "../../../../../../services/consult/deposits/generatedDeposits/getRows";
 import { useGetTotalGeneratedDeposits } from "../../../../../../services/consult/deposits/generatedDeposits/getTotal";
 import { generatedDepositTotalQuery } from "../../../../../../services/types/consult/deposits/generatedDeposits.interface";
+import { ResendWebhookModal } from "../components/ResendWebhookModal";
 import { ViewModal } from "../components/ViewModal";
+import { WebhookModal } from "../components/webhooksModal";
 import { TotalizersCards } from "./components/TotalizersCards";
 
 const INITIAL_QUERY: generatedDepositTotalQuery = {
@@ -37,6 +42,7 @@ const INITIAL_QUERY: generatedDepositTotalQuery = {
     .startOf("day")
     .add(3, "hours")
     .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+  status: "PAID",
 };
 
 export const UndeliveredDeposits = () => {
@@ -73,6 +79,22 @@ export const UndeliveredDeposits = () => {
     undefined
   );
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
+  const [isWebhookModalOpen, setIsWebhookModalOpen] = useState<boolean>(false);
+  const [isResendWebhookModalOpen, setIsResendWebhookModalOpen] =
+    useState<boolean>(false);
+  const [webhookBody, setWebhookBody] = useState<ResendWebhookBody>({
+    start_date: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss.SSS"),
+    end_date: moment(new Date())
+      .add(1, "hour")
+      .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+    merchant_id: undefined,
+    partner_id: undefined,
+    webhook_url_type: "both",
+  });
+  const [webhookId, setWebhookId] = useState<string>("");
+
+  const { ResendWebMutate, ResendWebError, ResendWebIsSuccess } =
+    useCreateSendWebhook(webhookBody, webhookId);
 
   const columns: ColumnInterface[] = [
     { name: "_id", type: "id" },
@@ -181,7 +203,7 @@ export const UndeliveredDeposits = () => {
             ]}
           />
         </Grid>
-        <Grid item xs={12} md={7} lg={4}>
+        <Grid item xs={12} md={3} lg={4}>
           <Search
             query={query}
             setQuery={setQuery}
@@ -209,59 +231,171 @@ export const UndeliveredDeposits = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        <Grid
-          container
-          item
-          xs={12}
-          md="auto"
-          style={{ marginLeft: "auto" }}
-          spacing={1}
-        >
-          {permissions.report.deposit.undelivered_deposit
-            .report_deposit_undelivered_deposit_export_csv && (
-            <Grid item xs={12} md={6} lg={6}>
-              <ExportReportsModal
-                disabled={depositsRows?.items.length === 0 || depositsRowsError}
-                mutateReport={() => GeneratedDepositsReportsMutate()}
-                error={GeneratedDepositsReportsError}
-                success={GeneratedDepositsReportsIsSuccess}
-                loading={GeneratedDepositsReportsIsLoading}
-                reportPath="/consult/deposit/deposits_reports/generated_deposits_reports"
-              />
-            </Grid>
-          )}
-        </Grid>
+        {permissions.report.deposit.generated_deposit
+          .report_deposit_generated_deposit_resend_notification && (
+          <Grid item xs={12} md={"auto"} lg={2}>
+            <Button
+              disabled={depositsRows?.items.length === 0 || depositsRowsError}
+              type="primary"
+              loading={isDepositsRowsFetching}
+              size="large"
+              onClick={() => {
+                setIsResendWebhookModalOpen(true);
+              }}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "100%",
+              }}
+            >
+              {t("modal.resend_webhook")}
+            </Button>
+          </Grid>
+        )}
+        {permissions.report.deposit.undelivered_deposit
+          .report_deposit_undelivered_deposit_export_csv && (
+          <Grid item xs={12} md={1} lg={1}>
+            <ExportReportsModal
+              disabled={depositsRows?.items.length === 0 || depositsRowsError}
+              mutateReport={() => GeneratedDepositsReportsMutate()}
+              error={GeneratedDepositsReportsError}
+              success={GeneratedDepositsReportsIsSuccess}
+              loading={GeneratedDepositsReportsIsLoading}
+              reportPath="/consult/deposit/deposits_reports/generated_deposits_reports"
+            />
+          </Grid>
+        )}
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
         <Grid item xs={12}>
-          <CustomTable
-            query={query}
-            setCurrentItem={setCurrentItem}
-            setQuery={setQuery}
-            data={depositsRows}
-            items={depositsRows?.items}
-            columns={columns}
-            loading={isDepositsRowsFetching}
-            error={depositsRowsError}
-            refetch={() => {
-              refetchDepositsTotal();
-              refetchDepositsTotalRows();
+          <Tabs
+            defaultActiveKey="1"
+            onChange={(active) => {
+              active === "1"
+                ? setQuery((state) => ({
+                    ...state,
+                    delivered_at_secondary: undefined,
+                    delivered_at: false,
+                  }))
+                : setQuery((state) => ({
+                    ...state,
+                    delivered_at_secondary: false,
+                    delivered_at: undefined,
+                  }));
             }}
-            actions={[
+            items={[
               {
-                label: "details",
-                icon: <EyeFilled style={{ fontSize: "18px" }} />,
-                onClick: () => setIsViewModalOpen(true),
+                key: "1",
+                label: t("table.webhook_url"),
+                children: (
+                  <CustomTable
+                    query={query}
+                    setCurrentItem={setCurrentItem}
+                    setQuery={setQuery}
+                    data={depositsRows}
+                    items={depositsRows?.items}
+                    columns={columns}
+                    loading={isDepositsRowsFetching}
+                    error={depositsRowsError}
+                    refetch={() => {
+                      refetchDepositsTotal();
+                      refetchDepositsTotalRows();
+                    }}
+                    actions={[
+                      {
+                        label: "details",
+                        icon: <EyeFilled style={{ fontSize: "18px" }} />,
+                        onClick: () => setIsViewModalOpen(true),
+                      },
+                      {
+                        label: "logs_webhooks",
+                        icon: <SettingFilled style={{ fontSize: "18px" }} />,
+                        onClick: () => setIsWebhookModalOpen(true),
+                      },
+                      permissions.report.deposit.paid_deposit
+                        .report_deposit_paid_deposit_resend_notification && {
+                        label: "resend_webhook",
+                        icon: <SendOutlined style={{ fontSize: "18px" }} />,
+                        onClick: (item) => {
+                          console.log(item);
+                          setWebhookBody((state) => ({
+                            ...state,
+                            end_date: undefined,
+                            start_date: undefined,
+                          }));
+                          setWebhookId(item?._id);
+                          setIsResendWebhookModalOpen(true);
+                        },
+                      },
+                    ]}
+                    removeTotal
+                    label={[
+                      "bank",
+                      "merchant_name",
+                      "status",
+                      "createdAt",
+                      "delivered_at",
+                    ]}
+                  />
+                ),
               },
-            ]}
-            removeTotal
-            label={[
-              "bank",
-              "merchant_name",
-              "status",
-              "createdAt",
-              "delivered_at",
+              {
+                key: "2",
+                label: t("table.webhook_url_optional"),
+                children: (
+                  <CustomTable
+                    query={query}
+                    setCurrentItem={setCurrentItem}
+                    setQuery={setQuery}
+                    data={depositsRows}
+                    items={depositsRows?.items}
+                    columns={columns}
+                    loading={isDepositsRowsFetching}
+                    error={depositsRowsError}
+                    refetch={() => {
+                      refetchDepositsTotal();
+                      refetchDepositsTotalRows();
+                    }}
+                    actions={[
+                      {
+                        label: "details",
+                        icon: <EyeFilled style={{ fontSize: "18px" }} />,
+                        onClick: () => setIsViewModalOpen(true),
+                      },
+                      {
+                        label: "logs_webhooks",
+                        icon: <SettingFilled style={{ fontSize: "18px" }} />,
+                        onClick: () => setIsWebhookModalOpen(true),
+                      },
+                      permissions.report.deposit.paid_deposit
+                        .report_deposit_paid_deposit_resend_notification && {
+                        label: "resend_webhook",
+                        icon: <SendOutlined style={{ fontSize: "18px" }} />,
+                        onClick: (item) => {
+                          console.log(item);
+                          setWebhookBody((state) => ({
+                            ...state,
+                            end_date: undefined,
+                            start_date: undefined,
+                          }));
+                          setWebhookId(item?._id);
+                          setIsResendWebhookModalOpen(true);
+                        },
+                      },
+                    ]}
+                    removeTotal
+                    label={[
+                      "bank",
+                      "merchant_name",
+                      "status",
+                      "createdAt",
+                      "delivered_at",
+                    ]}
+                  />
+                ),
+              },
             ]}
           />
         </Grid>
@@ -318,6 +452,31 @@ export const UndeliveredDeposits = () => {
           initialQuery={INITIAL_QUERY}
         />
       )}
+      {isWebhookModalOpen && (
+        <WebhookModal
+          open={isWebhookModalOpen}
+          setOpen={setIsWebhookModalOpen}
+          id={currentItem?._id}
+        />
+      )}
+      {isResendWebhookModalOpen && (
+        <ResendWebhookModal
+          open={isResendWebhookModalOpen}
+          setOpen={setIsResendWebhookModalOpen}
+          body={webhookBody}
+          setBody={setWebhookBody}
+          submit={ResendWebMutate}
+          id={webhookId}
+          setId={setWebhookId}
+        />
+      )}
+
+      <Toast
+        actionSuccess={t("messages.created")}
+        actionError={t("messages.create")}
+        error={ResendWebError}
+        success={ResendWebIsSuccess}
+      />
     </Grid>
   );
 };
