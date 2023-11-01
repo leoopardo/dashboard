@@ -740,7 +740,23 @@
     "refetch_data": "Recarregar dados",
     "download_payment_voucher": "Baixar comprovante",
     "generate_payment_voucher": "Gerar comprovante",
-    "reference_day": "Data de referência"
+    "reference_day": "Data de referência",
+    
+    "merchant_withdraw_fee_type": "Tipo de taxa (Saque empresa)",
+    "cashin_pix_fee_type": "Tipo de taxa (Depósito)",
+    "customer_withdraw_fee_type": "Tipo de taxa (Saque cliente)",
+    "fastpix_in_fee_type": "Tipo de taxa (Depósito FastPix)",
+    "fastpix_refund_fee_type": "Tipo de taxa (Devolução FastPix)",
+    "merchant_withdraw_fee_percent": "Porcentagem de taxa (Saque empresa)",
+    "cashin_pix_fee_percent": "Porcentagem de taxa (Depósito)",
+    "customer_withdraw_fee_percent": "Porcentagem de taxa (Saque cliente)",
+    "fastpix_in_fee_percent": "Porcentagem de taxa (Depósito FastPix)",
+    "fastpix_refund_fee_percent": "Porcentagem de taxa (Devolução FastPix)",
+    "merchant_withdraw_fee_value": "Valor de taxa (Saque empresa)",
+    "cashin_pix_fee_value": "Valor de taxa (Depósito)",
+    "customer_withdraw_fee_value": "Valor de taxa (Saque cliente)",
+    "fastpix_in_fee_value": "Valor de taxa (Depósito FastPix)",
+    "fastpix_refund_fee_value": "Valor de taxa (Devolução FastPix)"
   },
   "actions": {
     "details": "Detalhes",

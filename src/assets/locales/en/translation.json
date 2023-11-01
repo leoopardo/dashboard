@@ -735,7 +735,22 @@
     "refetch_data": "Reload data",
     "download_payment_voucher": "Download payment voucher",
     "generate_payment_voucher": "Generate payment voucher",
-    "reference_day": "Reference day"
+    "reference_day": "Reference day",
+    "merchant_withdraw_fee_type": "Fee Type (Merchant Withdrawal)",
+    "cashin_pix_fee_type": "Fee Type (Cash In - PIX)",
+    "customer_withdraw_fee_type": "Fee Type (Customer Withdrawal)",
+    "fastpix_in_fee_type": "Fee Type (FastPix Deposit)",
+    "fastpix_refund_fee_type": "Fee Type (FastPix Refund)",
+    "merchant_withdraw_fee_percent": "Percentage Fee (Merchant Withdrawal)",
+    "cashin_pix_fee_percent": "Percentage Fee (Cash In - PIX)",
+    "customer_withdraw_fee_percent": "Percentage Fee (Customer Withdrawal)",
+    "fastpix_in_fee_percent": "Percentage Fee (FastPix Deposit)",
+    "fastpix_refund_fee_percent": "Percentage Fee (FastPix Refund)",
+    "merchant_withdraw_fee_value": "Fee Amount (Merchant Withdrawal)",
+    "cashin_pix_fee_value": "Fee Amount (Cash In - PIX)",
+    "customer_withdraw_fee_value": "Fee Amount (Customer Withdrawal)",
+    "fastpix_in_fee_value": "Fee Amount (FastPix Deposit)",
+    "fastpix_refund_fee_value": "Fee Amount (FastPix Refund)"
   },
   "actions": {
     "details": "Details",
