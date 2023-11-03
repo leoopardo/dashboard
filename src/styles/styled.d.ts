@@ -4,6 +4,7 @@ declare module "styled-components" {
   export interface DefaultTheme {
     colors: {
       dark: string;
+      grey: string;
       primary: string;
       secondary: string;
       refund_to_merchant: string;

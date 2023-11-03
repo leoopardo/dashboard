@@ -3,6 +3,7 @@ import { DefaultTheme } from "styled-components";
 export const defaultTheme: DefaultTheme = {
   colors: {
     dark: "#4A4A4A",
+    grey:"#00000073",
     primary: import.meta.env.VITE_APP_COLOR_PRIMARY,
     secondary: import.meta.env.VITE_APP_COLOR_SECONDARY,
 
