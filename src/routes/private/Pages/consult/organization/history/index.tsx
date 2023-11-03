@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import { OrganizationHistoryLineChart } from "./components/historyLineChart";
+import { formatFilterDate } from "@src/utils/formatDate";
 
 export const OrganizationHistory = () => {
   const { t } = useTranslation();
@@ -36,13 +37,10 @@ export const OrganizationHistory = () => {
 
   const columns: TableColumnsType<OrganizationHistoryItem> = [
     {
-      title: t("table.created_at"),
-      dataIndex: "createdAt",
-      key: "createdAt",
-      render: (value) =>
-        new Date(value ?? "").toLocaleDateString("pt-BR", {
-          timeZone: "UTC",
-        }),
+      title: t("table.reference_day"),
+      dataIndex: "reference_day",
+      key: "reference_day",
+      render: (value) => formatFilterDate(value),
     },
     {
       title: t("table.balance_to_transactions"),
