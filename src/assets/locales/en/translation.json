@@ -733,6 +733,7 @@
     "operations_value": "Operations value",
     "category_id": "Category",
     "refetch_data": "Reload data",
+    "invalid": "Invalid",
     "download_payment_voucher": "Download payment voucher",
     "generate_payment_voucher": "Generate payment voucher",
     "reference_day": "Reference day",
