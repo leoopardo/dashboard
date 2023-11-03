@@ -1729,9 +1729,9 @@ export const SidebarNavigation = () => {
             display: permissions?.support?.blacklist?.menu ? undefined : "none",
           }
         ),
-        getItem("Wiki", null, null, false, () => {
+       /*  getItem("Wiki", null, null, false, () => {
           window.open("https://wiki-v4.paybrokers.info/");
-        }),
+        }), */
       ],
       undefined,
       undefined,

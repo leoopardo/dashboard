@@ -3,7 +3,7 @@ import {
   DeleteOutlined,
   EditOutlined,
   EyeFilled,
-  PlusOutlined
+  PlusOutlined,
 } from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
@@ -25,6 +25,8 @@ import { Button } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { UpdateFeePlanModal } from "./components/UpdateFeePlanModal";
+import { ValidateInterface } from "@src/services/types/validate.interface";
+import { queryClient } from "@src/services/queryClient";
 
 const INITIAL_QUERY: MerchantManualEntryCategoryQuery = {
   limit: 25,
@@ -34,6 +36,9 @@ const INITIAL_QUERY: MerchantManualEntryCategoryQuery = {
 };
 
 export const MerchantFeePlans = () => {
+  const { permissions } = queryClient.getQueryData(
+    "validate"
+  ) as ValidateInterface;
   const [query, setQuery] =
     useState<MerchantManualEntryCategoryQuery>(INITIAL_QUERY);
   const { t } = useTranslation();
@@ -116,29 +121,29 @@ export const MerchantFeePlans = () => {
             setQuery={setQuery}
           />
         </Grid>
-
-        <Grid item xs={12} md={3} lg={2}>
-          <Button
-            type="primary"
-            loading={isFeePlansDataFetching}
-            onClick={() => {
-              setIsCreateModalOpen(true);
-            }}
-            style={{
-              height: 40,
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <PlusOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
-            {`${t("buttons.create")} ${t("menus.fee_plans")
-              .toString()
-              .toLocaleLowerCase()}`}
-          </Button>
-        </Grid>
-
+        {permissions.register.merchant.fee_plans.merchant_fee_plans_create && (
+          <Grid item xs={12} md={3} lg={2}>
+            <Button
+              type="primary"
+              loading={isFeePlansDataFetching}
+              onClick={() => {
+                setIsCreateModalOpen(true);
+              }}
+              style={{
+                height: 40,
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <PlusOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
+              {`${t("buttons.create")} ${t("menus.fee_plans")
+                .toString()
+                .toLocaleLowerCase()}`}
+            </Button>
+          </Grid>
+        )}
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -161,14 +166,14 @@ export const MerchantFeePlans = () => {
                   setIsViewModalOpen(true);
                 },
               },
-              {
+              permissions.register.merchant.fee_plans.merchant_fee_plans_update && {
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
                 onClick: () => {
                   setIsUpdateModalOpen(true);
                 },
               },
-              {
+              permissions.register.merchant.fee_plans.merchant_fee_plans_delete && {
                 label: "delete",
                 icon: <DeleteOutlined style={{ fontSize: "20px" }} />,
                 onClick: () => setIsConfirmOpen(true),
