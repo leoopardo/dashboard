@@ -756,7 +756,10 @@
     "cashin_pix_fee_value": "Valor de taxa (Depósito)",
     "customer_withdraw_fee_value": "Valor de taxa (Saque cliente)",
     "fastpix_in_fee_value": "Valor de taxa (Depósito FastPix)",
-    "fastpix_refund_fee_value": "Valor de taxa (Devolução FastPix)"
+    "fastpix_refund_fee_value": "Valor de taxa (Devolução FastPix)",
+    "fastpix_webhook_url": "URL de webhook FastPix",
+    "fastpix_redirect_url": "URL de redirecionamento FastPix",
+    "fastpix_token_time": "Tempo de expiração de token FastPix"
   },
   "actions": {
     "details": "Detalhes",

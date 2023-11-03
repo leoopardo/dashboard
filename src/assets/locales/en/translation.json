@@ -751,7 +751,10 @@
     "cashin_pix_fee_value": "Fee Amount (Cash In - PIX)",
     "customer_withdraw_fee_value": "Fee Amount (Customer Withdrawal)",
     "fastpix_in_fee_value": "Fee Amount (FastPix Deposit)",
-    "fastpix_refund_fee_value": "Fee Amount (FastPix Refund)"
+    "fastpix_refund_fee_value": "Fee Amount (FastPix Refund)",
+    "fastpix_webhook_url": "FastPix Webhook URL",
+    "fastpix_redirect_url": "FastPix Redirect URL",
+    "fastpix_token_time": "FastPix Token Expiration Time"
   },
   "actions": {
     "details": "Details",

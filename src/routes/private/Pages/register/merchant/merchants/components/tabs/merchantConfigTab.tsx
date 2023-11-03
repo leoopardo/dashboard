@@ -5,7 +5,16 @@ import { Grid } from "@mui/material";
 import { useMerchantConfig } from "@src/services/register/merchant/merchant/merchantConfig.tsx/getMerchantConfig";
 import { useUpdateMerchantConfig } from "@src/services/register/merchant/merchant/merchantConfig.tsx/updateMerchantConfig";
 import { IMerchantConfig } from "@src/services/types/register/merchants/merchantConfig.interface";
-import { Button, Form, FormInstance, Input, Popconfirm, Select } from "antd";
+import {
+  Button,
+  Divider,
+  Form,
+  FormInstance,
+  Input,
+  InputNumber,
+  Popconfirm,
+  Select,
+} from "antd";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -159,6 +168,84 @@ export const MerchantConfigTab = (props: { id?: string }) => {
               }}
             />
           </Form.Item>
+        </Grid>
+        <Grid
+          item
+          container
+          xs={12}
+          spacing={1}
+          style={{ display: "flex", alignItems: "flex-end" }}
+        >
+          <Grid item xs={12}>
+            <Divider>FastPix</Divider>
+          </Grid>
+          <Grid item xs={12} md={5}>
+            <Form.Item
+              label={t("table.fastpix_webhook_url")}
+              name="fastpix_webhook_url"
+            >
+              <Input
+                size="large"
+                name="fastpix_webhook_url"
+                value={body?.fastpix_webhook_url}
+                onChange={(e) => {
+                  setBody((state) => ({
+                    ...state,
+                    fastpix_webhook_url: e.target.value,
+                  }));
+                  setBodyUpdate((state) => ({
+                    ...state,
+                    fastpix_webhook_url: e.target.value,
+                  }));
+                }}
+              />
+            </Form.Item>
+          </Grid>
+          <Grid item xs={12} md={5}>
+            <Form.Item
+              label={t("table.fastpix_redirect_url")}
+              name="fastpix_redirect_url"
+            >
+              <Input
+                size="large"
+                name="fastpix_redirect_url"
+                value={body?.fastpix_redirect_url}
+                onChange={(e) => {
+                  setBody((state) => ({
+                    ...state,
+                    fastpix_redirect_url: e.target.value,
+                  }));
+                  setBodyUpdate((state) => ({
+                    ...state,
+                    fastpix_redirect_url: e.target.value,
+                  }));
+                }}
+              />
+            </Form.Item>
+          </Grid>
+          <Grid item xs={12} md={2}>
+            <Form.Item
+              label={t("table.fastpix_token_time")}
+              name="fastpix_token_time"
+            >
+              <InputNumber
+                style={{ width: "100%" }}
+                size="large"
+                name="fastpix_token_time"
+                value={body?.fastpix_token_time}
+                onChange={(value) => {
+                  setBody((state) => ({
+                    ...state,
+                    fastpix_token_time: value ?? 0,
+                  }));
+                  setBodyUpdate((state) => ({
+                    ...state,
+                    fastpix_token_time: value ?? 0,
+                  }));
+                }}
+              />
+            </Form.Item>
+          </Grid>
         </Grid>
       </Grid>
       <Grid
