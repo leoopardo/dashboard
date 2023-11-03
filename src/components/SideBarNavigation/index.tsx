@@ -1458,7 +1458,7 @@ export const SidebarNavigation = () => {
               }
             ),
             getItem(
-              "withdrawals",
+              "refund_withdrawals",
               null,
               null,
               false,

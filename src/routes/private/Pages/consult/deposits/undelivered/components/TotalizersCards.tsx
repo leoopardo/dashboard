@@ -8,6 +8,7 @@ import {
 } from "../../../../../../../services/types/consult/deposits/generatedDeposits.interface";
 import { defaultTheme } from "../../../../../../../styles/defaultTheme";
 import { useTheme } from "@src/contexts/ThemeContext";
+import { getPercent } from "@src/utils/getPercent";
 
 interface TotalizersInterface {
   data: generatedDepositTotal | null | undefined;
@@ -36,7 +37,18 @@ export const TotalizersCards = (props: TotalizersInterface) => {
           <Card bordered={false}>
             <Statistic
               loading={props.loading}
-              title={`${t("table.paid")}: ${props?.data?.paid_total || 0}`}
+              title={
+                <>
+                  <>{t("table.paid")}</>:{" "}
+                  <span style={{ fontSize: "12px" }}>
+                    {props?.data?.paid_total || 0} /{" "}
+                    {getPercent(
+                      props?.data?.paid_total ?? 0,
+                      props.data?.transactions_total ?? 0
+                    )}
+                  </span>
+                </>
+              }
               value={new Intl.NumberFormat("pt-BR", {
                 style: "currency",
                 currency: "BRL",
@@ -54,19 +66,32 @@ export const TotalizersCards = (props: TotalizersInterface) => {
       )}
       {(props.query.status === "REFUNDED" || !props.query.status) && (
         <Col
-          style={{ maxWidth: "220px" }}
+          span={1}
+          style={{
+            maxWidth: "220px",
+            minWidth: !isMobile ? "200px" : undefined,
+          }}
           xs={{ span: isMobile ? 11 : undefined }}
         >
           <Card bordered={false}>
             <Statistic
               loading={props.loading}
-              title={`${t("table.refunded")}: ${
-                props?.data?.refund_total || 0
-              }`}
+              title={
+                <>
+                  <>{t("table.refunded")}</>:{" "}
+                  <span style={{ fontSize: "12px" }}>
+                    {props?.data?.refund_total || 0} /{" "}
+                    {getPercent(
+                      props?.data?.refund_total ?? 0,
+                      props.data?.transactions_total ?? 0
+                    )}
+                  </span>
+                </>
+              }
               value={new Intl.NumberFormat("pt-BR", {
                 style: "currency",
                 currency: "BRL",
-              }).format(props?.data?.awaiting_refund_value || 0)}
+              }).format(props?.data?.refund_value || 0)}
               precision={2}
               valueStyle={{
                 color: defaultTheme.colors.success,
@@ -86,9 +111,18 @@ export const TotalizersCards = (props: TotalizersInterface) => {
           <Card bordered={false}>
             <Statistic
               loading={props.loading}
-              title={`${t("table.canceled")}: ${
-                props?.data?.canceled_total || 0
-              }`}
+              title={
+                <>
+                  <>{t("table.canceled")}</>:{" "}
+                  <span style={{ fontSize: "12px" }}>
+                    {props?.data?.canceled_total || 0} /{" "}
+                    {getPercent(
+                      props?.data?.canceled_total ?? 0,
+                      props.data?.transactions_total ?? 0
+                    )}
+                  </span>
+                </>
+              }
               value={new Intl.NumberFormat("pt-BR", {
                 style: "currency",
                 currency: "BRL",
@@ -112,9 +146,18 @@ export const TotalizersCards = (props: TotalizersInterface) => {
           <Card bordered={false}>
             <Statistic
               loading={props.loading}
-              title={`${t("table.expired")}: ${
-                props?.data?.expired_total || 0
-              }`}
+              title={
+                <>
+                  <>{t("table.expired")}</>:{" "}
+                  <span style={{ fontSize: "12px" }}>
+                    {props?.data?.expired_total || 0} /{" "}
+                    {getPercent(
+                      props?.data?.expired_total ?? 0,
+                      props.data?.transactions_total ?? 0
+                    )}
+                  </span>
+                </>
+              }
               value={new Intl.NumberFormat("pt-BR", {
                 style: "currency",
                 currency: "BRL",
@@ -137,9 +180,18 @@ export const TotalizersCards = (props: TotalizersInterface) => {
           <Card bordered={false}>
             <Statistic
               loading={props.loading}
-              title={`${t("table.waiting")}: ${
-                props?.data?.waiting_total || 0
-              }`}
+              title={
+                <>
+                  <>{t("table.waiting")}:</>{" "}
+                  <span style={{ fontSize: "12px" }}>
+                    {props?.data?.waiting_total || 0} /{" "}
+                    {getPercent(
+                      props?.data?.waiting_total ?? 0,
+                      props.data?.transactions_total ?? 0
+                    )}
+                  </span>
+                </>
+              }
               value={new Intl.NumberFormat("pt-BR", {
                 style: "currency",
                 currency: "BRL",
@@ -163,9 +215,18 @@ export const TotalizersCards = (props: TotalizersInterface) => {
           <Card bordered={false}>
             <Statistic
               loading={props.loading}
-              title={`${t("table.waiting_refund")}: ${
-                props?.data?.awaiting_refund_total || 0
-              }`}
+              title={
+                <>
+                  <>{t("table.waiting_refund")}</>:{" "}
+                  <span style={{ fontSize: "12px" }}>
+                    {props?.data?.awaiting_refund_total || 0} /{" "}
+                    {getPercent(
+                      props?.data?.awaiting_refund_total ?? 0,
+                      props.data?.transactions_total ?? 0
+                    )}
+                  </span>
+                </>
+              }
               value={new Intl.NumberFormat("pt-BR", {
                 style: "currency",
                 currency: "BRL",

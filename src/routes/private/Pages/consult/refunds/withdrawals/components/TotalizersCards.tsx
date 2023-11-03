@@ -8,6 +8,7 @@ import {
 } from "../../../../../../../services/types/consult/refunds/refundsDeposits.interface";
 import { defaultTheme } from "../../../../../../../styles/defaultTheme";
 import { useTheme } from "@src/contexts/ThemeContext";
+import { getPercent } from "@src/utils/getPercent";
 
 interface TotalizersInterface {
   data: refundDepositTotal | null | undefined;
@@ -39,9 +40,18 @@ export const TotalizersCards = (props: TotalizersInterface) => {
           >
             <Statistic
               loading={props.loading}
-              title={`${t("table.paid_to_merchant")}: ${
-                props?.data?.paid_to_merchant_total || 0
-              }`}
+              title={
+                <>
+                  <>{t("table.paid_to_merchant")}</>:{" "}
+                  <span style={{ fontSize: "12px" }}>
+                    {props?.data?.paid_to_merchant_total || 0} /{" "}
+                    {getPercent(
+                      props?.data?.paid_to_merchant_total ?? 0,
+                      props.data?.transactions_total ?? 0
+                    )}
+                  </span>
+                </>
+              }
               value={new Intl.NumberFormat("pt-BR", {
                 style: "currency",
                 currency: "BRL",
@@ -68,7 +78,18 @@ export const TotalizersCards = (props: TotalizersInterface) => {
           >
             <Statistic
               loading={props.loading}
-              title={`${t("table.error")}: ${props?.data?.error_total || 0}`}
+              title={
+                <>
+                  <>{t("table.error")}</>:{" "}
+                  <span style={{ fontSize: "12px" }}>
+                    {props?.data?.error_total || 0} /{" "}
+                    {getPercent(
+                      props?.data?.error_total ?? 0,
+                      props.data?.transactions_total ?? 0
+                    )}
+                  </span>
+                </>
+              }
               value={new Intl.NumberFormat("pt-BR", {
                 style: "currency",
                 currency: "BRL",
@@ -95,9 +116,18 @@ export const TotalizersCards = (props: TotalizersInterface) => {
           >
             <Statistic
               loading={props.loading}
-              title={`${t("table.processing")}: ${
-                props?.data?.processing_total || 0
-              }`}
+              title={
+                <>
+                  <>{t("table.processing")}</>:{" "}
+                  <span style={{ fontSize: "12px" }}>
+                    {props?.data?.processing_total || 0} /{" "}
+                    {getPercent(
+                      props?.data?.processing_total ?? 0,
+                      props.data?.transactions_total ?? 0
+                    )}
+                  </span>
+                </>
+              }
               value={new Intl.NumberFormat("pt-BR", {
                 style: "currency",
                 currency: "BRL",
@@ -123,9 +153,18 @@ export const TotalizersCards = (props: TotalizersInterface) => {
           >
             <Statistic
               loading={props.loading}
-              title={`${t("table.waiting")}: ${
-                props?.data?.waiting_total || 0
-              }`}
+              title={
+                <>
+                  <>{t("table.waiting")}</>:{" "}
+                  <span style={{ fontSize: "12px" }}>
+                    {props?.data?.waiting_total || 0} /{" "}
+                    {getPercent(
+                      props?.data?.waiting_total ?? 0,
+                      props.data?.transactions_total ?? 0
+                    )}
+                  </span>
+                </>
+              }
               value={new Intl.NumberFormat("pt-BR", {
                 style: "currency",
                 currency: "BRL",

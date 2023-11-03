@@ -67,6 +67,7 @@ export interface generatedWithdrawalsRowsQuery {
   payment_id?: string;
   receiver_name?: string;
   description?: string;
+  delivered_at_secondary?: boolean;
 }
 
 export interface generatedWithdrawalsTotal {
@@ -149,5 +150,5 @@ export interface getWithdraw {
   receiver_bank_name: string;
   paid_at: string;
   delivered_at: string;
-  url_pdf: string
+  url_pdf: string;
 }

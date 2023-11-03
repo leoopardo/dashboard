@@ -13,7 +13,7 @@ import { queryClient } from "@src/services/queryClient";
 import { useCreateGeneratedWithdrawalsReports } from "@src/services/reports/consult/withdrawals/generated/createGeneratedWithdrawalsReports";
 import { ResendWebhookBody } from "@src/services/types/consult/deposits/createResendWebhook.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Select } from "antd";
+import { Button, Select, Tabs } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -285,54 +285,134 @@ export const UndeliveredWithdrawals = () => {
 
       <Grid container style={{ marginTop: "15px" }}>
         <Grid item xs={12}>
-          <CustomTable
-            query={query}
-            setCurrentItem={setCurrentItem}
-            setQuery={setQuery}
-            data={witrawalsRows}
-            items={witrawalsRows?.items}
-            columns={columns}
-            loading={isWithdrawalsRowsFetching}
-            error={witrawalsRowsError}
-            refetch={() => {
-              refetchWithdrawalsTotalRows();
-              refetchWithdrawalsTotal();
-            }}
-            actions={[
-              {
-                label: "details",
-                icon: <EyeFilled style={{ fontSize: "18px" }} />,
-                onClick: () => setIsViewModalOpen(true),
-              },
-              {
-                label: "logs_webhooks",
-                icon: <SettingFilled style={{ fontSize: "18px" }} />,
-                onClick: () => setIsWebhookModalOpen(true),
-              },
-              permissions.report.deposit.paid_deposit
-                .report_deposit_paid_deposit_resend_notification && {
-                label: "resend_webhook",
-                icon: <SendOutlined style={{ fontSize: "18px" }} />,
-                onClick: (item) => {
-                  console.log(item);
-                  setWebhookBody((state) => ({
+          <Tabs
+            defaultActiveKey="1"
+            onChange={(active) => {
+              active === "1"
+                ? setQuery((state) => ({
                     ...state,
-                    end_date: undefined,
-                    start_date: undefined,
+                    delivered_at_secondary: undefined,
+                    delivered_at: false,
+                  }))
+                : setQuery((state) => ({
+                    ...state,
+                    delivered_at_secondary: false,
+                    delivered_at: undefined,
                   }));
-                  setWebhookId(item?._id);
-                  setIsResendWebhookModalOpen(true);
-                },
-                disabled: (item) => item.status !== "PAID",
+            }}
+            items={[
+              {
+                key: "1",
+                label: t("table.webhook_url"),
+                children: (
+                  <CustomTable
+                    query={query}
+                    setCurrentItem={setCurrentItem}
+                    setQuery={setQuery}
+                    data={witrawalsRows}
+                    items={witrawalsRows?.items}
+                    columns={columns}
+                    loading={isWithdrawalsRowsFetching}
+                    error={witrawalsRowsError}
+                    refetch={() => {
+                      refetchWithdrawalsTotalRows();
+                      refetchWithdrawalsTotal();
+                    }}
+                    actions={[
+                      {
+                        label: "details",
+                        icon: <EyeFilled style={{ fontSize: "18px" }} />,
+                        onClick: () => setIsViewModalOpen(true),
+                      },
+                      {
+                        label: "logs_webhooks",
+                        icon: <SettingFilled style={{ fontSize: "18px" }} />,
+                        onClick: () => setIsWebhookModalOpen(true),
+                      },
+                      permissions.report.deposit.paid_deposit
+                        .report_deposit_paid_deposit_resend_notification && {
+                        label: "resend_webhook",
+                        icon: <SendOutlined style={{ fontSize: "18px" }} />,
+                        onClick: (item) => {
+                          console.log(item);
+                          setWebhookBody((state) => ({
+                            ...state,
+                            end_date: undefined,
+                            start_date: undefined,
+                          }));
+                          setWebhookId(item?._id);
+                          setIsResendWebhookModalOpen(true);
+                        },
+                        disabled: (item) => item.status !== "PAID",
+                      },
+                    ]}
+                    removeTotal
+                    label={[
+                      "bank",
+                      "merchant_name",
+                      "status",
+                      "createdAt",
+                      "delivered_at",
+                    ]}
+                  />
+                ),
               },
-            ]}
-            removeTotal
-            label={[
-              "bank",
-              "merchant_name",
-              "status",
-              "createdAt",
-              "delivered_at",
+              {
+                key: "2",
+                label: t("table.webhook_url_optional"),
+                children: (
+                  <CustomTable
+                    query={query}
+                    setCurrentItem={setCurrentItem}
+                    setQuery={setQuery}
+                    data={witrawalsRows}
+                    items={witrawalsRows?.items}
+                    columns={columns}
+                    loading={isWithdrawalsRowsFetching}
+                    error={witrawalsRowsError}
+                    refetch={() => {
+                      refetchWithdrawalsTotalRows();
+                      refetchWithdrawalsTotal();
+                    }}
+                    actions={[
+                      {
+                        label: "details",
+                        icon: <EyeFilled style={{ fontSize: "18px" }} />,
+                        onClick: () => setIsViewModalOpen(true),
+                      },
+                      {
+                        label: "logs_webhooks",
+                        icon: <SettingFilled style={{ fontSize: "18px" }} />,
+                        onClick: () => setIsWebhookModalOpen(true),
+                      },
+                      permissions.report.deposit.paid_deposit
+                        .report_deposit_paid_deposit_resend_notification && {
+                        label: "resend_webhook",
+                        icon: <SendOutlined style={{ fontSize: "18px" }} />,
+                        onClick: (item) => {
+                          console.log(item);
+                          setWebhookBody((state) => ({
+                            ...state,
+                            end_date: undefined,
+                            start_date: undefined,
+                          }));
+                          setWebhookId(item?._id);
+                          setIsResendWebhookModalOpen(true);
+                        },
+                        disabled: (item) => item.status !== "PAID",
+                      },
+                    ]}
+                    removeTotal
+                    label={[
+                      "bank",
+                      "merchant_name",
+                      "status",
+                      "createdAt",
+                      "delivered_at",
+                    ]}
+                  />
+                ),
+              },
             ]}
           />
         </Grid>

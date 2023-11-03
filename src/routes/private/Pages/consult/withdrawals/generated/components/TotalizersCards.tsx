@@ -1,4 +1,6 @@
 import { ReloadOutlined } from "@ant-design/icons";
+import { useTheme } from "@src/contexts/ThemeContext";
+import { getPercent } from "@src/utils/getPercent";
 import { Button, Card, Col, Row, Statistic } from "antd";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
@@ -7,7 +9,6 @@ import {
   generatedWithdrawalsTotal,
 } from "../../../../../../../services/types/consult/withdrawals/generatedWithdrawals.interface";
 import { defaultTheme } from "../../../../../../../styles/defaultTheme";
-import { useTheme } from "@src/contexts/ThemeContext";
 
 interface TotalizersInterface {
   data: generatedWithdrawalsTotal | null | undefined;
@@ -39,7 +40,18 @@ export const TotalizersCards = (props: TotalizersInterface) => {
           >
             <Statistic
               loading={props.loading}
-              title={`${t("table.paid")}: ${props?.data?.paid_total || 0}`}
+              title={
+                <>
+                  <>{t("table.paid")}</>:{" "}
+                  <span style={{ fontSize: "12px" }}>
+                    {props?.data?.paid_total || 0} /{" "}
+                    {getPercent(
+                      props?.data?.paid_total ?? 0,
+                      props.data?.transactions_total ?? 0
+                    )}
+                  </span>
+                </>
+              }
               value={new Intl.NumberFormat("pt-BR", {
                 style: "currency",
                 currency: "BRL",
@@ -66,9 +78,18 @@ export const TotalizersCards = (props: TotalizersInterface) => {
           >
             <Statistic
               loading={props.loading}
-              title={`${t("table.refunded")}: ${
-                props?.data?.withdraw_refunded_total || 0
-              }`}
+              title={
+                <>
+                  <>{t("table.refunded")}</>:{" "}
+                  <span style={{ fontSize: "12px" }}>
+                    {props?.data?.withdraw_refunded_total || 0} /{" "}
+                    {getPercent(
+                      props?.data?.withdraw_refunded_total ?? 0,
+                      props.data?.transactions_total ?? 0
+                    )}
+                  </span>
+                </>
+              }
               value={new Intl.NumberFormat("pt-BR", {
                 style: "currency",
                 currency: "BRL",
@@ -95,9 +116,18 @@ export const TotalizersCards = (props: TotalizersInterface) => {
           >
             <Statistic
               loading={props.loading}
-              title={`${t("table.canceled")}: ${
-                props?.data?.canceled_total || 0
-              }`}
+              title={
+                <>
+                  <>{t("table.canceled")}</>:{" "}
+                  <span style={{ fontSize: "12px" }}>
+                    {props?.data?.canceled_total || 0} /{" "}
+                    {getPercent(
+                      props?.data?.canceled_total ?? 0,
+                      props.data?.transactions_total ?? 0
+                    )}
+                  </span>
+                </>
+              }
               value={new Intl.NumberFormat("pt-BR", {
                 style: "currency",
                 currency: "BRL",
@@ -124,9 +154,18 @@ export const TotalizersCards = (props: TotalizersInterface) => {
           >
             <Statistic
               loading={props.loading}
-              title={`${t("table.processing")}: ${
-                props?.data?.processing_total || 0
-              }`}
+              title={
+                <>
+                  <>{t("table.processing")}</>:{" "}
+                  <span style={{ fontSize: "12px" }}>
+                    {props?.data?.processing_total || 0} /{" "}
+                    {getPercent(
+                      props?.data?.processing_total ?? 0,
+                      props.data?.transactions_total ?? 0
+                    )}
+                  </span>
+                </>
+              }
               value={new Intl.NumberFormat("pt-BR", {
                 style: "currency",
                 currency: "BRL",
@@ -152,9 +191,18 @@ export const TotalizersCards = (props: TotalizersInterface) => {
           >
             <Statistic
               loading={props.loading}
-              title={`${t("table.waiting")}: ${
-                props?.data?.pending_total || 0
-              }`}
+              title={
+                <>
+                  <>{t("table.waiting")}</>:{" "}
+                  <span style={{ fontSize: "12px" }}>
+                    {props?.data?.pending_total || 0} /{" "}
+                    {getPercent(
+                      props?.data?.pending_total ?? 0,
+                      props.data?.transactions_total ?? 0
+                    )}
+                  </span>
+                </>
+              }
               value={new Intl.NumberFormat("pt-BR", {
                 style: "currency",
                 currency: "BRL",
@@ -181,9 +229,18 @@ export const TotalizersCards = (props: TotalizersInterface) => {
           >
             <Statistic
               loading={props.loading}
-              title={`${t("table.in_analysis")}: ${
-                props?.data?.in_analysis_total || 0
-              }`}
+              title={
+                <>
+                  <>{t("table.in_analysis")}</>:{" "}
+                  <span style={{ fontSize: "12px" }}>
+                    {props?.data?.in_analysis_total || 0} /{" "}
+                    {getPercent(
+                      props?.data?.in_analysis_total ?? 0,
+                      props.data?.transactions_total ?? 0
+                    )}
+                  </span>
+                </>
+              }
               value={new Intl.NumberFormat("pt-BR", {
                 style: "currency",
                 currency: "BRL",
@@ -206,9 +263,18 @@ export const TotalizersCards = (props: TotalizersInterface) => {
           <Card bordered={false}>
             <Statistic
               loading={props.loading}
-              title={`${t("table.created")}: ${
-                props?.data?.created_total || 0
-              }`}
+              title={
+                <>
+                  <>{t("table.created")}</>:{" "}
+                  <span style={{ fontSize: "12px" }}>
+                    {props?.data?.created_total || 0} /{" "}
+                    {getPercent(
+                      props?.data?.created_total ?? 0,
+                      props.data?.transactions_total ?? 0
+                    )}
+                  </span>
+                </>
+              }
               value={new Intl.NumberFormat("pt-BR", {
                 style: "currency",
                 currency: "BRL",

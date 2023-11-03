@@ -404,7 +404,7 @@ export const PrivateRoutes = () => {
               }
             />
             <Route
-              path="withdrawals"
+              path="refund_withdrawals"
               element={
                 <Permission
                   permission={
