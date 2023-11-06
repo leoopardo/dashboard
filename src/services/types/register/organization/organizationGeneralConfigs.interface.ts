@@ -23,4 +23,5 @@ export interface OrganizationGeneralConfigs {
   callback_withdraw_api_enable?: boolean;
   cash_in_max_value_by_month?: number;
   cash_out_max_value_by_month?: number;
+  fastpix_qr_code_expire_seconds?: number;
 }

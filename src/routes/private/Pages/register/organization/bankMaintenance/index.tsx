@@ -149,6 +149,7 @@ export const BankMaintenence = () => {
             { label: "cash_in", required: false },
             { label: "cash_out", required: false },
             { label: "status", required: false },
+            { label: "fastpix_in", required: false },
             { label: "account_name", required: false },
             { label: "account_document", required: false },
           ]}

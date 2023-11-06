@@ -477,8 +477,9 @@ export const MutateModal = ({
               case "status":
               case "cash_in":
               case "cash_out":
+              case "fastpix_in":
                 return (
-                  <Col span={8}>
+                  <Col span={12} style={{display: 'flex', justifyContent: 'center'}}>
                     <Form.Item
                       label={t(`table.${field.label}`)}
                       name={field.label}
