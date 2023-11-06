@@ -100,6 +100,7 @@ export const UndeliveredDeposits = () => {
     { name: "_id", type: "id" },
     { name: "bank", type: "bankNameToIcon" },
     { name: "merchant_name", type: "text" },
+    { name: "partner_name", type: "text" },
     { name: "value", type: "value" },
     { name: "createdAt", type: "date" },
     { name: "delivered_at", type: "date" },
