@@ -67,8 +67,10 @@ export const UpdateUserModal = ({
     cellphone: currentUser?.cellphone,
   });
 
-  const { mutate, error, isLoading, isSuccess, reset } =
-    useCreateMerchantUser(body);
+  const { mutate, error, isLoading, isSuccess, reset } = useCreateMerchantUser({
+    ...body,
+    email: body?.email ?? undefined,
+  });
   const { updateIsLoading } = useUpdateMerchant(body);
 
   function handleChangeUserBody(event: any) {

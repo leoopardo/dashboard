@@ -1,5 +1,4 @@
-import { queryClient } from "@src/services/queryClient";
-import { ValidateInterface } from "@src/services/types/validate.interface";
+import { useValidate } from "@src/services/siginIn/validate";
 import { Route, Routes } from "react-router-dom";
 import { NotFount } from "../public/Pages/404";
 import { GeneratedDeposits } from "./Pages/consult/deposits/generated";
@@ -106,9 +105,8 @@ import { Permission } from "./permission";
 import { Redirect } from "./redirect";
 
 export const PrivateRoutes = () => {
-  const { permissions } = queryClient.getQueryData(
-    "validate"
-  ) as ValidateInterface;
+  const { responseValidate } = useValidate();
+
   return (
     <Routes>
       <Route path="/login" element={<Redirect />} />
@@ -127,7 +125,10 @@ export const PrivateRoutes = () => {
               path={"organization_bank_statement"}
               element={
                 <Permission
-                  permission={permissions?.report?.paybrokers?.extract?.menu}
+                  permission={
+                    responseValidate?.permissions?.report?.paybrokers?.extract
+                      ?.menu
+                  }
                 >
                   <OrganizationBankStatement />
                 </Permission>
@@ -137,7 +138,10 @@ export const PrivateRoutes = () => {
               path="organization_balance"
               element={
                 <Permission
-                  permission={permissions?.report?.paybrokers?.balance?.menu}
+                  permission={
+                    responseValidate?.permissions?.report?.paybrokers?.balance
+                      ?.menu
+                  }
                 >
                   <OrganizationBalance />
                 </Permission>
@@ -148,7 +152,8 @@ export const PrivateRoutes = () => {
               element={
                 <Permission
                   permission={
-                    permissions?.report?.paybrokers?.bank_balance?.menu
+                    responseValidate?.permissions?.report?.paybrokers
+                      ?.bank_balance?.menu
                   }
                 >
                   <OrganizationBankBalance />
@@ -160,7 +165,8 @@ export const PrivateRoutes = () => {
               element={
                 <Permission
                   permission={
-                    permissions?.report?.paybrokers?.bank_history?.menu
+                    responseValidate?.permissions?.report?.paybrokers
+                      ?.bank_history?.menu
                   }
                 >
                   <OrganizationHistory />
@@ -172,7 +178,7 @@ export const PrivateRoutes = () => {
               element={
                 <Permission
                   permission={
-                    permissions?.report?.paybrokers?.balance
+                    responseValidate?.permissions?.report?.paybrokers?.balance
                       ?.report_paybrokers_balance_export_csv
                   }
                 >
@@ -187,7 +193,10 @@ export const PrivateRoutes = () => {
               path="merchant_bank_statement"
               element={
                 <Permission
-                  permission={permissions?.report?.merchant?.extract?.menu}
+                  permission={
+                    responseValidate?.permissions?.report?.merchant?.extract
+                      ?.menu
+                  }
                 >
                   <MerchantBankStatement />
                 </Permission>
@@ -197,7 +206,10 @@ export const PrivateRoutes = () => {
               path="merchant_balance"
               element={
                 <Permission
-                  permission={permissions?.report?.merchant?.balance?.menu}
+                  permission={
+                    responseValidate?.permissions?.report?.merchant?.balance
+                      ?.menu
+                  }
                 >
                   <MerchantBalance />
                 </Permission>
@@ -208,7 +220,8 @@ export const PrivateRoutes = () => {
               element={
                 <Permission
                   permission={
-                    permissions?.report?.merchant?.balance_history?.menu
+                    responseValidate?.permissions?.report?.merchant
+                      ?.balance_history?.menu
                   }
                 >
                   <MerchantHistory />
@@ -220,7 +233,7 @@ export const PrivateRoutes = () => {
               element={
                 <Permission
                   permission={
-                    permissions?.report?.merchant?.balance
+                    responseValidate?.permissions?.report?.merchant?.balance
                       ?.report_merchant_balance_export_csv
                   }
                 >
@@ -236,7 +249,8 @@ export const PrivateRoutes = () => {
               element={
                 <Permission
                   permission={
-                    permissions?.report?.deposit?.generated_deposit?.menu
+                    responseValidate?.permissions?.report?.deposit
+                      ?.generated_deposit?.menu
                   }
                 >
                   <GeneratedDeposits />
@@ -247,7 +261,10 @@ export const PrivateRoutes = () => {
               path="paid_deposits"
               element={
                 <Permission
-                  permission={permissions?.report?.deposit?.paid_deposit?.menu}
+                  permission={
+                    responseValidate?.permissions?.report?.deposit?.paid_deposit
+                      ?.menu
+                  }
                 >
                   <PaidDeposits />
                 </Permission>
@@ -258,7 +275,8 @@ export const PrivateRoutes = () => {
               element={
                 <Permission
                   permission={
-                    permissions?.report?.deposit?.undelivered_deposit?.menu
+                    responseValidate?.permissions?.report?.deposit
+                      ?.undelivered_deposit?.menu
                   }
                 >
                   <UndeliveredDeposits />
@@ -272,7 +290,8 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.report?.deposit?.generated_deposit
+                      responseValidate?.permissions?.report?.deposit
+                        ?.generated_deposit
                         ?.report_deposit_generated_deposit_export_csv
                     }
                   >
@@ -285,8 +304,8 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.report?.deposit?.paid_deposit
-                        .report_deposit_paid_deposit_export_csv
+                      responseValidate?.permissions?.report?.deposit
+                        ?.paid_deposit.report_deposit_paid_deposit_export_csv
                     }
                   >
                     <PaidDepositsReports />
@@ -298,7 +317,8 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.report?.deposit?.generated_deposit
+                      responseValidate?.permissions?.report?.deposit
+                        ?.generated_deposit
                         ?.report_deposit_generated_deposit_resend_notification
                     }
                   >
@@ -315,7 +335,8 @@ export const PrivateRoutes = () => {
               element={
                 <Permission
                   permission={
-                    permissions?.report?.withdraw?.generated_withdraw?.menu
+                    responseValidate?.permissions?.report?.withdraw
+                      ?.generated_withdraw?.menu
                   }
                 >
                   <GeneratedWithdrawals />
@@ -327,7 +348,8 @@ export const PrivateRoutes = () => {
               element={
                 <Permission
                   permission={
-                    permissions?.report?.withdraw?.paid_withdraw?.menu
+                    responseValidate?.permissions?.report?.withdraw
+                      ?.paid_withdraw?.menu
                   }
                 >
                   <PaidWithdrawals />
@@ -339,7 +361,8 @@ export const PrivateRoutes = () => {
               element={
                 <Permission
                   permission={
-                    permissions?.report?.withdraw?.undelivered_withdraw?.menu
+                    responseValidate?.permissions?.report?.withdraw
+                      ?.undelivered_withdraw?.menu
                   }
                 >
                   <UndeliveredWithdrawals />
@@ -353,7 +376,8 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.report?.withdraw?.generated_withdraw
+                      responseValidate?.permissions?.report?.withdraw
+                        ?.generated_withdraw
                         ?.report_withdraw_generated_withdraw_export_csv
                     }
                   >
@@ -366,7 +390,8 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.report?.withdraw?.paid_withdraw
+                      responseValidate?.permissions?.report?.withdraw
+                        ?.paid_withdraw
                         ?.report_withdraw_paid_withdraw_export_csv
                     }
                   >
@@ -379,7 +404,8 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.report?.withdraw?.generated_withdraw
+                      responseValidate?.permissions?.report?.withdraw
+                        ?.generated_withdraw
                         ?.report_withdraw_generated_withdraw_resend_notification
                     }
                   >
@@ -396,7 +422,8 @@ export const PrivateRoutes = () => {
               element={
                 <Permission
                   permission={
-                    permissions?.report?.chargeback?.deposit_chargeback?.menu
+                    responseValidate?.permissions?.report?.chargeback
+                      ?.deposit_chargeback?.menu
                   }
                 >
                   <RefundDeposits />
@@ -408,7 +435,8 @@ export const PrivateRoutes = () => {
               element={
                 <Permission
                   permission={
-                    permissions?.report?.chargeback?.withdraw_chargeback?.menu
+                    responseValidate?.permissions?.report?.chargeback
+                      ?.withdraw_chargeback?.menu
                   }
                 >
                   <RefundWithdrawals />
@@ -420,8 +448,8 @@ export const PrivateRoutes = () => {
               element={
                 <Permission
                   permission={
-                    permissions?.report?.chargeback?.manual_deposit_chargeback
-                      .menu
+                    responseValidate?.permissions?.report?.chargeback
+                      ?.manual_deposit_chargeback.menu
                   }
                 >
                   <RefundDepositsManual />
@@ -435,7 +463,8 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.report?.chargeback?.deposit_chargeback
+                      responseValidate?.permissions?.report?.chargeback
+                        ?.deposit_chargeback
                         ?.report_chargeback_deposit_chargeback_export_csv
                     }
                   >
@@ -448,7 +477,8 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.report?.chargeback?.manual_deposit_chargeback
+                      responseValidate?.permissions?.report?.chargeback
+                        ?.manual_deposit_chargeback
                         ?.report_chargeback_manual_deposit_chargeback_export_csv
                     }
                   >
@@ -461,7 +491,8 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.report?.chargeback?.withdraw_chargeback
+                      responseValidate?.permissions?.report?.chargeback
+                        ?.withdraw_chargeback
                         ?.report_chargeback_withdraw_chargeback_export_csv
                     }
                   >
@@ -477,7 +508,10 @@ export const PrivateRoutes = () => {
               path="check_cpf"
               element={
                 <Permission
-                  permission={permissions?.report?.person?.check_cpf?.menu}
+                  permission={
+                    responseValidate?.permissions?.report?.person?.check_cpf
+                      ?.menu
+                  }
                 >
                   <CheckDocument />
                 </Permission>
@@ -493,7 +527,10 @@ export const PrivateRoutes = () => {
               path="users"
               element={
                 <Permission
-                  permission={permissions?.register?.paybrokers?.users?.menu}
+                  permission={
+                    responseValidate?.permissions?.register?.paybrokers?.users
+                      ?.menu
+                  }
                 >
                   <OrganizationUser />
                 </Permission>
@@ -504,7 +541,8 @@ export const PrivateRoutes = () => {
               element={
                 <Permission
                   permission={
-                    permissions?.register?.paybrokers?.release_category?.menu
+                    responseValidate?.permissions?.register?.paybrokers
+                      ?.release_category?.menu
                   }
                 >
                   <OrganizationCategories />
@@ -516,7 +554,8 @@ export const PrivateRoutes = () => {
               element={
                 <Permission
                   permission={
-                    permissions?.register?.paybrokers?.banks_maintain?.menu
+                    responseValidate?.permissions?.register?.paybrokers
+                      ?.banks_maintain?.menu
                   }
                 >
                   <BankMaintenence />
@@ -528,7 +567,8 @@ export const PrivateRoutes = () => {
               element={
                 <Permission
                   permission={
-                    permissions?.register?.paybrokers?.general_configs?.menu
+                    responseValidate?.permissions?.register?.paybrokers
+                      ?.general_configs?.menu
                   }
                 >
                   <GeneralConfigs />
@@ -541,7 +581,7 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.register?.paybrokers?.users
+                      responseValidate?.permissions?.register?.paybrokers?.users
                         ?.paybrokers_user_export_csv
                     }
                   >
@@ -554,7 +594,8 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.register?.paybrokers?.release_category
+                      responseValidate?.permissions?.register?.paybrokers
+                        ?.release_category
                         ?.paybrokers_release_category_export_csv
                     }
                   >
@@ -572,7 +613,8 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.register?.aggregator?.aggregator?.menu
+                      responseValidate?.permissions?.register?.aggregator
+                        ?.aggregator?.menu
                     }
                   >
                     <Aggregators />
@@ -584,8 +626,8 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.register?.aggregator?.aggregator
-                        ?.aggregator_update
+                      responseValidate?.permissions?.register?.aggregator
+                        ?.aggregator?.aggregator_update
                     }
                   >
                     <UpdateAggregator />
@@ -597,8 +639,8 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.register?.aggregator?.aggregator
-                        ?.aggregator_list
+                      responseValidate?.permissions?.register?.aggregator
+                        ?.aggregator?.aggregator_list
                     }
                   >
                     <AggregatorDetails />
@@ -611,7 +653,10 @@ export const PrivateRoutes = () => {
               path="aggregator_users"
               element={
                 <Permission
-                  permission={permissions?.register?.aggregator?.users?.menu}
+                  permission={
+                    responseValidate?.permissions?.register?.aggregator?.users
+                      ?.menu
+                  }
                 >
                   <AggregatorUsers />
                 </Permission>
@@ -622,7 +667,8 @@ export const PrivateRoutes = () => {
               element={
                 <Permission
                   permission={
-                    permissions?.register?.aggregator?.self_exclusion?.menu
+                    responseValidate?.permissions?.register?.aggregator
+                      ?.self_exclusion?.menu
                   }
                 >
                   <AggregatorSelfExclusion />
@@ -635,7 +681,8 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.register?.aggregator?.blacklist?.menu
+                      responseValidate?.permissions?.register?.aggregator
+                        ?.blacklist?.menu
                     }
                   >
                     <AggregatorBlacklist />
@@ -650,8 +697,8 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.register?.aggregator?.aggregator
-                        ?.aggregator_export_csv
+                      responseValidate?.permissions?.register?.aggregator
+                        ?.aggregator?.aggregator_export_csv
                     }
                   >
                     <AggregatorsReports />
@@ -663,7 +710,7 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.register?.aggregator?.users
+                      responseValidate?.permissions?.register?.aggregator?.users
                         ?.aggregator_user_export_csv
                     }
                   >
@@ -676,8 +723,8 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.register?.aggregator?.self_exclusion
-                        ?.aggregator_self_exclusion_export_csv
+                      responseValidate?.permissions?.register?.aggregator
+                        ?.self_exclusion?.aggregator_self_exclusion_export_csv
                     }
                   >
                     <SelfExclusionReports />
@@ -689,8 +736,8 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.register?.aggregator?.blacklist
-                        ?.aggregator_blacklist_export_csv
+                      responseValidate?.permissions?.register?.aggregator
+                        ?.blacklist?.aggregator_blacklist_export_csv
                     }
                   >
                     <AggregatorsBlacklistReports />
@@ -706,7 +753,10 @@ export const PrivateRoutes = () => {
                 index
                 element={
                   <Permission
-                    permission={permissions?.register?.partner?.partner?.menu}
+                    permission={
+                      responseValidate?.permissions?.register?.partner?.partner
+                        ?.menu
+                    }
                   >
                     <Partners />
                   </Permission>
@@ -717,7 +767,8 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.register?.partner?.partner?.partner_list
+                      responseValidate?.permissions?.register?.partner?.partner
+                        ?.partner_list
                     }
                   >
                     <PartnerDetails />
@@ -729,7 +780,8 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.register?.partner?.partner?.partner_update
+                      responseValidate?.permissions?.register?.partner?.partner
+                        ?.partner_update
                     }
                   >
                     <UpdatePartner />
@@ -741,7 +793,10 @@ export const PrivateRoutes = () => {
               path="partner_users"
               element={
                 <Permission
-                  permission={permissions?.register?.partner?.users?.menu}
+                  permission={
+                    responseValidate?.permissions?.register?.partner?.users
+                      ?.menu
+                  }
                 >
                   <PartnerUsers />
                 </Permission>
@@ -753,7 +808,7 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.register?.partner?.partner
+                      responseValidate?.permissions?.register?.partner?.partner
                         ?.partner_export_csv
                     }
                   >
@@ -766,7 +821,7 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.register?.partner?.users
+                      responseValidate?.permissions?.register?.partner?.users
                         ?.partner_user_export_csv
                     }
                   >
@@ -783,7 +838,10 @@ export const PrivateRoutes = () => {
                 index
                 element={
                   <Permission
-                    permission={permissions?.register?.operator?.operator?.menu}
+                    permission={
+                      responseValidate?.permissions?.register?.operator
+                        ?.operator?.menu
+                    }
                   >
                     <Operators />
                   </Permission>
@@ -794,7 +852,8 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.register?.operator?.operator?.operator_update
+                      responseValidate?.permissions?.register?.operator
+                        ?.operator?.operator_update
                     }
                   >
                     <UpdateOperator />
@@ -806,7 +865,8 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.register?.operator?.operator?.operator_list
+                      responseValidate?.permissions?.register?.operator
+                        ?.operator?.operator_list
                     }
                   >
                     <OperatorDetails />
@@ -818,7 +878,10 @@ export const PrivateRoutes = () => {
               path="operator_users"
               element={
                 <Permission
-                  permission={permissions?.register?.operator?.users?.menu}
+                  permission={
+                    responseValidate?.permissions?.register?.operator?.users
+                      ?.menu
+                  }
                 >
                   <OperatorUsers />
                 </Permission>
@@ -830,8 +893,8 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.register?.operator?.operator
-                        ?.operator_export_csv
+                      responseValidate?.permissions?.register?.operator
+                        ?.operator?.operator_export_csv
                     }
                   >
                     <OperatorReports />
@@ -843,7 +906,7 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.register?.operator?.users
+                      responseValidate?.permissions?.register?.operator?.users
                         ?.operator_user_export_csv
                     }
                   >
@@ -860,7 +923,10 @@ export const PrivateRoutes = () => {
                 index
                 element={
                   <Permission
-                    permission={permissions?.register?.merchant?.merchant?.menu}
+                    permission={
+                      responseValidate?.permissions?.register?.merchant
+                        ?.merchant?.menu
+                    }
                   >
                     <MerchantView />
                   </Permission>
@@ -871,18 +937,18 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.register?.merchant?.merchant
-                        ?.merchant_config_banks ||
-                      permissions?.register?.merchant?.merchant
-                        ?.merchant_config_credentials ||
-                      permissions?.register?.merchant?.merchant
-                        ?.merchant_config_fees ||
-                      permissions?.register?.merchant?.merchant
-                        ?.merchant_config_ips ||
-                      permissions?.register?.merchant?.merchant
-                        ?.merchant_config_merchant ||
-                      permissions?.register?.merchant?.merchant
-                        ?.merchant_config_paybrokers
+                      responseValidate?.permissions?.register?.merchant
+                        ?.merchant?.merchant_config_banks ||
+                      responseValidate?.permissions?.register?.merchant
+                        ?.merchant?.merchant_config_credentials ||
+                      responseValidate?.permissions?.register?.merchant
+                        ?.merchant?.merchant_config_fees ||
+                      responseValidate?.permissions?.register?.merchant
+                        ?.merchant?.merchant_config_ips ||
+                      responseValidate?.permissions?.register?.merchant
+                        ?.merchant?.merchant_config_merchant ||
+                      responseValidate?.permissions?.register?.merchant
+                        ?.merchant?.merchant_config_paybrokers
                     }
                   >
                     <MerchantConfigs />
@@ -894,7 +960,8 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.register?.merchant?.merchant?.merchant_list
+                      responseValidate?.permissions?.register?.merchant
+                        ?.merchant?.merchant_list
                     }
                   >
                     <MerchantDetails />
@@ -906,7 +973,8 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.register?.merchant?.merchant?.merchant_update
+                      responseValidate?.permissions?.register?.merchant
+                        ?.merchant?.merchant_update
                     }
                   >
                     <UpdateMerchant />
@@ -918,7 +986,10 @@ export const PrivateRoutes = () => {
               path="merchant_users"
               element={
                 <Permission
-                  permission={permissions?.register?.merchant?.users?.menu}
+                  permission={
+                    responseValidate?.permissions?.register?.merchant?.users
+                      ?.menu
+                  }
                 >
                   <MerchantUser />
                 </Permission>
@@ -931,7 +1002,8 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.register?.merchant?.blacklist?.menu
+                      responseValidate?.permissions?.register?.merchant
+                        ?.blacklist?.menu
                     }
                   >
                     <MerchantBlacklist />
@@ -943,7 +1015,8 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.register?.merchant?.black_list_reason?.menu
+                      responseValidate?.permissions?.register?.merchant
+                        ?.black_list_reason?.menu
                     }
                   >
                     <MerchantBlacklistReasons />
@@ -955,8 +1028,8 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.register?.merchant?.blacklist
-                        ?.merchant_blacklist_export_csv
+                      responseValidate?.permissions?.register?.merchant
+                        ?.blacklist?.merchant_blacklist_export_csv
                     }
                   >
                     <ImportBlacklist />
@@ -968,8 +1041,8 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.register?.merchant?.blacklist
-                        ?.merchant_blacklist_export_csv
+                      responseValidate?.permissions?.register?.merchant
+                        ?.blacklist?.merchant_blacklist_export_csv
                     }
                   >
                     <MerchantsBlacklistUploads />
@@ -981,7 +1054,10 @@ export const PrivateRoutes = () => {
               path="fee_plans"
               element={
                 <Permission
-                  permission={permissions?.register?.merchant?.fee_plans?.menu}
+                  permission={
+                    responseValidate?.permissions?.register?.merchant?.fee_plans
+                      ?.menu
+                  }
                 >
                   <MerchantFeePlans />
                 </Permission>
@@ -992,7 +1068,8 @@ export const PrivateRoutes = () => {
               element={
                 <Permission
                   permission={
-                    permissions?.register?.merchant?.release_category?.menu
+                    responseValidate?.permissions?.register?.merchant
+                      ?.release_category?.menu
                   }
                 >
                   <MerchantManualEntryCategory />
@@ -1005,8 +1082,8 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.register?.merchant?.merchant
-                        ?.merchant_export_csv
+                      responseValidate?.permissions?.register?.merchant
+                        ?.merchant?.merchant_export_csv
                     }
                   >
                     <MerchantReports />
@@ -1018,7 +1095,7 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.register?.merchant?.users
+                      responseValidate?.permissions?.register?.merchant?.users
                         ?.merchant_user_export_csv
                     }
                   >
@@ -1031,8 +1108,8 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.register?.merchant?.blacklist
-                        ?.merchant_blacklist_export_csv
+                      responseValidate?.permissions?.register?.merchant
+                        ?.blacklist?.merchant_blacklist_export_csv
                     }
                   >
                     <MerchantBlacklistReports />
@@ -1049,7 +1126,10 @@ export const PrivateRoutes = () => {
                 index
                 element={
                   <Permission
-                    permission={permissions?.register?.person?.person?.menu}
+                    permission={
+                      responseValidate?.permissions?.register?.person?.person
+                        ?.menu
+                    }
                   >
                     <Persons />
                   </Permission>
@@ -1060,7 +1140,8 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.register?.person?.person?.person_person_list
+                      responseValidate?.permissions?.register?.person?.person
+                        ?.person_person_list
                     }
                   >
                     <PersonDetails />
@@ -1073,7 +1154,7 @@ export const PrivateRoutes = () => {
                   element={
                     <Permission
                       permission={
-                        permissions?.register?.person?.person
+                        responseValidate?.permissions?.register?.person?.person
                           ?.person_person_update
                       }
                     >
@@ -1087,7 +1168,10 @@ export const PrivateRoutes = () => {
               path="person_accounts"
               element={
                 <Permission
-                  permission={permissions?.register?.person?.client_banks?.menu}
+                  permission={
+                    responseValidate?.permissions?.register?.person
+                      ?.client_banks?.menu
+                  }
                 >
                   <CostumerBanks />
                 </Permission>
@@ -1099,8 +1183,8 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.register?.person?.blacklist?.import_csv
-                        .person_blacklist_import_csv
+                      responseValidate?.permissions?.register?.person?.blacklist
+                        ?.import_csv.person_blacklist_import_csv
                     }
                   >
                     <ImportPersonsBlacklist />
@@ -1112,8 +1196,8 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.register?.person?.blacklist?.import_csv
-                        .person_blacklist_import_csv
+                      responseValidate?.permissions?.register?.person?.blacklist
+                        ?.import_csv.person_blacklist_import_csv
                     }
                   >
                     <PersonBlacklistUploads />
@@ -1125,7 +1209,8 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.register?.person?.blacklist.reason.menu
+                      responseValidate?.permissions?.register?.person?.blacklist
+                        .reason.menu
                     }
                   >
                     <PersonBlacklistReasons />
@@ -1139,7 +1224,7 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.register?.person?.person
+                      responseValidate?.permissions?.register?.person?.person
                         ?.person_person_export_csv
                     }
                   >
@@ -1152,8 +1237,8 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.register?.person?.client_banks
-                        ?.person_client_banks_export_csv
+                      responseValidate?.permissions?.register?.person
+                        ?.client_banks?.person_client_banks_export_csv
                     }
                   >
                     <CustomerBanksReports />
@@ -1172,8 +1257,8 @@ export const PrivateRoutes = () => {
               element={
                 <Permission
                   permission={
-                    permissions?.transactions?.paybrokers?.manual_transactions
-                      ?.menu
+                    responseValidate?.permissions?.transactions?.paybrokers
+                      ?.manual_transactions?.menu
                   }
                 >
                   <OrgonizationManual />
@@ -1186,7 +1271,8 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.transactions?.paybrokers?.manual_transactions
+                      responseValidate?.permissions?.transactions?.paybrokers
+                        ?.manual_transactions
                         ?.paybrokers_manual_transactions_export_csv
                     }
                   >
@@ -1200,8 +1286,8 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.transactions?.paybrokers?.internal_transfers
-                        .menu
+                      responseValidate?.permissions?.transactions?.paybrokers
+                        ?.internal_transfers.menu
                     }
                   >
                     <OrganizationTransferBetweenAccountsReports />
@@ -1215,8 +1301,8 @@ export const PrivateRoutes = () => {
               element={
                 <Permission
                   permission={
-                    permissions?.transactions?.paybrokers?.internal_transfers
-                      ?.menu
+                    responseValidate?.permissions?.transactions?.paybrokers
+                      ?.internal_transfers?.menu
                   }
                 >
                   <OrganizationTransfersBetweenAccounts />
@@ -1231,8 +1317,8 @@ export const PrivateRoutes = () => {
               element={
                 <Permission
                   permission={
-                    permissions?.transactions?.merchant?.manual_transactions
-                      ?.menu
+                    responseValidate?.permissions?.transactions?.merchant
+                      ?.manual_transactions?.menu
                   }
                 >
                   <MerchantManual />
@@ -1245,7 +1331,8 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.transactions?.merchant?.manual_transactions
+                      responseValidate?.permissions?.transactions?.merchant
+                        ?.manual_transactions
                         ?.merchant_manual_transactions_export_csv
                     }
                   >
@@ -1259,7 +1346,8 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.transactions?.merchant?.internal_transfers
+                      responseValidate?.permissions?.transactions?.merchant
+                        ?.internal_transfers
                         ?.merchant_internal_transfers_export_csv
                     }
                   >
@@ -1274,8 +1362,8 @@ export const PrivateRoutes = () => {
               element={
                 <Permission
                   permission={
-                    permissions?.transactions?.merchant?.internal_transfers
-                      ?.menu
+                    responseValidate?.permissions?.transactions?.merchant
+                      ?.internal_transfers?.menu
                   }
                 >
                   <TransfersBetweenAccounts />
@@ -1287,7 +1375,9 @@ export const PrivateRoutes = () => {
           <Route
             path="merchant_transfers"
             element={
-              <Permission permission={permissions?.transactions?.menu}>
+              <Permission
+                permission={responseValidate?.permissions?.transactions?.menu}
+              >
                 <TransferBetweenMerchants />
               </Permission>
             }
@@ -1298,7 +1388,9 @@ export const PrivateRoutes = () => {
             <Route
               path="aggregator_transfer_between_accounts"
               element={
-                <Permission permission={permissions?.transactions?.menu}>
+                <Permission
+                  permission={responseValidate?.permissions?.transactions?.menu}
+                >
                   <AggregatorTransfersBetweenAccounts />
                 </Permission>
               }
@@ -1308,7 +1400,11 @@ export const PrivateRoutes = () => {
               <Route
                 path="aggregator_transfer_between_accounts_reports"
                 element={
-                  <Permission permission={permissions?.transactions?.menu}>
+                  <Permission
+                    permission={
+                      responseValidate?.permissions?.transactions?.menu
+                    }
+                  >
                     <AggregatorTransferBetweenAccountsReports />
                   </Permission>
                 }
@@ -1324,7 +1420,10 @@ export const PrivateRoutes = () => {
               path="authentication_logs"
               element={
                 <Permission
-                  permission={permissions?.support?.logs?.auth_logs?.menu}
+                  permission={
+                    responseValidate?.permissions?.support?.logs?.auth_logs
+                      ?.menu
+                  }
                 >
                   <AuthLogs />
                 </Permission>
@@ -1335,7 +1434,8 @@ export const PrivateRoutes = () => {
               element={
                 <Permission
                   permission={
-                    permissions?.support?.logs?.deposit_error_logs?.menu
+                    responseValidate?.permissions?.support?.logs
+                      ?.deposit_error_logs?.menu
                   }
                 >
                   <DepositsErrors />
@@ -1347,7 +1447,8 @@ export const PrivateRoutes = () => {
               element={
                 <Permission
                   permission={
-                    permissions?.support?.logs?.withdraw_error_logs?.menu
+                    responseValidate?.permissions?.support?.logs
+                      ?.withdraw_error_logs?.menu
                   }
                 >
                   <WithdrawalsErrors />
@@ -1361,7 +1462,10 @@ export const PrivateRoutes = () => {
               path="bank_institutions"
               element={
                 <Permission
-                  permission={permissions?.support?.blacklist?.banks?.menu}
+                  permission={
+                    responseValidate?.permissions?.support?.blacklist?.banks
+                      ?.menu
+                  }
                 >
                   <BankBlacklist />
                 </Permission>
@@ -1372,7 +1476,8 @@ export const PrivateRoutes = () => {
               element={
                 <Permission
                   permission={
-                    permissions?.support?.blacklist?.third_party_pix_keys?.menu
+                    responseValidate?.permissions?.support?.blacklist
+                      ?.third_party_pix_keys?.menu
                   }
                 >
                   <ThirdPartKeyBlacklist />
@@ -1384,7 +1489,8 @@ export const PrivateRoutes = () => {
               element={
                 <Permission
                   permission={
-                    permissions?.support?.blacklist?.invalid_pix_keys?.menu
+                    responseValidate?.permissions?.support?.blacklist
+                      ?.invalid_pix_keys?.menu
                   }
                 >
                   <InvalidPixKeyBlacklist />
@@ -1397,7 +1503,7 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.support?.blacklist?.banks
+                      responseValidate?.permissions?.support?.blacklist?.banks
                         ?.support_blacklist_bank_export_csv
                     }
                   >
@@ -1415,7 +1521,8 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.support?.contestation?.deposits?.menu
+                      responseValidate?.permissions?.support?.contestation
+                        ?.deposits?.menu
                     }
                   >
                     <ContestationUploads />
@@ -1427,8 +1534,8 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      permissions?.support?.contestation?.deposits?.import_csv
-                        .menu
+                      responseValidate?.permissions?.support?.contestation
+                        ?.deposits?.import_csv.menu
                     }
                   >
                     <ImportContastationDeposit />
