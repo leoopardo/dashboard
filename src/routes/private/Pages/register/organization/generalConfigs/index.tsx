@@ -466,6 +466,19 @@ export const GeneralConfigs = () => {
                 />
               </Form.Item>
             </Grid>
+            <Grid item xs={12} md={4} ref={refTimeReceiveAfterExpire}>
+              <Form.Item
+                label={t("input.fastpix_qr_code_expire_seconds")}
+                name="fastpix_qr_code_expire_seconds"
+              >
+                <Input
+                  size="large"
+                  name="fastpix_qr_code_expire_seconds"
+                  value={body.fastpix_qr_code_expire_seconds}
+                  onChange={handleChange}
+                />
+              </Form.Item>
+            </Grid>
           </Grid>
         </Form>
       ),

@@ -373,7 +373,8 @@
     "fastpix_in_permission": "Permissão de FastPix",
     "fastpix_in_type": "Tipo de FastPix",
     "fastpix_in_max_value": "Valor máximo de FastPix",
-    "fastpix_in_fixed_min_value": "Valor mínimo de FastPix"
+    "fastpix_in_fixed_min_value": "Valor mínimo de FastPix",
+    "fastpix_qr_code_expire_seconds": "Tempo expiração QRCode FastPIX (segundos)"
   },
   "table": {
     "id": "ID",
@@ -759,7 +760,8 @@
     "fastpix_refund_fee_value": "Valor de taxa (Devolução FastPix)",
     "fastpix_webhook_url": "URL de webhook FastPix",
     "fastpix_redirect_url": "URL de redirecionamento FastPix",
-    "fastpix_token_time": "Tempo de expiração de token FastPix"
+    "fastpix_token_time": "Tempo de expiração de token FastPix",
+    "fastpix_in": "FastPix"
   },
   "actions": {
     "details": "Detalhes",
