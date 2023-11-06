@@ -7,7 +7,7 @@ export function useCreateContestImportCsv(body: {content: string} | null) {
   const { isLoading, error, mutate, isSuccess } = useMutation<
     MerchantBlacklistItem | null | undefined
   >("CreateContestImportCsv", async () => {
-    const response = await api.post("reconciliation/pix/e2e", body, {});
+    const response = await api.post("reconciliation/pix/bulk/e2e", body, {});
     await queryClient.refetchQueries({ queryKey: ["ContestImportCsv"] });
     return response.data;
   });
