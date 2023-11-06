@@ -127,6 +127,7 @@ export const RefundDepositsManual = () => {
     { name: "value", type: "value" },
     { name: "payer_name", type: "text" },
     { name: "payer_document", type: "document" },
+    { name: "fastpix_in",  type: "boolean" },
     { name: "createdAt", type: "date" },
     { name: "refund_date", type: "date" },
     { name: "status", type: "status" },
@@ -417,6 +418,7 @@ export const RefundDepositsManual = () => {
             "aggregator_id",
             "aggregator_id",
             "operator_id",
+            "pixType"
           ]}
           refetch={refetchRefundDepositManualTotal}
           selectOptions={{
@@ -428,6 +430,7 @@ export const RefundDepositsManual = () => {
               "WAITING",
               "WAITING_REFUND",
             ],
+            pixType: ["REGULAR", "FASTPIX_IN"],
             gender: ["MALE", "FEMALE", "OTHER"],
           }}
           startDateKeyName="start_date"

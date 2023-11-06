@@ -756,7 +756,8 @@
     "fastpix_webhook_url": "FastPix Webhook URL",
     "fastpix_redirect_url": "FastPix Redirect URL",
     "fastpix_token_time": "FastPix Token Expiration Time",
-    "fastpix_in": "FastPix"
+    "fastpix_in": "FastPix",
+    "pixType": "Pix Type"
   },
   "actions": {
     "details": "Details",

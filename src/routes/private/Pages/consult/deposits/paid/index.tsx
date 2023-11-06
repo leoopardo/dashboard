@@ -390,6 +390,7 @@ export const PaidDeposits = () => {
             "operator_id",
             "bank",
             "payer_bank",
+            "pixType",
             "state",
             "city",
             "gender",
@@ -407,6 +408,7 @@ export const PaidDeposits = () => {
               "WAITING_REFUND",
             ],
             gender: ["MALE", "FEMALE", "OTHER"],
+            pixType: ["REGULAR", "FASTPIX_IN"]
           }}
           startDateKeyName="initial_date"
           endDateKeyName="final_date"
