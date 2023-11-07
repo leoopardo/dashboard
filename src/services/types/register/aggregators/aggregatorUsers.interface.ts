@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface AggregatorUsersQuery {
   operator_id?: number;
   aggregator_id?: number;
@@ -8,8 +9,10 @@ export interface AggregatorUsersQuery {
   status?: string;
   sort_order?: string;
   sort_field?: string;
-  page: number;
-  limit: number;
+  page?: number;
+  limit?: number;
+  fields?: any;
+  comma_separate_value?: boolean
 }
 
 export interface AggregatorUsersItem {

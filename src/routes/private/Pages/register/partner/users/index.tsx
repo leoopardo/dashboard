@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { EditOutlined, EyeFilled, UserAddOutlined } from "@ant-design/icons";
+import { EditOutlined, EyeFilled, FileAddOutlined, UserAddOutlined } from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
@@ -8,7 +8,6 @@ import { ValidateToken } from "@components/ValidateToken";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { Search } from "@src/components/Inputs/search";
-import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
 import { Toast } from "@src/components/Toast";
 import { queryClient } from "@src/services/queryClient";
@@ -17,10 +16,12 @@ import { useUpdatePartnerUser } from "@src/services/register/partner/users/updat
 import { useCreatePartnerUserReports } from "@src/services/reports/register/partner/createUserReports";
 import { PartnerQuery } from "@src/services/types/register/partners/partners.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button } from "antd";
+import { Button, Tooltip } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { NewUserInterface, NewUserModal } from "./components/newUserModal";
+import { useGetPartnerUsersReportFields } from "@src/services/reports/register/partner/getPartnerUsersReportFields";
+import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
 
 const INITIAL_QUERY: PartnerQuery = {
   limit: 25,
@@ -55,13 +56,22 @@ export const PartnerUsers = () => {
       validation_token: tokenState,
     });
 
+    const [csvFields, setCsvFields] = useState<any>();
+    const [comma, setIsComma] = useState<boolean>(false);
   const {
     PartnerReportsError,
     PartnerReportsIsLoading,
     PartnerReportsIsSuccess,
     PartnerReportsMutate,
     PartnerReportsReset,
-  } = useCreatePartnerUserReports(query);
+  } = useCreatePartnerUserReports({
+    fields: csvFields,
+    comma_separate_value: comma,
+  });
+  const { fields } = useGetPartnerUsersReportFields();
+  const [isExportReportsOpen, setIsExportReportsOpen] =
+    useState<boolean>(false);
+
   const [action, setAction] = useState<"create" | "update">("create");
 
   const columns: ColumnInterface[] = [
@@ -172,18 +182,30 @@ export const PartnerUsers = () => {
 
         {permissions.register.partner.users.partner_user_export_csv && (
           <Grid item xs={12} md="auto">
-            <ExportReportsModal
-              disabled={!UsersData?.total || UsersDataError}
-              mutateReport={() => PartnerReportsMutate()}
-              error={PartnerReportsError}
-              success={PartnerReportsIsSuccess}
-              loading={PartnerReportsIsLoading}
-              reportPath="/register/merchant/merchant_reports/merchant_merchants_reports"
-            />
+           <Tooltip
+              placement="topRight"
+              title={
+                UsersData?.total === 0 || UsersDataError
+                  ? t("messages.no_records_to_export")
+                  : t("messages.export_csv")
+              }
+              arrow
+            >
+              <Button
+                onClick={() => setIsExportReportsOpen(true)}
+                style={{ width: "100%" }}
+                shape="round"
+                type="dashed"
+                size="large"
+                loading={isUsersDataFetching}
+                disabled={UsersData?.total === 0 || UsersDataError}
+              >
+                <FileAddOutlined style={{ fontSize: 22 }} /> CSV
+              </Button>
+            </Tooltip>
           </Grid>
         )}
       </Grid>
-
       <Grid container style={{ marginTop: "15px" }}>
         <Grid item xs={12}>
           {" "}
@@ -278,6 +300,22 @@ export const PartnerUsers = () => {
           setOpen={setIsViewModalOpen}
         />
       )}
+<ExportCustomReportsModal
+        open={isExportReportsOpen}
+        setOpen={setIsExportReportsOpen}
+        disabled={UsersData?.total === 0 || UsersDataError}
+        mutateReport={() => PartnerReportsMutate()}
+        error={PartnerReportsError}
+        success={PartnerReportsIsSuccess}
+        loading={PartnerReportsIsLoading}
+        reportPath="/register/partner/partner_reports/partner_users_reports"
+        fields={fields}
+        csvFields={csvFields}
+        comma={comma}
+        setIsComma={setIsComma}
+        setCsvFields={setCsvFields}
+        reportName="PartnerUsers"
+      />
     </Grid>
   );
 };

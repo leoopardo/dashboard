@@ -23,7 +23,11 @@ export const WithdrawFinancial = ({ query, chart }: TableProps) => {
                 },
               },
               color: ["#ee6666"],
-              legend: {},
+              legend: {textStyle: {
+                color: "#a0a0a0",
+              },},textStyle: {
+                color: "#a0a0a0",
+              },
               grid: {
                 left: "3%",
                 right: "4%",

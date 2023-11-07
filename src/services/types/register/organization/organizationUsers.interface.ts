@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface OrganizationUserQuery {
   user_id?: string;
   start_date?: string;
@@ -6,12 +7,14 @@ export interface OrganizationUserQuery {
   partner_id?: number;
   name?: string;
   status?: boolean;
-  sort_field: string;
-  sort_order: string;
-  page: number;
-  limit: number;
+  sort_field?: string;
+  sort_order?: string;
+  page?: number;
+  limit?: number;
   merchant?: boolean;
   partner?: boolean;
+  fields?: any,
+  comma_separate_value?: boolean
 }
 
 export interface OrganizationUserItem {

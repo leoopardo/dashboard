@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface PartnerQuery {
   partner_id?: number;
   start_date?: string;
@@ -8,8 +9,10 @@ export interface PartnerQuery {
   responsible_name?: string;
   sort_order?: string;
   sort_field?: string;
-  page: number;
-  limit: number;
+  page?: number;
+  limit?: number;
+  fields?: any;
+  comma_separate_value?: boolean;
 }
 
 export interface PartnerItem {
@@ -39,4 +42,3 @@ export interface PartnerTotalResponse {
   inactive_partners_totals: number;
   linked_merchants_total: number;
 }
-

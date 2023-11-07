@@ -3,6 +3,7 @@
 import {
   EditOutlined,
   EyeFilled,
+  FileAddOutlined,
   InfoCircleOutlined,
   UserAddOutlined,
 } from "@ant-design/icons";
@@ -13,7 +14,6 @@ import { ValidateToken } from "@components/ValidateToken";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { Search } from "@src/components/Inputs/search";
-import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
 import { Toast } from "@src/components/Toast";
 import { TuorComponent } from "@src/components/Tuor";
@@ -21,12 +21,14 @@ import { queryClient } from "@src/services/queryClient";
 import { useGetAggregatorUsers } from "@src/services/register/aggregator/users/getAggregatorUsers";
 import { useUpdateAggregatorUser } from "@src/services/register/aggregator/users/updateUser";
 import { useCreateAggregatorUsersReports } from "@src/services/reports/register/aggregators/createAggregatorUsersReports";
+import { useGetAggregatorUserReportFields } from "@src/services/reports/register/aggregators/getUserReportFields";
 import { PartnerQuery } from "@src/services/types/register/partners/partners.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
 import { Button, Tooltip, Typography } from "antd";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { NewUserInterface, NewUserModal } from "./components/newUserModal";
+import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
 
 const INITIAL_QUERY: PartnerQuery = {
   limit: 25,
@@ -60,12 +62,20 @@ export const AggregatorUsers = () => {
     });
   const [action, setAction] = useState<"create" | "update">("create");
 
+  const [csvFields, setCsvFields] = useState<any>();
+  const [comma, setIsComma] = useState<boolean>(false);
   const {
     AggregatorUsersReportsError,
     AggregatorUsersReportsIsLoading,
     AggregatorUsersReportsIsSuccess,
     AggregatorUsersReportsMutate,
-  } = useCreateAggregatorUsersReports(query);
+  } = useCreateAggregatorUsersReports({
+    fields: csvFields,
+    comma_separate_value: comma,
+  });
+  const { fields } = useGetAggregatorUserReportFields();
+  const [isExportReportsOpen, setIsExportReportsOpen] =
+    useState<boolean>(false);
 
   useEffect(() => {
     refetchUsersData();
@@ -183,17 +193,29 @@ export const AggregatorUsers = () => {
         )}
         {permissions.register.aggregator.users.aggregator_user_export_csv && (
           <Grid item xs={12} md="auto" ref={ref5}>
-            <ExportReportsModal
-              disabled={!UsersData?.total || UsersDataError}
-              mutateReport={() => AggregatorUsersReportsMutate()}
-              error={AggregatorUsersReportsError}
-              success={AggregatorUsersReportsIsSuccess}
-              loading={AggregatorUsersReportsIsLoading}
-              reportPath="/register/aggregator/aggregator_reports/aggregator_users_reports"
-            />
+            <Tooltip
+              placement="topRight"
+              title={
+                UsersData?.total === 0 || UsersDataError
+                  ? t("messages.no_records_to_export")
+                  : t("messages.export_csv")
+              }
+              arrow
+            >
+              <Button
+                onClick={() => setIsExportReportsOpen(true)}
+                style={{ width: "100%" }}
+                shape="round"
+                type="dashed"
+                size="large"
+                loading={isUsersDataFetching}
+                disabled={UsersData?.total === 0 || UsersDataError}
+              >
+                <FileAddOutlined style={{ fontSize: 22 }} /> CSV
+              </Button>
+            </Tooltip>
           </Grid>
         )}
-
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -391,6 +413,22 @@ export const AggregatorUsers = () => {
           title: t("menus.aggregator_users"),
           description: t("wiki.aggregator_users_description"),
         }}
+      />
+       <ExportCustomReportsModal
+        open={isExportReportsOpen}
+        setOpen={setIsExportReportsOpen}
+        disabled={UsersData?.total === 0 || UsersDataError}
+        mutateReport={() => AggregatorUsersReportsMutate()}
+        error={AggregatorUsersReportsError}
+        success={AggregatorUsersReportsIsSuccess}
+        loading={AggregatorUsersReportsIsLoading}
+        reportPath="/register/aggregator/aggregator_reports/aggregator_users_reports"
+        fields={fields}
+        csvFields={csvFields}
+        comma={comma}
+        setIsComma={setIsComma}
+        setCsvFields={setCsvFields}
+        reportName="AggregatorUsers"
       />
     </Grid>
   );

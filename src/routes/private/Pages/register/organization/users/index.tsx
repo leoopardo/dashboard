@@ -3,6 +3,7 @@
 import {
   EditOutlined,
   EyeFilled,
+  FileAddOutlined,
   InfoCircleOutlined,
   UserAddOutlined,
 } from "@ant-design/icons";
@@ -15,12 +16,13 @@ import { Grid } from "@mui/material";
 import { useGetRowsOrganizationUsers } from "@services/register/organization/users/getUsers";
 import { useUpdateOrganizationUser } from "@services/register/organization/users/updateUser";
 import { Search } from "@src/components/Inputs/search";
-import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
+import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
 import { Toast } from "@src/components/Toast";
 import { TuorComponent } from "@src/components/Tuor";
 import { queryClient } from "@src/services/queryClient";
 import { useCreateOrganizationReports } from "@src/services/reports/register/organization/createUserReports";
+import { useGetOrganizationUserReportFields } from "@src/services/reports/register/organization/getUserReportFields";
 import { OrganizationUserQuery } from "@src/services/types/register/organization/organizationUsers.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
 import { Button, Tooltip, Typography } from "antd";
@@ -58,12 +60,22 @@ export const OrganizationUser = () => {
       ...updateUserBody,
       validation_token: tokenState,
     });
+
+  const [csvFields, setCsvFields] = useState<any>();
+  const [comma, setIsComma] = useState<boolean>(false);
   const {
     OrganizationReportsError,
     OrganizationReportsIsLoading,
     OrganizationReportsIsSuccess,
     OrganizationReportsMutate,
-  } = useCreateOrganizationReports(query);
+  } = useCreateOrganizationReports({
+    fields: csvFields,
+    comma_separate_value: comma,
+  });
+
+  const { fields } = useGetOrganizationUserReportFields();
+  const [isExportReportsOpen, setIsExportReportsOpen] =
+    useState<boolean>(false);
   const [action, setAction] = useState<"create" | "update">("create");
 
   useEffect(() => {
@@ -183,14 +195,27 @@ export const OrganizationUser = () => {
         )}
         {permissions.register.paybrokers.users.paybrokers_user_export_csv && (
           <Grid item xs={12} md="auto" ref={ref5}>
-            <ExportReportsModal
-              disabled={!UsersData?.total || UsersDataError}
-              mutateReport={() => OrganizationReportsMutate()}
-              error={OrganizationReportsError}
-              success={OrganizationReportsIsSuccess}
-              loading={OrganizationReportsIsLoading}
-              reportPath="/register/organization/organization_reports/organization_reports_users"
-            />
+            <Tooltip
+              placement="topRight"
+              title={
+                UsersData?.total === 0 || UsersDataError
+                  ? t("messages.no_records_to_export")
+                  : t("messages.export_csv")
+              }
+              arrow
+            >
+              <Button
+                onClick={() => setIsExportReportsOpen(true)}
+                style={{ width: "100%" }}
+                shape="round"
+                type="dashed"
+                size="large"
+                loading={isUsersDataFetching}
+                disabled={UsersData?.total === 0 || UsersDataError}
+              >
+                <FileAddOutlined style={{ fontSize: 22 }} /> CSV
+              </Button>
+            </Tooltip>
           </Grid>
         )}
       </Grid>
@@ -229,9 +254,16 @@ export const OrganizationUser = () => {
                 name: ["permission_group", "name"],
                 head: "group",
                 type: "text",
-                key: refGroup, sort: true, sort_name: "group_name"
+                key: refGroup,
+                sort: true,
+                sort_name: "group_name",
               },
-              { name: "last_signin_date", type: "date", key: refEmail, sort: true },
+              {
+                name: "last_signin_date",
+                type: "date",
+                key: refEmail,
+                sort: true,
+              },
               { name: "status", type: "status", key: refStatus, sort: true },
               {
                 name: "created_at",
@@ -368,6 +400,23 @@ export const OrganizationUser = () => {
           title: t("wiki.organization_users"),
           description: t("wiki.organization_users_description"),
         }}
+      />
+
+      <ExportCustomReportsModal
+        open={isExportReportsOpen}
+        setOpen={setIsExportReportsOpen}
+        disabled={UsersData?.total === 0 || UsersDataError}
+        mutateReport={() => OrganizationReportsMutate()}
+        error={OrganizationReportsError}
+        success={OrganizationReportsIsSuccess}
+        loading={OrganizationReportsIsLoading}
+        reportPath="/register/organization/organization_reports/organization_reports_users"
+        fields={fields}
+        csvFields={csvFields}
+        comma={comma}
+        setIsComma={setIsComma}
+        setCsvFields={setCsvFields}
+        reportName="organizationUsers"
       />
     </Grid>
   );
