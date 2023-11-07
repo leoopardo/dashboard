@@ -307,8 +307,6 @@ export const FiltersModal = ({
               } else return;
 
             case "bank":
-            case "cash_in_bank":
-            case "cash_out_bank":
               return (
                 <Form.Item
                   label={t(`table.${filter}`)}
@@ -322,6 +320,26 @@ export const FiltersModal = ({
                   />
                 </Form.Item>
               );
+
+            case "cash_in_bank":
+            case "cash_out_bank":
+              if (
+                permissions.register.merchant.merchant.merchant_config_banks
+              ) {
+                return (
+                  <Form.Item
+                    label={t(`table.${filter}`)}
+                    name={filter}
+                    style={{ margin: 10 }}
+                  >
+                    <BanksSelect
+                      queryOptions={filtersQuery}
+                      setQueryFunction={setFiltersQuery}
+                      field={filter}
+                    />
+                  </Form.Item>
+                );
+              } else return;
 
             case "payer_bank":
               if (

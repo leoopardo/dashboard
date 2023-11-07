@@ -47,7 +47,7 @@ export const MerchantBalance = () => {
               {isHoverCurrency === "real" ? (
                 <Statistic
                   title={t("table.balance_to_transactions")}
-                  value={MerchantBalance?.balance_to_transactions ?? 0}
+                  value={MerchantBalance?.balance_to_transactions_total ?? 0}
                   precision={2}
                   prefix="R$"
                   valueStyle={{
@@ -59,7 +59,7 @@ export const MerchantBalance = () => {
                 <>
                   <Statistic
                     title={t("table.balance_to_transactions")}
-                    value={MerchantBalance?.balance_to_transactions ?? 0}
+                    value={MerchantBalance?.balance_to_transactions_total ?? 0}
                     precision={2}
                     prefix="R$"
                     valueStyle={{
@@ -171,7 +171,7 @@ export const MerchantBalance = () => {
               {isHoverCurrency === "real" ? (
                 <Statistic
                   title={t("table.balance_to_payment")}
-                  value={MerchantBalance?.balance_to_payment ?? 0}
+                  value={MerchantBalance?.balance_to_payment_total ?? 0}
                   precision={2}
                   prefix="R$"
                   valueStyle={{
@@ -183,7 +183,7 @@ export const MerchantBalance = () => {
                 <>
                   <Statistic
                     title={t("table.balance_to_payment")}
-                    value={MerchantBalance?.balance_to_payment ?? 0}
+                    value={MerchantBalance?.balance_to_payment_total ?? 0}
                     precision={2}
                     prefix="R$"
                     valueStyle={{
@@ -295,7 +295,7 @@ export const MerchantBalance = () => {
               {isHoverCurrency === "real" ? (
                 <Statistic
                   title={t("table.balance_reserved")}
-                  value={MerchantBalance?.balance_reserved ?? 0}
+                  value={MerchantBalance?.balance_reserved_total ?? 0}
                   precision={2}
                   prefix="R$"
                   valueStyle={{
@@ -307,7 +307,7 @@ export const MerchantBalance = () => {
                 <>
                   <Statistic
                     title={t("table.balance_reserved")}
-                    value={7325256.32}
+                    value={MerchantBalance?.balance_reserved_total ?? 0}
                     precision={2}
                     prefix="R$"
                     valueStyle={{
@@ -419,7 +419,11 @@ export const MerchantBalance = () => {
               {isHoverCurrency === "real" ? (
                 <Statistic
                   title="Total"
-                  value={MerchantBalance?.balance_reserved_total ?? 0}
+                  value={
+                    (MerchantBalance?.balance_reserved_total || 0) +
+                    (MerchantBalance?.balance_to_transactions_total || 0) +
+                    (MerchantBalance?.balance_to_transactions_total || 0)
+                  }
                   precision={2}
                   prefix="R$"
                   valueStyle={{
@@ -431,7 +435,9 @@ export const MerchantBalance = () => {
                 <>
                   <Statistic
                     title="Total"
-                    value={MerchantBalance?.balance_reserved_total ?? 0}
+                    value={(MerchantBalance?.balance_reserved_total || 0) +
+                      (MerchantBalance?.balance_to_transactions_total || 0) +
+                      (MerchantBalance?.balance_to_transactions_total || 0)}
                     precision={2}
                     prefix="R$"
                     valueStyle={{
