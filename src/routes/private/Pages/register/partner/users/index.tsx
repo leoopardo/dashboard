@@ -1,10 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  EditOutlined,
-  EyeFilled,
-  UserAddOutlined,
-} from "@ant-design/icons";
+import { EditOutlined, EyeFilled, UserAddOutlined } from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
@@ -71,10 +67,22 @@ export const PartnerUsers = () => {
   const columns: ColumnInterface[] = [
     { name: "id", type: "id", sort: true },
     { name: "name", type: "text", sort: true },
-    { name: ["permission_group", "name"], head: "group", type: "text" },
-    { name: ["partner", "name"], head: "partner", type: "text" },
-    { name: "last_signin_date", type: "date" },
-    { name: "status", type: "status" },
+    {
+      name: ["permission_group", "name"],
+      head: "group",
+      type: "text",
+      sort: true,
+      sort_name: "group_name",
+    },
+    {
+      name: ["partner", "name"],
+      head: "partner",
+      type: "text",
+      sort: true,
+      sort_name: "partner_name",
+    },
+    { name: "last_signin_date", type: "date", sort: true },
+    { name: "status", type: "status", sort: true },
     { name: "created_at", type: "date", sort: true },
   ];
 
@@ -174,7 +182,6 @@ export const PartnerUsers = () => {
             />
           </Grid>
         )}
-        
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>

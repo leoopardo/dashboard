@@ -614,7 +614,7 @@ export const SidebarNavigation = () => {
                 false,
                 (e) => handleNavigate(e?.keyPath),
                 {
-                  display: permissions?.register?.merchant?.blacklist?.menu
+                  display: permissions?.register?.merchant?.black_list_reason.menu
                     ? undefined
                     : "none",
                 }

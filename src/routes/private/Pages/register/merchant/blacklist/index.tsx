@@ -58,7 +58,7 @@ export const MerchantBlacklist = () => {
     null
   );
   const { error, isLoading, isSuccess, mutate } =
-    useCreateMerchantBlacklist(body);
+    useCreateMerchantBlacklist({...body, can_be_deleted_only_by_organization: body?.can_be_deleted_only_by_organization === "true"});
   const [search, setSearch] = useState<string>("");
   const debounceSearch = useDebounce(search);
   const {

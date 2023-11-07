@@ -252,7 +252,7 @@ export const NewUserModal = ({
                   required: !body.aggregator_id && action === "create",
                   message:
                     t("input.required", {
-                      field: t(`input.operator`),
+                      field: t(`table.aggregator`).toLowerCase(),
                     }) || "",
                 },
               ]}

@@ -194,8 +194,7 @@ export const FiltersModal = ({
               {
                 ...filtersQuery,
                 [startDateKeyName]: filtersQuery[startDateKeyName]
-                  ? moment(filtersQuery[startDateKeyName])
-                      .add(3, "hours")
+                  ? moment(filtersQuery[startDateKeyName]).add(3, "hours")
                   : undefined,
                 [endDateKeyName]: filtersQuery[endDateKeyName]
                   ? moment(filtersQuery[endDateKeyName]).add(3, "hours")
@@ -276,10 +275,10 @@ export const FiltersModal = ({
                       value={[
                         filtersQuery[startDateKeyName]
                           ? dayjs(filtersQuery[startDateKeyName])
-                          : null,
+                          : dayjs(moment(new Date()).startOf("day").format("YYYY-MM-DDTHH:mm:00.000")),
                         filtersQuery[endDateKeyName]
                           ? dayjs(filtersQuery[endDateKeyName])
-                          : null,
+                          : dayjs(moment(new Date()).startOf("day").format("YYYY-MM-DDTHH:mm:00.000")),
                       ]}
                       clearIcon={<></>}
                       placeholder={[
