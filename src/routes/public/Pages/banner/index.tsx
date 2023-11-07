@@ -1,15 +1,25 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Col, Row } from "antd";
 import { useMediaQuery } from "react-responsive";
-import Gif from "../../../../assets/gifPaybrokers.gif";
+import { useParams } from "react-router-dom";
+import Gif from "../../../../assets/gif-branca.gif";
+import Gif2 from "../../../../assets/gif-colorido.gif";
+import Gif3 from "../../../../assets/gif-natal.gif";
 
 export const Banner = () => {
   const isEven200 = useMediaQuery({ maxHeight: "500px" });
+  const { number } = useParams();
+  const gifLists: any = {
+    "1": Gif,
+    "2": Gif2,
+    "3": Gif3,
+  };
   return (
     <Row
       style={{
         height: "100vh",
         width: "100vw",
-        backgroundColor: "#042645",
+        backgroundColor: number === "2" ? "#fff" : "#042645",
         overflow: "hidden",
         display: "flex",
         justifyContent: "center",
@@ -26,7 +36,7 @@ export const Banner = () => {
         }}
       >
         <img
-          src={Gif}
+          src={gifLists[number as any]}
           style={{
             maxHeight: "180vh",
             maxWidth: "180vw",
