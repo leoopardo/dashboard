@@ -55,6 +55,7 @@ interface FilterModalProps {
   initialQuery: any;
   maxRange?: boolean;
   disabled?: string[];
+  disableMinutes?: boolean;
 }
 
 export const FiltersModal = ({
@@ -70,6 +71,7 @@ export const FiltersModal = ({
   maxRange,
   initialQuery,
   disabled,
+  disableMinutes,
 }: FilterModalProps) => {
   const { permissions } = queryClient.getQueryData(
     "validate"
@@ -188,7 +190,17 @@ export const FiltersModal = ({
         </Grid>
         <Grid item xs={12}>
           <FilterChips
-            query={filtersQuery || query}
+            query={
+              {
+                ...filtersQuery,
+                [startDateKeyName]: filtersQuery[startDateKeyName]
+                  ? moment(filtersQuery[startDateKeyName]).add(3, "hours")
+                  : undefined,
+                [endDateKeyName]: filtersQuery[endDateKeyName]
+                  ? moment(filtersQuery[endDateKeyName]).add(3, "hours")
+                  : undefined,
+              } || query
+            }
             setQuery={setQuery}
             startDateKeyName={startDateKeyName}
             endDateKeyName={endDateKeyName}
@@ -257,15 +269,16 @@ export const FiltersModal = ({
                           ? "DD/MM/YYYY HH:mm"
                           : "YYYY/MM/DD HH:mm"
                       }
+                      showMinute={disableMinutes ? false : true}
                       popupStyle={{ marginLeft: "40px" }}
                       showTime
                       value={[
                         filtersQuery[startDateKeyName]
                           ? dayjs(filtersQuery[startDateKeyName])
-                          : null,
+                          : dayjs(moment(new Date()).startOf("day").format("YYYY-MM-DDTHH:mm:00.000")),
                         filtersQuery[endDateKeyName]
                           ? dayjs(filtersQuery[endDateKeyName])
-                          : null,
+                          : dayjs(moment(new Date()).startOf("day").format("YYYY-MM-DDTHH:mm:00.000")),
                       ]}
                       clearIcon={<></>}
                       placeholder={[
@@ -307,8 +320,6 @@ export const FiltersModal = ({
               } else return;
 
             case "bank":
-            case "cash_in_bank":
-            case "cash_out_bank":
               return (
                 <Form.Item
                   label={t(`table.${filter}`)}
@@ -322,6 +333,26 @@ export const FiltersModal = ({
                   />
                 </Form.Item>
               );
+
+            case "cash_in_bank":
+            case "cash_out_bank":
+              if (
+                permissions.register.merchant.merchant.merchant_config_banks
+              ) {
+                return (
+                  <Form.Item
+                    label={t(`table.${filter}`)}
+                    name={filter}
+                    style={{ margin: 10 }}
+                  >
+                    <BanksSelect
+                      queryOptions={filtersQuery}
+                      setQueryFunction={setFiltersQuery}
+                      field={filter}
+                    />
+                  </Form.Item>
+                );
+              } else return;
 
             case "payer_bank":
               if (

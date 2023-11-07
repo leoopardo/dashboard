@@ -232,16 +232,17 @@ export const AggregatorUsers = () => {
                 name: ["permission_group", "name"],
                 head: "group",
                 type: "text",
-                key: refGroup,
+                key: refGroup, sort: true, sort_name: "group_name"
               },
               {
                 name: ["aggregator", "name"],
                 head: "aggregator",
                 type: "text",
                 key: refPartner,
+                sort: true, sort_name: "aggregator_name"
               },
-              { name: "last_signin_date", type: "date", key: refLast },
-              { name: "status", type: "status", key: refStatus },
+              { name: "last_signin_date", type: "date", key: refLast, sort: true },
+              { name: "status", type: "status", key: refStatus, sort: true },
               {
                 name: "created_at",
                 type: "date",

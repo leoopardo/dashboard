@@ -334,7 +334,7 @@
     "from": "From",
     "to": "To",
     "organization_name": "Organization",
-    "can_be_deleted_only_by_organization": "Organization can delete",
+    "can_be_deleted_only_by_organization": "Can be deleted only by organizations.",
     "fastpix_in_bank": "FastPix bank",
     "fastpix_in_permission": "FastPix permission",
     "fastpix_in_type": "FastPix type",
@@ -756,7 +756,8 @@
     "fastpix_webhook_url": "FastPix Webhook URL",
     "fastpix_redirect_url": "FastPix Redirect URL",
     "fastpix_token_time": "FastPix Token Expiration Time",
-    "fastpix_in": "FastPix"
+    "fastpix_in": "FastPix",
+    "pixType": "Pix Type"
   },
   "actions": {
     "details": "Details",
@@ -912,6 +913,7 @@
     "bank_total_description": "Brings the total balance value of the Organization along with the IP. This value is the total balance of transactions carried out by the organization through the IP in question.",
     "bank_blocked_value_description": "Brings the value blocked for future operations of the Organization, which has been safeguarded by the IP.",
     "bank_chart_description": "Switches the view from Grid to a bar chart.",
-    "bank_card_description": "Switches the view from Grid to bank cards."
+    "bank_card_description": "Switches the view from Grid to bank cards.",
+    "last_sign_in_description": "User's last access date to the system."
   }
 }
