@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
   EditOutlined,
   EyeFilled,
+  FileAddOutlined,
   InfoCircleOutlined,
   UserAddOutlined,
 } from "@ant-design/icons";
@@ -11,7 +13,7 @@ import { FilterChips } from "@components/FiltersModal/filterChips";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { Search } from "@src/components/Inputs/search";
-import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
+import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
 import { Toast } from "@src/components/Toast";
@@ -22,6 +24,7 @@ import { useGetAggregators } from "@src/services/register/aggregator/getAggregat
 import { useGetAggregatorsTotals } from "@src/services/register/aggregator/getAggregatorsTotals";
 import { useUpdateAggregator } from "@src/services/register/aggregator/updateAggregator";
 import { useCreateAggregatorReports } from "@src/services/reports/register/aggregators/createAggregatorReports";
+import { useGetAggregatorReportFields } from "@src/services/reports/register/aggregators/getAggregatorsReportFields";
 import {
   AggregatorItem,
   AggregatorQuery,
@@ -31,9 +34,9 @@ import { defaultTheme } from "@src/styles/defaultTheme";
 import { Button, Tooltip, Typography } from "antd";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useMediaQuery } from "react-responsive";
 import { useNavigate } from "react-router-dom";
 import { TotalizersCards } from "./components/totalizersCards";
-import { useMediaQuery } from "react-responsive";
 
 const INITIAL_QUERY: AggregatorQuery = {
   limit: 25,
@@ -65,12 +68,21 @@ export const Aggregators = () => {
     refetchAggregatorsTotalsData,
   } = useGetAggregatorsTotals(query);
 
+  const [csvFields, setCsvFields] = useState<any>();
+  const [comma, setIsComma] = useState<boolean>(false);
   const {
     AggregatorReportsError,
     AggregatorReportsIsLoading,
     AggregatorReportsIsSuccess,
     AggregatorReportsMutate,
-  } = useCreateAggregatorReports(query);
+  } = useCreateAggregatorReports({
+    fields: csvFields,
+    comma_separate_value: comma,
+  });
+
+  const { fields } = useGetAggregatorReportFields();
+  const [isExportReportsOpen, setIsExportReportsOpen] =
+    useState<boolean>(false);
 
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [isNewCategorieModal, setIsNewCategorieModal] =
@@ -230,14 +242,27 @@ export const Aggregators = () => {
         )}
         {permissions.register.aggregator.aggregator.aggregator_export_csv && (
           <Grid item xs={12} md="auto" ref={ref5}>
-            <ExportReportsModal
-              disabled={!AggregatorsData?.total || AggregatorsDataError}
-              mutateReport={() => AggregatorReportsMutate()}
-              error={AggregatorReportsError}
-              success={AggregatorReportsIsSuccess}
-              loading={AggregatorReportsIsLoading}
-              reportPath="/register/aggregator/aggregator_reports/aggregator_aggregators_reports"
-            />
+            <Tooltip
+              placement="topRight"
+              title={
+                AggregatorsData?.total === 0 || AggregatorsDataError
+                  ? t("messages.no_records_to_export")
+                  : t("messages.export_csv")
+              }
+              arrow
+            >
+              <Button
+                onClick={() => setIsExportReportsOpen(true)}
+                style={{ width: "100%" }}
+                shape="round"
+                type="dashed"
+                size="large"
+                loading={isAggregatorsDataFetching}
+                disabled={AggregatorsData?.total === 0 || AggregatorsDataError}
+              >
+                <FileAddOutlined style={{ fontSize: 22 }} /> CSV
+              </Button>
+            </Tooltip>
           </Grid>
         )}
       </Grid>
@@ -457,6 +482,22 @@ export const Aggregators = () => {
           title: t("menus.aggregators"),
           description: t("wiki.aggregators_description"),
         }}
+      />
+      <ExportCustomReportsModal
+        open={isExportReportsOpen}
+        setOpen={setIsExportReportsOpen}
+        disabled={AggregatorsData?.total === 0 || AggregatorsDataError}
+        mutateReport={() => AggregatorReportsMutate()}
+        error={AggregatorReportsError}
+        success={AggregatorReportsIsSuccess}
+        loading={AggregatorReportsIsLoading}
+        reportPath="/register/aggregator/aggregator_reports/aggregator_aggregators_reports"
+        fields={fields}
+        csvFields={csvFields}
+        comma={comma}
+        setIsComma={setIsComma}
+        setCsvFields={setCsvFields}
+        reportName="Aggregators"
       />
     </Grid>
   );

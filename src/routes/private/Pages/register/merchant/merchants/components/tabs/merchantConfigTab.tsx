@@ -185,6 +185,7 @@ export const MerchantConfigTab = (props: { id?: string }) => {
               name="fastpix_webhook_url"
             >
               <Input
+                disabled
                 size="large"
                 name="fastpix_webhook_url"
                 value={body?.fastpix_webhook_url}
@@ -207,6 +208,7 @@ export const MerchantConfigTab = (props: { id?: string }) => {
               name="fastpix_redirect_url"
             >
               <Input
+                disabled
                 size="large"
                 name="fastpix_redirect_url"
                 value={body?.fastpix_redirect_url}
@@ -229,6 +231,7 @@ export const MerchantConfigTab = (props: { id?: string }) => {
               name="fastpix_token_time"
             >
               <InputNumber
+                disabled
                 style={{ width: "100%" }}
                 size="large"
                 name="fastpix_token_time"

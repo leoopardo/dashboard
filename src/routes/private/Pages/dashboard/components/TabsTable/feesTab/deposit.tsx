@@ -23,7 +23,14 @@ export const DepositFees = ({ query, chart }: TableProps) => {
                 },
               },
               color: ["#91cc75"],
-              legend: {},
+              legend: {
+                textStyle: {
+                  color: "#a0a0a0",
+                },
+              },
+              textStyle: {
+                color: "#a0a0a0",
+              },
               grid: {
                 left: "3%",
                 right: "4%",
@@ -36,7 +43,9 @@ export const DepositFees = ({ query, chart }: TableProps) => {
               },
               yAxis: {
                 type: "category",
-                data: RankingData?.sort((a, b) => a.total > b.total ? -1 : 1)?.map((merchant) => merchant?.name ?? "-"),
+                data: RankingData?.sort((a, b) =>
+                  a.total > b.total ? -1 : 1
+                )?.map((merchant) => merchant?.name ?? "-"),
               },
               series: [
                 {
@@ -79,7 +88,7 @@ export const DepositFees = ({ query, chart }: TableProps) => {
       }}
       actions={[]}
       data={RankingData}
-      items={RankingData?.sort((a, b) => a.total > b.total ? -1 : 1)}
+      items={RankingData?.sort((a, b) => (a.total > b.total ? -1 : 1))}
       error={RankingError}
       columns={[
         { name: "name", type: "text" },

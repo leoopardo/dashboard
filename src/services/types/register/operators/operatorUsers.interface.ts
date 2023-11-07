@@ -8,8 +8,8 @@ export interface OperatorUsersQuery {
   status?: string;
   sort_order?: string;
   sort_field?: string;
-  page: number;
-  limit: number;
+  page?: number;
+  limit?: number;
 }
 
 export interface OperatorUsersItem {

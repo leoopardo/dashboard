@@ -73,11 +73,11 @@ function App() {
           <ConfigProvider
             theme={{
               components: {
-                Alert: { 
+                Alert: {
                   colorError: "#000",
-                  colorText: "#000"
+                  colorText: "#000",
                 },
-          
+
                 Menu: {
                   colorTextLightSolid:
                     theme === "dark"

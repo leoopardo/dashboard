@@ -474,7 +474,7 @@
     "type": "Tipo",
     "cellphone": "Telefone",
     "last_signin_ip": "Último IP",
-    "phone_validated": "Telefone validado:",
+    "phone_validated": "Telefone validado?",
     "true": "Sim",
     "false": "Não",
     "group": "Grupo",
@@ -762,7 +762,14 @@
     "fastpix_redirect_url": "URL de redirecionamento FastPix",
     "fastpix_token_time": "Tempo de expiração de token FastPix",
     "fastpix_in": "FastPix",
-    "pixType": "Tipo Pix"
+    "pixType": "Tipo Pix",
+    "group_name": "Grupo",
+    "profile_type_name": "Tipo de perfil",
+    "email_validated": "Email validado?",
+    "whatsapp": "WhatsApp",
+    "language": "Idioma",
+    "telegram": "Telegram",
+    "skype": "Skype"
   },
   "actions": {
     "details": "Detalhes",

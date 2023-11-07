@@ -340,7 +340,7 @@
     "fastpix_in_type": "FastPix type",
     "fastpix_in_max_value": "FastPix min. value",
     "fastpix_in_fixed_min_value": "FastPix max. value",
-    "fastpix_qr_code_expire_seconds":"QRCode FastPIX expiration time (seconds)"
+    "fastpix_qr_code_expire_seconds": "QRCode FastPIX expiration time (seconds)"
   },
   "modal": {
     "confirm": "Confirm",
@@ -474,7 +474,7 @@
     "type": "Type",
     "cellphone": "Cellphone",
     "last_signin_ip": "Last IP",
-    "phone_validated": "Phone validated",
+    "phone_validated": "Phone validated?",
     "true": "Yes",
     "false": "No",
     "group": "Group",
@@ -757,7 +757,14 @@
     "fastpix_redirect_url": "FastPix Redirect URL",
     "fastpix_token_time": "FastPix Token Expiration Time",
     "fastpix_in": "FastPix",
-    "pixType": "Pix Type"
+    "pixType": "Pix Type",
+    "group_name": "Group name",
+    "profile_type_name": "profile type",
+    "email_validated": "email validated?",
+    "whatsapp": "WhatsApp",
+    "language": "Language",
+    "telegram": "Telegram",
+    "skype": "Skype"
   },
   "actions": {
     "details": "Details",
