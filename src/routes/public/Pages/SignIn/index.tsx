@@ -81,7 +81,7 @@ export const Login = () => {
               duration: 1,
             },
           }}
-          style={{ width: "80%", maxWidth: "400px" }}
+          style={{ width: "80%", maxWidth: "350px" }}
         />
       </HalfHover>
       <Grid
