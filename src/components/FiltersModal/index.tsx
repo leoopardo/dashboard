@@ -55,6 +55,7 @@ interface FilterModalProps {
   initialQuery: any;
   maxRange?: boolean;
   disabled?: string[];
+  disableMinutes?: boolean;
 }
 
 export const FiltersModal = ({
@@ -70,6 +71,7 @@ export const FiltersModal = ({
   maxRange,
   initialQuery,
   disabled,
+  disableMinutes,
 }: FilterModalProps) => {
   const { permissions } = queryClient.getQueryData(
     "validate"
@@ -188,7 +190,18 @@ export const FiltersModal = ({
         </Grid>
         <Grid item xs={12}>
           <FilterChips
-            query={filtersQuery || query}
+            query={
+              {
+                ...filtersQuery,
+                [startDateKeyName]: filtersQuery[startDateKeyName]
+                  ? moment(filtersQuery[startDateKeyName])
+                      .add(3, "hours")
+                  : undefined,
+                [endDateKeyName]: filtersQuery[endDateKeyName]
+                  ? moment(filtersQuery[endDateKeyName]).add(3, "hours")
+                  : undefined,
+              } || query
+            }
             setQuery={setQuery}
             startDateKeyName={startDateKeyName}
             endDateKeyName={endDateKeyName}
@@ -257,6 +270,7 @@ export const FiltersModal = ({
                           ? "DD/MM/YYYY HH:mm"
                           : "YYYY/MM/DD HH:mm"
                       }
+                      showMinute={disableMinutes ? false : true}
                       popupStyle={{ marginLeft: "40px" }}
                       showTime
                       value={[

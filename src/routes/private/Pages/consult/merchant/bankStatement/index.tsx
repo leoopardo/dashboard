@@ -261,6 +261,8 @@ export const MerchantBankStatement = () => {
           startDateKeyName="start_date"
           endDateKeyName="end_date"
           initialQuery={INITIAL_QUERY}
+          maxRange
+          disableMinutes
         />
       )}
     </Grid>

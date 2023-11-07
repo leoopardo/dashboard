@@ -15,7 +15,7 @@ export const MerchantBalance = () => {
   const [show] = useState<boolean>(true);
   const INITIAL_QUERY: MerchantBalanceQuery = {
     page: 1,
-    limit: 25,
+    limit: 10,
   };
   const [
     query,

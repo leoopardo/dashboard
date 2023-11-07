@@ -913,6 +913,7 @@
     "bank_total_description": "Brings the total balance value of the Organization along with the IP. This value is the total balance of transactions carried out by the organization through the IP in question.",
     "bank_blocked_value_description": "Brings the value blocked for future operations of the Organization, which has been safeguarded by the IP.",
     "bank_chart_description": "Switches the view from Grid to a bar chart.",
-    "bank_card_description": "Switches the view from Grid to bank cards."
+    "bank_card_description": "Switches the view from Grid to bank cards.",
+    "last_sign_in_description": "User's last access date to the system."
   }
 }

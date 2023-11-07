@@ -9,7 +9,7 @@ export const MerchantsBalance = () => {
   const { t } = useTranslation();
   const INITIAL_QUERY: MerchantBalanceQuery = {
     page: 1,
-    limit: 25,
+    limit: 10,
   };
   const [query, setQuery] = useState<MerchantBalanceQuery>(INITIAL_QUERY);
   const { MerchantBalance, isMerchantBalanceFetching } =
