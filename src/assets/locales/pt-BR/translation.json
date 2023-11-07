@@ -368,7 +368,7 @@
     "credit_balance_type": "Tipo saldo destino",
     "from": "Origem",
     "to": "Destino",
-    "can_be_deleted_only_by_organization": "Organização pode deletar",
+    "can_be_deleted_only_by_organization": "Pode ser removido apenas por organizações.",
     "fastpix_in_bank": "Banco FastPix",
     "fastpix_in_permission": "Permissão de FastPix",
     "fastpix_in_type": "Tipo de FastPix",
