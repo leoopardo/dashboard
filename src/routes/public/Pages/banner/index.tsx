@@ -7,7 +7,7 @@ import Gif2 from "../../../../assets/gif-colorido.gif";
 import Gif3 from "../../../../assets/gif-natal.gif";
 
 export const Banner = () => {
-  const isEven200 = useMediaQuery({ maxHeight: "500px" });
+  const isEven200 = useMediaQuery({ maxHeight: "200px" });
   const { number } = useParams();
   const gifLists: any = {
     "1": Gif,
@@ -32,13 +32,13 @@ export const Banner = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          marginTop: isEven200 ? "-30vh" : undefined,
+          marginTop: isEven200 ? "-5vh" : undefined,
         }}
       >
         <img
           src={gifLists[number as any]}
           style={{
-            maxHeight: "180vh",
+            maxHeight: "140vh",
             maxWidth: "180vw",
           }}
         />
