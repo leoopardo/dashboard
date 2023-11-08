@@ -88,11 +88,9 @@ export const UpdateUserModal = ({
       setUpdateBody(body);
       setCurrentUser(null);
       setIsValidateTokenOpen(true);
-      setOpen(false);
       return;
     }
     mutate();
-    setOpen(false);
     setBody({});
   }
 
@@ -102,6 +100,15 @@ export const UpdateUserModal = ({
       organization_id: responseValidate?.organization_id,
     }));
   }, [responseValidate]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      setOpen(false);
+      reset();
+    }
+  }, [isSuccess]);
+
+  console.log(error);
 
   useEffect(() => {
     if (currentUser && action === "update")
@@ -398,6 +405,11 @@ export const UpdateUserModal = ({
       <Toast
         actionSuccess={t("messages.created")}
         actionError={t("messages.create")}
+        errorMessage={
+          (error as any)?.response?.data?.message === "INVALID USER"
+            ? `${t(`error.INVALID_USER`)}`
+            : undefined
+        }
         error={error}
         success={isSuccess}
       />
