@@ -347,7 +347,8 @@
     "fastpix_in_max_value": "FastPix min. value",
     "fastpix_in_fixed_min_value": "FastPix max. value",
     "fastpix_qr_code_expire_seconds":"QRCode FastPIX expiration time (seconds)",
-    "category_id": "Category"
+    "category_id": "Category",
+    "password_type": "The password must contain at least 8 characters, including at least 1 number, 1 uppercase letter, and 1 special character."
   },
   "modal": {
     "confirm": "Confirm",

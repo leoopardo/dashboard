@@ -120,7 +120,7 @@ export const NewUserModal = ({
         status: currentUser?.status,
         username: currentUser?.username,
         cellphone: currentUser?.cellphone,
-        email: currentUser?.email
+        email: currentUser?.email,
       }));
   }, [currentUser]);
 
@@ -170,11 +170,7 @@ export const NewUserModal = ({
       <Form
         ref={formRef}
         layout="vertical"
-        initialValues={
-          action === "create"
-            ? {}
-            : currentUser ?? body
-        }
+        initialValues={action === "create" ? {} : currentUser ?? body}
         disabled={currentUser ? updateLoading : isLoading}
         onFinish={CreateUser}
       >
@@ -306,7 +302,11 @@ export const NewUserModal = ({
               message:
                 t("input.required(a)", { field: t("input.password") }) || "",
             },
-            { min: 8, message: t("input.min_of", { min: 8 }) || "" },
+            {
+              pattern:
+                /^(?=.*[0-9])(?=.*[A-Z])(?=.*[!@#$%^&*()_+])[0-9a-zA-Z!@#$%^&*()_+]*$/,
+              message: `${t("input.password_type")}`,
+            },
             ({ getFieldValue }) => ({
               validator(_, value) {
                 if (!value || getFieldValue("confirmPasswprd") === value) {
@@ -329,7 +329,7 @@ export const NewUserModal = ({
           />
         </Form.Item>
         <Form.Item
-          label={t(`table.password`)}
+          label={t(`table.confirm_password`)}
           name="confirmPasswprd"
           dependencies={["password"]}
           style={{ margin: 10 }}

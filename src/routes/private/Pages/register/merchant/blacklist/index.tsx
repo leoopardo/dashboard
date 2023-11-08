@@ -1,18 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { PlusOutlined } from "@ant-design/icons";
+import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
 import { ViewModal } from "@components/Modals/viewGenericModal";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
-import { DeleteOutlined } from "@ant-design/icons";
-import { Confirmation } from "@src/components/Modals/confirmation";
 import { Grid } from "@mui/material";
+import { Confirmation } from "@src/components/Modals/confirmation";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
 import { ReasonSelect } from "@src/components/Selects/reasonSelect";
+import { Toast } from "@src/components/Toast";
 import { queryClient } from "@src/services/queryClient";
 import { useCreateMerchantBlacklist } from "@src/services/register/merchant/blacklist/createMerchantBlacklist";
+import { useDeleteMechantBlacklist } from "@src/services/register/merchant/blacklist/deleteMerchantBlacklist";
 import { useGetRowsMerchantBlacklist } from "@src/services/register/merchant/blacklist/getMerchantBlacklist";
 import { useCreateMerchantBlacklistReports } from "@src/services/reports/register/merchant/createMerchantBlacklistReports";
 import {
@@ -23,7 +24,6 @@ import { ValidateInterface } from "@src/services/types/validate.interface";
 import useDebounce from "@utils/useDebounce";
 import { Button, Input } from "antd";
 import { useEffect, useState } from "react";
-import { useDeleteMechantBlacklist } from "@src/services/register/merchant/blacklist/deleteMerchantBlacklist";
 import { useTranslation } from "react-i18next";
 
 const INITIAL_QUERY: MerchantBlacklistQuery = {
@@ -57,8 +57,11 @@ export const MerchantBlacklist = () => {
   const [currentItem, setCurrentItem] = useState<MerchantBlacklistItem | null>(
     null
   );
-  const { error, isLoading, isSuccess, mutate } =
-    useCreateMerchantBlacklist({...body, can_be_deleted_only_by_organization: body?.can_be_deleted_only_by_organization === "true"});
+  const { error, isLoading, isSuccess, mutate } = useCreateMerchantBlacklist({
+    ...body,
+    can_be_deleted_only_by_organization:
+      body?.can_be_deleted_only_by_organization === "true",
+  });
   const [search, setSearch] = useState<string>("");
   const debounceSearch = useDebounce(search);
   const {
@@ -224,7 +227,6 @@ export const MerchantBlacklist = () => {
             />
           </Grid>
         )}
-
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -322,6 +324,12 @@ export const MerchantBlacklist = () => {
           setOpen={setIsViewModalOpen}
         />
       )}
+      <Toast
+        actionError={t("messages.create")}
+        actionSuccess={t("messages.created")}
+        error={error}
+        success={isSuccess}
+      />
     </Grid>
   );
 };
