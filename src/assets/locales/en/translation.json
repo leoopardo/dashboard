@@ -142,7 +142,10 @@
     "import_csv": "Import csv",
     "update_aggregator": "Update agregator",
     "details": "Details",
-    "Wiki": "Wiki"
+    "Wiki": "Wiki",
+    "pre_manual": "Manual pre entry",
+    "merchant_pre_manual": "Manual pre entry",
+    "merchant_pre_manual_reports": "Manual pre entry reports"
   },
 
   "titles": {
@@ -153,7 +156,8 @@
     "total_onboarding": "Total {{entity}} onboarding",
     "total_registred_active": "Total {{entity}} registred active",
     "total_registred_inactive": "Total {{entity}} registred inactive",
-    "total": "Total {{entity}}"
+    "total": "Total {{entity}}",
+    "operation_approve": "Approve Operations"
   },
 
   "messages": {
@@ -166,6 +170,7 @@
     "update": "update",
     "created": "Created",
     "updated": "Updated",
+    "approved": "approved",
     "generate_voucher": "generate payment voucher",
     "generated_voucher": "Payment voucher generated",
     "confirm_action_title": "{{action}} data",
@@ -202,7 +207,8 @@
     "preview_csv": "Preview CSV",
     "preview_file": "preview file",
     "value_chart_area": "Value chart area",
-    "operations_number_chart_area": "Operation number chart area"
+    "operations_number_chart_area": "Operation number chart area",
+    "operation_approve": "Do you want to approve the selected operations?"
   },
   "login": {
     "sign_in": "Sign in",
@@ -340,7 +346,8 @@
     "fastpix_in_type": "FastPix type",
     "fastpix_in_max_value": "FastPix min. value",
     "fastpix_in_fixed_min_value": "FastPix max. value",
-    "fastpix_qr_code_expire_seconds": "QRCode FastPIX expiration time (seconds)"
+    "fastpix_qr_code_expire_seconds":"QRCode FastPIX expiration time (seconds)",
+    "category_id": "Category"
   },
   "modal": {
     "confirm": "Confirm",

@@ -101,6 +101,8 @@ import { BankBlackistReports } from "./Pages/support/blacklists/reports/bankBlac
 import { ThirdPartKeyBlacklist } from "./Pages/support/blacklists/thirdPartKey";
 import { ImportContastationDeposit } from "./Pages/support/contastation/importCSV";
 import { ContestationUploads } from "./Pages/support/contastation/uploads";
+import { PreManual } from "./Pages/moviments/preOperations";
+import { PreManualReports } from "./Pages/moviments/preOperations/reports";
 import { Permission } from "./permission";
 import { Redirect } from "./redirect";
 
@@ -1355,6 +1357,22 @@ export const PrivateRoutes = () => {
                   </Permission>
                 }
               />
+
+              {/* arrumar permissões */}
+              <Route
+                path="merchant_pre_manual_reports"
+                element={
+                  <Permission
+                    permission={
+                      responseValidate?.permissions?.transactions?.merchant
+                        ?.internal_transfers
+                        ?.merchant_internal_transfers_export_csv
+                    }
+                  >
+                    <TransferBetweenAccountsReports />
+                  </Permission>
+                }
+              />
             </Route>
             {/* arrumar permissões */}
             <Route
@@ -1410,6 +1428,34 @@ export const PrivateRoutes = () => {
                 }
               />
             </Route>
+          </Route>
+          {/* Arrumar permissão*/}
+          <Route path="pre_manual">
+            <Route
+              path="pre_manual"
+              element={
+                <Permission
+                  permission={
+                    responseValidate?.permissions?.transactions?.merchant?.menu
+                  }
+                >
+                  <PreManual />
+                </Permission>
+              }
+            />
+
+            <Route
+              path="reports"
+              element={
+                <Permission
+                  permission={
+                    responseValidate?.permissions?.transactions?.merchant?.menu
+                  }
+                >
+                  <PreManualReports />
+                </Permission>
+              }
+            />
           </Route>
         </Route>
         {/* Suporte */}

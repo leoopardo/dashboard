@@ -228,6 +228,15 @@ export interface ValidateInterface {
       };
       merchant: {
         menu: boolean;
+        pre_manual_transactions: {
+          menu: boolean;
+          merchant_pre_manual_transactions_list: boolean;
+          merchant_pre_manual_transactions_create: boolean;
+          merchant_pre_manual_transactions_update: boolean;
+          merchant_pre_manual_transactions_delete: boolean;
+          merchant_pre_manual_transactions_approve: boolean;
+          merchant_pre_manual_transactions_export_csv: boolean;
+        };
         manual_transactions: {
           menu: boolean;
           merchant_manual_transactions_list: boolean;

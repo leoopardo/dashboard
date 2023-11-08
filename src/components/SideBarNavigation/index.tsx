@@ -1075,6 +1075,38 @@ export const SidebarNavigation = () => {
           }
         ),
         getItem(
+          "pre_manual",
+          null,
+          [
+            getItem(
+              "pre_manual",
+              null,
+              null,
+              false,
+              (e) => handleNavigate(e?.keyPath),
+              {
+                display: permissions?.transactions?.merchant?.menu
+                  ? undefined
+                  : "none",
+              }
+            ),
+            getItem(
+              "reports",
+              null,
+              null,
+              false,
+              (e) => handleNavigate(e?.keyPath),
+              {
+                display: permissions?.transactions?.merchant?.menu
+                  ? undefined
+                  : "none",
+              }
+            ),
+          ],
+          false,
+          undefined
+        ),
+        getItem(
           "merchant_transfers",
           null,
           null,
