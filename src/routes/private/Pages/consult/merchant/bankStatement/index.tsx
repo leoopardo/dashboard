@@ -249,7 +249,7 @@ export const MerchantBankStatement = () => {
           filters={[
             "start_date",
             "end_date",
-            "payment_type",
+            "operation_type",
             "bank",
             "aggregator_id",
             "operator_id",
@@ -257,7 +257,7 @@ export const MerchantBankStatement = () => {
             "merchant_id",
           ]}
           refetch={refetchMerchantTransactionsTotal}
-          selectOptions={{ payment_type: ["PIX", "WITHDRAW"] }}
+          selectOptions={{ operation_type: ["PIX", "WITHDRAW"] }}
           startDateKeyName="start_date"
           endDateKeyName="end_date"
           initialQuery={INITIAL_QUERY}
