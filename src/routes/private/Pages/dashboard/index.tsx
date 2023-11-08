@@ -71,6 +71,33 @@ export const Dashboard = () => {
   const { refetchMerchantBankStatementTotalsTotal } =
     useGetMerchantBankStatementTotals(query);
 
+  const totilizersTabs = [];
+
+  if (
+    permissions?.report?.paybrokers?.balance?.report_paybrokers_balance_list
+  ) {
+    totilizersTabs.push({
+      key: "1",
+      label: t("table.organization_balance"),
+      children: (
+        <Col span={24}>
+          <OrganizationBalance />
+        </Col>
+      ),
+    });
+  }
+  if (permissions?.report?.merchant?.balance?.report_merchant_balance_list) {
+    totilizersTabs.push({
+      key: "2",
+      label: t("table.merchant_balance"),
+      children: (
+        <Col span={24}>
+          <MerchantBalance />
+        </Col>
+      ),
+    });
+  }
+
   return (
     <Row style={{ padding: 20 }}>
       <Layout
@@ -91,44 +118,7 @@ export const Dashboard = () => {
             onChange={(value) => {
               setActiveKey(value);
             }}
-            items={[
-              {
-                key: "1",
-                label: t("table.organization_balance"),
-                children: (
-                  <Col span={24}>
-                    <OrganizationBalance />
-                  </Col>
-                ),
-                style: {
-                  display: !permissions?.report?.paybrokers?.balance
-                    ?.report_paybrokers_balance_list
-                    ? "none"
-                    : undefined,
-                },
-                disabled:
-                  !permissions?.report?.paybrokers?.balance
-                    ?.report_paybrokers_balance_list,
-              },
-              {
-                key: "2",
-                label: t("table.merchant_balance"),
-                children: (
-                  <Col span={24}>
-                    <MerchantBalance />
-                  </Col>
-                ),
-                style: {
-                  display: !permissions?.report?.merchant?.balance
-                    ?.report_merchant_balance_list
-                    ? "none"
-                    : undefined,
-                },
-                disabled:
-                  !permissions?.report?.merchant?.balance
-                    ?.report_merchant_balance_list,
-              },
-            ]}
+            items={totilizersTabs}
           />
         )}
       </Layout>
