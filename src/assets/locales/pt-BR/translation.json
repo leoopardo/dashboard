@@ -840,14 +840,15 @@
   },
   "error": {
     "400": "Nenhum dado encontrado.",
+    "403": "Desculpe, você não está autorizado para acessar esta página.",
     "404": "Rota não encontrada",
+    "500": "Recurso temporariamente fora de ar. Caso persista ao recarregar a página, entre em contato com o suporte.",
     "date_too_log": "A diferença entre as datas deve ser menor ou igual a 30 dias",
     "password_or_username": "Senha e/ou usuário incorretos.",
     "BANK_ALREADY_CREATED": "Esse banco já foi adicionado",
     "date_1_hour": "A diferença máxima deve ser de uma hora",
-    "undefined": "Não foi possível se conectar ao servidor. Aguarde enquanto solucionamos este problema.",
-    "password_must_match_/^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9]).{8,}$/_regular_expression": "A senha deve possuir 8 dígitos, letras maiúsculas e minusculas, números e caracteres especiais (!@#$%^&*)",
-    "403": "Desculpe, você não está autorizado para acessar esta página."
+    "undefined": "Recurso temporariamente fora de ar. Caso persista ao recarregar a página, entre em contato com o suporte.",
+    "password_must_match_/^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9]).{8,}$/_regular_expression": "A senha deve possuir 8 dígitos, letras maiúsculas e minusculas, números e caracteres especiais (!@#$%^&*)"
   },
   "logs": {
     "login": "Login",
@@ -969,7 +970,6 @@
     "partner_name_description": "Nome cadastrado para a plataforma.",
     "partners_description": "Aqui você gerencia as plataformas que fazem uso do painel.",
     "update_table_button": "Atualize os dados da tabela.",
-
     "dashboard_description": "Aqui você encontra seus principais totalizadores.",
     "balance": "Saldos",
     "balance_description": "Os principais saldos disponíveis na sua conta.",
