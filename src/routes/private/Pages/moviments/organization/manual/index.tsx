@@ -99,7 +99,7 @@ export const OrgonizationManual = () => {
         container
         item
         xs={12}
-        style={{ display: "flex", justifyContent: "center" }}
+        style={{ display: "flex", justifyContent: "space-between" }}
       >
         {OrganizationMovimentsData &&
           Object.keys(OrganizationMovimentsData).map((key) => {
@@ -194,65 +194,93 @@ export const OrgonizationManual = () => {
       </Grid>
       <Grid
         container
-        style={{ display: "flex", alignItems: "center" }}
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
         spacing={1}
       >
-        <Grid item xs={12} md={3} lg={2}>
-          <Button
-            size="large"
-            style={{ width: "100%" }}
-            loading={isOrganizationMovimentsDataFetching}
-            type="primary"
-            onClick={() => setIsFiltersOpen(true)}
-          >
-            {t("table.filters")}
-          </Button>
-        </Grid>
-        <Grid item xs={12} md={3} lg={4}>
-          <FilterChips
-            startDateKeyName="start_date"
-            endDateKeyName="end_date"
-            query={query}
-            setQuery={setQuery}
-            haveInitialDate
-          />
-        </Grid>
-        <Grid item xs={12} md={2} lg={2}>
-          <Button
-            type="dashed"
-            loading={isOrganizationMovimentsDataFetching}
-            danger
-            onClick={() => {
-              setQuery(INITIAL_QUERY);
-            }}
-            style={{
-              height: 40,
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <FilterAltOffOutlinedIcon />{" "}
-            {t("table.clear_filters")}
-          </Button>
-        </Grid>
-        {permissions.transactions.paybrokers.manual_transactions
-          .paybrokers_manual_transactions_export_csv && (
-          <Grid item xs={12} md="auto">
-            <ExportReportsModal
-              disabled={
-                !OrganizationMovimentsData?.total ||
-                OrganizationMovimentsDataError
-              }
-              mutateReport={() => OrganizationManualReportsMutate()}
-              error={OrganizationManualReportsError}
-              success={OrganizationManualReportsIsSuccess}
-              loading={OrganizationManualReportsIsLoading}
-              reportPath="/moviment/organization_moviments/organization_moviments_reports"
+        <Grid
+          container
+          item
+          xs={12}
+          md={8}
+          spacing={1}
+          style={{
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <Grid item xs={12} md={3} lg={3}>
+            <Button
+              size="large"
+              style={{ width: "100%" }}
+              loading={isOrganizationMovimentsDataFetching}
+              type="primary"
+              onClick={() => setIsFiltersOpen(true)}
+            >
+              {t("table.filters")}
+            </Button>
+          </Grid>
+          <Grid item xs={12} md={9} lg={9}>
+            <FilterChips
+              startDateKeyName="start_date"
+              endDateKeyName="end_date"
+              query={query}
+              setQuery={setQuery}
+              haveInitialDate
             />
           </Grid>
-        )}
+        </Grid>
+        <Grid
+          container
+          item
+          xs={12}
+          md={4}
+          spacing={1}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-end",
+          }}
+        >
+          <Grid item xs={12} md={6} lg={6}>
+            <Button
+              type="dashed"
+              loading={isOrganizationMovimentsDataFetching}
+              danger
+              onClick={() => {
+                setQuery(INITIAL_QUERY);
+              }}
+              style={{
+                height: 40,
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <FilterAltOffOutlinedIcon /> {t("table.clear_filters")}
+            </Button>
+          </Grid>
+          {permissions.transactions.paybrokers.manual_transactions
+            .paybrokers_manual_transactions_export_csv && (
+            <Grid item xs={12} md={3} lg={3}>
+              <ExportReportsModal
+                disabled={
+                  !OrganizationMovimentsData?.total ||
+                  OrganizationMovimentsDataError
+                }
+                mutateReport={() => OrganizationManualReportsMutate()}
+                error={OrganizationManualReportsError}
+                success={OrganizationManualReportsIsSuccess}
+                loading={OrganizationManualReportsIsLoading}
+                reportPath="/moviment/organization_moviments/organization_moviments_reports"
+              />
+            </Grid>
+          )}
+        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -296,7 +324,7 @@ export const OrgonizationManual = () => {
               CategoriesData?.items?.map((category) => {
                 return { label: category?.name, value: category?.id };
               }) || [],
-              type: ["in", "out"]
+            type: ["in", "out"],
           }}
           startDateKeyName="start_date"
           endDateKeyName="end_date"

@@ -3,6 +3,7 @@
 import { Tour, TourProps } from "antd";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useMediaQuery } from "react-responsive";
 
 interface TuorComponentInterface {
   steps: TourProps["steps"] | [] | any[];
@@ -33,15 +34,19 @@ export const TuorComponent = ({
   const [currentSteps, setCurrentSteps] = useState<TourProps["steps"]>([
     pageStep,
   ]);
+  const isMobile = useMediaQuery({ maxWidth: "750px" });
 
   useEffect(() => {
-    const CSteps: TourProps["steps"] = [pageStep];
+    const CSteps: TourProps["steps"] = [
+      { ...pageStep, style: { width: isMobile ? "90%" : undefined } },
+    ];
 
     if (searchFilterStepRef) {
       CSteps.push({
         title: t("wiki.search_filter"),
         description: t("wiki.search_filter_description"),
         target: () => searchFilterStepRef?.current,
+        style: { width: isMobile ? "90%" : undefined },
       });
     }
     if (searchByNameStepRef) {
@@ -49,6 +54,7 @@ export const TuorComponent = ({
         title: t("wiki.search_by_name"),
         description: t("wiki.search_user_by_name_description"),
         target: () => searchByNameStepRef?.current,
+        style: { width: isMobile ? "90%" : undefined },
       });
     }
     if (removeFiltersStepRef) {
@@ -56,14 +62,21 @@ export const TuorComponent = ({
         title: t("wiki.remove_filters"),
         description: t("wiki.remove_filters_description"),
         target: () => removeFiltersStepRef?.current,
+        style: { width: isMobile ? "90%" : undefined },
       });
     }
     if (createRegisterStep) {
-      CSteps.push(createRegisterStep);
+      CSteps.push({
+        ...createRegisterStep,
+        style: { width: isMobile ? "90%" : undefined },
+      });
     }
 
     if (exportCsvStep) {
-      CSteps.push(exportCsvStep);
+      CSteps.push({
+        ...exportCsvStep,
+        style: { width: isMobile ? "90%" : undefined },
+      });
     }
 
     if (refreshStepRef) {
@@ -76,22 +89,29 @@ export const TuorComponent = ({
     }
     setCurrentSteps([
       ...CSteps,
-      ...(steps?.filter((step) => {
-        if (step) {
-          return step;
-        }
-      }) as any),
+      ...(
+        steps?.filter((step) => {
+          if (step) {
+            return step;
+          }
+        }) as any
+      ).map((step: any) => {
+        return { ...step, style: { width: isMobile ? "90%" : undefined } };
+      }),
     ]);
-  }, [i18n.language]);
+  }, [i18n.language, isMobile]);
 
   return (
-    <Tour
-      open={open}
-      onClose={() => setOpen(false)}
-      steps={currentSteps}
-      animated
-      gap={{ offset: 1, radius: 8 }}
-      mask
-    />
+    <div style={{ width: "300px" }}>
+      <Tour
+        open={open}
+        onClose={() => setOpen(false)}
+        steps={currentSteps}
+        animated
+        gap={{ offset: 1, radius: 8 }}
+        mask
+        scrollIntoViewOptions
+      />
+    </div>
   );
 };
