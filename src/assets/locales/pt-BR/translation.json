@@ -179,6 +179,7 @@
     "confirm_action_title": "{{action}} dados",
     "are_you_sure": "Deseja {{action}} {{itens}}?",
     "yes_update": "Sim, atualizar",
+    "yes_delete": "Sim, deletar",
     "no_cancel": "Não, cancelar",
     "upload_file": "Fazer upload",
     "confirm_upload_file": "Confirmar upload do arquivo?",
@@ -249,7 +250,8 @@
     "dark": "Tema escuro",
     "light": "Tema claro",
     "responsible": "responsável",
-    "help": "Ajuda"
+    "help": "Ajuda",
+    "confirm_import": "Confirmar importação"
   },
   "modal": {
     "confirm": "Confirmar",
@@ -382,7 +384,10 @@
     "fastpix_in_fixed_min_value": "Valor mínimo de FastPix",
     "fastpix_qr_code_expire_seconds": "Tempo expiração QRCode FastPIX (segundos)",
     "category_id": "Categoria",
-    "password_type": "A senha deve conter no mínimo 8 caracteres, incluindo pelo menos 1 número, 1 letra maiúscula e 1 caractere especial."
+    "password_type": "A senha deve conter no mínimo 8 caracteres, incluindo pelo menos 1 número, 1 letra maiúscula e 1 caractere especial.",
+    "merchant_id": "nome da empresa",
+    "reason": "motivo",
+    "domain": "domínio"
   },
   "table": {
     "id": "ID",
@@ -535,7 +540,7 @@
     "general_data": "Dados gerais",
     "locks": "Bloqueios",
     "limits": "Limites",
-    "black_list_reason": "Razão blacklist",
+    "black_list_reason": "Motivo blacklist",
     "black_list_description": "Descrição blacklist",
     "confirm_password": "Confirmar senha",
     "updated_at": "Atualizado em",
@@ -811,12 +816,12 @@
     "customer_withdraw_fee_plan_id": "ID plano de taxas saque cliente",
     "cashin_pix_fee_plan_id": "ID plano de taxas de depósitos",
     "merchant_withdraw_fee_min": "Taxa minima saque empresa",
-    "operation_type":"Tipo de operação",
+    "operation_type": "Tipo de operação",
     "operator_type": "Tipo de operador",
     "main_user_id": "ID do usuário principal",
     "main_user_name": "Nome do usuário principal",
-    "main_user_username": "usuário principal"
-
+    "main_user_username": "usuário principal",
+    "row": "Linha"
   },
   "actions": {
     "details": "Detalhes",
@@ -835,14 +840,15 @@
   },
   "error": {
     "400": "Nenhum dado encontrado.",
+    "403": "Desculpe, você não está autorizado para acessar esta página.",
     "404": "Rota não encontrada",
+    "500": "Recurso temporariamente fora de ar. Caso persista ao recarregar a página, entre em contato com o suporte.",
     "date_too_log": "A diferença entre as datas deve ser menor ou igual a 30 dias",
     "password_or_username": "Senha e/ou usuário incorretos.",
     "BANK_ALREADY_CREATED": "Esse banco já foi adicionado",
     "date_1_hour": "A diferença máxima deve ser de uma hora",
-    "undefined": "Não foi possível se conectar ao servidor. Aguarde enquanto solucionamos este problema.",
-    "password_must_match_/^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9]).{8,}$/_regular_expression": "A senha deve possuir 8 dígitos, letras maiúsculas e minusculas, números e caracteres especiais (!@#$%^&*)",
-    "403": "Desculpe, você não está autorizado para acessar esta página."
+    "undefined": "Recurso temporariamente fora de ar. Caso persista ao recarregar a página, entre em contato com o suporte.",
+    "password_must_match_/^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9]).{8,}$/_regular_expression": "A senha deve possuir 8 dígitos, letras maiúsculas e minusculas, números e caracteres especiais (!@#$%^&*)"
   },
   "logs": {
     "login": "Login",
@@ -964,7 +970,6 @@
     "partner_name_description": "Nome cadastrado para a plataforma.",
     "partners_description": "Aqui você gerencia as plataformas que fazem uso do painel.",
     "update_table_button": "Atualize os dados da tabela.",
-
     "dashboard_description": "Aqui você encontra seus principais totalizadores.",
     "balance": "Saldos",
     "balance_description": "Os principais saldos disponíveis na sua conta.",

@@ -167,8 +167,13 @@ export const ImportContastationDeposit = () => {
       render: (_, record: any) =>
         dataSource.length >= 1 ? (
           <Popconfirm
-            title="Sure to delete?"
+            title={t("messages.are_you_sure", {
+              action: t("messages.delete").toLocaleLowerCase(),
+              itens: t("table.row").toLocaleLowerCase(),
+            })}
             onConfirm={() => handleDelete(record?.key)}
+            cancelText={t("messages.no_cancel")}
+            okText={t("messages.yes_delete")}
           >
             <a>{t("messages.delete")}</a>
           </Popconfirm>

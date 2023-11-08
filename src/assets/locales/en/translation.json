@@ -176,6 +176,7 @@
     "confirm_action_title": "{{action}} data",
     "are_you_sure": "Do you want {{action}} the {{itens}}?",
     "yes_update": "Yes, update",
+    "yes_delete": "Yes, delete",
     "no_cancel": "No, cancel",
     "upload_file": "Upload file",
     "confirm_upload_file": "Confirm the file upload?",
@@ -246,7 +247,8 @@
     "dark": "Dark theme",
     "light": "Light theme",
     "responsible": "responsible",
-    "help": "Help"
+    "help": "Help",
+    "confirm_import": "Confirm import"
   },
   "input": {
     "required": "Please input the {{field}}",
@@ -346,9 +348,12 @@
     "fastpix_in_type": "FastPix type",
     "fastpix_in_max_value": "FastPix min. value",
     "fastpix_in_fixed_min_value": "FastPix max. value",
-    "fastpix_qr_code_expire_seconds":"QRCode FastPIX expiration time (seconds)",
+    "fastpix_qr_code_expire_seconds": "QRCode FastPIX expiration time (seconds)",
     "category_id": "Category",
-    "password_type": "The password must contain at least 8 characters, including at least 1 number, 1 uppercase letter, and 1 special character."
+    "password_type": "The password must contain at least 8 characters, including at least 1 number, 1 uppercase letter, and 1 special character.",
+    "merchant_id": "merchant",
+    "reason": "reason",
+    "domain": "domain"
   },
   "modal": {
     "confirm": "Confirm",
@@ -804,11 +809,12 @@
     "customer_withdraw_fee_plan_id": "Customer Withdrawal Fee Plan ID",
     "cashin_pix_fee_plan_id": "PIX Deposit Fee Plan ID",
     "merchant_withdraw_fee_min": "Merchant withdraw fee min",
-    "operation_type":"Operation type",
+    "operation_type": "Operation type",
     "operator_type": "Operator type",
     "main_user_id": "Main user ID",
     "main_user_name": "Main user name",
-    "main_user_username": "Main user username"
+    "main_user_username": "Main user username",
+    "row": "Row"
   },
   "actions": {
     "details": "Details",
@@ -827,13 +833,14 @@
   },
   "error": {
     "400": "Any records found.",
+    "403": "Sorry, you are not authorized to access this page.",
     "404": "Route not found",
+    "500": "Temporary service interruption. If the issue persists after reloading the page, please contact support.",
     "date_too_log": "The diffrence between dates should be equal or less than 30 days",
     "password_or_username": "Invalid username or password",
     "BANK_ALREADY_CREATED": "Bank already created",
     "date_1_hour": "The max range is one hour",
-    "undefined": "Couldn't connect to server. Wait while we solve this problem.",
-    "403": "Sorry, you are not authorized to access this page."
+    "undefined": "Temporary service interruption. If the issue persists after reloading the page, please contact support."
   },
   "logs": {
     "login": "Login",
