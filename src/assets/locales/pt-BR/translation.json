@@ -179,6 +179,7 @@
     "confirm_action_title": "{{action}} dados",
     "are_you_sure": "Deseja {{action}} {{itens}}?",
     "yes_update": "Sim, atualizar",
+    "yes_delete": "Sim, deletar",
     "no_cancel": "Não, cancelar",
     "upload_file": "Fazer upload",
     "confirm_upload_file": "Confirmar upload do arquivo?",
@@ -249,7 +250,8 @@
     "dark": "Tema escuro",
     "light": "Tema claro",
     "responsible": "responsável",
-    "help": "Ajuda"
+    "help": "Ajuda",
+    "confirm_import": "Confirmar importação"
   },
   "modal": {
     "confirm": "Confirmar",
@@ -811,12 +813,12 @@
     "customer_withdraw_fee_plan_id": "ID plano de taxas saque cliente",
     "cashin_pix_fee_plan_id": "ID plano de taxas de depósitos",
     "merchant_withdraw_fee_min": "Taxa minima saque empresa",
-    "operation_type":"Tipo de operação",
+    "operation_type": "Tipo de operação",
     "operator_type": "Tipo de operador",
     "main_user_id": "ID do usuário principal",
     "main_user_name": "Nome do usuário principal",
-    "main_user_username": "usuário principal"
-
+    "main_user_username": "usuário principal",
+    "row": "Linha"
   },
   "actions": {
     "details": "Detalhes",
