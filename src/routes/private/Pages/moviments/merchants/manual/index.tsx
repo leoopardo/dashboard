@@ -108,7 +108,7 @@ export const MerchantManual = () => {
         container
         item
         xs={12}
-        style={{ display: "flex", justifyContent: "center" }}
+        style={{ display: "flex", justifyContent: "space-between" }}
       >
         {MerchantMovimentsData &&
           Object.keys(MerchantMovimentsData).map((key) => {

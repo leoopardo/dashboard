@@ -85,7 +85,6 @@ function App() {
                       : import.meta.env.VITE_APP_MENU_THEME === "dark"
                       ? "#fff"
                       : "#000",
-                  subMenuItemBg: "#000",
                 },
                 Tooltip: {
                   colorTextLightSolid: theme === "dark" ? "#000" : "#fff",
