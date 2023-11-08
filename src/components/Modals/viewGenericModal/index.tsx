@@ -355,7 +355,7 @@ export const ViewModal = ({
 
       {item?.merchant_fee_plans_details && (
         <div style={{ marginTop: "20px" }}>
-          <span style={{ fontWeight: "bold", padding: "0 10px" }}>Taxas</span>
+          <Typography style={{ fontWeight: "bold", padding: "0 10px" }}>Taxas</Typography>
           <FeeTable
             data={listItems(item?.merchant_fee_plans_details, feePage, 5)}
           />

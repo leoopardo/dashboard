@@ -29,12 +29,14 @@ import { useMediaQuery } from "react-responsive";
 import { MerchantBalanceChart } from "./components/TotalizerChart";
 
 export const MerchantBalance = () => {
-  const { permissions } = queryClient.getQueryData(
+  const { t } = useTranslation();
+  const { permissions, type, merchant_id } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
   const INITIAL_QUERY: MerchantBalanceQuery = {
     page: 1,
     limit: 25,
+    merchant_id: type === 3 ? merchant_id : undefined
   };
   const [query, setQuery] = useState<MerchantBalanceQuery>(INITIAL_QUERY);
   const [expanded, setExpanded] = useState<string[]>([]);
@@ -45,12 +47,11 @@ export const MerchantBalance = () => {
     refetchMerchantBalance,
     MerchantBalanceError,
   } = useGetMerchantBalance(query);
+  
   const [, setCurrentItem] = useState<MerchantBalanceItem | null>();
 
-  const { t } = useTranslation();
-
   useEffect(() => {
-    refetchMerchantBalance();
+      refetchMerchantBalance();
   }, [query]);
 
   const columns: TableColumnsType<MerchantBalanceItem> = [
@@ -342,42 +343,47 @@ export const MerchantBalance = () => {
         <Divider />
       </Grid>
 
-      <Grid
-        container
-        style={{
-          display: "flex",
-          alignItems: "center",
-          marginBottom: "20px",
-        }}
-        spacing={1}
-      >
-        {permissions.register.merchant.merchant.merchant_list && (
-          <Grid item xs={12} md={4} lg={2}>
-            <MerchantSelect queryOptions={query} setQueryFunction={setQuery} />
-          </Grid>
-        )}
+      {type !== 3 && (
+        <Grid
+          container
+          style={{
+            display: "flex",
+            alignItems: "center",
+            marginBottom: "20px",
+          }}
+          spacing={1}
+        >
+          {permissions.register.merchant.merchant.merchant_list && (
+            <Grid item xs={12} md={4} lg={2}>
+              <MerchantSelect
+                queryOptions={query}
+                setQueryFunction={setQuery}
+              />
+            </Grid>
+          )}
 
-        <Grid item xs={12} md={6} lg={8}>
-          <FilterChips
-            startDateKeyName="start_date"
-            endDateKeyName="end_date"
-            query={query}
-            setQuery={setQuery}
-          />
+          <Grid item xs={12} md={6} lg={8}>
+            <FilterChips
+              startDateKeyName="start_date"
+              endDateKeyName="end_date"
+              query={query}
+              setQuery={setQuery}
+            />
+          </Grid>
+          <Grid item xs={12} md={2} lg={2}>
+            <Button
+              style={{ width: "100%" }}
+              size="large"
+              type="dashed"
+              danger
+              loading={isMerchantBalanceFetching}
+              onClickCapture={() => setQuery(INITIAL_QUERY)}
+            >
+              {t("table.clear_filters")}
+            </Button>
+          </Grid>
         </Grid>
-        <Grid item xs={12} md={2} lg={2}>
-          <Button
-            style={{ width: "100%" }}
-            size="large"
-            type="dashed"
-            danger
-            loading={isMerchantBalanceFetching}
-            onClickCapture={() => setQuery(INITIAL_QUERY)}
-          >
-            {t("table.clear_filters")}
-          </Button>
-        </Grid>
-      </Grid>
+      )}
 
       <Grid
         container
