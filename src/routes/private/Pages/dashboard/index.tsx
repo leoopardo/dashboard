@@ -266,13 +266,13 @@ export const Dashboard = () => {
                   {t("table.clear_filters")}
                 </Button>
               </Col>
-              <Col span={24} style={{ marginTop: 16, marginBottom: 16 }}>
+              <Col span={24} style={{ marginTop: 16 }}>
                 <ValuesTable query={query} />
               </Col>
             </Row>
           </Layout>
 
-          <Col span={24} style={{ paddingTop: "20px" }}>
+          <Col span={24} style={{ paddingTop: "20px", paddingBottom: user.aggregator_id ? "60px" : undefined }}>
             <Row gutter={[16, 16]}>
               <ChartIn query={query} />
               <ChartOut query={query} />
