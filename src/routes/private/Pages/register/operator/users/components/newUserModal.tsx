@@ -321,7 +321,11 @@ export const NewUserModal = ({
               message:
                 t("input.required(a)", { field: t("input.password") }) || "",
             },
-            { min: 8, message: t("input.min_of", { min: 8 }) || "" },
+            {
+              pattern:
+                /^(?=.*[0-9])(?=.*[A-Z])(?=.*[!@#$%^&*()_+])[0-9a-zA-Z!@#$%^&*()_+]*$/,
+              message: `${t("input.password_type")}`,
+            },
             ({ getFieldValue }) => ({
               validator(_, value) {
                 if (!value || getFieldValue("confirmPasswprd") === value) {
@@ -344,7 +348,7 @@ export const NewUserModal = ({
           />
         </Form.Item>
         <Form.Item
-          label={t(`table.password`)}
+          label={t(`table.confirm_password`)}
           name="confirmPasswprd"
           dependencies={["password"]}
           style={{ margin: 10 }}
