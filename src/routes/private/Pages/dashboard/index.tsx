@@ -104,7 +104,9 @@ export const Dashboard = () => {
         ref={ref1}
         style={{
           margin: -28,
-          padding: 20,
+          paddingBottom: 20,
+          paddingTop: 20,
+          paddingLeft: 6,
           display: "flex",
           justifyContent: "center",
         }}
@@ -224,8 +226,10 @@ export const Dashboard = () => {
             style={{
               width: "100%",
               marginLeft: "-40px",
-              marginRight: "-40px",
-              padding: 25,
+              marginRight: "-40px",  paddingBottom: 20,
+              paddingTop: 20,
+              paddingLeft: 8,
+              paddingRight: 8,
             }}
           >
             <Row gutter={[4, 4]} align="middle">
@@ -294,7 +298,10 @@ export const Dashboard = () => {
                 marginLeft: -50,
                 marginRight: -50,
                 marginTop: 25,
-                padding: 25,
+                paddingBottom: 20,
+                paddingTop: 20,
+                paddingLeft: 12,
+                paddingRight: 12,
               }}
             >
               <MerchantsBalance />
