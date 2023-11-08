@@ -43,6 +43,7 @@ interface mutateProps {
     label: string;
     required: boolean;
     selectOption?: boolean;
+    noTranslate?: boolean;
     feesDetails?: boolean;
     asyncOption?: {
       options?: any[];
@@ -600,7 +601,36 @@ export const MutateModal = ({
                       name="type"
                       style={{ margin: 10 }}
                     >
-                      <Select
+                      {field.selectOption ? (
+                         <Select
+                         size="large"
+                         options={
+                           selectOptions
+                             ? selectOptions[field.label]?.map(
+                                 (option: any) => {
+                                   return {
+                                     value: option?.value,
+                                     label: t(
+                                      field?.noTranslate ? option?.label?.toLowerCase() :  `table.${option?.label?.toLowerCase()}`
+                                     ),
+                                   };
+                                 }
+                               )
+                             : []
+                         }
+                         notFoundContent={<Empty />}
+                         value={body[field.label] || null}
+                         onChange={(value) => {
+                           setBody((state: any) => ({
+                             ...state,
+                             [field.label]: value,
+                           }));
+                         }}
+                         style={{ width: "100%", height: 40 }}
+                         placeholder={t(`table.${field.label}`)}
+                       />
+                      ) : (
+                        <Select
                         size="large"
                         options={
                           ["production"]?.map((item, index) => ({
@@ -617,6 +647,7 @@ export const MutateModal = ({
                           }));
                         }}
                       />
+                      )}
                     </Form.Item>
                   </Col>
                 );
@@ -778,7 +809,7 @@ export const MutateModal = ({
                                     return {
                                       value: option?.value,
                                       label: t(
-                                        `table.${option?.label?.toLowerCase()}`
+                                       field?.noTranslate ? option?.label?.toLowerCase() :  `table.${option?.label?.toLowerCase()}`
                                       ),
                                     };
                                   }

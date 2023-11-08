@@ -83,6 +83,7 @@ interface TableProps {
   setSelectedRows?: Dispatch<SetStateAction<any>>;
   selectedKeys?: any;
   refetch?: () => void;
+  rowKey?: string;
 }
 
 export const CustomTable = (props: TableProps) => {
@@ -1058,7 +1059,7 @@ export const CustomTable = (props: TableProps) => {
                   : undefined
               }
               direction="ltr"
-              rowKey={"id" || "_id"}
+              rowKey={props?.rowKey || "id"}
               columns={columns}
               loading={props.loading}
               showSorterTooltip={false}
