@@ -50,10 +50,10 @@ export const OperatorUsers = () => {
   const columns: ColumnInterface[] = [
     { name: "id", type: "id", sort: true },
     { name: "name", type: "text", sort: true },
-    { name: ["permission_group", "name"], head: "group", type: "text" },
-    { name: ["operator", "name"], head: "operator", type: "text" },
+    { name: ["permission_group", "name"], head: "group", type: "text", sort: true, sort_name: "group_name" },
+    { name: ["operator", "name"], head: "operator", type: "text", sort: true, sort_name: "operator_name" },
     { name: "last_signin_date", type: "date" },
-    { name: "status", type: "status" },
+    { name: "status", type: "status", sort: true },
     { name: "created_at", type: "date", sort: true },
   ];
 

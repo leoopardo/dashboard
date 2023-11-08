@@ -21,7 +21,11 @@ export const TotalOperations = ({ query, chart }: TableProps) => {
                   type: "shadow",
                 },
               },
-              legend: {},
+              legend: {textStyle: {
+                color: "#a0a0a0",
+              },},textStyle: {
+                color: "#a0a0a0",
+              },
               grid: {
                 left: "3%",
                 right: "4%",

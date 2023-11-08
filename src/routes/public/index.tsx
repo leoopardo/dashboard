@@ -17,7 +17,7 @@ export const PublicRoutes = () => {
       <Route path="*" element={<Navigate to={"login"} />} />
       <Route path="login" element={<Login />} />
       <Route path="forgot_my_password" element={<ForgotMyPassword />} />
-      <Route path="banner" element={<Banner />} />
+      <Route path="banner/:number" element={<Banner />} />
     </Routes>
   );
 };

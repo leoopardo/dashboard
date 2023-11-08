@@ -33,8 +33,8 @@ interface ExportCustomreportsInterface {
   setOpen: Dispatch<SetStateAction<boolean>>;
   setCsvFields: Dispatch<SetStateAction<any>>;
   csvFields: any;
-  comma: boolean;
-  setIsComma: Dispatch<SetStateAction<boolean>>;
+  comma?: boolean;
+  setIsComma?: Dispatch<SetStateAction<boolean>>;
   reportName: string;
 }
 
@@ -89,7 +89,7 @@ export const ExportCustomReportsModal = ({
       "comma"
     )}`;
     if (storage) setSelectedFields(storage);
-    if (commaSeparator) setIsComma(commaSeparator == "true");
+    if (commaSeparator && setIsComma) setIsComma(commaSeparator == "true");
   }, []);
 
   useEffect(() => {
@@ -152,7 +152,7 @@ export const ExportCustomReportsModal = ({
         <Row style={{ maxHeight: "450px", overflow: "auto" }}>
           <Col span={24}>
             <Form layout="vertical">
-              <Form.Item label={t("input.comma_separator")}>
+              {setIsComma && <Form.Item label={t("input.comma_separator")}>
                 <Radio.Group
                   options={[
                     { label: "$1000,00", value: true },
@@ -163,7 +163,7 @@ export const ExportCustomReportsModal = ({
                   optionType="button"
                   buttonStyle="solid"
                 />
-              </Form.Item>
+              </Form.Item>}
               <Form.Item label={t("input.csv_columns")} required>
                 <Space.Compact style={{ width: "100%" }} size="large">
                   <Select

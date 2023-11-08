@@ -1,17 +1,18 @@
-import { Card, Statistic } from "antd";
 import { Grid } from "@mui/material";
+import {
+  PartnerQuery,
+  PartnerTotalResponse,
+} from "@src/services/types/register/partners/partners.interface";
 import { defaultTheme } from "@src/styles/defaultTheme";
+import { Card, Statistic } from "antd";
 import ReactECharts from "echarts-for-react";
-import { PartnerTotalResponse, PartnerQuery } from "@src/services/types/register/partners/partners.interface";
 import { t } from "i18next";
-import { useMediaQuery } from "react-responsive";
 
 export const TotalizersCards = (props: {
   params: PartnerQuery;
   data?: PartnerTotalResponse;
-  loading: boolean
+  loading: boolean;
 }) => {
-  const isMobile = useMediaQuery({ maxWidth: "950px" });
   return (
     <Grid container spacing={1} justifyContent={"center"} mb={2}>
       <Grid
@@ -20,7 +21,7 @@ export const TotalizersCards = (props: {
         md={2}
         style={{
           marginTop: "-90px",
-          marginBottom: isMobile ? "-60px" : undefined,
+          marginBottom: "-60px",
         }}
       >
         <ReactECharts
@@ -82,7 +83,9 @@ export const TotalizersCards = (props: {
         <Card bordered={false}>
           <Statistic
             loading={props?.loading}
-            title={t("titles.total_registred", {entity: t('menus.partner')?.toLowerCase()})}
+            title={t("titles.total_registred", {
+              entity: t("menus.partner")?.toLowerCase(),
+            })}
             style={{ maxWidth: 200, minHeight: 75 }}
             value={props?.data?.registered_partners_totals}
             precision={0}
@@ -94,7 +97,9 @@ export const TotalizersCards = (props: {
         <Card bordered={false}>
           <Statistic
             loading={props?.loading}
-            title={t("titles.total_registred_active", {entity: t('menus.partner')?.toLowerCase()})}
+            title={t("titles.total_registred_active", {
+              entity: t("menus.partner")?.toLowerCase(),
+            })}
             style={{ maxWidth: 200, minHeight: 75 }}
             value={props?.data?.active_partners_totals}
             precision={0}
@@ -109,7 +114,9 @@ export const TotalizersCards = (props: {
         <Card bordered={false}>
           <Statistic
             loading={props?.loading}
-            title={t("titles.total_registred_inactive", {entity: t('menus.partner')?.toLowerCase()})}
+            title={t("titles.total_registred_inactive", {
+              entity: t("menus.partner")?.toLowerCase(),
+            })}
             style={{ maxWidth: 200, minHeight: 75 }}
             value={props?.data?.inactive_partners_totals}
             precision={0}
@@ -124,7 +131,9 @@ export const TotalizersCards = (props: {
         <Card bordered={false}>
           <Statistic
             loading={props?.loading}
-            title={t("titles.total", {entity: t('menus.merchants')?.toLowerCase()})}
+            title={t("titles.total", {
+              entity: t("menus.merchants")?.toLowerCase(),
+            })}
             style={{ maxWidth: 200, minHeight: 75 }}
             value={props?.data?.linked_merchants_total}
             precision={0}

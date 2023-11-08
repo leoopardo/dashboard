@@ -374,7 +374,7 @@
     "credit_balance_type": "Tipo saldo destino",
     "from": "Origem",
     "to": "Destino",
-    "can_be_deleted_only_by_organization": "Organização pode deletar",
+    "can_be_deleted_only_by_organization": "Pode ser removido apenas por organizações.",
     "fastpix_in_bank": "Banco FastPix",
     "fastpix_in_permission": "Permissão de FastPix",
     "fastpix_in_type": "Tipo de FastPix",
@@ -481,7 +481,7 @@
     "type": "Tipo",
     "cellphone": "Telefone",
     "last_signin_ip": "Último IP",
-    "phone_validated": "Telefone validado:",
+    "phone_validated": "Telefone validado?",
     "true": "Sim",
     "false": "Não",
     "group": "Grupo",
@@ -769,7 +769,14 @@
     "fastpix_redirect_url": "URL de redirecionamento FastPix",
     "fastpix_token_time": "Tempo de expiração de token FastPix",
     "fastpix_in": "FastPix",
-    "pixType": "Tipo Pix"
+    "pixType": "Tipo Pix",
+    "group_name": "Grupo",
+    "profile_type_name": "Tipo de perfil",
+    "email_validated": "Email validado?",
+    "whatsapp": "WhatsApp",
+    "language": "Idioma",
+    "telegram": "Telegram",
+    "skype": "Skype"
   },
   "actions": {
     "details": "Detalhes",
@@ -927,6 +934,7 @@
     "bank_total_description": "Traz o valor de saldo total da Organização junto com a IP. Esse valor é o valor total do saldo de movimentações realizadas pela organização através da IP em questão.",
     "bank_blocked_value_description": "Traz o valor bloqueado para operações futuras da Organização que foi resguardado pela IP.",
     "bank_chart_description": "Altera a vizualização do Grid para um gráfico em barras.",
-    "bank_card_description": "Altera a vizualização do Grid para cards de bancos."
+    "bank_card_description": "Altera a vizualização do Grid para cards de bancos.",
+    "last_sign_in_description": "Data do ultimo acesso do usuário junto ao sistema."
   }
 }

@@ -35,8 +35,15 @@ export const BankBalanceChart = () => {
       {OrganizationBankBalance && bankListData && bankListData?.itens && (
         <ReactECharts
           option={{
-            legend: {},
+            legend: {
+              textStyle: {
+                color: "#a0a0a0",
+              },
+            },
             tooltip: {},
+            textStyle: {
+              color: "#a0a0a0",
+            },
             color: ["#91cc75", "#ee6666", "#5470c6"],
             dataset: {
               source: [

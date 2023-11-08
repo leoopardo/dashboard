@@ -69,8 +69,9 @@ export const MerchantUser = () => {
     { name: "id", type: "id", sort: true },
     { name: "name", type: "text", sort: true },
     { name: ["merchant", "name"], head: "merchant", type: "text" },
-    { name: ["permission_group", "name"], head: "group", type: "text" },
-    { name: "last_signin_date", type: "date" },
+    { name: ["permission_group", "name"], head: "group", type: "text", sort: true, sort_name: "group_name" },
+    { name: "last_signin_date", type: "date", sort: true },
+    {name: "status", type: "status"},
     { name: "created_at", type: "date", sort: true },
   ];
 

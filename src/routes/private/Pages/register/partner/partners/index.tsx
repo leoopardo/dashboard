@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
   EditOutlined,
   EyeFilled,
+  FileAddOutlined,
   InfoCircleOutlined,
   UserAddOutlined,
 } from "@ant-design/icons";
@@ -17,7 +19,7 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { Search } from "@src/components/Inputs/search";
-import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
+import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
 import { Toast } from "@src/components/Toast";
 import { TuorComponent } from "@src/components/Tuor";
@@ -26,6 +28,7 @@ import { useCreatePartner } from "@src/services/register/partner/createPartner";
 import { useGetPartners } from "@src/services/register/partner/getPartners";
 import { useUpdatePartner } from "@src/services/register/partner/updatePartner";
 import { useCreatePartnerReports } from "@src/services/reports/register/partner/createPartnerReports";
+import { useGetPartnersReportFields } from "@src/services/reports/register/partner/getPartnerReportFields";
 import {
   PartnerItem,
   PartnerQuery,
@@ -82,12 +85,21 @@ export const Partners = () => {
     partner_id: currentItem?.id,
   });
 
+  const [csvFields, setCsvFields] = useState<any>();
+  const [comma, setIsComma] = useState<boolean>(false);
   const {
     PartnerReportsError,
     PartnerReportsIsLoading,
     PartnerReportsIsSuccess,
     PartnerReportsMutate,
-  } = useCreatePartnerReports(query);
+  } = useCreatePartnerReports({
+    fields: csvFields,
+    comma_separate_value: comma,
+  });
+
+  const { fields } = useGetPartnersReportFields();
+  const [isExportReportsOpen, setIsExportReportsOpen] =
+    useState<boolean>(false);
 
   const { PartnerIsLoading, PartnerMutate, PartnerError, PartnerIsSuccess } =
     useCreatePartner(createBody);
@@ -217,14 +229,27 @@ export const Partners = () => {
 
         {permissions.register.partner.partner.partner_export_csv && (
           <Grid item xs={12} md="auto" ref={ref5}>
-            <ExportReportsModal
-              disabled={!PartnersData?.total || PartnersDataError}
-              mutateReport={() => PartnerReportsMutate()}
-              error={PartnerReportsError}
-              success={PartnerReportsIsSuccess}
-              loading={PartnerReportsIsLoading}
-              reportPath="/register/partner/partner_reports/partner_partners_reports"
-            />
+            <Tooltip
+              placement="topRight"
+              title={
+                PartnersData?.total === 0 || PartnersDataError
+                  ? t("messages.no_records_to_export")
+                  : t("messages.export_csv")
+              }
+              arrow
+            >
+              <Button
+                onClick={() => setIsExportReportsOpen(true)}
+                style={{ width: "100%" }}
+                shape="round"
+                type="dashed"
+                size="large"
+                loading={isPartnersDataFetching}
+                disabled={PartnersData?.total === 0 || PartnersDataError}
+              >
+                <FileAddOutlined style={{ fontSize: 22 }} /> CSV
+              </Button>
+            </Tooltip>
           </Grid>
         )}
       </Grid>
@@ -447,6 +472,22 @@ export const Partners = () => {
           title: t("menus.partners"),
           description: t("wiki.partners_description"),
         }}
+      />
+      <ExportCustomReportsModal
+        open={isExportReportsOpen}
+        setOpen={setIsExportReportsOpen}
+        disabled={PartnersData?.total === 0 || PartnersDataError}
+        mutateReport={() => PartnerReportsMutate()}
+        error={PartnerReportsError}
+        success={PartnerReportsIsSuccess}
+        loading={PartnerReportsIsLoading}
+        reportPath="/register/partner/partner_reports/partner_partners_reports"
+        fields={fields}
+        csvFields={csvFields}
+        comma={comma}
+        setIsComma={setIsComma}
+        setCsvFields={setCsvFields}
+        reportName="Partner"
       />
     </Grid>
   );

@@ -45,6 +45,7 @@ export const Dashboard = () => {
   const { permissions } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
+  const user = queryClient.getQueryData("validate") as ValidateInterface;
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [isBankChart, setIsBankChart] = useState<boolean>(
     secureLocalStorage.getItem("isBankChart") === "true"
@@ -289,25 +290,27 @@ export const Dashboard = () => {
           </Col>
         </Row>
 
-        <Row
-          style={{
-            marginTop: permissions?.report?.paybrokers?.bank_balance?.menu
-              ? 16
-              : -65,
-          }}
-        >
-          <Layout
+        {!user.merchant_id && permissions.report.merchant.balance.menu && (
+          <Row
             style={{
-              width: "100%",
-              marginLeft: -50,
-              marginRight: -50,
-              marginTop: 25,
-              padding: 25,
+              marginTop: permissions?.report?.paybrokers?.bank_balance?.menu
+                ? 16
+                : -65,
             }}
           >
-            <MerchantsBalance />
-          </Layout>
-        </Row>
+            <Layout
+              style={{
+                width: "100%",
+                marginLeft: -50,
+                marginRight: -50,
+                marginTop: 25,
+                padding: 25,
+              }}
+            >
+              <MerchantsBalance />
+            </Layout>
+          </Row>
+        )}
 
         <Row style={{ marginTop: 16 }}>
           <Col span={24}>
