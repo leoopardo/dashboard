@@ -384,7 +384,9 @@
     "fastpix_in_fixed_min_value": "Valor mínimo de FastPix",
     "fastpix_qr_code_expire_seconds": "Tempo expiração QRCode FastPIX (segundos)",
     "category_id": "Categoria",
-    "password_type": "A senha deve conter no mínimo 8 caracteres, incluindo pelo menos 1 número, 1 letra maiúscula e 1 caractere especial."
+    "password_type": "A senha deve conter no mínimo 8 caracteres, incluindo pelo menos 1 número, 1 letra maiúscula e 1 caractere especial.",
+    "merchant_id": "nome da empresa",
+    "reason": "motivo"
   },
   "table": {
     "id": "ID",
@@ -537,7 +539,7 @@
     "general_data": "Dados gerais",
     "locks": "Bloqueios",
     "limits": "Limites",
-    "black_list_reason": "Razão blacklist",
+    "black_list_reason": "Motivo blacklist",
     "black_list_description": "Descrição blacklist",
     "confirm_password": "Confirmar senha",
     "updated_at": "Atualizado em",
