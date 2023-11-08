@@ -305,14 +305,18 @@ export const MerchantManual = () => {
               { name: "_id", type: "id" },
               { name: "category_name", type: "text", sort: true },
               { name: "user_name", type: "text" },
+              { name: "partner_name", type: "text" },
+              { name: "merchant_name", type: "text" },
               { name: "type", type: "translate" },
               { name: "value", type: "value" },
+              { name: "description", type: "text" },
               { name: "createdAt", type: "date", sort: true },
               { name: "status", type: "status", sort: true },
             ]}
             loading={isMerchantMovimentsDataFetching}
             refetch={() => refetchMerchantMovimentsData()}
             actions={[{}]}
+            disableActions
             removeTotal
             label={[
               "bank",

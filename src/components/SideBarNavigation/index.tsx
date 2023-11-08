@@ -38,7 +38,7 @@ export const SidebarNavigation = () => {
 
   const [isMenuTourOpen, setIsMenuTourOpen] = useState(true);
 
-  const { permissions } = queryClient.getQueryData(
+  const { permissions, type } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
   const [active, setActive] = useState<string>(
@@ -1113,8 +1113,7 @@ export const SidebarNavigation = () => {
           false,
           (e) => handleNavigate(e?.keyPath),
           {
-            display: permissions?.transactions?.merchant?.manual_transactions
-              ?.menu
+            display: type !== 3
               ? undefined
               : "none",
           }
