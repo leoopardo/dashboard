@@ -84,6 +84,7 @@ interface TableProps {
   setSelectedRows?: Dispatch<SetStateAction<any>>;
   selectedKeys?: any;
   refetch?: () => void;
+  disableActions?: boolean;
   rowKey?: string;
 }
 
@@ -111,6 +112,7 @@ export const CustomTable = (props: TableProps) => {
             onClick: action?.onClick,
           });
       }
+
       setActions(act);
     }
   }, [isMobile]);
@@ -672,6 +674,7 @@ export const CustomTable = (props: TableProps) => {
                   <Dropdown
                     trigger={["click"]}
                     key={column?.name}
+                    disabled={props.disableActions}
                     menu={{
                       items: actions.map((action: actionsInterface) => {
                         let disable = false;
