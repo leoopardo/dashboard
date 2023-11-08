@@ -25,6 +25,7 @@ import { Button, Input } from "antd";
 import { useEffect, useState } from "react";
 import { useDeleteMechantBlacklist } from "@src/services/register/merchant/blacklist/deleteMerchantBlacklist";
 import { useTranslation } from "react-i18next";
+import { Toast } from "@src/components/Toast";
 
 const INITIAL_QUERY: MerchantBlacklistQuery = {
   limit: 25,
@@ -57,8 +58,11 @@ export const MerchantBlacklist = () => {
   const [currentItem, setCurrentItem] = useState<MerchantBlacklistItem | null>(
     null
   );
-  const { error, isLoading, isSuccess, mutate } =
-    useCreateMerchantBlacklist({...body, can_be_deleted_only_by_organization: body?.can_be_deleted_only_by_organization === "true"});
+  const { error, isLoading, isSuccess, mutate } = useCreateMerchantBlacklist({
+    ...body,
+    can_be_deleted_only_by_organization:
+      body?.can_be_deleted_only_by_organization === "true",
+  });
   const [search, setSearch] = useState<string>("");
   const debounceSearch = useDebounce(search);
   const {
@@ -224,7 +228,6 @@ export const MerchantBlacklist = () => {
             />
           </Grid>
         )}
-
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -322,6 +325,12 @@ export const MerchantBlacklist = () => {
           setOpen={setIsViewModalOpen}
         />
       )}
+      <Toast
+        actionError={t("messages.create")}
+        actionSuccess={t("messages.created")}
+        error={error}
+        success={isSuccess}
+      />
     </Grid>
   );
 };
