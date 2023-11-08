@@ -8,7 +8,6 @@ import OTPInput from "react-otp-input";
 import { useGetSelf } from "../../services/getSelf";
 import { useValidatePhone } from "../../services/sendValidationPhone";
 import { useValidateToken } from "../../services/sendValidationToken";
-import { Toast } from "../Toast";
 import Countdown from "../countdown";
 
 interface ValidateTokenProps {
