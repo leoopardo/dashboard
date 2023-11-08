@@ -11,10 +11,10 @@ export function useGetMerchantBalance(params: MerchantBalanceQuery) {
   const { data, isFetching, error, refetch } = useQuery<
     MerchantBalanceData | null | undefined
   >("MerchantBalance", async () => {
-    const response = await api.get("core/merchant/account", {
+    const response = params?.merchant_id ? await api.get("core/merchant/account", {
       params,
-    });
-    return response.data;
+    }) :  null
+    return response?.data;
   });
 
   const MerchantBalance = data;
