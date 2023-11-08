@@ -25,6 +25,7 @@ import useDebounce from "@utils/useDebounce";
 import { Button, Input } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import ReactInputMask from "react-input-mask";
 
 const INITIAL_QUERY: MerchantBlacklistQuery = {
   limit: 25,
@@ -160,14 +161,16 @@ export const MerchantBlacklist = () => {
           <ReasonSelect queryOptions={query} setQueryFunction={setQuery} />
         </Grid>
         <Grid item xs={12} md={4} lg={4}>
-          <Input
-            size="large"
-            placeholder={t("table.cpf") || ""}
+          <ReactInputMask
             value={search}
+            mask="999.999.999-99"
             onChange={(event) => {
-              setSearch(event.target.value);
+              const value = event.target.value.replace(/[^\d]/g, "");
+              setSearch(value);
             }}
-          />
+          >
+            <Input size="large" />
+          </ReactInputMask>
         </Grid>
         <Grid item xs={12} md={3} lg={2}>
           <Button
