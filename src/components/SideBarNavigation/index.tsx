@@ -1003,7 +1003,7 @@ export const SidebarNavigation = () => {
               (e) => handleNavigate(e?.keyPath),
               {
                 display: permissions?.transactions?.merchant
-                  ?.manual_transactions?.menu
+                  ?.manual_transactions?.menu && type !== 3
                   ? undefined
                   : "none",
               }

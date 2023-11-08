@@ -7,7 +7,7 @@ export function useCreateOperator(body: OperatorItem) {
   const { isLoading, error, mutate, isSuccess } = useMutation<
     OperatorItem | null | undefined
   >("CreateOperator", async () => {
-    const response = await api.post("core/aggregator/create", body, {});
+    const response = await api.post("core/operator/create", body, {});
     await queryClient.refetchQueries({ queryKey: ["Operators"] });
     return response.data;
   });
