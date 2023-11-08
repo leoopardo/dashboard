@@ -239,7 +239,7 @@ export const FiltersModal = ({
               return (
                 <Form.Item
                   label={t("table.date")}
-                  style={{ margin: 10 }}
+                  style={{ marginBottom: 10 }}
                   name={startDateKeyName}
                   rules={[
                     {
@@ -309,7 +309,7 @@ export const FiltersModal = ({
                   <Form.Item
                     label={t(`table.${filter}`)}
                     name={filter}
-                    style={{ margin: 10 }}
+                    style={{ marginBottom: 10 }}
                   >
                     <PartnerSelect
                       queryOptions={filtersQuery}
@@ -324,7 +324,7 @@ export const FiltersModal = ({
                 <Form.Item
                   label={t(`table.${filter}`)}
                   name={filter}
-                  style={{ margin: 10 }}
+                  style={{ marginBottom: 10 }}
                 >
                   <BanksSelect
                     queryOptions={filtersQuery}
@@ -343,7 +343,7 @@ export const FiltersModal = ({
                   <Form.Item
                     label={t(`table.${filter}`)}
                     name={filter}
-                    style={{ margin: 10 }}
+                    style={{ marginBottom: 10 }}
                   >
                     <BanksSelect
                       queryOptions={filtersQuery}
@@ -363,7 +363,7 @@ export const FiltersModal = ({
                   <Form.Item
                     label={t(`table.${filter}`)}
                     name={filter}
-                    style={{ margin: 10 }}
+                    style={{ marginBottom: 10 }}
                   >
                     <ClientBanksSelect
                       queryOptions={filtersQuery}
@@ -453,7 +453,7 @@ export const FiltersModal = ({
                 <Form.Item
                   label={t(`table.${filter}`)}
                   name={filter}
-                  style={{ margin: 10 }}
+                  style={{ marginBottom: 10 }}
                 >
                   <AutoComplete
                     size="large"
@@ -487,7 +487,7 @@ export const FiltersModal = ({
                 <Form.Item
                   label={t(`table.${filter}`)}
                   name={filter}
-                  style={{ margin: 10 }}
+                  style={{ marginBottom: 10 }}
                 >
                   <AutoComplete
                     size="large"
@@ -522,7 +522,7 @@ export const FiltersModal = ({
                   <Form.Item
                     label={t(`table.${filter}`)}
                     name={filter}
-                    style={{ margin: 10 }}
+                    style={{ marginBottom: 10 }}
                   >
                     <MerchantSelect
                       queryOptions={filtersQuery}
@@ -538,7 +538,7 @@ export const FiltersModal = ({
                   <Form.Item
                     label={t(`table.${filter}`)}
                     name={filter}
-                    style={{ margin: 10 }}
+                    style={{ marginBottom: 10 }}
                   >
                     <AggregatorSelect
                       aggregatorId={filtersQuery?.aggregator_id}
@@ -554,7 +554,7 @@ export const FiltersModal = ({
                   <Form.Item
                     label={t(`table.${filter}`)}
                     name={filter}
-                    style={{ margin: 10 }}
+                    style={{ marginBottom: 10 }}
                   >
                     <OperatorSelect
                       queryOptions={filtersQuery}
@@ -569,7 +569,7 @@ export const FiltersModal = ({
                 <Form.Item
                   label={t(`table.${filter}`)}
                   name={filter}
-                  style={{ margin: 10 }}
+                  style={{ marginBottom: 10 }}
                 >
                   <ReasonSelect
                     queryOptions={filtersQuery}
@@ -583,7 +583,7 @@ export const FiltersModal = ({
                 <Form.Item
                   label={t(`table.${filter}`)}
                   name={filter}
-                  style={{ margin: 10 }}
+                  style={{ marginBottom: 10 }}
                 >
                   {!selectOptions[filter] ? (
                     <Select
@@ -647,7 +647,7 @@ export const FiltersModal = ({
                 <Form.Item
                   label={t(`table.${filter}`)}
                   name={filter}
-                  style={{ margin: 10 }}
+                  style={{ marginBottom: 10 }}
                 >
                   <Select
                     size="large"

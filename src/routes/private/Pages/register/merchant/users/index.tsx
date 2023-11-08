@@ -1,5 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { EditOutlined, EyeFilled, UserAddOutlined } from "@ant-design/icons";
+import {
+  EditOutlined,
+  EyeFilled,
+  FileAddOutlined,
+  UserAddOutlined,
+} from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
@@ -8,19 +14,20 @@ import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { useGetRowsMerchantUsers } from "@services/register/merchant/users/getUsers";
 import { Search } from "@src/components/Inputs/search";
-import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
+import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
 import { Toast } from "@src/components/Toast";
 import { ValidateToken } from "@src/components/ValidateToken";
 import { queryClient } from "@src/services/queryClient";
 import { useUpdateMerchant } from "@src/services/register/merchant/users/updateMerhchant";
 import { useCreateMerchantUsersReports } from "@src/services/reports/register/merchant/createMerchantUsersReports";
+import { useGetMerchantUsersReportFields } from "@src/services/reports/register/merchant/getMerchantUsersReportFields";
 import {
   MerchantUserBodyItem,
   MerchantUsersItem,
   MerchantUsersQuery,
 } from "@src/services/types/register/merchants/merchantUsers.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button } from "antd";
+import { Button, Tooltip } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { UpdateUserModal } from "./components/UpdateUserModal";
@@ -58,20 +65,36 @@ export const MerchantUser = () => {
       ...updateUserBody,
       validation_token: tokenState,
     });
+
+  const [csvFields, setCsvFields] = useState<any>();
+  const [comma, setIsComma] = useState<boolean>(false);
   const {
     MerchantUsersReportsError,
     MerchantUsersReportsIsLoading,
     MerchantUsersReportsIsSuccess,
     MerchantUsersReportsMutate,
-  } = useCreateMerchantUsersReports(query);
+  } = useCreateMerchantUsersReports({
+    fields: csvFields,
+    comma_separate_value: comma,
+  });
+
+  const { fields } = useGetMerchantUsersReportFields();
+  const [isExportReportsOpen, setIsExportReportsOpen] =
+    useState<boolean>(false);
 
   const columns: ColumnInterface[] = [
     { name: "id", type: "id", sort: true },
     { name: "name", type: "text", sort: true },
     { name: ["merchant", "name"], head: "merchant", type: "text" },
-    { name: ["permission_group", "name"], head: "group", type: "text", sort: true, sort_name: "group_name" },
+    {
+      name: ["permission_group", "name"],
+      head: "group",
+      type: "text",
+      sort: true,
+      sort_name: "group_name",
+    },
     { name: "last_signin_date", type: "date", sort: true },
-    {name: "status", type: "status"},
+    { name: "status", type: "status" },
     { name: "created_at", type: "date", sort: true },
   ];
 
@@ -163,19 +186,30 @@ export const MerchantUser = () => {
         )}
         {permissions.register.merchant.users.merchant_user_export_csv && (
           <Grid item xs={12} md="auto">
-            <ExportReportsModal
-              disabled={!UsersData?.total || UsersDataError}
-              mutateReport={() => MerchantUsersReportsMutate()}
-              error={MerchantUsersReportsError}
-              success={MerchantUsersReportsIsSuccess}
-              loading={MerchantUsersReportsIsLoading}
-              reportPath="/register/merchant/merchant_reports/merchant_users_reports"
-            />
+            <Tooltip
+              placement="topRight"
+              title={
+                UsersData?.total === 0 || UsersDataError
+                  ? t("messages.no_records_to_export")
+                  : t("messages.export_csv")
+              }
+              arrow
+            >
+              <Button
+                onClick={() => setIsExportReportsOpen(true)}
+                style={{ width: "100%" }}
+                shape="round"
+                type="dashed"
+                size="large"
+                loading={isUsersDataFetching}
+                disabled={UsersData?.total === 0 || UsersDataError}
+              >
+                <FileAddOutlined style={{ fontSize: 22 }} /> CSV
+              </Button>
+            </Tooltip>
           </Grid>
         )}
-
       </Grid>
-
       <Grid container style={{ marginTop: "15px" }}>
         <Grid item xs={12}>
           <CustomTable
@@ -273,6 +307,22 @@ export const MerchantUser = () => {
           setIsValidateTokenOpen={setIsValidateTokenOpen}
         />
       )}
+      <ExportCustomReportsModal
+        open={isExportReportsOpen}
+        setOpen={setIsExportReportsOpen}
+        disabled={UsersData?.total === 0 || UsersDataError}
+        mutateReport={() => MerchantUsersReportsMutate()}
+        error={MerchantUsersReportsError}
+        success={MerchantUsersReportsIsSuccess}
+        loading={MerchantUsersReportsIsLoading}
+        reportPath="/register/merchant/merchant_reports/merchant_users_reports"
+        fields={fields}
+        csvFields={csvFields}
+        comma={comma}
+        setIsComma={setIsComma}
+        setCsvFields={setCsvFields}
+        reportName="MerchantUsers"
+      />
     </Grid>
   );
 };
