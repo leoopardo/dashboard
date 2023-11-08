@@ -386,7 +386,8 @@
     "category_id": "Categoria",
     "password_type": "A senha deve conter no mínimo 8 caracteres, incluindo pelo menos 1 número, 1 letra maiúscula e 1 caractere especial.",
     "merchant_id": "nome da empresa",
-    "reason": "motivo"
+    "reason": "motivo",
+    "domain": "domínio"
   },
   "table": {
     "id": "ID",
