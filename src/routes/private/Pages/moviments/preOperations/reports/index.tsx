@@ -8,7 +8,6 @@ import { CustomTable } from "@src/components/CustomTable";
 import { FiltersModal } from "@src/components/FiltersModal";
 import { FilterChips } from "@src/components/FiltersModal/filterChips";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
-import { useGetMerchantManualReports } from "@src/services/reports/moviments/merchant/getManualTransactionReports";
 import { ReportsQuery } from "@src/services/types/reports/reports.interface";
 import { Button } from "antd";
 import { useEffect, useState } from "react";
