@@ -135,7 +135,7 @@ export const AggregatorTransferBetweenAccountsReports = () => {
           setQuery={setQuery}
           filters={["start_date", "end_date"]}
           refetch={() => {
-            return;
+            refetchTransferBetweenAccountsReportsData()
           }}
           selectOptions={{}}
           startDateKeyName="start_date"
