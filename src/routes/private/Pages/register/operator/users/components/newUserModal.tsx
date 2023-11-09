@@ -3,7 +3,6 @@
 import { GroupSelect } from "@components/Selects/groupSelect";
 import { CellphoneInput } from "@src/components/Inputs/CellphoneInput";
 import { OperatorSelect } from "@src/components/Selects/operatorSelect";
-import { Toast } from "@src/components/Toast";
 import { queryClient } from "@src/services/queryClient";
 import { useCreateOperatorUser } from "@src/services/register/operator/users/createUser";
 import { useUpdateOperatorUser } from "@src/services/register/operator/users/updateUser";
