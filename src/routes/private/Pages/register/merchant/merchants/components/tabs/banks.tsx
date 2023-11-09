@@ -34,7 +34,7 @@ export const BanksTab = (props: { id?: string }) => {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const { isMerchantBankFetching, merchantBankData, refetchMerchantBankData } =
     useMerchantBankConfig(props.id);
-    
+
   const { UpdateBankError, UpdateBankIsSuccess, UpdateMutate } =
     useUpdateBankConfig(body);
   const { bankListData } = useListBanks({ limit: 200, page: 1 });
@@ -44,7 +44,7 @@ export const BanksTab = (props: { id?: string }) => {
       ...state,
       cash_in_bank: despositBank?.bank,
       cash_out_bank: withdrawBank?.bank,
-      fastpix_in_bank: fastPixBank?.bank
+      fastpix_in_bank: fastPixBank?.bank,
     }));
   }, [despositBank, withdrawBank, fastPixBank]);
 
@@ -54,7 +54,8 @@ export const BanksTab = (props: { id?: string }) => {
       merchants_ids: [Number(props?.id)],
       cash_in_bank: merchantBankData?.merchantConfig?.cash_in_bank,
       cash_out_bank: merchantBankData?.merchantConfig?.cash_out_bank,
-      fastpix_in_bank: merchantBankData?.merchantConfig?.fastpix_in_bank ?? undefined,
+      fastpix_in_bank:
+        merchantBankData?.merchantConfig?.fastpix_in_bank ?? undefined,
     }));
 
     setDepositBank({ bank: merchantBankData?.merchantConfig?.cash_in_bank });
@@ -90,7 +91,7 @@ export const BanksTab = (props: { id?: string }) => {
               )?.label_name
             }
           </Typography>
-          <Typography>
+          <Typography style={{marginTop: 10}}>
             {t("input.withdraw_bank")}:{" "}
             <Avatar
               src={
@@ -108,6 +109,27 @@ export const BanksTab = (props: { id?: string }) => {
               )?.label_name
             }
           </Typography>
+          {merchantBankData?.merchantConfig?.fastpix_in_bank && (
+            <Typography style={{marginTop: 10}}>
+              {t("input.fastpix_in_bank")}:{" "}
+              <Avatar
+                src={
+                  bankListData?.itens.find(
+                    (bank) =>
+                      bank.bank ===
+                      merchantBankData?.merchantConfig?.fastpix_in_bank
+                  )?.icon_url
+                }
+              />
+              {
+                bankListData?.itens.find(
+                  (bank) =>
+                    bank.bank ===
+                    merchantBankData?.merchantConfig?.fastpix_in_bank
+                )?.label_name
+              }
+            </Typography>
+          )}
         </Grid>
         <Grid item xs={12} md={4}>
           <Form.Item label={t("input.deposit_bank")} name="cash_in_bank">

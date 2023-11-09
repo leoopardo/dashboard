@@ -27,6 +27,7 @@ import { Button, Tooltip } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { NewUserInterface, NewUserModal } from "./components/newUserModal";
+import { useCreateOperatorUser } from "@src/services/register/operator/users/createUser";
 
 const INITIAL_QUERY: PartnerQuery = {
   limit: 25,
@@ -57,6 +58,17 @@ export const OperatorUsers = () => {
     ...updateUserBody,
     validation_token: tokenState,
   });
+  const [bodyCreate, setBodyCreate] = useState<NewUserInterface>({
+    name: "",
+    username: "",
+    group_id: 0,
+    status: true,
+    type: 2,
+    operator_id: currentItem?.operator_id,
+    cellphone: currentItem?.cellphone,
+  });
+  const { mutate, error, isSuccess } = useCreateOperatorUser(bodyCreate);
+
   const [action, setAction] = useState<"create" | "update">("create");
 
   const [csvFields, setCsvFields] = useState<any>();
@@ -208,7 +220,6 @@ export const OperatorUsers = () => {
 
       <Grid container style={{ marginTop: "15px" }}>
         <Grid item xs={12}>
-          {" "}
           <CustomTable
             query={query}
             setCurrentItem={setCurrentItem}
@@ -266,10 +277,13 @@ export const OperatorUsers = () => {
         <NewUserModal
           action={action}
           open={isNewUserModal}
+          setBody={setBodyCreate}
           setOpen={setIsNewUserModal}
           currentUser={currentItem}
+          body={bodyCreate}
           setCurrentUser={setCurrentItem}
           setUpdateBody={setUpdateUserBody}
+          fuctionMutate={mutate}
           setIsValidateTokenOpen={setIsValidateTokenOpen}
         />
       )}
@@ -292,6 +306,14 @@ export const OperatorUsers = () => {
         error={updateError}
         success={updateSuccess}
       />
+
+      <Toast
+        actionSuccess={t("messages.created")}
+        actionError={t("messages.create")}
+        error={error}
+        success={isSuccess}
+      />
+
       {isViewModalOpen && (
         <ViewModal
           item={currentItem}
