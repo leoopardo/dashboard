@@ -9,8 +9,10 @@ import {
   PointElement,
   Title,
   Tooltip,
+  LegendOptions,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+import { useTheme } from "@src/contexts/ThemeContext";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 
@@ -31,17 +33,23 @@ interface OrganizationHistoryLineChartInterface {
 export function OrganizationHistoryLineChart({
   items,
 }: OrganizationHistoryLineChartInterface) {
+  const { theme } = useTheme();
   const { t } = useTranslation();
   const isMobile = useMediaQuery({ maxWidth: "750px" });
+
   const options = {
     responsive: true,
     plugins: {
       legend: {
         position: "top" as const,
+        labels: {
+          color: theme === "dark" ? "#fff" : "inherit"
+        },
       },
       title: {
         display: true,
         text: t("table.balance_history"),
+        color: theme === "dark" ? "#fff" : "inherit"
       },
     },
   };
@@ -65,9 +73,7 @@ export function OrganizationHistoryLineChart({
       },
       {
         label: t("table.balance_to_transactions"),
-        data: items
-          ?.map((item) => item.balance_to_transactions)
-          .sort(() => -1),
+        data: items?.map((item) => item.balance_to_transactions).sort(() => -1),
         borderColor: defaultTheme.colors.paid,
         backgroundColor: "rgba(75, 192, 192, 0.2)",
       },

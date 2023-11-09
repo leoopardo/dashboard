@@ -169,7 +169,6 @@ export const OrganizationHistory = () => {
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid container style={{ display: "flex", flexDirection: "row-reverse" }}>
-        {" "}
         <Grid xs={12} md={2}>
           <Button
             style={{ width: "100%" }}
