@@ -34,6 +34,7 @@ export const BanksTab = (props: { id?: string }) => {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const { isMerchantBankFetching, merchantBankData, refetchMerchantBankData } =
     useMerchantBankConfig(props.id);
+    
   const { UpdateBankError, UpdateBankIsSuccess, UpdateMutate } =
     useUpdateBankConfig(body);
   const { bankListData } = useListBanks({ limit: 200, page: 1 });
@@ -43,8 +44,9 @@ export const BanksTab = (props: { id?: string }) => {
       ...state,
       cash_in_bank: despositBank?.bank,
       cash_out_bank: withdrawBank?.bank,
+      fastpix_in_bank: fastPixBank?.bank
     }));
-  }, [despositBank, withdrawBank]);
+  }, [despositBank, withdrawBank, fastPixBank]);
 
   useEffect(() => {
     setBody((state: any) => ({

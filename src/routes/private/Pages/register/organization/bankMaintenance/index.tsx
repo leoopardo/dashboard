@@ -107,6 +107,7 @@ export const BankMaintenence = () => {
               { name: "bank_fee", type: "text", key: refBankFee },
               { name: "cash_in", type: "boolean", key: refCashIn },
               { name: "cash_out", type: "boolean", key: refCashOut },
+              { name: "fastpix_in", type: "boolean", key: refCashOut },
               {
                 name: "created_at",
                 type: "date",
