@@ -3,7 +3,7 @@
 import { useListAggregators } from "@src/services/register/aggregator/listAggregators";
 import { AggregatorQuery } from "@src/services/types/register/aggregators/aggregators.interface";
 import useDebounce from "@src/utils/useDebounce";
-import { AutoComplete, Empty } from "antd";
+import { Select } from "antd";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -22,7 +22,8 @@ export const AggregatorSelect = ({
     limit: 200,
     name: "",
   });
-  const { aggregatorsData, refetcAggregators } = useListAggregators(query);
+  const { aggregatorsData, refetcAggregators, isAggregatorsFetching } =
+    useListAggregators(query);
   const [value, setValue] = useState<any>(null);
   const debounceSearch = useDebounce(query.name);
 
@@ -52,47 +53,49 @@ export const AggregatorSelect = ({
     refetcAggregators();
   }, [debounceSearch]);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const val = event?.target?.value;
-    setQuery((state) => ({ ...state, name: val }));
-    if (!val) {
-      setQueryFunction((state: any) => ({
-        ...state,
-        aggregator_id: undefined,
-      }));
-      setValue(undefined);
-    }
-  };
-
   return (
-    <AutoComplete
+    <Select
+      showSearch
       size="large"
-      options={
-        aggregatorsData?.items?.map((item, index) => {
-          return { key: index, value: item.id, label: item.name };
-        }) ?? []
-      }
+      loading={isAggregatorsFetching}
       value={value}
-      notFoundContent={<Empty />}
-      onChange={(e) => {
-        setValue(e);
+      onSelect={() => {
+        delete query.name;
+        refetcAggregators();
       }}
-      style={{ width: "100%", height: 40 }}
-      onSelect={(value) => {
+      onSearch={(value) => {
+        if (value === "") {
+          delete query.name;
+          refetcAggregators();
+          return;
+        }
+
+        setQuery((state: any) => ({ ...state, name: value }));
+      }}
+      onChange={(value) => {
         setQueryFunction((state: any) => ({
           ...state,
           aggregator_id: value,
           group_id: undefined,
         }));
         setValue(
-          aggregatorsData?.items.find((aggregator) => aggregator.id === value)
-            ?.name
+          aggregatorsData?.items.find(
+            (aggregator) => aggregator.id === aggregatorId
+          )?.name
         );
       }}
-      onInputKeyDown={(event: any) => {
-        handleChange(event);
+      options={aggregatorsData?.items.map((aggregator) => {
+        return {
+          label: aggregator.name,
+          value: aggregator.id,
+        };
+      })}
+      filterOption={(input, option) => {
+        return (
+          `${option?.label}`?.toLowerCase()?.indexOf(input?.toLowerCase()) >= 0
+        );
       }}
-      placeholder={t("input.aggregator")}
+      placeholder={t("table.aggregator_name")}
     />
   );
 };

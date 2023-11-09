@@ -164,7 +164,9 @@ export const CustomTable = (props: TableProps) => {
                   {t(`table.${column?.head || column?.name}`)}
                 </Typography>
               ),
-              key: column?.sort_name ? column.sort_name : Array.isArray(column?.name)
+              key: column?.sort_name
+                ? column.sort_name
+                : Array.isArray(column?.name)
                 ? column?.name + `${Math.random()}`
                 : column?.name,
               dataIndex: column?.name,
@@ -186,10 +188,11 @@ export const CustomTable = (props: TableProps) => {
                 ? () => {
                     props.setQuery((state: any) => ({
                       ...state,
-                      sort_field:
-                        column?.sort_name ? column.sort_name : Array.isArray(column?.name)
-                          ? column?.name[1]
-                          : column?.name,
+                      sort_field: column?.sort_name
+                        ? column.sort_name
+                        : Array.isArray(column?.name)
+                        ? column?.name[1]
+                        : column?.name,
                       sort_order:
                         props.query.sort_order === "DESC" ? "ASC" : "DESC",
                     }));
@@ -217,7 +220,9 @@ export const CustomTable = (props: TableProps) => {
                   </Typography>
                 </Tooltip>
               ),
-              key: column?.sort_name ? column.sort_name : Array.isArray(column?.name)
+              key: column?.sort_name
+                ? column.sort_name
+                : Array.isArray(column?.name)
                 ? column?.name + `${Math.random()}`
                 : column?.name,
               dataIndex: column?.name,
@@ -242,10 +247,11 @@ export const CustomTable = (props: TableProps) => {
                 ? () => {
                     props.setQuery((state: any) => ({
                       ...state,
-                      sort_field:
-                        column?.sort_name ? column.sort_name : Array.isArray(column?.name)
-                          ? column?.name[1]
-                          : column?.name,
+                      sort_field: column?.sort_name
+                        ? column.sort_name
+                        : Array.isArray(column?.name)
+                        ? column?.name[1]
+                        : column?.name,
                       sort_order:
                         props.query.sort_order === "DESC" ? "ASC" : "DESC",
                     }));
@@ -273,7 +279,9 @@ export const CustomTable = (props: TableProps) => {
                   </Typography>
                 </Tooltip>
               ),
-              key: column?.sort_name ? column.sort_name : Array.isArray(column?.name)
+              key: column?.sort_name
+                ? column.sort_name
+                : Array.isArray(column?.name)
                 ? column?.name + `${Math.random()}`
                 : column?.name,
               dataIndex: column?.name,
@@ -292,10 +300,11 @@ export const CustomTable = (props: TableProps) => {
                 ? () => {
                     props.setQuery((state: any) => ({
                       ...state,
-                      sort_field:
-                        column?.sort_name ? column.sort_name : Array.isArray(column?.name)
-                          ? column?.name[1]
-                          : column?.name,
+                      sort_field: column?.sort_name
+                        ? column.sort_name
+                        : Array.isArray(column?.name)
+                        ? column?.name[1]
+                        : column?.name,
                       sort_order:
                         props.query.sort_order === "DESC" ? "ASC" : "DESC",
                     }));
@@ -322,7 +331,9 @@ export const CustomTable = (props: TableProps) => {
                   </Typography>
                 </Tooltip>
               ),
-              key: column?.sort_name ? column.sort_name : Array.isArray(column?.name)
+              key: column?.sort_name
+                ? column.sort_name
+                : Array.isArray(column?.name)
                 ? column?.name + `${Math.random()}`
                 : column?.name,
               dataIndex: column?.name,
@@ -341,10 +352,11 @@ export const CustomTable = (props: TableProps) => {
                 ? () => {
                     props.setQuery((state: any) => ({
                       ...state,
-                      sort_field:
-                        column?.sort_name ? column.sort_name : Array.isArray(column?.name)
-                          ? column?.name[1]
-                          : column?.name,
+                      sort_field: column?.sort_name
+                        ? column.sort_name
+                        : Array.isArray(column?.name)
+                        ? column?.name[1]
+                        : column?.name,
                       sort_order:
                         props.query.sort_order === "DESC" ? "ASC" : "DESC",
                     }));
@@ -371,7 +383,9 @@ export const CustomTable = (props: TableProps) => {
                   </Typography>
                 </Tooltip>
               ),
-              key: column?.sort_name ? column.sort_name : Array.isArray(column?.name)
+              key: column?.sort_name
+                ? column.sort_name
+                : Array.isArray(column?.name)
                 ? column?.name + `${Math.random()}`
                 : column?.name,
               dataIndex: column?.name,
@@ -384,10 +398,11 @@ export const CustomTable = (props: TableProps) => {
                 ? () => {
                     props.setQuery((state: any) => ({
                       ...state,
-                      sort_field:
-                        column?.sort_name ? column.sort_name : Array.isArray(column?.name)
-                          ? column?.name[1]
-                          : column?.name,
+                      sort_field: column?.sort_name
+                        ? column.sort_name
+                        : Array.isArray(column?.name)
+                        ? column?.name[1]
+                        : column?.name,
                       sort_order:
                         props.query.sort_order === "DESC" ? "ASC" : "DESC",
                     }));
@@ -415,7 +430,9 @@ export const CustomTable = (props: TableProps) => {
                   </Typography>
                 </Tooltip>
               ),
-              key: column?.sort_name ? column.sort_name : Array.isArray(column?.name)
+              key: column?.sort_name
+                ? column.sort_name
+                : Array.isArray(column?.name)
                 ? column?.name + `${Math.random()}`
                 : column?.name,
               dataIndex: column?.name,
@@ -449,10 +466,11 @@ export const CustomTable = (props: TableProps) => {
                 ? () => {
                     props.setQuery((state: any) => ({
                       ...state,
-                      sort_field:
-                        column?.sort_name ? column.sort_name : Array.isArray(column?.name)
-                          ? column?.name[1]
-                          : column?.name,
+                      sort_field: column?.sort_name
+                        ? column.sort_name
+                        : Array.isArray(column?.name)
+                        ? column?.name[1]
+                        : column?.name,
                       sort_order:
                         props.query.sort_order === "DESC" ? "ASC" : "DESC",
                     }));
@@ -480,7 +498,9 @@ export const CustomTable = (props: TableProps) => {
                   </Typography>
                 </Tooltip>
               ),
-              key: column?.sort_name ? column.sort_name : Array.isArray(column?.name)
+              key: column?.sort_name
+                ? column.sort_name
+                : Array.isArray(column?.name)
                 ? column?.name + `${Math.random()}`
                 : column?.name,
               dataIndex: column?.name,
@@ -517,10 +537,11 @@ export const CustomTable = (props: TableProps) => {
                 ? () => {
                     props.setQuery((state: any) => ({
                       ...state,
-                      sort_field:
-                        column?.sort_name ? column.sort_name : Array.isArray(column?.name)
-                          ? column?.name[1]
-                          : column?.name,
+                      sort_field: column?.sort_name
+                        ? column.sort_name
+                        : Array.isArray(column?.name)
+                        ? column?.name[1]
+                        : column?.name,
                       sort_order:
                         props.query.sort_order === "DESC" ? "ASC" : "DESC",
                     }));
@@ -548,7 +569,9 @@ export const CustomTable = (props: TableProps) => {
                   </Typography>
                 </Tooltip>
               ),
-              key: column?.sort_name ? column.sort_name : Array.isArray(column?.name)
+              key: column?.sort_name
+                ? column.sort_name
+                : Array.isArray(column?.name)
                 ? column?.name + `${Math.random()}`
                 : column?.name,
               dataIndex: column?.name,
@@ -564,10 +587,11 @@ export const CustomTable = (props: TableProps) => {
                 ? () => {
                     props.setQuery((state: any) => ({
                       ...state,
-                      sort_field:
-                        column?.sort_name ? column.sort_name : Array.isArray(column?.name)
-                          ? column?.name[1]
-                          : column?.name,
+                      sort_field: column?.sort_name
+                        ? column.sort_name
+                        : Array.isArray(column?.name)
+                        ? column?.name[1]
+                        : column?.name,
                       sort_order:
                         props.query.sort_order === "DESC" ? "ASC" : "DESC",
                     }));
@@ -595,7 +619,9 @@ export const CustomTable = (props: TableProps) => {
                   </Typography>
                 </Tooltip>
               ),
-              key: column?.sort_name ? column.sort_name : Array.isArray(column?.name)
+              key: column?.sort_name
+                ? column.sort_name
+                : Array.isArray(column?.name)
                 ? `${column?.name}-${Math.random()}`
                 : column?.name,
               dataIndex: column?.name,
@@ -622,10 +648,11 @@ export const CustomTable = (props: TableProps) => {
                 ? () => {
                     props?.setQuery((state: any) => ({
                       ...state,
-                      sort_field:
-                        column?.sort_name ? column.sort_name : Array.isArray(column?.name)
-                          ? column.name[1]
-                          : column?.name,
+                      sort_field: column?.sort_name
+                        ? column.sort_name
+                        : Array.isArray(column?.name)
+                        ? column.name[1]
+                        : column?.name,
                       sort_order:
                         props?.query?.sort_order === "DESC" ? "ASC" : "DESC",
                     }));
@@ -722,7 +749,9 @@ export const CustomTable = (props: TableProps) => {
                   </Typography>
                 </Tooltip>
               ),
-              key: column?.sort_name ? column.sort_name : Array.isArray(column?.name)
+              key: column?.sort_name
+                ? column.sort_name
+                : Array.isArray(column?.name)
                 ? column?.name + `${Math.random()}`
                 : column?.name,
               dataIndex: column?.name,
@@ -758,10 +787,11 @@ export const CustomTable = (props: TableProps) => {
                 ? () => {
                     props.setQuery((state: any) => ({
                       ...state,
-                      sort_field:
-                        column?.sort_name ? column.sort_name : Array.isArray(column?.name)
-                          ? column?.name[1]
-                          : column?.name,
+                      sort_field: column?.sort_name
+                        ? column.sort_name
+                        : Array.isArray(column?.name)
+                        ? column?.name[1]
+                        : column?.name,
                       sort_order:
                         props.query.sort_order === "DESC" ? "ASC" : "DESC",
                     }));
@@ -781,7 +811,9 @@ export const CustomTable = (props: TableProps) => {
                   {t(`table.${column?.head || column?.name}`)}
                 </Typography>
               ),
-              key: column?.sort_name ? column.sort_name : Array.isArray(column?.name)
+              key: column?.sort_name
+                ? column.sort_name
+                : Array.isArray(column?.name)
                 ? column?.name + `${Math.random()}`
                 : column?.name,
               dataIndex: column?.name,
@@ -794,10 +826,11 @@ export const CustomTable = (props: TableProps) => {
                 ? () => {
                     props.setQuery((state: any) => ({
                       ...state,
-                      sort_field:
-                        column?.sort_name ? column.sort_name : Array.isArray(column?.name)
-                          ? column?.name[1]
-                          : column?.name,
+                      sort_field: column?.sort_name
+                        ? column.sort_name
+                        : Array.isArray(column?.name)
+                        ? column?.name[1]
+                        : column?.name,
                       sort_order:
                         props.query.sort_order === "DESC" ? "ASC" : "DESC",
                     }));
@@ -817,7 +850,9 @@ export const CustomTable = (props: TableProps) => {
                   {t(`table.${column?.head ?? column?.name}`)}
                 </Typography>
               ),
-              key: column?.sort_name ? column.sort_name : Array.isArray(column?.name)
+              key: column?.sort_name
+                ? column.sort_name
+                : Array.isArray(column?.name)
                 ? column?.name + `${Math.random()}`
                 : column?.name,
               dataIndex: column?.name,
@@ -863,10 +898,11 @@ export const CustomTable = (props: TableProps) => {
                 ? () => {
                     props.setQuery((state: any) => ({
                       ...state,
-                      sort_field:
-                        column?.sort_name ? column.sort_name : Array.isArray(column?.name)
-                          ? column?.name[1]
-                          : column?.name,
+                      sort_field: column?.sort_name
+                        ? column.sort_name
+                        : Array.isArray(column?.name)
+                        ? column?.name[1]
+                        : column?.name,
                       sort_order:
                         props.query.sort_order === "DESC" ? "ASC" : "DESC",
                     }));
@@ -886,7 +922,9 @@ export const CustomTable = (props: TableProps) => {
                   {t(`table.${column?.head ?? column?.name}`)}
                 </Typography>
               ),
-              key: column?.sort_name ? column.sort_name : Array.isArray(column?.name)
+              key: column?.sort_name
+                ? column.sort_name
+                : Array.isArray(column?.name)
                 ? column?.name + `${Math.random()}`
                 : column?.name,
               dataIndex: column?.name,
@@ -899,10 +937,11 @@ export const CustomTable = (props: TableProps) => {
                 ? () => {
                     props.setQuery((state: any) => ({
                       ...state,
-                      sort_field:
-                        column?.sort_name ? column.sort_name : Array.isArray(column?.name)
-                          ? column?.name[1]
-                          : column?.name,
+                      sort_field: column?.sort_name
+                        ? column.sort_name
+                        : Array.isArray(column?.name)
+                        ? column?.name[1]
+                        : column?.name,
                       sort_order:
                         props.query.sort_order === "DESC" ? "ASC" : "DESC",
                     }));
@@ -922,7 +961,9 @@ export const CustomTable = (props: TableProps) => {
                   {t(`table.${column?.head ?? column?.name}`)}
                 </Typography>
               ),
-              key: column?.sort_name ? column.sort_name : Array.isArray(column?.name)
+              key: column?.sort_name
+                ? column.sort_name
+                : Array.isArray(column?.name)
                 ? column?.name + `${Math.random()}`
                 : column?.name,
               dataIndex: column?.name,
@@ -935,10 +976,11 @@ export const CustomTable = (props: TableProps) => {
                 ? () => {
                     props.setQuery((state: any) => ({
                       ...state,
-                      sort_field:
-                        column?.sort_name ? column.sort_name : Array.isArray(column?.name)
-                          ? column?.name[1]
-                          : column?.name,
+                      sort_field: column?.sort_name
+                        ? column.sort_name
+                        : Array.isArray(column?.name)
+                        ? column?.name[1]
+                        : column?.name,
                       sort_order:
                         props.query.sort_order === "DESC" ? "ASC" : "DESC",
                     }));
@@ -957,7 +999,9 @@ export const CustomTable = (props: TableProps) => {
                   {t(`table.${column?.head ?? column?.name}`)}
                 </Typography>
               ),
-              key: column?.sort_name ? column.sort_name : Array.isArray(column?.name)
+              key: column?.sort_name
+                ? column.sort_name
+                : Array.isArray(column?.name)
                 ? column?.name + `${Math.random()}`
                 : column?.name,
               dataIndex: column?.name,
@@ -970,10 +1014,11 @@ export const CustomTable = (props: TableProps) => {
                 ? () => {
                     props.setQuery((state: any) => ({
                       ...state,
-                      sort_field:
-                        column?.sort_name ? column.sort_name : Array.isArray(column?.name)
-                          ? column?.name[1]
-                          : column?.name,
+                      sort_field: column?.sort_name
+                        ? column.sort_name
+                        : Array.isArray(column?.name)
+                        ? column?.name[1]
+                        : column?.name,
                       sort_order:
                         props.query.sort_order === "DESC" ? "ASC" : "DESC",
                     }));

@@ -171,7 +171,13 @@ export const MerchantView = () => {
         container
         style={{ display: "flex", alignItems: "center" }}
         spacing={1}
-        mt={!isMobile ? "-80px" : undefined}
+        mt={
+          !isMobile &&
+          MerchantTotalsData &&
+          MerchantTotalsData?.registered_merchant_totals > 0
+            ? "-80px"
+            : undefined
+        }
       >
         <Grid item xs={12} md={4} lg={2}>
           <Button
@@ -320,7 +326,7 @@ export const MerchantView = () => {
             setSelectedRows={setSelectedItems}
             selectedKeys={selectedItems}
             actions={[
-              {
+              permissions.register.merchant.merchant.merchant_list && {
                 label: "details",
                 icon: <EyeFilled style={{ fontSize: "20px" }} />,
                 onClick: (item) => {
@@ -335,7 +341,15 @@ export const MerchantView = () => {
                   navigate("update", { state: item });
                 },
               },
-              {
+              (permissions.register.merchant.merchant.merchant_config_banks ||
+                permissions.register.merchant.merchant
+                  .merchant_config_credentials ||
+                permissions.register.merchant.merchant.merchant_config_fees ||
+                permissions.register.merchant.merchant.merchant_config_ips ||
+                permissions.register.merchant.merchant
+                  .merchant_config_merchant ||
+                permissions.register.merchant.merchant
+                  .merchant_config_paybrokers) && {
                 label: "configs",
                 icon: <ToolOutlined style={{ fontSize: "20px" }} />,
                 onClick: () => setIsConfigOpen(true),

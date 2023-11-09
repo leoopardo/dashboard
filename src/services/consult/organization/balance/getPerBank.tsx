@@ -13,14 +13,14 @@ export function useGetOrganizationBalance() {
   });
 
   const OrganizationBalance: OrganizationBalance | null | undefined = {
-    in: data?.in,
-    pix_transactions_total: data?.pix_transactions_total,
-    pix_amount_fee: data?.pix_amount_fee,
-    out: data?.out,
-    withdraw_transactions_total: data?.withdraw_transactions_total,
-    withdraw_amount_fee: data?.withdraw_amount_fee,
-    refund_transactions_total: data?.refund_transactions_total,
-    refund_amount_fee: data?.refund_amount_fee,
+    in: data?.in ?? 0,
+    pix_transactions_total: data?.pix_transactions_total ?? 0,
+    pix_amount_fee: data?.pix_amount_fee ?? 0,
+    out: data?.out ?? 0,
+    withdraw_transactions_total: data?.withdraw_transactions_total ?? 0,
+    withdraw_amount_fee: data?.withdraw_amount_fee ?? 0,
+    refund_transactions_total: data?.refund_transactions_total ?? 0,
+    refund_amount_fee: data?.refund_amount_fee ?? 0,
     ...data,
   };
   const isOrganizationBalanceFetching = isFetching;

@@ -39,12 +39,16 @@ export const DepositFinancial = ({ query, chart }: TableProps) => {
               },
               yAxis: {
                 type: "category",
-                data: RankingData?.sort((a, b) => a.total > b.total ? 1 : -1)?.map((merchant) => merchant?.name ?? "-"),
+                data: RankingData?.sort((a, b) =>
+                a.total > b.total ? 1 : -1
+              )?.map((merchant) => merchant?.name ?? "-"),
               },
               series: [
                 {
                   type: "bar",
-                  data: RankingData?.map(
+                  data: RankingData?.sort((a, b) =>
+                  a.total > b.total ? 1 : -1
+                )?.map(
                     (merchant) => merchant?.total ?? 0
                   ),
                   tooltip: {

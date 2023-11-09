@@ -92,7 +92,7 @@ export const Dashboard = () => {
       label: t("table.merchant_balance"),
       children: (
         <Col span={24}>
-          <MerchantBalance />
+          <MerchantBalance/>
         </Col>
       ),
     });

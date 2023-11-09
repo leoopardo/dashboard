@@ -543,19 +543,18 @@ export const SidebarNavigation = () => {
                   : "none",
               }
             ),
-
-            getItem(
-              "manual_entry_category",
-              null,
-              null,
-              false,
-              (e) => handleNavigate(e?.keyPath),
-              {
-                display: permissions?.register?.merchant?.release_category?.menu
-                  ? undefined
-                  : "none",
-              }
-            ),
+            // getItem(
+            //   "manual_entry_category",
+            //   null,
+            //   null,
+            //   false,
+            //   (e) => handleNavigate(e?.keyPath),
+            //   {
+            //     display: permissions?.register?.merchant?.release_category?.menu
+            //       ? undefined
+            //       : "none",
+            //   }
+            // ),
             getItem(
               "fee_plans",
               null,

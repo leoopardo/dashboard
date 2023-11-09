@@ -3,11 +3,11 @@
 import { useListOperators } from "@src/services/register/operator/listOperators";
 import { OperatorQuery } from "@src/services/types/register/operators/operators.interface";
 import useDebounce from "@src/utils/useDebounce";
-import { AutoComplete, Empty } from "antd";
+import { Select } from "antd";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-interface MerchantSelectProps {
+interface operatorSelectProps {
   setQueryFunction: Dispatch<SetStateAction<any>>;
   queryOptions: any;
 }
@@ -15,14 +15,14 @@ interface MerchantSelectProps {
 export const OperatorSelect = ({
   setQueryFunction,
   queryOptions,
-}: MerchantSelectProps) => {
+}: operatorSelectProps) => {
   const { t } = useTranslation();
   const [query, setQuery] = useState<OperatorQuery>({
     page: 1,
     limit: 200,
     name: "",
   });
-  const { operatorsData, refetcOperators, operatorsError } =
+  const { operatorsData, refetcOperators, isOperatorsFetching } =
     useListOperators(query);
   const [value, setValue] = useState<any>(null);
   const debounceSearch = useDebounce(query.name);
@@ -61,36 +61,26 @@ export const OperatorSelect = ({
     refetcOperators();
   }, [query]);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const val = event?.target?.value;
-    setQuery((state) => ({ ...state, name: val }));
-
-    if (!val) {
-      setQueryFunction((state: any) => ({
-        ...state,
-        operator_id: undefined,
-      }));
-      setValue(undefined);
-    }
-  };
-
   return (
-    <AutoComplete
+    <Select
+      showSearch
       size="large"
-      options={
-        operatorsError
-          ? []
-          : operatorsData?.items?.map((item, index) => {
-              return { key: index, value: item.id, label: item.name };
-            }) ?? []
-      }
+      loading={isOperatorsFetching}
       value={value}
-      notFoundContent={<Empty />}
-      onChange={(e) => {
-        setValue(e);
+      onSelect={() => {
+        delete query.name;
+        refetcOperators();
       }}
-      style={{ width: "100%", height: 40 }}
-      onSelect={(value) => {
+      onSearch={(value) => {
+        if (value === "") {
+          delete query.name;
+          refetcOperators();
+          return;
+        }
+
+        setQuery((state: any) => ({ ...state, name: value }));
+      }}
+      onChange={(value) => {
         setQueryFunction((state: any) => ({
           ...state,
           operator_id: value,
@@ -100,10 +90,19 @@ export const OperatorSelect = ({
           operatorsData?.items.find((operator) => operator.id === value)?.name
         );
       }}
-      onInputKeyDown={(event: any) => {
-        handleChange(event);
+      options={operatorsData?.items.map((operator) => {
+        return {
+          label: operator.name,
+          value: operator.id,
+        };
+      })}
+      filterOption={(input, option) => {
+        return (
+          `${option?.label}`?.toLowerCase()?.indexOf(input?.toLowerCase()) >= 0
+        );
       }}
       placeholder={t("input.operator")}
     />
+   
   );
 };
