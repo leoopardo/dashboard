@@ -502,6 +502,31 @@ export const MutateModal = ({
                     </Form.Item>
                   </Col>
                 );
+
+                case "can_be_deleted_only_by_organization":
+                  return (
+                    <Col
+                      span={24}
+                      style={{ display: "flex", justifyContent: "start" }}
+                    >
+                      <Form.Item
+                        label={t(`table.${field.label}`)}
+                        name={field.label}
+                        style={{ margin: 10 }}
+                        valuePropName="checked"
+                      >
+                        <Switch
+                          checked={body[field.label]}
+                          onChange={(e) => {
+                            setBody((state: any) => ({
+                              ...state,
+                              [field.label]: e,
+                            }))
+                          }}
+                        />
+                      </Form.Item>
+                    </Col>
+                  );
               case "cnpj":
                 return (
                   <Col span={24}>

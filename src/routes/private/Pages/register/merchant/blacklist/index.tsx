@@ -58,11 +58,7 @@ export const MerchantBlacklist = () => {
   const [currentItem, setCurrentItem] = useState<MerchantBlacklistItem | null>(
     null
   );
-  const { error, isLoading, isSuccess, mutate } = useCreateMerchantBlacklist({
-    ...body,
-    can_be_deleted_only_by_organization:
-      body?.can_be_deleted_only_by_organization === "true",
-  });
+  const { error, isLoading, isSuccess, mutate } = useCreateMerchantBlacklist(body);
   const [search, setSearch] = useState<string>("");
   const debounceSearch = useDebounce(search);
   const {
@@ -108,7 +104,6 @@ export const MerchantBlacklist = () => {
       columns.unshift({
         label: "can_be_deleted_only_by_organization",
         required: true,
-        selectOption: true,
       });
     }
 
@@ -301,18 +296,7 @@ export const MerchantBlacklist = () => {
           modalName={t("modal.new_bank_blacklist")}
           submit={mutate}
           submitLoading={isLoading}
-          selectOptions={{
-            can_be_deleted_only_by_organization: [
-              {
-                label: "true",
-                value: "true",
-              },
-              {
-                label: "false",
-                value: "false",
-              },
-            ],
-          }}
+          selectOptions={{}}
           error={error}
           success={isSuccess}
         />

@@ -33,7 +33,7 @@ import { useTranslation } from "react-i18next";
 import { UpdateUserModal } from "./components/UpdateUserModal";
 
 const INITIAL_QUERY: MerchantUsersQuery = {
-  limit: 5,
+  limit: 25,
   page: 1,
   sort_field: "created_at",
   sort_order: "DESC",
