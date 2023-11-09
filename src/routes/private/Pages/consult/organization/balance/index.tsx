@@ -1,123 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ReloadOutlined } from "@ant-design/icons";
 import { Grid } from "@mui/material";
 import { useGetOrganizationBalance } from "@src/services/consult/organization/balance/getPerBank";
-import { defaultTheme } from "@src/styles/defaultTheme";
-import { Button, Card, Descriptions, Divider, Spin, Statistic } from "antd";
+import { Descriptions, Divider, Spin } from "antd";
 import { useTranslation } from "react-i18next";
-import { useMediaQuery } from "react-responsive";
-import { OrganizationBalanceChart } from "./components/TotalChart";
+import { OrganizationBalance as OrganizationBalanceTotals } from "../../../dashboard/components/organizationBalance";
 
 export const OrganizationBalance = () => {
-  const isMobile = useMediaQuery({ maxWidth: "750px" });
-  const {
-    OrganizationBalance,
-    isOrganizationBalanceFetching,
-    refetchOrganizationBalance,
-  } = useGetOrganizationBalance();
+  const { OrganizationBalance, isOrganizationBalanceFetching } =
+    useGetOrganizationBalance();
   const { t } = useTranslation();
   return (
     <Grid container style={{ padding: "25px" }}>
-      <Grid
-        container
-        spacing={1}
-        style={{ display: "flex", justifyContent: "center" }}
-      >
-        <Grid
-          item
-          xs={12}
-          md={1}
-          style={{
-            minWidth: "120px",
-            minHeight: "120px",
-            marginRight: !isMobile ? "15px" : 0,
-          }}
-        >
-          <OrganizationBalanceChart items={OrganizationBalance} />
-        </Grid>
-        <Grid item xs={12} md="auto">
-          <Card bordered={false}>
-            <Statistic
-              loading={isOrganizationBalanceFetching}
-              title={t("table.balance_to_transactions")}
-              value={new Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(OrganizationBalance?.balance_to_transactions || 0)}
-              precision={0}
-              valueStyle={{ color: "#006086", fontSize: "16px" }}
-            />
-          </Card>
-        </Grid>
-        <Grid item xs={12} md="auto">
-          <Card bordered={false}>
-            <Statistic
-              loading={isOrganizationBalanceFetching}
-              title={t("table.balance_to_payment")}
-              value={new Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(OrganizationBalance?.balance_to_payment || 0)}
-              precision={2}
-              valueStyle={{
-                color: defaultTheme.colors.warnning,
-                fontSize: "16px",
-              }}
-            />
-          </Card>
-        </Grid>
-        <Grid item xs={12} md="auto">
-          <Card bordered={false}>
-            <Statistic
-              loading={isOrganizationBalanceFetching}
-              title={t("table.balance_reserved")}
-              value={new Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(OrganizationBalance?.balance_reserved || 0)}
-              precision={2}
-              valueStyle={{
-                color: defaultTheme.colors.error,
-                fontSize: "16px",
-              }}
-            />
-          </Card>
-        </Grid>
-        <Grid item xs={12} md="auto">
-          <Card bordered={false}>
-            <Statistic
-              loading={isOrganizationBalanceFetching}
-              title={t("table.balance_total")}
-              value={new Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(OrganizationBalance?.balance_total || 0)}
-              precision={2}
-              valueStyle={{
-                color: defaultTheme.colors.paid,
-                fontSize: "16px",
-              }}
-            />
-          </Card>
-        </Grid>
-        <Grid
-          item
-          xs={12}
-          md="auto"
-          style={{ display: "flex", alignItems: "center" }}
-        >
-          <Button
-            size="large"
-            type="primary"
-            style={{ width: "100%" }}
-            loading={isOrganizationBalanceFetching}
-            onClickCapture={() => {
-              refetchOrganizationBalance();
-            }}
-          >
-            <ReloadOutlined /> {t("buttons.refresh")}
-          </Button>
-        </Grid>
+      <Grid xs={12}>
+        <OrganizationBalanceTotals />
       </Grid>
       <Grid item xs={12}>
         <Divider />
@@ -169,7 +64,7 @@ export const OrganizationBalance = () => {
                 currency: "BRL",
               }).format(OrganizationBalance?.out || 0)}
             </Descriptions.Item>
-     
+
             <Descriptions.Item
               key={"updatedAt"}
               label={t(`table.updatedAt`)}
@@ -255,7 +150,7 @@ export const OrganizationBalance = () => {
                 textAlign: "center",
               }}
             >
-               {new Intl.NumberFormat("pt-BR", {
+              {new Intl.NumberFormat("pt-BR", {
                 style: "currency",
                 currency: "BRL",
               }).format(OrganizationBalance?.withdraw_amount_fee || 0)}
@@ -270,7 +165,7 @@ export const OrganizationBalance = () => {
                 textAlign: "center",
               }}
             >
-               {new Intl.NumberFormat("pt-BR", {
+              {new Intl.NumberFormat("pt-BR", {
                 style: "currency",
                 currency: "BRL",
               }).format(OrganizationBalance?.refund_amount_fee || 0)}
