@@ -9,15 +9,21 @@ import { api } from "../../../config/api";
 
 export function useListOperators(params: OperatorQuery) {
   const { data, isFetching, error, refetch } = useQuery<
-  OperatorsResponse | null | undefined
->("listOperators", async () => {
-  const response = await api.get("core/operator", {
-    params,
-  });
-  return response.data;
-});
+    OperatorsResponse | null | undefined
+  >(
+    "listOperators",
+    async () => {
+      const response = await api.get("core/operator", {
+        params,
+      });
+      return response.data;
+    },
+    { keepPreviousData: false }
+  );
 
-  const operatorsData = data;
+  const operatorsData = error
+    ? ({ items: [], limit: 200, page: 1, total: 0 } as OperatorsResponse)
+    : data;
   const isOperatorsFetching = isFetching;
   const operatorsError: any = error;
   const refetcOperators = refetch;
