@@ -181,7 +181,6 @@ export const DepositsWebhooks = () => {
           setOpen={setIsFiltersOpen}
           query={query}
           setQuery={setQuery}
-          haveInitialDate
           filters={["start_date", "end_date", "partner_id", "merchant_id"]}
           refetch={refetchDepositsWebhooks}
           selectOptions={{}}
