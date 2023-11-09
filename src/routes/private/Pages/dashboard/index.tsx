@@ -42,7 +42,7 @@ const INITIAL_QUERY = {
 
 export const Dashboard = () => {
   const { t } = useTranslation();
-  const { permissions, merchant_id, type } = queryClient.getQueryData(
+  const { permissions, type } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
   const user = queryClient.getQueryData("validate") as ValidateInterface;
