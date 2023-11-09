@@ -47,6 +47,7 @@ export const MerchantSelect = ({
 
   return (
     <Select
+      style={{ width: "100%" }}
       showSearch
       size="large"
       loading={isMerchantFetching}
