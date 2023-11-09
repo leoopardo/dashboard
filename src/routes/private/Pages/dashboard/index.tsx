@@ -21,8 +21,6 @@ import secureLocalStorage from "react-secure-storage";
 import { TabsTable } from "./components/TabsTable";
 import { BankCard } from "./components/bankCard";
 import { BankBalanceChart } from "./components/charts/bankBalanceChart";
-import { ChartIn } from "./components/charts/chartIn";
-import { ChartOut } from "./components/charts/chartOut";
 import { MerchantBalance } from "./components/merchantBalance";
 import { MerchantsBalance } from "./components/merchantsBalance";
 import { OrganizationBalance } from "./components/organizationBalance";
@@ -92,7 +90,7 @@ export const Dashboard = () => {
       label: t("table.merchant_balance"),
       children: (
         <Col span={24}>
-          <MerchantBalance/>
+          <MerchantBalance />
         </Col>
       ),
     });
@@ -226,7 +224,8 @@ export const Dashboard = () => {
             style={{
               width: "100%",
               marginLeft: "-40px",
-              marginRight: "-40px",  paddingBottom: 20,
+              marginRight: "-40px",
+              paddingBottom: 20,
               paddingTop: 20,
               paddingLeft: 8,
               paddingRight: 8,
@@ -276,12 +275,12 @@ export const Dashboard = () => {
             </Row>
           </Layout>
 
-          <Col span={24} style={{ paddingTop: "20px", paddingBottom: user.aggregator_id ? "60px" : undefined }}>
+          {/* <Col span={24} style={{ paddingTop: "20px", paddingBottom: user.aggregator_id ? "60px" : undefined }}>
             <Row gutter={[16, 16]}>
               <ChartIn query={query} />
               <ChartOut query={query} />
             </Row>
-          </Col>
+          </Col> */}
         </Row>
 
         {!user.merchant_id && permissions.report.merchant.balance.menu && (
@@ -309,13 +308,13 @@ export const Dashboard = () => {
           </Row>
         )}
 
-      {type !== 3 && (
-        <Row style={{ marginTop: 16 }}>
-          <Col span={24}>
-            <TabsTable query={query} />
-          </Col>
-        </Row>
-      )}
+        {type !== 3 && (
+          <Row style={{ marginTop: 16 }}>
+            <Col span={24}>
+              <TabsTable query={query} />
+            </Col>
+          </Row>
+        )}
       </Col>
 
       {isFiltersOpen && (
