@@ -841,7 +841,18 @@ export const SidebarNavigation = () => {
         ),
       ],
       undefined,
-      undefined
+      undefined,
+      {
+        display:
+          permissions?.register?.aggregator.menu ||
+          permissions?.register?.merchant.menu ||
+          permissions?.register?.operator.menu ||
+          permissions?.register?.partner.menu ||
+          permissions?.register?.paybrokers.menu ||
+          permissions?.register?.person.menu
+            ? undefined
+            : "none",
+      }
     ),
     // - MOVIMENTAÇÕES
     getItem(

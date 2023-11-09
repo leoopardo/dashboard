@@ -848,7 +848,8 @@
     "BANK_ALREADY_CREATED": "Esse banco já foi adicionado",
     "date_1_hour": "A diferença máxima deve ser de uma hora",
     "undefined": "Recurso temporariamente fora de ar. Caso persista ao recarregar a página, entre em contato com o suporte.",
-    "password_must_match_/^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9]).{8,}$/_regular_expression": "A senha deve possuir 8 dígitos, letras maiúsculas e minusculas, números e caracteres especiais (!@#$%^&*)"
+    "password_must_match_/^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9]).{8,}$/_regular_expression": "A senha deve possuir 8 dígitos, letras maiúsculas e minusculas, números e caracteres especiais (!@#$%^&*)",
+    "INVALID_USER": "Usuário inválido"
   },
   "logs": {
     "login": "Login",
