@@ -245,7 +245,7 @@ export const NewUserModal = ({
           !user.aggregator_id && (
             <Form.Item
               label={t("input.aggregator")}
-              name="operator_id"
+              name="aggregator_id"
               style={{ margin: 10 }}
               rules={[
                 {

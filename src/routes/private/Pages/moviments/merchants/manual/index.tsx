@@ -317,7 +317,6 @@ export const MerchantManual = () => {
             refetch={() => refetchMerchantMovimentsData()}
             actions={[{}]}
             disableActions
-            removeTotal
             label={[
               "bank",
               "merchant_name",

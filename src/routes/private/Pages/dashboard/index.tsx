@@ -42,7 +42,7 @@ const INITIAL_QUERY = {
 
 export const Dashboard = () => {
   const { t } = useTranslation();
-  const { permissions } = queryClient.getQueryData(
+  const { permissions, type } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
   const user = queryClient.getQueryData("validate") as ValidateInterface;
@@ -309,11 +309,13 @@ export const Dashboard = () => {
           </Row>
         )}
 
+      {type !== 3 && (
         <Row style={{ marginTop: 16 }}>
           <Col span={24}>
             <TabsTable query={query} />
           </Col>
         </Row>
+      )}
       </Col>
 
       {isFiltersOpen && (
