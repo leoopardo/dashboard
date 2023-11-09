@@ -29,6 +29,9 @@ export const PartnerSelect = ({
   const debounceSearch = useDebounce(query.name);
 
   useEffect(() => {
+    if (!queryOptions.partner_id) {
+      setValue(undefined);
+    }
     if (partnersData && !value) {
       const initial = queryOptions.partner_id
         ? partnersData?.items.find(
@@ -60,6 +63,10 @@ export const PartnerSelect = ({
 
   return (
     <Select
+      allowClear
+      onClear={() => {
+        setValue(undefined);
+      }}
       showSearch
       size="large"
       loading={isPartnersFetching}
@@ -79,6 +86,15 @@ export const PartnerSelect = ({
         setQuery((state: any) => ({ ...state, name: value }));
       }}
       onChange={(value) => {
+        if (!value) {
+          setValue(undefined);
+          setQueryFunction((state: any) => ({
+            ...state,
+            partner_id: undefined,
+            group_id: undefined,
+          }));
+          return;
+        }
         setQueryFunction((state: any) => ({
           ...state,
           partner_id: value,
@@ -103,35 +119,5 @@ export const PartnerSelect = ({
       }}
       placeholder={t("table.partner_name")}
     />
-    // <AutoComplete
-    //   size="large"
-    //   options={
-    //     partnersData?.items?.map((item, index) => {
-    //       return { key: index, value: item.id, label: item.name };
-    //     }) ?? []
-    //   }
-    //   disabled={disabled}
-    //   notFoundContent={<Empty />}
-    //   value={value}
-    //   style={{ width: "100%", height: 40 }}
-    //   onChange={(value) => {
-    //     if (!value) {
-    //       delete queryOptions.partner_id;
-    //       setValue("");
-    //       setQueryFunction((state: any) => ({
-    //         ...state,
-    //         partner_id: undefined,
-    //       }));
-    //     }
-    //     setValue(value);
-    //   }}
-    //   onSelect={(value) =>
-    //     setQueryFunction((state: any) => ({ ...state, partner_id: value }))
-    //   }
-    //   onInputKeyDown={(event: any) => {
-    //     handleChange(event);
-    //   }}
-    //   placeholder={t("table.partner_name")}
-    // />
   );
 };

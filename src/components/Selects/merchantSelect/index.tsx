@@ -27,9 +27,12 @@ export const MerchantSelect = ({
   const [value, setValue] = useState<any>(null);
   const debounceSearch = useDebounce(query.name);
   useEffect(() => {
+    if (!queryOptions.merchant_id) {
+      setValue(undefined);
+    }
     if (!value) {
       const initial = merchantsData?.items.find(
-        (merchant) => merchant.id === queryOptions.merchant_id
+        (merchant) => merchant.id === (queryOptions?.merchant_id || queryOptions?.merchant?.id)
       );
       if (initial) {
         setValue(initial?.name);
@@ -38,8 +41,13 @@ export const MerchantSelect = ({
   }, [merchantsData, queryOptions]);
 
   useEffect(() => {
-    setQuery((state) => ({ ...state, partner_id: queryOptions.partner_id }));
-  }, [queryOptions]);
+    setQuery((state) => ({
+      ...state,
+      partner_id: queryOptions.partner_id,
+      aggregator_id: queryOptions.partner_id,
+      operator_id: queryOptions.operator_id,
+    }));
+  }, [debounceSearch, queryOptions]);
 
   useEffect(() => {
     refetcMerchant();
@@ -47,6 +55,7 @@ export const MerchantSelect = ({
 
   return (
     <Select
+      allowClear
       style={{ width: "100%" }}
       showSearch
       size="large"
@@ -62,10 +71,18 @@ export const MerchantSelect = ({
           refetcMerchant();
           return;
         }
-
         setQuery((state: any) => ({ ...state, name: value }));
       }}
       onChange={(value) => {
+        if (!value) {
+          setValue(undefined);
+          setQueryFunction((state: any) => ({
+            ...state,
+            merchant_id: undefined,
+            group_id: undefined,
+          }));
+          return;
+        }
         setQueryFunction((state: any) => ({
           ...state,
           merchant_id: value,

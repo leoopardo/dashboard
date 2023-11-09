@@ -22,7 +22,9 @@ export function useListMerchants(params: MerchantQuery) {
     refetch();
   }, [params]);
 
-  const merchantsData = data;
+  const merchantsData = error
+    ? ({ items: [], limit: 200, page: 1, total: 0 } as MerchantResponse)
+    : data;
   const isMerchantFetching = isFetching;
   const merchantError: any = error;
   const refetcMerchant = refetch;
