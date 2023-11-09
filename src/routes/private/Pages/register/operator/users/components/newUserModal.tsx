@@ -3,7 +3,6 @@
 import { GroupSelect } from "@components/Selects/groupSelect";
 import { CellphoneInput } from "@src/components/Inputs/CellphoneInput";
 import { OperatorSelect } from "@src/components/Selects/operatorSelect";
-import { Toast } from "@src/components/Toast";
 import { queryClient } from "@src/services/queryClient";
 import { useCreateOperatorUser } from "@src/services/register/operator/users/createUser";
 import { useUpdateOperatorUser } from "@src/services/register/operator/users/updateUser";
@@ -34,6 +33,9 @@ interface NewuserModalprops {
   setUpdateBody?: Dispatch<SetStateAction<NewUserInterface | null>>;
   setIsValidateTokenOpen?: Dispatch<SetStateAction<boolean>>;
   action?: "create" | "update";
+  fuctionMutate: () => void;
+  body: NewUserInterface;
+  setBody: Dispatch<SetStateAction<NewUserInterface>>;
 }
 
 export interface NewUserInterface {
@@ -57,6 +59,9 @@ export const NewUserModal = ({
   setUpdateBody,
   setIsValidateTokenOpen,
   action,
+  body,
+  setBody,
+  fuctionMutate,
 }: NewuserModalprops) => {
   const { permissions } = queryClient.getQueryData(
     "validate"
@@ -67,18 +72,10 @@ export const NewUserModal = ({
   const formRef = React.useRef<FormInstance>(null);
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [, setCantSubmit] = useState<boolean>(true);
-  const [body, setBody] = useState<NewUserInterface>({
-    name: "",
-    username: "",
-    group_id: 0,
-    status: true,
-    type: 2,
-    operator_id: currentUser?.operator_id,
-    cellphone: currentUser?.cellphone,
-  });
 
-  const { mutate, error, isLoading, isSuccess } = useCreateOperatorUser(body);
   const { updateLoading } = useUpdateOperatorUser(body);
+
+  const { isLoading, isSuccess } = useCreateOperatorUser(body);
 
   function handleChangeUserBody(event: any) {
     setBody((state) => ({ ...state, [event.target.name]: event.target.value }));
@@ -98,7 +95,7 @@ export const NewUserModal = ({
       setOpen(false);
       return;
     }
-    mutate();
+    fuctionMutate();
     setOpen(false);
   }
 
@@ -112,7 +109,7 @@ export const NewUserModal = ({
         username: currentUser?.username,
         operator_id: currentUser?.operator_id,
         cellphone: currentUser?.cellphone,
-        email: currentUser?.email
+        email: currentUser?.email,
       }));
   }, [currentUser]);
 
@@ -384,12 +381,6 @@ export const NewUserModal = ({
           </button>
         </Form.Item>
       </Form>
-      <Toast
-        actionSuccess={t("messages.created")}
-        actionError={t("messages.create")}
-        error={error}
-        success={isSuccess}
-      />
     </Drawer>
   );
 };
