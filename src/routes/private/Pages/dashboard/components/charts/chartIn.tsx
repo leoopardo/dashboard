@@ -5,7 +5,7 @@ import { useTheme } from "@src/contexts/ThemeContext";
 import { useGetTotalGeneratedDeposits } from "@src/services/consult/deposits/generatedDeposits/getTotal";
 import { generatedDepositTotalQuery } from "@src/services/types/consult/deposits/generatedDeposits.interface";
 import { Button, Card, Col, Empty, Row, Spin, Typography } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Doughnut } from "react-chartjs-2";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
@@ -18,18 +18,21 @@ export const ChartIn = ({ query }: ChartInInterface) => {
   const { t } = useTranslation();
   const [oneByOne, setOneByOne] = useState<boolean>(false);
   const isMobile = useMediaQuery({ maxWidth: "750px" });
-  const [formatedQuery] =
-    useState<generatedDepositTotalQuery>({
-      ...query,
-      start_date: undefined,
-      end_date: undefined,
-      initial_date: query?.start_date,
-      final_date: query?.end_date,
-    });
+  const [formatedQuery] = useState<generatedDepositTotalQuery>({
+    ...query,
+    start_date: undefined,
+    end_date: undefined,
+    initial_date: query?.start_date,
+    final_date: query?.end_date,
+  });
 
-  const { depositsTotal, isDepositsTotalFetching } =
+  const { depositsTotal, isDepositsTotalFetching, refetchDepositsTotal } =
     useGetTotalGeneratedDeposits(formatedQuery);
   const { theme } = useTheme();
+
+  useEffect(() => {
+    refetchDepositsTotal();
+  }, [query]);
 
   const data = {
     labels: [
@@ -250,7 +253,7 @@ export const ChartIn = ({ query }: ChartInInterface) => {
                             },
                           },
                         },
-                        cutout: "80%"
+                        cutout: "80%",
                       }}
                     />
                     <Typography.Title
@@ -291,7 +294,7 @@ export const ChartIn = ({ query }: ChartInInterface) => {
                               },
                             },
                           },
-                          cutout: "80%"
+                          cutout: "80%",
                         }}
                       />
                     </Col>
@@ -315,7 +318,8 @@ export const ChartIn = ({ query }: ChartInInterface) => {
                                 color: theme === "dark" ? "#fff" : "#000",
                               },
                             },
-                          }, cutout: "80%"
+                          },
+                          cutout: "80%",
                         }}
                       />
                     </Col>
@@ -339,7 +343,8 @@ export const ChartIn = ({ query }: ChartInInterface) => {
                                 color: theme === "dark" ? "#fff" : "#000",
                               },
                             },
-                          }, cutout: "80%"
+                          },
+                          cutout: "80%",
                         }}
                       />
                     </Col>
@@ -363,7 +368,8 @@ export const ChartIn = ({ query }: ChartInInterface) => {
                                 color: theme === "dark" ? "#fff" : "#000",
                               },
                             },
-                          }, cutout: "80%"
+                          },
+                          cutout: "80%",
                         }}
                       />
                     </Col>

@@ -343,6 +343,7 @@ export const Dashboard = () => {
           endDateKeyName="end_date"
           initialQuery={INITIAL_QUERY}
           haveInitialDate
+          maxRange
         />
       )}
       <TuorComponent

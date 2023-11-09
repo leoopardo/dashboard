@@ -1,10 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { PieChartOutlined, SmallDashOutlined } from "@ant-design/icons";
 import { useTheme } from "@src/contexts/ThemeContext";
 import { useGetTotalGeneratedWithdrawals } from "@src/services/consult/withdrawals/generatedWithdrawals/getTotal";
 import { generatedWithdrawalsRowsQuery } from "@src/services/types/consult/withdrawals/generatedWithdrawals.interface";
 import { Button, Card, Col, Empty, Row, Spin, Typography } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Doughnut } from "react-chartjs-2";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
@@ -27,10 +28,13 @@ export const ChartOut = ({ query }: ChartInInterface) => {
     });
 
 
-  const { WithdrawalsTotal, isWithdrawalsTotalFetching } =
+  const { WithdrawalsTotal, isWithdrawalsTotalFetching, refetchWithdrawalsTotal } =
     useGetTotalGeneratedWithdrawals(formatedQuery);
   const { theme } = useTheme();
 
+  useEffect(() => {
+    refetchWithdrawalsTotal();
+  }, [query]);
 
   const data = {
     labels: [
