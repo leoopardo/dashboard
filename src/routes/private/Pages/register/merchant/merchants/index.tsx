@@ -320,7 +320,7 @@ export const MerchantView = () => {
             setSelectedRows={setSelectedItems}
             selectedKeys={selectedItems}
             actions={[
-              {
+              permissions.register.merchant.merchant.merchant_list && {
                 label: "details",
                 icon: <EyeFilled style={{ fontSize: "20px" }} />,
                 onClick: (item) => {
@@ -335,7 +335,15 @@ export const MerchantView = () => {
                   navigate("update", { state: item });
                 },
               },
-              {
+              (permissions.register.merchant.merchant.merchant_config_banks ||
+                permissions.register.merchant.merchant
+                  .merchant_config_credentials ||
+                permissions.register.merchant.merchant.merchant_config_fees ||
+                permissions.register.merchant.merchant.merchant_config_ips ||
+                permissions.register.merchant.merchant
+                  .merchant_config_merchant ||
+                permissions.register.merchant.merchant
+                  .merchant_config_paybrokers) && {
                 label: "configs",
                 icon: <ToolOutlined style={{ fontSize: "20px" }} />,
                 onClick: () => setIsConfigOpen(true),

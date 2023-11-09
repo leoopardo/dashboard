@@ -22,7 +22,7 @@ export const MerchantSelect = ({
     limit: 200,
     partner_id: queryOptions?.partner_id,
   });
-  const { merchantsData, refetcMerchant, merchantError } =
+  const { merchantsData, refetcMerchant } =
     useListMerchants(query);
   const [value, setValue] = useState<any>(null);
   const debounceSearch = useDebounce(query.name);
@@ -53,7 +53,6 @@ export const MerchantSelect = ({
   return (
     <AutoComplete
       size="large"
-      disabled={merchantError}
       options={
         merchantsData?.items?.map((item, index) => {
           return { key: index, value: item.id, label: item.name };

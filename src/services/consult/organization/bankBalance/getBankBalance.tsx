@@ -10,7 +10,7 @@ export function useGetBankBalance({ bank }: bankBalanceInterface) {
   const { data, isFetching, error, refetch } = useQuery<
   BankBalanceInterface | null | undefined
   >(bank ?? "bankBalance", async () => {
-    const response = await api.get(`bank/balance/values/${bank}`, {});
+    const response = await api.get(`bank/balance/values${bank ? `/${bank}`: ""}`, {});
 
     return response.data;
   });
