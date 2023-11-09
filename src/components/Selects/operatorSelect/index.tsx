@@ -52,6 +52,8 @@ export const OperatorSelect = ({
   useEffect(() => {
     setQuery((state) => ({
       ...state,
+      aggregator_id:
+        queryOptions?.aggregator_id ?? queryOptions?.aggregator?.id,
     }));
   }, [debounceSearch, queryOptions]);
 
