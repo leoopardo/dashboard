@@ -7,6 +7,7 @@ import { ValidateInterface } from "../types/validate.interface";
 import secureLocalStorage from "react-secure-storage";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
+import { queryClient } from "../queryClient";
 let disabledNotification = false;
 
 export function useValidate(rememberMe?: boolean, token?: string) {
@@ -51,12 +52,12 @@ export function useValidate(rememberMe?: boolean, token?: string) {
     !disabledNotification
   ) {
     toast.error(t("error.disabled_entity"));
+
+    disabledNotification = true;
+   
     secureLocalStorage.removeItem("token");
     sessionStorage.removeItem("token");
-    disabledNotification = true;
-    setTimeout(() => {
-      disabledNotification = false;
-    }, 3000);
+    queryClient.cancelMutations();
   }
   const responseValidate = data;
   const isValidateFetching = isFetching;
