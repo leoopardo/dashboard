@@ -55,61 +55,60 @@ export const ChartIn = ({ query }: ChartInInterface) => {
               trigger: "item",
             },
             legend: {
-              top: "5%",
-              left: "center",
-              textStyle: {
-                color: "#a0a0a0",
-              },
+              orient: "vertical",
+              left: "right",
+              show: false,
             },
             series: [
               {
                 name: t("table.deposit_conversion"),
                 type: "pie",
-                radius: ["40%", "70%"],
-                top: "8%",
-                avoidLabelOverlap: false,
-                itemStyle: {
-                  borderRadius: 10,
-                  borderColor: "#fff",
-                  borderWidth: 2,
-                },
-                label: {
-                  show: false,
-                  position: "center",
-                },
-                emphasis: {
-                  label: {
-                    show: false,
-                    fontSize: 40,
-                    fontWeight: "bold",
-                  },
-                },
-                labelLine: {
-                  show: false,
-                },
+                radius: "50%",
                 data: [
-                  { value: depositsTotal?.paid_value, name: t("table.paid") },
                   {
-                    value: depositsTotal?.refund_value,
-                    name: t("table.refunded"),
+                    value: depositsTotal?.paid_value ?? 0,
+                    name: `${t("table.paid")}: ${
+                      depositsTotal?.paid_total ?? 0
+                    }`,
                   },
                   {
-                    value: depositsTotal?.canceled_value,
-                    name: t("table.canceled"),
+                    value: depositsTotal?.refund_value ?? 0,
+                    name: `${t("table.refunded")}: ${
+                      depositsTotal?.refund_total ?? 0
+                    }`,
                   },
                   {
-                    value: depositsTotal?.expired_value,
-                    name: t("table.expired"),
+                    value: depositsTotal?.canceled_value ?? 0,
+                    name: `${t("table.canceled")} ${
+                      depositsTotal?.canceled_total ?? 0
+                    }`,
                   },
                   {
-                    value: depositsTotal?.waiting_value,
-                    name: t("table.waiting"),
+                    value: depositsTotal?.expired_value ?? 0,
+                    name: `${t("table.expired")}: ${
+                      depositsTotal?.expired_total ?? 0
+                    }`,
                   },
                   {
-                    value: depositsTotal?.awaiting_refund_value,
-                    name: t("table.waiting_refund"),
+                    value: depositsTotal?.waiting_value ?? 0,
+                    name: `${t("table.waiting")}: ${
+                      depositsTotal?.waiting_total ?? 0
+                    }`,
+                  },
+                  {
+                    value: depositsTotal?.awaiting_refund_value ?? 0,
+                    name: `${t("table.waiting_refund")}: ${
+                      depositsTotal?.awaiting_refund_total ?? 0
+                    }`,
                   },
                 ],
+                emphasis: {
+                  itemStyle: {
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowColor: "rgba(0, 0, 0, 0.5)",
+                  },
+                },
               },
             ],
           }}

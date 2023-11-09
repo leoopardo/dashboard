@@ -57,68 +57,66 @@ export const ChartOut = ({ query }: ChartInInterface) => {
               trigger: "item",
             },
             legend: {
-              top: "5%",
-              left: "center",
-              textStyle: {
-                color: "#a0a0a0",
-              },
+              orient: "vertical",
+              left: "right",
+              show: false,
             },
             series: [
               {
-                name: t("table.withdraw_conversion"),
+                name: t("table.deposit_conversion"),
                 type: "pie",
-                radius: ["40%", "70%"],
-                top: "8%",
-                avoidLabelOverlap: false,
-                itemStyle: {
-                  borderRadius: 10,
-                  borderColor: "#fff",
-                  borderWidth: 2,
-                },
-                label: {
-                  show: false,
-                  position: "center",
-                },
-                emphasis: {
-                  label: {
-                    show: false,
-                    fontSize: 40,
-                    fontWeight: "bold",
-                  },
-                },
-                labelLine: {
-                  show: false,
-                },
+                radius: "50%",
                 data: [
                   {
-                    value: WithdrawalsTotal?.paid_value,
-                    name: t("table.paid"),
+                    value: WithdrawalsTotal?.paid_value ?? 0,
+                    name: `${t("table.paid")}: ${
+                      WithdrawalsTotal?.paid_total ?? 0
+                    }`,
                   },
                   {
-                    value: WithdrawalsTotal?.withdraw_refunded_value,
-                    name: t("table.refunded"),
+                    value: WithdrawalsTotal?.withdraw_refunded_value ?? 0,
+                    name: `${t("table.refunded")}: ${
+                      WithdrawalsTotal?.withdraw_refunded_total ?? 0
+                    }`,
                   },
                   {
-                    value: WithdrawalsTotal?.canceled_value,
-                    name: t("table.canceled"),
+                    value: WithdrawalsTotal?.canceled_value ?? 0,
+                    name: `${t("table.canceled")}: ${
+                      WithdrawalsTotal?.canceled_total ?? 0
+                    }`,
                   },
                   {
-                    value: WithdrawalsTotal?.processing_value,
-                    name: t("table.processing"),
+                    value: WithdrawalsTotal?.processing_value ?? 0,
+                    name: `${t("table.processing")}: ${
+                      WithdrawalsTotal?.processing_total ?? 0
+                    }`,
                   },
                   {
-                    value: WithdrawalsTotal?.pending_value,
-                    name: t("table.waiting"),
+                    value: WithdrawalsTotal?.pending_value ?? 0,
+                    name: `${t("table.wainting")}: ${
+                      WithdrawalsTotal?.pending_total ?? 0
+                    }`,
                   },
                   {
-                    value: WithdrawalsTotal?.in_analysis_value,
-                    name: t("table.in_analysis"),
+                    value: WithdrawalsTotal?.in_analysis_value ?? 0,
+                    name: `${t("table.in_analysis")}: ${
+                      WithdrawalsTotal?.in_analysis_total ?? 0
+                    }`,
                   },
                   {
-                    value: WithdrawalsTotal?.created_value,
-                    name: t("table.created"),
+                    value: WithdrawalsTotal?.created_value ?? 0,
+                    name: `${t("table.created")}: ${
+                      WithdrawalsTotal?.created_total ?? 0
+                    }`,
                   },
                 ],
+                emphasis: {
+                  itemStyle: {
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowColor: "rgba(0, 0, 0, 0.5)",
+                  },
+                },
               },
             ],
           }}
