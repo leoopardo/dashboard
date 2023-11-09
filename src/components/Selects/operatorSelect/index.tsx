@@ -28,26 +28,18 @@ export const OperatorSelect = ({
   const debounceSearch = useDebounce(query.name);
 
   useEffect(() => {
-    if (operatorsData && !value) {
+    if (!queryOptions.operator_id) {
+      setValue(undefined);
+    }
+    if (!value) {
       const initial = operatorsData?.items.find(
-        (operator) => operator.id === queryOptions?.operator?.id
+        (operator) => operator.id === (queryOptions?.operator?.id ||queryOptions?.operator_id )
       );
       if (initial) {
         setValue(initial?.name);
       }
     }
   }, [queryOptions, operatorsData]);
-
-  useEffect(() => {
-    if (operatorsData) {
-      const initial = operatorsData?.items.find(
-        (operator) => operator.id === queryOptions?.operator?.id
-      );
-      if (initial) {
-        setValue(initial?.name);
-      }
-    }
-  }, [queryOptions]);
 
   useEffect(() => {
     setQuery((state) => ({
@@ -63,6 +55,7 @@ export const OperatorSelect = ({
 
   return (
     <Select
+      allowClear
       showSearch
       size="large"
       loading={isOperatorsFetching}
@@ -81,6 +74,15 @@ export const OperatorSelect = ({
         setQuery((state: any) => ({ ...state, name: value }));
       }}
       onChange={(value) => {
+        if (!value) {
+          setValue(undefined);
+          setQueryFunction((state: any) => ({
+            ...state,
+            operator_id: undefined,
+            group_id: undefined,
+          }));
+          return;
+        }
         setQueryFunction((state: any) => ({
           ...state,
           operator_id: value,
@@ -103,6 +105,5 @@ export const OperatorSelect = ({
       }}
       placeholder={t("input.operator")}
     />
-   
   );
 };

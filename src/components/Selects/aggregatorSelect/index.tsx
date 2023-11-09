@@ -28,6 +28,9 @@ export const AggregatorSelect = ({
   const debounceSearch = useDebounce(query.name);
 
   useEffect(() => {
+    if (!aggregatorId) {
+      setValue(undefined);
+    }
     if (aggregatorsData && !value) {
       const initial = aggregatorsData?.items.find(
         (aggregator) => aggregator.id === aggregatorId
@@ -55,6 +58,7 @@ export const AggregatorSelect = ({
 
   return (
     <Select
+      allowClear
       showSearch
       size="large"
       loading={isAggregatorsFetching}
@@ -73,6 +77,15 @@ export const AggregatorSelect = ({
         setQuery((state: any) => ({ ...state, name: value }));
       }}
       onChange={(value) => {
+        if (!value) {
+          setValue(undefined);
+          setQueryFunction((state: any) => ({
+            ...state,
+            aggregator_id: undefined,
+            group_id: undefined,
+          }));
+          return;
+        }
         setQueryFunction((state: any) => ({
           ...state,
           aggregator_id: value,
