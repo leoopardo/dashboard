@@ -171,7 +171,13 @@ export const MerchantView = () => {
         container
         style={{ display: "flex", alignItems: "center" }}
         spacing={1}
-        mt={!isMobile ? "-80px" : undefined}
+        mt={
+          !isMobile &&
+          MerchantTotalsData &&
+          MerchantTotalsData?.registered_merchant_totals > 0
+            ? "-80px"
+            : undefined
+        }
       >
         <Grid item xs={12} md={4} lg={2}>
           <Button

@@ -17,73 +17,78 @@ export const TotalizersCards = (props: {
   const isMobile = useMediaQuery({ maxWidth: "950px" });
   return (
     <Grid container spacing={1} justifyContent={"center"} mb={2}>
-      <Grid
-        item
-        xs={12}
-        md={2}
-        style={{
-          marginTop: "-90px",
-          marginBottom: isMobile ? "-60px" : undefined,
-        }}
-      >
-        <ReactECharts
-          option={{
-            tooltip: {
-              trigger: "item",
-            },
-            legend: {
-              selectedMode: false,
-              show: false,
-            },
-            color: ["#91cc75", "#fac858", "#ea7ccc"],
+      {props?.data && props?.data?.active_merchant_totals > 0 && (
+        <Grid
+          item
+          xs={12}
+          md={2}
+          style={{
+            marginTop: "-90px",
+            marginBottom: isMobile ? "-60px" : undefined,
+          }}
+        >
+          <ReactECharts
+            option={{
+              tooltip: {
+                trigger: "item",
+              },
+              legend: {
+                selectedMode: false,
+                show: false,
+              },
+              color: ["#91cc75", "#fac858", "#ea7ccc"],
 
-            series: [
-              {
-                name: t("menus.merchants"),
-                type: "pie",
-                radius: ["40%", "70%"],
-                center: ["50%", "70%"],
-                // adjust the start angle
-                startAngle: 180,
-                label: {
-                  show: false,
-                },
-                data: [ 
-                  {
-                    value: props?.data?.active_merchant_totals,
-                    name: t("table.active"),
+              series: [
+                {
+                  name: t("menus.merchants"),
+                  type: "pie",
+                  radius: ["40%", "70%"],
+                  center: ["50%", "70%"],
+                  // adjust the start angle
+                  startAngle: 180,
+                  label: {
+                    show: false,
                   },
-                  {
-                    value: props?.data?.inactive_merchant_totals,
-                    name: t("table.inactive"),
-                  },{
-                    value: props?.data?.onboarding_merchant_totals,
-                    name: "Onboarding",
-                  },
-                  {
-                    // make an record to fill the bottom 50%
-                    value:
-                      (props?.data?.active_merchant_totals || 0) +
-                      (props?.data?.inactive_merchant_totals || 0) + (props?.data?.onboarding_merchant_totals || 0),
-                    itemStyle: {
-                      top: "-20%",
-                      color: "none",
-                      decal: {
-                        symbol: "none",
+                  data: [
+                    {
+                      value: props?.data?.active_merchant_totals,
+                      name: t("table.active"),
+                    },
+                    {
+                      value: props?.data?.inactive_merchant_totals,
+                      name: t("table.inactive"),
+                    },
+                    {
+                      value: props?.data?.onboarding_merchant_totals,
+                      name: "Onboarding",
+                    },
+                    {
+                      // make an record to fill the bottom 50%
+                      value:
+                        (props?.data?.active_merchant_totals || 0) +
+                        (props?.data?.inactive_merchant_totals || 0) +
+                        (props?.data?.onboarding_merchant_totals || 0),
+                      itemStyle: {
+                        top: "-20%",
+                        color: "none",
+                        decal: {
+                          symbol: "none",
+                        },
+                      },
+                      label: {
+                        show: false,
                       },
                     },
-                    label: {
-                      show: false,
-                    },
-                  },
-                ],
-              },
-            ],
-          }}
-          opts={{ renderer: "svg" }}
-          lazyUpdate
-        />
-      </Grid>
+                  ],
+                },
+              ],
+            }}
+            opts={{ renderer: "svg" }}
+            lazyUpdate
+          />
+        </Grid>
+      )}
+
       <Grid item xs={12} md={2}>
         <Card bordered={false}>
           <Statistic

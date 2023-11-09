@@ -22,9 +22,12 @@ export const TotalFinancial = ({ query, chart }: TableProps) => {
                   type: "shadow",
                 },
               },
-              legend: {textStyle: {
-                color: "#a0a0a0",
-              },},textStyle: {
+              legend: {
+                textStyle: {
+                  color: "#a0a0a0",
+                },
+              },
+              textStyle: {
                 color: "#a0a0a0",
               },
               grid: {
@@ -39,14 +42,16 @@ export const TotalFinancial = ({ query, chart }: TableProps) => {
               },
               yAxis: {
                 type: "category",
-                data: RankingData?.sort((a, b) => a.total > b.total ? 1 : -1)?.map((merchant) => merchant?.name ?? "-"),
+                data: RankingData?.sort((a, b) =>
+                  a.total > b.total ? 1 : -1
+                )?.map((merchant) => merchant?.name ?? "-"),
               },
               series: [
                 {
                   type: "bar",
-                  data: RankingData?.map(
-                    (merchant) => merchant?.total ?? 0
-                  ),
+                  data: RankingData?.sort((a, b) =>
+                    a.total > b.total ? 1 : -1
+                  )?.map((merchant) => merchant?.total ?? 0),
                   tooltip: {
                     valueFormatter: function (value: number) {
                       return new Intl.NumberFormat("pt-BR", {
@@ -82,7 +87,7 @@ export const TotalFinancial = ({ query, chart }: TableProps) => {
       }}
       actions={[]}
       data={RankingData}
-      items={RankingData?.sort((a, b) => a.total > b.total ? -1 : 1)}
+      items={RankingData?.sort((a, b) => (a.total > b.total ? -1 : 1))}
       error={RankingError}
       columns={[
         { name: "name", type: "text" },
