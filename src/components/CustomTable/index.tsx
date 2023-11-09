@@ -22,7 +22,7 @@ import {
   Tooltip,
   Typography,
 } from "antd";
-import type { ColumnsType } from "antd/es/table";
+import type { ColumnsType, TableProps as TablePropsAntD } from "antd/es/table";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { toast } from "react-hot-toast";
@@ -92,8 +92,9 @@ export const CustomTable = (props: TableProps) => {
   const { t } = useTranslation();
   const isMobile = useMediaQuery({ maxWidth: "900px" });
   const [columns, setColumns] = useState<ColumnsType<ColumnInterface>>([]);
-  const [sortOrder] = useState(false);
   const [actions, setActions] = useState<any>([]);
+  const [sortOrder] = useState(false);
+  const [sorterObj, setSorterObj] = useState<any | undefined>()
   const { bankListData } = useListBanks({
     limit: 200,
     page: 1,
@@ -1031,6 +1032,23 @@ export const CustomTable = (props: TableProps) => {
     );
   }, [props.columns]);
 
+  const onChange: TablePropsAntD<any>["onChange"] = (page, _filter, sorter) => {
+    setSorterObj(sorter)
+    console.log('sorter', sorter)
+    if((page.total ?? 0) > (page?.pageSize ?? 0)) {
+      return  props.setQuery((state: any) => ({ ...state, page: page?.current }));
+    }
+    return  props.setQuery((state: any) => ({ ...state, page: 1 }));
+ 
+  }
+
+  useEffect(() => {
+    if(sorterObj?.order && sorterObj?.columnKey) {
+      props.setQuery((state: any) => ({ ...state, page: 1 }));
+    }
+  }, [sorterObj?.order, sorterObj?.columnKey])
+
+
   return (
     <>
       {!isMobile ? (
@@ -1039,6 +1057,7 @@ export const CustomTable = (props: TableProps) => {
             <Table
               size="middle"
               tableLayout="auto"
+              onChange={onChange}
               locale={{
                 emptyText: props.error ? (
                   <div style={{ display: "flex", justifyContent: "center" }}>
@@ -1083,9 +1102,9 @@ export const CustomTable = (props: TableProps) => {
                     : props?.data?.limit * props?.data?.page + 1
                   : props?.data?.total,
 
-                onChange: (page) => {
+                /* onChange: (page) => {
                   props.setQuery((state: any) => ({ ...state, page }));
-                },
+                }, */
                 pageSizeOptions: [10, 25, 50, 100],
                 defaultPageSize: 25,
                 onShowSizeChange: (_current, size) =>
