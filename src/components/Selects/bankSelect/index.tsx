@@ -47,11 +47,11 @@ export const BanksSelect = ({
         bankListData?.itens?.map((item, index) => {
           return {
             key: index,
-            value: item.label_name,
+            value: item.bank,
             label: (
               <>
                 <Avatar src={item.icon_url} style={{ marginRight: 10 }} />
-                {item.label_name}
+                {item?.label_name}
               </>
             ),
           };

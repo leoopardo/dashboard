@@ -840,7 +840,8 @@
     "password_or_username": "Invalid username or password",
     "BANK_ALREADY_CREATED": "Bank already created",
     "date_1_hour": "The max range is one hour",
-    "undefined": "Temporary service interruption. If the issue persists after reloading the page, please contact support."
+    "undefined": "Temporary service interruption. If the issue persists after reloading the page, please contact support.",
+    "INVALID_USER": "Invalid username"
   },
   "logs": {
     "login": "Login",
