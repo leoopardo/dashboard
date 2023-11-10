@@ -26,15 +26,18 @@ export const TotalizersCards = (props: TotalizersInterface) => {
     <Row
       gutter={[8, 8]}
       justify="center"
-      align="middle"
-      style={{ marginBottom: 8 }}
+      align="stretch"
+      style={{ height: "100%" }}
     >
       {(props.query.status === "PAID" || !props.query.status) && (
         <Col
           style={{ maxWidth: "220px" }}
           xs={{ span: isMobile ? 11 : undefined }}
         >
-          <Card bordered={false}>
+          <Card
+            bordered={false}
+            style={{ height: isMobile ? "100px" : "120px" }}
+          >
             <Statistic
               loading={props.loading}
               title={
@@ -73,7 +76,10 @@ export const TotalizersCards = (props: TotalizersInterface) => {
           }}
           xs={{ span: isMobile ? 11 : undefined }}
         >
-          <Card bordered={false}>
+          <Card
+            bordered={false}
+            style={{ height: isMobile ? "100px" : "120px" }}
+          >
             <Statistic
               loading={props.loading}
               title={
@@ -108,7 +114,10 @@ export const TotalizersCards = (props: TotalizersInterface) => {
           style={{ maxWidth: "220px" }}
           xs={{ span: isMobile ? 11 : undefined }}
         >
-          <Card bordered={false}>
+          <Card
+            bordered={false}
+            style={{ height: isMobile ? "100px" : "120px" }}
+          >
             <Statistic
               loading={props.loading}
               title={
@@ -143,7 +152,10 @@ export const TotalizersCards = (props: TotalizersInterface) => {
           style={{ maxWidth: "220px" }}
           xs={{ span: isMobile ? 11 : undefined }}
         >
-          <Card bordered={false}>
+          <Card
+            bordered={false}
+            style={{ height: isMobile ? "100px" : "120px" }}
+          >
             <Statistic
               loading={props.loading}
               title={
@@ -177,7 +189,10 @@ export const TotalizersCards = (props: TotalizersInterface) => {
           style={{ maxWidth: "220px" }}
           xs={{ span: isMobile ? 11 : undefined }}
         >
-          <Card bordered={false}>
+          <Card
+            bordered={false}
+            style={{ height: isMobile ? "100px" : "120px" }}
+          >
             <Statistic
               loading={props.loading}
               title={
@@ -212,7 +227,10 @@ export const TotalizersCards = (props: TotalizersInterface) => {
           style={{ maxWidth: "220px" }}
           xs={{ span: isMobile ? 11 : undefined }}
         >
-          <Card bordered={false}>
+          <Card
+            bordered={false}
+            style={{ height: isMobile ? "100px" : "120px" }}
+          >
             <Statistic
               loading={props.loading}
               title={
@@ -246,10 +264,22 @@ export const TotalizersCards = (props: TotalizersInterface) => {
         style={{ maxWidth: "220px" }}
         xs={{ span: isMobile ? 11 : undefined }}
       >
-        <Card bordered={false}>
+        <Card bordered={false} style={{ height: isMobile ? "100px" : "120px" }}>
           <Statistic
             loading={props.loading}
-            title={`Total: ${props?.data?.transactions_total || 0}`}
+            title={
+              <>
+                {`Total: ${props?.data?.transactions_total || 0}`}{" "}
+                <Button
+                  style={{ marginTop: "-10px" }}
+                  loading={props.loading}
+                  type="link"
+                  onClick={props.fetchData}
+                >
+                  {!props.loading && <ReloadOutlined />}
+                </Button>
+              </>
+            }
             value={new Intl.NumberFormat("pt-BR", {
               style: "currency",
               currency: "BRL",
@@ -262,20 +292,6 @@ export const TotalizersCards = (props: TotalizersInterface) => {
             }}
           />
         </Card>
-      </Col>
-      <Col
-        style={{ maxWidth: "200px", display: "flex", justifyContent: "center" }}
-        xs={{ span: isMobile ? 11 : undefined }}
-      >
-        <Button
-          shape="circle"
-          style={{ width: "50px", height: "50px" }}
-          loading={props.loading}
-          type="dashed"
-          onClick={props.fetchData}
-        >
-          {!props.loading && <ReloadOutlined />}
-        </Button>
       </Col>
     </Row>
   );

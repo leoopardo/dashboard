@@ -1128,6 +1128,7 @@ export const SidebarNavigation = () => {
               : "none",
           }
         ),
+        // TODO arrumar permissão
         getItem(
           "merchant_transfers",
           null,
