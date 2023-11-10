@@ -13,6 +13,8 @@ export function useUpdateMerchantConfig(body?: IMerchantUpdateConfig | null) {
       {}
     );
     await queryClient.refetchQueries({ queryKey: ["MerchantConfig"] });
+    await queryClient.refetchQueries({ queryKey: ["MerchantsPerBankTotals"] });
+
     return response.data;
   });
 

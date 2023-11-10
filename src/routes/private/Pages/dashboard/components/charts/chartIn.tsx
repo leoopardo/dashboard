@@ -68,7 +68,14 @@ export const ChartIn = ({ query }: ChartInInterface) => {
                 name: t("table.deposit_conversion"),
                 type: "pie",
                 radius: "50%",
-               
+                tooltip: {
+                  valueFormatter: function (value: number) {
+                    return new Intl.NumberFormat("pt-BR", {
+                      style: "currency",
+                      currency: "BRL",
+                    }).format(Number(value) || 0);
+                  },
+                },
                 data: [
                   {
                     value: depositsTotal?.paid_value ?? 0,

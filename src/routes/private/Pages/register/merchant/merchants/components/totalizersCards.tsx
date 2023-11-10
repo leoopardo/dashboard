@@ -16,7 +16,13 @@ export const TotalizersCards = (props: {
 }) => {
   const isMobile = useMediaQuery({ maxWidth: "950px" });
   return (
-    <Grid container spacing={1} justifyContent={"center"} mb={2}>
+    <Grid
+      container
+      spacing={1}
+      justifyContent={"center"}
+      mb={2}
+      style={{ overflow: "hidden" }}
+    >
       {props?.data && props?.data?.active_merchant_totals > 0 && (
         <Grid
           item
@@ -90,7 +96,7 @@ export const TotalizersCards = (props: {
       )}
 
       <Grid item xs={12} md={2}>
-        <Card bordered={false}>
+        <Card bordered={false} style={{ minHeight: "133px" }}>
           <Statistic
             loading={props?.loading}
             title={t("titles.total_registred", {
@@ -104,7 +110,7 @@ export const TotalizersCards = (props: {
         </Card>
       </Grid>
       <Grid item xs={12} md={2}>
-        <Card bordered={false}>
+        <Card bordered={false} style={{ minHeight: "133px" }}>
           <Statistic
             loading={props?.loading}
             title={t("titles.total_onboarding", {
@@ -121,7 +127,7 @@ export const TotalizersCards = (props: {
         </Card>
       </Grid>
       <Grid item xs={12} md={2}>
-        <Card bordered={false}>
+        <Card bordered={false} style={{ minHeight: "133px" }}>
           <Statistic
             loading={props?.loading}
             title={t("titles.total_registred_active", {
@@ -138,7 +144,7 @@ export const TotalizersCards = (props: {
         </Card>
       </Grid>
       <Grid item xs={12} md={2}>
-        <Card bordered={false}>
+        <Card bordered={false} style={{ minHeight: "133px" }}>
           <Statistic
             loading={props?.loading}
             title={t("titles.total_registred_inactive", {
@@ -155,10 +161,10 @@ export const TotalizersCards = (props: {
         </Card>
       </Grid>
       <Grid item xs={12} md={2}>
-        <Card bordered={false}>
+        <Card bordered={false} style={{ minHeight: "133px" }}>
           <Statistic
             loading={props?.loading}
-            title={t("titles.total", {
+            title={t("titles.total_expired", {
               entity: t("menus.merchants")?.toLowerCase(),
             })}
             style={{ maxWidth: 200, minHeight: 75 }}

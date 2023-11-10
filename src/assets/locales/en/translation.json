@@ -157,7 +157,12 @@
     "total_registred_active": "Total {{entity}} registred active",
     "total_registred_inactive": "Total {{entity}} registred inactive",
     "total": "Total {{entity}}",
-    "operation_approve": "Approve Operations"
+    "operation_approve": "Approve Operations",
+    "total_expired": "Total expired",
+    "deposits_bank": "Deposit banks",
+    "withdraw_bank": "Withdrawal banks",
+    "fastpix_bank": "FastPix banks",
+    "merchants_per_bank": "Total merchants per bank"
   },
 
   "messages": {
@@ -719,7 +724,7 @@
     "refunded_withdraw": "Refunded",
     "debit_merchant_id": "ID Merchant from",
     "credit_merchant_id": "ID Merchant to",
-    "can_be_deleted_only_by_organization": "Organization can delete",
+    "can_be_deleted_only_by_organization": "Can be removed only by organizations?",
     "file_url": "File",
     "previous_data": "Prior to the change",
     "data_later": "After the change",
@@ -816,6 +821,7 @@
     "main_user_name": "Main user name",
     "main_user_username": "Main user username",
     "row": "Row",
+    "pix_type": "Tipo de pix",
     "standard": "Standard"
   },
   "actions": {

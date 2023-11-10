@@ -27,7 +27,7 @@ import { useGetMerchantsTotals } from "@src/services/register/merchant/merchant/
 import { useCreateMerchantReports } from "@src/services/reports/register/merchant/createMerchantReports";
 import { useGetMerchantReportFields } from "@src/services/reports/register/merchant/getMerchantReportFields";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Input, Tooltip } from "antd";
+import { Button, Input, Tabs, Tooltip } from "antd";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
@@ -36,6 +36,7 @@ import { ViewMerchantModal } from "./components/ViewMerchantModal";
 import { TotalizersCards } from "./components/totalizersCards";
 import { UpdateBanks } from "./components/updatebanks";
 import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
+import { TotalizerPerBanks } from "./components/totalizerPerBank";
 
 const INITIAL_QUERY: MerchantsQuery = {
   limit: 25,
@@ -160,13 +161,39 @@ export const MerchantView = () => {
     });
   }, [currentItem]);
 
+  const TotalizersTabs = [];
+  if ([1, 2].includes(user.type)) {
+    TotalizersTabs.push({
+      label: `${t("titles.merchants_per_bank")}`,
+      key: "total_banks",
+      children: <TotalizerPerBanks query={query} />,
+    });
+  }
+
+  if (!user.merchant_id) {
+    TotalizersTabs.push({
+      label: `${t("titles.total", {
+        entity: t("menus.merchants")?.toLowerCase(),
+      })}`,
+      key: "total_merchants",
+      children: (
+        <TotalizersCards
+          params={query}
+          loading={isMerchantTotalsDataFetching}
+          data={MerchantTotalsData || undefined}
+        />
+      ),
+    });
+  }
+
+  
+
   return (
     <Grid container style={{ padding: "25px" }}>
-      <TotalizersCards
-        params={query}
-        loading={isMerchantTotalsDataFetching}
-        data={MerchantTotalsData || undefined}
-      />
+      <Grid item xs={12}>
+        <Tabs items={TotalizersTabs} />
+      </Grid>
+
       <Grid
         container
         style={{ display: "flex", alignItems: "center" }}
@@ -174,7 +201,8 @@ export const MerchantView = () => {
         mt={
           !isMobile &&
           MerchantTotalsData &&
-          MerchantTotalsData?.registered_merchant_totals > 0
+          MerchantTotalsData?.registered_merchant_totals > 0 &&
+          TotalizersTabs.length > 0
             ? "-80px"
             : undefined
         }

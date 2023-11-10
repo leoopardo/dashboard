@@ -9,6 +9,8 @@ export function useCreateMerchant(body: MerchantsItem) {
   >("createMerchant", async () => {
     const response = await api.post("core/merchant/create", body, {});
     await queryClient.refetchQueries({ queryKey: ["MerchantsRegister"] });
+    await queryClient.refetchQueries({ queryKey: ["MerchantsPerBankTotals"] });
+
     return response.data;
   });
 

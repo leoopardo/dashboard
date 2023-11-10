@@ -160,7 +160,12 @@
     "total_registred_inactive": "Total de {{entity}} inativas",
     "total_aggregator_inactive": "Total de {{entity}} inativos",
     "total": "Total de {{entity}}",
-    "operation_approve": "Aprovar Lançamentos"
+    "operation_approve": "Aprovar Lançamentos",
+    "total_expired": "Total expirado",
+    "deposits_bank": "Bancos de depósito",
+    "withdraw_bank": "Bancos de saque",
+    "fastpix_bank": "Bancos de FastPix",
+    "merchants_per_bank": "Total de empresas por banco"
   },
 
   "messages": {
@@ -724,7 +729,7 @@
     "refunded_withdraw": "Devolvido",
     "debit_merchant_id": "ID Empresa origem",
     "credit_merchant_id": "ID Empresa destino",
-    "can_be_deleted_only_by_organization": "Organização pode deletar",
+    "can_be_deleted_only_by_organization": "Pode ser removido apenas por organizações?",
     "file_url": "Arquivo",
     "previous_data": "Anterior à alteração",
     "data_later": "Posterior à alteração",
@@ -823,8 +828,8 @@
     "main_user_name": "Nome do usuário principal",
     "main_user_username": "usuário principal",
     "row": "Linha",
+    "pix_type": "Tipo de pix",
     "standard": "Regular"
-
   },
   "actions": {
     "details": "Detalhes",
