@@ -158,7 +158,11 @@
     "total_registred_inactive": "Total {{entity}} registred inactive",
     "total": "Total {{entity}}",
     "operation_approve": "Approve Operations",
-    "total_expired": "Total expired"
+    "total_expired": "Total expired",
+    "deposits_bank": "Deposit banks",
+    "withdraw_bank": "Withdrawal banks",
+    "fastpix_bank": "FastPix banks",
+    "merchants_per_bank": "Total merchants per bank"
   },
 
   "messages": {

@@ -161,33 +161,37 @@ export const MerchantView = () => {
     });
   }, [currentItem]);
 
+  const TotalizersTabs = [];
+  if ([1, 2].includes(user.type)) {
+    TotalizersTabs.push({
+      label: `${t("titles.merchants_per_bank")}`,
+      key: "total_banks",
+      children: <TotalizerPerBanks query={query} />,
+    });
+  }
+
+  if (!user.merchant_id) {
+    TotalizersTabs.push({
+      label: `${t("titles.total", {
+        entity: t("menus.merchants")?.toLowerCase(),
+      })}`,
+      key: "total_merchants",
+      children: (
+        <TotalizersCards
+          params={query}
+          loading={isMerchantTotalsDataFetching}
+          data={MerchantTotalsData || undefined}
+        />
+      ),
+    });
+  }
+
+  
+
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid item xs={12}>
-        <Tabs
-          items={[
-            {
-              label: `${t("titles.total", {
-                entity: t("menus.merchants")?.toLowerCase(),
-              })}`,
-              key: "total_merchants",
-              children: (
-                <TotalizersCards
-                  params={query}
-                  loading={isMerchantTotalsDataFetching}
-                  data={MerchantTotalsData || undefined}
-                />
-              ),
-            },
-            {
-              label: `${t("titles.total", {
-                entity: t("table.bank")?.toLowerCase(),
-              })}`,
-              key: "total_banks",
-              children: <TotalizerPerBanks query={query} />,
-            },
-          ]}
-        />
+        <Tabs items={TotalizersTabs} />
       </Grid>
 
       <Grid
@@ -197,7 +201,8 @@ export const MerchantView = () => {
         mt={
           !isMobile &&
           MerchantTotalsData &&
-          MerchantTotalsData?.registered_merchant_totals > 0
+          MerchantTotalsData?.registered_merchant_totals > 0 &&
+          TotalizersTabs.length > 0
             ? "-80px"
             : undefined
         }

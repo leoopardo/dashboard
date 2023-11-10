@@ -161,7 +161,11 @@
     "total_aggregator_inactive": "Total de {{entity}} inativos",
     "total": "Total de {{entity}}",
     "operation_approve": "Aprovar Lançamentos",
-    "total_expired": "Total expirado"
+    "total_expired": "Total expirado",
+    "deposits_bank": "Bancos de depósito",
+    "withdraw_bank": "Bancos de saque",
+    "fastpix_bank": "Bancos de FastPix",
+    "merchants_per_bank": "Total de empresas por banco"
   },
 
   "messages": {
@@ -826,7 +830,6 @@
     "row": "Linha",
     "pix_type": "Tipo de pix",
     "standard": "Regular"
-
   },
   "actions": {
     "details": "Detalhes",

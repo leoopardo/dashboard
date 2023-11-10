@@ -1,20 +1,25 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useTheme } from "@src/contexts/ThemeContext";
+import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
 import { useListBanks } from "@src/services/bank/listBanks";
 import { useGetMerchantsPerBank } from "@src/services/register/merchant/merchant/getMerchantPerBankTotals";
 import { MerchantsQuery } from "@src/services/types/register/merchants/merchantsRegister.interface";
-import { Avatar, Card, Col, List, Row, Tooltip, Typography } from "antd";
-import ReactECharts from "echarts-for-react";
+import { defaultTheme } from "@src/styles/defaultTheme";
+import {
+  Avatar,
+  Card,
+  Col,
+  Descriptions,
+  Row,
+  Tooltip,
+  Typography,
+} from "antd";
 import { t } from "i18next";
-import { useMediaQuery } from "react-responsive";
 
 interface TotalizerPerBanksInterface {
   query: MerchantsQuery;
 }
 
 export const TotalizerPerBanks = ({ query }: TotalizerPerBanksInterface) => {
-  const isMobile = useMediaQuery({ maxWidth: "950px" });
-  const { theme } = useTheme();
   const { MerchantsPerBankData, isMerchantsPerBankDataFetching } =
     useGetMerchantsPerBank(query);
   const { bankListData } = useListBanks({
@@ -32,112 +37,27 @@ export const TotalizerPerBanks = ({ query }: TotalizerPerBanksInterface) => {
 
   return (
     <Row gutter={[8, 8]} style={{ overflow: "hidden", marginBottom: "80px" }}>
-      {/* {MerchantsPerBankData?.total &&
-        MerchantsPerBankData.total > 0 &&
-        MerchantsPerBankData?.valuesIn?.null !== MerchantsPerBankData.total && (
-          <Col
-            xs={{ span: 24 }}
-            md={{ span: 8 }}
-            style={{
-              marginBottom: isMobile ? "-60px" : "20px",
-            }}
-          >
-            <Typography.Title level={5} style={{ marginBottom: "-50px" }}>
-              {t("table.deposit_bank")}
-            </Typography.Title>
-            <ReactECharts
-              option={{
-                darkMode: theme === "dark",
-                tooltip: {
-                  trigger: "item",
-                },
-                legend: {
-                  orient: "vertical",
-                  left: "left",
-                  top: "50%",
-                },
-                series: [
-                  {
-                    name: "Access From",
-                    type: "pie",
-                    radius: "50%",
-                    data: [
-                      ...(Object.keys(MerchantsPerBankData?.valuesIn).map(
-                        (bank) => {
-                          return {
-                            value: MerchantsPerBankData?.valuesIn[bank],
-                            name: `${
-                              bankListData?.itens.find((b) => b.bank === bank)
-                                ?.label_name
-                            }: ${MerchantsPerBankData?.valuesIn[bank]}`,
-                          };
-                        }
-                      ) as any),
-                    ],
-                    
-                    emphasis: {
-                      itemStyle: {
-                        shadowBlur: 10,
-                        shadowOffsetX: 0,
-                        shadowColor: "rgba(0, 0, 0, 0.5)",
-                      },
-                    },
-                  },
-                ],
-              }}
-              opts={{ renderer: "svg" }}
-              lazyUpdate
-            />
-          </Col>
-        )} */}
-      <Col span={8}>
-        <List
+      <Col xs={{ span: 24 }} md={{ span: 8 }}>
+        <Card
           loading={isMerchantsPerBankDataFetching}
-          grid={{ gutter: 16, column: 4 }}
-          dataSource={Object.keys(MerchantsPerBankData?.valuesIn)
-            .sort((a, b) =>
-              MerchantsPerBankData?.valuesIn[a] >
-              MerchantsPerBankData?.valuesIn[b]
-                ? -1
-                : 1
-            )
-            .map((bank) => {
-              return {
-                bank: bankListData?.itens.find((b) => b.bank === bank)
-                  ?.label_name,
-
-                value: MerchantsPerBankData?.valuesIn[bank],
-              };
-            })}
-          renderItem={(item) => (
-            <List.Item>
-              <Card title={<>{item.bank}</>}>Card content</Card>
-            </List.Item>
-          )}
-        />
-      </Col>
-      {MerchantsPerBankData?.total &&
-        MerchantsPerBankData.total > 0 &&
-        MerchantsPerBankData?.valuesIn?.null !== MerchantsPerBankData.total && (
-          <Col
-            xs={{ span: 24 }}
-            md={{ span: 8 }}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            <Row
-              gutter={[20, 20]}
-              style={{ backgroundColor: "#91cc75", height: "100%", padding: 8 }}
+          title={
+            <Typography.Title
+              level={4}
+              style={{ color: defaultTheme.colors.paid }}
             >
-              <Col span={24}>
-                <Typography.Title level={4}>
-                  {t("table.deposit_bank")}
-                </Typography.Title>
-              </Col>
-
-              {Object.keys(MerchantsPerBankData?.valuesIn)
+              {t("titles.deposits_bank")} <ArrowDownOutlined />
+            </Typography.Title>
+          }
+          bodyStyle={{ padding: 0 }}
+          style={{ height: "100%" }}
+        >
+          <Descriptions
+            bordered
+            style={{ width: "100%" }}
+            column={{ xs: 1, sm: 2, md: 2, lg: 2, xl: 3, xxl: 4 }}
+          >
+            {MerchantsPerBankData?.valuesIn &&
+              Object.keys(MerchantsPerBankData?.valuesIn)
                 .sort((a, b) =>
                   MerchantsPerBankData?.valuesIn[a] >
                   MerchantsPerBankData?.valuesIn[b]
@@ -145,150 +65,181 @@ export const TotalizerPerBanks = ({ query }: TotalizerPerBanksInterface) => {
                     : 1
                 )
                 .map((bank) => (
-                  <Col span={"auto"}>
-                    <Tooltip
-                      title={
-                        bankListData?.itens.find((b) => b.bank === bank)
-                          ?.label_name
-                      }
-                    >
-                      <Avatar
-                        src={
+                  <Descriptions.Item
+                    labelStyle={{
+                      padding: 0,
+                      margin: 0,
+                      maxHeight: "50px",
+                      maxWidth: "40px",
+                    }}
+                    label={
+                      <Tooltip
+                        title={
                           bankListData?.itens.find((b) => b.bank === bank)
-                            ?.icon_url
+                            ?.label_name
                         }
-                        size={45}
-                      />
-                      : {MerchantsPerBankData?.valuesIn[bank]}
-                    </Tooltip>
-                  </Col>
+                      >
+                        {bank !== "null" ? (
+                          <Avatar
+                            shape="square"
+                            style={{ width: "100%", height: "50px" }}
+                            src={
+                              bankListData?.itens.find((b) => b.bank === bank)
+                                ?.icon_url
+                            }
+                          />
+                        ) : (
+                          <Typography.Text strong>
+                            Não atribuido
+                          </Typography.Text>
+                        )}
+                      </Tooltip>
+                    }
+                  >
+                    <Typography.Text strong>
+                      {MerchantsPerBankData?.valuesIn[bank]}
+                    </Typography.Text>
+                  </Descriptions.Item>
                 ))}
-            </Row>
-          </Col>
-        )}
+          </Descriptions>
+        </Card>
+      </Col>
 
-      {/* {MerchantsPerBankData?.total &&
-        MerchantsPerBankData.total > 0 &&
-        MerchantsPerBankData?.valuesOut?.null !==
-          MerchantsPerBankData.total && (
-          <Col
-            xs={{ span: 24 }}
-            md={{ span: 5 }}
-            style={{
-              marginBottom: isMobile ? "-60px" : "20px",
-            }}
-          >
-            {" "}
-            <Typography.Title level={5} style={{ marginBottom: "-50px" }}>
-              {t("table.deposit_bank")}
+      <Col xs={{ span: 24 }} md={{ span: 8 }}>
+        <Card
+          loading={isMerchantsPerBankDataFetching}
+          title={
+            <Typography.Title
+              level={4}
+              style={{ color: defaultTheme.colors.error }}
+            >
+              {t("titles.withdraw_bank")} <ArrowUpOutlined />
             </Typography.Title>
-            <ReactECharts
-              option={{
-                darkMode: theme === "dark",
-                title: {
-                  text: "Saques",
-                  left: "left",
-                },
-                tooltip: {
-                  trigger: "item",
-                },
-                legend: {
-                  orient: "vertical",
-                  left: "left",
-                  show: false,
-                },
-                series: [
-                  {
-                    name: "Access From",
-                    type: "pie",
-                    radius: "50%",
-                    data: [
-                      ...(Object.keys(MerchantsPerBankData?.valuesOut).map(
-                        (bank) => {
-                          return {
-                            value: MerchantsPerBankData?.valuesOut[bank],
-                            name: bank,
-                          };
-                        }
-                      ) as any),
-                    ],
-                    emphasis: {
-                      itemStyle: {
-                        shadowBlur: 10,
-                        shadowOffsetX: 0,
-                        shadowColor: "rgba(0, 0, 0, 0.5)",
-                      },
-                    },
-                  },
-                ],
-              }}
-              opts={{ renderer: "svg" }}
-              lazyUpdate
-            />
-          </Col>
-        )} */}
-
-      {MerchantsPerBankData?.total &&
-        MerchantsPerBankData.total > 0 &&
-        MerchantsPerBankData?.valuesFastpix?.null !==
-          MerchantsPerBankData.total && (
-          <Col
-            xs={{ span: 24 }}
-            md={{ span: 5 }}
-            style={{
-              marginBottom: isMobile ? "-60px" : "20px",
-            }}
+          }
+          bodyStyle={{ padding: 0 }}
+          style={{ height: "100%" }}
+        >
+          <Descriptions
+            bordered
+            style={{ width: "100%" }}
+            column={{ xs: 1, sm: 2, md: 2, lg: 2, xl: 3, xxl: 4 }}
           >
-            <Typography.Title level={5} style={{ marginBottom: "-50px" }}>
-              {t("table.bank")} FastPix
-            </Typography.Title>
-            <ReactECharts
-              option={{
-                darkMode: theme === "dark",
-                title: {
-                  text: "FastPix",
-                  left: "left",
-                },
-                tooltip: {
-                  trigger: "item",
-                },
-                legend: {
-                  orient: "vertical",
-                  left: "left",
-                  show: false,
-                },
-                series: [
-                  {
-                    name: "Access From",
-                    type: "pie",
-                    radius: "50%",
-                    data: [
-                      ...(Object.keys(MerchantsPerBankData?.valuesFastpix).map(
-                        (bank) => {
-                          return {
-                            value: MerchantsPerBankData?.valuesFastpix[bank],
-                            name: bank,
-                          };
+            {MerchantsPerBankData?.valuesOut &&
+              Object.keys(MerchantsPerBankData?.valuesOut)
+                .sort((a, b) =>
+                  MerchantsPerBankData?.valuesOut[a] >
+                  MerchantsPerBankData?.valuesOut[b]
+                    ? -1
+                    : 1
+                )
+                .map((bank) => (
+                  <Descriptions.Item
+                    labelStyle={{
+                      padding: 0,
+                      margin: 0,
+                      maxHeight: "50px",
+                      maxWidth: "40px",
+                    }}
+                    label={
+                      <Tooltip
+                        title={
+                          bankListData?.itens.find((b) => b.bank === bank)
+                            ?.label_name
                         }
-                      ) as any),
-                    ],
-                    emphasis: {
-                      itemStyle: {
-                        shadowBlur: 10,
-                        shadowOffsetX: 0,
-                        shadowColor: "rgba(0, 0, 0, 0.5)",
-                      },
-                    },
-                  },
-                ],
-              }}
-              opts={{ renderer: "svg" }}
-              lazyUpdate
-            />
-          </Col>
-        )}
-
-      <Col></Col>
+                      >
+                        {bank !== "null" ? (
+                          <Avatar
+                            shape="square"
+                            style={{ width: "100%", height: "50px" }}
+                            src={
+                              bankListData?.itens.find((b) => b.bank === bank)
+                                ?.icon_url
+                            }
+                          />
+                        ) : (
+                          <Typography.Text strong>
+                            Não atribuido
+                          </Typography.Text>
+                        )}
+                      </Tooltip>
+                    }
+                  >
+                    <Typography.Text strong>
+                      {MerchantsPerBankData?.valuesOut[bank]}
+                    </Typography.Text>
+                  </Descriptions.Item>
+                ))}
+          </Descriptions>
+        </Card>
+      </Col>
+      <Col xs={{ span: 24 }} md={{ span: 8 }}>
+        <Card
+          loading={isMerchantsPerBankDataFetching}
+          title={
+            <Typography.Title
+              level={4}
+              style={{ color: defaultTheme.colors.info }}
+            >
+              {t("titles.fastpix_bank")}
+            </Typography.Title>
+          }
+          bodyStyle={{ padding: 0 }}
+          style={{ height: "100%" }}
+        >
+          <Descriptions
+            bordered
+            style={{ width: "100%" }}
+            column={{ xs: 1, sm: 2, md: 2, lg: 2, xl: 3, xxl: 4 }}
+          >
+            {MerchantsPerBankData?.valuesFastpix &&
+              Object.keys(MerchantsPerBankData?.valuesFastpix)
+                .sort((a, b) =>
+                  MerchantsPerBankData?.valuesFastpix[a] >
+                  MerchantsPerBankData?.valuesFastpix[b]
+                    ? -1
+                    : 1
+                )
+                .map((bank) => (
+                  <Descriptions.Item
+                    labelStyle={{
+                      padding: 0,
+                      margin: 0,
+                      maxHeight: "50px",
+                      maxWidth: "40px",
+                      textAlign: "center",
+                    }}
+                    label={
+                      <Tooltip
+                        title={
+                          bankListData?.itens.find((b) => b.bank === bank)
+                            ?.label_name
+                        }
+                      >
+                        {bank !== "null" ? (
+                          <Avatar
+                            shape="square"
+                            style={{ width: "100%", height: "50px" }}
+                            src={
+                              bankListData?.itens.find((b) => b.bank === bank)
+                                ?.icon_url
+                            }
+                          />
+                        ) : (
+                          <Typography.Text strong>
+                            Não atribuido
+                          </Typography.Text>
+                        )}
+                      </Tooltip>
+                    }
+                  >
+                    <Typography.Text strong>
+                      {MerchantsPerBankData?.valuesFastpix[bank]}
+                    </Typography.Text>
+                  </Descriptions.Item>
+                ))}
+          </Descriptions>
+        </Card>
+      </Col>
     </Row>
   );
 };
