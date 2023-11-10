@@ -310,7 +310,7 @@ export const PreManual = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        {!permissions.transactions.merchant?.merchant_pre_manual?.menu && (
+        {permissions.transactions.merchant?.merchant_pre_manual?.menu && (
           <Grid item xs={12} md={3} lg={2}>
             <ExportReportsModal
               disabled={!preManualData?.total || preManualDataError}
@@ -323,7 +323,7 @@ export const PreManual = () => {
           </Grid>
         )}
 
-        {!permissions.transactions.merchant?.merchant_pre_manual
+        {permissions.transactions.merchant?.merchant_pre_manual
           ?.merchant_pre_manual_transactions_approve && (
           <Grid item xs={12} md={3} lg={2}>
             <ApproveModal
@@ -365,7 +365,7 @@ export const PreManual = () => {
                 icon: <EyeFilled style={{ fontSize: "20px" }} />,
                 onClick: () => setIsViewModalOpen(true),
               },
-              !permissions.transactions.merchant?.merchant_pre_manual
+              permissions.transactions.merchant?.merchant_pre_manual
                 ?.merchant_pre_manual_transactions_update && {
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
