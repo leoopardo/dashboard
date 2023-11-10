@@ -3,12 +3,26 @@ import { useGetMerchantRanking } from "@src/services/merchant/ranking/getRanking
 import { Empty } from "antd";
 import ReactECharts from "echarts-for-react";
 import { useTranslation } from "react-i18next";
+import { useErrorContext } from "@src/contexts/ErrorContext";
 import { TableProps } from "..";
+import { useEffect } from "react";
 
 export const TotalFees = ({ query, chart }: TableProps) => {
-  const { RankingData, RankingError, isRankingFetching } =
-    useGetMerchantRanking("fee", "total", query);
   const { t } = useTranslation();
+  const { handleChangeError } = useErrorContext();
+  const { RankingData, RankingError, isRankingFetching, RankingDataSuccess } =
+    useGetMerchantRanking("fee", "total", query);
+
+  useEffect(() => {
+    if (RankingDataSuccess) {
+      handleChangeError({ rankingFee: false });
+    }
+
+    if (RankingError) {
+      handleChangeError({ rankingFee: true });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [RankingError, RankingDataSuccess]);
   return !chart ? (
     <>
       {RankingData?.length ? (
@@ -49,10 +63,8 @@ export const TotalFees = ({ query, chart }: TableProps) => {
                 {
                   type: "bar",
                   data: RankingData?.sort((a, b) =>
-                  a.total > b.total ? 1 : -1
-                )?.map(
-                    (merchant) => merchant?.total ?? 0
-                  ),
+                    a.total > b.total ? 1 : -1
+                  )?.map((merchant) => merchant?.total ?? 0),
                   tooltip: {
                     valueFormatter: function (value: number) {
                       return new Intl.NumberFormat("pt-BR", {

@@ -2,14 +2,27 @@ import { CustomTable } from "@src/components/CustomTable";
 import { useGetMerchantRanking } from "@src/services/merchant/ranking/getRanking";
 import { Empty } from "antd";
 import ReactECharts from "echarts-for-react";
+import { useErrorContext } from "@src/contexts/ErrorContext";
 import { useTranslation } from "react-i18next";
 import { TableProps } from "..";
+import { useEffect } from "react";
 
 export const WithdrawFinancial = ({ query, chart }: TableProps) => {
-  const { RankingData, RankingError, isRankingFetching } =
+  const { t } = useTranslation();
+  const { handleChangeError } = useErrorContext();
+  const { RankingData, RankingError, isRankingFetching, RankingDataSuccess } =
     useGetMerchantRanking("value", "withdraw", query);
 
-  const { t } = useTranslation();
+  useEffect(() => {
+    if (RankingDataSuccess) {
+      handleChangeError({ rankingValue: false });
+    }
+
+    if (RankingError) {
+      handleChangeError({ rankingValue: true });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [RankingError, RankingDataSuccess]);
   return !chart ? (
     <>
       {RankingData?.length ? (
@@ -23,9 +36,12 @@ export const WithdrawFinancial = ({ query, chart }: TableProps) => {
                 },
               },
               color: ["#ee6666"],
-              legend: {textStyle: {
-                color: "#a0a0a0",
-              },},textStyle: {
+              legend: {
+                textStyle: {
+                  color: "#a0a0a0",
+                },
+              },
+              textStyle: {
                 color: "#a0a0a0",
               },
               grid: {
@@ -41,17 +57,15 @@ export const WithdrawFinancial = ({ query, chart }: TableProps) => {
               yAxis: {
                 type: "category",
                 data: RankingData?.sort((a, b) =>
-                a.total > b.total ? 1 : -1
-              )?.map((merchant) => merchant?.name ?? "-"),
+                  a.total > b.total ? 1 : -1
+                )?.map((merchant) => merchant?.name ?? "-"),
               },
               series: [
                 {
                   type: "bar",
                   data: RankingData?.sort((a, b) =>
-                  a.total > b.total ? 1 : -1
-                )?.map(
-                    (merchant) => merchant?.total ?? 0
-                  ),
+                    a.total > b.total ? 1 : -1
+                  )?.map((merchant) => merchant?.total ?? 0),
                   tooltip: {
                     valueFormatter: function (value: number) {
                       return new Intl.NumberFormat("pt-BR", {

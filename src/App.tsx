@@ -7,6 +7,7 @@ import { I18nextProvider, useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
+import { ErrorProvider } from "./contexts/ErrorContext/index.tsx";
 import { PageHeader } from "./components/PageHeader/index.tsx";
 import { SidebarNavigation } from "./components/SideBarNavigation/index.tsx";
 import { useMenu } from "./contexts/SidebarContext/index.tsx";
@@ -112,17 +113,26 @@ function App() {
                   controlItemBgActiveHover: "#c0c0c09f",
                 },
                 Card: {
-                  boxShadow: theme === "dark" ? "0px 4px 15.7px -3px rgba(0, 0, 0, 0.25)" : "0px 4px 15.7px -3px rgba(0, 0, 0, 0.144)",
-                  boxShadowSecondary: theme === "dark" ? "0px 4px 15.7px -3px rgba(0, 0, 0, 0.25)" : "0px 4px 15.7px -3px rgba(0, 0, 0, 0.144)",
-                  boxShadowTertiary: theme === "dark" ? "0px 4px 15.7px -3px rgba(0, 0, 0, 0.25)" : "0px 4px 15.7px -3px rgba(0, 0, 0, 0.144)"
-                }
+                  boxShadow:
+                    theme === "dark"
+                      ? "0px 4px 15.7px -3px rgba(0, 0, 0, 0.25)"
+                      : "0px 4px 15.7px -3px rgba(0, 0, 0, 0.144)",
+                  boxShadowSecondary:
+                    theme === "dark"
+                      ? "0px 4px 15.7px -3px rgba(0, 0, 0, 0.25)"
+                      : "0px 4px 15.7px -3px rgba(0, 0, 0, 0.144)",
+                  boxShadowTertiary:
+                    theme === "dark"
+                      ? "0px 4px 15.7px -3px rgba(0, 0, 0, 0.25)"
+                      : "0px 4px 15.7px -3px rgba(0, 0, 0, 0.144)",
+                },
               },
-          
+
               token: {
                 colorPrimary: defaultTheme.colors.secondary,
                 colorBgTextHover: defaultTheme.colors.secondary,
                 colorBgContainer: theme === "dark" ? "#222222" : "#ffffff",
-  
+
                 colorBgLayout: theme === "dark" ? "#1a1a1a" : "#f5f5f5",
                 colorText: theme === "dark" ? "#f5f5f5" : "rgba(0, 0, 0, 0.88)",
                 colorTextHeading:
@@ -141,46 +151,49 @@ function App() {
               },
             }}
           >
-            <Toaster position="top-center" />
-            {isSuccess ? (
-              <Layout>
+            <ErrorProvider>
+              <Toaster position="top-center" />
+              {isSuccess ? (
                 <Layout>
-                  <SidebarNavigation />
+                  <Layout>
+                    <SidebarNavigation />
 
-                  <div
-                    style={{
-                      marginLeft:
-                        !isSuccess || isMobile
-                          ? "0"
-                          : isSidebarOpen
-                          ? "256px"
-                          : "90px",
-                    }}
-                  >
-                    <PageHeader />
-                    <Layout
+                    <div
                       style={{
-                        padding: "0 24px 24px",
-                        minHeight: "94vh",
+                        marginLeft:
+                          !isSuccess || isMobile
+                            ? "0"
+                            : isSidebarOpen
+                            ? "256px"
+                            : "90px",
                       }}
                     >
-                      <Content
+                      <PageHeader />
+                      <Layout
                         style={{
-                          padding: 2,
-                          margin: 0,
-                          height: "100%",
-                          background: theme === "dark" ? "#222222 " : "#fdfdfd",
+                          padding: "0 24px 24px",
+                          minHeight: "94vh",
                         }}
                       >
-                        {element}
-                      </Content>
-                    </Layout>
-                  </div>
+                        <Content
+                          style={{
+                            padding: 2,
+                            margin: 0,
+                            height: "100%",
+                            background:
+                              theme === "dark" ? "#222222 " : "#fdfdfd",
+                          }}
+                        >
+                          {element}
+                        </Content>
+                      </Layout>
+                    </div>
+                  </Layout>
                 </Layout>
-              </Layout>
-            ) : (
-              element
-            )}
+              ) : (
+                element
+              )}
+            </ErrorProvider>
           </ConfigProvider>
         </BrowserRouter>
       </ThemeProvider>

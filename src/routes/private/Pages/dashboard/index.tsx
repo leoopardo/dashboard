@@ -27,6 +27,7 @@ import { OrganizationBalance } from "./components/organizationBalance";
 import { ValuesTable } from "./components/valuesTable";
 import { ChartIn } from "./components/charts/chartIn";
 import { ChartOut } from "./components/charts/chartOut";
+import { useErrorContext } from "@src/contexts/ErrorContext";
 
 const INITIAL_QUERY = {
   start_date: moment(new Date())
@@ -42,7 +43,8 @@ const INITIAL_QUERY = {
 
 export const Dashboard = () => {
   const { t } = useTranslation();
-  const { permissions, type } = queryClient.getQueryData(
+  const {error} = useErrorContext()
+  const { permissions } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
   const user = queryClient.getQueryData("validate") as ValidateInterface;
@@ -97,7 +99,7 @@ export const Dashboard = () => {
       ),
     });
   }
-
+  
   return (
     <Row style={{ padding: 20 }}>
       <Layout
@@ -310,7 +312,7 @@ export const Dashboard = () => {
           </Row>
         )}
 
-        {type !== 3 && (
+        {(!error.rankingFee || !error.rankingOperations || !error.rankingValue) && (
           <Row style={{ marginTop: 16 }}>
             <Col span={24}>
               <TabsTable query={query} />
