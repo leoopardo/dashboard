@@ -21,7 +21,7 @@ export const ChartOut = ({ query }: ChartInInterface) => {
     initial_date: query?.start_date,
     final_date: query?.end_date,
   });
-  const {theme} = useTheme()
+  const { theme } = useTheme();
   const {
     WithdrawalsTotal,
     isWithdrawalsTotalFetching,
@@ -65,6 +65,14 @@ export const ChartOut = ({ query }: ChartInInterface) => {
             },
             series: [
               {
+                tooltip: {
+                  valueFormatter: function (value: number) {
+                    return new Intl.NumberFormat("pt-BR", {
+                      style: "currency",
+                      currency: "BRL",
+                    }).format(Number(value) || 0);
+                  },
+                },
                 name: t("table.deposit_conversion"),
                 type: "pie",
                 radius: "50%",
