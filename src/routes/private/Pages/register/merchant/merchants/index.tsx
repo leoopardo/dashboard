@@ -27,7 +27,7 @@ import { useGetMerchantsTotals } from "@src/services/register/merchant/merchant/
 import { useCreateMerchantReports } from "@src/services/reports/register/merchant/createMerchantReports";
 import { useGetMerchantReportFields } from "@src/services/reports/register/merchant/getMerchantReportFields";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Input, Tooltip } from "antd";
+import { Button, Input, Tabs, Tooltip } from "antd";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
@@ -36,6 +36,7 @@ import { ViewMerchantModal } from "./components/ViewMerchantModal";
 import { TotalizersCards } from "./components/totalizersCards";
 import { UpdateBanks } from "./components/updatebanks";
 import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
+import { TotalizerPerBanks } from "./components/totalizerPerBank";
 
 const INITIAL_QUERY: MerchantsQuery = {
   limit: 25,
@@ -162,11 +163,34 @@ export const MerchantView = () => {
 
   return (
     <Grid container style={{ padding: "25px" }}>
-      <TotalizersCards
-        params={query}
-        loading={isMerchantTotalsDataFetching}
-        data={MerchantTotalsData || undefined}
-      />
+      <Grid item xs={12}>
+        <Tabs
+          items={[
+            {
+              label: `${t("titles.total", {
+                entity: t("menus.merchants")?.toLowerCase(),
+              })}`,
+              key: "total_merchants",
+              children: (
+                <TotalizersCards
+                  params={query}
+                  loading={isMerchantTotalsDataFetching}
+                  data={MerchantTotalsData || undefined}
+                />
+              ),
+            },
+            {
+              label: `${t("titles.total", {
+                entity: t("table.bank")?.toLowerCase(),
+              })}`,
+              key: "total_banks",
+              children: <TotalizerPerBanks query={query} />,
+              disabled:true
+            },
+          ]}
+        />
+      </Grid>
+
       <Grid
         container
         style={{ display: "flex", alignItems: "center" }}

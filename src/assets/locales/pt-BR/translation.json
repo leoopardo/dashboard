@@ -160,7 +160,8 @@
     "total_registred_inactive": "Total de {{entity}} inativas",
     "total_aggregator_inactive": "Total de {{entity}} inativos",
     "total": "Total de {{entity}}",
-    "operation_approve": "Aprovar Lançamentos"
+    "operation_approve": "Aprovar Lançamentos",
+    "total_expired": "Total expirado"
   },
 
   "messages": {
@@ -821,7 +822,8 @@
     "main_user_id": "ID do usuário principal",
     "main_user_name": "Nome do usuário principal",
     "main_user_username": "usuário principal",
-    "row": "Linha"
+    "row": "Linha",
+    "pix_type": "Tipo de pix"
   },
   "actions": {
     "details": "Detalhes",

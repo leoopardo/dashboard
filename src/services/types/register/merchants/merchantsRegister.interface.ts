@@ -1,4 +1,4 @@
-
+/* eslint-disable @typescript-eslint/no-explicit-any */
 interface IPartner {
   id: number;
   name: string;
@@ -43,7 +43,7 @@ export interface MerchantsItem {
   partner_id?: number;
   aggregator_id?: number;
   operator_id?: number;
-  country?: string
+  country?: string;
 }
 
 export interface MerchantsResponse {
@@ -59,4 +59,11 @@ export interface MerchantsTotalResponse {
   inactive_merchant_totals: number;
   onboarding_merchant_totals: number;
   expired_merchant_totals: number;
+}
+
+export interface MerchantsPerBankResponse {
+  total: number;
+  valuesIn: any;
+  valuesOut: any;
+  valuesFastpix: any;
 }
