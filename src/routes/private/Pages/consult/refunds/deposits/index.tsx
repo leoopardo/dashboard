@@ -101,7 +101,7 @@ export const RefundDeposits = () => {
     { name: "merchant_name", type: "text" },
     { name: "value", type: "value" },
     { name: "createdAt", type: "date" },
-    { name: "fastpix_in",  type: "boolean" },
+    { name: "pix_type",  type: "text" },
     { name: "buyer_name", type: "text" },
     { name: "buyer_document", type: "document" },
     { name: "status", type: "status" },
