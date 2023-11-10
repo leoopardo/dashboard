@@ -307,7 +307,7 @@ export const FiltersModal = ({
               if (permissions.register.partner.partner.partner_list) {
                 return (
                   <Form.Item
-                    label={t(`table.${filter}`)}
+                    label={t(`table.partner`)}
                     name={filter}
                     style={{ marginBottom: 10 }}
                   >
@@ -520,7 +520,7 @@ export const FiltersModal = ({
               if (permissions.register.merchant.merchant.merchant_list) {
                 return (
                   <Form.Item
-                    label={t(`table.${filter}`)}
+                    label={t(`table.merchant`)}
                     name={filter}
                     style={{ marginBottom: 10 }}
                   >
@@ -536,7 +536,7 @@ export const FiltersModal = ({
               if (permissions.register.aggregator.aggregator.aggregator_list) {
                 return (
                   <Form.Item
-                    label={t(`table.${filter}`)}
+                    label={t(`table.aggregator`)}
                     name={filter}
                     style={{ marginBottom: 10 }}
                   >
@@ -552,7 +552,7 @@ export const FiltersModal = ({
               if (permissions.register.operator.operator.operator_list) {
                 return (
                   <Form.Item
-                    label={t(`table.${filter}`)}
+                    label={t(`table.operator`)}
                     name={filter}
                     style={{ marginBottom: 10 }}
                   >
