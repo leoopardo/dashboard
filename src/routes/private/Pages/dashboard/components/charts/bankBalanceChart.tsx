@@ -19,6 +19,7 @@ export const BankBalanceChart = () => {
     page: 1,
   });
 
+
   //   OrganizationBankBalance?.banks.map((bank) => bank.name)
   //   OrganizationBankBalance?.banks.map((bank) => bank.value)
   return (
@@ -51,13 +52,14 @@ export const BankBalanceChart = () => {
                   "product",
                   t("table.available_balance"),
                   t("table.blocked_value"),
+                  "Total",
                 ],
                 ...(OrganizationBankBalance?.banks?.map((bank) => {
                   return [
-                    bankListData?.itens?.find((b) => b.bank === bank.name)
-                      ?.label_name,
-                    bank.value,
+                    bank?.name,
+                    bank?.value,
                     bank.value_blocked,
+                    bank.value_blocked + bank?.value,
                   ];
                 }) as any),
               ],
@@ -113,7 +115,7 @@ export const BankBalanceChart = () => {
               },
             ],
           }}
-          opts={{ renderer: "svg" }}
+          opts={{ renderer: "canvas" }}
           lazyUpdate
           showLoading={isOrganizationBankBalanceFetching}
         />

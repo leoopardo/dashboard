@@ -1,6 +1,7 @@
 /* eslint-disable no-constant-condition */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useTheme } from "@src/contexts/ThemeContext";
 import { useGetTotalGeneratedDeposits } from "@src/services/consult/deposits/generatedDeposits/getTotal";
 import { generatedDepositTotalQuery } from "@src/services/types/consult/deposits/generatedDeposits.interface";
 import { Card, Col, Typography } from "antd";
@@ -27,6 +28,7 @@ export const ChartIn = ({ query }: ChartInInterface) => {
   useEffect(() => {
     refetchDepositsTotal();
   }, [query]);
+  const {theme} = useTheme()
 
   return (
     <Col xs={{ span: 24 }} md={{ span: 12 }}>
@@ -51,6 +53,7 @@ export const ChartIn = ({ query }: ChartInInterface) => {
       >
         <ReactECharts
           option={{
+            darkMode: theme === "dark",
             tooltip: {
               trigger: "item",
             },
@@ -59,11 +62,13 @@ export const ChartIn = ({ query }: ChartInInterface) => {
               left: "right",
               show: false,
             },
+
             series: [
               {
                 name: t("table.deposit_conversion"),
                 type: "pie",
                 radius: "50%",
+               
                 data: [
                   {
                     value: depositsTotal?.paid_value ?? 0,
