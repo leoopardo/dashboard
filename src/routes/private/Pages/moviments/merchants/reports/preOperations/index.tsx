@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useGetPreManualReports } from "@src/services/moviments/preManual/reportsPreManual";
 
-export const PreManualReports = () => {
+export const MerchantPreManualReports = () => {
   const INITIAL_QUERY: ReportsQuery = {
     limit: 25,
     page: 1,

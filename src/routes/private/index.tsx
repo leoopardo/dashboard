@@ -101,8 +101,8 @@ import { BankBlackistReports } from "./Pages/support/blacklists/reports/bankBlac
 import { ThirdPartKeyBlacklist } from "./Pages/support/blacklists/thirdPartKey";
 import { ImportContastationDeposit } from "./Pages/support/contastation/importCSV";
 import { ContestationUploads } from "./Pages/support/contastation/uploads";
-import { PreManual } from "./Pages/moviments/preOperations";
-import { PreManualReports } from "./Pages/moviments/preOperations/reports";
+import { MerchantPreManual } from "./Pages/moviments/merchants/preOperations";
+import { MerchantPreManualReports } from "./Pages/moviments/merchants/reports/preOperations";
 import { Permission } from "./permission";
 import { Redirect } from "./redirect";
 
@@ -1327,6 +1327,19 @@ export const PrivateRoutes = () => {
                 </Permission>
               }
             />
+             <Route
+              path="merchant_pre_manual_moviments"
+              element={
+                <Permission
+                  permission={
+                    responseValidate?.permissions?.transactions?.merchant
+                      ?.merchant_pre_manual?.menu
+                  }
+                >
+                  <MerchantPreManual />
+                </Permission>
+              }
+            />
             <Route path="merchant_moviments_reports">
               <Route
                 path="merchant_manual_moviments_reports"
@@ -1360,7 +1373,7 @@ export const PrivateRoutes = () => {
 
               {/*TODO arrumar permissões */}
               <Route
-                path="merchant_pre_manual_reports"
+                path="merchant_pre_manual_moviments_reports"
                 element={
                   <Permission
                     permission={
@@ -1369,7 +1382,7 @@ export const PrivateRoutes = () => {
                         ?.merchant_internal_transfers_export_csv
                     }
                   >
-                    <TransferBetweenAccountsReports />
+                    <MerchantPreManualReports />
                   </Permission>
                 }
               />
@@ -1428,34 +1441,6 @@ export const PrivateRoutes = () => {
                 }
               />
             </Route>
-          </Route>
-          <Route path="pre_manual">
-            <Route
-              path="pre_manual"
-              element={
-                <Permission
-                  permission={
-                    responseValidate?.permissions?.transactions?.merchant
-                      .merchant_pre_manual?.menu
-                  }
-                >
-                  <PreManual />
-                </Permission>
-              }
-            />
-
-            <Route
-              path="reports"
-              element={
-                <Permission
-                  permission={
-                    responseValidate?.permissions?.transactions?.merchant?.menu
-                  }
-                >
-                  <PreManualReports />
-                </Permission>
-              }
-            />
           </Route>
         </Route>
         {/* Suporte */}

@@ -36,10 +36,10 @@ import { Button, Divider, Statistic } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { CreateMovimentModal } from "../components/createMovimentModal";
+import { CreateMovimentModal } from "../../components/createMovimentModal";
 import { ApproveModal } from "./components/approveModal";
 
-export const PreManual = () => {
+export const MerchantPreManual = () => {
   const { t } = useTranslation();
   const { permissions } = queryClient.getQueryData(
     "validate"

@@ -1038,6 +1038,20 @@ export const SidebarNavigation = () => {
               }
             ),
             getItem(
+              "merchant_pre_manual_moviments",
+              null,
+              null,
+              false,
+              (e) => handleNavigate(e?.keyPath),
+              {
+                display:
+                  permissions?.transactions?.merchant?.merchant_pre_manual
+                    ?.menu
+                    ? undefined
+                    : "none",
+              }
+            ),
+            getItem(
               "merchant_moviments_reports",
               null,
               [
@@ -1069,6 +1083,21 @@ export const SidebarNavigation = () => {
                       : "none",
                   }
                 ),
+                //TODO arrumar permissão Reports Pre manual
+                getItem(
+                  "merchant_pre_manual_moviments_reports",
+                  null,
+                  null,
+                  false,
+                  (e) => handleNavigate(e?.keyPath),
+                  {
+                    display: permissions?.transactions?.merchant
+                      ?.merchant_pre_manual
+                      ?.menu
+                      ? undefined
+                      : "none",
+                  }
+                ),
               ],
               false,
               undefined,
@@ -1084,46 +1113,6 @@ export const SidebarNavigation = () => {
           undefined,
           {
             display: permissions?.transactions?.merchant?.menu
-              ? undefined
-              : "none",
-          }
-        ),
-        getItem(
-          "pre_manual",
-          null,
-          [
-            getItem(
-              "pre_manual",
-              null,
-              null,
-              false,
-              (e) => handleNavigate(e?.keyPath),
-              {
-                display: permissions?.transactions?.merchant
-                  ?.merchant_pre_manual?.menu
-                  ? undefined
-                  : "none",
-              }
-            ),
-            getItem(
-              "reports",
-              null,
-              null,
-              false,
-              (e) => handleNavigate(e?.keyPath),
-              {
-                display: permissions?.transactions?.merchant
-                  ?.merchant_pre_manual?.menu
-                  ? undefined
-                  : "none",
-              }
-            ),
-          ],
-          false,
-          undefined,
-          {
-            display:permissions?.transactions?.merchant?.merchant_pre_manual
-              ?.menu
               ? undefined
               : "none",
           }

@@ -144,8 +144,8 @@
     "details": "Details",
     "Wiki": "Wiki",
     "pre_manual": "Manual pre entry",
-    "merchant_pre_manual": "Manual pre entry",
-    "merchant_pre_manual_reports": "Manual pre entry reports"
+    "merchant_pre_manual_moviments": "Manual pre entry",
+    "merchant_pre_manual_moviments_reports": "Manual pre entry"
   },
 
   "titles": {
