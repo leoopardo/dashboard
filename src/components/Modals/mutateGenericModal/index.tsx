@@ -25,6 +25,7 @@ import {
   Row,
   Select,
   Switch,
+  Typography,
 } from "antd";
 import locale from "antd/locale/pt_BR";
 import dayjs from "dayjs";
@@ -513,9 +514,10 @@ export const MutateModal = ({
                     <Form.Item
                       label={t(`table.${field.label}`)}
                       name={field.label}
-                      style={{ margin: 10 }}
+                      style={{margin: 10 }}
                       valuePropName="checked"
                     >
+                      <Typography style={{display: 'inline', marginRight: 10}}>{t('table.false')}</Typography>
                       <Switch
                         checked={body[field.label]}
                         onChange={(e) => {
@@ -525,6 +527,7 @@ export const MutateModal = ({
                           }));
                         }}
                       />
+                      <Typography style={{display: 'inline', marginLeft: 10}}>{t('table.true')}</Typography>
                     </Form.Item>
                   </Col>
                 );
