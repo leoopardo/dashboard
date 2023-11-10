@@ -270,70 +270,95 @@ export const PreManual = () => {
         style={{ display: "flex", alignItems: "center" }}
         spacing={1}
       >
-        <Grid item xs={12} md={2} lg={2}>
-          <Button
-            size="large"
-            style={{ width: "100%" }}
-            loading={isPreManualDataFetching}
-            type="primary"
-            onClick={() => setIsFiltersOpen(true)}
-          >
-            {t("table.filters")}
-          </Button>
-        </Grid>
-        <Grid item xs={12} md={3} lg={4}>
-          <FilterChips
-            startDateKeyName="start_date"
-            endDateKeyName="end_date"
-            query={query}
-            setQuery={setQuery}
-            haveInitialDate
-          />
-        </Grid>
-        <Grid item xs={12} md={2} lg={2}>
-          <Button
-            type="dashed"
-            loading={isPreManualDataFetching}
-            danger
-            onClick={() => {
-              setQuery(INITIAL_QUERY);
-            }}
-            style={{
-              height: 40,
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />
-            {t("table.clear_filters")}
-          </Button>
-        </Grid>
-        {permissions.transactions.merchant?.merchant_pre_manual?.menu && (
-          <Grid item xs={12} md={3} lg={2}>
-            <ExportReportsModal
-              disabled={!preManualData?.total || preManualDataError}
-              mutateReport={() => preManualReportsMutate()}
-              error={preManualReportsError}
-              success={preManualReportsIsSuccess}
-              loading={preManualReportsIsLoading}
-              reportPath="moviment/pre_manual/reports"
+        <Grid
+          container
+          item
+          xs={12}
+          md={6}
+          spacing={1}
+          style={{
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <Grid item xs={12} md={4} lg={4}>
+            <Button
+              size="large"
+              style={{ width: "100%" }}
+              loading={isPreManualDataFetching}
+              type="primary"
+              onClick={() => setIsFiltersOpen(true)}
+            >
+              {t("table.filters")}
+            </Button>
+          </Grid>
+          <Grid item xs={12} md={8} lg={8}>
+            <FilterChips
+              startDateKeyName="start_date"
+              endDateKeyName="end_date"
+              query={query}
+              setQuery={setQuery}
+              haveInitialDate
             />
           </Grid>
-        )}
+        </Grid>
+        <Grid
+          container
+          item
+          xs={12}
+          md={6}
+          spacing={1}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-end",
+          }}
+        >
+          <Grid item xs={12} md={4} lg={4}>
+            <Button
+              type="dashed"
+              loading={isPreManualDataFetching}
+              danger
+              onClick={() => {
+                setQuery(INITIAL_QUERY);
+              }}
+              style={{
+                height: 40,
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />
+              {t("table.clear_filters")}
+            </Button>
+          </Grid>
+          {permissions.transactions.merchant?.merchant_pre_manual?.menu && (
+            <Grid item xs={12} md={2} lg={2}>
+              <ExportReportsModal
+                disabled={!preManualData?.total || preManualDataError}
+                mutateReport={() => preManualReportsMutate()}
+                error={preManualReportsError}
+                success={preManualReportsIsSuccess}
+                loading={preManualReportsIsLoading}
+                reportPath="moviment/pre_manual/reports"
+              />
+            </Grid>
+          )}
 
-        {permissions.transactions.merchant?.merchant_pre_manual
-          ?.merchant_pre_manual_transactions_approve && (
-          <Grid item xs={12} md={3} lg={2}>
-            <ApproveModal
-              disabled={selectedRows.length === 0}
-              loading={approvePreManualLoading}
-              reset={approvePreManualReset}
-              setIsValidateTokenOpen={setOperationInTokenModalOpen}
-            />
-          </Grid>
-        )}
+          {permissions.transactions.merchant?.merchant_pre_manual
+            ?.merchant_pre_manual_transactions_approve && (
+            <Grid item xs={12} md={4} lg={4}>
+              <ApproveModal
+                disabled={selectedRows.length === 0}
+                loading={approvePreManualLoading}
+                reset={approvePreManualReset}
+                setIsValidateTokenOpen={setOperationInTokenModalOpen}
+              />
+            </Grid>
+          )}
+        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
