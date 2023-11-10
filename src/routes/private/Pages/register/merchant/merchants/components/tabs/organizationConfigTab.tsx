@@ -128,21 +128,14 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
           }
         >
           <Row gutter={[8, 8]} align="middle">
-            <Col xs={{ span: 24 }} md={{ span: 6 }}>
+            <Col xs={{ span: 24 }} md={{ span: 3 }}>
               <Form.Item
                 label={t("input.check_cpf_permission")}
                 name="cpf_api_permission"
+                valuePropName="checked"
               >
-                <Select
-                  size="large"
-                  options={
-                    [true, false]?.map((item, index) => ({
-                      key: index,
-                      value: item,
-                      label: `${t(`table.${item}`)}`,
-                    })) ?? []
-                  }
-                  value={body?.cpf_api_permission}
+                <Switch
+                  checked={body?.cpf_api_permission}
                   onChange={(value) => {
                     setBody((state) => ({
                       ...state,
@@ -202,21 +195,14 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
             </Col>
           </Row>
           <Row gutter={[8, 8]} align="middle">
-            <Col xs={{ span: 24 }} md={{ span: 6 }}>
+            <Col xs={{ span: 24 }} md={{ span: 3 }}>
               <Form.Item
                 label={t("input.account_PJ_payment_permission")}
                 name="cash_in_receive_by_pj"
+                valuePropName="checked"
               >
-                <Select
-                  size="large"
-                  options={
-                    [true, false]?.map((item, index) => ({
-                      key: index,
-                      value: item,
-                      label: `${t(`table.${item}`)}`,
-                    })) ?? []
-                  }
-                  value={bodyUpdate?.cash_in_receive_by_pj}
+                <Switch
+                  checked={bodyUpdate?.cash_in_receive_by_pj}
                   onChange={(value) => {
                     setBodyUpdate((state) => ({
                       ...state,
@@ -271,21 +257,14 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
             </Col>
           </Row>
           <Row gutter={[8, 8]} align="middle">
-            <Col xs={{ span: 24 }} md={{ span: 6 }}>
+            <Col xs={{ span: 24 }} md={{ span: 3 }}>
               <Form.Item
                 label={t("input.permission_different_payer_pf")}
                 name="cash_in_receive_by_different_payer"
+                valuePropName="checked"
               >
-                <Select
-                  size="large"
-                  options={
-                    [true, false]?.map((item, index) => ({
-                      key: index,
-                      value: item,
-                      label: `${t(`table.${item}`)}`,
-                    })) ?? []
-                  }
-                  value={bodyUpdate?.cash_in_receive_by_different_payer}
+                <Switch
+                  checked={bodyUpdate?.cash_in_receive_by_different_payer}
                   onChange={(value) => {
                     setBodyUpdate((state) => ({
                       ...state,

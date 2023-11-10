@@ -14,8 +14,10 @@ import {
   InputNumber,
   Popconfirm,
   Select,
+  Switch,
 } from "antd";
 import { useEffect, useRef, useState } from "react";
+import { CurrencyInput } from "react-currency-mask";
 import { useTranslation } from "react-i18next";
 
 export const MerchantConfigTab = (props: { id?: string }) => {
@@ -179,75 +181,167 @@ export const MerchantConfigTab = (props: { id?: string }) => {
           <Grid item xs={12}>
             <Divider>FastPix</Divider>
           </Grid>
-          <Grid item xs={12} md={5}>
-            <Form.Item
-              label={t("table.fastpix_webhook_url")}
-              name="fastpix_webhook_url"
-            >
-              <Input
-                disabled
-                size="large"
+          <Grid container spacing={1}>
+            <Grid item xs={12} md={2}>
+              <Form.Item
+                label={t("input.fastpix_in_permission")}
+                name="fastpix_in_permission"
+                valuePropName="checked"
+              >
+                <Switch
+                  checked={body?.fastpix_in_permission}
+                  onChange={(value) => {
+                    setBody((state) => ({
+                      ...state,
+                      fastpix_in_permission: value,
+                    }));
+                    setBodyUpdate((state) => ({
+                      ...state,
+                      fastpix_in_permission: value,
+                    }));
+                  }}
+                />
+              </Form.Item>
+            </Grid>
+            <Grid item xs={12} md={3}>
+              <Form.Item
+                label={t("input.fastpix_in_type")}
+                name="fastpix_in_type"
+              >
+                <Select
+                  size="large"
+                  options={
+                    ["fixed", "free"]?.map((item, index) => ({
+                      key: index,
+                      value: item,
+                      label: `${t(`table.${item}`)}`,
+                    })) ?? []
+                  }
+                  value={body?.fastpix_in_type}
+                  onChange={(value) => {
+                    setBody((state) => ({
+                      ...state,
+                      fastpix_in_type: value,
+                    }));
+                    setBodyUpdate((state) => ({
+                      ...state,
+                      fastpix_in_type: value,
+                    }));
+                  }}
+                />
+              </Form.Item>
+            </Grid>
+            <Grid item xs={12} md={3}>
+              <Form.Item
+                label={t("input.fastpix_in_fixed_min_value")}
+                name="fastpix_in_fixed_min_value"
+              >
+                <CurrencyInput
+                  onChangeValue={(_event, originalValue) => {
+                    setBodyUpdate((state) => ({
+                      ...state,
+                      fastpix_in_fixed_min_value: +originalValue,
+                    }));
+                  }}
+                  InputElement={
+                    <Input
+                      size="large"
+                      style={{ width: "100%" }}
+                      value={body?.fastpix_in_fixed_min_value}
+                    />
+                  }
+                />
+              </Form.Item>
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <Form.Item
+                label={t("input.fastpix_in_max_value")}
+                name="fastpix_in_max_value"
+              >
+                <CurrencyInput
+                  onChangeValue={(_event, originalValue) => {
+                    setBodyUpdate((state) => ({
+                      ...state,
+                      fastpix_in_max_value: +originalValue,
+                    }));
+                  }}
+                  InputElement={
+                    <Input
+                      size="large"
+                      style={{ width: "100%" }}
+                      value={body?.fastpix_in_max_value}
+                    />
+                  }
+                />
+              </Form.Item>
+            </Grid>
+            <Grid item xs={12} md={5}>
+              <Form.Item
+                label={t("table.fastpix_webhook_url")}
                 name="fastpix_webhook_url"
-                value={body?.fastpix_webhook_url}
-                onChange={(e) => {
-                  setBody((state) => ({
-                    ...state,
-                    fastpix_webhook_url: e.target.value,
-                  }));
-                  setBodyUpdate((state) => ({
-                    ...state,
-                    fastpix_webhook_url: e.target.value,
-                  }));
-                }}
-              />
-            </Form.Item>
-          </Grid>
-          <Grid item xs={12} md={5}>
-            <Form.Item
-              label={t("table.fastpix_redirect_url")}
-              name="fastpix_redirect_url"
-            >
-              <Input
-                disabled
-                size="large"
+              >
+                <Input
+                  size="large"
+                  name="fastpix_webhook_url"
+                  value={body?.fastpix_webhook_url}
+                  onChange={(e) => {
+                    setBody((state) => ({
+                      ...state,
+                      fastpix_webhook_url: e.target.value,
+                    }));
+                    setBodyUpdate((state) => ({
+                      ...state,
+                      fastpix_webhook_url: e.target.value,
+                    }));
+                  }}
+                />
+              </Form.Item>
+            </Grid>
+            <Grid item xs={12} md={5}>
+              <Form.Item
+                label={t("table.fastpix_redirect_url")}
                 name="fastpix_redirect_url"
-                value={body?.fastpix_redirect_url}
-                onChange={(e) => {
-                  setBody((state) => ({
-                    ...state,
-                    fastpix_redirect_url: e.target.value,
-                  }));
-                  setBodyUpdate((state) => ({
-                    ...state,
-                    fastpix_redirect_url: e.target.value,
-                  }));
-                }}
-              />
-            </Form.Item>
-          </Grid>
-          <Grid item xs={12} md={2}>
-            <Form.Item
-              label={t("table.fastpix_token_time")}
-              name="fastpix_token_time"
-            >
-              <InputNumber
-                disabled
-                style={{ width: "100%" }}
-                size="large"
+              >
+                <Input
+                  size="large"
+                  name="fastpix_redirect_url"
+                  value={body?.fastpix_redirect_url}
+                  onChange={(e) => {
+                    setBody((state) => ({
+                      ...state,
+                      fastpix_redirect_url: e.target.value,
+                    }));
+                    setBodyUpdate((state) => ({
+                      ...state,
+                      fastpix_redirect_url: e.target.value,
+                    }));
+                  }}
+                />
+              </Form.Item>
+            </Grid>
+            <Grid item xs={12} md={2}>
+              <Form.Item
+                label={t("table.fastpix_token_time")}
                 name="fastpix_token_time"
-                value={body?.fastpix_token_time}
-                onChange={(value) => {
-                  setBody((state) => ({
-                    ...state,
-                    fastpix_token_time: value ?? 0,
-                  }));
-                  setBodyUpdate((state) => ({
-                    ...state,
-                    fastpix_token_time: value ?? 0,
-                  }));
-                }}
-              />
-            </Form.Item>
+              >
+                <InputNumber
+                  style={{ width: "100%" }}
+                  size="large"
+                  name="fastpix_token_time"
+                  value={body?.fastpix_token_time}
+                  onChange={(value) => {
+                    setBody((state) => ({
+                      ...state,
+                      fastpix_token_time: value ?? 0,
+                    }));
+                    setBodyUpdate((state) => ({
+                      ...state,
+                      fastpix_token_time: value ?? 0,
+                    }));
+                  }}
+                />
+              </Form.Item>
+            </Grid>
           </Grid>
         </Grid>
       </Grid>

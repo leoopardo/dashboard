@@ -230,7 +230,7 @@ export const PreManual = () => {
             })}
         </Grid>
 
-        {!permissions.transactions.merchant?.merchant_pre_manual
+        {permissions.transactions.merchant?.merchant_pre_manual
           ?.merchant_pre_manual_transactions_create && (
           <Grid container item xs={12} md={4} lg={2} rowSpacing={1}>
             <Grid item xs={12}>

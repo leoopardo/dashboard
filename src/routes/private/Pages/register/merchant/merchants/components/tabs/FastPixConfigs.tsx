@@ -5,9 +5,8 @@ import { Grid } from "@mui/material";
 import { useMerchantConfig } from "@src/services/register/merchant/merchant/merchantConfig.tsx/getMerchantConfig";
 import { useUpdateMerchantConfig } from "@src/services/register/merchant/merchant/merchantConfig.tsx/updateMerchantConfig";
 import { IMerchantConfig } from "@src/services/types/register/merchants/merchantConfig.interface";
-import { Button, Form, FormInstance, Input, Popconfirm, Select } from "antd";
+import { Button, Form, FormInstance, Popconfirm } from "antd";
 import { useEffect, useRef, useState } from "react";
-import { CurrencyInput } from "react-currency-mask";
 import { useTranslation } from "react-i18next";
 
 export const FastPixConfigTab = (props: { id?: string }) => {
@@ -52,105 +51,6 @@ export const FastPixConfigTab = (props: { id?: string }) => {
       onSubmitCapture={() => handleSubmit()}
       initialValues={merchantConfigData ?? {}}
     >
-      <Grid container spacing={1}>
-        <Grid item xs={12} md={6}>
-          <Form.Item
-            label={t("input.fastpix_in_permission")}
-            name="fastpix_in_permission"
-          >
-            <Select
-              size="large"
-              options={
-                [true, false]?.map((item, index) => ({
-                  key: index,
-                  value: item,
-                  label: `${t(`table.${item}`)}`,
-                })) ?? []
-              }
-              value={body?.fastpix_in_permission}
-              onChange={(value) => {
-                setBody((state) => ({
-                  ...state,
-                  fastpix_in_permission: value,
-                }));
-                setBodyUpdate((state) => ({
-                  ...state,
-                  fastpix_in_permission: value,
-                }));
-              }}
-            />
-          </Form.Item>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Form.Item label={t("input.fastpix_in_type")} name="fastpix_in_type">
-            <Select
-              size="large"
-              options={
-                ["fixed", "free"]?.map((item, index) => ({
-                  key: index,
-                  value: item,
-                  label: `${t(`table.${item}`)}`,
-                })) ?? []
-              }
-              value={body?.fastpix_in_type}
-              onChange={(value) => {
-                setBody((state) => ({
-                  ...state,
-                  fastpix_in_type: value,
-                }));
-                setBodyUpdate((state) => ({
-                  ...state,
-                  fastpix_in_type: value,
-                }));
-              }}
-            />
-          </Form.Item>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Form.Item
-            label={t("input.fastpix_in_fixed_min_value")}
-            name="fastpix_in_fixed_min_value"
-          >
-            <CurrencyInput
-              onChangeValue={(_event, originalValue) => {
-                setBodyUpdate((state) => ({
-                  ...state,
-                  fastpix_in_fixed_min_value: +originalValue,
-                }));
-              }}
-              InputElement={
-                <Input
-                  size="large"
-                  style={{ width: "100%" }}
-                  value={body?.fastpix_in_fixed_min_value}
-                />
-              }
-            />
-          </Form.Item>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Form.Item
-            label={t("input.fastpix_in_max_value")}
-            name="fastpix_in_max_value"
-          >
-            <CurrencyInput
-              onChangeValue={(_event, originalValue) => {
-                setBodyUpdate((state) => ({
-                  ...state,
-                  fastpix_in_max_value: +originalValue,
-                }));
-              }}
-              InputElement={
-                <Input
-                  size="large"
-                  style={{ width: "100%" }}
-                  value={body?.fastpix_in_max_value}
-                />
-              }
-            />
-          </Form.Item>
-        </Grid>
-      </Grid>
       <Grid
         item
         container

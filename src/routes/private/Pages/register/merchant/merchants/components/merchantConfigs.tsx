@@ -131,7 +131,7 @@ export const MerchantConfigs = () => {
           ? undefined
           : "none",
       },
-      disabled: true
+      disabled: false
     },
   ];
 
