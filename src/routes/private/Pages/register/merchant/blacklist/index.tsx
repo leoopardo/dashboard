@@ -289,6 +289,7 @@ export const MerchantBlacklist = () => {
           selectOptions={{}}
           error={error}
           success={isSuccess}
+          submitText={`${t("buttons.create")}`}
         />
       )}
 
