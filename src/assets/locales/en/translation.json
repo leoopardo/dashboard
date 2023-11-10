@@ -771,6 +771,7 @@
     "fastpix_redirect_url": "FastPix Redirect URL",
     "fastpix_token_time": "FastPix Token Expiration Time",
     "fastpix_in": "FastPix",
+    "fastpix": "FastPix",
     "pixType": "Pix Type",
     "group_name": "Group name",
     "profile_type_name": "profile type",
@@ -816,7 +817,8 @@
     "main_user_name": "Main user name",
     "main_user_username": "Main user username",
     "row": "Row",
-    "pix_type": "Tipo de pix"
+    "pix_type": "Tipo de pix",
+    "standard": "Standard"
   },
   "actions": {
     "details": "Details",
