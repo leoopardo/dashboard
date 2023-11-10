@@ -18,9 +18,9 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import { useLocation, useNavigate } from "react-router-dom";
+import secureLocalStorage from "react-secure-storage";
 import { useMenu } from "../../contexts/SidebarContext";
 import { defaultTheme } from "../../styles/defaultTheme";
-import secureLocalStorage from "react-secure-storage";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -1098,7 +1098,7 @@ export const SidebarNavigation = () => {
               (e) => handleNavigate(e?.keyPath),
               {
                 display: permissions?.transactions?.merchant
-                  ?.pre_manual_transactions?.menu
+                  ?.merchant_pre_manual?.menu
                   ? undefined
                   : "none",
               }
@@ -1111,8 +1111,7 @@ export const SidebarNavigation = () => {
               (e) => handleNavigate(e?.keyPath),
               {
                 display: permissions?.transactions?.merchant
-                  ?.pre_manual_transactions
-                  ?.merchant_pre_manual_transactions_export_csv
+                  ?.merchant_pre_manual?.menu
                   ? undefined
                   : "none",
               }
@@ -1121,8 +1120,8 @@ export const SidebarNavigation = () => {
           false,
           undefined,
           {
-            display: permissions?.transactions?.merchant
-              ?.pre_manual_transactions?.menu
+            display:permissions?.transactions?.merchant?.merchant_pre_manual
+              ?.menu
               ? undefined
               : "none",
           }

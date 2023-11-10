@@ -9,6 +9,8 @@ export function useUpdateMerchant(body: MerchantsItem) {
   >("UpdateMerchant", async () => {
     const response = await api.put("core/merchant/update", body, {});
     await queryClient.refetchQueries({ queryKey: ["MerchantsRegister"] });
+    await queryClient.refetchQueries({ queryKey: ["MerchantsPerBankTotals"] });
+
     return response.data;
   });
 

@@ -3,9 +3,9 @@
 import {
   ArrowDownOutlined,
   ArrowUpOutlined,
-  EyeFilled,
-  EditOutlined,
   DeleteOutlined,
+  EditOutlined,
+  EyeFilled,
 } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
@@ -13,8 +13,16 @@ import { CustomTable } from "@src/components/CustomTable";
 import { FiltersModal } from "@src/components/FiltersModal";
 import { FilterChips } from "@src/components/FiltersModal/filterChips";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
+import { MutateModal } from "@src/components/Modals/mutateGenericModal";
+import { ViewModal } from "@src/components/Modals/viewGenericModal";
 import { Toast } from "@src/components/Toast";
 import { ValidateToken } from "@src/components/ValidateToken";
+import { useApprovePreManualTransaction } from "@src/services/moviments/preManual/approvePreManual";
+import { useCreatePreManualTransaction } from "@src/services/moviments/preManual/createPreManualTransaction";
+import { useCreatePreMerchantManualReports } from "@src/services/moviments/preManual/createReportPreManual";
+import { useDeletePreManualTransaction } from "@src/services/moviments/preManual/deletePreManualTransaction";
+import { useGetPreManualEntry } from "@src/services/moviments/preManual/getPreManual";
+import { useUpdatePreManualTransaction } from "@src/services/moviments/preManual/updatePreManualTransaction";
 import { queryClient } from "@src/services/queryClient";
 import { useGetRowsMerchantManualEntryCategory } from "@src/services/register/merchant/manualEntryCategory/getManualEntryCategory";
 import { CreateMerchantManualTransaction } from "@src/services/types/moviments/merchant/createManualTransaction.interface";
@@ -27,16 +35,8 @@ import { Button, Divider, Statistic } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useGetPreManualEntry } from "@src/services/moviments/preManual/getPreManual";
 import { CreateMovimentModal } from "../components/createMovimentModal";
-import { useCreatePreManualTransaction } from "@src/services/moviments/preManual/createPreManualTransaction";
-import { ViewModal } from "@src/components/Modals/viewGenericModal";
 import { ApproveModal } from "./components/approveModal";
-import { MutateModal } from "@src/components/Modals/mutateGenericModal";
-import { useApprovePreManualTransaction } from "@src/services/moviments/preManual/approvePreManual";
-import { useCreatePreMerchantManualReports } from "@src/services/moviments/preManual/createReportPreManual";
-import { useUpdatePreManualTransaction } from "@src/services/moviments/preManual/updatePreManualTransaction";
-import { useDeletePreManualTransaction } from "@src/services/moviments/preManual/deletePreManualTransaction";
 
 export const PreManual = () => {
   const { t } = useTranslation();
@@ -100,7 +100,7 @@ export const PreManual = () => {
     approvePreManualLoading,
     approvePreManualMutate,
     approvePreManualSuccess,
-    approvePreManualReset
+    approvePreManualReset,
   } = useApprovePreManualTransaction({
     pre_entry_account_ids: selectedRowsId(selectedRows),
     validation_token: tokenState,
@@ -154,8 +154,8 @@ export const PreManual = () => {
   }, [tokenState]);
 
   useEffect(() => {
-    setSelectedRows([])
-  }, [approvePreManualSuccess])
+    setSelectedRows([]);
+  }, [approvePreManualSuccess]);
 
   return (
     <Grid container style={{ padding: "25px" }}>
@@ -165,62 +165,71 @@ export const PreManual = () => {
         xs={12}
         style={{ display: "flex", justifyContent: "center" }}
       >
-        {preManualData &&
-          Object.keys(preManualData).map((key) => {
-            switch (key) {
-              case "total_in_processing":
-              case "total_in_canceled":
-              case "total_in_success":
-                return (
-                  <Grid
-                    key={key}
-                    item
-                    xs={5}
-                    md="auto"
-                    style={{
-                      margin: "10px",
-                    }}
-                  >
-                    <Statistic
-                      valueStyle={{ color: "#3f8600", fontSize: "20px" }}
-                      prefix={<ArrowUpOutlined />}
-                      title={t(`table.${key}`)}
-                      loading={isPreManualDataFetching}
-                      value={new Intl.NumberFormat("pt-BR", {
-                        style: "currency",
-                        currency: "BRL",
-                      }).format(preManualData[key] || 0)}
-                    />
-                  </Grid>
-                );
-              case "total_out_processing":
-              case "total_out_canceled":
-              case "total_out_success":
-                return (
-                  <Grid
-                    key={key}
-                    item
-                    xs={5}
-                    md="auto"
-                    style={{ margin: "10px" }}
-                  >
-                    <Statistic
-                      valueStyle={{ color: "#cf1322", fontSize: "20px" }}
-                      prefix={<ArrowDownOutlined />}
-                      title={t(`table.${key}`)}
-                      loading={isPreManualDataFetching}
-                      value={new Intl.NumberFormat("pt-BR", {
-                        style: "currency",
-                        currency: "BRL",
-                      }).format(preManualData[key] || 0)}
-                    />
-                  </Grid>
-                );
-              default:
-                return;
-            }
-          })}
-        {!permissions.transactions.merchant?.pre_manual_transactions
+        <Grid
+          container
+          item
+          xs={12}
+          md={10}
+          style={{ display: "flex", justifyContent: "space-around" }}
+        >
+          {preManualData &&
+            Object.keys(preManualData).map((key) => {
+              switch (key) {
+                case "total_in_processing":
+                case "total_in_canceled":
+                case "total_in_success":
+                  return (
+                    <Grid
+                      key={key}
+                      item
+                      xs={5}
+                      md="auto"
+                      style={{
+                        margin: "10px",
+                      }}
+                    >
+                      <Statistic
+                        valueStyle={{ color: "#3f8600", fontSize: "20px" }}
+                        prefix={<ArrowUpOutlined />}
+                        title={t(`table.${key}`)}
+                        loading={isPreManualDataFetching}
+                        value={new Intl.NumberFormat("pt-BR", {
+                          style: "currency",
+                          currency: "BRL",
+                        }).format(preManualData[key] || 0)}
+                      />
+                    </Grid>
+                  );
+                case "total_out_processing":
+                case "total_out_canceled":
+                case "total_out_success":
+                  return (
+                    <Grid
+                      key={key}
+                      item
+                      xs={5}
+                      md="auto"
+                      style={{ margin: "10px" }}
+                    >
+                      <Statistic
+                        valueStyle={{ color: "#cf1322", fontSize: "20px" }}
+                        prefix={<ArrowDownOutlined />}
+                        title={t(`table.${key}`)}
+                        loading={isPreManualDataFetching}
+                        value={new Intl.NumberFormat("pt-BR", {
+                          style: "currency",
+                          currency: "BRL",
+                        }).format(preManualData[key] || 0)}
+                      />
+                    </Grid>
+                  );
+                default:
+                  return;
+              }
+            })}
+        </Grid>
+
+        {!permissions.transactions.merchant?.merchant_pre_manual
           ?.merchant_pre_manual_transactions_create && (
           <Grid container item xs={12} md={4} lg={2} rowSpacing={1}>
             <Grid item xs={12}>
@@ -300,8 +309,7 @@ export const PreManual = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        {!permissions.transactions.merchant?.pre_manual_transactions
-          ?.merchant_pre_manual_transactions_export_csv && (
+        {!permissions.transactions.merchant?.merchant_pre_manual?.menu && (
           <Grid item xs={12} md={3} lg={2}>
             <ExportReportsModal
               disabled={!preManualData?.total || preManualDataError}
@@ -314,7 +322,7 @@ export const PreManual = () => {
           </Grid>
         )}
 
-        {!permissions.transactions.merchant?.pre_manual_transactions
+        {!permissions.transactions.merchant?.merchant_pre_manual
           ?.merchant_pre_manual_transactions_approve && (
           <Grid item xs={12} md={3} lg={2}>
             <ApproveModal
@@ -356,7 +364,7 @@ export const PreManual = () => {
                 icon: <EyeFilled style={{ fontSize: "20px" }} />,
                 onClick: () => setIsViewModalOpen(true),
               },
-              !permissions.transactions.merchant?.pre_manual_transactions
+              !permissions.transactions.merchant?.merchant_pre_manual
                 ?.merchant_pre_manual_transactions_update && {
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
