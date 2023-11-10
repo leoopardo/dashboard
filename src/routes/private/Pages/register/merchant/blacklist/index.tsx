@@ -84,6 +84,17 @@ export const MerchantBlacklist = () => {
   ];
 
   useEffect(() => {
+    if (!isUpdateModalOpen) {
+      setBody({
+        cpf: "",
+        reason: "",
+        description: "",
+        can_be_deleted_only_by_organization: true,
+      });
+    }
+  }, [isUpdateModalOpen]);
+
+  useEffect(() => {
     refetchMerchantBlacklistData();
   }, [query]);
 
