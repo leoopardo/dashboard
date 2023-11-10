@@ -10,7 +10,6 @@ import { FeesTab } from "./tabs/fees";
 import { IpsConfigTab } from "./tabs/ips";
 import { MerchantConfigTab } from "./tabs/merchantConfigTab";
 import { OrganizationConfigTab } from "./tabs/organizationConfigTab";
-import { FastPixConfigTab } from "./tabs/FastPixConfigs";
 
 export const MerchantConfigs = () => {
   const { permissions } = queryClient.getQueryData(
@@ -45,11 +44,12 @@ export const MerchantConfigs = () => {
   };
 
   const initialItems = (items: TabsProps["items"]) => {
-   const currentItems= items?.filter((item) => item?.style?.display !== "none");
+    const currentItems = items?.filter(
+      (item) => item?.style?.display !== "none"
+    );
 
-   return currentItems
-
-  }
+    return currentItems;
+  };
 
   const items: TabsProps["items"] = [
     {
@@ -122,16 +122,6 @@ export const MerchantConfigs = () => {
           : "none",
       },
       disabled: !permissions.register.merchant.merchant.merchant_config_ips,
-    }, {
-      key: "7",
-      label: "FastPix",
-      children: <FastPixConfigTab id={params.id} />,
-      style: {
-        display: permissions.register.merchant.merchant.merchant_config_ips
-          ? undefined
-          : "none",
-      },
-      disabled: false
     },
   ];
 
