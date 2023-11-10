@@ -287,7 +287,8 @@
     "report_details": "Detalhes do relatório",
     "new_responsible": "Novo responsável",
     "update_responsible": "Editar responsável",
-    "update_merchant": "Editar empresa"
+    "update_merchant": "Editar empresa",
+    "pre_manual": "Pre lançamento manual"
   },
   "input": {
     "required": "Por favor, insira o {{field}}",
