@@ -12,29 +12,21 @@ import {
   MerchantBalanceQuery,
 } from "@src/services/types/consult/merchant/balance";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { defaultTheme } from "@src/styles/defaultTheme";
-import {
-  Button,
-  Card,
-  Divider,
-  Spin,
-  Statistic,
-  Table,
-  TableColumnsType,
-  Tooltip,
-} from "antd";
+import { Button, Divider, Spin, Table, TableColumnsType, Tooltip } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
-import { MerchantBalanceChart } from "./components/TotalizerChart";
+import { MerchantBalance as MerchantBalanceTotals } from "../../../dashboard/components/merchantBalance";
 
 export const MerchantBalance = () => {
-  const { permissions } = queryClient.getQueryData(
+  const { t } = useTranslation();
+  const { permissions, type, merchant_id } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
   const INITIAL_QUERY: MerchantBalanceQuery = {
     page: 1,
     limit: 25,
+    merchant_id: type === 3 ? merchant_id : undefined,
   };
   const [query, setQuery] = useState<MerchantBalanceQuery>(INITIAL_QUERY);
   const [expanded, setExpanded] = useState<string[]>([]);
@@ -45,9 +37,8 @@ export const MerchantBalance = () => {
     refetchMerchantBalance,
     MerchantBalanceError,
   } = useGetMerchantBalance(query);
-  const [, setCurrentItem] = useState<MerchantBalanceItem | null>();
 
-  const { t } = useTranslation();
+  const [, setCurrentItem] = useState<MerchantBalanceItem | null>();
 
   useEffect(() => {
     refetchMerchantBalance();
@@ -105,7 +96,9 @@ export const MerchantBalance = () => {
         <Tooltip title={t("table.refetch_data")}>
           <Button
             type="link"
-            onClick={refetchMerchantBalance}
+            onClick={() => {
+              queryClient.invalidateQueries();
+            }}
             style={{
               width: "100%",
               display: "flex",
@@ -233,151 +226,54 @@ export const MerchantBalance = () => {
 
   return (
     <Grid container style={{ padding: "25px" }}>
-      <Grid
-        container
-        spacing={1}
-        style={{ display: "flex", justifyContent: "center" }}
-      >
-        <Grid
-          item
-          xs={12}
-          md={1}
-          style={{
-            minWidth: "120px",
-            minHeight: "120px",
-            marginRight: !isMobile ? "15px" : 0,
-          }}
-        >
-          <MerchantBalanceChart items={MerchantBalance} />
-        </Grid>
-        <Grid item xs={12} md="auto">
-          <Card bordered={false}>
-            <Statistic
-              loading={isMerchantBalanceFetching}
-              title={t("table.balance_to_transactions")}
-              value={new Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(
-                MerchantBalance?.balance_to_transactions_total ??
-                  MerchantBalance?.balance_to_transactions ??
-                  0
-              )}
-              precision={0}
-              valueStyle={{ color: "#006086", fontSize: "16px" }}
-            />
-          </Card>
-        </Grid>
-        <Grid item xs={12} md="auto">
-          <Card bordered={false}>
-            <Statistic
-              loading={isMerchantBalanceFetching}
-              title={t("table.balance_to_payment")}
-              value={new Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(
-                MerchantBalance?.balance_to_payment_total ??
-                  MerchantBalance?.balance_to_payment ??
-                  0
-              )}
-              precision={2}
-              valueStyle={{
-                color: defaultTheme.colors.warnning,
-                fontSize: "16px",
-              }}
-            />
-          </Card>
-        </Grid>
-        <Grid item xs={12} md="auto">
-          <Card bordered={false}>
-            <Statistic
-              loading={isMerchantBalanceFetching}
-              title={t("table.balance_reserved")}
-              value={new Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(
-                MerchantBalance?.balance_reserved_total ??
-                  MerchantBalance?.balance_reserved ??
-                  0
-              )}
-              precision={2}
-              valueStyle={{
-                color: defaultTheme.colors.error,
-                fontSize: "16px",
-              }}
-            />
-          </Card>
-        </Grid>
-        <Grid item xs={12} md="auto">
-          <Card bordered={false}>
-            <Statistic
-              loading={isMerchantBalanceFetching}
-              title={t("table.balance_total")}
-              value={new Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(
-                (MerchantBalance?.balance_reserved_total ??
-                  MerchantBalance?.balance_reserved ??
-                  0) +
-                  (MerchantBalance?.balance_to_payment_total ??
-                    MerchantBalance?.balance_to_payment ??
-                    0) +
-                  (MerchantBalance?.balance_to_transactions_total ??
-                    MerchantBalance?.balance_to_transactions ??
-                    0)
-              )}
-              precision={2}
-              valueStyle={{
-                color: defaultTheme.colors.paid,
-                fontSize: "16px",
-              }}
-            />
-          </Card>
-        </Grid>
+      <Grid xs={12}>
+        <MerchantBalanceTotals customQuery={query} />
       </Grid>
       <Grid item xs={12}>
         <Divider />
       </Grid>
 
-      <Grid
-        container
-        style={{
-          display: "flex",
-          alignItems: "center",
-          marginBottom: "20px",
-        }}
-        spacing={1}
-      >
-        {permissions.register.merchant.merchant.merchant_list && (
-          <Grid item xs={12} md={4} lg={2}>
-            <MerchantSelect queryOptions={query} setQueryFunction={setQuery} />
-          </Grid>
-        )}
+      {type !== 3 && (
+        <Grid
+          container
+          style={{
+            display: "flex",
+            alignItems: "center",
+            marginBottom: "20px",
+          }}
+          spacing={1}
+        >
+          {permissions.register.merchant.merchant.merchant_list && (
+            <Grid item xs={12} md={4} lg={2}>
+              <MerchantSelect
+                queryOptions={query}
+                setQueryFunction={setQuery}
+              />
+            </Grid>
+          )}
 
-        <Grid item xs={12} md={6} lg={8}>
-          <FilterChips
-            startDateKeyName="start_date"
-            endDateKeyName="end_date"
-            query={query}
-            setQuery={setQuery}
-          />
+          <Grid item xs={12} md={6} lg={8}>
+            <FilterChips
+              startDateKeyName="start_date"
+              endDateKeyName="end_date"
+              query={query}
+              setQuery={setQuery}
+            />
+          </Grid>
+          <Grid item xs={12} md={2} lg={2}>
+            <Button
+              style={{ width: "100%" }}
+              size="large"
+              type="dashed"
+              danger
+              loading={isMerchantBalanceFetching}
+              onClickCapture={() => setQuery(INITIAL_QUERY)}
+            >
+              {t("table.clear_filters")}
+            </Button>
+          </Grid>
         </Grid>
-        <Grid item xs={12} md={2} lg={2}>
-          <Button
-            style={{ width: "100%" }}
-            size="large"
-            type="dashed"
-            danger
-            loading={isMerchantBalanceFetching}
-            onClickCapture={() => setQuery(INITIAL_QUERY)}
-          >
-            {t("table.clear_filters")}
-          </Button>
-        </Grid>
-      </Grid>
+      )}
 
       <Grid
         container

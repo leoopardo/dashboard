@@ -1,11 +1,18 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { EditOutlined, EyeFilled, UserAddOutlined } from "@ant-design/icons";
+import {
+  EditOutlined,
+  EyeFilled,
+  FileAddOutlined,
+  UserAddOutlined,
+} from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { Search } from "@src/components/Inputs/search";
+import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
 import { Toast } from "@src/components/Toast";
@@ -14,17 +21,19 @@ import { useCreateOperator } from "@src/services/register/operator/createOperato
 import { useGetOperator } from "@src/services/register/operator/getOperators";
 import { useGetOperatorTotal } from "@src/services/register/operator/getOperatorsTotal";
 import { useUpdateOperator } from "@src/services/register/operator/updateOperator";
+import { useCreateOperatorReports } from "@src/services/reports/register/operator/createOperatorReports";
+import { useGetOperatorsReportFields } from "@src/services/reports/register/operator/getOperatorReportFields";
 import {
   OperatorItem,
   OperatorQuery,
 } from "@src/services/types/register/operators/operators.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button } from "antd";
+import { Button, Tooltip } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useMediaQuery } from "react-responsive";
 import { useNavigate } from "react-router-dom";
 import { TotalizersCards } from "./components/totalizersCards";
-import { useMediaQuery } from "react-responsive";
 
 const INITIAL_QUERY: OperatorQuery = {
   limit: 25,
@@ -80,6 +89,22 @@ export const Operators = () => {
   } = useCreateOperator(createBody);
 
   const { UpdateError, UpdateIsSuccess } = useUpdateOperator(updateBody);
+
+  const [csvFields, setCsvFields] = useState<any>();
+  const [comma, setIsComma] = useState<boolean>(false);
+  const {
+    OperatorReportsError,
+    OperatorReportsIsLoading,
+    OperatorReportsIsSuccess,
+    OperatorReportsMutate,
+  } = useCreateOperatorReports({
+    fields: csvFields,
+    comma_separate_value: comma,
+  });
+
+  const { fields } = useGetOperatorsReportFields();
+  const [isExportReportsOpen, setIsExportReportsOpen] =
+    useState<boolean>(false);
 
   const columns: ColumnInterface[] = [
     { name: "id", type: "id", sort: true },
@@ -183,7 +208,31 @@ export const Operators = () => {
             </Button>
           </Grid>
         )}
-
+        {permissions.register.paybrokers.users.paybrokers_user_export_csv && (
+          <Grid item xs={12} md="auto">
+            <Tooltip
+              placement="topRight"
+              title={
+                OperatorData?.total === 0 || OperatorDataError
+                  ? t("messages.no_records_to_export")
+                  : t("messages.export_csv")
+              }
+              arrow
+            >
+              <Button
+                onClick={() => setIsExportReportsOpen(true)}
+                style={{ width: "100%" }}
+                shape="round"
+                type="dashed"
+                size="large"
+                loading={isOperatorDataFetching}
+                disabled={OperatorData?.total === 0 || OperatorDataError}
+              >
+                <FileAddOutlined style={{ fontSize: 22 }} /> CSV
+              </Button>
+            </Tooltip>
+          </Grid>
+        )}
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -276,6 +325,22 @@ export const Operators = () => {
         actionError={t("messages.create")}
         error={OperatorError}
         success={OperatorIsSuccess}
+      />
+      <ExportCustomReportsModal
+        open={isExportReportsOpen}
+        setOpen={setIsExportReportsOpen}
+        disabled={OperatorData?.total === 0 || OperatorDataError}
+        mutateReport={() => OperatorReportsMutate()}
+        error={OperatorReportsError}
+        success={OperatorReportsIsSuccess}
+        loading={OperatorReportsIsLoading}
+        reportPath="/register/operator/operator_reports/operator_operators_reports"
+        fields={fields}
+        csvFields={csvFields}
+        comma={comma}
+        setIsComma={setIsComma}
+        setCsvFields={setCsvFields}
+        reportName="Operators"
       />
     </Grid>
   );

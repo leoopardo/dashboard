@@ -88,11 +88,9 @@ export const UpdateUserModal = ({
       setUpdateBody(body);
       setCurrentUser(null);
       setIsValidateTokenOpen(true);
-      setOpen(false);
       return;
     }
     mutate();
-    setOpen(false);
     setBody({});
   }
 
@@ -102,6 +100,15 @@ export const UpdateUserModal = ({
       organization_id: responseValidate?.organization_id,
     }));
   }, [responseValidate]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      setOpen(false);
+      reset();
+    }
+  }, [isSuccess]);
+
+  console.log(error);
 
   useEffect(() => {
     if (currentUser && action === "update")
@@ -332,7 +339,11 @@ export const UpdateUserModal = ({
               message:
                 t("input.required(a)", { field: t("input.password") }) || "",
             },
-            { min: 8, message: t("input.min_of", { min: 8 }) || "" },
+            {
+              pattern:
+                /^(?=.*[0-9])(?=.*[A-Z])(?=.*[!@#$%^&*()_+])[0-9a-zA-Z!@#$%^&*()_+]*$/,
+              message: `${t("input.password_type")}`,
+            },
             ({ getFieldValue }) => ({
               validator(_, value) {
                 if (!value || getFieldValue("confirmPasswprd") === value) {
@@ -355,7 +366,7 @@ export const UpdateUserModal = ({
           />
         </Form.Item>
         <Form.Item
-          label={t(`table.password`)}
+          label={t(`table.confirm_password`)}
           name="confirmPasswprd"
           dependencies={["password"]}
           style={{ margin: 10 }}
@@ -394,6 +405,11 @@ export const UpdateUserModal = ({
       <Toast
         actionSuccess={t("messages.created")}
         actionError={t("messages.create")}
+        errorMessage={
+          (error as any)?.response?.data?.message === "INVALID USER"
+            ? `${t(`error.INVALID_USER`)}`
+            : undefined
+        }
         error={error}
         success={isSuccess}
       />

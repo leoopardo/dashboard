@@ -38,7 +38,7 @@ export const SidebarNavigation = () => {
 
   const [isMenuTourOpen, setIsMenuTourOpen] = useState(true);
 
-  const { permissions } = queryClient.getQueryData(
+  const { permissions, type } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
   const [active, setActive] = useState<string>(
@@ -82,7 +82,7 @@ export const SidebarNavigation = () => {
       disabled,
       onClick,
       style,
-      theme
+      theme,
     } as MenuItem;
   }
 
@@ -543,19 +543,18 @@ export const SidebarNavigation = () => {
                   : "none",
               }
             ),
-
-            getItem(
-              "manual_entry_category",
-              null,
-              null,
-              false,
-              (e) => handleNavigate(e?.keyPath),
-              {
-                display: permissions?.register?.merchant?.release_category?.menu
-                  ? undefined
-                  : "none",
-              }
-            ),
+            // getItem(
+            //   "manual_entry_category",
+            //   null,
+            //   null,
+            //   false,
+            //   (e) => handleNavigate(e?.keyPath),
+            //   {
+            //     display: permissions?.register?.merchant?.release_category?.menu
+            //       ? undefined
+            //       : "none",
+            //   }
+            // ),
             getItem(
               "fee_plans",
               null,
@@ -614,7 +613,8 @@ export const SidebarNavigation = () => {
                 false,
                 (e) => handleNavigate(e?.keyPath),
                 {
-                  display: permissions?.register?.merchant?.black_list_reason.menu
+                  display: permissions?.register?.merchant?.black_list_reason
+                    .menu
                     ? undefined
                     : "none",
                 }
@@ -840,7 +840,18 @@ export const SidebarNavigation = () => {
         ),
       ],
       undefined,
-      undefined
+      undefined,
+      {
+        display:
+          permissions?.register?.aggregator.menu ||
+          permissions?.register?.merchant.menu ||
+          permissions?.register?.operator.menu ||
+          permissions?.register?.partner.menu ||
+          permissions?.register?.paybrokers.menu ||
+          permissions?.register?.person.menu
+            ? undefined
+            : "none",
+      }
     ),
     // - MOVIMENTAÇÕES
     getItem(
@@ -1002,10 +1013,11 @@ export const SidebarNavigation = () => {
               false,
               (e) => handleNavigate(e?.keyPath),
               {
-                display: permissions?.transactions?.merchant
-                  ?.manual_transactions?.menu
-                  ? undefined
-                  : "none",
+                display:
+                  permissions?.transactions?.merchant?.manual_transactions
+                    ?.menu && type !== 3
+                    ? undefined
+                    : "none",
               }
             ),
 
@@ -1075,16 +1087,54 @@ export const SidebarNavigation = () => {
           }
         ),
         getItem(
+          "pre_manual",
+          null,
+          [
+            getItem(
+              "pre_manual",
+              null,
+              null,
+              false,
+              (e) => handleNavigate(e?.keyPath),
+              {
+                display: permissions?.transactions?.merchant
+                  ?.pre_manual_transactions?.menu
+                  ? undefined
+                  : "none",
+              }
+            ),
+            getItem(
+              "reports",
+              null,
+              null,
+              false,
+              (e) => handleNavigate(e?.keyPath),
+              {
+                display: permissions?.transactions?.merchant
+                  ?.pre_manual_transactions
+                  ?.merchant_pre_manual_transactions_export_csv
+                  ? undefined
+                  : "none",
+              }
+            ),
+          ],
+          false,
+          undefined,
+          {
+            display: permissions?.transactions?.merchant
+              ?.pre_manual_transactions?.menu
+              ? undefined
+              : "none",
+          }
+        ),
+        getItem(
           "merchant_transfers",
           null,
           null,
           false,
           (e) => handleNavigate(e?.keyPath),
           {
-            display: permissions?.transactions?.merchant?.manual_transactions
-              ?.menu
-              ? undefined
-              : "none",
+            display: type !== 3 ? undefined : "none",
           }
         ),
       ],
@@ -1729,7 +1779,7 @@ export const SidebarNavigation = () => {
             display: permissions?.support?.blacklist?.menu ? undefined : "none",
           }
         ),
-       /*  getItem("Wiki", null, null, false, () => {
+        /*  getItem("Wiki", null, null, false, () => {
           window.open("https://wiki-v4.paybrokers.info/");
         }), */
       ],
@@ -1813,7 +1863,7 @@ export const SidebarNavigation = () => {
         disabledOverflow
         translate="yes"
         mode="inline"
-        theme={import.meta.env.VITE_APP_MENU_THEME}
+        theme={theme === "dark" ? "dark" : import.meta.env.VITE_APP_MENU_THEME}
         inlineCollapsed={!isSidebarOpen}
         items={items}
       />

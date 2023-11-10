@@ -28,14 +28,22 @@ export const FilterChips = ({
   disabled,
 }: FilterChipsProps) => {
   const { t } = useTranslation();
-  const merchants = queryClient.getQueryData(
+  const [merchants, setMerchants] = useState<MerchantsResponse | undefined>();
+  const [partners, setPartners] = useState<PartnersResponse | undefined>();
+  const [aggregators, setAggregators] = useState<
+    PartnersResponse | undefined
+  >();
+  const [operators, setOperators] = useState<PartnersResponse | undefined>();
+  const currentMerchant = queryClient.getQueryData(
     "MerchantList"
   ) as MerchantsResponse;
-  const partners = queryClient.getQueryData("listPartners") as PartnersResponse;
-  const aggregators = queryClient.getQueryData(
+  const currentPartners = queryClient.getQueryData(
+    "listPartners"
+  ) as PartnersResponse;
+  const currentAggregators = queryClient.getQueryData(
     "listAggregator"
   ) as AggregatorsResponse;
-  const operators = queryClient.getQueryData(
+  const currentOperators = queryClient.getQueryData(
     "listOperators"
   ) as OperatorsResponse;
 
@@ -47,6 +55,24 @@ export const FilterChips = ({
       setQuery(q);
     }
   };
+
+  useEffect(() => {
+    if (currentMerchant?.items.length > 0) {
+      setMerchants(currentMerchant);
+    }
+
+    if (currentPartners?.items.length > 0) {
+      setPartners(currentPartners);
+    }
+
+    if (currentAggregators?.items.length > 0) {
+      setAggregators(currentAggregators);
+    }
+
+    if (currentOperators?.items.length > 0) {
+      setOperators(currentOperators);
+    }
+  }, [currentMerchant, currentPartners, currentAggregators, currentOperators]);
 
   useEffect(() => {
     const q = { ...query };
@@ -203,7 +229,7 @@ export const FilterChips = ({
                   {t(`table.partner`)}:{" "}
                   {partners?.items?.find(
                     (part) => part.id === filtersQuery?.partner_id
-                  )?.name ?? "-"}
+                  )?.name ?? filtersQuery?.partner_id}
                 </Tag>
               </Col>
             );

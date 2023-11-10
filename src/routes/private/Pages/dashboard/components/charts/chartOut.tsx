@@ -1,13 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { PieChartOutlined, SmallDashOutlined } from "@ant-design/icons";
-import { useTheme } from "@src/contexts/ThemeContext";
 import { useGetTotalGeneratedWithdrawals } from "@src/services/consult/withdrawals/generatedWithdrawals/getTotal";
 import { generatedWithdrawalsRowsQuery } from "@src/services/types/consult/withdrawals/generatedWithdrawals.interface";
-import { Button, Card, Col, Empty, Row, Spin, Typography } from "antd";
-import { useState } from "react";
-import { Doughnut } from "react-chartjs-2";
+import { Card, Col, Typography } from "antd";
+import ReactECharts from "echarts-for-react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useMediaQuery } from "react-responsive";
 
 interface ChartInInterface {
   query: any;
@@ -15,178 +13,22 @@ interface ChartInInterface {
 
 export const ChartOut = ({ query }: ChartInInterface) => {
   const { t } = useTranslation();
-  const [oneByOne, setOneByOne] = useState<boolean>(false);
-  const isMobile = useMediaQuery({ maxWidth: "750px" });
-  const [formatedQuery] =
-    useState<generatedWithdrawalsRowsQuery>({
-      ...query,
-      start_date: undefined,
-      end_date: undefined,
-      initial_date: query?.start_date,
-      final_date: query?.end_date,
-    });
+  const [formatedQuery] = useState<generatedWithdrawalsRowsQuery>({
+    ...query,
+    start_date: undefined,
+    end_date: undefined,
+    initial_date: query?.start_date,
+    final_date: query?.end_date,
+  });
 
-
-  const { WithdrawalsTotal, isWithdrawalsTotalFetching } =
-    useGetTotalGeneratedWithdrawals(formatedQuery);
-  const { theme } = useTheme();
-
-
-  const data = {
-    labels: [
-      `${t("table.paid")}: ${new Intl.NumberFormat("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-      }).format(WithdrawalsTotal?.paid_value || 0)}`,
-      `${t("table.canceled")}: ${new Intl.NumberFormat("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-      }).format(WithdrawalsTotal?.canceled_value || 0)}`,
-      `${t("table.pending")}: ${new Intl.NumberFormat("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-      }).format(WithdrawalsTotal?.pending_value || 0)}`,
-      `${t("table.processing")}: ${new Intl.NumberFormat("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-      }).format(WithdrawalsTotal?.processing_value || 0)}`,
-    ],
-    datasets: [
-      {
-        label: "",
-        data: [
-          WithdrawalsTotal?.paid_value,
-          WithdrawalsTotal?.canceled_value,
-          WithdrawalsTotal?.pending_value,
-          WithdrawalsTotal?.processing_value,
-        ],
-        backgroundColor: [
-          "rgba(75, 192, 192, 0.2)",
-          "rgba(255, 99, 132, 0.2)",
-          "rgba(255, 226, 99, 0.2)",
-          "rgba(255, 169, 99, 0.2)",
-        ],
-        borderColor: [
-          "rgba(75, 192, 192, 1)",
-          "rgba(255, 99, 132, 1)",
-          "rgba(255, 226, 99, 0.966)",
-          "rgb(255, 169, 99)",
-        ],
-        borderWidth: 1,
-      },
-    ],
-  };
-
-  const paid = {
-    labels: [
-      `${t("table.paid")}: ${new Intl.NumberFormat("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-      }).format(WithdrawalsTotal?.paid_value || 0)}`,
-    ],
-    datasets: [
-      {
-        label: "",
-        data: [
-          WithdrawalsTotal?.paid_value || 0,
-          `${
-            (WithdrawalsTotal?.canceled_value || 0) +
-            (WithdrawalsTotal?.pending_value || 0) +
-            (WithdrawalsTotal?.processing_value || 0)
-          }`,
-        ],
-        backgroundColor: [
-          "rgba(75, 192, 192, 0.2)",
-          "rgba(182, 182, 182, 0.2)",
-        ],
-        borderColor: ["rgba(75, 192, 192, 1)", "rgb(182, 182, 182)"],
-        borderWidth: 1,
-      },
-    ],
-  };
-
-  const canceled = {
-    labels: [
-      `${t("table.canceled")}: ${new Intl.NumberFormat("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-      }).format(WithdrawalsTotal?.canceled_value || 0)}`,
-    ],
-    datasets: [
-      {
-        label: "",
-        data: [
-          WithdrawalsTotal?.canceled_value || 0,
-          `${
-            (WithdrawalsTotal?.paid_value || 0) +
-            (WithdrawalsTotal?.pending_value || 0) +
-            (WithdrawalsTotal?.processing_value || 0)
-          }`,
-        ],
-        backgroundColor: [
-          "rgba(255, 99, 132, 0.2)",
-          "rgba(182, 182, 182, 0.2)",
-        ],
-        borderColor: ["rgba(255, 99, 132, 1)", "rgb(182, 182, 182)"],
-        borderWidth: 1,
-      },
-    ],
-  };
-
-  const waiting = {
-    labels: [
-      `${t("table.pending")}: ${new Intl.NumberFormat("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-      }).format(WithdrawalsTotal?.pending_value || 0)}`,
-    ],
-    datasets: [
-      {
-        label: "",
-        data: [
-          WithdrawalsTotal?.pending_value || 0,
-          `${
-            (WithdrawalsTotal?.paid_value || 0) +
-            (WithdrawalsTotal?.canceled_value || 0) +
-            (WithdrawalsTotal?.processing_value || 0)
-          }`,
-        ],
-        backgroundColor: [
-          "rgba(255, 226, 99, 0.2)",
-          "rgba(182, 182, 182, 0.2)",
-        ],
-        borderColor: ["rgba(255, 226, 99, 0.966)", "rgb(182, 182, 182)"],
-        borderWidth: 1,
-      },
-    ],
-  };
-  const notPaid = {
-    labels: [
-      `${t("table.processing")}: ${new Intl.NumberFormat("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-      }).format(WithdrawalsTotal?.processing_value || 0)}`,
-    ],
-    datasets: [
-      {
-        label: "",
-        data: [
-          WithdrawalsTotal?.processing_value || 0,
-          `${
-            (WithdrawalsTotal?.paid_value || 0) +
-            (WithdrawalsTotal?.canceled_value || 0) +
-            (WithdrawalsTotal?.pending_value || 0)
-          }`,
-        ],
-        backgroundColor: [
-          "rgba(255, 169, 99, 0.2)",
-          "rgba(182, 182, 182, 0.2)",
-        ],
-        borderColor: ["rgb(255, 169, 99)", "rgb(182, 182, 182)"],
-        borderWidth: 1,
-      },
-    ],
-  };
+  const {
+    WithdrawalsTotal,
+    isWithdrawalsTotalFetching,
+    refetchWithdrawalsTotal,
+  } = useGetTotalGeneratedWithdrawals(formatedQuery);
+  useEffect(() => {
+    refetchWithdrawalsTotal();
+  }, [query]);
 
   return (
     <Col xs={{ span: 24 }} md={{ span: 12 }}>
@@ -200,185 +42,88 @@ export const ChartOut = ({ query }: ChartInInterface) => {
             }}
           >
             <Typography.Title level={5}>
-              {t("table.withdraw_conversion")}
+              {t("table.withdraw_conversion")}:{" "}
+              {new Intl.NumberFormat("pt-BR", {
+                style: "currency",
+                currency: "BRL",
+              }).format(Number(WithdrawalsTotal?.transaction_value) || 0)}
             </Typography.Title>
-
-            <Button
-              shape="circle"
-              onClick={() => setOneByOne((state) => !state)}
-            >
-              {oneByOne ? <PieChartOutlined /> : <SmallDashOutlined />}
-            </Button>
           </div>
         }
-        bodyStyle={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
       >
-        {isWithdrawalsTotalFetching ? (
-          <Spin />
-        ) : (
-          <>
-            {Number(WithdrawalsTotal?.paid_value || 0) > 0 ||
-            Number(WithdrawalsTotal?.canceled_value || 0) > 0 ||
-            Number(WithdrawalsTotal?.pending_value || 0) > 0 ||
-            Number(WithdrawalsTotal?.processing_value || 0) > 0 ? (
-              <Row>
-                {!oneByOne ? (
-                  <Col
-                    span={24}
-                    style={{ display: "flex", justifyContent: "center" }}
-                  >
-                    <Doughnut
-                      data={data}
-                      style={{
-                        maxWidth: "300px",
-                        maxHeight: "300px",
-                        minHeight: !isMobile ? "300px" : undefined,
-                        minWidth: !isMobile ? "300px" : undefined,
-                      }}
-                      options={{
-                        plugins: {
-                          legend: {
-                            align: "center",
-                            position: "top",
-                            labels: {
-                              textAlign: "center",
-                              usePointStyle: true,
-                              color: theme === "dark" ? "#fff" : "#000",
-                            },
-                          },
-                        },
-                        cutout: "80%",
-                      }}
-                    />
-                    <Typography.Title
-                      level={5}
-                      style={{
-                        position: "absolute",
-                        top: 173,
-                        maxWidth: "110px",
-                        textAlign: "center",
-                      }}
-                    >
-                      {new Intl.NumberFormat("pt-BR", {
-                        style: "currency",
-                        currency: "BRL",
-                      }).format(WithdrawalsTotal?.transaction_value || 0)}
-                    </Typography.Title>
-                  </Col>
-                ) : (
-                  <>
-                    <Col
-                      xs={{ span: 24 }}
-                      md={{ span: 6 }}
-                      style={{ display: "flex", justifyContent: "center" }}
-                    >
-                      <Doughnut
-                        data={paid}
-                        style={{ maxWidth: "350px", maxHeight: "350px" }}
-                        options={{
-                          plugins: {
-                            legend: {
-                              align: "center",
-                              position: "top",
-                              labels: {
-                                textAlign: "center",
-                                usePointStyle: true,
-                                font: { size: 10 },
-                                color: theme === "dark" ? "#fff" : "#000",
-                              },
-                            },
-                          },
-                          cutout: "80%",
-                        }}
-                      />
-                    </Col>
-                    <Col
-                      xs={{ span: 24 }}
-                      md={{ span: 6 }}
-                      style={{ display: "flex", justifyContent: "center" }}
-                    >
-                      <Doughnut
-                        data={canceled}
-                        style={{ maxWidth: "350px", maxHeight: "350px" }}
-                        options={{
-                          plugins: {
-                            legend: {
-                              align: "center",
-                              position: "top",
-                              labels: {
-                                textAlign: "center",
-                                usePointStyle: true,
-                                font: { size: 10 },
-                                color: theme === "dark" ? "#fff" : "#000",
-                              },
-                            },
-                          },
-                          cutout: "80%",
-                        }}
-                      />
-                    </Col>
-                    <Col
-                      xs={{ span: 24 }}
-                      md={{ span: 6 }}
-                      style={{ display: "flex", justifyContent: "center" }}
-                    >
-                      <Doughnut
-                        data={waiting}
-                        style={{ maxWidth: "350px", maxHeight: "350px" }}
-                        options={{
-                          plugins: {
-                            legend: {
-                              align: "center",
-                              position: "top",
-                              labels: {
-                                textAlign: "center",
-                                usePointStyle: true,
-                                font: { size: 10 },
-                                color: theme === "dark" ? "#fff" : "#000",
-                              },
-                            },
-                          },
-                          cutout: "80%",
-                        }}
-                      />
-                    </Col>
-                    <Col
-                      xs={{ span: 24 }}
-                      md={{ span: 6 }}
-                      style={{ display: "flex", justifyContent: "center" }}
-                    >
-                      <Doughnut
-                        data={notPaid}
-                        style={{ maxWidth: "350px", maxHeight: "350px" }}
-                        options={{
-                          plugins: {
-                            legend: {
-                              align: "center",
-                              position: "top",
-                              labels: {
-                                textAlign: "center",
-                                usePointStyle: true,
-                                font: { size: 9 },
-                                color: theme === "dark" ? "#fff" : "#000",
-                              },
-                            },
-                          },
-                          cutout: "80%",
-                        }}
-                      />
-                    </Col>
-                  </>
-                )}
-              </Row>
-            ) : (
-              <Empty description={t("table.empty_conversion")} />
-            )}{" "}
-          </>
-        )}
+        <ReactECharts
+          option={{
+            tooltip: {
+              trigger: "item",
+            },
+            legend: {
+              orient: "vertical",
+              left: "right",
+              show: false,
+            },
+            series: [
+              {
+                name: t("table.deposit_conversion"),
+                type: "pie",
+                radius: "50%",
+                data: [
+                  {
+                    value: WithdrawalsTotal?.paid_value ?? 0,
+                    name: `${t("table.paid")}: ${
+                      WithdrawalsTotal?.paid_total ?? 0
+                    }`,
+                  },
+                  {
+                    value: WithdrawalsTotal?.withdraw_refunded_value ?? 0,
+                    name: `${t("table.refunded")}: ${
+                      WithdrawalsTotal?.withdraw_refunded_total ?? 0
+                    }`,
+                  },
+                  {
+                    value: WithdrawalsTotal?.canceled_value ?? 0,
+                    name: `${t("table.canceled")}: ${
+                      WithdrawalsTotal?.canceled_total ?? 0
+                    }`,
+                  },
+                  {
+                    value: WithdrawalsTotal?.processing_value ?? 0,
+                    name: `${t("table.processing")}: ${
+                      WithdrawalsTotal?.processing_total ?? 0
+                    }`,
+                  },
+                  {
+                    value: WithdrawalsTotal?.pending_value ?? 0,
+                    name: `${t("table.wainting")}: ${
+                      WithdrawalsTotal?.pending_total ?? 0
+                    }`,
+                  },
+                  {
+                    value: WithdrawalsTotal?.in_analysis_value ?? 0,
+                    name: `${t("table.in_analysis")}: ${
+                      WithdrawalsTotal?.in_analysis_total ?? 0
+                    }`,
+                  },
+                  {
+                    value: WithdrawalsTotal?.created_value ?? 0,
+                    name: `${t("table.created")}: ${
+                      WithdrawalsTotal?.created_total ?? 0
+                    }`,
+                  },
+                ],
+                emphasis: {
+                  itemStyle: {
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowColor: "rgba(0, 0, 0, 0.5)",
+                  },
+                },
+              },
+            ],
+          }}
+          opts={{ renderer: "svg" }}
+          lazyUpdate
+          showLoading={isWithdrawalsTotalFetching}
+        />
       </Card>
     </Col>
   );

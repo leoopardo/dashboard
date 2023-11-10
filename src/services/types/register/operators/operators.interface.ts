@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface OperatorQuery {
   operator_id?: number;
   start_date?: string;
@@ -9,8 +10,10 @@ export interface OperatorQuery {
   responsible_name?: string;
   sort_order?: string;
   sort_field?: string;
-  page: number;
-  limit: number;
+  page?: number;
+  limit?: number;
+  fields?: any;
+  comma_separate_value?: boolean;
 }
 
 export interface OperatorItem {

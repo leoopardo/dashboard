@@ -108,7 +108,7 @@ export const MerchantManual = () => {
         container
         item
         xs={12}
-        style={{ display: "flex", justifyContent: "center" }}
+        style={{ display: "flex", justifyContent: "space-between" }}
       >
         {MerchantMovimentsData &&
           Object.keys(MerchantMovimentsData).map((key) => {
@@ -202,64 +202,94 @@ export const MerchantManual = () => {
       </Grid>
       <Grid
         container
-        style={{ display: "flex", alignItems: "center" }}
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
         spacing={1}
       >
-        <Grid item xs={12} md={2} lg={2}>
-          <Button
-            size="large"
-            style={{ width: "100%" }}
-            loading={isMerchantMovimentsDataFetching}
-            type="primary"
-            onClick={() => setIsFiltersOpen(true)}
-          >
-            {t("table.filters")}
-          </Button>
-        </Grid>
-        <Grid item xs={12} md={3} lg={4}>
-          <FilterChips
-            startDateKeyName="start_date"
-            endDateKeyName="end_date"
-            query={query}
-            setQuery={setQuery}
-            haveInitialDate
-          />
-        </Grid>
-        <Grid item xs={12} md={2} lg={2}>
-          <Button
-            type="dashed"
-            loading={isMerchantMovimentsDataFetching}
-            danger
-            onClick={() => {
-              setQuery(INITIAL_QUERY);
-            }}
-            style={{
-              height: 40,
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
-            {t("table.clear_filters")}
-          </Button>
-        </Grid>
-        {permissions.transactions.merchant.manual_transactions
-          .merchant_manual_transactions_export_csv && (
-          <Grid item xs={12} md={3} lg={2}>
-            <ExportReportsModal
-              disabled={
-                !MerchantMovimentsData?.total || MerchantMovimentsDataError
-              }
-              mutateReport={() => MerchantManualReportsMutate()}
-              error={MerchantManualReportsError}
-              success={MerchantManualReportsIsSuccess}
-              loading={MerchantManualReportsIsLoading}
-              reportPath="/moviment/merchant_moviments/merchant_moviments_reports"
+        <Grid
+          container
+          item
+          xs={12}
+          md={8}
+          spacing={1}
+          style={{
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <Grid item xs={12} md={3} lg={3}>
+            <Button
+              size="large"
+              style={{ width: "100%" }}
+              loading={isMerchantMovimentsDataFetching}
+              type="primary"
+              onClick={() => setIsFiltersOpen(true)}
+            >
+              {t("table.filters")}
+            </Button>
+          </Grid>
+          <Grid item xs={12} md={9} lg={9}>
+            <FilterChips
+              startDateKeyName="start_date"
+              endDateKeyName="end_date"
+              query={query}
+              setQuery={setQuery}
+              haveInitialDate
             />
           </Grid>
-        )}
+        </Grid>
+
+        <Grid
+          container
+          item
+          xs={12}
+          md={4}
+          spacing={1}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-end"
+          }}
+        >
+          <Grid item xs={12} md={6} lg={6}>
+            <Button
+              type="dashed"
+              loading={isMerchantMovimentsDataFetching}
+              danger
+              onClick={() => {
+                setQuery(INITIAL_QUERY);
+              }}
+              style={{
+                height: 40,
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
+              {t("table.clear_filters")}
+            </Button>
+          </Grid>
+          {permissions.transactions.merchant.manual_transactions
+            .merchant_manual_transactions_export_csv && (
+            <Grid item xs={12} md={3} lg={3}>
+              <ExportReportsModal
+                disabled={
+                  !MerchantMovimentsData?.total || MerchantMovimentsDataError
+                }
+                mutateReport={() => MerchantManualReportsMutate()}
+                error={MerchantManualReportsError}
+                success={MerchantManualReportsIsSuccess}
+                loading={MerchantManualReportsIsLoading}
+                reportPath="/moviment/merchant_moviments/merchant_moviments_reports"
+              />
+            </Grid>
+          )}
+        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -275,15 +305,18 @@ export const MerchantManual = () => {
               { name: "_id", type: "id" },
               { name: "category_name", type: "text", sort: true },
               { name: "user_name", type: "text" },
+              { name: "partner_name", type: "text" },
+              { name: "merchant_name", type: "text" },
               { name: "type", type: "translate" },
               { name: "value", type: "value" },
+              { name: "description", type: "text" },
               { name: "createdAt", type: "date", sort: true },
               { name: "status", type: "status", sort: true },
             ]}
             loading={isMerchantMovimentsDataFetching}
             refetch={() => refetchMerchantMovimentsData()}
             actions={[{}]}
-            removeTotal
+            disableActions
             label={[
               "bank",
               "merchant_name",

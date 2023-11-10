@@ -5,8 +5,13 @@ import { useQuery } from "react-query";
 import { api } from "../../config/api";
 import { ValidateInterface } from "../types/validate.interface";
 import secureLocalStorage from "react-secure-storage";
+import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
+import { queryClient } from "../queryClient";
+let disabledNotification = false;
 
 export function useValidate(rememberMe?: boolean, token?: string) {
+  const { t } = useTranslation();
   const { data, isFetching, error, refetch, isSuccess } = useQuery<
     ValidateInterface | null | undefined
   >(
@@ -37,6 +42,23 @@ export function useValidate(rememberMe?: boolean, token?: string) {
       }`;
   }, [isSuccess]);
 
+  if (
+    [
+      "AGGREGATOR DISABLED",
+      "OPERATOR DISABLED",
+      "MERCHANT DISABLED",
+      "PARTNER DISABLED",
+    ].includes((error as any)?.response?.data?.message) &&
+    !disabledNotification
+  ) {
+    toast.error(t("error.disabled_entity"));
+
+    disabledNotification = true;
+   
+    secureLocalStorage.removeItem("token");
+    sessionStorage.removeItem("token");
+    queryClient.cancelMutations();
+  }
   const responseValidate = data;
   const isValidateFetching = isFetching;
   const validateError: any = error;

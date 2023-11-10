@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { StyleWrapperDatePicker } from "@src/components/FiltersModal/styles";
+import { CellphoneInput } from "@src/components/Inputs/CellphoneInput";
 import { AggregatorSelect } from "@src/components/Selects/aggregatorSelect";
 import { OperatorSelect } from "@src/components/Selects/operatorSelect";
 import { ValidateToken } from "@src/components/ValidateToken";
@@ -34,7 +35,6 @@ import { useTranslation } from "react-i18next";
 import ReactInputMask from "react-input-mask";
 import { MerchantSelect } from "../../Selects/merchantSelect";
 import { PartnerSelect } from "../../Selects/partnerSelect";
-import { CellphoneInput } from "@src/components/Inputs/CellphoneInput";
 const { RangePicker } = DatePicker;
 
 interface mutateProps {
@@ -43,6 +43,7 @@ interface mutateProps {
     label: string;
     required: boolean;
     selectOption?: boolean;
+    noTranslate?: boolean;
     feesDetails?: boolean;
     asyncOption?: {
       options?: any[];
@@ -479,7 +480,10 @@ export const MutateModal = ({
               case "cash_out":
               case "fastpix_in":
                 return (
-                  <Col span={12} style={{display: 'flex', justifyContent: 'center'}}>
+                  <Col
+                    span={12}
+                    style={{ display: "flex", justifyContent: "center" }}
+                  >
                     <Form.Item
                       label={t(`table.${field.label}`)}
                       name={field.label}
@@ -498,6 +502,31 @@ export const MutateModal = ({
                     </Form.Item>
                   </Col>
                 );
+
+                case "can_be_deleted_only_by_organization":
+                  return (
+                    <Col
+                      span={24}
+                      style={{ display: "flex", justifyContent: "start" }}
+                    >
+                      <Form.Item
+                        label={t(`table.${field.label}`)}
+                        name={field.label}
+                        style={{ margin: 10 }}
+                        valuePropName="checked"
+                      >
+                        <Switch
+                          checked={body[field.label]}
+                          onChange={(e) => {
+                            setBody((state: any) => ({
+                              ...state,
+                              [field.label]: e,
+                            }))
+                          }}
+                        />
+                      </Form.Item>
+                    </Col>
+                  );
               case "cnpj":
                 return (
                   <Col span={24}>
@@ -518,6 +547,46 @@ export const MutateModal = ({
                       <ReactInputMask
                         value={body[field.label]}
                         mask="99.999.999/9999-99"
+                        onChange={(event) => {
+                          const value = event.target.value.replace(
+                            /[^\d]/g,
+                            ""
+                          );
+                          if (!value) {
+                            delete body[field.label];
+                            return;
+                          }
+                          setBody((state: any) => ({
+                            ...state,
+                            [field.label]: value,
+                          }));
+                        }}
+                      >
+                        <Input size="large" />
+                      </ReactInputMask>
+                    </Form.Item>
+                  </Col>
+                );
+              case "cpf":
+                return (
+                  <Col span={24}>
+                    <Form.Item
+                      label={t(`table.${field.label}`)}
+                      name={field.label}
+                      style={{ margin: 10 }}
+                      rules={[
+                        {
+                          required: field.required,
+                          message:
+                            t("input.required", {
+                              field: t(`input.${field.label}`),
+                            }) || "",
+                        },
+                      ]}
+                    >
+                      <ReactInputMask
+                        value={body[field.label]}
+                        mask="999.999.999-99"
                         onChange={(event) => {
                           const value = event.target.value.replace(
                             /[^\d]/g,
@@ -600,23 +669,57 @@ export const MutateModal = ({
                       name="type"
                       style={{ margin: 10 }}
                     >
-                      <Select
-                        size="large"
-                        options={
-                          ["production"]?.map((item, index) => ({
-                            key: index,
-                            value: item,
-                            label: `${t(`table.${item?.toLocaleLowerCase()}`)}`,
-                          })) ?? []
-                        }
-                        value={body?.cashin_pix_fee_type || null}
-                        onChange={(value) => {
-                          setBody((state: any) => ({
-                            ...state,
-                            [field.label]: value,
-                          }));
-                        }}
-                      />
+                      {field.selectOption ? (
+                        <Select
+                          size="large"
+                          options={
+                            selectOptions
+                              ? selectOptions[field.label]?.map(
+                                  (option: any) => {
+                                    return {
+                                      value: option?.value,
+                                      label: t(
+                                        field?.noTranslate
+                                          ? option?.label?.toLowerCase()
+                                          : `table.${option?.label?.toLowerCase()}`
+                                      ),
+                                    };
+                                  }
+                                )
+                              : []
+                          }
+                          notFoundContent={<Empty />}
+                          value={body[field.label] || null}
+                          onChange={(value) => {
+                            setBody((state: any) => ({
+                              ...state,
+                              [field.label]: value,
+                            }));
+                          }}
+                          style={{ width: "100%", height: 40 }}
+                          placeholder={t(`table.${field.label}`)}
+                        />
+                      ) : (
+                        <Select
+                          size="large"
+                          options={
+                            ["production"]?.map((item, index) => ({
+                              key: index,
+                              value: item,
+                              label: `${t(
+                                `table.${item?.toLocaleLowerCase()}`
+                              )}`,
+                            })) ?? []
+                          }
+                          value={body?.cashin_pix_fee_type || null}
+                          onChange={(value) => {
+                            setBody((state: any) => ({
+                              ...state,
+                              [field.label]: value,
+                            }));
+                          }}
+                        />
+                      )}
                     </Form.Item>
                   </Col>
                 );
@@ -778,7 +881,9 @@ export const MutateModal = ({
                                     return {
                                       value: option?.value,
                                       label: t(
-                                        `table.${option?.label?.toLowerCase()}`
+                                        field?.noTranslate
+                                          ? option?.label?.toLowerCase()
+                                          : `table.${option?.label?.toLowerCase()}`
                                       ),
                                     };
                                   }

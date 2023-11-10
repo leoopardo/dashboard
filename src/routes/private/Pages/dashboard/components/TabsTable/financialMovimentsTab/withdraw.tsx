@@ -41,15 +41,17 @@ export const WithdrawFinancial = ({ query, chart }: TableProps) => {
               yAxis: {
                 type: "category",
                 data: RankingData?.sort((a, b) =>
-                  a.total > b.total ? -1 : 1
-                )?.map((merchant) => merchant?.name ?? "-"),
+                a.total > b.total ? 1 : -1
+              )?.map((merchant) => merchant?.name ?? "-"),
               },
               series: [
                 {
                   type: "bar",
-                  data: RankingData?.map(
+                  data: RankingData?.sort((a, b) =>
+                  a.total > b.total ? 1 : -1
+                )?.map(
                     (merchant) => merchant?.total ?? 0
-                  ).sort(() => -1),
+                  ),
                   tooltip: {
                     valueFormatter: function (value: number) {
                       return new Intl.NumberFormat("pt-BR", {

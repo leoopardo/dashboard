@@ -108,7 +108,6 @@ export const CreateMovimentModal = ({
             },
           ]}
         >
-          {" "}
           {category === "organization" ? (
             <OrganizationCategorieSelect
               setQueryFunction={setBody}

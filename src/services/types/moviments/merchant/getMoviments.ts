@@ -15,6 +15,7 @@ export interface GetMerchantMovimentsQuery {
 
 export interface GetMerchantMovimentsItem {
   _id: string;
+  merchant_id?: string;
   category_id: number;
   category_name: string;
   user_id: number;

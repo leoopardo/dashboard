@@ -85,7 +85,6 @@ function App() {
                       : import.meta.env.VITE_APP_MENU_THEME === "dark"
                       ? "#fff"
                       : "#000",
-                  subMenuItemBg: "#000",
                 },
                 Tooltip: {
                   colorTextLightSolid: theme === "dark" ? "#000" : "#fff",
@@ -112,11 +111,18 @@ function App() {
                   controlItemBgActive: defaultTheme.colors.secondary,
                   controlItemBgActiveHover: "#c0c0c09f",
                 },
+                Card: {
+                  boxShadow: theme === "dark" ? "0px 4px 15.7px -3px rgba(0, 0, 0, 0.25)" : "0px 4px 15.7px -3px rgba(0, 0, 0, 0.144)",
+                  boxShadowSecondary: theme === "dark" ? "0px 4px 15.7px -3px rgba(0, 0, 0, 0.25)" : "0px 4px 15.7px -3px rgba(0, 0, 0, 0.144)",
+                  boxShadowTertiary: theme === "dark" ? "0px 4px 15.7px -3px rgba(0, 0, 0, 0.25)" : "0px 4px 15.7px -3px rgba(0, 0, 0, 0.144)"
+                }
               },
+          
               token: {
                 colorPrimary: defaultTheme.colors.secondary,
                 colorBgTextHover: defaultTheme.colors.secondary,
-                colorBgContainer: theme === "dark" ? "#1a1a1a" : "#ffffff",
+                colorBgContainer: theme === "dark" ? "#222222" : "#ffffff",
+  
                 colorBgLayout: theme === "dark" ? "#1a1a1a" : "#f5f5f5",
                 colorText: theme === "dark" ? "#f5f5f5" : "rgba(0, 0, 0, 0.88)",
                 colorTextHeading:

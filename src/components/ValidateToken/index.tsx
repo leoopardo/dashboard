@@ -1,14 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Grid } from "@mui/material";
-import { Button, Modal, Typography } from "antd";
+import { Button, Modal, Typography, message } from "antd";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import OTPInput from "react-otp-input";
 import { useGetSelf } from "../../services/getSelf";
 import { useValidatePhone } from "../../services/sendValidationPhone";
 import { useValidateToken } from "../../services/sendValidationToken";
-import { Toast } from "../Toast";
 import Countdown from "../countdown";
 
 interface ValidateTokenProps {
@@ -125,8 +124,20 @@ export const ValidateToken = ({
   }, [validateBody, validationPhoneSent, validationTokenSent]);
 
   useEffect(() => {
-    if (success) setIsOpen(false);
-  }, [success]);
+
+    if (success || ValidatePhoneSuccess) {
+      message.success( t("messages.action_success", {
+        action: t("messages.validated"),
+      }))
+      setIsOpen(false);
+    } 
+
+    if(error || ValidatePhoneError) {
+      message.error( t("messages.action_error", {
+        action: t("messages.validated"),
+      }))
+    }
+  }, [success, error, ValidatePhoneSuccess, ValidatePhoneError]);
 
   return Self?.phone_validated ? (
     <Modal
@@ -295,7 +306,7 @@ export const ValidateToken = ({
         </Typography.Title>
       )}
 
-      <Toast
+    {/*   <Toast
         actionSuccess={t("messages.validated")}
         actionError={t("messages.validate")}
         error={ValidatePhoneError}
@@ -306,7 +317,7 @@ export const ValidateToken = ({
         actionError={t("messages.validate")}
         error={error}
         success={success}
-      />
+      /> */}
     </Modal>
   );
 };

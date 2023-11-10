@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import useDebounce from "@src/utils/useDebounce";
-import { AutoComplete, Empty } from "antd";
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Select } from "antd";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useListMerchants } from "../../../services/merchant/listMerchants";
 import { MerchantQuery } from "../../../services/types/register/merchants/merchants.interface";
@@ -22,14 +22,17 @@ export const MerchantSelect = ({
     limit: 200,
     partner_id: queryOptions?.partner_id,
   });
-  const { merchantsData, refetcMerchant, merchantError } =
+  const { merchantsData, refetcMerchant, isMerchantFetching } =
     useListMerchants(query);
   const [value, setValue] = useState<any>(null);
   const debounceSearch = useDebounce(query.name);
   useEffect(() => {
+    if (!queryOptions.merchant_id) {
+      setValue(undefined);
+    }
     if (!value) {
       const initial = merchantsData?.items.find(
-        (merchant) => merchant.id === queryOptions.merchant_id
+        (merchant) => merchant.id === (queryOptions?.merchant_id || queryOptions?.merchant?.id)
       );
       if (initial) {
         setValue(initial?.name);
@@ -38,51 +41,69 @@ export const MerchantSelect = ({
   }, [merchantsData, queryOptions]);
 
   useEffect(() => {
-    setQuery((state) => ({ ...state, partner_id: queryOptions.partner_id }));
-  }, [queryOptions]);
+    setQuery((state) => ({
+      ...state,
+      partner_id: queryOptions.partner_id,
+      aggregator_id: queryOptions.partner_id,
+      operator_id: queryOptions.operator_id,
+    }));
+  }, [debounceSearch, queryOptions]);
 
   useEffect(() => {
     refetcMerchant();
   }, [debounceSearch, query]);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const val = event?.target?.value;
-    setQuery((state) => ({ ...state, name: val }));
-  };
-
   return (
-    <AutoComplete
+    <Select
+      allowClear
+      style={{ width: "100%" }}
+      showSearch
       size="large"
-      disabled={merchantError}
-      options={
-        merchantsData?.items?.map((item, index) => {
-          return { key: index, value: item.id, label: item.name };
-        }) ?? []
-      }
-      notFoundContent={<Empty />}
+      loading={isMerchantFetching}
       value={value}
-      style={{ width: "100%", height: 40 }}
+      onSelect={() => {
+        delete query.name;
+        refetcMerchant();
+      }}
+      onSearch={(value) => {
+        if (value === "") {
+          delete query.name;
+          refetcMerchant();
+          return;
+        }
+        setQuery((state: any) => ({ ...state, name: value }));
+      }}
       onChange={(value) => {
         if (!value) {
-          delete queryOptions.merchant_id;
-          setValue("");
+          setValue(undefined);
           setQueryFunction((state: any) => ({
             ...state,
             merchant_id: undefined,
+            group_id: undefined,
           }));
+          return;
         }
-        setValue(value);
-      }}
-      onSelect={(value) => {
-        setQueryFunction((state: any) => ({ ...state, merchant_id: value }));
+        setQueryFunction((state: any) => ({
+          ...state,
+          merchant_id: value,
+          group_id: undefined,
+        }));
         setValue(
           merchantsData?.items.find(
             (merchant) => merchant.id === queryOptions.merchant_id
           )?.name
         );
       }}
-      onInputKeyDown={(event: any) => {
-        handleChange(event);
+      options={merchantsData?.items.map((merch) => {
+        return {
+          label: merch.name,
+          value: merch.id,
+        };
+      })}
+      filterOption={(input, option) => {
+        return (
+          `${option?.label}`?.toLowerCase()?.indexOf(input?.toLowerCase()) >= 0
+        );
       }}
       placeholder={t("table.merchant_name")}
     />

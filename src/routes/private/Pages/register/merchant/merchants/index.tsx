@@ -4,6 +4,7 @@ import {
   BankOutlined,
   EditOutlined,
   EyeFilled,
+  FileAddOutlined,
   ToolOutlined,
   UserAddOutlined,
 } from "@ant-design/icons";
@@ -20,13 +21,13 @@ import {
   MerchantsItem,
   MerchantsQuery,
 } from "@services/types/register/merchants/merchantsRegister.interface";
-import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { queryClient } from "@src/services/queryClient";
 import { useCreateMerchant } from "@src/services/register/merchant/merchant/createMerchant";
 import { useGetMerchantsTotals } from "@src/services/register/merchant/merchant/getMerchantsTotals";
 import { useCreateMerchantReports } from "@src/services/reports/register/merchant/createMerchantReports";
+import { useGetMerchantReportFields } from "@src/services/reports/register/merchant/getMerchantReportFields";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Input } from "antd";
+import { Button, Input, Tooltip } from "antd";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
@@ -34,6 +35,7 @@ import { useNavigate } from "react-router-dom";
 import { ViewMerchantModal } from "./components/ViewMerchantModal";
 import { TotalizersCards } from "./components/totalizersCards";
 import { UpdateBanks } from "./components/updatebanks";
+import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
 
 const INITIAL_QUERY: MerchantsQuery = {
   limit: 25,
@@ -94,6 +96,9 @@ export const MerchantView = () => {
     UpdateMutate,
     UpdateReset,
   } = useUpdateMerchant(updateBody);
+
+  const [csvFields, setCsvFields] = useState<any>();
+  const [comma, setIsComma] = useState<boolean>(false);
   const {
     MerchantReportsError,
     MerchantReportsIsLoading,
@@ -101,6 +106,11 @@ export const MerchantView = () => {
     MerchantReportsMutate,
     MerchantReset,
   } = useCreateMerchantReports(query);
+
+  const { fields } = useGetMerchantReportFields();
+  const [isExportReportsOpen, setIsExportReportsOpen] =
+    useState<boolean>(false);
+
   const [, setSearch] = useState<string>("");
   const [isConfigOpen, setIsConfigOpen] = useState(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
@@ -161,7 +171,13 @@ export const MerchantView = () => {
         container
         style={{ display: "flex", alignItems: "center" }}
         spacing={1}
-        mt={!isMobile ? "-80px" : undefined}
+        mt={
+          !isMobile &&
+          MerchantTotalsData &&
+          MerchantTotalsData?.registered_merchant_totals > 0
+            ? "-80px"
+            : undefined
+        }
       >
         <Grid item xs={12} md={4} lg={2}>
           <Button
@@ -266,19 +282,30 @@ export const MerchantView = () => {
 
         {permissions.register.merchant.merchant.merchant_export_csv && (
           <Grid item xs={12} md={3} lg={2}>
-            <ExportReportsModal
-              disabled={!MerchantData?.total || MerchantDataError}
-              mutateReport={() => MerchantReportsMutate()}
-              error={MerchantReportsError}
-              success={MerchantReportsIsSuccess}
-              loading={MerchantReportsIsLoading}
-              reportPath="/register/merchant/merchant_reports/merchant_merchants_reports"
-            />
+            <Tooltip
+              placement="topRight"
+              title={
+                MerchantData?.total === 0 || MerchantDataError
+                  ? t("messages.no_records_to_export")
+                  : t("messages.export_csv")
+              }
+              arrow
+            >
+              <Button
+                onClick={() => setIsExportReportsOpen(true)}
+                style={{ width: "100%" }}
+                shape="round"
+                type="dashed"
+                size="large"
+                loading={isMerchantDataFetching}
+                disabled={MerchantData?.total === 0 || MerchantDataError}
+              >
+                <FileAddOutlined style={{ fontSize: 22 }} /> CSV
+              </Button>
+            </Tooltip>
           </Grid>
         )}
-
       </Grid>
-
       <Grid container style={{ marginTop: "15px" }}>
         <Grid item xs={12}>
           <CustomTable
@@ -299,7 +326,7 @@ export const MerchantView = () => {
             setSelectedRows={setSelectedItems}
             selectedKeys={selectedItems}
             actions={[
-              {
+              permissions.register.merchant.merchant.merchant_list && {
                 label: "details",
                 icon: <EyeFilled style={{ fontSize: "20px" }} />,
                 onClick: (item) => {
@@ -314,7 +341,15 @@ export const MerchantView = () => {
                   navigate("update", { state: item });
                 },
               },
-              {
+              (permissions.register.merchant.merchant.merchant_config_banks ||
+                permissions.register.merchant.merchant
+                  .merchant_config_credentials ||
+                permissions.register.merchant.merchant.merchant_config_fees ||
+                permissions.register.merchant.merchant.merchant_config_ips ||
+                permissions.register.merchant.merchant
+                  .merchant_config_merchant ||
+                permissions.register.merchant.merchant
+                  .merchant_config_paybrokers) && {
                 label: "configs",
                 icon: <ToolOutlined style={{ fontSize: "20px" }} />,
                 onClick: () => setIsConfigOpen(true),
@@ -426,6 +461,23 @@ export const MerchantView = () => {
         actionError={t("messages.update")}
         error={UpdateError}
         success={UpdateIsSuccess}
+      />
+
+      <ExportCustomReportsModal
+        open={isExportReportsOpen}
+        setOpen={setIsExportReportsOpen}
+        disabled={MerchantData?.total === 0 || MerchantDataError}
+        mutateReport={() => MerchantReportsMutate()}
+        error={MerchantReportsError}
+        success={MerchantReportsIsSuccess}
+        loading={MerchantReportsIsLoading}
+        reportPath="/register/merchant/merchant_reports/merchant_merchants_reports"
+        fields={fields}
+        csvFields={csvFields}
+        comma={comma}
+        setIsComma={setIsComma}
+        setCsvFields={setCsvFields}
+        reportName="Merchant"
       />
     </Grid>
   );

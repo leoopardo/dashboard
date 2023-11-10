@@ -142,7 +142,10 @@
     "import_csv": "Import csv",
     "update_aggregator": "Update agregator",
     "details": "Details",
-    "Wiki": "Wiki"
+    "Wiki": "Wiki",
+    "pre_manual": "Manual pre entry",
+    "merchant_pre_manual": "Manual pre entry",
+    "merchant_pre_manual_reports": "Manual pre entry reports"
   },
 
   "titles": {
@@ -153,7 +156,8 @@
     "total_onboarding": "Total {{entity}} onboarding",
     "total_registred_active": "Total {{entity}} registred active",
     "total_registred_inactive": "Total {{entity}} registred inactive",
-    "total": "Total {{entity}}"
+    "total": "Total {{entity}}",
+    "operation_approve": "Approve Operations"
   },
 
   "messages": {
@@ -166,11 +170,13 @@
     "update": "update",
     "created": "Created",
     "updated": "Updated",
+    "approved": "approved",
     "generate_voucher": "generate payment voucher",
     "generated_voucher": "Payment voucher generated",
     "confirm_action_title": "{{action}} data",
     "are_you_sure": "Do you want {{action}} the {{itens}}?",
     "yes_update": "Yes, update",
+    "yes_delete": "Yes, delete",
     "no_cancel": "No, cancel",
     "upload_file": "Upload file",
     "confirm_upload_file": "Confirm the file upload?",
@@ -202,7 +208,8 @@
     "preview_csv": "Preview CSV",
     "preview_file": "preview file",
     "value_chart_area": "Value chart area",
-    "operations_number_chart_area": "Operation number chart area"
+    "operations_number_chart_area": "Operation number chart area",
+    "operation_approve": "Do you want to approve the selected operations?"
   },
   "login": {
     "sign_in": "Sign in",
@@ -240,7 +247,8 @@
     "dark": "Dark theme",
     "light": "Light theme",
     "responsible": "responsible",
-    "help": "Help"
+    "help": "Help",
+    "confirm_import": "Confirm import"
   },
   "input": {
     "required": "Please input the {{field}}",
@@ -340,7 +348,12 @@
     "fastpix_in_type": "FastPix type",
     "fastpix_in_max_value": "FastPix min. value",
     "fastpix_in_fixed_min_value": "FastPix max. value",
-    "fastpix_qr_code_expire_seconds": "QRCode FastPIX expiration time (seconds)"
+    "fastpix_qr_code_expire_seconds": "QRCode FastPIX expiration time (seconds)",
+    "category_id": "Category",
+    "password_type": "The password must contain at least 8 characters, including at least 1 number, 1 uppercase letter, and 1 special character.",
+    "merchant_id": "merchant",
+    "reason": "reason",
+    "domain": "domain"
   },
   "modal": {
     "confirm": "Confirm",
@@ -764,7 +777,44 @@
     "whatsapp": "WhatsApp",
     "language": "Language",
     "telegram": "Telegram",
-    "skype": "Skype"
+    "skype": "Skype",
+    "merchant_type": "Business Type",
+    "currency": "Currency",
+    "time_zone": "Time Zone",
+    "license_id": "License ID",
+    "license_name": "License Name",
+    "license_status": "License Status",
+    "license_indeterminate_validity": "Indeterminate License Validity",
+    "license_start_validity_date": "Start Date of License Validity",
+    "license_end_validity_date": "End Date of License Validity",
+    "cashin_bank": "Deposit Bank",
+    "cashout_bank": "Withdrawal Bank",
+    "exchenge_spread": "Exchange Spread",
+    "exchange_iof": "Exchange IOF",
+    "exchange_operating_rate": "Exchange operating rate",
+    "cash_in_permission": "Deposit Enabled?",
+    "cash_out_permission": "Withdrawal Enabled?",
+    "cpf_api_permission": "CPF Query API Enabled?",
+    "cash_in_receive_by_pj": "Receivable by Legal Entity (PJ) Enabled?",
+    "cash_in_receive_by_different_payer": "Third-party Deposit Enabled?",
+    "cash_in_max_value_receive_by_pj": "Maximum Legal Entity (PJ) Deposit Amount",
+    "cash_in_max_value_receive_by_different_payer": "Maximum Third-party Deposit Amount",
+    "btg_merchant_customer_id": "BTG Merchant Customer ID",
+    "customer_withdraw_fee_min": "Minimum Customer Withdrawal Fee",
+    "cashin_pix_fee_min": "Minimum PIX Deposit Fee",
+    "pix_refund_fee_type": "PIX Refund Fee Type",
+    "pix_refund_fee_percent": "PIX Refund Fee Percentage",
+    "pix_refund_fee_value": "PIX Refund Fee Value",
+    "pix_refund_fee_min": "Minimum PIX Refund Fee",
+    "customer_withdraw_fee_plan_id": "Customer Withdrawal Fee Plan ID",
+    "cashin_pix_fee_plan_id": "PIX Deposit Fee Plan ID",
+    "merchant_withdraw_fee_min": "Merchant withdraw fee min",
+    "operation_type": "Operation type",
+    "operator_type": "Operator type",
+    "main_user_id": "Main user ID",
+    "main_user_name": "Main user name",
+    "main_user_username": "Main user username",
+    "row": "Row"
   },
   "actions": {
     "details": "Details",
@@ -783,13 +833,15 @@
   },
   "error": {
     "400": "Any records found.",
+    "403": "Sorry, you are not authorized to access this page.",
     "404": "Route not found",
+    "500": "Temporary service interruption. If the issue persists after reloading the page, please contact support.",
     "date_too_log": "The diffrence between dates should be equal or less than 30 days",
     "password_or_username": "Invalid username or password",
     "BANK_ALREADY_CREATED": "Bank already created",
     "date_1_hour": "The max range is one hour",
-    "undefined": "Couldn't connect to server. Wait while we solve this problem.",
-    "403": "Sorry, you are not authorized to access this page."
+    "undefined": "Temporary service interruption. If the issue persists after reloading the page, please contact support.",
+    "INVALID_USER": "Invalid username"
   },
   "logs": {
     "login": "Login",

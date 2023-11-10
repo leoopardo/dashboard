@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import useDebounce from "@src/utils/useDebounce";
-import { AutoComplete, Empty } from "antd";
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Select } from "antd";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useListPartners } from "../../../services/register/partner/listPartners";
 import { PartnerQuery } from "../../../services/types/register/partners/partners.interface";
@@ -23,11 +23,15 @@ export const PartnerSelect = ({
     page: 1,
     limit: 200,
   });
-  const { partnersData, refetcPartners } = useListPartners(query);
+  const { partnersData, refetcPartners, isPartnersFetching } =
+    useListPartners(query);
   const [value, setValue] = useState<any>(null);
   const debounceSearch = useDebounce(query.name);
 
   useEffect(() => {
+    if (!queryOptions.partner_id) {
+      setValue(undefined);
+    }
     if (partnersData && !value) {
       const initial = queryOptions.partner_id
         ? partnersData?.items.find(
@@ -57,39 +61,61 @@ export const PartnerSelect = ({
     refetcPartners();
   }, [debounceSearch]);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const val = event?.target?.value;
-    setQuery((state) => ({ ...state, name: val }));
-  };
-
   return (
-    <AutoComplete
+    <Select
+      allowClear
+      onClear={() => {
+        setValue(undefined);
+      }}
+      showSearch
       size="large"
-      options={
-        partnersData?.items?.map((item, index) => {
-          return { key: index, value: item.id, label: item.name };
-        }) ?? []
-      }
+      loading={isPartnersFetching}
       disabled={disabled}
-      notFoundContent={<Empty />}
       value={value}
-      style={{ width: "100%", height: 40 }}
+      onSelect={() => {
+        delete query.name;
+        refetcPartners();
+      }}
+      onSearch={(value) => {
+        if (value === "") {
+          delete query.name;
+          refetcPartners();
+          return;
+        }
+
+        setQuery((state: any) => ({ ...state, name: value }));
+      }}
       onChange={(value) => {
         if (!value) {
-          delete queryOptions.partner_id;
-          setValue("");
+          setValue(undefined);
           setQueryFunction((state: any) => ({
             ...state,
             partner_id: undefined,
+            group_id: undefined,
           }));
+          return;
         }
-        setValue(value);
+        setQueryFunction((state: any) => ({
+          ...state,
+          partner_id: value,
+          group_id: undefined,
+        }));
+        setValue(
+          partnersData?.items.find(
+            (partner) => partner.id === queryOptions.partner_id
+          )?.name
+        );
       }}
-      onSelect={(value) =>
-        setQueryFunction((state: any) => ({ ...state, partner_id: value }))
-      }
-      onInputKeyDown={(event: any) => {
-        handleChange(event);
+      options={partnersData?.items.map((partner) => {
+        return {
+          label: partner.name,
+          value: partner.id,
+        };
+      })}
+      filterOption={(input, option) => {
+        return (
+          `${option?.label}`?.toLowerCase()?.indexOf(input?.toLowerCase()) >= 0
+        );
       }}
       placeholder={t("table.partner_name")}
     />

@@ -66,7 +66,11 @@ export const ExportCustomReportsModal = ({
   useEffect(() => {
     const f: any = {};
     for (const field in selectedFields) {
-      f[selectedFields[field]] = t(`table.${selectedFields[field]}`);
+      if (!fields?.find((f) => f === selectedFields[field])) {
+        return;
+      } else {
+        f[selectedFields[field]] = t(`table.${selectedFields[field]}`);
+      }
     }
     setCsvFields(f);
   }, [selectedFields]);
@@ -152,18 +156,20 @@ export const ExportCustomReportsModal = ({
         <Row style={{ maxHeight: "450px", overflow: "auto" }}>
           <Col span={24}>
             <Form layout="vertical">
-              {setIsComma && <Form.Item label={t("input.comma_separator")}>
-                <Radio.Group
-                  options={[
-                    { label: "$1000,00", value: true },
-                    { label: "$1000.00", value: false },
-                  ]}
-                  onChange={(e) => setIsComma(e.target.value)}
-                  value={comma}
-                  optionType="button"
-                  buttonStyle="solid"
-                />
-              </Form.Item>}
+              {setIsComma && (
+                <Form.Item label={t("input.comma_separator")}>
+                  <Radio.Group
+                    options={[
+                      { label: "$1000,00", value: true },
+                      { label: "$1000.00", value: false },
+                    ]}
+                    onChange={(e) => setIsComma(e.target.value)}
+                    value={comma}
+                    optionType="button"
+                    buttonStyle="solid"
+                  />
+                </Form.Item>
+              )}
               <Form.Item label={t("input.csv_columns")} required>
                 <Space.Compact style={{ width: "100%" }} size="large">
                   <Select

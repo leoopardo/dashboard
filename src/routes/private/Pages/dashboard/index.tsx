@@ -21,12 +21,12 @@ import secureLocalStorage from "react-secure-storage";
 import { TabsTable } from "./components/TabsTable";
 import { BankCard } from "./components/bankCard";
 import { BankBalanceChart } from "./components/charts/bankBalanceChart";
-import { ChartIn } from "./components/charts/chartIn";
-import { ChartOut } from "./components/charts/chartOut";
 import { MerchantBalance } from "./components/merchantBalance";
 import { MerchantsBalance } from "./components/merchantsBalance";
 import { OrganizationBalance } from "./components/organizationBalance";
 import { ValuesTable } from "./components/valuesTable";
+import { ChartIn } from "./components/charts/chartIn";
+import { ChartOut } from "./components/charts/chartOut";
 
 const INITIAL_QUERY = {
   start_date: moment(new Date())
@@ -42,7 +42,7 @@ const INITIAL_QUERY = {
 
 export const Dashboard = () => {
   const { t } = useTranslation();
-  const { permissions } = queryClient.getQueryData(
+  const { permissions, type } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
   const user = queryClient.getQueryData("validate") as ValidateInterface;
@@ -71,13 +71,42 @@ export const Dashboard = () => {
   const { refetchMerchantBankStatementTotalsTotal } =
     useGetMerchantBankStatementTotals(query);
 
+  const totilizersTabs = [];
+
+  if (
+    permissions?.report?.paybrokers?.balance?.report_paybrokers_balance_list
+  ) {
+    totilizersTabs.push({
+      key: "1",
+      label: t("table.organization_balance"),
+      children: (
+        <Col span={24}>
+          <OrganizationBalance />
+        </Col>
+      ),
+    });
+  }
+  if (permissions?.report?.merchant?.balance?.report_merchant_balance_list) {
+    totilizersTabs.push({
+      key: "2",
+      label: t("table.merchant_balance"),
+      children: (
+        <Col span={24}>
+          <MerchantBalance />
+        </Col>
+      ),
+    });
+  }
+
   return (
     <Row style={{ padding: 20 }}>
       <Layout
         ref={ref1}
         style={{
           margin: -28,
-          padding: 20,
+          paddingBottom: 20,
+          paddingTop: 20,
+          paddingLeft: 6,
           display: "flex",
           justifyContent: "center",
         }}
@@ -91,44 +120,7 @@ export const Dashboard = () => {
             onChange={(value) => {
               setActiveKey(value);
             }}
-            items={[
-              {
-                key: "1",
-                label: t("table.organization_balance"),
-                children: (
-                  <Col span={24}>
-                    <OrganizationBalance />
-                  </Col>
-                ),
-                style: {
-                  display: !permissions?.report?.paybrokers?.balance
-                    ?.report_paybrokers_balance_list
-                    ? "none"
-                    : undefined,
-                },
-                disabled:
-                  !permissions?.report?.paybrokers?.balance
-                    ?.report_paybrokers_balance_list,
-              },
-              {
-                key: "2",
-                label: t("table.merchant_balance"),
-                children: (
-                  <Col span={24}>
-                    <MerchantBalance />
-                  </Col>
-                ),
-                style: {
-                  display: !permissions?.report?.merchant?.balance
-                    ?.report_merchant_balance_list
-                    ? "none"
-                    : undefined,
-                },
-                disabled:
-                  !permissions?.report?.merchant?.balance
-                    ?.report_merchant_balance_list,
-              },
-            ]}
+            items={totilizersTabs}
           />
         )}
       </Layout>
@@ -235,7 +227,10 @@ export const Dashboard = () => {
               width: "100%",
               marginLeft: "-40px",
               marginRight: "-40px",
-              padding: 25,
+              paddingBottom: 20,
+              paddingTop: 20,
+              paddingLeft: 8,
+              paddingRight: 8,
             }}
           >
             <Row gutter={[4, 4]} align="middle">
@@ -276,13 +271,13 @@ export const Dashboard = () => {
                   {t("table.clear_filters")}
                 </Button>
               </Col>
-              <Col span={24} style={{ marginTop: 16, marginBottom: 16 }}>
+              <Col span={24} style={{ marginTop: 16 }}>
                 <ValuesTable query={query} />
               </Col>
             </Row>
           </Layout>
 
-          <Col span={24} style={{ paddingTop: "20px" }}>
+          <Col span={24} style={{ paddingTop: "20px", paddingBottom: user.aggregator_id ? "60px" : undefined }}>
             <Row gutter={[16, 16]}>
               <ChartIn query={query} />
               <ChartOut query={query} />
@@ -304,7 +299,10 @@ export const Dashboard = () => {
                 marginLeft: -50,
                 marginRight: -50,
                 marginTop: 25,
-                padding: 25,
+                paddingBottom: 20,
+                paddingTop: 20,
+                paddingLeft: 12,
+                paddingRight: 12,
               }}
             >
               <MerchantsBalance />
@@ -312,11 +310,13 @@ export const Dashboard = () => {
           </Row>
         )}
 
-        <Row style={{ marginTop: 16 }}>
-          <Col span={24}>
-            <TabsTable query={query} />
-          </Col>
-        </Row>
+        {type !== 3 && (
+          <Row style={{ marginTop: 16 }}>
+            <Col span={24}>
+              <TabsTable query={query} />
+            </Col>
+          </Row>
+        )}
       </Col>
 
       {isFiltersOpen && (
@@ -344,6 +344,7 @@ export const Dashboard = () => {
           endDateKeyName="end_date"
           initialQuery={INITIAL_QUERY}
           haveInitialDate
+          maxRange
         />
       )}
       <TuorComponent

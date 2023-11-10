@@ -239,7 +239,7 @@ export const FiltersModal = ({
               return (
                 <Form.Item
                   label={t("table.date")}
-                  style={{ margin: 10 }}
+                  style={{ marginBottom: 10 }}
                   name={startDateKeyName}
                   rules={[
                     {
@@ -252,7 +252,7 @@ export const FiltersModal = ({
                           maxRange &&
                           filtersQuery[endDateKeyName] >
                             moment(new Date(filtersQuery[startDateKeyName]))
-                              .add(30, "days")
+                              .add(31, "days")
                               .format("YYYY-MM-DDTHH:mm:00.000")
                         ) {
                           return Promise.reject(t("error.date_too_log"));
@@ -307,9 +307,9 @@ export const FiltersModal = ({
               if (permissions.register.partner.partner.partner_list) {
                 return (
                   <Form.Item
-                    label={t(`table.${filter}`)}
+                    label={t(`table.partner`)}
                     name={filter}
-                    style={{ margin: 10 }}
+                    style={{ marginBottom: 10 }}
                   >
                     <PartnerSelect
                       queryOptions={filtersQuery}
@@ -324,7 +324,7 @@ export const FiltersModal = ({
                 <Form.Item
                   label={t(`table.${filter}`)}
                   name={filter}
-                  style={{ margin: 10 }}
+                  style={{ marginBottom: 10 }}
                 >
                   <BanksSelect
                     queryOptions={filtersQuery}
@@ -343,7 +343,7 @@ export const FiltersModal = ({
                   <Form.Item
                     label={t(`table.${filter}`)}
                     name={filter}
-                    style={{ margin: 10 }}
+                    style={{ marginBottom: 10 }}
                   >
                     <BanksSelect
                       queryOptions={filtersQuery}
@@ -363,7 +363,7 @@ export const FiltersModal = ({
                   <Form.Item
                     label={t(`table.${filter}`)}
                     name={filter}
-                    style={{ margin: 10 }}
+                    style={{ marginBottom: 10 }}
                   >
                     <ClientBanksSelect
                       queryOptions={filtersQuery}
@@ -453,7 +453,7 @@ export const FiltersModal = ({
                 <Form.Item
                   label={t(`table.${filter}`)}
                   name={filter}
-                  style={{ margin: 10 }}
+                  style={{ marginBottom: 10 }}
                 >
                   <AutoComplete
                     size="large"
@@ -487,7 +487,7 @@ export const FiltersModal = ({
                 <Form.Item
                   label={t(`table.${filter}`)}
                   name={filter}
-                  style={{ margin: 10 }}
+                  style={{ marginBottom: 10 }}
                 >
                   <AutoComplete
                     size="large"
@@ -520,9 +520,9 @@ export const FiltersModal = ({
               if (permissions.register.merchant.merchant.merchant_list) {
                 return (
                   <Form.Item
-                    label={t(`table.${filter}`)}
+                    label={t(`table.merchant`)}
                     name={filter}
-                    style={{ margin: 10 }}
+                    style={{ marginBottom: 10 }}
                   >
                     <MerchantSelect
                       queryOptions={filtersQuery}
@@ -536,9 +536,9 @@ export const FiltersModal = ({
               if (permissions.register.aggregator.aggregator.aggregator_list) {
                 return (
                   <Form.Item
-                    label={t(`table.${filter}`)}
+                    label={t(`table.aggregator`)}
                     name={filter}
-                    style={{ margin: 10 }}
+                    style={{ marginBottom: 10 }}
                   >
                     <AggregatorSelect
                       aggregatorId={filtersQuery?.aggregator_id}
@@ -552,9 +552,9 @@ export const FiltersModal = ({
               if (permissions.register.operator.operator.operator_list) {
                 return (
                   <Form.Item
-                    label={t(`table.${filter}`)}
+                    label={t(`table.operator`)}
                     name={filter}
-                    style={{ margin: 10 }}
+                    style={{ marginBottom: 10 }}
                   >
                     <OperatorSelect
                       queryOptions={filtersQuery}
@@ -569,7 +569,7 @@ export const FiltersModal = ({
                 <Form.Item
                   label={t(`table.${filter}`)}
                   name={filter}
-                  style={{ margin: 10 }}
+                  style={{ marginBottom: 10 }}
                 >
                   <ReasonSelect
                     queryOptions={filtersQuery}
@@ -583,7 +583,7 @@ export const FiltersModal = ({
                 <Form.Item
                   label={t(`table.${filter}`)}
                   name={filter}
-                  style={{ margin: 10 }}
+                  style={{ marginBottom: 10 }}
                 >
                   {!selectOptions[filter] ? (
                     <Select
@@ -647,7 +647,7 @@ export const FiltersModal = ({
                 <Form.Item
                   label={t(`table.${filter}`)}
                   name={filter}
-                  style={{ margin: 10 }}
+                  style={{ marginBottom: 10 }}
                 >
                   <Select
                     size="large"
