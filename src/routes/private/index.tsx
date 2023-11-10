@@ -1282,7 +1282,7 @@ export const PrivateRoutes = () => {
                   </Permission>
                 }
               />
-              {/* arrumar permissões */}
+              {/* TODO arrumar permissões */}
               <Route
                 path="organization_transfer_between_accounts_reports"
                 element={
@@ -1297,7 +1297,7 @@ export const PrivateRoutes = () => {
                 }
               />
             </Route>
-            {/* arrumar permissões */}
+            {/*TODO arrumar permissões */}
             <Route
               path="organization_transfer_between_accounts"
               element={
@@ -1342,7 +1342,7 @@ export const PrivateRoutes = () => {
                   </Permission>
                 }
               />
-              {/* arrumar permissões */}
+              {/*TODO arrumar permissões */}
               <Route
                 path="merchant_between_accounts_reports"
                 element={
@@ -1358,7 +1358,7 @@ export const PrivateRoutes = () => {
                 }
               />
 
-              {/* arrumar permissões */}
+              {/*TODO arrumar permissões */}
               <Route
                 path="merchant_pre_manual_reports"
                 element={
@@ -1374,7 +1374,7 @@ export const PrivateRoutes = () => {
                 }
               />
             </Route>
-            {/* arrumar permissões */}
+            {/*TODO arrumar permissões */}
             <Route
               path="between_accounts_transfers"
               element={
@@ -1389,7 +1389,7 @@ export const PrivateRoutes = () => {
               }
             />
           </Route>
-          {/* arrumar permissões */}
+          {/*TODO arrumar permissões */}
           <Route
             path="merchant_transfers"
             element={
@@ -1402,7 +1402,7 @@ export const PrivateRoutes = () => {
           />
           {/* movimentações de agregador */}
           <Route path="aggregator_moviments">
-            {/* arrumar permissões */}
+            {/*TODO arrumar permissões */}
             <Route
               path="aggregator_transfer_between_accounts"
               element={
@@ -1414,7 +1414,7 @@ export const PrivateRoutes = () => {
               }
             />
             <Route path="aggregator_moviments_reports">
-              {/* arrumar permissões */}
+              {/*TODO arrumar permissões */}
               <Route
                 path="aggregator_transfer_between_accounts_reports"
                 element={
@@ -1429,14 +1429,14 @@ export const PrivateRoutes = () => {
               />
             </Route>
           </Route>
-          {/* Arrumar permissão*/}
           <Route path="pre_manual">
             <Route
               path="pre_manual"
               element={
                 <Permission
                   permission={
-                    responseValidate?.permissions?.transactions?.merchant?.menu
+                    responseValidate?.permissions?.transactions?.merchant
+                      .merchant_pre_manual?.menu
                   }
                 >
                   <PreManual />

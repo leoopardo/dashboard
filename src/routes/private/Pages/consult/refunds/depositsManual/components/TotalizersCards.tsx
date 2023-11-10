@@ -36,7 +36,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
         >
           <Card
             bordered={false}
-            style={{ height: isMobile ? "100%" : undefined }}
+            style={{ height: isMobile ? "100px" : "120px" }}
           >
             <Statistic
               loading={props.loading}
@@ -74,7 +74,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
         >
           <Card
             bordered={false}
-            style={{ height: isMobile ? "100%" : undefined }}
+            style={{ height: isMobile ? "100px" : "120px" }}
           >
             <Statistic
               loading={props.loading}
@@ -112,7 +112,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
         >
           <Card
             bordered={false}
-            style={{ height: isMobile ? "100%" : undefined }}
+            style={{ height: isMobile ? "100px" : "120px" }}
           >
             <Statistic
               loading={props.loading}
@@ -150,7 +150,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
         >
           <Card
             bordered={false}
-            style={{ height: isMobile ? "100%" : undefined }}
+            style={{ height: isMobile ? "100px" : "120px" }}
           >
             <Statistic
               loading={props.loading}
@@ -185,7 +185,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
         >
           <Card
             bordered={false}
-            style={{ height: isMobile ? "100%" : undefined }}
+            style={{ height: isMobile ? "100px" : "120px" }}
           >
             <Statistic
               loading={props.loading}
@@ -218,10 +218,20 @@ export const TotalizersCards = (props: TotalizersInterface) => {
         style={{ maxWidth: "220px" }}
         xs={{ span: isMobile ? 10 : undefined }}
       >
-        <Card bordered={false}>
+        <Card bordered={false} style={{ height: isMobile ? "100px" : "120px" }}>
           <Statistic
             loading={props.loading}
-            title={`Total: ${props?.data?.transactions_total || 0}`}
+            title={<>
+              {`Total: ${props?.data?.transactions_total || 0}`}{" "}
+              <Button
+                style={{ marginTop: "-10px" }}
+                loading={props.loading}
+                type="link"
+                onClick={props.fetchData}
+              >
+                {!props.loading && <ReloadOutlined />}
+              </Button>
+            </>}
             value={new Intl.NumberFormat("pt-BR", {
               style: "currency",
               currency: "BRL",
@@ -235,20 +245,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
           />
         </Card>
       </Col>
-      <Col
-        style={{ maxWidth: "220px" }}
-        xs={{ span: isMobile ? 10 : undefined }}
-      >
-        <Button
-          shape="circle"
-          style={{ width: "50px", height: "50px" }}
-          loading={props.loading}
-          type="dashed"
-          onClick={props.fetchData}
-        >
-          {!props.loading && <ReloadOutlined />}
-        </Button>
-      </Col>
+     
     </Row>
   );
 };

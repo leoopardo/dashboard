@@ -818,7 +818,7 @@ export const CustomTable = (props: TableProps) => {
                 : column?.name,
               dataIndex: column?.name,
               render: (text: string) => (
-                <Typography style={{ width: "100%", textAlign: "center" }}>
+                <Typography style={{ width: "100%", textAlign: "center", minWidth: "30px" }}>
                   {text ? t(`table.${text.toLocaleLowerCase()}`) : "-"}
                 </Typography>
               ),
