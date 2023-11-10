@@ -53,12 +53,14 @@ export const MerchantBlacklist = () => {
     cpf: "",
     reason: "",
     description: "",
+    can_be_deleted_only_by_organization: true,
   });
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [currentItem, setCurrentItem] = useState<MerchantBlacklistItem | null>(
     null
   );
-  const { error, isLoading, isSuccess, mutate } = useCreateMerchantBlacklist(body);
+  const { error, isLoading, isSuccess, mutate } =
+    useCreateMerchantBlacklist(body);
   const [search, setSearch] = useState<string>("");
   const debounceSearch = useDebounce(search);
   const {
@@ -80,35 +82,6 @@ export const MerchantBlacklist = () => {
     { name: "create_user_name", type: "text" },
     { name: "createdAt", type: "date", sort: true },
   ];
-
-  const handleRenderColumns = () => {
-    const columns: {
-      label: string;
-      required: boolean;
-      selectOption?: boolean;
-    }[] = [
-      { label: "cpf", required: true },
-      { label: "reason", required: true },
-      { label: "description", required: true },
-    ];
-
-    if (!merchant_id) {
-      columns.unshift({
-        label: "merchant_id",
-        required: true,
-        selectOption: true,
-      });
-    }
-
-    if (type === 1 || type === 2) {
-      columns.unshift({
-        label: "can_be_deleted_only_by_organization",
-        required: true,
-      });
-    }
-
-    return columns;
-  };
 
   useEffect(() => {
     refetchMerchantBlacklistData();
@@ -287,10 +260,27 @@ export const MerchantBlacklist = () => {
 
       {isUpdateModalOpen && (
         <MutateModal
-          type="create"
+          type="update"
           open={isUpdateModalOpen}
           setOpen={setIsUpdateModalOpen}
-          fields={handleRenderColumns()}
+          fields={[
+            type === 1 || type === 2
+              ? {
+                  label: "can_be_deleted_only_by_organization",
+                  required: true,
+                }
+              : undefined,
+            { label: "cpf", required: true },
+            { label: "reason", required: true },
+            { label: "description", required: true },
+            !merchant_id
+              ? {
+                  label: "merchant_id",
+                  required: true,
+                  selectOption: true,
+                }
+              : undefined,
+          ]}
           body={body}
           setBody={setBody}
           modalName={t("modal.new_bank_blacklist")}

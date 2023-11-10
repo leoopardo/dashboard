@@ -3,7 +3,7 @@ import { useTheme } from "@src/contexts/ThemeContext";
 import { useListBanks } from "@src/services/bank/listBanks";
 import { useGetMerchantsPerBank } from "@src/services/register/merchant/merchant/getMerchantPerBankTotals";
 import { MerchantsQuery } from "@src/services/types/register/merchants/merchantsRegister.interface";
-import { Avatar, Col, Row, Tooltip, Typography } from "antd";
+import { Avatar, Card, Col, List, Row, Tooltip, Typography } from "antd";
 import ReactECharts from "echarts-for-react";
 import { t } from "i18next";
 import { useMediaQuery } from "react-responsive";
@@ -15,9 +15,8 @@ interface TotalizerPerBanksInterface {
 export const TotalizerPerBanks = ({ query }: TotalizerPerBanksInterface) => {
   const isMobile = useMediaQuery({ maxWidth: "950px" });
   const { theme } = useTheme();
-  const {
-    MerchantsPerBankData,
-  } = useGetMerchantsPerBank(query);
+  const { MerchantsPerBankData, isMerchantsPerBankDataFetching } =
+    useGetMerchantsPerBank(query);
   const { bankListData } = useListBanks({
     limit: 200,
     page: 1,
@@ -91,6 +90,32 @@ export const TotalizerPerBanks = ({ query }: TotalizerPerBanksInterface) => {
             />
           </Col>
         )} */}
+      <Col span={8}>
+        <List
+          loading={isMerchantsPerBankDataFetching}
+          grid={{ gutter: 16, column: 4 }}
+          dataSource={Object.keys(MerchantsPerBankData?.valuesIn)
+            .sort((a, b) =>
+              MerchantsPerBankData?.valuesIn[a] >
+              MerchantsPerBankData?.valuesIn[b]
+                ? -1
+                : 1
+            )
+            .map((bank) => {
+              return {
+                bank: bankListData?.itens.find((b) => b.bank === bank)
+                  ?.label_name,
+
+                value: MerchantsPerBankData?.valuesIn[bank],
+              };
+            })}
+          renderItem={(item) => (
+            <List.Item>
+              <Card title={<>{item.bank}</>}>Card content</Card>
+            </List.Item>
+          )}
+        />
+      </Col>
       {MerchantsPerBankData?.total &&
         MerchantsPerBankData.total > 0 &&
         MerchantsPerBankData?.valuesIn?.null !== MerchantsPerBankData.total && (
@@ -107,7 +132,7 @@ export const TotalizerPerBanks = ({ query }: TotalizerPerBanksInterface) => {
               style={{ backgroundColor: "#91cc75", height: "100%", padding: 8 }}
             >
               <Col span={24}>
-                <Typography.Title level={4} >
+                <Typography.Title level={4}>
                   {t("table.deposit_bank")}
                 </Typography.Title>
               </Col>

@@ -725,7 +725,7 @@
     "refunded_withdraw": "Devolvido",
     "debit_merchant_id": "ID Empresa origem",
     "credit_merchant_id": "ID Empresa destino",
-    "can_be_deleted_only_by_organization": "Organização pode deletar",
+    "can_be_deleted_only_by_organization": "Pode ser removido apenas por organizações?",
     "file_url": "Arquivo",
     "previous_data": "Anterior à alteração",
     "data_later": "Posterior à alteração",

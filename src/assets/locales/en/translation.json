@@ -720,7 +720,7 @@
     "refunded_withdraw": "Refunded",
     "debit_merchant_id": "ID Merchant from",
     "credit_merchant_id": "ID Merchant to",
-    "can_be_deleted_only_by_organization": "Organization can delete",
+    "can_be_deleted_only_by_organization": "Can be removed only by organizations?",
     "file_url": "File",
     "previous_data": "Prior to the change",
     "data_later": "After the change",

@@ -185,7 +185,6 @@ export const MerchantView = () => {
               })}`,
               key: "total_banks",
               children: <TotalizerPerBanks query={query} />,
-              disabled:true
             },
           ]}
         />
