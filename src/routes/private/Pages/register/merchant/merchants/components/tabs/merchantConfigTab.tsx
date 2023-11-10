@@ -26,7 +26,6 @@ import {
   Upload,
   UploadFile,
 } from "antd";
-import ImgCrop from "antd-img-crop";
 import { RcFile } from "antd/es/upload";
 import { useEffect, useRef, useState } from "react";
 import { CurrencyInput } from "react-currency-mask";
@@ -387,7 +386,7 @@ export const MerchantConfigTab = (props: { id?: string }) => {
           <Row style={{ width: "100%" }}>
             <Col span={"auto"}>
               <span>Logos</span>
-              <ImgCrop rotationSlider>
+            
                 <Upload
                   listType="picture-card"
                   onPreview={handlePreview}
@@ -397,14 +396,15 @@ export const MerchantConfigTab = (props: { id?: string }) => {
                         console.log(file, fileList);
                       }
                     },
-                    defaultFileList:
-                      merchantLogosData?.items?.map((logo) => {
-                        return {
-                          uid: logo?._id ?? "",
-                          name: logo?.file_name ?? "",
-                          url: logo?.file_url ?? "",
-                        };
-                      }) ?? [],
+                    defaultFileList: isMerchantLogosFetching
+                      ? []
+                      : merchantLogosData?.items?.map((logo) => {
+                          return {
+                            uid: logo?._id ?? "",
+                            name: logo?.file_name ?? "",
+                            url: logo?.file_url ?? "",
+                          };
+                        }),
 
                     showUploadList: {
                       showDownloadIcon: true,
@@ -435,7 +435,6 @@ export const MerchantConfigTab = (props: { id?: string }) => {
                     Upload
                   </Button>
                 </Upload>
-              </ImgCrop>
             </Col>
 
             <Col xs={{ span: 24 }} md={{ span: 24 }}>
