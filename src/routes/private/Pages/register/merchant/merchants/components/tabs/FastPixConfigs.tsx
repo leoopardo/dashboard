@@ -18,10 +18,7 @@ export const FastPixConfigTab = (props: { id?: string }) => {
     refetchMerchantConfigData,
     isMerchantConfigFetching,
   } = useMerchantConfig(props?.id);
-  const [body, setBody] = useState<IMerchantConfig | null | undefined>(
-    merchantConfigData?.merchantConfig
-  );
-  const [bodyUpdate, setBodyUpdate] = useState<
+  const [bodyUpdate] = useState<
     Partial<IMerchantConfig> | null | undefined
   >(null);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
