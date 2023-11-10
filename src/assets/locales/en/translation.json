@@ -358,7 +358,8 @@
     "password_type": "The password must contain at least 8 characters, including at least 1 number, 1 uppercase letter, and 1 special character.",
     "merchant_id": "merchant",
     "reason": "reason",
-    "domain": "domain"
+    "domain": "domain",
+    "active_logo": "Active logo"
   },
   "modal": {
     "confirm": "Confirm",
@@ -392,7 +393,8 @@
     "report_details": "Report details",
     "new_responsible": "New responsible",
     "update_responsible": "Update responsible",
-    "update_merchant": "Update Merchant"
+    "update_merchant": "Update Merchant",
+    "pre_manual": "Manual pre entry"
   },
   "table": {
     "id": "ID",

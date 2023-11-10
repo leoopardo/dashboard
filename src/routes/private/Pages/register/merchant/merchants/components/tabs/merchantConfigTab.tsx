@@ -10,6 +10,7 @@ import { useUpdateMerchantConfig } from "@src/services/register/merchant/merchan
 import { IMerchantConfig } from "@src/services/types/register/merchants/merchantConfig.interface";
 import { defaultTheme } from "@src/styles/defaultTheme";
 import {
+  Avatar,
   Button,
   Col,
   Divider,
@@ -381,9 +382,11 @@ export const MerchantConfigTab = (props: { id?: string }) => {
             </Form.Item>
           </Col>
         </Row>
-        <Row>
-          {!isMerchantLogosFetching && (
-            <Col span={24}>
+
+        {!isMerchantLogosFetching && (
+          <Row style={{ width: "100%" }}>
+            <Col span={"auto"}>
+              <span>Logos</span>
               <ImgCrop rotationSlider>
                 <Upload
                   listType="picture-card"
@@ -428,12 +431,38 @@ export const MerchantConfigTab = (props: { id?: string }) => {
                   }}
                   style={{ width: "100%" }}
                 >
-                  <Button icon={<UploadOutlined />}>Upload</Button>
+                  <Button icon={<UploadOutlined />} style={{ height: "100%" }}>
+                    Upload
+                  </Button>
                 </Upload>
               </ImgCrop>
             </Col>
-          )}
-        </Row>
+
+            <Col xs={{ span: 24 }} md={{ span: 24 }}>
+              <Form.Item label={t("input.active_logo")}>
+                <Select
+                  style={{ width: "100%" }}
+                  value={
+                    merchantLogosData?.items?.find((logo) => logo.active)?._id
+                  }
+                  options={merchantLogosData?.items?.map((logo) => {
+                    return {
+                      label: (
+                        <>
+                          <Avatar shape="square" src={logo?.file_url} />{" "}
+                          {logo?.file_name}
+                        </>
+                      ),
+                      value: logo?._id ?? "",
+                    };
+                  })}
+                  size="large"
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+        )}
+
         <Modal
           open={previewOpen}
           title={previewTitle}
