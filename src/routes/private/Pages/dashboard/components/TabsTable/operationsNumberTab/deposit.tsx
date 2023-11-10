@@ -3,12 +3,28 @@ import { useGetMerchantRanking } from "@src/services/merchant/ranking/getRanking
 import { Empty } from "antd";
 import ReactECharts from "echarts-for-react";
 import { useTranslation } from "react-i18next";
+import { useErrorContext } from "@src/contexts/ErrorContext";
 import { TableProps } from "..";
+import { useEffect } from "react";
 
 export const DepositOperations = ({ query, chart }: TableProps) => {
-  const { RankingData, RankingError, isRankingFetching } =
-    useGetMerchantRanking("operations", "deposit", query);
   const { t } = useTranslation();
+  const {handleChangeError} = useErrorContext()
+  const { RankingData, RankingError, isRankingFetching,RankingDataSuccess } =
+    useGetMerchantRanking("operations", "deposit", query);
+
+  useEffect(() => {
+    if(RankingDataSuccess) {
+      handleChangeError({rankingOperations: false})
+    }
+
+    if(RankingError) {
+      handleChangeError({rankingOperations: true})
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [RankingError, RankingDataSuccess])
+
+  
   return !chart ? (
     <>
       {RankingData?.length ? (

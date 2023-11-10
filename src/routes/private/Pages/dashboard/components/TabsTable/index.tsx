@@ -1,26 +1,33 @@
-import { BarChartOutlined, DashOutlined, ReloadOutlined } from "@ant-design/icons";
+import {
+  BarChartOutlined,
+  DashOutlined,
+  ReloadOutlined,
+} from "@ant-design/icons";
 import { queryClient } from "@src/services/queryClient";
 import { Button, Col, Row, Tabs, Typography } from "antd";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import secureLocalStorage from "react-secure-storage";
 import { FeeTab } from "./feesTab";
+import { useErrorContext } from "@src/contexts/ErrorContext";
 import { FinancialMovementsTab } from "./financialMovimentsTab";
 import { OperationMovementsTab } from "./operationsNumberTab";
 
 export interface TableProps {
   query: { start_date: string; end_date: string };
-  chart?: boolean
+  chart?: boolean;
 }
 
 export const TabsTable = ({ query }: TableProps) => {
   const { t } = useTranslation();
+  const { error } = useErrorContext();
   const [isChart, setIsChart] = useState<boolean>(
     secureLocalStorage.getItem("isRankingChart") === "true"
   );
+
   return (
     <>
-      <Row gutter={[8,8]}>
+      <Row gutter={[8, 8]}>
         <Col span={22}>
           <Typography.Title level={3}>Ranking</Typography.Title>
         </Col>
@@ -67,23 +74,28 @@ export const TabsTable = ({ query }: TableProps) => {
         defaultActiveKey="1"
         type="line"
         size="large"
-        items={[
-          {
-            label: t("table.operations_value"),
-            key: "financial_movements",
-            children: <FinancialMovementsTab query={query} chart={isChart} />,
-          },
-          {
-            label: t("table.operation_number"),
-            key: "operation_moviments",
-            children: <OperationMovementsTab query={query} chart={isChart}/>,
-          },
-          {
-            label: t("table.fees"),
-            key: "fees",
-            children: <FeeTab query={query} chart={isChart}/>,
-          },
-        ]}
+        items={
+          [
+            !error.rankingValue && {
+              label: t("table.operations_value"),
+              key: "financial_movements",
+              children: <FinancialMovementsTab query={query} chart={isChart} />,
+              disabled: error.rankingValue,
+              style: { color: "#5470c6" },
+            },
+            !error.rankingOperations && {
+              label: t("table.operation_number"),
+              key: "operation_moviments",
+              disabled: error.rankingOperations,
+              children: <OperationMovementsTab query={query} chart={isChart} />,
+            },
+            !error.rankingFee && {
+              label: t("table.fees"),
+              key: "fees",
+              children: <FeeTab query={query} chart={isChart} />,
+            },
+          ].filter(Boolean) as any[]
+        }
       />
     </>
   );

@@ -9,7 +9,7 @@ export function useGetMerchantRanking(
   operation: "total" | "deposit" | "withdraw",
   params: { start_date: string; end_date: string }
 ) {
-  const { data, isFetching, error, refetch } = useQuery<
+  const { data, isFetching, error, refetch, isSuccess } = useQuery<
     { _id: string; total: number; name: string }[] | null | undefined
   >(`ranking-${type}-${operation}`, async () => {
     const response = await api.get(
@@ -27,6 +27,7 @@ export function useGetMerchantRanking(
   }, [params]);
 
   const RankingData = data;
+  const RankingDataSuccess = isSuccess
   const isRankingFetching = isFetching;
   const RankingError: any = error;
   const refetcRanking = refetch;
@@ -36,5 +37,6 @@ export function useGetMerchantRanking(
     isRankingFetching,
     RankingError,
     refetcRanking,
+    RankingDataSuccess
   };
 }

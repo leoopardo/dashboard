@@ -38,7 +38,7 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
           container
           item
           xs={12}
-          style={{ height: "5px", marginBottom: "50px" }}
+          style={{ height: "5px", marginBottom: "50px", justifyContent: 'flex-start' }}
         >
           <Divider />
         </Grid>
@@ -255,7 +255,7 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
           md={1}
           style={{
             display: "flex",
-            justifyContent: "center",
+            justifyContent: "flex-start",
             alignItems: "center",
           }}
         >
@@ -277,7 +277,7 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
                   item
                   style={{
                     display: "flex",
-                    justifyContent: "center",
+                    justifyContent: "flex-start",
                   }}
                 >
                   <Statistic

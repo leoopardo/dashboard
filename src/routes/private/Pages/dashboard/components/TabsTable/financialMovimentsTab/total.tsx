@@ -1,15 +1,29 @@
 import { CustomTable } from "@src/components/CustomTable";
 import { useGetMerchantRanking } from "@src/services/merchant/ranking/getRanking";
 import { Empty } from "antd";
+import { useErrorContext } from "@src/contexts/ErrorContext";
 import ReactECharts from "echarts-for-react";
 import { useTranslation } from "react-i18next";
 import { TableProps } from "..";
+import { useEffect } from "react";
 
 export const TotalFinancial = ({ query, chart }: TableProps) => {
-  const { RankingData, RankingError, isRankingFetching } =
+  const { t } = useTranslation();
+  const {handleChangeError} = useErrorContext()
+  const { RankingData, RankingError, isRankingFetching, RankingDataSuccess } =
     useGetMerchantRanking("value", "total", query);
 
-  const { t } = useTranslation();
+    useEffect(() => {
+      if (RankingDataSuccess) {
+        handleChangeError({ rankingValue: false });
+      }
+  
+      if (RankingError) {
+        handleChangeError({ rankingValue: true });
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [RankingError, RankingDataSuccess]);
+
   return !chart ? (
     <>
       {RankingData?.length ? (

@@ -20,6 +20,7 @@ import { useMediaQuery } from "react-responsive";
 import { useLocation, useNavigate } from "react-router-dom";
 import secureLocalStorage from "react-secure-storage";
 import { useMenu } from "../../contexts/SidebarContext";
+import { useErrorContext } from "@src/contexts/ErrorContext";
 import { defaultTheme } from "../../styles/defaultTheme";
 
 type MenuItem = Required<MenuProps>["items"][number];
@@ -27,6 +28,7 @@ type MenuItem = Required<MenuProps>["items"][number];
 export const SidebarNavigation = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const {resetErrors} = useErrorContext()
   const isMobile = useMediaQuery({ maxWidth: "950px" });
   const [collapsed, setCollapsed] = useState(true);
   const { handleChangeSidebar, isSidebarOpen } = useMenu();
@@ -1798,6 +1800,7 @@ export const SidebarNavigation = () => {
         secureLocalStorage.removeItem("token");
         sessionStorage.removeItem("token");
         queryClient.refetchQueries(["validate"]);
+        resetErrors()
       },
       { color: "red" }
     ),
