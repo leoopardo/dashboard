@@ -418,7 +418,7 @@ export const RefundDepositsManual = () => {
             "aggregator_id",
             "aggregator_id",
             "operator_id",
-            "pixType"
+            "pix_type"
           ]}
           refetch={refetchRefundDepositManualTotal}
           selectOptions={{
