@@ -109,31 +109,46 @@ export const Dashboard = () => {
   }
 
   return (
-    <Row style={{ padding: 20 }}>
-      <Layout
-        ref={ref1}
-        style={{
-          margin: -28,
-          paddingBottom: 20,
-          paddingTop: 20,
-          paddingLeft: 6,
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-        {(permissions?.report?.paybrokers?.balance
-          ?.report_paybrokers_balance_list ||
-          permissions?.report?.merchant?.balance
-            ?.report_merchant_balance_list) && (
-          <Tabs
-            activeKey={activeKey}
-            onChange={(value) => {
-              setActiveKey(value);
-            }}
-            items={totilizersTabs}
-          />
-        )}
-      </Layout>
+    <Row
+      style={{
+        margin: "0 20px",
+        transform:
+          permissions?.report?.paybrokers?.balance
+            ?.report_paybrokers_balance_list ||
+          permissions?.report?.merchant?.balance?.report_merchant_balance_list
+            ? "translateY(17px)"
+            : "translateY(-17px)"
+      }}
+    >
+      {(permissions?.report?.paybrokers?.balance
+        ?.report_paybrokers_balance_list ||
+        permissions?.report?.merchant?.balance
+          ?.report_merchant_balance_list) && (
+        <Layout
+          ref={ref1}
+          style={{
+            margin: -28,
+            paddingBottom: 20,
+            paddingTop: 20,
+            paddingLeft: 6,
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          {(permissions?.report?.paybrokers?.balance
+            ?.report_paybrokers_balance_list ||
+            permissions?.report?.merchant?.balance
+              ?.report_merchant_balance_list) && (
+            <Tabs
+              activeKey={activeKey}
+              onChange={(value) => {
+                setActiveKey(value);
+              }}
+              items={totilizersTabs}
+            />
+          )}
+        </Layout>
+      )}
 
       <Col
         span={24}
@@ -148,26 +163,6 @@ export const Dashboard = () => {
           padding: 15,
         }}
       >
-        {!permissions?.report?.paybrokers?.bank_balance?.menu && (
-          <Col
-            span={24}
-            style={{
-              width: "100%",
-              display: "flex",
-              justifyContent: "flex-end",
-              marginTop: "-25px",
-            }}
-          >
-            <Tooltip title={t("buttons.help")}>
-              <Button
-                type="link"
-                onClick={() => setIsTuorOpen((state) => !state)}
-              >
-                <InfoCircleOutlined />
-              </Button>
-            </Tooltip>
-          </Col>
-        )}
 
         {permissions?.report?.paybrokers?.bank_balance?.menu && (
           <div>
