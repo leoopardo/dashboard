@@ -359,7 +359,15 @@
     "merchant_id": "merchant",
     "reason": "reason",
     "domain": "domain",
-    "active_logo": "Active logo"
+    "active_logo": "Active logo",
+    "fastpix_in_fee_type": "Fee Type (FastPix Deposit)",
+    "fastpix_in_fee_percent": "Percentage Fee (FastPix Deposit)",
+    "fastpix_in_fee_value": "Fee Amount (FastPix Deposit)",
+    "fastpix_in_fee_min": "Fee min. value (FastPix Deposit)",
+    "fastpix_refund_fee_type": "Fee Type (FastPix Refund)",
+    "fastpix_refund_fee_percent": "Percentage Fee (FastPix Refund)",
+    "fastpix_refund_fee_value": "Fee Amount (FastPix Refund)",
+    "fastpix_refund_fee_min": "Fee min. value (FastPix Refund)"
   },
   "modal": {
     "confirm": "Confirm",
