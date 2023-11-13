@@ -28,8 +28,8 @@ export function useGetReceipts(endToEndId?: string) {
   >(
     "receipts",
     async () => {
-      const response = await api.get(`reconciliation/pix/pix/e2e`, {
-        params: { endToEndId },
+      const response = await api.post(`reconciliation/pix/pix/e2e`, {
+        endToEndId,
       });
       return response.data;
     },
@@ -46,6 +46,6 @@ export function useGetReceipts(endToEndId?: string) {
     isReceiptsFetching,
     receiptsError,
     refetchReceipts,
-    isSuccess
+    isSuccess,
   };
 }
