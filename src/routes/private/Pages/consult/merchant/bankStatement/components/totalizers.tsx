@@ -111,10 +111,7 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
                   return (
                     <Grid
                       item
-                      style={{
-                        display: "flex",
-                        justifyContent: "center",
-                      }}
+                      xs={2}
                     >
                       <Statistic
                         loading={isMerchantBankStatementTotalsFetching}
@@ -136,10 +133,7 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
                   return (
                     <Grid
                       item
-                      style={{
-                        display: "flex",
-                        justifyContent: "center",
-                      }}
+                      xs={2}
                     >
                       <Statistic
                         loading={isMerchantBankStatementTotalsFetching}
@@ -213,10 +207,7 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
                   return (
                     <Grid
                       item
-                      style={{
-                        display: "flex",
-                        justifyContent: "center",
-                      }}
+                      xs={2}
                     >
                       <Statistic
                         loading={isMerchantBankStatementTotalsFetching}
@@ -238,10 +229,7 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
                   return (
                     <Grid
                       item
-                      style={{
-                        display: "flex",
-                        justifyContent: "center",
-                      }}
+                      xs={2}
                     >
                       <Statistic
                         loading={isMerchantBankStatementTotalsFetching}

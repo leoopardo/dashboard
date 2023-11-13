@@ -485,7 +485,7 @@ export const GeneratedDeposits = () => {
               "WAITING_REFUND",
             ],
             gender: ["MALE", "FEMALE", "OTHER"],
-            pixType: ["REGULAR", "FASTPIX_IN"]
+            pixType: ["STANDARD", "FASTPIX_IN"]
           }}
           startDateKeyName="initial_date"
           endDateKeyName="final_date"
