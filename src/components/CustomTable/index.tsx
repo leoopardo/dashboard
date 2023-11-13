@@ -38,6 +38,7 @@ export interface ColumnInterface {
     | "birth"
     | "text"
     | "translate"
+    | "pix_type"
     | "date"
     | "document"
     | "value"
@@ -820,6 +821,46 @@ export const CustomTable = (props: TableProps) => {
               render: (text: string) => (
                 <Typography style={{ width: "100%", textAlign: "center", minWidth: "30px" }}>
                   {text ? t(`table.${text.toLocaleLowerCase()}`) : "-"}
+                </Typography>
+              ),
+              sorter: column.sort
+                ? () => {
+                    props.setQuery((state: any) => ({
+                      ...state,
+                      sort_field: column?.sort_name
+                        ? column.sort_name
+                        : Array.isArray(column?.name)
+                        ? column?.name[1]
+                        : column?.name,
+                      sort_order:
+                        props.query.sort_order === "DESC" ? "ASC" : "DESC",
+                    }));
+
+                    return 0;
+                  }
+                : undefined,
+            };
+
+
+            case "pix_type":
+            return {
+              title: (
+                <Typography
+                  style={{ width: "100%", textAlign: "center" }}
+                  ref={column.key}
+                >
+                  {t(`table.${column?.head || column?.name}`)}
+                </Typography>
+              ),
+              key: column?.sort_name
+                ? column.sort_name
+                : Array.isArray(column?.name)
+                ? column?.name + `${Math.random()}`
+                : column?.name,
+              dataIndex: column?.name,
+              render: (text: string) => (
+                <Typography style={{ width: "100%", textAlign: "center", minWidth: "30px" }}>
+                  {text ? t(`table.${text.toLocaleLowerCase()}`) : t('table.standard')}
                 </Typography>
               ),
               sorter: column.sort
