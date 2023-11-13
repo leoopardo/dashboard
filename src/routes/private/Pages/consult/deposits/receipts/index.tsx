@@ -1,6 +1,14 @@
 import { Toast } from "@src/components/Toast";
 import { useGetReceipts } from "@src/services/consult/deposits/receipts/useGetRecepts";
-import { Col, Descriptions, Divider, Empty, Input, Row } from "antd";
+import {
+  Col,
+  Descriptions,
+  Divider,
+  Empty,
+  Input,
+  Row,
+  Typography,
+} from "antd";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
@@ -27,9 +35,13 @@ export const DepositsReceipts = () => {
           loading={isReceiptsFetching}
         />
       </Col>
-      <Col span={24}>
+      <Col span={24} style={{ marginTop: 8, marginBottom: 8 }}>
         {receipts ? (
-          <Divider>{t(`messages.${receipts?.code}`)}</Divider>
+          <Divider>
+            <Typography.Title level={3}>
+              {t(`messages.${receipts?.code}`)}
+            </Typography.Title>
+          </Divider>
         ) : (
           <Divider />
         )}
@@ -53,9 +65,17 @@ export const DepositsReceipts = () => {
                 {receipts?.transaction?.bank}
               </Descriptions.Item>
             )}
-            {receipts?.transaction?.bank && (
+            {receipts?.transaction?.endToEndId && (
               <Descriptions.Item label={t("table.endToEndId")}>
                 {receipts?.transaction?.endToEndId}
+              </Descriptions.Item>
+            )}
+            {receipts?.transaction?.value && (
+              <Descriptions.Item label={t("table.value")}>
+                {new Intl.NumberFormat("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                }).format(Number(receipts?.transaction?.value) || 0)}
               </Descriptions.Item>
             )}
             {receipts?.transaction?.payer_name && (
@@ -75,7 +95,7 @@ export const DepositsReceipts = () => {
             )}
             {receipts?.transaction?.status && (
               <Descriptions.Item label={t("table.status")}>
-                {t(`table.${receipts?.transaction?.status?.toLowerCase}`)}
+                {t(`table.${receipts?.transaction?.status?.toLowerCase()}`)}
               </Descriptions.Item>
             )}
             {receipts?.transaction?.date && (
