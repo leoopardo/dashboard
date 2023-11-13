@@ -67,6 +67,44 @@ export const TotalizersCards = (props: TotalizersInterface) => {
         </Col>
       )}
 
+{(props.query.status === "ERROR" || !props.query.status) && (
+        <Col
+          style={{ maxWidth: "220px" }}
+          xs={{ span: isMobile ? 10 : undefined }}
+        >
+          <Card
+            bordered={false}
+            style={{ height: isMobile ? "100px" : "120px" }}
+          >
+            <Statistic
+              loading={props.loading}
+              title={
+                <>
+                  <>{t("table.error")}</>:{" "}
+                  <span style={{ fontSize: "12px" }}>
+                    {props?.data?.error_total || 0} /{" "}
+                    {getPercent(
+                      props?.data?.error_total ?? 0,
+                      props.data?.transactions_total ?? 0
+                    )}
+                  </span>
+                </>
+              }
+              value={new Intl.NumberFormat("pt-BR", {
+                style: "currency",
+                currency: "BRL",
+              }).format(props?.data?.error_value || 0)}
+              precision={2}
+              valueStyle={{
+                color: defaultTheme.colors.error,
+                fontSize: isMobile ? "12px" : "18px",
+                wordBreak: "break-all",
+              }}
+            />
+          </Card>
+        </Col>
+      )}
+
       {(props.query.status === "PROCESSING" || !props.query.status) && (
         <Col
           style={{ maxWidth: "220px" }}
@@ -96,7 +134,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
               }).format(props?.data?.processing_value || 0)}
               precision={2}
               valueStyle={{
-                color: defaultTheme.colors.error,
+                color: defaultTheme.colors.processing,
                 fontSize: isMobile ? "12px" : "18px",
                 wordBreak: "break-all",
               }}
