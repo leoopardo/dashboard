@@ -101,7 +101,7 @@ export const RefundDeposits = () => {
     { name: "merchant_name", type: "text" },
     { name: "value", type: "value" },
     { name: "createdAt", type: "date" },
-    { name: "pix_type", head: "pixType",  type: "translate" },
+    { name: "pix_type", head: "pixType",  type: "pix_type" },
     { name: "buyer_name", type: "text" },
     { name: "buyer_document", type: "document" },
     { name: "status", type: "status" },
@@ -339,7 +339,7 @@ export const RefundDeposits = () => {
             "operator_id",
             "bank",
             "payer_bank",
-            "pixType",
+            "pix_type",
             "state",
             "city",
             "gender",
@@ -356,7 +356,7 @@ export const RefundDeposits = () => {
               "WAITING",
               "WAITING_REFUND",
             ],
-            pixType: ["STANDARD", "FASTPIX_IN"],
+            pix_type: ["STANDARD", "FASTPIX"],
             gender: ["MALE", "FEMALE", "OTHER"],
           }}
           startDateKeyName="start_date"

@@ -9,7 +9,6 @@ import { useCreateWithdrawVoucherRefund } from "@src/services/consult/withdrawal
 import { useGetWithdraw } from "@src/services/consult/withdrawals/generatedWithdrawals/getWithdraw";
 import { Button, Descriptions, Drawer, Segmented, Spin } from "antd";
 import { Dispatch, SetStateAction, useState } from "react";
-import CopyToClipboard from "react-copy-to-clipboard";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 
@@ -88,15 +87,17 @@ export const ViewModal = (props: ViewModalProps) => {
                       }}
                     >
                       {`${withdraw?._id?.substring(0, 15)}...` ?? "-"}
-                      <CopyToClipboard text={withdraw?._id}>
-                        <Button
-                          size="large"
-                          type="ghost"
-                          onClick={() => toast.success(t("table.copied"))}
-                        >
-                          <CopyOutlined />
-                        </Button>
-                      </CopyToClipboard>
+
+                      <Button
+                        size="large"
+                        type="ghost"
+                        onClick={() => {
+                          navigator.clipboard.writeText(withdraw?._id);
+                          toast.success(t("table.copied"));
+                        }}
+                      >
+                        <CopyOutlined />
+                      </Button>
                     </Descriptions.Item>
                     <Descriptions.Item
                       key={"endToEndId"}
@@ -112,15 +113,16 @@ export const ViewModal = (props: ViewModalProps) => {
                         ? `${withdraw?.endToEndId?.substring(0, 15)}...`
                         : "-"}
                       {withdraw?.endToEndId && (
-                        <CopyToClipboard text={withdraw?.endToEndId}>
-                          <Button
-                            size="large"
-                            type="ghost"
-                            onClick={() => toast.success(t("table.copied"))}
-                          >
-                            <CopyOutlined />
-                          </Button>
-                        </CopyToClipboard>
+                        <Button
+                          size="large"
+                          type="ghost"
+                          onClick={() => {
+                            navigator.clipboard.writeText(withdraw?.endToEndId);
+                            toast.success(t("table.copied"));
+                          }}
+                        >
+                          <CopyOutlined />
+                        </Button>
                       )}
                     </Descriptions.Item>
                     <Descriptions.Item
@@ -137,15 +139,16 @@ export const ViewModal = (props: ViewModalProps) => {
                         ? `${withdraw?.payment_id?.substring(0, 15)}...`
                         : "-"}
                       {withdraw?.payment_id && (
-                        <CopyToClipboard text={withdraw?.payment_id}>
-                          <Button
-                            size="large"
-                            type="ghost"
-                            onClick={() => toast.success(t("table.copied"))}
-                          >
-                            <CopyOutlined />
-                          </Button>
-                        </CopyToClipboard>
+                        <Button
+                          size="large"
+                          type="ghost"
+                          onClick={() => {
+                            navigator.clipboard.writeText(withdraw?.payment_id);
+                            toast.success(t("table.copied"));
+                          }}
+                        >
+                          <CopyOutlined />
+                        </Button>
                       )}
                     </Descriptions.Item>
                     <Descriptions.Item
@@ -214,15 +217,18 @@ export const ViewModal = (props: ViewModalProps) => {
                         ? `${withdraw?.webhook_url?.substring(0, 15)}...`
                         : "-"}
                       {withdraw?.webhook_url && (
-                        <CopyToClipboard text={withdraw?.webhook_url}>
-                          <Button
-                            size="large"
-                            type="ghost"
-                            onClick={() => toast.success(t("table.copied"))}
-                          >
-                            <CopyOutlined />
-                          </Button>
-                        </CopyToClipboard>
+                        <Button
+                          size="large"
+                          type="ghost"
+                          onClick={() => {
+                            navigator.clipboard.writeText(
+                              withdraw?.webhook_url
+                            );
+                            toast.success(t("table.copied"));
+                          }}
+                        >
+                          <CopyOutlined />
+                        </Button>
                       )}
                     </Descriptions.Item>
                     <Descriptions.Item
@@ -242,15 +248,18 @@ export const ViewModal = (props: ViewModalProps) => {
                           )}...`
                         : "-"}
                       {withdraw?.webhook_url_optional && (
-                        <CopyToClipboard text={withdraw?.webhook_url_optional}>
-                          <Button
-                            size="large"
-                            type="ghost"
-                            onClick={() => toast.success(t("table.copied"))}
-                          >
-                            <CopyOutlined />
-                          </Button>
-                        </CopyToClipboard>
+                        <Button
+                          size="large"
+                          type="ghost"
+                          onClick={() => {
+                            navigator.clipboard.writeText(
+                              withdraw?.webhook_url_optional
+                            );
+                            toast.success(t("table.copied"));
+                          }}
+                        >
+                          <CopyOutlined />
+                        </Button>
                       )}
                     </Descriptions.Item>
                     {!withdraw?.url_pdf ? (

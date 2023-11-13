@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { CopyOutlined } from "@ant-design/icons";
 import { Grid } from "@mui/material";
 import {
   Button,
@@ -10,11 +11,9 @@ import {
   Spin,
 } from "antd";
 import { Dispatch, SetStateAction, useState } from "react";
+import { toast } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useGetDeposit } from "../../../../../../services/consult/deposits/generatedDeposits/getDeposit";
-import CopyToClipboard from "react-copy-to-clipboard";
-import { toast } from "react-hot-toast";
-import { CopyOutlined } from "@ant-design/icons";
 
 interface ViewModalProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -167,17 +166,16 @@ export const ViewModal = (props: ViewModalProps) => {
                               placeholder="-"
                               value={deposit[key] || "-"}
                               addonAfter={
-                                <CopyToClipboard text={deposit[key]}>
-                                  <Button
-                                    size="small"
-                                    type="ghost"
-                                    onClick={() =>
-                                      toast.success(t("table.copied"))
-                                    }
-                                  >
-                                    <CopyOutlined />
-                                  </Button>
-                                </CopyToClipboard>
+                                <Button
+                                  size="small"
+                                  type="ghost"
+                                  onClick={() => {
+                                    navigator.clipboard.writeText(deposit[key]);
+                                    toast.success(t("table.copied"));
+                                  }}
+                                >
+                                  <CopyOutlined />
+                                </Button>
                               }
                             />
                           </div>
