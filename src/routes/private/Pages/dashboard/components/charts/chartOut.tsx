@@ -14,13 +14,14 @@ interface ChartInInterface {
 
 export const ChartOut = ({ query }: ChartInInterface) => {
   const { t } = useTranslation();
-  const [formatedQuery] = useState<generatedWithdrawalsRowsQuery>({
-    ...query,
-    start_date: undefined,
-    end_date: undefined,
-    initial_date: query?.start_date,
-    final_date: query?.end_date,
-  });
+  const [formatedQuery, setFormatedQuery] =
+    useState<generatedWithdrawalsRowsQuery>({
+      ...query,
+      start_date: undefined,
+      end_date: undefined,
+      initial_date: query?.start_date,
+      final_date: query?.end_date,
+    });
   const { theme } = useTheme();
   const {
     WithdrawalsTotal,
@@ -28,6 +29,13 @@ export const ChartOut = ({ query }: ChartInInterface) => {
     refetchWithdrawalsTotal,
   } = useGetTotalGeneratedWithdrawals(formatedQuery);
   useEffect(() => {
+    setFormatedQuery({
+      ...query,
+      start_date: undefined,
+      end_date: undefined,
+      initial_date: query?.start_date,
+      final_date: query?.end_date,
+    });
     refetchWithdrawalsTotal();
   }, [query]);
 
@@ -47,7 +55,7 @@ export const ChartOut = ({ query }: ChartInInterface) => {
               {new Intl.NumberFormat("pt-BR", {
                 style: "currency",
                 currency: "BRL",
-              }).format(Number(WithdrawalsTotal?.transaction_value) || 0)}
+              }).format(Number(WithdrawalsTotal?.paid_value) || 0)}
             </Typography.Title>
           </div>
         }

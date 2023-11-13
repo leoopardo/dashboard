@@ -1546,7 +1546,7 @@ export const PrivateRoutes = () => {
           </Route>
           {/* Contastations */}
           <Route path="contestation">
-            <Route path="deposit">
+            <Route path="deposit_contestation">
               <Route
                 path="uploads"
                 element={

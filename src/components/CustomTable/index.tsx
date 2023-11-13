@@ -24,7 +24,6 @@ import {
 } from "antd";
 import type { ColumnsType, TableProps as TablePropsAntD } from "antd/es/table";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { CopyToClipboard } from "react-copy-to-clipboard";
 import { toast } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
@@ -95,7 +94,7 @@ export const CustomTable = (props: TableProps) => {
   const [columns, setColumns] = useState<ColumnsType<ColumnInterface>>([]);
   const [actions, setActions] = useState<any>([]);
   const [sortOrder] = useState(false);
-  const [sorterObj, setSorterObj] = useState<any | undefined>()
+  const [sorterObj, setSorterObj] = useState<any | undefined>();
   const { bankListData } = useListBanks({
     limit: 200,
     page: 1,
@@ -174,15 +173,16 @@ export const CustomTable = (props: TableProps) => {
               width: 60,
               render: (text: string) => (
                 <Tooltip title={text}>
-                  <CopyToClipboard text={text}>
-                    <Button
-                      size="large"
-                      type="ghost"
-                      onClick={() => toast.success(t("table.copied"))}
-                    >
-                      <CopyOutlined />
-                    </Button>
-                  </CopyToClipboard>
+                  <Button
+                    size="large"
+                    type="ghost"
+                    onClick={() => {
+                      navigator.clipboard.writeText(text);
+                      toast.success(t("table.copied"));
+                    }}
+                  >
+                    <CopyOutlined />
+                  </Button>
                 </Tooltip>
               ),
               sorter: column.sort
@@ -819,7 +819,13 @@ export const CustomTable = (props: TableProps) => {
                 : column?.name,
               dataIndex: column?.name,
               render: (text: string) => (
-                <Typography style={{ width: "100%", textAlign: "center", minWidth: "30px" }}>
+                <Typography
+                  style={{
+                    width: "100%",
+                    textAlign: "center",
+                    minWidth: "30px",
+                  }}
+                >
                   {text ? t(`table.${text.toLocaleLowerCase()}`) : "-"}
                 </Typography>
               ),
@@ -841,8 +847,7 @@ export const CustomTable = (props: TableProps) => {
                 : undefined,
             };
 
-
-            case "pix_type":
+          case "pix_type":
             return {
               title: (
                 <Typography
@@ -859,8 +864,16 @@ export const CustomTable = (props: TableProps) => {
                 : column?.name,
               dataIndex: column?.name,
               render: (text: string) => (
-                <Typography style={{ width: "100%", textAlign: "center", minWidth: "30px" }}>
-                  {text ? t(`table.${text.toLocaleLowerCase()}`) : t('table.standard')}
+                <Typography
+                  style={{
+                    width: "100%",
+                    textAlign: "center",
+                    minWidth: "30px",
+                  }}
+                >
+                  {text
+                    ? t(`table.${text.toLocaleLowerCase()}`)
+                    : t("table.standard")}
                 </Typography>
               ),
               sorter: column.sort
@@ -1074,21 +1087,22 @@ export const CustomTable = (props: TableProps) => {
   }, [props.columns]);
 
   const onChange: TablePropsAntD<any>["onChange"] = (page, _filter, sorter) => {
-    setSorterObj(sorter)
-    console.log('sorter', sorter)
-    if((page.total ?? 0) > (page?.pageSize ?? 0)) {
-      return  props.setQuery((state: any) => ({ ...state, page: page?.current }));
+    setSorterObj(sorter);
+    console.log("sorter", sorter);
+    if ((page.total ?? 0) > (page?.pageSize ?? 0)) {
+      return props.setQuery((state: any) => ({
+        ...state,
+        page: page?.current,
+      }));
     }
-    return  props.setQuery((state: any) => ({ ...state, page: 1 }));
- 
-  }
+    return props.setQuery((state: any) => ({ ...state, page: 1 }));
+  };
 
   useEffect(() => {
-    if(sorterObj?.order && sorterObj?.columnKey) {
+    if (sorterObj?.order && sorterObj?.columnKey) {
       props.setQuery((state: any) => ({ ...state, page: 1 }));
     }
-  }, [sorterObj?.order, sorterObj?.columnKey])
-
+  }, [sorterObj?.order, sorterObj?.columnKey]);
 
   return (
     <>

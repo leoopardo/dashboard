@@ -15,20 +15,28 @@ interface ChartInInterface {
 
 export const ChartIn = ({ query }: ChartInInterface) => {
   const { t } = useTranslation();
-  const [formatedQuery] = useState<generatedDepositTotalQuery>({
-    ...query,
-    start_date: undefined,
-    end_date: undefined,
-    initial_date: query?.start_date,
-    final_date: query?.end_date,
-  });
+  const [formatedQuery, setFormatedQuery] =
+    useState<generatedDepositTotalQuery>({
+      ...query,
+      start_date: undefined,
+      end_date: undefined,
+      initial_date: query?.start_date,
+      final_date: query?.end_date,
+    });
 
   const { depositsTotal, isDepositsTotalFetching, refetchDepositsTotal } =
     useGetTotalGeneratedDeposits(formatedQuery);
   useEffect(() => {
+    setFormatedQuery({
+      ...query,
+      start_date: undefined,
+      end_date: undefined,
+      initial_date: query?.start_date,
+      final_date: query?.end_date,
+    });
     refetchDepositsTotal();
   }, [query]);
-  const {theme} = useTheme()
+  const { theme } = useTheme();
 
   return (
     <Col xs={{ span: 24 }} md={{ span: 12 }}>
@@ -46,7 +54,7 @@ export const ChartIn = ({ query }: ChartInInterface) => {
               {new Intl.NumberFormat("pt-BR", {
                 style: "currency",
                 currency: "BRL",
-              }).format(Number(depositsTotal?.transaction_value) || 0)}
+              }).format(Number(depositsTotal?.paid_value) || 0)}
             </Typography.Title>
           </div>
         }
@@ -91,7 +99,7 @@ export const ChartIn = ({ query }: ChartInInterface) => {
                   },
                   {
                     value: depositsTotal?.canceled_value ?? 0,
-                    name: `${t("table.canceled")} ${
+                    name: `${t("table.canceled")}: ${
                       depositsTotal?.canceled_total ?? 0
                     }`,
                   },

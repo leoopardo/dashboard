@@ -22,7 +22,6 @@ import {
   Typography,
 } from "antd";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import CopyToClipboard from "react-copy-to-clipboard";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 
@@ -132,15 +131,17 @@ export const ViewModal = (props: ViewModalProps) => {
                   }}
                 >
                   {`${Refund?.endToEndId.substring(0, 10)}...` ?? "-"}
-                  <CopyToClipboard text={Refund?.endToEndId}>
-                    <Button
-                      size="large"
-                      type="ghost"
-                      onClick={() => toast.success(t("table.copied"))}
-                    >
-                      <CopyOutlined />
-                    </Button>
-                  </CopyToClipboard>
+
+                  <Button
+                    size="large"
+                    type="ghost"
+                    onClick={() => {
+                      navigator.clipboard.writeText(Refund?.endToEndId);
+                      toast.success(t("table.copied"));
+                    }}
+                  >
+                    <CopyOutlined />
+                  </Button>
                 </Descriptions.Item>
                 <Descriptions.Item
                   key={"rtrId"}
@@ -153,15 +154,17 @@ export const ViewModal = (props: ViewModalProps) => {
                   }}
                 >
                   {`${Refund?.txid.substring(0, 10)}...` ?? "-"}
-                  <CopyToClipboard text={Refund?.txid}>
-                    <Button
-                      size="large"
-                      type="ghost"
-                      onClick={() => toast.success(t("table.copied"))}
-                    >
-                      <CopyOutlined />
-                    </Button>
-                  </CopyToClipboard>
+
+                  <Button
+                    size="large"
+                    type="ghost"
+                    onClick={() => {
+                      navigator.clipboard.writeText(Refund?.txid);
+                      toast.success(t("table.copied"));
+                    }}
+                  >
+                    <CopyOutlined />
+                  </Button>
                 </Descriptions.Item>
                 <Descriptions.Item
                   key={"rtrId"}
@@ -174,15 +177,17 @@ export const ViewModal = (props: ViewModalProps) => {
                   }}
                 >
                   {`${Refund?.rtrId.substring(0, 10)}...` ?? "-"}
-                  <CopyToClipboard text={Refund?.rtrId}>
-                    <Button
-                      size="large"
-                      type="ghost"
-                      onClick={() => toast.success(t("table.copied"))}
-                    >
-                      <CopyOutlined />
-                    </Button>
-                  </CopyToClipboard>
+
+                  <Button
+                    size="large"
+                    type="ghost"
+                    onClick={() => {
+                      navigator.clipboard.writeText(Refund?.rtrId);
+                      toast.success(t("table.copied"));
+                    }}
+                  >
+                    <CopyOutlined />
+                  </Button>
                 </Descriptions.Item>
                 <Descriptions.Item
                   key={"payer_name"}
@@ -338,15 +343,17 @@ export const ViewModal = (props: ViewModalProps) => {
                 }}
               >
                 {`${RefundManual?.endToEndId.substring(0, 10)}...` ?? "-"}
-                <CopyToClipboard text={RefundManual?.endToEndId}>
-                  <Button
-                    size="large"
-                    type="ghost"
-                    onClick={() => toast.success(t("table.copied"))}
-                  >
-                    <CopyOutlined />
-                  </Button>
-                </CopyToClipboard>
+
+                <Button
+                  size="large"
+                  type="ghost"
+                  onClick={() => {
+                    navigator.clipboard.writeText(RefundManual?.endToEndId);
+                    toast.success(t("table.copied"));
+                  }}
+                >
+                  <CopyOutlined />
+                </Button>
               </Descriptions.Item>
               <Descriptions.Item
                 key={"payer_name"}

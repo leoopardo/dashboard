@@ -1744,7 +1744,7 @@ export const SidebarNavigation = () => {
           null,
           [
             getItem(
-              "deposit",
+              "deposit_contestation",
               null,
               [
                 getItem("uploads", null, null, false, (e) =>

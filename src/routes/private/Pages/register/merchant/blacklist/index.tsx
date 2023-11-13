@@ -275,7 +275,7 @@ export const MerchantBlacklist = () => {
           open={isUpdateModalOpen}
           setOpen={setIsUpdateModalOpen}
           fields={[
-            type === 1 || type === 2
+            type == 1 || type === 2
               ? {
                   label: "can_be_deleted_only_by_organization",
                   required: true,
