@@ -394,7 +394,15 @@
     "merchant_id": "nome da empresa",
     "reason": "motivo",
     "domain": "domínio",
-    "active_logo": "Logo ativo"
+    "active_logo": "Logo ativo",
+    "fastpix_in_fee_type":"Tipo de taxa (Depósito FastPix)",
+    "fastpix_in_fee_percent":"Porcentagem de taxa (Depósito FastPix)",
+    "fastpix_in_fee_value":"Valor de taxa (Depósito FastPix)",
+    "fastpix_in_fee_min": "Taxa mínima (Depósito FastPix)",
+    "fastpix_refund_fee_type": "Tipo de taxa (Devolução FastPix)",
+    "fastpix_refund_fee_percent": "Porcentagem de taxa (Devolução FastPix)",
+    "fastpix_refund_fee_value": "Valor de taxa (Devolução FastPix)",
+    "fastpix_refund_fee_min": "Taxa mínima (Devolução FastPix)"
   },
   "table": {
     "id": "ID",
@@ -831,7 +839,8 @@
     "main_user_username": "usuário principal",
     "row": "Linha",
     "pix_type": "Tipo de pix",
-    "standard": "Regular"
+    "standard": "Regular",
+    "unassigned": "Não atribuido"
   },
   "actions": {
     "details": "Detalhes",

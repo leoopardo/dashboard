@@ -76,6 +76,7 @@ export const FiltersModal = ({
   const { permissions } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
+  const user = queryClient.getQueryData("validate") as ValidateInterface;
   const { t } = useTranslation();
   const [filtersQuery, setFiltersQuery] = useState<any>(query);
   const { states } = useGetStates();
@@ -275,10 +276,18 @@ export const FiltersModal = ({
                       value={[
                         filtersQuery[startDateKeyName]
                           ? dayjs(filtersQuery[startDateKeyName])
-                          : dayjs(moment(new Date()).startOf("day").format("YYYY-MM-DDTHH:mm:00.000")),
+                          : dayjs(
+                              moment(new Date())
+                                .startOf("day")
+                                .format("YYYY-MM-DDTHH:mm:00.000")
+                            ),
                         filtersQuery[endDateKeyName]
                           ? dayjs(filtersQuery[endDateKeyName])
-                          : dayjs(moment(new Date()).startOf("day").format("YYYY-MM-DDTHH:mm:00.000")),
+                          : dayjs(
+                              moment(new Date())
+                                .startOf("day")
+                                .format("YYYY-MM-DDTHH:mm:00.000")
+                            ),
                       ]}
                       clearIcon={<></>}
                       placeholder={[
@@ -304,7 +313,10 @@ export const FiltersModal = ({
               );
 
             case "partner_id":
-              if (permissions.register.partner.partner.partner_list) {
+              if (
+                permissions.register.partner.partner.partner_list &&
+                !user.partner_id
+              ) {
                 return (
                   <Form.Item
                     label={t(`table.partner`)}
@@ -517,7 +529,10 @@ export const FiltersModal = ({
               );
 
             case "merchant_id":
-              if (permissions.register.merchant.merchant.merchant_list) {
+              if (
+                permissions.register.merchant.merchant.merchant_list &&
+                !user.merchant_id
+              ) {
                 return (
                   <Form.Item
                     label={t(`table.merchant`)}
@@ -533,7 +548,10 @@ export const FiltersModal = ({
               } else return;
 
             case "aggregator_id":
-              if (permissions.register.aggregator.aggregator.aggregator_list) {
+              if (
+                permissions.register.aggregator.aggregator.aggregator_list &&
+                !user.aggregator_id
+              ) {
                 return (
                   <Form.Item
                     label={t(`table.aggregator`)}
@@ -549,7 +567,10 @@ export const FiltersModal = ({
               } else return;
 
             case "operator_id":
-              if (permissions.register.operator.operator.operator_list) {
+              if (
+                permissions.register.operator.operator.operator_list &&
+                !user.operator_id
+              ) {
                 return (
                   <Form.Item
                     label={t(`table.operator`)}

@@ -330,13 +330,11 @@ export const FeesTab = (props: { id?: string }) => {
             <Select
               size="large"
               options={
-                withdrawFeePlansData?.items?.map(
-                  (item, index) => ({
-                    key: index,
-                    value: item.id,
-                    label: item.name,
-                  })
-                ) ?? []
+                withdrawFeePlansData?.items?.map((item, index) => ({
+                  key: index,
+                  value: item.id,
+                  label: item.name,
+                })) ?? []
               }
               value={body?.customer_withdraw_fee_plan_id || null}
               onChange={(value) => {
@@ -549,6 +547,236 @@ export const FeesTab = (props: { id?: string }) => {
                   size="large"
                   style={{ width: "100%" }}
                   value={body?.pix_refund_fee_min}
+                />
+              }
+            />
+          </Form.Item>
+        </Grid>
+        <Divider orientation="left">FastPix</Divider>
+
+        <Grid item xs={12} sm={6} md={3}>
+          <Form.Item
+            label={t("input.fastpix_in_fee_type")}
+            name="fastpix_in_fee_type"
+          >
+            <Select
+              size="large"
+              options={
+                arrayPercentValue?.map((item, index) => ({
+                  key: index,
+                  value: item,
+                  label: `${t(`table.${item.toLocaleLowerCase()}`)}`,
+                })) ?? []
+              }
+              value={body?.fastpix_in_fee_type || null}
+              onChange={(value) => {
+                setBody((state) => ({
+                  ...state,
+                  fastpix_in_fee_type: value,
+                }));
+                setBodyUpdate((state) => ({
+                  ...state,
+                  fastpix_in_fee_type: value,
+                }));
+              }}
+            />
+          </Form.Item>
+        </Grid>
+
+        <Grid item xs={12} sm={6} md={3}>
+          <Form.Item
+            label={t("input.fastpix_in_fee_percent")}
+            name="fastpix_in_fee_percent"
+            rules={[
+              {
+                type: "number",
+                min: body?.fastpix_in_fee_type === "PERCENT" ? 0.01 : 0,
+                message: t("messages.min_value_higher_then_zero") || "",
+              },
+            ]}
+          >
+            <Input
+              size="large"
+              type="number"
+              name="fastpix_in_fee_percent"
+              disabled={body?.fastpix_in_fee_type === "VALUE"}
+              value={body?.fastpix_in_fee_percent}
+              onChange={(e) => {
+                setBody((state) => ({
+                  ...state,
+                  fastpix_in_fee_percent: Number(e.target.value),
+                }));
+                setBodyUpdate((state) => ({
+                  ...state,
+                  fastpix_in_fee_percent: Number(e.target.value),
+                }));
+              }}
+            />
+          </Form.Item>
+        </Grid>
+
+        <Grid item xs={12} sm={6} md={3}>
+          <Form.Item
+            label={t("input.fastpix_in_fee_value")}
+            name="fastpix_in_fee_value"
+            rules={[
+              {
+                type: "number",
+                min: body?.pix_refund_fee_type === "VALUE" ? 0.01 : 0,
+                message: t("messages.min_value_higher_then_zero") || "",
+              },
+            ]}
+          >
+            <CurrencyInput
+              onChangeValue={(_event, originalValue) => {
+                setBodyUpdate((state) => ({
+                  ...state,
+                  fastpix_in_fee_value: +originalValue,
+                }));
+              }}
+              InputElement={
+                <Input
+                  size="large"
+                  style={{ width: "100%" }}
+                  disabled={body?.fastpix_in_fee_type === "PERCENT"}
+                  value={body?.fastpix_in_fee_value}
+                />
+              }
+            />
+          </Form.Item>
+        </Grid>
+
+        <Grid item xs={12} sm={6} md={3}>
+          <Form.Item
+            label={t("input.fastpix_in_fee_min")}
+            name="fastpix_in_fee_min"
+          >
+            <CurrencyInput
+              onChangeValue={(_event, originalValue) => {
+                setBodyUpdate((state) => ({
+                  ...state,
+                  fastpix_in_fee_min: +originalValue,
+                }));
+              }}
+              InputElement={
+                <Input
+                  size="large"
+                  style={{ width: "100%" }}
+                  value={body?.fastpix_in_fee_min}
+                />
+              }
+            />
+          </Form.Item>
+        </Grid>
+        <Grid item xs={12} sm={6} md={3}>
+          <Form.Item
+            label={t("input.fastpix_refund_fee_type")}
+            name="fastpix_refund_fee_type"
+          >
+            <Select
+              size="large"
+              options={
+                arrayPercentValue?.map((item, index) => ({
+                  key: index,
+                  value: item,
+                  label: `${t(`table.${item.toLocaleLowerCase()}`)}`,
+                })) ?? []
+              }
+              value={body?.fastpix_refund_fee_type || null}
+              onChange={(value) => {
+                setBody((state) => ({
+                  ...state,
+                  fastpix_refund_fee_type: value,
+                }));
+                setBodyUpdate((state) => ({
+                  ...state,
+                  fastpix_refund_fee_type: value,
+                }));
+              }}
+            />
+          </Form.Item>
+        </Grid>
+
+        <Grid item xs={12} sm={6} md={3}>
+          <Form.Item
+            label={t("input.fastpix_refund_fee_percent")}
+            name="fastpix_refund_fee_percent"
+            rules={[
+              {
+                type: "number",
+                min: body?.fastpix_refund_fee_type === "PERCENT" ? 0.01 : 0,
+                message: t("messages.min_value_higher_then_zero") || "",
+              },
+            ]}
+          >
+            <Input
+              size="large"
+              type="number"
+              name="fastpix_refund_fee_percent"
+              disabled={body?.fastpix_refund_fee_type === "VALUE"}
+              value={body?.fastpix_refund_fee_percent}
+              onChange={(e) => {
+                setBody((state) => ({
+                  ...state,
+                  fastpix_refund_fee_percent: Number(e.target.value),
+                }));
+                setBodyUpdate((state) => ({
+                  ...state,
+                  fastpix_refund_fee_percent: Number(e.target.value),
+                }));
+              }}
+            />
+          </Form.Item>
+        </Grid>
+
+        <Grid item xs={12} sm={6} md={3}>
+          <Form.Item
+            label={t("input.fastpix_refund_fee_value")}
+            name="fastpix_refund_fee_value"
+            rules={[
+              {
+                type: "number",
+                min: body?.pix_refund_fee_type === "VALUE" ? 0.01 : 0,
+                message: t("messages.min_value_higher_then_zero") || "",
+              },
+            ]}
+          >
+            <CurrencyInput
+              onChangeValue={(_event, originalValue) => {
+                setBodyUpdate((state) => ({
+                  ...state,
+                  fastpix_refund_fee_value: +originalValue,
+                }));
+              }}
+              InputElement={
+                <Input
+                  size="large"
+                  style={{ width: "100%" }}
+                  disabled={body?.fastpix_refund_fee_type === "PERCENT"}
+                  value={body?.fastpix_refund_fee_type}
+                />
+              }
+            />
+          </Form.Item>
+        </Grid>
+
+        <Grid item xs={12} sm={6} md={3}>
+          <Form.Item
+            label={t("input.fastpix_refund_fee_min")}
+            name="fastpix_refund_fee_min"
+          >
+            <CurrencyInput
+              onChangeValue={(_event, originalValue) => {
+                setBodyUpdate((state) => ({
+                  ...state,
+                  fastpix_refund_fee_min: +originalValue,
+                }));
+              }}
+              InputElement={
+                <Input
+                  size="large"
+                  style={{ width: "100%" }}
+                  value={body?.fastpix_refund_fee_min}
                 />
               }
             />

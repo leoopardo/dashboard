@@ -13,6 +13,7 @@ export function useGetMerchantLogos(id?: string) {
         });
         return response.data;
       },
+      {refetchOnWindowFocus: false}
     );
 
   const merchantLogosData = data;

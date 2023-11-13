@@ -83,8 +83,8 @@ export const MerchantBalance = () => {
     },
     {
       title: t("table.balance_total"),
-      dataIndex: "balance_to_transactions_total",
-      key: "balance_to_transactions_total",
+      dataIndex: "balance_total",
+      key: "balance_total",
       render: (value) =>
         new Intl.NumberFormat("pt-BR", {
           style: "currency",

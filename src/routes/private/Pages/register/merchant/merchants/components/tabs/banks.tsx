@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { BanksSelect } from "@components/Selects/bankSelect";
 import { Toast } from "@components/Toast";
 import { Grid } from "@mui/material";
 import { useMerchantBankConfig } from "@services/register/merchant/merchant/bankConfig/getBankConfig";
@@ -13,6 +12,8 @@ import {
   Form,
   FormInstance,
   Popconfirm,
+  Select,
+  Skeleton,
   Typography,
 } from "antd";
 import { useEffect, useRef, useState } from "react";
@@ -22,9 +23,7 @@ export const BanksTab = (props: { id?: string }) => {
   const formRef = useRef<FormInstance>(null);
   const { t } = useTranslation();
   const [body, setBody] = useState<IMerchantBankUpdate | null>(null);
-  const [despositBank, setDepositBank] = useState<
-    { bank?: string } | undefined
-  >();
+  const [despositBank, setDepositBank] = useState<{ bank: any }>();
   const [withdrawBank, setWithdrawBank] = useState<
     { bank?: string } | undefined
   >();
@@ -76,41 +75,86 @@ export const BanksTab = (props: { id?: string }) => {
         <Grid item xs={12}>
           <Typography>
             {t("input.deposit_bank")}:{" "}
-            <Avatar
-              src={
-                bankListData?.itens.find(
-                  (bank) =>
-                    bank.bank === merchantBankData?.merchantConfig?.cash_in_bank
-                )?.icon_url
-              }
-            />{" "}
-            {
-              bankListData?.itens.find(
-                (bank) =>
-                  bank.bank === merchantBankData?.merchantConfig?.cash_in_bank
-              )?.label_name
-            }
+            {merchantBankData?.merchantConfig?.cash_in_bank &&
+            !isMerchantBankFetching ? (
+              <Typography.Text strong>
+                {isMerchantBankFetching ? (
+                  <Skeleton avatar />
+                ) : (
+                  <Avatar
+                    src={
+                      bankListData?.itens.find(
+                        (bank) =>
+                          bank.bank ===
+                          merchantBankData?.merchantConfig?.cash_in_bank
+                      )?.icon_url
+                    }
+                  />
+                )}{" "}
+                {
+                  bankListData?.itens.find(
+                    (bank) =>
+                      bank.bank ===
+                      merchantBankData?.merchantConfig?.cash_in_bank
+                  )?.label_name
+                }
+              </Typography.Text>
+            ) : (
+              <Typography.Text strong>{t("table.unassigned")}</Typography.Text>
+            )}
           </Typography>
-          <Typography style={{marginTop: 10}}>
+          <Typography style={{ marginTop: 10 }}>
             {t("input.withdraw_bank")}:{" "}
-            <Avatar
-              src={
-                bankListData?.itens.find(
-                  (bank) =>
-                    bank.bank ===
-                    merchantBankData?.merchantConfig?.cash_out_bank
-                )?.icon_url
-              }
-            />{" "}
-            {
-              bankListData?.itens.find(
-                (bank) =>
-                  bank.bank === merchantBankData?.merchantConfig?.cash_out_bank
-              )?.label_name
-            }
+            {merchantBankData?.merchantConfig?.cash_out_bank ? (
+              <Typography.Text strong>
+                <Avatar
+                  src={
+                    bankListData?.itens.find(
+                      (bank) =>
+                        bank.bank ===
+                        merchantBankData?.merchantConfig?.cash_out_bank
+                    )?.icon_url
+                  }
+                />{" "}
+                {
+                  bankListData?.itens.find(
+                    (bank) =>
+                      bank.bank ===
+                      merchantBankData?.merchantConfig?.cash_out_bank
+                  )?.label_name
+                }
+              </Typography.Text>
+            ) : (
+              <Typography.Text strong>{t("table.unassigned")}</Typography.Text>
+            )}
+          </Typography>
+          <Typography style={{ marginTop: 10 }}>
+            {t("input.fastpix_in_bank")}:{" "}
+            {merchantBankData?.merchantConfig?.fastpix_in_bank ? (
+              <Typography.Text strong>
+                <Avatar
+                  src={
+                    bankListData?.itens.find(
+                      (bank) =>
+                        bank.bank ===
+                        merchantBankData?.merchantConfig?.fastpix_in_bank
+                    )?.icon_url
+                  }
+                />{" "}
+                {
+                  bankListData?.itens.find(
+                    (bank) =>
+                      bank.bank ===
+                      merchantBankData?.merchantConfig?.fastpix_in_bank
+                  )?.label_name
+                }
+              </Typography.Text>
+            ) : (
+              <Typography.Text strong>{t("table.unassigned")}</Typography.Text>
+            )}
           </Typography>
           {merchantBankData?.merchantConfig?.fastpix_in_bank && (
-            <Typography style={{marginTop: 10}}>
+            <Typography style={{ marginTop: 10 }}>
               {t("input.fastpix_in_bank")}:{" "}
               <Avatar
                 src={
@@ -132,32 +176,82 @@ export const BanksTab = (props: { id?: string }) => {
           )}
         </Grid>
         <Grid item xs={12} md={4}>
-          <Form.Item label={t("input.deposit_bank")} name="cash_in_bank">
-            <BanksSelect
-              queryOptions={despositBank?.bank}
-              currentValue={despositBank?.bank}
-              setCurrentValue={setDepositBank}
-              setQueryFunction={setDepositBank}
+          <Form.Item label={t("input.deposit_bank")}>
+            <Select
+              size="large"
+              value={despositBank?.bank}
+              options={
+                bankListData?.itens?.map((item, index) => {
+                  return {
+                    key: index,
+                    value: item.bank,
+                    label: (
+                      <>
+                        <Avatar
+                          src={item.icon_url}
+                          style={{ marginRight: 10 }}
+                        />
+                        {item.label_name}
+                      </>
+                    ),
+                  };
+                }) ?? []
+              }
+              onChange={(value) => setDepositBank({ bank: value })}
             />
           </Form.Item>
         </Grid>
         <Grid item xs={12} md={4}>
-          <Form.Item label={t("input.withdraw_bank")} name="cash_out_bank">
-            <BanksSelect
-              currentValue={withdrawBank?.bank}
-              queryOptions={withdrawBank?.bank}
-              setCurrentValue={setWithdrawBank}
-              setQueryFunction={setWithdrawBank}
+          <Form.Item label={t("input.withdraw_bank")}>
+            <Select
+              size="large"
+              value={withdrawBank?.bank}
+              options={
+                bankListData?.itens?.map((item, index) => {
+                  return {
+                    key: index,
+                    value: item.bank,
+                    label: (
+                      <>
+                        <Avatar
+                          src={item.icon_url}
+                          style={{ marginRight: 10 }}
+                        />
+                        {item.label_name}
+                      </>
+                    ),
+                  };
+                }) ?? []
+              }
+              onChange={(value) => setWithdrawBank({ bank: value })}
             />
           </Form.Item>
         </Grid>
         <Grid item xs={12} md={4}>
-          <Form.Item label={t("input.fastpix_in_bank")} name="fastpix_in_bank">
-            <BanksSelect
-              currentValue={fastPixBank?.bank}
-              queryOptions={fastPixBank?.bank}
-              setCurrentValue={setFastPixBank}
-              setQueryFunction={setFastPixBank}
+          <Form.Item label={t("input.fastpix_in_bank")}>
+            <Select
+              size="large"
+              value={fastPixBank?.bank}
+              options={
+                bankListData?.itens
+                  ?.filter((bank) => bank?.FastPix)
+                  .map((item, index) => {
+                    return {
+                      key: index,
+                      value: item.bank,
+                      label: (
+                        <>
+                          <Avatar
+                            src={item.icon_url}
+                            style={{ marginRight: 10 }}
+                          />
+                          {item.label_name}
+                        </>
+                      ),
+                    };
+                  }) ?? []
+              }
+              onChange={(value) => setFastPixBank({ bank: value })}
             />
           </Form.Item>
         </Grid>
