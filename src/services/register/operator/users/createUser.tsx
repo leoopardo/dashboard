@@ -4,7 +4,7 @@ import { api } from "../../../../config/api";
 import { queryClient } from "../../../queryClient";
 
 export function useCreateOperatorUser(body: OperatorItem) {
-  const { isLoading, error, mutate, isSuccess } = useMutation<
+  const { isLoading, error, mutate, isSuccess, reset } = useMutation<
     OperatorItem | null | undefined
   >("createOperatorUser", async () => {
     const response = await api.post("core/user/create/operator", body, {});
@@ -17,5 +17,6 @@ export function useCreateOperatorUser(body: OperatorItem) {
     error,
     mutate,
     isSuccess,
+     reset
   };
 }

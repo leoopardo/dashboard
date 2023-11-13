@@ -76,7 +76,8 @@ export const NewUserModal = ({
     cellphone: currentUser?.cellphone,
   });
 
-  const { mutate, error, isLoading, isSuccess } = useCreatePartnerUser(body);
+  const { mutate, error, isLoading, isSuccess, reset } =
+    useCreatePartnerUser(body);
   const { updateLoading } = useUpdatePartnerUser(body);
 
   function handleChangeUserBody(event: any) {
@@ -111,7 +112,7 @@ export const NewUserModal = ({
         username: currentUser.username,
         partner_id: currentUser.partner_id,
         cellphone: currentUser?.cellphone,
-        email: currentUser?.email
+        email: currentUser?.email,
       }));
   }, [currentUser]);
 
@@ -130,9 +131,26 @@ export const NewUserModal = ({
 
   useEffect(() => {
     if (isSuccess) {
+      reset();
       setOpen(false);
+      formRef.current?.resetFields();
     }
   }, [isSuccess]);
+
+  useEffect(() => {
+    if (error) {
+      setBody({
+        name: "",
+        username: "",
+        partner_id: user.partner_id,
+        group_id: 0,
+        status: true,
+        type: 2,
+        cellphone: "",
+      });
+      formRef.current?.resetFields();
+    }
+  }, [error]);
 
   return (
     <Drawer

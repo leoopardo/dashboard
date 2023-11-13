@@ -199,10 +199,12 @@ export const MerchantView = () => {
         style={{ display: "flex", alignItems: "center" }}
         spacing={1}
         mt={
-          !isMobile &&
-          MerchantTotalsData &&
-          MerchantTotalsData?.registered_merchant_totals > 0 &&
-          TotalizersTabs.length > 0
+          user.merchant_id
+            ? "-5px"
+            : !isMobile &&
+              MerchantTotalsData &&
+              MerchantTotalsData?.registered_merchant_totals > 0 &&
+              TotalizersTabs.length > 0
             ? "-80px"
             : undefined
         }

@@ -1,11 +1,11 @@
-import { Card, Statistic } from "antd";
 import { Grid } from "@mui/material";
-import { defaultTheme } from "@src/styles/defaultTheme";
-import ReactECharts from "echarts-for-react";
 import {
   OperatorQuery,
   OperatorsTotalResponse,
 } from "@src/services/types/register/operators/operators.interface";
+import { defaultTheme } from "@src/styles/defaultTheme";
+import { Card, Statistic } from "antd";
+import ReactECharts from "echarts-for-react";
 import { t } from "i18next";
 import { useMediaQuery } from "react-responsive";
 
@@ -17,70 +17,73 @@ export const TotalizersCards = (props: {
   const isMobile = useMediaQuery({ maxWidth: "950px" });
   return (
     <Grid container spacing={1} justifyContent={"center"} mb={2}>
-      <Grid
-        item
-        xs={12}
-        md={2}
-        style={{
-          marginTop: "-90px",
-          marginBottom: isMobile ? "-60px" : undefined,
-        }}
-      >
-        <ReactECharts
-          option={{
-            tooltip: {
-              trigger: "item",
-            },
-            legend: {
-              selectedMode: false,
-              show: false,
-            },
-            color: ["#91cc75", "#fac858", "#ea7ccc"],
-
-            series: [
-              {
-                name: t("menus.operators"),
-                type: "pie",
-                radius: ["40%", "70%"],
-                center: ["50%", "70%"],
-                // adjust the start angle
-                startAngle: 180,
-                label: {
+      {props.data?.registered_operators_totals &&
+        props.data?.registered_operators_totals > 0 && (
+          <Grid
+            item
+            xs={12}
+            md={2}
+            style={{
+              marginTop: "-90px",
+              marginBottom: isMobile ? "-60px" : undefined,
+            }}
+          >
+            <ReactECharts
+              option={{
+                tooltip: {
+                  trigger: "item",
+                },
+                legend: {
+                  selectedMode: false,
                   show: false,
                 },
-                data: [
+                color: ["#91cc75", "#fac858", "#ea7ccc"],
+
+                series: [
                   {
-                    value: props?.data?.active_operators_totals,
-                    name: t("table.active"),
-                  },
-                  {
-                    value: props?.data?.inactive_operators_totals,
-                    name: t("table.inactive"),
-                  },
-                  {
-                    // make an record to fill the bottom 50%
-                    value:
-                      (props?.data?.active_operators_totals || 0) +
-                      (props?.data?.inactive_operators_totals || 0),
-                    itemStyle: {
-                      top: "-20%",
-                      color: "none",
-                      decal: {
-                        symbol: "none",
-                      },
-                    },
+                    name: t("menus.operators"),
+                    type: "pie",
+                    radius: ["40%", "70%"],
+                    center: ["50%", "70%"],
+                    // adjust the start angle
+                    startAngle: 180,
                     label: {
                       show: false,
                     },
+                    data: [
+                      {
+                        value: props?.data?.active_operators_totals,
+                        name: t("table.active"),
+                      },
+                      {
+                        value: props?.data?.inactive_operators_totals,
+                        name: t("table.inactive"),
+                      },
+                      {
+                        // make an record to fill the bottom 50%
+                        value:
+                          (props?.data?.active_operators_totals || 0) +
+                          (props?.data?.inactive_operators_totals || 0),
+                        itemStyle: {
+                          top: "-20%",
+                          color: "none",
+                          decal: {
+                            symbol: "none",
+                          },
+                        },
+                        label: {
+                          show: false,
+                        },
+                      },
+                    ],
                   },
                 ],
-              },
-            ],
-          }}
-          opts={{ renderer: "svg" }}
-          lazyUpdate
-        />
-      </Grid>
+              }}
+              opts={{ renderer: "svg" }}
+              lazyUpdate
+            />
+          </Grid>
+        )}
 
       <Grid item xs={12} md={2}>
         <Card bordered={false}>

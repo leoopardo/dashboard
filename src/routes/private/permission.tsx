@@ -12,6 +12,16 @@ export const Permission = ({ permission, children }: PermissionInterface) => {
   return permission ? (
     <>{children}</>
   ) : (
-    <Result status="403" title="403" subTitle={t("error.403")} />
+    <div
+      style={{
+        width: "100%",
+        height: "89vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Result status="403" title="403" subTitle={t("error.403")} />
+    </div>
   );
 };

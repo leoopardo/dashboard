@@ -49,6 +49,7 @@ export const Aggregators = () => {
   const { permissions } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
+  const user = queryClient.getQueryData("validate") as ValidateInterface;
   const [query, setQuery] = useState<AggregatorQuery>(INITIAL_QUERY);
   const isMobile = useMediaQuery({ maxWidth: "950px" });
   const { t } = useTranslation();
@@ -156,18 +157,21 @@ export const Aggregators = () => {
           </Button>
         </Tooltip>
       </Grid>
-      <Grid item xs={12} ref={ref}>
-        <TotalizersCards
-          params={query}
-          loading={isAggregatorsTotalsDataFetching}
-          data={AggregatorsTotalsData || undefined}
-        />
-      </Grid>
+
+      {!user.aggregator_id && (
+        <Grid item xs={12} ref={ref}>
+          <TotalizersCards
+            params={query}
+            loading={isAggregatorsTotalsDataFetching}
+            data={AggregatorsTotalsData || undefined}
+          />
+        </Grid>
+      )}
 
       <Grid
         container
         style={{ display: "flex", alignItems: "center" }}
-        mt={!isMobile ? "-80px" : undefined}
+        mt={user.aggregator_id ? "-40px" : !isMobile? "-80px" : undefined}
         spacing={1}
       >
         <Grid item xs={12} md={4} lg={2}>

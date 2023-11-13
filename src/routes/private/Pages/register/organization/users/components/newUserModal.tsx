@@ -76,7 +76,7 @@ export const NewUserModal = ({
     cellphone: currentUser?.cellphone,
   });
 
-  const { mutate, error, isLoading, isSuccess } = useCreateOrganizationUser({
+  const { mutate, error, isLoading, isSuccess, reset } = useCreateOrganizationUser({
     ...body,
   });
   const { updateLoading } = useUpdateOrganizationUser(body);
@@ -139,9 +139,18 @@ export const NewUserModal = ({
 
   useEffect(() => {
     if (isSuccess) {
+      reset();
       setOpen(false);
+      formRef.current?.resetFields();
     }
   }, [isSuccess]);
+  
+  useEffect(() => {
+    if (error) {
+      setBody({});
+      formRef.current?.resetFields();
+    }
+  }, [error]);
 
   return (
     <Drawer

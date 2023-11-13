@@ -4,7 +4,7 @@ import { NewUserInterface } from "../../../../routes/private/Pages/register/orga
 import { queryClient } from "../../../queryClient";
 
 export function useCreateOrganizationUser(body: NewUserInterface) {
-  const { isLoading, error, mutate, isSuccess } = useMutation<
+  const { isLoading, error, mutate, isSuccess, reset } = useMutation<
     NewUserInterface | null | undefined
   >("createOrganizationUser", async () => {
     const response = await api.post("core/user/create/organization", body, {});
@@ -17,5 +17,6 @@ export function useCreateOrganizationUser(body: NewUserInterface) {
     error,
     mutate,
     isSuccess,
+    reset,
   };
 }
