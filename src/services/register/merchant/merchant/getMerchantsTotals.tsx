@@ -17,11 +17,6 @@ export function useGetMerchantsTotals(params: MerchantsQuery) {
       });
       return response.data;
     },
-    {
-      refetchInterval: false,
-      refetchIntervalInBackground: false,
-      refetchOnMount: false,
-    }
   );
 
   const MerchantTotalsData = data;

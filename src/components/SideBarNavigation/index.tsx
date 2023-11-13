@@ -18,15 +18,17 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useMenu } from "../../contexts/SidebarContext";
-import { defaultTheme } from "../../styles/defaultTheme";
 import secureLocalStorage from "react-secure-storage";
+import { useMenu } from "../../contexts/SidebarContext";
+import { useErrorContext } from "@src/contexts/ErrorContext";
+import { defaultTheme } from "../../styles/defaultTheme";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
 export const SidebarNavigation = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const {resetErrors} = useErrorContext()
   const isMobile = useMediaQuery({ maxWidth: "950px" });
   const [collapsed, setCollapsed] = useState(true);
   const { handleChangeSidebar, isSidebarOpen } = useMenu();
@@ -1036,6 +1038,20 @@ export const SidebarNavigation = () => {
               }
             ),
             getItem(
+              "merchant_pre_manual_moviments",
+              null,
+              null,
+              false,
+              (e) => handleNavigate(e?.keyPath),
+              {
+                display:
+                  permissions?.transactions?.merchant?.merchant_pre_manual
+                    ?.menu
+                    ? undefined
+                    : "none",
+              }
+            ),
+            getItem(
               "merchant_moviments_reports",
               null,
               [
@@ -1067,6 +1083,21 @@ export const SidebarNavigation = () => {
                       : "none",
                   }
                 ),
+                //TODO arrumar permissão Reports Pre manual
+                getItem(
+                  "merchant_pre_manual_moviments_reports",
+                  null,
+                  null,
+                  false,
+                  (e) => handleNavigate(e?.keyPath),
+                  {
+                    display: permissions?.transactions?.merchant
+                      ?.merchant_pre_manual
+                      ?.menu
+                      ? undefined
+                      : "none",
+                  }
+                ),
               ],
               false,
               undefined,
@@ -1086,47 +1117,7 @@ export const SidebarNavigation = () => {
               : "none",
           }
         ),
-        getItem(
-          "pre_manual",
-          null,
-          [
-            getItem(
-              "pre_manual",
-              null,
-              null,
-              false,
-              (e) => handleNavigate(e?.keyPath),
-              {
-                display: permissions?.transactions?.merchant
-                  ?.pre_manual_transactions?.menu
-                  ? undefined
-                  : "none",
-              }
-            ),
-            getItem(
-              "reports",
-              null,
-              null,
-              false,
-              (e) => handleNavigate(e?.keyPath),
-              {
-                display: permissions?.transactions?.merchant
-                  ?.pre_manual_transactions
-                  ?.merchant_pre_manual_transactions_export_csv
-                  ? undefined
-                  : "none",
-              }
-            ),
-          ],
-          false,
-          undefined,
-          {
-            display: permissions?.transactions?.merchant
-              ?.pre_manual_transactions?.menu
-              ? undefined
-              : "none",
-          }
-        ),
+        // TODO arrumar permissão
         getItem(
           "merchant_transfers",
           null,
@@ -1798,6 +1789,7 @@ export const SidebarNavigation = () => {
         secureLocalStorage.removeItem("token");
         sessionStorage.removeItem("token");
         queryClient.refetchQueries(["validate"]);
+        resetErrors()
       },
       { color: "red" }
     ),

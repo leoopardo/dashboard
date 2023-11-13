@@ -1,14 +1,28 @@
 import { CustomTable } from "@src/components/CustomTable";
 import { useGetMerchantRanking } from "@src/services/merchant/ranking/getRanking";
 import { Empty } from "antd";
+import { useErrorContext } from "@src/contexts/ErrorContext";
 import ReactECharts from "echarts-for-react";
 import { useTranslation } from "react-i18next";
 import { TableProps } from "..";
+import { useEffect } from "react";
 
 export const DepositFinancial = ({ query, chart }: TableProps) => {
-  const { RankingData, RankingError, isRankingFetching } =
-    useGetMerchantRanking("value", "deposit", query);
   const { t } = useTranslation();
+  const { handleChangeError } = useErrorContext();
+  const { RankingData, RankingError, isRankingFetching, RankingDataSuccess } =
+    useGetMerchantRanking("value", "deposit", query);
+
+  useEffect(() => {
+    if (RankingDataSuccess) {
+      handleChangeError({ rankingValue: false });
+    }
+
+    if (RankingError) {
+      handleChangeError({ rankingValue: true });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [RankingError, RankingDataSuccess]);
   return !chart ? (
     <>
       {RankingData?.length ? (
@@ -22,9 +36,12 @@ export const DepositFinancial = ({ query, chart }: TableProps) => {
                 },
               },
               color: ["#91cc75"],
-              legend: {textStyle: {
-                color: "#a0a0a0",
-              },},textStyle: {
+              legend: {
+                textStyle: {
+                  color: "#a0a0a0",
+                },
+              },
+              textStyle: {
                 color: "#a0a0a0",
               },
               grid: {
@@ -40,17 +57,15 @@ export const DepositFinancial = ({ query, chart }: TableProps) => {
               yAxis: {
                 type: "category",
                 data: RankingData?.sort((a, b) =>
-                a.total > b.total ? 1 : -1
-              )?.map((merchant) => merchant?.name ?? "-"),
+                  a.total > b.total ? 1 : -1
+                )?.map((merchant) => merchant?.name ?? "-"),
               },
               series: [
                 {
                   type: "bar",
                   data: RankingData?.sort((a, b) =>
-                  a.total > b.total ? 1 : -1
-                )?.map(
-                    (merchant) => merchant?.total ?? 0
-                  ),
+                    a.total > b.total ? 1 : -1
+                  )?.map((merchant) => merchant?.total ?? 0),
                   tooltip: {
                     valueFormatter: function (value: number) {
                       return new Intl.NumberFormat("pt-BR", {
@@ -86,7 +101,7 @@ export const DepositFinancial = ({ query, chart }: TableProps) => {
       }}
       actions={[]}
       data={RankingData}
-      items={RankingData?.sort((a, b) => a.total > b.total ? -1 : 1)}
+      items={RankingData?.sort((a, b) => (a.total > b.total ? -1 : 1))}
       error={RankingError}
       columns={[
         { name: "name", type: "text" },

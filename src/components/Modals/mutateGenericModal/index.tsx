@@ -25,6 +25,7 @@ import {
   Row,
   Select,
   Switch,
+  Typography,
 } from "antd";
 import locale from "antd/locale/pt_BR";
 import dayjs from "dayjs";
@@ -39,19 +40,20 @@ const { RangePicker } = DatePicker;
 
 interface mutateProps {
   type: "create" | "update";
-  fields: {
-    label: string;
-    required: boolean;
-    selectOption?: boolean;
-    noTranslate?: boolean;
-    feesDetails?: boolean;
-    asyncOption?: {
-      options?: any[];
-      optionLabel?: string;
-      optionValue?: string;
-      bodyProp?: string;
-    };
-  }[];
+  fields:
+    | ({
+        label: string;
+        required: boolean;
+        selectOption?: boolean;
+        noTranslate?: boolean;
+        feesDetails?: boolean;
+        asyncOption?: {
+          options?: any[];
+          optionLabel?: string;
+          optionValue?: string;
+          bodyProp?: string;
+        };
+      } | undefined)[];
   modalName: string;
   selectOptions?: any;
   setBody: Dispatch<SetStateAction<any>>;
@@ -198,8 +200,8 @@ export const MutateModal = ({
         }}
       >
         <Row>
-          {fields.map((field) => {
-            switch (field.label) {
+          {fields?.map((field) => {
+            switch (field?.label) {
               case "date":
                 return (
                   <Col span={24}>
@@ -503,30 +505,32 @@ export const MutateModal = ({
                   </Col>
                 );
 
-                case "can_be_deleted_only_by_organization":
-                  return (
-                    <Col
-                      span={24}
-                      style={{ display: "flex", justifyContent: "start" }}
+              case "can_be_deleted_only_by_organization":
+                return (
+                  <Col
+                    span={24}
+                    style={{ display: "flex", justifyContent: "start" }}
+                  >
+                    <Form.Item
+                      label={t(`table.${field.label}`)}
+                      name={field.label}
+                      style={{margin: 10 }}
+                      valuePropName="checked"
                     >
-                      <Form.Item
-                        label={t(`table.${field.label}`)}
-                        name={field.label}
-                        style={{ margin: 10 }}
-                        valuePropName="checked"
-                      >
-                        <Switch
-                          checked={body[field.label]}
-                          onChange={(e) => {
-                            setBody((state: any) => ({
-                              ...state,
-                              [field.label]: e,
-                            }))
-                          }}
-                        />
-                      </Form.Item>
-                    </Col>
-                  );
+                      <Typography style={{display: 'inline', marginRight: 10}}>{t('table.false')}</Typography>
+                      <Switch
+                        checked={body[field.label]}
+                        onChange={(e) => {
+                          setBody((state: any) => ({
+                            ...state,
+                            [field.label]: e,
+                          }));
+                        }}
+                      />
+                      <Typography style={{display: 'inline', marginLeft: 10}}>{t('table.true')}</Typography>
+                    </Form.Item>
+                  </Col>
+                );
               case "cnpj":
                 return (
                   <Col span={24}>
@@ -855,7 +859,7 @@ export const MutateModal = ({
                 );
 
               default:
-                if (field.selectOption) {
+                if (field?.selectOption) {
                   return (
                     <Col span={24}>
                       <Form.Item
@@ -906,7 +910,7 @@ export const MutateModal = ({
                   );
                 }
 
-                if (field.asyncOption) {
+                if (field?.asyncOption) {
                   return (
                     <Col span={24}>
                       <Form.Item
@@ -964,23 +968,23 @@ export const MutateModal = ({
                 return (
                   <Col span={24}>
                     <Form.Item
-                      label={t(`table.${field.label}`)}
-                      name={field.label}
+                      label={t(`table.${field?.label}`)}
+                      name={field?.label}
                       style={{ margin: 10 }}
                       rules={[
                         {
-                          required: field.required,
+                          required: field?.required,
                           message:
                             t("input.required", {
-                              field: t(`input.${field.label}`),
+                              field: t(`input.${field?.label}`),
                             }) || "",
                         },
                       ]}
                     >
                       <Input
                         size="large"
-                        name={field.label}
-                        value={body[field.label] ?? null}
+                        name={field?.label}
+                        value={body[field?.label as any] ?? null}
                         onChange={handleChange}
                       />
                     </Form.Item>

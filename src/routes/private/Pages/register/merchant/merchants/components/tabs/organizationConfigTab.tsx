@@ -128,21 +128,14 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
           }
         >
           <Row gutter={[8, 8]} align="middle">
-            <Col xs={{ span: 24 }} md={{ span: 6 }}>
+            <Col xs={{ span: 24 }} md={{ span: 4 }}>
               <Form.Item
                 label={t("input.check_cpf_permission")}
                 name="cpf_api_permission"
+                valuePropName="checked"
               >
-                <Select
-                  size="large"
-                  options={
-                    [true, false]?.map((item, index) => ({
-                      key: index,
-                      value: item,
-                      label: `${t(`table.${item}`)}`,
-                    })) ?? []
-                  }
-                  value={body?.cpf_api_permission}
+                <Switch
+                  checked={body?.cpf_api_permission}
                   onChange={(value) => {
                     setBody((state) => ({
                       ...state,
@@ -157,7 +150,7 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
               </Form.Item>
             </Col>
 
-            <Col xs={{ span: 20 }} md={{ span: 10 }}>
+            <Col xs={{ span: 17 }} md={{ span: 10 }}>
               <Form.Item
                 label={t("input.cash_out_max_value")}
                 name="cash_out_max_value"
@@ -190,7 +183,13 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
                 />
               </Form.Item>
             </Col>
-            <Col xs={{ span: 4 }} md={{ span: 4 }}>
+            <Col xs={{ span: 7 }} md={{ span: 4 }} style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "end",
+                height: "100%",
+                marginTop: "25px",
+              }}>
               <Form.Item label={""} name="pix_refund_fee_min">
                 <Checkbox
                   checked={withdrawUnlimited}
@@ -202,21 +201,14 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
             </Col>
           </Row>
           <Row gutter={[8, 8]} align="middle">
-            <Col xs={{ span: 24 }} md={{ span: 6 }}>
+            <Col xs={{ span: 24 }} md={{ span: 4 }}>
               <Form.Item
                 label={t("input.account_PJ_payment_permission")}
                 name="cash_in_receive_by_pj"
+                valuePropName="checked"
               >
-                <Select
-                  size="large"
-                  options={
-                    [true, false]?.map((item, index) => ({
-                      key: index,
-                      value: item,
-                      label: `${t(`table.${item}`)}`,
-                    })) ?? []
-                  }
-                  value={bodyUpdate?.cash_in_receive_by_pj}
+                <Switch
+                  checked={bodyUpdate?.cash_in_receive_by_pj}
                   onChange={(value) => {
                     setBodyUpdate((state) => ({
                       ...state,
@@ -226,7 +218,7 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
                 />
               </Form.Item>
             </Col>
-            <Col xs={{ span: 20 }} md={{ span: 10 }}>
+            <Col xs={{ span: 17 }} md={{ span: 10 }}>
               <Form.Item
                 label={t("input.max_value_payer_pj_by_day")}
                 name="cash_in_max_value_receive_by_pj"
@@ -259,8 +251,18 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
                 />
               </Form.Item>
             </Col>{" "}
-            <Col xs={{ span: 4 }} md={{ span: 4 }}>
-              <Form.Item label={""} name="pix_refund_fee_min">
+            <Col
+              xs={{ span: 7 }}
+              md={{ span: 4 }}
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "end",
+                height: "100%",
+                marginTop: "25px",
+              }}
+            >
+              <Form.Item label={""} name="pix_refund_fee_min" >
                 <Checkbox
                   checked={payerPjUnlimited}
                   onChange={handlPayerPjUnlimitedChange}
@@ -271,21 +273,14 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
             </Col>
           </Row>
           <Row gutter={[8, 8]} align="middle">
-            <Col xs={{ span: 24 }} md={{ span: 6 }}>
+            <Col xs={{ span: 24 }} md={{ span: 4 }}>
               <Form.Item
                 label={t("input.permission_different_payer_pf")}
                 name="cash_in_receive_by_different_payer"
+                valuePropName="checked"
               >
-                <Select
-                  size="large"
-                  options={
-                    [true, false]?.map((item, index) => ({
-                      key: index,
-                      value: item,
-                      label: `${t(`table.${item}`)}`,
-                    })) ?? []
-                  }
-                  value={bodyUpdate?.cash_in_receive_by_different_payer}
+                <Switch
+                  checked={bodyUpdate?.cash_in_receive_by_different_payer}
                   onChange={(value) => {
                     setBodyUpdate((state) => ({
                       ...state,
@@ -295,7 +290,7 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
                 />
               </Form.Item>
             </Col>{" "}
-            <Col xs={{ span: 20 }} md={{ span: 10 }}>
+            <Col xs={{ span: 17 }} md={{ span: 10 }}>
               <Form.Item
                 label={t("input.max_value_different_payer_pf_by_day")}
                 name="cash_in_max_value_receive_by_different_payer"
@@ -333,7 +328,13 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
                 />
               </Form.Item>
             </Col>{" "}
-            <Col xs={{ span: 4 }} md={{ span: 4 }}>
+            <Col xs={{ span: 7 }} md={{ span: 4 }} style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "end",
+                height: "100%",
+                marginTop: "25px",
+              }}>
               <Form.Item label={""} name="pix_refund_fee_min">
                 <Checkbox
                   checked={differentPayerUnlimited}

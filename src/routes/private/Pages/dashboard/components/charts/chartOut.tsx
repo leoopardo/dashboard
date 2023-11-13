@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useTheme } from "@src/contexts/ThemeContext";
 import { useGetTotalGeneratedWithdrawals } from "@src/services/consult/withdrawals/generatedWithdrawals/getTotal";
 import { generatedWithdrawalsRowsQuery } from "@src/services/types/consult/withdrawals/generatedWithdrawals.interface";
 import { Card, Col, Typography } from "antd";
@@ -20,7 +21,7 @@ export const ChartOut = ({ query }: ChartInInterface) => {
     initial_date: query?.start_date,
     final_date: query?.end_date,
   });
-
+  const { theme } = useTheme();
   const {
     WithdrawalsTotal,
     isWithdrawalsTotalFetching,
@@ -53,6 +54,7 @@ export const ChartOut = ({ query }: ChartInInterface) => {
       >
         <ReactECharts
           option={{
+            darkMode: theme === "dark",
             tooltip: {
               trigger: "item",
             },
@@ -63,6 +65,14 @@ export const ChartOut = ({ query }: ChartInInterface) => {
             },
             series: [
               {
+                tooltip: {
+                  valueFormatter: function (value: number) {
+                    return new Intl.NumberFormat("pt-BR", {
+                      style: "currency",
+                      currency: "BRL",
+                    }).format(Number(value) || 0);
+                  },
+                },
                 name: t("table.deposit_conversion"),
                 type: "pie",
                 radius: "50%",
@@ -93,7 +103,7 @@ export const ChartOut = ({ query }: ChartInInterface) => {
                   },
                   {
                     value: WithdrawalsTotal?.pending_value ?? 0,
-                    name: `${t("table.wainting")}: ${
+                    name: `${t("table.waiting")}: ${
                       WithdrawalsTotal?.pending_total ?? 0
                     }`,
                   },

@@ -145,8 +145,8 @@
     "details": "Detalhes",
     "Wiki": "Wiki",
     "pre_manual": "Pre lançamentos manuais",
-    "merchant_pre_manual": "Pre lançamentos manuais",
-    "merchant_pre_manual_reports": "Relatórios pre lançamentos manuais"
+    "merchant_pre_manual_moviments": "Pre lançamentos manuais",
+    "merchant_pre_manual_moviments_reports": "Pre lançamentos manuais"
   },
 
   "titles": {
@@ -160,7 +160,12 @@
     "total_registred_inactive": "Total de {{entity}} inativas",
     "total_aggregator_inactive": "Total de {{entity}} inativos",
     "total": "Total de {{entity}}",
-    "operation_approve": "Aprovar Lançamentos"
+    "operation_approve": "Aprovar Lançamentos",
+    "total_expired": "Total expirado",
+    "deposits_bank": "Bancos de depósito",
+    "withdraw_bank": "Bancos de saque",
+    "fastpix_bank": "Bancos de FastPix",
+    "merchants_per_bank": "Total de empresas por banco"
   },
 
   "messages": {
@@ -282,7 +287,8 @@
     "report_details": "Detalhes do relatório",
     "new_responsible": "Novo responsável",
     "update_responsible": "Editar responsável",
-    "update_merchant": "Editar empresa"
+    "update_merchant": "Editar empresa",
+    "pre_manual": "Pre lançamento manual"
   },
   "input": {
     "required": "Por favor, insira o {{field}}",
@@ -387,7 +393,8 @@
     "password_type": "A senha deve conter no mínimo 8 caracteres, incluindo pelo menos 1 número, 1 letra maiúscula e 1 caractere especial.",
     "merchant_id": "nome da empresa",
     "reason": "motivo",
-    "domain": "domínio"
+    "domain": "domínio",
+    "active_logo": "Logo ativo"
   },
   "table": {
     "id": "ID",
@@ -724,7 +731,7 @@
     "refunded_withdraw": "Devolvido",
     "debit_merchant_id": "ID Empresa origem",
     "credit_merchant_id": "ID Empresa destino",
-    "can_be_deleted_only_by_organization": "Organização pode deletar",
+    "can_be_deleted_only_by_organization": "Pode ser removido apenas por organizações?",
     "file_url": "Arquivo",
     "previous_data": "Anterior à alteração",
     "data_later": "Posterior à alteração",
@@ -775,6 +782,7 @@
     "fastpix_redirect_url": "URL de redirecionamento FastPix",
     "fastpix_token_time": "Tempo de expiração de token FastPix",
     "fastpix_in": "FastPix",
+    "fastpix": "FastPix",
     "pixType": "Tipo Pix",
     "group_name": "Grupo",
     "profile_type_name": "Tipo de perfil",
@@ -821,7 +829,9 @@
     "main_user_id": "ID do usuário principal",
     "main_user_name": "Nome do usuário principal",
     "main_user_username": "usuário principal",
-    "row": "Linha"
+    "row": "Linha",
+    "pix_type": "Tipo de pix",
+    "standard": "Regular"
   },
   "actions": {
     "details": "Detalhes",

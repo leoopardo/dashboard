@@ -19,11 +19,6 @@ export function useGetRowsMerchantRegister(params: MerchantsQuery) {
       });
       return response.data;
     },
-    {
-      refetchInterval: false,
-      refetchIntervalInBackground: false,
-      refetchOnMount: false,
-    }
   );
 
   useEffect(() => {

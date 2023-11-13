@@ -1,11 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   ArrowDownOutlined,
   ArrowUpOutlined,
-  EyeFilled,
-  EditOutlined,
   DeleteOutlined,
+  EditOutlined,
+  EyeFilled,
 } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
@@ -13,8 +14,16 @@ import { CustomTable } from "@src/components/CustomTable";
 import { FiltersModal } from "@src/components/FiltersModal";
 import { FilterChips } from "@src/components/FiltersModal/filterChips";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
+import { MutateModal } from "@src/components/Modals/mutateGenericModal";
+import { ViewModal } from "@src/components/Modals/viewGenericModal";
 import { Toast } from "@src/components/Toast";
 import { ValidateToken } from "@src/components/ValidateToken";
+import { useApprovePreManualTransaction } from "@src/services/moviments/preManual/approvePreManual";
+import { useCreatePreManualTransaction } from "@src/services/moviments/preManual/createPreManualTransaction";
+import { useCreatePreMerchantManualReports } from "@src/services/moviments/preManual/createReportPreManual";
+import { useDeletePreManualTransaction } from "@src/services/moviments/preManual/deletePreManualTransaction";
+import { useGetPreManualEntry } from "@src/services/moviments/preManual/getPreManual";
+import { useUpdatePreManualTransaction } from "@src/services/moviments/preManual/updatePreManualTransaction";
 import { queryClient } from "@src/services/queryClient";
 import { useGetRowsMerchantManualEntryCategory } from "@src/services/register/merchant/manualEntryCategory/getManualEntryCategory";
 import { CreateMerchantManualTransaction } from "@src/services/types/moviments/merchant/createManualTransaction.interface";
@@ -27,18 +36,10 @@ import { Button, Divider, Statistic } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useGetPreManualEntry } from "@src/services/moviments/preManual/getPreManual";
-import { CreateMovimentModal } from "../components/createMovimentModal";
-import { useCreatePreManualTransaction } from "@src/services/moviments/preManual/createPreManualTransaction";
-import { ViewModal } from "@src/components/Modals/viewGenericModal";
+import { CreateMovimentModal } from "../../components/createMovimentModal";
 import { ApproveModal } from "./components/approveModal";
-import { MutateModal } from "@src/components/Modals/mutateGenericModal";
-import { useApprovePreManualTransaction } from "@src/services/moviments/preManual/approvePreManual";
-import { useCreatePreMerchantManualReports } from "@src/services/moviments/preManual/createReportPreManual";
-import { useUpdatePreManualTransaction } from "@src/services/moviments/preManual/updatePreManualTransaction";
-import { useDeletePreManualTransaction } from "@src/services/moviments/preManual/deletePreManualTransaction";
 
-export const PreManual = () => {
+export const MerchantPreManual = () => {
   const { t } = useTranslation();
   const { permissions } = queryClient.getQueryData(
     "validate"
@@ -100,7 +101,7 @@ export const PreManual = () => {
     approvePreManualLoading,
     approvePreManualMutate,
     approvePreManualSuccess,
-    approvePreManualReset
+    approvePreManualReset,
   } = useApprovePreManualTransaction({
     pre_entry_account_ids: selectedRowsId(selectedRows),
     validation_token: tokenState,
@@ -154,8 +155,8 @@ export const PreManual = () => {
   }, [tokenState]);
 
   useEffect(() => {
-    setSelectedRows([])
-  }, [approvePreManualSuccess])
+    setSelectedRows([]);
+  }, [approvePreManualSuccess]);
 
   return (
     <Grid container style={{ padding: "25px" }}>
@@ -165,62 +166,71 @@ export const PreManual = () => {
         xs={12}
         style={{ display: "flex", justifyContent: "center" }}
       >
-        {preManualData &&
-          Object.keys(preManualData).map((key) => {
-            switch (key) {
-              case "total_in_processing":
-              case "total_in_canceled":
-              case "total_in_success":
-                return (
-                  <Grid
-                    key={key}
-                    item
-                    xs={5}
-                    md="auto"
-                    style={{
-                      margin: "10px",
-                    }}
-                  >
-                    <Statistic
-                      valueStyle={{ color: "#3f8600", fontSize: "20px" }}
-                      prefix={<ArrowUpOutlined />}
-                      title={t(`table.${key}`)}
-                      loading={isPreManualDataFetching}
-                      value={new Intl.NumberFormat("pt-BR", {
-                        style: "currency",
-                        currency: "BRL",
-                      }).format(preManualData[key] || 0)}
-                    />
-                  </Grid>
-                );
-              case "total_out_processing":
-              case "total_out_canceled":
-              case "total_out_success":
-                return (
-                  <Grid
-                    key={key}
-                    item
-                    xs={5}
-                    md="auto"
-                    style={{ margin: "10px" }}
-                  >
-                    <Statistic
-                      valueStyle={{ color: "#cf1322", fontSize: "20px" }}
-                      prefix={<ArrowDownOutlined />}
-                      title={t(`table.${key}`)}
-                      loading={isPreManualDataFetching}
-                      value={new Intl.NumberFormat("pt-BR", {
-                        style: "currency",
-                        currency: "BRL",
-                      }).format(preManualData[key] || 0)}
-                    />
-                  </Grid>
-                );
-              default:
-                return;
-            }
-          })}
-        {!permissions.transactions.merchant?.pre_manual_transactions
+        <Grid
+          container
+          item
+          xs={12}
+          md={10}
+          style={{ display: "flex", justifyContent: "space-around" }}
+        >
+          {preManualData &&
+            Object.keys(preManualData).map((key) => {
+              switch (key) {
+                case "total_in_processing":
+                case "total_in_canceled":
+                case "total_in_success":
+                  return (
+                    <Grid
+                      key={key}
+                      item
+                      xs={5}
+                      md="auto"
+                      style={{
+                        margin: "10px",
+                      }}
+                    >
+                      <Statistic
+                        valueStyle={{ color: "#3f8600", fontSize: "20px" }}
+                        prefix={<ArrowUpOutlined />}
+                        title={t(`table.${key}`)}
+                        loading={isPreManualDataFetching}
+                        value={new Intl.NumberFormat("pt-BR", {
+                          style: "currency",
+                          currency: "BRL",
+                        }).format(preManualData[key] || 0)}
+                      />
+                    </Grid>
+                  );
+                case "total_out_processing":
+                case "total_out_canceled":
+                case "total_out_success":
+                  return (
+                    <Grid
+                      key={key}
+                      item
+                      xs={5}
+                      md="auto"
+                      style={{ margin: "10px" }}
+                    >
+                      <Statistic
+                        valueStyle={{ color: "#cf1322", fontSize: "20px" }}
+                        prefix={<ArrowDownOutlined />}
+                        title={t(`table.${key}`)}
+                        loading={isPreManualDataFetching}
+                        value={new Intl.NumberFormat("pt-BR", {
+                          style: "currency",
+                          currency: "BRL",
+                        }).format(preManualData[key] || 0)}
+                      />
+                    </Grid>
+                  );
+                default:
+                  return;
+              }
+            })}
+        </Grid>
+
+        {permissions.transactions.merchant?.merchant_pre_manual
           ?.merchant_pre_manual_transactions_create && (
           <Grid container item xs={12} md={4} lg={2} rowSpacing={1}>
             <Grid item xs={12}>
@@ -260,71 +270,95 @@ export const PreManual = () => {
         style={{ display: "flex", alignItems: "center" }}
         spacing={1}
       >
-        <Grid item xs={12} md={2} lg={2}>
-          <Button
-            size="large"
-            style={{ width: "100%" }}
-            loading={isPreManualDataFetching}
-            type="primary"
-            onClick={() => setIsFiltersOpen(true)}
-          >
-            {t("table.filters")}
-          </Button>
-        </Grid>
-        <Grid item xs={12} md={3} lg={4}>
-          <FilterChips
-            startDateKeyName="start_date"
-            endDateKeyName="end_date"
-            query={query}
-            setQuery={setQuery}
-            haveInitialDate
-          />
-        </Grid>
-        <Grid item xs={12} md={2} lg={2}>
-          <Button
-            type="dashed"
-            loading={isPreManualDataFetching}
-            danger
-            onClick={() => {
-              setQuery(INITIAL_QUERY);
-            }}
-            style={{
-              height: 40,
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />
-            {t("table.clear_filters")}
-          </Button>
-        </Grid>
-        {!permissions.transactions.merchant?.pre_manual_transactions
-          ?.merchant_pre_manual_transactions_export_csv && (
-          <Grid item xs={12} md={3} lg={2}>
-            <ExportReportsModal
-              disabled={!preManualData?.total || preManualDataError}
-              mutateReport={() => preManualReportsMutate()}
-              error={preManualReportsError}
-              success={preManualReportsIsSuccess}
-              loading={preManualReportsIsLoading}
-              reportPath="moviment/pre_manual/reports"
+        <Grid
+          container
+          item
+          xs={12}
+          md={6}
+          spacing={1}
+          style={{
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <Grid item xs={12} md={4} lg={4}>
+            <Button
+              size="large"
+              style={{ width: "100%" }}
+              loading={isPreManualDataFetching}
+              type="primary"
+              onClick={() => setIsFiltersOpen(true)}
+            >
+              {t("table.filters")}
+            </Button>
+          </Grid>
+          <Grid item xs={12} md={8} lg={8}>
+            <FilterChips
+              startDateKeyName="start_date"
+              endDateKeyName="end_date"
+              query={query}
+              setQuery={setQuery}
+              haveInitialDate
             />
           </Grid>
-        )}
+        </Grid>
+        <Grid
+          container
+          item
+          xs={12}
+          md={6}
+          spacing={1}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-end",
+          }}
+        >
+          <Grid item xs={12} md={4} lg={4}>
+            <Button
+              type="dashed"
+              loading={isPreManualDataFetching}
+              danger
+              onClick={() => {
+                setQuery(INITIAL_QUERY);
+              }}
+              style={{
+                height: 40,
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />
+              {t("table.clear_filters")}
+            </Button>
+          </Grid>
+          {permissions.transactions.merchant?.merchant_pre_manual?.menu && (
+            <Grid item xs={12} md={2} lg={2}>
+              <ExportReportsModal
+                disabled={!preManualData?.total || preManualDataError}
+                mutateReport={() => preManualReportsMutate()}
+                error={preManualReportsError}
+                success={preManualReportsIsSuccess}
+                loading={preManualReportsIsLoading}
+                reportPath="moviment/pre_manual/reports"
+              />
+            </Grid>
+          )}
 
-        {!permissions.transactions.merchant?.pre_manual_transactions
-          ?.merchant_pre_manual_transactions_approve && (
-          <Grid item xs={12} md={3} lg={2}>
-            <ApproveModal
-              disabled={selectedRows.length === 0}
-              loading={approvePreManualLoading}
-              reset={approvePreManualReset}
-              setIsValidateTokenOpen={setOperationInTokenModalOpen}
-            />
-          </Grid>
-        )}
+          {permissions.transactions.merchant?.merchant_pre_manual
+            ?.merchant_pre_manual_transactions_approve && (
+            <Grid item xs={12} md={4} lg={4}>
+              <ApproveModal
+                disabled={selectedRows.length === 0}
+                loading={approvePreManualLoading}
+                reset={approvePreManualReset}
+                setIsValidateTokenOpen={setOperationInTokenModalOpen}
+              />
+            </Grid>
+          )}
+        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -356,7 +390,7 @@ export const PreManual = () => {
                 icon: <EyeFilled style={{ fontSize: "20px" }} />,
                 onClick: () => setIsViewModalOpen(true),
               },
-              !permissions.transactions.merchant?.pre_manual_transactions
+              permissions.transactions.merchant?.merchant_pre_manual
                 ?.merchant_pre_manual_transactions_update && {
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
@@ -440,7 +474,7 @@ export const PreManual = () => {
               }) || [],
           }}
           setBody={setUpdateBody}
-          modalName={t("modal.update_responsible")}
+          modalName={t("modal.pre_manual")}
           submit={updatePreManualTransactionMutate}
           submitLoading={updatePreManualTransactionIsLoading}
           error={updatePreManualTransactionError}

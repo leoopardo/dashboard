@@ -250,7 +250,7 @@ export const UpdateBanks = ({
             <Select
               size="large"
               options={
-                bankListData?.itens?.map((item, index) => {
+                bankListData?.itens?.filter((bank) => bank?.FastPix).map((item, index) => {
                   return {
                     key: index,
                     value: item.bank,
@@ -267,7 +267,7 @@ export const UpdateBanks = ({
                 }) ?? []
               }
               onChange={(value) =>
-                setBody((state) => ({ ...state, cash_in_bank: value }))
+                setBody((state) => ({ ...state, fastpix_in_bank: value }))
               }
             />
           </Form.Item>

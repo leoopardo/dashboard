@@ -101,8 +101,8 @@ import { BankBlackistReports } from "./Pages/support/blacklists/reports/bankBlac
 import { ThirdPartKeyBlacklist } from "./Pages/support/blacklists/thirdPartKey";
 import { ImportContastationDeposit } from "./Pages/support/contastation/importCSV";
 import { ContestationUploads } from "./Pages/support/contastation/uploads";
-import { PreManual } from "./Pages/moviments/preOperations";
-import { PreManualReports } from "./Pages/moviments/preOperations/reports";
+import { MerchantPreManual } from "./Pages/moviments/merchants/preOperations";
+import { MerchantPreManualReports } from "./Pages/moviments/merchants/reports/preOperations";
 import { Permission } from "./permission";
 import { Redirect } from "./redirect";
 
@@ -1282,7 +1282,7 @@ export const PrivateRoutes = () => {
                   </Permission>
                 }
               />
-              {/* arrumar permissões */}
+              {/* TODO arrumar permissões */}
               <Route
                 path="organization_transfer_between_accounts_reports"
                 element={
@@ -1297,7 +1297,7 @@ export const PrivateRoutes = () => {
                 }
               />
             </Route>
-            {/* arrumar permissões */}
+            {/*TODO arrumar permissões */}
             <Route
               path="organization_transfer_between_accounts"
               element={
@@ -1327,6 +1327,19 @@ export const PrivateRoutes = () => {
                 </Permission>
               }
             />
+             <Route
+              path="merchant_pre_manual_moviments"
+              element={
+                <Permission
+                  permission={
+                    responseValidate?.permissions?.transactions?.merchant
+                      ?.merchant_pre_manual?.menu
+                  }
+                >
+                  <MerchantPreManual />
+                </Permission>
+              }
+            />
             <Route path="merchant_moviments_reports">
               <Route
                 path="merchant_manual_moviments_reports"
@@ -1342,7 +1355,7 @@ export const PrivateRoutes = () => {
                   </Permission>
                 }
               />
-              {/* arrumar permissões */}
+              {/*TODO arrumar permissões */}
               <Route
                 path="merchant_between_accounts_reports"
                 element={
@@ -1358,9 +1371,9 @@ export const PrivateRoutes = () => {
                 }
               />
 
-              {/* arrumar permissões */}
+              {/*TODO arrumar permissões */}
               <Route
-                path="merchant_pre_manual_reports"
+                path="merchant_pre_manual_moviments_reports"
                 element={
                   <Permission
                     permission={
@@ -1369,12 +1382,12 @@ export const PrivateRoutes = () => {
                         ?.merchant_internal_transfers_export_csv
                     }
                   >
-                    <TransferBetweenAccountsReports />
+                    <MerchantPreManualReports />
                   </Permission>
                 }
               />
             </Route>
-            {/* arrumar permissões */}
+            {/*TODO arrumar permissões */}
             <Route
               path="between_accounts_transfers"
               element={
@@ -1389,7 +1402,7 @@ export const PrivateRoutes = () => {
               }
             />
           </Route>
-          {/* arrumar permissões */}
+          {/*TODO arrumar permissões */}
           <Route
             path="merchant_transfers"
             element={
@@ -1402,7 +1415,7 @@ export const PrivateRoutes = () => {
           />
           {/* movimentações de agregador */}
           <Route path="aggregator_moviments">
-            {/* arrumar permissões */}
+            {/*TODO arrumar permissões */}
             <Route
               path="aggregator_transfer_between_accounts"
               element={
@@ -1414,7 +1427,7 @@ export const PrivateRoutes = () => {
               }
             />
             <Route path="aggregator_moviments_reports">
-              {/* arrumar permissões */}
+              {/*TODO arrumar permissões */}
               <Route
                 path="aggregator_transfer_between_accounts_reports"
                 element={
@@ -1428,34 +1441,6 @@ export const PrivateRoutes = () => {
                 }
               />
             </Route>
-          </Route>
-          {/* Arrumar permissão*/}
-          <Route path="pre_manual">
-            <Route
-              path="pre_manual"
-              element={
-                <Permission
-                  permission={
-                    responseValidate?.permissions?.transactions?.merchant?.menu
-                  }
-                >
-                  <PreManual />
-                </Permission>
-              }
-            />
-
-            <Route
-              path="reports"
-              element={
-                <Permission
-                  permission={
-                    responseValidate?.permissions?.transactions?.merchant?.menu
-                  }
-                >
-                  <PreManualReports />
-                </Permission>
-              }
-            />
           </Route>
         </Route>
         {/* Suporte */}
