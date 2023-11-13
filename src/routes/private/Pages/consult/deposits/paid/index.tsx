@@ -112,6 +112,7 @@ export const PaidDeposits = () => {
     { name: "value", type: "value" },
     { name: "createdAt", type: "date" },
     { name: "delivered_at", type: "date" },
+    { name: "pix_type", head: "pixType",  type: "translate" },
     { name: "buyer_name", type: "text" },
     { name: "buyer_document", type: "document" },
     { name: "status", type: "status" },
@@ -391,7 +392,7 @@ export const PaidDeposits = () => {
             "operator_id",
             "bank",
             "payer_bank",
-            "pixType",
+            "pix_type",
             "state",
             "city",
             "gender",
@@ -409,7 +410,7 @@ export const PaidDeposits = () => {
               "WAITING_REFUND",
             ],
             gender: ["MALE", "FEMALE", "OTHER"],
-            pixType: ["REGULAR", "FASTPIX_IN"]
+            pix_type: ["STANDARD", "FASTPIX"]
           }}
           startDateKeyName="initial_date"
           endDateKeyName="final_date"

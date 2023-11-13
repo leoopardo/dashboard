@@ -339,7 +339,7 @@ export const RefundDeposits = () => {
             "operator_id",
             "bank",
             "payer_bank",
-            "pixType",
+            "pix_type",
             "state",
             "city",
             "gender",
@@ -356,7 +356,7 @@ export const RefundDeposits = () => {
               "WAITING",
               "WAITING_REFUND",
             ],
-            pixType: ["STANDARD", "FASTPIX_IN"],
+            pix_type: ["STANDARD", "FASTPIX"],
             gender: ["MALE", "FEMALE", "OTHER"],
           }}
           startDateKeyName="start_date"

@@ -467,7 +467,7 @@ export const GeneratedDeposits = () => {
             "operator_id",
             "bank",
             "payer_bank",
-            "pixType",
+            "pix_type",
             "state",
             "city",
             "gender",
@@ -485,7 +485,7 @@ export const GeneratedDeposits = () => {
               "WAITING_REFUND",
             ],
             gender: ["MALE", "FEMALE", "OTHER"],
-            pixType: ["STANDARD", "FASTPIX_IN"]
+            pix_type: ["STANDARD", "FASTPIX"]
           }}
           startDateKeyName="initial_date"
           endDateKeyName="final_date"

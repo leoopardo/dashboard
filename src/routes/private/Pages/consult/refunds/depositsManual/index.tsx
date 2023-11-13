@@ -430,7 +430,7 @@ export const RefundDepositsManual = () => {
               "WAITING",
               "WAITING_REFUND",
             ],
-            pixType: ["STANDARD", "FASTPIX_IN"],
+            pix_type: ["STANDARD", "FASTPIX"],
             gender: ["MALE", "FEMALE", "OTHER"],
           }}
           startDateKeyName="start_date"
