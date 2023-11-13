@@ -52,6 +52,7 @@ export const RefundDeposits = () => {
   ) as ValidateInterface;
   const { t } = useTranslation();
   const [query, setQuery] = useState<refundDepositsQuery>(INITIAL_QUERY);
+
   const {
     refundDepositsTotal,
     isRefundDepositsTotalFetching,
@@ -64,10 +65,6 @@ export const RefundDeposits = () => {
     refetchRefundDepositsTotalRows,
     refundDepositsRowsError,
   } = useGetRowsRefundDeposits(query);
-
-  useEffect(() => {
-    refetchRefundDepositsTotalRows();
-  }, [query]);
 
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const [isRefundModalOpen, setIsRefundModalOpen] = useState<boolean>(false);
@@ -101,11 +98,15 @@ export const RefundDeposits = () => {
     { name: "merchant_name", type: "text" },
     { name: "value", type: "value" },
     { name: "createdAt", type: "date" },
-    { name: "pix_type", head: "pixType",  type: "pix_type" },
+    { name: "pix_type", head: "pixType", type: "pix_type" },
     { name: "buyer_name", type: "text" },
     { name: "buyer_document", type: "document" },
     { name: "status", type: "status" },
   ];
+
+  useEffect(() => {
+    refetchRefundDepositsTotalRows();
+  }, [query]);
 
   return (
     <Grid container style={{ padding: "25px" }}>

@@ -21,6 +21,7 @@ export function useGetRowsRefundDeposits(params: refundDepositsQuery) {
       refetchInterval: false,
       refetchIntervalInBackground: false,
       refetchOnMount: false,
+      refetchOnWindowFocus: false,
     }
   );
 
@@ -28,6 +29,7 @@ export function useGetRowsRefundDeposits(params: refundDepositsQuery) {
   const isRefundDepositsRowsFetching = isFetching;
   const refundDepositsRowsError: any = error;
   const refetchRefundDepositsTotalRows = refetch;
+
   return {
     refundDepositsRows,
     isRefundDepositsRowsFetching,
