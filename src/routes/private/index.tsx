@@ -105,6 +105,7 @@ import { ImportContastationDeposit } from "./Pages/support/contastation/importCS
 import { ContestationUploads } from "./Pages/support/contastation/uploads";
 import { Permission } from "./permission";
 import { Redirect } from "./redirect";
+import { DepositsReceipts } from "./Pages/consult/deposits/receipts";
 
 export const PrivateRoutes = () => {
   const { responseValidate } = useValidate();
@@ -282,6 +283,19 @@ export const PrivateRoutes = () => {
                   }
                 >
                   <UndeliveredDeposits />
+                </Permission>
+              }
+            />
+            <Route
+              path="receipts"
+              element={
+                <Permission
+                  permission={
+                    responseValidate?.permissions?.report?.deposit
+                      ?.deposit_receipt?.menu
+                  }
+                >
+                  <DepositsReceipts />
                 </Permission>
               }
             />
