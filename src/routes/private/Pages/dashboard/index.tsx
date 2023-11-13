@@ -7,8 +7,10 @@ import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { FiltersModal } from "@src/components/FiltersModal";
 import { FilterChips } from "@src/components/FiltersModal/filterChips";
 import { TuorComponent } from "@src/components/Tuor";
+import { useErrorContext } from "@src/contexts/ErrorContext";
 import { useListBanks } from "@src/services/bank/listBanks";
 import { useGetMerchantBankStatementTotals } from "@src/services/consult/merchant/bankStatement/getTotals";
+import { useGetBankBalance } from "@src/services/consult/organization/bankBalance/getBankBalance";
 import { queryClient } from "@src/services/queryClient";
 import { MerchantBankStatementTotalsQuery } from "@src/services/types/consult/merchant/bankStatement";
 import { ValidateInterface } from "@src/services/types/validate.interface";
@@ -18,16 +20,20 @@ import moment from "moment";
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import secureLocalStorage from "react-secure-storage";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 import { TabsTable } from "./components/TabsTable";
 import { BankCard } from "./components/bankCard";
 import { BankBalanceChart } from "./components/charts/bankBalanceChart";
+import { ChartIn } from "./components/charts/chartIn";
+import { ChartOut } from "./components/charts/chartOut";
 import { MerchantBalance } from "./components/merchantBalance";
 import { MerchantsBalance } from "./components/merchantsBalance";
 import { OrganizationBalance } from "./components/organizationBalance";
 import { ValuesTable } from "./components/valuesTable";
-import { ChartIn } from "./components/charts/chartIn";
-import { ChartOut } from "./components/charts/chartOut";
-import { useErrorContext } from "@src/contexts/ErrorContext";
 
 const INITIAL_QUERY = {
   start_date: moment(new Date())
@@ -43,7 +49,7 @@ const INITIAL_QUERY = {
 
 export const Dashboard = () => {
   const { t } = useTranslation();
-  const {error} = useErrorContext()
+  const { error } = useErrorContext();
   const { permissions } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
@@ -52,6 +58,7 @@ export const Dashboard = () => {
   const [isBankChart, setIsBankChart] = useState<boolean>(
     secureLocalStorage.getItem("isBankChart") === "true"
   );
+
   const [query, setQuery] =
     useState<MerchantBankStatementTotalsQuery>(INITIAL_QUERY);
   const [isTuorOpen, setIsTuorOpen] = useState<boolean>(false);
@@ -62,6 +69,7 @@ export const Dashboard = () => {
     limit: 200,
     page: 1,
   });
+  const { OrganizationBankBalance } = useGetBankBalance({});
   const [activeKey, setActiveKey] = useState<string>(
     permissions?.report?.paybrokers?.balance?.report_paybrokers_balance_list
       ? "1"
@@ -99,7 +107,7 @@ export const Dashboard = () => {
       ),
     });
   }
-  
+
   return (
     <Row style={{ padding: 20 }}>
       <Layout
@@ -212,14 +220,63 @@ export const Dashboard = () => {
                 <Col span={24}>
                   <BankBalanceChart />
                 </Col>
-              )}
-              {!isBankChart && (
-                <>
-                  {bankListData?.itens.map((bank) => (
-                    <BankCard bank={bank} key={bank.id} />
-                  ))}
-                </>
-              )}
+              )}{" "}
+              <Col span={24}>
+                <Swiper
+                  slidesPerView={6}
+                  spaceBetween={8}
+                  pagination={{
+                    clickable: true,
+                  }}
+                  navigation={true}
+                  modules={[Autoplay, Pagination, Navigation]}
+                  className="mySwiper"
+                  style={{ height: 260, paddingLeft: 24, paddingRight: 24 }}
+                  loop={true}
+                  autoplay={{
+                    delay: 2500,
+                    disableOnInteraction: false,
+                    pauseOnMouseEnter: true,
+                  }}
+                  breakpoints={{
+                    300: {
+                      slidesPerView: 1,
+                      spaceBetween: 8,
+                    },
+                    640: {
+                      slidesPerView: 2,
+                      spaceBetween: 8,
+                    },
+                    950: {
+                      slidesPerView: 4,
+                      spaceBetween: 8,
+                    },
+                    1024: {
+                      slidesPerView: 6,
+                      spaceBetween: 8,
+                    },
+                  }}
+                >
+                  {!isBankChart && (
+                    <>
+                      {(OrganizationBankBalance as any)?.banks.map(
+                        (bank: any) => (
+                          <>
+                            <SwiperSlide>
+                              <BankCard
+                                bank={bankListData?.itens.find(
+                                  (b) => b.bank === bank.name
+                                )}
+                                key={bank.id}
+                              />
+                            </SwiperSlide>
+                          </>
+                        )
+                      )}
+                    </>
+                  )}
+                </Swiper>
+              </Col>
             </Row>
           </div>
         )}
@@ -279,7 +336,13 @@ export const Dashboard = () => {
             </Row>
           </Layout>
 
-          <Col span={24} style={{ paddingTop: "20px", paddingBottom: user.aggregator_id ? "60px" : undefined }}>
+          <Col
+            span={24}
+            style={{
+              paddingTop: "20px",
+              paddingBottom: user.aggregator_id ? "60px" : undefined,
+            }}
+          >
             <Row gutter={[16, 16]}>
               <ChartIn query={query} />
               <ChartOut query={query} />
@@ -312,7 +375,9 @@ export const Dashboard = () => {
           </Row>
         )}
 
-        {(!error.rankingFee || !error.rankingOperations || !error.rankingValue) && (
+        {(!error.rankingFee ||
+          !error.rankingOperations ||
+          !error.rankingValue) && (
           <Row style={{ marginTop: 16 }}>
             <Col span={24}>
               <TabsTable query={query} />

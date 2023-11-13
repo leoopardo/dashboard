@@ -2,11 +2,10 @@ import { InfoCircleFilled, ReloadOutlined } from "@ant-design/icons";
 import { useGetBankBalance } from "@src/services/consult/organization/bankBalance/getBankBalance";
 import { BankItem } from "@src/services/types/banks.interface";
 import { defaultTheme } from "@src/styles/defaultTheme";
-import { Card, Col, Spin, Statistic, Tooltip, Typography } from "antd";
+import { Card, Spin, Statistic, Tooltip, Typography } from "antd";
 import { motion } from "framer-motion";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
-import { useMediaQuery } from "react-responsive";
 
 interface BankcardInterface {
   bank?: BankItem;
@@ -19,15 +18,10 @@ export const BankCard = ({ bank }: BankcardInterface) => {
     OrganizationBankBalanceError,
     refetchOrganizationBankBalance,
   } = useGetBankBalance({ bank: bank?.bank?.toLocaleLowerCase() });
-  const isTablet = useMediaQuery({ maxWidth: "1199px" });
   const { t } = useTranslation();
 
   return OrganizationBankBalance && !OrganizationBankBalanceError ? (
-    <Col
-      xs={{ span: 24 }}
-      md={{ span: 8 }}
-      lg={{ span: isTablet ? 8 : 4 }}
-      key={bank?.id}
+    <div style={{maxWidth: "250px"}}
     >
       <Card
         loading={isOrganizationBankBalanceFetching}
@@ -154,8 +148,8 @@ export const BankCard = ({ bank }: BankcardInterface) => {
           }}
         />
       </Card>
-    </Col>
+    </div>
   ) : (
-    <div key={bank?.id}></div>
+    <div key={bank?.id} style={{display: "none"}}> </div>
   );
 };

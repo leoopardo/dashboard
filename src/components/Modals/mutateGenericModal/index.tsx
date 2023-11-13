@@ -41,19 +41,22 @@ const { RangePicker } = DatePicker;
 interface mutateProps {
   type: "create" | "update";
   fields:
-    | ({
-        label: string;
-        required: boolean;
-        selectOption?: boolean;
-        noTranslate?: boolean;
-        feesDetails?: boolean;
-        asyncOption?: {
-          options?: any[];
-          optionLabel?: string;
-          optionValue?: string;
-          bodyProp?: string;
-        };
-      } | undefined)[];
+    | (
+        | {
+            label: string;
+            required: boolean;
+            selectOption?: boolean;
+            noTranslate?: boolean;
+            feesDetails?: boolean;
+            asyncOption?: {
+              options?: any[];
+              optionLabel?: string;
+              optionValue?: string;
+              bodyProp?: string;
+            };
+          }
+        | undefined
+      )[];
   modalName: string;
   selectOptions?: any;
   setBody: Dispatch<SetStateAction<any>>;
@@ -514,10 +517,14 @@ export const MutateModal = ({
                     <Form.Item
                       label={t(`table.${field.label}`)}
                       name={field.label}
-                      style={{margin: 10 }}
+                      style={{ margin: 10 }}
                       valuePropName="checked"
                     >
-                      <Typography style={{display: 'inline', marginRight: 10}}>{t('table.false')}</Typography>
+                      <Typography
+                        style={{ display: "inline", marginRight: 10 }}
+                      >
+                        {t("table.false")}
+                      </Typography>
                       <Switch
                         checked={body[field.label]}
                         onChange={(e) => {
@@ -527,7 +534,9 @@ export const MutateModal = ({
                           }));
                         }}
                       />
-                      <Typography style={{display: 'inline', marginLeft: 10}}>{t('table.true')}</Typography>
+                      <Typography style={{ display: "inline", marginLeft: 10 }}>
+                        {t("table.true")}
+                      </Typography>
                     </Form.Item>
                   </Col>
                 );
@@ -857,6 +866,8 @@ export const MutateModal = ({
                     </Form.Item>
                   </Col>
                 );
+              case undefined:
+                return;
 
               default:
                 if (field?.selectOption) {
