@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   BarChartOutlined,
   DashOutlined,
@@ -256,8 +257,8 @@ export const Dashboard = () => {
                     <>
                       {(OrganizationBankBalance as any)?.banks.map(
                         (bank: any) => (
-                          <>
-                            <SwiperSlide>
+                
+                            <SwiperSlide key={bank.name}>
                               <BankCard
                                 bank={bankListData?.itens.find(
                                   (b) => b.bank === bank.name
@@ -265,7 +266,7 @@ export const Dashboard = () => {
                                 key={bank.id}
                               />
                             </SwiperSlide>
-                          </>
+              
                         )
                       )}
                     </>

@@ -150,6 +150,6 @@ export const BankCard = ({ bank }: BankcardInterface) => {
       </Card>
     </div>
   ) : (
-    <div key={bank?.id} style={{display: "none"}}> </div>
+    <></>
   );
 };
