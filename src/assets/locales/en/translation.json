@@ -832,7 +832,8 @@
     "main_user_username": "Main user username",
     "row": "Row",
     "pix_type": "Tipo de pix",
-    "standard": "Standard"
+    "standard": "Standard",
+    "unassigned": "Unassigned"
   },
   "actions": {
     "details": "Details",

@@ -90,7 +90,7 @@ export const TotalizerPerBanks = ({ query }: TotalizerPerBanksInterface) => {
                           />
                         ) : (
                           <Typography.Text strong>
-                            Não atribuido
+                            {t("table.unassigned")}
                           </Typography.Text>
                         )}
                       </Tooltip>
@@ -158,7 +158,7 @@ export const TotalizerPerBanks = ({ query }: TotalizerPerBanksInterface) => {
                           />
                         ) : (
                           <Typography.Text strong>
-                            Não atribuido
+                            {t("table.unassigned")}
                           </Typography.Text>
                         )}
                       </Tooltip>
@@ -226,7 +226,7 @@ export const TotalizerPerBanks = ({ query }: TotalizerPerBanksInterface) => {
                           />
                         ) : (
                           <Typography.Text strong>
-                            Não atribuido
+                            {t("table.unassigned")}
                           </Typography.Text>
                         )}
                       </Tooltip>
