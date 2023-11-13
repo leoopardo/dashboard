@@ -67,6 +67,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
           </Card>
         </Col>
       )}
+
       {(props.query.status === "PAID_TO_MERCHANT" || !props.query.status) && (
         <Col
           style={{ maxWidth: "220px" }}
@@ -118,7 +119,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
               loading={props.loading}
               title={
                 <>
-                  <>{t("table.paid_to_merchant")}</>:{" "}
+                  <>{t("table.error")}</>:{" "}
                   <span style={{ fontSize: "12px" }}>
                     {props?.data?.error_total || 0} /{" "}
                     {getPercent(
@@ -172,7 +173,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
               }).format(props?.data?.processing_value || 0)}
               precision={2}
               valueStyle={{
-                color: defaultTheme.colors.processing,
+                color: defaultTheme.colors.warnning,
                 fontSize: isMobile ? "12px" : "18px",
                 wordBreak: "break-all",
               }}

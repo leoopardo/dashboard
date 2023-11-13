@@ -67,10 +67,6 @@ export const RefundWithdrawals = () => {
     RefundWithdrawalsReportsMutate,
   } = useCreateRefundWithdrawalsReports(query);
 
-  useEffect(() => {
-    refetchRefundWithdrawals();
-  }, [query]);
-
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<any>();
   const [searchOption, setSearchOption] = useState<string | undefined>(
@@ -93,6 +89,10 @@ export const RefundWithdrawals = () => {
     { name: "receiver_document", type: "document" },
     { name: "status", type: "status" },
   ];
+
+  useEffect(() => {
+    refetchRefundWithdrawals();
+  }, [query]);
 
   return (
     <Grid container style={{ padding: "25px" }}>

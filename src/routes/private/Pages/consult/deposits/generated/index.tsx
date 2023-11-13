@@ -79,7 +79,6 @@ export const GeneratedDeposits = () => {
   const [isResendWebhookModalOpen, setIsResendWebhookModalOpen] =
     useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<any>();
-  console.log({ currentItem });
   const [searchOption, setSearchOption] = useState<string | undefined>(
     undefined
   );

@@ -105,7 +105,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
         </Col>
       )}
 
-      {(props.query.status === "ERROR" || !props.query.status) && (
+{(props.query.status === "ERROR" || !props.query.status) && (
         <Col
           style={{ maxWidth: "220px" }}
           xs={{ span: isMobile ? 10 : undefined }}
@@ -142,6 +142,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
           </Card>
         </Col>
       )}
+
 
       {(props.query.status === "PROCESSING" || !props.query.status) && (
         <Col

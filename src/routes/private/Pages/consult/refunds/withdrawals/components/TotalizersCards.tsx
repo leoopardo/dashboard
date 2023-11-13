@@ -67,7 +67,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
         </Col>
       )}
 
-      {(props.query.status === "ERROR" || !props.query.status) && (
+{(props.query.status === "ERROR" || !props.query.status) && (
         <Col
           style={{ maxWidth: "220px" }}
           xs={{ span: isMobile ? 10 : undefined }}
@@ -134,7 +134,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
               }).format(props?.data?.processing_value || 0)}
               precision={2}
               valueStyle={{
-                color: defaultTheme.colors.error,
+                color: defaultTheme.colors.processing,
                 fontSize: isMobile ? "12px" : "18px",
                 wordBreak: "break-all",
               }}
