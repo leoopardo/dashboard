@@ -21,6 +21,7 @@ export function useGetRefundDepositsManual(params: refundManualDepositsQuery) {
       refetchInterval: false,
       refetchIntervalInBackground: false,
       refetchOnMount: false,
+      refetchOnWindowFocus: false,
     }
   );
 

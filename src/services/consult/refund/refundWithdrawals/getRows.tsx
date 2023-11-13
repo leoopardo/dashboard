@@ -21,6 +21,7 @@ export function useGetRowsRefundWithdrawals(params: refundWithdrawalsQuery) {
       refetchInterval: false,
       refetchIntervalInBackground: false,
       refetchOnMount: false,
+      refetchOnWindowFocus: false,
     }
   );
 
