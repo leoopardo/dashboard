@@ -287,7 +287,8 @@
     "report_details": "Detalhes do relatório",
     "new_responsible": "Novo responsável",
     "update_responsible": "Editar responsável",
-    "update_merchant": "Editar empresa"
+    "update_merchant": "Editar empresa",
+    "pre_manual": "Pre lançamento manual"
   },
   "input": {
     "required": "Por favor, insira o {{field}}",
@@ -392,7 +393,8 @@
     "password_type": "A senha deve conter no mínimo 8 caracteres, incluindo pelo menos 1 número, 1 letra maiúscula e 1 caractere especial.",
     "merchant_id": "nome da empresa",
     "reason": "motivo",
-    "domain": "domínio"
+    "domain": "domínio",
+    "active_logo": "Logo ativo"
   },
   "table": {
     "id": "ID",

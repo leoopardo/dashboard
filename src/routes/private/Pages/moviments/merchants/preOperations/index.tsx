@@ -474,7 +474,7 @@ export const MerchantPreManual = () => {
               }) || [],
           }}
           setBody={setUpdateBody}
-          modalName={t("modal.update_responsible")}
+          modalName={t("modal.pre_manual")}
           submit={updatePreManualTransactionMutate}
           submitLoading={updatePreManualTransactionIsLoading}
           error={updatePreManualTransactionError}
