@@ -4,10 +4,17 @@
 import { DeleteOutlined, EyeOutlined, UploadOutlined } from "@ant-design/icons";
 import { Toast } from "@components/Toast";
 import { Grid } from "@mui/material";
+import { useTheme } from "@src/contexts/ThemeContext";
+import { useActivateFasPixLogo } from "@src/services/register/merchant/merchant/merchantConfig.tsx/activateFastPixLogo";
+import { useCreateFastPixLogo } from "@src/services/register/merchant/merchant/merchantConfig.tsx/createFastPixLogo";
+import { useDeleteFasPixLogo } from "@src/services/register/merchant/merchant/merchantConfig.tsx/deleteFastPixLogo";
 import { useGetMerchantLogos } from "@src/services/register/merchant/merchant/merchantConfig.tsx/getFastPixLogos";
 import { useMerchantConfig } from "@src/services/register/merchant/merchant/merchantConfig.tsx/getMerchantConfig";
 import { useUpdateMerchantConfig } from "@src/services/register/merchant/merchant/merchantConfig.tsx/updateMerchantConfig";
-import { IMerchantConfig } from "@src/services/types/register/merchants/merchantConfig.interface";
+import {
+  IMerchantConfig,
+  IMerchantLogoBody,
+} from "@src/services/types/register/merchants/merchantConfig.interface";
 import { defaultTheme } from "@src/styles/defaultTheme";
 import {
   Avatar,
@@ -23,6 +30,7 @@ import {
   Row,
   Select,
   Switch,
+  Typography,
   Upload,
   UploadFile,
 } from "antd";
@@ -32,6 +40,7 @@ import { CurrencyInput } from "react-currency-mask";
 import { useTranslation } from "react-i18next";
 
 export const MerchantConfigTab = (props: { id?: string }) => {
+  const { theme } = useTheme();
   const formRef = useRef<FormInstance>(null);
   const submitRef = useRef<HTMLButtonElement>(null);
   const [previewOpen, setPreviewOpen] = useState(false);
@@ -47,6 +56,7 @@ export const MerchantConfigTab = (props: { id?: string }) => {
   const [body, setBody] = useState<IMerchantConfig | null | undefined>(
     merchantConfigData?.merchantConfig
   );
+
   const [bodyUpdate, setBodyUpdate] = useState<
     Partial<IMerchantConfig> | null | undefined
   >(null);
@@ -59,6 +69,29 @@ export const MerchantConfigTab = (props: { id?: string }) => {
   const { merchantLogosData, isMerchantLogosFetching } = useGetMerchantLogos(
     props?.id
   );
+
+  const [FastPixLogoBody, setFastPixLogoBody] = useState<IMerchantLogoBody>({
+    merchant_id: Number(props?.id),
+  });
+
+  const [FastPixLogoToDelete, setFastPixLogoToDelete] = useState<
+    string | undefined
+  >(undefined);
+  const [FastPixLogoToActivate, setFastPixLogoToActivate] = useState<
+    string | undefined
+  >(undefined);
+
+  const { DeletePixLogoMutate, DeletePixLogoError, DeletePixLogoIsSuccess } =
+    useDeleteFasPixLogo(FastPixLogoToDelete);
+
+  const { ActivatePixLogoMutate } = useActivateFasPixLogo(
+    FastPixLogoToActivate
+  );
+  const { CreateLogoMutate, CreateLogoError, CreateLogoIsSuccess } =
+    useCreateFastPixLogo({
+      ...FastPixLogoBody,
+      merchant_id: Number(props?.id),
+    });
 
   const handleSubmit = () => {
     UpdateMutate();
@@ -94,6 +127,27 @@ export const MerchantConfigTab = (props: { id?: string }) => {
       file.name || file.url!.substring(file.url!.lastIndexOf("/") + 1)
     );
   };
+
+  useEffect(() => {
+    if (FastPixLogoBody.base64_file) {
+      CreateLogoMutate();
+      setFastPixLogoBody({ merchant_id: Number(props.id) });
+    }
+  }, [FastPixLogoBody]);
+
+  useEffect(() => {
+    if (FastPixLogoToDelete) {
+      DeletePixLogoMutate();
+      setFastPixLogoToDelete(undefined);
+    }
+  }, [FastPixLogoToDelete]);
+
+  useEffect(() => {
+    if (FastPixLogoToActivate) {
+      ActivatePixLogoMutate();
+      setFastPixLogoToActivate(undefined);
+    }
+  }, [FastPixLogoToActivate]);
 
   return (
     <Form
@@ -383,67 +437,80 @@ export const MerchantConfigTab = (props: { id?: string }) => {
         </Row>
 
         {!isMerchantLogosFetching && (
-          <Row style={{ width: "100%" }}>
+          <Row
+            style={{
+              width: "100%",
+              marginTop: -24,
+              padding: 8,
+              borderRadius: 8,
+              marginBottom: 8,
+            }}
+          >
             <Col span={"auto"}>
-              <span>Logos</span>
-            
-                <Upload
-                  listType="picture-card"
-                  onPreview={handlePreview}
-                  {...{
-                    onChange({ file, fileList }) {
-                      if (file.status !== "uploading") {
-                        console.log(file, fileList);
-                      }
-                    },
-                    defaultFileList: isMerchantLogosFetching
-                      ? []
-                      : merchantLogosData?.items?.map((logo) => {
-                          return {
-                            uid: logo?._id ?? "",
-                            name: logo?.file_name ?? "",
-                            url: logo?.file_url ?? "",
-                          };
-                        }),
+              <Typography.Title level={5}>Logos</Typography.Title>
+              <Upload
+                listType="picture-card"
+                onPreview={handlePreview}
+                {...{
+                  beforeUpload: (file) => {
+                    setFastPixLogoBody({ base64_file: "", logo_name: "" });
+                    setFastPixLogoBody((state: any) => ({
+                      ...state,
+                      logo_name: file.name,
+                    }));
+                    const reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = () => {
+                      setFastPixLogoBody((state: any) => ({
+                        ...state,
+                        base64_file: reader.result,
+                      }));
+                    };
+                    return false;
+                  },
+                  defaultFileList: isMerchantLogosFetching
+                    ? []
+                    : merchantLogosData?.items?.map((logo) => {
+                        return {
+                          uid: logo?._id ?? "",
+                          name: logo?.file_name ?? "",
+                          url: logo?.file_url ?? "",
+                        };
+                      }),
 
-                    showUploadList: {
-                      showDownloadIcon: true,
-                      showPreviewIcon: true,
-                      downloadIcon: "Download",
-                      showRemoveIcon: true,
-                      removeIcon: (
-                        <DeleteOutlined
-                          style={{ color: defaultTheme.colors.error }}
-                          onClick={(e) =>
-                            console.log(e, "custom removeIcon event")
-                          }
-                        />
-                      ),
-                      previewIcon: (
-                        <EyeOutlined
-                          style={{ color: "#fff" }}
-                          onClick={(e) =>
-                            console.log(e, "custom removeIcon event")
-                          }
-                        />
-                      ),
-                    },
-                  }}
-                  style={{ width: "100%" }}
-                >
-                  <Button icon={<UploadOutlined />} style={{ height: "100%" }}>
-                    Upload
-                  </Button>
-                </Upload>
+                  showUploadList: {
+                    showDownloadIcon: true,
+                    showPreviewIcon: true,
+                    downloadIcon: "Download",
+                    showRemoveIcon: true,
+                    removeIcon: (file) => (
+                      <DeleteOutlined
+                        style={{ color: defaultTheme.colors.error }}
+                        onClick={() => setFastPixLogoToDelete(file.uid)}
+                      />
+                    ),
+                    previewIcon: <EyeOutlined style={{ color: "#fff" }} />,
+                  },
+                }}
+                style={{ width: "100%" }}
+              >
+                <Button icon={<UploadOutlined />} style={{ height: "100%" }}>
+                  Upload
+                </Button>
+              </Upload>
             </Col>
 
             <Col xs={{ span: 24 }} md={{ span: 24 }}>
               <Form.Item label={t("input.active_logo")}>
                 <Select
+                  loading={isMerchantLogosFetching}
                   style={{ width: "100%" }}
                   value={
                     merchantLogosData?.items?.find((logo) => logo.active)?._id
                   }
+                  onChange={(value) => {
+                    setFastPixLogoToActivate(value);
+                  }}
                   options={merchantLogosData?.items?.map((logo) => {
                     return {
                       label: (
@@ -468,7 +535,14 @@ export const MerchantConfigTab = (props: { id?: string }) => {
           footer={null}
           onCancel={handleCancel}
         >
-          <img alt="example" style={{ width: "100%" }} src={previewImage} />
+          <div
+            style={{
+              backgroundColor: theme === "light" ? "#d1d1d1" : undefined,
+              borderRadius: "8px",
+            }}
+          >
+            <img alt="example" style={{ width: "100%" }} src={previewImage} />
+          </div>
         </Modal>
       </Row>
       <Grid
@@ -514,6 +588,18 @@ export const MerchantConfigTab = (props: { id?: string }) => {
         actionError={t("messages.update")}
         error={UpdateError}
         success={UpdateIsSuccess}
+      />
+      <Toast
+        actionSuccess={t("messages.created")}
+        actionError={t("messages.create")}
+        error={CreateLogoError}
+        success={CreateLogoIsSuccess}
+      />
+      <Toast
+        actionSuccess={t("messages.deleted")}
+        actionError={t("messages.delete")}
+        error={DeletePixLogoError}
+        success={DeletePixLogoIsSuccess}
       />
     </Form>
   );

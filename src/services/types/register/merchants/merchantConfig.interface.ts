@@ -34,3 +34,9 @@ export interface IMerchantLogosResponse {
   page: boolean;
   items: IMerchantLogosItem[];
 }
+
+export interface IMerchantLogoBody {
+  logo_name?: string;
+  merchant_id?: number;
+  base64_file?: string;
+}

@@ -186,13 +186,13 @@ export const MerchantView = () => {
     });
   }
 
-  
-
   return (
     <Grid container style={{ padding: "25px" }}>
-      <Grid item xs={12}>
-        <Tabs items={TotalizersTabs} />
-      </Grid>
+      {!user.merchant_id && (
+        <Grid item xs={12}>
+          <Tabs items={TotalizersTabs} />
+        </Grid>
+      )}
 
       <Grid
         container
