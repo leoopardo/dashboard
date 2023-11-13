@@ -46,6 +46,7 @@ export const Operators = () => {
   const { permissions } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
+  const user = queryClient.getQueryData("validate") as ValidateInterface;
   const isMobile = useMediaQuery({ maxWidth: "950px" });
   const [query, setQuery] = useState<OperatorQuery>(INITIAL_QUERY);
   const { t } = useTranslation();
@@ -131,11 +132,14 @@ export const Operators = () => {
 
   return (
     <Grid container style={{ padding: "25px" }}>
-      <TotalizersCards
-        params={query}
-        loading={isOperatorTotalDataFetching}
-        data={OperatorTotalData || undefined}
-      />
+      {!user.operator_id && (
+        <TotalizersCards
+          params={query}
+          loading={isOperatorTotalDataFetching}
+          data={OperatorTotalData || undefined}
+        />
+      )}
+
       <Grid
         container
         style={{ display: "flex", alignItems: "center" }}

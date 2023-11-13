@@ -102,15 +102,6 @@ export const UpdateUserModal = ({
   }, [responseValidate]);
 
   useEffect(() => {
-    if (isSuccess) {
-      setOpen(false);
-      reset();
-    }
-  }, [isSuccess]);
-
-  console.log(error);
-
-  useEffect(() => {
     if (currentUser && action === "update")
       setBody((state) => ({
         ...state,
@@ -141,9 +132,18 @@ export const UpdateUserModal = ({
 
   useEffect(() => {
     if (isSuccess) {
+      reset();
       setOpen(false);
+      formRef.current?.resetFields();
     }
   }, [isSuccess]);
+  
+  useEffect(() => {
+    if (error) {
+      setBody({});
+      formRef.current?.resetFields();
+    }
+  }, [error]);
 
   return (
     <Drawer

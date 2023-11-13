@@ -34,8 +34,10 @@ import { AggregatorTransfersBetweenAccounts } from "./Pages/moviments/aggregator
 import { AggregatorTransferBetweenAccountsReports } from "./Pages/moviments/aggregator/reports/betweenAccounts";
 import { TransfersBetweenAccounts } from "./Pages/moviments/merchants/betweenAccounts";
 import { MerchantManual } from "./Pages/moviments/merchants/manual";
+import { MerchantPreManual } from "./Pages/moviments/merchants/preOperations";
 import { TransferBetweenAccountsReports } from "./Pages/moviments/merchants/reports/betweenAccounts";
 import { MerchantManualReports } from "./Pages/moviments/merchants/reports/manual";
+import { MerchantPreManualReports } from "./Pages/moviments/merchants/reports/preOperations";
 import { TransferBetweenMerchants } from "./Pages/moviments/merchantsTransfers";
 import { OrganizationTransfersBetweenAccounts } from "./Pages/moviments/organization/betweenAccounts";
 import { OrgonizationManual } from "./Pages/moviments/organization/manual";
@@ -101,8 +103,6 @@ import { BankBlackistReports } from "./Pages/support/blacklists/reports/bankBlac
 import { ThirdPartKeyBlacklist } from "./Pages/support/blacklists/thirdPartKey";
 import { ImportContastationDeposit } from "./Pages/support/contastation/importCSV";
 import { ContestationUploads } from "./Pages/support/contastation/uploads";
-import { MerchantPreManual } from "./Pages/moviments/merchants/preOperations";
-import { MerchantPreManualReports } from "./Pages/moviments/merchants/reports/preOperations";
 import { Permission } from "./permission";
 import { Redirect } from "./redirect";
 
@@ -1327,7 +1327,7 @@ export const PrivateRoutes = () => {
                 </Permission>
               }
             />
-             <Route
+            <Route
               path="merchant_pre_manual_moviments"
               element={
                 <Permission

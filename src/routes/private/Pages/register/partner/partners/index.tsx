@@ -49,6 +49,7 @@ export const Partners = () => {
   const { permissions } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
+  const user = queryClient.getQueryData("validate") as ValidateInterface;
   const navigate = useNavigate();
   const [query, setQuery] = useState<PartnerQuery>(INITIAL_QUERY);
   const { t } = useTranslation();
@@ -145,18 +146,25 @@ export const Partners = () => {
           </Button>
         </Tooltip>
       </Grid>
-      <Grid item xs={12} ref={ref}>
-        <TotalizersCards
-          params={query}
-          loading={isPartnersTotalsDataFetching}
-          data={PartnersTotalsData || undefined}
-        />
-      </Grid>
+      {!user.partner_id && (
+        <Grid item xs={12} ref={ref}>
+          <TotalizersCards
+            params={query}
+            loading={isPartnersTotalsDataFetching}
+            data={PartnersTotalsData || undefined}
+          />
+        </Grid>
+      )}
 
       <Grid
         container
         style={{ display: "flex", alignItems: "center" }}
         spacing={1}
+        mt={
+          user.partner_id
+            ?  "-40px"
+            : undefined
+        }
       >
         <Grid item xs={12} md={4} lg={2}>
           <Button

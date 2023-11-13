@@ -124,9 +124,25 @@ export const NewUserModal = ({
 
   useEffect(() => {
     if (isSuccess) {
+      reset();
       setOpen(false);
+      formRef.current?.resetFields();
     }
   }, [isSuccess]);
+  
+  useEffect(() => {
+    if (error) {
+      setBody({
+        name: "",
+        username: "",
+        group_id: 0,
+        status: true,
+        type: 2,
+        cellphone: "",
+      });
+      formRef.current?.resetFields();
+    }
+  }, [error]);
 
   return (
     <Drawer

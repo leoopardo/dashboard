@@ -75,7 +75,7 @@ export const NewUserModal = ({
 
   const { updateLoading } = useUpdateOperatorUser(body);
 
-  const { isLoading, isSuccess } = useCreateOperatorUser(body);
+  const { isLoading, isSuccess, error, reset } = useCreateOperatorUser(body);
 
   function handleChangeUserBody(event: any) {
     setBody((state) => ({ ...state, [event.target.name]: event.target.value }));
@@ -126,11 +126,21 @@ export const NewUserModal = ({
     }
   }, [action]);
 
+  
   useEffect(() => {
     if (isSuccess) {
+      reset();
       setOpen(false);
+      formRef.current?.resetFields();
     }
   }, [isSuccess]);
+  
+  useEffect(() => {
+    if (error) {
+      setBody({});
+      formRef.current?.resetFields();
+    }
+  }, [error]);
 
   return (
     <Drawer
