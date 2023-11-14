@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useListMerchantById } from "@src/services/merchant/getListMerchantById";
 import useDebounce from "@src/utils/useDebounce";
 import { Select } from "antd";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
@@ -24,21 +25,29 @@ export const MerchantSelect = ({
   });
   const { merchantsData, refetcMerchant, isMerchantFetching } =
     useListMerchants(query);
+  const { merchant } = useListMerchantById({
+    page: 1,
+    limit: 200,
+    merchant_id: queryOptions.merchant_id ?? undefined,
+  });
   const [value, setValue] = useState<any>(null);
   const debounceSearch = useDebounce(query.name);
+  const [options, setOptions] = useState<any | undefined>();
   useEffect(() => {
-    if (!queryOptions.merchant_id) {
+    if (!queryOptions?.merchant_id) {
       setValue(undefined);
-    }
-    if (!value) {
-      const initial = merchantsData?.items.find(
-        (merchant) => merchant.id === (queryOptions?.merchant_id || queryOptions?.merchant?.id)
-      );
-      if (initial) {
-        setValue(initial?.name);
+      if (merchantsData) {
+        setOptions([...merchantsData.items]);
       }
     }
-  }, [merchantsData, queryOptions]);
+    if (!value && queryOptions.merchant_id) {
+      if (merchant && merchantsData) {
+        setOptions([...merchantsData.items, merchant]);
+      }
+
+      setValue(merchant?.id);
+    }
+  }, [merchantsData, merchant, queryOptions]);
 
   useEffect(() => {
     setQuery((state) => ({
@@ -94,12 +103,16 @@ export const MerchantSelect = ({
           )?.name
         );
       }}
-      options={merchantsData?.items.map((merch) => {
-        return {
-          label: merch.name,
-          value: merch.id,
-        };
-      })}
+      options={
+        options
+          ? options?.map((merch: any) => {
+              return {
+                label: merch.name,
+                value: merch.id,
+              };
+            })
+          : []
+      }
       filterOption={(input, option) => {
         return (
           `${option?.label}`?.toLowerCase()?.indexOf(input?.toLowerCase()) >= 0

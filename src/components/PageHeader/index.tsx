@@ -264,6 +264,7 @@ export const PageHeader = () => {
           menu={{ items: userItems }}
           arrow
           placement="bottomRight"
+          onOpenChange={() => refetchSelf()}
           dropdownRender={(menu) => (
             <div style={contentStyle}>
               <div
@@ -306,16 +307,45 @@ export const PageHeader = () => {
                   {t("table.last_signin_date")}:{" "}
                   {`${new Date(
                     `${responseValidate?.last_signin_date}`
-                  ).toLocaleDateString("pt-BR", {
-                    timeZone: "UTC",
-                  })} ${new Date(
+                  ).toLocaleDateString()} ${new Date(
                     `${responseValidate?.last_signin_date}`
-                  ).toLocaleTimeString("pt-BR", { timeZone: "UTC" })}`}
+                  ).toLocaleTimeString()}`}
                 </div>
               </div>
               {React.cloneElement(menu as React.ReactElement, {
                 style: menuStyle,
               })}
+              <div style={{ padding: 5 }}>
+                <Radio.Group
+                  defaultValue={theme}
+                  buttonStyle="solid"
+                  value={theme}
+                  onChange={(e) => setTheme(e.target.value)}
+                >
+                  <Radio.Button value="light">
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
+                      {t("buttons.light")}{" "}
+                      <LightModeIcon style={{ marginLeft: 8 }} />
+                    </div>
+                  </Radio.Button>
+                  <Radio.Button value="dark">
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
+                      {t("buttons.dark")}{" "}
+                      <DarkModeIcon style={{ marginLeft: 8 }} />{" "}
+                    </div>
+                  </Radio.Button>
+                </Radio.Group>
+              </div>
             </div>
           )}
         >

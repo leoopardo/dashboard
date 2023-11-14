@@ -1,5 +1,6 @@
 {
   "menus": {
+    "login": "",
     "consult": "Consultas",
     "organization": "Organização",
     "register": "Cadastro",
