@@ -871,7 +871,8 @@
     "unassigned": "Unassigned",
     "access_key": "Access key",
     "access_secret": "Access secret",
-    "merchant_blacklist": "Merchants blacklist"
+    "merchant_blacklist": "Merchants blacklist",
+    "international": "International"
   },
   "actions": {
     "details": "Details",
