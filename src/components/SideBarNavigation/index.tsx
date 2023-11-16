@@ -64,6 +64,7 @@ export const SidebarNavigation = () => {
 
   function handleNavigate(pathArray: string[]) {
     navigate(pathArray.reverse().join("/"));
+    handleChangeSidebar(false)
   }
 
   function getItem(
