@@ -11,7 +11,6 @@ import { TuorComponent } from "@src/components/Tuor";
 import { useErrorContext } from "@src/contexts/ErrorContext";
 import { useListBanks } from "@src/services/bank/listBanks";
 import { useGetMerchantBankStatementTotals } from "@src/services/consult/merchant/bankStatement/getTotals";
-import { useGetBankBalance } from "@src/services/consult/organization/bankBalance/getBankBalance";
 import { queryClient } from "@src/services/queryClient";
 import { MerchantBankStatementTotalsQuery } from "@src/services/types/consult/merchant/bankStatement";
 import { ValidateInterface } from "@src/services/types/validate.interface";
@@ -70,7 +69,6 @@ export const Dashboard = () => {
     limit: 200,
     page: 1,
   });
-  const { OrganizationBankBalance } = useGetBankBalance({});
   const [activeKey, setActiveKey] = useState<string>(
     permissions?.report?.paybrokers?.balance?.report_paybrokers_balance_list
       ? "1"
@@ -118,7 +116,7 @@ export const Dashboard = () => {
             ?.report_paybrokers_balance_list ||
           permissions?.report?.merchant?.balance?.report_merchant_balance_list
             ? "translateY(17px)"
-            : "translateY(0px)",
+            : "translateY(-17px)",
       }}
     >
       {(permissions?.report?.paybrokers?.balance
@@ -154,14 +152,14 @@ export const Dashboard = () => {
       <Col
         span={24}
         style={{
-          marginTop: permissions?.report?.paybrokers?.balance
-            ?.report_paybrokers_balance_list
-            ? 40
-            : 0,
-          padding: permissions?.report?.paybrokers?.balance
-            ?.report_paybrokers_balance_list
-            ? 15
-            : 0,
+          marginTop:
+            permissions?.report?.merchant?.balance
+              ?.report_merchant_balance_list ||
+            permissions?.report?.paybrokers?.balance
+              ?.report_paybrokers_balance_list
+              ? 40
+              : 0,
+          padding: 15,
         }}
       >
         {permissions?.report?.paybrokers?.bank_balance?.menu && (
@@ -247,27 +245,30 @@ export const Dashboard = () => {
                         spaceBetween: 8,
                       },
                       1024: {
-                        slidesPerView: 6,
+                        slidesPerView: 5,
                         spaceBetween: 8,
                       },
                       1400: {
+                        slidesPerView: 6,
+                        spaceBetween: 8,
+                      },
+                      1700: {
                         slidesPerView: 7,
                         spaceBetween: 8,
-                      }
+                      },
+                      2000: {
+                        slidesPerView: 8,
+                        spaceBetween: 8,
+                      },
                     }}
                   >
-                    {(OrganizationBankBalance as any)?.banks.map(
-                      (bank: any) => (
-                        <SwiperSlide key={bank.name}>
-                          <BankCard
-                            bank={bankListData?.itens.find(
-                              (b) => b.bank === bank.name
-                            )}
-                            key={bank.id}
-                          />
+                    {bankListData?.itens
+                      .filter((b) => b.status === true)
+                      .map((bank: any) => (
+                        <SwiperSlide key={bank?.id}>
+                          <BankCard bank={bank} key={bank.id} />
                         </SwiperSlide>
-                      )
-                    )}
+                      ))}
                   </Swiper>
                 </Col>
               )}
