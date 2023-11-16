@@ -24,7 +24,7 @@ import secureLocalStorage from "react-secure-storage";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import { Autoplay, Navigation, Pagination, Virtual } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { TabsTable } from "./components/TabsTable";
 import { BankCard } from "./components/bankCard";
@@ -70,7 +70,6 @@ export const Dashboard = () => {
     limit: 200,
     page: 1,
   });
-  const { OrganizationBankBalance } = useGetBankBalance({});
   const [activeKey, setActiveKey] = useState<string>(
     permissions?.report?.paybrokers?.balance?.report_paybrokers_balance_list
       ? "1"
@@ -223,6 +222,7 @@ export const Dashboard = () => {
                     pagination={{
                       clickable: true,
                     }}
+                  
                     navigation={true}
                     modules={[Autoplay, Pagination, Navigation]}
                     className="mySwiper"
@@ -247,22 +247,28 @@ export const Dashboard = () => {
                         spaceBetween: 8,
                       },
                       1024: {
-                        slidesPerView: 6,
+                        slidesPerView: 5,
                         spaceBetween: 8,
                       },
                       1400: {
+                        slidesPerView: 6,
+                        spaceBetween: 8,
+                      },
+                      1700: {
                         slidesPerView: 7,
                         spaceBetween: 8,
-                      }
+                      },
+                      2000: {
+                        slidesPerView: 8,
+                        spaceBetween: 8,
+                      },
                     }}
                   >
-                    {(OrganizationBankBalance as any)?.banks.map(
+                    {bankListData?.itens.filter((b) => b.status === true).map(
                       (bank: any) => (
-                        <SwiperSlide key={bank.name}>
+                        <SwiperSlide key={bank?.id} >
                           <BankCard
-                            bank={bankListData?.itens.find(
-                              (b) => b.bank === bank.name
-                            )}
+                            bank={bank}
                             key={bank.id}
                           />
                         </SwiperSlide>
