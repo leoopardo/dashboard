@@ -1017,7 +1017,7 @@ export const SidebarNavigation = () => {
               {
                 display:
                   permissions?.transactions?.merchant?.manual_transactions
-                    ?.menu && type !== 3
+                    ?.menu
                     ? undefined
                     : "none",
               }

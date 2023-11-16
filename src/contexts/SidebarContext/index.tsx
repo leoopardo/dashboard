@@ -10,7 +10,7 @@ interface SideMenuContext {
 const SideMenuContext = createContext<SideMenuContext>({} as SideMenuContext);
 
 export const MenuProvider = ({ children }: any) => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true);
 
   function handleChangeSidebar(open: boolean) {
     setIsSidebarOpen(open);
