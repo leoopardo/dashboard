@@ -3,6 +3,7 @@
 import {
   EyeFilled,
   FileAddOutlined,
+  FilterOutlined,
   SendOutlined,
   SettingFilled,
 } from "@ant-design/icons";
@@ -157,6 +158,7 @@ export const GeneratedWithdrawals = () => {
             loading={isWithdrawalsRowsFetching || isWithdrawalsTotalFetching}
             type="primary"
             onClick={() => setIsFiltersOpen(true)}
+            icon={<FilterOutlined />}
           >
             {t("table.filters")}
           </Button>
@@ -256,8 +258,8 @@ export const GeneratedWithdrawals = () => {
               justifyContent: "center",
               width: "100%",
             }}
+            icon={<FilterAltOffOutlinedIcon />}
           >
-            <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
             {t("table.clear_filters")}
           </Button>
         </Grid>
@@ -277,6 +279,7 @@ export const GeneratedWithdrawals = () => {
                 justifyContent: "center",
                 width: "100%",
               }}
+              icon={<SendOutlined />}
             >
               {t("modal.resend_webhook")}
             </Button>
@@ -303,8 +306,9 @@ export const GeneratedWithdrawals = () => {
                 size="large"
                 loading={isWithdrawalsRowsFetching}
                 disabled={!witrawalsRows?.items.length || witrawalsRowsError}
+                icon={<FileAddOutlined style={{ fontSize: 22 }} />}
               >
-                <FileAddOutlined style={{ fontSize: 22 }} /> CSV
+                CSV
               </Button>
             </Tooltip>
           </Grid>
@@ -390,7 +394,7 @@ export const GeneratedWithdrawals = () => {
           id={currentItem?._id}
         />
       )}
-    
+
       {isFiltersOpen && (
         <FiltersModal
           maxRange
@@ -441,7 +445,7 @@ export const GeneratedWithdrawals = () => {
           initialQuery={INITIAL_QUERY}
         />
       )}
-        {isWebhookModalOpen && (
+      {isWebhookModalOpen && (
         <WebhookModal
           open={isWebhookModalOpen}
           setOpen={setIsWebhookModalOpen}

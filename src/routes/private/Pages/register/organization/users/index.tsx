@@ -4,6 +4,7 @@ import {
   EditOutlined,
   EyeFilled,
   FileAddOutlined,
+  FilterOutlined,
   InfoCircleOutlined,
   UserAddOutlined,
 } from "@ant-design/icons";
@@ -116,6 +117,7 @@ export const OrganizationUser = () => {
             loading={isUsersDataFetching}
             type="primary"
             onClick={() => setIsFiltersOpen(true)}
+            icon={<FilterOutlined />}
           >
             {t("table.filters")}
           </Button>
@@ -165,8 +167,8 @@ export const OrganizationUser = () => {
               alignItems: "center",
               justifyContent: "center",
             }}
+            icon={<FilterAltOffOutlinedIcon />}
           >
-            <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
             {t("table.clear_filters")}
           </Button>
         </Grid>
@@ -187,8 +189,8 @@ export const OrganizationUser = () => {
                 alignItems: "center",
                 justifyContent: "center",
               }}
+              icon={<UserAddOutlined style={{ fontSize: 22 }} />}
             >
-              <UserAddOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
               {`${t("buttons.create")} ${t("buttons.new_user")}`}
             </Button>
           </Grid>
@@ -212,8 +214,9 @@ export const OrganizationUser = () => {
                 size="large"
                 loading={isUsersDataFetching}
                 disabled={UsersData?.total === 0 || UsersDataError}
+                icon={<FileAddOutlined style={{ fontSize: 22 }} />}
               >
-                <FileAddOutlined style={{ fontSize: 22 }} /> CSV
+                CSV
               </Button>
             </Tooltip>
           </Grid>

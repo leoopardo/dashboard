@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
   DeleteOutlined,
+  FilterOutlined,
   InfoCircleOutlined,
   PlusOutlined,
 } from "@ant-design/icons";
@@ -133,6 +134,7 @@ export const AggregatorSelfExclusion = () => {
             loading={isSelfExclusionDataFetching}
             type="primary"
             onClick={() => setIsFiltersOpen(true)}
+            icon={<FilterOutlined />}
           >
             {t("table.filters")}
           </Button>
@@ -160,8 +162,8 @@ export const AggregatorSelfExclusion = () => {
               loading={isSelfExclusionDataFetching}
               type="default"
               onClick={() => setIsCreateSelfExclusionOpen(true)}
+              icon={<PlusOutlined style={{ fontSize: 20 }} />}
             >
-              <PlusOutlined style={{ fontSize: 20 }} />{" "}
               {t("buttons.create_self_exclusion")}
             </Button>
           </Grid>

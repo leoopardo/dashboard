@@ -194,7 +194,7 @@ export const MerchantHistory = () => {
           </Grid>
         )}
 
-        <Grid item xs={12} md={4} lg={6}>
+        <Grid item xs={12} md={4} lg={7}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
@@ -214,16 +214,15 @@ export const MerchantHistory = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={2} lg={2}>
+        <Grid item xs={12} md={1}>
           <Button
             style={{ width: "100%" }}
             size="large"
-            type="primary"
+            type="link"
             loading={isMerchantHistoryFetching}
             onClickCapture={() => refetchMerchantHistory()}
-          >
-            <ReloadOutlined /> {t("buttons.refresh")}
-          </Button>
+            icon={<ReloadOutlined />}
+          ></Button>
         </Grid>
       </Grid>
 

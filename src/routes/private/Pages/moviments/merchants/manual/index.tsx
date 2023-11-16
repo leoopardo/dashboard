@@ -1,6 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
+import {
+  ArrowDownOutlined,
+  ArrowUpOutlined,
+  FilterOutlined,
+} from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { CustomTable } from "@src/components/CustomTable";
@@ -227,6 +231,7 @@ export const MerchantManual = () => {
               loading={isMerchantMovimentsDataFetching}
               type="primary"
               onClick={() => setIsFiltersOpen(true)}
+              icon={<FilterOutlined />}
             >
               {t("table.filters")}
             </Button>
@@ -251,7 +256,7 @@ export const MerchantManual = () => {
           style={{
             display: "flex",
             alignItems: "center",
-            justifyContent: "flex-end"
+            justifyContent: "flex-end",
           }}
         >
           <Grid item xs={12} md={6} lg={6}>
@@ -269,8 +274,8 @@ export const MerchantManual = () => {
                 alignItems: "center",
                 justifyContent: "center",
               }}
+              icon={<FilterAltOffOutlinedIcon />}
             >
-              <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
               {t("table.clear_filters")}
             </Button>
           </Grid>

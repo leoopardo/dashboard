@@ -18,11 +18,11 @@ export const OrganizationBankBalance = () => {
       <Col span={24} style={{ display: "flex", flexDirection: "row-reverse" }}>
         <Button
           shape="circle"
+          type="link"
           loading={isBankListFetching}
           onClick={() => queryClient.invalidateQueries()}
-        >
-          {!isBankListFetching && <ReloadOutlined />}
-        </Button>
+          icon={<ReloadOutlined />}
+        ></Button>
       </Col>
       {bankListData?.itens.map((bank) => (
         <BankCard bank={bank} />

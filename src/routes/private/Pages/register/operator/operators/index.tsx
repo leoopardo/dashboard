@@ -4,7 +4,8 @@ import {
   EditOutlined,
   EyeFilled,
   FileAddOutlined,
-  UserAddOutlined,
+  FilterOutlined,
+  PlusOutlined,
 } from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
@@ -153,6 +154,7 @@ export const Operators = () => {
             loading={isOperatorDataFetching}
             type="primary"
             onClick={() => setIsFiltersOpen(true)}
+            icon={<FilterOutlined />}
           >
             {t("table.filters")}
           </Button>
@@ -186,8 +188,8 @@ export const Operators = () => {
               alignItems: "center",
               justifyContent: "center",
             }}
+            icon={<FilterAltOffOutlinedIcon />}
           >
-            <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
             {t("table.clear_filters")}
           </Button>
         </Grid>
@@ -206,8 +208,8 @@ export const Operators = () => {
                 alignItems: "center",
                 justifyContent: "center",
               }}
+              icon={<PlusOutlined style={{ fontSize: 20 }} />}
             >
-              <UserAddOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
               {`${t("buttons.create")} ${t("buttons.new_operator")}`}
             </Button>
           </Grid>
@@ -231,8 +233,9 @@ export const Operators = () => {
                 size="large"
                 loading={isOperatorDataFetching}
                 disabled={OperatorData?.total === 0 || OperatorDataError}
+                icon={<FileAddOutlined style={{ fontSize: 22 }} />}
               >
-                <FileAddOutlined style={{ fontSize: 22 }} /> CSV
+                CSV
               </Button>
             </Tooltip>
           </Grid>

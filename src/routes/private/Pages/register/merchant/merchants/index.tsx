@@ -5,8 +5,9 @@ import {
   EditOutlined,
   EyeFilled,
   FileAddOutlined,
-  ToolOutlined,
-  UserAddOutlined,
+  FilterOutlined,
+  PlusOutlined,
+  ToolOutlined
 } from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
@@ -21,6 +22,7 @@ import {
   MerchantsItem,
   MerchantsQuery,
 } from "@services/types/register/merchants/merchantsRegister.interface";
+import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
 import { queryClient } from "@src/services/queryClient";
 import { useCreateMerchant } from "@src/services/register/merchant/merchant/createMerchant";
 import { useGetMerchantsTotals } from "@src/services/register/merchant/merchant/getMerchantsTotals";
@@ -33,10 +35,9 @@ import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import { useNavigate } from "react-router-dom";
 import { ViewMerchantModal } from "./components/ViewMerchantModal";
+import { TotalizerPerBanks } from "./components/totalizerPerBank";
 import { TotalizersCards } from "./components/totalizersCards";
 import { UpdateBanks } from "./components/updatebanks";
-import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
-import { TotalizerPerBanks } from "./components/totalizerPerBank";
 
 const INITIAL_QUERY: MerchantsQuery = {
   limit: 25,
@@ -216,6 +217,7 @@ export const MerchantView = () => {
             loading={isMerchantDataFetching}
             type="primary"
             onClick={() => setIsFiltersOpen(true)}
+            icon={<FilterOutlined />}
           >
             {t("table.filters")}
           </Button>
@@ -261,8 +263,8 @@ export const MerchantView = () => {
               alignItems: "center",
               justifyContent: "center",
             }}
+            icon={<FilterAltOffOutlinedIcon />}
           >
-            <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
             {t("table.clear_filters")}
           </Button>
         </Grid>
@@ -281,8 +283,8 @@ export const MerchantView = () => {
                 alignItems: "center",
                 justifyContent: "center",
               }}
+              icon={<BankOutlined style={{ fontSize: 22 }} />}
             >
-              <BankOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
               {`${t("buttons.update")} ${t("table.bank")}`}
             </Button>
           </Grid>
@@ -303,15 +305,15 @@ export const MerchantView = () => {
                 alignItems: "center",
                 justifyContent: "center",
               }}
+              icon={<PlusOutlined style={{ fontSize: 22 }} />}
             >
-              <UserAddOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
               {`${t("buttons.create")} ${t("table.merchant")}`}
             </Button>
           </Grid>
         )}
 
         {permissions.register.merchant.merchant.merchant_export_csv && (
-          <Grid item xs={12} md={3} lg={2}>
+          <Grid item xs={12} md={"auto"}>
             <Tooltip
               placement="topRight"
               title={
@@ -329,8 +331,9 @@ export const MerchantView = () => {
                 size="large"
                 loading={isMerchantDataFetching}
                 disabled={MerchantData?.total === 0 || MerchantDataError}
+                icon={<FileAddOutlined style={{ fontSize: 22 }} />}
               >
-                <FileAddOutlined style={{ fontSize: 22 }} /> CSV
+                CSV
               </Button>
             </Tooltip>
           </Grid>

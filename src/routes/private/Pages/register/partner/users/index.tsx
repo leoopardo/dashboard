@@ -1,6 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { EditOutlined, EyeFilled, FileAddOutlined, UserAddOutlined } from "@ant-design/icons";
+import {
+  EditOutlined,
+  EyeFilled,
+  FileAddOutlined,
+  FilterOutlined,
+  UserAddOutlined,
+} from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
@@ -8,20 +14,20 @@ import { ValidateToken } from "@components/ValidateToken";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { Search } from "@src/components/Inputs/search";
+import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
 import { Toast } from "@src/components/Toast";
 import { queryClient } from "@src/services/queryClient";
 import { useGetPartnerUsers } from "@src/services/register/partner/users/getPartnerUsers";
 import { useUpdatePartnerUser } from "@src/services/register/partner/users/updateUser";
 import { useCreatePartnerUserReports } from "@src/services/reports/register/partner/createUserReports";
+import { useGetPartnerUsersReportFields } from "@src/services/reports/register/partner/getPartnerUsersReportFields";
 import { PartnerQuery } from "@src/services/types/register/partners/partners.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
 import { Button, Tooltip } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { NewUserInterface, NewUserModal } from "./components/newUserModal";
-import { useGetPartnerUsersReportFields } from "@src/services/reports/register/partner/getPartnerUsersReportFields";
-import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
 
 const INITIAL_QUERY: PartnerQuery = {
   limit: 25,
@@ -56,8 +62,8 @@ export const PartnerUsers = () => {
       validation_token: tokenState,
     });
 
-    const [csvFields, setCsvFields] = useState<any>();
-    const [comma, setIsComma] = useState<boolean>(false);
+  const [csvFields, setCsvFields] = useState<any>();
+  const [comma, setIsComma] = useState<boolean>(false);
   const {
     PartnerReportsError,
     PartnerReportsIsLoading,
@@ -118,6 +124,7 @@ export const PartnerUsers = () => {
             loading={isUsersDataFetching}
             type="primary"
             onClick={() => setIsFiltersOpen(true)}
+            icon={<FilterOutlined />}
           >
             {t("table.filters")}
           </Button>
@@ -151,8 +158,8 @@ export const PartnerUsers = () => {
               alignItems: "center",
               justifyContent: "center",
             }}
+            icon={<FilterAltOffOutlinedIcon />}
           >
-            <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
             {t("table.clear_filters")}
           </Button>
         </Grid>
@@ -173,8 +180,8 @@ export const PartnerUsers = () => {
                 alignItems: "center",
                 justifyContent: "center",
               }}
+              icon={<UserAddOutlined style={{ fontSize: 22 }} />}
             >
-              <UserAddOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
               {`${t("buttons.create")} ${t("buttons.new_user")}`}
             </Button>
           </Grid>
@@ -182,7 +189,7 @@ export const PartnerUsers = () => {
 
         {permissions.register.partner.users.partner_user_export_csv && (
           <Grid item xs={12} md="auto">
-           <Tooltip
+            <Tooltip
               placement="topRight"
               title={
                 UsersData?.total === 0 || UsersDataError
@@ -199,8 +206,9 @@ export const PartnerUsers = () => {
                 size="large"
                 loading={isUsersDataFetching}
                 disabled={UsersData?.total === 0 || UsersDataError}
+                icon={<FileAddOutlined style={{ fontSize: 22 }} />}
               >
-                <FileAddOutlined style={{ fontSize: 22 }} /> CSV
+                CSV
               </Button>
             </Tooltip>
           </Grid>
@@ -300,7 +308,7 @@ export const PartnerUsers = () => {
           setOpen={setIsViewModalOpen}
         />
       )}
-<ExportCustomReportsModal
+      <ExportCustomReportsModal
         open={isExportReportsOpen}
         setOpen={setIsExportReportsOpen}
         disabled={UsersData?.total === 0 || UsersDataError}

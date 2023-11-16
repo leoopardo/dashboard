@@ -85,8 +85,9 @@ export const ExportReportsModal = ({
           shape="round"
           onClick={() => setOpen(true)}
           loading={loading}
+          icon={<FileAddOutlined style={{ fontSize: 22 }} />}
         >
-          {!loading && <FileAddOutlined style={{ fontSize: 22 }} />} CSV
+          CSV
         </Button>
       </Tooltip>
     </Popconfirm>

@@ -2,8 +2,9 @@
 import {
   EditOutlined,
   EyeFilled,
+  FilterOutlined,
   InfoCircleOutlined,
-  UserAddOutlined,
+  PlusOutlined,
 } from "@ant-design/icons";
 import { CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
@@ -124,6 +125,7 @@ export const OrganizationCategories = () => {
             loading={isCategoriesDataFetching}
             type="primary"
             onClick={() => setIsFiltersOpen(true)}
+            icon={<FilterOutlined />}
           >
             {t("table.filters")}
           </Button>
@@ -146,9 +148,8 @@ export const OrganizationCategories = () => {
             <Button
               type="link"
               onClick={() => setIsTuorOpen((state) => !state)}
-            >
-              <InfoCircleOutlined />
-            </Button>
+              icon={<InfoCircleOutlined />}
+            ></Button>
           </Tooltip>
         </Grid>
       </Grid>
@@ -173,8 +174,8 @@ export const OrganizationCategories = () => {
               alignItems: "center",
               justifyContent: "center",
             }}
+            icon={<FilterAltOffOutlinedIcon />}
           >
-            <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
             {t("table.clear_filters")}
           </Button>
         </Grid>
@@ -195,8 +196,8 @@ export const OrganizationCategories = () => {
                 alignItems: "center",
                 justifyContent: "center",
               }}
+              icon={<PlusOutlined style={{ fontSize: "20px" }} />}
             >
-              <UserAddOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
               {`${t("buttons.create")} ${t("buttons.new_categorie")}`}
             </Button>
           </Grid>
@@ -215,7 +216,6 @@ export const OrganizationCategories = () => {
             />
           </Grid>
         )}
-
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>

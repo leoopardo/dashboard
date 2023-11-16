@@ -100,8 +100,8 @@ export const PersonBlacklistReasons = () => {
               alignItems: "center",
               justifyContent: "center",
             }}
+            icon={<FilterAltOffOutlinedIcon />}
           >
-            <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
             {t("table.clear_filters")}
           </Button>
         </Grid>
@@ -117,8 +117,8 @@ export const PersonBlacklistReasons = () => {
               alignItems: "center",
               justifyContent: "center",
             }}
+            icon={<PlusOutlined style={{  fontSize: 22 }} />}
           >
-            <PlusOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
             {t("buttons.new_reason")}
           </Button>
         </Grid>
