@@ -875,7 +875,9 @@
     "pix_type": "Tipo de pix",
     "standard": "Regular",
     "unassigned": "Não atribuido",
-    "required_date": "Data de solicitação"
+    "required_date": "Data de solicitação",
+    "access_key": "Chave de acesso",
+    "access_secret": "Chave de acesso secreta"
   },
   "actions": {
     "details": "Detalhes",

@@ -20,6 +20,7 @@ export function useGetCredentialsConfig(params: CredentialQuery) {
         refetchInterval: false,
         refetchIntervalInBackground: false,
         refetchOnMount: false,
+        refetchOnWindowFocus: false,
       }
     );
 

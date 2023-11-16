@@ -867,7 +867,9 @@
     "row": "Row",
     "pix_type": "Tipo de pix",
     "standard": "Standard",
-    "unassigned": "Unassigned"
+    "unassigned": "Unassigned",
+    "access_key": "Access key",
+    "access_secret": "Access secret"
   },
   "actions": {
     "details": "Details",
