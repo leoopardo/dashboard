@@ -869,6 +869,8 @@
     "pix_type": "Tipo de pix",
     "standard": "Standard",
     "unassigned": "Unassigned",
+    "access_key": "Access key",
+    "access_secret": "Access secret",
     "merchant_blacklist": "Merchants blacklist"
   },
   "actions": {

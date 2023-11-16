@@ -1814,7 +1814,7 @@ export const SidebarNavigation = () => {
 
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
-    handleChangeSidebar(collapsed);
+    handleChangeSidebar(!collapsed);
   };
 
   return (

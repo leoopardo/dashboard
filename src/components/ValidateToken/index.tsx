@@ -143,6 +143,7 @@ export const ValidateToken = ({
         })
       );
     }
+
   }, [success, error, ValidatePhoneSuccess, ValidatePhoneError]);
 
   return Self?.phone_validated ? (

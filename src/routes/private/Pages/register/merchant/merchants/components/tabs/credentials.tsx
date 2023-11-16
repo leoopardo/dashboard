@@ -58,13 +58,12 @@ export const CredentialConfigTab = (props: { id?: string }) => {
     isShowCredentialConfigFetching,
     showCredentialConfigData,
     showCredentialConfigError,
-    isSuccess,
+    showCredentialConfigisSuccess,
     refetchShowCredentialConfigData,
   } = useShowCredentialsConfig({
     api_credential_id: currentItem?.id,
     validation_token: tokenState,
   });
-
   const { UpdateError, UpdateIsLoading, UpdateIsSuccess, UpdateMutate } =
     useUpdateCredentialConfig({
       api_credential_id: currentItem?.id,
@@ -268,12 +267,10 @@ export const CredentialConfigTab = (props: { id?: string }) => {
           setIsOpen={setIsGetValidateTokenOpen}
           action="API_CREDENTIAL_GET"
           setTokenState={setTokenState}
-          success={isSuccess}
+          success={showCredentialConfigisSuccess}
           tokenState={tokenState}
           error={showCredentialConfigError}
-          submit={() => {
-            refetchShowCredentialConfigData();
-          }}
+          submit={() => refetchShowCredentialConfigData()}
         />
       )}
     </Grid>

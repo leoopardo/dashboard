@@ -877,6 +877,8 @@
     "standard": "Regular",
     "unassigned": "Não atribuido",
     "required_date": "Data de solicitação",
+    "access_key": "Chave de acesso",
+    "access_secret": "Chave de acesso secreta",
     "merchant_blacklist": "Blacklist de empresa"
   },
   "actions": {
