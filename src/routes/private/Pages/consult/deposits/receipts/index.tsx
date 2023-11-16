@@ -1,5 +1,7 @@
+/* eslint-disable no-constant-condition */
 import { Toast } from "@src/components/Toast";
 import { useGetReceipts } from "@src/services/consult/deposits/receipts/useGetRecepts";
+import { defaultTheme } from "@src/styles/defaultTheme";
 import {
   Col,
   Descriptions,
@@ -38,7 +40,10 @@ export const DepositsReceipts = () => {
       <Col span={24} style={{ marginTop: 8, marginBottom: 8 }}>
         {receipts ? (
           <Divider>
-            <Typography.Title level={3}>
+            <Typography.Title
+              level={3}
+              style={{ color: defaultTheme.colors.secondary }}
+            >
               {t(`messages.${receipts?.code}`)}
             </Typography.Title>
           </Divider>

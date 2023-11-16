@@ -202,7 +202,6 @@ export const MerchantBankStatement = () => {
               { name: "transaction_type", type: "translate" },
               { name: "fee_type", type: "translate" },
               { name: "value", type: "value" },
-              { name: "fee_percent", type: "text" },
               { name: "fee", type: "value" },
             ]}
             actions={[

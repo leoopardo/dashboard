@@ -20,9 +20,12 @@ export const BankCard = ({ bank }: BankcardInterface) => {
   } = useGetBankBalance({ bank: bank?.bank?.toLocaleLowerCase() });
   const { t } = useTranslation();
 
+  if (!OrganizationBankBalance || OrganizationBankBalanceError) {
+    return null;
+  }
+
   return OrganizationBankBalance && !OrganizationBankBalanceError ? (
-    <div style={{maxWidth: "250px"}}
-    >
+    <div style={{ maxWidth: "250px" }} className="swiper-slide">
       <Card
         loading={isOrganizationBankBalanceFetching}
         headStyle={{ padding: 0 }}
