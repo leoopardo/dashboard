@@ -139,7 +139,6 @@ export const BreadcrumbComponent = () => {
   }, [location, translation]);
 
   useEffect(() => {
-    handleChangeSidebar(false);
     window.scrollTo({
       top: 0,
       left: 0,
