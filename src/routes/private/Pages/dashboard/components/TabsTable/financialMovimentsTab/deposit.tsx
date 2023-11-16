@@ -1,11 +1,11 @@
 import { CustomTable } from "@src/components/CustomTable";
+import { useErrorContext } from "@src/contexts/ErrorContext";
 import { useGetMerchantRanking } from "@src/services/merchant/ranking/getRanking";
 import { Empty } from "antd";
-import { useErrorContext } from "@src/contexts/ErrorContext";
 import ReactECharts from "echarts-for-react";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { TableProps } from "..";
-import { useEffect } from "react";
 
 export const DepositFinancial = ({ query, chart }: TableProps) => {
   const { t } = useTranslation();
@@ -92,6 +92,7 @@ export const DepositFinancial = ({ query, chart }: TableProps) => {
     </>
   ) : (
     <CustomTable
+      size="small"
       query={{}}
       setCurrentItem={() => {
         return;

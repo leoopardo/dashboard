@@ -84,6 +84,7 @@ export const WithdrawOperations = ({ query, chart }: TableProps) => {
     </>
   ) : (
     <CustomTable
+    size="small"
       query={{}}
       setCurrentItem={() => {
         return;
