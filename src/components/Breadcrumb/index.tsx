@@ -136,18 +136,7 @@ export const BreadcrumbComponent = () => {
           : t(`menus.${value}`)
       )
       .join(" - ")} | ${import.meta.env.VITE_APP_COMPANY_NAME}`;
-      ReactGA.send({
-        hitType: "pageview",
-        page: window.location.pathname,
-        title: `${l.map((value) =>
-            value.includes("%20")
-              ? value.split("%20").join(" ")
-              : Number(value)
-              ? value
-              : t(`menus.${value}`)
-          )
-          .join(" - ")} | ${import.meta.env.VITE_APP_COMPANY_NAME}`,
-      });
+     
   }, [location, translation]);
 
   useEffect(() => {
