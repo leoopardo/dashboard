@@ -25,7 +25,7 @@ export const BankCard = ({ bank }: BankcardInterface) => {
   }
 
   return OrganizationBankBalance && !OrganizationBankBalanceError ? (
-    <div style={{ maxWidth: "250px" }} className="swiper-slide">
+    <div  className="swiper-slide">
       <Card
         loading={isOrganizationBankBalanceFetching}
         headStyle={{ padding: 0 }}

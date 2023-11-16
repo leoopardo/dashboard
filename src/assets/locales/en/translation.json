@@ -287,7 +287,8 @@
     "light": "Light theme",
     "responsible": "responsible",
     "help": "Help",
-    "confirm_import": "Confirm import"
+    "confirm_import": "Confirm import",
+    "merchant_blacklist_details": "Merchants blacklist details"
   },
   "input": {
     "required": "Please input the {{field}}",
@@ -869,7 +870,8 @@
     "standard": "Standard",
     "unassigned": "Unassigned",
     "access_key": "Access key",
-    "access_secret": "Access secret"
+    "access_secret": "Access secret",
+    "merchant_blacklist": "Merchants blacklist"
   },
   "actions": {
     "details": "Details",
