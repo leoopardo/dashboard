@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { HomeOutlined } from "@ant-design/icons";
 import { Breadcrumb, Typography } from "antd";
 import {
   BreadcrumbItemType,
@@ -8,12 +9,10 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import { useLocation } from "react-router-dom";
-import { useMenu } from "../../contexts/SidebarContext";
-import { HomeOutlined } from "@ant-design/icons";
 
 export const BreadcrumbComponent = () => {
   const { t } = useTranslation();
-  const { handleChangeSidebar } = useMenu();
+  // const { handleChangeSidebar } = useMenu();
   const isMobile = useMediaQuery({ maxWidth: "750px" });
   const [breadcrumbs, setBreadcrumbs] = useState<
     Partial<BreadcrumbItemType & BreadcrumbSeparatorType>[]
@@ -63,8 +62,7 @@ export const BreadcrumbComponent = () => {
     "aggregator_moviments",
     "aggregator_moviments_reports",
     "merchant_moviments_reports",
-    "organization_moviments_reports"
-
+    "organization_moviments_reports",
   ];
 
   useEffect(() => {
