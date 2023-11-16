@@ -564,7 +564,8 @@ export const FiltersModal = ({
                     />
                   </Form.Item>
                 );
-              } else return;
+              } 
+              return;
 
             case "operator_id":
               if (

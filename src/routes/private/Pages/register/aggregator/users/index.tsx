@@ -38,7 +38,7 @@ const INITIAL_QUERY: PartnerQuery = {
 };
 
 export const AggregatorUsers = () => {
-  const { permissions } = queryClient.getQueryData(
+  const { permissions, aggregator_id } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
   const [query, setQuery] = useState<PartnerQuery>(INITIAL_QUERY);
@@ -98,6 +98,23 @@ export const AggregatorUsers = () => {
   const refLast = useRef(null);
   const refStatus = useRef(null);
   const refCreatedAt = useRef(null);
+
+  const filters = aggregator_id ? [
+    "start_date",
+    "end_date",
+    "status",
+    "partner_id",
+    "merchant_id",
+    "operator_id",
+  ] : [
+    "start_date",
+    "end_date",
+    "status",
+    "partner_id",
+    "merchant_id",
+    "aggregator_id",
+    "operator_id",
+  ]
 
   return (
     <Grid container style={{ padding: "25px" }}>
@@ -220,7 +237,6 @@ export const AggregatorUsers = () => {
 
       <Grid container style={{ marginTop: "15px" }}>
         <Grid item xs={12}>
-          {" "}
           <CustomTable
             query={query}
             setCurrentItem={setCurrentItem}
@@ -284,15 +300,7 @@ export const AggregatorUsers = () => {
           setOpen={setIsFiltersOpen}
           query={query}
           setQuery={setQuery}
-          filters={[
-            "start_date",
-            "end_date",
-            "status",
-            "partner_id",
-            "merchant_id",
-            "aggregator_id",
-            "operator_id",
-          ]}
+          filters={filters}
           refetch={refetchUsersData}
           selectOptions={{}}
           startDateKeyName="start_date"
