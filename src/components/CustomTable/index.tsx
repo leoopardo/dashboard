@@ -86,6 +86,7 @@ interface TableProps {
   refetch?: () => void;
   disableActions?: boolean;
   rowKey?: string;
+  size?: "large" | "middle" | "small";
 }
 
 export const CustomTable = (props: TableProps) => {
@@ -1110,7 +1111,7 @@ export const CustomTable = (props: TableProps) => {
         <Grid container>
           <Grid item xs={12}>
             <Table
-              size="middle"
+              size={props.size ?? "middle"}
               tableLayout="auto"
               onChange={onChange}
               locale={{

@@ -82,6 +82,7 @@ export const TotalOperations = ({ query, chart }: TableProps) => {
     </>
   ) : (
     <CustomTable
+    size="small"
       query={{}}
       setCurrentItem={() => {
         return;

@@ -85,7 +85,7 @@ export const DepositOperations = ({ query, chart }: TableProps) => {
       )}
     </>
   ) : (
-    <CustomTable
+    <CustomTable   size="small"
       query={{}}
       setCurrentItem={() => {
         return;
