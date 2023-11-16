@@ -1316,6 +1316,18 @@ export const SidebarNavigation = () => {
                   : "none",
               }
             ),
+            getItem(
+              "receipts",
+              null,
+              null,
+              false,
+              (e) => handleNavigate(e?.keyPath),
+              {
+                display: permissions?.report?.deposit?.deposit_receipt?.menu
+                  ? undefined
+                  : "none",
+              }
+            ),
 
             getItem(
               "deposits_reports",

@@ -1,5 +1,6 @@
 {
   "menus": {
+    "login": "",
     "consult": "Consult",
     "organization": "Organization",
     "register": "Register",
@@ -146,7 +147,8 @@
     "pre_manual": "Manual pre entry",
     "merchant_pre_manual_moviments": "Manual pre entry",
     "merchant_pre_manual_moviments_reports": "Manual pre entry",
-    "deposit_contestation": "Deposit"
+    "deposit_contestation": "Deposit",
+    "receipts": "Receipts"
   },
 
   "titles": {
@@ -167,6 +169,8 @@
   },
 
   "messages": {
+    "founded": "founded",
+    "found": "find",
     "loading": "Loading...",
     "page_not_found": "Page not found",
     "empty_table_data": "No records found, review search criteria.",
@@ -215,7 +219,35 @@
     "preview_file": "preview file",
     "value_chart_area": "Value chart area",
     "operations_number_chart_area": "Operation number chart area",
-    "operation_approve": "Do you want to approve the selected operations?"
+    "operation_approve": "Do you want to approve the selected operations?",
+    "10000": "Operation performed successfully",
+    "10001": "Transaction not Paid",
+    "10002": "Transaction Paid, Notification Sent...",
+    "10003": "Payment not found",
+    "10004": "Manual payment without QRCode, added to reversal (ETA: 24h to review and approval)",
+    "10005": "Transaction Paid but invalid QrCode (TXID not found)",
+    "10006": "Transaction doesn't belong to Merchant",
+    "10007": "Payment refunded",
+    "10008": "Refund being processed",
+    "10009": "Payment ID not found",
+    "10010": "Withdraw Refunded",
+    "10011": "Transaction paid value doesn't match with QR Code value",
+    "10012": "Document not locked",
+    "10013": "Account for this date not found",
+    "10014": "Report already exist",
+    "10015": "Are you sure you want to delete this data?",
+    "10016": "Invalid Pix Key",
+    "10017": "Key is being checked, please wait...",
+    "10018": "Do you really want to refund?",
+    "10019": "Are you sure you want to force-delete this data?",
+    "10020": "The value must be greater than BRL 1.00",
+    "10021": "Transaction not Found",
+    "10022": "Do you want to resend as notifications?",
+    "10023": "Select an option.",
+    "10024": "Do you want to delete this bank",
+    "10025": "Do you want to delete this key",
+    "10113": "Trasaction Paid by CNPJ, refunded.",
+    "10114": "Trasaction Paid by CNPJ, refund being processed (ETA: 24h to review and approval)."
   },
   "login": {
     "sign_in": "Sign in",

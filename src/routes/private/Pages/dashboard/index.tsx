@@ -211,65 +211,66 @@ export const Dashboard = () => {
               gutter={[16, 16]}
               ref={ref3}
             >
-              {isBankChart && (
+              {isBankChart ? (
                 <Col span={24}>
                   <BankBalanceChart />
                 </Col>
-              )}{" "}
-              <Col span={24}>
-                <Swiper
-                  slidesPerView={6}
-                  spaceBetween={8}
-                  pagination={{
-                    clickable: true,
-                  }}
-                  navigation={true}
-                  modules={[Autoplay, Pagination, Navigation]}
-                  className="mySwiper"
-                  style={{ height: 260, paddingLeft: 24, paddingRight: 24 }}
-                  loop={true}
-                  autoplay={{
-                    delay: 2500,
-                    disableOnInteraction: false,
-                    pauseOnMouseEnter: true,
-                  }}
-                  breakpoints={{
-                    300: {
-                      slidesPerView: 1,
-                      spaceBetween: 8,
-                    },
-                    640: {
-                      slidesPerView: 2,
-                      spaceBetween: 8,
-                    },
-                    950: {
-                      slidesPerView: 4,
-                      spaceBetween: 8,
-                    },
-                    1024: {
-                      slidesPerView: 6,
-                      spaceBetween: 8,
-                    },
-                  }}
-                >
-                  {!isBankChart && (
-                    <>
-                      {(OrganizationBankBalance as any)?.banks.map(
-                        (bank: any) => (
-                          <SwiperSlide key={bank.name}>
-                            <BankCard
-                              bank={bankListData?.itens.find(
-                                (b) => b.bank === bank.name
-                              )}
-                              key={bank.id}
-                            />
-                          </SwiperSlide>
-                        )
-                      )}
-                    </>
-                  )}
-                </Swiper>
-              </Col>
+              ) : (
+                <Col span={24}>
+                  <Swiper
+                    slidesPerView={6}
+                    spaceBetween={8}
+                    pagination={{
+                      clickable: true,
+                    }}
+                    navigation={true}
+                    modules={[Autoplay, Pagination, Navigation]}
+                    className="mySwiper"
+                    style={{ height: 260, paddingLeft: 32, paddingRight: 32 }}
+                    loop={true}
+                    autoplay={{
+                      delay: 2500,
+                      disableOnInteraction: false,
+                      pauseOnMouseEnter: true,
+                    }}
+                    breakpoints={{
+                      300: {
+                        slidesPerView: 1,
+                        spaceBetween: 8,
+                      },
+                      640: {
+                        slidesPerView: 2,
+                        spaceBetween: 8,
+                      },
+                      950: {
+                        slidesPerView: 4,
+                        spaceBetween: 8,
+                      },
+                      1024: {
+                        slidesPerView: 6,
+                        spaceBetween: 8,
+                      },
+                      1400: {
+                        slidesPerView: 7,
+                        spaceBetween: 8,
+                      }
+                    }}
+                  >
+                    {(OrganizationBankBalance as any)?.banks.map(
+                      (bank: any) => (
+                        <SwiperSlide key={bank.name}>
+                          <BankCard
+                            bank={bankListData?.itens.find(
+                              (b) => b.bank === bank.name
+                            )}
+                            key={bank.id}
+                          />
+                        </SwiperSlide>
+                      )
+                    )}
+                  </Swiper>
+                </Col>
+              )}
             </Row>
           </div>
         )}

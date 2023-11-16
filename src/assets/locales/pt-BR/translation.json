@@ -1,5 +1,6 @@
 {
   "menus": {
+    "login": "",
     "consult": "Consultas",
     "organization": "Organização",
     "register": "Cadastro",
@@ -147,7 +148,8 @@
     "pre_manual": "Pre lançamentos manuais",
     "merchant_pre_manual_moviments": "Pre lançamentos manuais",
     "merchant_pre_manual_moviments_reports": "Pre lançamentos manuais",
-    "deposit_contestation": "Depósitos"
+    "deposit_contestation": "Depósitos",
+    "receipts": "Comprovantes"
   },
 
   "titles": {
@@ -171,6 +173,8 @@
 
   "messages": {
     "loading": "Carregando...",
+    "founded": "encontrado",
+    "found": "encontrar",
     "page_not_found": "Página não encontrada",
     "empty_table_data": "Nenhum registro encontrado, revise os critérios de pesquisa.",
     "action_success": "{{action}} com sucesso",
@@ -218,7 +222,35 @@
     "preview_file": "arquivo prévia",
     "value_chart_area": "Gráfico de valores",
     "operations_number_chart_area": "Gráfico de número de operações",
-    "operation_approve": "Deseja aprovar os lançamentos selecionados?"
+    "operation_approve": "Deseja aprovar os lançamentos selecionados?",
+    "10000": "Operação realizada com sucesso",
+    "10001": "Transação não paga",
+    "10002": "Transação paga, notificação enviada...",
+    "10003": "Pagamento não encontrado",
+    "10004": "Pagamento manual sem QRCode, adicionado na lista de devolução (24h para revisão e aprovação)",
+    "10005": "Transação paga a mais de 90 dias",
+    "10006": "Pagamento não pertence a empresa",
+    "10007": "Pagamento devolvido",
+    "10008": "Devolução em processamento",
+    "10009": "ID do Pagamento não encontrado",
+    "10010": "Devolução de Saque feita pelo cliente",
+    "10011": "Transação com valor pago diferente do valor do QR Code",
+    "10012": "Documento não bloqueado",
+    "10013": "Não temos dados salvos para esta data",
+    "10014": "Relatório já existe",
+    "10015": "Você tem certeza que deseja deletar este dado?",
+    "10016": "Chave Pix Inválida",
+    "10017": "Chave está sendo conferida, aguarde...",
+    "10018": "Deseja realmente realizar a devolução?",
+    "10019": "Você tem certeza que deseja forçar o deletar deste dado?",
+    "10020": "O valor deve ser maior do que R$ 1,00",
+    "10021": "Transação não encontrada",
+    "10022": "Deseja reenviar as notificações?",
+    "10023": "Selecione uma opção.",
+    "10024": "Deseja excluir o banco",
+    "10025": "Deseja excluir a chave",
+    "10113": "Transação paga por uma conta PJ, devolvido",
+    "10114": "Transação paga por uma conta PJ, em processo de devolução (24h para revisão e aprovação)."
   },
   "login": {
     "sign_in": "Faça login",
@@ -396,9 +428,9 @@
     "reason": "motivo",
     "domain": "domínio",
     "active_logo": "Logo ativo",
-    "fastpix_in_fee_type":"Tipo de taxa (Depósito FastPix)",
-    "fastpix_in_fee_percent":"Porcentagem de taxa (Depósito FastPix)",
-    "fastpix_in_fee_value":"Valor de taxa (Depósito FastPix)",
+    "fastpix_in_fee_type": "Tipo de taxa (Depósito FastPix)",
+    "fastpix_in_fee_percent": "Porcentagem de taxa (Depósito FastPix)",
+    "fastpix_in_fee_value": "Valor de taxa (Depósito FastPix)",
     "fastpix_in_fee_min": "Taxa mínima (Depósito FastPix)",
     "fastpix_refund_fee_type": "Tipo de taxa (Devolução FastPix)",
     "fastpix_refund_fee_percent": "Porcentagem de taxa (Devolução FastPix)",
@@ -841,7 +873,8 @@
     "row": "Linha",
     "pix_type": "Tipo de pix",
     "standard": "Regular",
-    "unassigned": "Não atribuido"
+    "unassigned": "Não atribuido",
+    "required_date": "Data de solicitação"
   },
   "actions": {
     "details": "Detalhes",
