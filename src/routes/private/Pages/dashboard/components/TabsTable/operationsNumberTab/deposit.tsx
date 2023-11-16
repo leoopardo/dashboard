@@ -25,7 +25,7 @@ export const DepositOperations = ({ query, chart }: TableProps) => {
   }, [RankingError, RankingDataSuccess])
 
   
-  return !chart ? (
+  return chart ? (
     <>
       {RankingData?.length ? (
         <div style={{ marginTop: "-60px" }}>
@@ -102,7 +102,7 @@ export const DepositOperations = ({ query, chart }: TableProps) => {
         { name: "total", type: "text" },
       ]}
       loading={isRankingFetching}
-      label={["merchant", "value"]}
+      label={["name", "total"]}
       removePagination
       disableScrollToTop
     />

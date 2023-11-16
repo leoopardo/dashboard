@@ -23,7 +23,7 @@ export const TotalOperations = ({ query, chart }: TableProps) => {
       }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [RankingError, RankingDataSuccess])
-  return !chart ? (
+  return chart ? (
     <>
       {RankingData?.length ? (
         <div style={{ marginTop: "-60px" }}>
@@ -99,7 +99,7 @@ export const TotalOperations = ({ query, chart }: TableProps) => {
         { name: "total", type: "text" },
       ]}
       loading={isRankingFetching}
-      label={["merchant", "value"]}
+      label={["name", "total"]}
       removePagination
       disableScrollToTop
     />

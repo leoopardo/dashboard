@@ -239,7 +239,7 @@ export const Dashboard = () => {
                         spaceBetween: 8,
                       },
                       950: {
-                        slidesPerView: 4,
+                        slidesPerView: 3,
                         spaceBetween: 8,
                       },
                       1024: {

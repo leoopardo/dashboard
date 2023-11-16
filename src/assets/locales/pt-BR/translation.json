@@ -290,7 +290,8 @@
     "light": "Tema claro",
     "responsible": "responsável",
     "help": "Ajuda",
-    "confirm_import": "Confirmar importação"
+    "confirm_import": "Confirmar importação",
+    "merchant_blacklist_details": "Detalhes de blacklist de empresas"
   },
   "modal": {
     "confirm": "Confirmar",
@@ -425,7 +426,7 @@
     "fastpix_qr_code_expire_seconds": "Tempo expiração QRCode FastPIX (segundos)",
     "category_id": "Categoria",
     "password_type": "A senha deve conter no mínimo 8 caracteres, incluindo pelo menos 1 número, 1 letra maiúscula e 1 caractere especial.",
-    "merchant_id": "nome da empresa",
+    "merchant_id": "Empresa",
     "reason": "motivo",
     "domain": "domínio",
     "active_logo": "Logo ativo",
@@ -459,7 +460,7 @@
     "canceled": "Cancelado",
     "refunded": "Devolvido",
     "expired": "Expirado",
-    "merchant_id": "ID Empresa",
+    "merchant_id": "Empresa",
     "partner_name": "Plataforma",
     "partner_id": "ID Plataforma",
     "details": "Detalhes",
@@ -875,7 +876,8 @@
     "pix_type": "Tipo de pix",
     "standard": "Regular",
     "unassigned": "Não atribuido",
-    "required_date": "Data de solicitação"
+    "required_date": "Data de solicitação",
+    "merchant_blacklist": "Blacklist de empresa"
   },
   "actions": {
     "details": "Detalhes",
