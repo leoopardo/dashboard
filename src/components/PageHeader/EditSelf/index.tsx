@@ -195,6 +195,7 @@ export const EditSelfModal = ({
           error={error}
           success={isSuccess}
           submit={mutate}
+          editSelf
         />
       )}
     </Drawer>

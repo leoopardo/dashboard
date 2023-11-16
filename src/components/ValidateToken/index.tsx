@@ -20,6 +20,7 @@ interface ValidateTokenProps {
   success: boolean;
   error: any;
   submit: () => void;
+  editSelf?: boolean;
 }
 
 export const ValidateToken = ({
@@ -32,6 +33,7 @@ export const ValidateToken = ({
   submit,
   success,
   error,
+  editSelf,
 }: ValidateTokenProps) => {
   const { t } = useTranslation();
   const { Self, refetchSelf } = useGetSelf();
@@ -90,7 +92,8 @@ export const ValidateToken = ({
       !Self?.cellphone &&
       body?.cellphone &&
       !Self?.phone_validated &&
-      !validationPhoneSent
+      !validationPhoneSent &&
+      editSelf
     ) {
       setValidateBody({
         action: "USER_VALIDATE_PHONE",
@@ -124,18 +127,21 @@ export const ValidateToken = ({
   }, [validateBody, validationPhoneSent, validationTokenSent]);
 
   useEffect(() => {
-
     if (success || ValidatePhoneSuccess) {
-      message.success( t("messages.action_success", {
-        action: t("messages.validated"),
-      }))
+      message.success(
+        t("messages.action_success", {
+          action: t("messages.validated"),
+        })
+      );
       setIsOpen(false);
-    } 
+    }
 
-    if(error || ValidatePhoneError) {
-      message.error( t("messages.action_error", {
-        action: t("messages.validated"),
-      }))
+    if (error || ValidatePhoneError) {
+      message.error(
+        t("messages.action_error", {
+          action: t("messages.validated"),
+        })
+      );
     }
   }, [success, error, ValidatePhoneSuccess, ValidatePhoneError]);
 
@@ -152,40 +158,52 @@ export const ValidateToken = ({
       }}
       footer={[
         <Grid
+          container
           style={{
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
           }}
+          spacing={1}
         >
-          <Countdown
-            key="count"
-            success={ValidateTokenSuccess}
-            quantSeconds={tokenData?.expiration}
-          />
-          <Button
-            style={{ marginLeft: "150px" }}
-            loading={ValidateTokenLoading}
-            key="submit"
-            type="primary"
-            onClick={() => {
-              submit();
-              setValidationPhoneSent(false);
-              setValidationTokenSent(false);
-              setValidateBody({ action, cellphone: undefined });
-            }}
-          >
-            {t("modal.confirm")}
-          </Button>
+          <Grid item xs={12} md={4}>
+            <Countdown
+              key="count"
+              success={ValidateTokenSuccess}
+              quantSeconds={tokenData?.expiration}
+            />
+          </Grid>
+          <Grid xs={12} md={8}>
+            <Button
+              style={{ marginLeft: "150px" }}
+              loading={ValidateTokenLoading}
+              key="submit"
+              type="primary"
+              onClick={() => {
+                submit();
+                setValidationPhoneSent(false);
+                setValidationTokenSent(false);
+                setValidateBody({ action, cellphone: undefined });
+              }}
+            >
+              {t("modal.confirm")}
+            </Button>
+          </Grid>
         </Grid>,
       ]}
     >
-      <Typography.Text >
-        {t("messages.validate_text")}
-      </Typography.Text>
-      <Grid container justifyContent="center" style={{ marginTop: 16, marginBottom: 16 }}>
+      <Typography.Text>{t("messages.validate_text")}</Typography.Text>
+      <Grid
+        container
+        justifyContent="center"
+        style={{ marginTop: 16, marginBottom: 16 }}
+      >
         <OTPInput
-          containerStyle={{ gap: "20px" }}
+          containerStyle={{
+            gap: "8px",
+            display: "flex",
+            justifyContent: "center",
+          }}
           value={tokenState.toUpperCase()}
           onChange={setTokenState}
           numInputs={6}
@@ -193,8 +211,10 @@ export const ValidateToken = ({
           shouldAutoFocus
           inputType="tel"
           inputStyle={{
-            width: "40px",
-            height: "50px",
+            width: "10%",
+            height: "5vw",
+            minWidth: "30px",
+            minHeight: "30px",
             borderRadius: "5px",
             border: "2px solid #c9c9c9",
             fontSize: "22px",
@@ -217,7 +237,7 @@ export const ValidateToken = ({
         </Button>
       </Grid>
     </Modal>
-  ) : (
+  ) : Self?.cellphone || body?.cellphone ? (
     <Modal
       centered
       title={t("modal.validate_phone_number")}
@@ -230,45 +250,55 @@ export const ValidateToken = ({
       }}
       footer={[
         <Grid
+          container
           style={{
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
           }}
+          spacing={1}
         >
-          {Self?.cellphone ||
-            (body?.cellphone && (
-              <>
-              
-                <Countdown
-                  key="count"
-                  success={ValidateTokenSuccess}
-                  quantSeconds={tokenData?.expiration}
-                />
-                <Button
-                  style={{ marginLeft: "150px" }}
-                  loading={ValidatePhoneLoading}
-                  key="submit"
-                  type="primary"
-                  onClick={() => {
-                    ValidatePhone();
-                    setValidationPhoneSent(false);
-                    setValidationTokenSent(false);
-                    setValidateBody({ action, cellphone: undefined });
-                  }}
-                >
-                  {t("modal.confirm")}
-                </Button>
-              </>
-            ))}
+          <Grid item xs={12} md={4}>
+            <Countdown
+              key="count"
+              success={ValidateTokenSuccess}
+              quantSeconds={tokenData?.expiration}
+            />
+          </Grid>
+          <Grid item xs={12} md={8}>
+            <Button
+              style={{ marginLeft: "150px" }}
+              loading={ValidatePhoneLoading}
+              key="submit"
+              type="primary"
+              onClick={() => {
+                ValidatePhone();
+                setValidationPhoneSent(false);
+                setValidationTokenSent(false);
+                setValidateBody({ action, cellphone: undefined });
+              }}
+            >
+              {t("modal.confirm")}
+            </Button>
+          </Grid>
         </Grid>,
       ]}
     >
-      {Self?.cellphone || body?.cellphone ? (
-        <>  <Typography.Text>{t("messages.validate_phone_text")}</Typography.Text>
-          <Grid container justifyContent="center" style={{ marginTop: 16, marginBottom: 16 }}>
+      {Self?.cellphone || editSelf ? (
+        <>
+          {" "}
+          <Typography.Text>{t("messages.validate_phone_text")}</Typography.Text>
+          <Grid
+            container
+            justifyContent="center"
+            style={{ marginTop: 16, marginBottom: 16 }}
+          >
             <OTPInput
-              containerStyle={{ gap: "20px" }}
+              containerStyle={{
+                gap: "8px",
+                display: "flex",
+                justifyContent: "center",
+              }}
               value={tokenState.toUpperCase()}
               onChange={setTokenState}
               numInputs={6}
@@ -276,8 +306,10 @@ export const ValidateToken = ({
               shouldAutoFocus
               inputType="tel"
               inputStyle={{
-                width: "40px",
-                height: "50px",
+                width: "10%",
+                height: "5vw",
+                minWidth: "30px",
+                minHeight: "30px",
                 borderRadius: "5px",
                 border: "2px solid #c9c9c9",
                 fontSize: "22px",
@@ -301,12 +333,10 @@ export const ValidateToken = ({
           </Grid>
         </>
       ) : (
-        <Typography.Title level={4}>
-          Seu usuário não possui nenhum telefone cadastrado
-        </Typography.Title>
+        <Typography.Text strong>{t("messages.no_cellphone")}</Typography.Text>
       )}
 
-    {/*   <Toast
+      {/*   <Toast
         actionSuccess={t("messages.validated")}
         actionError={t("messages.validate")}
         error={ValidatePhoneError}
@@ -319,5 +349,17 @@ export const ValidateToken = ({
         success={success}
       /> */}
     </Modal>
+  ) : (
+    <Modal
+      centered
+      title={t("modal.validate_phone_number")}
+      open={open}
+      onCancel={() => {
+        setIsOpen(false);
+        setValidationPhoneSent(false);
+        setValidationTokenSent(false);
+        setValidateBody({ action, cellphone: undefined });
+      }}
+    ></Modal>
   );
 };

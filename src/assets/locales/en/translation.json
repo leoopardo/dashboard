@@ -220,6 +220,7 @@
     "value_chart_area": "Value chart area",
     "operations_number_chart_area": "Operation number chart area",
     "operation_approve": "Do you want to approve the selected operations?",
+    "no_cellphone": "You should add a phone number to your user account. To do so, navigate to ‘Edit User’ in the top left corner of the screen.",
     "10000": "Operation performed successfully",
     "10001": "Transaction not Paid",
     "10002": "Transaction Paid, Notification Sent...",
