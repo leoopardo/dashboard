@@ -879,7 +879,8 @@
     "required_date": "Data de solicitação",
     "access_key": "Chave de acesso",
     "access_secret": "Chave de acesso secreta",
-    "merchant_blacklist": "Blacklist de empresa"
+    "merchant_blacklist": "Blacklist de empresa",
+    "international": "Internacional"
   },
   "actions": {
     "details": "Detalhes",

@@ -3,6 +3,7 @@
 import {
   EyeFilled,
   FileAddOutlined,
+  FilterOutlined,
   SendOutlined,
   SettingFilled,
 } from "@ant-design/icons";
@@ -158,6 +159,7 @@ export const PaidWithdrawals = () => {
             }
             type="primary"
             onClick={() => setIsFiltersOpen(true)}
+            icon={<FilterOutlined />}
           >
             {t("table.filters")}
           </Button>
@@ -256,8 +258,8 @@ export const PaidWithdrawals = () => {
               justifyContent: "center",
               width: "100%",
             }}
+            icon={<FilterAltOffOutlinedIcon />}
           >
-            <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
             {t("table.clear_filters")}
           </Button>
         </Grid>
@@ -277,6 +279,7 @@ export const PaidWithdrawals = () => {
                 justifyContent: "center",
                 width: "100%",
               }}
+              icon={<SendOutlined />}
             >
               {t("modal.resend_webhook")}
             </Button>
@@ -306,8 +309,9 @@ export const PaidWithdrawals = () => {
                 disabled={
                   !paidWithdrawalsRows?.items.length || paidWithdrawalsRowsError
                 }
+                icon={<FileAddOutlined style={{ fontSize: 22 }} />}
               >
-                <FileAddOutlined style={{ fontSize: 22 }} /> CSV
+                CSV
               </Button>
             </Tooltip>
           </Grid>

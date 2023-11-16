@@ -3,6 +3,7 @@ import {
   DeleteOutlined,
   EditOutlined,
   EyeFilled,
+  FilterOutlined,
   PlusOutlined,
 } from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
@@ -109,6 +110,7 @@ export const MerchantFeePlans = () => {
             loading={isFeePlansDataFetching}
             type="primary"
             onClick={() => setIsFiltersOpen(true)}
+            icon={<FilterOutlined />}
           >
             {t("table.filters")}
           </Button>
@@ -136,8 +138,8 @@ export const MerchantFeePlans = () => {
                 alignItems: "center",
                 justifyContent: "center",
               }}
+              icon={<PlusOutlined style={{ fontSize: 22 }} />}
             >
-              <PlusOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
               {`${t("buttons.create")} ${t("menus.fee_plans")
                 .toString()
                 .toLocaleLowerCase()}`}
@@ -166,14 +168,16 @@ export const MerchantFeePlans = () => {
                   setIsViewModalOpen(true);
                 },
               },
-              permissions.register.merchant.fee_plans.merchant_fee_plans_update && {
+              permissions.register.merchant.fee_plans
+                .merchant_fee_plans_update && {
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
                 onClick: () => {
                   setIsUpdateModalOpen(true);
                 },
               },
-              permissions.register.merchant.fee_plans.merchant_fee_plans_delete && {
+              permissions.register.merchant.fee_plans
+                .merchant_fee_plans_delete && {
                 label: "delete",
                 icon: <DeleteOutlined style={{ fontSize: "20px" }} />,
                 onClick: () => setIsConfirmOpen(true),

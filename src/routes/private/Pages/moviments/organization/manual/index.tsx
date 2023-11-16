@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
+import { ArrowDownOutlined, ArrowUpOutlined, FilterOutlined } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { CustomTable } from "@src/components/CustomTable";
@@ -167,8 +167,9 @@ export const OrgonizationManual = () => {
                 type="default"
                 shape="round"
                 onClickCapture={() => setOperationInIOpen(true)}
+                icon={<ArrowUpOutlined /> }
               >
-                <ArrowUpOutlined /> {t("buttons.register_in")}
+                {t("buttons.register_in")}
               </Button>
             </Grid>
             <Grid item xs={12}>
@@ -179,8 +180,9 @@ export const OrgonizationManual = () => {
                 shape="round"
                 danger
                 onClickCapture={() => setOperationOutOpen(true)}
+                icon={ <ArrowDownOutlined />}
               >
-                <ArrowDownOutlined />
+               
                 {t("buttons.register_out")}
               </Button>
             </Grid>
@@ -219,6 +221,7 @@ export const OrgonizationManual = () => {
               loading={isOrganizationMovimentsDataFetching}
               type="primary"
               onClick={() => setIsFiltersOpen(true)}
+              icon={<FilterOutlined />}
             >
               {t("table.filters")}
             </Button>
@@ -260,8 +263,9 @@ export const OrgonizationManual = () => {
                 alignItems: "center",
                 justifyContent: "center",
               }}
+              icon={<FilterAltOffOutlinedIcon />}
             >
-              <FilterAltOffOutlinedIcon /> {t("table.clear_filters")}
+               {t("table.clear_filters")}
             </Button>
           </Grid>
           {permissions.transactions.paybrokers.manual_transactions

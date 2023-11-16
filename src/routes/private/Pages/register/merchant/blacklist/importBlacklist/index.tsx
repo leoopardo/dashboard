@@ -323,8 +323,9 @@ export const ImportBlacklist = () => {
                 alignItems: "center",
                 textAlign: "center",
               }}
+              icon={<AppstoreAddOutlined />}
             >
-              <AppstoreAddOutlined /> {t("table.add_row")}
+              {t("table.add_row")}
             </Button>
           </Col>
           <Col
@@ -390,8 +391,8 @@ export const ImportBlacklist = () => {
                 alignItems: "center",
                 textAlign: "center",
               }}
+              icon={<SendOutlined style={{ fontSize: 16 }} />}
             >
-              <SendOutlined style={{ fontSize: 16 }} />{" "}
               {t("buttons.confirm_import")}
             </Button>
           </Col>

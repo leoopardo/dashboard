@@ -57,6 +57,7 @@ export const CheckDocument = () => {
             type="dashed"
             loading={isCheckCpfDataFetching}
             danger
+            icon={<FilterAltOffOutlinedIcon />}
             onClick={() => {
               setSearch("");
             }}
@@ -68,7 +69,6 @@ export const CheckDocument = () => {
               justifyContent: "center",
             }}
           >
-            <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
             {t("table.clear_filters")}
           </Button>
         </Grid>

@@ -4,6 +4,7 @@ import {
   EditOutlined,
   EyeFilled,
   FileAddOutlined,
+  FilterOutlined,
   UserAddOutlined,
 } from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
@@ -17,6 +18,7 @@ import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomRep
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
 import { Toast } from "@src/components/Toast";
 import { queryClient } from "@src/services/queryClient";
+import { useCreateOperatorUser } from "@src/services/register/operator/users/createUser";
 import { useGetOperatorUsers } from "@src/services/register/operator/users/getOperatorUsers";
 import { useUpdateOperatorUser } from "@src/services/register/operator/users/updateUser";
 import { useCreateOperatorUsersReports } from "@src/services/reports/register/operator/createOperatorUsersReports";
@@ -27,7 +29,6 @@ import { Button, Tooltip } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { NewUserInterface, NewUserModal } from "./components/newUserModal";
-import { useCreateOperatorUser } from "@src/services/register/operator/users/createUser";
 
 const INITIAL_QUERY: PartnerQuery = {
   limit: 25,
@@ -130,6 +131,7 @@ export const OperatorUsers = () => {
             loading={isUsersDataFetching}
             type="primary"
             onClick={() => setIsFiltersOpen(true)}
+            icon={<FilterOutlined />}
           >
             {t("table.filters")}
           </Button>
@@ -163,8 +165,8 @@ export const OperatorUsers = () => {
               alignItems: "center",
               justifyContent: "center",
             }}
+            icon={<FilterAltOffOutlinedIcon />}
           >
-            <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
             {t("table.clear_filters")}
           </Button>
         </Grid>
@@ -184,8 +186,8 @@ export const OperatorUsers = () => {
                 alignItems: "center",
                 justifyContent: "center",
               }}
+              icon={<UserAddOutlined style={{ fontSize: 22 }} />}
             >
-              <UserAddOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
               {`${t("buttons.create")} ${t("buttons.new_user")}`}
             </Button>
           </Grid>
@@ -210,8 +212,9 @@ export const OperatorUsers = () => {
                 size="large"
                 loading={isUsersDataFetching}
                 disabled={UsersData?.total === 0 || UsersDataError}
+                icon={<FileAddOutlined style={{ fontSize: 22 }} />}
               >
-                <FileAddOutlined style={{ fontSize: 22 }} /> CSV
+                CSV
               </Button>
             </Tooltip>
           </Grid>

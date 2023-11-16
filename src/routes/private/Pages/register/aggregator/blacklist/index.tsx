@@ -1,5 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { InfoCircleOutlined, PlusOutlined } from "@ant-design/icons";
+import {
+  FilterOutlined,
+  InfoCircleOutlined,
+  LockOutlined,
+} from "@ant-design/icons";
 import { CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
@@ -107,6 +111,7 @@ export const AggregatorBlacklist = () => {
             loading={isAggregatorsBlacklistDataFetching}
             type="primary"
             onClick={() => setIsFiltersOpen(true)}
+            icon={<FilterOutlined />}
           >
             {t("table.filters")}
           </Button>
@@ -174,8 +179,8 @@ export const AggregatorBlacklist = () => {
               alignItems: "center",
               justifyContent: "center",
             }}
+            icon={<FilterAltOffOutlinedIcon />}
           >
-            <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
             {t("table.clear_filters")}
           </Button>
         </Grid>
@@ -194,8 +199,8 @@ export const AggregatorBlacklist = () => {
                 alignItems: "center",
                 justifyContent: "center",
               }}
+              icon={<LockOutlined style={{ fontSize: "20px" }} />}
             >
-              <PlusOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
               {t("buttons.create_bank_blacklist")}
             </Button>
           </Grid>

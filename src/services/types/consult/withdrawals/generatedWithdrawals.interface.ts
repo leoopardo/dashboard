@@ -26,8 +26,8 @@ export interface generatedWithdrawalsTotalQuery {
 }
 
 export interface generatedWithdrawalsRowsQuery {
-  page: number;
-  limit: number;
+  page?: number;
+  limit?: number;
   sort_order?: "DESC" | "ASC";
   sort_field?: string;
   initial_date?: string;

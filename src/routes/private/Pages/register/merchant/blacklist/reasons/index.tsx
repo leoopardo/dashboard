@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { PlusOutlined } from "@ant-design/icons";
+import { FilterOutlined, PlusOutlined } from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
@@ -17,7 +17,7 @@ import { useGetRowsMerchantBlacklistReasons } from "@src/services/register/merch
 import { MerchantBlacklistItem } from "@src/services/types/register/merchants/merchantBlacklist.interface";
 import {
   CreateMerchantBlacklistReasons,
-  MerchantBlacklistReasonQuery
+  MerchantBlacklistReasonQuery,
 } from "@src/services/types/register/merchants/merchantBlacklistReasons.interface";
 
 const INITIAL_QUERY: MerchantBlacklistReasonQuery = {
@@ -40,7 +40,7 @@ export const MerchantBlacklistReasons = () => {
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [isCreateReasonOpen, setIsCreateReasonOpen] = useState(false);
   const [body, setBody] = useState<CreateMerchantBlacklistReasons | null>({
-    reason_name : "",
+    reason_name: "",
   });
   const [currentItem, setCurrentItem] = useState<MerchantBlacklistItem | null>(
     null
@@ -80,11 +80,13 @@ export const MerchantBlacklistReasons = () => {
         spacing={1}
       >
         <Grid item xs={12} md={2} lg={2}>
-           <Button size="large"
+          <Button
+            size="large"
             style={{ width: "100%" }}
             loading={isMerchantBlacklistDataFetching}
             type="primary"
             onClick={() => setIsFiltersOpen(true)}
+            icon={<FilterOutlined />}
           >
             {t("table.filters")}
           </Button>
@@ -95,7 +97,6 @@ export const MerchantBlacklistReasons = () => {
             endDateKeyName="final_date"
             query={query}
             setQuery={setQuery}
-             
           />
         </Grid>
         <Grid item xs={12} md={3} lg={2}>
@@ -116,8 +117,8 @@ export const MerchantBlacklistReasons = () => {
               alignItems: "center",
               justifyContent: "center",
             }}
+            icon={<FilterAltOffOutlinedIcon />}
           >
-            <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
             {t("table.clear_filters")}
           </Button>
         </Grid>
@@ -133,12 +134,11 @@ export const MerchantBlacklistReasons = () => {
               alignItems: "center",
               justifyContent: "center",
             }}
+            icon={<PlusOutlined style={{ fontSize: 22 }} />}
           >
-            <PlusOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
             {t("buttons.new_reason")}
           </Button>
         </Grid>
-
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -164,7 +164,6 @@ export const MerchantBlacklistReasons = () => {
           setOpen={setIsFiltersOpen}
           query={query}
           setQuery={setQuery}
-           
           filters={["start_date", "end_date", "merchant_id"]}
           refetch={refetchMerchantBlacklistData}
           selectOptions={{}}
@@ -179,9 +178,7 @@ export const MerchantBlacklistReasons = () => {
           type="create"
           open={isCreateReasonOpen}
           setOpen={setIsCreateReasonOpen}
-          fields={[
-            { label: "reason_name", required: true },
-          ]}
+          fields={[{ label: "reason_name", required: true }]}
           body={body}
           setBody={setBody}
           modalName={t("modal.new_reason")}

@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ReloadOutlined } from "@ant-design/icons";
+import { FilterOutlined, ReloadOutlined } from "@ant-design/icons";
 import { Grid } from "@mui/material";
 import { CustomTable } from "@src/components/CustomTable";
 import { FiltersModal } from "@src/components/FiltersModal";
@@ -84,6 +84,7 @@ export const OrganizationBankStatement = () => {
             style={{ width: "100%" }}
             type="primary"
             onClick={() => setIsFiltersOpen(true)}
+            icon={<FilterOutlined />}
           >
             {t("table.filters")}
           </Button>
@@ -119,8 +120,9 @@ export const OrganizationBankStatement = () => {
               refetchOrganizationPerbank();
               refetchOrganizationBankStatementTotalsTotal();
             }}
+            icon={<ReloadOutlined />}
           >
-            <ReloadOutlined /> {t("buttons.refresh")}
+            {t("buttons.refresh")}
           </Button>
         </Grid>
         {permissions.report.paybrokers.extract
@@ -213,7 +215,6 @@ export const OrganizationBankStatement = () => {
               lazyUpdate
             />
           </Grid>
-         
         </Grid>
       )}
       {isOrganizationBankStatementTotalsFetching && (
