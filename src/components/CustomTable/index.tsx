@@ -158,33 +158,49 @@ export const CustomTable = (props: TableProps) => {
           case "id":
             return {
               title: (
-                <Typography
-                  style={{ width: "100%", textAlign: "center" }}
-                  ref={column.key}
-                >
-                  {t(`table.${column?.head || column?.name}`)}
-                </Typography>
+                <Tooltip title={t(`table.${column?.head || column?.name}`)}>
+                  <Typography
+                    style={{
+                      width: "100%",
+                      maxHeight: "50px",
+                      overflow: "hidden",
+                      textAlign: "center",
+                      textOverflow: "ellipsis",
+                    }}
+                    ref={column.key}
+                  >
+                    {t(`table.${column?.head || column?.name}`)}
+                  </Typography>
+                </Tooltip>
               ),
               key: column?.sort_name
                 ? column.sort_name
                 : Array.isArray(column?.name)
                 ? column?.name + `${Math.random()}`
                 : column?.name,
+              width: 85,
               dataIndex: column?.name,
-              width: 60,
               render: (text: string) => (
-                <Tooltip title={text}>
-                  <Button
-                    size="large"
-                    type="ghost"
-                    onClick={() => {
-                      navigator.clipboard.writeText(text);
-                      toast.success(t("table.copied"));
-                    }}
-                  >
-                    <CopyOutlined />
-                  </Button>
-                </Tooltip>
+                <div
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Tooltip title={text}>
+                    <Button
+                      size="large"
+                      type="ghost"
+                      onClick={() => {
+                        navigator.clipboard.writeText(text);
+                        toast.success(t("table.copied"));
+                      }}
+                    >
+                      <CopyOutlined />
+                    </Button>
+                  </Tooltip>
+                </div>
               ),
               sorter: column.sort
                 ? () => {
