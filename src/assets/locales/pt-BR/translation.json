@@ -223,6 +223,7 @@
     "value_chart_area": "Gráfico de valores",
     "operations_number_chart_area": "Gráfico de número de operações",
     "operation_approve": "Deseja aprovar os lançamentos selecionados?",
+    "no_cellphone": "Você deve adicionar um número de telefone ao seu usuário. Para isso, acesse 'Editar usuário' no canto superior esquerdo da tela.",
     "10000": "Operação realizada com sucesso",
     "10001": "Transação não paga",
     "10002": "Transação paga, notificação enviada...",
