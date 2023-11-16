@@ -118,7 +118,7 @@ export const Dashboard = () => {
             ?.report_paybrokers_balance_list ||
           permissions?.report?.merchant?.balance?.report_merchant_balance_list
             ? "translateY(17px)"
-            : "translateY(-17px)"
+            : "translateY(0px)",
       }}
     >
       {(permissions?.report?.paybrokers?.balance
@@ -154,17 +154,16 @@ export const Dashboard = () => {
       <Col
         span={24}
         style={{
-          marginTop:
-            permissions?.report?.merchant?.balance
-              ?.report_merchant_balance_list ||
-            permissions?.report?.paybrokers?.balance
-              ?.report_paybrokers_balance_list
-              ? 40
-              : 0,
-          padding: 15,
+          marginTop: permissions?.report?.paybrokers?.balance
+            ?.report_paybrokers_balance_list
+            ? 40
+            : 0,
+          padding: permissions?.report?.paybrokers?.balance
+            ?.report_paybrokers_balance_list
+            ? 15
+            : 0,
         }}
       >
-
         {permissions?.report?.paybrokers?.bank_balance?.menu && (
           <div>
             <Col
@@ -257,16 +256,14 @@ export const Dashboard = () => {
                     <>
                       {(OrganizationBankBalance as any)?.banks.map(
                         (bank: any) => (
-                
-                            <SwiperSlide key={bank.name}>
-                              <BankCard
-                                bank={bankListData?.itens.find(
-                                  (b) => b.bank === bank.name
-                                )}
-                                key={bank.id}
-                              />
-                            </SwiperSlide>
-              
+                          <SwiperSlide key={bank.name}>
+                            <BankCard
+                              bank={bankListData?.itens.find(
+                                (b) => b.bank === bank.name
+                              )}
+                              key={bank.id}
+                            />
+                          </SwiperSlide>
                         )
                       )}
                     </>
