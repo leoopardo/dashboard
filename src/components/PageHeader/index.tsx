@@ -1,28 +1,20 @@
 /* eslint-disable no-empty-pattern */
-import { DownOutlined, UserOutlined, LogoutOutlined } from "@ant-design/icons";
-import secureLocalStorage from "react-secure-storage";
-import { queryClient } from "@src/services/queryClient";
+import { DownOutlined, LogoutOutlined, UserOutlined } from "@ant-design/icons";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import { Grid } from "@mui/material";
+import { useErrorContext } from "@src/contexts/ErrorContext";
 import { useTheme } from "@src/contexts/ThemeContext";
 import { useGetSelf } from "@src/services/getSelf";
+import { queryClient } from "@src/services/queryClient";
 import { useValidate } from "@src/services/siginIn/validate";
-import {
-  Avatar,
-  Button,
-  Dropdown,
-  MenuProps,
-  Radio,
-  Space,
-  theme as t,
-} from "antd";
+import { Avatar, Dropdown, MenuProps, Radio, Space, theme as t } from "antd";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
+import secureLocalStorage from "react-secure-storage";
 import brazil from "../../assets/brazil-.png";
 import eua from "../../assets/united-states.png";
-import { useErrorContext } from "@src/contexts/ErrorContext";
 import { defaultTheme } from "../../styles/defaultTheme";
 import { BreadcrumbComponent } from "../Breadcrumb";
 import { EditSelfModal } from "./EditSelf";
@@ -32,7 +24,7 @@ export const PageHeader = () => {
   const isMobile = useMediaQuery({ maxWidth: "950px" });
   const { t, i18n } = useTranslation();
   const { responseValidate } = useValidate();
-  const {resetErrors} = useErrorContext()
+  const { resetErrors } = useErrorContext();
   const translation = useTranslation().i18n.language;
   const { token } = useToken();
   const [isEditUserModalOpen, setIsEditUserModalOpen] =
@@ -84,12 +76,12 @@ export const PageHeader = () => {
     {
       key: "logout",
       label: t("menus.logout"),
-      icon:  <LogoutOutlined style={{ marginRight: 8, color: "red" }} />,
+      icon: <LogoutOutlined style={{ marginRight: 8, color: "red" }} />,
       onClick: () => {
         secureLocalStorage.removeItem("token");
         sessionStorage.removeItem("token");
         queryClient.refetchQueries(["validate"]);
-        resetErrors()
+        resetErrors();
       },
     },
   ];
