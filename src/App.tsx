@@ -19,6 +19,9 @@ import { useValidate } from "./services/siginIn/validate.tsx";
 import { defaultTheme } from "./styles/defaultTheme/index.ts";
 import { GlobalStyle } from "./styles/globalStyles.ts";
 const Logo = import.meta.env.VITE_APP_ICON ?? PBLogo;
+import ReactGA from "react-ga4";
+
+ReactGA.initialize("G-8SMH6KZCSE");
 
 function App() {
   const { t } = useTranslation();
