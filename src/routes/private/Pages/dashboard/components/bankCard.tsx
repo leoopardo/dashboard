@@ -6,7 +6,6 @@ import { Card, Spin, Statistic, Tooltip, Typography } from "antd";
 import { motion } from "framer-motion";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
-import { SwiperSlide } from "swiper/react";
 
 interface BankcardInterface {
   bank?: BankItem;
@@ -22,7 +21,7 @@ export const BankCard = ({ bank }: BankcardInterface) => {
   const { t } = useTranslation();
 
   if (!OrganizationBankBalance || OrganizationBankBalanceError) {
-    return null
+    return null;
   }
 
   return OrganizationBankBalance && !OrganizationBankBalanceError ? (

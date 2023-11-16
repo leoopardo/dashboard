@@ -11,7 +11,6 @@ import { TuorComponent } from "@src/components/Tuor";
 import { useErrorContext } from "@src/contexts/ErrorContext";
 import { useListBanks } from "@src/services/bank/listBanks";
 import { useGetMerchantBankStatementTotals } from "@src/services/consult/merchant/bankStatement/getTotals";
-import { useGetBankBalance } from "@src/services/consult/organization/bankBalance/getBankBalance";
 import { queryClient } from "@src/services/queryClient";
 import { MerchantBankStatementTotalsQuery } from "@src/services/types/consult/merchant/bankStatement";
 import { ValidateInterface } from "@src/services/types/validate.interface";
@@ -24,7 +23,7 @@ import secureLocalStorage from "react-secure-storage";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { Autoplay, Navigation, Pagination, Virtual } from "swiper/modules";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { TabsTable } from "./components/TabsTable";
 import { BankCard } from "./components/bankCard";
@@ -117,7 +116,7 @@ export const Dashboard = () => {
             ?.report_paybrokers_balance_list ||
           permissions?.report?.merchant?.balance?.report_merchant_balance_list
             ? "translateY(17px)"
-            : "translateY(0px)",
+            : "translateY(-17px)",
       }}
     >
       {(permissions?.report?.paybrokers?.balance
@@ -153,14 +152,14 @@ export const Dashboard = () => {
       <Col
         span={24}
         style={{
-          marginTop: permissions?.report?.paybrokers?.balance
-            ?.report_paybrokers_balance_list
-            ? 40
-            : 0,
-          padding: permissions?.report?.paybrokers?.balance
-            ?.report_paybrokers_balance_list
-            ? 15
-            : 0,
+          marginTop:
+            permissions?.report?.merchant?.balance
+              ?.report_merchant_balance_list ||
+            permissions?.report?.paybrokers?.balance
+              ?.report_paybrokers_balance_list
+              ? 40
+              : 0,
+          padding: 15,
         }}
       >
         {permissions?.report?.paybrokers?.bank_balance?.menu && (
@@ -222,7 +221,6 @@ export const Dashboard = () => {
                     pagination={{
                       clickable: true,
                     }}
-                  
                     navigation={true}
                     modules={[Autoplay, Pagination, Navigation]}
                     className="mySwiper"
@@ -264,16 +262,13 @@ export const Dashboard = () => {
                       },
                     }}
                   >
-                    {bankListData?.itens.filter((b) => b.status === true).map(
-                      (bank: any) => (
-                        <SwiperSlide key={bank?.id} >
-                          <BankCard
-                            bank={bank}
-                            key={bank.id}
-                          />
+                    {bankListData?.itens
+                      .filter((b) => b.status === true)
+                      .map((bank: any) => (
+                        <SwiperSlide key={bank?.id}>
+                          <BankCard bank={bank} key={bank.id} />
                         </SwiperSlide>
-                      )
-                    )}
+                      ))}
                   </Swiper>
                 </Col>
               )}
