@@ -4,6 +4,7 @@ import {
   CheckCircleOutlined,
   EyeFilled,
   FileAddOutlined,
+  FilterOutlined,
   SendOutlined,
   SettingFilled,
 } from "@ant-design/icons";
@@ -123,7 +124,7 @@ export const GeneratedDeposits = () => {
     { name: "value", type: "value" },
     { name: "createdAt", type: "date" },
     { name: "delivered_at", type: "date" },
-    { name: "pix_type", head: "pixType",  type: "pix_type" },
+    { name: "pix_type", head: "pixType", type: "pix_type" },
     { name: "buyer_name", type: "text" },
     { name: "buyer_document", type: "document" },
     { name: "status", type: "status" },
@@ -160,6 +161,7 @@ export const GeneratedDeposits = () => {
             loading={isDepositsRowsFetching || isDepositsTotalFetching}
             type="primary"
             onClick={() => setIsFiltersOpen(true)}
+            icon={<FilterOutlined />}
           >
             {t("table.filters")}
           </Button>
@@ -203,19 +205,27 @@ export const GeneratedDeposits = () => {
                   delete query.description;
 
                   if (
-                    ["pix_id", "endToEndId", "txid", "reference_id"].includes(
-                      value
-                    )
+                    [
+                      "pix_id",
+                      "endToEndId",
+                      "txid",
+                      "reference_id",
+                      "payer_document",
+                      "buyer_document",
+                    ].includes(value)
                   ) {
                     delete query.initial_date;
                     delete query.final_date;
                   } else {
                     setQuery((state) => ({
-                      initial_date: moment(new Date()).format(
-                        "YYYY-MM-DDTHH:mm:ss.SSS"
-                      ),
+                      initial_date: moment(new Date())
+                        .startOf("day")
+                        .add(3, "hours")
+                        .format("YYYY-MM-DDTHH:mm:ss.SSS"),
                       final_date: moment(new Date())
-                        .add(1, "hour")
+                        .add(1, "day")
+                        .startOf("day")
+                        .add(3, "hours")
                         .format("YYYY-MM-DDTHH:mm:ss.SSS"),
                       ...state,
                     }));
@@ -295,8 +305,8 @@ export const GeneratedDeposits = () => {
               justifyContent: "center",
               width: "100%",
             }}
+            icon={<FilterAltOffOutlinedIcon />}
           >
-            <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
             {t("table.clear_filters")}
           </Button>
         </Col>
@@ -317,6 +327,7 @@ export const GeneratedDeposits = () => {
                 justifyContent: "center",
                 width: "100%",
               }}
+              icon={<SendOutlined />}
             >
               {t("modal.resend_webhook")}
             </Button>
@@ -343,8 +354,9 @@ export const GeneratedDeposits = () => {
                 size="large"
                 loading={GeneratedDepositsReportsIsLoading}
                 disabled={!depositsRows?.items.length || depositsRowsError}
+                icon={<FileAddOutlined style={{ fontSize: 22 }} />}
               >
-                <FileAddOutlined style={{ fontSize: 22 }} /> CSV
+                CSV
               </Button>
             </Tooltip>
           </Col>
@@ -484,7 +496,7 @@ export const GeneratedDeposits = () => {
               "WAITING_REFUND",
             ],
             gender: ["MALE", "FEMALE", "OTHER"],
-            pix_type: ["STANDARD", "FASTPIX"]
+            pix_type: ["STANDARD", "FASTPIX"],
           }}
           startDateKeyName="initial_date"
           endDateKeyName="final_date"

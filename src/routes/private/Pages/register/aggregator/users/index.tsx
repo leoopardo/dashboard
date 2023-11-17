@@ -4,6 +4,7 @@ import {
   EditOutlined,
   EyeFilled,
   FileAddOutlined,
+  FilterOutlined,
   InfoCircleOutlined,
   UserAddOutlined,
 } from "@ant-design/icons";
@@ -38,7 +39,7 @@ const INITIAL_QUERY: PartnerQuery = {
 };
 
 export const AggregatorUsers = () => {
-  const { permissions } = queryClient.getQueryData(
+  const { permissions, aggregator_id } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
   const [query, setQuery] = useState<PartnerQuery>(INITIAL_QUERY);
@@ -99,6 +100,25 @@ export const AggregatorUsers = () => {
   const refStatus = useRef(null);
   const refCreatedAt = useRef(null);
 
+  const filters = aggregator_id
+    ? [
+        "start_date",
+        "end_date",
+        "status",
+        "partner_id",
+        "merchant_id",
+        "operator_id",
+      ]
+    : [
+        "start_date",
+        "end_date",
+        "status",
+        "partner_id",
+        "merchant_id",
+        "aggregator_id",
+        "operator_id",
+      ];
+
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid
@@ -113,6 +133,7 @@ export const AggregatorUsers = () => {
             style={{ width: "100%" }}
             loading={isUsersDataFetching}
             type="primary"
+            icon={<FilterOutlined />}
             onClick={() => setIsFiltersOpen(true)}
           >
             {t("table.filters")}
@@ -157,6 +178,7 @@ export const AggregatorUsers = () => {
             onClick={() => {
               setQuery(INITIAL_QUERY);
             }}
+            icon={<FilterAltOffOutlinedIcon />}
             style={{
               width: "100%",
               display: "flex",
@@ -164,7 +186,6 @@ export const AggregatorUsers = () => {
               justifyContent: "center",
             }}
           >
-            <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
             {t("table.clear_filters")}
           </Button>
         </Grid>
@@ -185,8 +206,10 @@ export const AggregatorUsers = () => {
                 alignItems: "center",
                 justifyContent: "center",
               }}
+              icon={
+                <UserAddOutlined style={{ marginRight: 10, fontSize: 22 }} />
+              }
             >
-              <UserAddOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
               {`${t("buttons.create")} ${t("buttons.new_user")}`}
             </Button>
           </Grid>
@@ -210,8 +233,9 @@ export const AggregatorUsers = () => {
                 size="large"
                 loading={isUsersDataFetching}
                 disabled={UsersData?.total === 0 || UsersDataError}
+                icon={<FileAddOutlined style={{ fontSize: 22 }} />}
               >
-                <FileAddOutlined style={{ fontSize: 22 }} /> CSV
+                CSV
               </Button>
             </Tooltip>
           </Grid>
@@ -220,7 +244,6 @@ export const AggregatorUsers = () => {
 
       <Grid container style={{ marginTop: "15px" }}>
         <Grid item xs={12}>
-          {" "}
           <CustomTable
             query={query}
             setCurrentItem={setCurrentItem}
@@ -254,16 +277,24 @@ export const AggregatorUsers = () => {
                 name: ["permission_group", "name"],
                 head: "group",
                 type: "text",
-                key: refGroup, sort: true, sort_name: "group_name"
+                key: refGroup,
+                sort: true,
+                sort_name: "group_name",
               },
               {
                 name: ["aggregator", "name"],
                 head: "aggregator",
                 type: "text",
                 key: refPartner,
-                sort: true, sort_name: "aggregator_name"
+                sort: true,
+                sort_name: "aggregator_name",
               },
-              { name: "last_signin_date", type: "date", key: refLast, sort: true },
+              {
+                name: "last_signin_date",
+                type: "date",
+                key: refLast,
+                sort: true,
+              },
               { name: "status", type: "status", key: refStatus, sort: true },
               {
                 name: "created_at",
@@ -284,15 +315,7 @@ export const AggregatorUsers = () => {
           setOpen={setIsFiltersOpen}
           query={query}
           setQuery={setQuery}
-          filters={[
-            "start_date",
-            "end_date",
-            "status",
-            "partner_id",
-            "merchant_id",
-            "aggregator_id",
-            "operator_id",
-          ]}
+          filters={filters}
           refetch={refetchUsersData}
           selectOptions={{}}
           startDateKeyName="start_date"
@@ -414,7 +437,7 @@ export const AggregatorUsers = () => {
           description: t("wiki.aggregator_users_description"),
         }}
       />
-       <ExportCustomReportsModal
+      <ExportCustomReportsModal
         open={isExportReportsOpen}
         setOpen={setIsExportReportsOpen}
         disabled={UsersData?.total === 0 || UsersDataError}

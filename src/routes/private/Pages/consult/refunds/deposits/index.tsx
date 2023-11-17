@@ -1,19 +1,25 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { EyeFilled, ShopOutlined } from "@ant-design/icons";
+import {
+  EyeFilled,
+  FileAddOutlined,
+  FilterOutlined,
+  ShopOutlined,
+} from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import ReplayIcon from "@mui/icons-material/Replay";
 import { Grid } from "@mui/material";
 import { Search } from "@src/components/Inputs/search";
 import { Confirmation } from "@src/components/Modals/confirmation";
-import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
+import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
 import { Toast } from "@src/components/Toast";
 import { useCreateDepositrefund } from "@src/services/consult/refund/refundDeposits/createRefund";
+import { useGetRefundDepositsReportFields } from "@src/services/consult/refund/refundDeposits/getReportFields";
 import { useUpatePayToMerchant } from "@src/services/consult/refund/refundDeposits/updateRefundToMerchant";
 import { queryClient } from "@src/services/queryClient";
 import { useCreateRefundDepositsReports } from "@src/services/reports/consult/refund/deposit/createRefundDepositReports";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Select } from "antd";
+import { Button, Select, Tooltip } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -84,12 +90,23 @@ export const RefundDeposits = () => {
   const { payToMerchantSuccess, payToMerchanterror, payToMerchantMutate } =
     useUpatePayToMerchant(currentItem?._id);
 
+  const [csvFields, setCsvFields] = useState<any>();
+  const [isComma, setIsComma] = useState<boolean>(true);
+  const [isExportReportsOpen, setIsExportReportsOpen] =
+    useState<boolean>(false);
+
+  const { fields } = useGetRefundDepositsReportFields();
+
   const {
     RefundDepositsReportsError,
     RefundDepositsReportsIsLoading,
     RefundDepositsReportsIsSuccess,
     RefundDepositsReportsMutate,
-  } = useCreateRefundDepositsReports(query);
+  } = useCreateRefundDepositsReports({
+    ...query,
+    fields: { ...csvFields },
+    comma_separate_value: isComma,
+  });
 
   const columns: ColumnInterface[] = [
     { name: "pix_id", type: "id" },
@@ -134,6 +151,7 @@ export const RefundDeposits = () => {
             }
             type="primary"
             onClick={() => setIsFiltersOpen(true)}
+            icon={<FilterOutlined />}
           >
             {t("table.filters")}
           </Button>
@@ -165,7 +183,7 @@ export const RefundDeposits = () => {
               delete query.rtrid;
               delete query.buyer_document;
               delete query.buyer_name;
-              if (["pix_id", "endToEndId", "txid", "rtrid"].includes(value)) {
+              if (["pix_id", "endToEndId", "txid", "rtrid", "buyer_document"].includes(value)) {
                 delete query.start_date;
                 delete query.end_date;
               } else {
@@ -218,25 +236,39 @@ export const RefundDeposits = () => {
               justifyContent: "center",
               width: "100%",
             }}
+            icon={<FilterAltOffOutlinedIcon />}
           >
-            <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
             {t("table.clear_filters")}
           </Button>
         </Grid>
         {permissions?.report?.chargeback?.deposit_chargeback
           ?.report_chargeback_deposit_chargeback_export_csv && (
           <Grid item xs={12} md="auto">
-            <ExportReportsModal
-              disabled={
+            <Tooltip
+              placement="topLeft"
+              title={
                 refundDepositsRows?.items.length === 0 ||
                 refundDepositsRowsError
+                  ? t("messages.no_records_to_export")
+                  : t("messages.export_csv")
               }
-              mutateReport={() => RefundDepositsReportsMutate()}
-              error={RefundDepositsReportsError}
-              success={RefundDepositsReportsIsSuccess}
-              loading={RefundDepositsReportsIsLoading}
-              reportPath="/consult/refunds/refund_reports/refund_deposits_reports"
-            />
+              arrow
+            >
+              <Button
+                onClick={() => setIsExportReportsOpen(true)}
+                style={{ width: "100%" }}
+                shape="round"
+                type="dashed"
+                size="large"
+                loading={isRefundDepositsRowsFetching}
+                disabled={
+                  !refundDepositsRows?.items.length || refundDepositsRowsError
+                }
+                icon={<FileAddOutlined style={{ fontSize: 22 }} />}
+              >
+                CSV
+              </Button>
+            </Tooltip>
           </Grid>
         )}
       </Grid>
@@ -245,6 +277,7 @@ export const RefundDeposits = () => {
         <Grid item xs={12}>
           <CustomTable
             query={query}
+            error={refundDepositsRowsError}
             setCurrentItem={setCurrentItem}
             setQuery={setQuery}
             data={refundDepositsRows}
@@ -284,6 +317,23 @@ export const RefundDeposits = () => {
           />
         </Grid>
       </Grid>
+
+      <ExportCustomReportsModal
+        open={isExportReportsOpen}
+        setOpen={setIsExportReportsOpen}
+        disabled={!refundDepositsRows?.items.length || refundDepositsRowsError}
+        mutateReport={() => RefundDepositsReportsMutate()}
+        error={RefundDepositsReportsError}
+        success={RefundDepositsReportsIsSuccess}
+        loading={RefundDepositsReportsIsLoading}
+        reportPath="/consult/refunds/refund_reports/refund_deposits_reports"
+        fields={fields}
+        csvFields={csvFields}
+        setCsvFields={setCsvFields}
+        comma={isComma}
+        setIsComma={setIsComma}
+        reportName="RefundDepositsReportsFields"
+      />
 
       {isRefundModalOpen && (
         <Confirmation

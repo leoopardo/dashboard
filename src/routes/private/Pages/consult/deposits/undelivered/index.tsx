@@ -1,17 +1,24 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { EyeFilled, SendOutlined, SettingFilled } from "@ant-design/icons";
+import {
+  EyeFilled,
+  FileAddOutlined,
+  FilterOutlined,
+  SendOutlined,
+  SettingFilled,
+} from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { Search } from "@src/components/Inputs/search";
-import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
+import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
 import { Toast } from "@src/components/Toast";
 import { useCreateSendWebhook } from "@src/services/consult/deposits/generatedDeposits/resendWebhook";
+import { useGetDepositReportFields } from "@src/services/consult/deposits/reportCsvFields/getReportFields";
 import { queryClient } from "@src/services/queryClient";
 import { useCreateGeneratedDepositsReports } from "@src/services/reports/consult/deposits/createGeneratedDepositsReports";
 import { ResendWebhookBody } from "@src/services/types/consult/deposits/createResendWebhook.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Select, Tabs } from "antd";
+import { Button, Select, Tabs, Tooltip } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -62,12 +69,21 @@ export const UndeliveredDeposits = () => {
     depositsRowsError,
   } = useGetRowsGeneratedDeposits(query);
 
+  const [csvFields, setCsvFields] = useState<any>();
+  const [isComma, setIsComma] = useState<boolean>(true);
+  const [isExportReportsOpen, setIsExportReportsOpen] =
+    useState<boolean>(false);
+  const { fields } = useGetDepositReportFields();
   const {
     GeneratedDepositsReportsError,
     GeneratedDepositsReportsIsLoading,
     GeneratedDepositsReportsIsSuccess,
     GeneratedDepositsReportsMutate,
-  } = useCreateGeneratedDepositsReports(query);
+  } = useCreateGeneratedDepositsReports({
+    ...query,
+    fields: { ...csvFields },
+    comma_separate_value: isComma,
+  });
 
   useEffect(() => {
     refetchDepositsTotalRows();
@@ -136,6 +152,7 @@ export const UndeliveredDeposits = () => {
             loading={isDepositsRowsFetching || isDepositsTotalFetching}
             type="primary"
             onClick={() => setIsFiltersOpen(true)}
+            icon={<FilterOutlined />}
           >
             {t("table.filters")}
           </Button>
@@ -172,7 +189,14 @@ export const UndeliveredDeposits = () => {
               delete query.description;
 
               if (
-                ["pix_id", "endToEndId", "txid", "reference_id"].includes(value)
+                [
+                  "pix_id",
+                  "endToEndId",
+                  "txid",
+                  "reference_id",
+                  "payer_document",
+                  "buyer_document",
+                ].includes(value)
               ) {
                 delete query.initial_date;
                 delete query.final_date;
@@ -227,8 +251,8 @@ export const UndeliveredDeposits = () => {
               width: "100%",
               justifyContent: "center",
             }}
+            icon={<FilterAltOffOutlinedIcon />}
           >
-            <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
             {t("table.clear_filters")}
           </Button>
         </Grid>
@@ -249,6 +273,7 @@ export const UndeliveredDeposits = () => {
                 justifyContent: "center",
                 width: "100%",
               }}
+              icon={<SendOutlined />}
             >
               {t("modal.resend_webhook")}
             </Button>
@@ -257,14 +282,28 @@ export const UndeliveredDeposits = () => {
         {permissions.report.deposit.undelivered_deposit
           .report_deposit_undelivered_deposit_export_csv && (
           <Grid item xs={12} md={1} lg={1}>
-            <ExportReportsModal
-              disabled={depositsRows?.items.length === 0 || depositsRowsError}
-              mutateReport={() => GeneratedDepositsReportsMutate()}
-              error={GeneratedDepositsReportsError}
-              success={GeneratedDepositsReportsIsSuccess}
-              loading={GeneratedDepositsReportsIsLoading}
-              reportPath="/consult/deposit/deposits_reports/generated_deposits_reports"
-            />
+            <Tooltip
+              placement="topLeft"
+              title={
+                depositsRows?.items.length === 0 || depositsRowsError
+                  ? t("messages.no_records_to_export")
+                  : t("messages.export_csv")
+              }
+              arrow
+            >
+              <Button
+                onClick={() => setIsExportReportsOpen(true)}
+                style={{ width: "100%" }}
+                shape="round"
+                type="dashed"
+                size="large"
+                loading={GeneratedDepositsReportsIsLoading}
+                disabled={!depositsRows?.items.length || depositsRowsError}
+                icon={<FileAddOutlined style={{ fontSize: 22 }} />}
+              >
+                CSV
+              </Button>
+            </Tooltip>
           </Grid>
         )}
       </Grid>
@@ -476,6 +515,22 @@ export const UndeliveredDeposits = () => {
         actionError={t("messages.create")}
         error={ResendWebError}
         success={ResendWebIsSuccess}
+      />
+      <ExportCustomReportsModal
+        open={isExportReportsOpen}
+        setOpen={setIsExportReportsOpen}
+        disabled={!depositsRows?.items.length || depositsRowsError}
+        mutateReport={() => GeneratedDepositsReportsMutate()}
+        error={GeneratedDepositsReportsError}
+        success={GeneratedDepositsReportsIsSuccess}
+        loading={GeneratedDepositsReportsIsLoading}
+        reportPath="/consult/deposit/deposits_reports/generated_deposits_reports"
+        fields={fields}
+        csvFields={csvFields}
+        setCsvFields={setCsvFields}
+        comma={isComma}
+        setIsComma={setIsComma}
+        reportName="depositReportsFields"
       />
     </Grid>
   );

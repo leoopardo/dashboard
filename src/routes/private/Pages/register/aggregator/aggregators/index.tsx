@@ -4,13 +4,13 @@ import {
   EditOutlined,
   EyeFilled,
   FileAddOutlined,
+  FilterOutlined,
   InfoCircleOutlined,
   UserAddOutlined,
 } from "@ant-design/icons";
 import { CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
-import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { Search } from "@src/components/Inputs/search";
 import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
@@ -31,6 +31,7 @@ import {
 } from "@src/services/types/register/aggregators/aggregators.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
 import { defaultTheme } from "@src/styles/defaultTheme";
+import { RemoveFiltersIcon } from "@src/styles/styles";
 import { Button, Tooltip, Typography } from "antd";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -171,7 +172,7 @@ export const Aggregators = () => {
       <Grid
         container
         style={{ display: "flex", alignItems: "center" }}
-        mt={user.aggregator_id ? "-40px" : !isMobile? "-80px" : undefined}
+        mt={user.aggregator_id ? "-40px" : !isMobile ? "-80px" : undefined}
         spacing={1}
       >
         <Grid item xs={12} md={4} lg={2}>
@@ -182,6 +183,7 @@ export const Aggregators = () => {
             loading={isAggregatorsDataFetching}
             type="primary"
             onClick={() => setIsFiltersOpen(true)}
+            icon={<FilterOutlined />}
           >
             {t("table.filters")}
           </Button>
@@ -209,6 +211,7 @@ export const Aggregators = () => {
             onClick={() => {
               setQuery(INITIAL_QUERY);
             }}
+            icon={<RemoveFiltersIcon />}
             style={{
               height: 40,
               width: "100%",
@@ -217,7 +220,6 @@ export const Aggregators = () => {
               justifyContent: "center",
             }}
           >
-            <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
             {t("table.clear_filters")}
           </Button>
         </Grid>
@@ -231,6 +233,9 @@ export const Aggregators = () => {
                 AggregatorReset();
                 setIsNewCategorieModal(true);
               }}
+              icon={
+                <UserAddOutlined style={{ marginRight: 10, fontSize: 22 }} />
+              }
               style={{
                 height: 40,
                 width: "100%",
@@ -239,7 +244,6 @@ export const Aggregators = () => {
                 justifyContent: "center",
               }}
             >
-              <UserAddOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
               {`${t("buttons.create")} ${t("buttons.new_aggregator")}`}
             </Button>
           </Grid>
@@ -258,13 +262,14 @@ export const Aggregators = () => {
               <Button
                 onClick={() => setIsExportReportsOpen(true)}
                 style={{ width: "100%" }}
+                icon={<FileAddOutlined style={{ fontSize: 22 }} />}
                 shape="round"
                 type="dashed"
                 size="large"
                 loading={isAggregatorsDataFetching}
                 disabled={AggregatorsData?.total === 0 || AggregatorsDataError}
               >
-                <FileAddOutlined style={{ fontSize: 22 }} /> CSV
+                CSV
               </Button>
             </Tooltip>
           </Grid>

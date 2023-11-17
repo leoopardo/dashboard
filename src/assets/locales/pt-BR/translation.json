@@ -1,5 +1,6 @@
 {
   "menus": {
+    "login": "",
     "consult": "Consultas",
     "organization": "Organização",
     "register": "Cadastro",
@@ -222,6 +223,7 @@
     "value_chart_area": "Gráfico de valores",
     "operations_number_chart_area": "Gráfico de número de operações",
     "operation_approve": "Deseja aprovar os lançamentos selecionados?",
+    "no_cellphone": "Você deve adicionar um número de telefone ao seu usuário. Para isso, acesse 'Editar usuário' no canto superior esquerdo da tela.",
     "10000": "Operação realizada com sucesso",
     "10001": "Transação não paga",
     "10002": "Transação paga, notificação enviada...",
@@ -288,7 +290,8 @@
     "light": "Tema claro",
     "responsible": "responsável",
     "help": "Ajuda",
-    "confirm_import": "Confirmar importação"
+    "confirm_import": "Confirmar importação",
+    "merchant_blacklist_details": "Detalhes de blacklist de empresas"
   },
   "modal": {
     "confirm": "Confirmar",
@@ -423,7 +426,7 @@
     "fastpix_qr_code_expire_seconds": "Tempo expiração QRCode FastPIX (segundos)",
     "category_id": "Categoria",
     "password_type": "A senha deve conter no mínimo 8 caracteres, incluindo pelo menos 1 número, 1 letra maiúscula e 1 caractere especial.",
-    "merchant_id": "nome da empresa",
+    "merchant_id": "Empresa",
     "reason": "motivo",
     "domain": "domínio",
     "active_logo": "Logo ativo",
@@ -457,7 +460,7 @@
     "canceled": "Cancelado",
     "refunded": "Devolvido",
     "expired": "Expirado",
-    "merchant_id": "ID Empresa",
+    "merchant_id": "Empresa",
     "partner_name": "Plataforma",
     "partner_id": "ID Plataforma",
     "details": "Detalhes",
@@ -502,7 +505,7 @@
     "in_analysis": "Em análise",
     "created": "Criado",
     "receiver_name": "Nome do recebedor",
-    "receiver_document": "Documento",
+    "receiver_document": "Documento do recebedor",
     "pix_key_type": "Tipo de chave PIX",
     "pix_key": "Chave PIX",
     "receiver_birth_date": "Data de nascimento",
@@ -873,7 +876,13 @@
     "pix_type": "Tipo de pix",
     "standard": "Regular",
     "unassigned": "Não atribuido",
-    "required_date": "Data de solicitação"
+    "required_date": "Data de solicitação",
+    "access_key": "Chave de acesso",
+    "access_secret": "Chave de acesso secreta",
+    "merchant_blacklist": "Blacklist de empresa",
+    "international": "Internacional",
+    "receiver_bank_client_document": "Documento do cliente do banco",
+    "receiver_bank_client_name": "Nome do cliente do banco"
   },
   "actions": {
     "details": "Detalhes",
@@ -947,7 +956,7 @@
     "remove_filters": "Remoção de filtros",
     "remove_filters_description": "Remova os filtros aplicados e volte a busca para o estado inicial.",
     "register_users": "Cadastre usuários.",
-    "register_users_descriptions": "Cadastre novos usuários para acessar o painel da sua organização e defina suas permissões.",
+    "register_users_descriptions": "Cadastre novos usuários para acessar o painel.",
     "generate_reports": "Gere relatórios",
     "generate_reports_descriptions": "Gere relatórios dos registros encontrados de acordo com os filtros selecionados. O relatório poderá ser baixado na pagina:",
     "id_description": "Número de identificação no banco de dados",
@@ -1034,6 +1043,13 @@
     "bank_blocked_value_description": "Traz o valor bloqueado para operações futuras da Organização que foi resguardado pela IP.",
     "bank_chart_description": "Altera a vizualização do Grid para um gráfico em barras.",
     "bank_card_description": "Altera a vizualização do Grid para cards de bancos.",
-    "last_sign_in_description": "Data do ultimo acesso do usuário junto ao sistema."
+    "last_sign_in_description": "Data do ultimo acesso do usuário junto ao sistema.",
+
+    "operators_description": "Através desta funcionalidade, são cadastrados os Operadores no sistema. Também é possível validar os já cadastrados e editar os mesmos quando necessário.",
+    "register_operator": "Criar novo operador",
+    "register_operator_description": "Através deste é realizado o cadastro de um novo Operador no sistema. Será aberto um modal que solicita todas as informações necessárias para cadastro. Após a inserção das mesmas o cadastro é realizado.",
+    "operator_users":"Usuários operadores.",
+    "operator_users_description": "Através desta funcionalidade são cadastrados os usuários que pertencem à algum Operador. Suas permissões de execuções e visualizações dependerão das configurações realizadas pela Organização.",
+    "operator_description": "Operador a qual o usuário está vinculado."
   }
 }

@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ReloadOutlined, EyeFilled } from "@ant-design/icons";
+import { ReloadOutlined, EyeFilled, FilterOutlined } from "@ant-design/icons";
 import { Grid } from "@mui/material";
 import { CustomTable } from "@src/components/CustomTable";
 import { FiltersModal } from "@src/components/FiltersModal";
@@ -87,11 +87,12 @@ export const MerchantBankStatement = () => {
             style={{ width: "100%" }}
             type="primary"
             onClick={() => setIsFiltersOpen(true)}
+            icon={<FilterOutlined />}
           >
             {t("table.filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={4} lg={5}>
+        <Grid item xs={12} md={6} lg={6}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
@@ -112,24 +113,10 @@ export const MerchantBankStatement = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={2} lg={2}>
-          <Button
-            style={{ width: "100%" }}
-            type="primary"
-            size="large"
-            loading={isMerchantBankStatementTotalsFetching}
-            onClick={() => {
-              refetchMerchantTransactionsTotal();
-              refetchMerchantBankStatementTotalsTotal();
-            }}
-          >
-            <ReloadOutlined /> {t("buttons.refresh")}
-          </Button>
-        </Grid>
 
         {permissions.report.merchant.extract
           .report_merchant_extract_export_csv && (
-          <Grid item xs={12} md="auto" lg={1}>
+          <Grid item xs={12} md={1} >
             <ExportReportsModal
               disabled={
                 !MerchantTransactions?.total || MerchantTransactionsError
@@ -142,6 +129,19 @@ export const MerchantBankStatement = () => {
             />
           </Grid>
         )}
+        <Grid item xs={12} md="auto">
+          <Button
+            style={{ width: "100%" }}
+            type="link"
+            size="large"
+            loading={isMerchantBankStatementTotalsFetching}
+            onClick={() => {
+              refetchMerchantTransactionsTotal();
+              refetchMerchantBankStatementTotalsTotal();
+            }}
+            icon={<ReloadOutlined />}
+          ></Button>
+        </Grid>
       </Grid>
 
       <Totalizers query={query} />
@@ -202,7 +202,6 @@ export const MerchantBankStatement = () => {
               { name: "transaction_type", type: "translate" },
               { name: "fee_type", type: "translate" },
               { name: "value", type: "value" },
-              { name: "fee_percent", type: "text" },
               { name: "fee", type: "value" },
             ]}
             actions={[

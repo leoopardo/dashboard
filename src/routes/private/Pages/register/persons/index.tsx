@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { EditOutlined, EyeFilled, UserAddOutlined } from "@ant-design/icons";
+import { EditOutlined, EyeFilled, FilterOutlined, UserAddOutlined } from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
@@ -113,6 +113,7 @@ export const Persons = () => {
             loading={isPersonsDataFetching}
             type="primary"
             onClick={() => setIsFiltersOpen(true)}
+            icon={<FilterOutlined />}
           >
             {t("table.filters")}
           </Button>
@@ -166,8 +167,8 @@ export const Persons = () => {
               alignItems: "center",
               justifyContent: "center",
             }}
+            icon={<FilterAltOffOutlinedIcon  />}
           >
-            <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
             {t("table.clear_filters")}
           </Button>
         </Grid>
@@ -186,8 +187,8 @@ export const Persons = () => {
                 alignItems: "center",
                 justifyContent: "center",
               }}
+              icon={<UserAddOutlined style={{  fontSize: 22 }} />}
             >
-              <UserAddOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
               {`${t("buttons.create")} ${t("buttons.person")}`}
             </Button>
           </Grid>

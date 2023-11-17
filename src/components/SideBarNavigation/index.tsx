@@ -64,6 +64,7 @@ export const SidebarNavigation = () => {
 
   function handleNavigate(pathArray: string[]) {
     navigate(pathArray.reverse().join("/"));
+    handleChangeSidebar(false)
   }
 
   function getItem(
@@ -1017,7 +1018,7 @@ export const SidebarNavigation = () => {
               {
                 display:
                   permissions?.transactions?.merchant?.manual_transactions
-                    ?.menu && type !== 3
+                    ?.menu
                     ? undefined
                     : "none",
               }
@@ -1813,7 +1814,7 @@ export const SidebarNavigation = () => {
 
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
-    handleChangeSidebar(collapsed);
+    handleChangeSidebar(!collapsed);
   };
 
   return (

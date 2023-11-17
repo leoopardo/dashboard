@@ -1,5 +1,6 @@
 {
   "menus": {
+    "login": "",
     "consult": "Consult",
     "organization": "Organization",
     "register": "Register",
@@ -219,6 +220,7 @@
     "value_chart_area": "Value chart area",
     "operations_number_chart_area": "Operation number chart area",
     "operation_approve": "Do you want to approve the selected operations?",
+    "no_cellphone": "You should add a phone number to your user account. To do so, navigate to ‘Edit User’ in the top left corner of the screen.",
     "10000": "Operation performed successfully",
     "10001": "Transaction not Paid",
     "10002": "Transaction Paid, Notification Sent...",
@@ -285,7 +287,8 @@
     "light": "Light theme",
     "responsible": "responsible",
     "help": "Help",
-    "confirm_import": "Confirm import"
+    "confirm_import": "Confirm import",
+    "merchant_blacklist_details": "Merchants blacklist details"
   },
   "input": {
     "required": "Please input the {{field}}",
@@ -865,7 +868,13 @@
     "row": "Row",
     "pix_type": "Tipo de pix",
     "standard": "Standard",
-    "unassigned": "Unassigned"
+    "unassigned": "Unassigned",
+    "access_key": "Access key",
+    "access_secret": "Access secret",
+    "merchant_blacklist": "Merchants blacklist",
+    "international": "International",
+    "receiver_bank_client_document": "Receiver bank client document",
+    "receiver_bank_client_name": "Receiver bank client name"
   },
   "actions": {
     "details": "Details",
@@ -1025,5 +1034,6 @@
     "bank_chart_description": "Switches the view from Grid to a bar chart.",
     "bank_card_description": "Switches the view from Grid to bank cards.",
     "last_sign_in_description": "User's last access date to the system."
+
   }
 }

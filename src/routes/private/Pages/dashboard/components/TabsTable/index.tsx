@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   BarChartOutlined,
   DashOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
 import { queryClient } from "@src/services/queryClient";
-import { Button, Col, Row, Tabs, Typography } from "antd";
+import { Button, Col, Divider, Row, Tabs, Typography } from "antd";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import secureLocalStorage from "react-secure-storage";
@@ -29,7 +30,11 @@ export const TabsTable = ({ query }: TableProps) => {
     <>
       <Row gutter={[8, 8]}>
         <Col span={22}>
-          <Typography.Title level={3}>Ranking</Typography.Title>
+          <Divider orientation="left">
+            <Typography.Title level={3}>
+              Ranking <Typography.Text>(top 10)</Typography.Text>
+            </Typography.Title>
+          </Divider>
         </Col>
         <Col span={1}>
           <Button

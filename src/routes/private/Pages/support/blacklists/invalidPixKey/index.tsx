@@ -1,11 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { CheckCircleOutlined } from "@ant-design/icons";
+import { CheckCircleOutlined, DeleteOutlined } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { CustomTable } from "@src/components/CustomTable";
 import { FiltersModal } from "@src/components/FiltersModal";
 import { FilterChips } from "@src/components/FiltersModal/filterChips";
-import { Search } from "@src/components/Inputs/search";
 import { Toast } from "@src/components/Toast";
 import { useCheckInvalidPixKey } from "@src/services/support/blacklists/invalidPixKey/checkPixKey";
 import { useGetInvalidPixKey } from "@src/services/support/blacklists/invalidPixKey/getInvalidPixKey";
@@ -13,28 +12,36 @@ import {
   ThirdPartItem,
   ThirdPartQuery,
 } from "@src/services/types/support/blacklists/thirdPartKey.interface";
-import { Button, Select } from "antd";
+import { Button, Input } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { ValidateInterface } from "@src/services/types/validate.interface";
+import { queryClient } from "@src/services/queryClient";
+import { useDeleteInvalidPixKey } from "@src/services/support/blacklists/invalidPixKey/deleteinvalidPixKey";
 
 export const InvalidPixKeyBlacklist = () => {
+  const { t } = useTranslation();
   const INITIAL_QUERY: ThirdPartQuery = {
     limit: 25,
     page: 1,
   };
+  const { type } = queryClient.getQueryData("validate") as ValidateInterface;
   const [query, setQuery] = useState<ThirdPartQuery>(INITIAL_QUERY);
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
-  const [searchOption, setSearchOption] = useState<string | undefined>(
-    undefined
-  );
+  const [confirmDelete, setConfirmDelete] = useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<ThirdPartItem | null>(null);
-  const { t } = useTranslation();
+  const [search, setSearch] = useState<string>("");
+  const { deleteInvalidPixKeyError, deleteInvalidPixKeyMutate, deleteInvalidPixKeyIsSuccess } =
+    useDeleteInvalidPixKey(currentItem?.pix_key);
   const {
     InvalidPixKey,
     InvalidPixKeyError,
     isInvalidPixKeyFetching,
     refetchInvalidPixKey,
-  } = useGetInvalidPixKey(query);
+  } = useGetInvalidPixKey(
+    query,
+    type === 2 || type === 1 || (type === 3 && search.length > 0)
+  );
 
   const { CheckError, CheckIsSuccess, CheckMutate } = useCheckInvalidPixKey(
     currentItem?._id
@@ -72,23 +79,28 @@ export const InvalidPixKeyBlacklist = () => {
         </Grid>
       </Grid>
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
-        <Grid item xs={12} md={2} lg={2}>
-          <Select
-            style={{ width: "100%" }}
-            size="large"
-            onChange={(value) => {
-              setSearchOption(value);
-            }}
-            value={searchOption}
-            placeholder={t("input.options")}
-            options={[{ value: "pix_key", label: t("table.pix_key") }]}
-          />
-        </Grid>
         <Grid item xs={12} md={4} lg={4}>
-          <Search
-            query={query}
-            setQuery={setQuery}
-            searchOption={searchOption}
+          <Input.Search
+            size="large"
+            placeholder="Pesquisa"
+            value={search}
+            style={{ width: "100%" }}
+            onChange={(event) => {
+              setSearch(event.target.value);
+            }}
+            onSearch={(value) =>
+              search
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                ? setQuery((state: any) => ({
+                    ...state,
+                    pix_key: value,
+                  }))
+                : setQuery((prevQuery) => {
+                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                    const { pix_key, ...updatedQuery } = prevQuery;
+                    return updatedQuery;
+                  })
+            }
           />
         </Grid>
         <Grid item xs={12} md={3} lg={2}>
@@ -99,7 +111,6 @@ export const InvalidPixKeyBlacklist = () => {
             size="large"
             onClick={() => {
               setQuery(INITIAL_QUERY);
-              setSearchOption(undefined);
             }}
             style={{
               width: "100%",
@@ -137,8 +148,17 @@ export const InvalidPixKeyBlacklist = () => {
                   CheckMutate();
                 },
               },
+              (type === 1 || type === 2) && {
+                label: "delete",
+                icon: <DeleteOutlined style={{ fontSize: "18px" }} />,
+                onClick: () => setConfirmDelete(true),
+              },
             ]}
-            label={["bank_name", "receiver_name", "pix_key"]}
+            isConfirmOpen={confirmDelete}
+            setIsConfirmOpen={setConfirmDelete}
+            itemToAction={currentItem?.pix_key}
+            onConfirmAction={() => deleteInvalidPixKeyMutate()}
+            label={["pix_key"]}
           />
         </Grid>
       </Grid>
@@ -163,6 +183,13 @@ export const InvalidPixKeyBlacklist = () => {
         actionError={t("messages.check")}
         error={CheckError}
         success={CheckIsSuccess}
+      />
+
+      <Toast
+        actionSuccess={t("messages.deleted")}
+        actionError={t("messages.delete")}
+        error={deleteInvalidPixKeyError}
+        success={deleteInvalidPixKeyIsSuccess}
       />
     </Grid>
   );

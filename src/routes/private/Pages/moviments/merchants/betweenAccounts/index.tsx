@@ -5,6 +5,7 @@ import {
   ArrowUpOutlined,
   DollarOutlined,
   EyeFilled,
+  FilterOutlined,
 } from "@ant-design/icons";
 import { CustomTable } from "@src/components/CustomTable";
 import { FiltersModal } from "@src/components/FiltersModal";
@@ -159,6 +160,7 @@ export const TransfersBetweenAccounts = () => {
             loading={false}
             type="primary"
             onClick={() => setIsFiltersOpen(true)}
+            icon={<FilterOutlined />}
           >
             {t("table.filters")}
           </Button>

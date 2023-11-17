@@ -7,9 +7,7 @@ export function useCreateRefundDepositsReports(body: ReportsQuery) {
   const { isLoading, error, mutate, isSuccess, reset } = useMutation<
   ReportsQuery | null | undefined
   >("CreateRefundDepositsReports", async () => {
-    const response = await api.post("refund/csv/pix", body, {
-      params: body,
-    });
+    const response = await api.post("refund/csv/pix", body, {});
     await queryClient.refetchQueries({ queryKey: ["RefundDepositsReports"] });
     return response.data;
   });

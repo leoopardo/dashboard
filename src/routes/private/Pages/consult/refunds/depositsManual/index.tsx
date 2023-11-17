@@ -4,6 +4,8 @@ import {
   DeleteOutlined,
   EditOutlined,
   EyeFilled,
+  FileAddOutlined,
+  FilterOutlined,
   ReloadOutlined,
   ShopOutlined,
 } from "@ant-design/icons";
@@ -12,12 +14,12 @@ import ReplayIcon from "@mui/icons-material/Replay";
 import { Grid } from "@mui/material";
 import { Search } from "@src/components/Inputs/search";
 import { Confirmation } from "@src/components/Modals/confirmation";
-import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
 import { useCreatePayToMerchantRefund } from "@src/services/consult/refund/refundDepositsManual/createPayToMerchant";
 import { useCreatePixManualRefund } from "@src/services/consult/refund/refundDepositsManual/createRefund";
 import { useDeletePixManualRefund } from "@src/services/consult/refund/refundDepositsManual/deleteRefund";
 import { useGetRefundStatusManual } from "@src/services/consult/refund/refundDepositsManual/getRefreshStatus";
+import { useGetRefundManualReportFields } from "@src/services/consult/refund/refundDepositsManual/getReportFields";
 import { useGetRefundDepositsManual } from "@src/services/consult/refund/refundDepositsManual/getRows";
 import { useGetTotalRefundDepositManual } from "@src/services/consult/refund/refundDepositsManual/getTotal";
 import { useUpdateMerchantRefund } from "@src/services/consult/refund/refundDepositsManual/updateMerchant";
@@ -28,7 +30,7 @@ import {
   refundManualDepositsQuery,
 } from "@src/services/types/consult/refunds/refundmanualDeposits.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Select } from "antd";
+import { Button, Select, Tooltip } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -40,6 +42,7 @@ import { FiltersModal } from "../../../../../../components/FiltersModal";
 import { FilterChips } from "../../../../../../components/FiltersModal/filterChips";
 import { ViewModal } from "../components/ViewModal";
 import { TotalizersCards } from "./components/TotalizersCards";
+import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
 
 const INITIAL_QUERY: refundManualDepositsQuery = {
   page: 1,
@@ -74,12 +77,22 @@ export const RefundDepositsManual = () => {
     refundDepositsManualError,
   } = useGetRefundDepositsManual(query);
 
+  const [csvFields, setCsvFields] = useState<any>();
+  const [isComma, setIsComma] = useState<boolean>(true);
+  const [isExportReportsOpen, setIsExportReportsOpen] =
+    useState<boolean>(false);
+
+  const { fields } = useGetRefundManualReportFields();
   const {
     RefundManualDepositsReportsError,
     RefundManualDepositsReportsIsLoading,
     RefundManualDepositsReportsIsSuccess,
     RefundManualDepositsReportsMutate,
-  } = useCreateRefundManualDepositsReports(query);
+  } = useCreateRefundManualDepositsReports({
+    ...query,
+    fields: { ...csvFields },
+    comma_separate_value: isComma,
+  });
 
   useEffect(() => {
     refetchRefundDepositsManual();
@@ -107,9 +120,8 @@ export const RefundDepositsManual = () => {
   const { isDeleteLoading, mutateDelete } = useDeletePixManualRefund(
     currentItem?._id
   );
-  const { refetchRefundStatusManual, isRefundStatusManualFetching } = useGetRefundStatusManual(
-    currentItem?._id
-  );
+  const { refetchRefundStatusManual, isRefundStatusManualFetching } =
+    useGetRefundStatusManual(currentItem?._id);
 
   const {
     mutateUpdateMerchant,
@@ -127,7 +139,7 @@ export const RefundDepositsManual = () => {
     { name: "value", type: "value" },
     { name: "payer_name", type: "text" },
     { name: "payer_document", type: "document" },
-    { name: "pix_type", head: "pixType",  type: "pix_type" },
+    { name: "pix_type", head: "pixType", type: "pix_type" },
     { name: "createdAt", type: "date" },
     { name: "refund_date", type: "date" },
     { name: "status", type: "status" },
@@ -160,6 +172,7 @@ export const RefundDepositsManual = () => {
             }
             type="primary"
             onClick={() => setIsFiltersOpen(true)}
+            icon={<FilterOutlined />}
           >
             {t("table.filters")}
           </Button>
@@ -185,7 +198,7 @@ export const RefundDepositsManual = () => {
               delete query.endToEndId;
               delete query.payer_document;
               delete query.payer_name;
-              if (["rtrid", "endToEndId"].includes(value)) {
+              if (["rtrid", "endToEndId", "payer_document"].includes(value)) {
                 delete query?.start_date;
                 delete query?.end_date;
               } else {
@@ -234,25 +247,40 @@ export const RefundDepositsManual = () => {
               justifyContent: "center",
               width: "100%",
             }}
+            icon={<FilterAltOffOutlinedIcon />}
           >
-            <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
             {t("table.clear_filters")}
           </Button>
         </Grid>
         {permissions?.report?.chargeback?.deposit_chargeback
           ?.report_chargeback_deposit_chargeback_export_csv && (
           <Grid item xs={12} md="auto">
-            <ExportReportsModal
-              disabled={
+            <Tooltip
+              placement="topLeft"
+              title={
                 refundDepositsManual?.items.length === 0 ||
                 refundDepositsManualError
+                  ? t("messages.no_records_to_export")
+                  : t("messages.export_csv")
               }
-              mutateReport={() => RefundManualDepositsReportsMutate()}
-              error={RefundManualDepositsReportsError}
-              success={RefundManualDepositsReportsIsSuccess}
-              loading={RefundManualDepositsReportsIsLoading}
-              reportPath="/consult/refunds/refund_reports/refund_manual_reports"
-            />
+              arrow
+            >
+              <Button
+                onClick={() => setIsExportReportsOpen(true)}
+                style={{ width: "100%" }}
+                shape="round"
+                type="dashed"
+                size="large"
+                loading={isRefundDepositsManualFetching}
+                disabled={
+                  !refundDepositsManual?.items.length ||
+                  refundDepositsManualError
+                }
+                icon={<FileAddOutlined style={{ fontSize: 22 }} />}
+              >
+                CSV
+              </Button>
+            </Tooltip>
           </Grid>
         )}
       </Grid>
@@ -266,7 +294,9 @@ export const RefundDepositsManual = () => {
             data={refundDepositsManual}
             items={refundDepositsManual?.items}
             columns={columns}
-            loading={isRefundDepositsManualFetching || isRefundStatusManualFetching}
+            loading={
+              isRefundDepositsManualFetching || isRefundStatusManualFetching
+            }
             error={refundDepositsManualError}
             refetch={() => {
               refetchRefundDepositsManual();
@@ -336,6 +366,26 @@ export const RefundDepositsManual = () => {
           />
         </Grid>
       </Grid>
+
+      <ExportCustomReportsModal
+        open={isExportReportsOpen}
+        setOpen={setIsExportReportsOpen}
+        disabled={
+          !refundDepositsManual?.items.length || refundDepositsManualError
+        }
+        mutateReport={() => RefundManualDepositsReportsMutate()}
+        error={RefundManualDepositsReportsError}
+        success={RefundManualDepositsReportsIsSuccess}
+        loading={RefundManualDepositsReportsIsLoading}
+        reportPath="/consult/refunds/refund_reports/refund_manual_reports"
+        fields={fields}
+        csvFields={csvFields}
+        setCsvFields={setCsvFields}
+        comma={isComma}
+        setIsComma={setIsComma}
+        reportName="RefundManulReportsFields"
+      />
+
       {isViewModalOpen && (
         <ViewModal
           open={isViewModalOpen}
@@ -418,7 +468,7 @@ export const RefundDepositsManual = () => {
             "aggregator_id",
             "aggregator_id",
             "operator_id",
-            "pix_type"
+            "pix_type",
           ]}
           refetch={refetchRefundDepositManualTotal}
           selectOptions={{

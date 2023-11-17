@@ -36,7 +36,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
         >
           <Card
             bordered={false}
-            style={{ height: isMobile ? "100px" : "120px" }}
+            style={{ height: isMobile ? undefined : "120px" }}
           >
             <Statistic
               loading={props.loading}
@@ -74,7 +74,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
         >
           <Card
             bordered={false}
-            style={{ height: isMobile ? "100px" : "120px" }}
+            style={{ height: isMobile ? undefined : "120px" }}
           >
             <Statistic
               loading={props.loading}
@@ -112,7 +112,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
         >
           <Card
             bordered={false}
-            style={{ height: isMobile ? "100px" : "120px" }}
+            style={{ height: isMobile ? undefined : "120px" }}
           >
             <Statistic
               loading={props.loading}
@@ -151,7 +151,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
         >
           <Card
             bordered={false}
-            style={{ height: isMobile ? "100px" : "120px" }}
+            style={{ height: isMobile ? undefined : "120px" }}
           >
             <Statistic
               loading={props.loading}
@@ -186,7 +186,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
         >
           <Card
             bordered={false}
-            style={{ height: isMobile ? "100px" : "120px" }}
+            style={{ height: isMobile ? undefined : "120px" }}
           >
             <Statistic
               loading={props.loading}
@@ -219,7 +219,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
         style={{ maxWidth: "220px" }}
         xs={{ span: isMobile ? 10 : undefined }}
       >
-        <Card bordered={false} style={{ height: isMobile ? "100px" : "120px" }}>
+        <Card bordered={false} style={{ height: isMobile ? undefined : "120px" }}>
           <Statistic
             loading={props.loading}
             title={<>

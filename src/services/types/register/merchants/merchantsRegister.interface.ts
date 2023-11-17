@@ -53,6 +53,26 @@ export interface MerchantsResponse {
   items: MerchantsItem[];
 }
 
+export interface MerchantByIdResponse {
+  aggregator: {id: number, name: string};
+  cnpj: string;
+  country: string;
+  created_at: string;
+  currency: string;
+  domain: string;
+  id: number;
+  language: string;
+  licenses: any[];
+  merchant_type: string;
+  name: string;
+  operator: {id: number, name: string};
+  organization_id: number;
+  partner: {id: number, name: string};
+  situation: string;
+  time_zone: string;
+  updated_at: string;
+}
+
 export interface MerchantsTotalResponse {
   registered_merchant_totals: number;
   active_merchant_totals: number;

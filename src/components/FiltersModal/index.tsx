@@ -285,6 +285,7 @@ export const FiltersModal = ({
                           ? dayjs(filtersQuery[endDateKeyName])
                           : dayjs(
                               moment(new Date())
+                                .add(1, "day")
                                 .startOf("day")
                                 .format("YYYY-MM-DDTHH:mm:00.000")
                             ),
@@ -564,7 +565,8 @@ export const FiltersModal = ({
                     />
                   </Form.Item>
                 );
-              } else return;
+              }
+              return;
 
             case "operator_id":
               if (

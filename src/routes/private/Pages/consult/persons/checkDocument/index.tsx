@@ -8,6 +8,8 @@ import { useTranslation } from "react-i18next";
 import ReactInputMask from "react-input-mask";
 import { useMediaQuery } from "react-responsive";
 import { ViewModal } from "./components/ViewModal";
+import { LockOutlined, SearchOutlined } from "@ant-design/icons";
+import { useGetCheckCpfDetails } from "@src/services/consult/persons/checkDocumentsDetails";
 
 export const CheckDocument = () => {
   const { t } = useTranslation();
@@ -21,6 +23,7 @@ export const CheckDocument = () => {
     refetchCheckCpfData,
     CheckCpfDataSuccess,
   } = useGetCheckCpf(search);
+  const merchantsBlacklistData = useGetCheckCpfDetails(search);
 
   return (
     <Grid container style={{ padding: "25px" }}>
@@ -41,7 +44,9 @@ export const CheckDocument = () => {
               loading={isCheckCpfDataFetching}
               onClickCapture={() => {
                 refetchCheckCpfData();
+                merchantsBlacklistData.refetchCheckCpfData();
               }}
+              icon={<SearchOutlined />}
             >
               {t("buttons.check")}
             </Button>
@@ -52,6 +57,7 @@ export const CheckDocument = () => {
             type="dashed"
             loading={isCheckCpfDataFetching}
             danger
+            icon={<FilterAltOffOutlinedIcon />}
             onClick={() => {
               setSearch("");
             }}
@@ -63,7 +69,6 @@ export const CheckDocument = () => {
               justifyContent: "center",
             }}
           >
-            <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
             {t("table.clear_filters")}
           </Button>
         </Grid>
@@ -77,7 +82,13 @@ export const CheckDocument = () => {
             justifyContent={"flex-end"}
             style={{ marginBottom: 10 }}
           >
-            <Button onClick={() => setIsViewModalOpen(true)}>{t('table.details')}</Button>
+            <Button
+              icon={<LockOutlined />}
+              size="large"
+              onClick={() => setIsViewModalOpen(true)}
+            >
+              {t("buttons.merchant_blacklist_details")}
+            </Button>
           </Grid>
         )}
         <Grid item xs={12}>
@@ -161,6 +172,37 @@ export const CheckDocument = () => {
                     );
                 }
               })}
+            {merchantsBlacklistData?.CheckCpfData?.total && (
+              <>
+                {merchantsBlacklistData?.CheckCpfData?.total > 0 ? (
+                  <Descriptions.Item
+                    key={"merchant_blacklist"}
+                    label={t(`table.merchant_blacklist`)}
+                    labelStyle={{
+                      maxWidth: "120px !important",
+                      margin: 0,
+                      padding: 0,
+                      textAlign: "center",
+                    }}
+                  >
+                    {t("table.true")}
+                  </Descriptions.Item>
+                ) : (
+                  <Descriptions.Item
+                    key={"merchant_blacklist"}
+                    label={t(`table.merchant_blacklist`)}
+                    labelStyle={{
+                      maxWidth: "120px !important",
+                      margin: 0,
+                      padding: 0,
+                      textAlign: "center",
+                    }}
+                  >
+                    {t("table.false")}
+                  </Descriptions.Item>
+                )}
+              </>
+            )}
           </Descriptions>
         </Grid>
       </Grid>

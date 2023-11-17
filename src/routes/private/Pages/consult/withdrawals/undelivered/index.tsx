@@ -1,19 +1,26 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { EyeFilled, SendOutlined, SettingFilled } from "@ant-design/icons";
+import {
+  EyeFilled,
+  FileAddOutlined,
+  FilterOutlined,
+  SendOutlined,
+  SettingFilled,
+} from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { Search } from "@src/components/Inputs/search";
-import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
+import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
 import { Toast } from "@src/components/Toast";
 import { useGetRowsGeneratedWithdrawals } from "@src/services/consult/withdrawals/generatedWithdrawals/getRows";
 import { useGetTotalGeneratedWithdrawals } from "@src/services/consult/withdrawals/generatedWithdrawals/getTotal";
 import { useCreateSendWithdrawWebhook } from "@src/services/consult/withdrawals/generatedWithdrawals/resendWebhook";
+import { useGetWithdrawReportFields } from "@src/services/consult/withdrawals/reportCsvFields/getReportFields";
 import { queryClient } from "@src/services/queryClient";
 import { useCreateGeneratedWithdrawalsReports } from "@src/services/reports/consult/withdrawals/generated/createGeneratedWithdrawalsReports";
 import { ResendWebhookBody } from "@src/services/types/consult/deposits/createResendWebhook.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Select, Tabs } from "antd";
+import { Button, Select, Tabs, Tooltip } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -63,12 +70,22 @@ export const UndeliveredWithdrawals = () => {
     witrawalsRowsError,
   } = useGetRowsGeneratedWithdrawals(query);
 
+  const [csvFields, setCsvFields] = useState<any>();
+  const [isComma, setIsComma] = useState<boolean>(true);
+  const [isExportReportsOpen, setIsExportReportsOpen] =
+    useState<boolean>(false);
+  const { fields } = useGetWithdrawReportFields();
+
   const {
     GeneratedWithdrawalsReportsError,
     GeneratedWithdrawalsReportsIsLoading,
     GeneratedWithdrawalsReportsIsSuccess,
     GeneratedWithdrawalsReportsMutate,
-  } = useCreateGeneratedWithdrawalsReports(query);
+  } = useCreateGeneratedWithdrawalsReports({
+    ...query,
+    fields: { ...csvFields },
+    comma_separate_value: isComma,
+  });
 
   useEffect(() => {
     refetchWithdrawalsTotalRows();
@@ -144,6 +161,7 @@ export const UndeliveredWithdrawals = () => {
             loading={isWithdrawalsRowsFetching || isWithdrawalsTotalFetching}
             type="primary"
             onClick={() => setIsFiltersOpen(true)}
+            icon={<FilterOutlined />}
           >
             {t("table.filters")}
           </Button>
@@ -184,7 +202,7 @@ export const UndeliveredWithdrawals = () => {
                   "organization_id",
                   "endToEndId",
                   "payment_id",
-                  "reference_id",
+                  "reference_id","receiver_document"
                 ].includes(value)
               ) {
                 delete query.initial_date;
@@ -241,8 +259,8 @@ export const UndeliveredWithdrawals = () => {
               justifyContent: "center",
               width: "100%",
             }}
+            icon={<FilterAltOffOutlinedIcon />}
           >
-            <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
             {t("table.clear_filters")}
           </Button>
         </Grid>
@@ -264,6 +282,7 @@ export const UndeliveredWithdrawals = () => {
                 justifyContent: "center",
                 width: "100%",
               }}
+              icon={<SendOutlined />}
             >
               {t("modal.resend_webhook")}
             </Button>
@@ -271,15 +290,29 @@ export const UndeliveredWithdrawals = () => {
         )}
         {permissions.report.withdraw.undelivered_withdraw
           .report_withdraw_undelivered_withdraw_export_csv && (
-          <Grid item xs={12} md="auto" lg={1}>
-            <ExportReportsModal
-              disabled={witrawalsRows?.items.length === 0 || witrawalsRowsError}
-              mutateReport={() => GeneratedWithdrawalsReportsMutate()}
-              error={GeneratedWithdrawalsReportsError}
-              success={GeneratedWithdrawalsReportsIsSuccess}
-              loading={GeneratedWithdrawalsReportsIsLoading}
-              reportPath="/consult/withdrawals/withdrawals_reports/generated_withdrawals_reports"
-            />
+          <Grid item xs={12} md={4} lg={1}>
+            <Tooltip
+              placement="topRight"
+              title={
+                witrawalsRows?.items.length === 0 || witrawalsRowsError
+                  ? t("messages.no_records_to_export")
+                  : t("messages.export_csv")
+              }
+              arrow
+            >
+              <Button
+                onClick={() => setIsExportReportsOpen(true)}
+                style={{ width: "100%" }}
+                shape="round"
+                type="dashed"
+                size="large"
+                loading={isWithdrawalsRowsFetching}
+                disabled={!witrawalsRows?.items.length || witrawalsRowsError}
+                icon={<FileAddOutlined style={{ fontSize: 22 }} />}
+              >
+                CSV
+              </Button>
+            </Tooltip>
           </Grid>
         )}
       </Grid>
@@ -480,6 +513,22 @@ export const UndeliveredWithdrawals = () => {
           id={currentItem?._id}
         />
       )}
+      <ExportCustomReportsModal
+        open={isExportReportsOpen}
+        setOpen={setIsExportReportsOpen}
+        disabled={!witrawalsRows?.items.length || witrawalsRowsError}
+        mutateReport={() => GeneratedWithdrawalsReportsMutate()}
+        error={GeneratedWithdrawalsReportsError}
+        success={GeneratedWithdrawalsReportsIsSuccess}
+        loading={GeneratedWithdrawalsReportsIsLoading}
+        reportPath="/consult/withdrawals/withdrawals_reports/generated_withdrawals_reports"
+        fields={fields}
+        csvFields={csvFields}
+        setCsvFields={setCsvFields}
+        comma={isComma}
+        setIsComma={setIsComma}
+        reportName="withdrawalsReportsFields"
+      />
       {isResendWebhookModalOpen && (
         <ResendWebhookModal
           open={isResendWebhookModalOpen}

@@ -431,6 +431,9 @@ export const ViewModal = (props: ViewModalProps) => {
                     case "receiver_zip_code":
                     case "receiver_bank_account":
                     case "receiver_bank_agency":
+                    case "receiver_bank_name":
+                    case "receiver_bank_client_document":
+                    case "receiver_bank_client_name": 
                       return (
                         withdraw[key] !== "N/A" && (
                           <Descriptions.Item
