@@ -26,7 +26,7 @@ export const TotalizersCards = (props: {
           ? 10
           : 2
       }
-      style={{ overflow: "hidden" }}
+      style={{ overflow: "hidden", paddingBottom: 10, marginBottom: -10 }}
     >
       {props?.data && props?.data?.active_merchant_totals > 0 && (
         <Grid
@@ -34,7 +34,7 @@ export const TotalizersCards = (props: {
           xs={12}
           md={2}
           style={{
-            marginTop: "-90px",
+            marginTop: "-75px",
             marginBottom: isMobile ? "-60px" : undefined,
           }}
         >

@@ -21,7 +21,7 @@ import { GlobalStyle } from "./styles/globalStyles.ts";
 const Logo = import.meta.env.VITE_APP_ICON ?? PBLogo;
 import ReactGA from "react-ga4";
 
-ReactGA.initialize(import.meta.env.VITE_APP_ANALYTICS_ID);
+ReactGA.initialize(import.meta.env.VITE_APP_ANALYTICS_ID ?? "");
 
 function App() {
   const { t } = useTranslation();

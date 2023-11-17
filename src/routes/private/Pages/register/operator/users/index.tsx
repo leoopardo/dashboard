@@ -8,7 +8,7 @@ import {
   InfoCircleOutlined,
   UserAddOutlined,
 } from "@ant-design/icons";
-import { ColumnInterface, CustomTable } from "@components/CustomTable";
+import { CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
 import { ValidateToken } from "@components/ValidateToken";
@@ -18,6 +18,7 @@ import { Search } from "@src/components/Inputs/search";
 import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
 import { Toast } from "@src/components/Toast";
+import { TuorComponent } from "@src/components/Tuor";
 import { queryClient } from "@src/services/queryClient";
 import { useCreateOperatorUser } from "@src/services/register/operator/users/createUser";
 import { useGetOperatorUsers } from "@src/services/register/operator/users/getOperatorUsers";
@@ -30,7 +31,6 @@ import { Button, Tooltip, Typography } from "antd";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { NewUserInterface, NewUserModal } from "./components/newUserModal";
-import { TuorComponent } from "@src/components/Tuor";
 
 const INITIAL_QUERY: PartnerQuery = {
   limit: 25,
@@ -90,28 +90,6 @@ export const OperatorUsers = () => {
   const [isExportReportsOpen, setIsExportReportsOpen] =
     useState<boolean>(false);
 
-  const columns: ColumnInterface[] = [
-    { name: "id", type: "id", sort: true },
-    { name: "name", type: "text", sort: true },
-    {
-      name: ["permission_group", "name"],
-      head: "group",
-      type: "text",
-      sort: true,
-      sort_name: "group_name",
-    },
-    {
-      name: ["operator", "name"],
-      head: "operator",
-      type: "text",
-      sort: true,
-      sort_name: "operator_name",
-    },
-    { name: "last_signin_date", type: "date" },
-    { name: "status", type: "status", sort: true },
-    { name: "created_at", type: "date", sort: true },
-  ];
-
   useEffect(() => {
     refetchUsersData();
   }, [query]);
@@ -128,6 +106,9 @@ export const OperatorUsers = () => {
   const ref5 = useRef(null);
   const refId = useRef(null);
   const refName = useRef(null);
+  const refGroup = useRef(null);
+  const refOperator = useRef(null);
+  const refLast = useRef(null);
   const refStatus = useRef(null);
   const refCreatedAt = useRef(null);
 
@@ -182,7 +163,7 @@ export const OperatorUsers = () => {
         </Grid>
         <Grid item xs={12} md={3} lg={2}>
           <Button
-          ref={ref3}
+            ref={ref3}
             size="large"
             type="dashed"
             loading={isUsersDataFetching}
@@ -237,7 +218,7 @@ export const OperatorUsers = () => {
               arrow
             >
               <Button
-              ref={ref5}
+                ref={ref5}
                 onClick={() => setIsExportReportsOpen(true)}
                 style={{ width: "100%" }}
                 shape="round"
@@ -280,7 +261,34 @@ export const OperatorUsers = () => {
             data={UsersData}
             items={UsersData?.items}
             error={UsersDataError}
-            columns={columns}
+            columns={[
+              { name: "id", type: "id", sort: true, key: refId },
+              { name: "name", type: "text", sort: true, key: refName },
+              {
+                name: ["permission_group", "name"],
+                head: "group",
+                type: "text",
+                sort: true,
+                sort_name: "group_name",
+                key: refGroup,
+              },
+              {
+                name: ["operator", "name"],
+                head: "operator",
+                type: "text",
+                sort: true,
+                sort_name: "operator_name",
+                key: refOperator,
+              },
+              { name: "last_signin_date", type: "date", key: refLast },
+              { name: "status", type: "status", sort: true, key: refStatus },
+              {
+                name: "created_at",
+                type: "date",
+                sort: true,
+                key: refCreatedAt,
+              },
+            ]}
             loading={isUsersDataFetching}
             label={["name", "username", "operator.name", "updated_at"]}
           />
@@ -383,8 +391,8 @@ export const OperatorUsers = () => {
         removeFiltersStepRef={ref3}
         createRegisterStep={
           permissions.register.operator.operator.operator_create && {
-            title: t("wiki.register_operator"),
-            description: t("wiki.register_operator_description"),
+            title: t("wiki.register_users"),
+            description: t("wiki.register_users_descriptions"),
             target: () => ref4.current,
           }
         }
@@ -395,11 +403,11 @@ export const OperatorUsers = () => {
               <Typography>
                 {t("wiki.generate_reports_descriptions")}{" "}
                 <Typography.Link
-                  href="/register/operator/operator_reports/operator_operators_reports"
+                  href="/register/operator/operator_reports/operator_users_reports"
                   target="_blank"
                 >
                   {t("menus.operator")} | {t("menus.reports")} |{" "}
-                  {t("menus.operators")}
+                  {t("menus.operator_users")}
                 </Typography.Link>
               </Typography>
             ),
@@ -414,15 +422,29 @@ export const OperatorUsers = () => {
           },
           {
             title: t("table.name"),
-            description: t("wiki.aggregator_name_description"),
+            description: t("wiki.aggregator_user_name_description"),
             target: () => refName.current,
+          },
+          {
+            title: t("table.group"),
+            description: t("wiki.aggregator_group_description"),
+            target: () => refGroup.current,
+          },
+          {
+            title: t("table.operator"),
+            description: t("wiki.operator_description"),
+            target: () => refOperator.current,
+          },
+          {
+            title: t("table.last_signin_date"),
+            description: t("wiki.last_signin_date_description"),
+            target: () => refLast.current,
           },
           {
             title: t("table.status"),
             description: t("wiki.status_description"),
             target: () => refStatus.current,
           },
-
           {
             title: t("table.createdAt"),
             description: t("wiki.created_at_description"),
@@ -430,8 +452,8 @@ export const OperatorUsers = () => {
           },
         ]}
         pageStep={{
-          title: t("menus.operators"),
-          description: t("wiki.operators_description"),
+          title: t("menus.operator_users"),
+          description: t("wiki.operator_users_description"),
         }}
       />
     </Grid>

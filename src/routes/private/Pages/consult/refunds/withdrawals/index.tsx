@@ -165,7 +165,7 @@ export const RefundWithdrawals = () => {
               delete query.receiver_document;
               delete query.receiver_name;
               if (
-                ["pix_id", "endToEndId", "reference_id", "rtrid"].includes(
+                ["pix_id", "endToEndId", "reference_id", "rtrid", "receiver_document"].includes(
                   value
                 )
               ) {

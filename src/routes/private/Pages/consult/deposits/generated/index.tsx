@@ -205,19 +205,27 @@ export const GeneratedDeposits = () => {
                   delete query.description;
 
                   if (
-                    ["pix_id", "endToEndId", "txid", "reference_id"].includes(
-                      value
-                    )
+                    [
+                      "pix_id",
+                      "endToEndId",
+                      "txid",
+                      "reference_id",
+                      "payer_document",
+                      "buyer_document",
+                    ].includes(value)
                   ) {
                     delete query.initial_date;
                     delete query.final_date;
                   } else {
                     setQuery((state) => ({
-                      initial_date: moment(new Date()).format(
-                        "YYYY-MM-DDTHH:mm:ss.SSS"
-                      ),
+                      initial_date: moment(new Date())
+                        .startOf("day")
+                        .add(3, "hours")
+                        .format("YYYY-MM-DDTHH:mm:ss.SSS"),
                       final_date: moment(new Date())
-                        .add(1, "hour")
+                        .add(1, "day")
+                        .startOf("day")
+                        .add(3, "hours")
                         .format("YYYY-MM-DDTHH:mm:ss.SSS"),
                       ...state,
                     }));
@@ -346,7 +354,7 @@ export const GeneratedDeposits = () => {
                 size="large"
                 loading={GeneratedDepositsReportsIsLoading}
                 disabled={!depositsRows?.items.length || depositsRowsError}
-                icon={ <FileAddOutlined style={{ fontSize: 22 }} />}
+                icon={<FileAddOutlined style={{ fontSize: 22 }} />}
               >
                 CSV
               </Button>

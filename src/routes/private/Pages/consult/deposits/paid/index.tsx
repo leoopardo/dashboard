@@ -183,7 +183,14 @@ export const PaidDeposits = () => {
               delete query.description;
 
               if (
-                ["pix_id", "endToEndId", "txid", "reference_id"].includes(value)
+                [
+                  "pix_id",
+                  "endToEndId",
+                  "txid",
+                  "reference_id",
+                  "payer_document",
+                  "buyer_document",
+                ].includes(value)
               ) {
                 delete query.initial_date;
                 delete query.final_date;

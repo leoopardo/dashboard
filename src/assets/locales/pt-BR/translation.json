@@ -505,7 +505,7 @@
     "in_analysis": "Em análise",
     "created": "Criado",
     "receiver_name": "Nome do recebedor",
-    "receiver_document": "Documento",
+    "receiver_document": "Documento do recebedor",
     "pix_key_type": "Tipo de chave PIX",
     "pix_key": "Chave PIX",
     "receiver_birth_date": "Data de nascimento",
@@ -1045,6 +1045,9 @@
 
     "operators_description": "Através desta funcionalidade, são cadastrados os Operadores no sistema. Também é possível validar os já cadastrados e editar os mesmos quando necessário.",
     "register_operator": "Criar novo operador",
-    "register_operator_description": "Através deste é realizado o cadastro de um novo Operador no sistema. Será aberto um modal que solicita todas as informações necessárias para cadastro. Após a inserção das mesmas o cadastro é realizado."
+    "register_operator_description": "Através deste é realizado o cadastro de um novo Operador no sistema. Será aberto um modal que solicita todas as informações necessárias para cadastro. Após a inserção das mesmas o cadastro é realizado.",
+    "operator_users":"Usuários operadores.",
+    "operator_users_description": "Através desta funcionalidade são cadastrados os usuários que pertencem à algum Operador. Suas permissões de execuções e visualizações dependerão das configurações realizadas pela Organização.",
+    "operator_description": "Operador a qual o usuário está vinculado."
   }
 }

@@ -451,7 +451,6 @@ export const MerchantView = () => {
             "aggregator_id",
             "operator_id",
             "partner_id",
-            "merchant_id",
             "cash_in_bank",
             "cash_out_bank",
           ]}
