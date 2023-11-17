@@ -9,7 +9,6 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import { useLocation } from "react-router-dom";
-import ReactGA from "react-ga4";
 
 export const BreadcrumbComponent = () => {
   const { t } = useTranslation();
