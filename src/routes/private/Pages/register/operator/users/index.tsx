@@ -5,6 +5,7 @@ import {
   EyeFilled,
   FileAddOutlined,
   FilterOutlined,
+  InfoCircleOutlined,
   UserAddOutlined,
 } from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
@@ -25,10 +26,11 @@ import { useCreateOperatorUsersReports } from "@src/services/reports/register/op
 import { useGetOperatorUsersReportFields } from "@src/services/reports/register/operator/getOperatorUsersReportFields";
 import { PartnerQuery } from "@src/services/types/register/partners/partners.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Tooltip } from "antd";
-import { useEffect, useState } from "react";
+import { Button, Tooltip, Typography } from "antd";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { NewUserInterface, NewUserModal } from "./components/newUserModal";
+import { TuorComponent } from "@src/components/Tuor";
 
 const INITIAL_QUERY: PartnerQuery = {
   limit: 25,
@@ -117,6 +119,18 @@ export const OperatorUsers = () => {
   const handleUpdateTokenValidate = () => {
     updateMutate();
   };
+
+  const [isTuorOpen, setIsTuorOpen] = useState<boolean>(false);
+  const ref1 = useRef(null);
+  const ref2 = useRef(null);
+  const ref3 = useRef(null);
+  const ref4 = useRef(null);
+  const ref5 = useRef(null);
+  const refId = useRef(null);
+  const refName = useRef(null);
+  const refStatus = useRef(null);
+  const refCreatedAt = useRef(null);
+
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid
@@ -126,6 +140,7 @@ export const OperatorUsers = () => {
       >
         <Grid item xs={12} md={4} lg={2}>
           <Button
+            ref={ref1}
             size="large"
             style={{ width: "100%" }}
             loading={isUsersDataFetching}
@@ -136,7 +151,7 @@ export const OperatorUsers = () => {
             {t("table.filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={8} lg={10}>
+        <Grid item xs={12} md={8} lg={9}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
@@ -144,14 +159,30 @@ export const OperatorUsers = () => {
             setQuery={setQuery}
           />
         </Grid>
+        <Grid
+          item
+          xs={12}
+          md={1}
+          style={{ display: "flex", justifyContent: "flex-end" }}
+        >
+          <Tooltip title={t("buttons.help")}>
+            <Button
+              type="link"
+              onClick={() => setIsTuorOpen((state) => !state)}
+            >
+              <InfoCircleOutlined />
+            </Button>
+          </Tooltip>
+        </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
-        <Grid item xs={12} md={4} lg={4}>
+        <Grid item xs={12} md={4} lg={4} ref={ref2}>
           <Search query={query} setQuery={setQuery} searchOption="name" />
         </Grid>
         <Grid item xs={12} md={3} lg={2}>
           <Button
+          ref={ref3}
             size="large"
             type="dashed"
             loading={isUsersDataFetching}
@@ -173,6 +204,7 @@ export const OperatorUsers = () => {
         {permissions.register.operator.operator.operator_export_csv && (
           <Grid item xs={12} md={3} lg={2}>
             <Button
+              ref={ref4}
               type="primary"
               loading={isUsersDataFetching}
               onClick={() => {
@@ -205,6 +237,7 @@ export const OperatorUsers = () => {
               arrow
             >
               <Button
+              ref={ref5}
                 onClick={() => setIsExportReportsOpen(true)}
                 style={{ width: "100%" }}
                 shape="round"
@@ -341,6 +374,65 @@ export const OperatorUsers = () => {
         setIsComma={setIsComma}
         setCsvFields={setCsvFields}
         reportName="OperatorUsers"
+      />
+      <TuorComponent
+        open={isTuorOpen}
+        setOpen={setIsTuorOpen}
+        searchFilterStepRef={ref1}
+        searchByNameStepRef={ref2}
+        removeFiltersStepRef={ref3}
+        createRegisterStep={
+          permissions.register.operator.operator.operator_create && {
+            title: t("wiki.register_operator"),
+            description: t("wiki.register_operator_description"),
+            target: () => ref4.current,
+          }
+        }
+        exportCsvStep={
+          permissions.register.operator.operator.operator_export_csv && {
+            title: t("wiki.generate_reports"),
+            description: (
+              <Typography>
+                {t("wiki.generate_reports_descriptions")}{" "}
+                <Typography.Link
+                  href="/register/operator/operator_reports/operator_operators_reports"
+                  target="_blank"
+                >
+                  {t("menus.operator")} | {t("menus.reports")} |{" "}
+                  {t("menus.operators")}
+                </Typography.Link>
+              </Typography>
+            ),
+            target: () => ref5.current,
+          }
+        }
+        steps={[
+          {
+            title: t("table.id"),
+            description: t("wiki.id_description"),
+            target: () => refId.current,
+          },
+          {
+            title: t("table.name"),
+            description: t("wiki.aggregator_name_description"),
+            target: () => refName.current,
+          },
+          {
+            title: t("table.status"),
+            description: t("wiki.status_description"),
+            target: () => refStatus.current,
+          },
+
+          {
+            title: t("table.createdAt"),
+            description: t("wiki.created_at_description"),
+            target: () => refCreatedAt.current,
+          },
+        ]}
+        pageStep={{
+          title: t("menus.operators"),
+          description: t("wiki.operators_description"),
+        }}
       />
     </Grid>
   );

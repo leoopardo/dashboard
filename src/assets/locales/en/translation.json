@@ -1032,5 +1032,6 @@
     "bank_chart_description": "Switches the view from Grid to a bar chart.",
     "bank_card_description": "Switches the view from Grid to bank cards.",
     "last_sign_in_description": "User's last access date to the system."
+
   }
 }

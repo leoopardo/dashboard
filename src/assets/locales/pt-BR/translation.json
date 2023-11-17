@@ -1041,6 +1041,10 @@
     "bank_blocked_value_description": "Traz o valor bloqueado para operações futuras da Organização que foi resguardado pela IP.",
     "bank_chart_description": "Altera a vizualização do Grid para um gráfico em barras.",
     "bank_card_description": "Altera a vizualização do Grid para cards de bancos.",
-    "last_sign_in_description": "Data do ultimo acesso do usuário junto ao sistema."
+    "last_sign_in_description": "Data do ultimo acesso do usuário junto ao sistema.",
+
+    "operators_description": "Através desta funcionalidade, são cadastrados os Operadores no sistema. Também é possível validar os já cadastrados e editar os mesmos quando necessário.",
+    "register_operator": "Criar novo operador",
+    "register_operator_description": "Através deste é realizado o cadastro de um novo Operador no sistema. Será aberto um modal que solicita todas as informações necessárias para cadastro. Após a inserção das mesmas o cadastro é realizado."
   }
 }

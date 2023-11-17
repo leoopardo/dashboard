@@ -16,16 +16,28 @@ export const TotalizersCards = (props: {
 }) => {
   const isMobile = useMediaQuery({ maxWidth: "950px" });
   return (
-    <Grid container spacing={1} justifyContent={"center"} mb={2}>
+    <Grid
+      container
+      spacing={1}
+      justifyContent={"center"}
+      mb={
+        !props.data?.registered_operators_totals ||
+        props.data?.registered_operators_totals === 0
+          ? 10
+          : 2
+      }
+    >
       {props.data?.registered_operators_totals &&
         props.data?.registered_operators_totals > 0 && (
           <Grid
             item
             xs={12}
-            md={2}
+            md={3}
             style={{
-              marginTop: "-90px",
+              marginTop: "-75px",
               marginBottom: isMobile ? "-60px" : undefined,
+              marginLeft: "-10%",
+              marginRight: "-20px",
             }}
           >
             <ReactECharts
@@ -85,28 +97,49 @@ export const TotalizersCards = (props: {
           </Grid>
         )}
 
-      <Grid item xs={12} md={2}>
+      <Grid item xs={12} md={3}>
         <Card bordered={false}>
           <Statistic
             loading={props?.loading}
             title={t("titles.total_registred", {
               entity: t("menus.operators")?.toLowerCase(),
             })}
-            style={{ maxWidth: 200, minHeight: 75 }}
+            style={{
+              maxWidth: 200,
+              height: 90,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+            }}
             value={props?.data?.registered_operators_totals}
             precision={0}
             valueStyle={{ color: defaultTheme.colors.info, fontSize: "24px" }}
           />
         </Card>
       </Grid>
-      <Grid item xs={12} md={2}>
+      <Grid
+        item
+        xs={12}
+        md={
+          !props.data?.registered_operators_totals ||
+          props.data?.registered_operators_totals === 0
+            ? 3
+            : 2
+        }
+      >
         <Card bordered={false}>
           <Statistic
             loading={props?.loading}
             title={t("titles.total_aggregator_active", {
               entity: t("menus.operators")?.toLowerCase(),
             })}
-            style={{ maxWidth: 200, minHeight: 75 }}
+            style={{
+              maxWidth: 200,
+              height: 90,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+            }}
             value={props?.data?.active_operators_totals}
             precision={0}
             valueStyle={{
@@ -116,14 +149,29 @@ export const TotalizersCards = (props: {
           />
         </Card>
       </Grid>
-      <Grid item xs={12} md={2}>
+      <Grid
+        item
+        xs={12}
+        md={
+          !props.data?.registered_operators_totals ||
+          props.data?.registered_operators_totals === 0
+            ? 3
+            : 2
+        }
+      >
         <Card bordered={false}>
           <Statistic
             loading={props?.loading}
             title={t("titles.total_aggregator_inactive", {
               entity: t("menus.operators")?.toLowerCase(),
             })}
-            style={{ maxWidth: 200, minHeight: 75 }}
+            style={{
+              maxWidth: 200,
+              height: 90,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+            }}
             value={props?.data?.inactive_operators_totals}
             precision={0}
             valueStyle={{
@@ -133,14 +181,29 @@ export const TotalizersCards = (props: {
           />
         </Card>
       </Grid>
-      <Grid item xs={12} md={2}>
+      <Grid
+        item
+        xs={12}
+        md={
+          !props.data?.registered_operators_totals ||
+          props.data?.registered_operators_totals === 0
+            ? 3
+            : 2
+        }
+      >
         <Card bordered={false}>
           <Statistic
             loading={props?.loading}
             title={t("titles.total", {
               entity: t("menus.merchants")?.toLowerCase(),
             })}
-            style={{ maxWidth: 200, minHeight: 75 }}
+            style={{
+              maxWidth: 200,
+              height: 90,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+            }}
             value={props?.data?.linked_merchants_total}
             precision={0}
             valueStyle={{

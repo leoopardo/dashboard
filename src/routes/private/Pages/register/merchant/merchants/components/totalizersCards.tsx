@@ -20,7 +20,12 @@ export const TotalizersCards = (props: {
       container
       spacing={1}
       justifyContent={"center"}
-      mb={2}
+      mb={
+        !props?.data?.active_merchant_totals ||
+        props?.data?.active_merchant_totals === 0
+          ? 10
+          : 2
+      }
       style={{ overflow: "hidden" }}
     >
       {props?.data && props?.data?.active_merchant_totals > 0 && (
@@ -102,7 +107,13 @@ export const TotalizersCards = (props: {
             title={t("titles.total_registred", {
               entity: t("menus.merchants")?.toLowerCase(),
             })}
-            style={{ maxWidth: 200, minHeight: 75 }}
+            style={{
+              maxWidth: 200,
+              height: 90,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+            }}
             value={props?.data?.registered_merchant_totals}
             precision={0}
             valueStyle={{ color: defaultTheme.colors.info, fontSize: "24px" }}
@@ -116,7 +127,13 @@ export const TotalizersCards = (props: {
             title={t("titles.total_onboarding", {
               entity: t("menus.merchants")?.toLowerCase(),
             })}
-            style={{ maxWidth: 200, minHeight: 75 }}
+            style={{
+              maxWidth: 200,
+              height: 90,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+            }}
             value={props?.data?.onboarding_merchant_totals}
             precision={0}
             valueStyle={{
@@ -133,7 +150,13 @@ export const TotalizersCards = (props: {
             title={t("titles.total_registred_active", {
               entity: t("menus.merchants")?.toLowerCase(),
             })}
-            style={{ maxWidth: 200, minHeight: 75 }}
+            style={{
+              maxWidth: 200,
+              height: 90,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+            }}
             value={props?.data?.active_merchant_totals}
             precision={0}
             valueStyle={{
@@ -150,7 +173,13 @@ export const TotalizersCards = (props: {
             title={t("titles.total_registred_inactive", {
               entity: t("menus.merchants")?.toLowerCase(),
             })}
-            style={{ maxWidth: 200, minHeight: 75 }}
+            style={{
+              maxWidth: 200,
+              height: 90,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+            }}
             value={props?.data?.inactive_merchant_totals}
             precision={0}
             valueStyle={{
@@ -167,7 +196,13 @@ export const TotalizersCards = (props: {
             title={t("titles.total_expired", {
               entity: t("menus.merchants")?.toLowerCase(),
             })}
-            style={{ maxWidth: 200, minHeight: 75 }}
+            style={{
+              maxWidth: 200,
+              height: 90,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+            }}
             value={props?.data?.expired_merchant_totals}
             precision={0}
             valueStyle={{
