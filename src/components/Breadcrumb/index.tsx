@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import { useLocation } from "react-router-dom";
+import ReactGA from "react-ga4";
 
 export const BreadcrumbComponent = () => {
   const { t } = useTranslation();
@@ -19,6 +20,7 @@ export const BreadcrumbComponent = () => {
   >([{ title: <HomeOutlined style={{ fontSize: 16 }} /> }]);
   const location = useLocation();
   const translation = useTranslation().i18n.language;
+  
 
   const isNotPath: string[] = [
     "register",
@@ -134,6 +136,7 @@ export const BreadcrumbComponent = () => {
           : t(`menus.${value}`)
       )
       .join(" - ")} | ${import.meta.env.VITE_APP_COMPANY_NAME}`;
+     
   }, [location, translation]);
 
   useEffect(() => {
