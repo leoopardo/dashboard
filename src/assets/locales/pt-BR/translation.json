@@ -880,7 +880,9 @@
     "access_key": "Chave de acesso",
     "access_secret": "Chave de acesso secreta",
     "merchant_blacklist": "Blacklist de empresa",
-    "international": "Internacional"
+    "international": "Internacional",
+    "receiver_bank_client_document": "Documento do cliente do banco",
+    "receiver_bank_client_name": "Nome do cliente do banco"
   },
   "actions": {
     "details": "Detalhes",

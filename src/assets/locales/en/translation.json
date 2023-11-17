@@ -872,7 +872,9 @@
     "access_key": "Access key",
     "access_secret": "Access secret",
     "merchant_blacklist": "Merchants blacklist",
-    "international": "International"
+    "international": "International",
+    "receiver_bank_client_document": "Receiver bank client document",
+    "receiver_bank_client_name": "Receiver bank client name"
   },
   "actions": {
     "details": "Details",
