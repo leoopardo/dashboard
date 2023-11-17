@@ -158,33 +158,49 @@ export const CustomTable = (props: TableProps) => {
           case "id":
             return {
               title: (
-                <Typography
-                  style={{ width: "100%", textAlign: "center" }}
-                  ref={column.key}
-                >
-                  {t(`table.${column?.head || column?.name}`)}
-                </Typography>
+                <Tooltip title={t(`table.${column?.head || column?.name}`)}>
+                  <Typography
+                    style={{
+                      width: "100%",
+                      maxHeight: "50px",
+                      overflow: "hidden",
+                      textAlign: "center",
+                      textOverflow: "ellipsis",
+                    }}
+                    ref={column.key}
+                  >
+                    {t(`table.${column?.head || column?.name}`)}
+                  </Typography>
+                </Tooltip>
               ),
               key: column?.sort_name
                 ? column.sort_name
                 : Array.isArray(column?.name)
                 ? column?.name + `${Math.random()}`
                 : column?.name,
+              width: 85,
               dataIndex: column?.name,
-              width: 60,
               render: (text: string) => (
-                <Tooltip title={text}>
-                  <Button
-                    size="large"
-                    type="ghost"
-                    onClick={() => {
-                      navigator.clipboard.writeText(text);
-                      toast.success(t("table.copied"));
-                    }}
-                  >
-                    <CopyOutlined />
-                  </Button>
-                </Tooltip>
+                <div
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Tooltip title={text}>
+                    <Button
+                      size="large"
+                      type="ghost"
+                      onClick={() => {
+                        navigator.clipboard.writeText(text);
+                        toast.success(t("table.copied"));
+                      }}
+                    >
+                      <CopyOutlined />
+                    </Button>
+                  </Tooltip>
+                </div>
               ),
               sorter: column.sort
                 ? () => {
@@ -687,50 +703,53 @@ export const CustomTable = (props: TableProps) => {
               ),
               key: column?.name,
               dataIndex: column?.name,
+              width: 60,
               render: (_a: any, record: any) => (
                 <div
                   style={{ width: "100%", textAlign: "center" }}
                   ref={column.key}
                 >
-                  <Dropdown
-                    trigger={["click"]}
-                    key={column?.name}
-                    disabled={props.disableActions}
-                    menu={{
-                      items: actions.map((action: actionsInterface) => {
-                        let disable = false;
-
-                        if (action.disabled) {
-                          disable = action.disabled(record);
-                        }
-
-                        return {
-                          ...action,
-                          disabled: disable,
-                          onClick: () => {
-                            if (action && action.onClick) {
-                              action.onClick(record);
-                            }
-                          },
-                        };
-                      }),
-                    }}
-                    onOpenChange={(open) => {
-                      if (open) {
-                        props.setCurrentItem(record);
-                      }
-                    }}
-                    arrow
-                  >
-                    <Button
-                      onClick={() => {
-                        props.setCurrentItem(record);
+                  {!props.disableActions ? (
+                      <Dropdown
+                      trigger={["click"]}
+                      key={column?.name}
+                      disabled={props.disableActions}
+                      menu={{
+                        items: actions.map((action: actionsInterface) => {
+                          let disable = false;
+  
+                          if (action.disabled) {
+                            disable = action.disabled(record);
+                          }
+  
+                          return {
+                            ...action,
+                            disabled: disable,
+                            onClick: () => {
+                              if (action && action.onClick) {
+                                action.onClick(record);
+                              }
+                            },
+                          };
+                        }),
                       }}
+                      onOpenChange={(open) => {
+                        if (open) {
+                          props.setCurrentItem(record);
+                        }
+                      }}
+                      arrow
                     >
-                      <EllipsisOutlined />
-                    </Button>
-                  </Dropdown>
-                </div>
+                      <Button
+                        onClick={() => {
+                          props.setCurrentItem(record);
+                        }}
+                      >
+                        <EllipsisOutlined />
+                      </Button>
+                    </Dropdown>
+                  ) : (<></>)}
+                  </div>
               ),
             };
           case "text":

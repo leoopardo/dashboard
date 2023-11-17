@@ -4,6 +4,7 @@ import {
   EditOutlined,
   EyeFilled,
   FileAddOutlined,
+  FilterOutlined,
   UserAddOutlined,
 } from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
@@ -124,6 +125,7 @@ export const MerchantUser = () => {
             loading={isUsersDataFetching}
             type="primary"
             onClick={() => setIsFiltersOpen(true)}
+            icon={<FilterOutlined />}
           >
             {t("table.filters")}
           </Button>
@@ -157,8 +159,8 @@ export const MerchantUser = () => {
               alignItems: "center",
               justifyContent: "center",
             }}
+            icon={<FilterAltOffOutlinedIcon />}
           >
-            <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
             {t("table.clear_filters")}
           </Button>
         </Grid>
@@ -178,8 +180,8 @@ export const MerchantUser = () => {
                 alignItems: "center",
                 justifyContent: "center",
               }}
+              icon={<UserAddOutlined style={{ fontSize: 22 }} />}
             >
-              <UserAddOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
               {`${t("buttons.create")} ${t("buttons.new_user")}`}
             </Button>
           </Grid>
@@ -203,8 +205,9 @@ export const MerchantUser = () => {
                 size="large"
                 loading={isUsersDataFetching}
                 disabled={UsersData?.total === 0 || UsersDataError}
+                icon={<FileAddOutlined style={{ fontSize: 22 }} />}
               >
-                <FileAddOutlined style={{ fontSize: 22 }} /> CSV
+                 CSV
               </Button>
             </Tooltip>
           </Grid>

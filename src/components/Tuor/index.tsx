@@ -33,6 +33,7 @@ export const TuorComponent = ({
   const { t, i18n } = useTranslation();
   const [currentSteps, setCurrentSteps] = useState<TourProps["steps"]>([
     pageStep,
+    
   ]);
   const isMobile = useMediaQuery({ maxWidth: "750px" });
 

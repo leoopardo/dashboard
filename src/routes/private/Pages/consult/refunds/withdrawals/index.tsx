@@ -1,20 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { EyeFilled } from "@ant-design/icons";
+import { EyeFilled, FileAddOutlined, FilterOutlined } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import ReplayIcon from "@mui/icons-material/Replay";
 import { Grid } from "@mui/material";
 import { Search } from "@src/components/Inputs/search";
 import { Confirmation } from "@src/components/Modals/confirmation";
-import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
+import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
 import { useCreateWithdrawrefund } from "@src/services/consult/refund/refundWithdrawals/createRefund";
+import { useGetRefundWithdrawalsReportFields } from "@src/services/consult/refund/refundWithdrawals/getReportFields";
 import { useGetRowsRefundWithdrawals } from "@src/services/consult/refund/refundWithdrawals/getRows";
 import { useGetTotalRefundWithdrawals } from "@src/services/consult/refund/refundWithdrawals/getTotal";
 import { queryClient } from "@src/services/queryClient";
 import { useCreateRefundWithdrawalsReports } from "@src/services/reports/consult/refund/withdrawals/createRefundWithdrawalsReports";
 import { refundWithdrawalsQuery } from "@src/services/types/consult/refunds/refundWithdrawals.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Select } from "antd";
+import { Button, Select, Tooltip } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -60,12 +61,23 @@ export const RefundWithdrawals = () => {
     refundWithdrawalsError,
   } = useGetRowsRefundWithdrawals(query);
 
+  const [csvFields, setCsvFields] = useState<any>();
+  const [isComma, setIsComma] = useState<boolean>(true);
+  const [isExportReportsOpen, setIsExportReportsOpen] =
+    useState<boolean>(false);
+
+  const { fields } = useGetRefundWithdrawalsReportFields();
+
   const {
     RefundWithdrawalsReportsError,
     RefundWithdrawalsReportsIsLoading,
     RefundWithdrawalsReportsIsSuccess,
     RefundWithdrawalsReportsMutate,
-  } = useCreateRefundWithdrawalsReports(query);
+  } = useCreateRefundWithdrawalsReports({
+    ...query,
+    fields: { ...csvFields },
+    comma_separate_value: isComma,
+  });
 
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<any>();
@@ -120,6 +132,7 @@ export const RefundWithdrawals = () => {
             }
             type="primary"
             onClick={() => setIsFiltersOpen(true)}
+            icon={<FilterOutlined />}
           >
             {t("table.filters")}
           </Button>
@@ -152,7 +165,7 @@ export const RefundWithdrawals = () => {
               delete query.receiver_document;
               delete query.receiver_name;
               if (
-                ["pix_id", "endToEndId", "reference_id", "rtrid"].includes(
+                ["pix_id", "endToEndId", "reference_id", "rtrid", "receiver_document"].includes(
                   value
                 )
               ) {
@@ -209,8 +222,8 @@ export const RefundWithdrawals = () => {
               justifyContent: "center",
               width: "100%",
             }}
+            icon={<FilterAltOffOutlinedIcon />}
           >
-            <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
             {t("table.clear_filters")}
           </Button>
         </Grid>
@@ -218,16 +231,30 @@ export const RefundWithdrawals = () => {
         {permissions?.report?.chargeback?.deposit_chargeback
           ?.report_chargeback_deposit_chargeback_export_csv && (
           <Grid item xs={12} md="auto">
-            <ExportReportsModal
-              disabled={
+            <Tooltip
+              placement="topLeft"
+              title={
                 refundWithdrawals?.items.length === 0 || refundWithdrawalsError
+                  ? t("messages.no_records_to_export")
+                  : t("messages.export_csv")
               }
-              mutateReport={() => RefundWithdrawalsReportsMutate()}
-              error={RefundWithdrawalsReportsError}
-              success={RefundWithdrawalsReportsIsSuccess}
-              loading={RefundWithdrawalsReportsIsLoading}
-              reportPath="/consult/refunds/refund_reports/refund_withdrawals_reports"
-            />
+              arrow
+            >
+              <Button
+                onClick={() => setIsExportReportsOpen(true)}
+                style={{ width: "100%" }}
+                shape="round"
+                type="dashed"
+                size="large"
+                loading={isRefundWithdrawalsFetching}
+                disabled={
+                  !refundWithdrawals?.items.length || refundWithdrawalsError
+                }
+                icon={<FileAddOutlined style={{ fontSize: 22 }} />}
+              >
+                CSV
+              </Button>
+            </Tooltip>
           </Grid>
         )}
       </Grid>
@@ -274,6 +301,24 @@ export const RefundWithdrawals = () => {
           />
         </Grid>
       </Grid>
+
+      <ExportCustomReportsModal
+        open={isExportReportsOpen}
+        setOpen={setIsExportReportsOpen}
+        disabled={!refundWithdrawals?.items.length || refundWithdrawalsError}
+        mutateReport={() => RefundWithdrawalsReportsMutate()}
+        error={RefundWithdrawalsReportsError}
+        success={RefundWithdrawalsReportsIsSuccess}
+        loading={RefundWithdrawalsReportsIsLoading}
+        reportPath="/consult/refunds/refund_reports/refund_withdrawals_reports"
+        fields={fields}
+        csvFields={csvFields}
+        setCsvFields={setCsvFields}
+        comma={isComma}
+        setIsComma={setIsComma}
+        reportName="RefundWithdrawalsReportsFields"
+      />
+
       {isViewModalOpen && (
         <ViewModal
           open={isViewModalOpen}

@@ -1,5 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  FilterOutlined,
+  PlusOutlined,
+} from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
@@ -121,6 +125,7 @@ export const MerchantBlacklist = () => {
             loading={isMerchantBlacklistDataFetching}
             type="primary"
             onClick={() => setIsFiltersOpen(true)}
+            icon={<FilterOutlined />}
           >
             {t("table.filters")}
           </Button>
@@ -169,8 +174,8 @@ export const MerchantBlacklist = () => {
               alignItems: "center",
               justifyContent: "center",
             }}
+            icon={<FilterAltOffOutlinedIcon />}
           >
-            <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
             {t("table.clear_filters")}
           </Button>
         </Grid>
@@ -187,8 +192,8 @@ export const MerchantBlacklist = () => {
                 alignItems: "center",
                 justifyContent: "center",
               }}
+              icon={<PlusOutlined style={{ fontSize: 22 }} />}
             >
-              <PlusOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
               {t("buttons.create_bank_blacklist")}
             </Button>
           </Grid>
@@ -196,7 +201,7 @@ export const MerchantBlacklist = () => {
 
         {permissions.register.merchant.blacklist
           .merchant_blacklist_export_csv && (
-          <Grid item xs={12} md={2}>
+          <Grid item xs={12} md={"auto"}>
             <ExportReportsModal
               disabled={
                 !merchantBlacklistData?.total || merchantBlacklistDataError

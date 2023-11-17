@@ -205,6 +205,7 @@ export const Mobile = (props: MobileProps) => {
 
                   case "value_total":
                   case "value":
+                  case "total":
                     return (
                       <Typography key={label}>
                         {new Intl.NumberFormat("pt-BR", {

@@ -8,6 +8,7 @@ import { FilterChips } from "@src/components/FiltersModal/filterChips";
 import { useListBanks } from "@src/services/bank/listBanks";
 import { useGetMerchantAttachments } from "@src/services/register/merchant/attachments/getAttachments";
 import { useMerchantFeesConfig } from "@src/services/register/merchant/merchant/feesConfig/getFeesConfig";
+import { useGetMerchantById } from "@src/services/register/merchant/merchant/getMerchant";
 import { useGetMerchantResponsibles } from "@src/services/register/merchant/responsibles/getResponsibles";
 import {
   MerchantResponsiblesItem,
@@ -59,6 +60,7 @@ export const MerchantDetails = () => {
 
   const { MerchantAttachmentsData, isMerchantAttachmentsDataFetching } =
     useGetMerchantAttachments({ merchant_id: location.state.id });
+  const { MerchantByIdData } = useGetMerchantById(location.state.id);
   const { merchantFeesData } = useMerchantFeesConfig(location.state.id);
 
   const items: TabsProps["items"] = [
@@ -115,7 +117,7 @@ export const MerchantDetails = () => {
                   textAlign: "center",
                 }}
               >
-                {location?.state?.domain?.name || "-"}
+                {location?.state?.domain || "-"}
               </Descriptions.Item>
               <Descriptions.Item
                 key={"email"}
@@ -141,6 +143,7 @@ export const MerchantDetails = () => {
               >
                 {location?.state?.cellphone ?? "-"}
               </Descriptions.Item>
+              
             </Descriptions>
           </Col>
           <Col xs={{ span: 24 }} md={{ span: 8 }}>
@@ -167,10 +170,52 @@ export const MerchantDetails = () => {
                   textAlign: "center",
                 }}
               >
-                {location?.state?.status === 1
+                {location?.state?.status
                   ? t("table.active")
                   : t("table.inactive")}
               </Descriptions.Item>
+              {MerchantByIdData?.merchant_type && (
+                <Descriptions.Item
+                  key={"merchant_type"}
+                  label={t(`table.merchant_type`)}
+                  labelStyle={{
+                    maxWidth: "120px !important",
+                    margin: 0,
+                    padding: 0,
+                    textAlign: "center",
+                  }}
+                >
+                  {t(`table.${MerchantByIdData?.merchant_type}`)}
+                </Descriptions.Item>
+              )}
+               {MerchantByIdData?.language && (
+                <Descriptions.Item
+                  key={"language"}
+                  label={t(`table.language`)}
+                  labelStyle={{
+                    maxWidth: "120px !important",
+                    margin: 0,
+                    padding: 0,
+                    textAlign: "center",
+                  }}
+                >
+                 {MerchantByIdData?.language}
+                </Descriptions.Item>
+              )}
+               {MerchantByIdData?.currency && (
+                <Descriptions.Item
+                  key={"currency"}
+                  label={t(`table.currency`)}
+                  labelStyle={{
+                    maxWidth: "120px !important",
+                    margin: 0,
+                    padding: 0,
+                    textAlign: "center",
+                  }}
+                >
+                 {MerchantByIdData?.currency}
+                </Descriptions.Item>
+              )}
               {location?.state?.merchantConfig &&
                 location?.state?.merchantConfig?.cash_in_bank && (
                   <Descriptions.Item
@@ -352,11 +397,12 @@ export const MerchantDetails = () => {
                   textAlign: "center",
                 }}
               >
-                  {new Intl.NumberFormat("pt-BR", {
+                {new Intl.NumberFormat("pt-BR", {
                   style: "currency",
                   currency: "BRL",
                 }).format(
-                  Number(merchantFeesData?.fees?.merchant_withdraw_fee_value) || 0
+                  Number(merchantFeesData?.fees?.merchant_withdraw_fee_value) ||
+                    0
                 )}
               </Descriptions.Item>
               <Descriptions.Item
@@ -400,7 +446,7 @@ export const MerchantDetails = () => {
                   textAlign: "center",
                 }}
               >
-                 {new Intl.NumberFormat("pt-BR", {
+                {new Intl.NumberFormat("pt-BR", {
                   style: "currency",
                   currency: "BRL",
                 }).format(
@@ -448,11 +494,12 @@ export const MerchantDetails = () => {
                   textAlign: "center",
                 }}
               >
-                 {new Intl.NumberFormat("pt-BR", {
+                {new Intl.NumberFormat("pt-BR", {
                   style: "currency",
                   currency: "BRL",
                 }).format(
-                  Number(merchantFeesData?.fees?.customer_withdraw_fee_value) || 0
+                  Number(merchantFeesData?.fees?.customer_withdraw_fee_value) ||
+                    0
                 )}
               </Descriptions.Item>
 

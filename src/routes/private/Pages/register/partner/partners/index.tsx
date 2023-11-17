@@ -4,8 +4,9 @@ import {
   EditOutlined,
   EyeFilled,
   FileAddOutlined,
+  FilterOutlined,
   InfoCircleOutlined,
-  UserAddOutlined,
+  PlusOutlined,
 } from "@ant-design/icons";
 import { CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
@@ -160,11 +161,7 @@ export const Partners = () => {
         container
         style={{ display: "flex", alignItems: "center" }}
         spacing={1}
-        mt={
-          user.partner_id
-            ?  "-40px"
-            : undefined
-        }
+        mt={user.partner_id ? "-40px" : undefined}
       >
         <Grid item xs={12} md={4} lg={2}>
           <Button
@@ -174,6 +171,7 @@ export const Partners = () => {
             loading={isPartnersDataFetching}
             type="primary"
             onClick={() => setIsFiltersOpen(true)}
+            icon={<FilterOutlined />}
           >
             {t("table.filters")}
           </Button>
@@ -207,8 +205,8 @@ export const Partners = () => {
               alignItems: "center",
               justifyContent: "center",
             }}
+            icon={<FilterAltOffOutlinedIcon />}
           >
-            <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
             {t("table.clear_filters")}
           </Button>
         </Grid>
@@ -228,8 +226,8 @@ export const Partners = () => {
                 alignItems: "center",
                 justifyContent: "center",
               }}
+              icon={<PlusOutlined style={{ fontSize: "20px" }} />}
             >
-              <UserAddOutlined style={{ marginRight: 10, fontSize: 22 }} />{" "}
               {`${t("buttons.create")} ${t("buttons.new_partner")}`}
             </Button>
           </Grid>
@@ -254,8 +252,9 @@ export const Partners = () => {
                 size="large"
                 loading={isPartnersDataFetching}
                 disabled={PartnersData?.total === 0 || PartnersDataError}
+                icon={<FileAddOutlined style={{ fontSize: 22 }} />}
               >
-                <FileAddOutlined style={{ fontSize: 22 }} /> CSV
+                CSV
               </Button>
             </Tooltip>
           </Grid>

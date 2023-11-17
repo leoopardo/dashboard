@@ -3,6 +3,7 @@
 import {
   EyeFilled,
   FileAddOutlined,
+  FilterOutlined,
   SendOutlined,
   SettingFilled,
 } from "@ant-design/icons";
@@ -112,7 +113,7 @@ export const PaidDeposits = () => {
     { name: "value", type: "value" },
     { name: "createdAt", type: "date" },
     { name: "delivered_at", type: "date" },
-    { name: "pix_type", head: "pixType",  type: "pix_type" },
+    { name: "pix_type", head: "pixType", type: "pix_type" },
     { name: "buyer_name", type: "text" },
     { name: "buyer_document", type: "document" },
     { name: "status", type: "status" },
@@ -145,6 +146,7 @@ export const PaidDeposits = () => {
             loading={isPaidRowsFetching || isPaidTotalFetching}
             type="primary"
             onClick={() => setIsFiltersOpen(true)}
+            icon={<FilterOutlined />}
           >
             {t("table.filters")}
           </Button>
@@ -181,7 +183,14 @@ export const PaidDeposits = () => {
               delete query.description;
 
               if (
-                ["pix_id", "endToEndId", "txid", "reference_id"].includes(value)
+                [
+                  "pix_id",
+                  "endToEndId",
+                  "txid",
+                  "reference_id",
+                  "payer_document",
+                  "buyer_document",
+                ].includes(value)
               ) {
                 delete query.initial_date;
                 delete query.final_date;
@@ -236,8 +245,8 @@ export const PaidDeposits = () => {
               justifyContent: "center",
               width: "100%",
             }}
+            icon={<FilterAltOffOutlinedIcon />}
           >
-            <FilterAltOffOutlinedIcon style={{ marginRight: 10 }} />{" "}
             {t("table.clear_filters")}
           </Button>
         </Grid>
@@ -258,6 +267,7 @@ export const PaidDeposits = () => {
                 justifyContent: "center",
                 width: "100%",
               }}
+              icon={<SendOutlined />}
             >
               {t("modal.resend_webhook")}
             </Button>
@@ -284,8 +294,9 @@ export const PaidDeposits = () => {
                 size="large"
                 loading={isPaidRowsFetching}
                 disabled={paidRows?.items.length === 0 || paidRowsError}
+                icon={<FileAddOutlined style={{ fontSize: 22 }} />}
               >
-                <FileAddOutlined style={{ fontSize: 22 }} /> CSV
+                CSV
               </Button>
             </Tooltip>
           </Grid>
@@ -410,7 +421,7 @@ export const PaidDeposits = () => {
               "WAITING_REFUND",
             ],
             gender: ["MALE", "FEMALE", "OTHER"],
-            pix_type: ["STANDARD", "FASTPIX"]
+            pix_type: ["STANDARD", "FASTPIX"],
           }}
           startDateKeyName="initial_date"
           endDateKeyName="final_date"

@@ -169,15 +169,16 @@ export const OrganizationHistory = () => {
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid container style={{ display: "flex", flexDirection: "row-reverse" }}>
-        <Grid xs={12} md={2}>
+        <Grid xs={12} md={1}>
           <Button
             style={{ width: "100%" }}
             size="large"
-            type="primary"
+            type="link"
             loading={isOrganizationHistoryFetching}
             onClickCapture={() => refetchOrganizationHistory()}
+            icon={<ReloadOutlined />}
           >
-            <ReloadOutlined /> {t("buttons.refresh")}
+    
           </Button>
         </Grid>
       </Grid>

@@ -287,7 +287,8 @@
     "light": "Light theme",
     "responsible": "responsible",
     "help": "Help",
-    "confirm_import": "Confirm import"
+    "confirm_import": "Confirm import",
+    "merchant_blacklist_details": "Merchants blacklist details"
   },
   "input": {
     "required": "Please input the {{field}}",
@@ -867,7 +868,11 @@
     "row": "Row",
     "pix_type": "Tipo de pix",
     "standard": "Standard",
-    "unassigned": "Unassigned"
+    "unassigned": "Unassigned",
+    "access_key": "Access key",
+    "access_secret": "Access secret",
+    "merchant_blacklist": "Merchants blacklist",
+    "international": "International"
   },
   "actions": {
     "details": "Details",
@@ -1027,5 +1032,6 @@
     "bank_chart_description": "Switches the view from Grid to a bar chart.",
     "bank_card_description": "Switches the view from Grid to bank cards.",
     "last_sign_in_description": "User's last access date to the system."
+
   }
 }
