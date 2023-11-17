@@ -8,7 +8,7 @@ export function useCreateAggregator(body: AggregatorItem) {
   const { isLoading, error, mutate, isSuccess, reset } = useMutation<
     AggregatorItem | null | undefined
   >("CreateAggregator", async () => {
-    const response = await api.post("core/aggregator/responsible/create", body, {});
+    const response = await api.post("core/aggregator/create", body, {});
     await queryClient.refetchQueries({ queryKey: ["Aggregators"] });
     return response.data;
   });
