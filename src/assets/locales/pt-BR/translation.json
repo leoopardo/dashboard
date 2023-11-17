@@ -954,7 +954,7 @@
     "remove_filters": "Remoção de filtros",
     "remove_filters_description": "Remova os filtros aplicados e volte a busca para o estado inicial.",
     "register_users": "Cadastre usuários.",
-    "register_users_descriptions": "Cadastre novos usuários para acessar o painel da sua organização e defina suas permissões.",
+    "register_users_descriptions": "Cadastre novos usuários para acessar o painel.",
     "generate_reports": "Gere relatórios",
     "generate_reports_descriptions": "Gere relatórios dos registros encontrados de acordo com os filtros selecionados. O relatório poderá ser baixado na pagina:",
     "id_description": "Número de identificação no banco de dados",
