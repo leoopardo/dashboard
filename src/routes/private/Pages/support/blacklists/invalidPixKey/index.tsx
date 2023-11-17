@@ -158,7 +158,7 @@ export const InvalidPixKeyBlacklist = () => {
             setIsConfirmOpen={setConfirmDelete}
             itemToAction={currentItem?.pix_key}
             onConfirmAction={() => deleteInvalidPixKeyMutate()}
-            label={["bank_name", "receiver_name", "pix_key"]}
+            label={["pix_key"]}
           />
         </Grid>
       </Grid>
