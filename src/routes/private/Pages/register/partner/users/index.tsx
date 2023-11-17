@@ -5,9 +5,10 @@ import {
   EyeFilled,
   FileAddOutlined,
   FilterOutlined,
+  InfoCircleOutlined,
   UserAddOutlined,
 } from "@ant-design/icons";
-import { ColumnInterface, CustomTable } from "@components/CustomTable";
+import { CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
 import { ValidateToken } from "@components/ValidateToken";
@@ -17,6 +18,7 @@ import { Search } from "@src/components/Inputs/search";
 import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
 import { Toast } from "@src/components/Toast";
+import { TuorComponent } from "@src/components/Tuor";
 import { queryClient } from "@src/services/queryClient";
 import { useGetPartnerUsers } from "@src/services/register/partner/users/getPartnerUsers";
 import { useUpdatePartnerUser } from "@src/services/register/partner/users/updateUser";
@@ -24,8 +26,8 @@ import { useCreatePartnerUserReports } from "@src/services/reports/register/part
 import { useGetPartnerUsersReportFields } from "@src/services/reports/register/partner/getPartnerUsersReportFields";
 import { PartnerQuery } from "@src/services/types/register/partners/partners.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Tooltip } from "antd";
-import { useEffect, useState } from "react";
+import { Button, Tooltip, Typography } from "antd";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { NewUserInterface, NewUserModal } from "./components/newUserModal";
 
@@ -80,28 +82,6 @@ export const PartnerUsers = () => {
 
   const [action, setAction] = useState<"create" | "update">("create");
 
-  const columns: ColumnInterface[] = [
-    { name: "id", type: "id", sort: true },
-    { name: "name", type: "text", sort: true },
-    {
-      name: ["permission_group", "name"],
-      head: "group",
-      type: "text",
-      sort: true,
-      sort_name: "group_name",
-    },
-    {
-      name: ["partner", "name"],
-      head: "partner",
-      type: "text",
-      sort: true,
-      sort_name: "partner_name",
-    },
-    { name: "last_signin_date", type: "date", sort: true },
-    { name: "status", type: "status", sort: true },
-    { name: "created_at", type: "date", sort: true },
-  ];
-
   useEffect(() => {
     refetchUsersData();
   }, [query]);
@@ -109,6 +89,20 @@ export const PartnerUsers = () => {
   const handleUpdateTokenValidate = () => {
     updateMutate();
   };
+
+  const [isTuorOpen, setIsTuorOpen] = useState<boolean>(false);
+  const ref1 = useRef(null);
+  const ref2 = useRef(null);
+  const ref3 = useRef(null);
+  const ref4 = useRef(null);
+  const ref5 = useRef(null);
+  const refId = useRef(null);
+  const refName = useRef(null);
+  const refGroup = useRef(null);
+  const refPartner = useRef(null);
+  const refLast = useRef(null);
+  const refStatus = useRef(null);
+  const refCreatedAt = useRef(null);
 
   return (
     <Grid container style={{ padding: "25px" }}>
@@ -119,6 +113,7 @@ export const PartnerUsers = () => {
       >
         <Grid item xs={12} md={4} lg={2}>
           <Button
+            ref={ref1}
             size="large"
             style={{ width: "100%" }}
             loading={isUsersDataFetching}
@@ -129,22 +124,38 @@ export const PartnerUsers = () => {
             {t("table.filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={8} lg={10}>
+        <Grid item xs={12} md={8} lg={9}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
             query={query}
             setQuery={setQuery}
           />
+        </Grid>{" "}
+        <Grid
+          item
+          xs={12}
+          md={1}
+          style={{ display: "flex", justifyContent: "flex-end" }}
+        >
+          <Tooltip title={t("buttons.help")}>
+            <Button
+              type="link"
+              onClick={() => setIsTuorOpen((state) => !state)}
+            >
+              <InfoCircleOutlined />
+            </Button>
+          </Tooltip>
         </Grid>
       </Grid>
 
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
-        <Grid item xs={12} md={4} lg={4}>
+        <Grid item xs={12} md={4} lg={4} ref={ref2}>
           <Search query={query} setQuery={setQuery} searchOption="name" />
         </Grid>
         <Grid item xs={12} md={3} lg={2}>
           <Button
+            ref={ref3}
             size="large"
             type="dashed"
             loading={isUsersDataFetching}
@@ -166,6 +177,7 @@ export const PartnerUsers = () => {
         {permissions.register.partner.users.partner_user_create && (
           <Grid item xs={12} md={2} lg={2}>
             <Button
+              ref={ref4}
               type="primary"
               loading={isUsersDataFetching}
               onClick={() => {
@@ -199,6 +211,7 @@ export const PartnerUsers = () => {
               arrow
             >
               <Button
+                ref={ref5}
                 onClick={() => setIsExportReportsOpen(true)}
                 style={{ width: "100%" }}
                 shape="round"
@@ -242,7 +255,39 @@ export const PartnerUsers = () => {
             data={UsersData}
             items={UsersData?.items}
             error={UsersDataError}
-            columns={columns}
+            columns={[
+              { name: "id", type: "id", sort: true, key: refId },
+              { name: "name", type: "text", sort: true, key: refName },
+              {
+                name: ["permission_group", "name"],
+                head: "group",
+                type: "text",
+                sort: true,
+                sort_name: "group_name",
+                key: refGroup,
+              },
+              {
+                name: ["partner", "name"],
+                head: "partner",
+                type: "text",
+                sort: true,
+                sort_name: "partner_name",
+                key: refPartner,
+              },
+              {
+                name: "last_signin_date",
+                type: "date",
+                sort: true,
+                key: refLast,
+              },
+              { name: "status", type: "status", sort: true, key: refStatus },
+              {
+                name: "created_at",
+                type: "date",
+                sort: true,
+                key: refCreatedAt,
+              },
+            ]}
             loading={isUsersDataFetching}
             label={["name", "username", "partner.name", "updated_at"]}
           />
@@ -323,6 +368,79 @@ export const PartnerUsers = () => {
         setIsComma={setIsComma}
         setCsvFields={setCsvFields}
         reportName="PartnerUsers"
+      />
+      <TuorComponent
+        open={isTuorOpen}
+        setOpen={setIsTuorOpen}
+        searchFilterStepRef={ref1}
+        searchByNameStepRef={ref2}
+        removeFiltersStepRef={ref3}
+        createRegisterStep={
+          permissions.register.partner.users.partner_user_create && {
+            title: t("wiki.register_users"),
+            description: t("wiki.register_aggregator_users_descriptions"),
+            target: () => ref4.current,
+          }
+        }
+        exportCsvStep={
+          permissions.register.partner.users.partner_user_export_csv && {
+            title: t("wiki.generate_reports"),
+            description: (
+              <Typography>
+                {t("wiki.generate_reports_descriptions")}{" "}
+                <Typography.Link
+                  href="/register/partner/partner_reports/partner_users_reports"
+                  target="_blank"
+                >
+                  {t("menus.partner")} | {t("menus.reports")} |{" "}
+                  {t("menus.partner_users")}
+                </Typography.Link>
+              </Typography>
+            ),
+            target: () => ref5.current,
+          }
+        }
+        steps={[
+          {
+            title: t("table.id"),
+            description: t("wiki.id_description"),
+            target: () => refId.current,
+          },
+          {
+            title: t("table.name"),
+            description: t("wiki.aggregator_user_name_description"),
+            target: () => refName.current,
+          },
+          {
+            title: t("table.group"),
+            description: t("wiki.aggregator_group_description"),
+            target: () => refGroup.current,
+          },
+          {
+            title: t("table.partner"),
+            description: t("wiki.partner_description"),
+            target: () => refPartner.current,
+          },
+          {
+            title: t("table.last_signin_date"),
+            description: t("wiki.last_signin_date_description"),
+            target: () => refLast.current,
+          },
+          {
+            title: t("table.status"),
+            description: t("wiki.status_description"),
+            target: () => refStatus.current,
+          },
+          {
+            title: t("table.createdAt"),
+            description: t("wiki.created_at_description"),
+            target: () => refCreatedAt.current,
+          },
+        ]}
+        pageStep={{
+          title: t("menus.aggregator_users"),
+          description: t("wiki.aggregator_users_description"),
+        }}
       />
     </Grid>
   );

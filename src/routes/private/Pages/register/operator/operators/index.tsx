@@ -5,9 +5,10 @@ import {
   EyeFilled,
   FileAddOutlined,
   FilterOutlined,
+  InfoCircleOutlined,
   PlusOutlined,
 } from "@ant-design/icons";
-import { ColumnInterface, CustomTable } from "@components/CustomTable";
+import { CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
@@ -17,6 +18,7 @@ import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomRep
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
 import { Toast } from "@src/components/Toast";
+import { TuorComponent } from "@src/components/Tuor";
 import { queryClient } from "@src/services/queryClient";
 import { useCreateOperator } from "@src/services/register/operator/createOperator";
 import { useGetOperator } from "@src/services/register/operator/getOperators";
@@ -29,8 +31,9 @@ import {
   OperatorQuery,
 } from "@src/services/types/register/operators/operators.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Tooltip } from "antd";
-import { useEffect, useState } from "react";
+import { defaultTheme } from "@src/styles/defaultTheme";
+import { Button, Tooltip, Typography } from "antd";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import { useNavigate } from "react-router-dom";
@@ -108,13 +111,6 @@ export const Operators = () => {
   const [isExportReportsOpen, setIsExportReportsOpen] =
     useState<boolean>(false);
 
-  const columns: ColumnInterface[] = [
-    { name: "id", type: "id", sort: true },
-    { name: "name", type: "text", sort: true },
-    { name: "status", type: "status" },
-    { name: "created_at", type: "date", sort: true },
-  ];
-
   useEffect(() => {
     if (isSuccessOperatorData) {
       refetchOperatorData();
@@ -131,15 +127,41 @@ export const Operators = () => {
     });
   }, [currentItem]);
 
+  const [isTuorOpen, setIsTuorOpen] = useState<boolean>(false);
+  const ref = useRef(null);
+  const ref1 = useRef(null);
+  const ref2 = useRef(null);
+  const ref3 = useRef(null);
+  const ref4 = useRef(null);
+  const ref5 = useRef(null);
+  const refId = useRef(null);
+  const refName = useRef(null);
+  const refStatus = useRef(null);
+  const refCreatedAt = useRef(null);
+
   return (
     <Grid container style={{ padding: "25px" }}>
-      {!user.operator_id && (
-        <TotalizersCards
-          params={query}
-          loading={isOperatorTotalDataFetching}
-          data={OperatorTotalData || undefined}
-        />
-      )}
+      <Grid
+        item
+        xs={12}
+        md={12}
+        style={{ display: "flex", justifyContent: "flex-end" }}
+      >
+        <Tooltip title={t("buttons.help")}>
+          <Button type="link" onClick={() => setIsTuorOpen((state) => !state)}>
+            <InfoCircleOutlined />
+          </Button>
+        </Tooltip>
+      </Grid>
+      <Grid item xs={12} ref={ref}>
+        {!user.operator_id && (
+          <TotalizersCards
+            params={query}
+            loading={isOperatorTotalDataFetching}
+            data={OperatorTotalData || undefined}
+          />
+        )}
+      </Grid>
 
       <Grid
         container
@@ -149,6 +171,7 @@ export const Operators = () => {
       >
         <Grid item xs={12} md={4} lg={2}>
           <Button
+            ref={ref1}
             size="large"
             style={{ width: "100%" }}
             loading={isOperatorDataFetching}
@@ -159,7 +182,7 @@ export const Operators = () => {
             {t("table.filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={8} lg={10}>
+        <Grid item xs={12} md={8} lg={9}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
@@ -170,11 +193,12 @@ export const Operators = () => {
       </Grid>
 
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
-        <Grid item xs={12} md={4} lg={4}>
+        <Grid item xs={12} md={4} lg={4} ref={ref2}>
           <Search query={query} setQuery={setQuery} searchOption="name" />
         </Grid>
         <Grid item xs={12} md={3} lg={2}>
           <Button
+            ref={ref3}
             type="dashed"
             loading={isOperatorDataFetching}
             danger
@@ -196,6 +220,7 @@ export const Operators = () => {
         {permissions.register.operator.operator.operator_create && (
           <Grid item xs={12} md={3} lg={2}>
             <Button
+              ref={ref4}
               type="primary"
               loading={isOperatorDataFetching}
               onClick={() => {
@@ -226,6 +251,7 @@ export const Operators = () => {
               arrow
             >
               <Button
+                ref={ref5}
                 onClick={() => setIsExportReportsOpen(true)}
                 style={{ width: "100%" }}
                 shape="round"
@@ -268,7 +294,17 @@ export const Operators = () => {
             data={OperatorData}
             items={OperatorData?.items}
             error={OperatorDataError}
-            columns={columns}
+            columns={[
+              { name: "id", type: "id", sort: true, key: refId },
+              { name: "name", type: "text", sort: true, key: refName },
+              { name: "status", type: "status", key: refStatus },
+              {
+                name: "created_at",
+                type: "date",
+                sort: true,
+                key: refCreatedAt,
+              },
+            ]}
             loading={isOperatorDataFetching}
             label={["name", "description"]}
           />
@@ -348,6 +384,103 @@ export const Operators = () => {
         setIsComma={setIsComma}
         setCsvFields={setCsvFields}
         reportName="Operators"
+      />
+      <TuorComponent
+        open={isTuorOpen}
+        setOpen={setIsTuorOpen}
+        searchFilterStepRef={ref1}
+        searchByNameStepRef={ref2}
+        removeFiltersStepRef={ref3}
+        createRegisterStep={
+          permissions.register.operator.operator.operator_create && {
+            title: t("wiki.register_operator"),
+            description: t("wiki.register_operator_description"),
+            target: () => ref4.current,
+          }
+        }
+        exportCsvStep={
+          permissions.register.operator.operator.operator_export_csv && {
+            title: t("wiki.generate_reports"),
+            description: (
+              <Typography>
+                {t("wiki.generate_reports_descriptions")}{" "}
+                <Typography.Link
+                  href="/register/operator/operator_reports/operator_operators_reports"
+                  target="_blank"
+                >
+                  {t("menus.operator")} | {t("menus.reports")} |{" "}
+                  {t("menus.operators")}
+                </Typography.Link>
+              </Typography>
+            ),
+            target: () => ref5.current,
+          }
+        }
+        steps={[
+          {
+            title: t("wiki.totalizers"),
+            description: (
+              <Typography>
+                {t("wiki.totalizers_description")}
+                <Typography>
+                  <span style={{ color: defaultTheme.colors.info }}>
+                    {t("titles.total_registred", {
+                      entity: t("menus.operators")?.toLowerCase(),
+                    })}
+                    :
+                  </span>
+                  {t("wiki.entity_total")}
+                </Typography>
+                <Typography>
+                  <span style={{ color: defaultTheme.colors.success }}>
+                    {t("titles.total_registred_active", {
+                      entity: t("menus.operators")?.toLowerCase(),
+                    })}
+                    :
+                  </span>
+                  {t("wiki.entity_active")}
+                </Typography>
+                <Typography>
+                  <span style={{ color: defaultTheme.colors.waiting }}>
+                    {t("titles.total_registred_inactive", {
+                      entity: t("menus.operators")?.toLowerCase(),
+                    })}
+                    :
+                  </span>
+                  {t("wiki.entity_inactive")}
+                </Typography>
+              </Typography>
+            ),
+            target: () => ref.current,
+            style: { maxHeight: "120px" },
+          },
+
+          {
+            title: t("table.id"),
+            description: t("wiki.id_description"),
+            target: () => refId.current,
+          },
+          {
+            title: t("table.name"),
+            description: t("wiki.aggregator_name_description"),
+            target: () => refName.current,
+          },
+          {
+            title: t("table.status"),
+            description: t("wiki.status_description"),
+            target: () => refStatus.current,
+          },
+
+          {
+            title: t("table.createdAt"),
+            description: t("wiki.created_at_description"),
+            target: () => refCreatedAt.current,
+          },
+        ]}
+        pageStep={{
+          title: t("menus.operators"),
+          description: t("wiki.operators_description"),
+        }}
       />
     </Grid>
   );

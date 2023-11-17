@@ -7,7 +7,7 @@ import {
   FileAddOutlined,
   FilterOutlined,
   PlusOutlined,
-  ToolOutlined
+  ToolOutlined,
 } from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
@@ -23,13 +23,15 @@ import {
   MerchantsQuery,
 } from "@services/types/register/merchants/merchantsRegister.interface";
 import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
+import { TuorComponent } from "@src/components/Tuor";
 import { queryClient } from "@src/services/queryClient";
 import { useCreateMerchant } from "@src/services/register/merchant/merchant/createMerchant";
 import { useGetMerchantsTotals } from "@src/services/register/merchant/merchant/getMerchantsTotals";
 import { useCreateMerchantReports } from "@src/services/reports/register/merchant/createMerchantReports";
 import { useGetMerchantReportFields } from "@src/services/reports/register/merchant/getMerchantReportFields";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Input, Tabs, Tooltip } from "antd";
+import { defaultTheme } from "@src/styles/defaultTheme";
+import { Button, Input, Tabs, Tooltip, Typography } from "antd";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
@@ -55,6 +57,9 @@ export const MerchantView = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [query, setQuery] = useState<MerchantsQuery>(INITIAL_QUERY);
+  const [activeTotalizer, setActiveTotalizer] = useState<
+    "total_banks" | "total_merchants"
+  >("total_banks");
   const {
     MerchantData,
     MerchantDataError,
@@ -75,6 +80,7 @@ export const MerchantView = () => {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [currentItem, setCurrentItem] = useState<MerchantsItem | null>(null);
   const [isUpdatebankOpen, setIsUpdateBankOpen] = useState<boolean>(false);
+
   const [updateBody, setUpdateBody] = useState<MerchantsItem>({
     ...currentItem,
     merchant_id: currentItem?.id,
@@ -162,12 +168,25 @@ export const MerchantView = () => {
     });
   }, [currentItem]);
 
+  const [isTuorOpen, setIsTuorOpen] = useState<boolean>(false);
+  const ref = useRef(null);
+  const ref1 = useRef(null);
+  const ref2 = useRef(null);
+  const ref3 = useRef(null);
+  const ref4 = useRef(null);
+  const ref5 = useRef(null);
+  const refPerBanks = useRef(null);
+  const refId = useRef(null);
+  const refName = useRef(null);
+  const refStatus = useRef(null);
+  const refCreatedAt = useRef(null);
+
   const TotalizersTabs = [];
   if ([1, 2].includes(user.type)) {
     TotalizersTabs.push({
       label: `${t("titles.merchants_per_bank")}`,
       key: "total_banks",
-      children: <TotalizerPerBanks query={query} />,
+      children: <TotalizerPerBanks query={query} ref={refPerBanks} />,
     });
   }
 
@@ -189,9 +208,35 @@ export const MerchantView = () => {
 
   return (
     <Grid container style={{ padding: "25px" }}>
+      {/* <Grid
+        item
+        xs={12}
+        md={12}
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          marginBottom: -50,
+        }}
+      >
+        <Tooltip title={t("buttons.help")}>
+          <Button
+            style={{ zIndex: 999 }}
+            type="link"
+            onClick={() => setIsTuorOpen((state) => !state)}
+          >
+            <InfoCircleOutlined />
+          </Button>
+        </Tooltip>
+      </Grid> */}
       {!user.merchant_id && (
-        <Grid item xs={12}>
-          <Tabs items={TotalizersTabs} />
+        <Grid item xs={12} ref={refPerBanks}>
+          <Grid item xs={12} ref={ref}>
+            <Tabs
+              items={TotalizersTabs}
+              activeKey={activeTotalizer}
+              onChange={(key: any) => setActiveTotalizer(key)}
+            />
+          </Grid>
         </Grid>
       )}
 
@@ -212,6 +257,7 @@ export const MerchantView = () => {
       >
         <Grid item xs={12} md={4} lg={2}>
           <Button
+            ref={ref1}
             size="large"
             style={{ width: "100%" }}
             loading={isMerchantDataFetching}
@@ -233,7 +279,7 @@ export const MerchantView = () => {
       </Grid>
 
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
-        <Grid item xs={12} md={6} lg={4}>
+        <Grid item xs={12} md={6} lg={4} ref={ref2}>
           <Input.Search
             size="large"
             ref={searchref}
@@ -245,6 +291,7 @@ export const MerchantView = () => {
         </Grid>
         <Grid item xs={12} md={4} lg={2}>
           <Button
+            ref={ref3}
             type="dashed"
             loading={isMerchantDataFetching}
             danger
@@ -292,6 +339,7 @@ export const MerchantView = () => {
         {permissions.register.merchant.merchant.merchant_create && (
           <Grid item xs={12} md={4} lg={2}>
             <Button
+              ref={ref4}
               type="primary"
               loading={isMerchantDataFetching}
               onClick={() => {
@@ -324,6 +372,7 @@ export const MerchantView = () => {
               arrow
             >
               <Button
+                ref={ref5}
                 onClick={() => setIsExportReportsOpen(true)}
                 style={{ width: "100%" }}
                 shape="round"
@@ -451,7 +500,6 @@ export const MerchantView = () => {
             "aggregator_id",
             "operator_id",
             "partner_id",
-            "merchant_id",
             "cash_in_bank",
             "cash_out_bank",
           ]}
@@ -511,6 +559,140 @@ export const MerchantView = () => {
         setIsComma={setIsComma}
         setCsvFields={setCsvFields}
         reportName="Merchant"
+      />
+      <TuorComponent
+        open={isTuorOpen}
+        setOpen={setIsTuorOpen}
+        searchFilterStepRef={ref1}
+        searchByNameStepRef={ref2}
+        removeFiltersStepRef={ref3}
+        createRegisterStep={
+          permissions.register.operator.operator.operator_create && {
+            title: t("wiki.register_operator"),
+            description: t("wiki.register_operator_description"),
+            target: () => ref4.current,
+          }
+        }
+        exportCsvStep={
+          permissions.register.operator.operator.operator_export_csv && {
+            title: t("wiki.generate_reports"),
+            description: (
+              <Typography>
+                {t("wiki.generate_reports_descriptions")}{" "}
+                <Typography.Link
+                  href="/register/operator/operator_reports/operator_operators_reports"
+                  target="_blank"
+                >
+                  {t("menus.operator")} | {t("menus.reports")} |{" "}
+                  {t("menus.operators")}
+                </Typography.Link>
+              </Typography>
+            ),
+            target: () => ref5.current,
+            nextButtonProps: {
+              onClick: () => setActiveTotalizer("total_banks"),
+            },
+          }
+        }
+        steps={[
+          [1, 2].includes(user.type) && {
+            title: t("wiki.totalizers_merchant_per_bank"),
+            description: (
+              <Typography>
+                {t("wiki.totalizers_merchant_per_bank_description")}
+                <Typography>
+                  <span style={{ color: defaultTheme.colors.paid }}>
+                    {t("wiki.deposit_bank")}:
+                  </span>
+                  {t("wiki.deposit_bank_description")}
+                </Typography>
+                <Typography>
+                  <span style={{ color: defaultTheme.colors.error }}>
+                    {t("wiki.withdraw_bank")}:
+                  </span>
+                  {t("wiki.withdraw_bank_description")}
+                </Typography>
+                <Typography>
+                  <span style={{ color: defaultTheme.colors.info }}>
+                    {t("wiki.fast_pix_bank")}:
+                  </span>
+                  {t("wiki.fast_pix_bank_description")}
+                </Typography>
+              </Typography>
+            ),
+            target: () => ref.current,
+            style: { maxHeight: "100px" },
+            nextButtonProps: {
+              onClick: () => setActiveTotalizer("total_merchants"),
+            },
+          },
+          !user.merchant_id && {
+            title: t("wiki.totalizers"),
+            description: (
+              <Typography>
+                {t("wiki.totalizers_description")}
+                <Typography>
+                  <span style={{ color: defaultTheme.colors.info }}>
+                    {t("titles.total_registred", {
+                      entity: t("menus.operators")?.toLowerCase(),
+                    })}
+                    :
+                  </span>
+                  {t("wiki.entity_total")}
+                </Typography>
+                <Typography>
+                  <span style={{ color: defaultTheme.colors.success }}>
+                    {t("titles.total_registred_active", {
+                      entity: t("menus.operators")?.toLowerCase(),
+                    })}
+                    :
+                  </span>
+                  {t("wiki.entity_active")}
+                </Typography>
+                <Typography>
+                  <span style={{ color: defaultTheme.colors.waiting }}>
+                    {t("titles.total_registred_inactive", {
+                      entity: t("menus.operators")?.toLowerCase(),
+                    })}
+                    :
+                  </span>
+                  {t("wiki.entity_inactive")}
+                </Typography>
+              </Typography>
+            ),
+            target: () => ref.current,
+            style: { maxHeight: "120px" },
+            prevButtonProps: {
+              onClick: () => setActiveTotalizer("total_banks"),
+            },
+          },
+
+          {
+            title: t("table.id"),
+            description: t("wiki.id_description"),
+            target: () => refId.current,
+          },
+          {
+            title: t("table.name"),
+            description: t("wiki.aggregator_name_description"),
+            target: () => refName.current,
+          },
+          {
+            title: t("table.status"),
+            description: t("wiki.status_description"),
+            target: () => refStatus.current,
+          },
+
+          {
+            title: t("table.createdAt"),
+            description: t("wiki.created_at_description"),
+            target: () => refCreatedAt.current,
+          },
+        ]}
+        pageStep={{
+          title: t("menus.operators"),
+          description: t("wiki.operators_description"),
+        }}
       />
     </Grid>
   );

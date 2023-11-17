@@ -19,7 +19,6 @@ export const BreadcrumbComponent = () => {
   >([{ title: <HomeOutlined style={{ fontSize: 16 }} /> }]);
   const location = useLocation();
   const translation = useTranslation().i18n.language;
-  
 
   const isNotPath: string[] = [
     "register",
@@ -135,7 +134,6 @@ export const BreadcrumbComponent = () => {
           : t(`menus.${value}`)
       )
       .join(" - ")} | ${import.meta.env.VITE_APP_COMPANY_NAME}`;
-     
   }, [location, translation]);
 
   useEffect(() => {

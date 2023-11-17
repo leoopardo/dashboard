@@ -200,7 +200,7 @@ export const PaidWithdrawals = () => {
                   "organization_id",
                   "endToEndId",
                   "payment_id",
-                  "reference_id",
+                  "reference_id","receiver_document"
                 ].includes(value)
               ) {
                 delete query.initial_date;

@@ -198,7 +198,7 @@ export const RefundDepositsManual = () => {
               delete query.endToEndId;
               delete query.payer_document;
               delete query.payer_name;
-              if (["rtrid", "endToEndId"].includes(value)) {
+              if (["rtrid", "endToEndId", "payer_document"].includes(value)) {
                 delete query?.start_date;
                 delete query?.end_date;
               } else {
