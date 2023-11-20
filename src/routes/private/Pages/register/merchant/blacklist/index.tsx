@@ -55,7 +55,6 @@ export const MerchantBlacklist = () => {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [body, setBody] = useState<MerchantBlacklistItem | null>({
     cpf: "",
-    reason: "",
     description: "",
     can_be_deleted_only_by_organization: true,
   });
@@ -91,7 +90,6 @@ export const MerchantBlacklist = () => {
     if (!isUpdateModalOpen) {
       setBody({
         cpf: "",
-        reason: "",
         description: "",
         can_be_deleted_only_by_organization: true,
       });
