@@ -7,10 +7,13 @@ import moment from "moment";
 import { useQuery } from "react-query";
 import { api } from "../../../../config/api";
 
-export function useGetInvalidPixKey(params: ThirdPartQuery) {
+export function useGetInvalidPixKey(params: ThirdPartQuery, fetch?: boolean) {
   const { data, isFetching, error, refetch } = useQuery<
     ThirdPartData | null | undefined
   >("InvalidPixKey", async () => {
+    if (!fetch) {
+      return {};
+    }
     const response = await api.get("blacklist/pix-key-black-list", {
       params: {
         ...params,

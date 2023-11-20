@@ -882,7 +882,9 @@
     "merchant_blacklist": "Blacklist de empresa",
     "international": "Internacional",
     "operations": "Operações",
-    "in_out_conversion": "Conversões de entrada/saída"
+    "in_out_conversion": "Conversões de entrada/saída",
+    "receiver_bank_client_document": "Documento do cliente do banco",
+    "receiver_bank_client_name": "Nome do cliente do banco"
   },
   "actions": {
     "details": "Detalhes",

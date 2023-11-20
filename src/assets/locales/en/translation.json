@@ -874,7 +874,9 @@
     "merchant_blacklist": "Merchants blacklist",
     "international": "International",
     "operations": "Operations",
-    "in_out_conversion": "In/Out conversions"
+    "in_out_conversion": "In/Out conversions",
+    "receiver_bank_client_document": "Receiver bank client document",
+    "receiver_bank_client_name": "Receiver bank client name"
   },
   "actions": {
     "details": "Details",
