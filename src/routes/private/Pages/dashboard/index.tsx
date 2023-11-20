@@ -3,6 +3,7 @@ import {
   BarChartOutlined,
   DashOutlined,
   InfoCircleOutlined,
+  ReloadOutlined,
 } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { FiltersModal } from "@src/components/FiltersModal";
@@ -15,7 +16,16 @@ import { queryClient } from "@src/services/queryClient";
 import { MerchantBankStatementTotalsQuery } from "@src/services/types/consult/merchant/bankStatement";
 import { ValidateInterface } from "@src/services/types/validate.interface";
 import { defaultTheme } from "@src/styles/defaultTheme";
-import { Button, Col, Layout, Row, Tabs, Tooltip, Typography } from "antd";
+import {
+  Button,
+  Col,
+  Divider,
+  Layout,
+  Row,
+  Tabs,
+  Tooltip,
+  Typography,
+} from "antd";
 import moment from "moment";
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -65,6 +75,20 @@ export const Dashboard = () => {
   const ref1 = useRef(null);
   const ref2 = useRef(null);
   const ref3 = useRef(null);
+  const ref4 = useRef(null);
+  const refType = useRef(null);
+  const refOpNum = useRef(null);
+  const refOpVal = useRef(null);
+  const refTicket = useRef(null);
+  const refFee = useRef(null);
+  const refInOut = useRef(null);
+  const refIn = useRef(null);
+  const refOut = useRef(null);
+  const refMerchantsBalance = useRef(null);
+  const refMerchantname = useRef(null);
+  const refTransaction = useRef(null);
+  const refPayment = useRef(null);
+  const refReserved = useRef(null);
   const { bankListData } = useListBanks({
     limit: 200,
     page: 1,
@@ -120,12 +144,11 @@ export const Dashboard = () => {
       }}
     >
       {permissions?.report?.paybrokers?.balance
-            ?.report_paybrokers_balance_list && (
+        ?.report_paybrokers_balance_list && (
         <Layout
           ref={ref1}
           style={{
             margin: -28,
-            paddingBottom: 20,
             paddingTop: 20,
             paddingLeft: 6,
             display: "flex",
@@ -182,6 +205,13 @@ export const Dashboard = () => {
                     <InfoCircleOutlined />
                   </Button>
                 </Tooltip>
+                <Button
+                  type="link"
+                  onClick={() => queryClient.invalidateQueries()}
+                  style={{ marginRight: 8 }}
+                >
+                  <ReloadOutlined />
+                </Button>
                 <Button
                   shape="circle"
                   onClick={() => {
@@ -324,7 +354,15 @@ export const Dashboard = () => {
                 </Button>
               </Col>
               <Col span={24} style={{ marginTop: 16 }}>
-                <ValuesTable query={query} />
+                <Divider orientation="left">
+                  <Typography.Title level={3} ref={ref4}>
+                    {t("table.operations")}
+                  </Typography.Title>
+                </Divider>
+                <ValuesTable
+                  query={query}
+                  refs={[refType, refOpNum, refOpVal, refTicket, refFee]}
+                />
               </Col>
             </Row>
           </Layout>
@@ -336,9 +374,18 @@ export const Dashboard = () => {
               paddingBottom: user.aggregator_id ? "60px" : undefined,
             }}
           >
-            <Row gutter={[16, 16]}>
-              <ChartIn query={query} />
-              <ChartOut query={query} />
+            <Row gutter={[16, 0]}>
+              <Divider orientation="left">
+                <Typography.Title level={3} ref={refInOut}>
+                  {t("table.in_out_conversion")}
+                </Typography.Title>
+              </Divider>
+              <Col xs={{ span: 24 }} md={{ span: 12 }} ref={refIn}>
+                <ChartIn query={query} />
+              </Col>
+              <Col xs={{ span: 24 }} md={{ span: 12 }} ref={refOut}>
+                <ChartOut query={query} />
+              </Col>
             </Row>
           </Col>
         </Row>
@@ -363,7 +410,15 @@ export const Dashboard = () => {
                 paddingRight: 12,
               }}
             >
-              <MerchantsBalance />
+              <MerchantsBalance
+                ref={refMerchantsBalance}
+                refs={[
+                  refMerchantname,
+                  refTransaction,
+                  refPayment,
+                  refReserved,
+                ]}
+              />
             </Layout>
           </Row>
         )}
@@ -503,6 +558,81 @@ export const Dashboard = () => {
               </Typography>
             ),
             target: () => ref2.current,
+          },
+          permissions.report.merchant.extract.menu && {
+            title: t("table.operations"),
+            description: t("wiki.operations_description"),
+            target: () => ref4.current,
+          },
+          permissions.report.merchant.extract.menu && {
+            title: t("table.type"),
+            description: t("wiki.operation_type_description"),
+            target: () => refType.current,
+          },
+          permissions.report.merchant.extract.menu && {
+            title: t("wiki.operations_number"),
+            description: t("wiki.operations_number_description"),
+            target: () => refOpNum.current,
+          },
+          permissions.report.merchant.extract.menu && {
+            title: t("wiki.operations_value"),
+            description: t("wiki.operations_value_description"),
+            target: () => refOpVal.current,
+          },
+          permissions.report.merchant.extract.menu && {
+            title: t("wiki.ticket"),
+            description: t("wiki.ticket_description"),
+            target: () => refTicket.current,
+          },
+          permissions.report.merchant.extract.menu && {
+            title: t("wiki.fee"),
+            description: t("wiki.fee_description"),
+            target: () => refFee.current,
+          },
+          (permissions.report.deposit.generated_deposit
+            .report_deposit_generated_deposit_list_totals ||
+            permissions.report.withdraw.generated_withdraw
+              .report_withdraw_generated_withdraw_list_totals) && {
+            title: t("wiki.in_out_conversions"),
+            description: t("wiki.in_out_conversions_description"),
+            target: () => refInOut.current,
+          },
+          permissions.report.deposit.generated_deposit
+            .report_deposit_generated_deposit_list_totals && {
+            title: t("wiki.in_conversions"),
+            description: t("wiki.in_conversions_description"),
+            target: () => refIn.current,
+          },
+          permissions.report.withdraw.generated_withdraw
+            .report_withdraw_generated_withdraw_list_totals && {
+            title: t("wiki.out_conversions"),
+            description: t("wiki.out_conversions_description"),
+            target: () => refOut.current,
+          },
+          permissions.report.merchant.balance.menu && {
+            title: t("wiki.merchants_balance"),
+            description: t("wiki.merchants_balance_description"),
+            target: () => refMerchantsBalance.current,
+          },
+          permissions.report.merchant.balance.menu && {
+            title: t("wiki.merchant_name"),
+            description: t("wiki.merchant_name_description"),
+            target: () => refMerchantsBalance.current,
+          },
+          permissions.report.merchant.balance.menu && {
+            title: t("wiki.balance_to_transaction"),
+            description: t("wiki.balance_to_transaction_description"),
+            target: () => refMerchantsBalance.current,
+          },
+          permissions.report.merchant.balance.menu && {
+            title: t("wiki.balance_to_payment"),
+            description: t("wiki.balance_to_payment_description"),
+            target: () => refMerchantsBalance.current,
+          },
+          permissions.report.merchant.balance.menu && {
+            title: t("wiki.balance_reserved"),
+            description: t("wiki.balance_reserved_description"),
+            target: () => refMerchantsBalance.current,
           },
         ]}
         pageStep={{

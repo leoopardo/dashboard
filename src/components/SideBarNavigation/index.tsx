@@ -28,7 +28,7 @@ type MenuItem = Required<MenuProps>["items"][number];
 export const SidebarNavigation = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const {resetErrors} = useErrorContext()
+  const { resetErrors } = useErrorContext();
   const isMobile = useMediaQuery({ maxWidth: "950px" });
   const [collapsed, setCollapsed] = useState(true);
   const { handleChangeSidebar, isSidebarOpen } = useMenu();
@@ -64,7 +64,7 @@ export const SidebarNavigation = () => {
 
   function handleNavigate(pathArray: string[]) {
     navigate(pathArray.reverse().join("/"));
-    handleChangeSidebar(false)
+    handleChangeSidebar(false);
   }
 
   function getItem(
@@ -75,7 +75,8 @@ export const SidebarNavigation = () => {
     onClick?: (e: any) => void | null,
     style?: any,
     label?: React.ReactNode,
-    theme?: string
+    theme?: string,
+    type?: any
   ): MenuItem {
     return {
       key,
@@ -86,6 +87,7 @@ export const SidebarNavigation = () => {
       onClick,
       style,
       theme,
+      type,
     } as MenuItem;
   }
 
@@ -99,6 +101,17 @@ export const SidebarNavigation = () => {
       { fontSize: "16px" },
       import.meta.env.VITE_APP_COMPANY_NAME,
       "dark"
+    ),
+    getItem(
+      "div1",
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      "divider"
     ),
     // - CADASTROS
     getItem(
@@ -1016,11 +1029,10 @@ export const SidebarNavigation = () => {
               false,
               (e) => handleNavigate(e?.keyPath),
               {
-                display:
-                  permissions?.transactions?.merchant?.manual_transactions
-                    ?.menu
-                    ? undefined
-                    : "none",
+                display: permissions?.transactions?.merchant
+                  ?.manual_transactions?.menu
+                  ? undefined
+                  : "none",
               }
             ),
 
@@ -1045,11 +1057,10 @@ export const SidebarNavigation = () => {
               false,
               (e) => handleNavigate(e?.keyPath),
               {
-                display:
-                  permissions?.transactions?.merchant?.merchant_pre_manual
-                    ?.menu
-                    ? undefined
-                    : "none",
+                display: permissions?.transactions?.merchant
+                  ?.merchant_pre_manual?.menu
+                  ? undefined
+                  : "none",
               }
             ),
             getItem(
@@ -1093,8 +1104,7 @@ export const SidebarNavigation = () => {
                   (e) => handleNavigate(e?.keyPath),
                   {
                     display: permissions?.transactions?.merchant
-                      ?.merchant_pre_manual
-                      ?.menu
+                      ?.merchant_pre_manual?.menu
                       ? undefined
                       : "none",
                   }
@@ -1792,6 +1802,16 @@ export const SidebarNavigation = () => {
       {
         display: permissions?.support?.menu ? undefined : "none",
       }
+    ), getItem(
+      "div1",
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      "divider"
     ),
     getItem(
       "logout",
@@ -1802,7 +1822,7 @@ export const SidebarNavigation = () => {
         secureLocalStorage.removeItem("token");
         sessionStorage.removeItem("token");
         queryClient.refetchQueries(["validate"]);
-        resetErrors()
+        resetErrors();
       },
       { color: "red" }
     ),
@@ -1871,6 +1891,7 @@ export const SidebarNavigation = () => {
         theme={theme === "dark" ? "dark" : import.meta.env.VITE_APP_MENU_THEME}
         inlineCollapsed={!isSidebarOpen}
         items={items}
+        subMenuCloseDelay={0.5}
       />
     </div>
   );

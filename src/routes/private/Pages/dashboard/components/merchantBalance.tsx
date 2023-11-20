@@ -5,7 +5,7 @@ import { ReloadOutlined } from "@ant-design/icons";
 import { useGetMerchantBalanceTotal } from "@src/services/consult/merchant/balance/getMerchantBalanceTotal";
 import { MerchantBalanceQuery } from "@src/services/types/consult/merchant/balance";
 import { defaultTheme } from "@src/styles/defaultTheme";
-import { Button, Card, Col, Row, Statistic, Typography } from "antd";
+import { Button, Card, Col, Row, Statistic } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -15,7 +15,7 @@ interface MerchantBalanceInterface {
 
 export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
   const { t } = useTranslation();
-  const [isHoverCurrency, setIsHoverCurrency] = useState<
+  const [isHoverCurrency,] = useState<
     "real" | "dolar" | "euro" | "btc"
   >("real");
   const [show] = useState<boolean>(true);
@@ -32,7 +32,7 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
   }, [customQuery]);
 
   return (
-    <Row align="middle" style={{ width: "100%" }} gutter={[8, 8]}>
+    <Row align="top" style={{ width: "100%" }} gutter={[8, 8]}>
       {show && (
         <>
           <Col
@@ -72,7 +72,7 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
                 </>
               )}
 
-              {isHoverCurrency === "dolar" ? (
+              {/* {isHoverCurrency === "dolar" ? (
                 <Typography.Title
                   level={3}
                   style={{
@@ -160,7 +160,7 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
                     currency: "BTC",
                   }).format(MerchantBalance?.btc_balance_to_transactions ?? 0)}
                 </Typography.Title>
-              )}
+              )} */}
             </Card>
           </Col>
           <Col
@@ -195,7 +195,7 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
                   />
                 </>
               )}
-
+              {/* 
               {isHoverCurrency === "dolar" ? (
                 <Typography.Title
                   level={3}
@@ -284,7 +284,7 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
                     currency: "BTC",
                   }).format(MerchantBalance?.btc_balance_to_payment ?? 0)}
                 </Typography.Title>
-              )}
+              )} */}
             </Card>
           </Col>
           <Col
@@ -320,7 +320,7 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
                 </>
               )}
 
-              {isHoverCurrency === "dolar" ? (
+              {/* {isHoverCurrency === "dolar" ? (
                 <Typography.Title
                   level={3}
                   style={{
@@ -408,7 +408,7 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
                     currency: "BTC",
                   }).format(MerchantBalance?.btc_balance_reserved ?? 0)}
                 </Typography.Title>
-              )}
+              )} */}
             </Card>
           </Col>
           <Col
@@ -444,7 +444,7 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
                 </>
               )}
 
-              {isHoverCurrency === "dolar" ? (
+              {/* {isHoverCurrency === "dolar" ? (
                 <Typography.Title
                   level={3}
                   style={{
@@ -532,7 +532,7 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
                     currency: "BTC",
                   }).format(MerchantBalance?.btc_balance_total ?? 0)}
                 </Typography.Title>
-              )}
+              )} */}
             </Card>
           </Col>
           <Col
@@ -549,9 +549,9 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
               type="link"
               loading={isMerchantBalanceFetching}
               onClick={refetchMerchantBalance}
+              icon={<ReloadOutlined />}
             >
-              {!isMerchantBalanceFetching && <ReloadOutlined />}
-            </Button>
+                </Button>
           </Col>
         </>
       )}

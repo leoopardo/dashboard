@@ -872,7 +872,9 @@
     "access_key": "Access key",
     "access_secret": "Access secret",
     "merchant_blacklist": "Merchants blacklist",
-    "international": "International"
+    "international": "International",
+    "operations": "Operations",
+    "in_out_conversion": "In/Out conversions"
   },
   "actions": {
     "details": "Details",

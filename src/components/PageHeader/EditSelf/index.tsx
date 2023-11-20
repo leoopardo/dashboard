@@ -142,7 +142,7 @@ export const EditSelfModal = ({
             />
           </Form.Item>
           <Form.Item
-            label={t(`table.password`)}
+            label={t(`table.confirm_password`)}
             name="confirm"
             dependencies={["password"]}
             hasFeedback={body.password !== undefined}
