@@ -49,7 +49,8 @@ export interface ColumnInterface {
     | "bankNameToIcon"
     | "progress"
     | "merchant_name"
-    | "partner_name";
+    | "partner_name"
+    | '';
   sort?: boolean;
   key?: any;
   sort_name?: string;

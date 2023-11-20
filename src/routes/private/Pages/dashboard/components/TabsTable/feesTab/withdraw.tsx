@@ -10,7 +10,7 @@ import { useEffect } from "react";
 export const WithdrawFees = ({ query, chart }: TableProps) => {
   const { t } = useTranslation();
   const { handleChangeError } = useErrorContext();
-  const { RankingData, RankingError, isRankingFetching, RankingDataSuccess } =
+  const { RankingData,  RankingError, isRankingFetching, RankingDataSuccess } =
     useGetMerchantRanking("fee", "withdraw", query);
 
     useEffect(() => {
@@ -104,7 +104,7 @@ export const WithdrawFees = ({ query, chart }: TableProps) => {
       items={RankingData?.sort((a, b) => a.total > b.total ? -1 : 1)}
       error={RankingError}
       columns={[
-        { name: "name", type: "text" },
+        { name: "name", type: "" },
         { name: "total", type: "value" },
       ]}
       loading={isRankingFetching}

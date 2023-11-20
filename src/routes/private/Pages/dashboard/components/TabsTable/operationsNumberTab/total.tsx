@@ -11,9 +11,9 @@ export const TotalOperations = ({ query, chart }: TableProps) => {
   const { t } = useTranslation();
   const {handleChangeError} = useErrorContext()
   const { RankingData, RankingError, isRankingFetching, RankingDataSuccess } =
-    useGetMerchantRanking("operations", "total", query);
-
-    useEffect(() => {
+    useGetMerchantRanking("operations", "total", query)
+    
+     useEffect(() => {
       if(RankingDataSuccess) {
         handleChangeError({rankingOperations: false})
       }
@@ -95,7 +95,7 @@ export const TotalOperations = ({ query, chart }: TableProps) => {
       items={RankingData?.sort((a, b) => a.total > b.total ? -1 : 1)}
       error={RankingError}
       columns={[
-        { name: "name", type: "text" },
+        { name: "name", type: "" },
         { name: "total", type: "text" },
       ]}
       loading={isRankingFetching}
