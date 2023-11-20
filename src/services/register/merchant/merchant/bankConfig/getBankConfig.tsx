@@ -9,7 +9,7 @@ export function useMerchantBankConfig(id?: string) {
       "MerchantBankConfig",
       async () => {
         const response = await api.get("core/merchant/config/banks", {
-          params: { merchant_id: id },
+          params: { merchant_id: id,},
         });
         return response.data;
       },

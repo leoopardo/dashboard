@@ -113,7 +113,7 @@ export const PaidDeposits = () => {
     { name: "value", type: "value" },
     { name: "createdAt", type: "date" },
     { name: "delivered_at", type: "date" },
-    { name: "pix_type", head: "pixType", type: "pix_type" },
+    { name: "pix_type", head: "payment_type", type: "pix_type" },
     { name: "buyer_name", type: "text" },
     { name: "buyer_document", type: "document" },
     { name: "status", type: "status" },

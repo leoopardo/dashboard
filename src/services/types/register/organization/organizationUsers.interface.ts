@@ -49,6 +49,8 @@ export interface GroupQuery {
   name?: string;
   page: number;
   limit: number;
+  sort_field?: string
+  sort_order?: "ASC" | "DESC"
 }
 export interface GroupItem {
   id: number;

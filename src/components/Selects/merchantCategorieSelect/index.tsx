@@ -21,6 +21,8 @@ export const MerchantCategorieSelect = ({
     page: 1,
     limit: 200,
     name: "",
+    sort_field: "name",
+    sort_order: "ASC",
   });
   const { CategoriesData, refetchCategoriesData } =
     useGetMerchantCategories(query);

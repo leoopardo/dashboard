@@ -36,7 +36,7 @@ export const BanksTab = (props: { id?: string }) => {
 
   const { UpdateBankError, UpdateBankIsSuccess, UpdateMutate } =
     useUpdateBankConfig(body);
-  const { bankListData } = useListBanks({ limit: 200, page: 1 });
+  const { bankListData } = useListBanks({ limit: 200, page: 1, sort_order: "ASC", sort_field: "label_name"  });
 
   useEffect(() => {
     setBody((state: any) => ({

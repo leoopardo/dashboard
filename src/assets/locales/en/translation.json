@@ -148,7 +148,9 @@
     "merchant_pre_manual_moviments": "Manual pre entry",
     "merchant_pre_manual_moviments_reports": "Manual pre entry",
     "deposit_contestation": "Deposit",
-    "receipts": "Receipts"
+    "receipts": "Receipts",
+    "organization_settings": "Organization settings",
+    "merchant_settings": "Merchant settings"
   },
 
   "titles": {
