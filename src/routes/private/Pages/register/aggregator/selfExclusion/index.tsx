@@ -232,7 +232,7 @@ export const AggregatorSelfExclusion = () => {
           open={isCreateSelfExclusionOpen}
           setOpen={setIsCreateSelfExclusionOpen}
           fields={[
-            { label: "document", required: true },
+            { label: "document",head: "cpf", required: true },
             { label: "date", required: false },
           ]}
           body={body}
