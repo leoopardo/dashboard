@@ -1109,7 +1109,6 @@ export const CustomTable = (props: TableProps) => {
 
   const onChange: TablePropsAntD<any>["onChange"] = (page, _filter, sorter) => {
     setSorterObj(sorter);
-    console.log("sorter", sorter);
     if ((page.total ?? 0) > (page?.pageSize ?? 0)) {
       return props.setQuery((state: any) => ({
         ...state,

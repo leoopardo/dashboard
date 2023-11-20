@@ -47,13 +47,13 @@ const INITIAL_QUERY: AggregatorQuery = {
 };
 
 export const Aggregators = () => {
+  const { t } = useTranslation();
   const { permissions } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
   const user = queryClient.getQueryData("validate") as ValidateInterface;
   const [query, setQuery] = useState<AggregatorQuery>(INITIAL_QUERY);
   const isMobile = useMediaQuery({ maxWidth: "950px" });
-  const { t } = useTranslation();
   const navigate = useNavigate();
   const {
     AggregatorsData,
@@ -344,7 +344,7 @@ export const Aggregators = () => {
             { label: "name", required: true },
             { label: "cnpj", required: true },
             { label: "cellphone", required: false },
-            { label: "email", required: false },
+            { label: "email", required: false, type: "email" },
             { label: "country", required: true },
           ]}
           body={createBody}

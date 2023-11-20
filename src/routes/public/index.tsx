@@ -9,7 +9,6 @@ import { Banner } from "./Pages/banner";
 export const PublicRoutes = () => {
   useEffect(() => {
     queryClient.invalidateQueries();
-    console.log(queryClient.getQueryCache());
   }, []);
 
   return (

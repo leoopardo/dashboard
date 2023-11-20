@@ -53,9 +53,6 @@ export const PartnerDetails = () => {
   const { PartnerAttachmentsData, isPartnerAttachmentsDataFetching } =
     useGetPartnerAttachments({ partner_id: location.state.id });
 
-    console.log(location.state);
-    
-
   const items: TabsProps["items"] = [
     {
       key: "1",

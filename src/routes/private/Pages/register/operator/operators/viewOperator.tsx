@@ -36,8 +36,6 @@ export const OperatorDetails = () => {
     page: 1,
   };
 
-  console.log(location.state);
-
   const [responsibleQuery, setResponsibleQuery] =
     useState<OperatorResponsiblesQuery>(INITIAL_RESPONSIBLE_QUERY);
   const [, setCurrentResponsible] = useState<OperatorResponsiblesItem | null>(

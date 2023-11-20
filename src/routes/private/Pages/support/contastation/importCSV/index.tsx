@@ -149,7 +149,6 @@ export const ImportContastationDeposit = () => {
     const newData = dataSource.filter((item) => item.key !== key);
     setDataSource(newData);
   };
-  console.log(dataSource);
 
   const defaultColumns: (ColumnTypes[number] & {
     editable?: boolean;
