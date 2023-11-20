@@ -883,6 +883,8 @@
     "access_secret": "Chave de acesso secreta",
     "merchant_blacklist": "Blacklist de empresa",
     "international": "Internacional",
+    "operations": "Operações",
+    "in_out_conversion": "Conversões de entrada/saída",
     "receiver_bank_client_document": "Documento do cliente do banco",
     "receiver_bank_client_name": "Nome do cliente do banco"
   },
@@ -1050,8 +1052,26 @@
     "operators_description": "Através desta funcionalidade, são cadastrados os Operadores no sistema. Também é possível validar os já cadastrados e editar os mesmos quando necessário.",
     "register_operator": "Criar novo operador",
     "register_operator_description": "Através deste é realizado o cadastro de um novo Operador no sistema. Será aberto um modal que solicita todas as informações necessárias para cadastro. Após a inserção das mesmas o cadastro é realizado.",
-    "operator_users":"Usuários operadores.",
+    "operator_users": "Usuários operadores.",
     "operator_users_description": "Através desta funcionalidade são cadastrados os usuários que pertencem à algum Operador. Suas permissões de execuções e visualizações dependerão das configurações realizadas pela Organização.",
-    "operator_description": "Operador a qual o usuário está vinculado."
+    "operator_description": "Operador a qual o usuário está vinculado.",
+    "operations_description": "Através desta funcionalidade, é possível a visualização de um extrato do Merchant por período desejado. O extrato mostra números de registros, valores e taxas das operações de entrada e saídas.",
+    "operation_type_description": "Tipo de operação, podendo ser: Depósito, Saque, ou Total",
+    "operations_number": "Número de operações",
+    "operations_number_description": "Exibe o número de registros realizados no período para a operação da linha em questão.",
+    "operations_value": "Valor de operações",
+    "operations_value_description": "Exibe os valores das movimentações realizadas para aquele tipo de operação",
+    "ticket": "Ticket médio",
+    "ticket_description": "Valor médio das movimentações por tipo de operação mostradas na filtragem em questão. O cálculo para obtenção do valor é: Valor / Operações (Nº de registros).",
+    "fee": "Taxa",
+    "fee_description": "Valor total de taxas recebidas por tipo de operação",
+    "in_out_conversions": "Conversões de entrada/saída",
+    "in_out_conversions_description": "Exibe dois gráficos, um deles é a relação de depósitos de acordo com a sua situação, o outro é a relação de saques de acordo com a sua situação",
+    "in_conversions": "Conversão de entradas (Depósitos)",
+    "in_conversions_description": "Resumo das informações dos depósitos gerados dispostas por situação em gráfico de pizza. Neste item são listadas informações de situação, valor total e total de registros referentes à mesma.",
+    "out_conversions": "Conversão de saídas (Saques)",
+    "out_conversions_description": "Resumo das informações dos Saques gerados dispostas por situação em gráfico de pizza. Neste item são listadas informações de situação, valor total e total de registros referentes à mesma.",
+    "merchants_balance": "Saldos de empresas",
+    "merchants_balance_description": "Resumo das informações dos Saldos disponíveis em cada empresa a qual seu usuário está vinculado. Os totalizadores são separados pelos tipos de saldos disponíveis para as operações."
   }
 }

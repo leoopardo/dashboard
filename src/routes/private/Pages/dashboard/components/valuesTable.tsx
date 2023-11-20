@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useGetMerchantBankStatementTotals } from "@src/services/consult/merchant/bankStatement/getTotals";
 import { Card, Col, Row, Table, Typography } from "antd";
@@ -15,9 +16,10 @@ interface ValuesTableInterface {
     sort_field?: string;
     sort_order?: string;
   };
+  refs: any[];
 }
 
-export const ValuesTable = ({ query }: ValuesTableInterface) => {
+export const ValuesTable = ({ query, refs }: ValuesTableInterface) => {
   const { t } = useTranslation();
   const isMobile = useMediaQuery({ maxWidth: "750px" });
   const {
@@ -41,7 +43,7 @@ export const ValuesTable = ({ query }: ValuesTableInterface) => {
 
   const columns: ColumnsType<DataType> = [
     {
-      title: t("table.type"),
+      title: <Typography ref={refs[0]}>{t("table.type")}</Typography>,
       dataIndex: "type",
       filters: [
         { text: t("table.moviments"), value: "moviment" },
@@ -55,11 +57,13 @@ export const ValuesTable = ({ query }: ValuesTableInterface) => {
       render: (value) => <Typography>{t(`table.${value}`)}</Typography>,
     },
     {
-      title: t("table.operation_number"),
+      title: (
+        <Typography ref={refs[1]}>{t("table.operation_number")}</Typography>
+      ),
       dataIndex: "operation_number",
     },
     {
-      title: t("table.value"),
+      title: <Typography ref={refs[2]}>{t("table.value")}</Typography>,
       dataIndex: "value",
       render: (value) => (
         <Typography>
@@ -71,7 +75,7 @@ export const ValuesTable = ({ query }: ValuesTableInterface) => {
       ),
     },
     {
-      title: t("table.ticket"),
+      title: <Typography ref={refs[3]}>{t("table.ticket")}</Typography>,
       dataIndex: "ticket",
       render: (value) => (
         <Typography>
@@ -83,7 +87,7 @@ export const ValuesTable = ({ query }: ValuesTableInterface) => {
       ),
     },
     {
-      title: t("table.fee"),
+      title: <Typography ref={refs[4]}>{t("table.fee")}</Typography>,
       dataIndex: "fee",
       render: (value) => (
         <Typography>

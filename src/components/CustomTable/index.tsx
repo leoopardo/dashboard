@@ -1206,7 +1206,7 @@ export const CustomTable = (props: TableProps) => {
               loading={props.loading}
               showSorterTooltip={false}
               scroll={{ x: "none" }}
-              sticky
+       
               bordered
             />
           </Grid>

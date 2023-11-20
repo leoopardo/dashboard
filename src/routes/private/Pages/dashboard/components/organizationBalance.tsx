@@ -2,7 +2,7 @@
 import { ReloadOutlined } from "@ant-design/icons";
 import { useGetOrganizationBalance } from "@src/services/consult/organization/balance/getPerBank";
 import { defaultTheme } from "@src/styles/defaultTheme";
-import { Button, Card, Col, Row, Statistic, Typography } from "antd";
+import { Button, Card, Col, Row, Statistic } from "antd";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -13,16 +13,10 @@ export const OrganizationBalance = () => {
     refetchOrganizationBalance,
     isOrganizationBalanceFetching,
   } = useGetOrganizationBalance();
-  const [isHoverCurrency, setIsHoverCurrency] = useState<
-    "real" | "dolar" | "euro" | "btc"
-  >("real");
+  const [isHoverCurrency] = useState<"real" | "dolar" | "euro" | "btc">("real");
   const [show] = useState<boolean>(true);
   return (
-    <Row
-      align="middle"
-      style={{ width: "100%" }}
-      gutter={[8, 8]}
-    >
+    <Row align="top" style={{ width: "100%" }} gutter={[8, 8]}>
       {show && (
         <>
           <Col
@@ -60,7 +54,7 @@ export const OrganizationBalance = () => {
                 </>
               )}
 
-              {isHoverCurrency === "dolar" ? (
+              {/* {isHoverCurrency === "dolar" ? (
                 <Typography.Title
                   level={3}
                   style={{
@@ -160,7 +154,7 @@ export const OrganizationBalance = () => {
                     OrganizationBalance?.btc_balance_to_transactions ?? 0
                   )}
                 </Typography.Title>
-              )}
+              )} */}
             </Card>
           </Col>
           <Col
@@ -196,7 +190,7 @@ export const OrganizationBalance = () => {
                 </>
               )}
 
-              {isHoverCurrency === "dolar" ? (
+              {/* {isHoverCurrency === "dolar" ? (
                 <Typography.Title
                   level={3}
                   style={{
@@ -284,7 +278,7 @@ export const OrganizationBalance = () => {
                     currency: "BTC",
                   }).format(OrganizationBalance?.btc_balance_to_payment ?? 0)}
                 </Typography.Title>
-              )}
+              )} */}
             </Card>
           </Col>
           <Col
@@ -320,7 +314,7 @@ export const OrganizationBalance = () => {
                 </>
               )}
 
-              {isHoverCurrency === "dolar" ? (
+              {/* {isHoverCurrency === "dolar" ? (
                 <Typography.Title
                   level={3}
                   style={{
@@ -408,7 +402,7 @@ export const OrganizationBalance = () => {
                     currency: "BTC",
                   }).format(OrganizationBalance?.btc_balance_reserved ?? 0)}
                 </Typography.Title>
-              )}
+              )} */}
             </Card>
           </Col>
           <Col
@@ -444,7 +438,7 @@ export const OrganizationBalance = () => {
                 </>
               )}
 
-              {isHoverCurrency === "dolar" ? (
+              {/* {isHoverCurrency === "dolar" ? (
                 <Typography.Title
                   level={3}
                   style={{
@@ -532,7 +526,7 @@ export const OrganizationBalance = () => {
                     currency: "BTC",
                   }).format(OrganizationBalance?.btc_balance_total ?? 0)}
                 </Typography.Title>
-              )}
+              )} */}
             </Card>
           </Col>
           <Col
@@ -549,9 +543,8 @@ export const OrganizationBalance = () => {
               type="link"
               loading={isOrganizationBalanceFetching}
               onClick={refetchOrganizationBalance}
-            >
-              {!isOrganizationBalanceFetching && <ReloadOutlined />}
-            </Button>
+              icon={<ReloadOutlined />}
+            ></Button>
           </Col>
         </>
       )}
