@@ -143,21 +143,23 @@ export const FeesTab = (props: { id?: string }) => {
     >
       <Grid container spacing={1}>
         <Grid item xs={12}>
-          <Typography>
+          <Typography.Title level={5} mark>
             {t("titles.current_deposit_fee")}:{" "}
             {merchantFeesData?.fees?.cashin_pix_fee_percent}%{" "}
-          </Typography>
-          <Typography>
+          </Typography.Title>
+          <Typography.Title level={5} mark>
             {t("titles.current_withdraw_fee")}:{" "}
             {merchantFeesData?.fees?.customer_withdraw_fee_percent}%{" "}
-          </Typography>
-          <Typography>
+          </Typography.Title>
+          <Typography.Title level={5} mark>
             {t("titles.current_deposit_refund_fee")}:{" "}
             {merchantFeesData?.fees?.pix_refund_fee_percent}%{" "}
-          </Typography>
+          </Typography.Title >
         </Grid>
 
-        <Divider orientation="left">{t("menus.deposit")}</Divider>
+        <Divider orientation="left">
+          <Typography.Title level={3}>{t("menus.deposit")}</Typography.Title>
+        </Divider>
 
         <Grid item xs={12} md={6}>
           <Form.Item
@@ -292,7 +294,11 @@ export const FeesTab = (props: { id?: string }) => {
           </Form.Item>
         </Grid>
 
-        <Divider orientation="left">{t("menus.withdrawals")}</Divider>
+        <Divider orientation="left">
+          <Typography.Title level={3}>
+            {t("menus.withdrawals")}
+          </Typography.Title>
+        </Divider>
 
         <Grid item xs={12} md={6}>
           <Form.Item
@@ -436,7 +442,8 @@ export const FeesTab = (props: { id?: string }) => {
           </Form.Item>
         </Grid>
 
-        <Divider orientation="left">{t("menus.refunds")}</Divider>
+        <Divider orientation="left"><Typography.Title level={3}>{t("menus.refunds")}
+          </Typography.Title></Divider>
 
         <Grid item xs={12} sm={6} md={3}>
           <Form.Item
@@ -552,7 +559,9 @@ export const FeesTab = (props: { id?: string }) => {
             />
           </Form.Item>
         </Grid>
-        <Divider orientation="left">FastPix</Divider>
+        <Divider orientation="left">
+          <Typography.Title level={3}>FastPix</Typography.Title>
+        </Divider>
 
         <Grid item xs={12} sm={6} md={3}>
           <Form.Item

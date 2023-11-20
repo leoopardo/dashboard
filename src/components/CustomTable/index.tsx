@@ -710,18 +710,18 @@ export const CustomTable = (props: TableProps) => {
                   ref={column.key}
                 >
                   {!props.disableActions ? (
-                      <Dropdown
+                    <Dropdown
                       trigger={["click"]}
                       key={column?.name}
                       disabled={props.disableActions}
                       menu={{
                         items: actions.map((action: actionsInterface) => {
                           let disable = false;
-  
+
                           if (action.disabled) {
                             disable = action.disabled(record);
                           }
-  
+
                           return {
                             ...action,
                             disabled: disable,
@@ -748,8 +748,10 @@ export const CustomTable = (props: TableProps) => {
                         <EllipsisOutlined />
                       </Button>
                     </Dropdown>
-                  ) : (<></>)}
-                  </div>
+                  ) : (
+                    <></>
+                  )}
+                </div>
               ),
             };
           case "text":
@@ -787,7 +789,7 @@ export const CustomTable = (props: TableProps) => {
                       }}
                     >
                       {text
-                        ? text.length > 15
+                        ? text.length > 15 && columns.length >= 8
                           ? `${`${text}`.substring(0, 15)}...`
                           : text
                         : "-"}
@@ -1206,7 +1208,7 @@ export const CustomTable = (props: TableProps) => {
               loading={props.loading}
               showSorterTooltip={false}
               scroll={{ x: "none" }}
-       
+              sticky
               bordered
             />
           </Grid>
