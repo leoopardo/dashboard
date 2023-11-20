@@ -108,7 +108,7 @@ export const MutateModal = ({
     });
   const { merchantBlacklistData } = useGetRowsMerchantBlacklistReasons({
     limit: 200,
-    page: 1,
+    page: 1
   });
 
   const handleChange = (event: any) => {
