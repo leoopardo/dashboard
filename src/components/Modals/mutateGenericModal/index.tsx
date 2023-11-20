@@ -46,6 +46,7 @@ interface mutateProps {
         | {
             label: string;
             type?: string;
+            head?: string;
             required: boolean;
             selectOption?: boolean;
             noTranslate?: boolean;
@@ -112,7 +113,7 @@ export const MutateModal = ({
 
   const { merchantBlacklistData } = useGetRowsMerchantBlacklistReasons({
     limit: 200,
-    page: 1
+    page: 1,
   });
 
   const handleChange = (event: any) => {
@@ -887,7 +888,11 @@ export const MutateModal = ({
                   return (
                     <Col span={24}>
                       <Form.Item
-                        label={t(`input.${field.label}`)}
+                        label={
+                          field.head
+                            ? t(`input.${field.head}`)
+                            : t(`input.${field.label}`)
+                        }
                         name={field.label}
                         style={{ margin: 10 }}
                         rules={[
@@ -938,7 +943,11 @@ export const MutateModal = ({
                   return (
                     <Col span={24}>
                       <Form.Item
-                        label={t(`input.${field.label}`)}
+                        label={
+                          field.head
+                            ? t(`input.${field.head}`)
+                            : t(`input.${field.label}`)
+                        }
                         name={field.label}
                         style={{ margin: 10 }}
                         rules={[
@@ -992,7 +1001,11 @@ export const MutateModal = ({
                 return (
                   <Col span={24}>
                     <Form.Item
-                      label={t(`table.${field?.label}`)}
+                      label={
+                        field?.head
+                          ? t(`input.${field?.head}`)
+                          : t(`input.${field?.label}`)
+                      }
                       name={field?.label}
                       style={{ margin: 10 }}
                       rules={[

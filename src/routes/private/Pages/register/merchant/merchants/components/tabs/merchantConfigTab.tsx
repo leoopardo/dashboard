@@ -272,7 +272,7 @@ export const MerchantConfigTab = (props: { id?: string }) => {
           style={{ display: "flex", alignItems: "flex-end" }}
         >
           <Col span={24}>
-            <Divider orientation="center">FastPix</Divider>
+            <Divider orientation="left"><Typography.Title level={3}>FastPix</Typography.Title></Divider>
           </Col>
           <Col xs={{ span: 24 }} md={{ span: 3 }}>
             <Form.Item
