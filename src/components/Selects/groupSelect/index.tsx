@@ -23,6 +23,8 @@ export const GroupSelect = ({
   const [query, setQuery] = useState<GroupQuery>({
     page: 1,
     limit: 200,
+    sort_field: "name",
+    sort_order: "ASC",
     [filterIdProp]: filterIdValue,
   });
   const { groupsData, refetcGroups } = useListUserGroups(query);

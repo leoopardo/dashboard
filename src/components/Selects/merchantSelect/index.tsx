@@ -21,6 +21,8 @@ export const MerchantSelect = ({
   const [query, setQuery] = useState<MerchantQuery>({
     page: 1,
     limit: 200,
+    sort_field: "name",
+    sort_order: "ASC",
     partner_id: queryOptions?.partner_id,
   });
   const { merchantsData, refetcMerchant, isMerchantFetching } =

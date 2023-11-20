@@ -149,7 +149,9 @@
     "merchant_pre_manual_moviments": "Pre lançamentos manuais",
     "merchant_pre_manual_moviments_reports": "Pre lançamentos manuais",
     "deposit_contestation": "Depósitos",
-    "receipts": "Comprovantes"
+    "receipts": "Comprovantes",
+    "organization_settings": "Organização Configurações",
+    "merchant_settings": "Empresa Configurações"
   },
 
   "titles": {

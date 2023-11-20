@@ -21,6 +21,8 @@ export const AggregatorSelect = ({
     page: 1,
     limit: 200,
     name: "",
+    sort_order: "ASC",
+    sort_field: "name",
   });
   const { aggregatorsData, refetcAggregators, isAggregatorsFetching } =
     useListAggregators(query);

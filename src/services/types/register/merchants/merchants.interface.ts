@@ -8,6 +8,8 @@ export interface MerchantQuery {
   responsible_name?: string;
   page: number;
   limit: number;
+  sort_order?: "ASC" | "DESC";
+  sort_field?: string;
 }
 
 export interface MerchantItem {

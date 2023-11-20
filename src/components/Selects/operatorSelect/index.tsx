@@ -20,6 +20,8 @@ export const OperatorSelect = ({
   const [query, setQuery] = useState<OperatorQuery>({
     page: 1,
     limit: 200,
+    sort_field: "name",
+    sort_order: "ASC",
     name: "",
   });
   const { operatorsData, refetcOperators, isOperatorsFetching } =
