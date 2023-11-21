@@ -1,23 +1,28 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   ClockCircleOutlined,
+  DownOutlined,
   HomeOutlined,
   LogoutOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import banner3 from "@assets/bet-banner.jpg";
+import brazil from "@assets/brazil-.png";
 import banner1 from "@assets/cassino-banner.jpg";
 import banner2 from "@assets/footbal-bet.png";
 import logo from "@assets/paysbet.png";
+import eua from "@assets/united-states.png";
 import Uruguai from "@assets/uruguai.png";
 import VideogameAssetOutlinedIcon from "@mui/icons-material/VideogameAssetOutlined";
 import { defaultTheme } from "@src/styles/defaultTheme";
 import type { MenuProps } from "antd";
 import {
+  Avatar,
   Button,
   Carousel,
   Col,
   Divider,
+  Dropdown,
   Layout,
   Menu,
   Row,
@@ -26,6 +31,7 @@ import {
   theme,
 } from "antd";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import { Outlet, useLocation, useNavigate } from "react-router";
 import "./styles.css";
@@ -40,14 +46,47 @@ export const Paysbet = () => {
   const isMobile = useMediaQuery({ maxWidth: "750px" });
   const location = useLocation();
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
 
   console.log(location);
+
+  const changeLanguage = (language: string) => {
+    i18n.changeLanguage(language);
+  };
+
+  const items: MenuProps["items"] = [
+    {
+      key: "pt-BR",
+      label: t("menus.portuguese"),
+      icon: <Avatar src={brazil} />,
+      onClick: () => changeLanguage("pt-BR"),
+    },
+    {
+      key: "en",
+      label: t("menus.english"),
+      icon: <Avatar src={eua} />,
+      onClick: () => changeLanguage("en"),
+    },
+  ];
 
   const items1: MenuProps["items"] = [
     {
       label: (
+        <Dropdown menu={{ items }}>
+          <a onClick={(e) => e.preventDefault()}>
+            <Space>
+              {t("table.language")}
+              <DownOutlined />
+            </Space>
+          </a>
+        </Dropdown>
+      ),
+      type: "group",
+    },
+    {
+      label: (
         <Button type="dashed" size="large">
-          ENTRAR
+          {t("paysbet.login")}
         </Button>
       ),
       type: "group",
@@ -56,7 +95,7 @@ export const Paysbet = () => {
     {
       label: (
         <Button type="primary" size="large">
-          CADASTRE-SE
+          {t("paysbet.signin")}
         </Button>
       ),
       type: "group",
@@ -85,7 +124,7 @@ export const Paysbet = () => {
   }
   const items2: MenuProps["items"] = [
     getItem(
-      "Início",
+      t("paysbet.home"),
       "start",
       <HomeOutlined />,
       undefined,
@@ -94,11 +133,11 @@ export const Paysbet = () => {
       () => navigate("/paysbet")
     ),
     getItem(
-      "Todos os jogos",
-      "grp",
+        t("paysbet.all_games"),
+      "grp1",
       null,
       [
-        getItem("Apostas ao vivo", "live", <ClockCircleOutlined />, [
+        getItem(t("paysbet.live_betting"), "live", <ClockCircleOutlined />, [
           getItem("Cassino", "5", null, undefined, undefined, undefined, () =>
             navigate("cassino")
           ),
@@ -107,12 +146,12 @@ export const Paysbet = () => {
         { type: "divider" },
 
         getItem(
-          "Jogos",
+            t("paysbet.games"),
           "sub4",
           <VideogameAssetOutlinedIcon style={{ fontSize: 18 }} />,
           [
             getItem(
-              "Aviãozinho",
+                t("paysbet.little_plane"),
               "9",
               null,
               undefined,
@@ -120,16 +159,26 @@ export const Paysbet = () => {
               undefined,
               () => navigate("aviator")
             ),
-            getItem("Cassino", "10", null, [getItem("Roleta", "11", null,
-            undefined,
-            undefined,
-            undefined,
-            () => navigate("roulette"),)]),
-            getItem("Carrinho", "12", null,
-            undefined,
-            undefined,
-            undefined,
-            () => navigate("car"),),
+            getItem("Cassino", "10", null, [
+              getItem(
+                t("paysbet.roulette"),
+                "11",
+                null,
+                undefined,
+                undefined,
+                undefined,
+                () => navigate("roulette")
+              ),
+            ]),
+            getItem(
+                t("paysbet.little_car"),
+              "12",
+              null,
+              undefined,
+              undefined,
+              undefined,
+              () => navigate("car")
+            ),
           ]
         ),
       ],
@@ -137,16 +186,20 @@ export const Paysbet = () => {
     ),
 
     getItem(
-      "Configurações",
+        t("paysbet.configurations"),
       "grp",
       null,
       [
-        getItem("Meu usuário", "myUser", <UserOutlined />,
-        undefined,
-        undefined,
-        undefined,
-        () => navigate("profile"),),
-        getItem("Sair", "logout", <LogoutOutlined />, undefined, undefined, {
+        getItem(
+          "Meu usuário",
+          "myUser",
+          <UserOutlined />,
+          undefined,
+          undefined,
+          undefined,
+          () => navigate("profile")
+        ),
+        getItem(t("paysbet.logout"), "logout", <LogoutOutlined />, undefined, undefined, {
           color: "red",
         }),
       ],
@@ -171,13 +224,13 @@ export const Paysbet = () => {
             <img src={logo} style={{ marginTop: 24 }} />
           </Col>
         </Row>
-        <Col span={5}>
+        <Col span={6}>
           <Menu
             theme="light"
             mode="horizontal"
             defaultSelectedKeys={["2"]}
             items={items1}
-            style={{ width: "100%" }}
+            style={{ width: "100%", display: "flex", alignItems: "center" }}
           />
         </Col>
       </Header>
@@ -245,8 +298,7 @@ export const Paysbet = () => {
                                 wordBreak: "break-word",
                               }}
                             >
-                              Faça um pix agora e comece a apostar
-                              imediatamente.
+                              {t("paysbet.imediattly")}
                             </Typography.Title>
                           </div>
                         </Col>
@@ -261,8 +313,7 @@ export const Paysbet = () => {
                                 wordBreak: "break-word",
                               }}
                             >
-                              Simples e descomplicado, leia nosso QrCode,
-                              selecione o valor e já terá sua conta para apostar
+                                {t("paysbet.easy")}
                             </Typography.Title>
                           </div>
                         </Col>
@@ -273,7 +324,7 @@ export const Paysbet = () => {
                               size="large"
                               style={{ height: "70px", fontSize: "20px" }}
                             >
-                              Comece agora mesmo!
+                                {t("paysbet.start_now")}
                             </Button>
                           </div>
                         </Col>

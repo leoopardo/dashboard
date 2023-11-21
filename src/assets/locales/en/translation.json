@@ -1039,5 +1039,22 @@
     "bank_card_description": "Switches the view from Grid to bank cards.",
     "last_sign_in_description": "User's last access date to the system."
 
+  }, 
+  "paysbet": {
+    "login": "LOGIN",
+    "signin": "SIGN UP",
+    "imediattly": "Make a pix now and start betting immediately.",
+    "easy": "Simple and straightforward, scan our QrCode, select the amount, and you'll have your account ready to bet.",
+    "start_now": "Start now!",
+    "home": "Home",
+    "all_games": "All games",
+    "live_betting": "Live betting",
+    "roulette": "Roulette",
+    "games": "Games",
+    "little_plane": "Little Plane",
+    "little_car": "Little Car",
+    "configurations": "Settings",
+    "profile": "Profile",
+    "logout": "Logout"
   }
 }
