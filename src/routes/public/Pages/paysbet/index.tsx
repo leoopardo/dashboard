@@ -1,7 +1,7 @@
 import {
-  LaptopOutlined,
-  NotificationOutlined,
-  UserOutlined,
+    LaptopOutlined,
+    NotificationOutlined,
+    UserOutlined,
 } from "@ant-design/icons";
 import banner3 from "@assets/bet-banner.jpg";
 import banner1 from "@assets/cassino-banner.jpg";
@@ -10,15 +10,18 @@ import logo from "@assets/paysbet.png";
 import { defaultTheme } from "@src/styles/defaultTheme";
 import type { MenuProps } from "antd";
 import {
-  Button,
-  Carousel,
-  Col,
-  Layout,
-  Menu,
-  Row,
-  Typography,
-  theme,
+    Button,
+    Carousel,
+    Col,
+    Image,
+    Layout,
+    Menu,
+    Row,
+    Space,
+    Typography,
+    theme,
 } from "antd";
+import { Content } from "antd/es/layout/layout";
 import React from "react";
 import { useMediaQuery } from "react-responsive";
 
@@ -199,6 +202,130 @@ export const Paysbet = () => {
               </Carousel>
             </Col>
           </Row>
+
+          <Content
+            style={{
+              padding: 24,
+              margin: 0,
+              minHeight: 280,
+            }}
+          >
+            <Typography
+              style={{
+                fontSize: "16px",
+                margin: "28px 0 28px 32px",
+              }}
+            >
+              Último Jogos
+            </Typography>
+
+            <Space direction="vertical" style={{ background: "white" }}>
+              <Image
+                width={310}
+                height={121}
+                src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+              />
+
+              <Space
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  background: "white",
+                  borderRadius: "17px",
+                }}
+              >
+                <Space
+                  direction="vertical"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    background: "white",
+                    boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
+                    borderRadius: "11px",
+                    width: "93px",
+                    minHeight: "43px",
+                    padding: '5px',
+                    gap: 0,
+                  }}
+                >
+                  <Typography
+                    style={{
+                      fontSize: "16px",
+                      fontWeight: 800,
+                      color: "#3FBCBC",
+                      lineHeight: "22px",
+                    }}
+                  >
+                    3.45
+                  </Typography>
+
+                  <Typography style={{ lineHeight: "22px", fontSize: "16px" }}>
+                    Brasil
+                  </Typography>
+                </Space>
+
+                <Space
+                  direction="vertical"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    background: "white",
+                    boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
+                    borderRadius: "11px",
+                    width: "93px",
+                    minHeight: "43px",
+                    padding: '5px',
+                    gap: 0,
+                  }}
+                >
+                  <Typography
+                    style={{
+                      fontSize: "16px",
+                      fontWeight: 800,
+                      color: "#3FBCBC",
+                      lineHeight: "22px",
+                    }}
+                  >
+                    2.32
+                  </Typography>
+
+                  <Typography style={{ lineHeight: "22px", fontSize: "16px" }}>
+                    Empate
+                  </Typography>
+                </Space>
+
+                <Space
+                  direction="vertical"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    background: "white",
+                    boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
+                    borderRadius: "11px",
+                    width: "93px",
+                    minHeight: "43px",
+                    padding: '5px',
+                    gap: 0,
+                  }}
+                >
+                  <Typography
+                    style={{
+                      fontSize: "16px",
+                      fontWeight: 800,
+                      color: "#3FBCBC",
+                      lineHeight: "22px",
+                    }}
+                  >
+                    1.47
+                  </Typography>
+
+                  <Typography style={{ lineHeight: "22px", fontSize: "16px" }}>
+                    Argentina
+                  </Typography>
+                </Space>
+              </Space>
+            </Space>
+          </Content>
         </Layout>
       </Layout>
     </Layout>
