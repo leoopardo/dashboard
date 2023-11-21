@@ -6,6 +6,7 @@ import { Login } from "./Pages/SignIn";
 import { ForgotMyPassword } from "./Pages/forgotMyPassword";
 import { Banner } from "./Pages/banner";
 import { Paysbet } from "./Pages/paysbet";
+import { Typography } from "antd";
 
 export const PublicRoutes = () => {
   useEffect(() => {
@@ -18,7 +19,13 @@ export const PublicRoutes = () => {
       <Route path="login" element={<Login />} />
       <Route path="forgot_my_password" element={<ForgotMyPassword />} />
       <Route path="banner/:number" element={<Banner />} />
-      <Route path="paysbet" element={<Paysbet />} />
+      <Route path="paysbet" element={<Paysbet />}>
+        <Route path={"aviator"} element={<Typography>Aviãozinho</Typography>} />
+        <Route path={"cassino"} element={<Typography>Cassino</Typography>} />
+        <Route path={"roulette"} element={<Typography>Roleta ao vivo</Typography>} />
+        <Route path={"car"} element={<Typography>Carrinho</Typography>} />
+        <Route path={"profile"} element={<Typography>Meu perfil</Typography>} />
+      </Route>
     </Routes>
   );
 };
