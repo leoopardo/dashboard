@@ -1057,6 +1057,7 @@
     "profile": "Profile",
     "logout": "Logout",
     "recent_games": "Recent games",
-    "tie": "Tie"
+    "tie": "Tie",
+    "popular_games": "Popular games"
   }
 }

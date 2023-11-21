@@ -1092,6 +1092,7 @@
     "profile": "Perfil",
     "logout": "Sair",
     "recent_games": "Jogos recentes",
-    "tie": "Empate"
+    "tie": "Empate",
+    "popular_games": "Jogos populares"
   }
 }
