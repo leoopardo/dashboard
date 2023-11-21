@@ -2,13 +2,13 @@ import {
   ClockCircleOutlined,
   HomeOutlined,
   LogoutOutlined,
-  SettingOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import banner3 from "@assets/bet-banner.jpg";
 import banner1 from "@assets/cassino-banner.jpg";
 import banner2 from "@assets/footbal-bet.png";
 import logo from "@assets/paysbet.png";
+import VideogameAssetOutlinedIcon from "@mui/icons-material/VideogameAssetOutlined";
 import { defaultTheme } from "@src/styles/defaultTheme";
 import type { MenuProps } from "antd";
 import {
@@ -26,7 +26,6 @@ import {
 import { Content } from "antd/es/layout/layout";
 import React from "react";
 import { useMediaQuery } from "react-responsive";
-import VideogameAssetOutlinedIcon from "@mui/icons-material/VideogameAssetOutlined";
 
 const { Header, Sider } = Layout;
 
@@ -65,7 +64,7 @@ function getItem(
     children,
     label,
     type,
-    style
+    style,
   } as MenuItem;
 }
 const items2: MenuProps["items"] = [
@@ -102,7 +101,9 @@ const items2: MenuProps["items"] = [
     null,
     [
       getItem("Meu usuário", "myUser", <UserOutlined />),
-      getItem("Sair", "logout", <LogoutOutlined />, undefined, undefined, {color: "red"}),
+      getItem("Sair", "logout", <LogoutOutlined />, undefined, undefined, {
+        color: "red",
+      }),
     ],
     "group"
   ),
