@@ -1,95 +1,114 @@
-import { Layout, Menu, Typography, Space, Image } from "antd";
+import {
+    LaptopOutlined,
+    NotificationOutlined,
+    UserOutlined,
+} from "@ant-design/icons";
+import fastpixBanner from "@assets/fastpix-banner.png";
+import logo from "@assets/paysbet.png";
 import type { MenuProps } from "antd";
-import { HomeOutlined, ClockCircleOutlined } from "@ant-design/icons";
-import Sider from "antd/es/layout/Sider";
-import { Content, Header } from "antd/es/layout/layout";
+import { Carousel, Col, Layout, Menu, Row, Space, Typography, theme, Image } from "antd";
+import { Content } from "antd/es/layout/layout";
+import React from "react";
 
-type MenuItem = Required<MenuProps>["items"][number];
+const { Header, Sider } = Layout;
 
-function getItem(
-  label: React.ReactNode,
-  key: React.Key,
-  icon?: React.ReactNode,
-  children?: MenuItem[],
-  type?: "group"
-): MenuItem {
+const items1: MenuProps["items"] = ["1", "2", "3"].map((key) => ({
+  key,
+  label: `nav ${key}`,
+}));
+
+const items2: MenuProps["items"] = [
+  UserOutlined,
+  LaptopOutlined,
+  NotificationOutlined,
+].map((icon, index) => {
+  const key = String(index + 1);
+
   return {
-    key,
-    icon,
-    children,
-    label,
-    type,
-  } as MenuItem;
-}
+    key: `sub${key}`,
+    icon: React.createElement(icon),
+    label: `subnav ${key}`,
 
-const items: MenuProps["items"] = [
-  getItem("Início", "sub1", <HomeOutlined />),
+    children: new Array(4).fill(null).map((_, j) => {
+      const subKey = index * 4 + j + 1;
+      return {
+        key: subKey,
+        label: `option${subKey}`,
+      };
+    }),
+  };
+});
 
-  getItem("Apostas ao vivo", "sub2", <ClockCircleOutlined />, [
-    getItem("Option 5", "5"),
-    getItem("Option 6", "6"),
-    getItem("Submenu", "sub3", null, [
-      getItem("Option 7", "7"),
-      getItem("Option 8", "8"),
-    ]),
-  ]),
-
-  getItem("Jogos", "sub4", <ClockCircleOutlined />, [
-    getItem("Option 9", "9"),
-    getItem("Option 10", "10"),
-    getItem("Option 11", "11"),
-    getItem("Option 12", "12"),
-  ]),
-
-  getItem("Jogos ao vivo", "sub5", <ClockCircleOutlined />, [
-    getItem("Aviãozinho", "9"),
-    getItem("Cassino", "sub3", null, [
-      getItem("Roleta", "7"),
-      getItem("Cartas", "8"),
-    ]),
-    getItem("Carrinhos", "11"),
-  ]),
-
-  getItem("Futebol", "sub6", <ClockCircleOutlined />),
-
-  getItem("Jogos eletrônicos", "sub7", <ClockCircleOutlined />, [
-    getItem("Aviãozinho", "9"),
-    getItem("Cassino", "sub3", null, [
-      getItem("Roleta", "7"),
-      getItem("Cartas", "8"),
-    ]),
-    getItem("Carrinhos", "11"),
-  ]),
-];
+const contentStyle: React.CSSProperties = {
+  margin: 0,
+  height: "40dvh",
+  color: "#fff",
+  lineHeight: "160px",
+  textAlign: "center",
+  background: "#364d79",
+};
 
 export const Paysbet = () => {
+  const {
+    token: { colorBgContainer },
+  } = theme.useToken();
+
   return (
     <Layout>
       <Header
         style={{
           display: "flex",
           alignItems: "center",
-          backgroundColor: "white",
+          padding: 30,
+          backgroundColor: "#fff",
         }}
       >
-        <Typography
-          style={{ fontSize: "32px", fontWeight: 700, color: "#3FBCBC" }}
-        >
-          Pays Bet
-        </Typography>
-        <Menu theme="light" mode="horizontal" defaultSelectedKeys={["2"]} />
+        <Row style={{ width: "100%" }}>
+          <Col span={4}>
+            {" "}
+            <img src={logo} />
+          </Col>
+        </Row>
+        <Col span={4}>
+          <Menu
+            theme="light"
+            mode="horizontal"
+            defaultSelectedKeys={["2"]}
+            items={items1}
+            style={{ width: "100%" }}
+          />
+        </Col>
       </Header>
-      <Layout>
-        <Sider width={200}>
+      <Layout style={{ height: "93dvh" }}>
+        <Sider width={200} style={{ background: colorBgContainer }}>
           <Menu
             mode="inline"
             defaultSelectedKeys={["1"]}
             defaultOpenKeys={["sub1"]}
-            style={{ height: "100vh", borderRight: 0, width: "242px" }}
-            items={items}
+            style={{ height: "100%", borderRight: 0 }}
+            items={items2}
           />
         </Sider>
-        <Layout style={{ padding: "0 24px 24px", marginLeft: "23px" }}>
+        <Layout style={{ padding: "0 16px 16px" }}>
+          <Row style={{ padding: 20, margin: 0, minHeight: "80dvh" }}>
+            <Col span={24}>
+              <Carousel style={{borderRadius: 16}}>
+                <div>
+                  <img src={fastpixBanner} style={{ width: "100%", height: "65dvh", borderRadius: 8 }} />
+                </div>
+                <div>
+                  <h3 style={contentStyle}>2</h3>
+                </div>
+                <div>
+                  <h3 style={contentStyle}>3</h3>
+                </div>
+                <div>
+                  <h3 style={contentStyle}>4</h3>
+                </div>
+              </Carousel>
+            </Col>
+          </Row>
+
           <Content
             style={{
               padding: 24,
@@ -97,12 +116,6 @@ export const Paysbet = () => {
               minHeight: 280,
             }}
           >
-            <Space
-              style={{ height: "452px", background: "white", width: "100%" }}
-            >
-              test
-            </Space>
-
             <Typography
               style={{
                 fontSize: "16px",
