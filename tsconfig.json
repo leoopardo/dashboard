@@ -33,6 +33,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
+  "types": ["vite-plugin-svgr/client"],
   "include": ["src", "src/i18n.ts", "vite-env.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }],
   "files": ["src/styles/styled.d.ts", "src/react-i18next.d.ts"]
