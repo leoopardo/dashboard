@@ -1,7 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import "./styles.css";
 import {
-  LaptopOutlined,
-  NotificationOutlined,
   ClockCircleOutlined,
   HomeOutlined,
   LogoutOutlined,
@@ -19,7 +18,6 @@ import {
   Button,
   Carousel,
   Col,
-  Image,
   Layout,
   Menu,
   Row,
@@ -268,7 +266,7 @@ export const Paysbet = () => {
 
           <Content
             style={{
-              padding: 24,
+              padding: "0 24px 24px 24px",
               margin: 0,
               minHeight: 280,
             }}
