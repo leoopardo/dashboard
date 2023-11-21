@@ -1,7 +1,9 @@
 import {
-    LaptopOutlined,
-    NotificationOutlined,
-    UserOutlined,
+  ClockCircleOutlined,
+  HomeOutlined,
+  LogoutOutlined,
+  SettingOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 import banner3 from "@assets/bet-banner.jpg";
 import banner1 from "@assets/cassino-banner.jpg";
@@ -10,20 +12,21 @@ import logo from "@assets/paysbet.png";
 import { defaultTheme } from "@src/styles/defaultTheme";
 import type { MenuProps } from "antd";
 import {
-    Button,
-    Carousel,
-    Col,
-    Image,
-    Layout,
-    Menu,
-    Row,
-    Space,
-    Typography,
-    theme,
+  Button,
+  Carousel,
+  Col,
+  Image,
+  Layout,
+  Menu,
+  Row,
+  Space,
+  Typography,
+  theme,
 } from "antd";
 import { Content } from "antd/es/layout/layout";
 import React from "react";
 import { useMediaQuery } from "react-responsive";
+import VideogameAssetOutlinedIcon from "@mui/icons-material/VideogameAssetOutlined";
 
 const { Header, Sider } = Layout;
 
@@ -35,6 +38,7 @@ const items1: MenuProps["items"] = [
       </Button>
     ),
     type: "group",
+    style: { marginRight: -20 },
   },
   {
     label: (
@@ -45,28 +49,64 @@ const items1: MenuProps["items"] = [
     type: "group",
   },
 ];
+type MenuItem = Required<MenuProps>["items"][number];
 
-const items2: MenuProps["items"] = [
-  UserOutlined,
-  LaptopOutlined,
-  NotificationOutlined,
-].map((icon, index) => {
-  const key = String(index + 1);
-
+function getItem(
+  label: React.ReactNode,
+  key: React.Key,
+  icon?: React.ReactNode,
+  children?: MenuItem[],
+  type?: "group",
+  style?: any
+): MenuItem {
   return {
-    key: `sub${key}`,
-    icon: React.createElement(icon),
-    label: `subnav ${key}`,
+    key,
+    icon,
+    children,
+    label,
+    type,
+    style
+  } as MenuItem;
+}
+const items2: MenuProps["items"] = [
+  getItem("Início", "start", <HomeOutlined />),
+  getItem(
+    "Todos os jogos",
+    "grp",
+    null,
+    [
+      getItem("Apostas ao vivo", "live", <ClockCircleOutlined />, [
+        getItem("Cassino", "5"),
+      ]),
 
-    children: new Array(4).fill(null).map((_, j) => {
-      const subKey = index * 4 + j + 1;
-      return {
-        key: subKey,
-        label: `option${subKey}`,
-      };
-    }),
-  };
-});
+      { type: "divider" },
+
+      getItem(
+        "Jogos",
+        "sub4",
+        <VideogameAssetOutlinedIcon style={{ fontSize: 18 }} />,
+        [
+          getItem("Aviãozinho", "9"),
+          getItem("Cassino", "10", null, [getItem("Roleta", "11")]),
+          getItem("Carrinho", "12"),
+          getItem("Option 12", "13"),
+        ]
+      ),
+    ],
+    "group"
+  ),
+
+  getItem(
+    "Configurações",
+    "grp",
+    null,
+    [
+      getItem("Meu usuário", "myUser", <UserOutlined />),
+      getItem("Sair", "logout", <LogoutOutlined />, undefined, undefined, {color: "red"}),
+    ],
+    "group"
+  ),
+];
 
 export const Paysbet = () => {
   const {
@@ -84,12 +124,12 @@ export const Paysbet = () => {
           padding: 30,
           backgroundColor: "#fff",
           boxShadow: "0px 0px 11.1px 1px rgba(0, 0, 0, 0.11)",
-          zIndex: 99
+          zIndex: 99,
         }}
       >
         <Row style={{ width: "100%" }}>
           <Col span={4}>
-            <img src={logo} style={{marginTop: 24}}/>
+            <img src={logo} style={{ marginTop: 24 }} />
           </Col>
         </Row>
         <Col span={5}>
@@ -108,7 +148,6 @@ export const Paysbet = () => {
             mode="inline"
             defaultSelectedKeys={["1"]}
             defaultOpenKeys={["sub1"]}
-            style={{ height: "100%", borderRight: 0 }}
             items={items2}
           />
         </Sider>
@@ -137,7 +176,13 @@ export const Paysbet = () => {
                         marginLeft: 50,
                       }}
                     >
-                      <Col span={12}>
+                      <Col
+                        span={24}
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                        }}
+                      >
                         <Typography.Title
                           level={1}
                           style={{
@@ -165,18 +210,31 @@ export const Paysbet = () => {
                         </div>
                       </Col>
                       <Col span={24}>
-                        <Typography.Title
-                          level={1}
-                          style={{
-                            color: "#fff",
-                            fontSize: isMobile ? 15 : isTablet ? 20 : 25,
-                            maxWidth: "70%",
-                            wordBreak: "break-word",
-                          }}
-                        >
-                          Simples e descomplicado, leia nosso QrCode, selecione
-                          o valor e já terá sua conta para apostar
-                        </Typography.Title>
+                        <div style={{ width: "90vw" }}>
+                          <Typography.Title
+                            level={1}
+                            style={{
+                              color: "#fff",
+                              fontSize: isMobile ? 15 : isTablet ? 20 : 25,
+                              maxWidth: "70%",
+                              wordBreak: "break-word",
+                            }}
+                          >
+                            Simples e descomplicado, leia nosso QrCode,
+                            selecione o valor e já terá sua conta para apostar
+                          </Typography.Title>
+                        </div>
+                      </Col>
+                      <Col span={24}>
+                        <div style={{ marginTop: "15px" }}>
+                          <Button
+                            type="primary"
+                            size="large"
+                            style={{ height: "70px", fontSize: "20px" }}
+                          >
+                            Comece agora mesmo!
+                          </Button>
+                        </div>
                       </Col>
                     </Row>
                   </div>
@@ -244,7 +302,7 @@ export const Paysbet = () => {
                     borderRadius: "11px",
                     width: "93px",
                     minHeight: "43px",
-                    padding: '5px',
+                    padding: "5px",
                     gap: 0,
                   }}
                 >
@@ -274,7 +332,7 @@ export const Paysbet = () => {
                     borderRadius: "11px",
                     width: "93px",
                     minHeight: "43px",
-                    padding: '5px',
+                    padding: "5px",
                     gap: 0,
                   }}
                 >
@@ -304,7 +362,7 @@ export const Paysbet = () => {
                     borderRadius: "11px",
                     width: "93px",
                     minHeight: "43px",
-                    padding: '5px',
+                    padding: "5px",
                     gap: 0,
                   }}
                 >
