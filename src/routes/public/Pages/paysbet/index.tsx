@@ -191,7 +191,7 @@ export const Paysbet = () => {
       null,
       [
         getItem(
-          "Meu usuário",
+            t("paysbet.profile"),
           "myUser",
           <UserOutlined />,
           undefined,
@@ -363,7 +363,7 @@ export const Paysbet = () => {
                   </div>
                 </Carousel>
               </Col>
-              <Divider orientation="left">Últimos jogos</Divider>
+              <Divider orientation="left">{t("paysbet.recent_games")}</Divider>
 
               <Row gutter={16} justify="space-between">
                 <Col span={8}>
@@ -461,7 +461,7 @@ export const Paysbet = () => {
                         <Typography
                           style={{ lineHeight: "22px", fontSize: "16px" }}
                         >
-                          Empate
+                              {t("paysbet.tie")}
                         </Typography>
                       </Space>
 
@@ -595,7 +595,7 @@ export const Paysbet = () => {
                         <Typography
                           style={{ lineHeight: "22px", fontSize: "16px" }}
                         >
-                          Empate
+                              {t("paysbet.tie")}
                         </Typography>
                       </Space>
 
@@ -730,7 +730,7 @@ export const Paysbet = () => {
                         <Typography
                           style={{ lineHeight: "22px", fontSize: "16px" }}
                         >
-                          Empate
+                              {t("paysbet.tie")}
                         </Typography>
                       </Space>
 
