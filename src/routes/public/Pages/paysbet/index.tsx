@@ -292,12 +292,14 @@ export const Paysbet = () => {
                     className="img2"
                     width={"100%"}
                     height={121}
+                    style={{borderRadius: "10px 10px 0 0"}}
                     src="https://static.significados.com.br/foto/argentina.jpg"
                   />
                   <img
                     className="img"
                     width={"100%"}
                     height={121}
+                    style={{borderRadius: "0 10px 0 0"}}
                     src="https://www.gov.br/planalto/pt-br/conheca-a-presidencia/acervo/simbolos-nacionais/bandeira/bandeira-nacional-brasil.jpg/@@images/image"
                   />
 
@@ -426,12 +428,15 @@ export const Paysbet = () => {
                     className="img2"
                     width={"100%"}
                     height={121}
+                    style={{borderRadius: "10px 10px 0 0"}}
                     src="https://upload.wikimedia.org/wikipedia/commons/e/ec/Flag_of_Paraguay_%281990%E2%80%932013%29.svg"
                   />
                   <img
                     className="img"
                     width={"100%"}
                     height={121}
+                    style={{borderRadius: "0 10px 0 0"}}
+
                     src="https://upload.wikimedia.org/wikipedia/commons/2/21/Flag_of_Colombia.svg"
                   />
 
@@ -567,6 +572,7 @@ export const Paysbet = () => {
                     className="img"
                     width={"100%"}
                     height={121}
+                    style={{borderRadius: "0 10px 0 0"}}
                     src="https://i.pinimg.com/originals/fd/90/4a/fd904a378b57e1b3f3059f78963781c0.jpg"
                   />
 
