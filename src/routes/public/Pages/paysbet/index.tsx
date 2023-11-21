@@ -29,6 +29,8 @@ import {
 import { Content } from "antd/es/layout/layout";
 import React from "react";
 import { useMediaQuery } from "react-responsive";
+import { Outlet } from "react-router";
+
 const { Header, Sider } = Layout;
 
 const items1: MenuProps["items"] = [
@@ -125,7 +127,7 @@ export const Paysbet = () => {
           display: "flex",
           alignItems: "center",
           padding: 30,
-        
+
           boxShadow: "0px 0px 11.1px 1px rgba(0, 0, 0, 0.11)",
           zIndex: 99,
         }}
@@ -157,6 +159,7 @@ export const Paysbet = () => {
         <Layout style={{ padding: "0 16px 16px" }}>
           <Row style={{ padding: 20, margin: 0, minHeight: "70dvh" }}>
             <Col span={24}>
+              <Outlet />
               <Carousel
                 style={{ borderRadius: 16 }}
                 arrows
