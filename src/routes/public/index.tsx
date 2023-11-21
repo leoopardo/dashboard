@@ -21,6 +21,10 @@ export const PublicRoutes = () => {
       <Route path="banner/:number" element={<Banner />} />
       <Route path="paysbet" element={<Paysbet />}>
         <Route path={"aviator"} element={<Typography>Aviãozinho</Typography>} />
+        <Route path={"cassino"} element={<Typography>Cassino</Typography>} />
+        <Route path={"roulette"} element={<Typography>Roleta ao vivo</Typography>} />
+        <Route path={"car"} element={<Typography>Carrinho</Typography>} />
+        <Route path={"profile"} element={<Typography>Meu perfil</Typography>} />
       </Route>
     </Routes>
   );

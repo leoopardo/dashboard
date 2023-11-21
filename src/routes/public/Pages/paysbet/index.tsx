@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
-    ClockCircleOutlined,
-    HomeOutlined,
-    LogoutOutlined,
-    UserOutlined,
+  ClockCircleOutlined,
+  HomeOutlined,
+  LogoutOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 import banner3 from "@assets/bet-banner.jpg";
 import banner1 from "@assets/cassino-banner.jpg";
@@ -14,16 +14,16 @@ import VideogameAssetOutlinedIcon from "@mui/icons-material/VideogameAssetOutlin
 import { defaultTheme } from "@src/styles/defaultTheme";
 import type { MenuProps } from "antd";
 import {
-    Button,
-    Carousel,
-    Col,
-    Divider,
-    Layout,
-    Menu,
-    Row,
-    Space,
-    Typography,
-    theme,
+  Button,
+  Carousel,
+  Col,
+  Divider,
+  Layout,
+  Menu,
+  Row,
+  Space,
+  Typography,
+  theme,
 } from "antd";
 import React from "react";
 import { useMediaQuery } from "react-responsive";
@@ -32,7 +32,6 @@ import "./styles.css";
 
 const { Header, Sider } = Layout;
 
-
 export const Paysbet = () => {
   const {
     token: { colorBgContainer },
@@ -40,7 +39,7 @@ export const Paysbet = () => {
   const isTablet = useMediaQuery({ maxWidth: "1150px" });
   const isMobile = useMediaQuery({ maxWidth: "750px" });
   const location = useLocation();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   console.log(location);
 
@@ -64,7 +63,7 @@ export const Paysbet = () => {
     },
   ];
   type MenuItem = Required<MenuProps>["items"][number];
-  
+
   function getItem(
     label: React.ReactNode,
     key: React.Key,
@@ -81,43 +80,72 @@ export const Paysbet = () => {
       label,
       type,
       style,
-      onClick
+      onClick,
     } as MenuItem;
   }
   const items2: MenuProps["items"] = [
-    getItem("Início", "start", <HomeOutlined />, undefined, undefined,undefined, () => navigate("/paysbet")),
+    getItem(
+      "Início",
+      "start",
+      <HomeOutlined />,
+      undefined,
+      undefined,
+      undefined,
+      () => navigate("/paysbet")
+    ),
     getItem(
       "Todos os jogos",
       "grp",
       null,
       [
         getItem("Apostas ao vivo", "live", <ClockCircleOutlined />, [
-          getItem("Cassino", "5"),
+          getItem("Cassino", "5", null, undefined, undefined, undefined, () =>
+            navigate("cassino")
+          ),
         ]),
-  
+
         { type: "divider" },
-  
+
         getItem(
           "Jogos",
           "sub4",
           <VideogameAssetOutlinedIcon style={{ fontSize: 18 }} />,
           [
-            getItem("Aviãozinho", "9", null, undefined, undefined, undefined, () => navigate("aviator")),
-            getItem("Cassino", "10", null, [getItem("Roleta", "11")]),
-            getItem("Carrinho", "12"),
-            getItem("Option 12", "13"),
+            getItem(
+              "Aviãozinho",
+              "9",
+              null,
+              undefined,
+              undefined,
+              undefined,
+              () => navigate("aviator")
+            ),
+            getItem("Cassino", "10", null, [getItem("Roleta", "11", null,
+            undefined,
+            undefined,
+            undefined,
+            () => navigate("roulette"),)]),
+            getItem("Carrinho", "12", null,
+            undefined,
+            undefined,
+            undefined,
+            () => navigate("car"),),
           ]
         ),
       ],
       "group"
     ),
-  
+
     getItem(
       "Configurações",
       "grp",
       null,
       [
-        getItem("Meu usuário", "myUser", <UserOutlined />),
+        getItem("Meu usuário", "myUser", <UserOutlined />,
+        undefined,
+        undefined,
+        undefined,
+        () => navigate("profile"),),
         getItem("Sair", "logout", <LogoutOutlined />, undefined, undefined, {
           color: "red",
         }),
@@ -125,7 +153,6 @@ export const Paysbet = () => {
       "group"
     ),
   ];
-  
 
   return (
     <Layout>
