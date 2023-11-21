@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import "./styles.css";
 import {
   ClockCircleOutlined,
   HomeOutlined,
@@ -11,17 +13,18 @@ import logo from "@assets/paysbet.png";
 import VideogameAssetOutlinedIcon from "@mui/icons-material/VideogameAssetOutlined";
 import { defaultTheme } from "@src/styles/defaultTheme";
 import type { MenuProps } from "antd";
+import Uruguai from "@assets/uruguai.png";
 import {
   Button,
   Carousel,
   Col,
-  Image,
   Layout,
   Menu,
   Row,
   Space,
   Typography,
   theme,
+  Divider,
 } from "antd";
 import { Content } from "antd/es/layout/layout";
 import React from "react";
@@ -144,7 +147,7 @@ export const Paysbet = () => {
           />
         </Col>
       </Header>
-      <Layout style={{ height: "93dvh" }}>
+      <Layout style={{ minHeight: "93dvh" }}>
         <Sider width={200} style={{ background: colorBgContainer }}>
           <Menu
             mode="inline"
@@ -154,7 +157,7 @@ export const Paysbet = () => {
           />
         </Sider>
         <Layout style={{ padding: "0 16px 16px" }}>
-          <Row style={{ padding: 20, margin: 0, minHeight: "80dvh" }}>
+          <Row style={{ padding: 20, margin: 0, minHeight: "70dvh" }}>
             <Col span={24}>
               <Outlet />
               <Carousel
@@ -266,126 +269,417 @@ export const Paysbet = () => {
 
           <Content
             style={{
-              padding: 24,
+              padding: "0 24px 24px 24px",
               margin: 0,
               minHeight: 280,
             }}
           >
-            <Typography
-              style={{
-                fontSize: "16px",
-                margin: "28px 0 28px 32px",
-              }}
-            >
-              Último Jogos
-            </Typography>
+            <Divider orientation="left">Últimos jogos</Divider>
 
-            <Space direction="vertical" style={{ background: "white" }}>
-              <Image
-                width={310}
-                height={121}
-                src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-              />
-
-              <Space
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  background: "white",
-                  borderRadius: "17px",
-                }}
-              >
-                <Space
-                  direction="vertical"
+            <Row gutter={16} justify="space-between">
+              <Col span={8}>
+                <Row
                   style={{
-                    display: "flex",
-                    alignItems: "center",
                     background: "white",
-                    boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
-                    borderRadius: "11px",
-                    width: "93px",
-                    minHeight: "43px",
-                    padding: "5px",
-                    gap: 0,
+                    padding: 10,
+                    borderRadius: 10,
+                    position: "relative",
+                    minHeight: "200px",
+                    maxWidth: "400px",
                   }}
                 >
-                  <Typography
+                  <img
+                    className="img2"
+                    width={"100%"}
+                    height={121}
+                    src="https://static.significados.com.br/foto/argentina.jpg"
+                  />
+                  <img
+                    className="img"
+                    width={"100%"}
+                    height={121}
+                    src="https://www.gov.br/planalto/pt-br/conheca-a-presidencia/acervo/simbolos-nacionais/bandeira/bandeira-nacional-brasil.jpg/@@images/image"
+                  />
+
+                  <Col
                     style={{
-                      fontSize: "16px",
-                      fontWeight: 800,
-                      color: "#3FBCBC",
-                      lineHeight: "22px",
+                      display: "flex",
+                      justifyContent: "center",
+                      background: "white",
+                      borderRadius: "17px",
+                      marginTop: "125px",
+                      gap: 5,
                     }}
+                    span={24}
                   >
-                    3.45
-                  </Typography>
+                    <Space
+                      direction="vertical"
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        background: "white",
+                        boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
+                        borderRadius: "11px",
+                        width: "93px",
+                        minHeight: "43px",
+                        padding: "5px",
+                        gap: 0,
+                      }}
+                    >
+                      <Typography
+                        style={{
+                          fontSize: "16px",
+                          fontWeight: 800,
+                          color: "#3FBCBC",
+                          lineHeight: "22px",
+                        }}
+                      >
+                        3.45
+                      </Typography>
 
-                  <Typography style={{ lineHeight: "22px", fontSize: "16px" }}>
-                    Brasil
-                  </Typography>
-                </Space>
+                      <Typography
+                        style={{ lineHeight: "22px", fontSize: "16px" }}
+                      >
+                        Brasil
+                      </Typography>
+                    </Space>
 
-                <Space
-                  direction="vertical"
+                    <Space
+                      direction="vertical"
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        background: "white",
+                        boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
+                        borderRadius: "11px",
+                        width: "93px",
+                        minHeight: "43px",
+                        padding: "5px",
+                        gap: 0,
+                      }}
+                    >
+                      <Typography
+                        style={{
+                          fontSize: "16px",
+                          fontWeight: 800,
+                          color: "#3FBCBC",
+                          lineHeight: "22px",
+                        }}
+                      >
+                        2.32
+                      </Typography>
+
+                      <Typography
+                        style={{ lineHeight: "22px", fontSize: "16px" }}
+                      >
+                        Empate
+                      </Typography>
+                    </Space>
+
+                    <Space
+                      direction="vertical"
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        background: "white",
+                        boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
+                        borderRadius: "11px",
+                        width: "93px",
+                        minHeight: "43px",
+                        padding: "5px",
+                        gap: 0,
+                      }}
+                    >
+                      <Typography
+                        style={{
+                          fontSize: "16px",
+                          fontWeight: 800,
+                          color: "#3FBCBC",
+                          lineHeight: "22px",
+                        }}
+                      >
+                        1.47
+                      </Typography>
+
+                      <Typography
+                        style={{ lineHeight: "22px", fontSize: "16px" }}
+                      >
+                        Argentina
+                      </Typography>
+                    </Space>
+                  </Col>
+                </Row>
+              </Col>
+
+              <Col span={8}>
+                <Row
                   style={{
-                    display: "flex",
-                    alignItems: "center",
                     background: "white",
-                    boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
-                    borderRadius: "11px",
-                    width: "93px",
-                    minHeight: "43px",
-                    padding: "5px",
-                    gap: 0,
+                    padding: 10,
+                    borderRadius: 10,
+                    position: "relative",
+                    minHeight: "200px",
+                    maxWidth: "400px",
                   }}
                 >
-                  <Typography
+                  <img
+                    className="img2"
+                    width={"100%"}
+                    height={121}
+                    src="https://upload.wikimedia.org/wikipedia/commons/e/ec/Flag_of_Paraguay_%281990%E2%80%932013%29.svg"
+                  />
+                  <img
+                    className="img"
+                    width={"100%"}
+                    height={121}
+                    src="https://upload.wikimedia.org/wikipedia/commons/2/21/Flag_of_Colombia.svg"
+                  />
+
+                  <Col
                     style={{
-                      fontSize: "16px",
-                      fontWeight: 800,
-                      color: "#3FBCBC",
-                      lineHeight: "22px",
+                      display: "flex",
+                      justifyContent: "center",
+                      background: "white",
+                      borderRadius: "17px",
+                      marginTop: "125px",
+                      gap: 5,
                     }}
+                    span={24}
                   >
-                    2.32
-                  </Typography>
+                    <Space
+                      direction="vertical"
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        background: "white",
+                        boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
+                        borderRadius: "11px",
+                        width: "93px",
+                        minHeight: "43px",
+                        padding: "5px",
+                        gap: 0,
+                      }}
+                    >
+                      <Typography
+                        style={{
+                          fontSize: "16px",
+                          fontWeight: 800,
+                          color: "#3FBCBC",
+                          lineHeight: "22px",
+                        }}
+                      >
+                        3.45
+                      </Typography>
 
-                  <Typography style={{ lineHeight: "22px", fontSize: "16px" }}>
-                    Empate
-                  </Typography>
-                </Space>
+                      <Typography
+                        style={{ lineHeight: "22px", fontSize: "16px" }}
+                      >
+                        Brasil
+                      </Typography>
+                    </Space>
 
-                <Space
-                  direction="vertical"
+                    <Space
+                      direction="vertical"
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        background: "white",
+                        boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
+                        borderRadius: "11px",
+                        width: "93px",
+                        minHeight: "43px",
+                        padding: "5px",
+                        gap: 0,
+                      }}
+                    >
+                      <Typography
+                        style={{
+                          fontSize: "16px",
+                          fontWeight: 800,
+                          color: "#3FBCBC",
+                          lineHeight: "22px",
+                        }}
+                      >
+                        2.32
+                      </Typography>
+
+                      <Typography
+                        style={{ lineHeight: "22px", fontSize: "16px" }}
+                      >
+                        Empate
+                      </Typography>
+                    </Space>
+
+                    <Space
+                      direction="vertical"
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        background: "white",
+                        boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
+                        borderRadius: "11px",
+                        width: "93px",
+                        minHeight: "43px",
+                        padding: "5px",
+                        gap: 0,
+                      }}
+                    >
+                      <Typography
+                        style={{
+                          fontSize: "16px",
+                          fontWeight: 800,
+                          color: "#3FBCBC",
+                          lineHeight: "22px",
+                        }}
+                      >
+                        1.47
+                      </Typography>
+
+                      <Typography
+                        style={{ lineHeight: "22px", fontSize: "16px" }}
+                      >
+                        Argentina
+                      </Typography>
+                    </Space>
+                  </Col>
+                </Row>
+              </Col>
+
+              <Col span={8}>
+                <Row
                   style={{
-                    display: "flex",
-                    alignItems: "center",
                     background: "white",
-                    boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
-                    borderRadius: "11px",
-                    width: "93px",
-                    minHeight: "43px",
-                    padding: "5px",
-                    gap: 0,
+                    padding: 10,
+                    borderRadius: 10,
+                    position: "relative",
+                    minHeight: "200px",
+                    maxWidth: "400px",
                   }}
                 >
-                  <Typography
-                    style={{
-                      fontSize: "16px",
-                      fontWeight: 800,
-                      color: "#3FBCBC",
-                      lineHeight: "22px",
-                    }}
-                  >
-                    1.47
-                  </Typography>
+                  <img
+                    className="img2"
+                    width={"100%"}
+                    height={121}
+                    style={{ marginLeft: -15 }}
+                    src={Uruguai}
+                  />
+                  <img
+                    className="img"
+                    width={"100%"}
+                    height={121}
+                    src="https://i.pinimg.com/originals/fd/90/4a/fd904a378b57e1b3f3059f78963781c0.jpg"
+                  />
 
-                  <Typography style={{ lineHeight: "22px", fontSize: "16px" }}>
-                    Argentina
-                  </Typography>
-                </Space>
-              </Space>
-            </Space>
+                  <Col
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      background: "white",
+                      borderRadius: "17px",
+                      marginTop: "125px",
+                      gap: 5,
+                    }}
+                    span={24}
+                  >
+                    <Space
+                      direction="vertical"
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        background: "white",
+                        boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
+                        borderRadius: "11px",
+                        width: "93px",
+                        minHeight: "43px",
+                        padding: "5px",
+                        gap: 0,
+                      }}
+                    >
+                      <Typography
+                        style={{
+                          fontSize: "16px",
+                          fontWeight: 800,
+                          color: "#3FBCBC",
+                          lineHeight: "22px",
+                        }}
+                      >
+                        3.45
+                      </Typography>
+
+                      <Typography
+                        style={{ lineHeight: "22px", fontSize: "16px" }}
+                      >
+                        Brasil
+                      </Typography>
+                    </Space>
+
+                    <Space
+                      direction="vertical"
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        background: "white",
+                        boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
+                        borderRadius: "11px",
+                        width: "93px",
+                        minHeight: "43px",
+                        padding: "5px",
+                        gap: 0,
+                      }}
+                    >
+                      <Typography
+                        style={{
+                          fontSize: "16px",
+                          fontWeight: 800,
+                          color: "#3FBCBC",
+                          lineHeight: "22px",
+                        }}
+                      >
+                        2.32
+                      </Typography>
+
+                      <Typography
+                        style={{ lineHeight: "22px", fontSize: "16px" }}
+                      >
+                        Empate
+                      </Typography>
+                    </Space>
+
+                    <Space
+                      direction="vertical"
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        background: "white",
+                        boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
+                        borderRadius: "11px",
+                        width: "93px",
+                        minHeight: "43px",
+                        padding: "5px",
+                        gap: 0,
+                      }}
+                    >
+                      <Typography
+                        style={{
+                          fontSize: "16px",
+                          fontWeight: 800,
+                          color: "#3FBCBC",
+                          lineHeight: "22px",
+                        }}
+                      >
+                        1.47
+                      </Typography>
+
+                      <Typography
+                        style={{ lineHeight: "22px", fontSize: "16px" }}
+                      >
+                        Argentina
+                      </Typography>
+                    </Space>
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
           </Content>
         </Layout>
       </Layout>
