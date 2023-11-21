@@ -1,15 +1,15 @@
 import {
-  LaptopOutlined,
-  NotificationOutlined,
-  UserOutlined,
+    LaptopOutlined,
+    NotificationOutlined,
+    UserOutlined,
 } from "@ant-design/icons";
-import type { MenuProps } from "antd";
-import { Breadcrumb, Carousel, Col, Layout, Menu, Row, theme } from "antd";
-import React from "react";
-import logo from "@assets/paysbet.png";
 import fastpixBanner from "@assets/fastpix-banner.png";
+import logo from "@assets/paysbet.png";
+import type { MenuProps } from "antd";
+import { Carousel, Col, Layout, Menu, Row, theme } from "antd";
+import React from "react";
 
-const { Header, Content, Sider } = Layout;
+const { Header, Sider } = Layout;
 
 const items1: MenuProps["items"] = ["1", "2", "3"].map((key) => ({
   key,
