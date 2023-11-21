@@ -471,7 +471,7 @@ export const Paysbet = () => {
                       <Typography
                         style={{ lineHeight: "22px", fontSize: "16px" }}
                       >
-                        Brasil
+                        Paraguai
                       </Typography>
                     </Space>
 
@@ -535,7 +535,7 @@ export const Paysbet = () => {
                       <Typography
                         style={{ lineHeight: "22px", fontSize: "16px" }}
                       >
-                        Argentina
+                        Colômbia
                       </Typography>
                     </Space>
                   </Col>
@@ -606,7 +606,7 @@ export const Paysbet = () => {
                       <Typography
                         style={{ lineHeight: "22px", fontSize: "16px" }}
                       >
-                        Brasil
+                        Uruguai
                       </Typography>
                     </Space>
 
@@ -670,7 +670,7 @@ export const Paysbet = () => {
                       <Typography
                         style={{ lineHeight: "22px", fontSize: "16px" }}
                       >
-                        Argentina
+                        Chile
                       </Typography>
                     </Space>
                   </Col>
