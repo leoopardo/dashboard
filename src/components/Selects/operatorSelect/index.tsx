@@ -28,7 +28,7 @@ export const OperatorSelect = ({
     useListOperators(query);
   const [value, setValue] = useState<any>(null);
   const debounceSearch = useDebounce(query.name);
-
+  
   useEffect(() => {
     if (!queryOptions.operator_id) {
       setValue(undefined);
@@ -54,6 +54,12 @@ export const OperatorSelect = ({
   useEffect(() => {
     refetcOperators();
   }, [query]);
+
+  useEffect(() => {
+    if (!operatorsData?.items.some((operator) => operator.id === queryOptions?.operator_id)) {
+     return setValue(undefined);
+    }
+  }, [operatorsData]);
 
   return (
     <Select
