@@ -129,6 +129,9 @@ function App() {
                       ? "0px 4px 15.7px -3px rgba(0, 0, 0, 0.25)"
                       : "0px 4px 15.7px -3px rgba(0, 0, 0, 0.144)",
                 },
+                Layout: {
+                  colorBgHeader: theme === "dark" ? "#222222" : "#ffffff"
+                }
               },
 
               token: {

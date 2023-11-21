@@ -1888,8 +1888,7 @@ export const SidebarNavigation = () => {
         disabledOverflow
         translate="yes"
         mode="inline"
-        theme={theme === "dark" ? "dark" : import.meta.env.VITE_APP_MENU_THEME}
-        inlineCollapsed={!isSidebarOpen}
+        theme={theme === "dark" ? "light" : import.meta.env.VITE_APP_MENU_THEME}       inlineCollapsed={!isSidebarOpen}
         items={items}
         subMenuCloseDelay={0.5}
       />

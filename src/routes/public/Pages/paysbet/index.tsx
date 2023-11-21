@@ -123,7 +123,7 @@ export const Paysbet = () => {
           display: "flex",
           alignItems: "center",
           padding: 30,
-          backgroundColor: "#fff",
+        
           boxShadow: "0px 0px 11.1px 1px rgba(0, 0, 0, 0.11)",
           zIndex: 99,
         }}
