@@ -1090,6 +1090,8 @@
     "little_car": "Carrinho",
     "configurations": "Configurações",
     "profile": "Perfil",
-    "logout": "Sair"
+    "logout": "Sair",
+    "recent_games": "Jogos recentes",
+    "tie": "Empate"
   }
 }

@@ -1055,6 +1055,8 @@
     "little_car": "Little Car",
     "configurations": "Settings",
     "profile": "Profile",
-    "logout": "Logout"
+    "logout": "Logout",
+    "recent_games": "Recent games",
+    "tie": "Tie"
   }
 }
