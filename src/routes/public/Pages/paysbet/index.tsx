@@ -1,20 +1,47 @@
 import {
-    LaptopOutlined,
-    NotificationOutlined,
-    UserOutlined,
+  LaptopOutlined,
+  NotificationOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
-import fastpixBanner from "@assets/fastpix-banner.png";
+import banner3 from "@assets/bet-banner.jpg";
+import banner1 from "@assets/cassino-banner.jpg";
+import banner2 from "@assets/footbal-bet.png";
 import logo from "@assets/paysbet.png";
+import { defaultTheme } from "@src/styles/defaultTheme";
 import type { MenuProps } from "antd";
-import { Carousel, Col, Layout, Menu, Row, theme } from "antd";
+import {
+  Button,
+  Carousel,
+  Col,
+  Layout,
+  Menu,
+  Row,
+  Typography,
+  theme,
+} from "antd";
 import React from "react";
+import { useMediaQuery } from "react-responsive";
 
 const { Header, Sider } = Layout;
 
-const items1: MenuProps["items"] = ["1", "2", "3"].map((key) => ({
-  key,
-  label: `nav ${key}`,
-}));
+const items1: MenuProps["items"] = [
+  {
+    label: (
+      <Button type="dashed" size="large">
+        ENTRAR
+      </Button>
+    ),
+    type: "group",
+  },
+  {
+    label: (
+      <Button type="primary" size="large">
+        CADASTRE-SE
+      </Button>
+    ),
+    type: "group",
+  },
+];
 
 const items2: MenuProps["items"] = [
   UserOutlined,
@@ -38,19 +65,12 @@ const items2: MenuProps["items"] = [
   };
 });
 
-const contentStyle: React.CSSProperties = {
-  margin: 0,
-  height: "40dvh",
-  color: "#fff",
-  lineHeight: "160px",
-  textAlign: "center",
-  background: "#364d79",
-};
-
 export const Paysbet = () => {
   const {
     token: { colorBgContainer },
   } = theme.useToken();
+  const isTablet = useMediaQuery({ maxWidth: "1150px" });
+  const isMobile = useMediaQuery({ maxWidth: "750px" });
 
   return (
     <Layout>
@@ -60,15 +80,16 @@ export const Paysbet = () => {
           alignItems: "center",
           padding: 30,
           backgroundColor: "#fff",
+          boxShadow: "0px 0px 11.1px 1px rgba(0, 0, 0, 0.11)",
+          zIndex: 99
         }}
       >
         <Row style={{ width: "100%" }}>
           <Col span={4}>
-            {" "}
-            <img src={logo} />
+            <img src={logo} style={{marginTop: 24}}/>
           </Col>
         </Row>
-        <Col span={4}>
+        <Col span={5}>
           <Menu
             theme="light"
             mode="horizontal"
@@ -91,18 +112,89 @@ export const Paysbet = () => {
         <Layout style={{ padding: "0 16px 16px" }}>
           <Row style={{ padding: 20, margin: 0, minHeight: "80dvh" }}>
             <Col span={24}>
-              <Carousel style={{borderRadius: 16}}>
+              <Carousel
+                style={{ borderRadius: 16 }}
+                arrows
+                autoplaySpeed={3000}
+              >
                 <div>
-                  <img src={fastpixBanner} style={{ width: "100%", height: "65dvh", borderRadius: 8 }} />
+                  <div
+                    style={{
+                      background: `linear-gradient(90deg, ${defaultTheme.colors.primary} 0%, ${defaultTheme.colors.secondary} 100%)`,
+                      height: "65dvh",
+                      width: "100%",
+                      borderRadius: 8,
+                    }}
+                  >
+                    <Row
+                      style={{
+                        width: "100%",
+                        position: "absolute",
+                        top: 40,
+                        marginLeft: 50,
+                      }}
+                    >
+                      <Col span={12}>
+                        <Typography.Title
+                          level={1}
+                          style={{
+                            color: "#fff",
+                            fontSize: 60,
+                          }}
+                        >
+                          FastPix
+                        </Typography.Title>
+                      </Col>
+
+                      <Col span={24}>
+                        <div style={{ width: "90vw" }}>
+                          <Typography.Title
+                            level={1}
+                            style={{
+                              color: "#fff",
+                              fontSize: isMobile ? 15 : isTablet ? 30 : 35,
+                              maxWidth: "70%",
+                              wordBreak: "break-word",
+                            }}
+                          >
+                            Faça um pix agora e comece a apostar imediatamente.
+                          </Typography.Title>
+                        </div>
+                      </Col>
+                      <Col span={24}>
+                        <Typography.Title
+                          level={1}
+                          style={{
+                            color: "#fff",
+                            fontSize: isMobile ? 15 : isTablet ? 20 : 25,
+                            maxWidth: "70%",
+                            wordBreak: "break-word",
+                          }}
+                        >
+                          Simples e descomplicado, leia nosso QrCode, selecione
+                          o valor e já terá sua conta para apostar
+                        </Typography.Title>
+                      </Col>
+                    </Row>
+                  </div>
                 </div>
                 <div>
-                  <h3 style={contentStyle}>2</h3>
+                  <img
+                    src={banner1}
+                    style={{ width: "100%", height: "65dvh", borderRadius: 8 }}
+                  />
                 </div>
                 <div>
-                  <h3 style={contentStyle}>3</h3>
+                  <img
+                    src={banner2}
+                    style={{ width: "100%", height: "65dvh", borderRadius: 8 }}
+                  />
                 </div>
                 <div>
-                  <h3 style={contentStyle}>4</h3>
+                  <img
+                    src={banner3}
+                    style={{ width: "100%", height: "65dvh", borderRadius: 8 }}
+                  />
                 </div>
               </Carousel>
             </Col>
