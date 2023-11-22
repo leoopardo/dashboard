@@ -298,7 +298,7 @@ export const Paysbet = () => {
             <img src={logo} style={{ marginTop: 24 }} />
           </Col>
         </Row>
-        <Col span={10} style={{ display: "flex", justifyContent: "flex-end" }}>
+        <Col span={16} style={{ display: "flex", justifyContent: "flex-end" }}>
           <Menu
             theme="light"
             mode="horizontal"

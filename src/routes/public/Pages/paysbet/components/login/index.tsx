@@ -18,7 +18,7 @@ export const LoginModal = ({ open, setOpen }: ILoginModal) => {
   }>();
   const submitRef = useRef<HTMLButtonElement>(null);
 
-  const { Login, isLoading, isSuccess } = useFastPixToken(credentials);
+  const { Login, tokenLoading, isSuccess } = useFastPixToken(credentials);
   const handleChangeCredentials = (event: any) => {
     setCredentials((state: any) => ({
       ...state,
@@ -39,7 +39,7 @@ export const LoginModal = ({ open, setOpen }: ILoginModal) => {
       open={open}
       footer={
         <Button
-          loading={isLoading}
+          loading={tokenLoading}
           type="primary"
           style={{ width: "100%" }}
           size="large"

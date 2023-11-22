@@ -29,7 +29,7 @@ export const PublicRoutes = () => {
         />
         <Route path={"car"} element={<Typography>Carrinho</Typography>} />
         <Route path={"profile"} element={<Typography>Meu perfil</Typography>} />
-        <Route path={"auth/:token"} element={<AuthFromFastPix />} />
+        <Route path={"auth"} element={<AuthFromFastPix />} />
       </Route>
     </Routes>
   );
