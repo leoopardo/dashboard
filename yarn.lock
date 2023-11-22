@@ -4332,7 +4332,7 @@ vite-plugin-radar@^0.9.1:
 
 vite-plugin-react-svg@^0.2.0:
   version "0.2.0"
-  resolved "https://registry.npmjs.org/vite-plugin-react-svg/-/vite-plugin-react-svg-0.2.0.tgz"
+  resolved "https://registry.yarnpkg.com/vite-plugin-react-svg/-/vite-plugin-react-svg-0.2.0.tgz#e8464187919688e4405a6f52971375fa894d7532"
   integrity sha512-Qza30GSMb9SBp9Ma5Bq1O/GmZzkB97Tn6JJGPonuJ2h8NRZWESK69ux9lZHcdqekLnVxvDxabcJVOrygAeSyxQ==
   dependencies:
     "@babel/plugin-transform-react-jsx" "^7.12.12"
