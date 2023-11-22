@@ -28,8 +28,8 @@ export function useValidateFastPix(rememberMe?: boolean, token?: string) {
       const response = await api.get("mock/bank/fastpix/token/validate", {
         headers: {
           Authorization: `Bearer ${
-            token ??
-            secureLocalStorage.getItem("FastPixToken") ??
+            token ||
+            secureLocalStorage.getItem("FastPixToken") ||
             sessionStorage.getItem("FastPixToken")
           }`,
         },
@@ -44,8 +44,8 @@ export function useValidateFastPix(rememberMe?: boolean, token?: string) {
   useEffect(() => {
     if (isSuccess)
       api.defaults.headers.Authorization = `Bearer ${
-        token ??
-        secureLocalStorage.getItem("FastPixToken") ??
+        token ||
+        secureLocalStorage.getItem("FastPixToken") ||
         sessionStorage.getItem("FastPixToken")
       }`;
   }, [isSuccess]);
