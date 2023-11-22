@@ -48,22 +48,11 @@ export const AuthFromFastPix = () => {
     FastPixCredentialsError,
     FastPixCredentialsIsSuccess,
   } = useChangeFastPixCredentials({ body: changeCredentials });
-  const { refetchValidate, isValidateFetching, isSuccess } =
+  const { refetchValidate, isValidateFetching, isSuccess, responseValidate } =
     useValidateFastPix();
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [, setCantSubmit] = useState<boolean>(true);
   const submitRef = useRef<HTMLButtonElement>(null);
-
-  const userData:
-    | {
-        id: string;
-        document: string;
-        name: string;
-        username: string;
-        pending_password_change: boolean;
-        balance: number;
-      }
-    | undefined = queryClient.getQueryData("FastPixTokenValidate");
 
   useEffect(() => {
     Login();
@@ -78,7 +67,7 @@ export const AuthFromFastPix = () => {
   }, [tokenSuccess]);
 
   useEffect(() => {
-    if (tokenSuccess && !LoginError && !userData?.pending_password_change) {
+    if (tokenSuccess && !LoginError && !responseValidate?.pending_password_change) {
       const interval = setInterval(() => {
         setCount((prevCount) => {
           const newCount = prevCount + 20;
@@ -92,8 +81,8 @@ export const AuthFromFastPix = () => {
       }, 1000);
       return () => clearInterval(interval);
     }
-    setChangeCredentials({ username: userData?.username });
-  }, [userData, isSuccess]);
+    setChangeCredentials({ username: responseValidate?.username });
+  }, [responseValidate, isSuccess]);
 
   const handleChangeCredentials = (event: any) => {
     setChangeCredentials((state: any) => ({
@@ -129,7 +118,7 @@ export const AuthFromFastPix = () => {
           >
             <Spin />
           </Row>
-        ) : tokenSuccess && !LoginError && userData?.pending_password_change ? (
+        ) : tokenSuccess && !LoginError && responseValidate?.pending_password_change ? (
           <Row>
             <Col
               span={24}
@@ -139,7 +128,7 @@ export const AuthFromFastPix = () => {
                 level={1}
                 style={{ color: defaultTheme.colors.secondary }}
               >
-                {t("paysbet.welcome")}: {userData?.name}
+                {t("paysbet.welcome")}: {responseValidate?.name}
               </Typography.Title>
             </Col>
             <Col
@@ -323,14 +312,14 @@ export const AuthFromFastPix = () => {
           </Row>
         ) : tokenSuccess &&
           !LoginError &&
-          !userData?.pending_password_change ? (
+          !responseValidate?.pending_password_change ? (
           <Row>
             <Col span={24} style={{}}>
               <Typography.Title
                 level={1}
                 style={{ color: defaultTheme.colors.secondary }}
               >
-                {t("paysbet.welcome")}: {userData?.name}
+                {t("paysbet.welcome")}: {responseValidate?.name}
               </Typography.Title>
               <Col span={24}>
                 <Typography.Title

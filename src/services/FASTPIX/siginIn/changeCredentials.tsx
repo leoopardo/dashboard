@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { api } from "@src/config/api";
+import { queryClient } from "@src/services/queryClient";
 import { useMutation } from "react-query";
 
 export function useChangeFastPixCredentials({
@@ -18,6 +19,7 @@ export function useChangeFastPixCredentials({
       "mock/bank/fastpix/user/update/credentials",
       { ...body }
     );
+    await queryClient.refetchQueries({ queryKey: ["FastPixTokenValidate"] });
     return response.data;
   });
 
