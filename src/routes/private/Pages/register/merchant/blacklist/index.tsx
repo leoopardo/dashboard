@@ -139,12 +139,10 @@ export const MerchantBlacklist = () => {
       </Grid>
 
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
-        <Grid item xs={12} md={2} lg={2}>
-          <ReasonSelect queryOptions={query} setQueryFunction={setQuery} />
-        </Grid>
         <Grid item xs={12} md={4} lg={4}>
           <ReactInputMask
             value={search}
+            placeholder="CPF"
             mask="999.999.999-99"
             onChange={(event) => {
               const value = event.target.value.replace(/[^\d]/g, "");
@@ -249,7 +247,7 @@ export const MerchantBlacklist = () => {
           setOpen={setIsFiltersOpen}
           query={query}
           setQuery={setQuery}
-          filters={["start_date", "end_date", "merchant_id"]}
+          filters={["start_date", "end_date", "merchant_id", "reason"]}
           refetch={refetchMerchantBlacklistData}
           selectOptions={{}}
           startDateKeyName="start_date"
