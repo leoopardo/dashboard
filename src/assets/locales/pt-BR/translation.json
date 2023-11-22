@@ -1073,5 +1073,26 @@
     "out_conversions_description": "Resumo das informações dos Saques gerados dispostas por situação em gráfico de pizza. Neste item são listadas informações de situação, valor total e total de registros referentes à mesma.",
     "merchants_balance": "Saldos de empresas",
     "merchants_balance_description": "Resumo das informações dos Saldos disponíveis em cada empresa a qual seu usuário está vinculado. Os totalizadores são separados pelos tipos de saldos disponíveis para as operações."
+  },
+
+  "paysbet": {
+    "login": "ENTRAR",
+    "signin": "CADASTRE-SE",
+    "imediattly": "Faça um pix agora e comece a apostar imediatamente.",
+    "easy": "Simples e descomplicado, leia nosso QrCode, selecione o valor e já terá sua conta para apostar",
+    "start_now": "Comece agora mesmo!",
+    "home": "Início",
+    "all_games": "Todos os jogos",
+    "live_betting": "Apostas ao vivo",
+    "roulette": "Roleta",
+    "games": "Jogos",
+    "little_plane": "Aviãozinho",
+    "little_car": "Carrinho",
+    "configurations": "Configurações",
+    "profile": "Perfil",
+    "logout": "Sair",
+    "recent_games": "Jogos recentes",
+    "tie": "Empate",
+    "popular_games": "Jogos populares"
   }
 }
