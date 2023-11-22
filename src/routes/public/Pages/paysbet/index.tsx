@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   ClockCircleOutlined,
+  DollarOutlined,
   DownOutlined,
   HomeOutlined,
   LogoutOutlined,
@@ -112,15 +113,26 @@ export const Paysbet = () => {
             type: "group",
           },
           {
+            label: (
+              <Button
+                type="dashed"
+                size="large"
+                onClick={() => QrCodeReserveMutate()}
+                icon={<DollarOutlined />}
+              >
+                Novo depósito
+              </Button>
+            ),
+            type: "group",
+          },
+          {
             label: `${t("login.user")}: ${userData?.name}`,
             type: "group",
-            style: { marginRight: -20 },
           },
 
           {
             label: `${t("table.balance")}: ${userData?.balance}`,
             type: "group",
-            style: { marginRight: -20 },
           },
         ]
       : [
@@ -304,7 +316,7 @@ export const Paysbet = () => {
             mode="horizontal"
             defaultSelectedKeys={["2"]}
             items={items1}
-            style={{  display: "flex", alignItems: "center" }}
+            style={{ display: "flex", alignItems: "center" }}
           />
         </Col>
       </Header>
@@ -326,87 +338,90 @@ export const Paysbet = () => {
                   arrows
                   autoplaySpeed={3000}
                 >
-                  <div>
-                    <div
-                      style={{
-                        background: `linear-gradient(90deg, ${defaultTheme.colors.primary} 0%, ${defaultTheme.colors.secondary} 100%)`,
-                        height: "65dvh",
-                        width: "100%",
-                        borderRadius: 8,
-                      }}
-                    >
-                      <Row
+                  {!userData && (
+                    <div>
+                      <div
                         style={{
+                          background: `linear-gradient(90deg, ${defaultTheme.colors.primary} 0%, ${defaultTheme.colors.secondary} 100%)`,
+                          height: "65dvh",
                           width: "100%",
-                          position: "absolute",
-                          top: 40,
-                          marginLeft: 50,
+                          borderRadius: 8,
                         }}
                       >
-                        <Col
-                          span={24}
+                        <Row
                           style={{
-                            display: "flex",
-                            alignItems: "center",
+                            width: "100%",
+                            position: "absolute",
+                            top: 40,
+                            marginLeft: 50,
                           }}
                         >
-                          <Typography.Title
-                            level={1}
+                          <Col
+                            span={24}
                             style={{
-                              color: "#fff",
-                              fontSize: 60,
+                              display: "flex",
+                              alignItems: "center",
                             }}
                           >
-                            FastPix
-                          </Typography.Title>
-                        </Col>
+                            <Typography.Title
+                              level={1}
+                              style={{
+                                color: "#fff",
+                                fontSize: 60,
+                              }}
+                            >
+                              FastPix
+                            </Typography.Title>
+                          </Col>
 
-                        <Col span={24}>
-                          <div style={{ width: "90vw" }}>
-                            <Typography.Title
-                              level={1}
-                              style={{
-                                color: "#fff",
-                                fontSize: isMobile ? 15 : isTablet ? 30 : 35,
-                                maxWidth: "70%",
-                                wordBreak: "break-word",
-                              }}
-                            >
-                              {t("paysbet.imediattly")}
-                            </Typography.Title>
-                          </div>
-                        </Col>
-                        <Col span={24}>
-                          <div style={{ width: "90vw" }}>
-                            <Typography.Title
-                              level={1}
-                              style={{
-                                color: "#fff",
-                                fontSize: isMobile ? 15 : isTablet ? 20 : 25,
-                                maxWidth: "70%",
-                                wordBreak: "break-word",
-                              }}
-                            >
-                              {t("paysbet.easy")}
-                            </Typography.Title>
-                          </div>
-                        </Col>
-                        <Col span={24}>
-                          <div style={{ marginTop: "15px" }}>
-                            <Button
-                              type="primary"
-                              size="large"
-                              style={{ height: "70px", fontSize: "20px" }}
-                              onClick={() => QrCodeReserveMutate()}
-                              loading={QrCodeReserveIsLoading}
-                            >
-                              {t("paysbet.start_now")}
-                            </Button>
-                          </div>
-                        </Col>
-                      </Row>
+                          <Col span={24}>
+                            <div style={{ width: "90vw" }}>
+                              <Typography.Title
+                                level={1}
+                                style={{
+                                  color: "#fff",
+                                  fontSize: isMobile ? 15 : isTablet ? 30 : 35,
+                                  maxWidth: "70%",
+                                  wordBreak: "break-word",
+                                }}
+                              >
+                                {t("paysbet.imediattly")}
+                              </Typography.Title>
+                            </div>
+                          </Col>
+                          <Col span={24}>
+                            <div style={{ width: "90vw" }}>
+                              <Typography.Title
+                                level={1}
+                                style={{
+                                  color: "#fff",
+                                  fontSize: isMobile ? 15 : isTablet ? 20 : 25,
+                                  maxWidth: "70%",
+                                  wordBreak: "break-word",
+                                }}
+                              >
+                                {t("paysbet.easy")}
+                              </Typography.Title>
+                            </div>
+                          </Col>
+                          <Col span={24}>
+                            <div style={{ marginTop: "15px" }}>
+                              <Button
+                                type="primary"
+                                size="large"
+                                style={{ height: "70px", fontSize: "20px" }}
+                                onClick={() => QrCodeReserveMutate()}
+                                loading={QrCodeReserveIsLoading}
+                              >
+                                {t("paysbet.start_now")}
+                              </Button>
+                            </div>
+                          </Col>
+                        </Row>
+                      </div>
                     </div>
-                  </div>
+                  )}
+
                   <div>
                     <img
                       src={banner1}
