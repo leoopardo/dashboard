@@ -22,6 +22,7 @@ import {
   Tooltip,
   Typography,
 } from "antd";
+import { formatCPF } from "@src/utils/functions";
 import type { ColumnsType, TableProps as TablePropsAntD } from "antd/es/table";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
@@ -34,6 +35,7 @@ export interface ColumnInterface {
   head?: string;
   type:
     | "id"
+    | "cpf"
     | "birth"
     | "text"
     | "translate"
@@ -50,7 +52,7 @@ export interface ColumnInterface {
     | "progress"
     | "merchant_name"
     | "partner_name"
-    | '';
+    | "";
   sort?: boolean;
   key?: any;
   sort_name?: string;
@@ -199,6 +201,77 @@ export const CustomTable = (props: TableProps) => {
                       }}
                     >
                       <CopyOutlined />
+                    </Button>
+                  </Tooltip>
+                </div>
+              ),
+              sorter: column.sort
+                ? () => {
+                    props.setQuery((state: any) => ({
+                      ...state,
+                      sort_field: column?.sort_name
+                        ? column.sort_name
+                        : Array.isArray(column?.name)
+                        ? column?.name[1]
+                        : column?.name,
+                      sort_order:
+                        props.query.sort_order === "DESC" ? "ASC" : "DESC",
+                    }));
+
+                    return 0;
+                  }
+                : undefined,
+            };
+
+          case "cpf":
+            return {
+              title: (
+                <Tooltip title={t(`table.${column?.head || column?.name}`)}>
+                  <Typography
+                    style={{
+                      width: "100%",
+                      maxHeight: "50px",
+                      overflow: "hidden",
+                      textAlign: "center",
+                      textOverflow: "ellipsis",
+                    }}
+                    ref={column.key}
+                  >
+                    {t(`table.${column?.head || column?.name}`)}
+                  </Typography>
+                </Tooltip>
+              ),
+              key: column?.sort_name
+                ? column.sort_name
+                : Array.isArray(column?.name)
+                ? column?.name + `${Math.random()}`
+                : column?.name,
+              width: 85,
+              dataIndex: column?.name,
+              render: (text: string) => (
+                <div
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Tooltip title={text}>
+                    <Button
+                      size="large"
+                      type="ghost"
+                      onClick={() => {
+                        navigator.clipboard.writeText(text);
+                        toast.success(t("table.copied"));
+                      }}
+                    >
+                      {text ? (
+                        <>
+                          {formatCPF(text)} {" "}<CopyOutlined />
+                        </>
+                      ) : (
+                        "-"
+                      )}
                     </Button>
                   </Tooltip>
                 </div>

@@ -1,4 +1,12 @@
 export function unmask(value: string): string {
-    // Remove any non-digit characters from the value
     return value.replace(/[^\d]/g, "");
 }
+
+export function formatCPF(cpf: string | '') {
+    const cleanedCPF = cpf?.replace(/\D/g, '');
+    if (!cleanedCPF || cleanedCPF.length !== 11) {
+      return '-';
+    }
+  
+    return cleanedCPF?.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+  }
