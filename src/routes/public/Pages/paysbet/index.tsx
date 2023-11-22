@@ -337,6 +337,7 @@ export const Paysbet = () => {
                   style={{ borderRadius: 16 }}
                   arrows
                   autoplaySpeed={3000}
+                  autoplay={!!userData}
                 >
                   {!userData && (
                     <div>
