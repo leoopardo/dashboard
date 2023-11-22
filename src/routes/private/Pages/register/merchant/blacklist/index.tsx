@@ -13,7 +13,6 @@ import { Grid } from "@mui/material";
 import { Confirmation } from "@src/components/Modals/confirmation";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
-import { ReasonSelect } from "@src/components/Selects/reasonSelect";
 import { Toast } from "@src/components/Toast";
 import { queryClient } from "@src/services/queryClient";
 import { useCreateMerchantBlacklist } from "@src/services/register/merchant/blacklist/createMerchantBlacklist";
