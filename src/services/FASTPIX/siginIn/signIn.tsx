@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect } from "react";
 import { useMutation } from "react-query";
@@ -38,15 +39,21 @@ export function useFastPixToken(
     }
   );
 
+  const {
+    isValidateFetching,
+    responseValidate,
+    validateError,
+    isSuccess,
+    refetchValidate,
+  } = useValidateFastPix(rememberMe, token?.data?.token);
+
   useEffect(() => {
-    if (token?.data?.token) {
+    if (token?.isSuccess) {
+      refetchValidate();
       queryClient.refetchQueries(["FastPixToken"]);
       api.defaults.headers.Authorization = `Bearer ${token?.data?.token}`;
     }
   }, [token?.data?.token]);
-
-  const { isValidateFetching, responseValidate, validateError, isSuccess } =
-    useValidateFastPix(rememberMe, token?.data?.token);
 
   const LoginError: any = token.error;
   const Login = token.mutate;

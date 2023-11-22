@@ -31,6 +31,7 @@ import {
   Menu,
   Row,
   Space,
+  Spin,
   Typography,
   theme,
 } from "antd";
@@ -65,17 +66,8 @@ export const Paysbet = () => {
   const changeLanguage = (language: string) => {
     i18n.changeLanguage(language);
   };
-  const { refetchValidate, responseValidate } = useValidateFastPix();
-  const userData:
-    | {
-        id: string;
-        document: string;
-        name: string;
-        username: string;
-        pending_password_change: boolean;
-        balance: number;
-      }
-    | undefined = queryClient.getQueryData("FastPixTokenValidate");
+  const { refetchValidate, responseValidate, isValidateFetching } =
+    useValidateFastPix();
 
   useEffect(() => {
     refetchValidate();
@@ -96,77 +88,76 @@ export const Paysbet = () => {
     },
   ];
 
-  const items1: MenuProps["items"] =
-    userData || responseValidate
-      ? [
-          {
-            label: (
-              <Dropdown menu={{ items }}>
-                <a onClick={(e) => e.preventDefault()}>
-                  <Space>
-                    {t("table.language")}
-                    <DownOutlined />
-                  </Space>
-                </a>
-              </Dropdown>
-            ),
-            type: "group",
-          },
-          {
-            label: (
-              <Button
-                type="dashed"
-                size="large"
-                onClick={() => QrCodeReserveMutate()}
-                icon={<DollarOutlined />}
-              >
-                Novo depósito
-              </Button>
-            ),
-            type: "group",
-          },
-          {
-            label: `${t("login.user")}: ${userData?.name}`,
-            type: "group",
-          },
+  const items1: MenuProps["items"] = responseValidate
+    ? [
+        {
+          label: (
+            <Dropdown menu={{ items }}>
+              <a onClick={(e) => e.preventDefault()}>
+                <Space>
+                  {t("table.language")}
+                  <DownOutlined />
+                </Space>
+              </a>
+            </Dropdown>
+          ),
+          type: "group",
+        },
+        {
+          label: (
+            <Button
+              type="dashed"
+              size="large"
+              onClick={() => QrCodeReserveMutate()}
+              icon={<DollarOutlined />}
+            >
+              Novo depósito
+            </Button>
+          ),
+          type: "group",
+        },
+        {
+          label: `${t("login.user")}: ${responseValidate?.name}`,
+          type: "group",
+        },
 
-          {
-            label: `${t("table.balance")}: ${userData?.balance}`,
-            type: "group",
-          },
-        ]
-      : [
-          {
-            label: (
-              <Dropdown menu={{ items }}>
-                <a onClick={(e) => e.preventDefault()}>
-                  <Space>
-                    {t("table.language")}
-                    <DownOutlined />
-                  </Space>
-                </a>
-              </Dropdown>
-            ),
-            type: "group",
-          },
-          {
-            label: (
-              <Button type="dashed" size="large" onClick={() => setOpen(true)}>
-                {t("paysbet.login")}
-              </Button>
-            ),
-            type: "group",
-            style: { marginRight: -20 },
-          },
-          {
-            label: (
-              <Button type="primary" size="large">
-                {t("paysbet.signin")}
-              </Button>
-            ),
-            type: "group",
-          },
-        ];
+        {
+          label: `${t("table.balance")}: ${responseValidate?.balance}`,
+          type: "group",
+        },
+      ]
+    : [
+        {
+          label: (
+            <Dropdown menu={{ items }}>
+              <a onClick={(e) => e.preventDefault()}>
+                <Space>
+                  {t("table.language")}
+                  <DownOutlined />
+                </Space>
+              </a>
+            </Dropdown>
+          ),
+          type: "group",
+        },
+        {
+          label: (
+            <Button type="dashed" size="large" onClick={() => setOpen(true)}>
+              {t("paysbet.login")}
+            </Button>
+          ),
+          type: "group",
+          style: { marginRight: -20 },
+        },
+        {
+          label: (
+            <Button type="primary" size="large">
+              {t("paysbet.signin")}
+            </Button>
+          ),
+          type: "group",
+        },
+      ];
   type MenuItem = Required<MenuProps>["items"][number];
 
   function getItem(
@@ -282,7 +273,8 @@ export const Paysbet = () => {
           }
         ),
       ],
-      "group"
+      "group",
+      { display: responseValidate ? undefined : "none" }
     ),
   ];
 
@@ -311,13 +303,17 @@ export const Paysbet = () => {
           </Col>
         </Row>
         <Col span={16} style={{ display: "flex", justifyContent: "flex-end" }}>
-          <Menu
-            theme="light"
-            mode="horizontal"
-            defaultSelectedKeys={["2"]}
-            items={items1}
-            style={{ display: "flex", alignItems: "center" }}
-          />
+          {isValidateFetching ? (
+            <Spin />
+          ) : (
+            <Menu
+              theme="light"
+              mode="horizontal"
+              defaultSelectedKeys={["2"]}
+              items={items1}
+              style={{ display: "flex", alignItems: "center" }}
+            />
+          )}
         </Col>
       </Header>
       <Layout style={{ minHeight: "93dvh" }}>
@@ -337,9 +333,9 @@ export const Paysbet = () => {
                   style={{ borderRadius: 16 }}
                   arrows
                   autoplaySpeed={3000}
-                  autoplay={!!userData}
+                  autoplay={!!responseValidate}
                 >
-                  {!userData && (
+                  {!responseValidate && (
                     <div>
                       <div
                         style={{
