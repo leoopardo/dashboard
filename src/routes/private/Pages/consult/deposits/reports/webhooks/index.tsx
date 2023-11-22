@@ -66,7 +66,6 @@ export const DepositsWebhooks = () => {
             haveInitialDate
           />
         </Col>
-
       </Row>
 
       <Row
@@ -77,7 +76,7 @@ export const DepositsWebhooks = () => {
       >
         <Tabs
           defaultActiveKey="1"
-          tabPosition={isMobile ? "top" : "left"}
+          tabPosition={isMobile ? "top" : "right"}
           style={{ padding: 0 }}
           onChange={(active) => {
             active === "multiple"
