@@ -216,7 +216,6 @@ export const MerchantBankStatement = () => {
             loading={isMerchantTransactionsFetching}
             removeTotal
             label={["bank_name", "value", "paid_at"]}
-            removePagination
           />
         </Grid>
       </Grid>
