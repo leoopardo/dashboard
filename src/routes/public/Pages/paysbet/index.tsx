@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   ClockCircleOutlined,
@@ -13,6 +14,9 @@ import banner2 from "@assets/footbal-bet.png";
 import logo from "@assets/paysbet.png";
 import eua from "@assets/united-states.png";
 import VideogameAssetOutlinedIcon from "@mui/icons-material/VideogameAssetOutlined";
+import { useCreateQrCodeReserve } from "@src/services/FASTPIX/postReserveQrCode";
+import { useValidateFastPix } from "@src/services/FASTPIX/siginIn/validate";
+import { queryClient } from "@src/services/queryClient";
 import { defaultTheme } from "@src/styles/defaultTheme";
 import type { MenuProps } from "antd";
 import {
@@ -29,10 +33,11 @@ import {
   Typography,
   theme,
 } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import { Outlet, useLocation, useNavigate } from "react-router";
+import secureLocalStorage from "react-secure-storage";
 import { GameCard } from "./components/gameCards";
 import { LoginModal } from "./components/login";
 import "./styles.css";
@@ -48,13 +53,32 @@ export const Paysbet = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
+  const {
+    QrCodeReserveIsSuccess,
+    QrCodeReserveIsLoading,
+    QrCodeReserveMutate,
+    QrCodeReserveData,
+  } = useCreateQrCodeReserve();
   const [open, setOpen] = useState<boolean>(false);
-
-  console.log(location);
 
   const changeLanguage = (language: string) => {
     i18n.changeLanguage(language);
   };
+  const { refetchValidate, responseValidate } = useValidateFastPix();
+  const userData:
+    | {
+        id: string;
+        document: string;
+        name: string;
+        username: string;
+        pending_password_change: boolean;
+        balance: number;
+      }
+    | undefined = queryClient.getQueryData("FastPixTokenValidate");
+
+  useEffect(() => {
+    refetchValidate();
+  }, []);
 
   const items: MenuProps["items"] = [
     {
@@ -71,38 +95,66 @@ export const Paysbet = () => {
     },
   ];
 
-  const items1: MenuProps["items"] = [
-    {
-      label: (
-        <Dropdown menu={{ items }}>
-          <a onClick={(e) => e.preventDefault()}>
-            <Space>
-              {t("table.language")}
-              <DownOutlined />
-            </Space>
-          </a>
-        </Dropdown>
-      ),
-      type: "group",
-    },
-    {
-      label: (
-        <Button type="dashed" size="large" onClick={() => setOpen(true)}>
-          {t("paysbet.login")}
-        </Button>
-      ),
-      type: "group",
-      style: { marginRight: -20 },
-    },
-    {
-      label: (
-        <Button type="primary" size="large">
-          {t("paysbet.signin")}
-        </Button>
-      ),
-      type: "group",
-    },
-  ];
+  const items1: MenuProps["items"] =
+    userData || responseValidate
+      ? [
+          {
+            label: (
+              <Dropdown menu={{ items }}>
+                <a onClick={(e) => e.preventDefault()}>
+                  <Space>
+                    {t("table.language")}
+                    <DownOutlined />
+                  </Space>
+                </a>
+              </Dropdown>
+            ),
+            type: "group",
+          },
+          {
+            label: `${t("login.user")}: ${userData?.name}`,
+            type: "group",
+            style: { marginRight: -20 },
+          },
+
+          {
+            label: `${t("table.balance")}: ${userData?.balance}`,
+            type: "group",
+            style: { marginRight: -20 },
+          },
+        ]
+      : [
+          {
+            label: (
+              <Dropdown menu={{ items }}>
+                <a onClick={(e) => e.preventDefault()}>
+                  <Space>
+                    {t("table.language")}
+                    <DownOutlined />
+                  </Space>
+                </a>
+              </Dropdown>
+            ),
+            type: "group",
+          },
+          {
+            label: (
+              <Button type="dashed" size="large" onClick={() => setOpen(true)}>
+                {t("paysbet.login")}
+              </Button>
+            ),
+            type: "group",
+            style: { marginRight: -20 },
+          },
+          {
+            label: (
+              <Button type="primary" size="large">
+                {t("paysbet.signin")}
+              </Button>
+            ),
+            type: "group",
+          },
+        ];
   type MenuItem = Required<MenuProps>["items"][number];
 
   function getItem(
@@ -209,12 +261,25 @@ export const Paysbet = () => {
           undefined,
           {
             color: "red",
+          },
+          () => {
+            secureLocalStorage.removeItem("FastPixToken");
+            sessionStorage.removeItem("FastPixToken");
+            queryClient.removeQueries();
+            refetchValidate();
           }
         ),
       ],
       "group"
     ),
   ];
+
+  useEffect(() => {
+    if (QrCodeReserveData?.token)
+      window.open(
+        `https://d3hpel0fquw4yd.cloudfront.net/${QrCodeReserveData?.token}`
+      );
+  }, [QrCodeReserveIsSuccess]);
 
   return (
     <Layout>
@@ -233,13 +298,13 @@ export const Paysbet = () => {
             <img src={logo} style={{ marginTop: 24 }} />
           </Col>
         </Row>
-        <Col span={6}>
+        <Col span={10} style={{ display: "flex", justifyContent: "flex-end" }}>
           <Menu
             theme="light"
             mode="horizontal"
             defaultSelectedKeys={["2"]}
             items={items1}
-            style={{ width: "100%", display: "flex", alignItems: "center" }}
+            style={{  display: "flex", alignItems: "center" }}
           />
         </Col>
       </Header>
@@ -332,6 +397,8 @@ export const Paysbet = () => {
                               type="primary"
                               size="large"
                               style={{ height: "70px", fontSize: "20px" }}
+                              onClick={() => QrCodeReserveMutate()}
+                              loading={QrCodeReserveIsLoading}
                             >
                               {t("paysbet.start_now")}
                             </Button>
@@ -818,7 +885,7 @@ export const Paysbet = () => {
             <Outlet />
           )}
         </Layout>
-        <LoginModal open={open} setOpen={setOpen} />
+        {open && <LoginModal open={open} setOpen={setOpen} />}
       </Layout>
     </Layout>
   );

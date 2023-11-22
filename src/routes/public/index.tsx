@@ -7,6 +7,7 @@ import { ForgotMyPassword } from "./Pages/forgotMyPassword";
 import { Banner } from "./Pages/banner";
 import { Paysbet } from "./Pages/paysbet";
 import { Typography } from "antd";
+import { AuthFromFastPix } from "./Pages/paysbet/authFromFastPix";
 
 export const PublicRoutes = () => {
   useEffect(() => {
@@ -22,9 +23,13 @@ export const PublicRoutes = () => {
       <Route path="paysbet" element={<Paysbet />}>
         <Route path={"aviator"} element={<Typography>Aviãozinho</Typography>} />
         <Route path={"cassino"} element={<Typography>Cassino</Typography>} />
-        <Route path={"roulette"} element={<Typography>Roleta ao vivo</Typography>} />
+        <Route
+          path={"roulette"}
+          element={<Typography>Roleta ao vivo</Typography>}
+        />
         <Route path={"car"} element={<Typography>Carrinho</Typography>} />
         <Route path={"profile"} element={<Typography>Meu perfil</Typography>} />
+        <Route path={"auth/:token"} element={<AuthFromFastPix />} />
       </Route>
     </Routes>
   );

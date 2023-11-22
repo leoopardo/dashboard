@@ -878,7 +878,8 @@
     "operations": "Operations",
     "in_out_conversion": "In/Out conversions",
     "receiver_bank_client_document": "Receiver bank client document",
-    "receiver_bank_client_name": "Receiver bank client name"
+    "receiver_bank_client_name": "Receiver bank client name",
+    "balance": "Balance"
   },
   "actions": {
     "details": "Details",
@@ -1038,8 +1039,7 @@
     "bank_chart_description": "Switches the view from Grid to a bar chart.",
     "bank_card_description": "Switches the view from Grid to bank cards.",
     "last_sign_in_description": "User's last access date to the system."
-
-  }, 
+  },
   "paysbet": {
     "login": "LOGIN",
     "signin": "SIGN UP",
