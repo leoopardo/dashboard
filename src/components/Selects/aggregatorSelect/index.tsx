@@ -27,7 +27,7 @@ export const AggregatorSelect = ({
   const { aggregatorsData, refetcAggregators, isAggregatorsFetching } =
     useListAggregators(query);
   const [value, setValue] = useState<any>(null);
-  const debounceSearch = useDebounce(query.name);
+  const debounceSearch = useDebounce(query.name, 500);
 
   useEffect(() => {
     if (!aggregatorId) {
