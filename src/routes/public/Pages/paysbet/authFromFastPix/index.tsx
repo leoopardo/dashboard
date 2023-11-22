@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Toast } from "@src/components/Toast";
 import { useTheme } from "@src/contexts/ThemeContext";
@@ -138,7 +139,7 @@ export const AuthFromFastPix = () => {
                 level={1}
                 style={{ color: defaultTheme.colors.secondary }}
               >
-                Bem vindo: {userData?.name}
+                {t("paysbet.welcome")}: {userData?.name}
               </Typography.Title>
             </Col>
             <Col
@@ -153,8 +154,7 @@ export const AuthFromFastPix = () => {
                 level={3}
                 style={{ color: defaultTheme.colors.info }}
               >
-                Percebemos que é seu primeiro acesso. Para a sua segurança,
-                altere a sua senha e usuário
+                {t("paysbet.first_access")}
               </Typography.Title>
             </Col>
 
@@ -306,7 +306,7 @@ export const AuthFromFastPix = () => {
                     loading={FastPixCredentialsIsLoading}
                     onClick={() => submitRef.current?.click()}
                   >
-                    Atualizar
+                    {t("paysbet.update")}
                   </Button>
                 </Col>
                 <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
@@ -330,15 +330,14 @@ export const AuthFromFastPix = () => {
                 level={1}
                 style={{ color: defaultTheme.colors.secondary }}
               >
-                Bem vindo: {userData?.name}
+                {t("paysbet.welcome")}: {userData?.name}
               </Typography.Title>
               <Col span={24}>
                 <Typography.Title
                   level={3}
                   style={{ color: defaultTheme.colors.info }}
                 >
-                  Estamos preparando tudo para que você possa fazer suas
-                  apostas.
+                  {t("paysbet.preparing")}
                 </Typography.Title>
                 <Progress size="default" percent={count} showInfo={false} />
               </Col>
@@ -351,8 +350,7 @@ export const AuthFromFastPix = () => {
                 level={1}
                 style={{ color: defaultTheme.colors.secondary }}
               >
-                Token de redirecionamento inválido, caso tenha feito um FastPix
-                solicite um novo token de acesso ao suporte.
+                {t("paysbet.invalid_token")}
               </Typography.Title>
             </Col>
           </Row>

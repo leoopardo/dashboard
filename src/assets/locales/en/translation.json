@@ -1058,6 +1058,11 @@
     "logout": "Logout",
     "recent_games": "Recent games",
     "tie": "Tie",
-    "popular_games": "Popular games"
+    "popular_games": "Popular games",
+    "first_access": "We noticed this is your first access. For your security, please change your password and username.",
+    "welcome": "Welcome",
+    "update": "Update",
+    "preparing": "We are preparing everything so you can place your bets.",
+    "invalid_token": "Invalid redirection token. If you have requested a FastPix, please ask for a new access token from support."
   }
 }
