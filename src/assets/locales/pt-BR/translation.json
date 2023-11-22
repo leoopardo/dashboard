@@ -1094,6 +1094,12 @@
     "logout": "Sair",
     "recent_games": "Jogos recentes",
     "tie": "Empate",
-    "popular_games": "Jogos populares"
+    "popular_games": "Jogos populares",
+
+    "first_access": "Percebemos que é seu primeiro acesso. Para a sua segurança, altere a sua senha e usuário",
+    "welcome": "Bem vindo",
+    "update": "Atualizar",
+    "preparing": "Estamos preparando tudo para que você possa fazer suas apostas.",
+    "invalid_token": "Token de redirecionamento inválido, caso tenha feito um FastPix solicite um novo token de acesso ao suporte."
   }
 }
