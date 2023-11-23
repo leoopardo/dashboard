@@ -23,6 +23,8 @@ export interface MerchantsQuery {
   limit: number;
   merchant?: boolean;
   partner?: boolean;
+  fields?: any;
+  comma_separate_value?: boolean
 }
 
 export interface MerchantsItem {

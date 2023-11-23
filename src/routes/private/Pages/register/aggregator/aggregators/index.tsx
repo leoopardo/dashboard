@@ -77,7 +77,7 @@ export const Aggregators = () => {
     AggregatorReportsIsLoading,
     AggregatorReportsIsSuccess,
     AggregatorReportsMutate,
-  } = useCreateAggregatorReports({
+  } = useCreateAggregatorReports({ ...query,
     fields: csvFields,
     comma_separate_value: comma,
   });

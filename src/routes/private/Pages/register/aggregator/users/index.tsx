@@ -70,7 +70,7 @@ export const AggregatorUsers = () => {
     AggregatorUsersReportsIsLoading,
     AggregatorUsersReportsIsSuccess,
     AggregatorUsersReportsMutate,
-  } = useCreateAggregatorUsersReports({
+  } = useCreateAggregatorUsersReports({ ...query,
     fields: csvFields,
     comma_separate_value: comma,
   });

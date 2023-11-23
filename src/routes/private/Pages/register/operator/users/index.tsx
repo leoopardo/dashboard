@@ -81,7 +81,7 @@ export const OperatorUsers = () => {
     OperatorUsersReportsIsLoading,
     OperatorUsersReportsIsSuccess,
     OperatorUsersReportsMutate,
-  } = useCreateOperatorUsersReports({
+  } = useCreateOperatorUsersReports({ ...query,
     fields: csvFields,
     comma_separate_value: comma,
   });
