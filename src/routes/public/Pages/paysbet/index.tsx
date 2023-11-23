@@ -887,6 +887,22 @@ export const Paysbet = () => {
                     name: "Touro",
                     banner:
                       "https://cdn.coingaming.io/casino-hub88/PGsoft/fortune-ox-thumbnail.jpg",
+                  }, {
+                    name: "Aranha",
+                    banner:
+                      "https://criticalhits.com.br/wp-content/uploads/2020/07/Spider-Man-PS5-1.jpg",
+                  }, {
+                    name: "Mareo",
+                    banner:
+                      "https://tm.ibxk.com.br/2022/11/16/16132323299487.jpg",
+                  }, {
+                    name: "Leopardo",
+                    banner:
+                      "https://bdjogos.com.br/capas/6834-captain-commando-Super-Nintendo-capa-1.jpg",
+                  }, {
+                    name: "Touro",
+                    banner:
+                      "https://cdn.coingaming.io/casino-hub88/PGsoft/fortune-ox-thumbnail.jpg",
                   },
                 ].map((game) => (
                   <GameCard banner={game.banner} name={game.name} />
