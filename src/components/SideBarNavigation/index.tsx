@@ -1780,8 +1780,7 @@ export const SidebarNavigation = () => {
               undefined,
               undefined,
               {
-                display: permissions?.support?.blacklist?.banks
-                  ?.support_blacklist_bank_export_csv
+                display: permissions?.support?.contestation?.deposits?.menu
                   ? undefined
                   : "none",
               }
@@ -1790,7 +1789,7 @@ export const SidebarNavigation = () => {
           undefined,
           undefined,
           {
-            display: permissions?.support?.blacklist?.menu ? undefined : "none",
+            display: permissions?.support?.contestation?.menu ? undefined : "none",
           }
         ),
         /*  getItem("Wiki", null, null, false, () => {
