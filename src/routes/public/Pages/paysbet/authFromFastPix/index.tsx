@@ -343,8 +343,8 @@ export const AuthFromFastPix = () => {
       <Toast
         error={FastPixCredentialsError}
         success={FastPixCredentialsIsSuccess}
-        actionError="update"
-        actionSuccess="updated"
+        actionError={t("messages.update")}
+        actionSuccess={t("messages.updated")}
       />
     </Layout>
   );
