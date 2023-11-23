@@ -9,10 +9,10 @@ interface IGameCard {
 
 export const GameCard = ({ banner, name }: IGameCard) => {
   return (
-    <Col>
+    <Col span={4}>
       <Card
         hoverable
-        style={{ width: 240, maxWidth: "240px", overflow: "hidden" }}
+        style={{ width: "100%",  overflow: "hidden" }}
         cover={
           <motion.img
             whileHover={{ scale: 1.2 }}

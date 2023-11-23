@@ -857,7 +857,7 @@ export const Paysbet = () => {
                   </Row>
                 </Col>
               </Row> */}
-              <Row style={{ width: "100%" }} gutter={[8, 8]}>
+              <Row style={{ width: "100%" }} gutter={[8, 16]}>
                 {[
                   {
                     name: "Aviãozinho",
