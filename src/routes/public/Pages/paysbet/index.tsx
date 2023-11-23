@@ -52,6 +52,7 @@ export const Paysbet = () => {
   } = theme.useToken();
   const isTablet = useMediaQuery({ maxWidth: "1150px" });
   const isMobile = useMediaQuery({ maxWidth: "750px" });
+  window.document.title = "PAY'SBET"
   const location = useLocation();
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
