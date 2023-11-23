@@ -8,6 +8,7 @@ import { Banner } from "./Pages/banner";
 import { Paysbet } from "./Pages/paysbet";
 import { Typography } from "antd";
 import { AuthFromFastPix } from "./Pages/paysbet/authFromFastPix";
+import { Profile } from "./Pages/paysbet/profile";
 
 export const PublicRoutes = () => {
   useEffect(() => {
@@ -28,7 +29,7 @@ export const PublicRoutes = () => {
           element={<Typography>Roleta ao vivo</Typography>}
         />
         <Route path={"car"} element={<Typography>Carrinho</Typography>} />
-        <Route path={"profile"} element={<Typography>Meu perfil</Typography>} />
+        <Route path={"profile"} element={<Profile />} />
         <Route path={"auth"} element={<AuthFromFastPix />} />
       </Route>
     </Routes>
