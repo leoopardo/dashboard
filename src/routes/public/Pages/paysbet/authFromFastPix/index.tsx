@@ -206,11 +206,6 @@ export const AuthFromFastPix = () => {
                               field: t("input.password"),
                             }) || "",
                         },
-                        {
-                          pattern:
-                            /^(?=.*[0-9])(?=.*[A-Z])(?=.*[!@#$%^&*()_+])[0-9a-zA-Z!@#$%^&*()_+]*$/,
-                          message: `${t("input.password_type")}`,
-                        },
                         ({ getFieldValue }) => ({
                           validator(_, value) {
                             if (

@@ -33,7 +33,7 @@ export const BankBalanceChart = () => {
             textStyle: {
               color: "#a0a0a0",
             },
-            color: ["#91cc75", "#ee6666", "#5470c6"],
+            color: ["#91cc75c8", "#ee6666cf", "#5470c6c8"],
             dataset: {
               source: [
                 [
