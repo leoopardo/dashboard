@@ -109,7 +109,7 @@ export const MutateModal = ({
       page: 1,
       limit: 200,
     });
-  const [mask, setMask] = useState('')
+  const [mask, setMask] = useState("");
 
   const { merchantBlacklistData } = useGetRowsMerchantBlacklistReasons({
     limit: 200,
@@ -286,6 +286,33 @@ export const MutateModal = ({
                         <MerchantSelect
                           setQueryFunction={setBody}
                           queryOptions={body}
+                        />
+                      </Form.Item>
+                    </Col>
+                  );
+                } else return;
+              case "merchant_name":
+                if (permissions.register.merchant.merchant.merchant_list) {
+                  return (
+                    <Col span={24}>
+                      <Form.Item
+                        label={t(`table.${field.label}`)}
+                        name={field.label}
+                        style={{ margin: 10 }}
+                        rules={[
+                          {
+                            required: field.required && !body.merchant_name,
+                            message:
+                              t("input.required", {
+                                field: t(`input.${field.label}`),
+                              }) || "",
+                          },
+                        ]}
+                      >
+                        <MerchantSelect
+                          setQueryFunction={setBody}
+                          queryOptions={body}
+                          name
                         />
                       </Form.Item>
                     </Col>
@@ -635,15 +662,21 @@ export const MutateModal = ({
                       style={{ margin: 10 }}
                       rules={[
                         {
-                          required: body?.cellphone && (unmask(mask).length > body?.cellphone?.length),
+                          required:
+                            body?.cellphone &&
+                            unmask(mask).length > body?.cellphone?.length,
                           message:
                             t("input.invalid", {
                               field: t(`table.cellphone`),
                             }) || "",
-                        }
+                        },
                       ]}
                     >
-                      <CellphoneInput body={body} setBody={setBody} setMask={setMask} />
+                      <CellphoneInput
+                        body={body}
+                        setBody={setBody}
+                        setMask={setMask}
+                      />
                     </Form.Item>
                   </Col>
                 );

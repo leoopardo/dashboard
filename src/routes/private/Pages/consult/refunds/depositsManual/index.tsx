@@ -14,6 +14,7 @@ import ReplayIcon from "@mui/icons-material/Replay";
 import { Grid } from "@mui/material";
 import { Search } from "@src/components/Inputs/search";
 import { Confirmation } from "@src/components/Modals/confirmation";
+import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
 import { useCreatePayToMerchantRefund } from "@src/services/consult/refund/refundDepositsManual/createPayToMerchant";
 import { useCreatePixManualRefund } from "@src/services/consult/refund/refundDepositsManual/createRefund";
@@ -42,7 +43,6 @@ import { FiltersModal } from "../../../../../../components/FiltersModal";
 import { FilterChips } from "../../../../../../components/FiltersModal/filterChips";
 import { ViewModal } from "../components/ViewModal";
 import { TotalizersCards } from "./components/TotalizersCards";
-import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
 
 const INITIAL_QUERY: refundManualDepositsQuery = {
   page: 1,
@@ -111,8 +111,7 @@ export const RefundDepositsManual = () => {
   const [isUpdateMerchantModalOpen, setIsUpdateMerchantModalOpen] =
     useState<boolean>(false);
   const [updateBody, setUpdateBody] = useState<UpdateMerchantRefundBody>({
-    endToEndId: currentItem?.endToEndId,
-    merchant_id: currentItem?.merchant_id,
+    merchant_name: currentItem?.merchant_id,
   });
   const { mutate, isLoading } = useCreatePixManualRefund(currentItem?._id);
   const { isPayToMerchantLoading, mutatePayToMerchant } =
@@ -128,7 +127,10 @@ export const RefundDepositsManual = () => {
     UpdateMerchantError,
     isUpdateMerchantLoading,
     isUpdateMerchantSuccess,
-  } = useUpdateMerchantRefund(updateBody);
+  } = useUpdateMerchantRefund({
+    ...updateBody,
+    endToEndId: currentItem?.endToEndId,
+  });
 
   const columns: ColumnInterface[] = [
     { name: "_id", type: "id" },
@@ -340,7 +342,13 @@ export const RefundDepositsManual = () => {
               {
                 label: "edit_merchant",
                 icon: <EditOutlined style={{ fontSize: "18px" }} />,
-                onClick: () => setIsUpdateMerchantModalOpen(true),
+                onClick: (item) => {
+                  setUpdateBody((state) => ({
+                    ...state,
+                    endToEndId: item.endToEndId,
+                  }));
+                  setIsUpdateMerchantModalOpen(true);
+                },
                 disabled: () =>
                   !permissions?.report?.chargeback?.manual_deposit_chargeback
                     ?.report_chargeback_manual_deposit_chargeback_update_merchant,
@@ -442,7 +450,7 @@ export const RefundDepositsManual = () => {
           type="update"
           open={isUpdateMerchantModalOpen}
           setOpen={setIsUpdateMerchantModalOpen}
-          fields={[{ label: "merchant_id", required: true }]}
+          fields={[{ label: "merchant_name", required: true }]}
           body={updateBody}
           setBody={setUpdateBody}
           modalName={t("modal.update_merchant")}

@@ -98,6 +98,6 @@ export interface refundById {
 }
 
 export interface UpdateMerchantRefundBody {
-  merchant_id?: string;
+  merchant_name?: string;
   endToEndId?: string;
 }
