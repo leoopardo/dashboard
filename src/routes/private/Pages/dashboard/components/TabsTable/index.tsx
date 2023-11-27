@@ -127,6 +127,7 @@ export const TabsTable = ({ query }: TableProps) => {
             },
           ].filter(Boolean) as any[]
         }
+        style={{paddingBottom: 24}}
       />
     </>
   );
