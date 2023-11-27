@@ -10,6 +10,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import secureLocalStorage from "react-secure-storage";
 import { FeeTab } from "./feesTab";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 import { useErrorContext } from "@src/contexts/ErrorContext";
 import { FinancialMovementsTab } from "./financialMovimentsTab";
 import { OperationMovementsTab } from "./operationsNumberTab";
@@ -21,6 +22,7 @@ export interface TableProps {
 
 export const TabsTable = ({ query }: TableProps) => {
   const { t } = useTranslation();
+  const { type } = queryClient.getQueryData("validate") as ValidateInterface;
   const { error } = useErrorContext();
   const [isChart, setIsChart] = useState<boolean>(
     secureLocalStorage.getItem("isRankingChart") === "true"
@@ -94,11 +96,12 @@ export const TabsTable = ({ query }: TableProps) => {
               disabled: error.rankingOperations,
               children: <OperationMovementsTab query={query} chart={isChart} />,
             },
-            !error.rankingFee && {
-              label: t("table.fees"),
-              key: "fees",
-              children: <FeeTab query={query} chart={isChart} />,
-            },
+            !error.rankingFee &&
+              (type === 1 || type === 2) && {
+                label: t("table.fees"),
+                key: "fees",
+                children: <FeeTab query={query} chart={isChart} />,
+              },
           ].filter(Boolean) as any[]
         }
       />

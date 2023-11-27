@@ -1,6 +1,8 @@
 /* eslint-disable react-refresh/only-export-components */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { createContext, useContext, useState } from "react";
+import { queryClient } from "@src/services/queryClient";
+import { ValidateInterface } from "@src/services/types/validate.interface";
+import { createContext, useContext, useState, useEffect } from "react";
 
 interface IError {
   rankingValue?: boolean;
@@ -17,10 +19,13 @@ interface ErrorContext {
 const ErrorContext = createContext<ErrorContext>({} as ErrorContext);
 
 export const ErrorProvider = ({ children }: any) => {
+  const user = queryClient?.getQueryData(
+    "validate"
+  ) as ValidateInterface;
   const [error, setError] = useState<IError>({
     rankingValue: false,
     rankingOperations: false,
-    rankingFee: false,
+    rankingFee: (user?.type === 1 || user?.type === 2) ? false : true,
   });
 
   function handleChangeError(error: IError) {
@@ -34,6 +39,14 @@ export const ErrorProvider = ({ children }: any) => {
       rankingFee: false,
     });
   }
+
+  useEffect(() => {
+    setError({
+      rankingValue: false,
+      rankingOperations: false,
+      rankingFee: (user?.type === 1 || user?.type === 2) ? false : true,
+    })
+  }  , [user])
 
   return (
     <ErrorContext.Provider value={{ error, handleChangeError, resetErrors }}>
