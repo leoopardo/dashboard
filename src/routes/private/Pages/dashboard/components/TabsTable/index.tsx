@@ -6,7 +6,7 @@ import {
 } from "@ant-design/icons";
 import { queryClient } from "@src/services/queryClient";
 import { Button, Col, Divider, Row, Tabs, Typography } from "antd";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useTranslation } from "react-i18next";
 import secureLocalStorage from "react-secure-storage";
 import { FeeTab } from "./feesTab";
@@ -17,6 +17,8 @@ import { OperationMovementsTab } from "./operationsNumberTab";
 export interface TableProps {
   query: { start_date: string; end_date: string };
   chart?: boolean;
+  operationType?: "total" | "deposit" | "withdraw";
+  setOperationType?: Dispatch<SetStateAction<"total" | "deposit" | "withdraw">>;
 }
 
 export const TabsTable = ({ query }: TableProps) => {
@@ -25,6 +27,9 @@ export const TabsTable = ({ query }: TableProps) => {
   const [isChart, setIsChart] = useState<boolean>(
     secureLocalStorage.getItem("isRankingChart") === "true"
   );
+  const [operationType, setOperationType] = useState<
+    "total" | "deposit" | "withdraw"
+  >("total");
 
   return (
     <>
@@ -84,7 +89,14 @@ export const TabsTable = ({ query }: TableProps) => {
             !error.rankingValue && {
               label: t("table.operations_value"),
               key: "financial_movements",
-              children: <FinancialMovementsTab query={query} chart={isChart} />,
+              children: (
+                <FinancialMovementsTab
+                  query={query}
+                  chart={isChart}
+                  operationType={operationType}
+                  setOperationType={setOperationType}
+                />
+              ),
               disabled: error.rankingValue,
               style: { color: "#5470c6" },
             },
@@ -92,12 +104,26 @@ export const TabsTable = ({ query }: TableProps) => {
               label: t("table.operation_number"),
               key: "operation_moviments",
               disabled: error.rankingOperations,
-              children: <OperationMovementsTab query={query} chart={isChart} />,
+              children: (
+                <OperationMovementsTab
+                  query={query}
+                  chart={isChart}
+                  operationType={operationType}
+                  setOperationType={setOperationType}
+                />
+              ),
             },
             !error.rankingFee && {
               label: t("table.fees"),
               key: "fees",
-              children: <FeeTab query={query} chart={isChart} />,
+              children: (
+                <FeeTab
+                  query={query}
+                  chart={isChart}
+                  operationType={operationType}
+                  setOperationType={setOperationType}
+                />
+              ),
             },
           ].filter(Boolean) as any[]
         }
