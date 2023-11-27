@@ -15,7 +15,6 @@ import { generatedDepositTotalQuery } from "@src/services/types/consult/deposits
 import { generatedWithdrawalsRowsQuery } from "@src/services/types/consult/withdrawals/generatedWithdrawals.interface";
 import { PersonsQuery } from "@src/services/types/register/persons/persons.interface";
 import { Descriptions, Empty, Spin, Tabs, TabsProps, Upload } from "antd";
-import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
