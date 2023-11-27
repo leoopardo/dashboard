@@ -419,6 +419,7 @@ export const Dashboard = () => {
                   refPayment,
                   refReserved,
                 ]}
+                query={query}
               />
             </Layout>
           </Row>

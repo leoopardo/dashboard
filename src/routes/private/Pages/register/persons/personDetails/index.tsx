@@ -15,7 +15,6 @@ import { generatedDepositTotalQuery } from "@src/services/types/consult/deposits
 import { generatedWithdrawalsRowsQuery } from "@src/services/types/consult/withdrawals/generatedWithdrawals.interface";
 import { PersonsQuery } from "@src/services/types/register/persons/persons.interface";
 import { Descriptions, Empty, Spin, Tabs, TabsProps, Upload } from "antd";
-import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
@@ -76,10 +75,6 @@ export const PersonDetails = () => {
       limit: 25,
       page: 1,
       buyer_document: cpf?.split(" ").join("").split("-").join(""),
-      initial_date: moment(new Date())
-        .subtract(30, "days")
-        .format("YYYY-MM-DDTHH:mm:ss.SSS"),
-      final_date: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss.SSS"),
     });
 
   const { depositsTotal, isDepositsTotalFetching, refetchDepositsTotal } =
@@ -96,10 +91,6 @@ export const PersonDetails = () => {
     limit: 25,
     page: 1,
     payer_document: cpf?.split(" ").join("").split("-").join(""),
-    initial_date: moment(new Date())
-      .subtract(30, "days")
-      .format("YYYY-MM-DDTHH:mm:ss.SSS"),
-    final_date: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss.SSS"),
   });
 
   const { paidTotal, isPaidTotalFetching, refetchPaidTotal } =
@@ -117,10 +108,6 @@ export const PersonDetails = () => {
       limit: 25,
       page: 1,
       receiver_document: cpf?.split(" ").join("").split("-").join(""),
-      initial_date: moment(new Date())
-        .subtract(30, "days")
-        .format("YYYY-MM-DDTHH:mm:ss.SSS"),
-      final_date: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss.SSS"),
     });
   const {
     WithdrawalsTotal,

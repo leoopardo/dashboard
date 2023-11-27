@@ -1,53 +1,53 @@
-import {
-  ArrowDownOutlined,
-  ArrowUpOutlined,
-  DollarOutlined,
-} from "@ant-design/icons";
-import { defaultTheme } from "@src/styles/defaultTheme";
-import { Col, Divider, Row, Typography } from "antd";
+import { Col, Form, Row, Select } from "antd";
 import { useTranslation } from "react-i18next";
 import { TableProps } from "..";
 import { DepositFees } from "./deposit";
 import { TotalFees } from "./total";
 import { WithdrawFees } from "./withdraw";
 
-export const FeeTab = ({ query, chart }: TableProps) => {
+export const FeeTab = ({
+  query,
+  chart,
+  operationType,
+  setOperationType,
+}: TableProps) => {
   const { t } = useTranslation();
 
   return (
     <Row gutter={[8, 8]}>
-      <Col xs={{ span: 24 }} md={{ span: 24 }}>
-        <Typography.Title level={4}>
-          <Divider>
-            <DollarOutlined /> Total:
-          </Divider>
-        </Typography.Title>
-        <TotalFees query={query} chart={chart} />
+      <Col xs={{ span: 12 }} md={{ span: 6 }}>
+        <Form layout="vertical">
+          <Form.Item label={t("input.operation_type")}>
+            <Select
+              size="large"
+              style={{ width: "100%", marginBottom: 16 }}
+              options={[
+                { label: "Total", value: "total" },
+                { label: t("table.deposits"), value: "deposit" },
+                { label: t("table.withdrawals"), value: "withdraw" },
+              ]}
+              value={operationType || "total"}
+              onChange={(value) => {
+                setOperationType && setOperationType(value);
+              }}
+            />
+          </Form.Item>
+        </Form>
       </Col>
-      <Col xs={{ span: 24 }} md={{ span: 24 }}>
-        <Divider>
-          <Typography.Title
-            level={4}
-            style={{ color: defaultTheme.colors.success }}
-          >
-            <ArrowDownOutlined /> {t("table.deposits")}:
-          </Typography.Title>
-        </Divider>
 
-        <DepositFees query={query} chart={chart} />
-      </Col>
-      <Col xs={{ span: 24 }} md={{ span: 24 }}>
-        <Divider>
-          <Typography.Title
-            level={4}
-            style={{ color: defaultTheme.colors.error }}
-          >
-            <ArrowUpOutlined /> {t("table.withdrawals")}:
-          </Typography.Title>
-        </Divider>
-
-        <WithdrawFees query={query} chart={chart} />
-      </Col>
+      {operationType === "total" ? (
+        <Col xs={{ span: 24 }} md={{ span: 24 }}>
+          <TotalFees query={query} chart={chart} />
+        </Col>
+      ) : operationType === "deposit" ? (
+        <Col xs={{ span: 24 }} md={{ span: 24 }}>
+          <DepositFees query={query} chart={chart} />
+        </Col>
+      ) : (
+        <Col xs={{ span: 24 }} md={{ span: 24 }}>
+          <WithdrawFees query={query} chart={chart} />
+        </Col>
+      )}
     </Row>
   );
 };

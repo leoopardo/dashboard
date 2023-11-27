@@ -35,7 +35,7 @@ export const WithdrawFees = ({ query, chart }: TableProps) => {
                   type: "shadow",
                 },
               },
-              color: ["#ee6666"],
+              color: ["#ee6666be"],
               legend: {textStyle: {
                 color: "#a0a0a0",
               },},textStyle: {

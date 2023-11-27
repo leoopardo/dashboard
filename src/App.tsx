@@ -2,14 +2,15 @@
 import PBLogo from "@assets/icon.png";
 import { ConfigProvider, Layout, Spin } from "antd";
 import { useEffect, useState } from "react";
+import ReactGA from "react-ga4";
 import { Toaster } from "react-hot-toast";
 import { I18nextProvider, useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
-import { ErrorProvider } from "./contexts/ErrorContext/index.tsx";
 import { PageHeader } from "./components/PageHeader/index.tsx";
 import { SidebarNavigation } from "./components/SideBarNavigation/index.tsx";
+import { ErrorProvider } from "./contexts/ErrorContext/index.tsx";
 import { useMenu } from "./contexts/SidebarContext/index.tsx";
 import { useTheme } from "./contexts/ThemeContext/index.tsx";
 import i18n from "./i18n";
@@ -19,7 +20,6 @@ import { useValidate } from "./services/siginIn/validate.tsx";
 import { defaultTheme } from "./styles/defaultTheme/index.ts";
 import { GlobalStyle } from "./styles/globalStyles.ts";
 const Logo = import.meta.env.VITE_APP_ICON ?? PBLogo;
-import ReactGA from "react-ga4";
 
 ReactGA.initialize(import.meta.env.VITE_APP_ANALYTICS_ID ?? "");
 
@@ -130,8 +130,8 @@ function App() {
                       : "0px 4px 15.7px -3px rgba(0, 0, 0, 0.144)",
                 },
                 Layout: {
-                  colorBgHeader: theme === "dark" ? "#222222" : "#ffffff"
-                }
+                  colorBgHeader: theme === "dark" ? "#222222" : "#ffffff",
+                },
               },
 
               token: {
@@ -175,6 +175,7 @@ function App() {
                       }}
                     >
                       <PageHeader />
+
                       <Layout
                         style={{
                           padding: "0 24px 24px",

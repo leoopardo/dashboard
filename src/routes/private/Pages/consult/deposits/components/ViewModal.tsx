@@ -9,6 +9,7 @@ import {
   QRCode,
   Segmented,
   Spin,
+  Typography,
 } from "antd";
 import { Dispatch, SetStateAction, useState } from "react";
 import { toast } from "react-hot-toast";
@@ -87,17 +88,13 @@ export const ViewModal = (props: ViewModalProps) => {
                           ).toLocaleTimeString()}`}
                         </Descriptions.Item>
                       );
-                    case "_id":
+
                     case "merchant_name":
                     case "bank":
-                    case "txid":
-                    case "endToEndId":
                     case "reference_id":
                     case "description":
-                    case "webhook_url":
                     case "buyer_name":
                     case "payer_name":
-                    case "webhook_url_optional":
                       return (
                         deposit[key] !== "N/A" && (
                           <Descriptions.Item
@@ -111,6 +108,30 @@ export const ViewModal = (props: ViewModalProps) => {
                             }}
                           >
                             {deposit[key]}
+                          </Descriptions.Item>
+                        )
+                      );
+                    case "webhook_url":
+                    case "webhook_url_optional":
+                    case "txid":
+                      case "endToEndId":
+                    case "_id":
+                      return (
+                        deposit[key] !== "N/A" &&
+                        deposit[key] && (
+                          <Descriptions.Item
+                            key={key}
+                            label={t(`table.${key}`)}
+                            labelStyle={{
+                              maxWidth: "120px !important",
+                              margin: 0,
+                              padding: 0,
+                              textAlign: "center",
+                            }}
+                          >
+                            <Typography.Text copyable>
+                              {deposit[key]}
+                            </Typography.Text>
                           </Descriptions.Item>
                         )
                       );

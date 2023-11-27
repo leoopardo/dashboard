@@ -36,7 +36,7 @@ export const DepositFees = ({ query, chart }: TableProps) => {
                   type: "shadow",
                 },
               },
-              color: ["#91cc75"],
+              color: ["#91cc75c9"],
               legend: {
                 textStyle: {
                   color: "#a0a0a0",

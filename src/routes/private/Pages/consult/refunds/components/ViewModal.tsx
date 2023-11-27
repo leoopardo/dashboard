@@ -1,10 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  CopyOutlined,
-  DownloadOutlined,
-  FilePdfOutlined,
-} from "@ant-design/icons";
+import { DownloadOutlined, FilePdfOutlined } from "@ant-design/icons";
 import { Grid } from "@mui/material";
 import { Toast } from "@src/components/Toast";
 import { useGetRowsGeneratedDeposits } from "@src/services/consult/deposits/generatedDeposits/getRows";
@@ -22,7 +18,6 @@ import {
   Typography,
 } from "antd";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 
 interface ViewModalProps {
@@ -120,75 +115,51 @@ export const ViewModal = (props: ViewModalProps) => {
                 >
                   {Refund?.bank ?? "-"}
                 </Descriptions.Item>
-                <Descriptions.Item
-                  key={"endToEndId"}
-                  label={t(`table.endToEndId`)}
-                  labelStyle={{
-                    maxWidth: "120px !important",
-                    margin: 0,
-                    padding: 0,
-                    textAlign: "center",
-                  }}
-                >
-                  {`${Refund?.endToEndId.substring(0, 10)}...` ?? "-"}
-
-                  <Button
-                    size="large"
-                    type="ghost"
-                    onClick={() => {
-                      navigator.clipboard.writeText(Refund?.endToEndId);
-                      toast.success(t("table.copied"));
+                {Refund?.endToEndId && (
+                  <Descriptions.Item
+                    key={"endToEndId"}
+                    label={t(`table.endToEndId`)}
+                    labelStyle={{
+                      maxWidth: "120px !important",
+                      margin: 0,
+                      padding: 0,
+                      textAlign: "center",
                     }}
                   >
-                    <CopyOutlined />
-                  </Button>
-                </Descriptions.Item>
-                <Descriptions.Item
-                  key={"rtrId"}
-                  label={t(`table.txid`)}
-                  labelStyle={{
-                    maxWidth: "120px !important",
-                    margin: 0,
-                    padding: 0,
-                    textAlign: "center",
-                  }}
-                >
-                  {`${Refund?.txid.substring(0, 10)}...` ?? "-"}
-
-                  <Button
-                    size="large"
-                    type="ghost"
-                    onClick={() => {
-                      navigator.clipboard.writeText(Refund?.txid);
-                      toast.success(t("table.copied"));
+                    <Typography.Text copyable>
+                      {Refund?.endToEndId}
+                    </Typography.Text>
+                  </Descriptions.Item>
+                )}
+                {Refund?.txid && (
+                  <Descriptions.Item
+                    key={"rtrId"}
+                    label={t(`table.txid`)}
+                    labelStyle={{
+                      maxWidth: "120px !important",
+                      margin: 0,
+                      padding: 0,
+                      textAlign: "center",
                     }}
                   >
-                    <CopyOutlined />
-                  </Button>
-                </Descriptions.Item>
-                <Descriptions.Item
-                  key={"rtrId"}
-                  label={t(`table.refund_id`)}
-                  labelStyle={{
-                    maxWidth: "120px !important",
-                    margin: 0,
-                    padding: 0,
-                    textAlign: "center",
-                  }}
-                >
-                  {`${Refund?.rtrId.substring(0, 10)}...` ?? "-"}
-
-                  <Button
-                    size="large"
-                    type="ghost"
-                    onClick={() => {
-                      navigator.clipboard.writeText(Refund?.rtrId);
-                      toast.success(t("table.copied"));
+                    <Typography.Text copyable>{Refund?.txid}</Typography.Text>
+                  </Descriptions.Item>
+                )}
+                {Refund?.rtrId && (
+                  <Descriptions.Item
+                    key={"rtrId"}
+                    label={t(`table.refund_id`)}
+                    labelStyle={{
+                      maxWidth: "120px !important",
+                      margin: 0,
+                      padding: 0,
+                      textAlign: "center",
                     }}
                   >
-                    <CopyOutlined />
-                  </Button>
-                </Descriptions.Item>
+                    <Typography.Text copyable>{Refund?.rtrId}</Typography.Text>
+                  </Descriptions.Item>
+                )}
+
                 <Descriptions.Item
                   key={"payer_name"}
                   label={t(`table.payer_name`)}
@@ -332,29 +303,23 @@ export const ViewModal = (props: ViewModalProps) => {
               >
                 {RefundManual?.bank ?? "-"}
               </Descriptions.Item>
-              <Descriptions.Item
-                key={"endToEndId"}
-                label={t(`table.endToEndId`)}
-                labelStyle={{
-                  maxWidth: "120px !important",
-                  margin: 0,
-                  padding: 0,
-                  textAlign: "center",
-                }}
-              >
-                {`${RefundManual?.endToEndId.substring(0, 10)}...` ?? "-"}
-
-                <Button
-                  size="large"
-                  type="ghost"
-                  onClick={() => {
-                    navigator.clipboard.writeText(RefundManual?.endToEndId);
-                    toast.success(t("table.copied"));
+              {Refund?.endToEndId && (
+                <Descriptions.Item
+                  key={"endToEndId"}
+                  label={t(`table.endToEndId`)}
+                  labelStyle={{
+                    maxWidth: "120px !important",
+                    margin: 0,
+                    padding: 0,
+                    textAlign: "center",
                   }}
                 >
-                  <CopyOutlined />
-                </Button>
-              </Descriptions.Item>
+                  <Typography.Text copyable>
+                    {Refund?.endToEndId}
+                  </Typography.Text>
+                </Descriptions.Item>
+              )}
+
               <Descriptions.Item
                 key={"payer_name"}
                 label={t(`table.payer_name`)}

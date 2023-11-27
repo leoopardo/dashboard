@@ -201,7 +201,7 @@ export const CustomTable = (props: TableProps) => {
                         toast.success(t("table.copied"));
                       }}
                     >
-                      <CopyOutlined />
+                      <CopyOutlined style={{color: defaultTheme.colors.info}}/>
                     </Button>
                   </Tooltip>
                 </div>
@@ -431,15 +431,23 @@ export const CustomTable = (props: TableProps) => {
                 : column?.name,
               dataIndex: column?.name,
               render: (text: string) => (
-                <Typography
+                <Typography.Text
+                  copyable={{
+                    icon: (
+                      <CopyOutlined
+                        style={{ color: defaultTheme.colors.info }}
+                      />
+                    ),
+                    text
+                  }}
                   key={column?.name}
-                  style={{ width: "100%", textAlign: "center", minWidth: 50 }}
+                  style={{ width: "100%", textAlign: "center", minWidth: 50, display: "flex", justifyContent: "center" }}
                 >
                   {`${text}`?.replace(
                     /(\d{3})(\d{3})(\d{3})(\d{2})/,
                     "$1.$2.$3-$4"
                   ) || "-"}
-                </Typography>
+                </Typography.Text>
               ),
               sorter: column.sort
                 ? () => {
