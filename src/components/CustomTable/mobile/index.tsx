@@ -29,6 +29,7 @@ interface MobileProps {
   columns: ColumnInterface[];
   items: any;
   label: any;
+  removeValue?: boolean;
   actions: any;
   setCurrentItem: Dispatch<SetStateAction<any>>;
   checkbox?: boolean;
@@ -53,7 +54,7 @@ export const Mobile = (props: MobileProps) => {
     setItems(
       props?.items?.map((item: any) => {
         return {
-          key: item.id ?? item._id,
+          key: item?.id ?? item?._id,
           collapsible: "icon",
           label: (
             <>
@@ -113,13 +114,6 @@ export const Mobile = (props: MobileProps) => {
                       </Tooltip>
                     );
                   }
-                  return (
-                    <Typography>
-                      <span>{t(`table.${label.split(".")[0]}`)}: </span>
-                      {item[label.split(".")[0]][label.split(".")[1]]}
-                      <Divider style={{ margin: 2, padding: 2 }} dashed />
-                    </Typography>
-                  );
                 }
                 switch (label) {
                   case "bank":
@@ -141,9 +135,6 @@ export const Mobile = (props: MobileProps) => {
                         </Avatar>
                       </Tooltip>
                     );
-
-                  case "merchant_name":
-                    return ` - ${item[label]}`;
 
                   case "createdAt":
                   case "paid_at":
@@ -205,13 +196,27 @@ export const Mobile = (props: MobileProps) => {
 
                   case "value_total":
                   case "value":
-                  case "total":
+                  case "balance_to_transactions":
                     return (
                       <Typography key={label}>
                         {new Intl.NumberFormat("pt-BR", {
                           style: "currency",
                           currency: "BRL",
                         }).format(Number(item[label]) || 0)}
+                      </Typography>
+                    );
+
+                  case "total":
+                    return !props.removeValue ? (
+                      <Typography key={label}>
+                        {new Intl.NumberFormat("pt-BR", {
+                          style: "currency",
+                          currency: "BRL",
+                        }).format(Number(item[label]) || 0)}
+                      </Typography>
+                    ) : (
+                      <Typography key={label}>
+                        {Number(item[label]) || 0}
                       </Typography>
                     );
 
@@ -352,6 +357,25 @@ export const Mobile = (props: MobileProps) => {
                             shape="square"
                           />
                         </div>
+                      </Descriptions.Item>
+                    );
+
+                  case "text":
+                    return (
+                      <Descriptions.Item
+                        key={value?.name}
+                        label={t(`table.${value.head ?? value?.name}`)}
+                        labelStyle={{
+                          maxWidth: "100px",
+                          margin: 0,
+                          padding: 5,
+                        }}
+                      >
+                        <Typography
+                          style={{ width: "100%", textAlign: "center" }}
+                        >
+                          {item[value?.name] ?? "-"}
+                        </Typography>
                       </Descriptions.Item>
                     );
 

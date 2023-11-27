@@ -72,6 +72,7 @@ interface TableProps {
   loading: boolean;
   query: any;
   error?: any;
+  removeValue?: boolean;
   setQuery: Dispatch<SetStateAction<any>>;
   label?: string[];
   setCurrentItem: Dispatch<SetStateAction<any>>;
@@ -1327,6 +1328,7 @@ export const CustomTable = (props: TableProps) => {
             <Mobile
               columns={props?.columns}
               items={props?.items}
+              removeValue={props?.removeValue}
               label={props?.label}
               actions={actions}
               setCurrentItem={props.setCurrentItem}

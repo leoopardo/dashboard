@@ -25,7 +25,6 @@ export const MerchantsBalance = ({
   useEffect(() => {
     refetchMerchantBalance();
   }, [query]);
-
   return (
     <Col span={24}>
       <Divider orientation="left" data-test-id="divider-1">
@@ -51,7 +50,7 @@ export const MerchantsBalance = ({
           { name: "balance_to_payment", type: "value", key: refs[2] },
           { name: "balance_reserved", type: "value", key: refs[3] },
         ]}
-        label={["merchant", "value"]}
+        label={["merchant_name", "balance_to_transactions"]}
         disableScrollToTop
         removePagination
       />
