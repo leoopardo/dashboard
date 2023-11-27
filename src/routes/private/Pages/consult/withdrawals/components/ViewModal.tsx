@@ -7,7 +7,15 @@ import {
 import { Grid } from "@mui/material";
 import { useCreateWithdrawVoucherRefund } from "@src/services/consult/withdrawals/generatedWithdrawals/generateWithdrawVoucher";
 import { useGetWithdraw } from "@src/services/consult/withdrawals/generatedWithdrawals/getWithdraw";
-import { Button, Descriptions, Drawer, Segmented, Spin } from "antd";
+import { defaultTheme } from "@src/styles/defaultTheme";
+import {
+  Button,
+  Descriptions,
+  Drawer,
+  Segmented,
+  Spin,
+  Typography,
+} from "antd";
 import { Dispatch, SetStateAction, useState } from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
@@ -86,18 +94,9 @@ export const ViewModal = (props: ViewModalProps) => {
                         textAlign: "center",
                       }}
                     >
-                      {`${withdraw?._id?.substring(0, 15)}...` ?? "-"}
-
-                      <Button
-                        size="large"
-                        type="ghost"
-                        onClick={() => {
-                          navigator.clipboard.writeText(withdraw?._id);
-                          toast.success(t("table.copied"));
-                        }}
-                      >
-                        <CopyOutlined />
-                      </Button>
+                      <Typography.Text copyable>
+                        {withdraw?._id}
+                      </Typography.Text>
                     </Descriptions.Item>
                     <Descriptions.Item
                       key={"endToEndId"}
@@ -203,65 +202,39 @@ export const ViewModal = (props: ViewModalProps) => {
                     >
                       {withdraw?.description ?? "-"}
                     </Descriptions.Item>
-                    <Descriptions.Item
-                      key={"webhook_url"}
-                      label={t(`table.webhook_url`)}
-                      labelStyle={{
-                        maxWidth: "120px !important",
-                        margin: 0,
-                        padding: 0,
-                        textAlign: "center",
-                      }}
-                    >
-                      {withdraw?.webhook_url
-                        ? `${withdraw?.webhook_url?.substring(0, 15)}...`
-                        : "-"}
-                      {withdraw?.webhook_url && (
-                        <Button
-                          size="large"
-                          type="ghost"
-                          onClick={() => {
-                            navigator.clipboard.writeText(
-                              withdraw?.webhook_url
-                            );
-                            toast.success(t("table.copied"));
-                          }}
-                        >
-                          <CopyOutlined />
-                        </Button>
-                      )}
-                    </Descriptions.Item>
-                    <Descriptions.Item
-                      key={"webhook_url_optional"}
-                      label={t(`table.webhook_url_optional`)}
-                      labelStyle={{
-                        maxWidth: "120px !important",
-                        margin: 0,
-                        padding: 0,
-                        textAlign: "center",
-                      }}
-                    >
-                      {withdraw?.webhook_url_optional
-                        ? `${withdraw?.webhook_url_optional?.substring(
-                            0,
-                            15
-                          )}...`
-                        : "-"}
-                      {withdraw?.webhook_url_optional && (
-                        <Button
-                          size="large"
-                          type="ghost"
-                          onClick={() => {
-                            navigator.clipboard.writeText(
-                              withdraw?.webhook_url_optional
-                            );
-                            toast.success(t("table.copied"));
-                          }}
-                        >
-                          <CopyOutlined />
-                        </Button>
-                      )}
-                    </Descriptions.Item>
+                    {withdraw?.webhook_url && (
+                      <Descriptions.Item
+                        key={"webhook_url"}
+                        label={t(`table.webhook_url`)}
+                        labelStyle={{
+                          maxWidth: "120px !important",
+                          margin: 0,
+                          padding: 0,
+                          textAlign: "center",
+                        }}
+                      >
+                        <Typography.Text copyable>
+                          {withdraw?.webhook_url}
+                        </Typography.Text>
+                      </Descriptions.Item>
+                    )}
+                    {withdraw?.webhook_url_optional && (
+                      <Descriptions.Item
+                        key={"webhook_url_optional"}
+                        label={t(`table.webhook_url_optional`)}
+                        labelStyle={{
+                          maxWidth: "120px !important",
+                          margin: 0,
+                          padding: 0,
+                          textAlign: "center",
+                        }}
+                      >
+                        <Typography.Text copyable>
+                          {withdraw?.webhook_url_optional}
+                        </Typography.Text>
+                      </Descriptions.Item>
+                    )}
+
                     {!withdraw?.url_pdf ? (
                       <Descriptions.Item
                         key={"generate_payment_voucher"}
@@ -421,7 +394,6 @@ export const ViewModal = (props: ViewModalProps) => {
                         </Descriptions.Item>
                       );
                     case "receiver_name":
-                    case "receiver_document":
                     case "receiver_gender":
                     case "receiver_street":
                     case "receiver_number":
@@ -433,7 +405,7 @@ export const ViewModal = (props: ViewModalProps) => {
                     case "receiver_bank_agency":
                     case "receiver_bank_name":
                     case "receiver_bank_client_document":
-                    case "receiver_bank_client_name": 
+                    case "receiver_bank_client_name":
                       return (
                         withdraw[key] !== "N/A" && (
                           <Descriptions.Item
@@ -449,6 +421,24 @@ export const ViewModal = (props: ViewModalProps) => {
                             {withdraw[key]}
                           </Descriptions.Item>
                         )
+                      );
+                    case "receiver_document":
+                      return (
+                        <Descriptions.Item
+                          key={key}
+                          label={t(`table.${key}`)}
+                          labelStyle={{
+                            maxWidth: "120px !important",
+                            margin: 0,
+                            padding: 0,
+                            textAlign: "center",
+                          }}
+                        >
+                          <Typography.Text copyable>
+                            {" "}
+                            {withdraw[key]}
+                          </Typography.Text>
+                        </Descriptions.Item>
                       );
 
                     default:
