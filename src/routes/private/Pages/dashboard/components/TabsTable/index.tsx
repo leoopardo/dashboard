@@ -11,6 +11,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { useTranslation } from "react-i18next";
 import secureLocalStorage from "react-secure-storage";
 import { FeeTab } from "./feesTab";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 import { FinancialMovementsTab } from "./financialMovimentsTab";
 import { OperationMovementsTab } from "./operationsNumberTab";
 
@@ -23,6 +24,7 @@ export interface TableProps {
 
 export const TabsTable = ({ query }: TableProps) => {
   const { t } = useTranslation();
+  const { type } = queryClient.getQueryData("validate") as ValidateInterface;
   const { error } = useErrorContext();
   const [isChart, setIsChart] = useState<boolean>(
     secureLocalStorage.getItem("isRankingChart") === "true"
@@ -118,19 +120,20 @@ export const TabsTable = ({ query }: TableProps) => {
                 />
               ),
             },
-            !error.rankingFee && {
-              label: t("table.fees"),
-              key: "fees",
-              children: (
-                <FeeTab
-                  data-test-id="fee-tab"
-                  query={query}
-                  chart={isChart}
-                  operationType={operationType}
-                  setOperationType={setOperationType}
-                />
-              ),
-            },
+            !error.rankingFee &&
+              (type === 1 || type === 2) && {
+                label: t("table.fees"),
+                key: "fees",
+                children: (
+                  <FeeTab
+                    data-test-id="fee-tab"
+                    query={query}
+                    chart={isChart}
+                    operationType={operationType}
+                    setOperationType={setOperationType}
+                  />
+                ),
+              },
           ].filter(Boolean) as any[]
         }
         style={{ paddingBottom: 24 }}

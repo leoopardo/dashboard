@@ -60,6 +60,7 @@ const INITIAL_QUERY = {
 export const Dashboard = () => {
   const { t } = useTranslation();
   const { error } = useErrorContext();
+  console.log('error', error)
   const { permissions } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
