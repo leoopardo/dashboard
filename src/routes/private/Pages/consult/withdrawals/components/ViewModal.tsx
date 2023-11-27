@@ -7,7 +7,6 @@ import {
 import { Grid } from "@mui/material";
 import { useCreateWithdrawVoucherRefund } from "@src/services/consult/withdrawals/generatedWithdrawals/generateWithdrawVoucher";
 import { useGetWithdraw } from "@src/services/consult/withdrawals/generatedWithdrawals/getWithdraw";
-import { defaultTheme } from "@src/styles/defaultTheme";
 import {
   Button,
   Descriptions,
