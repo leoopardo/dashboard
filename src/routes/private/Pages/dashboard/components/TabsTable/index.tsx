@@ -4,13 +4,13 @@ import {
   DashOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
+import { useErrorContext } from "@src/contexts/ErrorContext";
 import { queryClient } from "@src/services/queryClient";
 import { Button, Col, Divider, Row, Tabs, Typography } from "antd";
 import { Dispatch, SetStateAction, useState } from "react";
 import { useTranslation } from "react-i18next";
 import secureLocalStorage from "react-secure-storage";
 import { FeeTab } from "./feesTab";
-import { useErrorContext } from "@src/contexts/ErrorContext";
 import { FinancialMovementsTab } from "./financialMovimentsTab";
 import { OperationMovementsTab } from "./operationsNumberTab";
 
@@ -35,14 +35,15 @@ export const TabsTable = ({ query }: TableProps) => {
     <>
       <Row gutter={[8, 8]}>
         <Col span={22}>
-          <Divider orientation="left">
-            <Typography.Title level={3}>
+          <Divider orientation="left" data-test-id="divider-tabs-table-1">
+            <Typography.Title level={3} data-test-id="text-tabs-table-1">
               Ranking <Typography.Text>(top 10)</Typography.Text>
             </Typography.Title>
           </Divider>
         </Col>
         <Col span={1}>
           <Button
+            data-test-id="button-tabs-table-1"
             style={{ width: "100%" }}
             onClick={() => {
               for (const key of [
@@ -65,6 +66,7 @@ export const TabsTable = ({ query }: TableProps) => {
         </Col>
         <Col span={1}>
           <Button
+            data-test-id="button-tabs-table-2"
             shape="circle"
             onClick={() => {
               if (isChart) {
@@ -81,6 +83,7 @@ export const TabsTable = ({ query }: TableProps) => {
         </Col>
       </Row>
       <Tabs
+        data-test-id="tabs-tabs-table-1"
         defaultActiveKey="1"
         type="line"
         size="large"
@@ -91,6 +94,7 @@ export const TabsTable = ({ query }: TableProps) => {
               key: "financial_movements",
               children: (
                 <FinancialMovementsTab
+                  data-test-id="financial-movements-tab"
                   query={query}
                   chart={isChart}
                   operationType={operationType}
@@ -106,6 +110,7 @@ export const TabsTable = ({ query }: TableProps) => {
               disabled: error.rankingOperations,
               children: (
                 <OperationMovementsTab
+                  data-test-id="operation-movements-tab"
                   query={query}
                   chart={isChart}
                   operationType={operationType}
@@ -118,6 +123,7 @@ export const TabsTable = ({ query }: TableProps) => {
               key: "fees",
               children: (
                 <FeeTab
+                  data-test-id="fee-tab"
                   query={query}
                   chart={isChart}
                   operationType={operationType}
@@ -127,7 +133,7 @@ export const TabsTable = ({ query }: TableProps) => {
             },
           ].filter(Boolean) as any[]
         }
-        style={{paddingBottom: 24}}
+        style={{ paddingBottom: 24 }}
       />
     </>
   );

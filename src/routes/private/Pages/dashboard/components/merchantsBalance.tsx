@@ -28,12 +28,13 @@ export const MerchantsBalance = ({
 
   return (
     <Col span={24}>
-      <Divider orientation="left">
-        <Typography.Title level={4} ref={ref}>
+      <Divider orientation="left" data-test-id="divider-1">
+        <Typography.Title data-test-id="text-1" level={4} ref={ref}>
           {t("table.merchants_balance")}
         </Typography.Title>
       </Divider>
       <CustomTable
+        data-test-id="merchants-balance-table"
         query={custQuery}
         setCurrentItem={() => {
           return;

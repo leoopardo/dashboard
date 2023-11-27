@@ -152,6 +152,7 @@ export const FiltersModal = ({
 
   return (
     <Drawer
+      data-test-id="filters-modal"
       title={`${t("table.filters")}`}
       placement="right"
       bodyStyle={{ overflowX: "hidden" }}
@@ -159,6 +160,7 @@ export const FiltersModal = ({
       open={open}
       footer={
         <Button
+          data-test-id="button-apply-filters"
           type="primary"
           onClick={() => {
             submitRef.current?.click();
@@ -175,10 +177,13 @@ export const FiltersModal = ({
         spacing={1}
       >
         <Grid item xs={10}>
-          <Typography>{t("table.used_filters")}:</Typography>
+          <Typography data-test-id="used-filters-text">
+            {t("table.used_filters")}:
+          </Typography>
         </Grid>
         <Grid item xs={2}>
           <Button
+            data-test-id="button-clear-filters"
             type="dashed"
             onClick={() => {
               setQuery(initialQuery);
@@ -191,6 +196,7 @@ export const FiltersModal = ({
         </Grid>
         <Grid item xs={12}>
           <FilterChips
+            data-test-id="filter-chips"
             query={
               {
                 ...filtersQuery,
@@ -212,6 +218,7 @@ export const FiltersModal = ({
       </Grid>
 
       <Form
+        data-test-id="form-filters"
         ref={formRef}
         initialValues={filtersQuery}
         layout="vertical"
@@ -239,6 +246,7 @@ export const FiltersModal = ({
             case startDateKeyName:
               return (
                 <Form.Item
+                  data-test-id="form-item-start-date"
                   label={t("table.date")}
                   style={{ marginBottom: 10 }}
                   name={startDateKeyName}
@@ -264,6 +272,7 @@ export const FiltersModal = ({
                 >
                   <ConfigProvider locale={locale}>
                     <RangePicker
+                      data-test-id="range-picker-date-filter"
                       panelRender={panelRender}
                       format={
                         navigator.language === "pt-BR"
@@ -320,11 +329,13 @@ export const FiltersModal = ({
               ) {
                 return (
                   <Form.Item
+                    data-test-id="form-item-partner"
                     label={t(`table.partner`)}
                     name={filter}
                     style={{ marginBottom: 10 }}
                   >
                     <PartnerSelect
+                      data-test-id="partner-select"
                       queryOptions={filtersQuery}
                       setQueryFunction={setFiltersQuery}
                     />
@@ -335,11 +346,13 @@ export const FiltersModal = ({
             case "bank":
               return (
                 <Form.Item
+                  data-test-id="form-item-bank"
                   label={t(`table.${filter}`)}
                   name={filter}
                   style={{ marginBottom: 10 }}
                 >
                   <BanksSelect
+                    data-test-id="bank-select"
                     queryOptions={filtersQuery}
                     setQueryFunction={setFiltersQuery}
                     field={filter}
@@ -354,11 +367,13 @@ export const FiltersModal = ({
               ) {
                 return (
                   <Form.Item
+                    data-test-id="form-item-cash-in-out-bank"
                     label={t(`table.${filter}`)}
                     name={filter}
                     style={{ marginBottom: 10 }}
                   >
                     <BanksSelect
+                      data-test-id="cash-in-out-bank-select"
                       queryOptions={filtersQuery}
                       setQueryFunction={setFiltersQuery}
                       field={filter}
@@ -374,11 +389,13 @@ export const FiltersModal = ({
               ) {
                 return (
                   <Form.Item
+                    data-test-id="form-item-payer-bank"
                     label={t(`table.${filter}`)}
                     name={filter}
                     style={{ marginBottom: 10 }}
                   >
                     <ClientBanksSelect
+                      data-test-id="payer-bank-select"
                       queryOptions={filtersQuery}
                       setQueryFunction={setFiltersQuery}
                     />
@@ -396,6 +413,7 @@ export const FiltersModal = ({
                 >
                   <Grid item xs={3}>
                     <Checkbox
+                      data-test-id="checkbox-age-range"
                       checked={isAgeRangeAbled}
                       onChange={(event: any) => {
                         isAgeAbled(event.target.checked);
@@ -407,6 +425,7 @@ export const FiltersModal = ({
                   </Grid>
                   <Grid item xs={8}>
                     <Slider
+                      data-test-id="slider-age-range"
                       disabled={!isAgeRangeAbled}
                       range
                       step={10}
@@ -433,6 +452,7 @@ export const FiltersModal = ({
                 >
                   <Grid item xs={3}>
                     <Checkbox
+                      data-test-id="checkbox-value-range"
                       checked={isValueRangeAbled}
                       onChange={(event: any) => {
                         isValueAbled(event.target.checked);
@@ -444,6 +464,7 @@ export const FiltersModal = ({
                   </Grid>
                   <Grid item xs={8}>
                     <Slider
+                      data-test-id="slider-value-range"
                       disabled={!isValueRangeAbled}
                       range
                       step={10}
@@ -464,11 +485,13 @@ export const FiltersModal = ({
             case "state":
               return (
                 <Form.Item
+                  data-test-id="form-item-state"
                   label={t(`table.${filter}`)}
                   name={filter}
                   style={{ marginBottom: 10 }}
                 >
                   <AutoComplete
+                    data-test-id="autocomplete-state"
                     size="large"
                     style={{ width: "100%", height: "40px" }}
                     placeholder={t(`table.${filter}`)}
@@ -498,11 +521,13 @@ export const FiltersModal = ({
             case "city":
               return (
                 <Form.Item
+                  data-test-id="form-item-city"
                   label={t(`table.${filter}`)}
                   name={filter}
                   style={{ marginBottom: 10 }}
                 >
                   <AutoComplete
+                    data-test-id="autocomplete-city"
                     size="large"
                     disabled={!filtersQuery.state}
                     style={{ width: "100%", height: "40px" }}
@@ -536,6 +561,7 @@ export const FiltersModal = ({
               ) {
                 return (
                   <Form.Item
+                    data-test-id="form-item-merchant"
                     label={t(`table.merchant`)}
                     name={filter}
                     style={{ marginBottom: 10 }}
@@ -555,11 +581,13 @@ export const FiltersModal = ({
               ) {
                 return (
                   <Form.Item
+                    data-test-id="form-item-aggregator"
                     label={t(`table.aggregator`)}
                     name={filter}
                     style={{ marginBottom: 10 }}
                   >
                     <AggregatorSelect
+                      data-test-id="aggregator-select"
                       aggregatorId={filtersQuery?.aggregator_id}
                       setQueryFunction={setFiltersQuery}
                     />
@@ -575,11 +603,13 @@ export const FiltersModal = ({
               ) {
                 return (
                   <Form.Item
+                    data-test-id="form-item-operator"
                     label={t(`table.operator`)}
                     name={filter}
                     style={{ marginBottom: 10 }}
                   >
                     <OperatorSelect
+                      data-test-id="operator-select"
                       queryOptions={filtersQuery}
                       setQueryFunction={setFiltersQuery}
                     />
@@ -590,11 +620,13 @@ export const FiltersModal = ({
             case "reason":
               return (
                 <Form.Item
+                  data-test-id="form-item-reason"
                   label={t(`table.${filter}`)}
                   name={filter}
                   style={{ marginBottom: 10 }}
                 >
                   <ReasonSelect
+                    data-test-id="reason-select"
                     queryOptions={filtersQuery}
                     setQueryFunction={setFiltersQuery}
                   />
@@ -604,12 +636,14 @@ export const FiltersModal = ({
             case "status":
               return (
                 <Form.Item
+                  data-test-id="form-item-status"
                   label={t(`table.${filter}`)}
                   name={filter}
                   style={{ marginBottom: 10 }}
                 >
                   {!selectOptions[filter] ? (
                     <Select
+                      data-test-id="select-status"
                       showSearch
                       size="large"
                       removeIcon={<>x</>}
@@ -629,6 +663,7 @@ export const FiltersModal = ({
                     />
                   ) : (
                     <Select
+                      data-test-id="select-status"
                       size="large"
                       style={{ width: "100%", height: "40px" }}
                       placeholder={t(`table.${filter}`)}
@@ -668,11 +703,13 @@ export const FiltersModal = ({
             default:
               return (
                 <Form.Item
+                  data-test-id="form-item-default"
                   label={t(`table.${filter}`)}
                   name={filter}
                   style={{ marginBottom: 10 }}
                 >
                   <Select
+                    data-test-id="select-default"
                     size="large"
                     style={{ width: "100%", height: "40px" }}
                     placeholder={t(`table.${filter}`)}
