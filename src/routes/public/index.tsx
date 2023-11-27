@@ -22,6 +22,7 @@ export const PublicRoutes = () => {
       <Route path="login" element={<Login />} />
       <Route path="forgot_my_password" element={<ForgotMyPassword />} />
       <Route path="banner/:number" element={<Banner />} />
+      {/* TODO - remover paysbet  */}
       <Route
         path="paysbet"
         element={
