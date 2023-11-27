@@ -438,6 +438,7 @@ export const CustomTable = (props: TableProps) => {
                         style={{ color: defaultTheme.colors.info }}
                       />
                     ),
+                    text
                   }}
                   key={column?.name}
                   style={{ width: "100%", textAlign: "center", minWidth: 50, display: "flex", justifyContent: "center" }}
