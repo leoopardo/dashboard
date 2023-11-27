@@ -22,6 +22,8 @@ export const PartnerSelect = ({
   const [query, setQuery] = useState<PartnerQuery>({
     page: 1,
     limit: 200,
+    sort_field: "name",
+    sort_order: "ASC",
   });
   const { partnersData, refetcPartners, isPartnersFetching } =
     useListPartners(query);

@@ -76,7 +76,7 @@ export const MerchantConfigs = () => {
     },
     {
       key: "3",
-      label: `${t("table.merchant_name")} Configs`,
+      label: t("menus.merchant_settings"),
       children: <MerchantConfigTab id={params.id} />,
       style: {
         display: permissions.register.merchant.merchant.merchant_config_merchant
@@ -88,7 +88,7 @@ export const MerchantConfigs = () => {
     },
     {
       key: "4",
-      label: `${t("menus.organization")} Configs`,
+      label:  t("menus.organization_settings"),
       children: <OrganizationConfigTab id={params.id} />,
       style: {
         display: permissions.register.merchant.merchant

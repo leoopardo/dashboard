@@ -70,6 +70,7 @@ export const OrganizationUser = () => {
     OrganizationReportsIsSuccess,
     OrganizationReportsMutate,
   } = useCreateOrganizationReports({
+    ...query,
     fields: csvFields,
     comma_separate_value: comma,
   });

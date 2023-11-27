@@ -18,6 +18,8 @@ export const ClientBanksSelect = ({
   const [query, setQuery] = useState<MerchantQuery>({
     page: 1,
     limit: 200,
+    sort_order: "ASC",
+    sort_field: "label_name",
   });
   const { clientbankListData } = useListClientClientBanks(query);
   const [value, setValue] = useState<any>(null);

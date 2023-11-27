@@ -22,6 +22,7 @@ import {
   Tooltip,
   Typography,
 } from "antd";
+import { formatCPF } from "@src/utils/functions";
 import type { ColumnsType, TableProps as TablePropsAntD } from "antd/es/table";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
@@ -34,6 +35,7 @@ export interface ColumnInterface {
   head?: string;
   type:
     | "id"
+    | "cpf"
     | "birth"
     | "text"
     | "translate"
@@ -49,7 +51,8 @@ export interface ColumnInterface {
     | "bankNameToIcon"
     | "progress"
     | "merchant_name"
-    | "partner_name";
+    | "partner_name"
+    | "";
   sort?: boolean;
   key?: any;
   sort_name?: string;
@@ -69,6 +72,7 @@ interface TableProps {
   loading: boolean;
   query: any;
   error?: any;
+  removeValue?: boolean;
   setQuery: Dispatch<SetStateAction<any>>;
   label?: string[];
   setCurrentItem: Dispatch<SetStateAction<any>>;
@@ -87,6 +91,7 @@ interface TableProps {
   disableActions?: boolean;
   rowKey?: string;
   size?: "large" | "middle" | "small";
+  bankStatement?: boolean;
 }
 
 export const CustomTable = (props: TableProps) => {
@@ -197,7 +202,78 @@ export const CustomTable = (props: TableProps) => {
                         toast.success(t("table.copied"));
                       }}
                     >
-                      <CopyOutlined />
+                      <CopyOutlined style={{color: defaultTheme.colors.info}}/>
+                    </Button>
+                  </Tooltip>
+                </div>
+              ),
+              sorter: column.sort
+                ? () => {
+                    props.setQuery((state: any) => ({
+                      ...state,
+                      sort_field: column?.sort_name
+                        ? column.sort_name
+                        : Array.isArray(column?.name)
+                        ? column?.name[1]
+                        : column?.name,
+                      sort_order:
+                        props.query.sort_order === "DESC" ? "ASC" : "DESC",
+                    }));
+
+                    return 0;
+                  }
+                : undefined,
+            };
+
+          case "cpf":
+            return {
+              title: (
+                <Tooltip title={t(`table.${column?.head || column?.name}`)}>
+                  <Typography
+                    style={{
+                      width: "100%",
+                      maxHeight: "50px",
+                      overflow: "hidden",
+                      textAlign: "center",
+                      textOverflow: "ellipsis",
+                    }}
+                    ref={column.key}
+                  >
+                    {t(`table.${column?.head || column?.name}`)}
+                  </Typography>
+                </Tooltip>
+              ),
+              key: column?.sort_name
+                ? column.sort_name
+                : Array.isArray(column?.name)
+                ? column?.name + `${Math.random()}`
+                : column?.name,
+              width: 85,
+              dataIndex: column?.name,
+              render: (text: string) => (
+                <div
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Tooltip title={text}>
+                    <Button
+                      size="large"
+                      type="ghost"
+                      onClick={() => {
+                        navigator.clipboard.writeText(text);
+                        toast.success(t("table.copied"));
+                      }}
+                    >
+                      {text ? (
+                        <>
+                          {formatCPF(text)} <CopyOutlined />
+                        </>
+                      ) : (
+                        "-"
+                      )}
                     </Button>
                   </Tooltip>
                 </div>
@@ -356,15 +432,23 @@ export const CustomTable = (props: TableProps) => {
                 : column?.name,
               dataIndex: column?.name,
               render: (text: string) => (
-                <Typography
+                <Typography.Text
+                  copyable={{
+                    icon: (
+                      <CopyOutlined
+                        style={{ color: defaultTheme.colors.info }}
+                      />
+                    ),
+                    text
+                  }}
                   key={column?.name}
-                  style={{ width: "100%", textAlign: "center", minWidth: 50 }}
+                  style={{ width: "100%", textAlign: "center", minWidth: 50, display: "flex", justifyContent: "center" }}
                 >
                   {`${text}`?.replace(
                     /(\d{3})(\d{3})(\d{3})(\d{2})/,
                     "$1.$2.$3-$4"
                   ) || "-"}
-                </Typography>
+                </Typography.Text>
               ),
               sorter: column.sort
                 ? () => {
@@ -710,18 +794,18 @@ export const CustomTable = (props: TableProps) => {
                   ref={column.key}
                 >
                   {!props.disableActions ? (
-                      <Dropdown
+                    <Dropdown
                       trigger={["click"]}
                       key={column?.name}
                       disabled={props.disableActions}
                       menu={{
                         items: actions.map((action: actionsInterface) => {
                           let disable = false;
-  
+
                           if (action.disabled) {
                             disable = action.disabled(record);
                           }
-  
+
                           return {
                             ...action,
                             disabled: disable,
@@ -748,8 +832,10 @@ export const CustomTable = (props: TableProps) => {
                         <EllipsisOutlined />
                       </Button>
                     </Dropdown>
-                  ) : (<></>)}
-                  </div>
+                  ) : (
+                    <></>
+                  )}
+                </div>
               ),
             };
           case "text":
@@ -787,7 +873,7 @@ export const CustomTable = (props: TableProps) => {
                       }}
                     >
                       {text
-                        ? text.length > 15
+                        ? text.length > 15 && columns.length >= 8
                           ? `${`${text}`.substring(0, 15)}...`
                           : text
                         : "-"}
@@ -1108,7 +1194,6 @@ export const CustomTable = (props: TableProps) => {
 
   const onChange: TablePropsAntD<any>["onChange"] = (page, _filter, sorter) => {
     setSorterObj(sorter);
-    console.log("sorter", sorter);
     if ((page.total ?? 0) > (page?.pageSize ?? 0)) {
       return props.setQuery((state: any) => ({
         ...state,
@@ -1163,29 +1248,33 @@ export const CustomTable = (props: TableProps) => {
                   />
                 ),
               }}
-              pagination={{
-                current: Number(props?.query?.page ?? 1),
-                pageSize: Number(props?.query?.limit ?? 25),
-                showTotal: (total, range) => {
-                  return props.removeTotal
-                    ? `${range[0]} - ${range[1]}`
-                    : `${range[0]} - ${range[1]} de ${total}`;
-                },
-                total: props.removeTotal
-                  ? props?.items?.length < props?.data?.limit
-                    ? props?.data?.limit * props?.data?.page
-                    : props?.data?.limit * props?.data?.page + 1
-                  : props?.data?.total,
+              pagination={
+                !props.bankStatement && {
+                  current: Number(props?.query?.page ?? 1),
+                  pageSize: Number(props?.query?.limit ?? 25),
+                  showTotal: (total, range) => {
+                    return props.removeTotal
+                      ? `${range[0]} - ${range[1]}`
+                      : `${range[0]} - ${range[1]} de ${total}`;
+                  },
+                  total: props.removeTotal
+                    ? props?.items?.length < props?.data?.limit
+                      ? props?.data?.limit * props?.data?.page
+                      : props?.data?.limit * props?.data?.page + 1
+                    : props?.data?.total,
 
-                /* onChange: (page) => {
+                  /* onChange: (page) => {
                   props.setQuery((state: any) => ({ ...state, page }));
                 }, */
-                pageSizeOptions: [10, 25, 50, 100],
-                defaultPageSize: 25,
-                onShowSizeChange: (_current, size) =>
-                  props.setQuery((state: any) => ({ ...state, limit: size })),
-                style: { display: props.removePagination ? "none" : undefined },
-              }}
+                  pageSizeOptions: [10, 25, 50, 100],
+                  defaultPageSize: 25,
+                  onShowSizeChange: (_current, size) =>
+                    props.setQuery((state: any) => ({ ...state, limit: size })),
+                  style: {
+                    display: props.removePagination ? "none" : undefined,
+                  },
+                }
+              }
               sortDirections={["ascend", "descend"]}
               dataSource={props?.error ? [] : props?.items ? props.items : []}
               rowSelection={
@@ -1210,6 +1299,25 @@ export const CustomTable = (props: TableProps) => {
               bordered
             />
           </Grid>
+          {props.bankStatement && (
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "flex-end",
+                marginTop: "5px",
+              }}
+            >
+              <Pagination
+                current={props?.query?.page}
+                onChange={(page) =>
+                  props.setQuery((state: any) => ({ ...state, page }))
+                }
+                total={props?.data?.total}
+                pageSize={1}
+              />
+            </div>
+          )}
         </Grid>
       ) : (
         <Grid
@@ -1220,6 +1328,7 @@ export const CustomTable = (props: TableProps) => {
             <Mobile
               columns={props?.columns}
               items={props?.items}
+              removeValue={props?.removeValue}
               label={props?.label}
               actions={actions}
               setCurrentItem={props.setCurrentItem}
@@ -1228,7 +1337,7 @@ export const CustomTable = (props: TableProps) => {
               selectedKeys={props?.selectedKeys}
             />
           </Grid>
-          {!props.removePagination && (
+          {!props.removePagination && !props.bankStatement && (
             <Pagination
               style={{ marginTop: 8 }}
               current={Number(props?.query?.page ?? 1)}
@@ -1249,6 +1358,25 @@ export const CustomTable = (props: TableProps) => {
                   : props?.data?.total
               }
             />
+          )}
+          {props.bankStatement && (
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "flex-end",
+                marginTop: "5px",
+              }}
+            >
+              <Pagination
+                current={props?.query?.page}
+                onChange={(page) =>
+                  props.setQuery((state: any) => ({ ...state, page }))
+                }
+                total={props?.data?.total}
+                pageSize={1}
+              />
+            </div>
           )}
         </Grid>
       )}

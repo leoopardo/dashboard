@@ -13,6 +13,7 @@ export const DepositOperations = ({ query, chart }: TableProps) => {
   const { RankingData, RankingError, isRankingFetching,RankingDataSuccess } =
     useGetMerchantRanking("operations", "deposit", query);
 
+  
   useEffect(() => {
     if(RankingDataSuccess) {
       handleChangeError({rankingOperations: false})
@@ -85,7 +86,7 @@ export const DepositOperations = ({ query, chart }: TableProps) => {
       )}
     </>
   ) : (
-    <CustomTable   size="small"
+    <CustomTable size="small"
       query={{}}
       setCurrentItem={() => {
         return;
@@ -94,12 +95,13 @@ export const DepositOperations = ({ query, chart }: TableProps) => {
         return;
       }}
       actions={[]}
+      removeValue
       data={RankingData}
       items={RankingData?.sort((a, b) => (a.total > b.total ? -1 : 1))}
       error={RankingError}
       columns={[
-        { name: "name", type: "text" },
-        { name: "total", type: "text" },
+        { name: "name", type: "" },
+        { name: "total", type: ""},
       ]}
       loading={isRankingFetching}
       label={["name", "total"]}

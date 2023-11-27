@@ -148,7 +148,9 @@
     "merchant_pre_manual_moviments": "Manual pre entry",
     "merchant_pre_manual_moviments_reports": "Manual pre entry",
     "deposit_contestation": "Deposit",
-    "receipts": "Receipts"
+    "receipts": "Receipts",
+    "organization_settings": "Organization settings",
+    "merchant_settings": "Merchant settings"
   },
 
   "titles": {
@@ -873,8 +875,11 @@
     "access_secret": "Access secret",
     "merchant_blacklist": "Merchants blacklist",
     "international": "International",
+    "operations": "Operations",
+    "in_out_conversion": "In/Out conversions",
     "receiver_bank_client_document": "Receiver bank client document",
-    "receiver_bank_client_name": "Receiver bank client name"
+    "receiver_bank_client_name": "Receiver bank client name",
+    "balance": "Balance"
   },
   "actions": {
     "details": "Details",
@@ -1034,6 +1039,30 @@
     "bank_chart_description": "Switches the view from Grid to a bar chart.",
     "bank_card_description": "Switches the view from Grid to bank cards.",
     "last_sign_in_description": "User's last access date to the system."
-
+  },
+  "paysbet": {
+    "login": "LOGIN",
+    "signin": "SIGN UP",
+    "imediattly": "Make a pix now and start betting immediately.",
+    "easy": "Simple and straightforward, scan our QrCode, select the amount, and you'll have your account ready to bet.",
+    "start_now": "Start now!",
+    "home": "Home",
+    "all_games": "All games",
+    "live_betting": "Live betting",
+    "roulette": "Roulette",
+    "games": "Games",
+    "little_plane": "Little Plane",
+    "little_car": "Little Car",
+    "configurations": "Settings",
+    "profile": "Profile",
+    "logout": "Logout",
+    "recent_games": "Recent games",
+    "tie": "Tie",
+    "popular_games": "Popular games",
+    "first_access": "We noticed this is your first access. For your security, please change your password and username.",
+    "welcome": "Welcome",
+    "update": "Update",
+    "preparing": "We are preparing everything so you can place your bets.",
+    "invalid_token": "Invalid redirection token. If you have requested a FastPix, please ask for a new access token from support."
   }
 }

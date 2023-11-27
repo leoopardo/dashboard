@@ -11,9 +11,9 @@ export const TotalOperations = ({ query, chart }: TableProps) => {
   const { t } = useTranslation();
   const {handleChangeError} = useErrorContext()
   const { RankingData, RankingError, isRankingFetching, RankingDataSuccess } =
-    useGetMerchantRanking("operations", "total", query);
-
-    useEffect(() => {
+    useGetMerchantRanking("operations", "total", query)
+    
+     useEffect(() => {
       if(RankingDataSuccess) {
         handleChangeError({rankingOperations: false})
       }
@@ -23,6 +23,7 @@ export const TotalOperations = ({ query, chart }: TableProps) => {
       }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [RankingError, RankingDataSuccess])
+
   return chart ? (
     <>
       {RankingData?.length ? (
@@ -82,7 +83,7 @@ export const TotalOperations = ({ query, chart }: TableProps) => {
     </>
   ) : (
     <CustomTable
-    size="small"
+      size="small"
       query={{}}
       setCurrentItem={() => {
         return;
@@ -94,8 +95,9 @@ export const TotalOperations = ({ query, chart }: TableProps) => {
       data={RankingData}
       items={RankingData?.sort((a, b) => a.total > b.total ? -1 : 1)}
       error={RankingError}
+      removeValue
       columns={[
-        { name: "name", type: "text" },
+        { name: "name", type: "" },
         { name: "total", type: "text" },
       ]}
       loading={isRankingFetching}

@@ -5,6 +5,7 @@ import { Grid } from "@mui/material";
 import { useMerchantBankConfig } from "@services/register/merchant/merchant/bankConfig/getBankConfig";
 import { useListBanks } from "@src/services/bank/listBanks";
 import { useUpdateBankConfig } from "@src/services/register/merchant/merchant/bankConfig/updateBankConfig";
+import { BankQuery } from "@src/services/types/banks.interface";
 import { IMerchantBankUpdate } from "@src/services/types/register/merchants/merchantBankConfig.interface";
 import {
   Avatar,
@@ -36,7 +37,12 @@ export const BanksTab = (props: { id?: string }) => {
 
   const { UpdateBankError, UpdateBankIsSuccess, UpdateMutate } =
     useUpdateBankConfig(body);
-  const { bankListData } = useListBanks({ limit: 200, page: 1 });
+  const { bankListData } = useListBanks({
+    limit: 200,
+    page: 1,
+    sort_order: "ASC",
+    sort_field: "label_name",
+  } as BankQuery);
 
   useEffect(() => {
     setBody((state: any) => ({

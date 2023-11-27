@@ -272,7 +272,7 @@ export const MerchantConfigTab = (props: { id?: string }) => {
           style={{ display: "flex", alignItems: "flex-end" }}
         >
           <Col span={24}>
-            <Divider orientation="center">FastPix</Divider>
+            <Divider orientation="left"><Typography.Title level={3}>FastPix</Typography.Title></Divider>
           </Col>
           <Col xs={{ span: 24 }} md={{ span: 3 }}>
             <Form.Item
@@ -303,7 +303,7 @@ export const MerchantConfigTab = (props: { id?: string }) => {
               <Select
                 size="large"
                 options={
-                  ["fixed", "free"]?.map((item, index) => ({
+                  ["FIXED", "FREE"]?.map((item, index) => ({
                     key: index,
                     value: item,
                     label: `${t(`table.${item}`)}`,
@@ -325,21 +325,21 @@ export const MerchantConfigTab = (props: { id?: string }) => {
           </Col>
           <Col xs={{ span: 24 }} md={{ span: 7 }}>
             <Form.Item
-              label={t("input.fastpix_in_fixed_min_value")}
-              name="fastpix_in_fixed_min_value"
+              label={t("input.fastpix_in_min_value")}
+              name="fastpix_in_min_value"
             >
               <CurrencyInput
                 onChangeValue={(_event, originalValue) => {
                   setBodyUpdate((state) => ({
                     ...state,
-                    fastpix_in_fixed_min_value: +originalValue,
+                    fastpix_in_min_value: +originalValue,
                   }));
                 }}
                 InputElement={
                   <Input
                     size="large"
                     style={{ width: "100%" }}
-                    value={body?.fastpix_in_fixed_min_value}
+                    value={body?.fastpix_in_min_value}
                   />
                 }
               />

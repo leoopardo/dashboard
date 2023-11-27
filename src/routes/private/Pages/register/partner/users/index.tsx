@@ -72,7 +72,7 @@ export const PartnerUsers = () => {
     PartnerReportsIsSuccess,
     PartnerReportsMutate,
     PartnerReportsReset,
-  } = useCreatePartnerUserReports({
+  } = useCreatePartnerUserReports({ ...query,
     fields: csvFields,
     comma_separate_value: comma,
   });

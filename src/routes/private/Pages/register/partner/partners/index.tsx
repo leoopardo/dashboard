@@ -95,6 +95,7 @@ export const Partners = () => {
     PartnerReportsIsSuccess,
     PartnerReportsMutate,
   } = useCreatePartnerReports({
+    ...query,
     fields: csvFields,
     comma_separate_value: comma,
   });

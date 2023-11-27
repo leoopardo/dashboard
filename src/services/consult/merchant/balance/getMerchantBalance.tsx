@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useQuery } from "react-query";
 import { api } from "../../../../config/api";
@@ -17,7 +18,11 @@ export function useGetMerchantBalance(params: MerchantBalanceQuery) {
     return response?.data;
   });
 
-  const MerchantBalance = data;
+  const MerchantBalance = error
+    ? ({ items: [] } as any)
+    : !data?.total
+    ? { items: [data] }
+    : data;
   const isMerchantBalanceFetching = isFetching;
   const MerchantBalanceError: any = error;
   const refetchMerchantBalance = refetch;

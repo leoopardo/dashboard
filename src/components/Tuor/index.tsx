@@ -81,7 +81,6 @@ export const TuorComponent = ({
     }
 
     if (refreshStepRef) {
-      console.log("tttest");
       CSteps.push({
         title: t("buttons.update"),
         description: t("wiki.update_table_button"),

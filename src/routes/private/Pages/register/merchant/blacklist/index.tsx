@@ -13,7 +13,6 @@ import { Grid } from "@mui/material";
 import { Confirmation } from "@src/components/Modals/confirmation";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
-import { ReasonSelect } from "@src/components/Selects/reasonSelect";
 import { Toast } from "@src/components/Toast";
 import { queryClient } from "@src/services/queryClient";
 import { useCreateMerchantBlacklist } from "@src/services/register/merchant/blacklist/createMerchantBlacklist";
@@ -55,7 +54,6 @@ export const MerchantBlacklist = () => {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [body, setBody] = useState<MerchantBlacklistItem | null>({
     cpf: "",
-    reason: "",
     description: "",
     can_be_deleted_only_by_organization: true,
   });
@@ -79,7 +77,7 @@ export const MerchantBlacklist = () => {
   });
 
   const columns: ColumnInterface[] = [
-    { name: "cpf", type: "id" },
+    { name: "cpf", type: "cpf" },
     { name: "merchant_name", type: "text" },
     { name: "reason", type: "text", sort: true },
     { name: "description", type: "text" },
@@ -91,7 +89,6 @@ export const MerchantBlacklist = () => {
     if (!isUpdateModalOpen) {
       setBody({
         cpf: "",
-        reason: "",
         description: "",
         can_be_deleted_only_by_organization: true,
       });
@@ -141,12 +138,10 @@ export const MerchantBlacklist = () => {
       </Grid>
 
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
-        <Grid item xs={12} md={2} lg={2}>
-          <ReasonSelect queryOptions={query} setQueryFunction={setQuery} />
-        </Grid>
         <Grid item xs={12} md={4} lg={4}>
           <ReactInputMask
             value={search}
+            placeholder="CPF"
             mask="999.999.999-99"
             onChange={(event) => {
               const value = event.target.value.replace(/[^\d]/g, "");
@@ -251,7 +246,7 @@ export const MerchantBlacklist = () => {
           setOpen={setIsFiltersOpen}
           query={query}
           setQuery={setQuery}
-          filters={["start_date", "end_date", "merchant_id"]}
+          filters={["start_date", "end_date", "merchant_id", "reason"]}
           refetch={refetchMerchantBlacklistData}
           selectOptions={{}}
           startDateKeyName="start_date"

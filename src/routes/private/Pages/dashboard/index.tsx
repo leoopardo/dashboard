@@ -3,6 +3,7 @@ import {
   BarChartOutlined,
   DashOutlined,
   InfoCircleOutlined,
+  ReloadOutlined,
 } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { FiltersModal } from "@src/components/FiltersModal";
@@ -15,7 +16,16 @@ import { queryClient } from "@src/services/queryClient";
 import { MerchantBankStatementTotalsQuery } from "@src/services/types/consult/merchant/bankStatement";
 import { ValidateInterface } from "@src/services/types/validate.interface";
 import { defaultTheme } from "@src/styles/defaultTheme";
-import { Button, Col, Layout, Row, Tabs, Tooltip, Typography } from "antd";
+import {
+  Button,
+  Col,
+  Divider,
+  Layout,
+  Row,
+  Tabs,
+  Tooltip,
+  Typography,
+} from "antd";
 import moment from "moment";
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -65,6 +75,20 @@ export const Dashboard = () => {
   const ref1 = useRef(null);
   const ref2 = useRef(null);
   const ref3 = useRef(null);
+  const ref4 = useRef(null);
+  const refType = useRef(null);
+  const refOpNum = useRef(null);
+  const refOpVal = useRef(null);
+  const refTicket = useRef(null);
+  const refFee = useRef(null);
+  const refInOut = useRef(null);
+  const refIn = useRef(null);
+  const refOut = useRef(null);
+  const refMerchantsBalance = useRef(null);
+  const refMerchantname = useRef(null);
+  const refTransaction = useRef(null);
+  const refPayment = useRef(null);
+  const refReserved = useRef(null);
   const { bankListData } = useListBanks({
     limit: 200,
     page: 1,
@@ -120,12 +144,11 @@ export const Dashboard = () => {
       }}
     >
       {permissions?.report?.paybrokers?.balance
-            ?.report_paybrokers_balance_list && (
+        ?.report_paybrokers_balance_list && (
         <Layout
           ref={ref1}
           style={{
             margin: -28,
-            paddingBottom: 20,
             paddingTop: 20,
             paddingLeft: 6,
             display: "flex",
@@ -137,6 +160,7 @@ export const Dashboard = () => {
             permissions?.report?.merchant?.balance
               ?.report_merchant_balance_list) && (
             <Tabs
+              data-test-id="tabs-1"
               activeKey={activeKey}
               onChange={(value) => {
                 setActiveKey(value);
@@ -170,19 +194,29 @@ export const Dashboard = () => {
                 justifyContent: "space-between",
               }}
             >
-              <Typography.Title level={3} ref={ref2}>
+              <Typography.Title level={3} ref={ref2} data-test-id="text-1">
                 {t("menus.organization_bank_balance")}
               </Typography.Title>
               <div>
-                <Tooltip title={t("buttons.help")}>
+                <Tooltip title={t("buttons.help")} data-test-id="tootip-1">
                   <Button
+                    data-test-id="button-1"
                     type="link"
                     onClick={() => setIsTuorOpen((state) => !state)}
                   >
-                    <InfoCircleOutlined />
+                    <InfoCircleOutlined data-test-id="icon-1" />
                   </Button>
                 </Tooltip>
                 <Button
+                  data-test-id="button-2"
+                  type="link"
+                  onClick={() => queryClient.invalidateQueries()}
+                  style={{ marginRight: 8 }}
+                >
+                  <ReloadOutlined data-test-id="icon-2" />
+                </Button>
+                <Button
+                  data-test-id="button-3"
                   shape="circle"
                   onClick={() => {
                     if (isBankChart) {
@@ -194,7 +228,11 @@ export const Dashboard = () => {
                     }
                   }}
                 >
-                  {!isBankChart ? <BarChartOutlined /> : <DashOutlined />}
+                  {!isBankChart ? (
+                    <BarChartOutlined data-test-id="icon-3" />
+                  ) : (
+                    <DashOutlined data-test-id="icon-4" />
+                  )}
                 </Button>
               </div>
             </Col>
@@ -209,11 +247,12 @@ export const Dashboard = () => {
             >
               {isBankChart ? (
                 <Col span={24}>
-                  <BankBalanceChart />
+                  <BankBalanceChart data-test-id="chart-1" />
                 </Col>
               ) : (
                 <Col span={24}>
                   <Swiper
+                    data-test-id="swiper-1"
                     slidesPerView={6}
                     spaceBetween={8}
                     pagination={{
@@ -262,9 +301,13 @@ export const Dashboard = () => {
                   >
                     {bankListData?.itens
                       .filter((b) => b.status === true)
-                      .map((bank: any) => (
+                      .map((bank: any, index) => (
                         <SwiperSlide key={bank?.id}>
-                          <BankCard bank={bank} key={bank.id} />
+                          <BankCard
+                            bank={bank}
+                            key={bank.id}
+                            data-test-id={`bank-${index}`}
+                          />
                         </SwiperSlide>
                       ))}
                   </Swiper>
@@ -288,6 +331,7 @@ export const Dashboard = () => {
             <Row gutter={[4, 4]} align="middle">
               <Col xs={{ span: 24 }} md={{ span: 4 }}>
                 <Button
+                  data-test-id="button-4"
                   style={{ width: "100%", height: 40 }}
                   type="primary"
                   onClick={() => setIsFiltersOpen(true)}
@@ -297,6 +341,7 @@ export const Dashboard = () => {
               </Col>
               <Col xs={{ span: 24 }} md={{ span: 16 }}>
                 <FilterChips
+                  data-test-id="filter-chips-1"
                   startDateKeyName="start_date"
                   endDateKeyName="end_date"
                   query={query}
@@ -306,6 +351,7 @@ export const Dashboard = () => {
               </Col>
               <Col xs={{ span: 24 }} md={{ span: 4 }}>
                 <Button
+                  data-test-id="button-5"
                   type="dashed"
                   danger
                   onClick={() => {
@@ -324,7 +370,16 @@ export const Dashboard = () => {
                 </Button>
               </Col>
               <Col span={24} style={{ marginTop: 16 }}>
-                <ValuesTable query={query} />
+                <Divider orientation="left" data-test-id="divider-1">
+                  <Typography.Title level={3} ref={ref4} data-test-id="text-2">
+                    {t("table.operations")}
+                  </Typography.Title>
+                </Divider>
+                <ValuesTable
+                  data-test-id="values-table-1"
+                  query={query}
+                  refs={[refType, refOpNum, refOpVal, refTicket, refFee]}
+                />
               </Col>
             </Row>
           </Layout>
@@ -336,9 +391,22 @@ export const Dashboard = () => {
               paddingBottom: user.aggregator_id ? "60px" : undefined,
             }}
           >
-            <Row gutter={[16, 16]}>
-              <ChartIn query={query} />
-              <ChartOut query={query} />
+            <Row gutter={[16, 0]}>
+              <Divider orientation="left" data-test-id="divider-2">
+                <Typography.Title
+                  level={3}
+                  ref={refInOut}
+                  data-test-id="text-3"
+                >
+                  {t("table.in_out_conversion")}
+                </Typography.Title>
+              </Divider>
+              <Col xs={{ span: 24 }} md={{ span: 12 }} ref={refIn}>
+                <ChartIn query={query} data-test-id="chart-in" />
+              </Col>
+              <Col xs={{ span: 24 }} md={{ span: 12 }} ref={refOut}>
+                <ChartOut query={query} data-test-id="chart-out" />
+              </Col>
             </Row>
           </Col>
         </Row>
@@ -363,7 +431,17 @@ export const Dashboard = () => {
                 paddingRight: 12,
               }}
             >
-              <MerchantsBalance />
+              <MerchantsBalance
+                data-test-id="merchants-balance-1"
+                ref={refMerchantsBalance}
+                refs={[
+                  refMerchantname,
+                  refTransaction,
+                  refPayment,
+                  refReserved,
+                ]}
+                query={query}
+              />
             </Layout>
           </Row>
         )}
@@ -373,7 +451,7 @@ export const Dashboard = () => {
           !error.rankingValue) && (
           <Row style={{ marginTop: 16 }}>
             <Col span={24}>
-              <TabsTable query={query} />
+              <TabsTable data-test-id="tabs-table" query={query} />
             </Col>
           </Row>
         )}
@@ -381,6 +459,7 @@ export const Dashboard = () => {
 
       {isFiltersOpen && (
         <FiltersModal
+          data-test-id="filters-modal"
           open={isFiltersOpen}
           setOpen={setIsFiltersOpen}
           query={query}
@@ -408,6 +487,7 @@ export const Dashboard = () => {
         />
       )}
       <TuorComponent
+        data-test-id="tuor-component"
         open={isTuorOpen}
         setOpen={setIsTuorOpen}
         steps={[
@@ -417,7 +497,7 @@ export const Dashboard = () => {
               ?.report_paybrokers_balance_list) && {
             title: t("wiki.balance"),
             description: (
-              <Typography>
+              <Typography data-test-id="tuor-balance-description">
                 {t("wiki.balance_description")}
                 <Typography>
                   <span style={{ color: defaultTheme.colors.info }}>
@@ -447,7 +527,7 @@ export const Dashboard = () => {
           permissions.report.paybrokers.bank_balance.menu && {
             title: t("menus.organization_bank_balance"),
             description: (
-              <Typography>
+              <Typography data-test-id="organization-bank-balance-description">
                 <Typography>
                   <span
                     style={{
@@ -503,6 +583,81 @@ export const Dashboard = () => {
               </Typography>
             ),
             target: () => ref2.current,
+          },
+          permissions.report.merchant.extract.menu && {
+            title: t("table.operations"),
+            description: t("wiki.operations_description"),
+            target: () => ref4.current,
+          },
+          permissions.report.merchant.extract.menu && {
+            title: t("table.type"),
+            description: t("wiki.operation_type_description"),
+            target: () => refType.current,
+          },
+          permissions.report.merchant.extract.menu && {
+            title: t("wiki.operations_number"),
+            description: t("wiki.operations_number_description"),
+            target: () => refOpNum.current,
+          },
+          permissions.report.merchant.extract.menu && {
+            title: t("wiki.operations_value"),
+            description: t("wiki.operations_value_description"),
+            target: () => refOpVal.current,
+          },
+          permissions.report.merchant.extract.menu && {
+            title: t("wiki.ticket"),
+            description: t("wiki.ticket_description"),
+            target: () => refTicket.current,
+          },
+          permissions.report.merchant.extract.menu && {
+            title: t("wiki.fee"),
+            description: t("wiki.fee_description"),
+            target: () => refFee.current,
+          },
+          (permissions.report.deposit.generated_deposit
+            .report_deposit_generated_deposit_list_totals ||
+            permissions.report.withdraw.generated_withdraw
+              .report_withdraw_generated_withdraw_list_totals) && {
+            title: t("wiki.in_out_conversions"),
+            description: t("wiki.in_out_conversions_description"),
+            target: () => refInOut.current,
+          },
+          permissions.report.deposit.generated_deposit
+            .report_deposit_generated_deposit_list_totals && {
+            title: t("wiki.in_conversions"),
+            description: t("wiki.in_conversions_description"),
+            target: () => refIn.current,
+          },
+          permissions.report.withdraw.generated_withdraw
+            .report_withdraw_generated_withdraw_list_totals && {
+            title: t("wiki.out_conversions"),
+            description: t("wiki.out_conversions_description"),
+            target: () => refOut.current,
+          },
+          permissions.report.merchant.balance.menu && {
+            title: t("wiki.merchants_balance"),
+            description: t("wiki.merchants_balance_description"),
+            target: () => refMerchantsBalance.current,
+          },
+          permissions.report.merchant.balance.menu && {
+            title: t("wiki.merchant_name"),
+            description: t("wiki.merchant_name_description"),
+            target: () => refMerchantsBalance.current,
+          },
+          permissions.report.merchant.balance.menu && {
+            title: t("wiki.balance_to_transaction"),
+            description: t("wiki.balance_to_transaction_description"),
+            target: () => refMerchantsBalance.current,
+          },
+          permissions.report.merchant.balance.menu && {
+            title: t("wiki.balance_to_payment"),
+            description: t("wiki.balance_to_payment_description"),
+            target: () => refMerchantsBalance.current,
+          },
+          permissions.report.merchant.balance.menu && {
+            title: t("wiki.balance_reserved"),
+            description: t("wiki.balance_reserved_description"),
+            target: () => refMerchantsBalance.current,
           },
         ]}
         pageStep={{

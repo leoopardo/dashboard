@@ -74,7 +74,7 @@ export const MerchantUser = () => {
     MerchantUsersReportsIsLoading,
     MerchantUsersReportsIsSuccess,
     MerchantUsersReportsMutate,
-  } = useCreateMerchantUsersReports({
+  } = useCreateMerchantUsersReports({...query,
     fields: csvFields,
     comma_separate_value: comma,
   });

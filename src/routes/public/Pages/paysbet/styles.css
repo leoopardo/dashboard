@@ -1,0 +1,15 @@
+.img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  -webkit-clip-path: polygon(100% 0, 0% 100%, 100% 100%);
+  clip-path: polygon(100% 0, 0% 100%, 100% 100%);
+}
+
+.img2 {
+  position: absolute;
+  left: 0;
+  top: 0;
+  -webkit-clip-path: polygon(100% 0, 0% 100%, 0 0);
+  clip-path: polygon(100% 0, 0% 100%, 0 0);
+}

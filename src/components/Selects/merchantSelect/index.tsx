@@ -11,16 +11,20 @@ import { MerchantQuery } from "../../../services/types/register/merchants/mercha
 interface MerchantSelectProps {
   setQueryFunction: Dispatch<SetStateAction<any>>;
   queryOptions: any;
+  name?: boolean;
 }
 
 export const MerchantSelect = ({
   setQueryFunction,
   queryOptions,
+  name,
 }: MerchantSelectProps) => {
   const { t } = useTranslation();
   const [query, setQuery] = useState<MerchantQuery>({
     page: 1,
     limit: 200,
+    sort_field: "name",
+    sort_order: "ASC",
     partner_id: queryOptions?.partner_id,
   });
   const { merchantsData, refetcMerchant, isMerchantFetching } =
@@ -45,7 +49,7 @@ export const MerchantSelect = ({
         setOptions([...merchantsData.items, merchant]);
       }
 
-      setValue(merchant?.id);
+      setValue(name ? merchant?.name : merchant?.id);
     }
   }, [merchantsData, merchant, queryOptions]);
 
@@ -82,11 +86,12 @@ export const MerchantSelect = ({
         }
         setQuery((state: any) => ({ ...state, name: value }));
       }}
-      onChange={(value) => {
+      onChange={(value, option) => {
         if (!value) {
           setValue(undefined);
           setQueryFunction((state: any) => ({
             ...state,
+            merchant_name: undefined,
             merchant_id: undefined,
             group_id: undefined,
           }));
@@ -94,6 +99,7 @@ export const MerchantSelect = ({
         }
         setQueryFunction((state: any) => ({
           ...state,
+          merchant_name: name ? (option as any)["label"] : undefined,
           merchant_id: value,
           group_id: undefined,
         }));

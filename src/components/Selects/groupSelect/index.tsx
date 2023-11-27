@@ -1,10 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AutoComplete, Empty } from "antd";
+import { Select, Empty } from "antd";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useListUserGroups } from "../../../services/register/organization/users/useListUserGroups";
 import { GroupQuery } from "../../../services/types/register/organization/organizationUsers.interface";
+import useDebounce from "@src/utils/useDebounce";
 
 interface GroupSelectProps {
   setBody: Dispatch<SetStateAction<any>>;
@@ -23,9 +24,12 @@ export const GroupSelect = ({
   const [query, setQuery] = useState<GroupQuery>({
     page: 1,
     limit: 200,
+    sort_field: "name",
+    sort_order: "ASC",
     [filterIdProp]: filterIdValue,
   });
-  const { groupsData, refetcGroups } = useListUserGroups(query);
+  const { groupsData, refetcGroups, isGroupsFetching } = useListUserGroups(query);
+  const debounceSearch = useDebounce(query.filterIdProp);
 
   useEffect(() => {
     setQuery((state) => ({ ...state, [filterIdProp]: filterIdValue }));
@@ -33,12 +37,23 @@ export const GroupSelect = ({
 
   useEffect(() => {
     refetcGroups();
-  }, [query]);
+  }, [debounceSearch]);
 
   return (
-    <AutoComplete
+    <Select
+      allowClear
+      showSearch
       size="large"
+      loading={isGroupsFetching}
       disabled={!filterIdValue}
+      onSearch={(value) => {
+        if (value === "") {
+          delete query.filterIdProp;
+          return;
+        }
+
+        setQuery((state: any) => ({ ...state, filterIdProp: value }));
+      }}
       options={
         groupsData?.items?.map((item, index) => {
           return { key: index, value: item.id, label: item.name };
@@ -54,24 +69,18 @@ export const GroupSelect = ({
       }
       notFoundContent={<Empty />}
       style={{ width: "100%", height: 40 }}
-      onChange={(_event: any, option: any) => {
-        setQuery((state) => ({ ...state, name: option.label }));
+      filterOption={(input, option) => {
+        return (
+          `${option?.label}`?.toLowerCase()?.indexOf(input?.toLowerCase()) >= 0
+        );
       }}
-      onSelect={(value) =>
+      onChange={(value) => {
         setBody((state: any) => ({ ...state, group_id: value }))
-      }
-      onInputKeyDown={(event: any) => {
-        setQuery((state) => ({ ...state, name: event.target.value }));
       }}
-      onKeyDown={(event) => {
-        if (event.code === "Backspace") {
-          delete body.group_id;
-          setQuery({
-            page: 1,
-            limit: 200,
-          });
-        }
-      }}
+     /*  onSelect={(value) =>
+        refetcGroups()
+      } */
+     
       placeholder={t("table.group")}
     />
   );

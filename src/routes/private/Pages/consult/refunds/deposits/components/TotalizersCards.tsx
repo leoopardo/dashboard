@@ -62,7 +62,12 @@ export const TotalizersCards = (props: TotalizersInterface) => {
                 fontSize: isMobile ? "12px" : "18px",
                 wordBreak: "break-all",
               }}
-              suffix=""
+              suffix=""style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+                minHeight: isMobile ? undefined : "75px",
+              }}
             />
           </Card>
         </Col>
@@ -100,6 +105,11 @@ export const TotalizersCards = (props: TotalizersInterface) => {
                 color: defaultTheme.colors.success,
                 fontSize: isMobile ? "12px" : "18px",
                 wordBreak: "break-all",
+              }}style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+                minHeight: isMobile ? undefined : "75px",
               }}
             />
           </Card>
@@ -138,6 +148,11 @@ export const TotalizersCards = (props: TotalizersInterface) => {
                 color: defaultTheme.colors.error,
                 fontSize: isMobile ? "12px" : "18px",
                 wordBreak: "break-all",
+              }}style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+                minHeight: isMobile ? undefined : "75px",
               }}
             />
           </Card>
@@ -176,6 +191,11 @@ export const TotalizersCards = (props: TotalizersInterface) => {
                 color: defaultTheme.colors.warnning,
                 fontSize: isMobile ? "12px" : "18px",
                 wordBreak: "break-all",
+              }}style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+                minHeight: isMobile ? undefined : "75px",
               }}
             />
           </Card>
@@ -213,6 +233,11 @@ export const TotalizersCards = (props: TotalizersInterface) => {
                 color: defaultTheme.colors.warnning,
                 fontSize: isMobile ? "12px" : "18px",
                 wordBreak: "break-all",
+              }}style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+                minHeight: isMobile ? undefined : "75px",
               }}
             />
           </Card>
@@ -248,6 +273,11 @@ export const TotalizersCards = (props: TotalizersInterface) => {
               color: theme === "dark" ? "#fff" : defaultTheme.colors.dark,
               fontSize: isMobile ? "12px" : "18px",
               wordBreak: "break-all",
+            }}style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              minHeight: isMobile ? undefined : "75px",
             }}
           />
         </Card>

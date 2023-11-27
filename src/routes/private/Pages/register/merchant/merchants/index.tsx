@@ -113,7 +113,11 @@ export const MerchantView = () => {
     MerchantReportsIsSuccess,
     MerchantReportsMutate,
     MerchantReset,
-  } = useCreateMerchantReports(query);
+  } = useCreateMerchantReports({
+    ...query,
+    fields: csvFields,
+    comma_separate_value: comma,
+  });
 
   const { fields } = useGetMerchantReportFields();
   const [isExportReportsOpen, setIsExportReportsOpen] =

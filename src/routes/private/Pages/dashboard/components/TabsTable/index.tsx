@@ -4,40 +4,48 @@ import {
   DashOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
+import { useErrorContext } from "@src/contexts/ErrorContext";
 import { queryClient } from "@src/services/queryClient";
 import { Button, Col, Divider, Row, Tabs, Typography } from "antd";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useTranslation } from "react-i18next";
 import secureLocalStorage from "react-secure-storage";
 import { FeeTab } from "./feesTab";
-import { useErrorContext } from "@src/contexts/ErrorContext";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 import { FinancialMovementsTab } from "./financialMovimentsTab";
 import { OperationMovementsTab } from "./operationsNumberTab";
 
 export interface TableProps {
   query: { start_date: string; end_date: string };
   chart?: boolean;
+  operationType?: "total" | "deposit" | "withdraw";
+  setOperationType?: Dispatch<SetStateAction<"total" | "deposit" | "withdraw">>;
 }
 
 export const TabsTable = ({ query }: TableProps) => {
   const { t } = useTranslation();
+  const { type } = queryClient.getQueryData("validate") as ValidateInterface;
   const { error } = useErrorContext();
   const [isChart, setIsChart] = useState<boolean>(
     secureLocalStorage.getItem("isRankingChart") === "true"
   );
+  const [operationType, setOperationType] = useState<
+    "total" | "deposit" | "withdraw"
+  >("total");
 
   return (
     <>
       <Row gutter={[8, 8]}>
         <Col span={22}>
-          <Divider orientation="left">
-            <Typography.Title level={3}>
+          <Divider orientation="left" data-test-id="divider-tabs-table-1">
+            <Typography.Title level={3} data-test-id="text-tabs-table-1">
               Ranking <Typography.Text>(top 10)</Typography.Text>
             </Typography.Title>
           </Divider>
         </Col>
         <Col span={1}>
           <Button
+            data-test-id="button-tabs-table-1"
             style={{ width: "100%" }}
             onClick={() => {
               for (const key of [
@@ -60,6 +68,7 @@ export const TabsTable = ({ query }: TableProps) => {
         </Col>
         <Col span={1}>
           <Button
+            data-test-id="button-tabs-table-2"
             shape="circle"
             onClick={() => {
               if (isChart) {
@@ -76,6 +85,7 @@ export const TabsTable = ({ query }: TableProps) => {
         </Col>
       </Row>
       <Tabs
+        data-test-id="tabs-tabs-table-1"
         defaultActiveKey="1"
         type="line"
         size="large"
@@ -84,7 +94,15 @@ export const TabsTable = ({ query }: TableProps) => {
             !error.rankingValue && {
               label: t("table.operations_value"),
               key: "financial_movements",
-              children: <FinancialMovementsTab query={query} chart={isChart} />,
+              children: (
+                <FinancialMovementsTab
+                  data-test-id="financial-movements-tab"
+                  query={query}
+                  chart={isChart}
+                  operationType={operationType}
+                  setOperationType={setOperationType}
+                />
+              ),
               disabled: error.rankingValue,
               style: { color: "#5470c6" },
             },
@@ -92,15 +110,33 @@ export const TabsTable = ({ query }: TableProps) => {
               label: t("table.operation_number"),
               key: "operation_moviments",
               disabled: error.rankingOperations,
-              children: <OperationMovementsTab query={query} chart={isChart} />,
+              children: (
+                <OperationMovementsTab
+                  data-test-id="operation-movements-tab"
+                  query={query}
+                  chart={isChart}
+                  operationType={operationType}
+                  setOperationType={setOperationType}
+                />
+              ),
             },
-            !error.rankingFee && {
-              label: t("table.fees"),
-              key: "fees",
-              children: <FeeTab query={query} chart={isChart} />,
-            },
+            !error.rankingFee &&
+              (type === 1 || type === 2) && {
+                label: t("table.fees"),
+                key: "fees",
+                children: (
+                  <FeeTab
+                    data-test-id="fee-tab"
+                    query={query}
+                    chart={isChart}
+                    operationType={operationType}
+                    setOperationType={setOperationType}
+                  />
+                ),
+              },
           ].filter(Boolean) as any[]
         }
+        style={{ paddingBottom: 24 }}
       />
     </>
   );

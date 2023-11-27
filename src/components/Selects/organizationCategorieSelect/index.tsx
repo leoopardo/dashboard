@@ -20,6 +20,8 @@ export const OrganizationCategorieSelect = ({
   const [query, setQuery] = useState<OrganizationCategoriesQuery>({
     page: 1,
     limit: 200,
+    sort_field: "name",
+    sort_order: "ASC",
     name: "",
   });
   const { CategoriesData, refetchCategoriesData } =

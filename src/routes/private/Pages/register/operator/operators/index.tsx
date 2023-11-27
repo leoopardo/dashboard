@@ -102,7 +102,7 @@ export const Operators = () => {
     OperatorReportsIsLoading,
     OperatorReportsIsSuccess,
     OperatorReportsMutate,
-  } = useCreateOperatorReports({
+  } = useCreateOperatorReports({ ...query,
     fields: csvFields,
     comma_separate_value: comma,
   });

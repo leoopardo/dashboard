@@ -96,6 +96,7 @@ export const FilterChips = ({
             return query[startDateKeyName] ? (
               <Col key={key}>
                 <Tag
+                  data-test-id="filter-chip-date"
                   key={key}
                   style={{
                     width: "100%",
@@ -157,6 +158,7 @@ export const FilterChips = ({
             return (
               <Col key={key}>
                 <Tag
+                  data-test-id="filter-chip-age"
                   key={key}
                   color="cyan"
                   style={{
@@ -187,6 +189,7 @@ export const FilterChips = ({
             return (
               <Col key={key}>
                 <Tag
+                  data-test-id="filter-chip-merchant-id"
                   style={{
                     width: "100%",
                     textOverflow: "ellipsis",
@@ -213,6 +216,7 @@ export const FilterChips = ({
               <Col key={key}>
                 {" "}
                 <Tag
+                  data-test-id="filter-chip-partner-id"
                   style={{
                     width: "100%",
                     textOverflow: "ellipsis",
@@ -239,6 +243,7 @@ export const FilterChips = ({
               <Col key={key}>
                 {" "}
                 <Tag
+                  data-test-id="filter-chip-operator-id"
                   style={{
                     width: "100%",
                     textOverflow: "ellipsis",
@@ -265,6 +270,7 @@ export const FilterChips = ({
               <Col key={key}>
                 {" "}
                 <Tag
+                  data-test-id="filter-chip-aggregator-id"
                   style={{
                     width: "100%",
                     textOverflow: "ellipsis",
@@ -291,6 +297,7 @@ export const FilterChips = ({
               <Col key={key}>
                 {" "}
                 <Tag
+                  data-test-id="filter-chip-value-start"
                   style={{
                     width: "100%",
                     textOverflow: "ellipsis",
@@ -332,6 +339,7 @@ export const FilterChips = ({
               <Col key={key}>
                 {" "}
                 <Tag
+                  data-test-id="filter-chip-gender"
                   style={{
                     width: "100%",
                     textOverflow: "ellipsis",
@@ -355,6 +363,7 @@ export const FilterChips = ({
             return (
               <Col key={key}>
                 <Tag
+                  data-test-id="filter-chip-status"
                   style={{
                     width: "100%",
                     textOverflow: "ellipsis",
@@ -382,12 +391,13 @@ export const FilterChips = ({
               </Col>
             );
 
-            case "pix_type":
-            case "pixType":
+          case "pix_type":
+          case "pixType":
             return (
               <Col key={key}>
                 {filtersQuery[key] ? (
                   <Tag
+                    data-test-id="filter-chip-pix-type"
                     style={{
                       width: "100%",
                       textOverflow: "ellipsis",
@@ -401,7 +411,8 @@ export const FilterChips = ({
                       <CloseCircleOutlined onClick={() => deleteFilter(key)} />
                     }
                   >
-                    {t(`table.${key}`)}: {t(`table.${filtersQuery[key].toLowerCase()}`)}
+                    {t(`table.${key}`)}:{" "}
+                    {t(`table.${filtersQuery[key].toLowerCase()}`)}
                   </Tag>
                 ) : (
                   <></>
@@ -416,6 +427,7 @@ export const FilterChips = ({
               <Col key={key}>
                 {filtersQuery[key] ? (
                   <Tag
+                    data-test-id="filter-chip-default"
                     style={{
                       width: "100%",
                       textOverflow: "ellipsis",

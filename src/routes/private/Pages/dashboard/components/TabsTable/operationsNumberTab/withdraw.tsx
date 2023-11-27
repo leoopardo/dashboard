@@ -10,7 +10,7 @@ import { useEffect } from "react";
 export const WithdrawOperations = ({ query, chart }: TableProps) => {
   const { t } = useTranslation();
   const {handleChangeError} = useErrorContext()
-  const { RankingData, RankingError, isRankingFetching, RankingDataSuccess } =
+  const { RankingData,  RankingError, isRankingFetching, RankingDataSuccess } =
     useGetMerchantRanking("operations", "withdraw", query);
 
     useEffect(() => {
@@ -96,8 +96,9 @@ export const WithdrawOperations = ({ query, chart }: TableProps) => {
       data={RankingData}
       items={RankingData?.sort((a, b) => (a.total > b.total ? -1 : 1))}
       error={RankingError}
+      removeValue
       columns={[
-        { name: "name", type: "text" },
+        { name: "name", type: "" },
         { name: "total", type: "text" },
       ]}
       loading={isRankingFetching}

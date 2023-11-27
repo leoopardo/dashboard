@@ -21,11 +21,13 @@ export const AggregatorSelect = ({
     page: 1,
     limit: 200,
     name: "",
+    sort_order: "ASC",
+    sort_field: "name",
   });
   const { aggregatorsData, refetcAggregators, isAggregatorsFetching } =
     useListAggregators(query);
   const [value, setValue] = useState<any>(null);
-  const debounceSearch = useDebounce(query.name);
+  const debounceSearch = useDebounce(query.name, 500);
 
   useEffect(() => {
     if (!aggregatorId) {
@@ -83,6 +85,7 @@ export const AggregatorSelect = ({
             ...state,
             aggregator_id: undefined,
             group_id: undefined,
+            operator_id: undefined
           }));
           return;
         }
@@ -90,6 +93,7 @@ export const AggregatorSelect = ({
           ...state,
           aggregator_id: value,
           group_id: undefined,
+          operator_id: undefined
         }));
         setValue(
           aggregatorsData?.items.find(

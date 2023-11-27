@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ReloadOutlined } from "@ant-design/icons";
 import { useListBanks } from "@src/services/bank/listBanks";
 import { useGetOrganizationBankBalance } from "@src/services/consult/organization/bankBalance/getOrganizationBankBalance";
-import { Button, Col } from "antd";
 import ReactECharts from "echarts-for-react";
 import { useTranslation } from "react-i18next";
 
@@ -11,7 +9,6 @@ export const BankBalanceChart = () => {
   const {
     OrganizationBankBalance,
     isOrganizationBankBalanceFetching,
-    refetchOrganizationBankBalance,
   } = useGetOrganizationBankBalance();
 
   const { bankListData } = useListBanks({
@@ -24,15 +21,6 @@ export const BankBalanceChart = () => {
   //   OrganizationBankBalance?.banks.map((bank) => bank.value)
   return (
     <>
-      <Col
-        span={24}
-        style={{ width: "100%", display: "flex", justifyContent: "flex-end" }}
-      >
-        <Button onClick={refetchOrganizationBankBalance}>
-          <ReloadOutlined />
-        </Button>
-      </Col>
-
       {OrganizationBankBalance && bankListData && bankListData?.itens && (
         <ReactECharts
           option={{
@@ -45,7 +33,7 @@ export const BankBalanceChart = () => {
             textStyle: {
               color: "#a0a0a0",
             },
-            color: ["#91cc75", "#ee6666", "#5470c6"],
+            color: ["#91cc75c8", "#ee6666cf", "#5470c6c8"],
             dataset: {
               source: [
                 [

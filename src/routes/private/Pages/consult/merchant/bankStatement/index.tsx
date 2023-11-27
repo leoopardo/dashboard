@@ -48,7 +48,6 @@ export const MerchantBankStatement = () => {
     useState<MerchantBankStatementTotalsQuery>(INITIAL_QUERY);
   const [isViewDepositOpen, setIsViewDepositOpen] = useState(false);
   const [isViewWithdrawOpen, setIsViewWithdrawOpen] = useState(false);
-  console.log({ currentItem });
   const {
     isMerchantBankStatementTotalsFetching,
     refetchMerchantBankStatementTotalsTotal,
@@ -217,7 +216,7 @@ export const MerchantBankStatement = () => {
             loading={isMerchantTransactionsFetching}
             removeTotal
             label={["bank_name", "value", "paid_at"]}
-            removePagination
+            bankStatement
           />
         </Grid>
       </Grid>

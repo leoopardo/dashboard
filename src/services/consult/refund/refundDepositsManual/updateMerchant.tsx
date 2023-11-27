@@ -8,7 +8,7 @@ export function useUpdateMerchantRefund(body: UpdateMerchantRefundBody) {
   const { isLoading, error, mutate, isSuccess } = useMutation<
     any | null | undefined
   >("UpdateMerchantRefund", async () => {
-    const response = await api.post(
+    const response = await api.put(
       `refund/pix-manual/merchant/update`,
       body,
       {}

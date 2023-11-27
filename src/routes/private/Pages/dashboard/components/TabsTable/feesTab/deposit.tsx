@@ -36,7 +36,7 @@ export const DepositFees = ({ query, chart }: TableProps) => {
                   type: "shadow",
                 },
               },
-              color: ["#91cc75"],
+              color: ["#91cc75c9"],
               legend: {
                 textStyle: {
                   color: "#a0a0a0",
@@ -106,7 +106,7 @@ export const DepositFees = ({ query, chart }: TableProps) => {
       items={RankingData?.sort((a, b) => (a.total > b.total ? -1 : 1))}
       error={RankingError}
       columns={[
-        { name: "name", type: "text" },
+        { name: "name", type: "" },
         { name: "total", type: "value" },
       ]}
       loading={isRankingFetching}

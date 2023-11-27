@@ -25,7 +25,7 @@ export const BanksSelect = ({
   const { t } = useTranslation();
   const [query] = useState<MerchantQuery>({
     page: 1,
-    limit: 200,
+    limit: 200
   });
   const { bankListData } = useListBanks(query);
   const [value, setValue] = useState<any>(null);

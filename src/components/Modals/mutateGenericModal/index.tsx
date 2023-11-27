@@ -34,6 +34,7 @@ import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { CurrencyInput } from "react-currency-mask";
 import { useTranslation } from "react-i18next";
 import ReactInputMask from "react-input-mask";
+import { unmask } from "@src/utils/functions";
 import { MerchantSelect } from "../../Selects/merchantSelect";
 import { PartnerSelect } from "../../Selects/partnerSelect";
 const { RangePicker } = DatePicker;
@@ -44,6 +45,8 @@ interface mutateProps {
     | (
         | {
             label: string;
+            type?: string;
+            head?: string;
             required: boolean;
             selectOption?: boolean;
             noTranslate?: boolean;
@@ -106,6 +109,8 @@ export const MutateModal = ({
       page: 1,
       limit: 200,
     });
+  const [mask, setMask] = useState("");
+
   const { merchantBlacklistData } = useGetRowsMerchantBlacklistReasons({
     limit: 200,
     page: 1,
@@ -281,6 +286,33 @@ export const MutateModal = ({
                         <MerchantSelect
                           setQueryFunction={setBody}
                           queryOptions={body}
+                        />
+                      </Form.Item>
+                    </Col>
+                  );
+                } else return;
+              case "merchant_name":
+                if (permissions.register.merchant.merchant.merchant_list) {
+                  return (
+                    <Col span={24}>
+                      <Form.Item
+                        label={t(`table.${field.label}`)}
+                        name={field.label}
+                        style={{ margin: 10 }}
+                        rules={[
+                          {
+                            required: field.required && !body.merchant_name,
+                            message:
+                              t("input.required", {
+                                field: t(`input.${field.label}`),
+                              }) || "",
+                          },
+                        ]}
+                      >
+                        <MerchantSelect
+                          setQueryFunction={setBody}
+                          queryOptions={body}
+                          name
                         />
                       </Form.Item>
                     </Col>
@@ -628,9 +660,23 @@ export const MutateModal = ({
                       label={t(`table.${field.label}`)}
                       name={field.label}
                       style={{ margin: 10 }}
-                      help=""
+                      rules={[
+                        {
+                          required:
+                            body?.cellphone &&
+                            unmask(mask).length > body?.cellphone?.length,
+                          message:
+                            t("input.invalid", {
+                              field: t(`table.cellphone`),
+                            }) || "",
+                        },
+                      ]}
                     >
-                      <CellphoneInput body={body} setBody={setBody} />
+                      <CellphoneInput
+                        body={body}
+                        setBody={setBody}
+                        setMask={setMask}
+                      />
                     </Form.Item>
                   </Col>
                 );
@@ -866,6 +912,7 @@ export const MutateModal = ({
                     </Form.Item>
                   </Col>
                 );
+
               case undefined:
                 return;
 
@@ -874,7 +921,11 @@ export const MutateModal = ({
                   return (
                     <Col span={24}>
                       <Form.Item
-                        label={t(`input.${field.label}`)}
+                        label={
+                          field.head
+                            ? t(`input.${field.head}`)
+                            : t(`input.${field.label}`)
+                        }
                         name={field.label}
                         style={{ margin: 10 }}
                         rules={[
@@ -925,7 +976,11 @@ export const MutateModal = ({
                   return (
                     <Col span={24}>
                       <Form.Item
-                        label={t(`input.${field.label}`)}
+                        label={
+                          field.head
+                            ? t(`input.${field.head}`)
+                            : t(`input.${field.label}`)
+                        }
                         name={field.label}
                         style={{ margin: 10 }}
                         rules={[
@@ -979,11 +1034,16 @@ export const MutateModal = ({
                 return (
                   <Col span={24}>
                     <Form.Item
-                      label={t(`table.${field?.label}`)}
+                      label={
+                        field?.head
+                          ? t(`input.${field?.head}`)
+                          : t(`input.${field?.label}`)
+                      }
                       name={field?.label}
                       style={{ margin: 10 }}
                       rules={[
                         {
+                          type: field?.type as any,
                           required: field?.required,
                           message:
                             t("input.required", {
