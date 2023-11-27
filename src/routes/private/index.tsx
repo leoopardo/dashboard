@@ -103,6 +103,7 @@ import { BankBlackistReports } from "./Pages/support/blacklists/reports/bankBlac
 import { ThirdPartKeyBlacklist } from "./Pages/support/blacklists/thirdPartKey";
 import { ImportContastationDeposit } from "./Pages/support/contastation/importCSV";
 import { ContestationUploads } from "./Pages/support/contastation/uploads";
+import { HistoricCpfByMerchant } from "./Pages/consult/persons/historicCpfByMerchant";
 import { Permission } from "./permission";
 import { Redirect } from "./redirect";
 import { DepositsReceipts } from "./Pages/consult/deposits/receipts";
@@ -530,6 +531,18 @@ export const PrivateRoutes = () => {
                   }
                 >
                   <CheckDocument />
+                </Permission>
+              }
+            />
+            <Route
+              path="historic_cpf_merchant"
+              element={
+                <Permission
+                  permission={
+                    responseValidate?.permissions?.report?.person?.menu
+                  }
+                >
+                  <HistoricCpfByMerchant />
                 </Permission>
               }
             />

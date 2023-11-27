@@ -1626,6 +1626,18 @@ export const SidebarNavigation = () => {
                   : "none",
               }
             ),
+            getItem(
+              "historic_cpf_merchant",
+              null,
+              null,
+              false,
+              (e) => handleNavigate(e?.keyPath),
+              {
+                display: permissions?.report?.person?.check_cpf?.menu
+                  ? undefined
+                  : "none",
+              }
+            ),
           ],
           undefined,
           undefined,
