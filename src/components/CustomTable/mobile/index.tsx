@@ -214,7 +214,6 @@ export const Mobile = (props: MobileProps) => {
 
                     case "value_total":
                     case "value":
-                    case "balance_to_transactions":
                       return (
                         <Typography
                           key={label}
@@ -249,6 +248,19 @@ export const Mobile = (props: MobileProps) => {
                       ) : (
                         <Typography key={label}>
                           {Number(item[label]) || 0}
+                        </Typography>
+                      );
+
+                    case "balance_to_transactions":
+                    case "balance_to_payment":
+                    case "balance_reserved":
+                      return (
+                        <Typography key={label}>
+                          <span>{t(`table.${label && label}`)}:</span>{" "}
+                          {new Intl.NumberFormat("pt-BR", {
+                            style: "currency",
+                            currency: "BRL",
+                          }).format(item[label] ?? 0)}
                         </Typography>
                       );
 
