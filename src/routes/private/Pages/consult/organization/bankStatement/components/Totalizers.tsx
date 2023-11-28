@@ -72,7 +72,7 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
             style={{
               display: "flex",
               justifyContent: "center",
-              alignItems: "center",
+              alignItems: "center", width: "100%",
             }}
           >
             <ArrowUpOutlined style={{ marginRight: "-5px" }} />
