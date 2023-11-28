@@ -215,7 +215,21 @@ export const Mobile = (props: MobileProps) => {
                     case "value_total":
                     case "value":
                       return (
-                        <Typography key={label}>
+                        <Typography
+                          key={label}
+                          style={{
+                            color: (defaultTheme.colors as any)[
+                              item?.status?.toLocaleLowerCase()
+                            ],
+                          }}
+                        >
+                          {item?.type === "in" ? (
+                            <ArrowUpOutlined />
+                          ) : item?.type === "out" ? (
+                            <ArrowDownOutlined />
+                          ) : (
+                            " "
+                          )} {" "}
                           {new Intl.NumberFormat("pt-BR", {
                             style: "currency",
                             currency: "BRL",
