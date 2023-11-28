@@ -3,6 +3,7 @@ import { Toast } from "@src/components/Toast";
 import { useGetReceipts } from "@src/services/consult/deposits/receipts/useGetRecepts";
 import { defaultTheme } from "@src/styles/defaultTheme";
 import {
+  Button,
   Col,
   Descriptions,
   Divider,
@@ -14,9 +15,11 @@ import {
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
+import { ViewModal } from "../components/ViewModal";
 
 export const DepositsReceipts = () => {
   const [endToEndId, setEndToEndId] = useState<string | undefined>(undefined);
+  const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const {
     receipts,
     refetchReceipts,
@@ -26,6 +29,7 @@ export const DepositsReceipts = () => {
   } = useGetReceipts(endToEndId);
   const { t } = useTranslation();
   const isMobile = useMediaQuery({ maxWidth: "750px" });
+
   return (
     <Row style={{ padding: 25 }}>
       <Col xs={{ span: 24 }} md={{ span: 8 }}>
@@ -41,7 +45,7 @@ export const DepositsReceipts = () => {
         {receipts ? (
           <Divider>
             <Typography.Title
-              level={3}
+              level={isMobile ? 5 : 3}
               style={{ color: defaultTheme.colors.secondary }}
             >
               {t(`messages.${receipts?.code}`)}
@@ -57,7 +61,12 @@ export const DepositsReceipts = () => {
           <Descriptions bordered column={isMobile ? 1 : 3}>
             {receipts?.transaction?.id && (
               <Descriptions.Item label={t("table.id")}>
-                {receipts?.transaction?.id}
+                <Button
+                  style={{ width: "100%", height: "100%" }}
+                  onClick={() => setIsViewModalOpen(true)}
+                >
+                  {receipts?.transaction?.id}
+                </Button>
               </Descriptions.Item>
             )}
             {receipts?.transaction?.acquirer_id && (
@@ -142,6 +151,13 @@ export const DepositsReceipts = () => {
         actionSuccess="founded"
         errorMessage={`${t("error.400")}`}
       />
+      {isViewModalOpen && (
+        <ViewModal
+          open={isViewModalOpen}
+          setOpen={setIsViewModalOpen}
+          id={receipts?.transaction?.id}
+        />
+      )}
     </Row>
   );
 };

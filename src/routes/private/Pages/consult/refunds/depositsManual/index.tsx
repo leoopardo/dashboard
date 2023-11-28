@@ -144,6 +144,7 @@ export const RefundDepositsManual = () => {
     { name: "pix_type", head: "payment_type", type: "pix_type" },
     { name: "createdAt", type: "date" },
     { name: "refund_date", type: "date" },
+    { name: "reason", type: "text" },
     { name: "status", type: "status" },
   ];
 
@@ -368,8 +369,9 @@ export const RefundDepositsManual = () => {
               "bank",
               "merchant_name",
               "status",
+              "reason",
               "createdAt",
-              "delivered_at",
+              "value"
             ]}
           />
         </Grid>

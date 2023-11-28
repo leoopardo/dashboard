@@ -118,6 +118,7 @@ export const RefundDeposits = () => {
     { name: "pix_type", head: "payment_type", type: "pix_type" },
     { name: "buyer_name", type: "text" },
     { name: "buyer_document", type: "document" },
+    { name: "reason", type: "text" },
     { name: "status", type: "status" },
   ];
 
@@ -183,7 +184,15 @@ export const RefundDeposits = () => {
               delete query.rtrid;
               delete query.buyer_document;
               delete query.buyer_name;
-              if (["pix_id", "endToEndId", "txid", "rtrid", "buyer_document"].includes(value)) {
+              if (
+                [
+                  "pix_id",
+                  "endToEndId",
+                  "txid",
+                  "rtrid",
+                  "buyer_document",
+                ].includes(value)
+              ) {
                 delete query.start_date;
                 delete query.end_date;
               } else {
@@ -313,7 +322,13 @@ export const RefundDeposits = () => {
               },
             ]}
             removeTotal
-            label={["merchant_name", "status", "createdAt", "delivered_at"]}
+            label={[
+              "merchant_name",
+              "status",
+              "reason",
+              "createdAt",
+              "value",
+            ]}
           />
         </Grid>
       </Grid>
