@@ -98,7 +98,7 @@ export const WithdrawOperations = ({ query, chart }: TableProps) => {
       error={RankingError}
       removeValue
       columns={[
-        { name: "name", type: "" },
+        { name: "name", type: "text" },
         { name: "total", type: "text" },
       ]}
       loading={isRankingFetching}

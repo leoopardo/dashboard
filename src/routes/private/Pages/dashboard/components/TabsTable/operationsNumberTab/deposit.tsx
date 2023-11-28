@@ -100,8 +100,8 @@ export const DepositOperations = ({ query, chart }: TableProps) => {
       items={RankingData?.sort((a, b) => (a.total > b.total ? -1 : 1))}
       error={RankingError}
       columns={[
-        { name: "name", type: "" },
-        { name: "total", type: ""},
+        { name: "name", type: "text" },
+        { name: "total", type: "text"},
       ]}
       loading={isRankingFetching}
       label={["name", "total"]}
