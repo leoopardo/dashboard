@@ -32,7 +32,7 @@ export const ContestationUploads = () => {
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const { t } = useTranslation();
   const { data, error, isFetching, refetch } =
-  useGetContestDepositsUploads(query);
+    useGetContestDepositsUploads(query);
 
   useEffect(() => {
     refetch();
@@ -107,7 +107,7 @@ export const ContestationUploads = () => {
             data={data}
             items={data?.items}
             error={error}
-            columns={ [
+            columns={[
               { name: "_id", type: "id" },
               { name: "created_by_name", type: "text" },
               { name: "rows", type: "text" },
@@ -126,7 +126,7 @@ export const ContestationUploads = () => {
                 },
               },
             ]}
-            label={["bank_name", "receiver_name", "pix_key"]}
+            label={["rows", "failed_rows", "progress"]}
           />
         </Grid>
       </Grid>

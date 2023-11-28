@@ -214,7 +214,7 @@ export const DepositsErrors = () => {
               { name: "createdAt", type: "date", sort: true },
             ]}
             loading={isDepositsErrorsLogsFetching}
-            label={["error_message", "step"]}
+            label={["merchant_name", "error_message", "step"]}
             actions={[
               {
                 label: "details",

@@ -94,7 +94,7 @@ export const AuthLogs = () => {
               { name: "createdAt", type: "date", sort: true },
             ]}
             loading={isAuthLogsFetching}
-            label={["error_message", "step"]}
+            label={["merchant_name", "success", "ip","error_message", "step"]}
             actions={[
               {
                 label: "details",
