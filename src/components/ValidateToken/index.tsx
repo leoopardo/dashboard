@@ -135,7 +135,7 @@ export const ValidateToken = ({
           action: t("messages.validated"),
         })
       );
-      resetFunction()
+      resetFunction && resetFunction()
       setIsOpen(false);
     }
 
