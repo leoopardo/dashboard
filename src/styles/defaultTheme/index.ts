@@ -17,6 +17,7 @@ export const defaultTheme: DefaultTheme = {
     error: "#cf1322",
     canceled: "#cf1322",
     expired: "#cf1322",
+    invalid: "#cf1322",
     warnning: "#cfa913",
     in_analysis: "#cfa913",
     processing: "#cfa913",
