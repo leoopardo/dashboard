@@ -420,6 +420,7 @@ export const GeneratedDeposits = () => {
               "status",
               "createdAt",
               "delivered_at",
+              "value"
             ]}
           />
         </Col>

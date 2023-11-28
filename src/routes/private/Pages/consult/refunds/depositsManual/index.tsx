@@ -369,7 +369,7 @@ export const RefundDepositsManual = () => {
               "merchant_name",
               "status",
               "createdAt",
-              "delivered_at",
+              "value"
             ]}
           />
         </Grid>
