@@ -34,6 +34,7 @@ export const GroupSelect = ({
   useEffect(() => {
     setQuery((state) => ({ ...state, [filterIdProp]: filterIdValue }));
   }, [filterIdProp, filterIdValue]);
+  
 
   useEffect(() => {
     refetcGroups();
