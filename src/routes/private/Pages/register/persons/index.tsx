@@ -247,7 +247,7 @@ export const Persons = () => {
             error={PersonsDataError}
             columns={columns}
             loading={isPersonsDataFetching}
-            label={["name", "description"]}
+            label={["name", "cpf"]}
             removeTotal
           />
         </Grid>

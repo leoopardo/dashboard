@@ -562,7 +562,7 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
               display: "flex",
               alignItems: "start",
               justifyContent: "flex-start",
-              height: "160px",
+            
             }}
           >
             <Button
