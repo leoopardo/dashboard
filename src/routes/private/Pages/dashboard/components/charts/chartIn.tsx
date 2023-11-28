@@ -48,13 +48,13 @@ export const ChartIn = ({ query }: ChartInInterface) => {
             width: "100%",
           }}
         >
-          <Typography.Title level={5}>
+          <Typography.Text strong>
             {t("table.deposit_conversion")}:{" "}
             {new Intl.NumberFormat("pt-BR", {
               style: "currency",
               currency: "BRL",
             }).format(Number(depositsTotal?.paid_value) || 0)}
-          </Typography.Title>
+          </Typography.Text>
         </div>
       }
     >
