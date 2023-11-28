@@ -129,27 +129,12 @@ export const Mobile = (props: MobileProps) => {
                   switch (label) {
                     case "bank":
                     case "bank_name":
-                      return (
-                        <Tooltip placement="topLeft" title={item[label]} arrow>
-                          <Avatar
-                            src={
-                              bankListData?.itens.find(
-                                (bank) =>
-                                  bank?.label_name?.split(" ").join("_") ===
-                                  item[label]
-                              )?.icon_url ?? null
-                            }
-                            size="large"
-                            shape="square"
-                          >
-                            <BankOutlined />
-                          </Avatar>
-                        </Tooltip>
-                      );
+                      return item[label];
 
                     case "createdAt":
                     case "paid_at":
                     case "updated_at":
+                      case "last_check":
                       return (
                         <Typography key={label} style={{ fontSize: "12px" }}>
                           <span> {t(`table.${label}`)}: </span>
@@ -229,7 +214,7 @@ export const Mobile = (props: MobileProps) => {
                             <ArrowDownOutlined />
                           ) : (
                             " "
-                          )} {" "}
+                          )}{" "}
                           {new Intl.NumberFormat("pt-BR", {
                             style: "currency",
                             currency: "BRL",

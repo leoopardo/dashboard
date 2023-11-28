@@ -12,6 +12,7 @@ declare module "styled-components" {
       success: string;
       refunded_withdraw: string;
       completed: string;
+      invalid: string;
       paid: string;
       refund: string;
       error: string;
