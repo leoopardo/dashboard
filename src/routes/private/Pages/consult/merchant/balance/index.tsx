@@ -346,7 +346,12 @@ export const MerchantBalance = () => {
               query={query}
               setCurrentItem={setCurrentItem}
               setQuery={setQuery}
-              label={["merchant_name"]}
+              label={[
+                "merchant_name",
+                "balance_to_transactions",
+                "balance_to_payment",
+                "balance_reserved",
+              ]}
             />
           )}
         </Grid>
