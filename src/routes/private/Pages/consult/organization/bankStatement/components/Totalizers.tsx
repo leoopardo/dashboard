@@ -81,7 +81,8 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
               return (
                 <Grid
                   item
-                  xs={2}
+                  md={2}
+                  xs={6}
                 >
                   <Statistic
                     loading={isOrganizationBankStatementTotalsFetching}
@@ -104,7 +105,8 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
               return (
                 <Grid
                   item
-                  xs={2}
+                  md={2}
+                  xs={6}
                 >
                   <Statistic
                     loading={isOrganizationBankStatementTotalsFetching}
@@ -173,7 +175,8 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
               return (
                 <Grid
                   item
-                  xs={2}
+                  md={2}
+                  xs={6}
                  
                 >
                   <Statistic
@@ -197,7 +200,8 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
               return (
                 <Grid
                   item
-                  xs={2}
+                  md={2}
+                  xs={6}
                 >
                   <Statistic
                     loading={isOrganizationBankStatementTotalsFetching}
@@ -264,7 +268,8 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
               return (
                 <Grid
                   item
-                  xs={2}
+                  md={2}
+                  xs={6}
                 >
                   <Statistic
                     loading={isOrganizationBankStatementTotalsFetching}
@@ -283,7 +288,8 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
               return (
                 <Grid
                   item
-                  xs={2}
+                  md={2}
+                  xs={6}
                 >
                   <Statistic
                     loading={isOrganizationBankStatementTotalsFetching}
