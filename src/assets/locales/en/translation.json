@@ -879,7 +879,8 @@
     "in_out_conversion": "In/Out conversions",
     "receiver_bank_client_document": "Receiver bank client document",
     "receiver_bank_client_name": "Receiver bank client name",
-    "balance": "Balance"
+    "balance": "Balance",
+    "permission_group": "Group"
   },
   "actions": {
     "details": "Details",
