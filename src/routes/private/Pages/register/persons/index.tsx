@@ -98,7 +98,6 @@ export const Persons = () => {
       ...currentItem,
     });
   }, [currentItem]);
-
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid
@@ -197,7 +196,7 @@ export const Persons = () => {
         {permissions.register.person.person.person_person_export_csv && (
           <Grid item xs={12} md="auto">
             <ExportReportsModal
-              disabled={!PersonsData?.total || PersonsReportsError}
+              disabled={!PersonsData?.items?.length || PersonsReportsError}
               mutateReport={() => PersonsReportsMutate()}
               error={PersonsReportsError}
               success={PersonsReportsIsSuccess}
