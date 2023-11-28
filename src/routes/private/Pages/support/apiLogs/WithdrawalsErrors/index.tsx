@@ -209,7 +209,7 @@ export const WithdrawalsErrors = () => {
               { name: "createdAt", type: "date", sort: true },
             ]}
             loading={isWithdrawalsErrorsLogsFetching}
-            label={["error_message", "step"]}
+            label={["merchant_name", "error_message", "step"]}
             actions={[
               {
                 label: "details",
