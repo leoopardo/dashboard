@@ -126,7 +126,7 @@ export const ContestationUploads = () => {
                 },
               },
             ]}
-            label={["total_rows", "failed_rows", "progress"]}
+            label={["created_by_name", "total_rows", "failed_rows", "progress"]}
           />
         </Grid>
       </Grid>
