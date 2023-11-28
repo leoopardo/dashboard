@@ -118,6 +118,7 @@ export const RefundDeposits = () => {
     { name: "pix_type", head: "payment_type", type: "pix_type" },
     { name: "buyer_name", type: "text" },
     { name: "buyer_document", type: "document" },
+    { name: "reason", type: "text" },
     { name: "status", type: "status" },
   ];
 
@@ -324,6 +325,7 @@ export const RefundDeposits = () => {
             label={[
               "merchant_name",
               "status",
+              "reason",
               "createdAt",
               "value",
             ]}
