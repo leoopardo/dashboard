@@ -130,7 +130,7 @@ export const BankMaintenence = () => {
                 : undefined
             }
             loading={isBankMainteneceDataFetching}
-            label={["label_name"]}
+            label={["label_name", "cash_in", "cash_out"]}
           />
         </Grid>
       </Grid>
