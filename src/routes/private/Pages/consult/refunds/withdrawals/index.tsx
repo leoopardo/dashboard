@@ -99,7 +99,6 @@ export const RefundWithdrawals = () => {
     { name: "refund_date", type: "date" },
     { name: "receiver_name", type: "text" },
     { name: "receiver_document", type: "document" },
-    { name: "reason", type: "text" },
     { name: "status", type: "status" },
   ];
 
@@ -296,7 +295,6 @@ export const RefundWithdrawals = () => {
               "bank",
               "merchant_name",
               "status",
-              "reason",
               "createdAt",
               "value"
             ]}
