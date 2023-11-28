@@ -26,7 +26,7 @@ export const PublicRoutes = () => {
       <Route
         path="paysbet"
         element={
-          <Permission permission={false}>
+          <Permission permission={import.meta.env.VITE_APP_PAYSBET == "true"}>
             <Paysbet />
           </Permission>
         }

@@ -153,6 +153,7 @@ export const Dashboard = () => {
           style={{
             margin: -28,
             paddingTop: 20,
+          paddingBottom: 16,
             paddingLeft: 6,
             display: "flex",
             justifyContent: "center",
