@@ -35,18 +35,22 @@ export const TabsTable = ({ query }: TableProps) => {
 
   return (
     <>
-      <Row gutter={[8, 8]}>
-        <Col span={22}>
+      <Row gutter={[8, 8]} justify="space-between">
+        <Col xs={{ span: 18 }} md={{ span: 20 }} lg={{ span: 22 }}>
           <Divider orientation="left" data-test-id="divider-tabs-table-1">
             <Typography.Title level={3} data-test-id="text-tabs-table-1">
               Ranking <Typography.Text>(top 10)</Typography.Text>
             </Typography.Title>
           </Divider>
         </Col>
-        <Col span={1}>
+        <Col xs={{ span: 2 }} md={{ span: 1 }}>
           <Button
             data-test-id="button-tabs-table-1"
-            style={{ width: "100%" }}
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
             onClick={() => {
               for (const key of [
                 "ranking-value-total",
@@ -66,7 +70,7 @@ export const TabsTable = ({ query }: TableProps) => {
             <ReloadOutlined />
           </Button>
         </Col>
-        <Col span={1}>
+        <Col xs={{ span: 2 }} md={{ span: 1 }}>
           <Button
             data-test-id="button-tabs-table-2"
             shape="circle"
