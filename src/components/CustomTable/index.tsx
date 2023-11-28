@@ -248,7 +248,6 @@ export const CustomTable = (props: TableProps) => {
                 : Array.isArray(column?.name)
                 ? column?.name + `${Math.random()}`
                 : column?.name,
-              width: 85,
               dataIndex: column?.name,
               render: (text: string) => (
                 <div
@@ -258,24 +257,17 @@ export const CustomTable = (props: TableProps) => {
                     justifyContent: "center",
                   }}
                 >
-                  <Tooltip title={text}>
-                    <Button
-                      size="large"
-                      type="ghost"
-                      onClick={() => {
-                        navigator.clipboard.writeText(text);
-                        toast.success(t("table.copied"));
-                      }}
-                    >
-                      {text ? (
+                  <Typography.Text copyable>
+                     {text ? (
                         <>
-                          {formatCPF(text)} <CopyOutlined />
+                          {formatCPF(text)} 
                         </>
                       ) : (
                         "-"
                       )}
-                    </Button>
-                  </Tooltip>
+                  </Typography.Text>
+                    
+                     
                 </div>
               ),
               sorter: column.sort

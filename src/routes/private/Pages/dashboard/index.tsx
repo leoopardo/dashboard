@@ -44,6 +44,7 @@ import { MerchantBalance } from "./components/merchantBalance";
 import { MerchantsBalance } from "./components/merchantsBalance";
 import { OrganizationBalance } from "./components/organizationBalance";
 import { ValuesTable } from "./components/valuesTable";
+import { useMediaQuery } from "react-responsive";
 
 const INITIAL_QUERY = {
   start_date: moment(new Date())
@@ -68,6 +69,8 @@ export const Dashboard = () => {
   const [isBankChart, setIsBankChart] = useState<boolean>(
     secureLocalStorage.getItem("isBankChart") === "true"
   );
+
+  const isMobile = useMediaQuery({ maxWidth: "767px" });
 
   const [query, setQuery] =
     useState<MerchantBankStatementTotalsQuery>(INITIAL_QUERY);
@@ -185,56 +188,64 @@ export const Dashboard = () => {
         }}
       >
         {permissions?.report?.paybrokers?.bank_balance?.menu && (
-          <div>
-            <Col
-              span={24}
-              style={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-            >
-              <Typography.Title level={3} ref={ref2} data-test-id="text-1">
+          <Row
+            style={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            <Col xs={{ span: 6 }} md={{ span: 6 }}>
+              <Typography.Title
+                level={isMobile ? 5 : 3}
+                ref={ref2}
+                data-test-id="text-1"
+              >
                 {t("menus.organization_bank_balance")}
               </Typography.Title>
-              <div>
-                <Tooltip title={t("buttons.help")} data-test-id="tootip-1">
-                  <Button
-                    data-test-id="button-1"
-                    type="link"
-                    onClick={() => setIsTuorOpen((state) => !state)}
-                  >
-                    <InfoCircleOutlined data-test-id="icon-1" />
-                  </Button>
-                </Tooltip>
+            </Col>
+
+            <Col
+              xs={{ span: 18 }}
+              md={{ span: 18 }}
+              style={{ display: "flex", justifyContent: "flex-end" }}
+            >
+              <Tooltip title={t("buttons.help")} data-test-id="tootip-1">
                 <Button
-                  data-test-id="button-2"
+                  data-test-id="button-1"
                   type="link"
-                  onClick={() => queryClient.invalidateQueries()}
-                  style={{ marginRight: 8 }}
+                  onClick={() => setIsTuorOpen((state) => !state)}
                 >
-                  <ReloadOutlined data-test-id="icon-2" />
+                  <InfoCircleOutlined data-test-id="icon-1" />
                 </Button>
-                <Button
-                  data-test-id="button-3"
-                  shape="circle"
-                  onClick={() => {
-                    if (isBankChart) {
-                      setIsBankChart(false);
-                      secureLocalStorage.setItem("isBankChart", "false");
-                    } else {
-                      setIsBankChart(true);
-                      secureLocalStorage.setItem("isBankChart", "true");
-                    }
-                  }}
-                >
-                  {!isBankChart ? (
-                    <BarChartOutlined data-test-id="icon-3" />
-                  ) : (
-                    <DashOutlined data-test-id="icon-4" />
-                  )}
-                </Button>
-              </div>
+              </Tooltip>
+              <Button
+                data-test-id="button-2"
+                type="link"
+                onClick={() => queryClient.invalidateQueries()}
+                style={{ marginRight: 8 }}
+              >
+                <ReloadOutlined data-test-id="icon-2" />
+              </Button>
+              <Button
+                data-test-id="button-3"
+                shape="circle"
+                onClick={() => {
+                  if (isBankChart) {
+                    setIsBankChart(false);
+                    secureLocalStorage.setItem("isBankChart", "false");
+                  } else {
+                    setIsBankChart(true);
+                    secureLocalStorage.setItem("isBankChart", "true");
+                  }
+                }}
+              >
+                {!isBankChart ? (
+                  <BarChartOutlined data-test-id="icon-3" />
+                ) : (
+                  <DashOutlined data-test-id="icon-4" />
+                )}
+              </Button>
             </Col>
             <Row
               style={{
@@ -314,7 +325,7 @@ export const Dashboard = () => {
                 </Col>
               )}
             </Row>
-          </div>
+          </Row>
         )}
         <Row gutter={[8, 4]} align="middle" justify="center">
           <Layout
@@ -394,7 +405,7 @@ export const Dashboard = () => {
             <Row gutter={[16, 0]}>
               <Divider orientation="left" data-test-id="divider-2">
                 <Typography.Title
-                  level={3}
+                  level={isMobile ? 5 : 3}
                   ref={refInOut}
                   data-test-id="text-3"
                 >

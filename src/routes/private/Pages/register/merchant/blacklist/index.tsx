@@ -77,7 +77,7 @@ export const MerchantBlacklist = () => {
   });
 
   const columns: ColumnInterface[] = [
-    { name: "cpf", type: "cpf" },
+    { name: "cpf", type: "document" },
     { name: "merchant_name", type: "text" },
     { name: "reason", type: "text", sort: true },
     { name: "description", type: "text" },

@@ -35,8 +35,8 @@ export const TabsTable = ({ query }: TableProps) => {
 
   return (
     <>
-      <Row gutter={[8, 8]} justify="space-between">
-        <Col xs={{ span: 18 }} md={{ span: 20 }} lg={{ span: 22 }}>
+      <Row gutter={[8, 8]} justify="space-between" style={{alignItems: "center"}}>
+        <Col xs={{ span: 14 }} md={{ span: 20 }} lg={{ span: 22 }}>
           <Divider orientation="left" data-test-id="divider-tabs-table-1">
             <Typography.Title level={3} data-test-id="text-tabs-table-1">
               Ranking <Typography.Text>(top 10)</Typography.Text>
