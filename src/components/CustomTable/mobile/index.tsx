@@ -21,6 +21,7 @@ import {
   Typography,
 } from "antd";
 import moment from "moment";
+import { defaultTheme } from "@src/styles/defaultTheme";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ColumnInterface, actionsInterface } from "..";
@@ -165,13 +166,15 @@ export const Mobile = (props: MobileProps) => {
                       return typeof item[label] === "boolean" ||
                         item[label] === 0 ||
                         item[label] === 1 ? (
-                        <Typography key={label}>
+                        <Typography key={label} >
                           {item[label] || item[label] === 1
                             ? t("table.active")
                             : t("table.inactive")}
                         </Typography>
                       ) : (
-                        <Typography key={label}>
+                        <Typography key={label} style={{color: (defaultTheme.colors as any)[
+                          item[label]?.toLocaleLowerCase()
+                        ],}}>
                           {t(`table.${item[label]?.toLocaleLowerCase()}`)}
                         </Typography>
                       );
