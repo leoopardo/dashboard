@@ -107,7 +107,7 @@ export const IpsConfigTab = (props: { id?: string }) => {
             error={ipsConfigError}
             columns={columns}
             loading={isIpsConfigFetching}
-            label={["name", "username"]}
+            label={["ip"]}
             actions={[
               {
                 label: "delete",

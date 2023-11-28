@@ -277,7 +277,7 @@ export const OrganizationUser = () => {
               },
             ]}
             loading={isUsersDataFetching}
-            label={["name", "username", "updated_at"]}
+            label={["name", "updated_at"]}
           />
         </Grid>
       </Grid>
