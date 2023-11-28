@@ -76,6 +76,7 @@ export const CredentialConfigTab = (props: { id?: string }) => {
     CreateCredentialsIsLoading,
     CreateCredentialsIsSuccess,
     CreateCredentialsMutate,
+    CreateCredentialsIsReset
   } = useCreateCredentialsConfig({
     merchant_id: Number(props?.id),
     validation_token: tokenState,
@@ -121,6 +122,7 @@ export const CredentialConfigTab = (props: { id?: string }) => {
     }
     setQuery((state: any) => ({ ...state, name: debounceSearch }));
   }, [debounceSearch]);
+
 
   return (
     <Grid container style={{ padding: "25px" }}>
@@ -255,6 +257,7 @@ export const CredentialConfigTab = (props: { id?: string }) => {
           tokenState={tokenState}
           error={CreateCredentialsError}
           success={CreateCredentialsIsSuccess}
+          resetFunction={CreateCredentialsIsReset}
           submit={() => {
             CreateCredentialsMutate();
           }}

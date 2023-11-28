@@ -23,7 +23,6 @@ export function useGetCredentialsConfig(params: CredentialQuery) {
         refetchOnWindowFocus: false,
       }
     );
-
   const credentialConfigData = data;
   const isCredentialConfigFetching = isFetching;
   const credentialConfigError: any = error;

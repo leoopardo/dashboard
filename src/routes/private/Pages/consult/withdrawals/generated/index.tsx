@@ -126,7 +126,7 @@ export const GeneratedWithdrawals = () => {
     { name: "delivered_at", type: "date" },
     { name: "receiver_name", type: "text" },
     { name: "receiver_document", type: "document" },
-    { name: "pix_key_type", type: "text" },
+    { name: "pix_type", head: "payment_type", type: "pix_type" },
     { name: "pix_key", type: "text" },
     { name: "status", type: "status" },
   ];
