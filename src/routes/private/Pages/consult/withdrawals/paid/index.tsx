@@ -368,6 +368,7 @@ export const PaidWithdrawals = () => {
               "status",
               "createdAt",
               "delivered_at",
+              "value"
             ]}
           />
         </Grid>
