@@ -166,15 +166,20 @@ export const Mobile = (props: MobileProps) => {
                       return typeof item[label] === "boolean" ||
                         item[label] === 0 ||
                         item[label] === 1 ? (
-                        <Typography key={label} >
+                        <Typography key={label}>
                           {item[label] || item[label] === 1
                             ? t("table.active")
                             : t("table.inactive")}
                         </Typography>
                       ) : (
-                        <Typography key={label} style={{color: (defaultTheme.colors as any)[
-                          item[label]?.toLocaleLowerCase()
-                        ],}}>
+                        <Typography
+                          key={label}
+                          style={{
+                            color: (defaultTheme.colors as any)[
+                              item[label]?.toLocaleLowerCase()
+                            ],
+                          }}
+                        >
                           {t(`table.${item[label]?.toLocaleLowerCase()}`)}
                         </Typography>
                       );
@@ -211,7 +216,21 @@ export const Mobile = (props: MobileProps) => {
                     case "value":
                     case "balance_to_transactions":
                       return (
-                        <Typography key={label}>
+                        <Typography
+                          key={label}
+                          style={{
+                            color: (defaultTheme.colors as any)[
+                              item?.status?.toLocaleLowerCase()
+                            ],
+                          }}
+                        >
+                          {item?.type === "in" ? (
+                            <ArrowUpOutlined />
+                          ) : item?.type === "out" ? (
+                            <ArrowDownOutlined />
+                          ) : (
+                            " "
+                          )} {" "}
                           {new Intl.NumberFormat("pt-BR", {
                             style: "currency",
                             currency: "BRL",

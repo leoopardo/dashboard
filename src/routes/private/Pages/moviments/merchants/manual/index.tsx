@@ -323,8 +323,8 @@ export const MerchantManual = () => {
             disableActions
             label={[
               "merchant_name",
-              "value",
               "category_name",
+              "value",
               "status",
               "createdAt",
             ]}
@@ -338,7 +338,17 @@ export const MerchantManual = () => {
           query={query}
           setQuery={setQuery}
           haveInitialDate
-          filters={["start_date", "end_date", "status", "partner_id", "aggregator_id", "merchant_id", "operator_id", "category_id", "type"]}
+          filters={[
+            "start_date",
+            "end_date",
+            "status",
+            "partner_id",
+            "aggregator_id",
+            "merchant_id",
+            "operator_id",
+            "category_id",
+            "type",
+          ]}
           refetch={refetchMerchantMovimentsData}
           selectOptions={{
             status: ["PROCESSING", "SUCCESS", "CANCELED"],
