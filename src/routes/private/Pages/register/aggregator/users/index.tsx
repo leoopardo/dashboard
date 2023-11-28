@@ -304,7 +304,7 @@ export const AggregatorUsers = () => {
               },
             ]}
             loading={isUsersDataFetching}
-            label={["name", "username", "aggregator.name", "updated_at"]}
+            label={["name", "aggregator.name", "updated_at"]}
           />
         </Grid>
       </Grid>
