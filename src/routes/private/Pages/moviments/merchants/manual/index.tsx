@@ -29,6 +29,7 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { CreateMovimentModal } from "../../components/createMovimentModal";
+import { Toast } from "@src/components/Toast";
 
 export const MerchantManual = () => {
   const { permissions } = queryClient.getQueryData(
@@ -402,6 +403,12 @@ export const MerchantManual = () => {
           }}
         />
       )}
+      <Toast
+        error={error}
+        success={isSuccess}
+        actionSuccess={t("messages.created")}
+        actionError={t("messages.create")}
+      />
     </Grid>
   );
 };
