@@ -54,7 +54,8 @@ export const AuthLogs = () => {
         spacing={1}
       >
         <Grid item xs={12} md={4} lg={2}>
-           <Button size="large"
+          <Button
+            size="large"
             style={{ width: "100%" }}
             loading={isAuthLogsFetching}
             type="primary"
@@ -94,7 +95,7 @@ export const AuthLogs = () => {
               { name: "createdAt", type: "date", sort: true },
             ]}
             loading={isAuthLogsFetching}
-            label={["merchant_name", "success", "ip","error_message", "step"]}
+            label={["merchant_name", "success", "ip", "error_message", "step"]}
             actions={[
               {
                 label: "details",

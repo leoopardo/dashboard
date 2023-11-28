@@ -134,7 +134,7 @@ export const Mobile = (props: MobileProps) => {
                     case "createdAt":
                     case "paid_at":
                     case "updated_at":
-                      case "last_check":
+                    case "last_check":
                       return (
                         <Typography key={label} style={{ fontSize: "12px" }}>
                           <span> {t(`table.${label}`)}: </span>
@@ -147,6 +147,34 @@ export const Mobile = (props: MobileProps) => {
                           }`}
                         </Typography>
                       );
+                    case "cash_in":
+                    case "cash_out": {
+                      return typeof item[label] === "boolean" ||
+                        item[label] === 0 ||
+                        item[label] === 1 ? (
+                        <>
+                          <Typography
+                            key={label}
+                          >
+                            <span>{t(`table.${label && label}`)}:</span>{" "}
+                            {item[label] || item[label] === 1
+                              ? t("table.true")
+                              : t("table.false")}
+                          </Typography>
+                        </>
+                      ) : (
+                        <Typography
+                          key={label}
+                          style={{
+                            color: (defaultTheme.colors as any)[
+                              item[label]?.toLocaleLowerCase()
+                            ],
+                          }}
+                        >
+                          {t(`table.${item[label]?.toLocaleLowerCase()}`)}
+                        </Typography>
+                      );
+                    }
                     case "status": {
                       return typeof item[label] === "boolean" ||
                         item[label] === 0 ||
