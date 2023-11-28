@@ -536,7 +536,6 @@ export const OrganizationBalance = () => {
               display: "flex",
               alignItems: "start",
               justifyContent: "flex-start",
-              height: "160px",
             }}
           >
             <Button

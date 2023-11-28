@@ -109,10 +109,7 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
               switch (key) {
                 case "number_in":
                   return (
-                    <Grid
-                      item
-                      xs={2}
-                    >
+                    <Grid item md={2} xs={6}>
                       <Statistic
                         loading={isMerchantBankStatementTotalsFetching}
                         title={t("table.number_in")}
@@ -131,10 +128,7 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
                 case "fee_in":
                 case "average_ticket_in":
                   return (
-                    <Grid
-                      item
-                      xs={2}
-                    >
+                    <Grid item md={2} xs={6}>
                       <Statistic
                         loading={isMerchantBankStatementTotalsFetching}
                         title={t(`table.${key}`)}
@@ -205,10 +199,7 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
               switch (key) {
                 case "number_out":
                   return (
-                    <Grid
-                      item
-                      xs={2}
-                    >
+                    <Grid item md={2} xs={6}>
                       <Statistic
                         loading={isMerchantBankStatementTotalsFetching}
                         title={t("table.number_out")}
@@ -227,10 +218,7 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
                 case "fee_out":
                 case "average_ticket_out":
                   return (
-                    <Grid
-                      item
-                      xs={2}
-                    >
+                    <Grid item md={2} xs={6}>
                       <Statistic
                         loading={isMerchantBankStatementTotalsFetching}
                         title={t(`table.${key}`)}

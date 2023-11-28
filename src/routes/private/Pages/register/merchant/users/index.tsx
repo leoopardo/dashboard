@@ -74,7 +74,8 @@ export const MerchantUser = () => {
     MerchantUsersReportsIsLoading,
     MerchantUsersReportsIsSuccess,
     MerchantUsersReportsMutate,
-  } = useCreateMerchantUsersReports({...query,
+  } = useCreateMerchantUsersReports({
+    ...query,
     fields: csvFields,
     comma_separate_value: comma,
   });
@@ -207,7 +208,7 @@ export const MerchantUser = () => {
                 disabled={UsersData?.total === 0 || UsersDataError}
                 icon={<FileAddOutlined style={{ fontSize: 22 }} />}
               >
-                 CSV
+                CSV
               </Button>
             </Tooltip>
           </Grid>
@@ -224,7 +225,12 @@ export const MerchantUser = () => {
             error={UsersDataError}
             columns={columns}
             loading={isUsersDataFetching}
-            label={["name", "username", "merchant.name", "updated_at"]}
+            label={[
+              "name",
+              "permission_group.name",
+              "merchant.name",
+              "updated_at",
+            ]}
             actions={[
               {
                 label: "details",
