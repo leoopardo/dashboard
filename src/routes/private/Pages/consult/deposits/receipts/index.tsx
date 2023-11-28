@@ -3,7 +3,6 @@ import { Toast } from "@src/components/Toast";
 import { useGetReceipts } from "@src/services/consult/deposits/receipts/useGetRecepts";
 import { defaultTheme } from "@src/styles/defaultTheme";
 import {
-  Button,
   Col,
   Descriptions,
   Divider,
@@ -61,12 +60,9 @@ export const DepositsReceipts = () => {
           <Descriptions bordered column={isMobile ? 1 : 3}>
             {receipts?.transaction?.id && (
               <Descriptions.Item label={t("table.id")}>
-                <Button
-                  style={{ width: "100%", height: "100%" }}
-                  onClick={() => setIsViewModalOpen(true)}
-                >
+                <Typography.Link onClick={() => setIsViewModalOpen(true)}>
                   {receipts?.transaction?.id}
-                </Button>
+                </Typography.Link>
               </Descriptions.Item>
             )}
             {receipts?.transaction?.acquirer_id && (
