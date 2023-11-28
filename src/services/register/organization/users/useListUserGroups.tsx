@@ -28,7 +28,7 @@ export function useListUserGroups(params: GroupQuery) {
 
   useEffect(() => {
     refetch();
-  }, []);
+  }, [params]);
 
   const groupsData = data;
   const isGroupsFetching = isFetching;

@@ -300,7 +300,7 @@ export const UpdateUserModal = ({
             setBody={setBody}
             filterIdProp="merchant_id"
             filterIdValue={
-              user.merchant_id ?? body?.merchant_id ?? currentUser?.merchant.id
+              body?.merchant_id ?? currentUser?.merchant.id
             }
           />
         </Form.Item>
