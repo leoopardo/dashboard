@@ -90,6 +90,14 @@ export const Mobile = (props: MobileProps) => {
                         </Tooltip>
                       );
                     }
+                    if (label?.split(".")[1] === "name") {
+                      return (
+                        <Typography>
+                          {t(`table.${label?.split(".")[0]}`)}:{" "}
+                          {item[label?.split(".")[0]]?.name}
+                        </Typography>
+                      );
+                    }
                     if (label.split(".")[1] === "cash_out_bank") {
                       return (
                         <Tooltip placement="topLeft" title={item[label]} arrow>
