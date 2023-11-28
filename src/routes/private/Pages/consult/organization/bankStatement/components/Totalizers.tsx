@@ -38,7 +38,11 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
           container
           item
           xs={12}
-          style={{ height: "5px", marginBottom: "50px", justifyContent: 'flex-start' }}
+          style={{
+            height: "5px",
+            marginBottom: "50px",
+            justifyContent: "flex-start",
+          }}
         >
           <Divider />
         </Grid>
@@ -79,11 +83,7 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
           switch (key) {
             case "number_in":
               return (
-                <Grid
-                  item
-                  md={2}
-                  xs={6}
-                >
+                <Grid item md={2} xs={6}>
                   <Statistic
                     loading={isOrganizationBankStatementTotalsFetching}
                     title={t("table.number_in")}
@@ -103,11 +103,7 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
             case "fee_in":
             case "result_in":
               return (
-                <Grid
-                  item
-                  md={2}
-                  xs={6}
-                >
+                <Grid item md={2} xs={6}>
                   <Statistic
                     loading={isOrganizationBankStatementTotalsFetching}
                     title={t(`table.${key}`)}
@@ -144,7 +140,7 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          marginTop: "25px",
+          marginTop: "25px",  width: "100%",
         }}
       >
         <Grid
@@ -161,7 +157,7 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
             style={{
               display: "flex",
               justifyContent: "center",
-              alignItems: "center",
+              alignItems: "center",  width: "100%",
             }}
           >
             <ArrowDownOutlined style={{ marginRight: "-5px" }} />
@@ -173,12 +169,7 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
           switch (key) {
             case "number_out":
               return (
-                <Grid
-                  item
-                  md={2}
-                  xs={6}
-                 
-                >
+                <Grid item md={2} xs={6}>
                   <Statistic
                     loading={isOrganizationBankStatementTotalsFetching}
                     title={t("table.number_out")}
@@ -198,11 +189,7 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
             case "fee_out":
             case "result_out":
               return (
-                <Grid
-                  item
-                  md={2}
-                  xs={6}
-                >
+                <Grid item md={2} xs={6}>
                   <Statistic
                     loading={isOrganizationBankStatementTotalsFetching}
                     title={t(`table.${key}`)}
@@ -254,6 +241,7 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
         >
           <Typography
             style={{
+              width: "100%",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
@@ -266,11 +254,7 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
           switch (key) {
             case "number_total":
               return (
-                <Grid
-                  item
-                  md={2}
-                  xs={6}
-                >
+                <Grid item md={2} xs={6}>
                   <Statistic
                     loading={isOrganizationBankStatementTotalsFetching}
                     title={t("table.number_total")}
@@ -286,11 +270,7 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
             case "fee_total":
             case "result_total":
               return (
-                <Grid
-                  item
-                  md={2}
-                  xs={6}
-                >
+                <Grid item md={2} xs={6}>
                   <Statistic
                     loading={isOrganizationBankStatementTotalsFetching}
                     title={t(`table.${key}`)}
