@@ -313,8 +313,8 @@ export const OrgonizationManual = () => {
             
             label={[
               "user_name",
-              "value",
               "category_name",
+              "value",
               "status",
               "createdAt",
             ]}
