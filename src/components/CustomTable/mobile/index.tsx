@@ -199,10 +199,12 @@ export const Mobile = (props: MobileProps) => {
                   case "balance_to_transactions":
                     return (
                       <Typography key={label}>
-                        {new Intl.NumberFormat("pt-BR", {
-                          style: "currency",
-                          currency: "BRL",
-                        }).format(Number(item[label]) || 0)}
+                        {item && label && typeof item[label] === "number"
+                          ? new Intl.NumberFormat("pt-BR", {
+                              style: "currency",
+                              currency: "BRL",
+                            }).format(Number(item[label]))
+                          : ""}
                       </Typography>
                     );
 
@@ -224,8 +226,12 @@ export const Mobile = (props: MobileProps) => {
                     return (
                       <>
                         <Typography key={label}>
-                          <span>{t(`table.${label}`)}:</span> {item[label]}
+                          <span>{t(`table.${label && label}`)}:</span>{" "}
+                          {label && item && item[label] !== undefined
+                            ? item[label]
+                            : ""}
                         </Typography>
+
                         <Divider style={{ margin: 2, padding: 2 }} dashed />
                       </>
                     );
@@ -292,7 +298,7 @@ export const Mobile = (props: MobileProps) => {
           children: (
             <Descriptions bordered style={{ margin: 0, padding: 0 }}>
               {props?.columns?.map((value) => {
-                switch (value.type) {
+                switch (value?.type) {
                   case "date":
                     return (
                       <Descriptions.Item
@@ -321,7 +327,7 @@ export const Mobile = (props: MobileProps) => {
                     return (
                       <Descriptions.Item
                         key={value?.name}
-                        label={t(`table.${value.head ?? value?.name}`)}
+                        label={t(`table.${value?.head ?? value?.name}`)}
                         labelStyle={{
                           maxWidth: "100px",
                           margin: 0,
@@ -332,10 +338,15 @@ export const Mobile = (props: MobileProps) => {
                           key={value?.name}
                           style={{ width: "100%", textAlign: "center" }}
                         >
-                          {new Intl.NumberFormat("pt-BR", {
-                            style: "currency",
-                            currency: "BRL",
-                          }).format(Number(item[value?.name]) || 0)}
+                          {item &&
+                          value &&
+                          value.name &&
+                          item[value.name] !== undefined
+                            ? new Intl.NumberFormat("pt-BR", {
+                                style: "currency",
+                                currency: "BRL",
+                              }).format(Number(item[value.name]))
+                            : "-"}
                         </Typography>
                       </Descriptions.Item>
                     );
@@ -343,7 +354,7 @@ export const Mobile = (props: MobileProps) => {
                     return (
                       <Descriptions.Item
                         key={value?.name}
-                        label={t(`table.${value.head ?? value?.name}`)}
+                        label={t(`table.${value?.head ?? value?.name}`)}
                         labelStyle={{
                           maxWidth: "100px",
                           margin: 0,
@@ -364,7 +375,7 @@ export const Mobile = (props: MobileProps) => {
                     return (
                       <Descriptions.Item
                         key={value?.name}
-                        label={t(`table.${value.head ?? value?.name}`)}
+                        label={t(`table.${value?.head ?? value?.name}`)}
                         labelStyle={{
                           maxWidth: "100px",
                           margin: 0,
@@ -374,7 +385,12 @@ export const Mobile = (props: MobileProps) => {
                         <Typography
                           style={{ width: "100%", textAlign: "center" }}
                         >
-                          {item[value?.name] ?? "-"}
+                          {item &&
+                          value &&
+                          value.name &&
+                          item[value.name] !== undefined
+                            ? item[value.name]
+                            : "-"}
                         </Typography>
                       </Descriptions.Item>
                     );
