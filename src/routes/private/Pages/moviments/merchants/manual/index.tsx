@@ -323,11 +323,11 @@ export const MerchantManual = () => {
             actions={[{}]}
             disableActions
             label={[
-              "bank",
-              "merchant_name",
+              "user_name",
+              "value",
+              "category_name",
               "status",
               "createdAt",
-              "delivered_at",
             ]}
           />
         </Grid>
