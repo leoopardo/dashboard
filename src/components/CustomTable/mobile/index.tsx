@@ -150,6 +150,7 @@ export const Mobile = (props: MobileProps) => {
                     case "createdAt":
                     case "paid_at":
                     case "updated_at":
+                      case "last_check":
                       return (
                         <Typography key={label} style={{ fontSize: "12px" }}>
                           <span> {t(`table.${label}`)}: </span>
