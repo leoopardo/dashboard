@@ -320,10 +320,9 @@ export const MerchantManual = () => {
             ]}
             loading={isMerchantMovimentsDataFetching}
             refetch={() => refetchMerchantMovimentsData()}
-            actions={[{}]}
             disableActions
             label={[
-              "user_name",
+              "merchant_name",
               "value",
               "category_name",
               "status",
