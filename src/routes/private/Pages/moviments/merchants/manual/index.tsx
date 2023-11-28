@@ -92,11 +92,11 @@ export const MerchantManual = () => {
     refetchMerchantMovimentsData();
   }, [query]);
 
-  const onSubmitIn = () => {
-    setOperationInIOpen(false);
-    setOperationOutOpen(false);
-    setOperationInTokenModalOpen(true);
-  };
+  // const onSubmitIn = () => {
+  //   setOperationInIOpen(false);
+  //   setOperationOutOpen(false);
+  //   setOperationInTokenModalOpen(true);
+  // };
 
   useEffect(() => {
     setOperationInBody((state) => ({ ...state, validation_token: tokenState }));
@@ -370,7 +370,7 @@ export const MerchantManual = () => {
           setOpen={setOperationInIOpen}
           category="merchant"
           type="in"
-          onSubmit={onSubmitIn}
+          onSubmit={mutate}
           body={operationInBody}
           setBody={setOperationInBody}
         />
@@ -381,7 +381,7 @@ export const MerchantManual = () => {
           setOpen={setOperationOutOpen}
           category="merchant"
           type="out"
-          onSubmit={onSubmitIn}
+          onSubmit={mutate}
           body={operationInBody}
           setBody={setOperationInBody}
         />

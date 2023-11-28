@@ -229,7 +229,7 @@ export const RefundDeposits = () => {
             searchOption={searchOption}
           />
         </Grid>
-        <Grid item xs={12} md={3} lg={3}>
+        <Grid item xs={12} md={2} lg={2}>
           <Button
             size="large"
             type="dashed"
