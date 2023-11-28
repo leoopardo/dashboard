@@ -210,7 +210,7 @@ export const BankBlacklist = () => {
             }
             isConfirmOpen={isConfirmOpen}
             setIsConfirmOpen={setIsConfirmOpen}
-            label={["bank_name", "ispb"]}
+            label={["bank_name", "ispb","createdAt" ]}
             itemToAction={currentItem?.bank_name}
             onConfirmAction={() => DeleteMutate()}
           />
