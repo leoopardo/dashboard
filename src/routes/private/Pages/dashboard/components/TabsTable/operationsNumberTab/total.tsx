@@ -97,13 +97,14 @@ export const TotalOperations = ({ query, chart }: TableProps) => {
       error={RankingError}
       removeValue
       columns={[
-        { name: "name", type: "" },
+        { name: "name", type: "text" },
         { name: "total", type: "text" },
       ]}
       loading={isRankingFetching}
       label={["name", "total"]}
       removePagination
       disableScrollToTop
+    
     />
   );
 };

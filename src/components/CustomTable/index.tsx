@@ -1326,8 +1326,8 @@ export const CustomTable = (props: TableProps) => {
         >
           <Grid item xs={12}>
             <Mobile
-              columns={props?.columns}
-              items={props?.items}
+              columns={props.columns}
+              items={props.items}
               removeValue={props?.removeValue}
               label={props?.label}
               actions={actions}
@@ -1335,6 +1335,7 @@ export const CustomTable = (props: TableProps) => {
               checkbox={props?.checkbox}
               setSelectedRows={props?.setSelectedRows}
               selectedKeys={props?.selectedKeys}
+              loading={props.loading}
             />
           </Grid>
           {!props.removePagination && !props.bankStatement && (
