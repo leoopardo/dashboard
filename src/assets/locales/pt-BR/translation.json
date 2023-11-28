@@ -887,7 +887,8 @@
     "in_out_conversion": "Conversões de entrada/saída",
     "receiver_bank_client_document": "Documento do cliente do banco",
     "receiver_bank_client_name": "Nome do cliente do banco",
-    "balance": "Saldo"
+    "balance": "Saldo",
+    "permission_group": "Grupo"
   },
   "actions": {
     "details": "Detalhes",

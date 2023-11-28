@@ -596,32 +596,34 @@ export const SidebarNavigation = () => {
                     : "none",
                 }
               ),
-              getItem(
-                "import_merchant_blacklist",
-                null,
-                null,
-                false,
-                (e) => handleNavigate(e?.keyPath),
-                {
-                  display: permissions?.register?.merchant?.blacklist
-                    ?.merchant_blacklist_create
-                    ? undefined
-                    : "none",
-                }
-              ),
-              getItem(
-                "uploads_merchant_blacklist",
-                null,
-                null,
-                false,
-                (e) => handleNavigate(e?.keyPath),
-                {
-                  display: permissions?.register?.merchant?.blacklist
-                    ?.merchant_blacklist_create
-                    ? undefined
-                    : "none",
-                }
-              ),
+                // todo
+
+              // getItem(
+              //   "import_merchant_blacklist",
+              //   null,
+              //   null,
+              //   false,
+              //   (e) => handleNavigate(e?.keyPath),
+              //   {
+              //     display: permissions?.register?.merchant?.blacklist
+              //       ?.merchant_blacklist_create
+              //       ? undefined
+              //       : "none",
+              //   }
+              // ),
+              // getItem(
+              //   "uploads_merchant_blacklist",
+              //   null,
+              //   null,
+              //   false,
+              //   (e) => handleNavigate(e?.keyPath),
+              //   {
+              //     display: permissions?.register?.merchant?.blacklist
+              //       ?.merchant_blacklist_create
+              //       ? undefined
+              //       : "none",
+              //   }
+              // ),
               getItem(
                 "merchant_blacklist_reasons",
                 null,
