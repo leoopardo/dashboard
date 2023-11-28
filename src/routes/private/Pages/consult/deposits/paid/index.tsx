@@ -352,6 +352,7 @@ export const PaidDeposits = () => {
               "status",
               "createdAt",
               "delivered_at",
+              "value"
             ]}
           />
         </Grid>
