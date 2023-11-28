@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { LockOutlined, SearchOutlined } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { useGetCheckCpf } from "@src/services/consult/persons/checkDocument";
+import { useGetCheckCpfDetails } from "@src/services/consult/persons/checkDocumentsDetails";
 import { Button, Descriptions, Input, Space } from "antd";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import ReactInputMask from "react-input-mask";
 import { useMediaQuery } from "react-responsive";
 import { ViewModal } from "./components/ViewModal";
-import { LockOutlined, SearchOutlined } from "@ant-design/icons";
-import { useGetCheckCpfDetails } from "@src/services/consult/persons/checkDocumentsDetails";
 
 export const CheckDocument = () => {
   const { t } = useTranslation();

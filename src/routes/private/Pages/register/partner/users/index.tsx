@@ -289,7 +289,7 @@ export const PartnerUsers = () => {
               },
             ]}
             loading={isUsersDataFetching}
-            label={["name", "partner.name", "updated_at"]}
+            label={["name", "partner.name","permission_group.name", "updated_at"]}
           />
         </Grid>
       </Grid>

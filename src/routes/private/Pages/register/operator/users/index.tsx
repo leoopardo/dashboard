@@ -290,7 +290,7 @@ export const OperatorUsers = () => {
               },
             ]}
             loading={isUsersDataFetching}
-            label={["name", "operator.name", "updated_at"]}
+            label={["name", "operator.name","permission_group.name", "updated_at"]}
           />
         </Grid>
       </Grid>

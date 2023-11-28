@@ -889,7 +889,6 @@
     "receiver_bank_client_name": "Nome do cliente do banco",
     "balance": "Saldo",
     "permission_group": "Grupo"
-
   },
   "actions": {
     "details": "Detalhes",
