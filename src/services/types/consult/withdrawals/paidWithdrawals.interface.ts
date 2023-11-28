@@ -53,7 +53,8 @@ export interface paidWithdrawalsRowsQuery {
   payment_id?: string;
   receiver_document?: string;
   receiver_name?: string;
-  description?: string
+  description?: string;
+  withdraw_id?: string;
 }
 
 export interface paidWithdrawalsTotal {

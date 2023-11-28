@@ -197,12 +197,15 @@ export const UndeliveredWithdrawals = () => {
               delete query.receiver_document;
               delete query.receiver_name;
               delete query.description;
+              delete query.withdraw_id;
               if (
                 [
                   "organization_id",
                   "endToEndId",
                   "payment_id",
-                  "reference_id","receiver_document"
+                  "reference_id",
+                  "receiver_document",
+                  "withdraw_id",
                 ].includes(value)
               ) {
                 delete query.initial_date;

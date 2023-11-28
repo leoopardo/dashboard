@@ -23,6 +23,7 @@ export interface generatedWithdrawalsTotalQuery {
   delivered_at?: boolean;
   buyer_name?: string;
   payer_name?: string;
+  withdraw_id?: string;
 }
 
 export interface generatedWithdrawalsRowsQuery {
@@ -68,6 +69,7 @@ export interface generatedWithdrawalsRowsQuery {
   receiver_name?: string;
   description?: string;
   delivered_at_secondary?: boolean;
+  withdraw_id?: string;
 }
 
 export interface generatedWithdrawalsTotal {

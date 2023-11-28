@@ -64,9 +64,11 @@ export const OrganizationCategorieSelect = ({
     <AutoComplete
       size="large"
       options={
-        CategoriesData?.items?.map((item, index) => {
-          return { key: index, value: item.id, label: item.name };
-        }) ?? []
+        CategoriesData?.items
+          ?.filter((categ) => categ.status === true)
+          ?.map((item, index) => {
+            return { key: index, value: item.id, label: item.name };
+          }) ?? []
       }
       value={value}
       notFoundContent={<Empty />}

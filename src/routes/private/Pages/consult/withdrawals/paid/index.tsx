@@ -195,6 +195,8 @@ export const PaidWithdrawals = () => {
               delete query.receiver_document;
               delete query.receiver_name;
               delete query.description;
+              delete query.withdraw_id;
+              
               if (
                 [
                   "organization_id",

@@ -888,7 +888,8 @@
     "receiver_bank_client_document": "Documento do cliente do banco",
     "receiver_bank_client_name": "Nome do cliente do banco",
     "balance": "Saldo",
-    "permission_group": "Grupo"
+    "permission_group": "Grupo",
+    "withdraw_id": "ID da organização"
   },
   "actions": {
     "details": "Detalhes",

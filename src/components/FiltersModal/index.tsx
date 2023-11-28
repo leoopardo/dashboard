@@ -261,7 +261,7 @@ export const FiltersModal = ({
                           maxRange &&
                           filtersQuery[endDateKeyName] >
                             moment(new Date(filtersQuery[startDateKeyName]))
-                              .add(31, "days")
+                              .add(32, "days")
                               .format("YYYY-MM-DDTHH:mm:00.000")
                         ) {
                           return Promise.reject(t("error.date_too_log"));
