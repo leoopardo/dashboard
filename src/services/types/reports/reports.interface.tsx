@@ -2,6 +2,8 @@
 export interface ReportsQuery {
   start_date?: string;
   end_date?: string;
+  createdat_start?: string;
+  createdat_end?: string;
   limit?: number;
   page?: number;
   fields?: any;

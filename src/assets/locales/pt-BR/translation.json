@@ -151,7 +151,9 @@
     "deposit_contestation": "Depósitos",
     "receipts": "Comprovantes",
     "organization_settings": "Organização Configurações",
-    "merchant_settings": "Empresa Configurações"
+    "merchant_settings": "Empresa Configurações",
+    "historic_cpf_merchant": "Histórico de CPF por Merchant",
+    "historic_cpf_merchant_details": "Detalhes de CPF por Merchant"
   },
 
   "titles": {
@@ -897,7 +899,8 @@
     "receiver_bank_client_name": "Nome do cliente do banco",
     "balance": "Saldo",
     "permission_group": "Grupo",
-    "withdraw_id": "ID da organização"
+    "withdraw_id": "ID da organização",
+    "total_cpf_checks": "Total CPF checados"
   },
   "actions": {
     "details": "Detalhes",
