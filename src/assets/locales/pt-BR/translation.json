@@ -446,7 +446,8 @@
     "account": "Conta",
     "internal_account_number": "Número de conta interna",
     "account_name": "Nome da conta",
-    "account_document": "Documento da conta"
+    "account_document": "Documento da conta",
+    "label_name": "Nome do banco"
   },
   "table": {
     "id": "ID",
