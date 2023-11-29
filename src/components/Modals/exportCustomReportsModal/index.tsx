@@ -60,20 +60,9 @@ export const ExportCustomReportsModal = ({
   const [selectedFields, setSelectedFields] = useState<string[]>([]);
   const [preview, setPreview] = useState<any>();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const [api, contextHolder] = notification.useNotification();
-
-  useEffect(() => {
-    const f: any = {};
-    for (const field in selectedFields) {
-      if (!fields?.find((f) => f === selectedFields[field])) {
-        return;
-      } else {
-        f[selectedFields[field]] = t(`table.${selectedFields[field]}`);
-      }
-    }
-    setCsvFields(f);
-  }, [selectedFields]);
 
   const handleCreateReport = () => {
     const f: any = {};
@@ -85,10 +74,14 @@ export const ExportCustomReportsModal = ({
       }
     }
     setCsvFields(f);
-    mutateReport();
+    setLoading(true);
+    setTimeout(() => {
+      mutateReport();
+      setLoading(false);
+      setOpen(false);
+    }, 500);
     secureLocalStorage.setItem(reportName, selectedFields.join("%"));
     secureLocalStorage.setItem("comma", `${comma}`);
-    setOpen(false);
   };
 
   useEffect(() => {
@@ -158,7 +151,7 @@ export const ExportCustomReportsModal = ({
         title={t("messages.export_csv")}
         open={open}
         onCancel={() => setOpen(false)}
-        okButtonProps={{ disabled: selectedFields.length === 0 }}
+        okButtonProps={{ disabled: selectedFields.length === 0, loading }}
         onOk={handleCreateReport}
       >
         <Row style={{ maxHeight: "450px", overflow: "auto" }}>
