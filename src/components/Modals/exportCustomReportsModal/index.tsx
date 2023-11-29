@@ -99,7 +99,8 @@ export const ExportCustomReportsModal = ({
     const commaSeparator: string | null = `${secureLocalStorage.getItem(
       "comma"
     )}`;
-    if (storage) setSelectedFields(storage);
+
+    if (storage && storage[0] !== "null") setSelectedFields(storage);
     if (commaSeparator && setIsComma) setIsComma(commaSeparator == "true");
   }, []);
 
@@ -200,9 +201,13 @@ export const ExportCustomReportsModal = ({
                         value: t(`table.${field}`),
                       };
                     })}
-                    value={selectedFields.map((field) => {
-                      return { title: field, value: t(`table.${field}`) };
-                    })}
+                    value={
+                      selectedFields.length >= 1
+                        ? selectedFields.map((field) => {
+                            return { title: field, value: t(`table.${field}`) };
+                          })
+                        : []
+                    }
                     mode="multiple"
                     onChange={(_value, option) => {
                       setSelectedFields(
