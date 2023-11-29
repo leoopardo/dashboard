@@ -342,7 +342,7 @@ export const MerchantPreManual = () => {
                 error={preManualReportsError}
                 success={preManualReportsIsSuccess}
                 loading={preManualReportsIsLoading}
-                reportPath="moviment/pre_manual/reports"
+                reportPath="/moviment/merchant_moviments/merchant_moviments_reports/merchant_pre_manual_moviments_reports"
               />
             </Grid>
           )}
