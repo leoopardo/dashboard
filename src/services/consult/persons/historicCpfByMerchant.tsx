@@ -7,7 +7,7 @@ export function useGetHistoricCpfByMerchant(
   params?: HistoricCpfByMerchantQuery
 ) {
   const { data, isFetching, error, refetch, isSuccess } = useQuery<
-    IHistoricCpfByMerchant | null | undefined
+    IHistoricCpfByMerchant[] | null | undefined
   >(
     "HistoricCpfByMerchant",
     async () => {

@@ -1640,6 +1640,44 @@ export const SidebarNavigation = () => {
                   : "none",
               }
             ),
+            getItem(
+              "reports",
+              null,
+              [
+                getItem(
+                  "historic_cpf_merchant",
+                  null,
+                  null,
+                  false,
+                  (e) => handleNavigate(e?.keyPath),
+                  {
+                    display: permissions?.report?.person?.check_cpf?.menu
+                      ? undefined
+                      : "none",
+                  }
+                ),
+
+                getItem(
+                  "historic_cpf_merchant_details",
+                  null,
+                  null,
+                  false,
+                  (e) => handleNavigate(e?.keyPath),
+                  {
+                    display: permissions?.report?.person?.check_cpf?.menu
+                      ? undefined
+                      : "none",
+                  }
+                ),
+              ],
+              undefined,
+              undefined,
+              {
+                display: permissions?.report?.person?.check_cpf?.menu
+                  ? undefined
+                  : "none",
+              }
+            ),
           ],
           undefined,
           undefined,

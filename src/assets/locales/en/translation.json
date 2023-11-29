@@ -150,7 +150,9 @@
     "deposit_contestation": "Deposit",
     "receipts": "Receipts",
     "organization_settings": "Organization settings",
-    "merchant_settings": "Merchant settings"
+    "merchant_settings": "Merchant settings",
+    "historic_cpf_merchant": "CPF historic by merchant",
+    "historic_cpf_merchant_details": "CPF historic by merchant details"
   },
 
   "titles": {
@@ -881,7 +883,8 @@
     "receiver_bank_client_name": "Receiver bank client name",
     "balance": "Balance",
     "permission_group": "Group",
-    "withdraw_id": "Organization ID"
+    "withdraw_id": "Organization ID",
+    "total_cpf_checks": "Total CPF checks"
   },
   "actions": {
     "details": "Details",

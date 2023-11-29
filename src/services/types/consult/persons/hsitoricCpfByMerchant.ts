@@ -12,8 +12,8 @@ export interface IHistoricCpfByMerchant {
   total?: number
 }
 
-export interface CheckCpfDetails {
-  items: { reason: string; merchant_name: string };
+export interface HistoricCpfByMerchantQueryDetails {
+  items: IHistoricCpfByMerchant[];
   limit: number;
   page: number;
   total: number;

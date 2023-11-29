@@ -107,6 +107,9 @@ import { HistoricCpfByMerchant } from "./Pages/consult/persons/historicCpfByMerc
 import { Permission } from "./permission";
 import { Redirect } from "./redirect";
 import { DepositsReceipts } from "./Pages/consult/deposits/receipts";
+import { HistoricCpfByMerchantReports } from "./Pages/consult/persons/reports/historicCpfByMerchant";
+import { HistoricCpfByMerchantDetails } from "./Pages/consult/persons/historicCpfByMerchant/details";
+import { HistoricCpfByMerchantDetailsReports } from "./Pages/consult/persons/reports/historicCpfByMerchantDetails";
 
 export const PrivateRoutes = () => {
   const { responseValidate } = useValidate();
@@ -534,18 +537,60 @@ export const PrivateRoutes = () => {
                 </Permission>
               }
             />
-            <Route
-              path="historic_cpf_merchant"
-              element={
-                <Permission
-                  permission={
-                    responseValidate?.permissions?.report?.person?.menu
-                  }
-                >
-                  <HistoricCpfByMerchant />
-                </Permission>
-              }
-            />
+            <Route path="historic_cpf_merchant">
+              <Route
+                index
+                element={
+                  <Permission
+                    permission={
+                      responseValidate?.permissions?.register?.merchant
+                        ?.merchant?.menu
+                    }
+                  >
+                    <HistoricCpfByMerchant />
+                  </Permission>
+                }
+              />
+              <Route
+                path="details"
+                element={
+                  <Permission
+                    permission={
+                      responseValidate?.permissions?.report?.person?.menu
+                    }
+                  >
+                    <HistoricCpfByMerchantDetails />
+                  </Permission>
+                }
+              />
+            </Route>
+
+            <Route path="reports">
+              <Route
+                path="historic_cpf_merchant"
+                element={
+                  <Permission
+                    permission={
+                      responseValidate?.permissions?.report?.person?.menu
+                    }
+                  >
+                    <HistoricCpfByMerchantReports />
+                  </Permission>
+                }
+              />
+              <Route
+                path="historic_cpf_merchant_details"
+                element={
+                  <Permission
+                    permission={
+                      responseValidate?.permissions?.report?.person?.menu
+                    }
+                  >
+                    <HistoricCpfByMerchantDetailsReports />
+                  </Permission>
+                }
+              />
+            </Route>
           </Route>
         </Route>
         {/* cadastros */}
