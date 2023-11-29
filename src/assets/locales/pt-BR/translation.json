@@ -439,7 +439,14 @@
     "fastpix_refund_fee_type": "Tipo de taxa (Devolução FastPix)",
     "fastpix_refund_fee_percent": "Porcentagem de taxa (Devolução FastPix)",
     "fastpix_refund_fee_value": "Valor de taxa (Devolução FastPix)",
-    "fastpix_refund_fee_min": "Taxa mínima (Devolução FastPix)"
+    "fastpix_refund_fee_min": "Taxa mínima (Devolução FastPix)",
+    "priority": "Prioridade",
+    "bank_fee": "Taxa bancária",
+    "agency": "Agência",
+    "account": "Conta",
+    "internal_account_number": "Número de conta interna",
+    "account_name": "Nome da conta",
+    "account_document": "Documento da conta"
   },
   "table": {
     "id": "ID",

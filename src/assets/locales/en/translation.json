@@ -404,7 +404,14 @@
     "fastpix_refund_fee_type": "Fee Type (FastPix Refund)",
     "fastpix_refund_fee_percent": "Percentage Fee (FastPix Refund)",
     "fastpix_refund_fee_value": "Fee Amount (FastPix Refund)",
-    "fastpix_refund_fee_min": "Fee min. value (FastPix Refund)"
+    "fastpix_refund_fee_min": "Fee min. value (FastPix Refund)",
+    "priority": "Priority",
+    "bank_fee": "Bank fee",
+    "agency": "Agency",
+    "account": "Account",
+    "internal_account_number": "Internal account number",
+    "account_name": "Account name",
+    "account_document": "Account document"
   },
   "modal": {
     "confirm": "Confirm",
