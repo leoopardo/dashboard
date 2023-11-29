@@ -270,7 +270,7 @@ export const ImportPersonsBlacklist = () => {
                   console.log(`${reader.result}`);
 
                   const base64Enconded = Buffer.from(
-                    `${reader?.result}`?.replace(/(\r\n|\n|\r)/gm, "\n")
+                    `${reader?.result}`?.replace(/(\r\n|\n|\r)/gm, "\n").trim()
                   ).toString("base64");
 
                   setBody({ content: base64Enconded });
