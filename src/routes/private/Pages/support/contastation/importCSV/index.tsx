@@ -229,7 +229,7 @@ export const ImportContastationDeposit = () => {
       fields: csvHeader,
       data: dataSource,
     });
-    const base64Encoded = btoa(csvData.replace(/(\r\n|\n|\r)/gm, "\n"));
+    const base64Encoded = btoa(csvData.replace(/(\r\n|\n|\r)/gm, "\n").trim());
 
     setBody({ content: base64Encoded });
   };
