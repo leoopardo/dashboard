@@ -4,7 +4,7 @@ import { IBodyCredentialItem } from "@src/services/types/register/merchants/merc
 import { useMutation } from "react-query";
 
 export function useCreateCredentialsConfig(body: IBodyCredentialItem) {
-  const { isLoading, error, mutate, isSuccess } = useMutation<
+  const { isLoading, error, mutate, isSuccess, reset } = useMutation<
     IBodyCredentialItem | null | undefined
   >("CreateCredentialsConfig", async () => {
     const response = await api.post("core/api-credentials/create", body, {});
@@ -12,15 +12,18 @@ export function useCreateCredentialsConfig(body: IBodyCredentialItem) {
     return response.data;
   });
 
+  
   const CreateCredentialsMutate = mutate;
   const CreateCredentialsIsLoading = isLoading;
   const CreateCredentialsError = error;
   const CreateCredentialsIsSuccess = isSuccess;
+  const CreateCredentialsIsReset = reset;
 
   return {
     CreateCredentialsMutate,
     CreateCredentialsIsLoading,
     CreateCredentialsError,
     CreateCredentialsIsSuccess,
+    CreateCredentialsIsReset
   };
 }

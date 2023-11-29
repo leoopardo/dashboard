@@ -79,7 +79,7 @@ export const Mobile = (props: MobileProps) => {
                             src={
                               bankListData?.itens.find(
                                 (bank) =>
-                                  bank?.label_name?.split(".").join("_") ===
+                                  bank?.bank ===
                                   item?.merchantConfig?.cash_in_bank
                               )?.icon_url ?? null
                             }
@@ -113,7 +113,7 @@ export const Mobile = (props: MobileProps) => {
                             src={
                               bankListData?.itens.find(
                                 (bank) =>
-                                  bank?.label_name?.split(".").join("_") ===
+                                  bank?.bank ===
                                   item?.merchantConfig?.cash_out_bank
                               )?.icon_url ?? null
                             }
