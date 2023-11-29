@@ -103,6 +103,7 @@ export const NewUserModal = ({
     if (currentUser && action === "update")
       setBody((state) => ({
         ...state,
+        user_id: currentUser?.id,
         name: currentUser?.name,
         group_id: currentUser?.group_id,
         status: currentUser?.status,

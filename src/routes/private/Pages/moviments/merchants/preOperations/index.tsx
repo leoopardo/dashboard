@@ -274,7 +274,7 @@ export const MerchantPreManual = () => {
           container
           item
           xs={12}
-          md={6}
+          md={5}
           spacing={1}
           style={{
             display: "flex",
@@ -306,7 +306,7 @@ export const MerchantPreManual = () => {
           container
           item
           xs={12}
-          md={6}
+          md={7}
           spacing={1}
           style={{
             display: "flex",
@@ -335,14 +335,14 @@ export const MerchantPreManual = () => {
             </Button>
           </Grid>
           {permissions.transactions.merchant?.merchant_pre_manual?.menu && (
-            <Grid item xs={12} md={2} lg={2}>
+            <Grid item xs={12} md={"auto"} lg={"auto"}>
               <ExportReportsModal
                 disabled={!preManualData?.total || preManualDataError}
                 mutateReport={() => preManualReportsMutate()}
                 error={preManualReportsError}
                 success={preManualReportsIsSuccess}
                 loading={preManualReportsIsLoading}
-                reportPath="moviment/pre_manual/reports"
+                reportPath="/moviment/merchant_moviments/merchant_moviments_reports/merchant_pre_manual_moviments_reports"
               />
             </Grid>
           )}
@@ -401,7 +401,14 @@ export const MerchantPreManual = () => {
               {
                 label: "delete",
                 icon: <DeleteOutlined style={{ fontSize: "20px" }} />,
-                onClick: () => setConfirmDelete(true),
+                onClick: (item) => {
+                  setSelectedRows(
+                    selectedRows.filter((i) => i._id !== item._id)
+                  );
+                  console.log(selectedRows);
+
+                  setConfirmDelete(true);
+                },
               },
             ]}
             isConfirmOpen={confirmDelete}

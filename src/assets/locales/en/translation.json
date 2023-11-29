@@ -414,7 +414,9 @@
     "internal_account_number": "Internal account number",
     "account_name": "Account name",
     "account_document": "Account document",
-    "label_name": "Bank name"
+    "label_name": "Bank name",
+    "v3_id": "ID V3",
+    "position": "Position"
   },
   "modal": {
     "confirm": "Confirm",

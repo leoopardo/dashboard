@@ -146,8 +146,9 @@ export const UpdateAggregator = () => {
     aggregator_responsible_id: currentResponsible?.id,
   });
 
-  const { AggregatorAttachmentsData, isAggregatorAttachmentsDataFetching } =
-    useGetAggregatorAttachments({ aggregator_id: location.state.id });
+  const { AggregatorAttachmentsData } = useGetAggregatorAttachments({
+    aggregator_id: location.state.id,
+  });
   const {
     AggregatorAttachmentError,
     AggregatorAttachmentIsLoading,
@@ -159,7 +160,6 @@ export const UpdateAggregator = () => {
     DeleteAggregatorAttachmentMutate,
     DeleteAggregatorAttachmentError,
     DeleteAggregatorAttachmentIsSuccess,
-    DeleteAggregatorAttachmentIsLoading,
   } = useDeleteAggregatorAttachment(deleteFileId);
 
   const handleChangeAggregator = (event: any) => {
@@ -533,84 +533,79 @@ export const UpdateAggregator = () => {
     {
       key: "3",
       label: t("table.attachments"),
-      children:
-        isAggregatorAttachmentsDataFetching ||
-        DeleteAggregatorAttachmentIsLoading ||
-        AggregatorAttachmentIsLoading ? (
-          <div
-            style={{
-              height: "100%",
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Spin size="large" />
-          </div>
-        ) : (
-          <Row gutter={[8, 8]}>
-            <Col span={24}>
-              <Dragger
-                style={{ maxHeight: "150px" }}
-                listType="picture"
-                multiple={false}
-                onRemove={(file) => {
-                  setDeleteFileId(file?.uid);
-                }}
-                defaultFileList={AggregatorAttachmentsData?.items.map(
-                  (file) => {
-                    return {
-                      uid: file._id,
-                      name: file.file_name,
-                      url: file.file_url,
-                    };
-                  }
-                )}
-                height={1000}
-                beforeUpload={(file) => {
-                  setFileBody({
-                    base64_file: "",
-                    file_name: "",
-                    aggregator_id: location.state.id,
-                  });
+      children: AggregatorAttachmentIsLoading ? (
+        <div
+          style={{
+            height: "100%",
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Spin size="large" />
+        </div>
+      ) : (
+        <Row gutter={[8, 8]}>
+          <Col span={24}>
+            <Dragger
+              style={{ maxHeight: "150px" }}
+              listType="picture"
+              multiple={false}
+              onRemove={(file) => {
+                setDeleteFileId(file?.uid);
+              }}
+              defaultFileList={AggregatorAttachmentsData?.items.map((file) => {
+                return {
+                  uid: file._id,
+                  name: file.file_name,
+                  url: file.file_url,
+                };
+              })}
+              height={1000}
+              beforeUpload={(file) => {
+                setFileBody({
+                  base64_file: "",
+                  file_name: "",
+                  aggregator_id: location.state.id,
+                });
+                setFileBody((state: any) => ({
+                  ...state,
+                  file_name: file.name,
+                }));
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => {
                   setFileBody((state: any) => ({
                     ...state,
-                    file_name: file.name,
+                    base64_file: reader.result,
                   }));
-                  const reader = new FileReader();
-                  reader.readAsDataURL(file);
-                  reader.onload = () => {
-                    setFileBody((state: any) => ({
-                      ...state,
-                      base64_file: reader.result,
-                    }));
-                  };
-                  return false;
-                }}
-              >
-                <Typography className="ant-upload-drag-icon">
-                  <InboxOutlined />
-                </Typography>
-                <Typography className="ant-upload-text">
-                  {t("messages.upload_label")}
-                </Typography>
-                <Typography className="ant-upload-hint">
-                  {t("messages.upload_description")}
-                </Typography>
-              </Dragger>
-            </Col>
+                };
+                return false;
+              }}
+            >
+              <Typography className="ant-upload-drag-icon">
+                <InboxOutlined />
+              </Typography>
+              <Typography className="ant-upload-text">
+                {t("messages.upload_label")}
+              </Typography>
+              <Typography className="ant-upload-hint">
+                {t("messages.upload_description")}
+              </Typography>
+            </Dragger>
+          </Col>
 
-            {!AggregatorAttachmentsData?.total && !fileBody?.base64_file && (
-              <Col span={24}>
-                <Empty
-                  image={Empty.PRESENTED_IMAGE_SIMPLE}
-                  description={t("error.400")}
-                />
-              </Col>
-            )}
-          </Row>
-        ),
+          {!AggregatorAttachmentsData?.total && !fileBody?.base64_file && (
+            <Col span={24}>
+              <Empty
+                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                description={t("error.400")}
+              />
+            </Col>
+          )}
+        </Row>
+      ),
     },
   ];
   return (
