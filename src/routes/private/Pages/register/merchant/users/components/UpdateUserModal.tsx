@@ -137,7 +137,7 @@ export const UpdateUserModal = ({
       formRef.current?.resetFields();
     }
   }, [isSuccess]);
-  
+
   useEffect(() => {
     if (error) {
       setBody({});

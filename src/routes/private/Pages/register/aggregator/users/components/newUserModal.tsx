@@ -105,6 +105,7 @@ export const NewUserModal = ({
     if (currentUser && action === "update")
       setBody(() => ({
         ...currentUser,
+        user_id: currentUser.id,
       }));
   }, [currentUser]);
 
@@ -129,7 +130,7 @@ export const NewUserModal = ({
       formRef.current?.resetFields();
     }
   }, [isSuccess]);
-  
+
   useEffect(() => {
     if (error) {
       setBody({
