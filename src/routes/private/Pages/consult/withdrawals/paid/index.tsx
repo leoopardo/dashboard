@@ -196,13 +196,14 @@ export const PaidWithdrawals = () => {
               delete query.receiver_name;
               delete query.description;
               delete query.withdraw_id;
-              
+
               if (
                 [
                   "organization_id",
                   "endToEndId",
                   "payment_id",
-                  "reference_id","receiver_document"
+                  "reference_id",
+                  "receiver_document",
                 ].includes(value)
               ) {
                 delete query.initial_date;
@@ -308,9 +309,6 @@ export const PaidWithdrawals = () => {
                 type="dashed"
                 size="large"
                 loading={isPaidWithdrawalsRowsFetching}
-                disabled={
-                  !paidWithdrawalsRows?.items.length || paidWithdrawalsRowsError
-                }
                 icon={<FileAddOutlined style={{ fontSize: 22 }} />}
               >
                 CSV
@@ -370,7 +368,7 @@ export const PaidWithdrawals = () => {
               "status",
               "createdAt",
               "delivered_at",
-              "value"
+              "value",
             ]}
           />
         </Grid>

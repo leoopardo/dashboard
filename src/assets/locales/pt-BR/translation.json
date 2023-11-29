@@ -462,7 +462,7 @@
     "canceled": "Cancelado",
     "refunded": "Devolvido",
     "expired": "Expirado",
-    "merchant_id": "Empresa",
+    "merchant_id": "ID Empresa",
     "partner_name": "Plataforma",
     "partner_id": "ID Plataforma",
     "details": "Detalhes",
