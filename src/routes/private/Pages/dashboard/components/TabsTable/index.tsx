@@ -4,6 +4,7 @@ import {
   DashOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
+import { useErrorContext } from "@src/contexts/ErrorContext";
 import { queryClient } from "@src/services/queryClient";
 import { Button, Col, Divider, Row, Tabs, Typography } from "antd";
 import { Dispatch, SetStateAction, useState } from "react";
@@ -11,7 +12,6 @@ import { useTranslation } from "react-i18next";
 import secureLocalStorage from "react-secure-storage";
 import { FeeTab } from "./feesTab";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { useErrorContext } from "@src/contexts/ErrorContext";
 import { FinancialMovementsTab } from "./financialMovimentsTab";
 import { OperationMovementsTab } from "./operationsNumberTab";
 
@@ -35,17 +35,22 @@ export const TabsTable = ({ query }: TableProps) => {
 
   return (
     <>
-      <Row gutter={[8, 8]}>
-        <Col span={22}>
-          <Divider orientation="left">
-            <Typography.Title level={3}>
+      <Row gutter={[8, 8]} justify="space-between" style={{alignItems: "center"}}>
+        <Col xs={{ span: 14 }} md={{ span: 20 }} lg={{ span: 22 }}>
+          <Divider orientation="left" data-test-id="divider-tabs-table-1">
+            <Typography.Title level={3} data-test-id="text-tabs-table-1">
               Ranking <Typography.Text>(top 10)</Typography.Text>
             </Typography.Title>
           </Divider>
         </Col>
-        <Col span={1}>
+        <Col xs={{ span: 2 }} md={{ span: 1 }}>
           <Button
-            style={{ width: "100%" }}
+            data-test-id="button-tabs-table-1"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
             onClick={() => {
               for (const key of [
                 "ranking-value-total",
@@ -65,8 +70,9 @@ export const TabsTable = ({ query }: TableProps) => {
             <ReloadOutlined />
           </Button>
         </Col>
-        <Col span={1}>
+        <Col xs={{ span: 2 }} md={{ span: 1 }}>
           <Button
+            data-test-id="button-tabs-table-2"
             shape="circle"
             onClick={() => {
               if (isChart) {
@@ -83,6 +89,7 @@ export const TabsTable = ({ query }: TableProps) => {
         </Col>
       </Row>
       <Tabs
+        data-test-id="tabs-tabs-table-1"
         defaultActiveKey="1"
         type="line"
         size="large"
@@ -93,6 +100,7 @@ export const TabsTable = ({ query }: TableProps) => {
               key: "financial_movements",
               children: (
                 <FinancialMovementsTab
+                  data-test-id="financial-movements-tab"
                   query={query}
                   chart={isChart}
                   operationType={operationType}
@@ -108,6 +116,7 @@ export const TabsTable = ({ query }: TableProps) => {
               disabled: error.rankingOperations,
               children: (
                 <OperationMovementsTab
+                  data-test-id="operation-movements-tab"
                   query={query}
                   chart={isChart}
                   operationType={operationType}
@@ -121,6 +130,7 @@ export const TabsTable = ({ query }: TableProps) => {
                 key: "fees",
                 children: (
                   <FeeTab
+                    data-test-id="fee-tab"
                     query={query}
                     chart={isChart}
                     operationType={operationType}
@@ -130,7 +140,7 @@ export const TabsTable = ({ query }: TableProps) => {
               },
           ].filter(Boolean) as any[]
         }
-        style={{paddingBottom: 24}}
+        style={{ paddingBottom: 24 }}
       />
     </>
   );

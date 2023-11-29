@@ -44,6 +44,7 @@ import { MerchantBalance } from "./components/merchantBalance";
 import { MerchantsBalance } from "./components/merchantsBalance";
 import { OrganizationBalance } from "./components/organizationBalance";
 import { ValuesTable } from "./components/valuesTable";
+import { useMediaQuery } from "react-responsive";
 
 const INITIAL_QUERY = {
   start_date: moment(new Date())
@@ -60,7 +61,6 @@ const INITIAL_QUERY = {
 export const Dashboard = () => {
   const { t } = useTranslation();
   const { error } = useErrorContext();
-  console.log('error', error)
   const { permissions } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
@@ -69,6 +69,8 @@ export const Dashboard = () => {
   const [isBankChart, setIsBankChart] = useState<boolean>(
     secureLocalStorage.getItem("isBankChart") === "true"
   );
+
+  const isMobile = useMediaQuery({ maxWidth: "767px" });
 
   const [query, setQuery] =
     useState<MerchantBankStatementTotalsQuery>(INITIAL_QUERY);
@@ -151,6 +153,7 @@ export const Dashboard = () => {
           style={{
             margin: -28,
             paddingTop: 20,
+          paddingBottom: 16,
             paddingLeft: 6,
             display: "flex",
             justifyContent: "center",
@@ -161,6 +164,7 @@ export const Dashboard = () => {
             permissions?.report?.merchant?.balance
               ?.report_merchant_balance_list) && (
             <Tabs
+              data-test-id="tabs-1"
               activeKey={activeKey}
               onChange={(value) => {
                 setActiveKey(value);
@@ -185,49 +189,64 @@ export const Dashboard = () => {
         }}
       >
         {permissions?.report?.paybrokers?.bank_balance?.menu && (
-          <div>
-            <Col
-              span={24}
-              style={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-            >
-              <Typography.Title level={3} ref={ref2}>
+          <Row
+            style={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            <Col xs={{ span: 6 }} md={{ span: 6 }}>
+              <Typography.Title
+                level={isMobile ? 5 : 3}
+                ref={ref2}
+                data-test-id="text-1"
+              >
                 {t("menus.organization_bank_balance")}
               </Typography.Title>
-              <div>
-                <Tooltip title={t("buttons.help")}>
-                  <Button
-                    type="link"
-                    onClick={() => setIsTuorOpen((state) => !state)}
-                  >
-                    <InfoCircleOutlined />
-                  </Button>
-                </Tooltip>
+            </Col>
+
+            <Col
+              xs={{ span: 18 }}
+              md={{ span: 18 }}
+              style={{ display: "flex", justifyContent: "flex-end" }}
+            >
+              <Tooltip title={t("buttons.help")} data-test-id="tootip-1">
                 <Button
+                  data-test-id="button-1"
                   type="link"
-                  onClick={() => queryClient.invalidateQueries()}
-                  style={{ marginRight: 8 }}
+                  onClick={() => setIsTuorOpen((state) => !state)}
                 >
-                  <ReloadOutlined />
+                  <InfoCircleOutlined data-test-id="icon-1" />
                 </Button>
-                <Button
-                  shape="circle"
-                  onClick={() => {
-                    if (isBankChart) {
-                      setIsBankChart(false);
-                      secureLocalStorage.setItem("isBankChart", "false");
-                    } else {
-                      setIsBankChart(true);
-                      secureLocalStorage.setItem("isBankChart", "true");
-                    }
-                  }}
-                >
-                  {!isBankChart ? <BarChartOutlined /> : <DashOutlined />}
-                </Button>
-              </div>
+              </Tooltip>
+              <Button
+                data-test-id="button-2"
+                type="link"
+                onClick={() => queryClient.invalidateQueries()}
+                style={{ marginRight: 8 }}
+              >
+                <ReloadOutlined data-test-id="icon-2" />
+              </Button>
+              <Button
+                data-test-id="button-3"
+                shape="circle"
+                onClick={() => {
+                  if (isBankChart) {
+                    setIsBankChart(false);
+                    secureLocalStorage.setItem("isBankChart", "false");
+                  } else {
+                    setIsBankChart(true);
+                    secureLocalStorage.setItem("isBankChart", "true");
+                  }
+                }}
+              >
+                {!isBankChart ? (
+                  <BarChartOutlined data-test-id="icon-3" />
+                ) : (
+                  <DashOutlined data-test-id="icon-4" />
+                )}
+              </Button>
             </Col>
             <Row
               style={{
@@ -240,11 +259,12 @@ export const Dashboard = () => {
             >
               {isBankChart ? (
                 <Col span={24}>
-                  <BankBalanceChart />
+                  <BankBalanceChart data-test-id="chart-1" />
                 </Col>
               ) : (
                 <Col span={24}>
                   <Swiper
+                    data-test-id="swiper-1"
                     slidesPerView={6}
                     spaceBetween={8}
                     pagination={{
@@ -293,16 +313,20 @@ export const Dashboard = () => {
                   >
                     {bankListData?.itens
                       .filter((b) => b.status === true)
-                      .map((bank: any) => (
+                      .map((bank: any, index) => (
                         <SwiperSlide key={bank?.id}>
-                          <BankCard bank={bank} key={bank.id} />
+                          <BankCard
+                            bank={bank}
+                            key={bank.id}
+                            data-test-id={`bank-${index}`}
+                          />
                         </SwiperSlide>
                       ))}
                   </Swiper>
                 </Col>
               )}
             </Row>
-          </div>
+          </Row>
         )}
         <Row gutter={[8, 4]} align="middle" justify="center">
           <Layout
@@ -319,6 +343,7 @@ export const Dashboard = () => {
             <Row gutter={[4, 4]} align="middle">
               <Col xs={{ span: 24 }} md={{ span: 4 }}>
                 <Button
+                  data-test-id="button-4"
                   style={{ width: "100%", height: 40 }}
                   type="primary"
                   onClick={() => setIsFiltersOpen(true)}
@@ -328,6 +353,7 @@ export const Dashboard = () => {
               </Col>
               <Col xs={{ span: 24 }} md={{ span: 16 }}>
                 <FilterChips
+                  data-test-id="filter-chips-1"
                   startDateKeyName="start_date"
                   endDateKeyName="end_date"
                   query={query}
@@ -337,6 +363,7 @@ export const Dashboard = () => {
               </Col>
               <Col xs={{ span: 24 }} md={{ span: 4 }}>
                 <Button
+                  data-test-id="button-5"
                   type="dashed"
                   danger
                   onClick={() => {
@@ -355,12 +382,13 @@ export const Dashboard = () => {
                 </Button>
               </Col>
               <Col span={24} style={{ marginTop: 16 }}>
-                <Divider orientation="left">
-                  <Typography.Title level={3} ref={ref4}>
+                <Divider orientation="left" data-test-id="divider-1">
+                  <Typography.Title level={3} ref={ref4} data-test-id="text-2">
                     {t("table.operations")}
                   </Typography.Title>
                 </Divider>
                 <ValuesTable
+                  data-test-id="values-table-1"
                   query={query}
                   refs={[refType, refOpNum, refOpVal, refTicket, refFee]}
                 />
@@ -376,16 +404,20 @@ export const Dashboard = () => {
             }}
           >
             <Row gutter={[16, 0]}>
-              <Divider orientation="left">
-                <Typography.Title level={3} ref={refInOut}>
+              <Divider orientation="left" data-test-id="divider-2">
+                <Typography.Title
+                  level={isMobile ? 5 : 3}
+                  ref={refInOut}
+                  data-test-id="text-3"
+                >
                   {t("table.in_out_conversion")}
                 </Typography.Title>
               </Divider>
               <Col xs={{ span: 24 }} md={{ span: 12 }} ref={refIn}>
-                <ChartIn query={query} />
+                <ChartIn query={query} data-test-id="chart-in" />
               </Col>
               <Col xs={{ span: 24 }} md={{ span: 12 }} ref={refOut}>
-                <ChartOut query={query} />
+                <ChartOut query={query} data-test-id="chart-out" />
               </Col>
             </Row>
           </Col>
@@ -412,6 +444,7 @@ export const Dashboard = () => {
               }}
             >
               <MerchantsBalance
+                data-test-id="merchants-balance-1"
                 ref={refMerchantsBalance}
                 refs={[
                   refMerchantname,
@@ -430,7 +463,7 @@ export const Dashboard = () => {
           !error.rankingValue) && (
           <Row style={{ marginTop: 16 }}>
             <Col span={24}>
-              <TabsTable query={query} />
+              <TabsTable data-test-id="tabs-table" query={query} />
             </Col>
           </Row>
         )}
@@ -438,6 +471,7 @@ export const Dashboard = () => {
 
       {isFiltersOpen && (
         <FiltersModal
+          data-test-id="filters-modal"
           open={isFiltersOpen}
           setOpen={setIsFiltersOpen}
           query={query}
@@ -465,6 +499,7 @@ export const Dashboard = () => {
         />
       )}
       <TuorComponent
+        data-test-id="tuor-component"
         open={isTuorOpen}
         setOpen={setIsTuorOpen}
         steps={[
@@ -474,7 +509,7 @@ export const Dashboard = () => {
               ?.report_paybrokers_balance_list) && {
             title: t("wiki.balance"),
             description: (
-              <Typography>
+              <Typography data-test-id="tuor-balance-description">
                 {t("wiki.balance_description")}
                 <Typography>
                   <span style={{ color: defaultTheme.colors.info }}>
@@ -504,7 +539,7 @@ export const Dashboard = () => {
           permissions.report.paybrokers.bank_balance.menu && {
             title: t("menus.organization_bank_balance"),
             description: (
-              <Typography>
+              <Typography data-test-id="organization-bank-balance-description">
                 <Typography>
                   <span
                     style={{
@@ -611,31 +646,31 @@ export const Dashboard = () => {
             description: t("wiki.out_conversions_description"),
             target: () => refOut.current,
           },
-          permissions.report.merchant.balance.menu && {
-            title: t("wiki.merchants_balance"),
-            description: t("wiki.merchants_balance_description"),
-            target: () => refMerchantsBalance.current,
-          },
-          permissions.report.merchant.balance.menu && {
-            title: t("wiki.merchant_name"),
-            description: t("wiki.merchant_name_description"),
-            target: () => refMerchantsBalance.current,
-          },
-          permissions.report.merchant.balance.menu && {
-            title: t("wiki.balance_to_transaction"),
-            description: t("wiki.balance_to_transaction_description"),
-            target: () => refMerchantsBalance.current,
-          },
-          permissions.report.merchant.balance.menu && {
-            title: t("wiki.balance_to_payment"),
-            description: t("wiki.balance_to_payment_description"),
-            target: () => refMerchantsBalance.current,
-          },
-          permissions.report.merchant.balance.menu && {
-            title: t("wiki.balance_reserved"),
-            description: t("wiki.balance_reserved_description"),
-            target: () => refMerchantsBalance.current,
-          },
+          // permissions.report.merchant.balance.menu && {
+          //   title: t("wiki.merchants_balance"),
+          //   description: t("wiki.merchants_balance_description"),
+          //   target: () => refMerchantsBalance.current,
+          // },
+          // permissions.report.merchant.balance.menu && {
+          //   title: t("wiki.merchant_name"),
+          //   description: t("wiki.merchant_name_description"),
+          //   target: () => refMerchantsBalance.current,
+          // },
+          // permissions.report.merchant.balance.menu && {
+          //   title: t("wiki.balance_to_transaction"),
+          //   description: t("wiki.balance_to_transaction_description"),
+          //   target: () => refMerchantsBalance.current,
+          // },
+          // permissions.report.merchant.balance.menu && {
+          //   title: t("wiki.balance_to_payment"),
+          //   description: t("wiki.balance_to_payment_description"),
+          //   target: () => refMerchantsBalance.current,
+          // },
+          // permissions.report.merchant.balance.menu && {
+          //   title: t("wiki.balance_reserved"),
+          //   description: t("wiki.balance_reserved_description"),
+          //   target: () => refMerchantsBalance.current,
+          // },
         ]}
         pageStep={{
           title: t("menus.dashboard"),

@@ -1,5 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { ArrowDownOutlined, ArrowUpOutlined, FilterOutlined } from "@ant-design/icons";
+import {
+  ArrowDownOutlined,
+  ArrowUpOutlined,
+  FilterOutlined,
+} from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { CustomTable } from "@src/components/CustomTable";
@@ -167,7 +171,7 @@ export const OrgonizationManual = () => {
                 type="default"
                 shape="round"
                 onClickCapture={() => setOperationInIOpen(true)}
-                icon={<ArrowUpOutlined /> }
+                icon={<ArrowUpOutlined />}
               >
                 {t("buttons.register_in")}
               </Button>
@@ -180,9 +184,8 @@ export const OrgonizationManual = () => {
                 shape="round"
                 danger
                 onClickCapture={() => setOperationOutOpen(true)}
-                icon={ <ArrowDownOutlined />}
+                icon={<ArrowDownOutlined />}
               >
-               
                 {t("buttons.register_out")}
               </Button>
             </Grid>
@@ -265,7 +268,7 @@ export const OrgonizationManual = () => {
               }}
               icon={<FilterAltOffOutlinedIcon />}
             >
-               {t("table.clear_filters")}
+              {t("table.clear_filters")}
             </Button>
           </Grid>
           {permissions.transactions.paybrokers.manual_transactions
@@ -307,9 +310,14 @@ export const OrgonizationManual = () => {
               { name: "status", type: "status" },
             ]}
             loading={isOrganizationMovimentsDataFetching}
-            actions={[{}]}
-            removeTotal
-            label={["bank", "user_name", "status", "createdAt", "delivered_at"]}
+            
+            label={[
+              "user_name",
+              "category_name",
+              "value",
+              "status",
+              "createdAt",
+            ]}
           />
         </Grid>
       </Grid>

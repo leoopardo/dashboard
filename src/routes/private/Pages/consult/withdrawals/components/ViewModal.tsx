@@ -2,7 +2,7 @@
 import {
   CopyOutlined,
   DownloadOutlined,
-  FilePdfOutlined,
+  FilePdfOutlined
 } from "@ant-design/icons";
 import { Grid } from "@mui/material";
 import { useCreateWithdrawVoucherRefund } from "@src/services/consult/withdrawals/generatedWithdrawals/generateWithdrawVoucher";
@@ -234,7 +234,28 @@ export const ViewModal = (props: ViewModalProps) => {
                       </Descriptions.Item>
                     )}
 
-                    {!withdraw?.url_pdf ? (
+
+                    {withdraw?.error && (
+                      <Descriptions.Item
+                        key={"error"}
+                        label={t(`table.error`)}
+                        labelStyle={{
+                          maxWidth: "120px !important",
+                          margin: 0,
+                          padding: 0,
+                          textAlign: "center",
+                        }}
+                      >
+                        <Typography.Text copyable>
+                          {withdraw?.error}
+                        </Typography.Text>
+                      </Descriptions.Item>
+                    )}
+
+
+
+
+                    {!withdraw?.url_pdf &&  withdraw.status === 'PAID'  ? (
                       <Descriptions.Item
                         key={"generate_payment_voucher"}
                         label={t(`table.generate_payment_voucher`)}
@@ -255,7 +276,8 @@ export const ViewModal = (props: ViewModalProps) => {
                         </Button>
                       </Descriptions.Item>
                     ) : (
-                      <Descriptions.Item
+                      withdraw.status === 'PAID' && (
+                        <Descriptions.Item
                         key={"download_payment_voucher"}
                         label={t(`table.download_payment_voucher`)}
                         labelStyle={{
@@ -275,6 +297,8 @@ export const ViewModal = (props: ViewModalProps) => {
                           {t(`table.download_payment_voucher`)}
                         </Button>
                       </Descriptions.Item>
+                      )
+                      
                     )}
                   </>
                 )

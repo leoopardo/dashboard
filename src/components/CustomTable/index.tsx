@@ -72,6 +72,7 @@ interface TableProps {
   loading: boolean;
   query: any;
   error?: any;
+  removeValue?: boolean;
   setQuery: Dispatch<SetStateAction<any>>;
   label?: string[];
   setCurrentItem: Dispatch<SetStateAction<any>>;
@@ -247,7 +248,6 @@ export const CustomTable = (props: TableProps) => {
                 : Array.isArray(column?.name)
                 ? column?.name + `${Math.random()}`
                 : column?.name,
-              width: 85,
               dataIndex: column?.name,
               render: (text: string) => (
                 <div
@@ -257,24 +257,17 @@ export const CustomTable = (props: TableProps) => {
                     justifyContent: "center",
                   }}
                 >
-                  <Tooltip title={text}>
-                    <Button
-                      size="large"
-                      type="ghost"
-                      onClick={() => {
-                        navigator.clipboard.writeText(text);
-                        toast.success(t("table.copied"));
-                      }}
-                    >
-                      {text ? (
+                  <Typography.Text copyable>
+                     {text ? (
                         <>
-                          {formatCPF(text)} <CopyOutlined />
+                          {formatCPF(text)} 
                         </>
                       ) : (
                         "-"
                       )}
-                    </Button>
-                  </Tooltip>
+                  </Typography.Text>
+                    
+                     
                 </div>
               ),
               sorter: column.sort
@@ -1325,14 +1318,16 @@ export const CustomTable = (props: TableProps) => {
         >
           <Grid item xs={12}>
             <Mobile
-              columns={props?.columns}
-              items={props?.items}
+              columns={props.columns}
+              items={props.items}
+              removeValue={props?.removeValue}
               label={props?.label}
               actions={actions}
               setCurrentItem={props.setCurrentItem}
               checkbox={props?.checkbox}
               setSelectedRows={props?.setSelectedRows}
               selectedKeys={props?.selectedKeys}
+              loading={props.loading}
             />
           </Grid>
           {!props.removePagination && !props.bankStatement && (

@@ -105,7 +105,7 @@ export const TotalFinancial = ({ query, chart }: TableProps) => {
       items={RankingData?.sort((a, b) => (a.total > b.total ? -1 : 1))}
       error={RankingError}
       columns={[
-        { name: "name", type: "" },
+        { name: "name", type: "text" },
         { name: "total", type: "value" },
       ]}
       loading={isRankingFetching}

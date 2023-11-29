@@ -446,9 +446,9 @@
     "bank": "Banco",
     "merchant_name": "Empresa",
     "value": "Valor",
-    "createdAt": "Data de criação",
-    "created_at": "Data de criação",
-    "delivered_at": "Data de entrega",
+    "createdAt": "Criado em",
+    "created_at": "Criado em",
+    "delivered_at": "Entregue em",
     "payer_name": "Pagador",
     "buyer_name": "Comprador",
     "buyer_document": "Documento do comprador",
@@ -462,7 +462,7 @@
     "canceled": "Cancelado",
     "refunded": "Devolvido",
     "expired": "Expirado",
-    "merchant_id": "Empresa",
+    "merchant_id": "ID Empresa",
     "partner_name": "Plataforma",
     "partner_id": "ID Plataforma",
     "details": "Detalhes",
@@ -887,7 +887,9 @@
     "in_out_conversion": "Conversões de entrada/saída",
     "receiver_bank_client_document": "Documento do cliente do banco",
     "receiver_bank_client_name": "Nome do cliente do banco",
-    "balance": "Saldo"
+    "balance": "Saldo",
+    "permission_group": "Grupo",
+    "withdraw_id": "ID da organização"
   },
   "actions": {
     "details": "Detalhes",

@@ -19,7 +19,7 @@ import { useGetDeposit } from "../../../../../../services/consult/deposits/gener
 interface ViewModalProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
   open: boolean;
-  id: string;
+  id?: string | null;
 }
 
 export const ViewModal = (props: ViewModalProps) => {
@@ -28,7 +28,7 @@ export const ViewModal = (props: ViewModalProps) => {
     props.setOpen(false);
   };
 
-  const { deposit, isDepositFetching } = useGetDeposit(props.id);
+  const { deposit, isDepositFetching } = useGetDeposit(`${props.id}`);
   const [currOption, setCurrOption] = useState<any>("transaction");
 
   return (
@@ -114,7 +114,7 @@ export const ViewModal = (props: ViewModalProps) => {
                     case "webhook_url":
                     case "webhook_url_optional":
                     case "txid":
-                      case "endToEndId":
+                    case "endToEndId":
                     case "_id":
                       return (
                         deposit[key] !== "N/A" &&

@@ -126,7 +126,7 @@ export const GeneratedWithdrawals = () => {
     { name: "delivered_at", type: "date" },
     { name: "receiver_name", type: "text" },
     { name: "receiver_document", type: "document" },
-    { name: "pix_key_type", type: "text" },
+    { name: "pix_type", head: "payment_type", type: "pix_type" },
     { name: "pix_key", type: "text" },
     { name: "status", type: "status" },
   ];
@@ -194,10 +194,12 @@ export const GeneratedWithdrawals = () => {
               delete query.receiver_document;
               delete query.receiver_name;
               delete query.description;
+              delete query.withdraw_id;
 
               if (
                 [
                   "organization_id",
+                  "withdraw_id",
                   "endToEndId",
                   "payment_id",
                   "reference_id",
@@ -366,6 +368,7 @@ export const GeneratedWithdrawals = () => {
               "status",
               "createdAt",
               "delivered_at",
+              "value",
             ]}
           />
         </Grid>

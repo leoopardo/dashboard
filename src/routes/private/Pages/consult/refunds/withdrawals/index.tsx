@@ -296,7 +296,7 @@ export const RefundWithdrawals = () => {
               "merchant_name",
               "status",
               "createdAt",
-              "delivered_at",
+              "value"
             ]}
           />
         </Grid>
@@ -364,12 +364,10 @@ export const RefundWithdrawals = () => {
           refetch={refetchRefundWithdrawalsTotal}
           selectOptions={{
             status: [
-              "PAID",
-              "REFUNDED",
-              "EXPIRED",
-              "CANCELED",
+              "PAID_TO_MERCHANT",
+              "ERROR",
+              "PROCESSING",
               "WAITING",
-              "WAITING_REFUND",
             ],
             gender: ["MALE", "FEMALE", "OTHER"],
           }}

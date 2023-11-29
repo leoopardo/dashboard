@@ -55,11 +55,11 @@
     "person_reports": "Reports",
     "refunds": "Refunds",
     "refund_withdrawals": "Deposits refunds",
-    "refund_deposits": "Withdrawals refunds",
+    "refund_deposits": "Deposits refunds",
     "refund_manual_deposits": "Manual deposits refunds",
     "refund_reports": "Reports",
     "refund_manual_reports": "Manual deposits refunds",
-    "refund_deposits_reports": "Deposits refunds",
+    "refund_deposits_reports": "Withdrawals refunds",
     "refund_withdrawals_reports": "Withdrawals refunds",
     "consult_persons": "Persons",
     "check_cpf": "Check document",
@@ -879,7 +879,9 @@
     "in_out_conversion": "In/Out conversions",
     "receiver_bank_client_document": "Receiver bank client document",
     "receiver_bank_client_name": "Receiver bank client name",
-    "balance": "Balance"
+    "balance": "Balance",
+    "permission_group": "Group",
+    "withdraw_id": "Organization ID"
   },
   "actions": {
     "details": "Details",

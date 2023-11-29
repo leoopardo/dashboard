@@ -21,6 +21,7 @@ interface ValidateTokenProps {
   error: any;
   submit: () => void;
   editSelf?: boolean;
+  resetFunction?: () => void;
 }
 
 export const ValidateToken = ({
@@ -30,6 +31,7 @@ export const ValidateToken = ({
   tokenState,
   setTokenState,
   body,
+  resetFunction,
   submit,
   success,
   error,
@@ -133,6 +135,7 @@ export const ValidateToken = ({
           action: t("messages.validated"),
         })
       );
+      resetFunction && resetFunction()
       setIsOpen(false);
     }
 

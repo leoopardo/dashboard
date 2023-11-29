@@ -95,4 +95,5 @@ export interface refundById {
   value: number;
   refund_date: string;
   rtrId: string;
+  url_pdf: string;
 }

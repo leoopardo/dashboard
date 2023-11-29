@@ -394,7 +394,7 @@ export const GeneratedDeposits = () => {
                 label: "resend_webhook",
                 icon: <SendOutlined style={{ fontSize: "18px" }} />,
                 onClick: (item) => {
-                  console.log(item);
+                  
                   setWebhookBody((state) => ({
                     ...state,
                     end_date: undefined,
@@ -420,6 +420,7 @@ export const GeneratedDeposits = () => {
               "status",
               "createdAt",
               "delivered_at",
+              "value"
             ]}
           />
         </Col>

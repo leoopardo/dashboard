@@ -25,15 +25,15 @@ export const MerchantsBalance = ({
   useEffect(() => {
     refetchMerchantBalance();
   }, [query]);
-
   return (
     <Col span={24}>
-      <Divider orientation="left">
-        <Typography.Title level={4} ref={ref}>
+      <Divider orientation="left" data-test-id="divider-1" >
+        <Typography.Title ref={ref} data-test-id="text-1" level={4} >
           {t("table.merchants_balance")}
         </Typography.Title>
       </Divider>
       <CustomTable
+        data-test-id="merchants-balance-table"
         query={custQuery}
         setCurrentItem={() => {
           return;
@@ -50,7 +50,7 @@ export const MerchantsBalance = ({
           { name: "balance_to_payment", type: "value", key: refs[2] },
           { name: "balance_reserved", type: "value", key: refs[3] },
         ]}
-        label={["merchant", "value"]}
+        label={["merchant_name", "balance_to_transactions"]}
         disableScrollToTop
         removePagination
       />

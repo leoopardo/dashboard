@@ -201,7 +201,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
           </Card>
         </Col>
       )}
-      {(props.query.status === "PENDING" || !props.query.status) && (
+      {(props.query.status === "WAITING" || !props.query.status) && (
         <Col
           style={{ maxWidth: "220px" }}
           xs={{ span: isMobile ? 10 : undefined }}

@@ -596,32 +596,34 @@ export const SidebarNavigation = () => {
                     : "none",
                 }
               ),
-              getItem(
-                "import_merchant_blacklist",
-                null,
-                null,
-                false,
-                (e) => handleNavigate(e?.keyPath),
-                {
-                  display: permissions?.register?.merchant?.blacklist
-                    ?.merchant_blacklist_create
-                    ? undefined
-                    : "none",
-                }
-              ),
-              getItem(
-                "uploads_merchant_blacklist",
-                null,
-                null,
-                false,
-                (e) => handleNavigate(e?.keyPath),
-                {
-                  display: permissions?.register?.merchant?.blacklist
-                    ?.merchant_blacklist_create
-                    ? undefined
-                    : "none",
-                }
-              ),
+                // todo
+
+              // getItem(
+              //   "import_merchant_blacklist",
+              //   null,
+              //   null,
+              //   false,
+              //   (e) => handleNavigate(e?.keyPath),
+              //   {
+              //     display: permissions?.register?.merchant?.blacklist
+              //       ?.merchant_blacklist_create
+              //       ? undefined
+              //       : "none",
+              //   }
+              // ),
+              // getItem(
+              //   "uploads_merchant_blacklist",
+              //   null,
+              //   null,
+              //   false,
+              //   (e) => handleNavigate(e?.keyPath),
+              //   {
+              //     display: permissions?.register?.merchant?.blacklist
+              //       ?.merchant_blacklist_create
+              //       ? undefined
+              //       : "none",
+              //   }
+              // ),
               getItem(
                 "merchant_blacklist_reasons",
                 null,
@@ -1782,17 +1784,35 @@ export const SidebarNavigation = () => {
               "deposit_contestation",
               null,
               [
-                getItem("uploads", null, null, false, (e) =>
-                  handleNavigate(e?.keyPath)
+                getItem(
+                  "uploads",
+                  null,
+                  null,
+                  false,
+                  (e) => handleNavigate(e?.keyPath),
+                  {
+                    display: permissions?.support?.contestation?.deposits.menu
+                      ? undefined
+                      : "none",
+                  }
                 ),
-                getItem("import_csv", null, null, false, (e) =>
-                  handleNavigate(e?.keyPath)
+                getItem(
+                  "import_csv",
+                  null,
+                  null,
+                  false,
+                  (e) => handleNavigate(e?.keyPath),
+                  {
+                    display: permissions?.support?.contestation?.deposits.import_csv.menu
+                      ? undefined
+                      : "none",
+                  }
                 ),
               ],
               undefined,
               undefined,
               {
-                display: permissions?.support?.contestation?.deposits?.menu
+                display: permissions?.support?.contestation?.deposits?.menu && (type === 1 || type === 2)
                   ? undefined
                   : "none",
               }
@@ -1801,7 +1821,9 @@ export const SidebarNavigation = () => {
           undefined,
           undefined,
           {
-            display: permissions?.support?.contestation?.menu ? undefined : "none",
+            display: permissions?.support?.contestation?.deposits?.menu && (type === 1 || type === 2)
+            ? undefined
+            : "none",
           }
         ),
         /*  getItem("Wiki", null, null, false, () => {

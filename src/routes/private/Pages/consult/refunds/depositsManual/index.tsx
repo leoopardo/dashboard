@@ -144,6 +144,7 @@ export const RefundDepositsManual = () => {
     { name: "pix_type", head: "payment_type", type: "pix_type" },
     { name: "createdAt", type: "date" },
     { name: "refund_date", type: "date" },
+    { name: "reason", type: "text" },
     { name: "status", type: "status" },
   ];
 
@@ -368,8 +369,9 @@ export const RefundDepositsManual = () => {
               "bank",
               "merchant_name",
               "status",
+              "reason",
               "createdAt",
-              "delivered_at",
+              "value",
             ]}
           />
         </Grid>
@@ -481,12 +483,11 @@ export const RefundDepositsManual = () => {
           refetch={refetchRefundDepositManualTotal}
           selectOptions={{
             status: [
-              "PAID",
               "REFUNDED",
-              "EXPIRED",
-              "CANCELED",
+              "PAID_TO_MERCHANT",
+              "ERROR",
+              "PROCESSIGN",
               "WAITING",
-              "WAITING_REFUND",
             ],
             pix_type: ["STANDARD", "FASTPIX"],
             gender: ["MALE", "FEMALE", "OTHER"],

@@ -8,6 +8,7 @@ import { defaultTheme } from "@src/styles/defaultTheme";
 import { Button, Card, Col, Row, Statistic } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import "./style.css";
 
 interface MerchantBalanceInterface {
   customQuery?: any;
@@ -15,9 +16,7 @@ interface MerchantBalanceInterface {
 
 export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
   const { t } = useTranslation();
-  const [isHoverCurrency,] = useState<
-    "real" | "dolar" | "euro" | "btc"
-  >("real");
+  const [isHoverCurrency] = useState<"real" | "dolar" | "euro" | "btc">("real");
   const [show] = useState<boolean>(true);
   const INITIAL_QUERY: MerchantBalanceQuery = {
     page: 1,
@@ -43,12 +42,14 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
             }}
           >
             <Card
+              data-test-id="card-1"
               bordered={false}
               loading={isMerchantBalanceFetching}
               style={{ minWidth: "100%" }}
             >
               {isHoverCurrency === "real" ? (
                 <Statistic
+                  data-test-id="statistic-1"
                   title={t("table.balance_to_transactions")}
                   value={MerchantBalance?.balance_to_transactions ?? 0}
                   precision={2}
@@ -61,6 +62,7 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
               ) : (
                 <>
                   <Statistic
+                    data-test-id="statistic-2"
                     title={t("table.balance_to_transactions")}
                     value={MerchantBalance?.balance_to_transactions ?? 0}
                     precision={2}
@@ -170,9 +172,14 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
               minWidth: isMerchantBalanceFetching ? "220px" : undefined,
             }}
           >
-            <Card bordered={false} loading={isMerchantBalanceFetching}>
+            <Card
+              data-test-id="card-2"
+              bordered={false}
+              loading={isMerchantBalanceFetching}
+            >
               {isHoverCurrency === "real" ? (
                 <Statistic
+                  data-test-id="statistic-3"
                   title={t("table.balance_to_payment")}
                   value={MerchantBalance?.balance_to_payment ?? 0}
                   precision={2}
@@ -185,6 +192,7 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
               ) : (
                 <>
                   <Statistic
+                    data-test-id="statistic-4"
                     title={t("table.balance_to_payment")}
                     value={MerchantBalance?.balance_to_payment ?? 0}
                     precision={2}
@@ -294,9 +302,14 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
               minWidth: isMerchantBalanceFetching ? "220px" : undefined,
             }}
           >
-            <Card bordered={false} loading={isMerchantBalanceFetching}>
+            <Card
+              data-test-id="card-3"
+              bordered={false}
+              loading={isMerchantBalanceFetching}
+            >
               {isHoverCurrency === "real" ? (
                 <Statistic
+                  data-test-id="statistic-5"
                   title={t("table.balance_reserved")}
                   value={MerchantBalance?.balance_reserved ?? 0}
                   precision={2}
@@ -309,6 +322,7 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
               ) : (
                 <>
                   <Statistic
+                    data-test-id="statistic-6"
                     title={t("table.balance_reserved")}
                     value={MerchantBalance?.balance_reserved ?? 0}
                     precision={2}
@@ -418,9 +432,14 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
               minWidth: isMerchantBalanceFetching ? "220px" : undefined,
             }}
           >
-            <Card bordered={false} loading={isMerchantBalanceFetching}>
+            <Card
+              data-test-id="card-4"
+              bordered={false}
+              loading={isMerchantBalanceFetching}
+            >
               {isHoverCurrency === "real" ? (
                 <Statistic
+                  data-test-id="statistic-7"
                   title="Total"
                   value={MerchantBalance?.balance_total}
                   precision={2}
@@ -433,6 +452,7 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
               ) : (
                 <>
                   <Statistic
+                    data-test-id="statistic-8"
                     title="Total"
                     value={MerchantBalance?.balance_total}
                     precision={2}
@@ -542,16 +562,16 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
               display: "flex",
               alignItems: "start",
               justifyContent: "flex-start",
-              height: "160px",
+            
             }}
           >
             <Button
+              data-test-id="button-1"
               type="link"
               loading={isMerchantBalanceFetching}
               onClick={refetchMerchantBalance}
               icon={<ReloadOutlined />}
-            >
-                </Button>
+            ></Button>
           </Col>
         </>
       )}

@@ -71,6 +71,7 @@ export const Login = () => {
         }}
       >
         <motion.img
+          data-test-id="img-logo"
           src={Logo}
           initial={{
             opacity: 0,
@@ -118,19 +119,31 @@ export const Login = () => {
               marginBottom: "5px",
             }}
           >
-            <LockIcon />
+            <LockIcon data-test-id="lock-icon" />
           </RoundedLock>
           {isMobile ? (
-            <Typography.Title level={2} style={{ fontWeight: 500 }}>
+            <Typography.Title
+              data-test-id="sign-in-text"
+              level={2}
+              style={{ fontWeight: 500 }}
+            >
               {t("login.sign_in")}
             </Typography.Title>
           ) : (
-            <Typography.Title level={2} style={{ fontWeight: 500 }}>
+            <Typography.Title
+              data-test-id="sign-in-text"
+              level={2}
+              style={{ fontWeight: 500 }}
+            >
               {t("login.sign_in")}
             </Typography.Title>
           )}
         </Grid>
-        <Form layout="vertical" onFinish={handleLogin}>
+        <Form
+          data-test-id="sign-in-form"
+          layout="vertical"
+          onFinish={handleLogin}
+        >
           <Grid
             container
             item
@@ -145,6 +158,7 @@ export const Login = () => {
           >
             <Grid item xs={8}>
               <Form.Item
+                data-test-id="form-item-username"
                 label={`${t("login.user")}`}
                 name="user"
                 rules={[
@@ -156,6 +170,7 @@ export const Login = () => {
                 ]}
               >
                 <Input
+                  data-test-id="input-username"
                   status={validateError && LoginError ? "error" : undefined}
                   size="large"
                   value={user.username}
@@ -167,12 +182,13 @@ export const Login = () => {
                   }
                   placeholder={`${t("login.user")}123`}
                   style={{ height: "50px" }}
-                  prefix={<UserOutlined />}
+                  prefix={<UserOutlined data-test-id="icon-user" />}
                 />
               </Form.Item>
             </Grid>
             <Grid item xs={8}>
               <Form.Item
+                data-test-id="form-item-password"
                 label={`${t("login.password")}`}
                 name="password"
                 rules={[
@@ -185,6 +201,7 @@ export const Login = () => {
                 ]}
               >
                 <Input.Password
+                  data-test-id="input-password"
                   status={validateError && LoginError ? "error" : undefined}
                   value={user.password}
                   onChange={(event) =>
@@ -196,9 +213,13 @@ export const Login = () => {
                   size="large"
                   placeholder="*********"
                   style={{ height: "50px" }}
-                  prefix={<KeyOutlined />}
+                  prefix={<KeyOutlined data-test-id="icon-key" />}
                   iconRender={(visible) =>
-                    visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+                    visible ? (
+                      <EyeTwoTone data-test-id="icon-eye" />
+                    ) : (
+                      <EyeInvisibleOutlined data-test-id="icon-invisible-eye" />
+                    )
                   }
                 />
               </Form.Item>
@@ -206,6 +227,7 @@ export const Login = () => {
             {validateError && LoginError && (
               <Grid item xs={8}>
                 <Alert
+                  data-test-id="alert-error"
                   message={t("error.password_or_username")}
                   type="error"
                   closable
@@ -214,7 +236,11 @@ export const Login = () => {
             )}
             <Grid item xs={8}>
               <Form.Item>
-                <CustomCheckbox checked={rememerMe} onChange={onChange}>
+                <CustomCheckbox
+                  data-test-id="remember-me-checkbox"
+                  checked={rememerMe}
+                  onChange={onChange}
+                >
                   {t("login.remember_me")}
                 </CustomCheckbox>
               </Form.Item>
@@ -233,6 +259,7 @@ export const Login = () => {
                   Submit
                 </button>
                 <CustButton
+                  data-test-id="button-submit"
                   type="primary"
                   icon={<LoginOutlined />}
                   onClick={() => submitRef.current?.click()}
@@ -242,6 +269,7 @@ export const Login = () => {
                 </CustButton>
               </Form.Item>
               <Typography.Link
+                data-test-id="forgot-password-link"
                 style={{ textAlign: "center", width: "100%", marginTop: -16 }}
                 href="/forgot_my_password"
               >
@@ -260,7 +288,10 @@ export const Login = () => {
                 maxHeight: "200px",
               }}
             >
-              <Typography style={{ opacity: 0.6 }}>
+              <Typography
+                style={{ opacity: 0.6 }}
+                data-test-id="copyright-text"
+              >
                 Copyright ©{" "}
                 <Typography.Link
                   href="https://paybrokers.com.br/"

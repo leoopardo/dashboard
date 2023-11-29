@@ -76,6 +76,15 @@ export const ExportCustomReportsModal = ({
   }, [selectedFields]);
 
   const handleCreateReport = () => {
+    const f: any = {};
+    for (const field in selectedFields) {
+      if (!fields?.find((f) => f === selectedFields[field])) {
+        return;
+      } else {
+        f[selectedFields[field]] = t(`table.${selectedFields[field]}`);
+      }
+    }
+    setCsvFields(f);
     mutateReport();
     secureLocalStorage.setItem(reportName, selectedFields.join("%"));
     secureLocalStorage.setItem("comma", `${comma}`);
@@ -83,11 +92,9 @@ export const ExportCustomReportsModal = ({
   };
 
   useEffect(() => {
-    const storage: string[] | undefined = secureLocalStorage?.getItem(
+    const storage: string[] | undefined = `${secureLocalStorage?.getItem(
       reportName
-    )
-      ? `${secureLocalStorage?.getItem(reportName)}`?.split("%")
-      : undefined;
+    )}`?.split("%");
 
     const commaSeparator: string | null = `${secureLocalStorage.getItem(
       "comma"
@@ -163,7 +170,20 @@ export const ExportCustomReportsModal = ({
                       { label: "$1000,00", value: true },
                       { label: "$1000.00", value: false },
                     ]}
-                    onChange={(e) => setIsComma(e.target.value)}
+                    onChange={(e) => {
+                      setIsComma(e.target.value);
+                      const f: any = {};
+                      for (const field in selectedFields) {
+                        if (!fields?.find((f) => f === selectedFields[field])) {
+                          return;
+                        } else {
+                          f[selectedFields[field]] = t(
+                            `table.${selectedFields[field]}`
+                          );
+                        }
+                      }
+                      setCsvFields(f);
+                    }}
                     value={comma}
                     optionType="button"
                     buttonStyle="solid"

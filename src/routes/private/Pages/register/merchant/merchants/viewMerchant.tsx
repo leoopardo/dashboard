@@ -29,6 +29,7 @@ import {
 } from "antd";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useMediaQuery } from "react-responsive";
 import { useLocation } from "react-router-dom";
 
 export const MerchantDetails = () => {
@@ -43,6 +44,7 @@ export const MerchantDetails = () => {
     limit: 200,
     page: 1,
   });
+  const isMobile = useMediaQuery({ maxWidth: "760px" });
 
   const [responsibleQuery, setResponsibleQuery] =
     useState<MerchantResponsiblesQuery>(INITIAL_RESPONSIBLE_QUERY);
@@ -143,7 +145,6 @@ export const MerchantDetails = () => {
               >
                 {location?.state?.cellphone ?? "-"}
               </Descriptions.Item>
-              
             </Descriptions>
           </Col>
           <Col xs={{ span: 24 }} md={{ span: 8 }}>
@@ -188,7 +189,7 @@ export const MerchantDetails = () => {
                   {t(`table.${MerchantByIdData?.merchant_type}`)}
                 </Descriptions.Item>
               )}
-               {MerchantByIdData?.language && (
+              {MerchantByIdData?.language && (
                 <Descriptions.Item
                   key={"language"}
                   label={t(`table.language`)}
@@ -199,10 +200,10 @@ export const MerchantDetails = () => {
                     textAlign: "center",
                   }}
                 >
-                 {MerchantByIdData?.language}
+                  {MerchantByIdData?.language}
                 </Descriptions.Item>
               )}
-               {MerchantByIdData?.currency && (
+              {MerchantByIdData?.currency && (
                 <Descriptions.Item
                   key={"currency"}
                   label={t(`table.currency`)}
@@ -213,7 +214,7 @@ export const MerchantDetails = () => {
                     textAlign: "center",
                   }}
                 >
-                 {MerchantByIdData?.currency}
+                  {MerchantByIdData?.currency}
                 </Descriptions.Item>
               )}
               {location?.state?.merchantConfig &&
@@ -355,56 +356,8 @@ export const MerchantDetails = () => {
       children: (
         <Row gutter={[8, 8]}>
           <Col span={24}>
-            <Descriptions column={3} bordered>
-              <Descriptions.Item
-                key={"merchant_withdraw_fee_type"}
-                label={`${t(`table.merchant_withdraw_fee_type`)}`}
-                labelStyle={{
-                  maxWidth: "120px !important",
-                  margin: 0,
-                  padding: 0,
-                  textAlign: "center",
-                }}
-              >
-                {merchantFeesData?.fees?.merchant_withdraw_fee_type
-                  ? t(
-                      `table.${merchantFeesData?.fees?.merchant_withdraw_fee_type.toLocaleLowerCase()}`
-                    )
-                  : "-"}
-              </Descriptions.Item>
-              <Descriptions.Item
-                key={"merchant_withdraw_fee_percent"}
-                label={`${t(`table.merchant_withdraw_fee_percent`)}`}
-                labelStyle={{
-                  maxWidth: "120px !important",
-                  margin: 0,
-                  padding: 0,
-                  textAlign: "center",
-                }}
-              >
-                {merchantFeesData?.fees?.merchant_withdraw_fee_percent
-                  ? `${merchantFeesData?.fees?.merchant_withdraw_fee_percent}%`
-                  : "-"}
-              </Descriptions.Item>
-
-              <Descriptions.Item
-                key={"merchant_withdraw_fee_value"}
-                label={`${t(`table.merchant_withdraw_fee_value`)}`}
-                labelStyle={{
-                  maxWidth: "120px !important",
-                  margin: 0,
-                  padding: 0,
-                  textAlign: "center",
-                }}
-              >
-                {new Intl.NumberFormat("pt-BR", {
-                  style: "currency",
-                  currency: "BRL",
-                }).format(
-                  Number(merchantFeesData?.fees?.merchant_withdraw_fee_value) ||
-                    0
-                )}
-              </Descriptions.Item>
+            <Descriptions column={isMobile ? 1 : 3} bordered>
+    
               <Descriptions.Item
                 key={"cashin_pix_fee_type"}
                 label={`${t(`table.cashin_pix_fee_type`)}`}
@@ -502,7 +455,6 @@ export const MerchantDetails = () => {
                     0
                 )}
               </Descriptions.Item>
-
               <Descriptions.Item
                 key={"fastpix_in_fee_type"}
                 label={`${t(`table.fastpix_in_fee_type`)}`}

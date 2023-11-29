@@ -96,8 +96,9 @@ export const WithdrawOperations = ({ query, chart }: TableProps) => {
       data={RankingData}
       items={RankingData?.sort((a, b) => (a.total > b.total ? -1 : 1))}
       error={RankingError}
+      removeValue
       columns={[
-        { name: "name", type: "" },
+        { name: "name", type: "text" },
         { name: "total", type: "text" },
       ]}
       loading={isRankingFetching}

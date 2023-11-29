@@ -6,7 +6,7 @@ export interface IMerchantConfig {
   fastpix_in_permission?: boolean;
   fastpix_in_type?: string;
   fastpix_in_max_value?: number;
-  fastpix_in_fixed_min_value?: number;
+  fastpix_in_min_value?: number;
   fastpix_webhook_url?: string;
   fastpix_redirect_url?: string;
   fastpix_token_time?: number;

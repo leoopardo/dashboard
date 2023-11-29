@@ -29,6 +29,7 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { CreateMovimentModal } from "../../components/createMovimentModal";
+import { Toast } from "@src/components/Toast";
 
 export const MerchantManual = () => {
   const { permissions } = queryClient.getQueryData(
@@ -92,11 +93,11 @@ export const MerchantManual = () => {
     refetchMerchantMovimentsData();
   }, [query]);
 
-  const onSubmitIn = () => {
-    setOperationInIOpen(false);
-    setOperationOutOpen(false);
-    setOperationInTokenModalOpen(true);
-  };
+  // const onSubmitIn = () => {
+  //   setOperationInIOpen(false);
+  //   setOperationOutOpen(false);
+  //   setOperationInTokenModalOpen(true);
+  // };
 
   useEffect(() => {
     setOperationInBody((state) => ({ ...state, validation_token: tokenState }));
@@ -320,14 +321,13 @@ export const MerchantManual = () => {
             ]}
             loading={isMerchantMovimentsDataFetching}
             refetch={() => refetchMerchantMovimentsData()}
-            actions={[{}]}
             disableActions
             label={[
-              "bank",
               "merchant_name",
+              "category_name",
+              "value",
               "status",
               "createdAt",
-              "delivered_at",
             ]}
           />
         </Grid>
@@ -339,7 +339,17 @@ export const MerchantManual = () => {
           query={query}
           setQuery={setQuery}
           haveInitialDate
-          filters={["start_date", "end_date", "status", "partner_id", "aggregator_id", "merchant_id", "operator_id", "category_id", "type"]}
+          filters={[
+            "start_date",
+            "end_date",
+            "status",
+            "partner_id",
+            "aggregator_id",
+            "merchant_id",
+            "operator_id",
+            "category_id",
+            "type",
+          ]}
           refetch={refetchMerchantMovimentsData}
           selectOptions={{
             status: ["PROCESSING", "SUCCESS", "CANCELED"],
@@ -361,7 +371,7 @@ export const MerchantManual = () => {
           setOpen={setOperationInIOpen}
           category="merchant"
           type="in"
-          onSubmit={onSubmitIn}
+          onSubmit={mutate}
           body={operationInBody}
           setBody={setOperationInBody}
         />
@@ -372,7 +382,7 @@ export const MerchantManual = () => {
           setOpen={setOperationOutOpen}
           category="merchant"
           type="out"
-          onSubmit={onSubmitIn}
+          onSubmit={mutate}
           body={operationInBody}
           setBody={setOperationInBody}
         />
@@ -393,6 +403,12 @@ export const MerchantManual = () => {
           }}
         />
       )}
+      <Toast
+        error={error}
+        success={isSuccess}
+        actionSuccess={t("messages.created")}
+        actionError={t("messages.create")}
+      />
     </Grid>
   );
 };
