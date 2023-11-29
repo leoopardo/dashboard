@@ -3,7 +3,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
-  AppstoreAddOutlined,
   DownloadOutlined,
   SendOutlined,
   UploadOutlined,
@@ -17,14 +16,13 @@ import {
   Form,
   Input,
   InputRef,
-  Popconfirm,
   Row,
   Table,
   Upload,
   notification,
 } from "antd";
 import { FormInstance } from "antd/lib/form/Form";
-import { unparse } from "papaparse";
+import { Buffer } from "buffer";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useCSVDownloader, usePapaParse } from "react-papaparse";
@@ -184,11 +182,6 @@ export const ImportPersonsBlacklist = () => {
     }
   }, [error, isSuccess]);
 
-  const handleDelete = (key: React.Key) => {
-    const newData = dataSource.filter((item) => item.key !== key);
-    setDataSource(newData);
-  };
-
   const defaultColumns: (ColumnTypes[number] & {
     editable?: boolean;
     dataIndex: string;
@@ -209,46 +202,7 @@ export const ImportPersonsBlacklist = () => {
       dataIndex: "DESCRIPTION",
       editable: true,
     },
-    {
-      title: "",
-      dataIndex: "actions",
-      render: (_, record: any) =>
-        dataSource.length >= 1 ? (
-          <Popconfirm
-          title={t("messages.are_you_sure", {
-            action: t("messages.delete").toLocaleLowerCase(),
-            itens: t("table.row").toLocaleLowerCase(),
-          })}
-          onConfirm={() => handleDelete(record?.key)}
-          cancelText={t("messages.no_cancel")}
-          okText={t("messages.yes_delete")}
-        >
-          <a>{t("messages.delete")}</a>
-        </Popconfirm>
-        ) : null,
-    },
   ];
-
-  const handleAdd = () => {
-    const newData: DataType = {
-      key: dataSource.length + 1,
-      CPF: "11111111111",
-      REASON: "Fraude",
-      DESCRIPTION: "Solicitado pelo merchant xyz",
-    };
-    setDataSource([...dataSource, newData]);
-  };
-
-  const handleSave = (row: DataType) => {
-    const newData = [...dataSource];
-    const index = newData.findIndex((item) => row.key === item.key);
-    const item = newData[index];
-    newData.splice(index, 1, {
-      ...item,
-      ...row,
-    });
-    setDataSource(newData);
-  };
 
   const components = {
     body: {
@@ -265,32 +219,16 @@ export const ImportPersonsBlacklist = () => {
       ...col,
       onCell: (record: DataType) => ({
         record,
-        editable: col.editable,
         dataIndex: col.dataIndex,
         title: col.title,
-        handleSave,
       }),
     };
   });
 
   const handleUpload = () => {
-    const csvHeader = ["CPF", "REASON", "DESCRIPTION"];
-
-    const csvData = unparse({
-      fields: csvHeader,
-      data: dataSource,
-    });
-    const base64Encoded = btoa(csvData.replace(/(\r\n|\n|\r)/gm, "\n"));
-
-    setBody({ content: base64Encoded });
+    mutate();
+    setBody({ content: "" });
   };
-
-  useEffect(() => {
-    if (body.content) {
-      mutate();
-      setBody({ content: "" });
-    }
-  }, [body]);
 
   return (
     <Row style={{ padding: 25 }}>
@@ -326,7 +264,17 @@ export const ImportPersonsBlacklist = () => {
                   },
                   download: true,
                 });
+                const reader = new FileReader();
+                reader.readAsText(file);
+                reader.onload = () => {
+                  console.log(`${reader.result}`);
 
+                  const base64Enconded = Buffer.from(
+                    `${reader?.result}`?.replace(/(\r\n|\n|\r)/gm, "\n")
+                  ).toString("base64");
+
+                  setBody({ content: base64Enconded });
+                };
                 return false;
               }}
             >
@@ -342,23 +290,7 @@ export const ImportPersonsBlacklist = () => {
               </button>
             </Upload>
           </Col>
-          <Col xs={{ span: 24 }} md={{ span: 6 }} lg={{ span: 4 }}>
-            <Button
-              size="large"
-              onClick={handleAdd}
-              type="primary"
-              style={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                textAlign: "center",
-              }}
-              icon={ <AppstoreAddOutlined />}
-            >
-              {t("table.add_row")}
-            </Button>
-          </Col>
+
           <Col
             xs={{ span: 24 }}
             md={{ span: 6 }}
@@ -406,8 +338,8 @@ export const ImportPersonsBlacklist = () => {
               </a>
             </CSVDownloader>
           </Col>
-          <Col xs={{ span: 0 }} md={{ span: 0 }} lg={{ span: 8 }} />
-          <Col xs={{ span: 24 }} md={{ span: 6 }} lg={{ span: 4 }}>
+          <Col xs={{ span: 0 }} md={{ span: 0 }} lg={{ span: 10 }} />
+          <Col xs={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }}>
             <Button
               size="large"
               type="dashed"
@@ -424,7 +356,7 @@ export const ImportPersonsBlacklist = () => {
               }}
               icon={<SendOutlined style={{ fontSize: 16 }} />}
             >
-               Confirmar upload
+              Confirmar upload
             </Button>
           </Col>
         </Row>
