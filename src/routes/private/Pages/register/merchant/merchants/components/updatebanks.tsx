@@ -192,21 +192,23 @@ export const UpdateBanks = ({
             <Select
               size="large"
               options={
-                bankListData?.itens?.map((item, index) => {
-                  return {
-                    key: index,
-                    value: item.bank,
-                    label: (
-                      <>
-                        <Avatar
-                          src={item.icon_url}
-                          style={{ marginRight: 10 }}
-                        />
-                        {item.label_name}
-                      </>
-                    ),
-                  };
-                }) ?? []
+                bankListData?.itens
+                  ?.filter((bank) => bank?.cash_in && bank.status)
+                  ?.map((item, index) => {
+                    return {
+                      key: index,
+                      value: item.bank,
+                      label: (
+                        <>
+                          <Avatar
+                            src={item.icon_url}
+                            style={{ marginRight: 10 }}
+                          />
+                          {item.label_name}
+                        </>
+                      ),
+                    };
+                  }) ?? []
               }
               onChange={(value) =>
                 setBody((state) => ({ ...state, cash_in_bank: value }))
@@ -221,21 +223,23 @@ export const UpdateBanks = ({
             <Select
               size="large"
               options={
-                bankListData?.itens?.map((item, index) => {
-                  return {
-                    key: index,
-                    value: item.bank,
-                    label: (
-                      <>
-                        <Avatar
-                          src={item.icon_url}
-                          style={{ marginRight: 10 }}
-                        />
-                        {item.label_name}
-                      </>
-                    ),
-                  };
-                }) ?? []
+                bankListData?.itens
+                  ?.filter((bank) => bank?.cash_out && bank.status)
+                  ?.map((item, index) => {
+                    return {
+                      key: index,
+                      value: item.bank,
+                      label: (
+                        <>
+                          <Avatar
+                            src={item.icon_url}
+                            style={{ marginRight: 10 }}
+                          />
+                          {item.label_name}
+                        </>
+                      ),
+                    };
+                  }) ?? []
               }
               onChange={(value) =>
                 setBody((state) => ({ ...state, cash_out_bank: value }))
@@ -250,21 +254,23 @@ export const UpdateBanks = ({
             <Select
               size="large"
               options={
-                bankListData?.itens?.filter((bank) => bank?.FastPix).map((item, index) => {
-                  return {
-                    key: index,
-                    value: item.bank,
-                    label: (
-                      <>
-                        <Avatar
-                          src={item.icon_url}
-                          style={{ marginRight: 10 }}
-                        />
-                        {item.label_name}
-                      </>
-                    ),
-                  };
-                }) ?? []
+                bankListData?.itens
+                  ?.filter((bank) => bank?.fastpix_in && bank.status)
+                  .map((item, index) => {
+                    return {
+                      key: index,
+                      value: item.bank,
+                      label: (
+                        <>
+                          <Avatar
+                            src={item.icon_url}
+                            style={{ marginRight: 10 }}
+                          />
+                          {item.label_name}
+                        </>
+                      ),
+                    };
+                  }) ?? []
               }
               onChange={(value) =>
                 setBody((state) => ({ ...state, fastpix_in_bank: value }))

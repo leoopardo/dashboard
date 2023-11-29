@@ -187,21 +187,23 @@ export const BanksTab = (props: { id?: string }) => {
               size="large"
               value={despositBank?.bank}
               options={
-                bankListData?.itens?.map((item, index) => {
-                  return {
-                    key: index,
-                    value: item.bank,
-                    label: (
-                      <>
-                        <Avatar
-                          src={item.icon_url}
-                          style={{ marginRight: 10 }}
-                        />
-                        {item.label_name}
-                      </>
-                    ),
-                  };
-                }) ?? []
+                bankListData?.itens
+                  ?.filter((bank) => bank?.cash_in && bank.status)
+                  ?.map((item, index) => {
+                    return {
+                      key: index,
+                      value: item.bank,
+                      label: (
+                        <>
+                          <Avatar
+                            src={item.icon_url}
+                            style={{ marginRight: 10 }}
+                          />
+                          {item.label_name}
+                        </>
+                      ),
+                    };
+                  }) ?? []
               }
               onChange={(value) => setDepositBank({ bank: value })}
             />
@@ -213,21 +215,23 @@ export const BanksTab = (props: { id?: string }) => {
               size="large"
               value={withdrawBank?.bank}
               options={
-                bankListData?.itens?.map((item, index) => {
-                  return {
-                    key: index,
-                    value: item.bank,
-                    label: (
-                      <>
-                        <Avatar
-                          src={item.icon_url}
-                          style={{ marginRight: 10 }}
-                        />
-                        {item.label_name}
-                      </>
-                    ),
-                  };
-                }) ?? []
+                bankListData?.itens
+                  ?.filter((bank) => bank?.cash_out && bank.status)
+                  ?.map((item, index) => {
+                    return {
+                      key: index,
+                      value: item.bank,
+                      label: (
+                        <>
+                          <Avatar
+                            src={item.icon_url}
+                            style={{ marginRight: 10 }}
+                          />
+                          {item.label_name}
+                        </>
+                      ),
+                    };
+                  }) ?? []
               }
               onChange={(value) => setWithdrawBank({ bank: value })}
             />
@@ -240,7 +244,7 @@ export const BanksTab = (props: { id?: string }) => {
               value={fastPixBank?.bank}
               options={
                 bankListData?.itens
-                  ?.filter((bank) => bank?.FastPix)
+                  ?.filter((bank) => bank?.fastpix_in && bank.status)
                   .map((item, index) => {
                     return {
                       key: index,

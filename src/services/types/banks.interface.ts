@@ -24,7 +24,7 @@ export interface BankItem {
   account_name: string;
   account_document: string;
   created_at: string;
-  FastPix: boolean
+  fastpix_in: boolean
 }
 export interface BankResponse {
   total: number;
