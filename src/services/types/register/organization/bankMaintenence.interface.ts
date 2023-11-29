@@ -18,6 +18,7 @@ export interface BankMaintenenceItem {
   internal_account_number?: number;
   cash_in?: boolean;
   cash_out?: boolean;
+  fastpix_in?: boolean;
   status?: boolean;
   account_name?: string;
   account_document?: string;

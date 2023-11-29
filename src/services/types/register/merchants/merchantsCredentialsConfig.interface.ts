@@ -46,4 +46,5 @@ export interface IBodyCredentialItem {
   status?: boolean;
   type?: string;
   validation_token?: string;
+  id?: number;
 }

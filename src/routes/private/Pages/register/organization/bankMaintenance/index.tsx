@@ -44,10 +44,25 @@ export const BankMaintenence = () => {
   );
 
   const [updateBody, setUpdateBody] = useState<BankMaintenenceItem | null>({
-    ...currentItem,
+    label_name: currentItem?.label_name,
+    icon_url: currentItem?.icon_url,
+    priority: Number(currentItem?.priority),
+    bank_fee: Number(currentItem?.bank_fee),
+    agency: Number(currentItem?.agency),
+    account: Number(currentItem?.account),
+    internal_account_number: Number(currentItem?.internal_account_number),
+    cash_in: currentItem?.cash_in,
+    cash_out: currentItem?.cash_out,
+    status: currentItem?.status,
+    fastpix_in: currentItem?.fastpix_in,
+    account_name: currentItem?.account_name,
+    account_document: currentItem?.account_document,
   });
   const { updateBank, updateBankError, updateBankLoading, updateBankSuccess } =
-    useUpdateBank({...updateBody, id: undefined, bank: undefined, created_at: undefined}, currentItem?.id);
+    useUpdateBank(
+      { ...updateBody, id: undefined, bank: undefined, created_at: undefined },
+      currentItem?.id
+    );
 
   const [isTuorOpen, setIsTuorOpen] = useState<boolean>(false);
   const refLogo = useRef(null);

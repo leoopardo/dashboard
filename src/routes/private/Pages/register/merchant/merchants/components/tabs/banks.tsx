@@ -65,6 +65,7 @@ export const BanksTab = (props: { id?: string }) => {
 
     setDepositBank({ bank: merchantBankData?.merchantConfig?.cash_in_bank });
     setWithdrawBank({ bank: merchantBankData?.merchantConfig?.cash_out_bank });
+    setFastPixBank({ bank: merchantBankData?.merchantConfig?.fastpix_in_bank });
   }, [merchantBankData]);
 
   useEffect(() => {
@@ -159,27 +160,6 @@ export const BanksTab = (props: { id?: string }) => {
               <Typography.Text strong>{t("table.unassigned")}</Typography.Text>
             )}
           </Typography>
-          {merchantBankData?.merchantConfig?.fastpix_in_bank && (
-            <Typography style={{ marginTop: 10 }}>
-              {t("input.fastpix_in_bank")}:{" "}
-              <Avatar
-                src={
-                  bankListData?.itens.find(
-                    (bank) =>
-                      bank.bank ===
-                      merchantBankData?.merchantConfig?.fastpix_in_bank
-                  )?.icon_url
-                }
-              />
-              {
-                bankListData?.itens.find(
-                  (bank) =>
-                    bank.bank ===
-                    merchantBankData?.merchantConfig?.fastpix_in_bank
-                )?.label_name
-              }
-            </Typography>
-          )}
         </Grid>
         <Grid item xs={12} md={4}>
           <Form.Item label={t("input.deposit_bank")}>
@@ -187,21 +167,23 @@ export const BanksTab = (props: { id?: string }) => {
               size="large"
               value={despositBank?.bank}
               options={
-                bankListData?.itens?.map((item, index) => {
-                  return {
-                    key: index,
-                    value: item.bank,
-                    label: (
-                      <>
-                        <Avatar
-                          src={item.icon_url}
-                          style={{ marginRight: 10 }}
-                        />
-                        {item.label_name}
-                      </>
-                    ),
-                  };
-                }) ?? []
+                bankListData?.itens
+                  ?.filter((bank) => bank?.cash_in && bank.status)
+                  ?.map((item, index) => {
+                    return {
+                      key: index,
+                      value: item.bank,
+                      label: (
+                        <>
+                          <Avatar
+                            src={item.icon_url}
+                            style={{ marginRight: 10 }}
+                          />
+                          {item.label_name}
+                        </>
+                      ),
+                    };
+                  }) ?? []
               }
               onChange={(value) => setDepositBank({ bank: value })}
             />
@@ -213,21 +195,23 @@ export const BanksTab = (props: { id?: string }) => {
               size="large"
               value={withdrawBank?.bank}
               options={
-                bankListData?.itens?.map((item, index) => {
-                  return {
-                    key: index,
-                    value: item.bank,
-                    label: (
-                      <>
-                        <Avatar
-                          src={item.icon_url}
-                          style={{ marginRight: 10 }}
-                        />
-                        {item.label_name}
-                      </>
-                    ),
-                  };
-                }) ?? []
+                bankListData?.itens
+                  ?.filter((bank) => bank?.cash_out && bank.status)
+                  ?.map((item, index) => {
+                    return {
+                      key: index,
+                      value: item.bank,
+                      label: (
+                        <>
+                          <Avatar
+                            src={item.icon_url}
+                            style={{ marginRight: 10 }}
+                          />
+                          {item.label_name}
+                        </>
+                      ),
+                    };
+                  }) ?? []
               }
               onChange={(value) => setWithdrawBank({ bank: value })}
             />
@@ -240,7 +224,7 @@ export const BanksTab = (props: { id?: string }) => {
               value={fastPixBank?.bank}
               options={
                 bankListData?.itens
-                  ?.filter((bank) => bank?.FastPix)
+                  ?.filter((bank) => bank?.fastpix_in && bank.status)
                   .map((item, index) => {
                     return {
                       key: index,

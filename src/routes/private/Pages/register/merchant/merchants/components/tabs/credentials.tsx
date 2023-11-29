@@ -53,6 +53,7 @@ export const CredentialConfigTab = (props: { id?: string }) => {
     useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [createdCredential, setCreatedCredential] = useState<any>(null);
 
   const {
     isShowCredentialConfigFetching,
@@ -61,7 +62,7 @@ export const CredentialConfigTab = (props: { id?: string }) => {
     showCredentialConfigisSuccess,
     refetchShowCredentialConfigData,
   } = useShowCredentialsConfig({
-    api_credential_id: currentItem?.id,
+    api_credential_id: currentItem?.id ?? createdCredential,
     validation_token: tokenState,
   });
   const { UpdateError, UpdateIsLoading, UpdateIsSuccess, UpdateMutate } =
@@ -76,7 +77,8 @@ export const CredentialConfigTab = (props: { id?: string }) => {
     CreateCredentialsIsLoading,
     CreateCredentialsIsSuccess,
     CreateCredentialsMutate,
-    CreateCredentialsIsReset
+    CreateCredentialsIsReset,
+    data,
   } = useCreateCredentialsConfig({
     merchant_id: Number(props?.id),
     validation_token: tokenState,
@@ -102,6 +104,13 @@ export const CredentialConfigTab = (props: { id?: string }) => {
   }, [currentItem]);
 
   useEffect(() => {
+    if (!CreateCredentialsIsSuccess) return;
+    setCreatedCredential(data);
+    setIsViewModalOpen(true);
+    console.log(data);
+  }, [CreateCredentialsIsSuccess]);
+
+  useEffect(() => {
     if (showCredentialConfigError?.response?.status === 400) return;
 
     setIsGetValidateTokenOpen(false);
@@ -122,7 +131,6 @@ export const CredentialConfigTab = (props: { id?: string }) => {
     }
     setQuery((state: any) => ({ ...state, name: debounceSearch }));
   }, [debounceSearch]);
-
 
   return (
     <Grid container style={{ padding: "25px" }}>
@@ -225,7 +233,7 @@ export const CredentialConfigTab = (props: { id?: string }) => {
 
       {isViewModalOpen && (
         <ViewModal
-          item={showCredentialConfigData}
+          item={showCredentialConfigData ?? createdCredential}
           loading={isShowCredentialConfigFetching}
           modalName={`${t("menus.merchant")}: ${currentItem?.name}`}
           open={isViewModalOpen}

@@ -1222,11 +1222,6 @@ export const CustomTable = (props: TableProps) => {
                       image={Empty.PRESENTED_IMAGE_SIMPLE}
                       description={
                         <div>
-                          <div>
-                            {`${t("table.error")} ${
-                              props?.error?.response?.status
-                            }`}
-                          </div>
                           {`${t(`error.${props?.error?.response?.status}`)}`}
                         </div>
                       }

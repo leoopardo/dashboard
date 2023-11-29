@@ -153,7 +153,59 @@ export const OrganizationBankStatement = () => {
             marginTop: "50px",
           }}
         >
-          <Grid item xs={12}>
+          <Grid item xs={12} md={2}>
+            <ReactECharts
+              option={{
+                tooltip: {
+                  trigger: "item",
+                },
+                legend: {
+                  top: "5%",
+                  left: "center",
+                },
+                series: [
+                  {
+                    name: "Access From",
+                    type: "pie",
+                    radius: ["40%", "70%"],
+                    avoidLabelOverlap: false,
+                    itemStyle: {
+                      borderRadius: 10,
+                      borderColor: "#fff",
+                      borderWidth: 2,
+                    },
+                    label: {
+                      show: false,
+                      position: "center",
+                    },
+                    emphasis: {
+                      label: {
+                        show: false,
+                        fontSize: 40,
+                        fontWeight: "bold",
+                      },
+                    },
+                    labelLine: {
+                      show: false,
+                    },
+                    data: [
+                      {
+                        value: OrganizationBankStatementTotals.number_in,
+                        name: t("table.operation_number_in"),
+                      },
+                      {
+                        value: OrganizationBankStatementTotals.number_out,
+                        name: t("table.operation_number_out"),
+                      },
+                    ],
+                  },
+                ],
+              }}
+              opts={{ renderer: "svg" }}
+              lazyUpdate
+            />
+          </Grid>
+          <Grid item xs={10}>
             <ReactECharts
               option={{
                 legend: {
@@ -175,12 +227,7 @@ export const OrganizationBankStatement = () => {
                       t("table.out"),
                       t("table.total"),
                     ],
-                    [
-                      t("table.operation_number"),
-                      OrganizationBankStatementTotals.number_in,
-                      OrganizationBankStatementTotals.number_out,
-                      OrganizationBankStatementTotals.number_total,
-                    ],
+
                     [
                       t("table.value"),
                       OrganizationBankStatementTotals.value_in,
