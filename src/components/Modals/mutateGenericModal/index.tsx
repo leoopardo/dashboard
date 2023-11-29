@@ -22,6 +22,7 @@ import {
   Form,
   FormInstance,
   Input,
+  InputNumber,
   Row,
   Select,
   Switch,
@@ -449,6 +450,36 @@ export const MutateModal = ({
                         InputElement={
                           <Input size="large" style={{ width: "100%" }} />
                         }
+                      />
+                    </Form.Item>
+                  </Col>
+                );
+              case "priority":
+              case "bank_fee":
+              case "agency":
+              case "internal_account_number":
+                return (
+                  <Col span={24}>
+                    <Form.Item
+                      label={t(`table.${field.label}`)}
+                      name={field.label}
+                      style={{ margin: 10 }}
+                      rules={[
+                        {
+                          required: field.required,
+                          message:
+                            t("input.required", {
+                              field: t(`input.${field.label}`),
+                            }) || "",
+                        },
+                      ]}
+                    >
+                      <InputNumber
+                        style={{ width: "100%" }}
+                        size="large"
+                        name="reason"
+                        value={body[field.label]}
+                        onChange={handleChange}
                       />
                     </Form.Item>
                   </Col>
