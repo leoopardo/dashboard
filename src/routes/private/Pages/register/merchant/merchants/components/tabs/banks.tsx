@@ -65,6 +65,7 @@ export const BanksTab = (props: { id?: string }) => {
 
     setDepositBank({ bank: merchantBankData?.merchantConfig?.cash_in_bank });
     setWithdrawBank({ bank: merchantBankData?.merchantConfig?.cash_out_bank });
+    setFastPixBank({ bank: merchantBankData?.merchantConfig?.fastpix_in_bank });
   }, [merchantBankData]);
 
   useEffect(() => {
@@ -159,27 +160,6 @@ export const BanksTab = (props: { id?: string }) => {
               <Typography.Text strong>{t("table.unassigned")}</Typography.Text>
             )}
           </Typography>
-          {merchantBankData?.merchantConfig?.fastpix_in_bank && (
-            <Typography style={{ marginTop: 10 }}>
-              {t("input.fastpix_in_bank")}:{" "}
-              <Avatar
-                src={
-                  bankListData?.itens.find(
-                    (bank) =>
-                      bank.bank ===
-                      merchantBankData?.merchantConfig?.fastpix_in_bank
-                  )?.icon_url
-                }
-              />
-              {
-                bankListData?.itens.find(
-                  (bank) =>
-                    bank.bank ===
-                    merchantBankData?.merchantConfig?.fastpix_in_bank
-                )?.label_name
-              }
-            </Typography>
-          )}
         </Grid>
         <Grid item xs={12} md={4}>
           <Form.Item label={t("input.deposit_bank")}>

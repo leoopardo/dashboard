@@ -153,7 +153,8 @@ export const OrganizationBankStatement = () => {
             marginTop: "50px",
           }}
         >
-          <Grid item xs={12}>
+          <Grid></Grid>
+          <Grid item xs={10}>
             <ReactECharts
               option={{
                 legend: {
