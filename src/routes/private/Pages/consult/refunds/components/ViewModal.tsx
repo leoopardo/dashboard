@@ -4,6 +4,7 @@ import { DownloadOutlined, FilePdfOutlined } from "@ant-design/icons";
 import { Grid } from "@mui/material";
 import { Toast } from "@src/components/Toast";
 import { useGetRowsGeneratedDeposits } from "@src/services/consult/deposits/generatedDeposits/getRows";
+import { useCreateDepositPaymentVoucherRefund } from "@src/services/consult/refund/refundDeposits/generatePaymentVoucher";
 import { useGetRefund } from "@src/services/consult/refund/refundDeposits/getRefund";
 import { useCreatePaymentVoucherRefund } from "@src/services/consult/refund/refundDepositsManual/generatePaymentVoucher";
 import { useGetRefundManualOne } from "@src/services/consult/refund/refundDepositsManual/getRefund";
@@ -42,6 +43,10 @@ export const ViewModal = (props: ViewModalProps) => {
     PaymentVoucherError,
     isPaymentVoucherSuccess,
   } = useCreatePaymentVoucherRefund(props?.item?.endToEndId);
+  const {
+    mutateDepositPaymentVoucher,
+    isDepositPaymentVoucherLoading,
+  } = useCreateDepositPaymentVoucherRefund(props?.item?.endToEndId);
   const [currOption, setCurrOption] = useState<any>("transaction");
   const { depositsRows, refetchDepositsTotalRows } =
     useGetRowsGeneratedDeposits({
@@ -284,6 +289,48 @@ export const ViewModal = (props: ViewModalProps) => {
                     Refund?.refund_date
                   ).toLocaleTimeString()}`}
                 </Descriptions.Item>
+                {!Refund?.url_pdf ? (
+                  <Descriptions.Item
+                    key={"generate_payment_voucher"}
+                    label={t(`table.generate_payment_voucher`)}
+                    labelStyle={{
+                      maxWidth: "120px !important",
+                      margin: 0,
+                      padding: 0,
+                      textAlign: "center",
+                    }}
+                  >
+                    <Button
+                      type="dashed"
+                      onClick={() => mutateDepositPaymentVoucher()}
+                      loading={isDepositPaymentVoucherLoading}
+                    >
+                      <FilePdfOutlined />
+                      {t(`table.generate_payment_voucher`)}
+                    </Button>
+                  </Descriptions.Item>
+                ) : (
+                  <Descriptions.Item
+                    key={"download_payment_voucher"}
+                    label={t(`table.download_payment_voucher`)}
+                    labelStyle={{
+                      maxWidth: "120px !important",
+                      margin: 0,
+                      padding: 0,
+                      textAlign: "center",
+                    }}
+                  >
+                    <Button
+                      onClick={() => {
+                        window.location.assign(Refund?.url_pdf);
+                      }}
+                      type="primary"
+                    >
+                      <DownloadOutlined />
+                      {t(`table.download_payment_voucher`)}
+                    </Button>
+                  </Descriptions.Item>
+                )}
               </Descriptions>
             )}
           </Grid>

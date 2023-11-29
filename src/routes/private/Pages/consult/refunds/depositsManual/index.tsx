@@ -371,7 +371,7 @@ export const RefundDepositsManual = () => {
               "status",
               "reason",
               "createdAt",
-              "value"
+              "value",
             ]}
           />
         </Grid>
@@ -483,12 +483,11 @@ export const RefundDepositsManual = () => {
           refetch={refetchRefundDepositManualTotal}
           selectOptions={{
             status: [
-              "PAID",
               "REFUNDED",
-              "EXPIRED",
-              "CANCELED",
+              "PAID_TO_MERCHANT",
+              "ERROR",
+              "PROCESSIGN",
               "WAITING",
-              "WAITING_REFUND",
             ],
             pix_type: ["STANDARD", "FASTPIX"],
             gender: ["MALE", "FEMALE", "OTHER"],

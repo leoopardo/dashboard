@@ -322,13 +322,7 @@ export const RefundDeposits = () => {
               },
             ]}
             removeTotal
-            label={[
-              "merchant_name",
-              "status",
-              "reason",
-              "createdAt",
-              "value",
-            ]}
+            label={["merchant_name", "status", "reason", "createdAt", "value"]}
           />
         </Grid>
       </Grid>
@@ -415,12 +409,11 @@ export const RefundDeposits = () => {
           refetch={refetchRefundDepositsTotalRows}
           selectOptions={{
             status: [
-              "PAID",
               "REFUNDED",
-              "EXPIRED",
-              "CANCELED",
+              "PAID_TO_MERCHANT",
+              "ERROR",
+              "PROCESSING",
               "WAITING",
-              "WAITING_REFUND",
             ],
             pix_type: ["STANDARD", "FASTPIX"],
             gender: ["MALE", "FEMALE", "OTHER"],
