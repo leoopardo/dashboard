@@ -274,7 +274,7 @@ export const MerchantPreManual = () => {
           container
           item
           xs={12}
-          md={6}
+          md={5}
           spacing={1}
           style={{
             display: "flex",
@@ -306,7 +306,7 @@ export const MerchantPreManual = () => {
           container
           item
           xs={12}
-          md={6}
+          md={7}
           spacing={1}
           style={{
             display: "flex",
@@ -335,7 +335,7 @@ export const MerchantPreManual = () => {
             </Button>
           </Grid>
           {permissions.transactions.merchant?.merchant_pre_manual?.menu && (
-            <Grid item xs={12} md={2} lg={2}>
+            <Grid item xs={12} md={"auto"} lg={"auto"}>
               <ExportReportsModal
                 disabled={!preManualData?.total || preManualDataError}
                 mutateReport={() => preManualReportsMutate()}
