@@ -450,7 +450,8 @@
     "account_name": "Nome da conta",
     "account_document": "Documento da conta",
     "label_name": "Nome do banco",
-    "v3_id": "ID V3"
+    "v3_id": "ID V3",
+    "position": "Cargo"
   },
   "table": {
     "id": "ID",
