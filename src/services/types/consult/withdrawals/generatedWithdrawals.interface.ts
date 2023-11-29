@@ -127,6 +127,7 @@ export interface getWithdraw {
   receiver_document: string;
   pix_key_type: string;
   pix_key: string;
+  error:string;
   bank: string;
   status: string;
   receiver_email: string;
