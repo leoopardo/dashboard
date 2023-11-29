@@ -144,8 +144,9 @@ export const UpdateOperator = () => {
     operator_responsible_id: currentResponsible?.id,
   });
 
-  const { OperatorAttachmentsData, isOperatorAttachmentsDataFetching } =
-    useGetOperatorAttachments({ operator_id: location.state.id });
+  const { OperatorAttachmentsData } = useGetOperatorAttachments({
+    operator_id: location.state.id,
+  });
   const {
     OperatorAttachmentError,
     OperatorAttachmentIsLoading,
@@ -157,7 +158,6 @@ export const UpdateOperator = () => {
     DeleteOperatorAttachmentMutate,
     DeleteOperatorAttachmentError,
     DeleteOperatorAttachmentIsSuccess,
-    DeleteOperatorAttachmentIsLoading,
   } = useDeleteOperatorAttachment(deleteFileId);
 
   const handleChangeOperator = (event: any) => {
@@ -250,7 +250,10 @@ export const UpdateOperator = () => {
             </Col>
             <Col xs={{ span: 24 }} md={{ span: 6 }}>
               <Form.Item label={t("table.cellphone")} name="name">
-                <CellphoneInput body={OperatorBody ?? location?.state?.cellphone} setBody={setOperatorBody} />
+                <CellphoneInput
+                  body={OperatorBody ?? location?.state?.cellphone}
+                  setBody={setOperatorBody}
+                />
               </Form.Item>
             </Col>
             <Col xs={{ span: 24 }} md={{ span: 6 }}>
@@ -301,13 +304,19 @@ export const UpdateOperator = () => {
             <Col xs={{ span: 24 }} md={{ span: 6 }}>
               <Form.Item label={t("table.aggregator")} name="aggregator_id">
                 <AggregatorSelect
-                  aggregatorId={OperatorBody.aggregator_id ?? location?.state?.aggregator_id}
+                  aggregatorId={
+                    OperatorBody.aggregator_id ?? location?.state?.aggregator_id
+                  }
                   setQueryFunction={setOperatorBody}
                 />
               </Form.Item>
             </Col>
             <Col xs={{ span: 24 }} md={{ span: 2 }}>
-              <Form.Item label={t("table.status")} name="status" valuePropName="checked">
+              <Form.Item
+                label={t("table.status")}
+                name="status"
+                valuePropName="checked"
+              >
                 <Switch
                   checked={OperatorBody?.status}
                   onChange={(checked) => {
@@ -514,82 +523,79 @@ export const UpdateOperator = () => {
     {
       key: "3",
       label: t("table.attachments"),
-      children:
-        isOperatorAttachmentsDataFetching ||
-        DeleteOperatorAttachmentIsLoading ||
-        OperatorAttachmentIsLoading ? (
-          <div
-            style={{
-              height: "100%",
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Spin size="large" />
-          </div>
-        ) : (
-          <Row gutter={[8, 8]}>
-            <Col span={24}>
-              <Dragger
-                style={{ maxHeight: "150px" }}
-                listType="picture"
-                multiple={false}
-                onRemove={(file) => {
-                  setDeleteFileId(file?.uid);
-                }}
-                defaultFileList={OperatorAttachmentsData?.items.map((file) => {
-                  return {
-                    uid: file._id,
-                    name: file.file_name,
-                    url: file.file_url,
-                  };
-                })}
-                height={1000}
-                beforeUpload={(file) => {
-                  setFileBody({
-                    base64_file: "",
-                    file_name: "",
-                    operator_id: location.state.id,
-                  });
+      children: OperatorAttachmentIsLoading ? (
+        <div
+          style={{
+            height: "100%",
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Spin size="large" />
+        </div>
+      ) : (
+        <Row gutter={[8, 8]}>
+          <Col span={24}>
+            <Dragger
+              style={{ maxHeight: "150px" }}
+              listType="picture"
+              multiple={false}
+              onRemove={(file) => {
+                setDeleteFileId(file?.uid);
+              }}
+              defaultFileList={OperatorAttachmentsData?.items.map((file) => {
+                return {
+                  uid: file._id,
+                  name: file.file_name,
+                  url: file.file_url,
+                };
+              })}
+              height={1000}
+              beforeUpload={(file) => {
+                setFileBody({
+                  base64_file: "",
+                  file_name: "",
+                  operator_id: location.state.id,
+                });
+                setFileBody((state: any) => ({
+                  ...state,
+                  file_name: file.name,
+                }));
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => {
                   setFileBody((state: any) => ({
                     ...state,
-                    file_name: file.name,
+                    base64_file: reader.result,
                   }));
-                  const reader = new FileReader();
-                  reader.readAsDataURL(file);
-                  reader.onload = () => {
-                    setFileBody((state: any) => ({
-                      ...state,
-                      base64_file: reader.result,
-                    }));
-                  };
-                  return false;
-                }}
-              >
-                <Typography className="ant-upload-drag-icon">
-                  <InboxOutlined />
-                </Typography>
-                <Typography className="ant-upload-text">
-                  {t("messages.upload_label")}
-                </Typography>
-                <Typography className="ant-upload-hint">
-                  {t("messages.upload_description")}
-                </Typography>
-              </Dragger>
-            </Col>
+                };
+                return false;
+              }}
+            >
+              <Typography className="ant-upload-drag-icon">
+                <InboxOutlined />
+              </Typography>
+              <Typography className="ant-upload-text">
+                {t("messages.upload_label")}
+              </Typography>
+              <Typography className="ant-upload-hint">
+                {t("messages.upload_description")}
+              </Typography>
+            </Dragger>
+          </Col>
 
-            {!OperatorAttachmentsData?.total && !fileBody?.base64_file && (
-              <Col span={24}>
-                <Empty
-                  image={Empty.PRESENTED_IMAGE_SIMPLE}
-                  description={t("error.400")}
-                />
-              </Col>
-            )}
-          </Row>
-        ),
+          {!OperatorAttachmentsData?.total && !fileBody?.base64_file && (
+            <Col span={24}>
+              <Empty
+                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                description={t("error.400")}
+              />
+            </Col>
+          )}
+        </Row>
+      ),
     },
   ];
   return (
