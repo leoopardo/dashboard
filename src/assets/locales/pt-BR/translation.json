@@ -334,8 +334,8 @@
     "required(a)": "Por favor, insira a {{field}}",
     "confirm_password": "Por favor, confirme sua senha!",
     "doest_match": "As senhas não coincidem!",
-    "name": "nome",
-    "username": "nome de usuário",
+    "name": "Nome",
+    "username": "Nome de usuário",
     "min_of": "Minímo de {{min}} caractéres",
     "invalid": "{{field}} inválido",
     "number": "Número",
@@ -431,8 +431,8 @@
     "category_id": "Categoria",
     "password_type": "A senha deve conter no mínimo 8 caracteres, incluindo pelo menos 1 número, 1 letra maiúscula e 1 caractere especial.",
     "merchant_id": "Empresa",
-    "reason": "motivo",
-    "domain": "domínio",
+    "reason": "Motivo",
+    "domain": "Domínio",
     "active_logo": "Logo ativo",
     "fastpix_in_fee_type": "Tipo de taxa (Depósito FastPix)",
     "fastpix_in_fee_percent": "Porcentagem de taxa (Depósito FastPix)",
@@ -449,7 +449,8 @@
     "internal_account_number": "Número de conta interna",
     "account_name": "Nome da conta",
     "account_document": "Documento da conta",
-    "label_name": "Nome do banco"
+    "label_name": "Nome do banco",
+    "v3_id": "ID V3"
   },
   "table": {
     "id": "ID",

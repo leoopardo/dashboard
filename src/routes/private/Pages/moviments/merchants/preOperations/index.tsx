@@ -401,7 +401,14 @@ export const MerchantPreManual = () => {
               {
                 label: "delete",
                 icon: <DeleteOutlined style={{ fontSize: "20px" }} />,
-                onClick: () => setConfirmDelete(true),
+                onClick: (item) => {
+                  setSelectedRows(
+                    selectedRows.filter((i) => i._id !== item._id)
+                  );
+                  console.log(selectedRows);
+
+                  setConfirmDelete(true);
+                },
               },
             ]}
             isConfirmOpen={confirmDelete}
