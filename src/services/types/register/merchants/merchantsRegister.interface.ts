@@ -30,7 +30,7 @@ export interface MerchantsQuery {
 export interface MerchantsItem {
   cellphone?: string;
   created_at?: string;
-  v3_id?: string;
+  v3_id?: number;
   cnpj?: string;
   domain?: string;
   email?: string | null;
