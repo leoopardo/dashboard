@@ -68,11 +68,12 @@ export const UpdateFeePlanModal = ({
   const divRef = useRef<HTMLDivElement>(null);
   const [createFeeDetails, setCreateFeeDetails] =
     useState<ICreateDetails | null>(null);
-  const { feePlansDetailsData, refetchFeePlansDetailsData } =
+  const { feePlansDetailsData, refetchFeePlansDetailsData,  } =
     useGetFeePlansDetails({ fee_plans_id: currentUser?.id });
   const [feePage] = useState(1);
   const { createFeePlansDetailsFetching, isSuccess } =
     useCreateMerchantFeePlansDetails(createFeeDetails ?? null);
+
   const handleChangeUserBody = (event: ChangeEvent<HTMLInputElement>) => {
     if (setUpdateBody) {
       setUpdateBody((state) => ({
@@ -116,8 +117,8 @@ export const UpdateFeePlanModal = ({
     setOpen(false);
   }
   useEffect(() => {
-    setFees(feePlansDetailsData?.items ?? []);
-  }, [currentUser, feePlansDetailsData]);
+   action === "update" && setFees(feePlansDetailsData?.items ?? []);
+  }, [currentUser, feePlansDetailsData, action]);
 
   useEffect(() => {
     if (action === "create") {
@@ -143,11 +144,12 @@ export const UpdateFeePlanModal = ({
       open={open}
       onClose={() => {
         setOpen(false);
+        setFees([])
         formRef.current?.resetFields();
         if (setCurrentUser) setCurrentUser(null);
       }}
       bodyStyle={{ overflowX: "hidden" }}
-      title={t("buttons.new_fee")}
+      title={action === "create" ? t("buttons.new_fee") : t("buttons.update_menu", {menu: t("table.fee")})}
       footer={
         <Button
           loading={loading}

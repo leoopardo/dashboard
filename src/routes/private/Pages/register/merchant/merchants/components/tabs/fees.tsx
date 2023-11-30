@@ -133,7 +133,9 @@ export const FeesTab = (props: { id?: string }) => {
 
   useEffect(() => {
     formRef.current?.setFieldsValue(merchantFeesData?.fees);
+    setBody(merchantFeesData?.fees);
   }, [merchantFeesData, depositFeePlansData, withdrawFeePlansData]);
+
   return (
     <Form
       ref={formRef}
@@ -215,7 +217,6 @@ export const FeesTab = (props: { id?: string }) => {
             name="cashin_pix_fee_percent"
             rules={[
               {
-                type: "number",
                 min: body?.cashin_pix_fee_type === "PERCENT" ? 0.01 : 0,
                 message: t("messages.min_value_higher_then_zero") || "",
               },
@@ -224,6 +225,7 @@ export const FeesTab = (props: { id?: string }) => {
             <Input
               size="large"
               type="number"
+              step={0.01}
               name="cashin_pix_fee_percent"
               disabled={body?.cashin_pix_fee_type === "VALUE"}
               value={body?.cashin_pix_fee_percent}
@@ -363,7 +365,6 @@ export const FeesTab = (props: { id?: string }) => {
             name="customer_withdraw_fee_percent"
             rules={[
               {
-                type: "number",
                 min: body?.customer_withdraw_fee_type === "PERCENT" ? 0.01 : 0,
                 message: t("messages.min_value_higher_then_zero") || "",
               },
@@ -480,7 +481,6 @@ export const FeesTab = (props: { id?: string }) => {
             name="pix_refund_fee_percent"
             rules={[
               {
-                type: "number",
                 min: body?.pix_refund_fee_type === "PERCENT" ? 0.01 : 0,
                 message: t("messages.min_value_higher_then_zero") || "",
               },
@@ -598,7 +598,6 @@ export const FeesTab = (props: { id?: string }) => {
             name="fastpix_in_fee_percent"
             rules={[
               {
-                type: "number",
                 min: body?.fastpix_in_fee_type === "PERCENT" ? 0.01 : 0,
                 message: t("messages.min_value_higher_then_zero") || "",
               },
@@ -712,7 +711,6 @@ export const FeesTab = (props: { id?: string }) => {
             name="fastpix_refund_fee_percent"
             rules={[
               {
-                type: "number",
                 min: body?.fastpix_refund_fee_type === "PERCENT" ? 0.01 : 0,
                 message: t("messages.min_value_higher_then_zero") || "",
               },
