@@ -113,11 +113,11 @@ export const MutateModal = ({
   const [mask, setMask] = useState("");
 
   const validateCnpjLength = (_: any, value: string) => {
-    if (value && value.replace(/[^\d]/g, '').length !== 14) {
+    if (value && value.replace(/[^\d]/g, "").length !== 14) {
       return Promise.reject(
-        t('input.invalid', {
+        t("input.invalid", {
           field: t(`input.cnpj`),
-        }) || ''
+        }) || ""
       );
     }
     return Promise.resolve();
@@ -191,6 +191,7 @@ export const MutateModal = ({
       title={modalName}
       footer={
         <Button
+          data-test-id="submit-button"
           loading={submitLoading}
           type="primary"
           style={{ width: "100%" }}
@@ -652,7 +653,7 @@ export const MutateModal = ({
                       validateTrigger="onBlur"
                       rules={[
                         {
-                          validator: validateCnpjLength
+                          validator: validateCnpjLength,
                         },
                         {
                           required: field.required,
