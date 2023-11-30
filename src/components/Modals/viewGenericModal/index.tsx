@@ -288,6 +288,26 @@ export const ViewModal = ({
                   </Descriptions.Item>
                 );
 
+              case "value":
+              return (
+                <Descriptions.Item
+                  key={key}
+                  label={t(`table.${key}`)}
+                  labelStyle={{
+                    maxWidth: "120px !important",
+                    margin: 0,
+                    padding: 0,
+                    textAlign: "center",
+                  }}
+                >
+                  {new Intl.NumberFormat("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
+                  }).format(Number(sortItems[key]) || 0)}
+                </Descriptions.Item>
+              );
+
+
               case "to":
               case "from":
                 return (
@@ -333,6 +353,37 @@ export const ViewModal = ({
               case "sort_field_filter":
               case "createdById":
                 return;
+
+              case "type":
+                return (
+                  sortItems[key] && sortItems[key] === "aggregator_transfer" ? (
+                    <Descriptions.Item
+                      key={key}
+                      label={t(`table.${key}`)}
+                      labelStyle={{
+                        maxWidth: "120px !important",
+                        margin: 0,
+                        padding: 0,
+                        textAlign: "center",
+                      }}
+                    >
+                      {t("table.aggregator_transfer")}
+                    </Descriptions.Item>
+                  ) : (
+                    <Descriptions.Item
+                      key={key}
+                      label={t(`table.${key}`)}
+                      labelStyle={{
+                        maxWidth: "120px !important",
+                        margin: 0,
+                        padding: 0,
+                        textAlign: "center",
+                      }}
+                    >
+                     {sortItems[key] ?? "-"}
+                    </Descriptions.Item>
+                  )
+                )
 
               default:
                 return (

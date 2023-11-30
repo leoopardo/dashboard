@@ -902,7 +902,10 @@
     "user_partner_id": "User partner ID",
     "user_partner_name": "User partner name",
     "user_aggregator_id": "User aggregator ID",
-    "user_aggregator_name": "User aggregator name"
+    "user_aggregator_name": "User aggregator name",
+    "internal": "Internal",
+    "aggregator_transfer": "Aggregator transfer",
+    "aggregator_id_filter": "Filter: Aggregator ID"
   },
   "actions": {
     "details": "Details",

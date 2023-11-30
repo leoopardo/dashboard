@@ -169,6 +169,17 @@ export const UpdateAggregator = () => {
     }));
   };
 
+  const validateCnpjLength = (_: any, value: string) => {
+    if (value && value.replace(/[^\d]/g, "").length !== 14) {
+      return Promise.reject(
+        t("input.invalid", {
+          field: t(`input.cnpj`),
+        }) || ""
+      );
+    }
+    return Promise.resolve();
+  };
+
   useEffect(() => {
     if (fileBody?.base64_file) {
       AggregatorAttachmentMutate();
@@ -221,7 +232,11 @@ export const UpdateAggregator = () => {
               <Form.Item
                 label={t("table.cnpj")}
                 name="cnpj"
+                validateTrigger="onBlur"
                 rules={[
+                  {
+                    validator: validateCnpjLength,
+                  },
                   {
                     required: true,
                     message:

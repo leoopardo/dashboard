@@ -15,6 +15,7 @@ import { useGetReportsHistoricCpfMerchant } from "@src/services/consult/persons/
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
 
 export const HistoricCpfByMerchantReports = () => {
+  const { t } = useTranslation();
   const INITIAL_QUERY: ReportsQuery = {
     limit: 25,
     page: 1,
@@ -44,7 +45,6 @@ export const HistoricCpfByMerchantReports = () => {
     refetchReportsHistoricCpfMerchantData();
   }, [query]);
 
-  const { t } = useTranslation();
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid

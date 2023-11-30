@@ -112,6 +112,17 @@ export const MutateModal = ({
     });
   const [mask, setMask] = useState("");
 
+  const validateCnpjLength = (_: any, value: string) => {
+    if (value && value.replace(/[^\d]/g, '').length !== 14) {
+      return Promise.reject(
+        t('input.invalid', {
+          field: t(`input.cnpj`),
+        }) || ''
+      );
+    }
+    return Promise.resolve();
+  };
+
   const { merchantBlacklistData } = useGetRowsMerchantBlacklistReasons({
     limit: 200,
     page: 1,
@@ -638,7 +649,11 @@ export const MutateModal = ({
                       label={t(`table.${field.label}`)}
                       name={field.label}
                       style={{ margin: 10 }}
+                      validateTrigger="onBlur"
                       rules={[
+                        {
+                          validator: validateCnpjLength
+                        },
                         {
                           required: field.required,
                           message:
@@ -652,6 +667,7 @@ export const MutateModal = ({
                         data-test-id={`${field.label}-input-mask`}
                         value={body[field.label]}
                         mask="99.999.999/9999-99"
+                        name={field.label}
                         onChange={(event) => {
                           const value = event.target.value.replace(
                             /[^\d]/g,
@@ -898,15 +914,6 @@ export const MutateModal = ({
                       label={t(`table.${field.label}`)}
                       name={field.label}
                       style={{ margin: 10 }}
-                      rules={[
-                        {
-                          required: field.required,
-                          message:
-                            t("input.required", {
-                              field: t(`input.${field.label}`),
-                            }) || "",
-                        },
-                      ]}
                     >
                       <AutoComplete
                         data-test-id={`${field.label}-select`}

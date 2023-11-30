@@ -105,18 +105,12 @@ export const AggregatorUsers = () => {
         "start_date",
         "end_date",
         "status",
-        "partner_id",
-        "merchant_id",
-        "operator_id",
       ]
     : [
         "start_date",
         "end_date",
         "status",
-        "partner_id",
-        "merchant_id",
         "aggregator_id",
-        "operator_id",
       ];
 
   return (

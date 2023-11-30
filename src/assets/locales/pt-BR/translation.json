@@ -910,7 +910,10 @@
     "user_partner_id": "ID da plataforma do usuário",
     "user_partner_name": "Nome da plataforma do usuário",
     "user_aggregator_id": "ID do agregador do usuário",
-    "user_aggregator_name": "Nome do agregador do usuário"
+    "user_aggregator_name": "Nome do agregador do usuário",
+    "internal": "Interno",
+    "aggregator_transfer": "Transferência de agregador",
+    "aggregator_id_filter": "Filtro: ID do agregador"
   },
   "actions": {
     "details": "Detalhes",
