@@ -135,18 +135,17 @@ export const ValidateToken = ({
           action: t("messages.validated"),
         })
       );
-      resetFunction && resetFunction()
+      resetFunction && resetFunction();
       setIsOpen(false);
     }
 
-    if (error || ValidatePhoneError) {
+   /*  if (error || ValidatePhoneError) {
       message.error(
         t("messages.action_error", {
           action: t("messages.validated"),
         })
       );
-    }
-
+    } */
   }, [success, error, ValidatePhoneSuccess, ValidatePhoneError]);
 
   return Self?.phone_validated ? (
@@ -339,19 +338,6 @@ export const ValidateToken = ({
       ) : (
         <Typography.Text strong>{t("messages.no_cellphone")}</Typography.Text>
       )}
-
-      {/*   <Toast
-        actionSuccess={t("messages.validated")}
-        actionError={t("messages.validate")}
-        error={ValidatePhoneError}
-        success={ValidatePhoneSuccess}
-      />
-      <Toast
-        actionSuccess={t("messages.validated")}
-        actionError={t("messages.validate")}
-        error={error}
-        success={success}
-      /> */}
     </Modal>
   ) : (
     <Modal
