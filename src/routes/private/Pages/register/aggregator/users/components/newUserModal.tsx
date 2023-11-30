@@ -74,6 +74,7 @@ export const NewUserModal = ({
     status: true,
     type: 2,
     cellphone: currentUser?.cellphone,
+    aggregator_id: currentUser?.aggregator?.id || user?.aggregator_id,
   });
 
   const { mutate, error, isLoading, isSuccess, reset } =

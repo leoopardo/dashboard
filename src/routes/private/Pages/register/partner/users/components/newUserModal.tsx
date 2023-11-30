@@ -69,7 +69,7 @@ export const NewUserModal = ({
   const [body, setBody] = useState<NewUserInterface>({
     name: "",
     username: "",
-    partner_id: user.partner_id,
+    partner_id: currentUser?.partner_id || user.partner_id,
     group_id: 0,
     status: true,
     type: 2,
