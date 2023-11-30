@@ -254,7 +254,7 @@ export const UpdateMerchant = () => {
                 name="cnpj"
                 rules={[
                   {
-                    required: true,
+                    required: false,
                     message:
                       t("input.required", {
                         field: t(`input.cnpj`),
