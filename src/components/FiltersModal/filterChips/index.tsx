@@ -3,7 +3,9 @@
 import { CloseCircleOutlined } from "@ant-design/icons";
 import { useListMerchantById } from "@src/services/merchant/getListMerchantById";
 import { useListAggregatorById } from "@src/services/register/aggregator/getListAggregatorById";
+import { useGetRowsMerchantManualEntryCategory } from "@src/services/register/merchant/manualEntryCategory/getManualEntryCategory";
 import { useListOperatorById } from "@src/services/register/operator/getListOperatorById";
+import { useGetOrganizationCategories } from "@src/services/register/organization/categories/getCategories";
 import { useListPartnerById } from "@src/services/register/partner/getListPartnerById";
 import { Col, Row, Tag } from "antd";
 import moment from "moment";
@@ -48,6 +50,16 @@ export const FilterChips = ({
     page: 1,
     limit: 200,
     operator_id: query.operator_id ?? undefined,
+  });
+  const { CategoriesData } = useGetOrganizationCategories({
+    limit: 200,
+    page: 1,
+  });
+  const { categoryData } = useGetRowsMerchantManualEntryCategory({
+    limit: 200,
+    page: 1,
+    sort_field: "created_at",
+    sort_order: "DESC",
   });
 
   const [filtersQuery, setFiltersQuery] = useState<any>(query);
@@ -207,6 +219,34 @@ export const FilterChips = ({
                   }
                 >
                   {t(`table.merchant`)}: {currentMerchant?.name ?? "-"}
+                </Tag>
+              </Col>
+            );
+          case "category_id":
+            return (
+              <Col key={key}>
+                <Tag
+                  data-test-id="filter-chip-merchant-id"
+                  style={{
+                    width: "100%",
+                    textOverflow: "ellipsis",
+                    overflow: "hidden",
+                    wordBreak: "break-all",
+                    display: disabled?.includes(key) ? "none" : undefined,
+                  }}
+                  key={key}
+                  color="cyan"
+                  icon={
+                    <CloseCircleOutlined onClick={() => deleteFilter(key)} />
+                  }
+                >
+                  {t(`table.category`)}:{" "}
+                  {CategoriesData?.items.find(
+                    (c) => c.id === query?.category_id
+                  )?.name ??
+                    categoryData?.items.find((c) => c.id === query?.category_id)
+                      ?.name ??
+                    "-"}
                 </Tag>
               </Col>
             );
