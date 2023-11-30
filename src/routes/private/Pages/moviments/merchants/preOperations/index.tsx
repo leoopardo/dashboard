@@ -38,6 +38,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { CreateMovimentModal } from "../../components/createMovimentModal";
 import { ApproveModal } from "./components/approveModal";
+import { defaultTheme } from "@src/styles/defaultTheme";
 
 export const MerchantPreManual = () => {
   const { t } = useTranslation();
@@ -272,7 +273,7 @@ export const MerchantPreManual = () => {
         spacing={1}
       >
         <Grid xs={12} style={{ display: "flex", justifyContent: "center" }}>
-          <Typography.Title level={2}>
+          <Typography.Title level={2} style={{color: defaultTheme.colors.secondary}}>
             {selectedRows &&
               selectedRows.length > 0 &&
               `Total: ${new Intl.NumberFormat("pt-BR", {
