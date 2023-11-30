@@ -9,7 +9,7 @@ export function useCreateAggregator(body: AggregatorItem) {
     AggregatorItem | null | undefined
   >("CreateAggregator", async () => {
     const response = await api.post("core/aggregator/create", body, {});
-    await queryClient.refetchQueries({ queryKey: ["Aggregators"] });
+    await queryClient.refetchQueries({ queryKey: ["Aggregator"] });
     return response.data;
   });
 
