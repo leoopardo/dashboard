@@ -288,6 +288,26 @@ export const ViewModal = ({
                   </Descriptions.Item>
                 );
 
+              case "value":
+              return (
+                <Descriptions.Item
+                  key={key}
+                  label={t(`table.${key}`)}
+                  labelStyle={{
+                    maxWidth: "120px !important",
+                    margin: 0,
+                    padding: 0,
+                    textAlign: "center",
+                  }}
+                >
+                  {new Intl.NumberFormat("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
+                  }).format(Number(sortItems[key]) || 0)}
+                </Descriptions.Item>
+              );
+
+
               case "to":
               case "from":
                 return (

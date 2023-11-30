@@ -867,15 +867,6 @@ export const MutateModal = ({
                       label={t(`table.${field.label}`)}
                       name={field.label}
                       style={{ margin: 10 }}
-                      rules={[
-                        {
-                          required: field.required,
-                          message:
-                            t("input.required", {
-                              field: t(`input.${field.label}`),
-                            }) || "",
-                        },
-                      ]}
                     >
                       <AutoComplete
                         size="large"
