@@ -234,7 +234,7 @@ export const AggregatorBlacklist = () => {
             items={AggregatorsBlacklistData?.items}
             error={AggregatorsBlacklistDataError}
             columns={[
-              { name: "cpf", type: "cpf", key: refDoc },
+              { name: "cpf", type: "document", key: refDoc },
               { name: "merchant_name", type: "text", key: refMerchant },
               { name: "reason", type: "text", sort: true, key: refReason },
               { name: "description", type: "text", key: refDescription },

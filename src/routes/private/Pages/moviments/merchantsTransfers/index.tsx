@@ -281,15 +281,33 @@ export const TransferBetweenMerchants = () => {
           body={transferBody}
           setBody={setTransferBody}
           selectOptions={{
-            debit_balance_type: [
-              "balance_reserved",
-              "balance_to_payment",
-              "balance_to_transactions",
+            debit_balance_type:  [
+              {
+                label: "balance_reserved",
+                value: "balance_reserved",
+              },
+              {
+                label: "balance_to_payment",
+                value: "balance_to_payment",
+              },
+              {
+                label: "balance_to_transactions",
+                value: "balance_to_transactions",
+              },
             ],
-            credit_balance_type: [
-              "balance_reserved",
-              "balance_to_payment",
-              "balance_to_transactions",
+            credit_balance_type:  [
+              {
+                label: "balance_reserved",
+                value: "balance_reserved",
+              },
+              {
+                label: "balance_to_payment",
+                value: "balance_to_payment",
+              },
+              {
+                label: "balance_to_transactions",
+                value: "balance_to_transactions",
+              },
             ],
           }}
           modalName={t("table.transfer")}

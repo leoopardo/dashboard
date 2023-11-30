@@ -49,7 +49,7 @@ export const MerchantSelect = ({
         setOptions([...merchantsData.items, merchant]);
       }
 
-      setValue(name ? merchant?.name : merchant?.id);
+      setValue(merchant?.name);
     }
   }, [merchantsData, merchant, queryOptions]);
 

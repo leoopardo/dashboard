@@ -563,7 +563,6 @@ export const FiltersModal = ({
                   <Form.Item
                     data-test-id="form-item-merchant"
                     label={t(`table.merchant`)}
-                    name={filter}
                     style={{ marginBottom: 10 }}
                   >
                     <MerchantSelect
