@@ -197,11 +197,13 @@ export const PersonDetails = () => {
                             textAlign: "center",
                           }}
                         >
-                          {`${new Date(
-                            currentData[key] ?? ""
-                          ).toLocaleDateString("pt-BR", {
-                            timeZone: "UTC",
-                          })}`}
+                          {currentData[key]
+                            ? `${new Date(
+                                currentData[key] ?? ""
+                              ).toLocaleDateString("pt-BR", {
+                                timeZone: "UTC",
+                              })}`
+                            : "-"}
                         </Descriptions.Item>
                       );
 

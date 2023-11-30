@@ -894,7 +894,19 @@
     "balance": "Balance",
     "permission_group": "Group",
     "withdraw_id": "Organization ID",
-    "total_cpf_checks": "Total CPF checks"
+    "total_cpf_checks": "Total CPF checks",
+    "user_merchant_id": "User merchant ID",
+    "user_merchant_name": "User merchant name",
+    "user_operator_id": "User operator ID",
+    "user_operator_name": "User operator name",
+    "user_partner_id": "User partner ID",
+    "user_partner_name": "User partner name",
+    "user_aggregator_id": "User aggregator ID",
+    "user_aggregator_name": "User aggregator name",
+    "internal": "Internal",
+    "aggregator_transfer": "Aggregator transfer",
+    "aggregator_id_filter": "Filter: Aggregator ID",
+    "deposit": "Deposit"
   },
   "actions": {
     "details": "Details",

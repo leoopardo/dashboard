@@ -5,7 +5,7 @@ import { IFeePlansDetailsResponse } from "@src/services/types/register/merchants
 import { useQuery } from "react-query";
 
 export function useGetFeePlansDetails(params?: { fee_plans_id?: string}) {
-  const { data, isFetching, error, refetch } = useQuery<
+  const { data, isFetching, error, refetch  } = useQuery<
   IFeePlansDetailsResponse | null | undefined
   >(
     "MerchantsFeePlansDetails",
@@ -19,6 +19,7 @@ export function useGetFeePlansDetails(params?: { fee_plans_id?: string}) {
       refetchInterval: false,
       refetchIntervalInBackground: false,
       refetchOnMount: false,
+      refetchOnWindowFocus: false
     }
   );
 

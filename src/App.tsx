@@ -158,7 +158,7 @@ function App() {
             }}
           >
             <ErrorProvider>
-              <Toaster position="top-center" />
+              <Toaster position="top-center" data-test-id="toaster" />
               {isSuccess ? (
                 <Layout>
                   <Layout>

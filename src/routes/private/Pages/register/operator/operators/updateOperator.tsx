@@ -167,6 +167,17 @@ export const UpdateOperator = () => {
     }));
   };
 
+  const validateCnpjLength = (_: any, value: string) => {
+    if (value && value.replace(/[^\d]/g, "").length !== 14) {
+      return Promise.reject(
+        t("input.invalid", {
+          field: t(`input.cnpj`),
+        }) || ""
+      );
+    }
+    return Promise.resolve();
+  };
+
   useEffect(() => {
     if (fileBody?.base64_file) {
       OperatorAttachmentMutate();
@@ -220,6 +231,9 @@ export const UpdateOperator = () => {
                 label={t("table.cnpj")}
                 name="cnpj"
                 rules={[
+                  {
+                    validator: validateCnpjLength,
+                  },
                   {
                     required: true,
                     message:

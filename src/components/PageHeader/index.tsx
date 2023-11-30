@@ -18,6 +18,7 @@ import eua from "../../assets/united-states.png";
 import { defaultTheme } from "../../styles/defaultTheme";
 import { BreadcrumbComponent } from "../Breadcrumb";
 import { EditSelfModal } from "./EditSelf";
+import ReactGA from "react-ga4";
 const { useToken } = t;
 
 export const PageHeader = () => {
@@ -186,7 +187,13 @@ export const PageHeader = () => {
                   defaultValue={theme}
                   buttonStyle="solid"
                   value={theme}
-                  onChange={(e) => setTheme(e.target.value)}
+                  onChange={(e) => {
+                    setTheme(e.target.value);
+                    ReactGA.event({
+                      category: "Theme",
+                      action: e.target.value,
+                    });
+                  }}
                 >
                   <Radio.Button value="light">
                     <div

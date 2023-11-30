@@ -43,6 +43,7 @@ export const OperatorUsers = () => {
   const { permissions } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
+  const user = queryClient.getQueryData("validate") as ValidateInterface;
   const [query, setQuery] = useState<PartnerQuery>(INITIAL_QUERY);
   const { t } = useTranslation();
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
@@ -67,8 +68,8 @@ export const OperatorUsers = () => {
     group_id: 0,
     status: true,
     type: 2,
-    operator_id: currentItem?.operator_id,
     cellphone: currentItem?.cellphone,
+    operator_id: currentItem?.operator_id || user?.operator_id,
   });
   const { mutate, error, isSuccess } = useCreateOperatorUser(bodyCreate);
 
@@ -81,7 +82,8 @@ export const OperatorUsers = () => {
     OperatorUsersReportsIsLoading,
     OperatorUsersReportsIsSuccess,
     OperatorUsersReportsMutate,
-  } = useCreateOperatorUsersReports({ ...query,
+  } = useCreateOperatorUsersReports({
+    ...query,
     fields: csvFields,
     comma_separate_value: comma,
   });
@@ -290,7 +292,12 @@ export const OperatorUsers = () => {
               },
             ]}
             loading={isUsersDataFetching}
-            label={["name", "operator.name","permission_group.name", "updated_at"]}
+            label={[
+              "name",
+              "operator.name",
+              "permission_group.name",
+              "updated_at",
+            ]}
           />
         </Grid>
       </Grid>

@@ -1,10 +1,12 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { CloseCircleOutlined } from "@ant-design/icons";
-import { queryClient } from "@src/services/queryClient";
-import { AggregatorsResponse } from "@src/services/types/register/aggregators/aggregators.interface";
-import { MerchantsResponse } from "@src/services/types/register/merchants/merchantsRegister.interface";
-import { OperatorsResponse } from "@src/services/types/register/operators/operators.interface";
-import { PartnersResponse } from "@src/services/types/register/partners/partners.interface";
+import { useListMerchantById } from "@src/services/merchant/getListMerchantById";
+import { useListAggregatorById } from "@src/services/register/aggregator/getListAggregatorById";
+import { useGetRowsMerchantManualEntryCategory } from "@src/services/register/merchant/manualEntryCategory/getManualEntryCategory";
+import { useListOperatorById } from "@src/services/register/operator/getListOperatorById";
+import { useGetOrganizationCategories } from "@src/services/register/organization/categories/getCategories";
+import { useListPartnerById } from "@src/services/register/partner/getListPartnerById";
 import { Col, Row, Tag } from "antd";
 import moment from "moment";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
@@ -28,24 +30,37 @@ export const FilterChips = ({
   disabled,
 }: FilterChipsProps) => {
   const { t } = useTranslation();
-  const [merchants, setMerchants] = useState<MerchantsResponse | undefined>();
-  const [partners, setPartners] = useState<PartnersResponse | undefined>();
-  const [aggregators, setAggregators] = useState<
-    PartnersResponse | undefined
-  >();
-  const [operators, setOperators] = useState<PartnersResponse | undefined>();
-  const currentMerchant = queryClient.getQueryData(
-    "MerchantList"
-  ) as MerchantsResponse;
-  const currentPartners = queryClient.getQueryData(
-    "listPartners"
-  ) as PartnersResponse;
-  const currentAggregators = queryClient.getQueryData(
-    "listAggregator"
-  ) as AggregatorsResponse;
-  const currentOperators = queryClient.getQueryData(
-    "listOperators"
-  ) as OperatorsResponse;
+  const { merchant, refetcMerchant } = useListMerchantById({
+    page: 1,
+    limit: 200,
+    merchant_id: query.merchant_id ?? undefined,
+  });
+  const currentMerchant = merchant;
+  const { Partner, refetcPartner } = useListPartnerById({
+    page: 1,
+    limit: 200,
+    partner_id: query.partner_id ?? undefined,
+  });
+  const { Aggregator, refetcAggregator } = useListAggregatorById({
+    page: 1,
+    limit: 200,
+    aggregator_id: query.aggregator_id ?? undefined,
+  });
+  const { Operator, refetcOperator } = useListOperatorById({
+    page: 1,
+    limit: 200,
+    operator_id: query.operator_id ?? undefined,
+  });
+  const { CategoriesData } = useGetOrganizationCategories({
+    limit: 200,
+    page: 1,
+  });
+  const { categoryData } = useGetRowsMerchantManualEntryCategory({
+    limit: 200,
+    page: 1,
+    sort_field: "created_at",
+    sort_order: "DESC",
+  });
 
   const [filtersQuery, setFiltersQuery] = useState<any>(query);
   const deleteFilter = (key: string) => {
@@ -57,22 +72,22 @@ export const FilterChips = ({
   };
 
   useEffect(() => {
-    if (currentMerchant?.items.length > 0) {
-      setMerchants(currentMerchant);
+    if (query.merchant_id) {
+      refetcMerchant();
     }
 
-    if (currentPartners?.items.length > 0) {
-      setPartners(currentPartners);
+    if (query.partner_id) {
+      refetcPartner();
     }
 
-    if (currentAggregators?.items.length > 0) {
-      setAggregators(currentAggregators);
+    if (query.aggregator_id) {
+      refetcAggregator();
     }
 
-    if (currentOperators?.items.length > 0) {
-      setOperators(currentOperators);
+    if (query.operator_id) {
+      refetcOperator();
     }
-  }, [currentMerchant, currentPartners, currentAggregators, currentOperators]);
+  }, [query]);
 
   useEffect(() => {
     const q = { ...query };
@@ -203,10 +218,35 @@ export const FilterChips = ({
                     <CloseCircleOutlined onClick={() => deleteFilter(key)} />
                   }
                 >
-                  {t(`table.merchant`)}:{" "}
-                  {merchants?.items?.find(
-                    (merch) => merch.id === filtersQuery?.merchant_id
-                  )?.name ?? "-"}
+                  {t(`table.merchant`)}: {currentMerchant?.name ?? "-"}
+                </Tag>
+              </Col>
+            );
+          case "category_id":
+            return (
+              <Col key={key}>
+                <Tag
+                  data-test-id="filter-chip-merchant-id"
+                  style={{
+                    width: "100%",
+                    textOverflow: "ellipsis",
+                    overflow: "hidden",
+                    wordBreak: "break-all",
+                    display: disabled?.includes(key) ? "none" : undefined,
+                  }}
+                  key={key}
+                  color="cyan"
+                  icon={
+                    <CloseCircleOutlined onClick={() => deleteFilter(key)} />
+                  }
+                >
+                  {t(`table.category`)}:{" "}
+                  {CategoriesData?.items.find(
+                    (c) => c.id === query?.category_id
+                  )?.name ??
+                    categoryData?.items.find((c) => c.id === query?.category_id)
+                      ?.name ??
+                    "-"}
                 </Tag>
               </Col>
             );
@@ -231,9 +271,7 @@ export const FilterChips = ({
                   }
                 >
                   {t(`table.partner`)}:{" "}
-                  {partners?.items?.find(
-                    (part) => part.id === filtersQuery?.partner_id
-                  )?.name ?? filtersQuery?.partner_id}
+                  {Partner?.name ?? filtersQuery?.partner_id}
                 </Tag>
               </Col>
             );
@@ -257,10 +295,7 @@ export const FilterChips = ({
                     <CloseCircleOutlined onClick={() => deleteFilter(key)} />
                   }
                 >
-                  {t(`table.operator`)}:{" "}
-                  {operators?.items?.find(
-                    (op) => op.id === filtersQuery?.operator_id
-                  )?.name ?? "-"}
+                  {t(`table.operator`)}: {Operator?.name ?? "-"}
                 </Tag>
               </Col>
             );
@@ -284,10 +319,7 @@ export const FilterChips = ({
                     <CloseCircleOutlined onClick={() => deleteFilter(key)} />
                   }
                 >
-                  {t(`table.aggregator`)}:{" "}
-                  {aggregators?.items?.find(
-                    (aggreg) => aggreg.id === filtersQuery?.aggregator_id
-                  )?.name ?? "-"}
+                  {t(`table.aggregator`)}: {Aggregator?.name ?? "-"}
                 </Tag>
               </Col>
             );
@@ -422,6 +454,34 @@ export const FilterChips = ({
 
           case "log_type":
             return;
+
+          case "type":
+            return (
+              <Col key={key}>
+              {filtersQuery[key] ? (
+                <Tag
+                  data-test-id="filter-chip-pix-type"
+                  style={{
+                    width: "100%",
+                    textOverflow: "ellipsis",
+                    overflow: "hidden",
+                    wordBreak: "break-all",
+                    display: disabled?.includes(key) ? "none" : undefined,
+                  }}
+                  key={key}
+                  color="cyan"
+                  icon={
+                    <CloseCircleOutlined onClick={() => deleteFilter(key)} />
+                  }
+                >
+                  {t(`table.${key}`)}:{" "}
+                  {t(`table.${filtersQuery[key].toLowerCase()}`)}
+                </Tag>
+              ) : (
+                <></>
+              )}
+            </Col>
+            )
           default:
             return (
               <Col key={key}>
