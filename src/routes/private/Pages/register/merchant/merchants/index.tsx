@@ -96,7 +96,7 @@ export const MerchantView = () => {
     CreateIsSuccess,
     CreateMutate,
     ClearCreate,
-  } = useCreateMerchant(createBody);
+  } = useCreateMerchant({ ...createBody, v3_id: Number(createBody?.v3_id) });
   const {
     UpdateError,
     UpdateIsLoading,

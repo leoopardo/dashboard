@@ -73,7 +73,7 @@ export const UpdateMerchant = () => {
     cnpj: location.state?.cnpj,
     cellphone: location.state?.cellphone,
     email: location.state?.email,
-    v3_id: location.state?.v3_id,
+    v3_id: Number(location.state?.v3_id),
     partner_id: location.state?.partner?.id,
     aggregator_id: location.state?.aggregator?.id,
     operator_id: location.state?.operator?.id,
@@ -254,7 +254,7 @@ export const UpdateMerchant = () => {
                 name="cnpj"
                 rules={[
                   {
-                    required: true,
+                    required: false,
                     message:
                       t("input.required", {
                         field: t(`input.cnpj`),
