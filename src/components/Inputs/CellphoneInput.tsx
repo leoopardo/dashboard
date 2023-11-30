@@ -13,7 +13,11 @@ interface CellphoneInterface {
   setMask?: Dispatch<SetStateAction<string>>;
 }
 
-export const CellphoneInput = ({ body, setBody,setMask }: CellphoneInterface) => {
+export const CellphoneInput = ({
+  body,
+  setBody,
+  setMask,
+}: CellphoneInterface) => {
   const [codeFlag, setCodeFlag] = useState<any>(null);
   const { Countries } = useGetrefetchCountries();
   const countries = Country.getAllCountries();
@@ -70,69 +74,69 @@ export const CellphoneInput = ({ body, setBody,setMask }: CellphoneInterface) =>
   function getCellphoneFormat() {
     switch (DDI) {
       case "+1": // EUA e Canadá
-      setMask && setMask("(999) 999-9999");
+        setMask && setMask("(999) 999-9999");
         return "(999) 999-9999";
 
       case "+55": // Brasil
-       setMask && setMask("(99) 99999-9999");
+        setMask && setMask("(99) 99999-9999");
         return "(99) 9 9999-9999";
 
       case "+54": // Argentina
-       setMask && setMask("(99) 9 9999-9999");
+        setMask && setMask("(99) 9 9999-9999");
         return "(99) 9 9999-9999";
 
       case "+57": // Colômbia
-       setMask && setMask("(999) 999-9999");
+        setMask && setMask("(999) 999-9999");
         return "(999) 999-9999";
 
       case "+56": // Chile
-      setMask && setMask("(9) 9999-9999");
+        setMask && setMask("(9) 9999-9999");
         return "(9) 9999-9999";
 
       case "+51": // Peru
-      setMask && setMask("(999) 999-999");
+        setMask && setMask("(999) 999-999");
         return "(999) 999-999";
 
       // Europa
       case "+44": // Reino Unido
-      setMask && setMask("99999 999999");
+        setMask && setMask("99999 999999");
         return "99999 999999";
 
       case "+33": // França
-      setMask && setMask("99 99 99 99 99");
+        setMask && setMask("99 99 99 99 99");
         return "99 99 99 99 99";
 
       case "+49": // Alemanha
-      setMask && setMask("9999 9999999");
+        setMask && setMask("9999 9999999");
         return "9999 9999999";
 
       case "+39": // Itália
-      setMask && setMask("999 999 9999");
+        setMask && setMask("999 999 9999");
         return "999 999 9999";
 
       case "+34": // Espanha
-      setMask && setMask("999 999 9999");
+        setMask && setMask("999 999 9999");
         return "999 99 99 99";
 
       // Ásia
       case "+7": // Rússia
-      setMask && setMask("(999) 999-99-99");
+        setMask && setMask("(999) 999-99-99");
         return "(999) 999-99-99";
 
       case "+91": // Índia
-      setMask && setMask("99999 99999");
+        setMask && setMask("99999 99999");
         return "99999 99999";
 
       case "+86": // China
-      setMask && setMask("9999 9999 9999");
+        setMask && setMask("9999 9999 9999");
         return "9999 9999 9999";
 
       case "+81": // Japão
-      setMask && setMask("99 9999 9999");
+        setMask && setMask("99 9999 9999");
         return "99 9999 9999";
 
       case "+65": // Cingapura
-      setMask && setMask("9999 9999");
+        setMask && setMask("9999 9999");
         return "9999 9999";
 
       default:
@@ -144,6 +148,7 @@ export const CellphoneInput = ({ body, setBody,setMask }: CellphoneInterface) =>
   return (
     <Space.Compact size="large" style={{ width: "100%" }}>
       <AutoComplete
+        data-test-id="cellphone-ddi"
         style={{ width: "60%" }}
         value={search}
         options={codeFlag?.map((item: any) => {
@@ -171,6 +176,7 @@ export const CellphoneInput = ({ body, setBody,setMask }: CellphoneInterface) =>
         onSelect={(value) => setDDI(value)}
       >
         <Input
+          data-test-id="cellphone-ddi"
           size="large"
           prefix={
             <Avatar
@@ -185,6 +191,7 @@ export const CellphoneInput = ({ body, setBody,setMask }: CellphoneInterface) =>
         />
       </AutoComplete>
       <ReactInputMask
+        data-test-id="cellphone-number"
         value={number}
         mask={getCellphoneFormat()}
         disabled={!DDI}
@@ -197,7 +204,7 @@ export const CellphoneInput = ({ body, setBody,setMask }: CellphoneInterface) =>
         }}
         placeholder={getCellphoneFormat()}
       >
-        <Input />
+        <Input data-test-id="cellphone-number" />
       </ReactInputMask>
     </Space.Compact>
   );

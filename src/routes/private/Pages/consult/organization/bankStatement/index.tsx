@@ -153,7 +153,12 @@ export const OrganizationBankStatement = () => {
             marginTop: "50px",
           }}
         >
-          <Grid item xs={12} md={2}>
+          <Grid
+            item
+            xs={12}
+            md={2}
+            style={{marginRight: -30, }}
+          >
             <ReactECharts
               option={{
                 tooltip: {
@@ -163,6 +168,10 @@ export const OrganizationBankStatement = () => {
                   top: "5%",
                   left: "center",
                 },
+                color: [
+                  defaultTheme.colors.chartGreen,
+                  defaultTheme.colors.chartRed,
+                ],
                 series: [
                   {
                     name: "Access From",
@@ -191,11 +200,11 @@ export const OrganizationBankStatement = () => {
                     data: [
                       {
                         value: OrganizationBankStatementTotals.number_in,
-                        name: t("table.operation_number_in"),
+                        name: t("table.number_in"),
                       },
                       {
                         value: OrganizationBankStatementTotals.number_out,
-                        name: t("table.operation_number_out"),
+                        name: t("table.number_out"),
                       },
                     ],
                   },

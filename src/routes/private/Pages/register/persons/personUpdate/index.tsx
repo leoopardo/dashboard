@@ -206,7 +206,6 @@ export const PersonUpdate = () => {
             <Grid item xs={12} md={4} lg={3}>
               <Form.Item
                 label={t("table.birth_date")}
-                name="birth_date"
                 rules={[
                   {
                     required: true,
@@ -221,7 +220,11 @@ export const PersonUpdate = () => {
                   style={{ width: "100%" }}
                   size="large"
                   name="birth_date"
-                  value={dayjs(body?.birth_date, "YYYY-MM-DD HH:mm:ss")}
+                  value={
+                    body?.birth_date
+                      ? dayjs(body?.birth_date, "YYYY-MM-DD HH:mm:ss")
+                      : null
+                  }
                   onChange={(e: any) => {
                     setBody((state) => ({
                       ...state,
@@ -375,8 +378,8 @@ export const PersonUpdate = () => {
               >
                 <Input
                   size="large"
-                  name="number"
-                  value={body?.number}
+                  name="email"
+                  value={body?.email}
                   onChange={onChangeConfigs}
                 />
               </Form.Item>

@@ -902,7 +902,15 @@
     "balance": "Saldo",
     "permission_group": "Grupo",
     "withdraw_id": "ID da organização",
-    "total_cpf_checks": "Total CPF checados"
+    "total_cpf_checks": "Total CPF checados",
+    "user_merchant_id": "ID da empresa do usuário",
+    "user_merchant_name": "Nome da empresa do usuário",
+    "user_operator_id": "ID do operador do usuário",
+    "user_operator_name": "Nome do operador do usuário",
+    "user_partner_id": "ID da plataforma do usuário",
+    "user_partner_name": "Nome da plataforma do usuário",
+    "user_aggregator_id": "ID do agregador do usuário",
+    "user_aggregator_name": "Nome do agregador do usuário"
   },
   "actions": {
     "details": "Detalhes",

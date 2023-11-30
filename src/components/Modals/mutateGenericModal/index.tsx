@@ -222,6 +222,7 @@ export const MutateModal = ({
                     >
                       <ConfigProvider locale={locale}>
                         <RangePicker
+                          data-test-id="date-picker"
                           size="large"
                           panelRender={panelRender}
                           format={
@@ -271,6 +272,7 @@ export const MutateModal = ({
                   return (
                     <Col span={24}>
                       <Form.Item
+                        data-test-id="merchant-select-form-item"
                         label={t(`table.${field.label}`)}
                         name={field.label}
                         style={{ margin: 10 }}
@@ -285,6 +287,7 @@ export const MutateModal = ({
                         ]}
                       >
                         <MerchantSelect
+                          data-test-id="merchant-select"
                           setQueryFunction={setBody}
                           queryOptions={body}
                         />
@@ -297,6 +300,7 @@ export const MutateModal = ({
                   return (
                     <Col span={24}>
                       <Form.Item
+                        data-test-id="merchant-select-form-item"
                         label={t(`table.${field.label}`)}
                         name={field.label}
                         style={{ margin: 10 }}
@@ -311,6 +315,7 @@ export const MutateModal = ({
                         ]}
                       >
                         <MerchantSelect
+                          data-test-id="merchant-select"
                           setQueryFunction={setBody}
                           queryOptions={body}
                           name
@@ -328,6 +333,7 @@ export const MutateModal = ({
                   return (
                     <Col span={24}>
                       <Form.Item
+                        data-test-id="partner-select-form-item"
                         label={t(`table.${field.label}`)}
                         name={field.label}
                         style={{ margin: 10 }}
@@ -342,6 +348,7 @@ export const MutateModal = ({
                         ]}
                       >
                         <PartnerSelect
+                          data-test-id="partner-select"
                           setQueryFunction={setBody}
                           queryOptions={body}
                         />
@@ -359,6 +366,7 @@ export const MutateModal = ({
                   return (
                     <Col span={24}>
                       <Form.Item
+                        data-test-id="aggregator-select-form-item"
                         label={t(`table.${field.label}`)}
                         name={field.label}
                         style={{ margin: 10 }}
@@ -373,6 +381,7 @@ export const MutateModal = ({
                         ]}
                       >
                         <AggregatorSelect
+                          data-test-id="aggregator-select"
                           setQueryFunction={setBody}
                           aggregatorId={
                             (body?.aggregator?.id || body?.aggregator_id) ??
@@ -389,6 +398,7 @@ export const MutateModal = ({
                 return (
                   <Col span={24}>
                     <Form.Item
+                      data-test-id="reason-select-form-item"
                       label={t(`table.black_list_reason`)}
                       name={field.label}
                       style={{ margin: 10 }}
@@ -403,6 +413,7 @@ export const MutateModal = ({
                       ]}
                     >
                       <Select
+                        data-test-id="reason-select"
                         size="large"
                         options={merchantBlacklistData?.items.map((reason) => {
                           return {
@@ -426,6 +437,7 @@ export const MutateModal = ({
                 return (
                   <Col span={24}>
                     <Form.Item
+                      data-test-id="value-form-item"
                       label={t(`table.${field.label}`)}
                       name={field.label}
                       style={{ margin: 10 }}
@@ -440,6 +452,7 @@ export const MutateModal = ({
                       ]}
                     >
                       <CurrencyInput
+                        data-test-id="value-input"
                         value={body[field.label]}
                         onChangeValue={(_event, originalValue) => {
                           setBody((state: any) => ({
@@ -448,7 +461,11 @@ export const MutateModal = ({
                           }));
                         }}
                         InputElement={
-                          <Input size="large" style={{ width: "100%" }} />
+                          <Input
+                            data-test-id="value-input"
+                            size="large"
+                            style={{ width: "100%" }}
+                          />
                         }
                       />
                     </Form.Item>
@@ -461,6 +478,7 @@ export const MutateModal = ({
                 return (
                   <Col span={24}>
                     <Form.Item
+                      data-test-id={`${field.label}-form-item`}
                       label={t(`table.${field.label}`)}
                       name={field.label}
                       style={{ margin: 10 }}
@@ -475,6 +493,7 @@ export const MutateModal = ({
                       ]}
                     >
                       <InputNumber
+                        data-test-id={`${field.label}-input`}
                         style={{ width: "100%" }}
                         size="large"
                         name="reason"
@@ -489,6 +508,7 @@ export const MutateModal = ({
                 return (
                   <Col span={24}>
                     <Form.Item
+                      data-test-id={`${field.label}-form-item`}
                       label={t(`table.black_list_reason`)}
                       name={field.label}
                       style={{ margin: 10 }}
@@ -503,6 +523,7 @@ export const MutateModal = ({
                       ]}
                     >
                       <Input
+                        data-test-id={`${field.label}-input`}
                         size="large"
                         name="reason"
                         value={body.reason}
@@ -520,6 +541,7 @@ export const MutateModal = ({
                   return (
                     <Col span={24}>
                       <Form.Item
+                        data-test-id={`${field.label}-form-item`}
                         label={t(`table.${field.label}`)}
                         name={field.label}
                         style={{ margin: 10 }}
@@ -534,6 +556,7 @@ export const MutateModal = ({
                         ]}
                       >
                         <OperatorSelect
+                          data-test-id={`${field.label}-input`}
                           setQueryFunction={setBody}
                           queryOptions={body}
                         />
@@ -553,12 +576,14 @@ export const MutateModal = ({
                     style={{ display: "flex", justifyContent: "center" }}
                   >
                     <Form.Item
+                      data-test-id={`${field.label}-form-item`}
                       label={t(`table.${field.label}`)}
                       name={field.label}
                       style={{ margin: 10 }}
                       valuePropName="checked"
                     >
                       <Switch
+                        data-test-id={`${field.label}-switch`}
                         checked={body[field.label]}
                         onChange={(e) =>
                           setBody((state: any) => ({
@@ -578,6 +603,7 @@ export const MutateModal = ({
                     style={{ display: "flex", justifyContent: "start" }}
                   >
                     <Form.Item
+                      data-test-id={`${field.label}-form-item`}
                       label={t(`table.${field.label}`)}
                       name={field.label}
                       style={{ margin: 10 }}
@@ -589,6 +615,7 @@ export const MutateModal = ({
                         {t("table.false")}
                       </Typography>
                       <Switch
+                        data-test-id={`${field.label}-switch`}
                         checked={body[field.label]}
                         onChange={(e) => {
                           setBody((state: any) => ({
@@ -607,6 +634,7 @@ export const MutateModal = ({
                 return (
                   <Col span={24}>
                     <Form.Item
+                      data-test-id={`${field.label}-form-item`}
                       label={t(`table.${field.label}`)}
                       name={field.label}
                       style={{ margin: 10 }}
@@ -621,6 +649,7 @@ export const MutateModal = ({
                       ]}
                     >
                       <ReactInputMask
+                        data-test-id={`${field.label}-input-mask`}
                         value={body[field.label]}
                         mask="99.999.999/9999-99"
                         onChange={(event) => {
@@ -638,7 +667,10 @@ export const MutateModal = ({
                           }));
                         }}
                       >
-                        <Input size="large" />
+                        <Input
+                          data-test-id={`${field.label}-input`}
+                          size="large"
+                        />
                       </ReactInputMask>
                     </Form.Item>
                   </Col>
@@ -647,6 +679,7 @@ export const MutateModal = ({
                 return (
                   <Col span={24}>
                     <Form.Item
+                      data-test-id={`${field.label}-form-item`}
                       label={t(`table.${field.label}`)}
                       name={field.label}
                       style={{ margin: 10 }}
@@ -661,6 +694,7 @@ export const MutateModal = ({
                       ]}
                     >
                       <ReactInputMask
+                        data-test-id={`${field.label}-input-mask`}
                         value={body[field.label]}
                         mask="999.999.999-99"
                         onChange={(event) => {
@@ -678,7 +712,10 @@ export const MutateModal = ({
                           }));
                         }}
                       >
-                        <Input size="large" />
+                        <Input
+                          data-test-id={`${field.label}-input`}
+                          size="large"
+                        />
                       </ReactInputMask>
                     </Form.Item>
                   </Col>
@@ -688,6 +725,7 @@ export const MutateModal = ({
                 return (
                   <Col span={24}>
                     <Form.Item
+                      data-test-id={`${field.label}-form-item`}
                       label={t(`table.${field.label}`)}
                       name={field.label}
                       style={{ margin: 10 }}
@@ -704,6 +742,7 @@ export const MutateModal = ({
                       ]}
                     >
                       <CellphoneInput
+                        data-test-id={`${field.label}-input`}
                         body={body}
                         setBody={setBody}
                         setMask={setMask}
@@ -715,6 +754,7 @@ export const MutateModal = ({
                 return (
                   <Col span={24}>
                     <Form.Item
+                      data-test-id={`${field.label}-form-item`}
                       label={t(`table.${field.label}`)}
                       name={field.label}
                       style={{ margin: 10 }}
@@ -729,6 +769,7 @@ export const MutateModal = ({
                       ]}
                     >
                       <Select
+                        data-test-id={`${field.label}-select`}
                         size="large"
                         options={clientbankListData?.items.map((bank: any) => {
                           return {
@@ -755,12 +796,14 @@ export const MutateModal = ({
                 return (
                   <Col span={24}>
                     <Form.Item
+                      data-test-id={`${field.label}-form-item`}
                       label={t("table.type")}
                       name="type"
                       style={{ margin: 10 }}
                     >
                       {field.selectOption ? (
                         <Select
+                          data-test-id={`${field.label}-select`}
                           size="large"
                           options={
                             selectOptions
@@ -791,6 +834,7 @@ export const MutateModal = ({
                         />
                       ) : (
                         <Select
+                          data-test-id={`${field.label}-select`}
                           size="large"
                           options={
                             ["production"]?.map((item, index) => ({
@@ -818,6 +862,7 @@ export const MutateModal = ({
                 return (
                   <Col span={24}>
                     <Form.Item
+                      data-test-id={`${field.label}-form-item`}
                       label={t(`table.${field.label}`)}
                       name={field.label}
                       style={{ margin: 10 }}
@@ -832,6 +877,7 @@ export const MutateModal = ({
                       ]}
                     >
                       <Input
+                        data-test-id={`${field.label}-input`}
                         size="large"
                         name={field.label}
                         value={body[field.label]}
@@ -848,6 +894,7 @@ export const MutateModal = ({
                 return (
                   <Col span={24}>
                     <Form.Item
+                      data-test-id={`${field.label}-form-item`}
                       label={t(`table.${field.label}`)}
                       name={field.label}
                       style={{ margin: 10 }}
@@ -862,6 +909,7 @@ export const MutateModal = ({
                       ]}
                     >
                       <AutoComplete
+                        data-test-id={`${field.label}-select`}
                         size="large"
                         options={
                           Countries?.map((item, index) => {
@@ -901,6 +949,7 @@ export const MutateModal = ({
                   <Col span={24}>
                     {" "}
                     <Form.Item
+                      data-test-id={`${field.label}-form-item`}
                       label={t(`table.reason`)}
                       name="reason"
                       style={{ margin: 10 }}
@@ -915,6 +964,7 @@ export const MutateModal = ({
                       ]}
                     >
                       <Input
+                        data-test-id={`${field.label}-input`}
                         size="large"
                         name="reason"
                         value={body?.reason}
@@ -928,12 +978,14 @@ export const MutateModal = ({
                 return (
                   <Col span={24}>
                     <Form.Item
+                      data-test-id={`${field.label}-form-item`}
                       label={t(`table.${field.label}`)}
                       name={field.label}
                       style={{ margin: 10 }}
                       help=""
                     >
                       <Input.TextArea
+                        data-test-id={`${field.label}-input`}
                         size="large"
                         name="description"
                         value={body?.description}
@@ -952,6 +1004,7 @@ export const MutateModal = ({
                   return (
                     <Col span={24}>
                       <Form.Item
+                        data-test-id={`${field.label}-form-item`}
                         label={
                           field.head
                             ? t(`input.${field.head}`)
@@ -970,6 +1023,7 @@ export const MutateModal = ({
                         ]}
                       >
                         <Select
+                          data-test-id={`${field.label}-select`}
                           size="large"
                           options={
                             selectOptions
@@ -1007,6 +1061,7 @@ export const MutateModal = ({
                   return (
                     <Col span={24}>
                       <Form.Item
+                        data-test-id={`${field.label}-form-item`}
                         label={
                           field.head
                             ? t(`input.${field.head}`)
@@ -1025,6 +1080,7 @@ export const MutateModal = ({
                         ]}
                       >
                         <Select
+                          data-test-id={`${field.label}-select`}
                           size="large"
                           options={
                             field?.asyncOption
@@ -1065,6 +1121,7 @@ export const MutateModal = ({
                 return (
                   <Col span={24}>
                     <Form.Item
+                      data-test-id={`${field?.label}-form-item`}
                       label={
                         field?.head
                           ? t(`input.${field?.head}`)
@@ -1084,6 +1141,7 @@ export const MutateModal = ({
                       ]}
                     >
                       <Input
+                        data-test-id={`${field?.label}-inpur`}
                         size="large"
                         name={field?.label}
                         value={body[field?.label as any] ?? null}
