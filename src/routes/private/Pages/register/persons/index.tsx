@@ -12,7 +12,6 @@ import { FilterChips } from "@components/FiltersModal/filterChips";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { Search } from "@src/components/Inputs/search";
-import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
 import { Toast } from "@src/components/Toast";
