@@ -32,7 +32,7 @@ import {
   GetMerchantMovimentsQuery,
 } from "@src/services/types/moviments/merchant/getMoviments";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Divider, Statistic } from "antd";
+import { Button, Divider, Statistic, Typography } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -265,11 +265,24 @@ export const MerchantPreManual = () => {
           <Divider />
         </Grid>
       </Grid>
+
       <Grid
         container
         style={{ display: "flex", alignItems: "center" }}
         spacing={1}
       >
+        <Grid xs={12} style={{ display: "flex", justifyContent: "center" }}>
+          <Typography.Title level={2}>
+            {selectedRows &&
+              selectedRows.length > 0 &&
+              `Total: ${new Intl.NumberFormat("pt-BR", {
+                style: "currency",
+                currency: "BRL",
+              }).format(
+                selectedRows.map((i) => i?.value)?.reduce((p, n) => p + n) ?? 0
+              )}`}
+          </Typography.Title>
+        </Grid>
         <Grid
           container
           item
@@ -377,6 +390,7 @@ export const MerchantPreManual = () => {
             columns={[
               { name: "_id", type: "id" },
               { name: "category_name", type: "text", sort: true },
+              { name: "merchant_name", type: "text", sort: true },
               { name: "user_name", type: "text" },
               { name: "type", type: "translate" },
               { name: "value", type: "value" },
