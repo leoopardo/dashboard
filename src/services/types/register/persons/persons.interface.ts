@@ -18,6 +18,8 @@ export interface PersonsQuery {
   flag_alert?: boolean;
   initial_date?: string;
   final_date?: string;
+  fields?: string[],
+  comma_separate_value?: boolean
 }
 export interface PersonsItem {
   _id?: string;

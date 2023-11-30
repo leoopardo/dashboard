@@ -1,5 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { EditOutlined, EyeFilled, FilterOutlined, UserAddOutlined } from "@ant-design/icons";
+import {
+  EditOutlined,
+  EyeFilled,
+  FileAddOutlined,
+  FilterOutlined,
+  UserAddOutlined,
+} from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
@@ -20,7 +26,9 @@ import {
   PersonsQuery,
 } from "@src/services/types/register/persons/persons.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Select } from "antd";
+import { useGetPersonReportFields } from "@src/services/reports/register/persons/persons/getPersonReportFields";
+import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
+import { Button, Select, Tooltip } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -33,6 +41,8 @@ const INITIAL_QUERY: PersonsQuery = {
 };
 
 export const Persons = () => {
+  const { t } = useTranslation();
+  const navigate = useNavigate();
   const { permissions } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
@@ -43,6 +53,10 @@ export const Persons = () => {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<PersonsItem | null>(null);
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
+  const [isExportReportsOpen, setIsExportReportsOpen] =
+    useState<boolean>(false);
+  const [csvFields, setCsvFields] = useState<any>();
+  const [comma, setIsComma] = useState<boolean>(false);
   const [createBody, setCreateBody] = useState<{ cpf: string }>({
     cpf: "",
   });
@@ -53,8 +67,7 @@ export const Persons = () => {
     "cpf" | "name" | "email" | "cellphone" | undefined
   >(undefined);
 
-  const { t } = useTranslation();
-  const navigate = useNavigate();
+  const { fields } = useGetPersonReportFields();
 
   const {
     PersonsData,
@@ -68,7 +81,11 @@ export const Persons = () => {
     PersonsReportsIsLoading,
     PersonsReportsIsSuccess,
     PersonsReportsMutate,
-  } = useCreatePersonsReports(query);
+  } = useCreatePersonsReports({
+    ...query,
+    fields: csvFields,
+    comma_separate_value: comma,
+  });
 
   const { PersonIsLoading, PersonMutate, PersonError, PersonIsSuccess } =
     useCreatePerson(createBody);
@@ -166,7 +183,7 @@ export const Persons = () => {
               alignItems: "center",
               justifyContent: "center",
             }}
-            icon={<FilterAltOffOutlinedIcon  />}
+            icon={<FilterAltOffOutlinedIcon />}
           >
             {t("table.clear_filters")}
           </Button>
@@ -186,7 +203,7 @@ export const Persons = () => {
                 alignItems: "center",
                 justifyContent: "center",
               }}
-              icon={<UserAddOutlined style={{  fontSize: 22 }} />}
+              icon={<UserAddOutlined style={{ fontSize: 22 }} />}
             >
               {`${t("buttons.create")} ${t("buttons.person")}`}
             </Button>
@@ -194,15 +211,29 @@ export const Persons = () => {
         )}
 
         {permissions.register.person.person.person_person_export_csv && (
-          <Grid item xs={12} md="auto">
-            <ExportReportsModal
-              disabled={!PersonsData?.items?.length || PersonsReportsError}
-              mutateReport={() => PersonsReportsMutate()}
-              error={PersonsReportsError}
-              success={PersonsReportsIsSuccess}
-              loading={PersonsReportsIsLoading}
-              reportPath="/register/person/person_reports/person_persons_reports"
-            />
+          <Grid item xs={12} md={"auto"}>
+            <Tooltip
+              placement="topRight"
+              title={
+                PersonsData?.total === 0 || PersonsDataError
+                  ? t("messages.no_records_to_export")
+                  : t("messages.export_csv")
+              }
+              arrow
+            >
+              <Button
+                onClick={() => setIsExportReportsOpen(true)}
+                style={{ width: "100%" }}
+                shape="round"
+                type="dashed"
+                size="large"
+                loading={PersonsReportsIsLoading}
+                disabled={PersonsData?.total === 0 || PersonsDataError}
+                icon={<FileAddOutlined style={{ fontSize: 22 }} />}
+              >
+                CSV
+              </Button>
+            </Tooltip>
           </Grid>
         )}
       </Grid>
@@ -328,6 +359,23 @@ export const Persons = () => {
           setOpen={setIsViewModalOpen}
         />
       )}
+
+      <ExportCustomReportsModal
+        open={isExportReportsOpen}
+        setOpen={setIsExportReportsOpen}
+        disabled={PersonsData?.total === 0 || PersonsReportsError}
+        mutateReport={() => PersonsReportsMutate()}
+        error={PersonsReportsError}
+        success={PersonsReportsIsSuccess}
+        loading={PersonsReportsIsLoading}
+        reportPath="/register/person/person_reports/person_persons_reports"
+        fields={fields}
+        csvFields={csvFields}
+        comma={comma}
+        setIsComma={setIsComma}
+        setCsvFields={setCsvFields}
+        reportName="Merchant"
+      />
       <Toast
         actionSuccess={t("messages.updated")}
         actionError={t("messages.update")}
