@@ -334,6 +334,37 @@ export const ViewModal = ({
               case "createdById":
                 return;
 
+              case "type":
+                return (
+                  sortItems[key] && sortItems[key] === "aggregator_transfer" ? (
+                    <Descriptions.Item
+                      key={key}
+                      label={t(`table.${key}`)}
+                      labelStyle={{
+                        maxWidth: "120px !important",
+                        margin: 0,
+                        padding: 0,
+                        textAlign: "center",
+                      }}
+                    >
+                      {t("table.aggregator_transfer")}
+                    </Descriptions.Item>
+                  ) : (
+                    <Descriptions.Item
+                      key={key}
+                      label={t(`table.${key}`)}
+                      labelStyle={{
+                        maxWidth: "120px !important",
+                        margin: 0,
+                        padding: 0,
+                        textAlign: "center",
+                      }}
+                    >
+                     {sortItems[key] ?? "-"}
+                    </Descriptions.Item>
+                  )
+                )
+
               default:
                 return (
                   <Descriptions.Item

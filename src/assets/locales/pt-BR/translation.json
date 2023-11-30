@@ -902,7 +902,10 @@
     "balance": "Saldo",
     "permission_group": "Grupo",
     "withdraw_id": "ID da organização",
-    "total_cpf_checks": "Total CPF checados"
+    "total_cpf_checks": "Total CPF checados",
+    "internal": "Interno",
+    "aggregator_transfer": "Transferência de agregador",
+    "aggregator_id_filter": "Filtro: ID do agregador"
   },
   "actions": {
     "details": "Detalhes",
