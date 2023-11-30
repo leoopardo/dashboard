@@ -913,7 +913,8 @@
     "user_aggregator_name": "Nome do agregador do usuário",
     "internal": "Interno",
     "aggregator_transfer": "Transferência de agregador",
-    "aggregator_id_filter": "Filtro: ID do agregador"
+    "aggregator_id_filter": "Filtro: ID do agregador",
+    "deposit": "Depósito"
   },
   "actions": {
     "details": "Detalhes",

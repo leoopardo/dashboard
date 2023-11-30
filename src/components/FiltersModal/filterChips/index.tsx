@@ -454,6 +454,34 @@ export const FilterChips = ({
 
           case "log_type":
             return;
+
+          case "type":
+            return (
+              <Col key={key}>
+              {filtersQuery[key] ? (
+                <Tag
+                  data-test-id="filter-chip-pix-type"
+                  style={{
+                    width: "100%",
+                    textOverflow: "ellipsis",
+                    overflow: "hidden",
+                    wordBreak: "break-all",
+                    display: disabled?.includes(key) ? "none" : undefined,
+                  }}
+                  key={key}
+                  color="cyan"
+                  icon={
+                    <CloseCircleOutlined onClick={() => deleteFilter(key)} />
+                  }
+                >
+                  {t(`table.${key}`)}:{" "}
+                  {t(`table.${filtersQuery[key].toLowerCase()}`)}
+                </Tag>
+              ) : (
+                <></>
+              )}
+            </Col>
+            )
           default:
             return (
               <Col key={key}>
