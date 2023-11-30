@@ -905,7 +905,8 @@
     "user_aggregator_name": "User aggregator name",
     "internal": "Internal",
     "aggregator_transfer": "Aggregator transfer",
-    "aggregator_id_filter": "Filter: Aggregator ID"
+    "aggregator_id_filter": "Filter: Aggregator ID",
+    "deposit": "Deposit"
   },
   "actions": {
     "details": "Details",
