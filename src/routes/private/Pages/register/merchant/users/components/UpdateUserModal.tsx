@@ -70,7 +70,7 @@ export const UpdateUserModal = ({
   const { mutate, error, isLoading, isSuccess, reset } = useCreateMerchantUser({
     ...body,
     email: body?.email ?? undefined,
-    merchant_id: user?.merchant_id || currentUser?.merchant_id,
+    merchant_id: body?.merchant_id || user?.merchant_id || currentUser?.merchant_id,
   });
   const { updateIsLoading } = useUpdateMerchant(body);
 

@@ -69,7 +69,6 @@ export const NewUserModal = ({
   const [body, setBody] = useState<NewUserInterface>({
     name: "",
     username: "",
-    partner_id: currentUser?.partner_id || user.partner_id,
     group_id: 0,
     status: true,
     type: 2,
@@ -78,7 +77,10 @@ export const NewUserModal = ({
 
   const { mutate, error, isLoading, isSuccess, reset } =
     useCreatePartnerUser(body);
-  const { updateLoading } = useUpdatePartnerUser(body);
+  const { updateLoading } = useUpdatePartnerUser({
+    ...body,
+    partner_id: body?.partner_id || currentUser?.partner_id || user.partner_id,
+  });
 
   function handleChangeUserBody(event: any) {
     setBody((state) => ({ ...state, [event.target.name]: event.target.value }));

@@ -69,9 +69,12 @@ export const OperatorUsers = () => {
     status: true,
     type: 2,
     cellphone: currentItem?.cellphone,
-    operator_id: currentItem?.operator_id || user?.operator_id,
   });
-  const { mutate, error, isSuccess } = useCreateOperatorUser(bodyCreate);
+  const { mutate, error, isSuccess } = useCreateOperatorUser({
+    ...bodyCreate,
+    operator_id:
+      bodyCreate.operator_id || currentItem?.operator_id || user?.operator_id,
+  });
 
   const [action, setAction] = useState<"create" | "update">("create");
 

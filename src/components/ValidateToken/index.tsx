@@ -17,8 +17,8 @@ interface ValidateTokenProps {
   action: string;
   tokenState: string;
   setTokenState: Dispatch<SetStateAction<string>>;
-  success: boolean;
-  error: any;
+  success?: boolean;
+  error?: any;
   submit: () => void;
   editSelf?: boolean;
   resetFunction?: () => void;
@@ -87,6 +87,7 @@ export const ValidateToken = ({
         action: "USER_VALIDATE_PHONE",
         cellphone: `+${Self?.cellphone.split("+")[1]}`,
       });
+      setValidationPhoneSent(true);
     }
 
     if (
@@ -101,6 +102,7 @@ export const ValidateToken = ({
         action: "USER_VALIDATE_PHONE",
         cellphone: `+${body?.cellphone.split("+")[1]}`,
       });
+      setValidationPhoneSent(true);
     }
 
     if (
@@ -117,10 +119,8 @@ export const ValidateToken = ({
             ? `+${Self?.cellphone.split("+")[1]}`
             : undefined,
       });
+      setValidationTokenSent(true);
     }
-
-    setValidationTokenSent(true);
-    setValidationPhoneSent(true);
   }, [Self, body]);
 
   useEffect(() => {
@@ -290,7 +290,6 @@ export const ValidateToken = ({
     >
       {Self?.cellphone || editSelf ? (
         <>
-          {" "}
           <Typography.Text>{t("messages.validate_phone_text")}</Typography.Text>
           <Grid
             container
