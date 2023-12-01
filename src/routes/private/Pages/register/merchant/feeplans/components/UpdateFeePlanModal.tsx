@@ -113,6 +113,7 @@ export const UpdateFeePlanModal = ({
   function CreateUser() {
     mutate();
     setBody({});
+    setFees([]);
     if (setUpdateBody) setUpdateBody({});
     setOpen(false);
   }
@@ -123,7 +124,6 @@ export const UpdateFeePlanModal = ({
   useEffect(() => {
     if (action === "create") {
       setBody({
-        name: "",
         status: true,
       });
     }
