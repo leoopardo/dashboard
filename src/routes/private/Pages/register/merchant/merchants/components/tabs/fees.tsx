@@ -19,7 +19,7 @@ import {
   Select,
   Typography,
 } from "antd";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CurrencyInput } from "react-currency-mask";
 import { useTranslation } from "react-i18next";
 
@@ -76,56 +76,56 @@ export const FeesTab = (props: { id?: string }) => {
     }
   };
 
-  const handleSubmit = useCallback(() => {
-    const array = [
-      {
-        proptype: "cashin_pix_fee_type",
-        type: "PERCENT",
-        value: "cashin_pix_fee_percent",
-      },
-      {
-        proptype: "cashin_pix_fee_type",
-        type: "VALUE",
-        value: "cashin_pix_fee_value",
-      },
-      {
-        proptype: "customer_withdraw_fee_type",
-        type: "PERCENT",
-        value: "customer_withdraw_fee_percent",
-      },
-      {
-        proptype: "customer_withdraw_fee_type",
-        type: "VALUE",
-        value: "customer_withdraw_fee_value",
-      },
-      {
-        proptype: "pix_refund_fee_type",
-        type: "PERCENT",
-        value: "pix_refund_fee_percent",
-      },
-      {
-        proptype: "pix_refund_fee_type",
-        type: "VALUE",
-        value: "pix_refund_fee_value",
-      },
-    ];
-    const stopRequest = array.some((item) => {
-      if (
-        body &&
-        body[item.proptype as keyof typeof body] === item.type &&
-        ((bodyUpdate &&
-          bodyUpdate?.[item.value as keyof typeof bodyUpdate] === undefined) ||
-          Number(bodyUpdate?.[item.value as keyof typeof bodyUpdate]) <= 0)
-      ) {
-        return true;
-      } else return false;
-    });
+  // const handleSubmit = useCallback(() => {
+  //   const array = [
+  //     {
+  //       proptype: "cashin_pix_fee_type",
+  //       type: "PERCENT",
+  //       value: "cashin_pix_fee_percent",
+  //     },
+  //     {
+  //       proptype: "cashin_pix_fee_type",
+  //       type: "VALUE",
+  //       value: "cashin_pix_fee_value",
+  //     },
+  //     {
+  //       proptype: "customer_withdraw_fee_type",
+  //       type: "PERCENT",
+  //       value: "customer_withdraw_fee_percent",
+  //     },
+  //     {
+  //       proptype: "customer_withdraw_fee_type",
+  //       type: "VALUE",
+  //       value: "customer_withdraw_fee_value",
+  //     },
+  //     {
+  //       proptype: "pix_refund_fee_type",
+  //       type: "PERCENT",
+  //       value: "pix_refund_fee_percent",
+  //     },
+  //     {
+  //       proptype: "pix_refund_fee_type",
+  //       type: "VALUE",
+  //       value: "pix_refund_fee_value",
+  //     },
+  //   ];
+  //   const stopRequest = array.some((item) => {
+  //     if (
+  //       body &&
+  //       body[item.proptype as keyof typeof body] === item.type &&
+  //       ((bodyUpdate &&
+  //         bodyUpdate?.[item.value as keyof typeof bodyUpdate] === undefined) ||
+  //         Number(bodyUpdate?.[item.value as keyof typeof bodyUpdate]) <= 0)
+  //     ) {
+  //       return true;
+  //     } else return false;
+  //   });
 
-    if (stopRequest) return;
+  //   if (stopRequest) return;
 
-    UpdateMutate();
-    setIsConfirmOpen(false);
-  }, [body, bodyUpdate]);
+  //   UpdateMutate();
+  //   setIsConfirmOpen(false);
+  // }, [body, bodyUpdate]);
 
   useEffect(() => {
     refetchMerchantFeesData();
@@ -140,7 +140,10 @@ export const FeesTab = (props: { id?: string }) => {
     <Form
       ref={formRef}
       layout="vertical"
-      onSubmitCapture={() => handleSubmit()}
+      onFinish={() => {
+        UpdateMutate();
+        setIsConfirmOpen(false);
+      }}
       initialValues={merchantFeesData ? merchantFeesData?.fees : {}}
     >
       <Grid container spacing={1}>
@@ -156,7 +159,7 @@ export const FeesTab = (props: { id?: string }) => {
           <Typography.Title level={5} mark>
             {t("titles.current_deposit_refund_fee")}:{" "}
             {merchantFeesData?.fees?.pix_refund_fee_percent}%{" "}
-          </Typography.Title >
+          </Typography.Title>
         </Grid>
 
         <Divider orientation="left">
@@ -215,12 +218,18 @@ export const FeesTab = (props: { id?: string }) => {
           <Form.Item
             label={t("input.deposit_fee_percent")}
             name="cashin_pix_fee_percent"
-            rules={[
-              {
-                min: body?.cashin_pix_fee_type === "PERCENT" ? 0.01 : 0,
-                message: t("messages.min_value_higher_then_zero") || "",
-              },
-            ]}
+            rules={
+              body?.cashin_pix_fee_type === "PERCENT" &&
+              body?.cashin_pix_fee_percent &&
+              body?.cashin_pix_fee_percent < 0.01
+                ? [
+                    {
+                      min: 0.01,
+                      message: t("messages.min_value_higher_then_zero") || "",
+                    },
+                  ]
+                : []
+            }
           >
             <Input
               size="large"
@@ -246,13 +255,19 @@ export const FeesTab = (props: { id?: string }) => {
           <Form.Item
             label={t("input.deposit_fee_value")}
             name="cashin_pix_fee_value"
-            rules={[
-              {
-                type: "number",
-                min: body?.cashin_pix_fee_type === "VALUE" ? 0.01 : 0,
-                message: t("messages.min_value_higher_then_zero") || "",
-              },
-            ]}
+            rules={
+              body?.cashin_pix_fee_type === "VALUE" &&
+              body?.cashin_pix_fee_value &&
+              body?.cashin_pix_fee_value < 0.01
+                ? [
+                    {
+                      type: "number",
+                      min: 0.01,
+                      message: t("messages.min_value_higher_then_zero") || "",
+                    },
+                  ]
+                : []
+            }
           >
             <CurrencyInput
               onChangeValue={(_event, originalValue) => {
@@ -363,12 +378,18 @@ export const FeesTab = (props: { id?: string }) => {
           <Form.Item
             label={t("input.withdraw_fee_percent")}
             name="customer_withdraw_fee_percent"
-            rules={[
-              {
-                min: body?.customer_withdraw_fee_type === "PERCENT" ? 0.01 : 0,
-                message: t("messages.min_value_higher_then_zero") || "",
-              },
-            ]}
+            rules={
+              body?.customer_withdraw_fee_type === "PERCENT" &&
+              body?.customer_withdraw_fee_percent &&
+              body?.customer_withdraw_fee_percent < 0.01
+                ? [
+                    {
+                      min: 0.01,
+                      message: t("messages.min_value_higher_then_zero") || "",
+                    },
+                  ]
+                : []
+            }
           >
             <Input
               size="large"
@@ -443,8 +464,9 @@ export const FeesTab = (props: { id?: string }) => {
           </Form.Item>
         </Grid>
 
-        <Divider orientation="left"><Typography.Title level={3}>{t("menus.refunds")}
-          </Typography.Title></Divider>
+        <Divider orientation="left">
+          <Typography.Title level={3}>{t("menus.refunds")}</Typography.Title>
+        </Divider>
 
         <Grid item xs={12} sm={6} md={3}>
           <Form.Item
@@ -479,12 +501,18 @@ export const FeesTab = (props: { id?: string }) => {
           <Form.Item
             label={t("input.deposit_refund_fee_percent")}
             name="pix_refund_fee_percent"
-            rules={[
-              {
-                min: body?.pix_refund_fee_type === "PERCENT" ? 0.01 : 0,
-                message: t("messages.min_value_higher_then_zero") || "",
-              },
-            ]}
+            rules={
+              body?.pix_refund_fee_type === "PERCENT" &&
+              body?.pix_refund_fee_percent &&
+              body?.pix_refund_fee_percent < 0.01
+                ? [
+                    {
+                      min: 0.01,
+                      message: t("messages.min_value_higher_then_zero") || "",
+                    },
+                  ]
+                : []
+            }
           >
             <Input
               size="large"
@@ -596,12 +624,18 @@ export const FeesTab = (props: { id?: string }) => {
           <Form.Item
             label={t("input.fastpix_in_fee_percent")}
             name="fastpix_in_fee_percent"
-            rules={[
-              {
-                min: body?.fastpix_in_fee_type === "PERCENT" ? 0.01 : 0,
-                message: t("messages.min_value_higher_then_zero") || "",
-              },
-            ]}
+            rules={
+              body?.fastpix_in_fee_type === "PERCENT" &&
+              body?.fastpix_in_fee_percent &&
+              body?.fastpix_in_fee_percent < 0.01
+                ? [
+                    {
+                      min: 0.01,
+                      message: t("messages.min_value_higher_then_zero") || "",
+                    },
+                  ]
+                : []
+            }
           >
             <Input
               size="large"
@@ -627,13 +661,19 @@ export const FeesTab = (props: { id?: string }) => {
           <Form.Item
             label={t("input.fastpix_in_fee_value")}
             name="fastpix_in_fee_value"
-            rules={[
-              {
-                type: "number",
-                min: body?.pix_refund_fee_type === "VALUE" ? 0.01 : 0,
-                message: t("messages.min_value_higher_then_zero") || "",
-              },
-            ]}
+            rules={
+              body?.pix_refund_fee_type === "VALUE" &&
+              body?.fastpix_in_fee_value &&
+              body?.fastpix_in_fee_value < 0.01
+                ? [
+                    {
+                      type: "number",
+                      min: 0.01,
+                      message: t("messages.min_value_higher_then_zero") || "",
+                    },
+                  ]
+                : []
+            }
           >
             <CurrencyInput
               onChangeValue={(_event, originalValue) => {
@@ -709,12 +749,18 @@ export const FeesTab = (props: { id?: string }) => {
           <Form.Item
             label={t("input.fastpix_refund_fee_percent")}
             name="fastpix_refund_fee_percent"
-            rules={[
-              {
-                min: body?.fastpix_refund_fee_type === "PERCENT" ? 0.01 : 0,
-                message: t("messages.min_value_higher_then_zero") || "",
-              },
-            ]}
+            rules={
+              body?.fastpix_refund_fee_type === "PERCENT" &&
+              body?.fastpix_refund_fee_percent &&
+              body?.fastpix_refund_fee_percent < 0.01
+                ? [
+                    {
+                      min: 0.01,
+                      message: t("messages.min_value_higher_then_zero") || "",
+                    },
+                  ]
+                : []
+            }
           >
             <Input
               size="large"
@@ -740,13 +786,19 @@ export const FeesTab = (props: { id?: string }) => {
           <Form.Item
             label={t("input.fastpix_refund_fee_value")}
             name="fastpix_refund_fee_value"
-            rules={[
-              {
-                type: "number",
-                min: body?.pix_refund_fee_type === "VALUE" ? 0.01 : 0,
-                message: t("messages.min_value_higher_then_zero") || "",
-              },
-            ]}
+            rules={
+              body?.pix_refund_fee_type === "VALUE" &&
+              body?.fastpix_refund_fee_value &&
+              body?.fastpix_refund_fee_value < 0.01
+                ? [
+                    {
+                      type: "number",
+                      min: 0.01,
+                      message: t("messages.min_value_higher_then_zero") || "",
+                    },
+                  ]
+                : []
+            }
           >
             <CurrencyInput
               onChangeValue={(_event, originalValue) => {
@@ -760,7 +812,7 @@ export const FeesTab = (props: { id?: string }) => {
                   size="large"
                   style={{ width: "100%" }}
                   disabled={body?.fastpix_refund_fee_type === "PERCENT"}
-                  value={body?.fastpix_refund_fee_type}
+                  value={body?.fastpix_refund_fee_value}
                 />
               }
             />
