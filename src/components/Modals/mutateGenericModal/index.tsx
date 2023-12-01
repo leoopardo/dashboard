@@ -10,6 +10,7 @@ import { queryClient } from "@src/services/queryClient";
 import { useGetRowsMerchantBlacklistReasons } from "@src/services/register/merchant/blacklist/getMerchantBlacklistReason";
 import { useGetrefetchCountries } from "@src/services/states_cities/getCountries";
 import { ValidateInterface } from "@src/services/types/validate.interface";
+import { unmask } from "@src/utils/functions";
 import {
   AutoComplete,
   Avatar,
@@ -22,7 +23,6 @@ import {
   Form,
   FormInstance,
   Input,
-  InputNumber,
   Row,
   Select,
   Switch,
@@ -35,7 +35,6 @@ import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { CurrencyInput } from "react-currency-mask";
 import { useTranslation } from "react-i18next";
 import ReactInputMask from "react-input-mask";
-import { unmask } from "@src/utils/functions";
 import { MerchantSelect } from "../../Selects/merchantSelect";
 import { PartnerSelect } from "../../Selects/partnerSelect";
 const { RangePicker } = DatePicker;
@@ -504,13 +503,18 @@ export const MutateModal = ({
                         },
                       ]}
                     >
-                      <InputNumber
+                      <Input
                         data-test-id={`${field.label}-input`}
                         style={{ width: "100%" }}
                         size="large"
-                        name="reason"
+                        name={field.label}
                         value={body[field.label]}
-                        onChange={handleChange}
+                        onChange={(event) =>
+                          setBody((state: any) => ({
+                            ...state,
+                            [event.target.name]: Number(event.target.value),
+                          }))
+                        }
                       />
                     </Form.Item>
                   </Col>

@@ -57,7 +57,7 @@ export const MerchantSelect = ({
     setQuery((state) => ({
       ...state,
       partner_id: queryOptions.partner_id,
-      aggregator_id: queryOptions.partner_id,
+      aggregator_id: queryOptions.aggregator_id,
       operator_id: queryOptions.operator_id,
     }));
   }, [debounceSearch, queryOptions]);

@@ -16,11 +16,11 @@ export function useListMerchants(params: MerchantQuery) {
       params,
     });
     return response.data;
-  });
+  }, {enabled: false});
 
   useEffect(() => {
     refetch();
-  }, [params]);
+  }, [params?.name]);
 
   const merchantsData = error
     ? ({ items: [], limit: 200, page: 1, total: 0 } as MerchantResponse)
