@@ -120,6 +120,7 @@ export const ValidateToken = ({
     }
 
     setValidationTokenSent(true);
+    setValidationPhoneSent(true);
   }, [Self, body]);
 
   useEffect(() => {
@@ -139,7 +140,7 @@ export const ValidateToken = ({
       setIsOpen(false);
     }
 
-   /*  if (error || ValidatePhoneError) {
+    /*  if (error || ValidatePhoneError) {
       message.error(
         t("messages.action_error", {
           action: t("messages.validated"),
