@@ -105,7 +105,7 @@ export const MerchantSelect = ({
         }));
         setValue(
           merchantsData?.items.find(
-            (merchant) => merchant.id === queryOptions.merchant_id
+            (merchant) => merchant.id === value
           )?.name
         );
       }}
