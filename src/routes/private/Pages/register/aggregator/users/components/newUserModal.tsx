@@ -74,12 +74,15 @@ export const NewUserModal = ({
     status: true,
     type: 2,
     cellphone: currentUser?.cellphone,
-    aggregator_id: currentUser?.aggregator?.id || user?.aggregator_id,
   });
 
   const { mutate, error, isLoading, isSuccess, reset } =
     useCreateAggregatorUser(body);
-  const { updateLoading } = useUpdateAggregatorUser(body);
+  const { updateLoading } = useUpdateAggregatorUser({
+    ...body,
+    aggregator_id:
+      body?.aggregator_id || currentUser?.aggregator?.id || user?.aggregator_id,
+  });
 
   function handleChangeUserBody(event: any) {
     setBody((state) => ({ ...state, [event.target.name]: event.target.value }));

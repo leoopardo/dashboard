@@ -19,6 +19,7 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Totalizers } from "./components/Totalizers";
+import { useTheme } from "@src/contexts/ThemeContext";
 
 const INITIAL_QUERY: OrganizationBankStatementTotalsQuery = {
   start_date: moment(new Date())
@@ -41,7 +42,7 @@ export const OrganizationBankStatement = () => {
   const { t } = useTranslation();
   const [query, setQuery] =
     useState<OrganizationBankStatementTotalsQuery>(INITIAL_QUERY);
-
+  const { theme } = useTheme();
   const {
     OrganizationBankStatementTotals,
     isOrganizationBankStatementTotalsFetching,
@@ -153,20 +154,17 @@ export const OrganizationBankStatement = () => {
             marginTop: "50px",
           }}
         >
-          <Grid
-            item
-            xs={12}
-            md={2}
-            style={{marginRight: -30, }}
-          >
+          <Grid item xs={12} md={2} style={{ marginRight: -30 }}>
             <ReactECharts
               option={{
                 tooltip: {
                   trigger: "item",
                 },
+                darkMode: theme === "dark",
                 legend: {
-                  top: "5%",
-                  left: "center",
+                  textStyle: {
+                    color: "#a0a0a0",
+                  },
                 },
                 color: [
                   defaultTheme.colors.chartGreen,
@@ -180,7 +178,6 @@ export const OrganizationBankStatement = () => {
                     avoidLabelOverlap: false,
                     itemStyle: {
                       borderRadius: 10,
-                      borderColor: "#fff",
                       borderWidth: 2,
                     },
                     label: {

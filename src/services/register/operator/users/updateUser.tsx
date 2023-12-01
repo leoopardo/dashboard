@@ -8,7 +8,7 @@ export function useUpdateOperatorUser(body: any | null) {
   const { isLoading, error, mutate, isSuccess } = useMutation<
     NewUserInterface | null | undefined
   >("updateOperatorUser", async () => {
-    const response = await api.put("core/user/update/partner", body, {});
+    const response = await api.put("core/user/update/operator", body, {});
     await queryClient.refetchQueries({ queryKey: ["OperatorUser"] });
     return response.data;
   });

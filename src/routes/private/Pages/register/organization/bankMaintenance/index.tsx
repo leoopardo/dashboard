@@ -3,6 +3,7 @@ import { EditFilled, InfoCircleOutlined } from "@ant-design/icons";
 import { CustomTable } from "@components/CustomTable";
 import { Grid } from "@mui/material";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
+import { Toast } from "@src/components/Toast";
 import { TuorComponent } from "@src/components/Tuor";
 import { queryClient } from "@src/services/queryClient";
 import { useGetOrganizationBankMaintenece } from "@src/services/register/organization/bankMaitenence/getBanks";
@@ -237,6 +238,12 @@ export const BankMaintenence = () => {
           title: t("menus.bank_maintain"),
           description: t("wiki.bank_maintain_description"),
         }}
+      />
+      <Toast
+        actionError={t("messages.update")}
+        actionSuccess={t("messages.updated")}
+        error={updateBankError}
+        success={updateBankSuccess}
       />
     </Grid>
   );

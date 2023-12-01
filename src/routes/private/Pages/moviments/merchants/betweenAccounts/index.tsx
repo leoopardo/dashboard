@@ -41,7 +41,6 @@ export const TransfersBetweenAccounts = () => {
   const [body, setBody] = useState<TransferBetweenAccountsbody | null>({
     from: "",
     to: "",
-    merchant_id: user?.merchant_id ?? undefined,
   });
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const [isNewTransferModalOpen, setIsNewTransferModalOpen] =
@@ -58,7 +57,10 @@ export const TransfersBetweenAccounts = () => {
   } = useGetTransferBetweenAccounts(query);
 
   const { error, isLoading, isSuccess, mutate } =
-    useCreateTransferBetweenAccounts(body);
+    useCreateTransferBetweenAccounts({
+      ...body,
+      merchant_id: user?.merchant_id ?? undefined,
+    });
 
   const {
     MerchantTransferBetweenAccountsError,
@@ -66,6 +68,10 @@ export const TransfersBetweenAccounts = () => {
     MerchantTransferBetweenAccountsIsSuccess,
     MerchantTransferBetweenAccountsMutate,
   } = useCreateMerchantTransferBetweenAccountsReports(query);
+
+  useEffect(() => {
+    refetchTransferBetweenAccountsData();
+  }, [query]);
 
   const fieldsIfNotMerch = [
     {
@@ -90,13 +96,6 @@ export const TransfersBetweenAccounts = () => {
     { label: "value", required: true },
   ];
 
-  useEffect(() => {
-    refetchTransferBetweenAccountsData();
-  }, [query]);
-
-  useEffect(() => {
-    setBody((state) => ({ ...state, merchant_id: user?.merchant_id }));
-  }, [user]);
 
   return (
     <Row style={{ padding: 25 }}>
