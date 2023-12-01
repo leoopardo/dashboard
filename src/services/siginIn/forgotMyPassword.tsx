@@ -2,7 +2,10 @@
 import { api } from "@src/config/api";
 import { useMutation } from "react-query";
 
-export function useForgotMyPassword(body: { username?: string }) {
+export function useForgotMyPassword(body: {
+  username?: string;
+  message_channel?: string;
+}) {
   const { isLoading, error, mutate, isSuccess, reset, data } = useMutation<
     any | null | undefined
   >("ForgotMyPassword", async () => {
@@ -22,6 +25,6 @@ export function useForgotMyPassword(body: { username?: string }) {
     ForgotMyPasswordIsLoading,
     ForgotMyPasswordError,
     ForgotMyPasswordIsSuccess,
-    data
+    data,
   };
 }

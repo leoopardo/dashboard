@@ -12,6 +12,7 @@ import {
   Input,
   Layout,
   Progress,
+  Radio,
   Row,
   Typography,
 } from "antd";
@@ -23,6 +24,9 @@ export const ForgotMyPassword = () => {
   const { theme } = useTheme();
   const isMobile = useMediaQuery({ maxWidth: "750px" });
   const [username, setUsername] = useState<string>("");
+  const [messageChannel, setMessageChannel] = useState<
+    "EMAIL" | "SMS" | undefined
+  >("SMS");
   const [count, setCount] = useState(0);
   const [confirmedChannel, setConfirmedChannel] = useState<string>("");
   const [error, setError] = useState<boolean>(false);
@@ -32,7 +36,7 @@ export const ForgotMyPassword = () => {
     ForgotMyPasswordIsSuccess,
     ForgotMyPasswordMutate,
     data,
-  } = useForgotMyPassword({ username });
+  } = useForgotMyPassword({ username, message_channel: messageChannel });
 
   useEffect(() => {
     if (ForgotMyPasswordIsSuccess) {
@@ -221,6 +225,15 @@ export const ForgotMyPassword = () => {
                           <SendOutlined />
                         </Button>
                       </Form.Item>
+                      <Form.Item label="Canal da mensagem">
+                        <Radio.Group
+                          onChange={(e) => setMessageChannel(e.target.value)}
+                          value={messageChannel}
+                        >
+                          <Radio value={"EMAIL"}>Email</Radio>
+                          <Radio value={"SMS"}>Telefone</Radio>
+                        </Radio.Group>
+                      </Form.Item>
                     </Form>
                   </Col>
                 </Row>
@@ -297,7 +310,7 @@ export const ForgotMyPassword = () => {
                     <Progress percent={count} />
                   </Col>
                 </Row>
-              ) : confirmedChannel === "SMS" ? (
+              ) : confirmedChannel === "EMAIL" ? (
                 <Row style={{ marginTop: isMobile ? 8 : 64, width: "100%" }}>
                   <Col xs={{ span: 24 }} md={{ span: 3 }} />
 
@@ -315,7 +328,7 @@ export const ForgotMyPassword = () => {
                               : defaultTheme.colors.primary,
                         }}
                       >
-                        SMS enviado para {data?.phone}
+                        SMS enviado para {data?.email}
                       </Typography.Title>
                     </Col>
                   )}
@@ -349,7 +362,7 @@ export const ForgotMyPassword = () => {
                               : defaultTheme.colors.primary,
                         }}
                       >
-                        Email enviado para {data?.emal}
+                        Email enviado para {data?.email}
                       </Typography.Title>
                     )}
 
@@ -364,7 +377,7 @@ export const ForgotMyPassword = () => {
                         textAlign: isMobile ? "center" : undefined,
                       }}
                     >
-                      Enviamos um token para {data?.emal} via email, use esse
+                      Enviamos um token para {data?.email} via email, use esse
                       token como acesso temporário e mude sua senha pelo painel.
                     </Typography.Title>
                     <Progress percent={count} />
