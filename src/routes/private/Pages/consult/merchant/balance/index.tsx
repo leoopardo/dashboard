@@ -223,7 +223,7 @@ export const MerchantBalance = () => {
     }
     setExpanded(keys);
   };
-
+  
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid xs={12}>
