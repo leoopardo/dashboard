@@ -140,7 +140,7 @@ export const FeesTab = (props: { id?: string }) => {
     <Form
       ref={formRef}
       layout="vertical"
-      onSubmitCapture={() => {
+      onFinish={() => {
         UpdateMutate();
         setIsConfirmOpen(false);
       }}
