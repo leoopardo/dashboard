@@ -1,5 +1,10 @@
 /* eslint-disable no-empty-pattern */
-import { DownOutlined, LogoutOutlined, UserOutlined } from "@ant-design/icons";
+import {
+  DownOutlined,
+  LogoutOutlined,
+  PhoneOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import { Grid } from "@mui/material";
@@ -19,9 +24,12 @@ import { defaultTheme } from "../../styles/defaultTheme";
 import { BreadcrumbComponent } from "../Breadcrumb";
 import { EditSelfModal } from "./EditSelf";
 import ReactGA from "react-ga4";
+import { ValidateInterface } from "@src/services/types/validate.interface";
+import { ValidateToken } from "../ValidateToken";
 const { useToken } = t;
 
 export const PageHeader = () => {
+  const user = queryClient.getQueryData("validate") as ValidateInterface;
   const isMobile = useMediaQuery({ maxWidth: "950px" });
   const { t, i18n } = useTranslation();
   const { responseValidate } = useValidate();
@@ -30,8 +38,11 @@ export const PageHeader = () => {
   const { token } = useToken();
   const [isEditUserModalOpen, setIsEditUserModalOpen] =
     useState<boolean>(false);
+  const [isValidateCellphoneModalOpen, setIsValidateCellphoneModalOpen] =
+    useState<boolean>(false);
   const { setTheme, theme } = useTheme();
   const { refetchSelf } = useGetSelf();
+  const [tokenState, setTokenState] = useState<string>("");
 
   const contentStyle = {
     backgroundColor: token.colorBgElevated,
@@ -62,30 +73,67 @@ export const PageHeader = () => {
     },
   ];
 
-  const userItems: MenuProps["items"] = [
-    {
-      type: "divider",
-    },
-    {
-      key: "en",
-      label: t("menus.edit_user"),
-      icon: <UserOutlined />,
-      onClick: () => {
-        setIsEditUserModalOpen(true);
-      },
-    },
-    {
-      key: "logout",
-      label: t("menus.logout"),
-      icon: <LogoutOutlined style={{ marginRight: 8, color: "red" }} />,
-      onClick: () => {
-        secureLocalStorage.removeItem("token");
-        sessionStorage.removeItem("token");
-        queryClient.refetchQueries(["validate"]);
-        resetErrors();
-      },
-    },
-  ];
+  const userItems: MenuProps["items"] = user.phone_validated
+    ? [
+        {
+          type: "divider",
+        },
+        {
+          key: "en",
+          label: t("menus.edit_user"),
+          icon: <UserOutlined />,
+          onClick: () => {
+            setIsEditUserModalOpen(true);
+          },
+        },
+        {
+          key: "logout",
+          label: t("menus.logout"),
+          icon: <LogoutOutlined style={{ marginRight: 8, color: "red" }} />,
+          onClick: () => {
+            secureLocalStorage.removeItem("token");
+            sessionStorage.removeItem("token");
+            queryClient.refetchQueries(["validate"]);
+            resetErrors();
+          },
+        },
+      ]
+    : [
+        {
+          type: "divider",
+        },
+        {
+          key: "en",
+          label: t("menus.edit_user"),
+          icon: <UserOutlined />,
+          onClick: () => {
+            setIsEditUserModalOpen(true);
+          },
+        },
+        {
+          key: "validate_phone",
+          label: t("modal.validate_phone_number"),
+          icon: (
+            <PhoneOutlined
+              style={{ marginRight: 8, color: defaultTheme.colors.info }}
+            />
+          ),
+          onClick: () => {
+            setIsValidateCellphoneModalOpen(true);
+          },
+        },
+        {
+          key: "logout",
+          label: t("menus.logout"),
+          icon: <LogoutOutlined style={{ marginRight: 8, color: "red" }} />,
+          onClick: () => {
+            secureLocalStorage.removeItem("token");
+            sessionStorage.removeItem("token");
+            queryClient.refetchQueries(["validate"]);
+            resetErrors();
+          },
+        },
+      ];
 
   return !isMobile ? (
     <Grid
@@ -242,6 +290,19 @@ export const PageHeader = () => {
           open={isEditUserModalOpen}
           setOpen={setIsEditUserModalOpen}
           self={responseValidate}
+        />
+      )}
+      {isValidateCellphoneModalOpen && (
+        <ValidateToken
+          action="USER_UPDATE"
+          body={{}}
+          open={isValidateCellphoneModalOpen}
+          setIsOpen={setIsValidateCellphoneModalOpen}
+          setTokenState={setTokenState}
+          tokenState={tokenState}
+          submit={() => {
+            return;
+          }}
         />
       )}
     </Grid>
@@ -405,6 +466,20 @@ export const PageHeader = () => {
         setOpen={setIsEditUserModalOpen}
         self={responseValidate}
       />
+
+      {isValidateCellphoneModalOpen && (
+        <ValidateToken
+          action="USER_UPDATE"
+          body={{}}
+          open={isValidateCellphoneModalOpen}
+          setIsOpen={setIsValidateCellphoneModalOpen}
+          setTokenState={setTokenState}
+          tokenState={tokenState}
+          submit={() => {
+            return;
+          }}
+        />
+      )}
     </Grid>
   );
 };

@@ -1,4 +1,5 @@
 import { Grid } from "@mui/material";
+import { useTheme } from "@src/contexts/ThemeContext";
 import {
   OperatorQuery,
   OperatorsTotalResponse,
@@ -15,6 +16,7 @@ export const TotalizersCards = (props: {
   loading: boolean;
 }) => {
   const isMobile = useMediaQuery({ maxWidth: "950px" });
+  const { theme } = useTheme();
   return (
     <Grid
       container
@@ -42,13 +44,16 @@ export const TotalizersCards = (props: {
           >
             <ReactECharts
               option={{
+                darkMode: theme === "dark",
+                legend: {
+                  textStyle: {
+                    color: "#a0a0a0",
+                  },
+                },
                 tooltip: {
                   trigger: "item",
                 },
-                legend: {
-                  selectedMode: false,
-                  show: false,
-                },
+               
                 color: ["#91cc75", "#fac858", "#ea7ccc"],
 
                 series: [
