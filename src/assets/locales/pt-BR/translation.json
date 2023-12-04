@@ -153,7 +153,9 @@
     "organization_settings": "Organização Configurações",
     "merchant_settings": "Empresa Configurações",
     "historic_cpf_merchant": "Histórico de CPF por Merchant",
-    "historic_cpf_merchant_details": "Detalhes de CPF por Merchant"
+    "historic_cpf_merchant_details": "Detalhes de CPF por Merchant",
+    "settings": "Configurações",
+    "permissions_groups": "Grupos de permissões"
   },
 
   "titles": {
@@ -931,7 +933,12 @@
     "payer_underage": "Pagador menor de idade",
     "payer_blocked_by_merchant": "Pagador bloqueado pelo merchant",
     "payment_repeated_to_same_qrcode": "Pagamento duplicado",
-    "refund_reason": "Motivo da devolução"
+    "refund_reason": "Motivo da devolução",
+    "profile_name": "Tipo de entidade",
+    "linked_user_total": "Usuários atribuídos",
+    "profile_id": "Tipo de entidade",
+    "permissions": "Permissões"
+
   },
   "actions": {
     "details": "Detalhes",

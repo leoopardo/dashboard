@@ -923,7 +923,11 @@
     "payer_underage": "Payer underage",
     "payer_blocked_by_merchant": "Payer blocked by merchant",
     "payment_repeated_to_same_qrcode": "Payment repeated to same qrcode",
-    "refund_reason": "Refund reason"
+    "refund_reason": "Refund reason",
+    "profile_name": "Entity type",
+    "linked_user_total": "Linked users",
+    "profile_id": "Entity type",
+    "permissions": "Permissions"
   },
   "actions": {
     "details": "Details",

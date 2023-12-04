@@ -110,7 +110,7 @@ import { DepositsReceipts } from "./Pages/consult/deposits/receipts";
 import { HistoricCpfByMerchantReports } from "./Pages/consult/persons/reports/historicCpfByMerchant";
 import { HistoricCpfByMerchantDetails } from "./Pages/consult/persons/historicCpfByMerchant/details";
 import { HistoricCpfByMerchantDetailsReports } from "./Pages/consult/persons/reports/historicCpfByMerchantDetails";
-
+import { PermissionsGroups } from "./Pages/register/permissionsGroups";
 export const PrivateRoutes = () => {
   const { responseValidate } = useValidate();
 
@@ -595,6 +595,7 @@ export const PrivateRoutes = () => {
         </Route>
         {/* cadastros */}
         <Route path="register">
+          <Route path="permissions_groups" element={<PermissionsGroups />} />
           {/* cadastros de organização */}
           <Route path="organization">
             <Route
