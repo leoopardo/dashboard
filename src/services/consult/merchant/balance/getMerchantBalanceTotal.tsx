@@ -7,7 +7,6 @@ import {
   MerchantBalanceQuery,
   MerchantBalanceTotalsData,
 } from "@src/services/types/consult/merchant/balance";
-import { useEffect } from "react";
 
 export function useGetMerchantBalanceTotal(params: MerchantBalanceQuery) {
   const { data, isFetching, error, refetch } = useQuery<
@@ -22,10 +21,6 @@ export function useGetMerchantBalanceTotal(params: MerchantBalanceQuery) {
     },
     { keepPreviousData: false }
   );
-
-  useEffect(() => {
-    refetch();
-  }, [params]);
 
   const MerchantBalance = error ? ({} as any) : data;
   const isMerchantBalanceFetching = isFetching;

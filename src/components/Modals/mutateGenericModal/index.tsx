@@ -37,6 +37,7 @@ import { useTranslation } from "react-i18next";
 import ReactInputMask from "react-input-mask";
 import { MerchantSelect } from "../../Selects/merchantSelect";
 import { PartnerSelect } from "../../Selects/partnerSelect";
+import { useGetMerchantBalanceTotal } from "@src/services/consult/merchant/balance/getMerchantBalanceTotal";
 const { RangePicker } = DatePicker;
 
 interface mutateProps {
@@ -74,6 +75,7 @@ interface mutateProps {
   submitText?: string;
   validateToken?: boolean;
   validateTokenAction?: string;
+  merchantBetweenAccounts?: boolean;
 }
 
 export const MutateModal = ({
@@ -92,6 +94,7 @@ export const MutateModal = ({
   validateToken,
   validateTokenAction,
   success,
+  merchantBetweenAccounts,
 }: mutateProps) => {
   const { permissions } = queryClient.getQueryData(
     "validate"
@@ -110,6 +113,10 @@ export const MutateModal = ({
       limit: 200,
     });
   const [mask, setMask] = useState("");
+  const { MerchantBalance } = useGetMerchantBalanceTotal({
+    limit: 200,
+    page: 1,
+  });
 
   const validateCnpjLength = (_: any, value: string) => {
     if (value && value.replace(/[^\d]/g, "").length !== 14) {
@@ -1043,11 +1050,22 @@ export const MutateModal = ({
                                   (option: any) => {
                                     return {
                                       value: option?.value,
-                                      label: t(
-                                        field?.noTranslate
-                                          ? option?.label?.toLowerCase()
-                                          : `table.${option?.label?.toLowerCase()}`
-                                      ),
+                                      label: merchantBetweenAccounts
+                                        ? `${t(
+                                            `table.${option?.label?.toLowerCase()}`
+                                          )}: ${new Intl.NumberFormat("pt-BR", {
+                                            style: "currency",
+                                            currency: "BRL",
+                                          }).format(
+                                            MerchantBalance[
+                                              option?.label?.toLowerCase()
+                                            ]
+                                          )}`
+                                        : t(
+                                            field?.noTranslate
+                                              ? option?.label?.toLowerCase()
+                                              : `table.${option?.label?.toLowerCase()}`
+                                          ),
                                     };
                                   }
                                 )

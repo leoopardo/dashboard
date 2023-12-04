@@ -32,13 +32,13 @@ import {
   GetMerchantMovimentsQuery,
 } from "@src/services/types/moviments/merchant/getMoviments";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Divider, Statistic, Typography } from "antd";
+import { defaultTheme } from "@src/styles/defaultTheme";
+import { Button, Divider, Statistic } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { CreateMovimentModal } from "../../components/createMovimentModal";
 import { ApproveModal } from "./components/approveModal";
-import { defaultTheme } from "@src/styles/defaultTheme";
 
 export const MerchantPreManual = () => {
   const { t } = useTranslation();
@@ -272,18 +272,59 @@ export const MerchantPreManual = () => {
         style={{ display: "flex", alignItems: "center" }}
         spacing={1}
       >
-        <Grid xs={12} style={{ display: "flex", justifyContent: "center" }}>
-          <Typography.Title level={2} style={{color: defaultTheme.colors.secondary}}>
-            {selectedRows &&
-              selectedRows.length > 0 &&
-              `Total: ${new Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(
-                selectedRows.map((i) => i?.value)?.reduce((p, n) => p + n) ?? 0
-              )}`}
-          </Typography.Title>
-        </Grid>
+        {selectedRows && selectedRows.length > 0 && (
+  
+          <Grid
+            xs={12}
+            style={{
+              display: "flex",
+              justifyContent: "space-around",
+              alignItems: "center",
+              padding: 20,
+            }}
+          >
+            <h2 style={{ color: defaultTheme.colors.secondary }}>
+              {selectedRows &&
+                selectedRows.length > 0 &&
+                selectedRows?.filter((i) => i?.type == "in").length > 0 &&
+                `${t("table.in")}: ${new Intl.NumberFormat("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                }).format(
+                  selectedRows
+                    ?.filter((i) => i?.type == "in")
+                    ?.map((i) => i?.value)
+                    ?.reduce((p, n) => p + n) ?? 0
+                )}`}
+            </h2>
+            <h2 style={{ color: defaultTheme.colors.error }}>
+              {selectedRows &&
+                selectedRows.length > 0 &&
+                selectedRows?.filter((i) => i?.type == "out").length > 0 &&
+                `${t("table.out")}: ${new Intl.NumberFormat("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                })?.format(
+                  selectedRows
+                    ?.filter((i) => i?.type == "out")
+                    ?.map((i) => i?.value)
+                    ?.reduce((p, n) => p + n) ?? 0
+                )}`}
+            </h2>
+            <h2 style={{ color: defaultTheme.colors.info }}>
+              {selectedRows &&
+                selectedRows.length > 0 &&
+                `Total: ${new Intl.NumberFormat("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                }).format(
+                  selectedRows?.map((i) => i?.value)?.reduce((p, n) => p + n) ??
+                    0
+                )}`}
+            </h2>
+          </Grid>
+        )}
+
         <Grid
           container
           item
