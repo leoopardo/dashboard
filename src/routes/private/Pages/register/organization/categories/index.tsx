@@ -220,7 +220,6 @@ export const OrganizationCategories = () => {
 
       <Grid container style={{ marginTop: "15px" }}>
         <Grid item xs={12}>
-          {" "}
           <CustomTable
             query={query}
             setCurrentItem={setCurrentItem}
@@ -307,7 +306,7 @@ export const OrganizationCategories = () => {
           open={isUpdateCategorieModalOpen}
           setOpen={setIsUpdateCategorieModalOpen}
           fields={[
-            { label: "name", required: false },
+            { label: "name", required: true },
             { label: "description", required: false },
             { label: "status", required: false },
           ]}
