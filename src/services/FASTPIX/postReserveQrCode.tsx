@@ -2,7 +2,7 @@
 import axios from "axios";
 import { useMutation } from "react-query";
 
-export function useCreateQrCodeReserve(type: "123fixed" | "123free") {
+export function useCreateQrCodeReserve(type?: "123fixed" | "123free") {
   const { isLoading, error, mutate, isSuccess, reset, data } = useMutation<
     | {
         token: string;

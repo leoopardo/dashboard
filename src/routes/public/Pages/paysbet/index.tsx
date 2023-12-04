@@ -55,7 +55,9 @@ export const Paysbet = () => {
   window.document.title = "PAY'SBET";
   const location = useLocation();
   const navigate = useNavigate();
-  const [type, setType] = useState<"123fixed" | "123free">("123fixed");
+  const [type, setType] = useState<"123fixed" | "123free" | undefined>(
+    undefined
+  );
   const { t, i18n } = useTranslation();
   const {
     QrCodeReserveIsSuccess,
@@ -287,6 +289,13 @@ export const Paysbet = () => {
       );
   }, [QrCodeReserveIsSuccess]);
 
+  useEffect(() => {
+    if (type) {
+      QrCodeReserveMutate();
+      setType(undefined);
+    }
+  }, [type]);
+
   return (
     <Layout>
       <Header
@@ -411,7 +420,6 @@ export const Paysbet = () => {
                                 style={{ height: "70px", fontSize: "20px" }}
                                 onClick={() => {
                                   setType("123fixed");
-                                  QrCodeReserveMutate();
                                 }}
                                 loading={QrCodeReserveIsLoading}
                               >
@@ -497,7 +505,6 @@ export const Paysbet = () => {
                                 style={{ height: "70px", fontSize: "20px" }}
                                 onClick={() => {
                                   setType("123free");
-                                  QrCodeReserveMutate();
                                 }}
                                 loading={QrCodeReserveIsLoading}
                               >
