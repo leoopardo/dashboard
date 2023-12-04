@@ -13,7 +13,7 @@ import { Search } from "@src/components/Inputs/search";
 import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
 import { Toast } from "@src/components/Toast";
 import { useCreateSendWebhook } from "@src/services/consult/deposits/generatedDeposits/resendWebhook";
-import { useGetDepositReportFields } from "@src/services/consult/deposits/reportCsvFields/getReportFields";
+import { useGetPaidDepositReportFields } from "@src/services/consult/deposits/paidDeposits/reportCsvFields/getReportFields";
 import { queryClient } from "@src/services/queryClient";
 import { useCreatePaidDepositsReports } from "@src/services/reports/consult/deposits/createPaidDepositsReports";
 import { ResendWebhookBody } from "@src/services/types/consult/deposits/createResendWebhook.interface";
@@ -35,7 +35,6 @@ import { ResendWebhookModal } from "../components/ResendWebhookModal";
 import { ViewModal } from "../components/ViewModal";
 import { WebhookModal } from "../components/webhooksModal";
 import { TotalizersCards } from "./components/TotalizersCards";
-import { useGetPaidDepositReportFields } from "@src/services/consult/deposits/paidDeposits/reportCsvFields/getReportFields";
 
 const INITIAL_QUERY: paidDepositRowsQuery = {
   page: 1,
@@ -353,7 +352,7 @@ export const PaidDeposits = () => {
               "status",
               "createdAt",
               "delivered_at",
-              "value"
+              "value",
             ]}
           />
         </Grid>
