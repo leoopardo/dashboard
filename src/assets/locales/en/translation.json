@@ -907,8 +907,12 @@
     "aggregator_transfer": "Aggregator transfer",
     "aggregator_id_filter": "Filter: Aggregator ID",
     "deposit": "Deposit",
-    "bank_acc_number": "Bank account number",
-    "pixtype": "PIX type"
+    "bank_acc_number": "Bank account numbr",
+    "pixtype": "PIX type",
+    "profile_name": "Entity type",
+    "linked_user_total": "Linked users",
+    "profile_id": "Entity type",
+    "permissions": "Permissions"
   },
   "actions": {
     "details": "Details",
