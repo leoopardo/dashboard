@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { ErrorList } from "@src/utils/errors";
 import { useEffect } from "react";
 import { toast } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
@@ -23,10 +24,11 @@ export const Toast = ({
   useEffect(() => {
     if (error) {
       toast.error(
-        errorMessage ??
-          t("messages.action_error", {
-            action: actionError,
-          })
+        errorMessage ?? (ErrorList as any)[error?.response?.data?.message]
+          ? t(`error.${(ErrorList as any)[error?.response?.data?.message]}`)
+          : t("messages.action_error", {
+              action: actionError,
+            })
       );
     }
     if (success) {

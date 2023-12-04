@@ -147,6 +147,7 @@ export const ViewModal = ({
               case "final_date_filter":
                 return (
                   <Descriptions.Item
+                    data-test-id={`details-${key}`}
                     key={key}
                     label={t(`table.${key}`)}
                     labelStyle={{
@@ -167,6 +168,7 @@ export const ViewModal = ({
               case "birth_date":
                 return (
                   <Descriptions.Item
+                    data-test-id={`details-${key}`}
                     key={key}
                     label={t(`table.${key}`)}
                     labelStyle={{
@@ -185,6 +187,7 @@ export const ViewModal = ({
               case "status":
                 return (
                   <Descriptions.Item
+                    data-test-id={`details-${key}`}
                     key={key}
                     label={t(`table.${key}`)}
                     labelStyle={{
@@ -197,12 +200,17 @@ export const ViewModal = ({
                     <Typography.Title
                       level={5}
                       style={{
-                        color: typeof sortItems[key] === "string" ? (defaultTheme.colors as any)[
-                          sortItems[key]?.toLocaleLowerCase() 
-                        ]: undefined,
+                        color:
+                          typeof sortItems[key] === "string"
+                            ? (defaultTheme.colors as any)[
+                                sortItems[key]?.toLocaleLowerCase()
+                              ]
+                            : undefined,
                       }}
                     >
-                      {(typeof sortItems[key] === "boolean" || sortItems[key] === 1 || sortItems[key] === 2)
+                      {typeof sortItems[key] === "boolean" ||
+                      sortItems[key] === 1 ||
+                      sortItems[key] === 2
                         ? sortItems[key] || sortItems[key] === 1
                           ? t("table.active")
                           : t("table.inactive")
@@ -214,6 +222,7 @@ export const ViewModal = ({
               case "progress":
                 return (
                   <Descriptions.Item
+                    data-test-id={`details-${key}`}
                     key={key}
                     label={t(`table.${key}`)}
                     labelStyle={{
@@ -240,6 +249,7 @@ export const ViewModal = ({
               case "success":
                 return (
                   <Descriptions.Item
+                    data-test-id={`details-${key}`}
                     key={key}
                     label={t(`table.${key}`)}
                     labelStyle={{
@@ -257,6 +267,7 @@ export const ViewModal = ({
               case "black_list":
                 return (
                   <Descriptions.Item
+                    data-test-id={`details-${key}`}
                     key={key}
                     label={t(`table.${key}`)}
                     labelStyle={{
@@ -273,6 +284,7 @@ export const ViewModal = ({
               case "phone_validated":
                 return (
                   <Descriptions.Item
+                    data-test-id={`details-${key}`}
                     key={key}
                     label={t(`table.${key}`)}
                     labelStyle={{
@@ -289,29 +301,30 @@ export const ViewModal = ({
                 );
 
               case "value":
-              return (
-                <Descriptions.Item
-                  key={key}
-                  label={t(`table.${key}`)}
-                  labelStyle={{
-                    maxWidth: "120px !important",
-                    margin: 0,
-                    padding: 0,
-                    textAlign: "center",
-                  }}
-                >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "BRL",
-                  }).format(Number(sortItems[key]) || 0)}
-                </Descriptions.Item>
-              );
-
+                return (
+                  <Descriptions.Item
+                    data-test-id={`details-${key}`}
+                    key={key}
+                    label={t(`table.${key}`)}
+                    labelStyle={{
+                      maxWidth: "120px !important",
+                      margin: 0,
+                      padding: 0,
+                      textAlign: "center",
+                    }}
+                  >
+                    {new Intl.NumberFormat("pt-BR", {
+                      style: "currency",
+                      currency: "BRL",
+                    }).format(Number(sortItems[key]) || 0)}
+                  </Descriptions.Item>
+                );
 
               case "to":
               case "from":
                 return (
                   <Descriptions.Item
+                    data-test-id={`details-${key}`}
                     key={key}
                     label={t(`table.${key}`)}
                     labelStyle={{
@@ -328,6 +341,7 @@ export const ViewModal = ({
               case "file_url":
                 return (
                   <Descriptions.Item
+                    data-test-id={`details-${key}`}
                     key={key}
                     label={t(`table.${key}`)}
                     labelStyle={{
@@ -355,39 +369,41 @@ export const ViewModal = ({
                 return;
 
               case "type":
-                return (
-                  sortItems[key] && sortItems[key] === "aggregator_transfer" ? (
-                    <Descriptions.Item
-                      key={key}
-                      label={t(`table.${key}`)}
-                      labelStyle={{
-                        maxWidth: "120px !important",
-                        margin: 0,
-                        padding: 0,
-                        textAlign: "center",
-                      }}
-                    >
-                      {t("table.aggregator_transfer")}
-                    </Descriptions.Item>
-                  ) : (
-                    <Descriptions.Item
-                      key={key}
-                      label={t(`table.${key}`)}
-                      labelStyle={{
-                        maxWidth: "120px !important",
-                        margin: 0,
-                        padding: 0,
-                        textAlign: "center",
-                      }}
-                    >
-                     {sortItems[key] ?? "-"}
-                    </Descriptions.Item>
-                  )
-                )
+                return sortItems[key] &&
+                  sortItems[key] === "aggregator_transfer" ? (
+                  <Descriptions.Item
+                    data-test-id={`details-${key}`}
+                    key={key}
+                    label={t(`table.${key}`)}
+                    labelStyle={{
+                      maxWidth: "120px !important",
+                      margin: 0,
+                      padding: 0,
+                      textAlign: "center",
+                    }}
+                  >
+                    {t("table.aggregator_transfer")}
+                  </Descriptions.Item>
+                ) : (
+                  <Descriptions.Item
+                    data-test-id={`details-${key}`}
+                    key={key}
+                    label={t(`table.${key}`)}
+                    labelStyle={{
+                      maxWidth: "120px !important",
+                      margin: 0,
+                      padding: 0,
+                      textAlign: "center",
+                    }}
+                  >
+                    {sortItems[key] ?? "-"}
+                  </Descriptions.Item>
+                );
 
               default:
                 return (
                   <Descriptions.Item
+                    data-test-id={`details-${key}`}
                     key={key}
                     label={t(`table.${key}`)}
                     labelStyle={{
@@ -406,7 +422,9 @@ export const ViewModal = ({
 
       {item?.merchant_fee_plans_details && (
         <div style={{ marginTop: "20px" }}>
-          <Typography style={{ fontWeight: "bold", padding: "0 10px" }}>Taxas</Typography>
+          <Typography style={{ fontWeight: "bold", padding: "0 10px" }}>
+            Taxas
+          </Typography>
           <FeeTable
             data={listItems(item?.merchant_fee_plans_details, feePage, 5)}
           />

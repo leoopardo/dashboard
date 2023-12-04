@@ -914,7 +914,9 @@
     "internal": "Interno",
     "aggregator_transfer": "Transferência de agregador",
     "aggregator_id_filter": "Filtro: ID do agregador",
-    "deposit": "Depósito"
+    "deposit": "Depósito",
+    "bank_acc_number": "Conta corrente",
+    "pixtype": "Tipo de pix"
   },
   "actions": {
     "details": "Detalhes",
@@ -943,7 +945,9 @@
     "undefined": "Recurso temporariamente fora de ar. Caso persista ao recarregar a página, entre em contato com o suporte.",
     "password_must_match_/^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9]).{8,}$/_regular_expression": "A senha deve possuir 8 dígitos, letras maiúsculas e minusculas, números e caracteres especiais (!@#$%^&*)",
     "INVALID_USER": "Usuário inválido",
-    "disabled_entity": "Usuário vinculado a uma entidade disabilitada."
+    "disabled_entity": "Usuário vinculado a uma entidade disabilitada.",
+    "category_exists": "Categoria já cadastrada.",
+    "invalid_user": "Nome de usuário inválido, tente utilizar outro."
   },
   "logs": {
     "login": "Login",

@@ -4,6 +4,7 @@ import ForgotPassword from "@assets/forgot.svg";
 import { useTheme } from "@src/contexts/ThemeContext";
 import { useForgotMyPassword } from "@src/services/siginIn/forgotMyPassword";
 import { defaultTheme } from "@src/styles/defaultTheme";
+import { useNavigate } from "react-router-dom";
 import {
   Breadcrumb,
   Button,
@@ -22,6 +23,7 @@ import { useMediaQuery } from "react-responsive";
 
 export const ForgotMyPassword = () => {
   const { theme } = useTheme();
+  const navigate = useNavigate();
   const isMobile = useMediaQuery({ maxWidth: "750px" });
   const [username, setUsername] = useState<string>("");
   const [messageChannel, setMessageChannel] = useState<
@@ -38,7 +40,7 @@ export const ForgotMyPassword = () => {
     data,
   } = useForgotMyPassword({ username, message_channel: messageChannel });
 
-  useEffect(() => {
+  const handleInterval = () => {
     if (ForgotMyPasswordIsSuccess) {
       setConfirmedChannel(data?.message_channel);
       const interval = setInterval(() => {
@@ -47,17 +49,24 @@ export const ForgotMyPassword = () => {
           if (newCount >= 100) {
             clearInterval(interval);
             setConfirmedChannel("");
+            navigate("/login");
             return 100;
           }
           return newCount;
         });
       }, 1000);
+  
       return () => {
         clearInterval(interval);
         setCount(0);
       };
     }
+  }
+
+  useEffect(() => {
+    handleInterval()
   }, [ForgotMyPasswordIsSuccess]);
+
   useEffect(() => {
     if (ForgotMyPasswordError) {
       setError(true);

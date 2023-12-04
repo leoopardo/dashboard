@@ -13,7 +13,7 @@ import { Search } from "@src/components/Inputs/search";
 import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
 import { Toast } from "@src/components/Toast";
 import { useCreateSendWebhook } from "@src/services/consult/deposits/generatedDeposits/resendWebhook";
-import { useGetDepositReportFields } from "@src/services/consult/deposits/reportCsvFields/getReportFields";
+import { useGetPaidDepositReportFields } from "@src/services/consult/deposits/paidDeposits/reportCsvFields/getReportFields";
 import { queryClient } from "@src/services/queryClient";
 import { useCreatePaidDepositsReports } from "@src/services/reports/consult/deposits/createPaidDepositsReports";
 import { ResendWebhookBody } from "@src/services/types/consult/deposits/createResendWebhook.interface";
@@ -68,7 +68,7 @@ export const PaidDeposits = () => {
   const { paidRows, isPaidRowsFetching, refetchPaidTotalRows, paidRowsError } =
     useGetRowsPaidDeposits(query);
 
-  const { fields } = useGetDepositReportFields();
+  const { fields } = useGetPaidDepositReportFields();
 
   const [webhookBody, setWebhookBody] = useState<ResendWebhookBody>({
     start_date: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss.SSS"),
@@ -352,7 +352,7 @@ export const PaidDeposits = () => {
               "status",
               "createdAt",
               "delivered_at",
-              "value"
+              "value",
             ]}
           />
         </Grid>

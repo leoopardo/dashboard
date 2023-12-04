@@ -861,11 +861,11 @@ export const CustomTable = (props: TableProps) => {
                       style={{
                         width: "100%",
                         textAlign: "center",
-                        minWidth: 50,
+                        minWidth: 50
                       }}
                     >
                       {text
-                        ? text.length > 15 && columns.length >= 8
+                        ? text.length > 15 && columns.length >= 5
                           ? `${`${text}`.substring(0, 15)}...`
                           : text
                         : "-"}

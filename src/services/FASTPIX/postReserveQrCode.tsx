@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { api } from "@src/config/api";
+import axios from "axios";
 import { useMutation } from "react-query";
 
-export function useCreateQrCodeReserve() {
+export function useCreateQrCodeReserve(type?: "123fixed" | "123free") {
   const { isLoading, error, mutate, isSuccess, reset, data } = useMutation<
     | {
         token: string;
@@ -10,7 +10,11 @@ export function useCreateQrCodeReserve() {
     | null
     | undefined
   >("CreateReserveQrCode", async () => {
-    const response = await api.post("mock/bank/fastpix/reserve/qrcode",);
+    const response = await axios.post(
+      "https://sandbox-v4.paybrokers.io/v4/fastpix/checkout/reserve/qrcode",
+      {},
+      { headers: { ["merchant-hash"]: type } }
+    );
     return response.data;
   });
 
@@ -19,7 +23,7 @@ export function useCreateQrCodeReserve() {
   const QrCodeReserveError: any = error;
   const QrCodeReserveIsSuccess = isSuccess;
   const QrCodeReserveReset = reset;
-  const QrCodeReserveData = data
+  const QrCodeReserveData = data;
 
   return {
     QrCodeReserveMutate,
@@ -27,6 +31,6 @@ export function useCreateQrCodeReserve() {
     QrCodeReserveIsLoading,
     QrCodeReserveError,
     QrCodeReserveIsSuccess,
-    QrCodeReserveData
+    QrCodeReserveData,
   };
 }

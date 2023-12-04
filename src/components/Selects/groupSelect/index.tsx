@@ -42,6 +42,7 @@ export const GroupSelect = ({
 
   return (
     <Select
+    data-test-id="group-select"
       allowClear
       showSearch
       size="large"

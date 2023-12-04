@@ -156,7 +156,7 @@ export const BankMaintenence = () => {
           open={isUpdateBankModalOpen}
           setOpen={setIsUpdateBankModalOpen}
           fields={[
-            { label: "label_name", required: false },
+            { label: "label_name", required: true },
             { label: "icon_url", required: false },
             { label: "priority", required: false },
             { label: "bank_fee", required: false },

@@ -906,7 +906,9 @@
     "internal": "Internal",
     "aggregator_transfer": "Aggregator transfer",
     "aggregator_id_filter": "Filter: Aggregator ID",
-    "deposit": "Deposit"
+    "deposit": "Deposit",
+    "bank_acc_number": "Bank account number",
+    "pixtype": "PIX type"
   },
   "actions": {
     "details": "Details",
@@ -933,7 +935,9 @@
     "BANK_ALREADY_CREATED": "Bank already created",
     "date_1_hour": "The max range is one hour",
     "undefined": "Temporary service interruption. If the issue persists after reloading the page, please contact support.",
-    "INVALID_USER": "Invalid username"
+    "INVALID_USER": "Invalid username",
+    "category_exists": "Category already exists",
+    "invalid_user": "Invalid username, please try another one."
   },
   "logs": {
     "login": "Login",

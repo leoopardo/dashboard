@@ -163,6 +163,7 @@ export const NewUserModal = ({
       }
       footer={
         <Button
+          data-test-id="submit-button"
           loading={action === "update" ? updateLoading : isLoading}
           type="primary"
           style={{ width: "100%" }}
@@ -192,17 +193,19 @@ export const NewUserModal = ({
         onFinish={CreateUser}
       >
         <Form.Item
+          data-test-id="name"
           label={t(`table.name`)}
           name="name"
           style={{ margin: 10 }}
           rules={[
             {
-              required: action === "create",
+              required: true,
               message: t("input.required", { field: t("input.name") }) || "",
             },
           ]}
         >
           <Input
+            data-test-id="name-input"
             size="large"
             name="name"
             value={body.name}
@@ -211,6 +214,7 @@ export const NewUserModal = ({
         </Form.Item>
         {action === "create" && (
           <Form.Item
+            data-test-id="username"
             label={t(`table.username`)}
             name="username"
             style={{ margin: 10 }}
@@ -224,6 +228,7 @@ export const NewUserModal = ({
             ]}
           >
             <Input
+              data-test-id="username-input"
               size="large"
               name="username"
               autoComplete="new-password"
@@ -234,13 +239,19 @@ export const NewUserModal = ({
         )}
 
         <Form.Item
+          data-test-id="cellphone"
           label={t(`table.cellphone`)}
           name="cellphone"
           style={{ margin: 10 }}
         >
-          <CellphoneInput body={body} setBody={setBody} />
+          <CellphoneInput
+            data-test-id="cellphone-input"
+            body={body}
+            setBody={setBody}
+          />
         </Form.Item>
         <Form.Item
+          data-test-id="email"
           label={t(`table.email`)}
           name="email"
           style={{ margin: 10 }}
@@ -255,6 +266,7 @@ export const NewUserModal = ({
           ]}
         >
           <Input
+            data-test-id="email-input"
             size="large"
             name="email"
             autoComplete="new-password"
@@ -265,6 +277,7 @@ export const NewUserModal = ({
         {permissions.register.aggregator.aggregator.aggregator_list &&
           !user.aggregator_id && (
             <Form.Item
+              data-test-id="aggregator"
               label={t("input.aggregator")}
               name="aggregator_id"
               style={{ margin: 10 }}
@@ -286,6 +299,7 @@ export const NewUserModal = ({
           )}
 
         <Form.Item
+          data-test-id="group"
           label={t(`table.group`)}
           name="group_id"
           style={{ margin: 10 }}
@@ -313,6 +327,7 @@ export const NewUserModal = ({
           />
         </Form.Item>
         <Form.Item
+          data-test-id="status"
           label={t("table.status")}
           name="status"
           style={{ margin: 10 }}
@@ -322,6 +337,7 @@ export const NewUserModal = ({
               {t("table.inactive")}
             </Typography>
             <Switch
+              data-test-id="status-switch"
               disabled={action === "create"}
               checked={body?.status}
               onChange={(checked) =>
@@ -335,6 +351,7 @@ export const NewUserModal = ({
         </Form.Item>
 
         <Form.Item
+          data-test-id="password"
           label={t(`table.password`)}
           name="password"
           style={{ margin: 10 }}
@@ -364,6 +381,7 @@ export const NewUserModal = ({
           ]}
         >
           <Input.Password
+            data-test-id="password-input"
             type="password"
             size="large"
             name="password"
@@ -373,6 +391,7 @@ export const NewUserModal = ({
           />
         </Form.Item>
         <Form.Item
+          data-test-id="confirm-password"
           label={t(`table.confirm_password`)}
           name="confirmPasswprd"
           dependencies={["password"]}
@@ -396,6 +415,7 @@ export const NewUserModal = ({
           hasFeedback
         >
           <Input.Password
+            data-test-id="confirm-password-input"
             type="password"
             size="large"
             name="confirmPasswprd"
