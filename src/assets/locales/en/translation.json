@@ -910,7 +910,11 @@
     "bank_acc_number": "Bank account number",
     "pixtype": "PIX type",
     "merchant_hash": "Merchant hash",
-    "search": "Search"
+    "search": "Search",
+    "profile_name": "Entity type",
+    "linked_user_total": "Linked users",
+    "profile_id": "Entity type",
+    "permissions": "Permissions"
   },
   "actions": {
     "details": "Details",

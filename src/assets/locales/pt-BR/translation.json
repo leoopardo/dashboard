@@ -153,7 +153,9 @@
     "organization_settings": "Organização Configurações",
     "merchant_settings": "Empresa Configurações",
     "historic_cpf_merchant": "Histórico de CPF por Merchant",
-    "historic_cpf_merchant_details": "Detalhes de CPF por Merchant"
+    "historic_cpf_merchant_details": "Detalhes de CPF por Merchant",
+    "settings": "Configurações",
+    "permissions_groups": "Grupos de permissões"
   },
 
   "titles": {
@@ -918,7 +920,12 @@
     "bank_acc_number": "Conta corrente",
     "pixtype": "Tipo de pix",
     "merchant_hash": "Hash da empresa",
-    "search": "Pesquisa"
+    "search": "Pesquisa",
+    "profile_name": "Tipo de entidade",
+    "linked_user_total": "Usuários atribuídos",
+    "profile_id": "Tipo de entidade",
+    "permissions": "Permissões"
+
   },
   "actions": {
     "details": "Detalhes",

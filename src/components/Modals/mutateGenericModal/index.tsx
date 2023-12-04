@@ -38,6 +38,8 @@ import ReactInputMask from "react-input-mask";
 import { MerchantSelect } from "../../Selects/merchantSelect";
 import { PartnerSelect } from "../../Selects/partnerSelect";
 import { useGetMerchantBalanceTotal } from "@src/services/consult/merchant/balance/getMerchantBalanceTotal";
+import { useGetProfiles } from "@src/services/register/permissionGroups/getProfiles";
+import { ProfileInterface } from "@src/services/types/register/permissionsGroup/permissionsGroupinterface";
 const { RangePicker } = DatePicker;
 
 interface mutateProps {
@@ -126,6 +128,10 @@ export const MutateModal = ({
   useEffect(() => {
     refetchMerchantBalance();
   }, [body]);
+
+  const { ProfilesData, isProfilesDataFetching } = useGetProfiles({
+    group: true,
+  });
 
   const validateCnpjLength = (_: any, value: string) => {
     if (value && value.replace(/[^\d]/g, "").length !== 14) {
@@ -535,6 +541,53 @@ export const MutateModal = ({
                             [event.target.name]: Number(event.target.value),
                           }))
                         }
+                      />
+                    </Form.Item>
+                  </Col>
+                );
+
+              case "profile_id":
+                return (
+                  <Col span={24}>
+                    <Form.Item
+                      data-test-id={`${field.label}-form-item`}
+                      label={t(`table.${field.label}`)}
+                      name={field.label}
+                      style={{ margin: 10 }}
+                      rules={[
+                        {
+                          required: field.required,
+                          message:
+                            t("input.required", {
+                              field: t(`input.${field.label}`),
+                            }) || "",
+                        },
+                      ]}
+                    >
+                      <Select
+                        data-test-id={`${field.label}-select`}
+                        size="large"
+                        options={
+                          ProfilesData?.map((profile: ProfileInterface) => {
+                            return {
+                              label: t(
+                                `table.${profile?.name?.toLocaleLowerCase()}`
+                              ),
+                              value: profile?.id,
+                            };
+                          }) || []
+                        }
+                        loading={isProfilesDataFetching}
+                        notFoundContent={<Empty />}
+                        value={body[field.label] || null}
+                        onChange={(value) => {
+                          setBody((state: any) => ({
+                            ...state,
+                            [field.label]: value,
+                          }));
+                        }}
+                        style={{ width: "100%", height: 40 }}
+                        placeholder={t(`table.${field.label}`)}
                       />
                     </Form.Item>
                   </Col>

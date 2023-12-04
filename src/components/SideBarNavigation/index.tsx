@@ -10,6 +10,7 @@ import {
   MenuUnfoldOutlined,
   NotificationOutlined,
 } from "@ant-design/icons";
+import { useErrorContext } from "@src/contexts/ErrorContext";
 import { useTheme } from "@src/contexts/ThemeContext";
 import { queryClient } from "@src/services/queryClient";
 import { ValidateInterface } from "@src/services/types/validate.interface";
@@ -20,7 +21,6 @@ import { useMediaQuery } from "react-responsive";
 import { useLocation, useNavigate } from "react-router-dom";
 import secureLocalStorage from "react-secure-storage";
 import { useMenu } from "../../contexts/SidebarContext";
-import { useErrorContext } from "@src/contexts/ErrorContext";
 import { defaultTheme } from "../../styles/defaultTheme";
 
 type MenuItem = Required<MenuProps>["items"][number];
@@ -118,6 +118,18 @@ export const SidebarNavigation = () => {
       "register",
       <FolderAddOutlined style={{ fontSize: "23px" }} />,
       [
+        getItem(
+          "permissions_groups",
+          null,
+          null,
+          false,
+          (e) => handleNavigate(e?.keyPath),
+          {
+            display: permissions?.register?.paybrokers?.users?.menu
+              ? undefined
+              : "none",
+          }
+        ),
         // - CADASTROS DE ORGANIZAÇÃO
         getItem(
           "organization",
@@ -596,7 +608,7 @@ export const SidebarNavigation = () => {
                     : "none",
                 }
               ),
-                // todo
+              // todo
 
               // getItem(
               //   "import_merchant_blacklist",
@@ -1841,7 +1853,8 @@ export const SidebarNavigation = () => {
                   false,
                   (e) => handleNavigate(e?.keyPath),
                   {
-                    display: permissions?.support?.contestation?.deposits.import_csv.menu
+                    display: permissions?.support?.contestation?.deposits
+                      .import_csv.menu
                       ? undefined
                       : "none",
                   }
@@ -1850,18 +1863,22 @@ export const SidebarNavigation = () => {
               undefined,
               undefined,
               {
-                display: permissions?.support?.contestation?.deposits?.menu && (type === 1 || type === 2)
-                  ? undefined
-                  : "none",
+                display:
+                  permissions?.support?.contestation?.deposits?.menu &&
+                  (type === 1 || type === 2)
+                    ? undefined
+                    : "none",
               }
             ),
           ],
           undefined,
           undefined,
           {
-            display: permissions?.support?.contestation?.deposits?.menu && (type === 1 || type === 2)
-            ? undefined
-            : "none",
+            display:
+              permissions?.support?.contestation?.deposits?.menu &&
+              (type === 1 || type === 2)
+                ? undefined
+                : "none",
           }
         ),
         /*  getItem("Wiki", null, null, false, () => {
@@ -1873,7 +1890,8 @@ export const SidebarNavigation = () => {
       {
         display: permissions?.support?.menu ? undefined : "none",
       }
-    ), getItem(
+    ),
+    getItem(
       "div1",
       undefined,
       undefined,
@@ -1959,7 +1977,8 @@ export const SidebarNavigation = () => {
         disabledOverflow
         translate="yes"
         mode="inline"
-        theme={theme === "dark" ? "light" : import.meta.env.VITE_APP_MENU_THEME}       inlineCollapsed={!isSidebarOpen}
+        theme={theme === "dark" ? "light" : import.meta.env.VITE_APP_MENU_THEME}
+        inlineCollapsed={!isSidebarOpen}
         items={items}
       />
     </div>
