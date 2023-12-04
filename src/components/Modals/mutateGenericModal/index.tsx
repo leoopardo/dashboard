@@ -137,7 +137,7 @@ export const MutateModal = ({
   const handleChange = (event: any) => {
     setBody((state: any) => ({
       ...state,
-      [event.target.name]: event.target.value,
+      [event.target.name]: event.target.value || null,
     }));
   };
 
@@ -1137,7 +1137,8 @@ export const MutateModal = ({
                           onChange={(value) => {
                             setBody((state: any) => ({
                               ...state,
-                              [field?.asyncOption?.bodyProp || ""]: value,
+                              [field?.asyncOption?.bodyProp || ""]:
+                                value || null,
                             }));
                           }}
                           style={{ width: "100%", height: 40 }}
