@@ -60,6 +60,7 @@ export const AggregatorSelect = ({
 
   return (
     <Select
+      data-test-id="aggregator-select"
       allowClear
       showSearch
       size="large"
@@ -85,7 +86,7 @@ export const AggregatorSelect = ({
             ...state,
             aggregator_id: undefined,
             group_id: undefined,
-            operator_id: undefined
+            operator_id: undefined,
           }));
           return;
         }
@@ -93,7 +94,7 @@ export const AggregatorSelect = ({
           ...state,
           aggregator_id: value,
           group_id: undefined,
-          operator_id: undefined
+          operator_id: undefined,
         }));
         setValue(
           aggregatorsData?.items.find(

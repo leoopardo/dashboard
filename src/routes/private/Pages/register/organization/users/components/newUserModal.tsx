@@ -76,9 +76,10 @@ export const NewUserModal = ({
     cellphone: currentUser?.cellphone,
   });
 
-  const { mutate, error, isLoading, isSuccess, reset } = useCreateOrganizationUser({
-    ...body,
-  });
+  const { mutate, error, isLoading, isSuccess, reset } =
+    useCreateOrganizationUser({
+      ...body,
+    });
   const { updateLoading } = useUpdateOrganizationUser(body);
 
   function handleChangeUserBody(event: any) {
@@ -144,7 +145,7 @@ export const NewUserModal = ({
       formRef.current?.resetFields();
     }
   }, [isSuccess]);
-  
+
   useEffect(() => {
     if (error) {
       setBody({});
@@ -166,6 +167,7 @@ export const NewUserModal = ({
       }
       footer={
         <Button
+          data-test-id="submit-button"
           loading={action === "update" ? updateLoading : isLoading}
           type="primary"
           style={{ width: "100%" }}
@@ -177,6 +179,7 @@ export const NewUserModal = ({
       }
     >
       <Form
+        data-test-id="form"
         ref={formRef}
         layout="vertical"
         initialValues={action === "create" ? {} : currentUser ?? body}
@@ -184,6 +187,7 @@ export const NewUserModal = ({
         onFinish={CreateUser}
       >
         <Form.Item
+          data-test-id="name"
           label={t(`table.name`)}
           name="name"
           style={{ margin: 10 }}
@@ -195,6 +199,7 @@ export const NewUserModal = ({
           ]}
         >
           <Input
+            data-test-id="name-input"
             size="large"
             name="name"
             value={body.name}
@@ -203,6 +208,7 @@ export const NewUserModal = ({
         </Form.Item>
         {action === "create" && (
           <Form.Item
+            data-test-id="username"
             label={t(`table.username`)}
             name="username"
             style={{ margin: 10 }}
@@ -216,6 +222,7 @@ export const NewUserModal = ({
             ]}
           >
             <Input
+              data-test-id="username-input"
               size="large"
               name="username"
               autoComplete="new-password"
@@ -225,13 +232,19 @@ export const NewUserModal = ({
           </Form.Item>
         )}
         <Form.Item
+          data-test-id="cellphone"
           label={t(`table.cellphone`)}
           name="cellphone"
           style={{ margin: 10 }}
         >
-          <CellphoneInput body={body || currentUser} setBody={setBody} />
+          <CellphoneInput
+            data-test-id="cellphone-input"
+            body={body || currentUser}
+            setBody={setBody}
+          />
         </Form.Item>
         <Form.Item
+          data-test-id="email"
           label={t(`table.email`)}
           name="email"
           style={{ margin: 10 }}
@@ -246,6 +259,7 @@ export const NewUserModal = ({
           ]}
         >
           <Input
+            data-test-id="email-input"
             size="large"
             name="email"
             autoComplete="new-password"
@@ -254,6 +268,7 @@ export const NewUserModal = ({
           />
         </Form.Item>
         <Form.Item
+          data-test-id="group"
           label={t(`table.group`)}
           name="group_id"
           style={{ margin: 10 }}
@@ -265,6 +280,7 @@ export const NewUserModal = ({
           ]}
         >
           <Input
+            data-test-id="group-input"
             value={body.group_id || ""}
             style={{ display: "none" }}
             name="group_id"
@@ -278,6 +294,7 @@ export const NewUserModal = ({
         </Form.Item>
 
         <Form.Item
+          data-test-id="status"
           label={t("table.status")}
           name="status"
           style={{ margin: 10 }}
@@ -287,6 +304,7 @@ export const NewUserModal = ({
               {t("table.inactive")}
             </Typography>
             <Switch
+              data-test-id="status-switch"
               disabled={action === "create"}
               checked={body?.status}
               onChange={(checked) =>
@@ -300,6 +318,7 @@ export const NewUserModal = ({
         </Form.Item>
 
         <Form.Item
+          data-test-id="password"
           label={t(`table.password`)}
           name="password"
           style={{ margin: 10 }}
@@ -329,6 +348,7 @@ export const NewUserModal = ({
           ]}
         >
           <Input.Password
+            data-test-id="password-input"
             type="password"
             size="large"
             name="password"
@@ -338,6 +358,7 @@ export const NewUserModal = ({
           />
         </Form.Item>
         <Form.Item
+          data-test-id="confirm-password"
           label={t(`table.confirm_password`)}
           name="confirmPasswprd"
           dependencies={["password"]}
@@ -361,6 +382,7 @@ export const NewUserModal = ({
           hasFeedback
         >
           <Input.Password
+            data-test-id="confirm-password-input"
             type="password"
             size="large"
             name="confirmPasswprd"

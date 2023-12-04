@@ -68,6 +68,7 @@ export const MerchantSelect = ({
 
   return (
     <Select
+      data-test-id="merchant-select"
       allowClear
       style={{ width: "100%" }}
       showSearch
@@ -104,9 +105,7 @@ export const MerchantSelect = ({
           group_id: undefined,
         }));
         setValue(
-          merchantsData?.items.find(
-            (merchant) => merchant.id === value
-          )?.name
+          merchantsData?.items.find((merchant) => merchant.id === value)?.name
         );
       }}
       options={

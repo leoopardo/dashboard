@@ -28,14 +28,16 @@ export const OperatorSelect = ({
     useListOperators(query);
   const [value, setValue] = useState<any>(null);
   const debounceSearch = useDebounce(query.name);
-  
+
   useEffect(() => {
     if (!queryOptions.operator_id) {
       setValue(undefined);
     }
     if (!value) {
       const initial = operatorsData?.items.find(
-        (operator) => operator.id === (queryOptions?.operator?.id ||queryOptions?.operator_id )
+        (operator) =>
+          operator.id ===
+          (queryOptions?.operator?.id || queryOptions?.operator_id)
       );
       if (initial) {
         setValue(initial?.name);
@@ -56,13 +58,18 @@ export const OperatorSelect = ({
   }, [query]);
 
   useEffect(() => {
-    if (!operatorsData?.items.some((operator) => operator.id === queryOptions?.operator_id)) {
-     return setValue(undefined);
+    if (
+      !operatorsData?.items.some(
+        (operator) => operator.id === queryOptions?.operator_id
+      )
+    ) {
+      return setValue(undefined);
     }
   }, [operatorsData]);
 
   return (
     <Select
+      data-test-id="operator-select"
       allowClear
       showSearch
       size="large"

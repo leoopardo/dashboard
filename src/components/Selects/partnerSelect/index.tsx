@@ -65,6 +65,7 @@ export const PartnerSelect = ({
 
   return (
     <Select
+      data-test-id="partner-select"
       allowClear
       onClear={() => {
         setValue(undefined);

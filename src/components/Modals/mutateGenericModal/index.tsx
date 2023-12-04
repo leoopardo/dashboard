@@ -1172,7 +1172,7 @@ export const MutateModal = ({
                       ]}
                     >
                       <Input
-                        data-test-id={`${field?.label}-inpur`}
+                        data-test-id={`${field?.label}-input`}
                         size="large"
                         name={field?.label}
                         value={body[field?.label as any] ?? null}
