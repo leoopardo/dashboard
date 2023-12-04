@@ -906,7 +906,9 @@
     "internal": "Internal",
     "aggregator_transfer": "Aggregator transfer",
     "aggregator_id_filter": "Filter: Aggregator ID",
-    "deposit": "Deposit"
+    "deposit": "Deposit",
+    "bank_acc_number": "Bank account number",
+    "pixtype": "PIX type"
   },
   "actions": {
     "details": "Details",

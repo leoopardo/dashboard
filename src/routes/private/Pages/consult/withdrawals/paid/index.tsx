@@ -11,8 +11,9 @@ import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { Search } from "@src/components/Inputs/search";
 import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
+import { Toast } from "@src/components/Toast";
 import { useCreateSendWithdrawWebhook } from "@src/services/consult/withdrawals/generatedWithdrawals/resendWebhook";
-import { useGetWithdrawReportFields } from "@src/services/consult/withdrawals/reportCsvFields/getReportFields";
+import { useGetPaidWithdrawReportFields } from "@src/services/consult/withdrawals/paidWithdrawals/reportCsvFields/getReportFields";
 import { queryClient } from "@src/services/queryClient";
 import { useCreatePaidWithdrawalsReports } from "@src/services/reports/consult/withdrawals/paid/createGeneratedWithdrawalsReports";
 import { ResendWebhookBody } from "@src/services/types/consult/deposits/createResendWebhook.interface";
@@ -34,7 +35,6 @@ import { ResendWebhookModal } from "../../deposits/components/ResendWebhookModal
 import { ViewModal } from "../components/ViewModal";
 import { WebhookModal } from "../components/webhooksModal";
 import { TotalizersCards } from "./components/TotalizersCards";
-import { Toast } from "@src/components/Toast";
 
 const INITIAL_QUERY: paidWithdrawalsRowsQuery = {
   page: 1,
@@ -70,7 +70,7 @@ export const PaidWithdrawals = () => {
     paidWithdrawalsRowsError,
   } = useGetRowsPaidWithdrawals(query);
 
-  const { fields } = useGetWithdrawReportFields();
+  const { fields } = useGetPaidWithdrawReportFields();
 
   useEffect(() => {
     refetchPaidWithdrawalsTotalRows();

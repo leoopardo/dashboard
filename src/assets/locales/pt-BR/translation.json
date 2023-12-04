@@ -914,7 +914,9 @@
     "internal": "Interno",
     "aggregator_transfer": "Transferência de agregador",
     "aggregator_id_filter": "Filtro: ID do agregador",
-    "deposit": "Depósito"
+    "deposit": "Depósito",
+    "bank_acc_number": "Conta corrente",
+    "pixtype": "Tipo de pix"
   },
   "actions": {
     "details": "Detalhes",

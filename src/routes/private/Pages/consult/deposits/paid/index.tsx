@@ -35,6 +35,7 @@ import { ResendWebhookModal } from "../components/ResendWebhookModal";
 import { ViewModal } from "../components/ViewModal";
 import { WebhookModal } from "../components/webhooksModal";
 import { TotalizersCards } from "./components/TotalizersCards";
+import { useGetPaidDepositReportFields } from "@src/services/consult/deposits/paidDeposits/reportCsvFields/getReportFields";
 
 const INITIAL_QUERY: paidDepositRowsQuery = {
   page: 1,
@@ -68,7 +69,7 @@ export const PaidDeposits = () => {
   const { paidRows, isPaidRowsFetching, refetchPaidTotalRows, paidRowsError } =
     useGetRowsPaidDeposits(query);
 
-  const { fields } = useGetDepositReportFields();
+  const { fields } = useGetPaidDepositReportFields();
 
   const [webhookBody, setWebhookBody] = useState<ResendWebhookBody>({
     start_date: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss.SSS"),
