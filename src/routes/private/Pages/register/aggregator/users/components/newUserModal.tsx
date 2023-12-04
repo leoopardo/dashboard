@@ -197,7 +197,7 @@ export const NewUserModal = ({
           style={{ margin: 10 }}
           rules={[
             {
-              required: action === "create",
+              required: true,
               message: t("input.required", { field: t("input.name") }) || "",
             },
           ]}
