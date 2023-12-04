@@ -595,6 +595,7 @@ export const PrivateRoutes = () => {
         </Route>
         {/* cadastros */}
         <Route path="register">
+          <Route path="permissions_groups" element={<PermissionsGroups />} />
           {/* cadastros de organização */}
           <Route path="organization">
             <Route

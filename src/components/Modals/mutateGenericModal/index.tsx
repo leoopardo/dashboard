@@ -132,7 +132,7 @@ export const MutateModal = ({
   const { ProfilesData, isProfilesDataFetching } = useGetProfiles({
     group: true,
   });
-
+  
   const validateCnpjLength = (_: any, value: string) => {
     if (value && value.replace(/[^\d]/g, "").length !== 14) {
       return Promise.reject(
@@ -579,9 +579,7 @@ export const MutateModal = ({
                         }
                         loading={isProfilesDataFetching}
                         notFoundContent={<Empty />}
-                        value={
-                          body[field.label]
-                        }
+                        value={body[field.label] || null}
                         onChange={(value) => {
                           setBody((state: any) => ({
                             ...state,

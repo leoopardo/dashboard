@@ -936,11 +936,12 @@
     "payer_blocked_by_merchant": "Pagador bloqueado pelo merchant",
     "payment_repeated_to_same_qrcode": "Pagamento duplicado",
     "refund_reason": "Motivo da devolução",
+    "profiles": "Tipos de entidade",
     "profile_name": "Tipo de entidade",
     "linked_user_total": "Usuários atribuídos",
     "profile_id": "Tipo de entidade",
-    "permissions": "Permissões",
-    "profiles": "Tipos de entidade"
+    "permissions": "Permissões"
+
   },
   "actions": {
     "details": "Detalhes",
