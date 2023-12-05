@@ -123,14 +123,13 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
   const generateHandomString = () => {
     let randomString = "";
     const characters =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%-+=/?&*";
     const charactersLength = characters.length;
     for (let i = 0; i < 25; i++) {
       randomString += characters.charAt(
         Math.floor(Math.random() * charactersLength)
       );
     }
-
     return randomString;
   };
 
