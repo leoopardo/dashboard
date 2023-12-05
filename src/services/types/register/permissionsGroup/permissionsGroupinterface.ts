@@ -21,18 +21,36 @@ export interface PermissionsGroupsDataInterface {
 }
 
 export interface PermissionsGroupsQueryInterface {
-  search?: string; //nome do groupo ou descrição
-  profiles?: number[]; //id dos profiles selecionados
-  status?: boolean; //status "true" | "false"
-  sort_field?: string; //campo de ordenação (id | name | created_at | description | status | profile | users_total)
-  sort_order?: string; //ordem de ordenação
-  page?: number; //pagina
-  limit?: number; //itens exibidos por página
+  search?: string;
+  profiles?: number[];
+  status?: boolean;
+  sort_field?: string;
+  sort_order?: string;
+  page?: number;
+  limit?: number;
 }
 
 export interface PermissionGroupBodyInterface {
   name?: string;
   profile_id?: number;
   status?: string;
-  description?: string; //opcional
+  description?: string;
+}
+
+export interface PermissionMenuInterface {
+  id: number;
+  name: string;
+  menu_id: number;
+  internal_id: string;
+  permissions: [
+    {
+      id: number;
+      internal_id: string;
+      permission: string;
+      permission_type: {
+        name: string;
+      };
+    }
+  ];
+  menu_id_children: PermissionMenuInterface[];
 }
