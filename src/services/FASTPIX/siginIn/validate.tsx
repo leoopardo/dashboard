@@ -26,15 +26,18 @@ export function useValidateFastPix(rememberMe?: boolean, token?: string) {
   >(
     "FastPixTokenValidate",
     async () => {
-      const response = await axios.get("https://sandbox-v4.paybrokers.io/v4/mock/bank/fastpix/token/validate", {
-        headers: {
-          Authorization: `Bearer ${
-            token ||
-            secureLocalStorage.getItem("FastPixToken") ||
-            sessionStorage.getItem("FastPixToken")
-          }`,
-        },
-      });
+      const response = await axios.get(
+        "https://sandbox-v4.paybrokers.io/v4/mock/bank/fastpix/token/validate",
+        {
+          headers: {
+            Authorization: `Bearer ${
+              token ||
+              secureLocalStorage.getItem("FastPixToken") ||
+              sessionStorage.getItem("FastPixToken")
+            }`,
+          },
+        }
+      );
 
       return response.data;
     },
