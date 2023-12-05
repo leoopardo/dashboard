@@ -60,7 +60,7 @@ export const TransfersBetweenAccounts = () => {
   const { error, isLoading, isSuccess, mutate } =
     useCreateTransferBetweenAccounts({
       ...body,
-      merchant_id: user?.merchant_id ?? undefined,
+      merchant_id: (body?.merchant_id || user?.merchant_id) ?? undefined,
     });
 
   const {
@@ -105,7 +105,7 @@ export const TransfersBetweenAccounts = () => {
             {
               label: t("table.balance"),
               key: "balance",
-              children: <MerchantBalance />,
+              children: <MerchantBalance customQuery={query} />,
             },
             {
               label: t("menus.between_accounts_transfers"),

@@ -1,11 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect } from "react";
-import { useMutation } from "react-query";
-import { useValidateFastPix } from "./validate";
-import secureLocalStorage from "react-secure-storage";
 import { api } from "@src/config/api";
 import { queryClient } from "@src/services/queryClient";
+import axios from "axios";
+import { useEffect } from "react";
+import { useMutation } from "react-query";
+import secureLocalStorage from "react-secure-storage";
+import { useValidateFastPix } from "./validate";
 
 interface TokenInterface {
   token: string;
@@ -19,8 +20,8 @@ export function useFastPixToken(
   const token = useMutation<TokenInterface | null | undefined>(
     "FastPixToken",
     async () => {
-      const response = await api.post(
-        "mock/bank/fastpix/token",
+      const response = await axios.post(
+        "https://sandbox-v4.paybrokers.io/v4/mock/bank/fastpix/token",
         {},
         {
           auth: user,

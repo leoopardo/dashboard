@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { api } from "@src/config/api";
 import { queryClient } from "@src/services/queryClient";
+import axios from "axios";
 import { useMutation } from "react-query";
 
 export function useChangeFastPixCredentials({
@@ -15,8 +15,8 @@ export function useChangeFastPixCredentials({
     | null
     | undefined
   >("ChangeCredentials", async () => {
-    const response = await api.put(
-      "mock/bank/fastpix/user/update/credentials",
+    const response = await axios.put(
+      "https://sandbox-v4.paybrokers.io/v4/mock/bank/fastpix/user/update/credentials",
       { ...body }
     );
     await queryClient.refetchQueries({ queryKey: ["FastPixTokenValidate"] });

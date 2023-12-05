@@ -149,6 +149,12 @@ export const ValidateToken = ({
     } */
   }, [success, error, ValidatePhoneSuccess, ValidatePhoneError]);
 
+  useEffect(() => {
+    if (tokenState.length === 6) {
+      submit();
+    }
+  }, [tokenState]);
+
   return Self?.phone_validated ? (
     <Modal
       centered
@@ -230,10 +236,6 @@ export const ValidateToken = ({
           type="link"
           disabled={!ableToResend}
           onClick={() => {
-            setValidateBody({
-              action,
-              cellphone: `+${Self?.cellphone.split("+")[1]}`,
-            });
             ValidateToken();
           }}
         >
@@ -324,10 +326,6 @@ export const ValidateToken = ({
               type="link"
               disabled={!ableToResend}
               onClick={() => {
-                setValidateBody({
-                  action: "USER_VALIDATE_PHONE",
-                  cellphone: Self?.cellphone,
-                });
                 ValidateToken();
               }}
             >

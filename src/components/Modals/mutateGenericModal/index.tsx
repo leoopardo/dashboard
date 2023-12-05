@@ -76,6 +76,7 @@ interface mutateProps {
   validateToken?: boolean;
   validateTokenAction?: string;
   merchantBetweenAccounts?: boolean;
+  query?: any;
 }
 
 export const MutateModal = ({
@@ -95,6 +96,7 @@ export const MutateModal = ({
   validateTokenAction,
   success,
   merchantBetweenAccounts,
+  query,
 }: mutateProps) => {
   const { permissions } = queryClient.getQueryData(
     "validate"
@@ -113,10 +115,17 @@ export const MutateModal = ({
       limit: 200,
     });
   const [mask, setMask] = useState("");
-  const { MerchantBalance } = useGetMerchantBalanceTotal({
-    limit: 200,
-    page: 1,
-  });
+  const { MerchantBalance, refetchMerchantBalance } =
+    useGetMerchantBalanceTotal({
+      ...query,
+      merchant_id: body?.merchant_id,
+      page: 1,
+      limit: 200,
+    });
+
+  useEffect(() => {
+    refetchMerchantBalance();
+  }, [body]);
 
   const validateCnpjLength = (_: any, value: string) => {
     if (value && value.replace(/[^\d]/g, "").length !== 14) {
@@ -291,7 +300,7 @@ export const MutateModal = ({
                     <Col span={24}>
                       <Form.Item
                         data-test-id="merchant-select-form-item"
-                        label={t(`table.${field.label}`)}
+                        label={t(`table.merchant`)}
                         name={field.label}
                         style={{ margin: 10 }}
                         rules={[
@@ -307,7 +316,11 @@ export const MutateModal = ({
                         <MerchantSelect
                           data-test-id="merchant-select"
                           setQueryFunction={setBody}
-                          queryOptions={body}
+                          queryOptions={{
+                            ...body,
+                            merchant_id:
+                              body?.merchant_id || query?.merchant_id,
+                          }}
                         />
                       </Form.Item>
                     </Col>
@@ -1059,7 +1072,7 @@ export const MutateModal = ({
                                           }).format(
                                             MerchantBalance[
                                               option?.label?.toLowerCase()
-                                            ]
+                                            ] || 0
                                           )}`
                                         : t(
                                             field?.noTranslate
