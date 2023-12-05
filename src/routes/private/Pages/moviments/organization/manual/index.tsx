@@ -334,10 +334,11 @@ export const OrgonizationManual = () => {
             status: ["PROCESSING", "SUCCESS", "CANCELED"],
             category_id:
               CategoriesData?.items?.map((category) => {
-                return { label: category?.name, value: category?.id };
+                return { label: category?.name || " ", value: category?.id || " " };
               }) || [],
-            type: ["in", "out"],
+            type: [{label: "in", value: "in"}, {label: "out", value: "out"}],
           }}
+        
           startDateKeyName="start_date"
           endDateKeyName="end_date"
           initialQuery={INITIAL_QUERY}
