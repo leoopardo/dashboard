@@ -60,7 +60,7 @@ export const TransfersBetweenAccounts = () => {
   const { error, isLoading, isSuccess, mutate } =
     useCreateTransferBetweenAccounts({
       ...body,
-      merchant_id: user?.merchant_id ?? undefined,
+      merchant_id: (body?.merchant_id || user?.merchant_id) ?? undefined,
     });
 
   const {

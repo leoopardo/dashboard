@@ -20,7 +20,11 @@ export interface IOrganizationUpdateConfig {
   cash_out_max_value?: number;
   operation_type?: string;
   btg_merchant_customer_id?: string;
-  under_age_verify?: boolean
+  under_age_verify?: boolean;
+  fastpix_in_permission?: boolean;
+  fastpix_in_type?: string;
+  fastpix_in_min_value?: number;
+  fastpix_in_max_value?: number;
 }
 
 export interface IOrganizationConfigResponse {

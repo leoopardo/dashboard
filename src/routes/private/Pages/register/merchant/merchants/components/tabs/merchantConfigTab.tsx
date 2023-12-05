@@ -29,14 +29,12 @@ import {
   Popconfirm,
   Row,
   Select,
-  Switch,
   Typography,
   Upload,
   UploadFile,
 } from "antd";
 import { RcFile } from "antd/es/upload";
 import { useEffect, useRef, useState } from "react";
-import { CurrencyInput } from "react-currency-mask";
 import { useTranslation } from "react-i18next";
 
 export const MerchantConfigTab = (props: { id?: string }) => {
@@ -269,104 +267,14 @@ export const MerchantConfigTab = (props: { id?: string }) => {
         <Row
           gutter={[8, 8]}
           align="bottom"
-          style={{ display: "flex", alignItems: "flex-end" }}
+          style={{ display: "flex", alignItems: "flex-end", width: "100%" }}
         >
           <Col span={24}>
-            <Divider orientation="left"><Typography.Title level={3}>FastPix</Typography.Title></Divider>
+            <Divider orientation="left">
+              <Typography.Title level={3}>FastPix</Typography.Title>
+            </Divider>
           </Col>
-          <Col xs={{ span: 24 }} md={{ span: 3 }}>
-            <Form.Item
-              label={t("input.fastpix_in_permission")}
-              name="fastpix_in_permission"
-              valuePropName="checked"
-            >
-              <Switch
-                checked={body?.fastpix_in_permission}
-                onChange={(value) => {
-                  setBody((state) => ({
-                    ...state,
-                    fastpix_in_permission: value,
-                  }));
-                  setBodyUpdate((state) => ({
-                    ...state,
-                    fastpix_in_permission: value,
-                  }));
-                }}
-              />
-            </Form.Item>
-          </Col>
-          <Col xs={{ span: 24 }} md={{ span: 7 }}>
-            <Form.Item
-              label={t("input.fastpix_in_type")}
-              name="fastpix_in_type"
-            >
-              <Select
-                size="large"
-                options={
-                  ["FIXED", "FREE"]?.map((item, index) => ({
-                    key: index,
-                    value: item,
-                    label: `${t(`table.${item}`)}`,
-                  })) ?? []
-                }
-                value={body?.fastpix_in_type}
-                onChange={(value) => {
-                  setBody((state) => ({
-                    ...state,
-                    fastpix_in_type: value,
-                  }));
-                  setBodyUpdate((state) => ({
-                    ...state,
-                    fastpix_in_type: value,
-                  }));
-                }}
-              />
-            </Form.Item>
-          </Col>
-          <Col xs={{ span: 24 }} md={{ span: 7 }}>
-            <Form.Item
-              label={t("input.fastpix_in_min_value")}
-              name="fastpix_in_min_value"
-            >
-              <CurrencyInput
-                onChangeValue={(_event, originalValue) => {
-                  setBodyUpdate((state) => ({
-                    ...state,
-                    fastpix_in_min_value: +originalValue,
-                  }));
-                }}
-                InputElement={
-                  <Input
-                    size="large"
-                    style={{ width: "100%" }}
-                    value={body?.fastpix_in_min_value}
-                  />
-                }
-              />
-            </Form.Item>
-          </Col>
-          <Col xs={{ span: 24 }} md={{ span: 7 }}>
-            <Form.Item
-              label={t("input.fastpix_in_max_value")}
-              name="fastpix_in_max_value"
-            >
-              <CurrencyInput
-                onChangeValue={(_event, originalValue) => {
-                  setBodyUpdate((state) => ({
-                    ...state,
-                    fastpix_in_max_value: +originalValue,
-                  }));
-                }}
-                InputElement={
-                  <Input
-                    size="large"
-                    style={{ width: "100%" }}
-                    value={body?.fastpix_in_max_value}
-                  />
-                }
-              />
-            </Form.Item>
-          </Col>
+
           <Col xs={{ span: 24 }} md={{ span: 9 }}>
             <Form.Item
               label={t("table.fastpix_webhook_url")}

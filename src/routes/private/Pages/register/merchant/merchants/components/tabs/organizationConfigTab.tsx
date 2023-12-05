@@ -11,6 +11,7 @@ import {
 import {
   Button,
   Col,
+  Divider,
   Form,
   FormInstance,
   Input,
@@ -18,6 +19,7 @@ import {
   Row,
   Select,
   Switch,
+  Typography,
 } from "antd";
 import Checkbox, { CheckboxChangeEvent } from "antd/es/checkbox";
 import { useEffect, useRef, useState } from "react";
@@ -183,13 +185,17 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
                 />
               </Form.Item>
             </Col>
-            <Col xs={{ span: 7 }} md={{ span: 4 }} style={{
+            <Col
+              xs={{ span: 7 }}
+              md={{ span: 4 }}
+              style={{
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "end",
                 height: "100%",
                 marginTop: "25px",
-              }}>
+              }}
+            >
               <Form.Item label={""} name="pix_refund_fee_min">
                 <Checkbox
                   checked={withdrawUnlimited}
@@ -262,7 +268,7 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
                 marginTop: "25px",
               }}
             >
-              <Form.Item label={""} name="pix_refund_fee_min" >
+              <Form.Item label={""} name="pix_refund_fee_min">
                 <Checkbox
                   checked={payerPjUnlimited}
                   onChange={handlPayerPjUnlimitedChange}
@@ -328,13 +334,17 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
                 />
               </Form.Item>
             </Col>{" "}
-            <Col xs={{ span: 7 }} md={{ span: 4 }} style={{
+            <Col
+              xs={{ span: 7 }}
+              md={{ span: 4 }}
+              style={{
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "end",
                 height: "100%",
                 marginTop: "25px",
-              }}>
+              }}
+            >
               <Form.Item label={""} name="pix_refund_fee_min">
                 <Checkbox
                   checked={differentPayerUnlimited}
@@ -428,6 +438,98 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
                       status: value,
                     }));
                   }}
+                />
+              </Form.Item>
+            </Col>
+
+            <Col span={24} />
+            <Col span={24}>
+              <Divider orientation="left">
+                <Typography.Title level={3}>FastPix</Typography.Title>
+              </Divider>
+            </Col>
+            <Col xs={{ span: 24 }} md={{ span: 3 }}>
+              <Form.Item
+                label={t("input.fastpix_in_permission")}
+                name="fastpix_in_permission"
+                valuePropName="checked"
+              >
+                <Switch
+                  checked={bodyUpdate?.fastpix_in_permission}
+                  onChange={(value) => {
+                    setBodyUpdate((state) => ({
+                      ...state,
+                      fastpix_in_permission: value,
+                    }));
+                  }}
+                />
+              </Form.Item>
+            </Col>
+            <Col xs={{ span: 24 }} md={{ span: 7 }}>
+              <Form.Item
+                label={t("input.fastpix_in_type")}
+                name="fastpix_in_type"
+              >
+                <Select
+                  size="large"
+                  options={
+                    ["FIXED", "FREE"]?.map((item, index) => ({
+                      key: index,
+                      value: item,
+                      label: `${t(`table.${item}`)}`,
+                    })) ?? []
+                  }
+                  value={bodyUpdate?.fastpix_in_type}
+                  onChange={(value) => {
+                    setBodyUpdate((state) => ({
+                      ...state,
+                      fastpix_in_type: value,
+                    }));
+                  }}
+                />
+              </Form.Item>
+            </Col>
+            <Col xs={{ span: 24 }} md={{ span: 7 }}>
+              <Form.Item
+                label={t("input.fastpix_in_min_value")}
+                name="fastpix_in_min_value"
+              >
+                <CurrencyInput
+                  onChangeValue={(_event, originalValue) => {
+                    setBodyUpdate((state) => ({
+                      ...state,
+                      fastpix_in_min_value: +originalValue,
+                    }));
+                  }}
+                  InputElement={
+                    <Input
+                      size="large"
+                      style={{ width: "100%" }}
+                      value={bodyUpdate?.fastpix_in_min_value}
+                    />
+                  }
+                />
+              </Form.Item>
+            </Col>
+            <Col xs={{ span: 24 }} md={{ span: 7 }}>
+              <Form.Item
+                label={t("input.fastpix_in_max_value")}
+                name="fastpix_in_max_value"
+              >
+                <CurrencyInput
+                  onChangeValue={(_event, originalValue) => {
+                    setBodyUpdate((state) => ({
+                      ...state,
+                      fastpix_in_max_value: +originalValue,
+                    }));
+                  }}
+                  InputElement={
+                    <Input
+                      size="large"
+                      style={{ width: "100%" }}
+                      value={bodyUpdate?.fastpix_in_max_value}
+                    />
+                  }
                 />
               </Form.Item>
             </Col>
