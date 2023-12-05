@@ -105,7 +105,7 @@ export const TransfersBetweenAccounts = () => {
             {
               label: t("table.balance"),
               key: "balance",
-              children: <MerchantBalance />,
+              children: <MerchantBalance customQuery={query} />,
             },
             {
               label: t("menus.between_accounts_transfers"),
