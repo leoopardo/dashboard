@@ -2,6 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { api } from "@src/config/api";
 import { queryClient } from "@src/services/queryClient";
+import axios from "axios";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
@@ -25,15 +26,18 @@ export function useValidateFastPix(rememberMe?: boolean, token?: string) {
   >(
     "FastPixTokenValidate",
     async () => {
-      const response = await api.get("mock/bank/fastpix/token/validate", {
-        headers: {
-          Authorization: `Bearer ${
-            token ||
-            secureLocalStorage.getItem("FastPixToken") ||
-            sessionStorage.getItem("FastPixToken")
-          }`,
-        },
-      });
+      const response = await axios.get(
+        "https://sandbox-v4.paybrokers.io/v4/mock/bank/fastpix/token/validate",
+        {
+          headers: {
+            Authorization: `Bearer ${
+              token ||
+              secureLocalStorage.getItem("FastPixToken") ||
+              sessionStorage.getItem("FastPixToken")
+            }`,
+          },
+        }
+      );
 
       return response.data;
     },
