@@ -25,6 +25,7 @@ export interface IOrganizationUpdateConfig {
   fastpix_in_type?: string;
   fastpix_in_min_value?: number;
   fastpix_in_max_value?: number;
+  merchant_hash?: string;
 }
 
 export interface IOrganizationConfigResponse {

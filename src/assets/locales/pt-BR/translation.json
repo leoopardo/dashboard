@@ -916,7 +916,8 @@
     "aggregator_id_filter": "Filtro: ID do agregador",
     "deposit": "Depósito",
     "bank_acc_number": "Conta corrente",
-    "pixtype": "Tipo de pix"
+    "pixtype": "Tipo de pix",
+    "merchant_hash": "Hash da empresa"
   },
   "actions": {
     "details": "Detalhes",

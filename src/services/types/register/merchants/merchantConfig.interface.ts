@@ -10,6 +10,7 @@ export interface IMerchantConfig {
   fastpix_webhook_url?: string;
   fastpix_redirect_url?: string;
   fastpix_token_time?: number;
+  merchant_hash?: string;
 }
 export interface IMerchantUpdateConfig extends IMerchantConfig {
   merchant_id: number;

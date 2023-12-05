@@ -908,7 +908,8 @@
     "aggregator_id_filter": "Filter: Aggregator ID",
     "deposit": "Deposit",
     "bank_acc_number": "Bank account number",
-    "pixtype": "PIX type"
+    "pixtype": "PIX type",
+    "merchant_hash": "Merchant hash"
   },
   "actions": {
     "details": "Details",

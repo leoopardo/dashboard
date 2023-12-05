@@ -489,6 +489,21 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
                 />
               </Form.Item>
             </Col>
+            <Col xs={{ span: 24 }} md={{ span: 6 }}>
+              <Form.Item label={t("table.merchant_hash")} name="merchant_hash">
+                <Input
+                  size="large"
+                  name="merchant_hash"
+                  value={bodyUpdate?.merchant_hash}
+                  onChange={(e) => {
+                    setBodyUpdate((state) => ({
+                      ...state,
+                      merchant_hash: e.target.value,
+                    }));
+                  }}
+                />
+              </Form.Item>
+            </Col>
             <Col xs={{ span: 24 }} md={{ span: 7 }}>
               <Form.Item
                 label={t("input.fastpix_in_min_value")}
@@ -511,6 +526,7 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
                 />
               </Form.Item>
             </Col>
+            
             <Col xs={{ span: 24 }} md={{ span: 7 }}>
               <Form.Item
                 label={t("input.fastpix_in_max_value")}
