@@ -1,5 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useGetPermissionMenus } from "@src/services/register/permissionGroups/getPermissionMenus";
-import { Drawer, Form, Select } from "antd";
+import { defaultTheme } from "@src/styles/defaultTheme";
+import { Drawer, Input, Spin } from "antd";
 import Tree, { DataNode } from "antd/es/tree";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -16,6 +19,9 @@ export const PermissionsModal = ({
   group,
 }: PermissionsModalProps) => {
   const { t } = useTranslation();
+  const [expandedKeys, setExpandedKeys] = useState<React.Key[]>([]);
+  const [searchValue, setSearchValue] = useState("");
+  const [autoExpandParent, setAutoExpandParent] = useState(true);
   const [treeData, setTreeData] = useState<DataNode[]>([]);
   const {
     PermissionMenusData,
@@ -24,44 +30,147 @@ export const PermissionsModal = ({
     isSuccessPermissionMenusData,
   } = useGetPermissionMenus({ group_id: group?.id });
 
-  console.log(PermissionMenusData);
-
   useEffect(() => {
     if (isSuccessPermissionMenusData && PermissionMenusData) {
       setTreeData(
         PermissionMenusData?.map((item) => {
           return {
-            title: item?.name,
-            key: item?.id?.toString(),
+            title: t(`permissions.${item?.name}`),
+            key: `${item?.name}-${item.id.toString()}`,
+            style: {
+              color:
+                searchValue &&
+                t(`permissions.${item?.name}`)
+                  .toLowerCase()
+                  .includes(searchValue.toLowerCase())
+                  ? defaultTheme.colors.secondary
+                  : undefined,
+            },
             children: [
               ...item.permissions.map((subPermission) => {
                 return {
-                  title: subPermission?.permission_type?.name,
-                  key: subPermission.id.toString(),
+                  title: t(
+                    `permissions.${subPermission?.permission_type?.name}`
+                  ),
+                  key: `${
+                    subPermission?.permission_type?.name
+                  }-${subPermission.id.toString()}`,
+                  style: {
+                    color:
+                      searchValue &&
+                      t(`permissions.${subPermission?.permission_type?.name}`)
+                        .toLowerCase()
+                        .includes(searchValue.toLowerCase())
+                        ? defaultTheme.colors.secondary
+                        : undefined,
+                  },
                 };
               }),
               ...item.menu_id_children.map((permission) => {
                 return {
-                  title: permission?.name,
-                  key: permission.id.toString(),
+                  title: t(`permissions.${permission?.name}`),
+                  key: `${permission?.name}-${permission.id.toString()}`,
+                  style: {
+                    color:
+                      searchValue &&
+                      t(`permissions.${permission?.name}`)
+                        .toLowerCase()
+                        .includes(searchValue.toLowerCase())
+                        ? defaultTheme.colors.secondary
+                        : undefined,
+                  },
                   children: [
                     ...permission.permissions.map((sub) => {
                       return {
-                        title: sub?.permission_type?.name,
-                        key: sub.id.toString(),
-
+                        title: t(`permissions.${sub?.permission_type?.name}`),
+                        key: `${
+                          sub?.permission_type?.name
+                        }-${sub.id.toString()}`,
+                        style: {
+                          color:
+                            searchValue &&
+                            t(`permissions.${sub?.permission_type?.name}`)
+                              .toLowerCase()
+                              .includes(searchValue.toLowerCase())
+                              ? defaultTheme.colors.secondary
+                              : undefined,
+                        },
                       };
                     }),
                     ...permission.menu_id_children.map((sub) => {
                       return {
-                        title: sub?.name,
+                        title: t(`permissions.${sub?.name}`),
                         key: sub.id.toString(),
-                        children: sub.menu_id_children.map((supPermission) => {
-                          return {
-                            title: supPermission?.name,
-                            key: supPermission.id.toString(),
-                          };
-                        }),
+                        style: {
+                          color:
+                            searchValue &&
+                            t(`permissions.${sub?.name}`)
+                              .toLowerCase()
+                              .includes(searchValue.toLowerCase())
+                              ? defaultTheme.colors.secondary
+                              : undefined,
+                        },
+                        children: [
+                          ...sub.permissions.map((sub3) => {
+                            return {
+                              title: t(
+                                `permissions.${sub3?.permission_type.name}`
+                              ),
+                              key: `${
+                                sub3?.permission_type?.name
+                              }-${sub3.id.toString()}`,
+                              style: {
+                                color:
+                                  searchValue &&
+                                  t(
+                                    `permissions.${sub3?.permission_type?.name}`
+                                  )
+                                    .toLowerCase()
+                                    .includes(searchValue.toLowerCase())
+                                    ? defaultTheme.colors.secondary
+                                    : undefined,
+                              },
+                            };
+                          }),
+                          ...sub.menu_id_children.map((sub3) => {
+                            return {
+                              title: t(`permissions.${sub3?.name}`),
+                              key: `${sub3?.name}-${sub3.id.toString()}`,
+                              style: {
+                                color:
+                                  searchValue &&
+                                  t(`permissions.${sub3?.name}`)
+                                    .toLowerCase()
+                                    .includes(searchValue.toLowerCase())
+                                    ? defaultTheme.colors.secondary
+                                    : undefined,
+                              },
+                              children: [
+                                ...sub3.permissions.map((sub4) => {
+                                  return {
+                                    title: t(
+                                      `permissions.${sub4?.permission_type.name}`
+                                    ),
+                                    key: `${
+                                      sub4?.permission_type?.name
+                                    }-${sub4.id.toString()}`,
+                                    style: {
+                                      color:
+                                        searchValue &&
+                                        t(
+                                          `permissions.${sub4?.permission_type?.name}`
+                                        )
+                                          .toLowerCase()
+                                          .includes(searchValue.toLowerCase())
+                                          ? defaultTheme.colors.secondary
+                                          : undefined,
+                                    },
+                                  };
+                                }),
+                              ],
+                            };
+                          }),
+                        ],
                       };
                     }),
                   ],
@@ -72,102 +181,110 @@ export const PermissionsModal = ({
         })
       );
     }
-  }, [PermissionMenusData]);
+  }, [PermissionMenusData, searchValue]);
 
-  // const treeData: DataNode[] = [
-  //   {
-  //     title: "Dashboard",
-  //     key: "0-0",
-  //     children: [
-  //       {
-  //         title: "parent 1-0",
-  //         key: "0-0-0",
-  //         children: [
-  //           {
-  //             title: "leaf",
-  //             key: "0-0-0-0",
-  //           },
-  //           {
-  //             title: "leaf",
-  //             key: "0-0-0-1",
-  //           },
-  //         ],
-  //       },
-  //       {
-  //         title: "parent 1-1",
-  //         key: "0-0-1",
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    const data = [...treeData];
+    const keys: any = [];
 
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     title: "Cadastros",
-  //     key: "0-1",
-  //     children: [
-  //       {
-  //         title: "parent 1-1",
-  //         key: "0-1-0",
-  //         children: [
-  //           {
-  //             title: "leaf",
-  //             key: "0-1-0-0",
-  //           },
-  //           {
-  //             title: "leaf",
-  //             key: "0-1-0-1",
-  //           },
-  //         ],
-  //       },
-  //       {
-  //         title: "parent 1-1",
-  //         key: "0-1-1",
-  //         children: [
-  //           {
-  //             title: <span style={{ color: "#1677ff" }}>sss</span>,
-  //             key: "0-1-1-0",
-  //           },
-  //         ],
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     title: "Movimentações",
-  //     key: "0-2",
-  //     children: [
-  //       {
-  //         title: "parent 1-0",
-  //         key: "0-2-0",
-  //         children: [
-  //           {
-  //             title: "leaf",
-  //             key: "0-2-0-0",
-  //           },
-  //           {
-  //             title: "leaf",
-  //             key: "0-2-0-1",
-  //           },
-  //         ],
-  //       },
-  //       {
-  //         title: "parent 1-1",
-  //         key: "0-2-1",
-  //         children: [
-  //           {
-  //             title: <span style={{ color: "#1677ff" }}>sss</span>,
-  //             key: "0-2-1-0",
-  //           },
-  //         ],
-  //       },
-  //     ],
-  //   },
-  // ];
+    if (!value) {
+      setExpandedKeys([]);
+      setSearchValue("");
+      setAutoExpandParent(true);
+      return;
+    }
+    
+    data.filter((item) => {
+      if (item.children) {
+        for (const sub of item.children) {
+          if (sub.children) {
+            for (const subSub of sub.children) {
+              if (subSub.children) {
+                for (const subSubSub of subSub.children) {
+                  if (
+                    `${t(
+                      `permissions.${subSubSub?.title}`
+                    ).toLocaleLowerCase()}`.includes(value.toLocaleLowerCase())
+                  ) {
+                    keys.push(subSubSub.key);
+                  }
+                }
+              }
+              if (
+                `${t(
+                  `permissions.${subSub.title}`
+                ).toLocaleLowerCase()}`.includes(value.toLocaleLowerCase())
+              ) {
+                keys.push(subSub.key);
+              }
+            }
+          }
+
+          if (
+            `${t(`permissions.${sub.title}`).toLocaleLowerCase()}`.includes(
+              value.toLocaleLowerCase()
+            )
+          ) {
+            keys.push(sub.key);
+          }
+        }
+      }
+      if (
+        `${t(`permissions.${item.title}`).toLocaleLowerCase()}`.includes(
+          value.toLocaleLowerCase()
+        )
+      ) {
+        keys.push(item.key);
+      }
+    });
+    setExpandedKeys(keys);
+    setSearchValue(value);
+    setAutoExpandParent(true);
+  };
+
+  const onExpand = (newExpandedKeys: React.Key[]) => {
+    setExpandedKeys(newExpandedKeys);
+    setAutoExpandParent(false);
+  };
   return (
     <Drawer
       title={`${t("table.permissions")}: ${group?.name}`}
       onClose={() => setOpen(false)}
       open={open}
     >
-      <Tree treeData={treeData} checkable />
+      {isPermissionMenusDataFetching ? (
+        <div
+          style={{
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Spin size="large" />
+        </div>
+      ) : (
+        <>
+          <Input.Search
+            style={{ marginBottom: 8 }}
+            placeholder="Search"
+            onChange={onChange}
+          />
+          <Tree
+            onExpand={onExpand}
+            expandedKeys={expandedKeys}
+            autoExpandParent={autoExpandParent}
+            treeData={treeData}
+            checkable
+            showLine
+            onCheck={(checkedKeys) => {
+              console.log(checkedKeys);
+            }}
+          />
+        </>
+      )}
     </Drawer>
   );
 };
