@@ -948,7 +948,11 @@
     "INVALID_USER": "Usuário inválido",
     "disabled_entity": "Usuário vinculado a uma entidade disabilitada.",
     "category_exists": "Categoria já cadastrada.",
-    "invalid_user": "Nome de usuário inválido, tente utilizar outro."
+    "invalid_user": "Nome de usuário inválido, tente utilizar outro.",
+    "items_not_found": "Nenhum item encontrado.",
+    "missing_process_handler": "Manipulador de processo não encontrado.",
+    "test": "Teste"
+
   },
   "logs": {
     "login": "Login",
