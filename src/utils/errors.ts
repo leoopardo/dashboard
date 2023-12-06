@@ -5,4 +5,5 @@ export const ErrorList = {
   ["Missing process handler for job type create-entry-account-organizations-report-job"]:
     "missing_process_handler",
   ["BadRequestException: teste"]: "test",
+  ["TOKEN WITHOUT AGGREGATOR_ID"]: "token_without_aggregator_id",
 };

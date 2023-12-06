@@ -951,8 +951,8 @@
     "invalid_user": "Nome de usuário inválido, tente utilizar outro.",
     "items_not_found": "Nenhum item encontrado.",
     "missing_process_handler": "Manipulador de processo não encontrado.",
-    "test": "Teste"
-
+    "test": "Teste",
+    "token_without_aggregator_id": "Necessário estar vinculado a um agregador para realizar a ação"
   },
   "logs": {
     "login": "Login",

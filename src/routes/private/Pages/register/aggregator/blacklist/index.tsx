@@ -13,6 +13,7 @@ import { Grid } from "@mui/material";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
 import { ReasonSelect } from "@src/components/Selects/reasonSelect";
+import { Toast } from "@src/components/Toast";
 import { TuorComponent } from "@src/components/Tuor";
 import { queryClient } from "@src/services/queryClient";
 import { useCreateAggregatorBlacklist } from "@src/services/register/aggregator/blacklist/createAggregatorBlacklist";
@@ -373,6 +374,12 @@ export const AggregatorBlacklist = () => {
           title: t("menus.aggregator_blacklist_blacklist"),
           description: t("wiki.aggregator_blacklist_description"),
         }}
+      />
+      <Toast
+        actionError={t("messages.create")}
+        actionSuccess={t("messages.created")}
+        error={error}
+        success={isSuccess}
       />
     </Grid>
   );
