@@ -54,3 +54,21 @@ export interface PermissionMenuInterface {
   ];
   menu_id_children: PermissionMenuInterface[];
 }
+
+export interface PermissionGroupInterface {
+  id: number;
+  name: string;
+  created_at: string;
+  updated_at: string;
+  description: string;
+  status: number;
+  profile_type: {
+    id: number;
+    name: string;
+  };
+  permissions: {
+    id: number;
+    internal_id: string;
+    permission: string;
+  }[];
+}

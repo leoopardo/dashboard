@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useGetPermissionGroup } from "@src/services/register/permissionGroups/getPermissionGroupById";
 import { useGetPermissionMenus } from "@src/services/register/permissionGroups/getPermissionMenus";
 import { defaultTheme } from "@src/styles/defaultTheme";
 import { Drawer, Input, Spin } from "antd";
@@ -29,6 +30,9 @@ export const PermissionsModal = ({
     isPermissionMenusDataFetching,
     isSuccessPermissionMenusData,
   } = useGetPermissionMenus({ group_id: group?.id });
+
+  const { PermissionGroupData, isPermissionGroupDataFetching } =
+    useGetPermissionGroup(group?.id);
 
   useEffect(() => {
     if (isSuccessPermissionMenusData && PermissionMenusData) {
@@ -194,7 +198,7 @@ export const PermissionsModal = ({
       setAutoExpandParent(true);
       return;
     }
-    
+
     data.filter((item) => {
       if (item.children) {
         for (const sub of item.children) {
@@ -253,7 +257,7 @@ export const PermissionsModal = ({
       onClose={() => setOpen(false)}
       open={open}
     >
-      {isPermissionMenusDataFetching ? (
+      {isPermissionMenusDataFetching || isPermissionGroupDataFetching ? (
         <div
           style={{
             width: "100%",
