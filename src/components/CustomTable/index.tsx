@@ -864,7 +864,7 @@ export const CustomTable = (props: TableProps) => {
                         textAlign: "center",
                         minWidth: 50
                       }}
-                      title={text}
+                      full-text={text}
                     >
                       {text
                         ? text.length > 15 && columns.length >= 5
