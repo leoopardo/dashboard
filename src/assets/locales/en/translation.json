@@ -929,7 +929,8 @@
     "refresh": "Refresh status",
     "edit_merchant": "Edit merchant",
     "check_payments": "Check payments",
-    "resend_webhook": "Resend webhook"
+    "resend_webhook": "Resend webhook",
+    "permissions": "Permissions"
   },
   "error": {
     "400": "Any records found.",

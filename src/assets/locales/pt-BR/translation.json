@@ -939,7 +939,8 @@
     "refresh": "Atualizar status",
     "edit_merchant": "Editar empresa",
     "check_payments": "Checar pagamentos",
-    "resend_webhook": "Reenviar webhook"
+    "resend_webhook": "Reenviar webhook",
+    "permissions": "Permissões"
   },
   "error": {
     "400": "Nenhum dado encontrado.",
