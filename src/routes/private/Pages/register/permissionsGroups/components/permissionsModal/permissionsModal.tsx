@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useCreatePermission } from "@src/services/register/permissionGroups/createPermissions";
 import { useGetPermissionGroup } from "@src/services/register/permissionGroups/getPermissionGroupById";
 import { useGetPermissionMenus } from "@src/services/register/permissionGroups/getPermissionMenus";
 import { defaultTheme } from "@src/styles/defaultTheme";
@@ -23,6 +24,7 @@ export const PermissionsModal = ({
   const [expandedKeys, setExpandedKeys] = useState<React.Key[]>([]);
   const [searchValue, setSearchValue] = useState("");
   const [autoExpandParent, setAutoExpandParent] = useState(true);
+  const [permissionList, setPermissionList] = useState<number[]>([]);
   const [treeData, setTreeData] = useState<DataNode[]>([]);
   const {
     PermissionMenusData,
@@ -33,6 +35,8 @@ export const PermissionsModal = ({
 
   const { PermissionGroupData, isPermissionGroupDataFetching } =
     useGetPermissionGroup(group?.id);
+
+  const { PermissionMutate } = useCreatePermission(group?.id, permissionList);
 
   useEffect(() => {
     if (isSuccessPermissionMenusData && PermissionMenusData) {
@@ -251,6 +255,10 @@ export const PermissionsModal = ({
     setExpandedKeys(newExpandedKeys);
     setAutoExpandParent(false);
   };
+
+  useEffect(() => {
+    PermissionMutate();
+  }, [permissionList]);
   return (
     <Drawer
       title={`${t("table.permissions")}: ${group?.name}`}
@@ -284,7 +292,11 @@ export const PermissionsModal = ({
             checkable
             showLine
             onCheck={(checkedKeys) => {
-              console.log(checkedKeys);
+              setPermissionList(
+                (checkedKeys as any)?.map((key: string) =>
+                  key.split("-").length > 1 ? +key.split("-")[1] : +key
+                )
+              );
             }}
           />
         </>

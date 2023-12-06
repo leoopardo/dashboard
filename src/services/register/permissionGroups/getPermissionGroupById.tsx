@@ -6,9 +6,11 @@ import { useQuery } from "react-query";
 
 export function useGetPermissionGroup(id?: number) {
   const { data, isFetching, error, isSuccess, refetch } = useQuery<
-  PermissionGroupInterface | null | undefined
+    PermissionGroupInterface | null | undefined
   >("PermissionGroupById", async () => {
-    const response = await api.get(`core/permission_group/${id}`);
+    const response = await api.get(`core/permission_group/${id}`, {
+      params: { permissions: true },
+    });
     return response.data;
   });
 
