@@ -94,6 +94,7 @@ export const PartnerSelect = ({
           setQueryFunction((state: any) => ({
             ...state,
             partner_id: undefined,
+            merchant_id: undefined,
             group_id: undefined,
           }));
           return;
@@ -101,6 +102,7 @@ export const PartnerSelect = ({
         setQueryFunction((state: any) => ({
           ...state,
           partner_id: value,
+          merchant_id: undefined,
           group_id: undefined,
         }));
         setValue(
