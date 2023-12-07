@@ -297,7 +297,8 @@
     "responsible": "responsável",
     "help": "Ajuda",
     "confirm_import": "Confirmar importação",
-    "merchant_blacklist_details": "Detalhes de blacklist de empresas"
+    "merchant_blacklist_details": "Detalhes de blacklist de empresas",
+    "create_group": "Criar grupo"
   },
   "modal": {
     "confirm": "Confirmar",
@@ -453,7 +454,8 @@
     "account_document": "Documento da conta",
     "label_name": "Nome do banco",
     "v3_id": "ID V3",
-    "position": "Cargo"
+    "position": "Cargo",
+    "search": "Pesquisar"
   },
   "table": {
     "id": "ID",
