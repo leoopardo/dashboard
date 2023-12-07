@@ -128,7 +128,7 @@ export const PermissionsGroups = () => {
                 justifyContent: "center",
               }}
             >
-              {t("table.create_group")}
+              {t("buttons.create_group")}
             </Button>
           </Col>
         </Row>

@@ -292,7 +292,8 @@
     "responsible": "responsible",
     "help": "Help",
     "confirm_import": "Confirm import",
-    "merchant_blacklist_details": "Merchants blacklist details"
+    "merchant_blacklist_details": "Merchants blacklist details",
+    "create_group": "Create group"
   },
   "input": {
     "required": "Please input the {{field}}",
@@ -416,7 +417,8 @@
     "account_document": "Account document",
     "label_name": "Bank name",
     "v3_id": "ID V3",
-    "position": "Position"
+    "position": "Position",
+    "search": "Search"
   },
   "modal": {
     "confirm": "Confirm",
