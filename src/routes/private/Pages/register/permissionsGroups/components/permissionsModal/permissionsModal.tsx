@@ -1,3 +1,4 @@
+/* eslint-disable no-unsafe-optional-chaining */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useCreatePermission } from "@src/services/register/permissionGroups/createPermissions";
@@ -26,9 +27,9 @@ export const PermissionsModal = ({
   const [autoExpandParent, setAutoExpandParent] = useState(true);
   const [permissionList, setPermissionList] = useState<number[]>([]);
   const [treeData, setTreeData] = useState<DataNode[]>([]);
+  const [checked, setChecked] = useState<any[]>([]);
   const {
     PermissionMenusData,
-    PermissionMenusDataError,
     isPermissionMenusDataFetching,
     isSuccessPermissionMenusData,
   } = useGetPermissionMenus({ group_id: group?.id });
@@ -44,7 +45,7 @@ export const PermissionsModal = ({
         PermissionMenusData?.map((item) => {
           return {
             title: t(`permissions.${item?.name}`),
-            key: `${item?.name}-${item.id.toString()}`,
+            key: `${item?.name}-${item.id.toString()}_menu`,
             style: {
               color:
                 searchValue &&
@@ -60,9 +61,7 @@ export const PermissionsModal = ({
                   title: t(
                     `permissions.${subPermission?.permission_type?.name}`
                   ),
-                  key: `${
-                    subPermission?.permission_type?.name
-                  }-${subPermission.id.toString()}`,
+                  key: `${subPermission.id.toString()}`,
                   style: {
                     color:
                       searchValue &&
@@ -77,7 +76,7 @@ export const PermissionsModal = ({
               ...item.menu_id_children.map((permission) => {
                 return {
                   title: t(`permissions.${permission?.name}`),
-                  key: `${permission?.name}-${permission.id.toString()}`,
+                  key: `${permission?.name}-${permission.id.toString()}_menu`,
                   style: {
                     color:
                       searchValue &&
@@ -91,9 +90,7 @@ export const PermissionsModal = ({
                     ...permission.permissions.map((sub) => {
                       return {
                         title: t(`permissions.${sub?.permission_type?.name}`),
-                        key: `${
-                          sub?.permission_type?.name
-                        }-${sub.id.toString()}`,
+                        key: `${sub.id.toString()}`,
                         style: {
                           color:
                             searchValue &&
@@ -108,7 +105,7 @@ export const PermissionsModal = ({
                     ...permission.menu_id_children.map((sub) => {
                       return {
                         title: t(`permissions.${sub?.name}`),
-                        key: sub.id.toString(),
+                        key: `${sub?.name}-${sub.id.toString()}_menu`,
                         style: {
                           color:
                             searchValue &&
@@ -124,9 +121,7 @@ export const PermissionsModal = ({
                               title: t(
                                 `permissions.${sub3?.permission_type.name}`
                               ),
-                              key: `${
-                                sub3?.permission_type?.name
-                              }-${sub3.id.toString()}`,
+                              key: `${sub3.id.toString()}`,
                               style: {
                                 color:
                                   searchValue &&
@@ -143,7 +138,7 @@ export const PermissionsModal = ({
                           ...sub.menu_id_children.map((sub3) => {
                             return {
                               title: t(`permissions.${sub3?.name}`),
-                              key: `${sub3?.name}-${sub3.id.toString()}`,
+                              key: `${sub3?.name}-${sub3.id.toString()}_menu`,
                               style: {
                                 color:
                                   searchValue &&
@@ -159,9 +154,7 @@ export const PermissionsModal = ({
                                     title: t(
                                       `permissions.${sub4?.permission_type.name}`
                                     ),
-                                    key: `${
-                                      sub4?.permission_type?.name
-                                    }-${sub4.id.toString()}`,
+                                    key: `${sub4.id.toString()}`,
                                     style: {
                                       color:
                                         searchValue &&
@@ -257,8 +250,15 @@ export const PermissionsModal = ({
   };
 
   useEffect(() => {
-    PermissionMutate();
+    if (permissionList.length >= 1) PermissionMutate();
   }, [permissionList]);
+
+  useEffect(() => {
+    if (PermissionGroupData) {
+      setChecked(PermissionGroupData?.permissions.map((p) => `${p?.id}`));
+    }
+  }, [PermissionGroupData]);
+
   return (
     <Drawer
       title={`${t("table.permissions")}: ${group?.name}`}
@@ -279,10 +279,11 @@ export const PermissionsModal = ({
         </div>
       ) : (
         <>
-          <Input.Search
-            style={{ marginBottom: 8 }}
-            placeholder="Search"
+          <Input
+            style={{ marginBottom: 24 }}
+            placeholder={`${t("input.search")}`}
             onChange={onChange}
+            size="large"
           />
           <Tree
             onExpand={onExpand}
@@ -291,11 +292,25 @@ export const PermissionsModal = ({
             treeData={treeData}
             checkable
             showLine
+            defaultCheckedKeys={PermissionGroupData?.permissions.map(
+              (p) => `${p?.id}`
+            )}
+            checkedKeys={checked}
             onCheck={(checkedKeys) => {
+              setChecked((state) => [
+                ...state,
+                ...(checkedKeys as any)
+                  ?.filter((p: string) => !p.includes("_menu"))
+                  ?.map((key: string) =>
+                    key.split("-").length > 1 ? key.split("-")[1] : key
+                  ),
+              ]);
               setPermissionList(
-                (checkedKeys as any)?.map((key: string) =>
-                  key.split("-").length > 1 ? +key.split("-")[1] : +key
-                )
+                (checkedKeys as any)
+                  ?.filter((p: string) => !p.includes("_menu"))
+                  ?.map((key: string) =>
+                    key.split("-").length > 1 ? +key.split("-")[1] : +key
+                  )
               );
             }}
           />
