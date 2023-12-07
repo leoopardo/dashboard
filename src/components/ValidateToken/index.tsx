@@ -150,9 +150,10 @@ export const ValidateToken = ({
   }, [success, error, ValidatePhoneSuccess, ValidatePhoneError]);
 
   useEffect(() => {
-    if (tokenState.length === 6) {
-      submit();
+    if (tokenState.length < 6) {
+      return;
     }
+    submit();
   }, [tokenState]);
 
   return Self?.phone_validated ? (

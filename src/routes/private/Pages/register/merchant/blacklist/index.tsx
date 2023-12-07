@@ -41,6 +41,7 @@ export const MerchantBlacklist = () => {
   const { permissions, type, merchant_id } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
+
   const [query, setQuery] = useState<MerchantBlacklistQuery>(INITIAL_QUERY);
   const { t } = useTranslation();
   const {
@@ -61,8 +62,10 @@ export const MerchantBlacklist = () => {
   const [currentItem, setCurrentItem] = useState<MerchantBlacklistItem | null>(
     null
   );
-  const { error, isLoading, isSuccess, mutate } =
-    useCreateMerchantBlacklist(body);
+  const { error, isLoading, isSuccess, mutate } = useCreateMerchantBlacklist({
+    ...body,
+    merchant_id: merchant_id || body?.merchant_id,
+  });
   const [search, setSearch] = useState<string>("");
   const debounceSearch = useDebounce(search);
   const {

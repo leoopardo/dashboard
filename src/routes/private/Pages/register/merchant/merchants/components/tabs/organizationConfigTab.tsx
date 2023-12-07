@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { CopyOutlined, ReloadOutlined } from "@ant-design/icons";
 import { Toast } from "@components/Toast";
 import { Grid } from "@mui/material";
 import { useOrganizationConfig } from "@src/services/register/merchant/merchant/organizationConfig.tsx/getMerchantConfig";
@@ -24,6 +25,7 @@ import {
 import Checkbox, { CheckboxChangeEvent } from "antd/es/checkbox";
 import { useEffect, useRef, useState } from "react";
 import { CurrencyInput } from "react-currency-mask";
+import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 
 export const OrganizationConfigTab = (props: { id?: string }) => {
@@ -117,6 +119,19 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
       status: organizationConfigData?.status,
     });
   }, [organizationConfigData]);
+
+  const generateHandomString = () => {
+    let randomString = "";
+    const characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%-+=/?&*";
+    const charactersLength = characters.length;
+    for (let i = 0; i < 25; i++) {
+      randomString += characters.charAt(
+        Math.floor(Math.random() * charactersLength)
+      );
+    }
+    return randomString;
+  };
 
   return (
     <>
@@ -489,6 +504,45 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
                 />
               </Form.Item>
             </Col>
+            <Col xs={{ span: 24 }} md={{ span: 6 }}>
+              <Form.Item label={t("table.merchant_hash")}>
+                <Input
+                  size="large"
+                  name="merchant_hash"
+                  value={bodyUpdate?.merchant_hash}
+                  onChange={(e) => {
+                    setBodyUpdate((state) => ({
+                      ...state,
+                      merchant_hash: e.target.value,
+                    }));
+                  }}
+                  addonBefore={
+                    <Button
+                      type="ghost"
+                      icon={<ReloadOutlined />}
+                      onClick={() =>
+                        setBodyUpdate((state) => ({
+                          ...state,
+                          merchant_hash: generateHandomString(),
+                        }))
+                      }
+                    />
+                  }
+                  addonAfter={
+                    <Button
+                      type="ghost"
+                      icon={<CopyOutlined />}
+                      onClick={() => {
+                        navigator.clipboard.writeText(
+                          bodyUpdate?.merchant_hash || ""
+                        );
+                        toast.success(t("table.copied"));
+                      }}
+                    />
+                  }
+                />
+              </Form.Item>
+            </Col>
             <Col xs={{ span: 24 }} md={{ span: 7 }}>
               <Form.Item
                 label={t("input.fastpix_in_min_value")}
@@ -511,6 +565,7 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
                 />
               </Form.Item>
             </Col>
+
             <Col xs={{ span: 24 }} md={{ span: 7 }}>
               <Form.Item
                 label={t("input.fastpix_in_max_value")}

@@ -123,7 +123,7 @@ export const BankMaintenence = () => {
               { name: "bank_fee", type: "text", key: refBankFee },
               { name: "cash_in", type: "boolean", key: refCashIn },
               { name: "cash_out", type: "boolean", key: refCashOut },
-              { name: "fastpix_in", type: "boolean", key: refCashOut },
+              { name: "fastpix_in", type: "boolean",  },
               {
                 name: "created_at",
                 type: "date",
@@ -146,7 +146,7 @@ export const BankMaintenence = () => {
                 : undefined
             }
             loading={isBankMainteneceDataFetching}
-            label={["label_name", "cash_in", "cash_out"]}
+            label={["label_name", "cash_in", "cash_out", ]}
           />
         </Grid>
       </Grid>

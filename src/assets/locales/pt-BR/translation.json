@@ -17,7 +17,7 @@
     "merchant": "Empresa",
     "merchants": "Empresas",
     "merchant_users": "Usuários empresa",
-    "merchant_blacklist": "Blacklist Empresas",
+    "merchant_blacklist": "Blacklist",
     "merchant_reports": "Relatórios",
     "person": "Pessoas",
     "persons": "Pessoas",
@@ -916,7 +916,8 @@
     "aggregator_id_filter": "Filtro: ID do agregador",
     "deposit": "Depósito",
     "bank_acc_number": "Conta corrente",
-    "pixtype": "Tipo de pix"
+    "pixtype": "Tipo de pix",
+    "merchant_hash": "Hash da empresa"
   },
   "actions": {
     "details": "Detalhes",
@@ -947,7 +948,11 @@
     "INVALID_USER": "Usuário inválido",
     "disabled_entity": "Usuário vinculado a uma entidade disabilitada.",
     "category_exists": "Categoria já cadastrada.",
-    "invalid_user": "Nome de usuário inválido, tente utilizar outro."
+    "invalid_user": "Nome de usuário inválido, tente utilizar outro.",
+    "items_not_found": "Nenhum item encontrado.",
+    "missing_process_handler": "Manipulador de processo não encontrado.",
+    "test": "Teste",
+    "token_without_aggregator_id": "Necessário estar vinculado a um agregador para realizar a ação"
   },
   "logs": {
     "login": "Login",

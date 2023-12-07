@@ -22,6 +22,7 @@ import {
   Tooltip,
   Typography,
 } from "antd";
+import { ErrorList } from "@src/utils/errors";
 import { formatCPF } from "@src/utils/functions";
 import type { ColumnsType, TableProps as TablePropsAntD } from "antd/es/table";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
@@ -863,6 +864,7 @@ export const CustomTable = (props: TableProps) => {
                         textAlign: "center",
                         minWidth: 50
                       }}
+                      full-text={text}
                     >
                       {text
                         ? text.length > 15 && columns.length >= 5
@@ -1036,7 +1038,11 @@ export const CustomTable = (props: TableProps) => {
                   </Grid>
                   {record?.error_message && (
                     <Grid item xs={1}>
-                      <Tooltip title={record?.error_message}>
+                      <Tooltip title={
+                        (ErrorList as any)[record?.error_message]
+                        ? t(`error.${(ErrorList as any)[record?.error_message]}`)
+                        : record?.error_message
+                        }>
                         <InfoCircleTwoTone
                           twoToneColor={defaultTheme.colors.error}
                           style={{ marginBottom: "8px" }}

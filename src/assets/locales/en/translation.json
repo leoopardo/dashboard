@@ -908,7 +908,8 @@
     "aggregator_id_filter": "Filter: Aggregator ID",
     "deposit": "Deposit",
     "bank_acc_number": "Bank account number",
-    "pixtype": "PIX type"
+    "pixtype": "PIX type",
+    "merchant_hash": "Merchant hash"
   },
   "actions": {
     "details": "Details",
@@ -937,7 +938,11 @@
     "undefined": "Temporary service interruption. If the issue persists after reloading the page, please contact support.",
     "INVALID_USER": "Invalid username",
     "category_exists": "Category already exists",
-    "invalid_user": "Invalid username, please try another one."
+    "invalid_user": "Invalid username, please try another one.",
+    "items_not_found": "No items found",
+    "missing_process_handler": "Missing process handler",
+    "test": "Test",
+    "token_without_aggregator_id": "It is necessary to be linked to an aggregator to perform the action."
   },
   "logs": {
     "login": "Login",
