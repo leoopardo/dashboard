@@ -6,4 +6,5 @@ export const ErrorList = {
     "missing_process_handler",
   ["BadRequestException: teste"]: "test",
   ["TOKEN WITHOUT AGGREGATOR_ID"]: "token_without_aggregator_id",
+  ["CAN ONLY BE DELETED BY ORGANIZATION"]: "can_only_be_deleted_by_organization",
 };

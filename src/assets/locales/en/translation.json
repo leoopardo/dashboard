@@ -942,7 +942,8 @@
     "items_not_found": "No items found",
     "missing_process_handler": "Missing process handler",
     "test": "Test",
-    "token_without_aggregator_id": "It is necessary to be linked to an aggregator to perform the action."
+    "token_without_aggregator_id": "It is necessary to be linked to an aggregator to perform the action.",
+    "can_only_be_deleted_by_organization": "Can only be deleted by organizations."
   },
   "logs": {
     "login": "Login",

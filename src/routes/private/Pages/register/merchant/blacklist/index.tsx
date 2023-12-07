@@ -56,7 +56,7 @@ export const MerchantBlacklist = () => {
   const [body, setBody] = useState<MerchantBlacklistItem | null>({
     cpf: "",
     description: "",
-    can_be_deleted_only_by_organization: true,
+    can_be_deleted_only_by_organization: merchant_id ? false : true,
   });
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [currentItem, setCurrentItem] = useState<MerchantBlacklistItem | null>(
@@ -75,7 +75,7 @@ export const MerchantBlacklist = () => {
     MerchantBlacklistReportsMutate,
   } = useCreateMerchantBlacklistReports(query);
 
-  const { isDeleteLoading, mutateDelete } = useDeleteMechantBlacklist({
+  const { isDeleteLoading, mutateDelete, DeleteError, isDeleteSuccess } = useDeleteMechantBlacklist({
     cpf: currentItem?.cpf,
   });
 
@@ -93,7 +93,7 @@ export const MerchantBlacklist = () => {
       setBody({
         cpf: "",
         description: "",
-        can_be_deleted_only_by_organization: true,
+        can_be_deleted_only_by_organization: merchant_id ? false : true,
       });
     }
   }, [isUpdateModalOpen]);
@@ -321,6 +321,12 @@ export const MerchantBlacklist = () => {
         actionSuccess={t("messages.created")}
         error={error}
         success={isSuccess}
+      />
+      <Toast
+        actionError={t("messages.delete")}
+        actionSuccess={t("messages.deleted")}
+        error={DeleteError}
+        success={isDeleteSuccess}
       />
     </Grid>
   );
