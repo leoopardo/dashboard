@@ -158,9 +158,9 @@ export const ViewModal = ({
                     }}
                   >
                     {`${new Date(
-                      sortItems[key]
+                      new Date(sortItems[key]).toDateString()
                     ).toLocaleDateString()} ${new Date(
-                      sortItems[key]
+                      new Date(sortItems[key]).toDateString()
                     ).toLocaleTimeString()}`}
                   </Descriptions.Item>
                 );
