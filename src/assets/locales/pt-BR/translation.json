@@ -940,7 +940,8 @@
     "profile_name": "Tipo de entidade",
     "linked_user_total": "Usuários atribuídos",
     "profile_id": "Tipo de entidade",
-    "permissions": "Permissões"
+    "permissions": "Permissões",
+    "profiles": "Tipos de entidade"
   },
   "actions": {
     "details": "Detalhes",
