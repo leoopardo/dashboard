@@ -118,18 +118,6 @@ export const SidebarNavigation = () => {
       "register",
       <FolderAddOutlined style={{ fontSize: "23px" }} />,
       [
-        getItem(
-          "permissions_groups",
-          null,
-          null,
-          false,
-          (e) => handleNavigate(e?.keyPath),
-          {
-            display: permissions?.register?.paybrokers?.users?.menu
-              ? undefined
-              : "none",
-          }
-        ),
         // - CADASTROS DE ORGANIZAÇÃO
         getItem(
           "organization",
