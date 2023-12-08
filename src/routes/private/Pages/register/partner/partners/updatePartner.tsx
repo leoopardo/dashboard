@@ -64,11 +64,33 @@ export const UpdatePartner = () => {
   ) as ValidateInterface;
   const { t } = useTranslation();
   const location = useLocation();
-  // eslint-disable-next-line prefer-const
-  const tabindex0 = document.querySelector('#rc-tabs-1-tab-1');
-  const tabindex1 = document.querySelector('#rc-tabs-1-tab-2');
-  const tabindex2 = document.querySelector('#rc-tabs-1-tab-3');
- 
+  const tabindex0 = document.querySelector('[data-node-key="1"]');
+  const tabindex1 = document.querySelector('[data-node-key="2"]');
+  const tabindex2 = document.querySelector('[data-node-key="3"]');
+
+  if (tabindex0) {
+    const firstChildDiv = tabindex0.querySelector("div");
+
+    if (firstChildDiv) {
+      firstChildDiv?.setAttribute("id", "tab-partner-data");
+    }
+  }
+
+  if (tabindex1) {
+    const firstChildDiv1 = tabindex1.querySelector("div");
+
+    if (firstChildDiv1) {
+      firstChildDiv1?.setAttribute("id", "tab-responsibles");
+    }
+  }
+
+  if (tabindex2) {
+    const firstChildDiv2 = tabindex2.querySelector("div");
+
+    if (firstChildDiv2) {
+      firstChildDiv2?.setAttribute("id", "tab-attachments");
+    }
+  }
 
   const [partnerBody, setPartnerBody] = useState<PartnerItem>({
     partner_id: location?.state?.id,
@@ -197,14 +219,7 @@ export const UpdatePartner = () => {
     }
   }, [deleteFileId]);
 
-
-  useEffect(() => {
-    tabindex0?.setAttribute("id", "tab-partner-data");
-    tabindex1?.setAttribute("id", "tab-partner-responsibles");
-    tabindex2?.setAttribute("id", "tab-partner-attachments");
-  }, []);
-
-  const items: TabsProps['items']= [
+  const items: TabsProps["items"] = [
     {
       key: "1",
       label: t("table.partner_data"),
