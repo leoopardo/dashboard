@@ -62,6 +62,7 @@ export interface ColumnInterface {
 export interface actionsInterface {
   label?: string;
   icon?: any;
+  id?: string;
   onClick?: (item?: any) => void;
   disabled?: (item?: any) => boolean;
 }
@@ -113,6 +114,7 @@ export const CustomTable = (props: TableProps) => {
       for (const action of props.actions) {
         if (action)
           act.push({
+            id: action?.id,
             key: action?.label,
             label: t(`actions.${action?.label}`),
             icon: action?.icon,
