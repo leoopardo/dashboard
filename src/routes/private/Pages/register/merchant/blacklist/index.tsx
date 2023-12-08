@@ -41,6 +41,7 @@ export const MerchantBlacklist = () => {
   const { permissions, type, merchant_id } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
+
   const [query, setQuery] = useState<MerchantBlacklistQuery>(INITIAL_QUERY);
   const { t } = useTranslation();
   const {
@@ -55,14 +56,16 @@ export const MerchantBlacklist = () => {
   const [body, setBody] = useState<MerchantBlacklistItem | null>({
     cpf: "",
     description: "",
-    can_be_deleted_only_by_organization: true,
+    can_be_deleted_only_by_organization: merchant_id ? false : true,
   });
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [currentItem, setCurrentItem] = useState<MerchantBlacklistItem | null>(
     null
   );
-  const { error, isLoading, isSuccess, mutate } =
-    useCreateMerchantBlacklist(body);
+  const { error, isLoading, isSuccess, mutate } = useCreateMerchantBlacklist({
+    ...body,
+    merchant_id: merchant_id || body?.merchant_id,
+  });
   const [search, setSearch] = useState<string>("");
   const debounceSearch = useDebounce(search);
   const {
@@ -72,7 +75,7 @@ export const MerchantBlacklist = () => {
     MerchantBlacklistReportsMutate,
   } = useCreateMerchantBlacklistReports(query);
 
-  const { isDeleteLoading, mutateDelete } = useDeleteMechantBlacklist({
+  const { isDeleteLoading, mutateDelete, DeleteError, isDeleteSuccess } = useDeleteMechantBlacklist({
     cpf: currentItem?.cpf,
   });
 
@@ -90,7 +93,7 @@ export const MerchantBlacklist = () => {
       setBody({
         cpf: "",
         description: "",
-        can_be_deleted_only_by_organization: true,
+        can_be_deleted_only_by_organization: merchant_id ? false : true,
       });
     }
   }, [isUpdateModalOpen]);
@@ -318,6 +321,12 @@ export const MerchantBlacklist = () => {
         actionSuccess={t("messages.created")}
         error={error}
         success={isSuccess}
+      />
+      <Toast
+        actionError={t("messages.delete")}
+        actionSuccess={t("messages.deleted")}
+        error={DeleteError}
+        success={isDeleteSuccess}
       />
     </Grid>
   );

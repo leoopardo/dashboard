@@ -271,7 +271,7 @@ export const OrganizationTransfersBetweenAccounts = () => {
           setBody={setBody}
           selectOptions={{
             from:
-              user?.type === 1
+              user?.type === 1 || user?.type === 2
                 ? [
                     {
                       label: "balance_reserved",

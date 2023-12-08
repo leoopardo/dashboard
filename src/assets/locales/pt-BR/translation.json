@@ -17,7 +17,7 @@
     "merchant": "Empresa",
     "merchants": "Empresas",
     "merchant_users": "Usuários empresa",
-    "merchant_blacklist": "Blacklist Empresas",
+    "merchant_blacklist": "Blacklist",
     "merchant_reports": "Relatórios",
     "person": "Pessoas",
     "persons": "Pessoas",
@@ -952,8 +952,9 @@
     "invalid_user": "Nome de usuário inválido, tente utilizar outro.",
     "items_not_found": "Nenhum item encontrado.",
     "missing_process_handler": "Manipulador de processo não encontrado.",
-    "test": "Teste"
-
+    "test": "Teste",
+    "token_without_aggregator_id": "Necessário estar vinculado a um agregador para realizar a ação",
+    "can_only_be_deleted_by_organization": "Pode ser removido apenas por organizações."
   },
   "logs": {
     "login": "Login",
