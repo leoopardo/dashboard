@@ -203,7 +203,9 @@ export const CustomTable = (props: TableProps) => {
                         toast.success(t("table.copied"));
                       }}
                     >
-                      <CopyOutlined style={{color: defaultTheme.colors.info}}/>
+                      <CopyOutlined
+                        style={{ color: defaultTheme.colors.info }}
+                      />
                     </Button>
                   </Tooltip>
                 </div>
@@ -259,16 +261,8 @@ export const CustomTable = (props: TableProps) => {
                   }}
                 >
                   <Typography.Text copyable>
-                     {text ? (
-                        <>
-                          {formatCPF(text)} 
-                        </>
-                      ) : (
-                        "-"
-                      )}
+                    {text ? <>{formatCPF(text)}</> : "-"}
                   </Typography.Text>
-                    
-                     
                 </div>
               ),
               sorter: column.sort
@@ -318,8 +312,10 @@ export const CustomTable = (props: TableProps) => {
                   <Typography
                     key={column?.name}
                     style={{ width: "100%", textAlign: "center", minWidth: 50 }}
-                  >{`${new Date(text).toLocaleDateString()} ${new Date(
-                    text
+                  >{`${new Date(
+                    new Date(text).toDateString()
+                  ).toLocaleDateString()} ${new Date(
+                    new Date(text).toDateString()
                   ).toLocaleTimeString()}`}</Typography>
                 ) : (
                   <Typography
@@ -432,10 +428,16 @@ export const CustomTable = (props: TableProps) => {
                         style={{ color: defaultTheme.colors.info }}
                       />
                     ),
-                    text
+                    text,
                   }}
                   key={column?.name}
-                  style={{ width: "100%", textAlign: "center", minWidth: 50, display: "flex", justifyContent: "center" }}
+                  style={{
+                    width: "100%",
+                    textAlign: "center",
+                    minWidth: 50,
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
                 >
                   {`${text}`?.replace(
                     /(\d{3})(\d{3})(\d{3})(\d{2})/,
@@ -862,7 +864,7 @@ export const CustomTable = (props: TableProps) => {
                       style={{
                         width: "100%",
                         textAlign: "center",
-                        minWidth: 50
+                        minWidth: 50,
                       }}
                       full-text={text}
                     >
@@ -880,6 +882,7 @@ export const CustomTable = (props: TableProps) => {
                       textAlign: "center",
                       minWidth: 50,
                     }}
+                    full-text={text}
                   >
                     {text ?? "-"}
                   </Typography>
@@ -1038,11 +1041,17 @@ export const CustomTable = (props: TableProps) => {
                   </Grid>
                   {record?.error_message && (
                     <Grid item xs={1}>
-                      <Tooltip title={
-                        (ErrorList as any)[record?.error_message]
-                        ? t(`error.${(ErrorList as any)[record?.error_message]}`)
-                        : record?.error_message
-                        }>
+                      <Tooltip
+                        title={
+                          (ErrorList as any)[record?.error_message]
+                            ? t(
+                                `error.${
+                                  (ErrorList as any)[record?.error_message]
+                                }`
+                              )
+                            : record?.error_message
+                        }
+                      >
                         <InfoCircleTwoTone
                           twoToneColor={defaultTheme.colors.error}
                           style={{ marginBottom: "8px" }}

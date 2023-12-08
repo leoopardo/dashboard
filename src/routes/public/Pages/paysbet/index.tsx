@@ -6,6 +6,8 @@ import {
   DownOutlined,
   HomeOutlined,
   LogoutOutlined,
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import banner3 from "@assets/bet-banner.jpg";
@@ -33,7 +35,6 @@ import {
   Space,
   Spin,
   Typography,
-  theme,
 } from "antd";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -44,12 +45,9 @@ import { GameCard } from "./components/gameCards";
 import { LoginModal } from "./components/login";
 import "./styles.css";
 
-const { Header, Sider } = Layout;
+const { Header } = Layout;
 
 export const Paysbet = () => {
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
   const isTablet = useMediaQuery({ maxWidth: "1150px" });
   const isMobile = useMediaQuery({ maxWidth: "750px" });
   window.document.title = "PAY'SBET";
@@ -66,6 +64,7 @@ export const Paysbet = () => {
     QrCodeReserveData,
   } = useCreateQrCodeReserve(type);
   const [open, setOpen] = useState<boolean>(false);
+  const [collapsed, setCollapsed] = useState<boolean>(isMobile ? true : false);
 
   const changeLanguage = (language: string) => {
     i18n.changeLanguage(language);
@@ -285,7 +284,8 @@ export const Paysbet = () => {
   useEffect(() => {
     if (QrCodeReserveData?.token)
       window.open(
-        `https://fastpix.hmg.paybrokers.com.br/${QrCodeReserveData?.token}`
+        `https://fastpix.hmg.paybrokers.com.br/${QrCodeReserveData?.token}`,
+        "_self"
       );
   }, [QrCodeReserveIsSuccess]);
 
@@ -295,6 +295,10 @@ export const Paysbet = () => {
       setType(undefined);
     }
   }, [type]);
+
+  const toggleCollapsed = () => {
+    setCollapsed(!collapsed);
+  };
 
   return (
     <Layout>
@@ -309,34 +313,83 @@ export const Paysbet = () => {
         }}
       >
         <Row style={{ width: "100%" }}>
-          <Col span={4}>
-            <img src={logo} style={{ marginTop: 24 }} />
+          <Col span={4} style={{ display: "flex", alignItems: "center" }}>
+            <img src={logo} />
+            <Button
+              type="primary"
+              onClick={toggleCollapsed}
+              style={{ marginLeft: 16 }}
+            >
+              {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+            </Button>
           </Col>
         </Row>
-        <Col span={16} style={{ display: "flex", justifyContent: "flex-end" }}>
-          {isValidateFetching ? (
-            <Spin />
-          ) : (
-            <Menu
-              theme="light"
-              mode="horizontal"
-              defaultSelectedKeys={["2"]}
-              items={items1}
-              style={{ display: "flex", alignItems: "center" }}
-            />
-          )}
-        </Col>
+        {!isMobile ? (
+          <Col
+            span={16}
+            style={{ display: "flex", justifyContent: "flex-end" }}
+          >
+            {isValidateFetching ? (
+              <Spin />
+            ) : (
+              <Menu
+                theme="light"
+                mode="horizontal"
+                defaultSelectedKeys={["2"]}
+                items={items1}
+                style={{ display: "flex", alignItems: "center" }}
+              />
+            )}
+          </Col>
+        ) : (
+          <Dropdown menu={{ items: items1 }}>
+            <Space style={{ cursor: "pointer" }}>
+              {!responseValidate ? (
+                "Menu"
+              ) : (
+                <Avatar
+                  style={{
+                    backgroundColor: defaultTheme.colors.primary,
+                    color: "#fff",
+                  }}
+                  size="large"
+                >
+                  {responseValidate?.name[0]?.toLocaleUpperCase()}
+                </Avatar>
+              )}
+              <DownOutlined />
+            </Space>
+          </Dropdown>
+        )}
       </Header>
-      <Layout style={{ minHeight: "93dvh" }}>
-        <Sider width={200} style={{ background: colorBgContainer }}>
+
+      <Layout
+        style={{
+          minHeight: "93dvh",
+          display: "flex",
+          flexDirection: "row",
+        }}
+      >
+        <div
+          style={{
+            width: isMobile ? "100vw" : collapsed ? "5vw" : "15vw",
+            position: isMobile ? "absolute" : "inherit",
+            zIndex: 99,
+            display: isMobile ? (collapsed ? "none" : "block") : "block",
+            height: "100vh",
+          }}
+        >
           <Menu
             mode="inline"
             defaultSelectedKeys={["1"]}
             defaultOpenKeys={["sub1"]}
             items={items2}
+            inlineCollapsed={collapsed}
+            style={{ height: "100%" }}
           />
-        </Sider>
-        <Layout style={{ padding: "0 16px 16px" }}>
+        </div>
+
+        <Layout style={{ padding: "0 16px 16px", width: "70vw" }}>
           {location.pathname === "/paysbet" ? (
             <Row style={{ padding: 20, margin: 0, minHeight: "70dvh" }}>
               <Col span={24}>
@@ -375,7 +428,7 @@ export const Paysbet = () => {
                               level={1}
                               style={{
                                 color: "#fff",
-                                fontSize: 60,
+                                fontSize: isMobile ? 40 : 60,
                               }}
                             >
                               FastPix (Fixo)
@@ -460,7 +513,7 @@ export const Paysbet = () => {
                               level={1}
                               style={{
                                 color: "#fff",
-                                fontSize: 60,
+                                fontSize: isMobile ? 40 : 60,
                               }}
                             >
                               FastPix (Livre)
@@ -550,410 +603,7 @@ export const Paysbet = () => {
                 </Carousel>
               </Col>
               <Divider orientation="left">{t("paysbet.popular_games")}</Divider>
-              {/* <Row gutter={16} justify="space-between">
-                <Col span={8}>
-                  <Row
-                    style={{
-                      background: "white",
-                      padding: 10,
-                      borderRadius: 10,
-                      position: "relative",
-                      minHeight: "200px",
-                      maxWidth: "400px",
-                    }}
-                  >
-                    <img
-                      className="img2"
-                      width={"100%"}
-                      height={121}
-                      src="https://static.significados.com.br/foto/argentina.jpg"
-                    />
-                    <img
-                      className="img"
-                      width={"100%"}
-                      height={121}
-                      src="https://www.gov.br/planalto/pt-br/conheca-a-presidencia/acervo/simbolos-nacionais/bandeira/bandeira-nacional-brasil.jpg/@@images/image"
-                    />
 
-                    <Col
-                      style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        background: "white",
-                        borderRadius: "17px",
-                        marginTop: "125px",
-                        gap: 5,
-                      }}
-                      span={24}
-                    >
-                      <Space
-                        direction="vertical"
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          background: "white",
-                          boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
-                          borderRadius: "11px",
-                          width: "93px",
-                          minHeight: "43px",
-                          padding: "5px",
-                          gap: 0,
-                        }}
-                      >
-                        <Typography
-                          style={{
-                            fontSize: "16px",
-                            fontWeight: 800,
-                            color: "#3FBCBC",
-                            lineHeight: "22px",
-                          }}
-                        >
-                          3.45
-                        </Typography>
-
-                        <Typography
-                          style={{ lineHeight: "22px", fontSize: "16px" }}
-                        >
-                          Brasil
-                        </Typography>
-                      </Space>
-
-                      <Space
-                        direction="vertical"
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          background: "white",
-                          boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
-                          borderRadius: "11px",
-                          width: "93px",
-                          minHeight: "43px",
-                          padding: "5px",
-                          gap: 0,
-                        }}
-                      >
-                        <Typography
-                          style={{
-                            fontSize: "16px",
-                            fontWeight: 800,
-                            color: "#3FBCBC",
-                            lineHeight: "22px",
-                          }}
-                        >
-                          2.32
-                        </Typography>
-
-                        <Typography
-                          style={{ lineHeight: "22px", fontSize: "16px" }}
-                        >
-                          {t("paysbet.tie")}
-                        </Typography>
-                      </Space>
-
-                      <Space
-                        direction="vertical"
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          background: "white",
-                          boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
-                          borderRadius: "11px",
-                          width: "93px",
-                          minHeight: "43px",
-                          padding: "5px",
-                          gap: 0,
-                        }}
-                      >
-                        <Typography
-                          style={{
-                            fontSize: "16px",
-                            fontWeight: 800,
-                            color: "#3FBCBC",
-                            lineHeight: "22px",
-                          }}
-                        >
-                          1.47
-                        </Typography>
-
-                        <Typography
-                          style={{ lineHeight: "22px", fontSize: "16px" }}
-                        >
-                          Argentina
-                        </Typography>
-                      </Space>
-                    </Col>
-                  </Row>
-                </Col>
-
-                <Col span={8}>
-                  <Row
-                    style={{
-                      background: "white",
-                      padding: 10,
-                      borderRadius: 10,
-                      position: "relative",
-                      minHeight: "200px",
-                      maxWidth: "400px",
-                    }}
-                  >
-                    <img
-                      className="img2"
-                      width={"100%"}
-                      height={121}
-                      src="https://upload.wikimedia.org/wikipedia/commons/e/ec/Flag_of_Paraguay_%281990%E2%80%932013%29.svg"
-                    />
-                    <img
-                      className="img"
-                      width={"100%"}
-                      height={121}
-                      src="https://upload.wikimedia.org/wikipedia/commons/2/21/Flag_of_Colombia.svg"
-                    />
-
-                    <Col
-                      style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        background: "white",
-                        borderRadius: "17px",
-                        marginTop: "125px",
-                        gap: 5,
-                      }}
-                      span={24}
-                    >
-                      <Space
-                        direction="vertical"
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          background: "white",
-                          boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
-                          borderRadius: "11px",
-                          width: "93px",
-                          minHeight: "43px",
-                          padding: "5px",
-                          gap: 0,
-                        }}
-                      >
-                        <Typography
-                          style={{
-                            fontSize: "16px",
-                            fontWeight: 800,
-                            color: "#3FBCBC",
-                            lineHeight: "22px",
-                          }}
-                        >
-                          3.45
-                        </Typography>
-
-                        <Typography
-                          style={{ lineHeight: "22px", fontSize: "16px" }}
-                        >
-                          Brasil
-                        </Typography>
-                      </Space>
-
-                      <Space
-                        direction="vertical"
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          background: "white",
-                          boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
-                          borderRadius: "11px",
-                          width: "93px",
-                          minHeight: "43px",
-                          padding: "5px",
-                          gap: 0,
-                        }}
-                      >
-                        <Typography
-                          style={{
-                            fontSize: "16px",
-                            fontWeight: 800,
-                            color: "#3FBCBC",
-                            lineHeight: "22px",
-                          }}
-                        >
-                          2.32
-                        </Typography>
-
-                        <Typography
-                          style={{ lineHeight: "22px", fontSize: "16px" }}
-                        >
-                          {t("paysbet.tie")}
-                        </Typography>
-                      </Space>
-
-                      <Space
-                        direction="vertical"
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          background: "white",
-                          boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
-                          borderRadius: "11px",
-                          width: "93px",
-                          minHeight: "43px",
-                          padding: "5px",
-                          gap: 0,
-                        }}
-                      >
-                        <Typography
-                          style={{
-                            fontSize: "16px",
-                            fontWeight: 800,
-                            color: "#3FBCBC",
-                            lineHeight: "22px",
-                          }}
-                        >
-                          1.47
-                        </Typography>
-
-                        <Typography
-                          style={{ lineHeight: "22px", fontSize: "16px" }}
-                        >
-                          Argentina
-                        </Typography>
-                      </Space>
-                    </Col>
-                  </Row>
-                </Col>
-
-                <Col span={8}>
-                  <Row
-                    style={{
-                      background: "white",
-                      padding: 10,
-                      borderRadius: 10,
-                      position: "relative",
-                      minHeight: "200px",
-                      maxWidth: "400px",
-                    }}
-                  >
-                    <img
-                      className="img2"
-                      width={"100%"}
-                      height={121}
-                      style={{ marginLeft: -15 }}
-                      src={Uruguai}
-                    />
-                    <img
-                      className="img"
-                      width={"100%"}
-                      height={121}
-                      src="https://i.pinimg.com/originals/fd/90/4a/fd904a378b57e1b3f3059f78963781c0.jpg"
-                    />
-
-                    <Col
-                      style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        background: "white",
-                        borderRadius: "17px",
-                        marginTop: "125px",
-                        gap: 5,
-                      }}
-                      span={24}
-                    >
-                      <Space
-                        direction="vertical"
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          background: "white",
-                          boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
-                          borderRadius: "11px",
-                          width: "93px",
-                          minHeight: "43px",
-                          padding: "5px",
-                          gap: 0,
-                        }}
-                      >
-                        <Typography
-                          style={{
-                            fontSize: "16px",
-                            fontWeight: 800,
-                            color: "#3FBCBC",
-                            lineHeight: "22px",
-                          }}
-                        >
-                          3.45
-                        </Typography>
-
-                        <Typography
-                          style={{ lineHeight: "22px", fontSize: "16px" }}
-                        >
-                          Brasil
-                        </Typography>
-                      </Space>
-
-                      <Space
-                        direction="vertical"
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          background: "white",
-                          boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
-                          borderRadius: "11px",
-                          width: "93px",
-                          minHeight: "43px",
-                          padding: "5px",
-                          gap: 0,
-                        }}
-                      >
-                        <Typography
-                          style={{
-                            fontSize: "16px",
-                            fontWeight: 800,
-                            color: "#3FBCBC",
-                            lineHeight: "22px",
-                          }}
-                        >
-                          2.32
-                        </Typography>
-
-                        <Typography
-                          style={{ lineHeight: "22px", fontSize: "16px" }}
-                        >
-                          {t("paysbet.tie")}
-                        </Typography>
-                      </Space>
-
-                      <Space
-                        direction="vertical"
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          background: "white",
-                          boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
-                          borderRadius: "11px",
-                          width: "93px",
-                          minHeight: "43px",
-                          padding: "5px",
-                          gap: 0,
-                        }}
-                      >
-                        <Typography
-                          style={{
-                            fontSize: "16px",
-                            fontWeight: 800,
-                            color: "#3FBCBC",
-                            lineHeight: "22px",
-                          }}
-                        >
-                          1.47
-                        </Typography>
-
-                        <Typography
-                          style={{ lineHeight: "22px", fontSize: "16px" }}
-                        >
-                          Argentina
-                        </Typography>
-                      </Space>
-                    </Col>
-                  </Row>
-                </Col>
-              </Row> */}
               <Row style={{ width: "100%" }} gutter={[8, 16]}>
                 {[
                   {
