@@ -552,7 +552,6 @@ export const MutateModal = ({
                     <Form.Item
                       data-test-id={`${field.label}-form-item`}
                       label={t(`table.${field.label}`)}
-                      name={field.label}
                       style={{ margin: 10 }}
                       rules={[
                         {
@@ -579,7 +578,14 @@ export const MutateModal = ({
                         }
                         loading={isProfilesDataFetching}
                         notFoundContent={<Empty />}
-                        value={body[field.label] || null}
+                        value={
+                          ProfilesData?.find(
+                            (p) => p.id === body[field.label]
+                          ) ||
+                          ProfilesData?.find(
+                            (p) => p?.name === body?.profile_name
+                          )?.id
+                        }
                         onChange={(value) => {
                           setBody((state: any) => ({
                             ...state,
