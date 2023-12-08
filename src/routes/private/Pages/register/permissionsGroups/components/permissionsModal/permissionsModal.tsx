@@ -298,7 +298,6 @@ export const PermissionsModal = ({
             checkedKeys={checked}
             onCheck={(checkedKeys) => {
               setChecked((state) => [
-                ...state,
                 ...(checkedKeys as any)
                   ?.filter((p: string) => !p.includes("_menu"))
                   ?.map((key: string) =>
