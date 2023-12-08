@@ -698,6 +698,12 @@ export const MerchantView = () => {
           description: t("wiki.operators_description"),
         }}
       />
+      <Toast
+        error={CreateError}
+        success={CreateIsLoading}
+        actionError={t("messages.create")}
+        actionSuccess={t("messages.created")}
+      />
     </Grid>
   );
 };
