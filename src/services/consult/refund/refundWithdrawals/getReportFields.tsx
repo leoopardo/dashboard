@@ -6,7 +6,7 @@ export function useGetRefundWithdrawalsReportFields() {
   const { data, isFetching, error, refetch } = useQuery<
     string[] | null | undefined
   >("refundWithdrawalsReportFields", async () => {
-    const response = await api.get(`"refund/csv/withdraw/fields`);
+    const response = await api.get(`refund/csv/withdraw/fields`);
     return response.data;
   });
 
