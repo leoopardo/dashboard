@@ -35,6 +35,7 @@ export interface PermissionGroupBodyInterface {
   profile_id?: number;
   status?: string;
   description?: string;
+  group_id?: number;
 }
 
 export interface PermissionMenuInterface {

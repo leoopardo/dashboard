@@ -26,15 +26,21 @@ export const Toast = ({
       toast.error(
         errorMessage ?? (ErrorList as any)[error?.response?.data?.message]
           ? t(`error.${(ErrorList as any)[error?.response?.data?.message]}`)
-          : t("messages.action_error", {
-              action: actionError,
-            })
+          : t(
+              "messages.action_error",
+              {
+                action: actionError,
+                id: "toast-error",
+              },
+             
+            )
       );
     }
     if (success) {
       toast.success(
         t("messages.action_success", {
           action: actionSuccess,
+          id: "toast-success"
         })
       );
     }
