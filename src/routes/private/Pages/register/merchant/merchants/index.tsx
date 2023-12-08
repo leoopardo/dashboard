@@ -287,7 +287,7 @@ export const MerchantView = () => {
           <Input.Search
             size="large"
             ref={searchref}
-            placeholder={t("table.name") || ""}
+            placeholder={t("table.search") || ""}
             onSearch={(value) =>
               setQuery((state) => ({ ...state, name: value }))
             }

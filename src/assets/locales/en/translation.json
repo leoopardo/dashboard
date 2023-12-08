@@ -909,7 +909,8 @@
     "deposit": "Deposit",
     "bank_acc_number": "Bank account number",
     "pixtype": "PIX type",
-    "merchant_hash": "Merchant hash"
+    "merchant_hash": "Merchant hash",
+    "search": "Search"
   },
   "actions": {
     "details": "Details",
