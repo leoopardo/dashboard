@@ -632,6 +632,57 @@ export const FiltersModal = ({
                 </Form.Item>
               );
 
+            case "profiles":
+              return (
+                <Form.Item
+                  data-test-id="form-item-default"
+                  label={t(`table.${filter}`)}
+                  style={{ marginBottom: 10 }}
+                >
+                  <Select
+                    mode="multiple"
+                    data-test-id="select-default"
+                    size="large"
+                    style={{ width: "100%", height: "40px" }}
+                    placeholder={t(`table.${filter}`)}
+                    value={
+                      filtersQuery[filter] && filtersQuery[filter].length >= 1
+                        ? filtersQuery[filter]
+                            .split("[")[1]
+                            .split("]")[0]
+                            .split(",")
+                            .map((item: any) => Number(item))
+                        : undefined
+                    }
+                    onChange={(value) => {
+                      if (value.length === 0) {
+                        setFiltersQuery((state: any) => ({
+                          ...state,
+                          [filter]: undefined,
+                        }));
+                        return;
+                      }
+                      setFiltersQuery((state: any) => ({
+                        ...state,
+                        [filter]: `[${value}]`,
+                      }));
+                    }}
+                    showSearch
+                    options={
+                      ["", ...selectOptions[filter]]?.map((option: any) => {
+                        if (option === "") {
+                          return { value: "", label: "" };
+                        }
+                        return {
+                          value: option?.value || option,
+                          label: option?.label,
+                        };
+                      }) ?? []
+                    }
+                  />
+                </Form.Item>
+              );
+
             case "status":
               return (
                 <Form.Item

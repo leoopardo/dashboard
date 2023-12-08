@@ -5,12 +5,12 @@ export interface ProfileInterface {
 }
 
 export interface PermissionsGroupsItemInterface {
-  id: number;
-  name: string;
-  description: string;
-  status: number;
-  profile_name: string;
-  linked_user_total: number;
+  id?: number;
+  name?: string;
+  description?: string;
+  status?: number;
+  profile_name?: string;
+  linked_user_total?: number;
 }
 
 export interface PermissionsGroupsDataInterface {

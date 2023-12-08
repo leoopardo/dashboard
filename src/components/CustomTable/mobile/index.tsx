@@ -621,14 +621,6 @@ export const Mobile = (props: MobileProps) => {
                           <Typography
                             key={value?.name}
                             style={{ width: "100%", textAlign: "center" }}
-                            onClick={() =>
-                              console.log(
-                                Array.isArray(value?.name) &&
-                                  item[value?.name[0]]
-                                  ? item[value?.name[0]][value?.name[1]]
-                                  : item[value?.name]
-                              )
-                            }
                           >
                             {Array.isArray(value?.name) &&
                             item[value?.name[0]] &&
