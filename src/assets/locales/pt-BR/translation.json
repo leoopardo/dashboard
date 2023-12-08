@@ -917,7 +917,8 @@
     "deposit": "Depósito",
     "bank_acc_number": "Conta corrente",
     "pixtype": "Tipo de pix",
-    "merchant_hash": "Hash da empresa"
+    "merchant_hash": "Hash da empresa",
+    "search": "Pesquisar"
   },
   "actions": {
     "details": "Detalhes",
