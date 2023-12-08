@@ -22,6 +22,7 @@ import { Button, Col, Row } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { PermissionsModal } from "./components/permissionsModal/permissionsModal";
+import { useUpdatePermissionGroup } from "@src/services/register/permissionGroups/updatePermissionGroup";
 
 export const PermissionsGroups = () => {
   const { t } = useTranslation();
@@ -44,6 +45,13 @@ export const PermissionsGroups = () => {
       profile_id: undefined,
       status: "true",
     });
+  const [updateGroupBody, setUpdateGroupBody] =
+    useState<PermissionGroupBodyInterface>({
+      name: "",
+      description: "",
+      profile_id: undefined,
+      status: "true",
+    });
   const {
     PermissionGroupsData,
     isPermissionGroupsDataFetching,
@@ -56,6 +64,12 @@ export const PermissionsGroups = () => {
     PermissionGroupMutate,
     data,
   } = useCreatePermissionGroup({ ...createGroupBody, status: "true" });
+  const {
+    UpdatePermissionGroupError,
+    UpdatePermissionGroupIsLoading,
+    UpdatePermissionGroupIsSuccess,
+    UpdatePermissionGroupMutate,
+  } = useUpdatePermissionGroup(updateGroupBody);
 
   useEffect(() => {
     if (data) {
@@ -63,6 +77,8 @@ export const PermissionsGroups = () => {
       setIsPermissionsModalOpen(true);
     }
   }, [PermissionGroupIsSuccess]);
+
+  console.log(updateGroupBody);
 
   return (
     <Row style={{ padding: 25 }} gutter={[8, 8]}>
@@ -152,6 +168,12 @@ export const PermissionsGroups = () => {
               icon: <EditOutlined style={{ fontSize: "20px" }} />,
               onClick: (item) => {
                 setCurrentItem(item);
+                setUpdateGroupBody({
+                  description: item.description,
+                  name: item.name,
+                  profile_id: item.profile_id,
+                  group_id: item.id,
+                });
                 setIsUpdateModalOpen(true);
               },
             },
@@ -207,6 +229,25 @@ export const PermissionsGroups = () => {
           submitLoading={PermissionGroupIsLoading}
           error={PermissionGroupError}
           success={PermissionGroupIsSuccess}
+        />
+      )}
+      {isUpdateModalOpen && (
+        <MutateModal
+          type="update"
+          open={isUpdateModalOpen}
+          setOpen={setIsUpdateModalOpen}
+          fields={[
+            { label: "name", required: true },
+            { label: "profile_id", required: true },
+            { label: "description", required: false },
+          ]}
+          body={updateGroupBody}
+          setBody={setUpdateGroupBody}
+          modalName={t("modal.create_group")}
+          submit={UpdatePermissionGroupMutate}
+          submitLoading={UpdatePermissionGroupIsLoading}
+          error={UpdatePermissionGroupError}
+          success={UpdatePermissionGroupIsSuccess}
         />
       )}
       {isPermissionsModalOpen && (
