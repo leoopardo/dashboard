@@ -64,6 +64,12 @@ export const UpdatePartner = () => {
   ) as ValidateInterface;
   const { t } = useTranslation();
   const location = useLocation();
+  // eslint-disable-next-line prefer-const
+  const tabindex0 = document.querySelector('#rc-tabs-1-tab-1');
+  const tabindex1 = document.querySelector('#rc-tabs-1-tab-2');
+  const tabindex2 = document.querySelector('#rc-tabs-1-tab-3');
+ 
+
   const [partnerBody, setPartnerBody] = useState<PartnerItem>({
     partner_id: location?.state?.id,
     name: location?.state?.name,
@@ -191,7 +197,14 @@ export const UpdatePartner = () => {
     }
   }, [deleteFileId]);
 
-  const items: TabsProps["items"] = [
+
+  useEffect(() => {
+    tabindex0?.setAttribute("id", "tab-partner-data");
+    tabindex1?.setAttribute("id", "tab-partner-responsibles");
+    tabindex2?.setAttribute("id", "tab-partner-attachments");
+  }, []);
+
+  const items: TabsProps['items']= [
     {
       key: "1",
       label: t("table.partner_data"),
@@ -606,7 +619,7 @@ export const UpdatePartner = () => {
         </Typography.Title>
       </Col>
       <Col span={24}>
-        <Tabs defaultActiveKey="1" items={items} />
+        <Tabs defaultActiveKey="1" items={items} data-test-id="tab" />
       </Col>
       <Toast
         actionSuccess={t("messages.updated")}

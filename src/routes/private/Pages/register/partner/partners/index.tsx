@@ -264,13 +264,13 @@ export const Partners = () => {
 
       <Grid container style={{ marginTop: "15px" }}>
         <Grid item xs={12}>
-          {" "}
           <CustomTable
             query={query}
             setCurrentItem={setCurrentItem}
             setQuery={setQuery}
             actions={[
               {
+                id: "table-details-button",
                 label: "details",
                 icon: <EyeFilled style={{ fontSize: "20px" }} />,
                 onClick: (item) => {
@@ -278,6 +278,7 @@ export const Partners = () => {
                 },
               },
               permissions.register.partner.partner.partner_update && {
+                id: "table-edit-button",
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
                 onClick: (item) => {
