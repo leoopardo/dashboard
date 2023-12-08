@@ -461,8 +461,6 @@ export const MerchantPreManual = () => {
                   setSelectedRows(
                     selectedRows.filter((i) => i._id !== item._id)
                   );
-                  console.log(selectedRows);
-
                   setConfirmDelete(true);
                 },
               },

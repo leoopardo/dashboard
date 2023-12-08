@@ -929,7 +929,8 @@
     "profile_name": "Entity type",
     "linked_user_total": "Linked users",
     "profile_id": "Entity type",
-    "permissions": "Permissions"
+    "permissions": "Permissions",
+    "profiles": "Entity types"
   },
   "actions": {
     "details": "Details",
