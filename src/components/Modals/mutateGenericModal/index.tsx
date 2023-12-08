@@ -6,9 +6,12 @@ import { AggregatorSelect } from "@src/components/Selects/aggregatorSelect";
 import { OperatorSelect } from "@src/components/Selects/operatorSelect";
 import { ValidateToken } from "@src/components/ValidateToken";
 import { useListClientClientBanks } from "@src/services/bank/listClientBanks";
+import { useGetMerchantBalanceTotal } from "@src/services/consult/merchant/balance/getMerchantBalanceTotal";
 import { queryClient } from "@src/services/queryClient";
 import { useGetRowsMerchantBlacklistReasons } from "@src/services/register/merchant/blacklist/getMerchantBlacklistReason";
+import { useGetProfiles } from "@src/services/register/permissionGroups/getProfiles";
 import { useGetrefetchCountries } from "@src/services/states_cities/getCountries";
+import { ProfileInterface } from "@src/services/types/register/permissionsGroup/permissionsGroupinterface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
 import { unmask } from "@src/utils/functions";
 import {
@@ -37,9 +40,6 @@ import { useTranslation } from "react-i18next";
 import ReactInputMask from "react-input-mask";
 import { MerchantSelect } from "../../Selects/merchantSelect";
 import { PartnerSelect } from "../../Selects/partnerSelect";
-import { useGetMerchantBalanceTotal } from "@src/services/consult/merchant/balance/getMerchantBalanceTotal";
-import { useGetProfiles } from "@src/services/register/permissionGroups/getProfiles";
-import { ProfileInterface } from "@src/services/types/register/permissionsGroup/permissionsGroupinterface";
 const { RangePicker } = DatePicker;
 
 interface mutateProps {
@@ -539,6 +539,7 @@ export const MutateModal = ({
                     <Form.Item
                       data-test-id={`${field.label}-form-item`}
                       label={t(`table.${field.label}`)}
+                      name={field.label}
                       style={{ margin: 10 }}
                       rules={[
                         {
@@ -566,12 +567,7 @@ export const MutateModal = ({
                         loading={isProfilesDataFetching}
                         notFoundContent={<Empty />}
                         value={
-                          ProfilesData?.find(
-                            (p) => p.id === body[field.label]
-                          ) ||
-                          ProfilesData?.find(
-                            (p) => p?.name === body?.profile_name
-                          )?.id
+                          body[field.label]
                         }
                         onChange={(value) => {
                           setBody((state: any) => ({

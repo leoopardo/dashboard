@@ -1,4 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
+  DeleteOutlined,
   EditOutlined,
   EyeFilled,
   FilterOutlined,
@@ -6,23 +8,29 @@ import {
   SettingOutlined,
 } from "@ant-design/icons";
 import { CustomTable } from "@src/components/CustomTable";
+import { FiltersModal } from "@src/components/FiltersModal";
 import { FilterChips } from "@src/components/FiltersModal/filterChips";
 import { Search } from "@src/components/Inputs/search";
+import { Confirmation } from "@src/components/Modals/confirmation";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
+import { ViewModal } from "@src/components/Modals/viewGenericModal";
 import { Toast } from "@src/components/Toast";
 import { useCreatePermissionGroup } from "@src/services/register/permissionGroups/createPermissionGroup";
+import { useDeletePermissionGroup } from "@src/services/register/permissionGroups/deletePermissionGroup";
 import { useGetPermissionGroups } from "@src/services/register/permissionGroups/getPermissionGroups";
+import { useGetProfiles } from "@src/services/register/permissionGroups/getProfiles";
+import { useUpdatePermissionGroup } from "@src/services/register/permissionGroups/updatePermissionGroup";
 import {
   PermissionGroupBodyInterface,
   PermissionsGroupsItemInterface,
   PermissionsGroupsQueryInterface,
 } from "@src/services/types/register/permissionsGroup/permissionsGroupinterface";
+import { defaultTheme } from "@src/styles/defaultTheme";
 import { RemoveFiltersIcon } from "@src/styles/styles";
 import { Button, Col, Row } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { PermissionsModal } from "./components/permissionsModal/permissionsModal";
-import { useUpdatePermissionGroup } from "@src/services/register/permissionGroups/updatePermissionGroup";
 
 export const PermissionsGroups = () => {
   const { t } = useTranslation();
@@ -34,6 +42,7 @@ export const PermissionsGroups = () => {
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState<boolean>(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState<boolean>(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   const [isPermissionsModalOpen, setIsPermissionsModalOpen] =
     useState<boolean>(false);
   const [currentItem, setCurrentItem] =
@@ -56,6 +65,7 @@ export const PermissionsGroups = () => {
     PermissionGroupsData,
     isPermissionGroupsDataFetching,
     PermissionGroupsDataError,
+    refetchPermissionGroupsData,
   } = useGetPermissionGroups(query);
   const {
     PermissionGroupError,
@@ -64,12 +74,22 @@ export const PermissionsGroups = () => {
     PermissionGroupMutate,
     data,
   } = useCreatePermissionGroup({ ...createGroupBody, status: "true" });
+
+  const {
+    DeletePermissionGroupError,
+    DeletePermissionGroupIsLoading,
+    DeletePermissionGroupIsSuccess,
+    DeletePermissionGroupMutate,
+  } = useDeletePermissionGroup(currentItem?.id);
   const {
     UpdatePermissionGroupError,
     UpdatePermissionGroupIsLoading,
     UpdatePermissionGroupIsSuccess,
     UpdatePermissionGroupMutate,
   } = useUpdatePermissionGroup(updateGroupBody);
+  const { ProfilesData } = useGetProfiles({
+    group: true,
+  });
 
   useEffect(() => {
     if (data) {
@@ -78,7 +98,16 @@ export const PermissionsGroups = () => {
     }
   }, [PermissionGroupIsSuccess]);
 
-  console.log(updateGroupBody);
+  useEffect(() => {
+    setUpdateGroupBody({
+      description: currentItem?.description,
+      name: currentItem?.name,
+      profile_id: ProfilesData?.find(
+        (p) => p?.name === currentItem?.profile_name
+      )?.id,
+      group_id: currentItem?.id,
+    });
+  }, [currentItem]);
 
   return (
     <Row style={{ padding: 25 }} gutter={[8, 8]}>
@@ -171,7 +200,7 @@ export const PermissionsGroups = () => {
                 setUpdateGroupBody({
                   description: item.description,
                   name: item.name,
-                  profile_id: item.profile_id,
+                  profile_id: item?.profile_name,
                   group_id: item.id,
                 });
                 setIsUpdateModalOpen(true);
@@ -183,6 +212,20 @@ export const PermissionsGroups = () => {
               onClick: (item) => {
                 setCurrentItem(item);
                 setIsPermissionsModalOpen(true);
+              },
+            },
+            {
+              label: "delete",
+              icon: (
+                <DeleteOutlined
+                  style={{
+                    fontSize: "20px",
+                    color: defaultTheme.colors.canceled,
+                  }}
+                />
+              ),
+              onClick: () => {
+                setIsDeleteModalOpen(true);
               },
             },
           ]}
@@ -231,6 +274,22 @@ export const PermissionsGroups = () => {
           success={PermissionGroupIsSuccess}
         />
       )}
+      {isDeleteModalOpen && (
+        <Confirmation
+          open={isDeleteModalOpen}
+          setOpen={setIsDeleteModalOpen}
+          title={t("messages.confirm_action_title", {
+            action: t("messages.delete"),
+          })}
+          description={`${t("messages.are_you_sure", {
+            action: t("messages.delete").toLocaleLowerCase(),
+            itens: currentItem?.name,
+          })}`}
+          submit={() => DeletePermissionGroupMutate()}
+          loading={DeletePermissionGroupIsLoading}
+        />
+      )}
+
       {isUpdateModalOpen && (
         <MutateModal
           type="update"
@@ -238,12 +297,11 @@ export const PermissionsGroups = () => {
           setOpen={setIsUpdateModalOpen}
           fields={[
             { label: "name", required: true },
-            { label: "profile_id", required: true },
             { label: "description", required: false },
           ]}
           body={updateGroupBody}
           setBody={setUpdateGroupBody}
-          modalName={t("modal.create_group")}
+          modalName={t("modal.update_group")}
           submit={UpdatePermissionGroupMutate}
           submitLoading={UpdatePermissionGroupIsLoading}
           error={UpdatePermissionGroupError}
@@ -257,11 +315,48 @@ export const PermissionsGroups = () => {
           group={currentItem}
         />
       )}
+      {isViewModalOpen && (
+        <ViewModal
+          item={currentItem}
+          loading={isPermissionGroupsDataFetching}
+          modalName={`${t("table.group")}: ${currentItem?.name}`}
+          open={isViewModalOpen}
+          setOpen={setIsViewModalOpen}
+        />
+      )}
+      {isFiltersOpen && (
+        <FiltersModal
+          open={isFiltersOpen}
+          setOpen={setIsFiltersOpen}
+          query={query}
+          setQuery={setQuery}
+          filters={["start_date", "end_date", "profiles"]}
+          refetch={refetchPermissionGroupsData}
+          selectOptions={{
+            profiles: ProfilesData?.map((p) => ({
+              label: t(`table.${p?.name?.toLocaleLowerCase()}`),
+              value: p?.id,
+            })),
+          }}
+          startDateKeyName="start_date"
+          endDateKeyName="end_date"
+          initialQuery={{
+            limit: 25,
+            page: 1,
+          }}
+        />
+      )}
       <Toast
         actionError={t("messages.create")}
         actionSuccess={t("messages.created")}
         error={PermissionGroupError}
         success={PermissionGroupIsSuccess}
+      />
+      <Toast
+        actionError={t("messages.delete")}
+        actionSuccess={t("messages.deleted")}
+        error={DeletePermissionGroupError}
+        success={DeletePermissionGroupIsSuccess}
       />
     </Row>
   );
