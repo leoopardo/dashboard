@@ -730,9 +730,9 @@ export const FiltersModal = ({
                           label: t(
                             `table.${option
                               ?.split(":")
-                              .join("")
-                              .split(" ")
-                              .join("_")
+                              ?.join("")
+                              ?.split(" ")
+                              ?.join("_")
                               ?.toLowerCase()}`
                           ),
                         };
