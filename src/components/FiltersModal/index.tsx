@@ -36,6 +36,7 @@ import { PartnerSelect } from "../Selects/partnerSelect";
 import { ReasonSelect } from "../Selects/reasonSelect";
 import { FilterChips } from "./filterChips";
 import { StyleWrapperDatePicker } from "./styles";
+import { useMediaQuery } from "react-responsive";
 const { RangePicker } = DatePicker;
 
 dayjs.extend(weekday);
@@ -86,6 +87,7 @@ export const FiltersModal = ({
   const { cities, refetchCities } = useGetCities(currState);
   const submitRef = useRef<HTMLButtonElement>(null);
   const formRef = useRef<FormInstance>(null);
+  const isMobile = useMediaQuery({ maxWidth: "950px" });
 
   useEffect(() => {
     if (query.age_start) {
@@ -272,6 +274,52 @@ export const FiltersModal = ({
                 >
                   <ConfigProvider locale={locale}>
                     <RangePicker
+                      presets={
+                        !isMobile
+                          ? [
+                              {
+                                label: t("table.last_7"),
+                                value: [dayjs().add(-7, "d"), dayjs()],
+                              },
+                              {
+                                label: t("table.last_14"),
+                                value: [dayjs().add(-14, "d"), dayjs()],
+                              },
+                              {
+                                label: t("table.last_30"),
+                                value: [dayjs().add(-30, "d"), dayjs()],
+                              },
+                              {
+                                label: t("table.today"),
+                                value: [
+                                  dayjs().startOf("day"),
+                                  dayjs().endOf("day"),
+                                ],
+                              },
+                              {
+                                label: t("table.yesterday"),
+                                value: [
+                                  dayjs().subtract(1, "day").startOf("day"),
+                                  dayjs().subtract(1, "day").endOf("day"),
+                                ],
+                              },
+                              {
+                                label: t("table.this_month"),
+                                value: [
+                                  dayjs().startOf("M"),
+                                  dayjs().endOf("M"),
+                                ],
+                              },
+                              {
+                                label: t("table.last_month"),
+                                value: [
+                                  dayjs().subtract(1, "M").startOf("M"),
+                                  dayjs().subtract(1, "M").endOf("M"),
+                                ],
+                              },
+                            ]
+                          : undefined
+                      }
                       data-test-id="range-picker-date-filter"
                       panelRender={panelRender}
                       format={
