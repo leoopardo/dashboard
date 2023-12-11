@@ -1941,13 +1941,14 @@ export const SidebarNavigation = () => {
             {isSidebarOpen && (
               <img
                 src={import.meta.env.VITE_APP_LOGO ||PbLogo}
-                style={{ width: "180px" }}
+                style={{ width: "180px", marginLeft: "-24px" }}
               />
             )}
             {!isSidebarOpen ? (
               <MenuUnfoldOutlined
                 style={{
                   fontSize: "26px",
+                
                   color:
                     !isSidebarOpen && isMobile && theme === "light"
                       ? "#000"
@@ -1960,6 +1961,7 @@ export const SidebarNavigation = () => {
               <MenuFoldOutlined
                 style={{
                   fontSize: "26px",
+                  marginLeft: 24,
                   color:
                     !isSidebarOpen && isMobile && theme === "light"
                       ? "#000"
