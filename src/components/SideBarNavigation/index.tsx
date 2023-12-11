@@ -24,6 +24,7 @@ import secureLocalStorage from "react-secure-storage";
 import { useMenu } from "../../contexts/SidebarContext";
 import { defaultTheme } from "../../styles/defaultTheme";
 import { motion } from "framer-motion";
+import PbLogo from "@assets/logo.png";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -1939,7 +1940,7 @@ export const SidebarNavigation = () => {
           >
             {isSidebarOpen && (
               <img
-                src={import.meta.env.VITE_APP_LOGO || "/src/assets/logo.png"}
+                src={import.meta.env.VITE_APP_LOGO ||PbLogo}
                 style={{ width: "180px" }}
               />
             )}
