@@ -7,6 +7,7 @@ import {
   EllipsisOutlined,
 } from "@ant-design/icons";
 import { useListBanks } from "@src/services/bank/listBanks";
+import { defaultTheme } from "@src/styles/defaultTheme";
 import {
   Avatar,
   Button,
@@ -20,8 +21,6 @@ import {
   Tooltip,
   Typography,
 } from "antd";
-import moment from "moment";
-import { defaultTheme } from "@src/styles/defaultTheme";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ColumnInterface, actionsInterface } from "..";
@@ -140,9 +139,11 @@ export const Mobile = (props: MobileProps) => {
                           <span> {t(`table.${label}`)}: </span>
                           {`${
                             item[label]
-                              ? moment(item[label])
-                                  .subtract(3, "hours")
-                                  .format("YYYY/DD/MM HH:MM")
+                              ? `${new Date(
+                                  item[label]
+                                ).toLocaleDateString()} ${new Date(
+                                  item[label]
+                                ).toLocaleTimeString()}`
                               : ""
                           }`}
                         </Typography>
@@ -153,9 +154,7 @@ export const Mobile = (props: MobileProps) => {
                         item[label] === 0 ||
                         item[label] === 1 ? (
                         <>
-                          <Typography
-                            key={label}
-                          >
+                          <Typography key={label}>
                             <span>{t(`table.${label && label}`)}:</span>{" "}
                             {item[label] || item[label] === 1
                               ? t("table.true")
