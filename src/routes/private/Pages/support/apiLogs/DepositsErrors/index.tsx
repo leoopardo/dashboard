@@ -28,10 +28,12 @@ export const DepositsErrors = () => {
     page: 1,
     start_date: moment(new Date())
       .startOf("day")
+      .add(3, "hours")
       .format("YYYY-MM-DDTHH:mm:ss.SSS"),
     end_date: moment(new Date())
       .add(1, "day")
       .startOf("day")
+      .add(3, "hours")
       .format("YYYY-MM-DDTHH:mm:ss.SSS"),
   };
   const { t } = useTranslation();
@@ -73,9 +75,7 @@ export const DepositsErrors = () => {
     refetchDepositsErrorsTotal();
     refetchDepositsErrorsLogs();
     refetchLogsSteps();
-
   }, [query]);
-
 
   return (
     <Grid container style={{ padding: "25px" }}>

@@ -1327,6 +1327,15 @@ export const CustomTable = (props: TableProps) => {
           style={{ display: "flex", justifyContent: "center", width: "100%" }}
         >
           <Grid item xs={12}>
+            {props.refetch && (
+              <Button
+                style={{ width: "100%" }}
+                type="link"
+                onClick={props.refetch}
+                icon={<ReloadOutlined />}
+                loading={props?.loading}
+              />
+            )}
             <Mobile
               columns={props.columns}
               items={props.items}
