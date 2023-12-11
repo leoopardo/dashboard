@@ -39,6 +39,7 @@ import {
   MerchantResponsiblesUpdateBody,
 } from "@src/services/types/register/merchants/responsibles/responsibles.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
+import { setFirstChildDivId } from "@src/utils/functions";
 import {
   AutoComplete,
   Avatar,
@@ -86,10 +87,13 @@ export const UpdateMerchant = () => {
   };
 
   const submitRef = useRef<HTMLButtonElement>(null);
-
   const { Countries } = useGetrefetchCountries();
-
   const formRef = useRef<FormInstance>(null);
+
+  const tabMerchantsData = document.querySelector('[data-node-key="1"]');
+  const tabResponsible = document.querySelector('[data-node-key="2"]');
+  const tabAttachments = document.querySelector('[data-node-key="3"]');
+
   const {
     UpdateError,
     UpdateIsLoading,
@@ -191,6 +195,12 @@ export const UpdateMerchant = () => {
       setDeleteFileId("");
     }
   }, [deleteFileId]);
+
+  useEffect(() => {
+    setFirstChildDivId(tabMerchantsData, "tab-merchants-data");
+    setFirstChildDivId(tabResponsible, "tab-responsible");
+    setFirstChildDivId(tabAttachments, "tab-attachments");
+  }, [tabMerchantsData, tabResponsible, tabAttachments]);
 
   const items: TabsProps["items"] = [
     {

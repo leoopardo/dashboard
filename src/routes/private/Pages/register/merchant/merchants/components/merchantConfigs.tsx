@@ -10,6 +10,8 @@ import { FeesTab } from "./tabs/fees";
 import { IpsConfigTab } from "./tabs/ips";
 import { MerchantConfigTab } from "./tabs/merchantConfigTab";
 import { OrganizationConfigTab } from "./tabs/organizationConfigTab";
+import { useEffect } from "react";
+import { setFirstChildDivId } from "@src/utils/functions";
 
 export const MerchantConfigs = () => {
   const { permissions } = queryClient.getQueryData(
@@ -20,6 +22,13 @@ export const MerchantConfigs = () => {
   const params = useParams();
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   const onChange = () => {};
+
+  const tabBanks = document.querySelector('[data-node-key="1"]');
+  const tabFees = document.querySelector('[data-node-key="2"]');
+  const tabMerchantConfig = document.querySelector('[data-node-key="3"]');
+  const tabOrganizationConfig = document.querySelector('[data-node-key="4"]');
+  const tabCredential = document.querySelector('[data-node-key="5"]');
+  const tabIps = document.querySelector('[data-node-key="6"]');
 
   const initialTab = () => {
     if (!permissions.register.merchant.merchant.merchant_config_banks) {
@@ -50,6 +59,15 @@ export const MerchantConfigs = () => {
 
     return currentItems;
   };
+
+  useEffect(() => {
+    setFirstChildDivId(tabBanks, "tab-banks");
+    setFirstChildDivId(tabFees, "tab-fees");
+    setFirstChildDivId(tabMerchantConfig, "tab-merchant-config");
+    setFirstChildDivId(tabOrganizationConfig, "tab-organization-config");
+    setFirstChildDivId(tabCredential, "tab-credential");
+    setFirstChildDivId(tabIps, "tab-ips");
+  }, [tabBanks, tabFees, tabMerchantConfig, tabOrganizationConfig, tabCredential, tabIps]);
 
   const items: TabsProps["items"] = [
     {

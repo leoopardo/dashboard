@@ -529,6 +529,7 @@ export const MerchantView = () => {
             { label: "cnpj", required: false },
             { label: "cellphone", required: false },
             { label: "email", required: false },
+            { label: "country", required: false },
           ]}
           body={createBody}
           setBody={setCreateBody}

@@ -36,6 +36,7 @@ import {
   AggregatorResponsiblesUpdateBody,
 } from "@src/services/types/register/aggregators/responsibles/responsibles.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
+import { setFirstChildDivId } from "@src/utils/functions";
 import {
   AutoComplete,
   Avatar,
@@ -79,7 +80,6 @@ export const UpdateAggregator = () => {
   };
 
   const submitRef = useRef<HTMLButtonElement>(null);
-
   const { Countries } = useGetrefetchCountries();
 
   const formRef = useRef<FormInstance>(null);
@@ -111,6 +111,9 @@ export const UpdateAggregator = () => {
     aggregator_id: location.state.id,
   });
   const [deleteFileId, setDeleteFileId] = useState<string>("");
+  const tabAggregatorsData = document.querySelector('[data-node-key="1"]');
+  const tabResponsible = document.querySelector('[data-node-key="2"]');
+  const tabAttachments = document.querySelector('[data-node-key="3"]');
 
   const {
     ResponsiblesData,
@@ -193,6 +196,12 @@ export const UpdateAggregator = () => {
       setDeleteFileId("");
     }
   }, [deleteFileId]);
+
+  useEffect(() => {
+    setFirstChildDivId(tabAggregatorsData, 'tab-aggregators-data');
+    setFirstChildDivId(tabResponsible, 'tab-responsible');
+    setFirstChildDivId(tabAttachments, 'tab-attachments');
+  }, [tabAggregatorsData, tabResponsible, tabAttachments])
 
   const items: TabsProps["items"] = [
     {
