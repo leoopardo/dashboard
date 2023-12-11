@@ -1939,7 +1939,7 @@ export const SidebarNavigation = () => {
           >
             {isSidebarOpen && (
               <img
-                src={import.meta.env.VITE_APP_LOGO}
+                src={import.meta.env.VITE_APP_LOGO || "/src/assets/logo.png"}
                 style={{ width: "180px" }}
               />
             )}
@@ -1960,7 +1960,7 @@ export const SidebarNavigation = () => {
                 style={{
                   fontSize: "26px",
                   color:
-                  !isSidebarOpen && isMobile && theme === "light"
+                    !isSidebarOpen && isMobile && theme === "light"
                       ? "#000"
                       : import.meta.env.VITE_APP_MENU_THEME === "dark"
                       ? "#fff"
