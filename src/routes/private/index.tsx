@@ -649,7 +649,14 @@ export const PrivateRoutes = () => {
                 </Permission>
               }
             />
-            <Route path="permissions_groups" element={<PermissionsGroups />} />
+            <Route
+              path="permissions_groups"
+              element={
+                <Permission permission={responseValidate?.type === 1}>
+                  <PermissionsGroups />
+                </Permission>
+              }
+            />
             <Route path="organization_reports">
               <Route
                 path="organization_reports_users"
