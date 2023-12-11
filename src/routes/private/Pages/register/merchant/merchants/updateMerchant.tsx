@@ -198,7 +198,7 @@ export const UpdateMerchant = () => {
 
   useEffect(() => {
     setFirstChildDivId(tabMerchantsData, "tab-merchants-data");
-    setFirstChildDivId(tabResponsible, "tab-responsible");
+    setFirstChildDivId(tabResponsible, "tab-responsibles");
     setFirstChildDivId(tabAttachments, "tab-attachments");
   }, [tabMerchantsData, tabResponsible, tabAttachments]);
 
