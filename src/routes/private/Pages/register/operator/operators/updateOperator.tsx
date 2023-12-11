@@ -198,7 +198,7 @@ export const UpdateOperator = () => {
 
   useEffect(() => {
     setFirstChildDivId(tabOperatorsData, "tab-operators-data");
-    setFirstChildDivId(tabResponsible, "tab-responsible");
+    setFirstChildDivId(tabResponsible, "tab-responsibles");
     setFirstChildDivId(tabAttachments, "tab-attachments");
   }, [tabOperatorsData, tabResponsible, tabAttachments]);
 

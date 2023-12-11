@@ -199,7 +199,7 @@ export const UpdateAggregator = () => {
 
   useEffect(() => {
     setFirstChildDivId(tabAggregatorsData, 'tab-aggregators-data');
-    setFirstChildDivId(tabResponsible, 'tab-responsible');
+    setFirstChildDivId(tabResponsible, 'tab-responsibles');
     setFirstChildDivId(tabAttachments, 'tab-attachments');
   }, [tabAggregatorsData, tabResponsible, tabAttachments])
 
