@@ -458,30 +458,30 @@ export const FilterChips = ({
           case "type":
             return (
               <Col key={key}>
-              {filtersQuery[key] ? (
-                <Tag
-                  data-test-id="filter-chip-pix-type"
-                  style={{
-                    width: "100%",
-                    textOverflow: "ellipsis",
-                    overflow: "hidden",
-                    wordBreak: "break-all",
-                    display: disabled?.includes(key) ? "none" : undefined,
-                  }}
-                  key={key}
-                  color="cyan"
-                  icon={
-                    <CloseCircleOutlined onClick={() => deleteFilter(key)} />
-                  }
-                >
-                  {t(`table.${key}`)}:{" "}
-                  {t(`table.${filtersQuery[key].toLowerCase()}`)}
-                </Tag>
-              ) : (
-                <></>
-              )}
-            </Col>
-            )
+                {filtersQuery[key] ? (
+                  <Tag
+                    data-test-id="filter-chip-pix-type"
+                    style={{
+                      width: "100%",
+                      textOverflow: "ellipsis",
+                      overflow: "hidden",
+                      wordBreak: "break-all",
+                      display: disabled?.includes(key) ? "none" : undefined,
+                    }}
+                    key={key}
+                    color="cyan"
+                    icon={
+                      <CloseCircleOutlined onClick={() => deleteFilter(key)} />
+                    }
+                  >
+                    {t(`table.${key}`)}:{" "}
+                    {t(`table.${filtersQuery[key].toLowerCase()}`)}
+                  </Tag>
+                ) : (
+                  <></>
+                )}
+              </Col>
+            );
           default:
             return (
               <Col key={key}>
@@ -501,7 +501,30 @@ export const FilterChips = ({
                       <CloseCircleOutlined onClick={() => deleteFilter(key)} />
                     }
                   >
-                    {t(`table.${key}`)}: {filtersQuery[key]}
+                    {t(`table.${key}`)}:{" "}
+                    {[
+                      "DIVERGENT VALUE",
+                      "PAYMENT FROM QR CODE EXPIRED",
+                      "PAYMENT REFUND: THIRD PARTY PAYMENT UNAVAILABLE",
+                      "PAYMENT REFUND: CNPJ NOT ACCEPTED",
+                      "DAILY TRANSACTION LIMIT EXCEEDED FOR THIS CLIENT",
+                      "MONTH TRANSACTION LIMIT EXCEEDED FOR THIS CLIENT",
+                      "DAILY TRANSACTION TO THIRD LIMIT EXCEEDED FOR THIS CLIENT",
+                      "DAILY TRANSACTION LIMIT EXCEEDED FOR THIS CNPJ",
+                      "PAYER IRREGULAR DOCUMENT, PLEASE CONTACT SUPPORT TO REGULARIZE DOCUMENT",
+                      "PAYER UNDERAGE",
+                      "PAYER BLOCKED BY MERCHANT",
+                      "PAYMENT REPEATED TO SAME QRCODE",
+                    ].includes(filtersQuery[key])
+                      ? t(
+                          `table.${filtersQuery[key]
+                            ?.split(":")
+                            ?.join("")
+                            ?.split(" ")
+                            ?.join("_")
+                            ?.toLowerCase()}`
+                        )
+                      : filtersQuery[key]}
                   </Tag>
                 ) : (
                   <></>

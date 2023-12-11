@@ -9,7 +9,11 @@ export function useUpdateBankConfig(body?: IMerchantBankUpdate | null) {
   >("UpdateMerchantBankConfig", async () => {
     const response = await api.put(
       "core/merchant/config/banks/update",
-      body,
+      {
+        ...body,
+        merchants_ids:
+          body?.merchants_ids?.length === 0 ? undefined : body?.merchants_ids,
+      },
       {}
     );
     await queryClient.refetchQueries({ queryKey: ["MerchantsRegister"] });
@@ -27,6 +31,7 @@ export function useUpdateBankConfig(body?: IMerchantBankUpdate | null) {
     UpdateMutate,
     UpdateIsLoading,
     UpdateBankError,
-    UpdateBankIsSuccess,reset
+    UpdateBankIsSuccess,
+    reset,
   };
 }
