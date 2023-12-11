@@ -7,6 +7,7 @@ import { useGetRowsMerchantManualEntryCategory } from "@src/services/register/me
 import { useListOperatorById } from "@src/services/register/operator/getListOperatorById";
 import { useGetOrganizationCategories } from "@src/services/register/organization/categories/getCategories";
 import { useListPartnerById } from "@src/services/register/partner/getListPartnerById";
+import { useGetProfiles } from "@src/services/register/permissionGroups/getProfiles";
 import { Col, Row, Tag } from "antd";
 import moment from "moment";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
@@ -60,6 +61,9 @@ export const FilterChips = ({
     page: 1,
     sort_field: "created_at",
     sort_order: "DESC",
+  });
+  const { ProfilesData } = useGetProfiles({
+    group: true,
   });
 
   const [filtersQuery, setFiltersQuery] = useState<any>(query);
@@ -454,6 +458,45 @@ export const FilterChips = ({
 
           case "log_type":
             return;
+
+          case "profiles":
+            return (
+              <Col key={key}>
+                {filtersQuery[key] ? (
+                  <Tag
+                    data-test-id="filter-chip-default"
+                    style={{
+                      width: "100%",
+                      textOverflow: "ellipsis",
+                      overflow: "hidden",
+                      wordBreak: "break-all",
+                      display: disabled?.includes(key) ? "none" : undefined,
+                    }}
+                    key={key}
+                    color="cyan"
+                    icon={
+                      <CloseCircleOutlined onClick={() => deleteFilter(key)} />
+                    }
+                  >
+                    {t(`table.${key}`)}:{" "}
+                    {`[${filtersQuery[key]
+                      .split("[")[1]
+                      .split("]")[0]
+                      .split(",")
+                      .map((p: string) =>
+                        t(
+                          `table.${ProfilesData?.find(
+                            (profile) => profile.id === +p
+                          )?.name?.toLocaleLowerCase()}`
+                        )
+                      )
+                      .join(", ")}]`}
+                  </Tag>
+                ) : (
+                  <></>
+                )}
+              </Col>
+            );
 
           case "type":
             return (

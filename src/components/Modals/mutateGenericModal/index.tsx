@@ -6,9 +6,12 @@ import { AggregatorSelect } from "@src/components/Selects/aggregatorSelect";
 import { OperatorSelect } from "@src/components/Selects/operatorSelect";
 import { ValidateToken } from "@src/components/ValidateToken";
 import { useListClientClientBanks } from "@src/services/bank/listClientBanks";
+import { useGetMerchantBalanceTotal } from "@src/services/consult/merchant/balance/getMerchantBalanceTotal";
 import { queryClient } from "@src/services/queryClient";
 import { useGetRowsMerchantBlacklistReasons } from "@src/services/register/merchant/blacklist/getMerchantBlacklistReason";
+import { useGetProfiles } from "@src/services/register/permissionGroups/getProfiles";
 import { useGetrefetchCountries } from "@src/services/states_cities/getCountries";
+import { ProfileInterface } from "@src/services/types/register/permissionsGroup/permissionsGroupinterface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
 import { unmask } from "@src/utils/functions";
 import {
@@ -37,7 +40,6 @@ import { useTranslation } from "react-i18next";
 import ReactInputMask from "react-input-mask";
 import { MerchantSelect } from "../../Selects/merchantSelect";
 import { PartnerSelect } from "../../Selects/partnerSelect";
-import { useGetMerchantBalanceTotal } from "@src/services/consult/merchant/balance/getMerchantBalanceTotal";
 const { RangePicker } = DatePicker;
 
 interface mutateProps {
@@ -127,6 +129,10 @@ export const MutateModal = ({
     refetchMerchantBalance();
   }, [body]);
 
+  const { ProfilesData, isProfilesDataFetching } = useGetProfiles({
+    group: true,
+  });
+  
   const validateCnpjLength = (_: any, value: string) => {
     if (value && value.replace(/[^\d]/g, "").length !== 14) {
       return Promise.reject(
@@ -535,6 +541,55 @@ export const MutateModal = ({
                             [event.target.name]: Number(event.target.value),
                           }))
                         }
+                      />
+                    </Form.Item>
+                  </Col>
+                );
+
+              case "profile_id":
+                return (
+                  <Col span={24}>
+                    <Form.Item
+                      data-test-id={`${field.label}-form-item`}
+                      label={t(`table.${field.label}`)}
+                      name={field.label}
+                      style={{ margin: 10 }}
+                      rules={[
+                        {
+                          required: field.required,
+                          message:
+                            t("input.required", {
+                              field: t(`input.${field.label}`),
+                            }) || "",
+                        },
+                      ]}
+                    >
+                      <Select
+                        data-test-id={`${field.label}-select`}
+                        size="large"
+                        options={
+                          ProfilesData?.map((profile: ProfileInterface) => {
+                            return {
+                              label: t(
+                                `table.${profile?.name?.toLocaleLowerCase()}`
+                              ),
+                              value: profile?.id,
+                            };
+                          }) || []
+                        }
+                        loading={isProfilesDataFetching}
+                        notFoundContent={<Empty />}
+                        value={
+                          body[field.label]
+                        }
+                        onChange={(value) => {
+                          setBody((state: any) => ({
+                            ...state,
+                            [field.label]: value,
+                          }));
+                        }}
+                        style={{ width: "100%", height: 40 }}
+                        placeholder={t(`table.${field.label}`)}
                       />
                     </Form.Item>
                   </Col>

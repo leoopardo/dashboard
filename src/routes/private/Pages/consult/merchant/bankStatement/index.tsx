@@ -35,6 +35,8 @@ const INITIAL_QUERY: MerchantBankStatementTotalsQuery = {
     .startOf("day")
     .add(3, "hours")
     .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+  sort_field: "paid_at",
+  sort_order: "desc",
 };
 
 export const MerchantBankStatement = () => {
@@ -115,7 +117,7 @@ export const MerchantBankStatement = () => {
 
         {permissions.report.merchant.extract
           .report_merchant_extract_export_csv && (
-          <Grid item xs={12} md={1} >
+          <Grid item xs={12} md={1}>
             <ExportReportsModal
               disabled={
                 !MerchantTransactions?.total || MerchantTransactionsError
