@@ -25,6 +25,7 @@ import weekday from "dayjs/plugin/weekday";
 import moment from "moment";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useMediaQuery } from "react-responsive";
 import { useGetCities } from "../../services/states_cities/getCities";
 import { useGetStates } from "../../services/states_cities/getStates";
 import { AggregatorSelect } from "../Selects/aggregatorSelect";
@@ -36,7 +37,6 @@ import { PartnerSelect } from "../Selects/partnerSelect";
 import { ReasonSelect } from "../Selects/reasonSelect";
 import { FilterChips } from "./filterChips";
 import { StyleWrapperDatePicker } from "./styles";
-import { useMediaQuery } from "react-responsive";
 const { RangePicker } = DatePicker;
 
 dayjs.extend(weekday);
@@ -365,6 +365,8 @@ export const FiltersModal = ({
                         }));
                         formRef?.current?.validateFields();
                       }}
+                      autoFocus={false}
+                      autoComplete="off"
                     />
                   </ConfigProvider>
                 </Form.Item>
