@@ -2,6 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
+  BarChartOutlined,
   DollarOutlined,
   FileSearchOutlined,
   FolderAddOutlined,
@@ -22,6 +23,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import secureLocalStorage from "react-secure-storage";
 import { useMenu } from "../../contexts/SidebarContext";
 import { defaultTheme } from "../../styles/defaultTheme";
+import { motion } from "framer-motion";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -29,6 +31,7 @@ export const SidebarNavigation = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { resetErrors } = useErrorContext();
+  const LargeDesktop = useMediaQuery({ maxHeight: "920px" });
   const isMobile = useMediaQuery({ maxWidth: "950px" });
   const [collapsed, setCollapsed] = useState(true);
   const { handleChangeSidebar, isSidebarOpen } = useMenu();
@@ -94,25 +97,15 @@ export const SidebarNavigation = () => {
   const i: MenuItem[] = [
     getItem(
       "dashboard",
-      null,
+      <BarChartOutlined style={{ fontSize: "23px" }} />,
       null,
       false,
       () => navigate("/dashboard"),
       { fontSize: "16px" },
-      import.meta.env.VITE_APP_COMPANY_NAME,
+      t("menus.dashboard"),
       "dark"
     ),
-    getItem(
-      "div1",
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      "divider"
-    ),
+
     // - CADASTROS
     getItem(
       "register",
@@ -1889,30 +1882,6 @@ export const SidebarNavigation = () => {
         display: permissions?.support?.menu ? undefined : "none",
       }
     ),
-    getItem(
-      "div1",
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      "divider"
-    ),
-    getItem(
-      "logout",
-      <LogoutOutlined style={{ fontSize: "23px" }} />,
-      null,
-      false,
-      () => {
-        secureLocalStorage.removeItem("token");
-        sessionStorage.removeItem("token");
-        queryClient.refetchQueries(["validate"]);
-        resetErrors();
-      },
-      { color: "red" }
-    ),
   ];
 
   useEffect(() => {
@@ -1934,36 +1903,79 @@ export const SidebarNavigation = () => {
       }}
     >
       <Tour open={isMenuTourOpen} onClose={() => setIsMenuTourOpen(true)} />
-      <Button
-        type={isMobile && !isSidebarOpen ? "ghost" : "primary"}
-        onClick={toggleCollapsed}
-        style={{
-          height: "55px",
-          width: isSidebarOpen ? 256 : 80,
-          borderRadius: 0,
-        }}
+      <motion.div
+        whileHover={{ filter: "contrast(130%)" }}
+        whileTap={{ filter: "contrast(100%)" }}
       >
-        {!isSidebarOpen ? (
-          <MenuUnfoldOutlined
+        <Button
+          type={isMobile && !isSidebarOpen ? "ghost" : "primary"}
+          onClick={toggleCollapsed}
+          style={{
+            height: LargeDesktop ? "6vh" : "7vh",
+            width: isSidebarOpen ? 256 : 80,
+            borderRadius: 0,
+            backgroundColor:
+              isMobile && !isSidebarOpen
+                ? undefined
+                : theme === "dark"
+                ? "#222222"
+                : defaultTheme.colors.primary,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            borderBottom: isMobile
+              ? "none"
+              : theme === "light"
+              ? "1px solid #797979ac"
+              : "1px solid #4b4b4bac",
+          }}
+        >
+          <div
             style={{
-              fontSize: "26px",
-              color: theme === "dark" ? "#fff" : "#000",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
             }}
-          />
-        ) : (
-          <MenuFoldOutlined
-            style={{
-              fontSize: "26px",
-              color: theme === "dark" ? "#fff" : "#000",
-            }}
-          />
-        )}
-      </Button>
+          >
+            {isSidebarOpen && (
+              <img
+                src={import.meta.env.VITE_APP_LOGO}
+                style={{ width: "180px" }}
+              />
+            )}
+            {!isSidebarOpen ? (
+              <MenuUnfoldOutlined
+                style={{
+                  fontSize: "26px",
+                  color:
+                    !isSidebarOpen && isMobile && theme === "light"
+                      ? "#000"
+                      : import.meta.env.VITE_APP_MENU_THEME === "dark"
+                      ? "#fff"
+                      : "#000",
+                }}
+              />
+            ) : (
+              <MenuFoldOutlined
+                style={{
+                  fontSize: "26px",
+                  color:
+                  !isSidebarOpen && isMobile && theme === "light"
+                      ? "#000"
+                      : import.meta.env.VITE_APP_MENU_THEME === "dark"
+                      ? "#fff"
+                      : "#000",
+                }}
+              />
+            )}
+          </div>
+        </Button>
+      </motion.div>
 
       <Menu
         style={{
-          minHeight: "100%",
-          maxHeight: "100%",
+          minHeight: LargeDesktop ? "89vh" : "86vh",
+          maxHeight: "90vh",
           overflow: "auto",
           backgroundColor:
             theme === "dark" ? "#222222" : defaultTheme.colors.primary,
@@ -1979,6 +1991,34 @@ export const SidebarNavigation = () => {
         inlineCollapsed={!isSidebarOpen}
         items={items}
       />
+      {(!isMobile || isSidebarOpen) && (
+        <motion.div
+          whileHover={{ filter: "contrast(130%)" }}
+          whileTap={{ filter: "contrast(100%)" }}
+        >
+          <Button
+            type={isMobile && !isSidebarOpen ? "ghost" : "primary"}
+            onClick={() => {
+              secureLocalStorage.removeItem("token");
+              sessionStorage.removeItem("token");
+              queryClient.refetchQueries(["validate"]);
+              resetErrors();
+            }}
+            danger
+            style={{
+              height: LargeDesktop ? "5vh" : "7vh",
+              width: isSidebarOpen ? 256 : 80,
+              borderRadius: 0,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            icon={<LogoutOutlined style={{ fontSize: "23px" }} />}
+          >
+            {isSidebarOpen && t("menus.logout")}
+          </Button>
+        </motion.div>
+      )}
     </div>
   );
 };
