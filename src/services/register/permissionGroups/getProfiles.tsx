@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { api } from "@config/api";
 import { ProfileInterface } from "@src/services/types/register/permissionsGroup/permissionsGroupinterface";
-import { useEffect } from "react";
 import { useQuery } from "react-query";
 
 export function useGetProfiles(params: {group?: boolean}) {
