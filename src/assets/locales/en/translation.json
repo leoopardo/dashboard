@@ -1003,7 +1003,9 @@
     "create_file": "Create file",
     "update_file": "Update file",
     "create_cpf": "Create document",
-    "update_cpf": "Update document"
+    "update_cpf": "Update document",
+    "unknown": "Unknown",
+    "trio": "Trio"
   },
   "wiki": {
     "categories_description": "This feature enables the registration of categories for manual entries made by the organization. Categories are used for identifying the reasons for the entries.",

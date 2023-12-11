@@ -1015,7 +1015,9 @@
     "create_file": "Criar arquivo",
     "update_file": "Atualizar arquivo",
     "create_cpf": "Criar CPF",
-    "update_cpf": "Atualizar CPF"
+    "update_cpf": "Atualizar CPF",
+    "unknown": "Desconhecido",
+    "trio": "Trio"
   },
   "wiki": {
     "categories_description": "Esta funcionalidade viabiliza o cadastro de categorias de lançamentos manuais realizados pela organização. As categorizações servem para identificação dos motivos dos lançamentos.",
