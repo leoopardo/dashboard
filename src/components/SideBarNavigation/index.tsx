@@ -32,7 +32,7 @@ export const SidebarNavigation = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { resetErrors } = useErrorContext();
-  const LargeDesktop = useMediaQuery({ maxHeight: "920px" });
+  const LargeDesktop = useMediaQuery({ maxHeight: "800px" });
   const isMobile = useMediaQuery({ maxWidth: "950px" });
   const [collapsed, setCollapsed] = useState(true);
   const { handleChangeSidebar, isSidebarOpen } = useMenu();
@@ -1912,7 +1912,7 @@ export const SidebarNavigation = () => {
           type={isMobile && !isSidebarOpen ? "ghost" : "primary"}
           onClick={toggleCollapsed}
           style={{
-            height: LargeDesktop ? "6vh" : "7vh",
+            height: LargeDesktop ? "8vh" : "6vh",
             width: isSidebarOpen ? 256 : 80,
             borderRadius: 0,
             backgroundColor:
@@ -1977,7 +1977,7 @@ export const SidebarNavigation = () => {
 
       <Menu
         style={{
-          minHeight: LargeDesktop ? "89vh" : "86vh",
+          minHeight: LargeDesktop ? "85vh" : "89vh",
           maxHeight: "90vh",
           overflow: "auto",
           backgroundColor:
@@ -2009,7 +2009,7 @@ export const SidebarNavigation = () => {
             }}
             danger
             style={{
-              height: LargeDesktop ? "5vh" : "7vh",
+              height: LargeDesktop ? "8vh" : "5vh",
               width: isSidebarOpen ? 256 : 80,
               borderRadius: 0,
               display: "flex",
