@@ -910,7 +910,20 @@
     "bank_acc_number": "Bank account number",
     "pixtype": "PIX type",
     "merchant_hash": "Merchant hash",
-    "search": "Search"
+    "search": "Search",
+    "divergent_value": "Divergent value",
+    "payment_from_qr_code_expired": "Epired QrCode",
+    "payment_refund_third_party_payment_unavailable": "Third party payment unavailable",
+    "payment_refund_cnpj_not_accepted": "CNPJ not accepted",
+    "daily_transaction_limit_exceeded_for_this_client": "Daily transaction limit exceeded for this client",
+    "month_transaction_limit_exceeded_for_this_client": "Month transaction limit exceeded for this client",
+    "daily_transaction_to_third_limit_exceeded_for_this_client": "Daily transaction to third limit exceeded for this client",
+    "daily_transaction_limit_exceeded_for_this_cnpj": "Daily transaction limit exceeded for this CNPJ",
+    "payer_irregular_document,_please_contact_support_to_regularize_document": "Payer irregular document",
+    "payer_underage": "Payer underage",
+    "payer_blocked_by_merchant": "Payer blocked by merchant",
+    "payment_repeated_to_same_qrcode": "Payment repeated to same qrcode",
+    "refund_reason": "Refund reason"
   },
   "actions": {
     "details": "Details",

@@ -400,6 +400,7 @@ export const RefundDeposits = () => {
             "bank",
             "payer_bank",
             "pix_type",
+            "refund_reason",
             "state",
             "city",
             "gender",
@@ -417,6 +418,20 @@ export const RefundDeposits = () => {
             ],
             pix_type: ["STANDARD", "FASTPIX"],
             gender: ["MALE", "FEMALE", "OTHER"],
+            refund_reason: [
+              "DIVERGENT VALUE",
+              "PAYMENT FROM QR CODE EXPIRED",
+              "PAYMENT REFUND: THIRD PARTY PAYMENT UNAVAILABLE",
+              "PAYMENT REFUND: CNPJ NOT ACCEPTED",
+              "DAILY TRANSACTION LIMIT EXCEEDED FOR THIS CLIENT",
+              "MONTH TRANSACTION LIMIT EXCEEDED FOR THIS CLIENT",
+              "DAILY TRANSACTION TO THIRD LIMIT EXCEEDED FOR THIS CLIENT",
+              "DAILY TRANSACTION LIMIT EXCEEDED FOR THIS CNPJ",
+              "PAYER IRREGULAR DOCUMENT, PLEASE CONTACT SUPPORT TO REGULARIZE DOCUMENT",
+              "PAYER UNDERAGE",
+              "PAYER BLOCKED BY MERCHANT",
+              "PAYMENT REPEATED TO SAME QRCODE",
+            ],
           }}
           startDateKeyName="start_date"
           endDateKeyName="end_date"

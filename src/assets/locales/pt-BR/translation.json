@@ -918,7 +918,20 @@
     "bank_acc_number": "Conta corrente",
     "pixtype": "Tipo de pix",
     "merchant_hash": "Hash da empresa",
-    "search": "Pesquisa"
+    "search": "Pesquisa",
+    "divergent_value": "Valor divergente",
+    "payment_from_qr_code_expired": "QrCode expirado",
+    "payment_refund_third_party_payment_unavailable": "Pagamento para terceiros indisponível",
+    "payment_refund_cnpj_not_accepted": "CNPJ recusado",
+    "daily_transaction_limit_exceeded_for_this_client": "Limite de transação diária para cliente",
+    "month_transaction_limit_exceeded_for_this_client": "Limite de transação mensal para cliente",
+    "daily_transaction_to_third_limit_exceeded_for_this_client": "Limite de transação para terceiros diário para cliente",
+    "daily_transaction_limit_exceeded_for_this_cnpj": "Limite detransação diário para CNPJ",
+    "payer_irregular_document,_please_contact_support_to_regularize_document": "Documento irregular do pagador",
+    "payer_underage": "Pagador menor de idade",
+    "payer_blocked_by_merchant": "Pagador bloqueado pelo merchant",
+    "payment_repeated_to_same_qrcode": "Pagamento duplicado",
+    "refund_reason": "Motivo da devolução"
   },
   "actions": {
     "details": "Detalhes",

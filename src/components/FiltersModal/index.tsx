@@ -699,6 +699,49 @@ export const FiltersModal = ({
             case endDateKeyName:
               return;
 
+            case "refund_reason":
+              return (
+                <Form.Item
+                  data-test-id="form-item-default"
+                  label={t(`table.${filter}`)}
+                  name={filter}
+                  style={{ marginBottom: 10 }}
+                >
+                  <Select
+                    data-test-id="select-default"
+                    size="large"
+                    style={{ width: "100%", height: "40px" }}
+                    placeholder={t(`table.${filter}`)}
+                    value={[filtersQuery[filter]] ?? null}
+                    onChange={(value) => {
+                      setFiltersQuery((state: any) => ({
+                        ...state,
+                        reason: value,
+                      }));
+                    }}
+                    showSearch
+                    options={
+                      ["", ...selectOptions[filter]]?.map((option: any) => {
+                        if (option === "") {
+                          return { value: "", label: "" };
+                        }
+                        return {
+                          value: option,
+                          label: t(
+                            `table.${option
+                              ?.split(":")
+                              .join("")
+                              .split(" ")
+                              .join("_")
+                              ?.toLowerCase()}`
+                          ),
+                        };
+                      }) ?? []
+                    }
+                  />
+                </Form.Item>
+              );
+
             default:
               return (
                 <Form.Item
