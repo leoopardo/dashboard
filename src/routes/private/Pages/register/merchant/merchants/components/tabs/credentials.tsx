@@ -107,7 +107,6 @@ export const CredentialConfigTab = (props: { id?: string }) => {
     if (!CreateCredentialsIsSuccess) return;
     setCreatedCredential(data);
     setIsViewModalOpen(true);
-    console.log(data);
   }, [CreateCredentialsIsSuccess]);
 
   useEffect(() => {

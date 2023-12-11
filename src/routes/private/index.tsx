@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import { NotFount } from "../public/Pages/404";
 import { GeneratedDeposits } from "./Pages/consult/deposits/generated";
 import { PaidDeposits } from "./Pages/consult/deposits/paid";
+import { DepositsReceipts } from "./Pages/consult/deposits/receipts";
 import { GeneratedDepositsReports } from "./Pages/consult/deposits/reports/generatedDeposits";
 import { PaidDepositsReports } from "./Pages/consult/deposits/reports/paidDeposits";
 import { DepositsWebhooks } from "./Pages/consult/deposits/reports/webhooks";
@@ -17,6 +18,10 @@ import { OrganizationBankStatement } from "./Pages/consult/organization/bankStat
 import { OrganizationHistory } from "./Pages/consult/organization/history";
 import { ConsultOrganizationReports } from "./Pages/consult/organization/reports";
 import { CheckDocument } from "./Pages/consult/persons/checkDocument";
+import { HistoricCpfByMerchant } from "./Pages/consult/persons/historicCpfByMerchant";
+import { HistoricCpfByMerchantDetails } from "./Pages/consult/persons/historicCpfByMerchant/details";
+import { HistoricCpfByMerchantReports } from "./Pages/consult/persons/reports/historicCpfByMerchant";
+import { HistoricCpfByMerchantDetailsReports } from "./Pages/consult/persons/reports/historicCpfByMerchantDetails";
 import { RefundDeposits } from "./Pages/consult/refunds/deposits";
 import { RefundDepositsManual } from "./Pages/consult/refunds/depositsManual";
 import { RefundDepositsReports } from "./Pages/consult/refunds/reports/deposits";
@@ -85,6 +90,7 @@ import { PartnerDetails } from "./Pages/register/partner/partners/viewPartner";
 import { PartnerReports } from "./Pages/register/partner/reports/partner";
 import { PartnerUsersReports } from "./Pages/register/partner/reports/users";
 import { PartnerUsers } from "./Pages/register/partner/users";
+import { PermissionsGroups } from "./Pages/register/permissionsGroups";
 import { Persons } from "./Pages/register/persons";
 import { PersonBlacklistReasons } from "./Pages/register/persons/blacklist/blacklistReasons";
 import { ImportPersonsBlacklist } from "./Pages/register/persons/blacklist/importBlacklist";
@@ -103,14 +109,8 @@ import { BankBlackistReports } from "./Pages/support/blacklists/reports/bankBlac
 import { ThirdPartKeyBlacklist } from "./Pages/support/blacklists/thirdPartKey";
 import { ImportContastationDeposit } from "./Pages/support/contastation/importCSV";
 import { ContestationUploads } from "./Pages/support/contastation/uploads";
-import { HistoricCpfByMerchant } from "./Pages/consult/persons/historicCpfByMerchant";
 import { Permission } from "./permission";
 import { Redirect } from "./redirect";
-import { DepositsReceipts } from "./Pages/consult/deposits/receipts";
-import { HistoricCpfByMerchantReports } from "./Pages/consult/persons/reports/historicCpfByMerchant";
-import { HistoricCpfByMerchantDetails } from "./Pages/consult/persons/historicCpfByMerchant/details";
-import { HistoricCpfByMerchantDetailsReports } from "./Pages/consult/persons/reports/historicCpfByMerchantDetails";
-
 export const PrivateRoutes = () => {
   const { responseValidate } = useValidate();
 
@@ -646,6 +646,14 @@ export const PrivateRoutes = () => {
                   }
                 >
                   <GeneralConfigs />
+                </Permission>
+              }
+            />
+            <Route
+              path="permissions_groups"
+              element={
+                <Permission permission={responseValidate?.type === 1}>
+                  <PermissionsGroups />
                 </Permission>
               }
             />

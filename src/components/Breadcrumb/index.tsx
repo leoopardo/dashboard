@@ -83,7 +83,7 @@ export const BreadcrumbComponent = () => {
                 >
                   <Typography.Title level={4} style={{ margin: 0 }}>
                     <HomeOutlined style={{ fontSize: 18, marginRight: 8 }} />/{" "}
-                    {import.meta.env.VITE_APP_COMPANY_NAME}
+                    {t("menus.dashboard")}
                   </Typography.Title>
                 </div>
               ),
