@@ -180,9 +180,7 @@ export const SidebarNavigation = () => {
               false,
               (e) => handleNavigate(e?.keyPath),
               {
-                display: permissions?.register?.paybrokers?.users?.menu
-                  ? undefined
-                  : "none",
+                display: type === 1 ? undefined : "none",
               }
             ),
             getItem(
