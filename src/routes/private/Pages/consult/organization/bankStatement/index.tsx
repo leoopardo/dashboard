@@ -172,7 +172,7 @@ export const OrganizationBankStatement = () => {
                 ],
                 series: [
                   {
-                    name: "Access From",
+                    name: `${t("table.number_in")} / ${t("table.number_out")}`,
                     type: "pie",
                     radius: ["40%", "70%"],
                     avoidLabelOverlap: false,
@@ -261,8 +261,47 @@ export const OrganizationBankStatement = () => {
                   ],
                 },
                 xAxis: { type: "category" },
-                yAxis: {},
-                series: [{ type: "bar" }, { type: "bar" }, { type: "bar" }],
+                yAxis: {
+                  axisLabel: {
+                    formatter: (value: number) =>
+                      new Intl.NumberFormat("pt-BR", {
+                        style: "currency",
+                        currency: "BRL",
+                      }).format(value ?? 0),
+                  },
+                },
+                series: [
+                  {
+                    type: "bar",
+                    tooltip: {
+                      valueFormatter: (value: number) =>
+                        new Intl.NumberFormat("pt-BR", {
+                          style: "currency",
+                          currency: "BRL",
+                        }).format(value ?? 0),
+                    },
+                  },
+                  {
+                    type: "bar",
+                    tooltip: {
+                      valueFormatter: (value: number) =>
+                        new Intl.NumberFormat("pt-BR", {
+                          style: "currency",
+                          currency: "BRL",
+                        }).format(value ?? 0),
+                    },
+                  },
+                  {
+                    type: "bar",
+                    tooltip: {
+                      valueFormatter: (value: number) =>
+                        new Intl.NumberFormat("pt-BR", {
+                          style: "currency",
+                          currency: "BRL",
+                        }).format(value ?? 0),
+                    },
+                  },
+                ],
               }}
               opts={{ renderer: "svg" }}
               lazyUpdate
