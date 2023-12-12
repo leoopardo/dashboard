@@ -89,7 +89,7 @@ export const UpdateOperator = () => {
   const tabAttachments = document.querySelector('[data-node-key="3"]');
 
   const { UpdateError, UpdateIsLoading, UpdateMutate, UpdateIsSuccess } =
-    useUpdateOperator(OperatorBody);
+    useUpdateOperator({...OperatorBody, operator_id: location.state.id,});
 
   const [responsibleQuery, setResponsibleQuery] =
     useState<OperatorResponsiblesQuery>(INITIAL_RESPONSIBLE_QUERY);
