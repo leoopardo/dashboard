@@ -155,9 +155,11 @@ export const ValidateToken = ({
       setLoading(true);
       setTimeout(() => {
         submit();
+      }, 1000);
+      setTimeout(() => {
         setLoading(false);
         setTokenState("");
-      }, 1000);
+      }, 2300);
     }
   }, [tokenState]);
 
