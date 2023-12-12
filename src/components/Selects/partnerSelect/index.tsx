@@ -35,12 +35,12 @@ export const PartnerSelect = ({
       setValue(undefined);
     }
     if (partnersData && !value) {
-      const initial = queryOptions.partner_id
+      const initial = queryOptions?.partner_id
         ? partnersData?.items.find(
-            (partner) => partner.id === queryOptions.partner_id
+            (partner) => partner.id === queryOptions?.partner_id
           )
         : partnersData?.items.find(
-            (partner) => partner.id === queryOptions.partner?.id
+            (partner) => partner.id === queryOptions?.partner?.id
           );
       if (initial) {
         setValue(initial?.name);
