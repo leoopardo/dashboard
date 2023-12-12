@@ -24,6 +24,7 @@ export const Search = ({ query, setQuery, searchOption }: SearchInterface) => {
       placeholder="Pesquisa"
       value={search}
       disabled={!searchOption}
+      
       style={{ width: "100%" }}
       onChange={(event) => {
         setSearch(event.target.value);

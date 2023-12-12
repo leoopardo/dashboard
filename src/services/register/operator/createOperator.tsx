@@ -8,7 +8,7 @@ export function useCreateOperator(body: OperatorItem) {
     OperatorItem | null | undefined
   >("CreateOperator", async () => {
     const response = await api.post("core/operator/create", body, {});
-    await queryClient.refetchQueries({ queryKey: ["Operators"] });
+    await queryClient.refetchQueries({ queryKey: ["Operator"] });
     return response.data;
   });
 
