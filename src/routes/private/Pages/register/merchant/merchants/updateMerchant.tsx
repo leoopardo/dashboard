@@ -203,14 +203,14 @@ export const UpdateMerchant = () => {
     setMerchantBody({
       merchant_id: currentMerchant?.id,
       name: currentMerchant?.name,
-      cnpj: currentMerchant?.cnpj,
-      cellphone: currentMerchant?.cellphone,
-      email: currentMerchant?.email,
-      v3_id: Number(currentMerchant?.v3_id),
+      cnpj: currentMerchant?.cnpj ?? undefined,
+      cellphone: currentMerchant?.cellphone ?? undefined,
+      email: currentMerchant?.email ?? undefined,
+      v3_id: currentMerchant?.v3_id !==0 ? Number(currentMerchant?.v3_id) : undefined,
       partner_id: currentMerchant?.partner?.id,
       aggregator_id: currentMerchant?.aggregator?.id,
       operator_id: currentMerchant?.operator?.id,
-      country: currentMerchant?.country,
+      country: currentMerchant?.country ?? undefined,
     })
 
     formRef.current?.setFieldsValue(currentMerchant);
