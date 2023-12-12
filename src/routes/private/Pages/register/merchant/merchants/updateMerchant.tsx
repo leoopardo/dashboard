@@ -313,7 +313,7 @@ export const UpdateMerchant = () => {
               </Form.Item>
             </Col>
             <Col xs={{ span: 24 }} md={{ span: 6 }}>
-              <Form.Item label={t("table.cellphone")} name="name">
+              <Form.Item label={t("table.cellphone")} name="cellphone">
                 <CellphoneInput body={merchantBody} setBody={setMerchantBody} />
               </Form.Item>
             </Col>
