@@ -151,15 +151,14 @@ export const ValidateToken = ({
   }, [success, error, ValidatePhoneSuccess, ValidatePhoneError]);
 
   useEffect(() => {
-    if (tokenState.length < 6) {
-      return;
+    if (tokenState.length === 6) {
+      setLoading(true);
+      setTimeout(() => {
+        submit();
+        setLoading(false);
+        setTokenState("");
+      }, 1000);
     }
-    submit();
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setTokenState("");
-    }, 1000);
   }, [tokenState]);
 
   return Self?.phone_validated ? (

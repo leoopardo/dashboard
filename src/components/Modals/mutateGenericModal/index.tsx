@@ -97,6 +97,7 @@ export const MutateModal = ({
   validateToken,
   validateTokenAction,
   success,
+  error,
   merchantBetweenAccounts,
   query,
 }: mutateProps) => {
@@ -132,7 +133,7 @@ export const MutateModal = ({
   const { ProfilesData, isProfilesDataFetching } = useGetProfiles({
     group: true,
   });
-  
+
   const validateCnpjLength = (_: any, value: string) => {
     if (value && value.replace(/[^\d]/g, "").length !== 14) {
       return Promise.reject(
@@ -195,8 +196,9 @@ export const MutateModal = ({
   }, [tokenState]);
 
   useEffect(() => {
-    if (tokenState && success) {
+    if (success && clear) {
       setOpen(false);
+      clear();
     }
   }, [success]);
 
@@ -579,9 +581,7 @@ export const MutateModal = ({
                         }
                         loading={isProfilesDataFetching}
                         notFoundContent={<Empty />}
-                        value={
-                          body[field.label]
-                        }
+                        value={body[field.label]}
                         onChange={(value) => {
                           setBody((state: any) => ({
                             ...state,
@@ -1267,8 +1267,8 @@ export const MutateModal = ({
           tokenState={tokenState}
           submit={submit}
           body={body}
-          error={false}
-          success={false}
+          error={error}
+          success={success}
         />
       )}
     </Drawer>

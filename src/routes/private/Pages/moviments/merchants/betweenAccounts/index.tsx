@@ -57,7 +57,7 @@ export const TransfersBetweenAccounts = () => {
     refetchTransferBetweenAccountsData,
   } = useGetTransferBetweenAccounts(query);
 
-  const { error, isLoading, isSuccess, mutate } =
+  const { error, isLoading, isSuccess, mutate, reset } =
     useCreateTransferBetweenAccounts({
       ...body,
       merchant_id: (body?.merchant_id || user?.merchant_id) ?? undefined,
@@ -356,6 +356,7 @@ export const TransfersBetweenAccounts = () => {
           error={error}
           success={isSuccess}
           submitText={`${t("buttons.create")}`}
+          clear={reset}
         />
       )}
 
