@@ -30,7 +30,7 @@ export const OperatorSelect = ({
   const debounceSearch = useDebounce(query.name);
 
   useEffect(() => {
-    if (!queryOptions.operator_id) {
+    if (!queryOptions?.operator_id) {
       setValue(undefined);
     }
     if (!value) {

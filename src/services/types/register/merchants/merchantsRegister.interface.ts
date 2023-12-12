@@ -36,6 +36,8 @@ export interface MerchantsItem {
   email?: string | null;
   id?: number;
   merchantConfig?: IMerchantConfig;
+  aggregator?: {id?: number, name?: string};
+  operator?: {id?: number, name?: string};
   name?: string;
   organization_id?: number;
   partner?: IPartner;
@@ -59,6 +61,9 @@ export interface MerchantByIdResponse {
   aggregator: {id: number, name: string};
   cnpj: string;
   country: string;
+  cellphone?: string;
+  email?: string;
+  v3_id?: number;
   created_at: string;
   currency: string;
   domain: string;
