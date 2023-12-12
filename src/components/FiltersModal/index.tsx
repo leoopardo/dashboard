@@ -189,7 +189,6 @@ export const FiltersModal = ({
             type="dashed"
             onClick={() => {
               setQuery(initialQuery);
-              setFiltersQuery(initialQuery);
             }}
             danger
           >
