@@ -25,7 +25,6 @@ import {
   CreateMerchantFileInterface,
   useCreateMerchantAttachment,
 } from "@src/services/register/merchant/attachments/uploadAttachment";
-import { useGetRowsMerchantRegister } from "@src/services/register/merchant/merchant/getMerchants";
 import { useUpdateMerchant } from "@src/services/register/merchant/merchant/updateMerchant";
 import { useCreateMerchantResponsible } from "@src/services/register/merchant/responsibles/createResponsible";
 import { useDeleteMerchantResponsible } from "@src/services/register/merchant/responsibles/deleteResponsible";
