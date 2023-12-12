@@ -1060,7 +1060,6 @@ export const MutateModal = ({
                     </Form.Item>
                   </Col>
                 );
-
               case "description":
                 return (
                   <Col span={24}>
@@ -1230,7 +1229,6 @@ export const MutateModal = ({
                       style={{ margin: 10 }}
                       rules={[
                         {
-                          type: field?.type as any,
                           required: field?.required,
                           message:
                             t("input.required", {
@@ -1242,6 +1240,7 @@ export const MutateModal = ({
                       <Input
                         data-test-id={`${field?.label}-input`}
                         size="large"
+                        type={field?.type as any}
                         name={field?.label}
                         value={body[field?.label as any] ?? null}
                         onChange={handleChange}

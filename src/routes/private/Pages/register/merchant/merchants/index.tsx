@@ -453,7 +453,7 @@ export const MerchantView = () => {
           fields={[
             { label: "name", required: false },
             { label: "domain", required: false },
-            { label: "v3_id", required: false },
+            { label: "v3_id", required: false, type: "number" },
             { label: "partner_id", required: true },
             { label: "aggregator_id", required: false },
             { label: "operator_id", required: false },
@@ -522,7 +522,7 @@ export const MerchantView = () => {
           fields={[
             { label: "name", required: true },
             { label: "domain", required: true },
-            { label: "v3_id", required: false },
+            { label: "v3_id", required: false, type: "number" },
             { label: "partner_id", required: true },
             { label: "aggregator_id", required: false },
             { label: "operator_id", required: false },

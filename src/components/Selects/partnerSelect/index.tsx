@@ -31,7 +31,7 @@ export const PartnerSelect = ({
   const debounceSearch = useDebounce(query.name);
 
   useEffect(() => {
-    if (!queryOptions.partner_id) {
+    if (!queryOptions?.partner_id) {
       setValue(undefined);
     }
     if (partnersData && !value) {
