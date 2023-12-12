@@ -1273,7 +1273,10 @@ export const CustomTable = (props: TableProps) => {
                   onShowSizeChange: (_current, size) =>
                     props.setQuery((state: any) => ({ ...state, limit: size })),
                   style: {
-                    display: props.removePagination ? "none" : undefined,
+                    display:
+                      props.removePagination || props.error
+                        ? "none"
+                        : undefined,
                   },
                 }
               }
@@ -1349,7 +1352,7 @@ export const CustomTable = (props: TableProps) => {
               loading={props.loading}
             />
           </Grid>
-          {!props.removePagination && !props.bankStatement && (
+          {!props.removePagination && !props.bankStatement && props.items && (
             <Pagination
               style={{ marginTop: 8 }}
               current={Number(props?.query?.page ?? 1)}

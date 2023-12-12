@@ -1978,7 +1978,7 @@ export const SidebarNavigation = () => {
       <Menu
         style={{
           minHeight: LargeDesktop ? "85vh" : "89vh",
-          maxHeight: "90vh",
+          maxHeight: LargeDesktop ? "85vh" : "89vh",
           overflow: "auto",
           backgroundColor:
             theme === "dark" ? "#222222" : defaultTheme.colors.primary,

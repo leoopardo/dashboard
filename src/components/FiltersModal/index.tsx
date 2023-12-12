@@ -87,7 +87,7 @@ export const FiltersModal = ({
   const { cities, refetchCities } = useGetCities(currState);
   const submitRef = useRef<HTMLButtonElement>(null);
   const formRef = useRef<FormInstance>(null);
-  const isMobile = useMediaQuery({ maxWidth: "950px" });
+  const isMobile = useMediaQuery({ maxWidth: "550px" });
 
   useEffect(() => {
     if (query.age_start) {
@@ -365,6 +365,9 @@ export const FiltersModal = ({
                         }));
                         formRef?.current?.validateFields();
                       }}
+                      autoFocus={false}
+                      autoComplete="off"
+                      allowClear
                     />
                   </ConfigProvider>
                 </Form.Item>
