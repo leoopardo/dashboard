@@ -10,7 +10,7 @@ export interface UpdateCategoryInterface {
 }
 
 export function useUpdateOrganizationCategory(body: UpdateCategoryInterface) {
-  const { isLoading, error, mutate, isSuccess } = useMutation<
+  const { isLoading, error, mutate, isSuccess, reset } = useMutation<
     UpdateCategoryInterface | null | undefined
   >("UpdateCategory", async () => {
     const response = await api.put(
@@ -23,6 +23,7 @@ export function useUpdateOrganizationCategory(body: UpdateCategoryInterface) {
   });
 
   const updateMutate = mutate;
+  const updateReset = reset;
   const updateError = error;
   const updateIsLoading = isLoading;
   const updateSuccess = isSuccess;
@@ -31,6 +32,6 @@ export function useUpdateOrganizationCategory(body: UpdateCategoryInterface) {
     updateIsLoading,
     updateError,
     updateMutate,
-    updateSuccess,
+    updateSuccess,updateReset
   };
 }

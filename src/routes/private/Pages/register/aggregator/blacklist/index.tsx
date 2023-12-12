@@ -65,7 +65,7 @@ export const AggregatorBlacklist = () => {
     AggregatorReportsMutate,
   } = useCreateAggregatorBlacklistReports(query);
 
-  const { error, isLoading, isSuccess, mutate } =
+  const { error, isLoading, isSuccess, mutate, reset } =
     useCreateAggregatorBlacklist(body);
   const [search, setSearch] = useState<string>("");
   const debounceSearch = useDebounce(search);
@@ -286,6 +286,7 @@ export const AggregatorBlacklist = () => {
           submitLoading={isLoading}
           error={error}
           success={isSuccess}
+          clear={reset}
         />
       )}
 

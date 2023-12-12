@@ -77,7 +77,8 @@ export const Aggregators = () => {
     AggregatorReportsIsLoading,
     AggregatorReportsIsSuccess,
     AggregatorReportsMutate,
-  } = useCreateAggregatorReports({ ...query,
+  } = useCreateAggregatorReports({
+    ...query,
     fields: csvFields,
     comma_separate_value: comma,
   });
@@ -353,6 +354,7 @@ export const Aggregators = () => {
           submitLoading={AggregatorIsLoading}
           error={AggregatorError}
           success={AggregatorIsSuccess}
+          clear={AggregatorReset}
         />
       )}
       {isUpdateCategorieModalOpen && (
@@ -374,6 +376,7 @@ export const Aggregators = () => {
           submitLoading={UpdateIsLoading}
           error={UpdateError}
           success={UpdateIsSuccess}
+          clear={UpdateReset}
         />
       )}
       {isViewModalOpen && (

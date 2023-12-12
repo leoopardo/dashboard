@@ -240,7 +240,7 @@ export const MutateModal = ({
             return;
           }
           submit();
-          setOpen(false);
+          if (!clear) setOpen(false);
         }}
       >
         <Row>

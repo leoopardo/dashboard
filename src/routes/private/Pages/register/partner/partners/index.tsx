@@ -104,11 +104,21 @@ export const Partners = () => {
   const [isExportReportsOpen, setIsExportReportsOpen] =
     useState<boolean>(false);
 
-  const { PartnerIsLoading, PartnerMutate, PartnerError, PartnerIsSuccess } =
-    useCreatePartner(createBody);
+  const {
+    PartnerIsLoading,
+    PartnerMutate,
+    PartnerError,
+    PartnerIsSuccess,
+    reset,
+  } = useCreatePartner(createBody);
 
-  const { UpdateError, UpdateIsLoading, UpdateMutate, UpdateIsSuccess } =
-    useUpdatePartner(updateBody);
+  const {
+    UpdateError,
+    UpdateIsLoading,
+    UpdateMutate,
+    UpdateIsSuccess,
+    UpdateReset,
+  } = useUpdatePartner(updateBody);
 
   useEffect(() => {
     isSuccessPartnersTotalsData && refetchPartnersTotalsData();
@@ -340,6 +350,7 @@ export const Partners = () => {
           submitLoading={PartnerIsLoading}
           error={PartnerError}
           success={PartnerIsSuccess}
+          clear={reset}
         />
       )}
       {isUpdateCategorieModalOpen && (
@@ -361,6 +372,7 @@ export const Partners = () => {
           submitLoading={UpdateIsLoading}
           error={UpdateError}
           success={UpdateIsSuccess}
+          clear={UpdateReset}
         />
       )}
       {isViewModalOpen && (

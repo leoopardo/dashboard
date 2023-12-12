@@ -453,7 +453,9 @@
     "new_responsible": "New responsible",
     "update_responsible": "Update responsible",
     "update_merchant": "Update Merchant",
-    "pre_manual": "Manual pre entry"
+    "pre_manual": "Manual pre entry",
+    "create_group": "Create group",
+    "update_group": "Update group"
   },
   "table": {
     "id": "ID",

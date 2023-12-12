@@ -8,7 +8,7 @@ interface CreateCategoryInterface {
 }
 
 export function useCreateOrganizationCategory(body: CreateCategoryInterface) {
-  const { isLoading, error, mutate, isSuccess } = useMutation<
+  const { isLoading, error, mutate, isSuccess, reset } = useMutation<
     CreateCategoryInterface | null | undefined
   >("CreateCategory", async () => {
     const response = await api.post(
@@ -24,6 +24,6 @@ export function useCreateOrganizationCategory(body: CreateCategoryInterface) {
     isLoading,
     error,
     mutate,
-    isSuccess,
+    isSuccess,reset
   };
 }

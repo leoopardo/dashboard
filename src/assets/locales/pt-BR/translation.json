@@ -330,7 +330,9 @@
     "new_responsible": "Novo responsável",
     "update_responsible": "Editar responsável",
     "update_merchant": "Editar empresa",
-    "pre_manual": "Pre lançamento manual"
+    "pre_manual": "Pre lançamento manual",
+    "create_group": "Criar grupo",
+    "update_group": "Atualizar grupo"
   },
   "input": {
     "required": "Por favor, insira o {{field}}",

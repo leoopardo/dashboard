@@ -71,7 +71,7 @@ export const AggregatorSelfExclusion = () => {
   const [currentItem, setCurrentItem] = useState<SelfExclusionItem | null>(
     null
   );
-  const { error, isLoading, isSuccess, mutate } = useCreateSelfExclusion(body);
+  const { error, isLoading, isSuccess, mutate, reset } = useCreateSelfExclusion(body);
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false);
   const {
@@ -243,6 +243,7 @@ export const AggregatorSelfExclusion = () => {
           error={error}
           success={isSuccess}
           submitText={`${t("buttons.create")}`}
+          clear={reset}
         />
       )}
 

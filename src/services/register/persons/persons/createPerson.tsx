@@ -7,7 +7,7 @@ interface CreatePersonInterface {
 }
 
 export function useCreatePerson(body: CreatePersonInterface) {
-  const { isLoading, error, mutate, isSuccess } = useMutation<
+  const { isLoading, error, mutate, isSuccess, reset } = useMutation<
     CreatePersonInterface | null | undefined
   >("createPerson", async () => {
     const response = await api.post("customer/person", body, {});
@@ -25,5 +25,6 @@ export function useCreatePerson(body: CreatePersonInterface) {
     PersonIsLoading,
     PersonError,
     PersonIsSuccess,
+    reset
   };
 }

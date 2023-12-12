@@ -7,7 +7,7 @@ export function useUpdateBank(
   body: BankMaintenenceItem | null,
   id: number | undefined
 ) {
-  const { isLoading, error, mutate, isSuccess } = useMutation<
+  const { isLoading, error, mutate, isSuccess, reset } = useMutation<
     BankMaintenenceItem | null | undefined
   >("OrganizationBankUpdate", async () => {
     const response = await api.put(`config/update_banks/${id}`, body, {});
@@ -26,6 +26,6 @@ export function useUpdateBank(
     updateBank,
     updateBankLoading,
     updateBankError,
-    updateBankSuccess,
+    updateBankSuccess,reset
   };
 }

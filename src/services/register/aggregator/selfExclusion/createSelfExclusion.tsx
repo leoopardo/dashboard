@@ -4,7 +4,7 @@ import { CreateSelfExclusion } from "@src/services/types/register/aggregators/se
 import { useMutation } from "react-query";
 
 export function useCreateSelfExclusion(body: CreateSelfExclusion) {
-  const { isLoading, error, mutate, isSuccess } = useMutation<
+  const { isLoading, error, mutate, isSuccess, reset } = useMutation<
     CreateSelfExclusion | null | undefined
   >("CreateSelfExclusion", async () => {
     const response = await api.post("blacklist/self-exclusion", body, {});
@@ -17,5 +17,6 @@ export function useCreateSelfExclusion(body: CreateSelfExclusion) {
     error,
     mutate,
     isSuccess,
+    reset
   };
 }

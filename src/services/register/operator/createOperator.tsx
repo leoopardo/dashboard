@@ -4,7 +4,7 @@ import { useMutation } from "react-query";
 import { api } from "../../../config/api";
 
 export function useCreateOperator(body: OperatorItem) {
-  const { isLoading, error, mutate, isSuccess } = useMutation<
+  const { isLoading, error, mutate, isSuccess, reset } = useMutation<
     OperatorItem | null | undefined
   >("CreateOperator", async () => {
     const response = await api.post("core/operator/create", body, {});
@@ -21,6 +21,6 @@ export function useCreateOperator(body: OperatorItem) {
     OperatorMutate,
     OperatorIsLoading,
     OperatorError,
-    OperatorIsSuccess,
+    OperatorIsSuccess,reset
   };
 }

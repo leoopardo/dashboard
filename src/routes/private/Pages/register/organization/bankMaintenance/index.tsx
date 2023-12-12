@@ -59,7 +59,7 @@ export const BankMaintenence = () => {
     account_name: currentItem?.account_name,
     account_document: currentItem?.account_document,
   });
-  const { updateBank, updateBankError, updateBankLoading, updateBankSuccess } =
+  const { updateBank, updateBankError, updateBankLoading, updateBankSuccess, reset } =
     useUpdateBank(
       { ...updateBody, id: undefined, bank: undefined, created_at: undefined },
       currentItem?.id
@@ -177,6 +177,7 @@ export const BankMaintenence = () => {
           submitLoading={updateBankLoading}
           error={updateBankError}
           success={updateBankSuccess}
+          clear={reset}
         />
       )}
       <TuorComponent
