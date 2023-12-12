@@ -68,7 +68,11 @@ export const MerchantBankStatement = () => {
     BankStatementReportsIsLoading,
     BankStatementReportsIsSuccess,
     BankStatementReportsMutate,
-  } = useCreateMerchantBankStatementReports(query);
+  } = useCreateMerchantBankStatementReports({
+    ...query,
+    sort_field: undefined,
+    sort_order: undefined,
+  });
 
   useEffect(() => {
     refetchHourlyTotal();
