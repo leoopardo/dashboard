@@ -189,7 +189,6 @@ export const FiltersModal = ({
             type="dashed"
             onClick={() => {
               setQuery(initialQuery);
-              setFiltersQuery(initialQuery);
             }}
             danger
           >
@@ -279,42 +278,42 @@ export const FiltersModal = ({
                           ? [
                               {
                                 label: t("table.last_7"),
-                                value: [dayjs().add(-7, "d"), dayjs()],
+                                value: [dayjs().add(-7, "d").startOf("day"), dayjs().add(1, "day").startOf("day")],
                               },
                               {
                                 label: t("table.last_14"),
-                                value: [dayjs().add(-14, "d"), dayjs()],
+                                value: [dayjs().add(-14, "d").startOf("day"), dayjs().add(1, "day").startOf("day")],
                               },
                               {
                                 label: t("table.last_30"),
-                                value: [dayjs().add(-30, "d"), dayjs()],
+                                value: [dayjs().add(-30, "d").startOf("day"), dayjs().add(1, "day").startOf("day")],
                               },
                               {
                                 label: t("table.today"),
                                 value: [
                                   dayjs().startOf("day"),
-                                  dayjs().endOf("day"),
+                                  dayjs().add(1, "day").startOf("day"),
                                 ],
                               },
                               {
                                 label: t("table.yesterday"),
                                 value: [
                                   dayjs().subtract(1, "day").startOf("day"),
-                                  dayjs().subtract(1, "day").endOf("day"),
+                                  dayjs().startOf("day"),
                                 ],
                               },
                               {
                                 label: t("table.this_month"),
                                 value: [
                                   dayjs().startOf("M"),
-                                  dayjs().endOf("M"),
+                                  dayjs().endOf("M").add(1, "D").startOf("day"),
                                 ],
                               },
                               {
                                 label: t("table.last_month"),
                                 value: [
                                   dayjs().subtract(1, "M").startOf("M"),
-                                  dayjs().subtract(1, "M").endOf("M"),
+                                  dayjs().subtract(1, "M").endOf("M").add(1, "D").startOf("day"),
                                 ],
                               },
                             ]
