@@ -11,26 +11,26 @@ import {
   MenuUnfoldOutlined,
   NotificationOutlined,
 } from "@ant-design/icons";
+import PbLogo from "@assets/logo.png";
 import { useErrorContext } from "@src/contexts/ErrorContext";
 import { useTheme } from "@src/contexts/ThemeContext";
 import { queryClient } from "@src/services/queryClient";
 import { ValidateInterface } from "@src/services/types/validate.interface";
 import { Button, Menu, MenuProps, Tour } from "antd";
+import { motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import secureLocalStorage from "react-secure-storage";
 import { useMenu } from "../../contexts/SidebarContext";
 import { defaultTheme } from "../../styles/defaultTheme";
-import { motion } from "framer-motion";
-import PbLogo from "@assets/logo.png";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
 export const SidebarNavigation = () => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { resetErrors } = useErrorContext();
   const LargeDesktop = useMediaQuery({ maxHeight: "800px" });
   const isMobile = useMediaQuery({ maxWidth: "950px" });
@@ -66,10 +66,10 @@ export const SidebarNavigation = () => {
     }
   };
 
-  function handleNavigate(pathArray: string[]) {
-    navigate(pathArray.reverse().join("/"));
-    handleChangeSidebar(false);
-  }
+  // function handleNavigate(pathArray: string[]) {
+  //   navigate(pathArray.reverse().join("/"));
+  //   handleChangeSidebar(false);
+  // }
 
   function getItem(
     key: React.Key,
@@ -101,9 +101,17 @@ export const SidebarNavigation = () => {
       <BarChartOutlined style={{ fontSize: "23px" }} />,
       null,
       false,
-      () => navigate("/dashboard"),
+      undefined,
       { fontSize: "16px" },
-      t("menus.dashboard"),
+      <Link
+        onClickCapture={() => {
+          setCollapsed(false);
+          handleChangeSidebar(false);
+        }}
+        to={"/dashboard"}
+      >
+        {t("menus.dashboard")}
+      </Link>,
       "dark"
     ),
 
@@ -122,60 +130,107 @@ export const SidebarNavigation = () => {
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.register?.paybrokers?.users?.menu
                   ? undefined
                   : "none",
-              }
+              },
+
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/register/organization/users"}
+                title={`${t("menus.users")}`}
+              >
+                {t("menus.users")}
+              </Link>
             ),
             getItem(
               "categories",
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.register?.paybrokers?.release_category
                   ?.menu
                   ? undefined
                   : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/register/organization/categories"}
+              >
+                {t("menus.categories")}
+              </Link>
             ),
             getItem(
               "bank_maintain",
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.register?.paybrokers?.banks_maintain?.menu
                   ? undefined
                   : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/register/organization/bank_maintain"}
+              >
+                {t("menus.bank_maintain")}
+              </Link>
             ),
             getItem(
               "general_configs",
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.register?.paybrokers?.general_configs
                   ?.menu
                   ? undefined
                   : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/register/organization/general_configs"}
+              >
+                {t("menus.general_configs")}
+              </Link>
             ),
             getItem(
               "permissions_groups",
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: type === 1 ? undefined : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/register/organization/permissions_groups"}
+              >
+                {t("menus.permissions_groups")}
+              </Link>
             ),
             getItem(
               "organization_reports",
@@ -186,26 +241,49 @@ export const SidebarNavigation = () => {
                   null,
                   null,
                   false,
-                  (e) => handleNavigate(e?.keyPath),
+                  undefined,
                   {
                     display: permissions?.register?.paybrokers?.users
                       ?.paybrokers_user_export_csv
                       ? undefined
                       : "none",
-                  }
+                  },
+                  <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
+                    to={
+                      "/register/organization/organization_reports/organization_reports_users"
+                    }
+                    title={`${t("menus.organization_reports_users")}`}
+                  >
+                    {t("menus.organization_reports_users")}
+                  </Link>
                 ),
                 getItem(
                   "organization_reports_categories",
                   null,
                   null,
                   false,
-                  (e) => handleNavigate(e?.keyPath),
+                  undefined,
                   {
                     display: permissions?.register?.paybrokers?.release_category
                       ?.paybrokers_release_category_export_csv
                       ? undefined
                       : "none",
-                  }
+                  },
+                  <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
+                    to={
+                      "/register/organization/organization_reports/organization_reports_categories"
+                    }
+                  >
+                    {t("menus.organization_reports_categories")}
+                  </Link>
                 ),
               ],
               false,
@@ -239,36 +317,63 @@ export const SidebarNavigation = () => {
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.register?.aggregator?.aggregator?.menu
                   ? undefined
                   : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/register/aggregator/aggregators"}
+              >
+                {t("menus.aggregators")}
+              </Link>
             ),
             getItem(
               "aggregator_users",
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.register?.aggregator?.users?.menu
                   ? undefined
                   : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/register/aggregator/aggregator_users"}
+              >
+                {t("menus.aggregator_users")}
+              </Link>
             ),
             getItem(
               "self_exclusion",
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.register?.aggregator?.self_exclusion?.menu
                   ? undefined
                   : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/register/aggregator/self_exclusion"}
+              >
+                {t("menus.self_exclusion")}
+              </Link>
             ),
             getItem(
               "aggregator_blacklist",
@@ -279,13 +384,25 @@ export const SidebarNavigation = () => {
                   null,
                   null,
                   false,
-                  (e) => handleNavigate(e?.keyPath),
+                  undefined,
                   {
                     display: permissions?.register?.aggregator?.aggregator
                       ?.aggregator_export_csv
                       ? undefined
                       : "none",
-                  }
+                  },
+                  <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
+                    to={
+                      "/register/aggregator/aggregator_blacklist/aggregator_blacklist_blacklist"
+                    }
+                    title={`${t("menus.aggregator_blacklist_blacklist")}`}
+                  >
+                    {t("menus.aggregator_blacklist_blacklist")}
+                  </Link>
                 ),
               ],
               false,
@@ -309,52 +426,97 @@ export const SidebarNavigation = () => {
                   null,
                   null,
                   false,
-                  (e) => handleNavigate(e?.keyPath),
+                  undefined,
                   {
                     display: permissions?.register?.aggregator?.aggregator
                       ?.aggregator_export_csv
                       ? undefined
                       : "none",
-                  }
+                  },
+                  <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
+                    to={
+                      "/register/aggregator/aggregator_reports/aggregator_aggregators_reports"
+                    }
+                  >
+                    {t("menus.aggregator_aggregators_reports")}
+                  </Link>
                 ),
                 getItem(
                   "aggregator_users_reports",
                   null,
                   null,
                   false,
-                  (e) => handleNavigate(e?.keyPath),
+                  undefined,
                   {
                     display: permissions?.register?.aggregator?.users
                       ?.aggregator_user_export_csv
                       ? undefined
                       : "none",
-                  }
+                  },
+                  <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
+                    to={
+                      "/register/aggregator/aggregator_reports/aggregator_users_reports"
+                    }
+                    title={`${t("menus.aggregator_users_reports")}`}
+                  >
+                    {t("menus.aggregator_users_reports")}
+                  </Link>
                 ),
                 getItem(
                   "aggregator_blacklist_reports",
                   null,
                   null,
                   false,
-                  (e) => handleNavigate(e?.keyPath),
+                  undefined,
                   {
                     display: permissions?.register?.aggregator?.blacklist
                       .aggregator_blacklist_export_csv
                       ? undefined
                       : "none",
-                  }
+                  },
+                  <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
+                    to={
+                      "/register/aggregator/aggregator_reports/aggregator_blacklist_reports"
+                    }
+                  >
+                    {t("menus.aggregator_blacklist_reports")}
+                  </Link>
                 ),
                 getItem(
                   "self_exclusion_reports",
                   null,
                   null,
                   false,
-                  (e) => handleNavigate(e?.keyPath),
+                  undefined,
                   {
                     display: permissions?.register?.aggregator?.self_exclusion
                       .aggregator_self_exclusion_export_csv
                       ? undefined
                       : "none",
-                  }
+                  },
+                  <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
+                    to={
+                      "/register/aggregator/aggregator_reports/self_exclusion_reports"
+                    }
+                  >
+                    {t("menus.self_exclusion_reports")}
+                  </Link>
                 ),
               ],
               false,
@@ -388,24 +550,42 @@ export const SidebarNavigation = () => {
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.register?.partner?.partner?.menu
                   ? undefined
                   : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/register/partner/partners"}
+              >
+                {t("menus.partners")}
+              </Link>
             ),
             getItem(
               "partner_users",
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.register?.partner?.users?.menu
                   ? undefined
                   : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/register/partner/partner_users"}
+              >
+                {t("menus.partner_users")}
+              </Link>
             ),
             getItem(
               "partner_reports",
@@ -416,26 +596,49 @@ export const SidebarNavigation = () => {
                   null,
                   null,
                   false,
-                  (e) => handleNavigate(e?.keyPath),
+                  undefined,
                   {
                     display: permissions?.register?.partner?.partner
                       ?.partner_export_csv
                       ? undefined
                       : "none",
-                  }
+                  },
+                  <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
+                    to={
+                      "/register/partner/partner_reports/partner_partners_reports"
+                    }
+                  >
+                    {t("menus.partner_partners_reports")}
+                  </Link>
                 ),
                 getItem(
                   "partner_users_reports",
                   null,
                   null,
                   false,
-                  (e) => handleNavigate(e?.keyPath),
+                  undefined,
                   {
                     display: permissions?.register?.partner?.users
                       ?.partner_user_export_csv
                       ? undefined
                       : "none",
-                  }
+                  },
+                  <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
+                    to={
+                      "/register/partner/partner_reports/partner_users_reports"
+                    }
+                    title={`${t("menus.partner_users_reports")}`}
+                  >
+                    {t("menus.partner_users_reports")}
+                  </Link>
                 ),
               ],
               false,
@@ -465,24 +668,42 @@ export const SidebarNavigation = () => {
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.register?.operator?.operator?.menu
                   ? undefined
                   : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/register/operator/operators"}
+              >
+                {t("menus.operators")}
+              </Link>
             ),
             getItem(
               "operator_users",
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.register?.operator?.users?.menu
                   ? undefined
                   : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/register/operator/operator_users"}
+              >
+                {t("menus.operator_users")}
+              </Link>
             ),
             getItem(
               "operator_reports",
@@ -493,26 +714,49 @@ export const SidebarNavigation = () => {
                   null,
                   null,
                   false,
-                  (e) => handleNavigate(e?.keyPath),
+                  undefined,
                   {
                     display: permissions?.register?.operator?.operator
                       ?.operator_export_csv
                       ? undefined
                       : "none",
-                  }
+                  },
+                  <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
+                    to={
+                      "/register/operator/operator_reports/operator_operators_reports"
+                    }
+                  >
+                    {t("menus.operator_operators_reports")}
+                  </Link>
                 ),
                 getItem(
                   "operator_users_reports",
                   null,
                   null,
                   false,
-                  (e) => handleNavigate(e?.keyPath),
+                  undefined,
                   {
                     display: permissions?.register?.operator?.users
                       ?.operator_user_export_csv
                       ? undefined
                       : "none",
-                  }
+                  },
+                  <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
+                    to={
+                      "/register/operator/operator_reports/operator_users_reports"
+                    }
+                    title={`${t("menus.operator_users_reports")}`}
+                  >
+                    {t("menus.operator_users_reports")}
+                  </Link>
                 ),
               ],
               false,
@@ -544,31 +788,49 @@ export const SidebarNavigation = () => {
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.register?.merchant?.merchant?.menu
                   ? undefined
                   : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/register/merchant/merchants"}
+              >
+                {t("menus.merchants")}
+              </Link>
             ),
             getItem(
               "merchant_users",
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.register?.merchant?.users?.menu
                   ? undefined
                   : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/register/merchant/merchant_users"}
+              >
+                {t("menus.merchant_users")}
+              </Link>
             ),
             // getItem(
             //   "manual_entry_category",
             //   null,
             //   null,
             //   false,
-            //   (e) => handleNavigate(e?.keyPath),
+            //   undefined,
             //   {
             //     display: permissions?.register?.merchant?.release_category?.menu
             //       ? undefined
@@ -580,12 +842,21 @@ export const SidebarNavigation = () => {
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.register?.merchant?.fee_plans?.menu
                   ? undefined
                   : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/register/merchant/fee_plans"}
+              >
+                {t("menus.fee_plans")}
+              </Link>
             ),
             getItem("merchant_blacklists", null, [
               getItem(
@@ -593,12 +864,23 @@ export const SidebarNavigation = () => {
                 null,
                 null,
                 false,
-                (e) => handleNavigate(e?.keyPath),
+                undefined,
                 {
                   display: permissions?.register?.merchant?.blacklist?.menu
                     ? undefined
                     : "none",
-                }
+                },
+                <Link
+                  onClickCapture={() => {
+                    setCollapsed(false);
+                    handleChangeSidebar(false);
+                  }}
+                  to={
+                    "/register/merchant/merchant_blacklists/merchant_blacklist"
+                  }
+                >
+                  {t("menus.merchant_blacklist")}
+                </Link>
               ),
               // todo
 
@@ -607,7 +889,7 @@ export const SidebarNavigation = () => {
               //   null,
               //   null,
               //   false,
-              //   (e) => handleNavigate(e?.keyPath),
+              //   undefined,
               //   {
               //     display: permissions?.register?.merchant?.blacklist
               //       ?.merchant_blacklist_create
@@ -620,7 +902,7 @@ export const SidebarNavigation = () => {
               //   null,
               //   null,
               //   false,
-              //   (e) => handleNavigate(e?.keyPath),
+              //   undefined,
               //   {
               //     display: permissions?.register?.merchant?.blacklist
               //       ?.merchant_blacklist_create
@@ -633,13 +915,25 @@ export const SidebarNavigation = () => {
                 null,
                 null,
                 false,
-                (e) => handleNavigate(e?.keyPath),
+                undefined,
                 {
                   display: permissions?.register?.merchant?.black_list_reason
                     .menu
                     ? undefined
                     : "none",
-                }
+                },
+                <Link
+                  onClickCapture={() => {
+                    setCollapsed(false);
+                    handleChangeSidebar(false);
+                  }}
+                  to={
+                    "/register/merchant/merchant_blacklists/merchant_blacklist_reasons"
+                  }
+                  title={`${t("menus.merchant_blacklist_reasons")}`}
+                >
+                  {t("menus.merchant_blacklist_reasons")}
+                </Link>
               ),
             ]),
             getItem(
@@ -651,39 +945,72 @@ export const SidebarNavigation = () => {
                   null,
                   null,
                   false,
-                  (e) => handleNavigate(e?.keyPath),
+                  undefined,
                   {
                     display: permissions?.register?.merchant?.merchant
                       ?.merchant_export_csv
                       ? undefined
                       : "none",
-                  }
+                  },
+                  <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
+                    to={
+                      "/register/merchant/merchant_reports/merchant_merchants_reports"
+                    }
+                  >
+                    {t("menus.merchant_merchants_reports")}
+                  </Link>
                 ),
                 getItem(
                   "merchant_users_reports",
                   null,
                   null,
                   false,
-                  (e) => handleNavigate(e?.keyPath),
+                  undefined,
                   {
                     display: permissions?.register?.merchant?.users
                       ?.merchant_user_export_csv
                       ? undefined
                       : "none",
-                  }
+                  },
+                  <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
+                    to={
+                      "/register/merchant/merchant_reports/merchant_users_reports"
+                    }
+                  >
+                    {t("menus.merchant_users_reports")}
+                  </Link>
                 ),
                 getItem(
                   "merchant_blacklist_reports",
                   null,
                   null,
                   false,
-                  (e) => handleNavigate(e?.keyPath),
+                  undefined,
                   {
                     display: permissions?.register?.merchant?.blacklist
                       .merchant_blacklist_export_csv
                       ? undefined
                       : "none",
-                  }
+                  },
+                  <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
+                    to={
+                      "/register/merchant/merchant_reports/merchant_blacklist_reports"
+                    }
+                  >
+                    {t("menus.merchant_blacklist_reports")}
+                  </Link>
                 ),
               ],
               false,
@@ -715,19 +1042,28 @@ export const SidebarNavigation = () => {
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.register?.person?.person?.menu
                   ? undefined
                   : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/register/person/persons"}
+              >
+                {t("menus.persons")}
+              </Link>
             ),
             // getItem(
             //   "whitelist",
             //   null,
             //   null,
             //   false,
-            //   (e) => handleNavigate(e?.keyPath),
+            //   undefined,
             //   {
             //     display: permissions?.register?.person?.pix_whitelist?.menu
             //       ? undefined
@@ -739,12 +1075,21 @@ export const SidebarNavigation = () => {
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.register?.person?.client_banks?.menu
                   ? undefined
                   : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/register/person/person_accounts"}
+              >
+                {t("menus.person_accounts")}
+              </Link>
             ),
             getItem(
               "person_blacklist",
@@ -755,36 +1100,70 @@ export const SidebarNavigation = () => {
                   null,
                   null,
                   false,
-                  (e) => handleNavigate(e?.keyPath),
+                  undefined,
                   {
                     display: permissions?.register?.person?.person?.menu
                       ? undefined
                       : "none",
-                  }
+                  },
+                  <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
+                    to={
+                      "/register/person/person_blacklist/upload_person_blacklist"
+                    }
+                  >
+                    {t("menus.upload_person_blacklist")}
+                  </Link>
                 ),
                 getItem(
                   "person_blacklist_uploads",
                   null,
                   null,
                   false,
-                  (e) => handleNavigate(e?.keyPath),
+                  undefined,
                   {
                     display: permissions?.register?.person?.person?.menu
                       ? undefined
                       : "none",
-                  }
+                  },
+                  <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
+                    to={
+                      "/register/person/person_blacklist/person_blacklist_uploads"
+                    }
+                  >
+                    {t("menus.person_blacklist_uploads")}
+                  </Link>
                 ),
                 getItem(
                   "person_blacklist_reasons",
                   null,
                   null,
                   false,
-                  (e) => handleNavigate(e?.keyPath),
+                  undefined,
                   {
                     display: permissions?.register?.person?.person?.menu
                       ? undefined
                       : "none",
-                  }
+                  },
+                  <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
+                    to={
+                      "/register/person/person_blacklist/person_blacklist_reasons"
+                    }
+                    title={`${t("menus.person_blacklist_reasons")}`}
+                  >
+                    {t("menus.person_blacklist_reasons")}
+                  </Link>
                 ),
               ],
               false,
@@ -804,33 +1183,53 @@ export const SidebarNavigation = () => {
                   null,
                   null,
                   false,
-                  (e) => handleNavigate(e?.keyPath),
+                  undefined,
                   {
                     display: permissions?.register?.person?.person
                       ?.person_person_export_csv
                       ? undefined
                       : "none",
-                  }
+                  },
+                  <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
+                    to={
+                      "/register/person/person_reports/person_persons_reports"
+                    }
+                  >
+                    {t("menus.person_persons_reports")}
+                  </Link>
                 ),
                 getItem(
                   "client_bank_reports",
                   null,
                   null,
                   false,
-                  (e) => handleNavigate(e?.keyPath),
+                  undefined,
                   {
                     display: permissions?.register?.person?.client_banks
                       ?.person_client_banks_export_csv
                       ? undefined
                       : "none",
-                  }
+                  },
+                  <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
+                    to={"/register/person/person_reports/client_bank_reports"}
+                  >
+                    {t("menus.client_bank_reports")}
+                  </Link>
                 ),
                 // getItem(
                 //   "pix_whitelist_reports",
                 //   null,
                 //   null,
                 //   false,
-                //   (e) => handleNavigate(e?.keyPath),
+                //   undefined,
                 //   {
                 //     display: permissions?.register?.person?.pix_whitelist
                 //       ?.person_pix_whitelist_export_csv
@@ -890,13 +1289,24 @@ export const SidebarNavigation = () => {
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.transactions?.paybrokers
                   ?.manual_transactions?.menu
                   ? undefined
                   : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={
+                  "/moviment/organization_moviments/organization_manual_moviments"
+                }
+              >
+                {t("menus.organization_manual_moviments")}
+              </Link>
             ),
             //ajustar permissões
             getItem(
@@ -904,13 +1314,25 @@ export const SidebarNavigation = () => {
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.transactions?.paybrokers
                   ?.manual_transactions?.menu
                   ? undefined
                   : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={
+                  "/moviment/organization_moviments/organization_transfer_between_accounts"
+                }
+                title={`${t("menus.organization_transfer_between_accounts")}`}
+              >
+                {t("menus.organization_transfer_between_accounts")}
+              </Link>
             ),
             getItem(
               "organization_moviments_reports",
@@ -921,14 +1343,28 @@ export const SidebarNavigation = () => {
                   null,
                   null,
                   false,
-                  (e) => handleNavigate(e?.keyPath),
+                  undefined,
                   {
                     display: permissions?.transactions?.paybrokers
                       ?.manual_transactions
                       ?.paybrokers_manual_transactions_export_csv
                       ? undefined
                       : "none",
-                  }
+                  },
+                  <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
+                    to={
+                      "/moviment/organization_moviments/organization_moviments_reports/organization_manual_moviments_reports"
+                    }
+                    title={`${t(
+                      "menus.organization_manual_moviments_reports"
+                    )}`}
+                  >
+                    {t("menus.organization_manual_moviments_reports")}
+                  </Link>
                 ),
                 //ajustar permisssões
                 getItem(
@@ -936,14 +1372,28 @@ export const SidebarNavigation = () => {
                   null,
                   null,
                   false,
-                  (e) => handleNavigate(e?.keyPath),
+                  undefined,
                   {
                     display: permissions?.transactions?.paybrokers
                       ?.manual_transactions
                       ?.paybrokers_manual_transactions_export_csv
                       ? undefined
                       : "none",
-                  }
+                  },
+                  <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
+                    to={
+                      "/moviment/organization_moviments/organization_moviments_reports/organization_transfer_between_accounts_reports"
+                    }
+                    title={`${t(
+                      "menus.organization_transfer_between_accounts_reports"
+                    )}`}
+                  >
+                    {t("menus.organization_transfer_between_accounts_reports")}
+                  </Link>
                 ),
               ],
               false,
@@ -976,13 +1426,25 @@ export const SidebarNavigation = () => {
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.transactions?.paybrokers
                   ?.manual_transactions?.menu
                   ? undefined
                   : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={
+                  "/moviment/aggregator_moviments/aggregator_transfer_between_accounts"
+                }
+                title={`${t("menus.aggregator_transfer_between_accounts")}`}
+              >
+                {t("menus.organization_transfer_between_accounts_reports")}
+              </Link>
             ),
             getItem(
               "aggregator_moviments_reports",
@@ -994,14 +1456,28 @@ export const SidebarNavigation = () => {
                   null,
                   null,
                   false,
-                  (e) => handleNavigate(e?.keyPath),
+                  undefined,
                   {
                     display: permissions?.transactions?.paybrokers
                       ?.manual_transactions
                       ?.paybrokers_manual_transactions_export_csv
                       ? undefined
                       : "none",
-                  }
+                  },
+                  <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
+                    to={
+                      "/moviment/aggregator_moviments/aggregator_moviments_reports/aggregator_transfer_between_accounts_reports"
+                    }
+                    title={`${t(
+                      "menus.aggregator_transfer_between_accounts_reports"
+                    )}`}
+                  >
+                    {t("menus.aggregator_transfer_between_accounts_reports")}
+                  </Link>
                 ),
               ],
               false,
@@ -1033,13 +1509,22 @@ export const SidebarNavigation = () => {
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.transactions?.merchant
                   ?.manual_transactions?.menu
                   ? undefined
                   : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/moviment/merchant_moviments/merchant_manual_moviments"}
+              >
+                {t("menus.merchant_manual_moviments")}
+              </Link>
             ),
 
             //ajustar permissões
@@ -1048,26 +1533,48 @@ export const SidebarNavigation = () => {
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.transactions?.merchant
                   ?.manual_transactions?.menu
                   ? undefined
                   : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/moviment/merchant_moviments/between_accounts_transfers"}
+                title={`${t("menus.between_accounts_transfers")}`}
+              >
+                {t("menus.between_accounts_transfers")}
+              </Link>
             ),
             getItem(
               "merchant_pre_manual_moviments",
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.transactions?.merchant
                   ?.merchant_pre_manual?.menu
                   ? undefined
                   : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={
+                  "/moviment/merchant_moviments/merchant_pre_manual_moviments"
+                }
+                title={`${t("menus.merchant_pre_manual_moviments")}`}
+              >
+                {t("menus.merchant_pre_manual_moviments")}
+              </Link>
             ),
             getItem(
               "merchant_moviments_reports",
@@ -1078,28 +1585,52 @@ export const SidebarNavigation = () => {
                   null,
                   null,
                   false,
-                  (e) => handleNavigate(e?.keyPath),
+                  undefined,
                   {
                     display: permissions?.transactions?.merchant
                       ?.manual_transactions
                       ?.merchant_manual_transactions_export_csv
                       ? undefined
                       : "none",
-                  }
+                  },
+                  <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
+                    to={
+                      "/moviment/merchant_moviments/merchant_moviments_reports/merchant_manual_moviments_reports"
+                    }
+                    title={`${t("menus.merchant_manual_moviments_reports")}`}
+                  >
+                    {t("menus.merchant_manual_moviments_reports")}
+                  </Link>
                 ),
                 getItem(
                   "merchant_between_accounts_reports",
                   null,
                   null,
                   false,
-                  (e) => handleNavigate(e?.keyPath),
+                  undefined,
                   {
                     display: permissions?.transactions?.merchant
                       ?.manual_transactions
                       ?.merchant_manual_transactions_export_csv
                       ? undefined
                       : "none",
-                  }
+                  },
+                  <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
+                    to={
+                      "/moviment/merchant_moviments/merchant_moviments_reports/merchant_between_accounts_reports"
+                    }
+                    title={`${t("menus.merchant_between_accounts_reports")}`}
+                  >
+                    {t("menus.merchant_between_accounts_reports")}
+                  </Link>
                 ),
                 //TODO arrumar permissão Reports Pre manual
                 getItem(
@@ -1107,13 +1638,27 @@ export const SidebarNavigation = () => {
                   null,
                   null,
                   false,
-                  (e) => handleNavigate(e?.keyPath),
+                  undefined,
                   {
                     display: permissions?.transactions?.merchant
                       ?.merchant_pre_manual?.menu
                       ? undefined
                       : "none",
-                  }
+                  },
+                  <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
+                    to={
+                      "/moviment/merchant_moviments/merchant_moviments_reports/merchant_pre_manual_moviments_reports"
+                    }
+                    title={`${t(
+                      "menus.merchant_pre_manual_moviments_reports"
+                    )}`}
+                  >
+                    {t("menus.merchant_pre_manual_moviments_reports")}
+                  </Link>
                 ),
               ],
               false,
@@ -1140,10 +1685,20 @@ export const SidebarNavigation = () => {
           null,
           null,
           false,
-          (e) => handleNavigate(e?.keyPath),
+          undefined,
           {
             display: type !== 3 ? undefined : "none",
-          }
+          },
+          <Link
+            onClickCapture={() => {
+              setCollapsed(false);
+              handleChangeSidebar(false);
+            }}
+            to={"/moviment/merchant_transfers"}
+            title={`${t("menus.merchant_transfers")}`}
+          >
+            {t("menus.merchant_transfers")}
+          </Link>
         ),
       ],
       undefined,
@@ -1167,61 +1722,108 @@ export const SidebarNavigation = () => {
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.report?.paybrokers?.extract?.menu
                   ? undefined
                   : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/consult/consult_organization/organization_bank_statement"}
+              >
+                {t("menus.organization_bank_statement")}
+              </Link>
             ),
             getItem(
               "organization_balance",
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.report?.paybrokers?.balance?.menu
                   ? undefined
                   : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/consult/consult_organization/organization_balance"}
+              >
+                {t("menus.organization_balance")}
+              </Link>
             ),
             getItem(
               "organization_bank_balance",
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.report?.paybrokers?.extract?.menu
                   ? undefined
                   : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/consult/consult_organization/organization_bank_balance"}
+              >
+                {t("menus.organization_bank_balance")}
+              </Link>
             ),
             getItem(
               "organization_history",
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.report?.paybrokers?.bank_history?.menu
                   ? undefined
                   : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/consult/consult_organization/organization_history"}
+              >
+                {t("menus.organization_history")}
+              </Link>
             ),
             getItem(
               "consult_organization_reports",
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.report?.paybrokers?.extract
                   ?.report_paybrokers_extract_export_csv
                   ? undefined
                   : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={
+                  "/consult/consult_organization/consult_organization_reports"
+                }
+              >
+                {t("menus.consult_organization_reports")}
+              </Link>
             ),
           ],
           undefined,
@@ -1241,49 +1843,85 @@ export const SidebarNavigation = () => {
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.report?.merchant?.extract?.menu
                   ? undefined
                   : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/consult/consult_merchant/merchant_bank_statement"}
+              >
+                {t("menus.merchant_bank_statement")}
+              </Link>
             ),
             getItem(
               "merchant_balance",
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.report?.merchant?.balance?.menu
                   ? undefined
                   : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/consult/consult_merchant/merchant_balance"}
+              >
+                {t("menus.merchant_balance")}
+              </Link>
             ),
             getItem(
               "merchant_history",
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.report?.merchant?.balance_history?.menu
                   ? undefined
                   : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/consult/consult_merchant/merchant_history"}
+              >
+                {t("menus.merchant_history")}
+              </Link>
             ),
             getItem(
               "consult_merchant_reports",
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.report?.merchant?.extract
                   ?.report_merchant_extract_export_csv
                   ? undefined
                   : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/consult/consult_merchant/consult_merchant_reports"}
+              >
+                {t("menus.consult_merchant_reports")}
+              </Link>
             ),
           ],
           undefined,
@@ -1302,48 +1940,85 @@ export const SidebarNavigation = () => {
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.report?.deposit?.generated_deposit?.menu
                   ? undefined
                   : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/consult/deposit/generated_deposits"}
+              >
+                {t("menus.generated_deposits")}
+              </Link>
             ),
             getItem(
               "paid_deposits",
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.report?.deposit?.paid_deposit?.menu
                   ? undefined
                   : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/consult/deposit/paid_deposits"}
+              >
+                {t("menus.paid_deposits")}
+              </Link>
             ),
             getItem(
               "undelivered_deposits",
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.report?.deposit?.undelivered_deposit?.menu
                   ? undefined
                   : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/consult/deposit/undelivered_deposits"}
+                title={`${t("menus.undelivered_deposits")}`}
+              >
+                {t("menus.undelivered_deposits")}
+              </Link>
             ),
             getItem(
               "receipts",
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.report?.deposit?.deposit_receipt?.menu
                   ? undefined
                   : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/consult/deposit/receipts"}
+              >
+                {t("menus.receipts")}
+              </Link>
             ),
 
             getItem(
@@ -1355,39 +2030,70 @@ export const SidebarNavigation = () => {
                   null,
                   null,
                   false,
-                  (e) => handleNavigate(e?.keyPath),
+                  undefined,
                   {
                     display: permissions?.report?.deposit?.generated_deposit
                       ?.report_deposit_generated_deposit_export_csv
                       ? undefined
                       : "none",
-                  }
+                  },
+                  <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
+                    to={
+                      "/consult/deposit/deposits_reports/generated_deposits_reports"
+                    }
+                  >
+                    {t("menus.generated_deposits_reports")}
+                  </Link>
                 ),
                 getItem(
                   "paid_deposits_reports",
                   null,
                   null,
                   false,
-                  (e) => handleNavigate(e?.keyPath),
+                  undefined,
                   {
                     display: permissions?.report?.deposit?.paid_deposit
                       ?.report_deposit_paid_deposit_export_csv
                       ? undefined
                       : "none",
-                  }
+                  },
+                  <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
+                    to={
+                      "/consult/deposit/deposits_reports/paid_deposits_reports"
+                    }
+                  >
+                    {t("menus.paid_deposits_reports")}
+                  </Link>
                 ),
                 getItem(
                   "webhooks_reports",
                   null,
                   null,
                   false,
-                  (e) => handleNavigate(e?.keyPath),
+                  undefined,
                   {
                     display: permissions?.report?.deposit?.generated_deposit
                       ?.report_deposit_generated_deposit_export_csv
                       ? undefined
                       : "none",
-                  }
+                  },
+                  <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
+                    to={"/consult/deposit/deposits_reports/webhooks_reports"}
+                  >
+                    {t("menus.webhooks_reports")}
+                  </Link>
                 ),
               ],
               false,
@@ -1416,37 +2122,64 @@ export const SidebarNavigation = () => {
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.report?.withdraw?.generated_withdraw?.menu
                   ? undefined
                   : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/consult/withdrawals/generated_withdrawals"}
+              >
+                {t("menus.generated_withdrawals")}
+              </Link>
             ),
             getItem(
               "paid_withdrawals",
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.report?.withdraw?.paid_withdraw?.menu
                   ? undefined
                   : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/consult/withdrawals/paid_withdrawals"}
+              >
+                {t("menus.paid_withdrawals")}
+              </Link>
             ),
             getItem(
               "undelivered_withdrawals",
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.report?.withdraw?.undelivered_withdraw
                   ?.menu
                   ? undefined
                   : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/consult/withdrawals/undelivered_withdrawals"}
+              >
+                {t("menus.undelivered_withdrawals")}
+              </Link>
             ),
 
             getItem(
@@ -1458,39 +2191,72 @@ export const SidebarNavigation = () => {
                   null,
                   null,
                   false,
-                  (e) => handleNavigate(e?.keyPath),
+                  undefined,
                   {
                     display: permissions?.report?.withdraw?.generated_withdraw
                       ?.report_withdraw_generated_withdraw_export_csv
                       ? undefined
                       : "none",
-                  }
+                  },
+                  <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
+                    to={
+                      "/consult/withdrawals/withdrawals_reports/generated_withdrawals_reports"
+                    }
+                  >
+                    {t("menus.generated_withdrawals_reports")}
+                  </Link>
                 ),
                 getItem(
                   "paid_withdrawals_reports",
                   null,
                   null,
                   false,
-                  (e) => handleNavigate(e?.keyPath),
+                  undefined,
                   {
                     display: permissions?.report?.withdraw?.paid_withdraw
                       ?.report_withdraw_paid_withdraw_export_csv
                       ? undefined
                       : "none",
-                  }
+                  },
+                  <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
+                    to={
+                      "/consult/withdrawals/withdrawals_reports/paid_withdrawals_reports"
+                    }
+                  >
+                    {t("menus.paid_withdrawals_reports")}
+                  </Link>
                 ),
                 getItem(
                   "withdrawals_webhooks_reports",
                   null,
                   null,
                   false,
-                  (e) => handleNavigate(e?.keyPath),
+                  undefined,
                   {
                     display: permissions?.report?.withdraw?.generated_withdraw
                       ?.report_withdraw_generated_withdraw_export_csv
                       ? undefined
                       : "none",
-                  }
+                  },
+                  <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
+                    to={
+                      "/consult/withdrawals/withdrawals_reports/withdrawals_webhooks_reports"
+                    }
+                  >
+                    {t("menus.withdrawals_webhooks_reports")}
+                  </Link>
                 ),
               ],
               false,
@@ -1519,39 +2285,69 @@ export const SidebarNavigation = () => {
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.report?.chargeback?.deposit_chargeback
                   ?.menu
                   ? undefined
                   : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/consult/refunds/refund_deposits"}
+                title={`${t("menus.refund_deposits")}`}
+              >
+                {t("menus.refund_deposits")}
+              </Link>
             ),
             getItem(
               "refund_withdrawals",
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.report?.chargeback?.withdraw_chargeback
                   ?.menu
                   ? undefined
                   : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/consult/refunds/refund_withdrawals"}
+                title={`${t("menus.refund_withdrawals")}`}
+              >
+                {t("menus.refund_withdrawals")}
+              </Link>
             ),
             getItem(
               "refund_manual_deposits",
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.report?.chargeback
                   .manual_deposit_chargeback?.menu
                   ? undefined
                   : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/consult/refunds/refund_manual_deposits"}
+                title={`${t("menus.refund_manual_deposits")}`}
+              >
+                {t("menus.refund_manual_deposits")}
+              </Link>
             ),
             getItem(
               "refund_reports",
@@ -1562,41 +2358,75 @@ export const SidebarNavigation = () => {
                   null,
                   null,
                   false,
-                  (e) => handleNavigate(e?.keyPath),
+                  undefined,
                   {
                     display: permissions?.report?.chargeback?.deposit_chargeback
                       ?.report_chargeback_deposit_chargeback_export_csv
                       ? undefined
                       : "none",
-                  }
+                  },
+                  <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
+                    to={
+                      "/consult/refunds/refund_reports/refund_deposits_reports"
+                    }
+                    title={`${t("menus.refund_deposits_reports")}`}
+                  >
+                    {t("menus.refund_deposits_reports")}
+                  </Link>
                 ),
                 getItem(
                   "refund_manual_reports",
                   null,
                   null,
                   false,
-                  (e) => handleNavigate(e?.keyPath),
+                  undefined,
                   {
                     display: permissions?.report?.chargeback
                       ?.withdraw_chargeback
                       ?.report_chargeback_withdraw_chargeback_export_csv
                       ? undefined
                       : "none",
-                  }
+                  },
+                  <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
+                    to={"/consult/refunds/refund_reports/refund_manual_reports"}
+                    title={`${t("menus.refund_manual_reports")}`}
+                  >
+                    {t("menus.refund_manual_reports")}
+                  </Link>
                 ),
                 getItem(
                   "refund_withdrawals_reports",
                   null,
                   null,
                   false,
-                  (e) => handleNavigate(e?.keyPath),
+                  undefined,
                   {
                     display: permissions?.report?.chargeback
                       .manual_deposit_chargeback
                       ?.report_chargeback_manual_deposit_chargeback_export_csv
                       ? undefined
                       : "none",
-                  }
+                  },
+                  <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
+                    to={
+                      "/consult/refunds/refund_reports/refund_withdrawals_reports"
+                    }
+                    title={`${t("menus.refund_withdrawals_reports")}`}
+                  >
+                    {t("menus.refund_withdrawals_reports")}
+                  </Link>
                 ),
               ],
               undefined,
@@ -1625,24 +2455,43 @@ export const SidebarNavigation = () => {
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.report?.person?.check_cpf?.menu
                   ? undefined
                   : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/consult/consult_persons/check_cpf"}
+              >
+                {t("menus.check_cpf")}
+              </Link>
             ),
             getItem(
               "historic_cpf_merchant",
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.report?.person?.check_cpf?.menu
                   ? undefined
                   : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/consult/consult_persons/historic_cpf_merchant"}
+                title={`${t("menus.historic_cpf_merchant")}`}
+              >
+                {t("menus.historic_cpf_merchant")}
+              </Link>
             ),
             getItem(
               "reports",
@@ -1653,12 +2502,24 @@ export const SidebarNavigation = () => {
                   null,
                   null,
                   false,
-                  (e) => handleNavigate(e?.keyPath),
+                  undefined,
                   {
                     display: permissions?.report?.person?.check_cpf?.menu
                       ? undefined
                       : "none",
-                  }
+                  },
+                  <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
+                    to={
+                      "/consult/consult_persons/reports/historic_cpf_merchant"
+                    }
+                    title={`${t("menus.historic_cpf_merchant")}`}
+                  >
+                    {t("menus.historic_cpf_merchant")}
+                  </Link>
                 ),
 
                 getItem(
@@ -1666,12 +2527,24 @@ export const SidebarNavigation = () => {
                   null,
                   null,
                   false,
-                  (e) => handleNavigate(e?.keyPath),
+                  undefined,
                   {
                     display: permissions?.report?.person?.check_cpf?.menu
                       ? undefined
                       : "none",
-                  }
+                  },
+                  <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
+                    to={
+                      "/consult/consult_persons/reports/historic_cpf_merchant_details"
+                    }
+                    title={`${t("menus.historic_cpf_merchant_details")}`}
+                  >
+                    {t("menus.historic_cpf_merchant_details")}
+                  </Link>
                 ),
               ],
               undefined,
@@ -1711,44 +2584,86 @@ export const SidebarNavigation = () => {
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.support?.blacklist.banks?.menu
                   ? undefined
                   : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/support/blacklists/bank_institutions"}
+              >
+                {t("menus.bank_institutions")}
+              </Link>
             ),
             getItem(
               "third_parties_pix_key",
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.support?.blacklist?.third_party_pix_keys
                   ?.menu
                   ? undefined
                   : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/support/blacklists/third_parties_pix_key"}
+              >
+                {t("menus.third_parties_pix_key")}
+              </Link>
             ),
             getItem(
               "invalid_pix_key",
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.support?.blacklist?.invalid_pix_keys?.menu
                   ? undefined
                   : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/support/blacklists/invalid_pix_key"}
+              >
+                {t("menus.invalid_pix_key")}
+              </Link>
             ),
             getItem(
               "blacklists_reports",
               null,
               [
-                getItem("bank_institutions_reports", null, null, false, (e) =>
-                  handleNavigate(e?.keyPath)
+                getItem(
+                  "bank_institutions_reports",
+                  null,
+                  null,
+                  false,
+                  undefined,
+                  <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
+                    to={
+                      "/support/blacklists/blacklists_reports/bank_institutions_reports"
+                    }
+                  >
+                    {t("menus.bank_institutions_reports")}
+                  </Link>
                 ),
               ],
               undefined,
@@ -1778,36 +2693,63 @@ export const SidebarNavigation = () => {
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.support?.logs?.deposit_error_logs.menu
                   ? undefined
                   : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/support/api_logs/error_logs_deposits"}
+              >
+                {t("menus.error_logs_deposits")}
+              </Link>
             ),
             getItem(
               "error_logs_withdrawals",
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.support?.logs?.withdraw_error_logs.menu
                   ? undefined
                   : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/support/api_logs/error_logs_withdrawals"}
+              >
+                {t("menus.error_logs_withdrawals")}
+              </Link>
             ),
             getItem(
               "authentication_logs",
               null,
               null,
               false,
-              (e) => handleNavigate(e?.keyPath),
+              undefined,
               {
                 display: permissions?.support?.logs?.auth_logs.menu
                   ? undefined
                   : "none",
-              }
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/support/api_logs/authentication_logs"}
+              >
+                {t("menus.authentication_logs")}
+              </Link>
             ),
           ],
           undefined,
@@ -1831,25 +2773,43 @@ export const SidebarNavigation = () => {
                   null,
                   null,
                   false,
-                  (e) => handleNavigate(e?.keyPath),
+                  undefined,
                   {
                     display: permissions?.support?.contestation?.deposits.menu
                       ? undefined
                       : "none",
-                  }
+                  },
+                  <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
+                    to={"/support/contestation/deposit_contestation/uploads"}
+                  >
+                    {t("menus.uploads")}
+                  </Link>
                 ),
                 getItem(
                   "import_csv",
                   null,
                   null,
                   false,
-                  (e) => handleNavigate(e?.keyPath),
+                  undefined,
                   {
                     display: permissions?.support?.contestation?.deposits
                       .import_csv.menu
                       ? undefined
                       : "none",
-                  }
+                  },
+                  <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
+                    to={"/support/contestation/deposit_contestation/import_csv"}
+                  >
+                    {t("menus.import_csv")}
+                  </Link>
                 ),
               ],
               undefined,
@@ -1940,7 +2900,7 @@ export const SidebarNavigation = () => {
           >
             {isSidebarOpen && (
               <img
-                src={import.meta.env.VITE_APP_LOGO ||PbLogo}
+                src={import.meta.env.VITE_APP_LOGO || PbLogo}
                 style={{ width: "180px", marginLeft: "-24px" }}
               />
             )}
@@ -1948,7 +2908,7 @@ export const SidebarNavigation = () => {
               <MenuUnfoldOutlined
                 style={{
                   fontSize: "26px",
-                
+
                   color:
                     !isSidebarOpen && isMobile && theme === "light"
                       ? "#000"
