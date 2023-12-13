@@ -69,9 +69,7 @@ export const UpdateMerchant = () => {
   ) as ValidateInterface;
   const { t } = useTranslation();
   const location = useLocation();
-  const [merchantBody, setMerchantBody] = useState<
-    MerchantsItem | undefined
-  >();
+  const [merchantBody, setMerchantBody] = useState<MerchantsItem | undefined>();
   const INITIAL_RESPONSIBLE_QUERY: MerchantResponsiblesQuery = {
     merchant_id: location.state.id,
     limit: 25,
@@ -95,6 +93,7 @@ export const UpdateMerchant = () => {
   } = useUpdateMerchant({
     ...merchantBody,
     v3_id: Number(merchantBody?.v3_id) ?? undefined,
+    merchant_id: location.state.id,
   });
 
   const [responsibleQuery, setResponsibleQuery] =
@@ -120,11 +119,7 @@ export const UpdateMerchant = () => {
   });
   const [deleteFileId, setDeleteFileId] = useState<string>("");
 
-  const {
-    MerchantByIdData
-  } = useGetMerchantById(
-   location.state.id,
-  );
+  const { MerchantByIdData } = useGetMerchantById(location.state.id);
 
   const {
     ResponsiblesData,
@@ -198,22 +193,24 @@ export const UpdateMerchant = () => {
   }, [deleteFileId]);
 
   useEffect(() => {
-    const currentMerchant = MerchantByIdData
+    const currentMerchant = MerchantByIdData;
     setMerchantBody({
       merchant_id: currentMerchant?.id,
       name: currentMerchant?.name,
       cnpj: currentMerchant?.cnpj ?? undefined,
       cellphone: currentMerchant?.cellphone ?? undefined,
       email: currentMerchant?.email ?? undefined,
-      v3_id: currentMerchant?.v3_id !==0 ? Number(currentMerchant?.v3_id) : undefined,
+      v3_id:
+        currentMerchant?.v3_id !== 0
+          ? Number(currentMerchant?.v3_id)
+          : undefined,
       partner_id: currentMerchant?.partner?.id,
       aggregator_id: currentMerchant?.aggregator?.id,
       operator_id: currentMerchant?.operator?.id,
       country: currentMerchant?.country ?? undefined,
-    })
+    });
 
     formRef.current?.setFieldsValue(currentMerchant);
-    
   }, [MerchantByIdData]);
 
   useEffect(() => {
