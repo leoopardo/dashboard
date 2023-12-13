@@ -29,6 +29,7 @@ export function useShowCredentialsConfig(params: IShowCredentialQuery) {
         refetchIntervalInBackground: false,
         refetchOnMount: false,
         refetchOnWindowFocus: false,
+        enabled: false
       }
     );
 

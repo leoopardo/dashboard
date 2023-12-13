@@ -234,7 +234,7 @@ export const CredentialConfigTab = (props: { id?: string }) => {
         <ViewModal
           item={showCredentialConfigData ?? createdCredential}
           loading={isShowCredentialConfigFetching}
-          modalName={`${t("menus.merchant")}: ${currentItem?.name}`}
+          modalName={`${t("menus.merchant")}: ${currentItem?.name || createdCredential?.name}`}
           open={isViewModalOpen}
           setOpen={setIsViewModalOpen}
         />
