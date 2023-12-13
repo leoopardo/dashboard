@@ -85,10 +85,14 @@ export const MerchantView = () => {
     ...currentItem,
     merchant_id: currentItem?.id,
   });
+
   const [createBody, setCreateBody] = useState<MerchantsItem>({
     ...currentItem,
     partner_id: user?.partner_id,
   });
+
+  console.log({createBody})
+
 
   const {
     CreateError,

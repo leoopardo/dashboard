@@ -11,7 +11,7 @@ import { IpsConfigTab } from "./tabs/ips";
 import { MerchantConfigTab } from "./tabs/merchantConfigTab";
 import { OrganizationConfigTab } from "./tabs/organizationConfigTab";
 import { useEffect } from "react";
-import { setFirstChildDivId } from "@src/utils/functions";
+import { setFirstChildDivTestId } from "@src/utils/functions";
 
 export const MerchantConfigs = () => {
   const { permissions } = queryClient.getQueryData(
@@ -61,13 +61,13 @@ export const MerchantConfigs = () => {
   };
 
   useEffect(() => {
-    setFirstChildDivId(tabBanks, "tab-banks");
-    setFirstChildDivId(tabFees, "tab-fees");
-    setFirstChildDivId(tabMerchantConfig, "tab-merchant-config");
-    setFirstChildDivId(tabOrganizationConfig, "tab-organization-config");
-    setFirstChildDivId(tabCredential, "tab-credential");
-    setFirstChildDivId(tabIps, "tab-ips");
-  }, [tabBanks, tabFees, tabMerchantConfig, tabOrganizationConfig, tabCredential, tabIps]);
+    setFirstChildDivTestId(tabBanks, "tab-banks");
+    setFirstChildDivTestId(tabFees, "tab-fees");
+    setFirstChildDivTestId(tabMerchantConfig, "tab-merchant-config");
+    setFirstChildDivTestId(tabOrganizationConfig, "tab-organization-config");
+    setFirstChildDivTestId(tabCredential, "tab-credential");
+    setFirstChildDivTestId(tabIps, "tab-ips");
+  }, [tabBanks, tabFees, tabMerchantConfig, tabOrganizationConfig, tabCredential, tabIps, permissions]);
 
   const items: TabsProps["items"] = [
     {

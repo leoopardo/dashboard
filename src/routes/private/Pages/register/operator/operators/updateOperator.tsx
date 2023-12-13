@@ -37,7 +37,7 @@ import {
   OperatorResponsiblesUpdateBody,
 } from "@src/services/types/register/operators/responsibles/responsibles.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { setFirstChildDivId } from "@src/utils/functions";
+import { setFirstChildDivId, validateFormCnpj } from "@src/utils/functions";
 import {
   AutoComplete,
   Avatar,
@@ -171,17 +171,6 @@ export const UpdateOperator = () => {
     }));
   };
 
-  const validateCnpjLength = (_: any, value: string) => {
-    if (value && value.replace(/[^\d]/g, "").length !== 14) {
-      return Promise.reject(
-        t("input.invalid", {
-          field: t(`input.cnpj`),
-        }) || ""
-      );
-    }
-    return Promise.resolve();
-  };
-
   useEffect(() => {
     if (fileBody?.base64_file) {
       OperatorAttachmentMutate();
@@ -242,7 +231,7 @@ export const UpdateOperator = () => {
                 name="cnpj"
                 rules={[
                   {
-                    validator: validateCnpjLength,
+                    validator: validateFormCnpj,
                   },
                   {
                     required: true,
