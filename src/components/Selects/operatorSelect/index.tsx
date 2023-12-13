@@ -51,11 +51,11 @@ export const OperatorSelect = ({
       aggregator_id:
         queryOptions?.aggregator_id ?? queryOptions?.aggregator?.id,
     }));
-  }, [debounceSearch, queryOptions]);
+  }, [queryOptions]);
 
   useEffect(() => {
     refetcOperators();
-  }, [query]);
+  }, [debounceSearch]);
 
   useEffect(() => {
     if (

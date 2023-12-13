@@ -19,7 +19,12 @@ export function useGetMerchantBalanceTotal(params: MerchantBalanceQuery) {
       });
       return response?.data;
     },
-    { keepPreviousData: false }
+    {
+      refetchInterval: false,
+      refetchIntervalInBackground: false,
+      refetchOnMount: false,
+      refetchOnWindowFocus: false
+    }
   );
 
   const MerchantBalance = error ? ({} as any) : data;

@@ -28,13 +28,13 @@ export const TotalizerPerBanks = ({ query, ref }: TotalizerPerBanksInterface) =>
     page: 1,
   });
 
-  if (MerchantsPerBankData?.valuesIn) {
+ /*  if (MerchantsPerBankData?.valuesIn) {
     console.log(
       Object.keys(MerchantsPerBankData?.valuesIn).map((bank) => {
         return { value: MerchantsPerBankData?.valuesIn[bank], name: bank };
       })
     );
-  }
+  } */
 
   return (
     <Row gutter={[8, 8]} style={{ overflow: "hidden", marginBottom: "80px" }} ref={ref}>

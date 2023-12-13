@@ -63,10 +63,18 @@ export const CellphoneInput = ({
   }, []);
 
   useEffect(() => {
-    setBody((state: any) => ({
-      ...state,
-      cellphone: DDI && number ? `${DDI}${number}` : undefined,
-    }));
+    const timer = setTimeout(
+      () =>
+      setBody((state: any) => ({
+        ...state,
+        cellphone: DDI && number ? `${DDI}${number}` : undefined,
+      })),
+      500
+    );
+
+    return () => {
+      clearTimeout(timer);
+    };
   }, [DDI, number]);
 
   function getCellphoneFormat() {

@@ -127,12 +127,12 @@ export const MutateModal = ({
 
   useEffect(() => {
     refetchMerchantBalance();
-  }, [body]);
+  }, [body?.merchant_id]);
 
   const { ProfilesData, isProfilesDataFetching } = useGetProfiles({
     group: true,
   });
-  
+
   const validateCnpjLength = (_: any, value: string) => {
     if (value && value.replace(/[^\d]/g, "").length !== 14) {
       return Promise.reject(
@@ -150,10 +150,18 @@ export const MutateModal = ({
   });
 
   const handleChange = (event: any) => {
-    setBody((state: any) => ({
-      ...state,
-      [event.target.name]: event.target.value || null,
-    }));
+    const timer = setTimeout(
+      () =>
+        setBody((state: any) => ({
+          ...state,
+          [event.target.name]: event.target.value || null,
+        })),
+      500
+    );
+
+    return () => {
+      clearTimeout(timer);
+    };
   };
 
   useEffect(() => {
@@ -579,9 +587,7 @@ export const MutateModal = ({
                         }
                         loading={isProfilesDataFetching}
                         notFoundContent={<Empty />}
-                        value={
-                          body[field.label]
-                        }
+                        value={body[field.label]}
                         onChange={(value) => {
                           setBody((state: any) => ({
                             ...state,
@@ -757,10 +763,19 @@ export const MutateModal = ({
                             delete body[field.label];
                             return;
                           }
-                          setBody((state: any) => ({
-                            ...state,
-                            [field.label]: value,
-                          }));
+
+                          const timer = setTimeout(
+                            () =>
+                            setBody((state: any) => ({
+                              ...state,
+                              [field.label]: value,
+                            })),
+                            500
+                          );
+                      
+                          return () => {
+                            clearTimeout(timer);
+                          };
                         }}
                       >
                         <Input
@@ -802,10 +817,19 @@ export const MutateModal = ({
                             delete body[field.label];
                             return;
                           }
-                          setBody((state: any) => ({
-                            ...state,
-                            [field.label]: value,
-                          }));
+
+                          const timer = setTimeout(
+                            () =>
+                            setBody((state: any) => ({
+                              ...state,
+                              [field.label]: value,
+                            })),
+                            500
+                          );
+                      
+                          return () => {
+                            clearTimeout(timer);
+                          };
                         }}
                       >
                         <Input
