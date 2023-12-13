@@ -141,6 +141,7 @@ export const CredentialConfigTab = (props: { id?: string }) => {
       >
         <Grid item xs={12} md={3} lg={2}>
           <Button
+          data-test-id="create-credential-button"
             type="primary"
             loading={isCredentialConfigFetching}
             onClick={() => {
@@ -176,6 +177,7 @@ export const CredentialConfigTab = (props: { id?: string }) => {
             label={["name", "username"]}
             actions={[
               {
+                id: "table-details-button",
                 label: "details",
                 icon: <EyeFilled style={{ fontSize: "20px" }} />,
                 onClick: () => {
@@ -183,6 +185,7 @@ export const CredentialConfigTab = (props: { id?: string }) => {
                 },
               },
               {
+                id: "table-edit-button",
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
                 onClick: () => setIsUpdateModalOpen(true),

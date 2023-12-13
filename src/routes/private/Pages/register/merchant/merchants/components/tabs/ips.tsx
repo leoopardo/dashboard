@@ -77,6 +77,7 @@ export const IpsConfigTab = (props: { id?: string }) => {
       >
         <Grid item xs={12} md={3} lg={2}>
           <Button
+          data-test-id="create-ip-button"
             type="primary"
             loading={isIpsConfigFetching}
             onClick={() => {
@@ -110,6 +111,7 @@ export const IpsConfigTab = (props: { id?: string }) => {
             label={["ip"]}
             actions={[
               {
+                id: "table-delete-button",
                 label: "delete",
                 icon: <DeleteOutlined style={{ fontSize: "20px" }} />,
                 onClick: () => setIsConfirmOpen(true),

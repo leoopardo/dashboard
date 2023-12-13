@@ -67,7 +67,7 @@ export const MerchantConfigs = () => {
     setFirstChildDivId(tabOrganizationConfig, "tab-organization-config");
     setFirstChildDivId(tabCredential, "tab-credential");
     setFirstChildDivId(tabIps, "tab-ips");
-  }, [tabBanks, tabFees, tabMerchantConfig, tabOrganizationConfig, tabCredential, tabIps]);
+  }, [tabBanks, tabFees, tabMerchantConfig, tabOrganizationConfig, tabCredential, tabIps, params]);
 
   const items: TabsProps["items"] = [
     {

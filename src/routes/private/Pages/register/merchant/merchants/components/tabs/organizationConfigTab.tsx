@@ -152,6 +152,7 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
                 valuePropName="checked"
               >
                 <Switch
+                  data-test-id="cpf_api_permission"
                   checked={body?.cpf_api_permission}
                   onChange={(value) => {
                     setBody((state) => ({
@@ -182,6 +183,7 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
                 ]}
               >
                 <CurrencyInput
+                data-test-id="cash_out_max_value"
                   onChangeValue={(_event, originalValue) => {
                     setBodyUpdate((state) => ({
                       ...state,
@@ -213,6 +215,7 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
             >
               <Form.Item label={""} name="pix_refund_fee_min">
                 <Checkbox
+                  data-test-id="cash_out_max_value_unlimited"
                   checked={withdrawUnlimited}
                   onChange={handleWithdrawUnlimitedChange}
                 >
@@ -229,6 +232,7 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
                 valuePropName="checked"
               >
                 <Switch
+                  data-test-id="account_PJ_payment_permission"
                   checked={bodyUpdate?.cash_in_receive_by_pj}
                   onChange={(value) => {
                     setBodyUpdate((state) => ({
@@ -254,6 +258,7 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
                 ]}
               >
                 <CurrencyInput
+                  data-test-id="cash_in_max_value_receive_by_pj"
                   onChangeValue={(_event, originalValue) => {
                     setBodyUpdate((state) => ({
                       ...state,
@@ -263,6 +268,7 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
                   value={bodyUpdate?.cash_in_max_value_receive_by_pj}
                   InputElement={
                     <Input
+                      data-test-id="cash_in_max_value_receive_by_pj"
                       size="large"
                       style={{ width: "100%" }}
                       disabled={payerPjUnlimited}
@@ -285,6 +291,7 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
             >
               <Form.Item label={""} name="pix_refund_fee_min">
                 <Checkbox
+                  data-test-id="pix_refund_fee_min"
                   checked={payerPjUnlimited}
                   onChange={handlPayerPjUnlimitedChange}
                 >
@@ -301,6 +308,7 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
                 valuePropName="checked"
               >
                 <Switch
+                data-test-id="cash_in_receive_by_different_payer"
                   checked={bodyUpdate?.cash_in_receive_by_different_payer}
                   onChange={(value) => {
                     setBodyUpdate((state) => ({
@@ -326,6 +334,7 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
                 ]}
               >
                 <CurrencyInput
+                data-test-id="cash_in_max_value_receive_by_different_payer"
                   onChangeValue={(_event, originalValue) => {
                     setBodyUpdate((state) => ({
                       ...state,
@@ -362,6 +371,7 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
             >
               <Form.Item label={""} name="pix_refund_fee_min">
                 <Checkbox
+                data-test-id="pix_refund_fee_min"
                   checked={differentPayerUnlimited}
                   onChange={handleDifferentPayerUnlimitedChange}
                 >
@@ -377,6 +387,7 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
                 name="operation_type"
               >
                 <Select
+                data-test-id="operation_type"
                   size="large"
                   options={[
                     { value: 1, label: "EFX" },
@@ -404,6 +415,7 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
                 name="btg_merchant_customer_id"
               >
                 <Input
+                data-test-id="btg_merchant_customer_id"
                   size="large"
                   value={bodyUpdate?.btg_merchant_customer_id}
                   onChange={(e) => {
@@ -425,6 +437,7 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
                 name="under_age_verify"
               >
                 <Switch
+                data-test-id="under_age_verify"
                   checked={bodyUpdate?.under_age_verify}
                   onChange={(value) => {
                     setBody((state) => ({
@@ -442,6 +455,7 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
             <Col xs={{ span: 4 }} md={{ span: 4 }}>
               <Form.Item label={t("table.status")} name="status">
                 <Switch
+                data-test-id="status"
                   checked={bodyUpdate?.status}
                   onChange={(value) => {
                     setBody((state) => ({
@@ -470,6 +484,7 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
                 valuePropName="checked"
               >
                 <Switch
+                data-test-id="fastpix_in_permission"
                   checked={bodyUpdate?.fastpix_in_permission}
                   onChange={(value) => {
                     setBodyUpdate((state) => ({
@@ -486,6 +501,7 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
                 name="fastpix_in_type"
               >
                 <Select
+                data-test-id="fastpix_in_type"
                   size="large"
                   options={
                     ["FIXED", "FREE"]?.map((item, index) => ({
@@ -507,6 +523,7 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
             <Col xs={{ span: 24 }} md={{ span: 6 }}>
               <Form.Item label={t("table.merchant_hash")}>
                 <Input
+                data-test-id="merchant_hash"
                   size="large"
                   name="merchant_hash"
                   value={bodyUpdate?.merchant_hash}
@@ -549,6 +566,7 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
                 name="fastpix_in_min_value"
               >
                 <CurrencyInput
+                data-test-id="fastpix_in_min_value"
                   onChangeValue={(_event, originalValue) => {
                     setBodyUpdate((state) => ({
                       ...state,
@@ -572,6 +590,7 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
                 name="fastpix_in_max_value"
               >
                 <CurrencyInput
+                data-test-id="fastpix_in_max_value"
                   onChangeValue={(_event, originalValue) => {
                     setBodyUpdate((state) => ({
                       ...state,
@@ -597,7 +616,7 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
             style={{ display: "flex", flexDirection: "row-reverse" }}
           >
             <Grid item xs={12} md={3} style={{ marginTop: "50px" }}>
-              <button type="submit" ref={submitRef} style={{ display: "none" }}>
+              <button data-test-id="submit" type="submit" ref={submitRef} style={{ display: "none" }}>
                 Submit
               </button>
               <Popconfirm
@@ -617,6 +636,7 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
                 onCancel={() => setIsConfirmOpen(false)}
               >
                 <Button
+                data-test-id="update"
                   size="large"
                   type="primary"
                   style={{ width: "100%" }}

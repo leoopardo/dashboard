@@ -172,6 +172,7 @@ export const FeesTab = (props: { id?: string }) => {
             name="cashin_pix_fee_type"
           >
             <Select
+              data-test-id="deposit_fee_type"
               size="large"
               options={
                 arrayPercentValue?.map((item, index) => ({
@@ -191,6 +192,7 @@ export const FeesTab = (props: { id?: string }) => {
             name="cashin_pix_fee_plan_id"
           >
             <Select
+              data-test-id="deposit_fee_plan"
               size="large"
               options={
                 depositFeePlansData?.items?.map((item, index) => ({
@@ -232,6 +234,7 @@ export const FeesTab = (props: { id?: string }) => {
             }
           >
             <Input
+              data-test-id="deposit_fee_percent"
               size="large"
               type="number"
               step={0.01}
@@ -270,6 +273,7 @@ export const FeesTab = (props: { id?: string }) => {
             }
           >
             <CurrencyInput
+              data-test-id="deposit_fee_value"
               onChangeValue={(_event, originalValue) => {
                 setBodyUpdate((state) => ({
                   ...state,
@@ -294,6 +298,7 @@ export const FeesTab = (props: { id?: string }) => {
             name="cashin_pix_fee_min"
           >
             <CurrencyInput
+              data-test-id="deposit_fee_min"
               onChangeValue={(_event, originalValue) => {
                 setBodyUpdate((state) => ({
                   ...state,
@@ -323,6 +328,7 @@ export const FeesTab = (props: { id?: string }) => {
             name="customer_withdraw_fee_type"
           >
             <Select
+              data-test-id="withdraw_fee_type"
               size="large"
               options={
                 arrayPercentValue?.map((item, index) => ({
@@ -351,6 +357,7 @@ export const FeesTab = (props: { id?: string }) => {
             name="customer_withdraw_fee_plan_id"
           >
             <Select
+              data-test-id="withdraw_fee_plan"
               size="large"
               options={
                 withdrawFeePlansData?.items?.map((item, index) => ({
@@ -392,6 +399,7 @@ export const FeesTab = (props: { id?: string }) => {
             }
           >
             <Input
+              data-test-id="withdraw_fee_percent"
               size="large"
               type="number"
               name="customer_withdraw_fee_percent"
@@ -423,6 +431,7 @@ export const FeesTab = (props: { id?: string }) => {
             ]}
           >
             <CurrencyInput
+              data-test-id="withdraw_fee_value"
               onChangeValue={(_event, originalValue) => {
                 setBodyUpdate((state) => ({
                   ...state,
@@ -455,6 +464,7 @@ export const FeesTab = (props: { id?: string }) => {
               }}
               InputElement={
                 <Input
+                  data-test-id="withdraw_fee_min"
                   size="large"
                   style={{ width: "100%" }}
                   value={body?.customer_withdraw_fee_min}
@@ -474,6 +484,7 @@ export const FeesTab = (props: { id?: string }) => {
             name="pix_refund_fee_type"
           >
             <Select
+              data-test-id="deposit_refund_fee_type"
               size="large"
               options={
                 arrayPercentValue?.map((item, index) => ({
@@ -515,6 +526,7 @@ export const FeesTab = (props: { id?: string }) => {
             }
           >
             <Input
+            data-test-id="deposit_refund_fee_percent"
               size="large"
               type="number"
               name="pix_refund_fee_percent"
@@ -547,6 +559,7 @@ export const FeesTab = (props: { id?: string }) => {
             ]}
           >
             <CurrencyInput
+            data-test-id="deposit_refund_fee_value"
               onChangeValue={(_event, originalValue) => {
                 setBodyUpdate((state) => ({
                   ...state,
@@ -571,6 +584,7 @@ export const FeesTab = (props: { id?: string }) => {
             name="pix_refund_fee_min"
           >
             <CurrencyInput
+              data-test-id="deposit_refund_fee_min"
               onChangeValue={(_event, originalValue) => {
                 setBodyUpdate((state) => ({
                   ...state,
@@ -597,6 +611,7 @@ export const FeesTab = (props: { id?: string }) => {
             name="fastpix_in_fee_type"
           >
             <Select
+              data-test-id="fastpix_in_fee_type"
               size="large"
               options={
                 arrayPercentValue?.map((item, index) => ({
@@ -638,6 +653,7 @@ export const FeesTab = (props: { id?: string }) => {
             }
           >
             <Input
+              data-test-id="fastpix_in_fee_percent"
               size="large"
               type="number"
               name="fastpix_in_fee_percent"
@@ -676,6 +692,7 @@ export const FeesTab = (props: { id?: string }) => {
             }
           >
             <CurrencyInput
+              data-test-id="fastpix_in_fee_value"
               onChangeValue={(_event, originalValue) => {
                 setBodyUpdate((state) => ({
                   ...state,
@@ -700,6 +717,7 @@ export const FeesTab = (props: { id?: string }) => {
             name="fastpix_in_fee_min"
           >
             <CurrencyInput
+              data-test-id="fastpix_in_fee_min"
               onChangeValue={(_event, originalValue) => {
                 setBodyUpdate((state) => ({
                   ...state,
@@ -722,6 +740,7 @@ export const FeesTab = (props: { id?: string }) => {
             name="fastpix_refund_fee_type"
           >
             <Select
+              data-test-id="fastpix_refund_fee_type"
               size="large"
               options={
                 arrayPercentValue?.map((item, index) => ({
@@ -763,6 +782,7 @@ export const FeesTab = (props: { id?: string }) => {
             }
           >
             <Input
+              data-test-id="fastpix_refund_fee_percent"
               size="large"
               type="number"
               name="fastpix_refund_fee_percent"
@@ -801,6 +821,7 @@ export const FeesTab = (props: { id?: string }) => {
             }
           >
             <CurrencyInput
+              data-test-id="fastpix_refund_fee_value"
               onChangeValue={(_event, originalValue) => {
                 setBodyUpdate((state) => ({
                   ...state,
@@ -825,6 +846,7 @@ export const FeesTab = (props: { id?: string }) => {
             name="fastpix_refund_fee_min"
           >
             <CurrencyInput
+              data-test-id="fastpix_refund_fee_min"
               onChangeValue={(_event, originalValue) => {
                 setBodyUpdate((state) => ({
                   ...state,
@@ -851,7 +873,7 @@ export const FeesTab = (props: { id?: string }) => {
       >
         <Grid item xs={12} md={4} lg={2}>
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-            <button type="submit" ref={submitRef} style={{ display: "none" }}>
+            <button data-test-id="submit" type="submit" ref={submitRef} style={{ display: "none" }}>
               Submit
             </button>
             <Popconfirm
