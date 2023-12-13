@@ -14,7 +14,6 @@ import { useGetrefetchCountries } from "@src/services/states_cities/getCountries
 import { ProfileInterface } from "@src/services/types/register/permissionsGroup/permissionsGroupinterface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
 import { unmask, validateFormCnpj } from "@src/utils/functions";
-import { isValidCNPJ } from '@brazilian-utils/brazilian-utils';
 import {
   AutoComplete,
   Avatar,
