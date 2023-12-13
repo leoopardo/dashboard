@@ -97,6 +97,7 @@ export const MutateModal = ({
   validateToken,
   validateTokenAction,
   success,
+  error,
   merchantBetweenAccounts,
   query,
 }: mutateProps) => {
@@ -203,8 +204,9 @@ export const MutateModal = ({
   }, [tokenState]);
 
   useEffect(() => {
-    if (tokenState && success) {
+    if (success && clear) {
       setOpen(false);
+      clear();
     }
   }, [success]);
 
@@ -246,7 +248,7 @@ export const MutateModal = ({
             return;
           }
           submit();
-          setOpen(false);
+          if (!clear) setOpen(false);
         }}
       >
         <Row>
@@ -1291,8 +1293,8 @@ export const MutateModal = ({
           tokenState={tokenState}
           submit={submit}
           body={body}
-          error={false}
-          success={false}
+          error={error}
+          success={success}
         />
       )}
     </Drawer>

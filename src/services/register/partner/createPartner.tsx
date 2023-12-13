@@ -4,7 +4,7 @@ import { useMutation } from "react-query";
 import { api } from "../../../config/api";
 
 export function useCreatePartner(body: PartnerItem) {
-  const { isLoading, error, mutate, isSuccess } = useMutation<
+  const { isLoading, error, mutate, isSuccess, reset } = useMutation<
     PartnerItem | null | undefined
   >("CreatePartner", async () => {
     const response = await api.post("core/partner/create", body, {});
@@ -21,6 +21,6 @@ export function useCreatePartner(body: PartnerItem) {
     PartnerMutate,
     PartnerIsLoading,
     PartnerError,
-    PartnerIsSuccess,
+    PartnerIsSuccess,reset
   };
 }

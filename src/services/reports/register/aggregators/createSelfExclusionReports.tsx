@@ -4,7 +4,7 @@ import { useMutation } from "react-query";
 import { api } from "../../../../config/api";
 
 export function useCreateSelfExclusionReports(body: ReportsQuery) {
-  const { isLoading, error, mutate, isSuccess } = useMutation<
+  const { isLoading, error, mutate, isSuccess, reset } = useMutation<
   ReportsQuery | null | undefined
   >("CreateSelfExclusionReports", async () => {
     const response = await api.post("blacklist/self-exclusion/csv", body, {
@@ -23,6 +23,6 @@ export function useCreateSelfExclusionReports(body: ReportsQuery) {
     SelfExclusionReportsMutate,
     SelfExclusionReportsIsLoading,
     SelfExclusionReportsError,
-    SelfExclusionReportsIsSuccess,
+    SelfExclusionReportsIsSuccess,reset
   };
 }

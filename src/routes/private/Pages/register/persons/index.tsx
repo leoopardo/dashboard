@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
   EditOutlined,
@@ -12,6 +13,7 @@ import { FilterChips } from "@components/FiltersModal/filterChips";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { Search } from "@src/components/Inputs/search";
+import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
 import { Toast } from "@src/components/Toast";
@@ -20,13 +22,12 @@ import { useUpdatePartner } from "@src/services/register/partner/updatePartner";
 import { useCreatePerson } from "@src/services/register/persons/persons/createPerson";
 import { useGetPersons } from "@src/services/register/persons/persons/getPersons";
 import { useCreatePersonsReports } from "@src/services/reports/register/persons/persons/createPersonReports";
+import { useGetPersonReportFields } from "@src/services/reports/register/persons/persons/getPersonReportFields";
 import {
   PersonsItem,
   PersonsQuery,
 } from "@src/services/types/register/persons/persons.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { useGetPersonReportFields } from "@src/services/reports/register/persons/persons/getPersonReportFields";
-import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
 import { Button, Select, Tooltip } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -86,7 +87,7 @@ export const Persons = () => {
     comma_separate_value: comma,
   });
 
-  const { PersonIsLoading, PersonMutate, PersonError, PersonIsSuccess } =
+  const { PersonIsLoading, PersonMutate, PersonError, PersonIsSuccess, reset } =
     useCreatePerson(createBody);
 
   const { UpdateError, UpdateIsLoading, UpdateMutate, UpdateIsSuccess } =
@@ -326,6 +327,7 @@ export const Persons = () => {
           submitLoading={PersonIsLoading}
           error={PersonError}
           success={PersonIsSuccess}
+          clear={reset}
         />
       )}
       {isUpdateModalOpen && (

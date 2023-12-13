@@ -6,7 +6,7 @@ import { queryClient } from "../../../queryClient";
 export function useCreateTransferBetweenAccounts(
   body: TransferBetweenAccountsbody | null
 ) {
-  const { isLoading, error, mutate, isSuccess } = useMutation<
+  const { isLoading, error, mutate, isSuccess, reset } = useMutation<
     TransferBetweenAccountsbody | null | undefined
   >("createTransferBetweenAccounts", async () => {
     const response = await api.post("core/merchant/account/balance/transfer/create", body, {});
@@ -18,6 +18,6 @@ export function useCreateTransferBetweenAccounts(
     isLoading,
     error,
     mutate,
-    isSuccess,
+    isSuccess,reset
   };
 }

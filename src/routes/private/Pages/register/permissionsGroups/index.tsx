@@ -73,6 +73,7 @@ export const PermissionsGroups = () => {
     PermissionGroupIsSuccess,
     PermissionGroupMutate,
     data,
+    PermissionGroupReset,
   } = useCreatePermissionGroup({ ...createGroupBody, status: "true" });
 
   const {
@@ -86,6 +87,7 @@ export const PermissionsGroups = () => {
     UpdatePermissionGroupIsLoading,
     UpdatePermissionGroupIsSuccess,
     UpdatePermissionGroupMutate,
+    UpdatePermissionGroupReset,
   } = useUpdatePermissionGroup(updateGroupBody);
   const { ProfilesData } = useGetProfiles({
     group: true,
@@ -272,6 +274,7 @@ export const PermissionsGroups = () => {
           submitLoading={PermissionGroupIsLoading}
           error={PermissionGroupError}
           success={PermissionGroupIsSuccess}
+          clear={PermissionGroupReset}
         />
       )}
       {isDeleteModalOpen && (
@@ -306,6 +309,7 @@ export const PermissionsGroups = () => {
           submitLoading={UpdatePermissionGroupIsLoading}
           error={UpdatePermissionGroupError}
           success={UpdatePermissionGroupIsSuccess}
+          clear={UpdatePermissionGroupReset}
         />
       )}
       {isPermissionsModalOpen && (

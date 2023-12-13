@@ -74,10 +74,10 @@ export const OrganizationCategories = () => {
     status: currentItem?.status,
     entry_account_category_id: currentItem?.id,
   });
-  const { isLoading, mutate, error, isSuccess } =
+  const { isLoading, mutate, error, isSuccess, reset } =
     useCreateOrganizationCategory(createBody);
 
-  const { updateError, updateIsLoading, updateMutate, updateSuccess } =
+  const { updateError, updateIsLoading, updateMutate, updateSuccess, updateReset } =
     useUpdateOrganizationCategory(updateBody);
 
   const {
@@ -298,6 +298,7 @@ export const OrganizationCategories = () => {
           submitLoading={isLoading}
           error={error}
           success={isSuccess}
+          clear={reset}
         />
       )}
       {isUpdateCategorieModalOpen && (
@@ -317,6 +318,7 @@ export const OrganizationCategories = () => {
           submitLoading={updateIsLoading}
           error={updateError}
           success={updateSuccess}
+          clear={updateReset}
         />
       )}
       {isViewModalOpen && (

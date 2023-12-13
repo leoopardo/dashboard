@@ -4,7 +4,7 @@ import { useMutation } from "react-query";
 import { api } from "../../../config/api";
 
 export function useUpdatePartner(body: PartnerItem) {
-  const { isLoading, error, mutate, isSuccess } = useMutation<
+  const { isLoading, error, mutate, isSuccess, reset } = useMutation<
     PartnerItem | null | undefined
   >("UpdatePartner", async () => {
     const response = await api.put("core/partner/update", body, {});
@@ -13,6 +13,7 @@ export function useUpdatePartner(body: PartnerItem) {
   });
 
   const UpdateMutate = mutate;
+  const UpdateReset = reset;
   const UpdateIsLoading = isLoading;
   const UpdateError = error;
   const UpdateIsSuccess = isSuccess;
@@ -21,6 +22,6 @@ export function useUpdatePartner(body: PartnerItem) {
     UpdateMutate,
     UpdateIsLoading,
     UpdateError,
-    UpdateIsSuccess,
+    UpdateIsSuccess,UpdateReset
   };
 }

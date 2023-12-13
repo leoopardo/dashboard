@@ -5,7 +5,7 @@ import { useMutation } from "react-query";
 import { queryClient } from "../../../queryClient";
 
 export function useCreateMerchantFeePlans(body: IDepositFeeItem | null) {
-  const { isLoading, error, mutate, isSuccess } = useMutation<
+  const { isLoading, error, mutate, isSuccess, reset } = useMutation<
     IDepositFeeItem | null | undefined
   >("CreateMerchantsFeePlans", async () => {
     const response = await api.post("core/fee_plans", body, {});
@@ -17,6 +17,6 @@ export function useCreateMerchantFeePlans(body: IDepositFeeItem | null) {
     isLoading,
     error,
     mutate,
-    isSuccess,
+    isSuccess,reset
   };
 }

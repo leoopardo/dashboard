@@ -57,7 +57,7 @@ export const OrganizationTransfersBetweenAccounts = () => {
     refetchTransferBetweenAccountsData,
   } = useGetOrganizationTransferBetweenAccounts(query);
 
-  const { error, isLoading, isSuccess, mutate } =
+  const { error, isLoading, isSuccess, mutate, reset } =
     useCreateOrganizationTransferBetweenAccounts({
       ...body,
       organization_id: user?.organization_id,
@@ -310,6 +310,7 @@ export const OrganizationTransfersBetweenAccounts = () => {
           }}
           modalName={t("table.transfer")}
           submit={mutate}
+          clear={reset}
           submitLoading={isLoading}
           error={error}
           success={isSuccess}

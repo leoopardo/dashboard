@@ -864,6 +864,11 @@ export const FiltersModal = ({
                       }));
                     }}
                     showSearch
+                    filterOption={(input, option) => {
+                      return (
+                        `${option?.label}`?.toLowerCase()?.indexOf(input?.toLowerCase()) >= 0
+                      );
+                    }}
                     options={
                       ["", ...selectOptions[filter]]?.map((option: any) => {
                         if (option === "") {
