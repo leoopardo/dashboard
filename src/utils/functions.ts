@@ -1,3 +1,6 @@
+import { isValidCNPJ } from "@brazilian-utils/brazilian-utils";
+import { t } from "i18next";
+
 export function unmask(value: string): string {
     return value.replace(/[^\d]/g, "");
 }
@@ -19,4 +22,16 @@ export const setFirstChildDivId = (tabIndex: Element | null, id: string): void =
       firstChildDiv.setAttribute('id', id);
     }
   }
+};
+
+export const validateFormCnpj = (_: any, value: string) => {
+  if (!isValidCNPJ(value)) {
+    return Promise.reject(
+      t("input.invalid", {
+        field: t(`input.cnpj`),
+      }) || ""
+    );
+  }
+
+  return Promise.resolve();
 };

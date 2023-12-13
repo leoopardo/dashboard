@@ -13,7 +13,8 @@ import { useGetProfiles } from "@src/services/register/permissionGroups/getProfi
 import { useGetrefetchCountries } from "@src/services/states_cities/getCountries";
 import { ProfileInterface } from "@src/services/types/register/permissionsGroup/permissionsGroupinterface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { unmask } from "@src/utils/functions";
+import { unmask, validateFormCnpj } from "@src/utils/functions";
+import { isValidCNPJ } from '@brazilian-utils/brazilian-utils';
 import {
   AutoComplete,
   Avatar,
@@ -133,17 +134,6 @@ export const MutateModal = ({
   const { ProfilesData, isProfilesDataFetching } = useGetProfiles({
     group: true,
   });
-
-  const validateCnpjLength = (_: any, value: string) => {
-    if (value && value.replace(/[^\d]/g, "").length !== 14) {
-      return Promise.reject(
-        t("input.invalid", {
-          field: t(`input.cnpj`),
-        }) || ""
-      );
-    }
-    return Promise.resolve();
-  };
 
   const { merchantBlacklistData } = useGetRowsMerchantBlacklistReasons({
     limit: 200,
@@ -740,7 +730,7 @@ export const MutateModal = ({
                       validateTrigger="onBlur"
                       rules={[
                         {
-                          validator: validateCnpjLength,
+                          validator: validateFormCnpj,
                         },
                         {
                           required: field.required,

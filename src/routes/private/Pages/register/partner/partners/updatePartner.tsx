@@ -57,7 +57,7 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import ReactInputMask from "react-input-mask";
 import { useLocation } from "react-router-dom";
-import { setFirstChildDivId } from "@src/utils/functions";
+import { setFirstChildDivId, validateFormCnpj } from "@src/utils/functions";
 
 export const UpdatePartner = () => {
   const { permissions } = queryClient.getQueryData(
@@ -171,17 +171,6 @@ export const UpdatePartner = () => {
     }));
   };
 
-  const validateCnpjLength = (_: any, value: string) => {
-    if (value && value.replace(/[^\d]/g, "").length !== 14) {
-      return Promise.reject(
-        t("input.invalid", {
-          field: t(`input.cnpj`),
-        }) || ""
-      );
-    }
-    return Promise.resolve();
-  };
-
   useEffect(() => {
     if (fileBody?.base64_file) {
       PartnerAttachmentMutate();
@@ -242,7 +231,7 @@ export const UpdatePartner = () => {
                 name="cnpj"
                 rules={[
                   {
-                    validator: validateCnpjLength,
+                    validator: validateFormCnpj,
                   },
                   {
                     required: true,
