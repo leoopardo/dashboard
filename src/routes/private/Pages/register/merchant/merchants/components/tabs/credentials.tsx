@@ -61,6 +61,7 @@ export const CredentialConfigTab = (props: { id?: string }) => {
     showCredentialConfigError,
     showCredentialConfigisSuccess,
     refetchShowCredentialConfigData,
+    remove,
   } = useShowCredentialsConfig({
     api_credential_id: currentItem?.id ?? createdCredential,
     validation_token: tokenState,
@@ -131,6 +132,12 @@ export const CredentialConfigTab = (props: { id?: string }) => {
     setQuery((state: any) => ({ ...state, name: debounceSearch }));
   }, [debounceSearch]);
 
+  useEffect(() => {
+    if (!isViewModalOpen) {
+      remove();
+    }
+  }, [isViewModalOpen]);
+
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid
@@ -141,7 +148,7 @@ export const CredentialConfigTab = (props: { id?: string }) => {
       >
         <Grid item xs={12} md={3} lg={2}>
           <Button
-          data-test-id="create-credential-button"
+            data-test-id="create-credential-button"
             type="primary"
             loading={isCredentialConfigFetching}
             onClick={() => {
@@ -237,7 +244,9 @@ export const CredentialConfigTab = (props: { id?: string }) => {
         <ViewModal
           item={showCredentialConfigData ?? createdCredential}
           loading={isShowCredentialConfigFetching}
-          modalName={`${t("menus.merchant")}: ${currentItem?.name || createdCredential?.name}`}
+          modalName={`${t("menus.merchant")}: ${
+            currentItem?.name || createdCredential?.name
+          }`}
           open={isViewModalOpen}
           setOpen={setIsViewModalOpen}
         />
