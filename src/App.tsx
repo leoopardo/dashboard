@@ -98,7 +98,11 @@ function App() {
                     theme === "dark"
                       ? "#303030"
                       : defaultTheme.colors.secondary,
+                  padding: 0,
+                  margin: 0,
+                  paddingXS: 5
                 },
+
                 Button: {
                   colorTextLightSolid:
                     import.meta.env.VITE_APP_BUTTON === "dark"
@@ -158,7 +162,11 @@ function App() {
             }}
           >
             <ErrorProvider>
-              <Toaster position="top-center" data-test-id="toaster" containerClassName="toaster" />
+              <Toaster
+                position="top-center"
+                data-test-id="toaster"
+                containerClassName="toaster"
+              />
               {isSuccess ? (
                 <Layout>
                   <Layout>

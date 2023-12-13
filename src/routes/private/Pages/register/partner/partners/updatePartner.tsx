@@ -57,6 +57,7 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import ReactInputMask from "react-input-mask";
 import { useLocation } from "react-router-dom";
+import { setFirstChildDivId } from "@src/utils/functions";
 
 export const UpdatePartner = () => {
   const { permissions } = queryClient.getQueryData(
@@ -64,6 +65,10 @@ export const UpdatePartner = () => {
   ) as ValidateInterface;
   const { t } = useTranslation();
   const location = useLocation();
+  const tabindex0 = document.querySelector('[data-node-key="1"]');
+  const tabindex1 = document.querySelector('[data-node-key="2"]');
+  const tabindex2 = document.querySelector('[data-node-key="3"]');
+
   const [partnerBody, setPartnerBody] = useState<PartnerItem>({
     partner_id: location?.state?.id,
     name: location?.state?.name,
@@ -190,6 +195,12 @@ export const UpdatePartner = () => {
       setDeleteFileId("");
     }
   }, [deleteFileId]);
+
+  useEffect(() => {
+    setFirstChildDivId(tabindex0, 'tab-partner-data');
+    setFirstChildDivId(tabindex1, 'tab-responsibles');
+    setFirstChildDivId(tabindex2, 'tab-attachments');
+  }, [tabindex0, tabindex1, tabindex2])
 
   const items: TabsProps["items"] = [
     {
@@ -606,7 +617,7 @@ export const UpdatePartner = () => {
         </Typography.Title>
       </Col>
       <Col span={24}>
-        <Tabs defaultActiveKey="1" items={items} />
+        <Tabs defaultActiveKey="1" items={items} data-test-id="tab" />
       </Col>
       <Toast
         actionSuccess={t("messages.updated")}

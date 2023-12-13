@@ -40,12 +40,15 @@ export const TotalizersCards = (props: {
               marginBottom: isMobile ? "-60px" : undefined,
               marginLeft: "-10%",
               marginRight: "-20px",
+              overflow: "hidden",
+              maxHeight: "300px",
             }}
           >
             <ReactECharts
               option={{
                 darkMode: theme === "dark",
                 legend: {
+                  show: false,
                   textStyle: {
                     color: "#a0a0a0",
                   },
@@ -53,7 +56,7 @@ export const TotalizersCards = (props: {
                 tooltip: {
                   trigger: "item",
                 },
-               
+
                 color: ["#91cc75", "#fac858", "#ea7ccc"],
 
                 series: [

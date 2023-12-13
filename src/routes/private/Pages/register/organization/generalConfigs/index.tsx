@@ -8,6 +8,7 @@ import { useGetGeneralconfigs } from "@src/services/register/organization/genera
 import { useUpdateOrganizationGeneralConfigs } from "@src/services/register/organization/generalConfigs/updateGeneralConfigs";
 import { OrganizationGeneralConfigs } from "@src/services/types/register/organization/organizationGeneralConfigs.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
+import { setFirstChildDivId } from "@src/utils/functions";
 import {
   Button,
   Form,
@@ -51,9 +52,6 @@ export const GeneralConfigs = () => {
     }));
   };
 
-  useEffect(() => {
-    formRef.current?.setFieldsValue(data);
-  }, [data]);
 
   const [isTuorOpen, setIsTuorOpen] = useState<boolean>(false);
   const refCashInMaxValue = useRef(null);
@@ -78,6 +76,18 @@ export const GeneralConfigs = () => {
   const refCheckLastWaitinPix = useRef(null);
   const refPaybrokersQrCode = useRef(null);
   const refTimeReceiveAfterExpire = useRef(null);
+  const tabFinancial = document.querySelector('[data-node-key="1"]');
+  const tabAdmin = document.querySelector('[data-node-key="2"]');
+
+  useEffect(() => {
+    setFirstChildDivId(tabFinancial, 'tab-financial');
+    setFirstChildDivId(tabAdmin, 'tab-admin');
+  }, [tabFinancial, tabAdmin])
+
+
+  useEffect(() => {
+    formRef.current?.setFieldsValue(data);
+  }, [data]);
 
   const items: TabsProps["items"] = [
     {

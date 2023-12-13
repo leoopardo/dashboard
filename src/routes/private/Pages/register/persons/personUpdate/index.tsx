@@ -46,6 +46,7 @@ import { useGetPersonHistoryDetails } from "@src/services/register/persons/perso
 import { useLocation, useParams } from "react-router-dom";
 import { FilterChips } from "@src/components/FiltersModal/filterChips";
 import { FiltersModal } from "@src/components/FiltersModal";
+import { setFirstChildDivId } from "@src/utils/functions";
 
 const INITIAL_QUERY: PersonsQuery = {
   limit: 25,
@@ -55,6 +56,8 @@ const INITIAL_QUERY: PersonsQuery = {
 };
 
 export const PersonUpdate = () => {
+  const { t } = useTranslation();
+  const { cpf } = useParams();
   const currentData = useLocation()?.state;
   const [body, setBody] = useState<PersonsItem | undefined>(undefined);
   const [currentObj, setCurrentObj] = useState<any | undefined>(undefined);
@@ -65,8 +68,13 @@ export const PersonUpdate = () => {
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [deleteFileId, setDeleteFileId] = useState<string>("");
   const submitRef1 = useRef<HTMLButtonElement>(null);
-  const { t } = useTranslation();
-  const { cpf } = useParams();
+
+  const tabGeneralData = document.querySelector('[data-node-key="1"]');
+  const tabBlocks = document.querySelector('[data-node-key="2"]');
+  const tabLimits = document.querySelector('[data-node-key="3"]');
+  const tabAttachments = document.querySelector('[data-node-key="4"]');
+  const tabHistoric = document.querySelector('[data-node-key="5"]');
+
   const [query, setQuery] = useState<PersonsQuery>({
     limit: 25,
     page: 1,
@@ -150,6 +158,14 @@ export const PersonUpdate = () => {
       setFileBody({ base64_file: "", file_name: "" });
     }
   }, [fileBody]);
+
+  useEffect(() => {
+    setFirstChildDivId(tabGeneralData, "tab-general-data");
+    setFirstChildDivId(tabBlocks, "tab-blocks");
+    setFirstChildDivId(tabLimits, "tab-limit");
+    setFirstChildDivId(tabAttachments, "tab-attachments");
+    setFirstChildDivId(tabHistoric, "tab-historic");
+  }, [tabGeneralData, tabBlocks, tabLimits, tabAttachments, tabHistoric]);
 
   const items: TabsProps["items"] = [
     {

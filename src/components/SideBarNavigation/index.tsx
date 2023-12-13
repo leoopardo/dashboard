@@ -2,6 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
+  BarChartOutlined,
   DollarOutlined,
   FileSearchOutlined,
   FolderAddOutlined,
@@ -10,6 +11,7 @@ import {
   MenuUnfoldOutlined,
   NotificationOutlined,
 } from "@ant-design/icons";
+import { useErrorContext } from "@src/contexts/ErrorContext";
 import { useTheme } from "@src/contexts/ThemeContext";
 import { queryClient } from "@src/services/queryClient";
 import { ValidateInterface } from "@src/services/types/validate.interface";
@@ -20,8 +22,9 @@ import { useMediaQuery } from "react-responsive";
 import { useLocation, useNavigate } from "react-router-dom";
 import secureLocalStorage from "react-secure-storage";
 import { useMenu } from "../../contexts/SidebarContext";
-import { useErrorContext } from "@src/contexts/ErrorContext";
 import { defaultTheme } from "../../styles/defaultTheme";
+import { motion } from "framer-motion";
+import PbLogo from "@assets/logo.png";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -29,6 +32,7 @@ export const SidebarNavigation = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { resetErrors } = useErrorContext();
+  const LargeDesktop = useMediaQuery({ maxHeight: "800px" });
   const isMobile = useMediaQuery({ maxWidth: "950px" });
   const [collapsed, setCollapsed] = useState(true);
   const { handleChangeSidebar, isSidebarOpen } = useMenu();
@@ -94,25 +98,15 @@ export const SidebarNavigation = () => {
   const i: MenuItem[] = [
     getItem(
       "dashboard",
-      null,
+      <BarChartOutlined style={{ fontSize: "23px" }} />,
       null,
       false,
       () => navigate("/dashboard"),
       { fontSize: "16px" },
-      import.meta.env.VITE_APP_COMPANY_NAME,
+      t("menus.dashboard"),
       "dark"
     ),
-    getItem(
-      "div1",
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      "divider"
-    ),
+
     // - CADASTROS
     getItem(
       "register",
@@ -171,6 +165,16 @@ export const SidebarNavigation = () => {
                   ?.menu
                   ? undefined
                   : "none",
+              }
+            ),
+            getItem(
+              "permissions_groups",
+              null,
+              null,
+              false,
+              (e) => handleNavigate(e?.keyPath),
+              {
+                display: type === 1 ? undefined : "none",
               }
             ),
             getItem(
@@ -596,7 +600,7 @@ export const SidebarNavigation = () => {
                     : "none",
                 }
               ),
-                // todo
+              // todo
 
               // getItem(
               //   "import_merchant_blacklist",
@@ -1841,7 +1845,8 @@ export const SidebarNavigation = () => {
                   false,
                   (e) => handleNavigate(e?.keyPath),
                   {
-                    display: permissions?.support?.contestation?.deposits.import_csv.menu
+                    display: permissions?.support?.contestation?.deposits
+                      .import_csv.menu
                       ? undefined
                       : "none",
                   }
@@ -1850,18 +1855,22 @@ export const SidebarNavigation = () => {
               undefined,
               undefined,
               {
-                display: permissions?.support?.contestation?.deposits?.menu && (type === 1 || type === 2)
-                  ? undefined
-                  : "none",
+                display:
+                  permissions?.support?.contestation?.deposits?.menu &&
+                  (type === 1 || type === 2)
+                    ? undefined
+                    : "none",
               }
             ),
           ],
           undefined,
           undefined,
           {
-            display: permissions?.support?.contestation?.deposits?.menu && (type === 1 || type === 2)
-            ? undefined
-            : "none",
+            display:
+              permissions?.support?.contestation?.deposits?.menu &&
+              (type === 1 || type === 2)
+                ? undefined
+                : "none",
           }
         ),
         /*  getItem("Wiki", null, null, false, () => {
@@ -1873,29 +1882,6 @@ export const SidebarNavigation = () => {
       {
         display: permissions?.support?.menu ? undefined : "none",
       }
-    ), getItem(
-      "div1",
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      "divider"
-    ),
-    getItem(
-      "logout",
-      <LogoutOutlined style={{ fontSize: "23px" }} />,
-      null,
-      false,
-      () => {
-        secureLocalStorage.removeItem("token");
-        sessionStorage.removeItem("token");
-        queryClient.refetchQueries(["validate"]);
-        resetErrors();
-      },
-      { color: "red" }
     ),
   ];
 
@@ -1918,36 +1904,81 @@ export const SidebarNavigation = () => {
       }}
     >
       <Tour open={isMenuTourOpen} onClose={() => setIsMenuTourOpen(true)} />
-      <Button
-        type={isMobile && !isSidebarOpen ? "ghost" : "primary"}
-        onClick={toggleCollapsed}
-        style={{
-          height: "55px",
-          width: isSidebarOpen ? 256 : 80,
-          borderRadius: 0,
-        }}
+      <motion.div
+        whileHover={{ filter: "contrast(130%)" }}
+        whileTap={{ filter: "contrast(100%)" }}
       >
-        {!isSidebarOpen ? (
-          <MenuUnfoldOutlined
+        <Button
+          type={isMobile && !isSidebarOpen ? "ghost" : "primary"}
+          onClick={toggleCollapsed}
+          style={{
+            height: LargeDesktop ? "8vh" : "6vh",
+            width: isSidebarOpen ? 256 : 80,
+            borderRadius: 0,
+            backgroundColor:
+              isMobile && !isSidebarOpen
+                ? undefined
+                : theme === "dark"
+                ? "#222222"
+                : defaultTheme.colors.primary,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            borderBottom: isMobile
+              ? "none"
+              : theme === "light"
+              ? "1px solid #797979ac"
+              : "1px solid #4b4b4bac",
+          }}
+        >
+          <div
             style={{
-              fontSize: "26px",
-              color: theme === "dark" ? "#fff" : "#000",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
             }}
-          />
-        ) : (
-          <MenuFoldOutlined
-            style={{
-              fontSize: "26px",
-              color: theme === "dark" ? "#fff" : "#000",
-            }}
-          />
-        )}
-      </Button>
+          >
+            {isSidebarOpen && (
+              <img
+                src={import.meta.env.VITE_APP_LOGO ||PbLogo}
+                style={{ width: "180px", marginLeft: "-24px" }}
+              />
+            )}
+            {!isSidebarOpen ? (
+              <MenuUnfoldOutlined
+                style={{
+                  fontSize: "26px",
+                
+                  color:
+                    !isSidebarOpen && isMobile && theme === "light"
+                      ? "#000"
+                      : import.meta.env.VITE_APP_MENU_THEME === "dark"
+                      ? "#fff"
+                      : "#000",
+                }}
+              />
+            ) : (
+              <MenuFoldOutlined
+                style={{
+                  fontSize: "26px",
+                  marginLeft: 24,
+                  color:
+                    !isSidebarOpen && isMobile && theme === "light"
+                      ? "#000"
+                      : import.meta.env.VITE_APP_MENU_THEME === "dark"
+                      ? "#fff"
+                      : "#000",
+                }}
+              />
+            )}
+          </div>
+        </Button>
+      </motion.div>
 
       <Menu
         style={{
-          minHeight: "100%",
-          maxHeight: "100%",
+          minHeight: LargeDesktop ? "85vh" : "89vh",
+          maxHeight: LargeDesktop ? "85vh" : "89vh",
           overflow: "auto",
           backgroundColor:
             theme === "dark" ? "#222222" : defaultTheme.colors.primary,
@@ -1959,9 +1990,38 @@ export const SidebarNavigation = () => {
         disabledOverflow
         translate="yes"
         mode="inline"
-        theme={theme === "dark" ? "light" : import.meta.env.VITE_APP_MENU_THEME}       inlineCollapsed={!isSidebarOpen}
+        theme={theme === "dark" ? "light" : import.meta.env.VITE_APP_MENU_THEME}
+        inlineCollapsed={!isSidebarOpen}
         items={items}
       />
+      {(!isMobile || isSidebarOpen) && (
+        <motion.div
+          whileHover={{ filter: "contrast(130%)" }}
+          whileTap={{ filter: "contrast(100%)" }}
+        >
+          <Button
+            type={isMobile && !isSidebarOpen ? "ghost" : "primary"}
+            onClick={() => {
+              secureLocalStorage.removeItem("token");
+              sessionStorage.removeItem("token");
+              queryClient.refetchQueries(["validate"]);
+              resetErrors();
+            }}
+            danger
+            style={{
+              height: LargeDesktop ? "8vh" : "5vh",
+              width: isSidebarOpen ? 256 : 80,
+              borderRadius: 0,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            icon={<LogoutOutlined style={{ fontSize: "23px" }} />}
+          >
+            {isSidebarOpen && t("menus.logout")}
+          </Button>
+        </motion.div>
+      )}
     </div>
   );
 };

@@ -312,12 +312,12 @@ export const Dashboard = () => {
                     }}
                   >
                     {bankListData?.itens
-                      .filter((b) => b.status === true)
+                      .filter((b) => b?.status === true)
                       .map((bank: any, index) => (
                         <SwiperSlide key={bank?.id}>
                           <BankCard
                             bank={bank}
-                            key={bank.id}
+                            key={bank?.id}
                             data-test-id={`bank-${index}`}
                           />
                         </SwiperSlide>

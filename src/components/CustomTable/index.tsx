@@ -62,6 +62,7 @@ export interface ColumnInterface {
 export interface actionsInterface {
   label?: string;
   icon?: any;
+  id?: string;
   onClick?: (item?: any) => void;
   disabled?: (item?: any) => boolean;
 }
@@ -113,6 +114,7 @@ export const CustomTable = (props: TableProps) => {
       for (const action of props.actions) {
         if (action)
           act.push({
+            id: action?.id,
             key: action?.label,
             label: t(`actions.${action?.label}`),
             icon: action?.icon,
@@ -1271,7 +1273,10 @@ export const CustomTable = (props: TableProps) => {
                   onShowSizeChange: (_current, size) =>
                     props.setQuery((state: any) => ({ ...state, limit: size })),
                   style: {
-                    display: props.removePagination ? "none" : undefined,
+                    display:
+                      props.removePagination || props.error
+                        ? "none"
+                        : undefined,
                   },
                 }
               }
@@ -1325,6 +1330,15 @@ export const CustomTable = (props: TableProps) => {
           style={{ display: "flex", justifyContent: "center", width: "100%" }}
         >
           <Grid item xs={12}>
+            {props.refetch && (
+              <Button
+                style={{ width: "100%" }}
+                type="link"
+                onClick={props.refetch}
+                icon={<ReloadOutlined />}
+                loading={props?.loading}
+              />
+            )}
             <Mobile
               columns={props.columns}
               items={props.items}
@@ -1338,7 +1352,7 @@ export const CustomTable = (props: TableProps) => {
               loading={props.loading}
             />
           </Grid>
-          {!props.removePagination && !props.bankStatement && (
+          {!props.removePagination && !props.bankStatement && props.items && (
             <Pagination
               style={{ marginTop: 8 }}
               current={Number(props?.query?.page ?? 1)}

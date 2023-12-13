@@ -90,7 +90,7 @@ export const Operators = () => {
     OperatorIsLoading,
     OperatorMutate,
     OperatorError,
-    OperatorIsSuccess,
+    OperatorIsSuccess,reset
   } = useCreateOperator(createBody);
 
   const { UpdateError, UpdateIsSuccess } = useUpdateOperator(updateBody);
@@ -346,6 +346,7 @@ export const Operators = () => {
           submitLoading={OperatorIsLoading}
           error={OperatorError}
           success={OperatorIsSuccess}
+          clear={reset}
         />
       )}
       {isViewModalOpen && (

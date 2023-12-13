@@ -7,6 +7,7 @@ import { useGetRowsMerchantManualEntryCategory } from "@src/services/register/me
 import { useListOperatorById } from "@src/services/register/operator/getListOperatorById";
 import { useGetOrganizationCategories } from "@src/services/register/organization/categories/getCategories";
 import { useListPartnerById } from "@src/services/register/partner/getListPartnerById";
+import { useGetProfiles } from "@src/services/register/permissionGroups/getProfiles";
 import { Col, Row, Tag } from "antd";
 import moment from "moment";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
@@ -60,6 +61,9 @@ export const FilterChips = ({
     page: 1,
     sort_field: "created_at",
     sort_order: "DESC",
+  });
+  const { ProfilesData } = useGetProfiles({
+    group: true,
   });
 
   const [filtersQuery, setFiltersQuery] = useState<any>(query);
@@ -455,33 +459,72 @@ export const FilterChips = ({
           case "log_type":
             return;
 
+          case "profiles":
+            return (
+              <Col key={key}>
+                {filtersQuery[key] ? (
+                  <Tag
+                    data-test-id="filter-chip-default"
+                    style={{
+                      width: "100%",
+                      textOverflow: "ellipsis",
+                      overflow: "hidden",
+                      wordBreak: "break-all",
+                      display: disabled?.includes(key) ? "none" : undefined,
+                    }}
+                    key={key}
+                    color="cyan"
+                    icon={
+                      <CloseCircleOutlined onClick={() => deleteFilter(key)} />
+                    }
+                  >
+                    {t(`table.${key}`)}:{" "}
+                    {`[${filtersQuery[key]
+                      .split("[")[1]
+                      .split("]")[0]
+                      .split(",")
+                      .map((p: string) =>
+                        t(
+                          `table.${ProfilesData?.find(
+                            (profile) => profile.id === +p
+                          )?.name?.toLocaleLowerCase()}`
+                        )
+                      )
+                      .join(", ")}]`}
+                  </Tag>
+                ) : (
+                  <></>
+                )}
+              </Col>
+            );
+
           case "type":
             return (
               <Col key={key}>
-              {filtersQuery[key] ? (
-                <Tag
-                  data-test-id="filter-chip-pix-type"
-                  style={{
-                    width: "100%",
-                    textOverflow: "ellipsis",
-                    overflow: "hidden",
-                    wordBreak: "break-all",
-                    display: disabled?.includes(key) ? "none" : undefined,
-                  }}
-                  key={key}
-                  color="cyan"
-                  icon={
-                    <CloseCircleOutlined onClick={() => deleteFilter(key)} />
-                  }
-                >
-                  {t(`table.${key}`)}:{" "}
-                  {t(`table.${filtersQuery[key].toLowerCase()}`)}
-                </Tag>
-              ) : (
-                <></>
-              )}
-            </Col>
-            )
+                {filtersQuery[key] ? (
+                  <Tag
+                    data-test-id="filter-chip-pix-type"
+                    style={{
+                      width: "100%",
+                      textOverflow: "ellipsis",
+                      overflow: "hidden",
+                      wordBreak: "break-all",
+                      display: disabled?.includes(key) ? "none" : undefined,
+                    }}
+                    key={key}
+                    color="cyan"
+                    icon={
+                      <CloseCircleOutlined onClick={() => deleteFilter(key)} />
+                    }
+                  >
+                    {t(`table.${key}`)}:{" "}
+                    {t(`table.${filtersQuery[key].toLowerCase()}`)}
+                  </Tag>
+                ) : (
+                  <></>
+                )}
+              </Col>
+            );
           default:
             return (
               <Col key={key}>
@@ -501,7 +544,30 @@ export const FilterChips = ({
                       <CloseCircleOutlined onClick={() => deleteFilter(key)} />
                     }
                   >
-                    {t(`table.${key}`)}: {filtersQuery[key]}
+                    {t(`table.${key}`)}:{" "}
+                    {[
+                      "DIVERGENT VALUE",
+                      "PAYMENT FROM QR CODE EXPIRED",
+                      "PAYMENT REFUND: THIRD PARTY PAYMENT UNAVAILABLE",
+                      "PAYMENT REFUND: CNPJ NOT ACCEPTED",
+                      "DAILY TRANSACTION LIMIT EXCEEDED FOR THIS CLIENT",
+                      "MONTH TRANSACTION LIMIT EXCEEDED FOR THIS CLIENT",
+                      "DAILY TRANSACTION TO THIRD LIMIT EXCEEDED FOR THIS CLIENT",
+                      "DAILY TRANSACTION LIMIT EXCEEDED FOR THIS CNPJ",
+                      "PAYER IRREGULAR DOCUMENT, PLEASE CONTACT SUPPORT TO REGULARIZE DOCUMENT",
+                      "PAYER UNDERAGE",
+                      "PAYER BLOCKED BY MERCHANT",
+                      "PAYMENT REPEATED TO SAME QRCODE",
+                    ].includes(filtersQuery[key])
+                      ? t(
+                          `table.${filtersQuery[key]
+                            ?.split(":")
+                            ?.join("")
+                            ?.split(" ")
+                            ?.join("_")
+                            ?.toLowerCase()}`
+                        )
+                      : filtersQuery[key]}
                   </Tag>
                 ) : (
                   <></>

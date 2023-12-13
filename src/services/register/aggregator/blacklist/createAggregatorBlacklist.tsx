@@ -4,7 +4,7 @@ import { useMutation } from "react-query";
 import { queryClient } from "../../../queryClient";
 
 export function useCreateAggregatorBlacklist(body: MerchantBlacklistItem | null) {
-  const { isLoading, error, mutate, isSuccess } = useMutation<
+  const { isLoading, error, mutate, isSuccess, reset } = useMutation<
     MerchantBlacklistItem | null | undefined
   >("CreateAggregatorBlacklist", async () => {
     const response = await api.post("blacklist/aggregator-black-list", body, {});
@@ -16,6 +16,6 @@ export function useCreateAggregatorBlacklist(body: MerchantBlacklistItem | null)
     isLoading,
     error,
     mutate,
-    isSuccess,
+    isSuccess,reset
   };
 }

@@ -43,6 +43,7 @@ export const ValidateToken = ({
     useState<boolean>(false);
   const [validationPhoneSent, setValidationPhoneSent] =
     useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [validateBody, setValidateBody] = useState<{
     action: string;
     cellphone?: string | undefined;
@@ -150,10 +151,16 @@ export const ValidateToken = ({
   }, [success, error, ValidatePhoneSuccess, ValidatePhoneError]);
 
   useEffect(() => {
-    if (tokenState.length < 6) {
-      return;
+    if (tokenState.length === 6) {
+      setLoading(true);
+      setTimeout(() => {
+        submit();
+      }, 1000);
+      setTimeout(() => {
+        setLoading(false);
+        setTokenState("");
+      }, 2300);
     }
-    submit();
   }, [tokenState]);
 
   return Self?.phone_validated ? (
@@ -187,7 +194,7 @@ export const ValidateToken = ({
           <Grid xs={12} md={8}>
             <Button
               style={{ marginLeft: "150px" }}
-              loading={ValidateTokenLoading}
+              loading={ValidateTokenLoading || loading}
               key="submit"
               type="primary"
               onClick={() => {
@@ -275,7 +282,7 @@ export const ValidateToken = ({
           <Grid item xs={12} md={8}>
             <Button
               style={{ marginLeft: "150px" }}
-              loading={ValidatePhoneLoading}
+              loading={ValidatePhoneLoading || loading}
               key="submit"
               type="primary"
               onClick={() => {

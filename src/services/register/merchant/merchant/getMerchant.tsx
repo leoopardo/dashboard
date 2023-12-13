@@ -12,7 +12,9 @@ export function useGetMerchantById(id?: string) {
   >(
     "MerchantsRegister",
     async () => {
-      const response = await api.get(`core/merchant/detail/${id}`, {});
+      const response = await api.get("core/merchant", {
+        params: {merchant_id: id},
+      });
       return response.data;
     },
   );

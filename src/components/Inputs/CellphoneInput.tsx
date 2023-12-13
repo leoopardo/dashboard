@@ -43,8 +43,6 @@ export const CellphoneInput = ({
     }
   }, [Countries, countries]);
 
-  useEffect;
-
   function parsePhoneNumber(phoneNumber?: string) {
     const item = { ddi: "", phone: "" };
     for (const ddi in DDIs) {
@@ -57,7 +55,7 @@ export const CellphoneInput = ({
   }
 
   useEffect(() => {
-    if (body.cellphone) {
+    if (body?.cellphone) {
       setSearch(parsePhoneNumber(body?.cellphone).ddi);
       setDDI(parsePhoneNumber(body?.cellphone).ddi);
       setNumber(parsePhoneNumber(body?.cellphone).phone);
@@ -65,10 +63,18 @@ export const CellphoneInput = ({
   }, []);
 
   useEffect(() => {
-    setBody((state: any) => ({
-      ...state,
-      cellphone: DDI && number ? `${DDI}${number}` : undefined,
-    }));
+    const timer = setTimeout(
+      () =>
+      setBody((state: any) => ({
+        ...state,
+        cellphone: DDI && number ? `${DDI}${number}` : undefined,
+      })),
+      500
+    );
+
+    return () => {
+      clearTimeout(timer);
+    };
   }, [DDI, number]);
 
   function getCellphoneFormat() {

@@ -85,10 +85,14 @@ export const MerchantView = () => {
     ...currentItem,
     merchant_id: currentItem?.id,
   });
+
   const [createBody, setCreateBody] = useState<MerchantsItem>({
     ...currentItem,
     partner_id: user?.partner_id,
   });
+
+  console.log({createBody})
+
 
   const {
     CreateError,
@@ -453,7 +457,7 @@ export const MerchantView = () => {
           fields={[
             { label: "name", required: false },
             { label: "domain", required: false },
-            { label: "v3_id", required: false },
+            { label: "v3_id", required: false, type: "number" },
             { label: "partner_id", required: true },
             { label: "aggregator_id", required: false },
             { label: "operator_id", required: false },
@@ -522,13 +526,14 @@ export const MerchantView = () => {
           fields={[
             { label: "name", required: true },
             { label: "domain", required: true },
-            { label: "v3_id", required: false },
+            { label: "v3_id", required: false, type: "number" },
             { label: "partner_id", required: true },
             { label: "aggregator_id", required: false },
             { label: "operator_id", required: false },
             { label: "cnpj", required: false },
             { label: "cellphone", required: false },
             { label: "email", required: false },
+            { label: "country", required: false },
           ]}
           body={createBody}
           setBody={setCreateBody}

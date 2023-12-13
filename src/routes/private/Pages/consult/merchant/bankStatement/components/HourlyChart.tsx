@@ -10,7 +10,6 @@ import {
   Title,
   Tooltip,
 } from "chart.js";
-import * as echarts from "echarts";
 import ReactECharts from "echarts-for-react";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
@@ -36,7 +35,7 @@ export function MerchantHourlyLineChart({
   return (
     <ReactECharts
       option={{
-        color: [defaultTheme.colors.chartGreen,  defaultTheme.colors.chartRed],
+        color: [defaultTheme.colors.chartGreen, defaultTheme.colors.chartRed],
         title: {
           text: t("messages.value_chart_area"),
           textStyle: {
@@ -54,13 +53,9 @@ export function MerchantHourlyLineChart({
           },
         },
         legend: {
-          data: [t("table.value_in"), t("table.value_out")], textStyle: {
+          data: [t("table.value_in"), t("table.value_out")],
+          textStyle: {
             color: "#a0a0a0",
-          },
-        },
-        toolbox: {
-          feature: {
-            saveAsImage: {},
           },
         },
         grid: {
@@ -68,6 +63,11 @@ export function MerchantHourlyLineChart({
           right: "4%",
           bottom: "3%",
           containLabel: true,
+        },
+        toolbox: {
+          feature: {
+            saveAsImage: {},
+          },
         },
         xAxis: [
           {
@@ -79,62 +79,41 @@ export function MerchantHourlyLineChart({
         yAxis: [
           {
             type: "value",
+            axisLabel: {
+              formatter: (value: number) =>
+                new Intl.NumberFormat("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                }).format(value ?? 0),
+            },
           },
         ],
         series: [
           {
             name: t("table.value_in"),
             type: "line",
-            stack: "Total",
             smooth: true,
-            lineStyle: {
-              width: 0,
-            },
-            showSymbol: false,
-            areaStyle: {
-              opacity: 0.8,
-              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                {
-                  offset: 0,
-                  color: defaultTheme.colors.chartGreen,
-                },
-                {
-                  offset: 1,
-                  color: defaultTheme.colors.chartBlue,
-                },
-              ]),
-            },
-            emphasis: {
-              focus: "series",
-            },
             data: items?.map((item) => item.value_in),
+            tooltip: {
+              valueFormatter: (value: number) =>
+              new Intl.NumberFormat("pt-BR", {
+                style: "currency",
+                currency: "BRL",
+              }).format(value ?? 0),
+            },
           },
           {
             name: t("table.value_out"),
             type: "line",
-            stack: "Total",
             smooth: true,
-            lineStyle: {
-              width: 0,
-            },
-            showSymbol: false,
-            areaStyle: {
-              opacity: 0.8,
-              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                {
-                  offset: 0,
-                  color: defaultTheme.colors.chartRed,
-                },
-                {
-                  offset: 1,
-                  color: defaultTheme.colors.chartYellow,
-                },
-              ]),
-            },
-            emphasis: {
-              focus: "series",
-            },
             data: items?.map((item) => item.value_out),
+            tooltip: {
+              valueFormatter: (value: number) =>
+              new Intl.NumberFormat("pt-BR", {
+                style: "currency",
+                currency: "BRL",
+              }).format(value ?? 0),
+            },
           },
         ],
       }}

@@ -36,6 +36,7 @@ import { PartnerSelect } from "../Selects/partnerSelect";
 import { ReasonSelect } from "../Selects/reasonSelect";
 import { FilterChips } from "./filterChips";
 import { StyleWrapperDatePicker } from "./styles";
+import { useMediaQuery } from "react-responsive";
 const { RangePicker } = DatePicker;
 
 dayjs.extend(weekday);
@@ -86,6 +87,7 @@ export const FiltersModal = ({
   const { cities, refetchCities } = useGetCities(currState);
   const submitRef = useRef<HTMLButtonElement>(null);
   const formRef = useRef<FormInstance>(null);
+  const isMobile = useMediaQuery({ maxWidth: "550px" });
 
   useEffect(() => {
     if (query.age_start) {
@@ -187,7 +189,6 @@ export const FiltersModal = ({
             type="dashed"
             onClick={() => {
               setQuery(initialQuery);
-              setFiltersQuery(initialQuery);
             }}
             danger
           >
@@ -272,6 +273,52 @@ export const FiltersModal = ({
                 >
                   <ConfigProvider locale={locale}>
                     <RangePicker
+                      presets={
+                        !isMobile
+                          ? [
+                              {
+                                label: t("table.last_7"),
+                                value: [dayjs().add(-7, "d").startOf("day"), dayjs().add(1, "day").startOf("day")],
+                              },
+                              {
+                                label: t("table.last_14"),
+                                value: [dayjs().add(-14, "d").startOf("day"), dayjs().add(1, "day").startOf("day")],
+                              },
+                              {
+                                label: t("table.last_30"),
+                                value: [dayjs().add(-30, "d").startOf("day"), dayjs().add(1, "day").startOf("day")],
+                              },
+                              {
+                                label: t("table.today"),
+                                value: [
+                                  dayjs().startOf("day"),
+                                  dayjs().add(1, "day").startOf("day"),
+                                ],
+                              },
+                              {
+                                label: t("table.yesterday"),
+                                value: [
+                                  dayjs().subtract(1, "day").startOf("day"),
+                                  dayjs().startOf("day"),
+                                ],
+                              },
+                              {
+                                label: t("table.this_month"),
+                                value: [
+                                  dayjs().startOf("M"),
+                                  dayjs().endOf("M").add(1, "D").startOf("day"),
+                                ],
+                              },
+                              {
+                                label: t("table.last_month"),
+                                value: [
+                                  dayjs().subtract(1, "M").startOf("M"),
+                                  dayjs().subtract(1, "M").endOf("M").add(1, "D").startOf("day"),
+                                ],
+                              },
+                            ]
+                          : undefined
+                      }
                       data-test-id="range-picker-date-filter"
                       panelRender={panelRender}
                       format={
@@ -317,6 +364,9 @@ export const FiltersModal = ({
                         }));
                         formRef?.current?.validateFields();
                       }}
+                      autoFocus={false}
+                      autoComplete="off"
+                      allowClear
                     />
                   </ConfigProvider>
                 </Form.Item>
@@ -632,6 +682,57 @@ export const FiltersModal = ({
                 </Form.Item>
               );
 
+            case "profiles":
+              return (
+                <Form.Item
+                  data-test-id="form-item-default"
+                  label={t(`table.${filter}`)}
+                  style={{ marginBottom: 10 }}
+                >
+                  <Select
+                    mode="multiple"
+                    data-test-id="select-default"
+                    size="large"
+                    style={{ width: "100%", height: "40px" }}
+                    placeholder={t(`table.${filter}`)}
+                    value={
+                      filtersQuery[filter] && filtersQuery[filter].length >= 1
+                        ? filtersQuery[filter]
+                            .split("[")[1]
+                            .split("]")[0]
+                            .split(",")
+                            .map((item: any) => Number(item))
+                        : undefined
+                    }
+                    onChange={(value) => {
+                      if (value.length === 0) {
+                        setFiltersQuery((state: any) => ({
+                          ...state,
+                          [filter]: undefined,
+                        }));
+                        return;
+                      }
+                      setFiltersQuery((state: any) => ({
+                        ...state,
+                        [filter]: `[${value}]`,
+                      }));
+                    }}
+                    showSearch
+                    options={
+                      ["", ...selectOptions[filter]]?.map((option: any) => {
+                        if (option === "") {
+                          return { value: "", label: "" };
+                        }
+                        return {
+                          value: option?.value || option,
+                          label: option?.label,
+                        };
+                      }) ?? []
+                    }
+                  />
+                </Form.Item>
+              );
+
             case "status":
               return (
                 <Form.Item
@@ -699,6 +800,49 @@ export const FiltersModal = ({
             case endDateKeyName:
               return;
 
+            case "refund_reason":
+              return (
+                <Form.Item
+                  data-test-id="form-item-default"
+                  label={t(`table.${filter}`)}
+                  name={filter}
+                  style={{ marginBottom: 10 }}
+                >
+                  <Select
+                    data-test-id="select-default"
+                    size="large"
+                    style={{ width: "100%", height: "40px" }}
+                    placeholder={t(`table.${filter}`)}
+                    value={[filtersQuery[filter]] ?? null}
+                    onChange={(value) => {
+                      setFiltersQuery((state: any) => ({
+                        ...state,
+                        reason: value,
+                      }));
+                    }}
+                    showSearch
+                    options={
+                      ["", ...selectOptions[filter]]?.map((option: any) => {
+                        if (option === "") {
+                          return { value: "", label: "" };
+                        }
+                        return {
+                          value: option,
+                          label: t(
+                            `table.${option
+                              ?.split(":")
+                              ?.join("")
+                              ?.split(" ")
+                              ?.join("_")
+                              ?.toLowerCase()}`
+                          ),
+                        };
+                      }) ?? []
+                    }
+                  />
+                </Form.Item>
+              );
+
             default:
               return (
                 <Form.Item
@@ -720,6 +864,11 @@ export const FiltersModal = ({
                       }));
                     }}
                     showSearch
+                    filterOption={(input, option) => {
+                      return (
+                        `${option?.label}`?.toLowerCase()?.indexOf(input?.toLowerCase()) >= 0
+                      );
+                    }}
                     options={
                       ["", ...selectOptions[filter]]?.map((option: any) => {
                         if (option === "") {

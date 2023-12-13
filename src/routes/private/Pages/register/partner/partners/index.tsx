@@ -104,11 +104,21 @@ export const Partners = () => {
   const [isExportReportsOpen, setIsExportReportsOpen] =
     useState<boolean>(false);
 
-  const { PartnerIsLoading, PartnerMutate, PartnerError, PartnerIsSuccess } =
-    useCreatePartner(createBody);
+  const {
+    PartnerIsLoading,
+    PartnerMutate,
+    PartnerError,
+    PartnerIsSuccess,
+    reset,
+  } = useCreatePartner(createBody);
 
-  const { UpdateError, UpdateIsLoading, UpdateMutate, UpdateIsSuccess } =
-    useUpdatePartner(updateBody);
+  const {
+    UpdateError,
+    UpdateIsLoading,
+    UpdateMutate,
+    UpdateIsSuccess,
+    UpdateReset,
+  } = useUpdatePartner(updateBody);
 
   useEffect(() => {
     isSuccessPartnersTotalsData && refetchPartnersTotalsData();
@@ -264,13 +274,13 @@ export const Partners = () => {
 
       <Grid container style={{ marginTop: "15px" }}>
         <Grid item xs={12}>
-          {" "}
           <CustomTable
             query={query}
             setCurrentItem={setCurrentItem}
             setQuery={setQuery}
             actions={[
               {
+                id: "table-details-button",
                 label: "details",
                 icon: <EyeFilled style={{ fontSize: "20px" }} />,
                 onClick: (item) => {
@@ -278,6 +288,7 @@ export const Partners = () => {
                 },
               },
               permissions.register.partner.partner.partner_update && {
+                id: "table-edit-button",
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
                 onClick: (item) => {
@@ -339,6 +350,7 @@ export const Partners = () => {
           submitLoading={PartnerIsLoading}
           error={PartnerError}
           success={PartnerIsSuccess}
+          clear={reset}
         />
       )}
       {isUpdateCategorieModalOpen && (
@@ -360,6 +372,7 @@ export const Partners = () => {
           submitLoading={UpdateIsLoading}
           error={UpdateError}
           success={UpdateIsSuccess}
+          clear={UpdateReset}
         />
       )}
       {isViewModalOpen && (

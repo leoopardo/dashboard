@@ -6,9 +6,12 @@ import { AggregatorSelect } from "@src/components/Selects/aggregatorSelect";
 import { OperatorSelect } from "@src/components/Selects/operatorSelect";
 import { ValidateToken } from "@src/components/ValidateToken";
 import { useListClientClientBanks } from "@src/services/bank/listClientBanks";
+import { useGetMerchantBalanceTotal } from "@src/services/consult/merchant/balance/getMerchantBalanceTotal";
 import { queryClient } from "@src/services/queryClient";
 import { useGetRowsMerchantBlacklistReasons } from "@src/services/register/merchant/blacklist/getMerchantBlacklistReason";
+import { useGetProfiles } from "@src/services/register/permissionGroups/getProfiles";
 import { useGetrefetchCountries } from "@src/services/states_cities/getCountries";
+import { ProfileInterface } from "@src/services/types/register/permissionsGroup/permissionsGroupinterface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
 import { unmask } from "@src/utils/functions";
 import {
@@ -37,7 +40,6 @@ import { useTranslation } from "react-i18next";
 import ReactInputMask from "react-input-mask";
 import { MerchantSelect } from "../../Selects/merchantSelect";
 import { PartnerSelect } from "../../Selects/partnerSelect";
-import { useGetMerchantBalanceTotal } from "@src/services/consult/merchant/balance/getMerchantBalanceTotal";
 const { RangePicker } = DatePicker;
 
 interface mutateProps {
@@ -95,6 +97,7 @@ export const MutateModal = ({
   validateToken,
   validateTokenAction,
   success,
+  error,
   merchantBetweenAccounts,
   query,
 }: mutateProps) => {
@@ -125,7 +128,11 @@ export const MutateModal = ({
 
   useEffect(() => {
     refetchMerchantBalance();
-  }, [body]);
+  }, [body?.merchant_id]);
+
+  const { ProfilesData, isProfilesDataFetching } = useGetProfiles({
+    group: true,
+  });
 
   const validateCnpjLength = (_: any, value: string) => {
     if (value && value.replace(/[^\d]/g, "").length !== 14) {
@@ -144,10 +151,18 @@ export const MutateModal = ({
   });
 
   const handleChange = (event: any) => {
-    setBody((state: any) => ({
-      ...state,
-      [event.target.name]: event.target.value || null,
-    }));
+    const timer = setTimeout(
+      () =>
+        setBody((state: any) => ({
+          ...state,
+          [event.target.name]: event.target.value || null,
+        })),
+      500
+    );
+
+    return () => {
+      clearTimeout(timer);
+    };
   };
 
   useEffect(() => {
@@ -189,8 +204,9 @@ export const MutateModal = ({
   }, [tokenState]);
 
   useEffect(() => {
-    if (tokenState && success) {
+    if (success && clear) {
       setOpen(false);
+      clear();
     }
   }, [success]);
 
@@ -232,7 +248,7 @@ export const MutateModal = ({
             return;
           }
           submit();
-          setOpen(false);
+          if (!clear) setOpen(false);
         }}
       >
         <Row>
@@ -540,6 +556,53 @@ export const MutateModal = ({
                   </Col>
                 );
 
+              case "profile_id":
+                return (
+                  <Col span={24}>
+                    <Form.Item
+                      data-test-id={`${field.label}-form-item`}
+                      label={t(`table.${field.label}`)}
+                      name={field.label}
+                      style={{ margin: 10 }}
+                      rules={[
+                        {
+                          required: field.required,
+                          message:
+                            t("input.required", {
+                              field: t(`input.${field.label}`),
+                            }) || "",
+                        },
+                      ]}
+                    >
+                      <Select
+                        data-test-id={`${field.label}-select`}
+                        size="large"
+                        options={
+                          ProfilesData?.map((profile: ProfileInterface) => {
+                            return {
+                              label: t(
+                                `table.${profile?.name?.toLocaleLowerCase()}`
+                              ),
+                              value: profile?.id,
+                            };
+                          }) || []
+                        }
+                        loading={isProfilesDataFetching}
+                        notFoundContent={<Empty />}
+                        value={body[field.label]}
+                        onChange={(value) => {
+                          setBody((state: any) => ({
+                            ...state,
+                            [field.label]: value,
+                          }));
+                        }}
+                        style={{ width: "100%", height: 40 }}
+                        placeholder={t(`table.${field.label}`)}
+                      />
+                    </Form.Item>
+                  </Col>
+                );
+
               case "new_reason":
                 return (
                   <Col span={24}>
@@ -702,10 +765,19 @@ export const MutateModal = ({
                             delete body[field.label];
                             return;
                           }
-                          setBody((state: any) => ({
-                            ...state,
-                            [field.label]: value,
-                          }));
+
+                          const timer = setTimeout(
+                            () =>
+                            setBody((state: any) => ({
+                              ...state,
+                              [field.label]: value,
+                            })),
+                            500
+                          );
+                      
+                          return () => {
+                            clearTimeout(timer);
+                          };
                         }}
                       >
                         <Input
@@ -747,10 +819,19 @@ export const MutateModal = ({
                             delete body[field.label];
                             return;
                           }
-                          setBody((state: any) => ({
-                            ...state,
-                            [field.label]: value,
-                          }));
+
+                          const timer = setTimeout(
+                            () =>
+                            setBody((state: any) => ({
+                              ...state,
+                              [field.label]: value,
+                            })),
+                            500
+                          );
+                      
+                          return () => {
+                            clearTimeout(timer);
+                          };
                         }}
                       >
                         <Input
@@ -1005,7 +1086,6 @@ export const MutateModal = ({
                     </Form.Item>
                   </Col>
                 );
-
               case "description":
                 return (
                   <Col span={24}>
@@ -1175,7 +1255,6 @@ export const MutateModal = ({
                       style={{ margin: 10 }}
                       rules={[
                         {
-                          type: field?.type as any,
                           required: field?.required,
                           message:
                             t("input.required", {
@@ -1187,6 +1266,7 @@ export const MutateModal = ({
                       <Input
                         data-test-id={`${field?.label}-input`}
                         size="large"
+                        type={field?.type as any}
                         name={field?.label}
                         value={body[field?.label as any] ?? null}
                         onChange={handleChange}
@@ -1213,8 +1293,8 @@ export const MutateModal = ({
           tokenState={tokenState}
           submit={submit}
           body={body}
-          error={false}
-          success={false}
+          error={error}
+          success={success}
         />
       )}
     </Drawer>

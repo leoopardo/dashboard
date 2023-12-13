@@ -30,7 +30,7 @@ export const OperatorSelect = ({
   const debounceSearch = useDebounce(query.name);
 
   useEffect(() => {
-    if (!queryOptions.operator_id) {
+    if (!queryOptions?.operator_id) {
       setValue(undefined);
     }
     if (!value) {
@@ -51,11 +51,11 @@ export const OperatorSelect = ({
       aggregator_id:
         queryOptions?.aggregator_id ?? queryOptions?.aggregator?.id,
     }));
-  }, [debounceSearch, queryOptions]);
+  }, [queryOptions]);
 
   useEffect(() => {
     refetcOperators();
-  }, [query]);
+  }, [debounceSearch]);
 
   useEffect(() => {
     if (

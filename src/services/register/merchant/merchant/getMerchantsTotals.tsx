@@ -17,6 +17,9 @@ export function useGetMerchantsTotals(params: MerchantsQuery) {
       });
       return response.data;
     },
+    {
+      refetchOnWindowFocus: false,
+    }
   );
 
   const MerchantTotalsData = data;

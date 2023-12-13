@@ -39,6 +39,7 @@ import {
   MerchantResponsiblesUpdateBody,
 } from "@src/services/types/register/merchants/responsibles/responsibles.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
+import { setFirstChildDivId } from "@src/utils/functions";
 import {
   AutoComplete,
   Avatar,
@@ -60,6 +61,7 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import ReactInputMask from "react-input-mask";
 import { useLocation } from "react-router-dom";
+import { useGetMerchantById } from "@src/services/register/merchant/merchant/getMerchant";
 
 export const UpdateMerchant = () => {
   const { permissions } = queryClient.getQueryData(
@@ -67,18 +69,7 @@ export const UpdateMerchant = () => {
   ) as ValidateInterface;
   const { t } = useTranslation();
   const location = useLocation();
-  const [merchantBody, setMerchantBody] = useState<MerchantsItem>({
-    merchant_id: location.state?.id,
-    name: location.state?.name,
-    cnpj: location.state?.cnpj,
-    cellphone: location.state?.cellphone,
-    email: location.state?.email,
-    v3_id: Number(location.state?.v3_id),
-    partner_id: location.state?.partner?.id,
-    aggregator_id: location.state?.aggregator?.id,
-    operator_id: location.state?.operator?.id,
-    country: location.state?.country,
-  });
+  const [merchantBody, setMerchantBody] = useState<MerchantsItem | undefined>();
   const INITIAL_RESPONSIBLE_QUERY: MerchantResponsiblesQuery = {
     merchant_id: location.state.id,
     limit: 25,
@@ -86,17 +77,24 @@ export const UpdateMerchant = () => {
   };
 
   const submitRef = useRef<HTMLButtonElement>(null);
-
   const { Countries } = useGetrefetchCountries();
-
   const formRef = useRef<FormInstance>(null);
+
+  const tabMerchantsData = document.querySelector('[data-node-key="1"]');
+  const tabResponsible = document.querySelector('[data-node-key="2"]');
+  const tabAttachments = document.querySelector('[data-node-key="3"]');
+
   const {
     UpdateError,
     UpdateIsLoading,
     UpdateMutate,
     UpdateIsSuccess,
     UpdateReset,
-  } = useUpdateMerchant(merchantBody);
+  } = useUpdateMerchant({
+    ...merchantBody,
+    v3_id: Number(merchantBody?.v3_id) ?? undefined,
+    merchant_id: location.state.id,
+  });
 
   const [responsibleQuery, setResponsibleQuery] =
     useState<MerchantResponsiblesQuery>(INITIAL_RESPONSIBLE_QUERY);
@@ -120,6 +118,8 @@ export const UpdateMerchant = () => {
     merchant_id: location.state.id,
   });
   const [deleteFileId, setDeleteFileId] = useState<string>("");
+
+  const { MerchantByIdData } = useGetMerchantById(location.state.id);
 
   const {
     ResponsiblesData,
@@ -192,6 +192,33 @@ export const UpdateMerchant = () => {
     }
   }, [deleteFileId]);
 
+  useEffect(() => {
+    const currentMerchant = MerchantByIdData;
+    setMerchantBody({
+      merchant_id: currentMerchant?.id,
+      name: currentMerchant?.name,
+      cnpj: currentMerchant?.cnpj ?? undefined,
+      cellphone: currentMerchant?.cellphone ?? undefined,
+      email: currentMerchant?.email ?? undefined,
+      v3_id:
+        currentMerchant?.v3_id !== 0
+          ? Number(currentMerchant?.v3_id)
+          : undefined,
+      partner_id: currentMerchant?.partner?.id,
+      aggregator_id: currentMerchant?.aggregator?.id,
+      operator_id: currentMerchant?.operator?.id,
+      country: currentMerchant?.country ?? undefined,
+    });
+
+    formRef.current?.setFieldsValue(currentMerchant);
+  }, [MerchantByIdData]);
+
+  useEffect(() => {
+    setFirstChildDivId(tabMerchantsData, "tab-merchants-data");
+    setFirstChildDivId(tabResponsible, "tab-responsibles");
+    setFirstChildDivId(tabAttachments, "tab-attachments");
+  }, [tabMerchantsData, tabResponsible, tabAttachments]);
+
   const items: TabsProps["items"] = [
     {
       key: "1",
@@ -200,7 +227,7 @@ export const UpdateMerchant = () => {
         <Form
           ref={formRef}
           layout="vertical"
-          initialValues={location.state}
+          initialValues={merchantBody}
           onFinish={() => UpdateMutate()}
         >
           <Row gutter={[8, 8]} style={{ width: "100%" }}>
@@ -282,7 +309,7 @@ export const UpdateMerchant = () => {
               </Form.Item>
             </Col>
             <Col xs={{ span: 24 }} md={{ span: 6 }}>
-              <Form.Item label={t("table.cellphone")} name="name">
+              <Form.Item label={t("table.cellphone")} name="cellphone">
                 <CellphoneInput body={merchantBody} setBody={setMerchantBody} />
               </Form.Item>
             </Col>
@@ -334,6 +361,8 @@ export const UpdateMerchant = () => {
             <Col xs={{ span: 24 }} md={{ span: 4 }}>
               <Form.Item label={t("table.v3_id")} name="v3_id">
                 <Input
+                  style={{ width: "100%" }}
+                  type="number"
                   name="v3_id"
                   size="large"
                   value={merchantBody?.v3_id}
@@ -352,7 +381,7 @@ export const UpdateMerchant = () => {
             <Col xs={{ span: 24 }} md={{ span: 4 }}>
               <Form.Item label={t("table.aggregator")} name="aggregator_id">
                 <AggregatorSelect
-                  aggregatorId={merchantBody.aggregator_id}
+                  aggregatorId={merchantBody?.aggregator_id}
                   setQueryFunction={setMerchantBody}
                 />
               </Form.Item>

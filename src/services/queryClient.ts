@@ -24,10 +24,10 @@ export const queryClient = new QueryClient({
   }),
   defaultOptions: {
     queries: {
-      refetchOnMount: "always",
       retry: false,
       keepPreviousData: false,
-      cacheTime: 0
+      refetchOnWindowFocus: false,
+      cacheTime: 0,
     },
   },
 });

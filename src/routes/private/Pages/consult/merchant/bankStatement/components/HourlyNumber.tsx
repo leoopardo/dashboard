@@ -1,4 +1,5 @@
 import { MerchantHourlyItem } from "@src/services/types/consult/merchant/bankStatement";
+import { defaultTheme } from "@src/styles/defaultTheme";
 import {
   CategoryScale,
   Chart as ChartJS,
@@ -9,7 +10,6 @@ import {
   Title,
   Tooltip,
 } from "chart.js";
-import * as echarts from "echarts";
 import ReactECharts from "echarts-for-react";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
@@ -35,13 +35,13 @@ export function MerchantNumberLineChart({
   return (
     <ReactECharts
       option={{
-        color: ["#80FFA5", "#FF0087"],
+        color: [defaultTheme.colors.chartGreen, defaultTheme.colors.chartRed],
         title: {
           text: t("messages.operations_number_chart_area"),
           textStyle: {
             color: "#a0a0a0",
           },
-          show: false
+          show: false,
         },
         tooltip: {
           trigger: "axis",
@@ -53,7 +53,8 @@ export function MerchantNumberLineChart({
           },
         },
         legend: {
-          data: [t("table.number_in"), t("table.number_out")], textStyle: {
+          data: [t("table.number_in"), t("table.number_out")],
+          textStyle: {
             color: "#a0a0a0",
           },
         },
@@ -78,61 +79,22 @@ export function MerchantNumberLineChart({
         yAxis: [
           {
             type: "value",
+            
           },
         ],
         series: [
           {
             name: t("table.number_in"),
             type: "line",
-            stack: "Total",
             smooth: true,
-            lineStyle: {
-              width: 0,
-            },
-            showSymbol: false,
-            areaStyle: {
-              opacity: 0.8,
-              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                {
-                  offset: 0,
-                  color: "rgb(128, 255, 165)",
-                },
-                {
-                  offset: 1,
-                  color: "rgb(1, 191, 236)",
-                },
-              ]),
-            },
-            emphasis: {
-              focus: "series",
-            },
+
             data: items?.map((item) => item.number_in),
           },
           {
             name: t("table.number_out"),
             type: "line",
-            stack: "Total",
             smooth: true,
-            lineStyle: {
-              width: 0,
-            },
-            showSymbol: false,
-            areaStyle: {
-              opacity: 0.8,
-              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                {
-                  offset: 0,
-                  color: "rgb(255, 0, 135)",
-                },
-                {
-                  offset: 1,
-                  color: "rgb(135, 0, 157)",
-                },
-              ]),
-            },
-            emphasis: {
-              focus: "series",
-            },
+
             data: items?.map((item) => item.number_out),
           },
         ],

@@ -37,6 +37,7 @@ import {
   OperatorResponsiblesUpdateBody,
 } from "@src/services/types/register/operators/responsibles/responsibles.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
+import { setFirstChildDivId } from "@src/utils/functions";
 import {
   AutoComplete,
   Avatar,
@@ -80,12 +81,15 @@ export const UpdateOperator = () => {
   };
 
   const submitRef = useRef<HTMLButtonElement>(null);
-
   const { Countries } = useGetrefetchCountries();
-
   const formRef = useRef<FormInstance>(null);
+
+  const tabOperatorsData = document.querySelector('[data-node-key="1"]');
+  const tabResponsible = document.querySelector('[data-node-key="2"]');
+  const tabAttachments = document.querySelector('[data-node-key="3"]');
+
   const { UpdateError, UpdateIsLoading, UpdateMutate, UpdateIsSuccess } =
-    useUpdateOperator(OperatorBody);
+    useUpdateOperator({...OperatorBody, operator_id: location.state.id,});
 
   const [responsibleQuery, setResponsibleQuery] =
     useState<OperatorResponsiblesQuery>(INITIAL_RESPONSIBLE_QUERY);
@@ -191,6 +195,12 @@ export const UpdateOperator = () => {
       setDeleteFileId("");
     }
   }, [deleteFileId]);
+
+  useEffect(() => {
+    setFirstChildDivId(tabOperatorsData, "tab-operators-data");
+    setFirstChildDivId(tabResponsible, "tab-responsibles");
+    setFirstChildDivId(tabAttachments, "tab-attachments");
+  }, [tabOperatorsData, tabResponsible, tabAttachments]);
 
   const items: TabsProps["items"] = [
     {
