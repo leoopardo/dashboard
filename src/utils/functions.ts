@@ -24,6 +24,16 @@ export const setFirstChildDivId = (tabIndex: Element | null, id: string): void =
   }
 };
 
+export const setFirstChildDivTestId = (tabIndex: Element | null, id: string): void => {
+  if (tabIndex) {
+    const firstChildDiv = tabIndex.querySelector('div');
+
+    if (firstChildDiv) {
+      firstChildDiv.setAttribute('data-test-id', id);
+    }
+  }
+};
+
 export const validateFormCnpj = (_: any, value: string) => {
   if (!isValidCNPJ(value)) {
     return Promise.reject(
