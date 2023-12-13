@@ -164,6 +164,7 @@ export const BanksTab = (props: { id?: string }) => {
         <Grid item xs={12} md={4}>
           <Form.Item label={t("input.deposit_bank")}>
             <Select
+              data-test-id="deposit-bank"
               size="large"
               value={despositBank?.bank}
               options={
@@ -192,6 +193,7 @@ export const BanksTab = (props: { id?: string }) => {
         <Grid item xs={12} md={4}>
           <Form.Item label={t("input.withdraw_bank")}>
             <Select
+              data-test-id="withdraw-bank"
               size="large"
               value={withdrawBank?.bank}
               options={
@@ -220,6 +222,7 @@ export const BanksTab = (props: { id?: string }) => {
         <Grid item xs={12} md={4}>
           <Form.Item label={t("input.fastpix_in_bank")}>
             <Select
+              data-test-id="fastpix-bank"
               size="large"
               value={fastPixBank?.bank}
               options={
@@ -273,6 +276,7 @@ export const BanksTab = (props: { id?: string }) => {
             onCancel={() => setIsConfirmOpen(false)}
           >
             <Button
+            data-test-id="update-general-configs"
               size="large"
               type="primary"
               style={{ width: "100%" }}

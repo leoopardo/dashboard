@@ -163,6 +163,7 @@ export const MerchantConfigTab = (props: { id?: string }) => {
             name="cash_in_permission"
           >
             <Select
+              data-test-id="general_deposit_permission"
               size="large"
               options={
                 [true, false]?.map((item, index) => ({
@@ -191,6 +192,7 @@ export const MerchantConfigTab = (props: { id?: string }) => {
             name="cash_out_permission"
           >
             <Select
+              data-test-id="general_withdraw_permission"
               size="large"
               options={
                 [true, false]?.map((item, index) => ({
@@ -219,6 +221,7 @@ export const MerchantConfigTab = (props: { id?: string }) => {
             name="cash_out_transaction_limit"
           >
             <Select
+              data-test-id="withdraw_limit_document_by_day"
               size="large"
               options={
                 cashoutLimits?.map((item, index) => ({
@@ -248,6 +251,7 @@ export const MerchantConfigTab = (props: { id?: string }) => {
             name="webhook_url_optional"
           >
             <Input
+            data-test-id="webhook_url_optional"
               size="large"
               name="webhook_url_optional"
               value={body?.webhook_url_optional}
@@ -281,6 +285,7 @@ export const MerchantConfigTab = (props: { id?: string }) => {
               name="fastpix_webhook_url"
             >
               <Input
+                data-test-id="fastpix_webhook_url"
                 size="large"
                 name="fastpix_webhook_url"
                 value={body?.fastpix_webhook_url}
@@ -303,6 +308,7 @@ export const MerchantConfigTab = (props: { id?: string }) => {
               name="fastpix_redirect_url"
             >
               <Input
+              data-test-id="fastpix_redirect_url"
                 size="large"
                 name="fastpix_redirect_url"
                 value={body?.fastpix_redirect_url}
@@ -325,6 +331,7 @@ export const MerchantConfigTab = (props: { id?: string }) => {
               name="fastpix_token_time"
             >
               <InputNumber
+              data-test-id="fastpix_token_time"
                 style={{ width: "100%" }}
                 size="large"
                 name="fastpix_token_time"
@@ -357,6 +364,7 @@ export const MerchantConfigTab = (props: { id?: string }) => {
             <Col span={"auto"}>
               <Typography.Title level={5}>Logos</Typography.Title>
               <Upload
+                data-test-id="upload_logo"
                 listType="picture-card"
                 onPreview={handlePreview}
                 {...{
@@ -411,6 +419,7 @@ export const MerchantConfigTab = (props: { id?: string }) => {
             <Col xs={{ span: 24 }} md={{ span: 24 }}>
               <Form.Item label={t("input.active_logo")}>
                 <Select
+                  data-test-id="active_logo"
                   loading={isMerchantLogosFetching}
                   style={{ width: "100%" }}
                   value={
@@ -460,7 +469,7 @@ export const MerchantConfigTab = (props: { id?: string }) => {
         style={{ display: "flex", flexDirection: "row-reverse" }}
       >
         <Grid item xs={12} md={4} lg={2}>
-          <button type="submit" ref={submitRef} style={{ display: "none" }}>
+          <button data-test-id="submit" type="submit" ref={submitRef} style={{ display: "none" }}>
             Submit
           </button>
           <Popconfirm

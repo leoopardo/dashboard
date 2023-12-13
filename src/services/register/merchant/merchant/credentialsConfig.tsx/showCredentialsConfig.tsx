@@ -1,27 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { api } from "@config/api";
-import { useQuery } from "react-query";
-import { useState } from "react";
 import {
   IShowCredentialItem,
   IShowCredentialQuery,
 } from "@src/services/types/register/merchants/merchantsCredentialsConfig.interface";
+import { useQuery } from "react-query";
 
 export function useShowCredentialsConfig(params: IShowCredentialQuery) {
-  const [errorState, setErrorState] = useState(false);
-  const showCredentialsConfigQueryKey = ["ShowCredentialsConfig", params];
-  const { data, isFetching, error, refetch, isSuccess } =
+  const { data, isFetching, error, refetch, isSuccess, remove } =
     useQuery<IShowCredentialItem | null>(
-      showCredentialsConfigQueryKey,
+      "ShowCredentialsConfig",
       async () => {
         const response = await api.get("core/api-credentials", {
           params,
         });
-        if (response.data !== null) {
-          setErrorState(false);
-        } else {
-          setErrorState(true);
-        }
+
         return response.data;
       },
       {
@@ -29,12 +22,13 @@ export function useShowCredentialsConfig(params: IShowCredentialQuery) {
         refetchIntervalInBackground: false,
         refetchOnMount: false,
         refetchOnWindowFocus: false,
+        enabled: false,
       }
     );
 
   const showCredentialConfigData = data;
   const isShowCredentialConfigFetching = isFetching;
-  const showCredentialConfigError: any = errorState ?  error : null;
+  const showCredentialConfigError: any = error;
   const showCredentialConfigisSuccess = isSuccess;
   const refetchShowCredentialConfigData = refetch;
   return {
@@ -43,5 +37,6 @@ export function useShowCredentialsConfig(params: IShowCredentialQuery) {
     showCredentialConfigError,
     showCredentialConfigisSuccess,
     refetchShowCredentialConfigData,
+    remove
   };
 }
