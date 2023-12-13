@@ -60,15 +60,6 @@ export const MerchantConfigs = () => {
     return currentItems;
   };
 
-  useEffect(() => {
-    setFirstChildDivTestId(tabBanks, "tab-banks");
-    setFirstChildDivTestId(tabFees, "tab-fees");
-    setFirstChildDivTestId(tabMerchantConfig, "tab-merchant-config");
-    setFirstChildDivTestId(tabOrganizationConfig, "tab-organization-config");
-    setFirstChildDivTestId(tabCredential, "tab-credential");
-    setFirstChildDivTestId(tabIps, "tab-ips");
-  }, [tabBanks, tabFees, tabMerchantConfig, tabOrganizationConfig, tabCredential, tabIps, permissions]);
-
   const items: TabsProps["items"] = [
     {
       key: "1",
@@ -106,7 +97,7 @@ export const MerchantConfigs = () => {
     },
     {
       key: "4",
-      label:  t("menus.organization_settings"),
+      label: t("menus.organization_settings"),
       children: <OrganizationConfigTab id={params.id} />,
       style: {
         display: permissions.register.merchant.merchant
@@ -142,6 +133,23 @@ export const MerchantConfigs = () => {
       disabled: !permissions.register.merchant.merchant.merchant_config_ips,
     },
   ];
+
+  useEffect(() => {
+    setFirstChildDivTestId(tabBanks, "tab-banks");
+    setFirstChildDivTestId(tabFees, "tab-fees");
+    setFirstChildDivTestId(tabMerchantConfig, "tab-merchant-config");
+    setFirstChildDivTestId(tabOrganizationConfig, "tab-organization-config");
+    setFirstChildDivTestId(tabCredential, "tab-credential");
+    setFirstChildDivTestId(tabIps, "tab-ips");
+  }, [
+    tabBanks,
+    tabFees,
+    tabMerchantConfig,
+    tabOrganizationConfig,
+    tabCredential,
+    tabIps,
+    permissions,
+  ]);
 
   return (
     <Grid

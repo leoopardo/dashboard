@@ -35,7 +35,7 @@ export const setFirstChildDivTestId = (tabIndex: Element | null, id: string): vo
 };
 
 export const validateFormCnpj = (_: any, value: string) => {
-  if (!isValidCNPJ(value)) {
+  if (value && !isValidCNPJ(value)) {
     return Promise.reject(
       t("input.invalid", {
         field: t(`input.cnpj`),
