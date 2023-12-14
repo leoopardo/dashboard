@@ -134,22 +134,12 @@ export const MerchantConfigs = () => {
     },
   ];
 
-  useEffect(() => {
-    setFirstChildDivTestId(tabBanks, "tab-banks");
-    setFirstChildDivTestId(tabFees, "tab-fees");
-    setFirstChildDivTestId(tabMerchantConfig, "tab-merchant-config");
-    setFirstChildDivTestId(tabOrganizationConfig, "tab-organization-config");
-    setFirstChildDivTestId(tabCredential, "tab-credential");
-    setFirstChildDivTestId(tabIps, "tab-ips");
-  }, [
-    tabBanks,
-    tabFees,
-    tabMerchantConfig,
-    tabOrganizationConfig,
-    tabCredential,
-    tabIps,
-    permissions,
-  ]);
+  setFirstChildDivTestId(tabBanks, "tab-banks");
+  setFirstChildDivTestId(tabFees, "tab-fees");
+  setFirstChildDivTestId(tabMerchantConfig, "tab-merchant-config");
+  setFirstChildDivTestId(tabOrganizationConfig, "tab-organization-config");
+  setFirstChildDivTestId(tabCredential, "tab-credential");
+  setFirstChildDivTestId(tabIps, "tab-ips");
 
   return (
     <Grid

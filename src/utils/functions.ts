@@ -34,6 +34,7 @@ export const setFirstChildDivTestId = (tabIndex: Element | null, id: string): vo
   }
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const validateFormCnpj = (_: any, value: string) => {
   if (value && !isValidCNPJ(value)) {
     return Promise.reject(
