@@ -91,9 +91,6 @@ export const MerchantView = () => {
     partner_id: user?.partner_id,
   });
 
-  console.log({createBody})
-
-
   const {
     CreateError,
     CreateIsLoading,

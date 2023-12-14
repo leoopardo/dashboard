@@ -594,10 +594,10 @@ export const Mobile = (props: MobileProps) => {
                             {Array.isArray(value?.name) && item[value?.name[0]]
                               ? t(
                                   `table.${
-                                    item[value?.name[0]][value?.name[1]]
+                                    item[value?.name[0]][value?.name[1]?.toString().toLowerCase()]
                                   }`
                                 )
-                              : t(`table.${item[value?.name]}`)}
+                              : t(`table.${item[value?.name]?.toString().toLowerCase()}`)}
                           </Typography>
                         </Descriptions.Item>
                       );

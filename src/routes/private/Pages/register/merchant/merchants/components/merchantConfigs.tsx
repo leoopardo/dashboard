@@ -3,7 +3,7 @@ import { queryClient } from "@src/services/queryClient";
 import { ValidateInterface } from "@src/services/types/validate.interface";
 import { Tabs, TabsProps } from "antd";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { BanksTab } from "./tabs/banks";
 import { CredentialConfigTab } from "./tabs/credentials";
 import { FeesTab } from "./tabs/fees";
@@ -11,6 +11,7 @@ import { IpsConfigTab } from "./tabs/ips";
 import { MerchantConfigTab } from "./tabs/merchantConfigTab";
 import { OrganizationConfigTab } from "./tabs/organizationConfigTab";
 import { setFirstChildDivTestId } from "@src/utils/functions";
+import { useEffect } from "react";
 
 export const MerchantConfigs = () => {
   const { permissions } = queryClient.getQueryData(
@@ -19,6 +20,7 @@ export const MerchantConfigs = () => {
 
   const { t } = useTranslation();
   const params = useParams();
+  const location = useLocation();
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   const onChange = () => {};
 
@@ -133,12 +135,14 @@ export const MerchantConfigs = () => {
     },
   ];
 
-  setFirstChildDivTestId(tabBanks, "tab-banks");
-  setFirstChildDivTestId(tabFees, "tab-fees");
-  setFirstChildDivTestId(tabMerchantConfig, "tab-merchant-config");
-  setFirstChildDivTestId(tabOrganizationConfig, "tab-organization-config");
-  setFirstChildDivTestId(tabCredential, "tab-credential");
-  setFirstChildDivTestId(tabIps, "tab-ips");
+  useEffect(() => {
+    setFirstChildDivTestId(tabBanks, "tab-banks");
+    setFirstChildDivTestId(tabFees, "tab-fees");
+    setFirstChildDivTestId(tabMerchantConfig, "tab-merchant-config");
+    setFirstChildDivTestId(tabOrganizationConfig, "tab-organization-config");
+    setFirstChildDivTestId(tabCredential, "tab-credential");
+    setFirstChildDivTestId(tabIps, "tab-ips");
+  }, [tabBanks, tabFees, tabMerchantConfig, tabOrganizationConfig, tabCredential, tabIps, params, location])
 
   return (
     <Grid
