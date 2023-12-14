@@ -22,7 +22,9 @@ export const MerchantConfigs = () => {
   const params = useParams();
   const location = useLocation();
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  const onChange = () => {};
+  const onChange = () => {
+
+  };
 
   const tabBanks = document.querySelector('[data-node-key="1"]');
   const tabFees = document.querySelector('[data-node-key="2"]');
@@ -39,17 +41,22 @@ export const MerchantConfigs = () => {
             !permissions.register.merchant.merchant.merchant_config_paybrokers
           ) {
             if (!permissions.register.merchant.merchant.merchant_config_ips) {
+              setFirstChildDivTestId(tabIps, "tab-ips");
               return "6";
             }
+            setFirstChildDivTestId(tabCredential, "tab-credential");
             return "5";
           }
+          setFirstChildDivTestId(tabOrganizationConfig, "tab-organization-config");
           return "4";
         }
+        setFirstChildDivTestId(tabMerchantConfig, "tab-merchant-config");
         return "3";
       }
+      setFirstChildDivTestId(tabFees, "tab-fees");
       return "2";
     }
-
+    setFirstChildDivTestId(tabBanks, "tab-banks");
     return "1";
   };
 
