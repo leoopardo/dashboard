@@ -153,6 +153,7 @@ export const MerchantConfigs = () => {
           defaultActiveKey={initialTab()}
           items={initialItems(items)}
           onChange={onChange}
+          itemID="teste-data-id"
         />
       </Grid>
     </Grid>

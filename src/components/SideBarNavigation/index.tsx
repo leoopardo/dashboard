@@ -1552,9 +1552,60 @@ export const SidebarNavigation = () => {
               </Link>
             ),
             getItem(
-              "merchant_pre_manual_moviments",
+              "merchant_pre_manual_moviment",
               null,
-              null,
+              [
+                getItem(
+                  "merchant_pre_manual_moviments",
+                  null,
+                  null,
+                  false,
+                  undefined,
+                  {
+                    display: permissions?.transactions?.merchant
+                      ?.merchant_pre_manual?.menu
+                      ? undefined
+                      : "none",
+                  },
+                  <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
+                    to={
+                      "/moviment/merchant_moviments/merchant_pre_manual_moviment/merchant_pre_manual_moviments"
+                    }
+                    title={`${t("menus.merchant_pre_manual_moviments")}`}
+                  >
+                    {t("menus.merchant_pre_manual_moviments")}
+                  </Link>
+                ),
+                getItem(
+                  "merchant_pre_manual_moviments_import",
+                  null,
+                  null,
+                  false,
+                  undefined,
+                  {
+                    display: permissions?.transactions?.merchant
+                      ?.merchant_pre_manual?.menu
+                      ? undefined
+                      : "none",
+                  },
+                  <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
+                    to={
+                      "/moviment/merchant_moviments/merchant_pre_manual_moviment/merchant_pre_manual_moviments_import"
+                    }
+                    title={`${t("menus.merchant_pre_manual_moviments_import")}`}
+                  >
+                    {t("menus.merchant_pre_manual_moviments_import")}
+                  </Link>
+                ),
+              ],
               false,
               undefined,
               {
@@ -1562,19 +1613,7 @@ export const SidebarNavigation = () => {
                   ?.merchant_pre_manual?.menu
                   ? undefined
                   : "none",
-              },
-              <Link
-                onClickCapture={() => {
-                  setCollapsed(false);
-                  handleChangeSidebar(false);
-                }}
-                to={
-                  "/moviment/merchant_moviments/merchant_pre_manual_moviments"
-                }
-                title={`${t("menus.merchant_pre_manual_moviments")}`}
-              >
-                {t("menus.merchant_pre_manual_moviments")}
-              </Link>
+              }
             ),
             getItem(
               "merchant_moviments_reports",

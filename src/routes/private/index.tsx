@@ -111,6 +111,7 @@ import { ImportContastationDeposit } from "./Pages/support/contastation/importCS
 import { ContestationUploads } from "./Pages/support/contastation/uploads";
 import { Permission } from "./permission";
 import { Redirect } from "./redirect";
+import { ImportPreOperations } from "./Pages/moviments/merchants/preOperations/import";
 export const PrivateRoutes = () => {
   const { responseValidate } = useValidate();
 
@@ -1407,19 +1408,35 @@ export const PrivateRoutes = () => {
                 </Permission>
               }
             />
-            <Route
-              path="merchant_pre_manual_moviments"
-              element={
-                <Permission
-                  permission={
-                    responseValidate?.permissions?.transactions?.merchant
-                      ?.merchant_pre_manual?.menu
-                  }
-                >
-                  <MerchantPreManual />
-                </Permission>
-              }
-            />
+            <Route path="merchant_pre_manual_moviment">
+              <Route
+                path="merchant_pre_manual_moviments"
+                element={
+                  <Permission
+                    permission={
+                      responseValidate?.permissions?.transactions?.merchant
+                        ?.merchant_pre_manual?.menu
+                    }
+                  >
+                    <MerchantPreManual />
+                  </Permission>
+                }
+              />
+              <Route
+                path="merchant_pre_manual_moviments_import"
+                element={
+                  <Permission
+                    permission={
+                      responseValidate?.permissions?.transactions?.merchant
+                        ?.merchant_pre_manual?.menu
+                    }
+                  >
+                    <ImportPreOperations />
+                  </Permission>
+                }
+              />
+            </Route>
+
             <Route path="merchant_moviments_reports">
               <Route
                 path="merchant_manual_moviments_reports"
