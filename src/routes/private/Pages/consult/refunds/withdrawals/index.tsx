@@ -165,9 +165,13 @@ export const RefundWithdrawals = () => {
               delete query.receiver_document;
               delete query.receiver_name;
               if (
-                ["pix_id", "endToEndId", "reference_id", "rtrid", "receiver_document"].includes(
-                  value
-                )
+                [
+                  "pix_id",
+                  "endToEndId",
+                  "reference_id",
+                  "rtrid",
+                  "receiver_document",
+                ].includes(value)
               ) {
                 delete query.start_date;
                 delete query.end_date;
@@ -291,13 +295,7 @@ export const RefundWithdrawals = () => {
               },
             ]}
             removeTotal
-            label={[
-              "bank",
-              "merchant_name",
-              "status",
-              "createdAt",
-              "value"
-            ]}
+            label={["bank", "merchant_name", "status", "createdAt", "value"]}
           />
         </Grid>
       </Grid>
@@ -360,16 +358,26 @@ export const RefundWithdrawals = () => {
             "aggregator_id",
             "aggregator_id",
             "operator_id",
+            "refund_reason",
           ]}
           refetch={refetchRefundWithdrawalsTotal}
           selectOptions={{
-            status: [
-              "PAID_TO_MERCHANT",
-              "ERROR",
-              "PROCESSING",
-              "WAITING",
-            ],
+            status: ["PAID_TO_MERCHANT", "ERROR", "PROCESSING", "WAITING"],
             gender: ["MALE", "FEMALE", "OTHER"],
+            refund_reason: [
+              "DIVERGENT VALUE",
+              "PAYMENT FROM QR CODE EXPIRED",
+              "PAYMENT REFUND: THIRD PARTY PAYMENT UNAVAILABLE",
+              "PAYMENT REFUND: CNPJ NOT ACCEPTED",
+              "DAILY TRANSACTION LIMIT EXCEEDED FOR THIS CLIENT",
+              "MONTH TRANSACTION LIMIT EXCEEDED FOR THIS CLIENT",
+              "DAILY TRANSACTION TO THIRD LIMIT EXCEEDED FOR THIS CLIENT",
+              "DAILY TRANSACTION LIMIT EXCEEDED FOR THIS CNPJ",
+              "PAYER IRREGULAR DOCUMENT, PLEASE CONTACT SUPPORT TO REGULARIZE DOCUMENT",
+              "PAYER UNDERAGE",
+              "PAYER BLOCKED BY MERCHANT",
+              "PAYMENT REPEATED TO SAME QRCODE",
+            ],
           }}
           startDateKeyName="start_date"
           endDateKeyName="end_date"

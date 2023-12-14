@@ -103,7 +103,15 @@ export const SidebarNavigation = () => {
       false,
       undefined,
       { fontSize: "16px" },
-      <Link to={"/dashboard"}>{t("menus.dashboard")}</Link>,
+      <Link
+        onClickCapture={() => {
+          setCollapsed(false);
+          handleChangeSidebar(false);
+        }}
+        to={"/dashboard"}
+      >
+        {t("menus.dashboard")}
+      </Link>,
       "dark"
     ),
 
@@ -128,7 +136,15 @@ export const SidebarNavigation = () => {
                   ? undefined
                   : "none",
               },
-              <Link to={"/register/organization/users"}>
+
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/register/organization/users"}
+                title={`${t("menus.users")}`}
+              >
                 {t("menus.users")}
               </Link>
             ),
@@ -144,7 +160,13 @@ export const SidebarNavigation = () => {
                   ? undefined
                   : "none",
               },
-              <Link to={"/register/organization/categories"}>
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/register/organization/categories"}
+              >
                 {t("menus.categories")}
               </Link>
             ),
@@ -159,7 +181,13 @@ export const SidebarNavigation = () => {
                   ? undefined
                   : "none",
               },
-              <Link to={"/register/organization/bank_maintain"}>
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/register/organization/bank_maintain"}
+              >
                 {t("menus.bank_maintain")}
               </Link>
             ),
@@ -175,7 +203,13 @@ export const SidebarNavigation = () => {
                   ? undefined
                   : "none",
               },
-              <Link to={"/register/organization/general_configs"}>
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/register/organization/general_configs"}
+              >
                 {t("menus.general_configs")}
               </Link>
             ),
@@ -188,7 +222,13 @@ export const SidebarNavigation = () => {
               {
                 display: type === 1 ? undefined : "none",
               },
-              <Link to={"/register/organization/permissions_groups"}>
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/register/organization/permissions_groups"}
+              >
                 {t("menus.permissions_groups")}
               </Link>
             ),
@@ -209,9 +249,14 @@ export const SidebarNavigation = () => {
                       : "none",
                   },
                   <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
                     to={
                       "/register/organization/organization_reports/organization_reports_users"
                     }
+                    title={`${t("menus.organization_reports_users")}`}
                   >
                     {t("menus.organization_reports_users")}
                   </Link>
@@ -229,6 +274,10 @@ export const SidebarNavigation = () => {
                       : "none",
                   },
                   <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
                     to={
                       "/register/organization/organization_reports/organization_reports_categories"
                     }
@@ -274,7 +323,13 @@ export const SidebarNavigation = () => {
                   ? undefined
                   : "none",
               },
-              <Link to={"/register/aggregator/aggregators"}>
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/register/aggregator/aggregators"}
+              >
                 {t("menus.aggregators")}
               </Link>
             ),
@@ -289,7 +344,13 @@ export const SidebarNavigation = () => {
                   ? undefined
                   : "none",
               },
-              <Link to={"/register/aggregator/aggregator_users"}>
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/register/aggregator/aggregator_users"}
+              >
                 {t("menus.aggregator_users")}
               </Link>
             ),
@@ -304,7 +365,13 @@ export const SidebarNavigation = () => {
                   ? undefined
                   : "none",
               },
-              <Link to={"/register/aggregator/self_exclusion"}>
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/register/aggregator/self_exclusion"}
+              >
                 {t("menus.self_exclusion")}
               </Link>
             ),
@@ -325,9 +392,14 @@ export const SidebarNavigation = () => {
                       : "none",
                   },
                   <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
                     to={
                       "/register/aggregator/aggregator_blacklist/aggregator_blacklist_blacklist"
                     }
+                    title={`${t("menus.aggregator_blacklist_blacklist")}`}
                   >
                     {t("menus.aggregator_blacklist_blacklist")}
                   </Link>
@@ -362,6 +434,10 @@ export const SidebarNavigation = () => {
                       : "none",
                   },
                   <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
                     to={
                       "/register/aggregator/aggregator_reports/aggregator_aggregators_reports"
                     }
@@ -382,9 +458,14 @@ export const SidebarNavigation = () => {
                       : "none",
                   },
                   <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
                     to={
                       "/register/aggregator/aggregator_reports/aggregator_users_reports"
                     }
+                    title={`${t("menus.aggregator_users_reports")}`}
                   >
                     {t("menus.aggregator_users_reports")}
                   </Link>
@@ -402,6 +483,10 @@ export const SidebarNavigation = () => {
                       : "none",
                   },
                   <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
                     to={
                       "/register/aggregator/aggregator_reports/aggregator_blacklist_reports"
                     }
@@ -422,6 +507,10 @@ export const SidebarNavigation = () => {
                       : "none",
                   },
                   <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
                     to={
                       "/register/aggregator/aggregator_reports/self_exclusion_reports"
                     }
@@ -467,7 +556,13 @@ export const SidebarNavigation = () => {
                   ? undefined
                   : "none",
               },
-              <Link to={"/register/partner/partners"}>
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/register/partner/partners"}
+              >
                 {t("menus.partners")}
               </Link>
             ),
@@ -482,7 +577,13 @@ export const SidebarNavigation = () => {
                   ? undefined
                   : "none",
               },
-              <Link to={"/register/partner/partner_users"}>
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/register/partner/partner_users"}
+              >
                 {t("menus.partner_users")}
               </Link>
             ),
@@ -503,6 +604,10 @@ export const SidebarNavigation = () => {
                       : "none",
                   },
                   <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
                     to={
                       "/register/partner/partner_reports/partner_partners_reports"
                     }
@@ -523,9 +628,14 @@ export const SidebarNavigation = () => {
                       : "none",
                   },
                   <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
                     to={
                       "/register/partner/partner_reports/partner_users_reports"
                     }
+                    title={`${t("menus.partner_users_reports")}`}
                   >
                     {t("menus.partner_users_reports")}
                   </Link>
@@ -564,7 +674,13 @@ export const SidebarNavigation = () => {
                   ? undefined
                   : "none",
               },
-              <Link to={"/register/operator/operators"}>
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/register/operator/operators"}
+              >
                 {t("menus.operators")}
               </Link>
             ),
@@ -579,7 +695,13 @@ export const SidebarNavigation = () => {
                   ? undefined
                   : "none",
               },
-              <Link to={"/register/operator/operator_users"}>
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/register/operator/operator_users"}
+              >
                 {t("menus.operator_users")}
               </Link>
             ),
@@ -600,6 +722,10 @@ export const SidebarNavigation = () => {
                       : "none",
                   },
                   <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
                     to={
                       "/register/operator/operator_reports/operator_operators_reports"
                     }
@@ -620,9 +746,14 @@ export const SidebarNavigation = () => {
                       : "none",
                   },
                   <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
                     to={
                       "/register/operator/operator_reports/operator_users_reports"
                     }
+                    title={`${t("menus.operator_users_reports")}`}
                   >
                     {t("menus.operator_users_reports")}
                   </Link>
@@ -663,7 +794,13 @@ export const SidebarNavigation = () => {
                   ? undefined
                   : "none",
               },
-              <Link to={"/register/merchant/merchants"}>
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/register/merchant/merchants"}
+              >
                 {t("menus.merchants")}
               </Link>
             ),
@@ -678,7 +815,13 @@ export const SidebarNavigation = () => {
                   ? undefined
                   : "none",
               },
-              <Link to={"/register/merchant/merchant_users"}>
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/register/merchant/merchant_users"}
+              >
                 {t("menus.merchant_users")}
               </Link>
             ),
@@ -705,7 +848,13 @@ export const SidebarNavigation = () => {
                   ? undefined
                   : "none",
               },
-              <Link to={"/register/merchant/fee_plans"}>
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/register/merchant/fee_plans"}
+              >
                 {t("menus.fee_plans")}
               </Link>
             ),
@@ -722,6 +871,10 @@ export const SidebarNavigation = () => {
                     : "none",
                 },
                 <Link
+                  onClickCapture={() => {
+                    setCollapsed(false);
+                    handleChangeSidebar(false);
+                  }}
                   to={
                     "/register/merchant/merchant_blacklists/merchant_blacklist"
                   }
@@ -770,9 +923,14 @@ export const SidebarNavigation = () => {
                     : "none",
                 },
                 <Link
+                  onClickCapture={() => {
+                    setCollapsed(false);
+                    handleChangeSidebar(false);
+                  }}
                   to={
                     "/register/merchant/merchant_blacklists/merchant_blacklist_reasons"
                   }
+                  title={`${t("menus.merchant_blacklist_reasons")}`}
                 >
                   {t("menus.merchant_blacklist_reasons")}
                 </Link>
@@ -795,6 +953,10 @@ export const SidebarNavigation = () => {
                       : "none",
                   },
                   <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
                     to={
                       "/register/merchant/merchant_reports/merchant_merchants_reports"
                     }
@@ -815,6 +977,10 @@ export const SidebarNavigation = () => {
                       : "none",
                   },
                   <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
                     to={
                       "/register/merchant/merchant_reports/merchant_users_reports"
                     }
@@ -835,6 +1001,10 @@ export const SidebarNavigation = () => {
                       : "none",
                   },
                   <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
                     to={
                       "/register/merchant/merchant_reports/merchant_blacklist_reports"
                     }
@@ -878,7 +1048,15 @@ export const SidebarNavigation = () => {
                   ? undefined
                   : "none",
               },
-              <Link to={"/register/person/persons"}>{t("menus.persons")}</Link>
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/register/person/persons"}
+              >
+                {t("menus.persons")}
+              </Link>
             ),
             // getItem(
             //   "whitelist",
@@ -903,7 +1081,13 @@ export const SidebarNavigation = () => {
                   ? undefined
                   : "none",
               },
-              <Link to={"/register/person/person_accounts"}>
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/register/person/person_accounts"}
+              >
                 {t("menus.person_accounts")}
               </Link>
             ),
@@ -923,6 +1107,10 @@ export const SidebarNavigation = () => {
                       : "none",
                   },
                   <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
                     to={
                       "/register/person/person_blacklist/upload_person_blacklist"
                     }
@@ -942,6 +1130,10 @@ export const SidebarNavigation = () => {
                       : "none",
                   },
                   <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
                     to={
                       "/register/person/person_blacklist/person_blacklist_uploads"
                     }
@@ -961,9 +1153,14 @@ export const SidebarNavigation = () => {
                       : "none",
                   },
                   <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
                     to={
                       "/register/person/person_blacklist/person_blacklist_reasons"
                     }
+                    title={`${t("menus.person_blacklist_reasons")}`}
                   >
                     {t("menus.person_blacklist_reasons")}
                   </Link>
@@ -994,6 +1191,10 @@ export const SidebarNavigation = () => {
                       : "none",
                   },
                   <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
                     to={
                       "/register/person/person_reports/person_persons_reports"
                     }
@@ -1014,6 +1215,10 @@ export const SidebarNavigation = () => {
                       : "none",
                   },
                   <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
                     to={"/register/person/person_reports/client_bank_reports"}
                   >
                     {t("menus.client_bank_reports")}
@@ -1092,6 +1297,10 @@ export const SidebarNavigation = () => {
                   : "none",
               },
               <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
                 to={
                   "/moviment/organization_moviments/organization_manual_moviments"
                 }
@@ -1113,9 +1322,14 @@ export const SidebarNavigation = () => {
                   : "none",
               },
               <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
                 to={
                   "/moviment/organization_moviments/organization_transfer_between_accounts"
                 }
+                title={`${t("menus.organization_transfer_between_accounts")}`}
               >
                 {t("menus.organization_transfer_between_accounts")}
               </Link>
@@ -1138,9 +1352,16 @@ export const SidebarNavigation = () => {
                       : "none",
                   },
                   <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
                     to={
                       "/moviment/organization_moviments/organization_moviments_reports/organization_manual_moviments_reports"
                     }
+                    title={`${t(
+                      "menus.organization_manual_moviments_reports"
+                    )}`}
                   >
                     {t("menus.organization_manual_moviments_reports")}
                   </Link>
@@ -1160,9 +1381,16 @@ export const SidebarNavigation = () => {
                       : "none",
                   },
                   <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
                     to={
                       "/moviment/organization_moviments/organization_moviments_reports/organization_transfer_between_accounts_reports"
                     }
+                    title={`${t(
+                      "menus.organization_transfer_between_accounts_reports"
+                    )}`}
                   >
                     {t("menus.organization_transfer_between_accounts_reports")}
                   </Link>
@@ -1206,9 +1434,14 @@ export const SidebarNavigation = () => {
                   : "none",
               },
               <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
                 to={
                   "/moviment/aggregator_moviments/aggregator_transfer_between_accounts"
                 }
+                title={`${t("menus.aggregator_transfer_between_accounts")}`}
               >
                 {t("menus.organization_transfer_between_accounts_reports")}
               </Link>
@@ -1232,9 +1465,16 @@ export const SidebarNavigation = () => {
                       : "none",
                   },
                   <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
                     to={
                       "/moviment/aggregator_moviments/aggregator_moviments_reports/aggregator_transfer_between_accounts_reports"
                     }
+                    title={`${t(
+                      "menus.aggregator_transfer_between_accounts_reports"
+                    )}`}
                   >
                     {t("menus.aggregator_transfer_between_accounts_reports")}
                   </Link>
@@ -1277,6 +1517,10 @@ export const SidebarNavigation = () => {
                   : "none",
               },
               <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
                 to={"/moviment/merchant_moviments/merchant_manual_moviments"}
               >
                 {t("menus.merchant_manual_moviments")}
@@ -1297,7 +1541,12 @@ export const SidebarNavigation = () => {
                   : "none",
               },
               <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
                 to={"/moviment/merchant_moviments/between_accounts_transfers"}
+                title={`${t("menus.between_accounts_transfers")}`}
               >
                 {t("menus.between_accounts_transfers")}
               </Link>
@@ -1315,9 +1564,14 @@ export const SidebarNavigation = () => {
                   : "none",
               },
               <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
                 to={
                   "/moviment/merchant_moviments/merchant_pre_manual_moviments"
                 }
+                title={`${t("menus.merchant_pre_manual_moviments")}`}
               >
                 {t("menus.merchant_pre_manual_moviments")}
               </Link>
@@ -1340,9 +1594,14 @@ export const SidebarNavigation = () => {
                       : "none",
                   },
                   <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
                     to={
                       "/moviment/merchant_moviments/merchant_moviments_reports/merchant_manual_moviments_reports"
                     }
+                    title={`${t("menus.merchant_manual_moviments_reports")}`}
                   >
                     {t("menus.merchant_manual_moviments_reports")}
                   </Link>
@@ -1361,9 +1620,14 @@ export const SidebarNavigation = () => {
                       : "none",
                   },
                   <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
                     to={
                       "/moviment/merchant_moviments/merchant_moviments_reports/merchant_between_accounts_reports"
                     }
+                    title={`${t("menus.merchant_between_accounts_reports")}`}
                   >
                     {t("menus.merchant_between_accounts_reports")}
                   </Link>
@@ -1382,9 +1646,16 @@ export const SidebarNavigation = () => {
                       : "none",
                   },
                   <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
                     to={
                       "/moviment/merchant_moviments/merchant_moviments_reports/merchant_pre_manual_moviments_reports"
                     }
+                    title={`${t(
+                      "menus.merchant_pre_manual_moviments_reports"
+                    )}`}
                   >
                     {t("menus.merchant_pre_manual_moviments_reports")}
                   </Link>
@@ -1418,7 +1689,14 @@ export const SidebarNavigation = () => {
           {
             display: type !== 3 ? undefined : "none",
           },
-          <Link to={"/moviment/merchant_transfers"}>
+          <Link
+            onClickCapture={() => {
+              setCollapsed(false);
+              handleChangeSidebar(false);
+            }}
+            to={"/moviment/merchant_transfers"}
+            title={`${t("menus.merchant_transfers")}`}
+          >
             {t("menus.merchant_transfers")}
           </Link>
         ),
@@ -1451,6 +1729,10 @@ export const SidebarNavigation = () => {
                   : "none",
               },
               <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
                 to={"/consult/consult_organization/organization_bank_statement"}
               >
                 {t("menus.organization_bank_statement")}
@@ -1467,7 +1749,13 @@ export const SidebarNavigation = () => {
                   ? undefined
                   : "none",
               },
-              <Link to={"/consult/consult_organization/organization_balance"}>
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/consult/consult_organization/organization_balance"}
+              >
                 {t("menus.organization_balance")}
               </Link>
             ),
@@ -1483,6 +1771,10 @@ export const SidebarNavigation = () => {
                   : "none",
               },
               <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
                 to={"/consult/consult_organization/organization_bank_balance"}
               >
                 {t("menus.organization_bank_balance")}
@@ -1499,7 +1791,13 @@ export const SidebarNavigation = () => {
                   ? undefined
                   : "none",
               },
-              <Link to={"/consult/consult_organization/organization_history"}>
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/consult/consult_organization/organization_history"}
+              >
                 {t("menus.organization_history")}
               </Link>
             ),
@@ -1516,6 +1814,10 @@ export const SidebarNavigation = () => {
                   : "none",
               },
               <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
                 to={
                   "/consult/consult_organization/consult_organization_reports"
                 }
@@ -1547,7 +1849,13 @@ export const SidebarNavigation = () => {
                   ? undefined
                   : "none",
               },
-              <Link to={"/consult/consult_merchant/merchant_bank_statement"}>
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/consult/consult_merchant/merchant_bank_statement"}
+              >
                 {t("menus.merchant_bank_statement")}
               </Link>
             ),
@@ -1562,7 +1870,13 @@ export const SidebarNavigation = () => {
                   ? undefined
                   : "none",
               },
-              <Link to={"/consult/consult_merchant/merchant_balance"}>
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/consult/consult_merchant/merchant_balance"}
+              >
                 {t("menus.merchant_balance")}
               </Link>
             ),
@@ -1577,7 +1891,13 @@ export const SidebarNavigation = () => {
                   ? undefined
                   : "none",
               },
-              <Link to={"/consult/consult_merchant/merchant_history"}>
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/consult/consult_merchant/merchant_history"}
+              >
                 {t("menus.merchant_history")}
               </Link>
             ),
@@ -1593,7 +1913,13 @@ export const SidebarNavigation = () => {
                   ? undefined
                   : "none",
               },
-              <Link to={"/consult/consult_merchant/consult_merchant_reports"}>
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/consult/consult_merchant/consult_merchant_reports"}
+              >
                 {t("menus.consult_merchant_reports")}
               </Link>
             ),
@@ -1620,7 +1946,13 @@ export const SidebarNavigation = () => {
                   ? undefined
                   : "none",
               },
-              <Link to={"/consult/deposit/generated_deposits"}>
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/consult/deposit/generated_deposits"}
+              >
                 {t("menus.generated_deposits")}
               </Link>
             ),
@@ -1635,7 +1967,13 @@ export const SidebarNavigation = () => {
                   ? undefined
                   : "none",
               },
-              <Link to={"/consult/deposit/paid_deposits"}>
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/consult/deposit/paid_deposits"}
+              >
                 {t("menus.paid_deposits")}
               </Link>
             ),
@@ -1650,7 +1988,14 @@ export const SidebarNavigation = () => {
                   ? undefined
                   : "none",
               },
-              <Link to={"/consult/deposit/undelivered_deposits"}>
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/consult/deposit/undelivered_deposits"}
+                title={`${t("menus.undelivered_deposits")}`}
+              >
                 {t("menus.undelivered_deposits")}
               </Link>
             ),
@@ -1665,7 +2010,13 @@ export const SidebarNavigation = () => {
                   ? undefined
                   : "none",
               },
-              <Link to={"/consult/deposit/receipts"}>
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/consult/deposit/receipts"}
+              >
                 {t("menus.receipts")}
               </Link>
             ),
@@ -1687,6 +2038,10 @@ export const SidebarNavigation = () => {
                       : "none",
                   },
                   <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
                     to={
                       "/consult/deposit/deposits_reports/generated_deposits_reports"
                     }
@@ -1707,6 +2062,10 @@ export const SidebarNavigation = () => {
                       : "none",
                   },
                   <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
                     to={
                       "/consult/deposit/deposits_reports/paid_deposits_reports"
                     }
@@ -1727,6 +2086,10 @@ export const SidebarNavigation = () => {
                       : "none",
                   },
                   <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
                     to={"/consult/deposit/deposits_reports/webhooks_reports"}
                   >
                     {t("menus.webhooks_reports")}
@@ -1765,7 +2128,13 @@ export const SidebarNavigation = () => {
                   ? undefined
                   : "none",
               },
-              <Link to={"/consult/withdrawals/generated_withdrawals"}>
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/consult/withdrawals/generated_withdrawals"}
+              >
                 {t("menus.generated_withdrawals")}
               </Link>
             ),
@@ -1780,7 +2149,13 @@ export const SidebarNavigation = () => {
                   ? undefined
                   : "none",
               },
-              <Link to={"/consult/withdrawals/paid_withdrawals"}>
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/consult/withdrawals/paid_withdrawals"}
+              >
                 {t("menus.paid_withdrawals")}
               </Link>
             ),
@@ -1796,7 +2171,13 @@ export const SidebarNavigation = () => {
                   ? undefined
                   : "none",
               },
-              <Link to={"/consult/withdrawals/undelivered_withdrawals"}>
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/consult/withdrawals/undelivered_withdrawals"}
+              >
                 {t("menus.undelivered_withdrawals")}
               </Link>
             ),
@@ -1818,6 +2199,10 @@ export const SidebarNavigation = () => {
                       : "none",
                   },
                   <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
                     to={
                       "/consult/withdrawals/withdrawals_reports/generated_withdrawals_reports"
                     }
@@ -1838,6 +2223,10 @@ export const SidebarNavigation = () => {
                       : "none",
                   },
                   <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
                     to={
                       "/consult/withdrawals/withdrawals_reports/paid_withdrawals_reports"
                     }
@@ -1858,6 +2247,10 @@ export const SidebarNavigation = () => {
                       : "none",
                   },
                   <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
                     to={
                       "/consult/withdrawals/withdrawals_reports/withdrawals_webhooks_reports"
                     }
@@ -1899,7 +2292,14 @@ export const SidebarNavigation = () => {
                   ? undefined
                   : "none",
               },
-              <Link to={"/consult/refunds/refund_deposits"}>
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/consult/refunds/refund_deposits"}
+                title={`${t("menus.refund_deposits")}`}
+              >
                 {t("menus.refund_deposits")}
               </Link>
             ),
@@ -1915,7 +2315,14 @@ export const SidebarNavigation = () => {
                   ? undefined
                   : "none",
               },
-              <Link to={"/consult/refunds/refund_withdrawals"}>
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/consult/refunds/refund_withdrawals"}
+                title={`${t("menus.refund_withdrawals")}`}
+              >
                 {t("menus.refund_withdrawals")}
               </Link>
             ),
@@ -1931,7 +2338,14 @@ export const SidebarNavigation = () => {
                   ? undefined
                   : "none",
               },
-              <Link to={"/consult/refunds/refund_manual_deposits"}>
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/consult/refunds/refund_manual_deposits"}
+                title={`${t("menus.refund_manual_deposits")}`}
+              >
                 {t("menus.refund_manual_deposits")}
               </Link>
             ),
@@ -1952,9 +2366,14 @@ export const SidebarNavigation = () => {
                       : "none",
                   },
                   <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
                     to={
                       "/consult/refunds/refund_reports/refund_deposits_reports"
                     }
+                    title={`${t("menus.refund_deposits_reports")}`}
                   >
                     {t("menus.refund_deposits_reports")}
                   </Link>
@@ -1973,7 +2392,12 @@ export const SidebarNavigation = () => {
                       : "none",
                   },
                   <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
                     to={"/consult/refunds/refund_reports/refund_manual_reports"}
+                    title={`${t("menus.refund_manual_reports")}`}
                   >
                     {t("menus.refund_manual_reports")}
                   </Link>
@@ -1992,9 +2416,14 @@ export const SidebarNavigation = () => {
                       : "none",
                   },
                   <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
                     to={
                       "/consult/refunds/refund_reports/refund_withdrawals_reports"
                     }
+                    title={`${t("menus.refund_withdrawals_reports")}`}
                   >
                     {t("menus.refund_withdrawals_reports")}
                   </Link>
@@ -2032,7 +2461,13 @@ export const SidebarNavigation = () => {
                   ? undefined
                   : "none",
               },
-              <Link to={"/consult/consult_persons/check_cpf"}>
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/consult/consult_persons/check_cpf"}
+              >
                 {t("menus.check_cpf")}
               </Link>
             ),
@@ -2047,7 +2482,14 @@ export const SidebarNavigation = () => {
                   ? undefined
                   : "none",
               },
-              <Link to={"/consult/consult_persons/historic_cpf_merchant"}>
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/consult/consult_persons/historic_cpf_merchant"}
+                title={`${t("menus.historic_cpf_merchant")}`}
+              >
                 {t("menus.historic_cpf_merchant")}
               </Link>
             ),
@@ -2067,9 +2509,14 @@ export const SidebarNavigation = () => {
                       : "none",
                   },
                   <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
                     to={
                       "/consult/consult_persons/reports/historic_cpf_merchant"
                     }
+                    title={`${t("menus.historic_cpf_merchant")}`}
                   >
                     {t("menus.historic_cpf_merchant")}
                   </Link>
@@ -2087,9 +2534,14 @@ export const SidebarNavigation = () => {
                       : "none",
                   },
                   <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
                     to={
                       "/consult/consult_persons/reports/historic_cpf_merchant_details"
                     }
+                    title={`${t("menus.historic_cpf_merchant_details")}`}
                   >
                     {t("menus.historic_cpf_merchant_details")}
                   </Link>
@@ -2138,7 +2590,13 @@ export const SidebarNavigation = () => {
                   ? undefined
                   : "none",
               },
-              <Link to={"/support/blacklists/bank_institutions"}>
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/support/blacklists/bank_institutions"}
+              >
                 {t("menus.bank_institutions")}
               </Link>
             ),
@@ -2154,7 +2612,13 @@ export const SidebarNavigation = () => {
                   ? undefined
                   : "none",
               },
-              <Link to={"/support/blacklists/third_parties_pix_key"}>
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/support/blacklists/third_parties_pix_key"}
+              >
                 {t("menus.third_parties_pix_key")}
               </Link>
             ),
@@ -2169,7 +2633,13 @@ export const SidebarNavigation = () => {
                   ? undefined
                   : "none",
               },
-              <Link to={"/support/blacklists/invalid_pix_key"}>
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/support/blacklists/invalid_pix_key"}
+              >
                 {t("menus.invalid_pix_key")}
               </Link>
             ),
@@ -2184,6 +2654,10 @@ export const SidebarNavigation = () => {
                   false,
                   undefined,
                   <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
                     to={
                       "/support/blacklists/blacklists_reports/bank_institutions_reports"
                     }
@@ -2225,7 +2699,13 @@ export const SidebarNavigation = () => {
                   ? undefined
                   : "none",
               },
-              <Link to={"/support/api_logs/error_logs_deposits"}>
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/support/api_logs/error_logs_deposits"}
+              >
                 {t("menus.error_logs_deposits")}
               </Link>
             ),
@@ -2240,7 +2720,13 @@ export const SidebarNavigation = () => {
                   ? undefined
                   : "none",
               },
-              <Link to={"/support/api_logs/error_logs_withdrawals"}>
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/support/api_logs/error_logs_withdrawals"}
+              >
                 {t("menus.error_logs_withdrawals")}
               </Link>
             ),
@@ -2255,7 +2741,13 @@ export const SidebarNavigation = () => {
                   ? undefined
                   : "none",
               },
-              <Link to={"/support/api_logs/authentication_logs"}>
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/support/api_logs/authentication_logs"}
+              >
                 {t("menus.authentication_logs")}
               </Link>
             ),
@@ -2288,6 +2780,10 @@ export const SidebarNavigation = () => {
                       : "none",
                   },
                   <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
                     to={"/support/contestation/deposit_contestation/uploads"}
                   >
                     {t("menus.uploads")}
@@ -2306,6 +2802,10 @@ export const SidebarNavigation = () => {
                       : "none",
                   },
                   <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
                     to={"/support/contestation/deposit_contestation/import_csv"}
                   >
                     {t("menus.import_csv")}

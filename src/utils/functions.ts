@@ -27,15 +27,15 @@ export const setFirstChildDivId = (tabIndex: Element | null, id: string): void =
 export const setFirstChildDivTestId = (tabIndex: Element | null, id: string): void => {
   if (tabIndex) {
     const firstChildDiv = tabIndex.querySelector('div');
-
     if (firstChildDiv) {
       firstChildDiv.setAttribute('data-test-id', id);
     }
   }
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const validateFormCnpj = (_: any, value: string) => {
-  if (!isValidCNPJ(value)) {
+  if (value && !isValidCNPJ(value)) {
     return Promise.reject(
       t("input.invalid", {
         field: t(`input.cnpj`),
