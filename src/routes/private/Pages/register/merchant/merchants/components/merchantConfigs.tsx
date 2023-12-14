@@ -10,7 +10,6 @@ import { FeesTab } from "./tabs/fees";
 import { IpsConfigTab } from "./tabs/ips";
 import { MerchantConfigTab } from "./tabs/merchantConfigTab";
 import { OrganizationConfigTab } from "./tabs/organizationConfigTab";
-import { useEffect } from "react";
 import { setFirstChildDivTestId } from "@src/utils/functions";
 
 export const MerchantConfigs = () => {
