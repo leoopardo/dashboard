@@ -764,6 +764,7 @@ export const CustomTable = (props: TableProps) => {
               title: props.refetch ? (
                 <Tooltip title={t("table.refetch_data")}>
                   <Button
+                    data-test-id="refetch-button"
                     type="link"
                     onClick={() => {
                       if (props?.refetch) props.refetch();
@@ -790,6 +791,7 @@ export const CustomTable = (props: TableProps) => {
                 >
                   {!props.disableActions ? (
                     <Dropdown
+                      data-test-id="action-button"
                       trigger={["click"]}
                       key={column?.name}
                       disabled={props.disableActions}
