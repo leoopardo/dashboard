@@ -40,6 +40,8 @@ import { AggregatorTransferBetweenAccountsReports } from "./Pages/moviments/aggr
 import { TransfersBetweenAccounts } from "./Pages/moviments/merchants/betweenAccounts";
 import { MerchantManual } from "./Pages/moviments/merchants/manual";
 import { MerchantPreManual } from "./Pages/moviments/merchants/preOperations";
+import { ImportPreOperations } from "./Pages/moviments/merchants/preOperations/import";
+import { PreManualUploads } from "./Pages/moviments/merchants/preOperations/uploads";
 import { TransferBetweenAccountsReports } from "./Pages/moviments/merchants/reports/betweenAccounts";
 import { MerchantManualReports } from "./Pages/moviments/merchants/reports/manual";
 import { MerchantPreManualReports } from "./Pages/moviments/merchants/reports/preOperations";
@@ -111,7 +113,6 @@ import { ImportContastationDeposit } from "./Pages/support/contastation/importCS
 import { ContestationUploads } from "./Pages/support/contastation/uploads";
 import { Permission } from "./permission";
 import { Redirect } from "./redirect";
-import { ImportPreOperations } from "./Pages/moviments/merchants/preOperations/import";
 export const PrivateRoutes = () => {
   const { responseValidate } = useValidate();
 
@@ -1432,6 +1433,19 @@ export const PrivateRoutes = () => {
                     }
                   >
                     <ImportPreOperations />
+                  </Permission>
+                }
+              />
+              <Route
+                path="merchant_pre_manual_moviments_uploads"
+                element={
+                  <Permission
+                    permission={
+                      responseValidate?.permissions?.transactions?.merchant
+                        ?.merchant_pre_manual?.menu
+                    }
+                  >
+                    <PreManualUploads />
                   </Permission>
                 }
               />

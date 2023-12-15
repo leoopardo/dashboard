@@ -24,7 +24,7 @@ export function useGetOrganizationTransferBetweenAccountsReports(params: Reports
     },
     {
       refetchInterval: loadData?.items.find(
-        (item) => item?.status !== "COMPLETED"
+        (item) => item?.status === "WAITING"
       )
         ? 10000
         : undefined,

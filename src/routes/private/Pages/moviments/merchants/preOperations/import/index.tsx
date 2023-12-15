@@ -1,9 +1,8 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
-  AppstoreAddOutlined,
   DownloadOutlined,
   SendOutlined,
   UploadOutlined,
@@ -13,19 +12,21 @@ import { useImportPreManualTransaction } from "@src/services/moviments/merchants
 import {
   Button,
   Col,
+  Empty,
   Form,
   Input,
   InputRef,
-  Popconfirm,
   Row,
   Table,
   Upload,
+  notification,
 } from "antd";
 import { FormInstance } from "antd/lib/form/Form";
-import { unparse } from "papaparse";
+import { Buffer } from "buffer";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useCSVDownloader, usePapaParse } from "react-papaparse";
+import { useNavigate } from "react-router-dom";
 
 const EditableContext = React.createContext<FormInstance<any> | null>(null);
 
@@ -140,19 +141,52 @@ type ColumnTypes = Exclude<EditableTableProps["columns"], undefined>;
 
 export const ImportPreOperations = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const { readRemoteFile } = usePapaParse();
-  const initialData: DataType[] = [];
-  const [dataSource, setDataSource] = useState<DataType[]>(initialData);
+  const initialData: DataType[] = [
+    {
+      key: "1",
+      MERCHANT_ID: "11111111111",
+      CATEGORY_ID: "Fraude",
+      VALUE: "0.99",
+      TYPE: "in / out",
+      DESCRIPTION: "Solicitado pelo merchant xyz",
+    },
+  ];
+  const [dataSource, setDataSource] = useState<DataType[]>([]);
   const [body, setBody] = useState<{ content: string }>({ content: "" });
   const { error, isLoading, isSuccess, mutate } =
     useImportPreManualTransaction(body);
   const uploadRef = useRef<HTMLButtonElement | null>(null);
   const { CSVDownloader } = useCSVDownloader();
 
-  const handleDelete = (key: React.Key) => {
-    const newData = dataSource.filter((item) => item.key !== key);
-    setDataSource(newData);
+  const [api, contextHolder] = notification.useNotification();
+
+  const openNotificationWithIcon = () => {
+    const BtnNavigate = (
+      <Button
+        onClick={() =>
+          navigate(
+            "/moviment/merchant_moviments/merchant_pre_manual_moviment/merchant_pre_manual_moviments_uploads"
+          )
+        }
+      >
+        Uploads
+      </Button>
+    );
+    api.info({
+      message: t("messages.creating_csv"),
+      description: t("messages.creating_csv_message"),
+      duration: 0,
+      btn: BtnNavigate,
+    });
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      openNotificationWithIcon();
+    }
+  }, [error, isSuccess]);
 
   const defaultColumns: (ColumnTypes[number] & {
     editable?: boolean;
@@ -161,70 +195,24 @@ export const ImportPreOperations = () => {
     {
       title: t("table.merchant_id"),
       dataIndex: "MERCHANT_ID",
-      editable: true,
     },
     {
       title: t("table.category_id"),
       dataIndex: "CATEGORY_ID",
-      editable: true,
     },
     {
       title: t("table.value"),
       dataIndex: "VALUE",
-      editable: true,
     },
     {
       title: t("table.type"),
       dataIndex: "TYPE",
-      editable: true,
     },
     {
       title: t("table.description"),
       dataIndex: "DESCRIPTION",
-      editable: true,
-    },
-    {
-      title: "",
-      dataIndex: "actions",
-      render: (_, record: any) =>
-        dataSource.length >= 1 ? (
-          <Popconfirm
-            title={t("messages.are_you_sure", {
-              action: t("messages.delete").toLocaleLowerCase(),
-              itens: t("table.row").toLocaleLowerCase(),
-            })}
-            onConfirm={() => handleDelete(record?.key)}
-            cancelText={t("messages.no_cancel")}
-            okText={t("messages.yes_delete")}
-          >
-            <a>{t("messages.delete")}</a>
-          </Popconfirm>
-        ) : null,
     },
   ];
-
-  const handleAdd = () => {
-    const newData: DataType = {
-      key: dataSource.length + 1,
-      ["MERCHANT_ID"]: "1",
-      ["CATEGORY_ID"]: "2",
-      ["VALUE"]: "0.01",
-      ["TYPE"]: "IN / OUT",
-      ["DESCRIPTION"]: "NEW ROW",
-    };
-    setDataSource([...dataSource, newData]);
-  };
-
-  const handleSave = (row: DataType) => {
-    const newData = [...dataSource];
-    const index = newData.findIndex((item) => row.key === item.key);
-    const item = newData[index];
-    newData.splice(index, 1, {
-      ...item,
-      ...row,
-    });
-    setDataSource(newData);
-  };
 
   const components = {
     body: {
@@ -241,41 +229,20 @@ export const ImportPreOperations = () => {
       ...col,
       onCell: (record: DataType) => ({
         record,
-        editable: col.editable,
         dataIndex: col.dataIndex,
         title: col.title,
-        handleSave,
       }),
     };
   });
 
   const handleUpload = () => {
-    const csvHeader = [
-      "MERCHANT_ID",
-      "CATEGORY_ID",
-      "VALUE",
-      "TYPE",
-      "DESCRIPTION",
-    ];
-
-    const csvData = unparse({
-      fields: csvHeader,
-      data: dataSource,
-    });
-    const base64Encoded = btoa(csvData.replace(/(\r\n|\n|\r)/gm, "\n").trim());
-
-    setBody({ content: base64Encoded });
+    mutate();
+    setBody({ content: "" });
   };
-
-  useEffect(() => {
-    if (body.content) {
-      mutate();
-      setBody({ content: "" });
-    }
-  }, [body]);
 
   return (
     <Row style={{ padding: 25 }}>
+      {contextHolder}
       <Col span={24} style={{ marginBottom: 8 }}>
         <Row gutter={[8, 8]} style={{ width: "100%" }}>
           <Col xs={{ span: 24 }} md={{ span: 6 }} lg={{ span: 4 }}>
@@ -307,7 +274,17 @@ export const ImportPreOperations = () => {
                   },
                   download: true,
                 });
+                const reader = new FileReader();
+                reader.readAsText(file);
+                reader.onload = () => {
+                  console.log(`${reader.result}`);
 
+                  const base64Enconded = Buffer.from(
+                    `${reader?.result}`?.replace(/(\r\n|\n|\r)/gm, "\n").trim()
+                  ).toString("base64");
+
+                  setBody({ content: base64Enconded });
+                };
                 return false;
               }}
             >
@@ -323,22 +300,7 @@ export const ImportPreOperations = () => {
               </button>
             </Upload>
           </Col>
-          <Col xs={{ span: 24 }} md={{ span: 6 }} lg={{ span: 4 }}>
-            <Button
-              size="large"
-              onClick={handleAdd}
-              type="primary"
-              style={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                textAlign: "center",
-              }}
-            >
-              <AppstoreAddOutlined /> {t("table.add_row")}
-            </Button>
-          </Col>
+
           <Col
             xs={{ span: 24 }}
             md={{ span: 6 }}
@@ -361,30 +323,30 @@ export const ImportPreOperations = () => {
                 {
                   MERCHANT_ID: 1,
                   CATEGORY_ID: 2,
-                  VALUE: 0.01,
-                  TYPE: "IN",
-                  DESCRIPTION: "NEW ROW",
+                  VALUE: "0.99",
+                  TYPE: "in / out",
+                  DESCRIPTION: "Solicitado pelo merchant xyz",
                 },
                 {
                   MERCHANT_ID: 1,
                   CATEGORY_ID: 2,
-                  VALUE: 0.01,
-                  TYPE: "IN",
-                  DESCRIPTION: "NEW ROW",
+                  VALUE: "0.99",
+                  TYPE: "in / out",
+                  DESCRIPTION: "Solicitado pelo merchant xyz",
                 },
                 {
                   MERCHANT_ID: 1,
                   CATEGORY_ID: 2,
-                  VALUE: 0.01,
-                  TYPE: "IN",
-                  DESCRIPTION: "NEW ROW",
+                  VALUE: "0.99",
+                  TYPE: "in / out",
+                  DESCRIPTION: "Solicitado pelo merchant xyz",
                 },
                 {
                   MERCHANT_ID: 1,
                   CATEGORY_ID: 2,
-                  VALUE: 0.01,
-                  TYPE: "IN",
-                  DESCRIPTION: "NEW ROW",
+                  VALUE: "0.99",
+                  TYPE: "in / out",
+                  DESCRIPTION: "Solicitado pelo merchant xyz",
                 },
               ]}
             >
@@ -394,8 +356,8 @@ export const ImportPreOperations = () => {
               </a>
             </CSVDownloader>
           </Col>
-          <Col xs={{ span: 0 }} md={{ span: 0 }} lg={{ span: 8 }} />
-          <Col xs={{ span: 24 }} md={{ span: 6 }} lg={{ span: 4 }}>
+          <Col xs={{ span: 0 }} md={{ span: 0 }} lg={{ span: 10 }} />
+          <Col xs={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }}>
             <Button
               size="large"
               type="dashed"
@@ -410,8 +372,9 @@ export const ImportPreOperations = () => {
                 alignItems: "center",
                 textAlign: "center",
               }}
+              icon={<SendOutlined style={{ fontSize: 16 }} />}
             >
-              <SendOutlined style={{ fontSize: 16 }} /> Confirmar upload
+              Confirmar upload
             </Button>
           </Col>
         </Row>
@@ -425,6 +388,15 @@ export const ImportPreOperations = () => {
           bordered
           dataSource={dataSource}
           columns={columns as ColumnTypes}
+          locale={{
+            emptyText: (
+              <Empty
+                style={{ padding: 15, paddingBottom: 30 }}
+                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                description={t("messages.empty_table_data")}
+              />
+            ),
+          }}
         />
       </Col>
 
