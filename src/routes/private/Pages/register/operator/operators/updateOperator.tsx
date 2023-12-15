@@ -39,7 +39,6 @@ import {
 import { ValidateInterface } from "@src/services/types/validate.interface";
 import { setFirstChildDivId, validateFormCnpj } from "@src/utils/functions";
 import {
-  AutoComplete,
   Avatar,
   Button,
   Col,
@@ -47,6 +46,7 @@ import {
   Form,
   Input,
   Row,
+  Select,
   Spin,
   Switch,
   Tabs,
@@ -89,7 +89,7 @@ export const UpdateOperator = () => {
   const tabAttachments = document.querySelector('[data-node-key="3"]');
 
   const { UpdateError, UpdateIsLoading, UpdateMutate, UpdateIsSuccess } =
-    useUpdateOperator({...OperatorBody, operator_id: location.state.id,});
+    useUpdateOperator({ ...OperatorBody, operator_id: location.state.id });
 
   const [responsibleQuery, setResponsibleQuery] =
     useState<OperatorResponsiblesQuery>(INITIAL_RESPONSIBLE_QUERY);
@@ -289,12 +289,17 @@ export const UpdateOperator = () => {
             </Col>
             <Col xs={{ span: 24 }} md={{ span: 6 }}>
               <Form.Item label={t("table.country")} name="country">
-                <AutoComplete
-                  options={Countries?.map((country) => {
+                <Select
+                  showSearch
+                  options={Countries?.map((country, index) => {
                     return {
+                      key: index,
                       label: (
                         <Typography>
-                          <Avatar src={country.flags.svg} />
+                          <Avatar
+                            src={country.flags.svg}
+                            style={{ marginRight: 10 }}
+                          />
                           {country?.name.common}
                         </Typography>
                       ),
