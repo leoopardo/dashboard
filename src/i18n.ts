@@ -4,7 +4,6 @@ import LanguageDetector from "i18next-browser-languagedetector";
 import { initReactI18next } from "react-i18next";
 import translationEN from '@assets/locales/en/translation.json';
 import translationPTBR from '@assets/locales/pt-BR/translation.json';
-// import { messages } from './translations/languages/index';
 
 i18n
   .use(Backend)
@@ -19,8 +18,8 @@ i18n
         translation: translationPTBR,
       },
     },
-    lng: 'pt-BR',
-    fallbackLng: "pt-BR",
+    // lng: 'pt-BR',
+   // fallbackLng: "pt-BR",
     saveMissing: true,
     react: {
       bindI18n: "languageChanged loaded",
@@ -31,7 +30,7 @@ i18n
       escapeValue: false,
     },
     detection: {
-      order: ["localStorage", "navigator"],
+      order: ["localStorage"],
       lookupQuerystring: "lng",
       lookupLocalStorage: "dash_v6_language",
       caches: ["localStorage"],
