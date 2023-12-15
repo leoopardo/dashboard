@@ -25,7 +25,7 @@ import {
 import { ErrorList } from "@src/utils/errors";
 import { formatCPF } from "@src/utils/functions";
 import type { ColumnsType, TableProps as TablePropsAntD } from "antd/es/table";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
@@ -100,7 +100,6 @@ export const CustomTable = (props: TableProps) => {
   const { t } = useTranslation();
   const isMobile = useMediaQuery({ maxWidth: "900px" });
   const [columns, setColumns] = useState<ColumnsType<ColumnInterface>>([]);
-  const [actions, setActions] = useState<any>([]);
   const [sortOrder] = useState(false);
   const [sorterObj, setSorterObj] = useState<any | undefined>();
   const { bankListData } = useListBanks({
@@ -108,7 +107,7 @@ export const CustomTable = (props: TableProps) => {
     page: 1,
   });
 
-  useEffect(() => {
+  const actions = useMemo(() => {
     const act: any = [];
     if (props.actions && props.actions.length > 0) {
       for (const action of props.actions) {
@@ -122,10 +121,9 @@ export const CustomTable = (props: TableProps) => {
             onClick: action?.onClick,
           });
       }
-
-      setActions(act);
     }
-  }, [isMobile]);
+    return act
+  }, [isMobile, t])
 
   useEffect(() => {
     if (
@@ -764,6 +762,7 @@ export const CustomTable = (props: TableProps) => {
               title: props.refetch ? (
                 <Tooltip title={t("table.refetch_data")}>
                   <Button
+                    data-test-id="refetch-button"
                     type="link"
                     onClick={() => {
                       if (props?.refetch) props.refetch();
@@ -790,6 +789,7 @@ export const CustomTable = (props: TableProps) => {
                 >
                   {!props.disableActions ? (
                     <Dropdown
+                      data-test-id="action-button"
                       trigger={["click"]}
                       key={column?.name}
                       disabled={props.disableActions}

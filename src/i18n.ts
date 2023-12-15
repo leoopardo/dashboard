@@ -2,9 +2,8 @@ import i18n from "i18next";
 import Backend from "i18next-http-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
 import { initReactI18next } from "react-i18next";
-import translationEN from '@assets/locales/en/translation.json';
-import translationPTBR from '@assets/locales/pt-BR/translation.json';
-// import { messages } from './translations/languages/index';
+import translationEN from "@assets/locales/en/translation.json";
+import translationPTBR from "@assets/locales/pt-BR/translation.json";
 
 i18n
   .use(Backend)
@@ -15,11 +14,11 @@ i18n
       en: {
         translation: translationEN,
       },
-      'pt-BR': {
+      "pt-BR": {
         translation: translationPTBR,
       },
     },
-    lng: 'pt-BR',
+    // lng: 'pt-BR',
     fallbackLng: "pt-BR",
     saveMissing: true,
     react: {
@@ -35,6 +34,7 @@ i18n
       lookupQuerystring: "lng",
       lookupLocalStorage: "dash_v6_language",
       caches: ["localStorage"],
+
     },
   });
 
