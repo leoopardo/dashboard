@@ -30,10 +30,11 @@ i18n
       escapeValue: false,
     },
     detection: {
-      order: ["localStorage"],
+      order: ["navigator", "localStorage"],
       lookupQuerystring: "lng",
       lookupLocalStorage: "dash_v6_language",
       caches: ["localStorage"],
+
     },
   });
 
