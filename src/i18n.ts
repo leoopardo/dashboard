@@ -30,7 +30,7 @@ i18n
       escapeValue: false,
     },
     detection: {
-      order: ["navigator", "localStorage"],
+      order: ["localStorage", "navigator"],
       lookupQuerystring: "lng",
       lookupLocalStorage: "dash_v6_language",
       caches: ["localStorage"],
