@@ -220,18 +220,20 @@ export const FeesTab = (props: { id?: string }) => {
           <Form.Item
             label={t("input.deposit_fee_percent")}
             name="cashin_pix_fee_percent"
-            rules={
-              body?.cashin_pix_fee_type === "PERCENT" &&
-              body?.cashin_pix_fee_percent &&
-              body?.cashin_pix_fee_percent < 0.01
-                ? [
-                    {
-                      min: 0.01,
-                      message: t("messages.min_value_higher_then_zero") || "",
-                    },
-                  ]
-                : []
-            }
+            rules={[
+              {
+                validator: () => {
+                  const numericValue = body?.cashin_pix_fee_percent || 0;
+                  const minValue = body?.cashin_pix_fee_type === "PERCENT" ? 0.01 : 0;
+          
+                  if (numericValue < minValue) {
+                    return Promise.reject(t("messages.min_value_higher_then_zero") || "");
+                  }
+          
+                  return Promise.resolve();
+                },
+              },
+            ]}
           >
             <Input
               data-test-id="deposit_fee_percent"
@@ -258,23 +260,28 @@ export const FeesTab = (props: { id?: string }) => {
           <Form.Item
             label={t("input.deposit_fee_value")}
             name="cashin_pix_fee_value"
-            rules={
-              body?.cashin_pix_fee_type === "VALUE" &&
-              body?.cashin_pix_fee_value &&
-              body?.cashin_pix_fee_value < 0.01
-                ? [
-                    {
-                      type: "number",
-                      min: 0.01,
-                      message: t("messages.min_value_higher_then_zero") || "",
-                    },
-                  ]
-                : []
-            }
+            rules={[
+              {
+                validator: () => {
+                  const numericValue = body?.cashin_pix_fee_value || 0;
+                  const minValue = body?.cashin_pix_fee_type === "VALUE" ? 0.01 : 0;
+          
+                  if (numericValue < minValue) {
+                    return Promise.reject(t("messages.min_value_higher_then_zero") || "");
+                  }
+          
+                  return Promise.resolve();
+                },
+              },
+            ]}
           >
             <CurrencyInput
               data-test-id="deposit_fee_value"
               onChangeValue={(_event, originalValue) => {
+                setBody((state) => ({
+                  ...state,
+                  cashin_pix_fee_value: +originalValue,
+                }));
                 setBodyUpdate((state) => ({
                   ...state,
                   cashin_pix_fee_value: +originalValue,
@@ -300,6 +307,10 @@ export const FeesTab = (props: { id?: string }) => {
             <CurrencyInput
               data-test-id="deposit_fee_min"
               onChangeValue={(_event, originalValue) => {
+                setBody((state) => ({
+                  ...state,
+                  cashin_pix_fee_min: +originalValue,
+                }));
                 setBodyUpdate((state) => ({
                   ...state,
                   cashin_pix_fee_min: +originalValue,
@@ -385,18 +396,21 @@ export const FeesTab = (props: { id?: string }) => {
           <Form.Item
             label={t("input.withdraw_fee_percent")}
             name="customer_withdraw_fee_percent"
-            rules={
-              body?.customer_withdraw_fee_type === "PERCENT" &&
-              body?.customer_withdraw_fee_percent &&
-              body?.customer_withdraw_fee_percent < 0.01
-                ? [
-                    {
-                      min: 0.01,
-                      message: t("messages.min_value_higher_then_zero") || "",
-                    },
-                  ]
-                : []
-            }
+            rules={[
+              {
+                validator: () => {
+                  const numericValue = body?.customer_withdraw_fee_percent || 0;
+                  const minValue = body?.customer_withdraw_fee_type === "PERCENT" ? 0.01 : 0;
+          
+                  if (numericValue < minValue) {
+                    return Promise.reject(t("messages.min_value_higher_then_zero") || "");
+                  }
+          
+                  return Promise.resolve();
+                },
+              },
+            ]}
+            
           >
             <Input
               data-test-id="withdraw_fee_percent"
@@ -424,15 +438,26 @@ export const FeesTab = (props: { id?: string }) => {
             name="customer_withdraw_fee_value"
             rules={[
               {
-                type: "number",
-                min: body?.customer_withdraw_fee_type === "VALUE" ? 0.01 : 0,
-                message: t("messages.min_value_higher_then_zero") || "",
+                validator: () => {
+                  const numericValue = body?.customer_withdraw_fee_value || 0;
+                  const minValue = body?.customer_withdraw_fee_type === "VALUE" ? 0.01 : 0;
+          
+                  if (numericValue < minValue) {
+                    return Promise.reject(t("messages.min_value_higher_then_zero") || "");
+                  }
+          
+                  return Promise.resolve();
+                },
               },
             ]}
           >
             <CurrencyInput
               data-test-id="withdraw_fee_value"
               onChangeValue={(_event, originalValue) => {
+                setBody((state) => ({
+                  ...state,
+                  customer_withdraw_fee_value: +originalValue,
+                }));
                 setBodyUpdate((state) => ({
                   ...state,
                   customer_withdraw_fee_value: +originalValue,
@@ -457,6 +482,10 @@ export const FeesTab = (props: { id?: string }) => {
           >
             <CurrencyInput
               onChangeValue={(_event, originalValue) => {
+                setBody((state) => ({
+                  ...state,
+                  customer_withdraw_fee_min: +originalValue,
+                }));
                 setBodyUpdate((state) => ({
                   ...state,
                   customer_withdraw_fee_min: +originalValue,
@@ -512,18 +541,20 @@ export const FeesTab = (props: { id?: string }) => {
           <Form.Item
             label={t("input.deposit_refund_fee_percent")}
             name="pix_refund_fee_percent"
-            rules={
-              body?.pix_refund_fee_type === "PERCENT" &&
-              body?.pix_refund_fee_percent &&
-              body?.pix_refund_fee_percent < 0.01
-                ? [
-                    {
-                      min: 0.01,
-                      message: t("messages.min_value_higher_then_zero") || "",
-                    },
-                  ]
-                : []
-            }
+            rules={[
+              {
+                validator: () => {
+                  const numericValue = body?.pix_refund_fee_percent || 0;
+                  const minValue = body?.pix_refund_fee_type === "PERCENT" ? 0.01 : 0;
+          
+                  if (numericValue < minValue) {
+                    return Promise.reject(t("messages.min_value_higher_then_zero") || "");
+                  }
+          
+                  return Promise.resolve();
+                },
+              },
+            ]}
           >
             <Input
             data-test-id="deposit_refund_fee_percent"
@@ -552,15 +583,26 @@ export const FeesTab = (props: { id?: string }) => {
             name="pix_refund_fee_value"
             rules={[
               {
-                type: "number",
-                min: body?.pix_refund_fee_type === "VALUE" ? 0.01 : 0,
-                message: t("messages.min_value_higher_then_zero") || "",
+                validator: () => {
+                  const numericValue = body?.pix_refund_fee_value || 0;
+                  const minValue = body?.pix_refund_fee_type === "VALUE" ? 0.01 : 0;
+          
+                  if (numericValue < minValue) {
+                    return Promise.reject(t("messages.min_value_higher_then_zero") || "");
+                  }
+          
+                  return Promise.resolve();
+                },
               },
             ]}
           >
             <CurrencyInput
             data-test-id="deposit_refund_fee_value"
               onChangeValue={(_event, originalValue) => {
+                setBody((state) => ({
+                  ...state,
+                  pix_refund_fee_value: +originalValue,
+                }));
                 setBodyUpdate((state) => ({
                   ...state,
                   pix_refund_fee_value: +originalValue,
@@ -586,6 +628,10 @@ export const FeesTab = (props: { id?: string }) => {
             <CurrencyInput
               data-test-id="deposit_refund_fee_min"
               onChangeValue={(_event, originalValue) => {
+                setBody((state) => ({
+                  ...state,
+                  pix_refund_fee_min: +originalValue,
+                }));
                 setBodyUpdate((state) => ({
                   ...state,
                   pix_refund_fee_min: +originalValue,
@@ -639,18 +685,20 @@ export const FeesTab = (props: { id?: string }) => {
           <Form.Item
             label={t("input.fastpix_in_fee_percent")}
             name="fastpix_in_fee_percent"
-            rules={
-              body?.fastpix_in_fee_type === "PERCENT" &&
-              body?.fastpix_in_fee_percent &&
-              body?.fastpix_in_fee_percent < 0.01
-                ? [
-                    {
-                      min: 0.01,
-                      message: t("messages.min_value_higher_then_zero") || "",
-                    },
-                  ]
-                : []
-            }
+            rules={[
+              {
+                validator: () => {
+                  const numericValue = body?.fastpix_in_fee_percent || 0;
+                  const minValue = body?.fastpix_in_fee_type === "PERCENT" ? 0.01 : 0;
+          
+                  if (numericValue < minValue) {
+                    return Promise.reject(t("messages.min_value_higher_then_zero") || "");
+                  }
+          
+                  return Promise.resolve();
+                },
+              },
+            ]}
           >
             <Input
               data-test-id="fastpix_in_fee_percent"
@@ -677,23 +725,28 @@ export const FeesTab = (props: { id?: string }) => {
           <Form.Item
             label={t("input.fastpix_in_fee_value")}
             name="fastpix_in_fee_value"
-            rules={
-              body?.pix_refund_fee_type === "VALUE" &&
-              body?.fastpix_in_fee_value &&
-              body?.fastpix_in_fee_value < 0.01
-                ? [
-                    {
-                      type: "number",
-                      min: 0.01,
-                      message: t("messages.min_value_higher_then_zero") || "",
-                    },
-                  ]
-                : []
-            }
+            rules={[
+              {
+                validator: () => {
+                  const numericValue = body?.fastpix_in_fee_value || 0;
+                  const minValue = body?.fastpix_in_fee_type === "VALUE" ? 0.01 : 0;
+          
+                  if (numericValue < minValue) {
+                    return Promise.reject(t("messages.min_value_higher_then_zero") || "");
+                  }
+          
+                  return Promise.resolve();
+                },
+              },
+            ]}
           >
             <CurrencyInput
               data-test-id="fastpix_in_fee_value"
               onChangeValue={(_event, originalValue) => {
+                setBody((state) => ({
+                  ...state,
+                  fastpix_in_fee_value: +originalValue,
+                }));
                 setBodyUpdate((state) => ({
                   ...state,
                   fastpix_in_fee_value: +originalValue,
@@ -719,6 +772,10 @@ export const FeesTab = (props: { id?: string }) => {
             <CurrencyInput
               data-test-id="fastpix_in_fee_min"
               onChangeValue={(_event, originalValue) => {
+                setBody((state) => ({
+                  ...state,
+                  fastpix_in_fee_min: +originalValue,
+                }));
                 setBodyUpdate((state) => ({
                   ...state,
                   fastpix_in_fee_min: +originalValue,
@@ -768,18 +825,20 @@ export const FeesTab = (props: { id?: string }) => {
           <Form.Item
             label={t("input.fastpix_refund_fee_percent")}
             name="fastpix_refund_fee_percent"
-            rules={
-              body?.fastpix_refund_fee_type === "PERCENT" &&
-              body?.fastpix_refund_fee_percent &&
-              body?.fastpix_refund_fee_percent < 0.01
-                ? [
-                    {
-                      min: 0.01,
-                      message: t("messages.min_value_higher_then_zero") || "",
-                    },
-                  ]
-                : []
-            }
+            rules={[
+              {
+                validator: () => {
+                  const numericValue = body?.fastpix_refund_fee_percent || 0;
+                  const minValue = body?.fastpix_refund_fee_type === "PERCENT" ? 0.01 : 0;
+          
+                  if (numericValue < minValue) {
+                    return Promise.reject(t("messages.min_value_higher_then_zero") || "");
+                  }
+          
+                  return Promise.resolve();
+                },
+              },
+            ]}
           >
             <Input
               data-test-id="fastpix_refund_fee_percent"
@@ -806,23 +865,28 @@ export const FeesTab = (props: { id?: string }) => {
           <Form.Item
             label={t("input.fastpix_refund_fee_value")}
             name="fastpix_refund_fee_value"
-            rules={
-              body?.pix_refund_fee_type === "VALUE" &&
-              body?.fastpix_refund_fee_value &&
-              body?.fastpix_refund_fee_value < 0.01
-                ? [
-                    {
-                      type: "number",
-                      min: 0.01,
-                      message: t("messages.min_value_higher_then_zero") || "",
-                    },
-                  ]
-                : []
-            }
+            rules={[
+              {
+                validator: () => {
+                  const numericValue = body?.fastpix_refund_fee_value || 0;
+                  const minValue = body?.fastpix_refund_fee_type === "VALUE" ? 0.01 : 0;
+          
+                  if (numericValue < minValue) {
+                    return Promise.reject(t("messages.min_value_higher_then_zero") || "");
+                  }
+          
+                  return Promise.resolve();
+                },
+              },
+            ]}
           >
             <CurrencyInput
               data-test-id="fastpix_refund_fee_value"
               onChangeValue={(_event, originalValue) => {
+                setBody((state) => ({
+                  ...state,
+                  fastpix_refund_fee_value: +originalValue,
+                }));
                 setBodyUpdate((state) => ({
                   ...state,
                   fastpix_refund_fee_value: +originalValue,
@@ -848,6 +912,10 @@ export const FeesTab = (props: { id?: string }) => {
             <CurrencyInput
               data-test-id="fastpix_refund_fee_min"
               onChangeValue={(_event, originalValue) => {
+                setBody((state) => ({
+                  ...state,
+                  fastpix_refund_fee_min: +originalValue,
+                }));
                 setBodyUpdate((state) => ({
                   ...state,
                   fastpix_refund_fee_min: +originalValue,
