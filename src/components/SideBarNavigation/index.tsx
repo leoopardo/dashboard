@@ -825,18 +825,27 @@ export const SidebarNavigation = () => {
                 {t("menus.merchant_users")}
               </Link>
             ),
-            // getItem(
-            //   "manual_entry_category",
-            //   null,
-            //   null,
-            //   false,
-            //   undefined,
-            //   {
-            //     display: permissions?.register?.merchant?.release_category?.menu
-            //       ? undefined
-            //       : "none",
-            //   }
-            // ),
+            getItem(
+              "manual_entry_category",
+              null,
+              null,
+              false,
+              undefined,
+              {
+                display: permissions?.register?.merchant?.release_category?.menu
+                  ? undefined
+                  : "none",
+              },
+              <Link
+              onClickCapture={() => {
+                setCollapsed(false);
+                handleChangeSidebar(false);
+              }}
+              to={"/register/merchant/manual_entry_category"}
+            >
+              {t("menus.manual_entry_category")}
+            </Link>
+            ),
             getItem(
               "fee_plans",
               null,
@@ -1552,9 +1561,87 @@ export const SidebarNavigation = () => {
               </Link>
             ),
             getItem(
-              "merchant_pre_manual_moviments",
+              "merchant_pre_manual_moviment",
               null,
-              null,
+              [
+                getItem(
+                  "merchant_pre_manual_moviments",
+                  null,
+                  null,
+                  false,
+                  undefined,
+                  {
+                    display: permissions?.transactions?.merchant
+                      ?.merchant_pre_manual?.menu
+                      ? undefined
+                      : "none",
+                  },
+                  <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
+                    to={
+                      "/moviment/merchant_moviments/merchant_pre_manual_moviment/merchant_pre_manual_moviments"
+                    }
+                    title={`${t("menus.merchant_pre_manual_moviments")}`}
+                  >
+                    {t("menus.merchant_pre_manual_moviments")}
+                  </Link>
+                ),
+                getItem(
+                  "merchant_pre_manual_moviments_import",
+                  null,
+                  null,
+                  false,
+                  undefined,
+                  {
+                    display: permissions?.transactions?.merchant
+                      ?.merchant_pre_manual?.menu
+                      ? undefined
+                      : "none",
+                  },
+                  <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
+                    to={
+                      "/moviment/merchant_moviments/merchant_pre_manual_moviment/merchant_pre_manual_moviments_import"
+                    }
+                    title={`${t("menus.merchant_pre_manual_moviments_import")}`}
+                  >
+                    {t("menus.merchant_pre_manual_moviments_import")}
+                  </Link>
+                ),
+                getItem(
+                  "merchant_pre_manual_moviments_uploads",
+                  null,
+                  null,
+                  false,
+                  undefined,
+                  {
+                    display: permissions?.transactions?.merchant
+                      ?.merchant_pre_manual?.menu
+                      ? undefined
+                      : "none",
+                  },
+                  <Link
+                    onClickCapture={() => {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }}
+                    to={
+                      "/moviment/merchant_moviments/merchant_pre_manual_moviment/merchant_pre_manual_moviments_uploads"
+                    }
+                    title={`${t(
+                      "menus.merchant_pre_manual_moviments_uploads"
+                    )}`}
+                  >
+                    {t("menus.merchant_pre_manual_moviments_uploads")}
+                  </Link>
+                ),
+              ],
               false,
               undefined,
               {
@@ -1562,19 +1649,7 @@ export const SidebarNavigation = () => {
                   ?.merchant_pre_manual?.menu
                   ? undefined
                   : "none",
-              },
-              <Link
-                onClickCapture={() => {
-                  setCollapsed(false);
-                  handleChangeSidebar(false);
-                }}
-                to={
-                  "/moviment/merchant_moviments/merchant_pre_manual_moviments"
-                }
-                title={`${t("menus.merchant_pre_manual_moviments")}`}
-              >
-                {t("menus.merchant_pre_manual_moviments")}
-              </Link>
+              }
             ),
             getItem(
               "merchant_moviments_reports",

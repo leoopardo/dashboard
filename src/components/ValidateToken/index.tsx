@@ -64,7 +64,31 @@ export const ValidateToken = ({
     ValidatePhoneSuccess,
   } = useValidatePhone({ validation_token: tokenState });
 
-  const [ableToResend] = useState<boolean>(true);
+  const [remainingTime, setRemainingTime] = useState<{
+    minutes: number;
+    seconds: number;
+  } | null>(null);
+
+  const ableToResendFunction = () => {
+    const deadline: any = new Date();
+    deadline.setSeconds(deadline.getSeconds() + 60);
+    const intervalId = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = deadline - now;
+
+      if (distance <= 0) {
+        clearInterval(intervalId);
+      } else {
+        const remaining = {
+          minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+          seconds: Math.floor((distance % (1000 * 60)) / 1000),
+        };
+        setRemainingTime(remaining);
+      }
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  };
 
   useEffect(() => {
     refetchSelf();
@@ -242,11 +266,16 @@ export const ValidateToken = ({
       <Grid container justifyContent="flex-end">
         <Button
           type="link"
-          disabled={!ableToResend}
           onClick={() => {
             ValidateToken();
+            ableToResendFunction();
           }}
+          disabled={
+            remainingTime?.seconds && ((remainingTime?.seconds >= 0) as any)
+          }
         >
+          {remainingTime &&
+            `${remainingTime.minutes}: ${remainingTime.seconds} `}
           {t("modal.resend_token_by_sms")}
         </Button>
       </Grid>
@@ -332,11 +361,13 @@ export const ValidateToken = ({
           <Grid container justifyContent="flex-end">
             <Button
               type="link"
-              disabled={!ableToResend}
               onClick={() => {
                 ValidateToken();
+                ableToResendFunction();
               }}
+              disabled={remainingTime?.seconds && ((remainingTime?.seconds >= 0) as any)}
             >
+              {remainingTime && `${remainingTime.minutes} `}
               {t("modal.resend_token_by_sms")}
             </Button>
           </Grid>

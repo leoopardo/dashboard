@@ -274,7 +274,7 @@ export const NewUserModal = ({
           style={{ margin: 10 }}
           rules={[
             {
-              required: !body.group_id && action === "create" ? true : false,
+              required: !body.group_id ? true : false,
               message: t("input.required", { field: t("input.group") }) || "",
             },
           ]}

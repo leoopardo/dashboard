@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Input } from "antd";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface SearchInterface {
   query: any;
@@ -11,6 +12,7 @@ interface SearchInterface {
 
 export const Search = ({ query, setQuery, searchOption }: SearchInterface) => {
   const [search, setSearch] = useState<string>("");
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (!query[searchOption as any] && search) {
@@ -21,10 +23,9 @@ export const Search = ({ query, setQuery, searchOption }: SearchInterface) => {
   return (
     <Input.Search
       size="large"
-      placeholder="Pesquisa"
+      placeholder={`${t("table.search")}`}
       value={search}
       disabled={!searchOption}
-      
       style={{ width: "100%" }}
       onChange={(event) => {
         setSearch(event.target.value);

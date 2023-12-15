@@ -29,11 +29,12 @@ import {
 import moment from "moment";
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useMediaQuery } from "react-responsive";
 import secureLocalStorage from "react-secure-storage";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import { Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { TabsTable } from "./components/TabsTable";
 import { BankCard } from "./components/bankCard";
@@ -44,7 +45,6 @@ import { MerchantBalance } from "./components/merchantBalance";
 import { MerchantsBalance } from "./components/merchantsBalance";
 import { OrganizationBalance } from "./components/organizationBalance";
 import { ValuesTable } from "./components/valuesTable";
-import { useMediaQuery } from "react-responsive";
 
 const INITIAL_QUERY = {
   start_date: moment(new Date())
@@ -153,7 +153,7 @@ export const Dashboard = () => {
           style={{
             margin: -28,
             paddingTop: 20,
-          paddingBottom: 16,
+            paddingBottom: 16,
             paddingLeft: 6,
             display: "flex",
             justifyContent: "center",
@@ -263,66 +263,87 @@ export const Dashboard = () => {
                 </Col>
               ) : (
                 <Col span={24}>
-                  <Swiper
-                    data-test-id="swiper-1"
-                    slidesPerView={6}
-                    spaceBetween={8}
-                    pagination={{
-                      clickable: true,
-                    }}
-                    navigation={true}
-                    modules={[Autoplay, Pagination, Navigation]}
-                    className="mySwiper"
-                    style={{ height: 260, paddingLeft: 32, paddingRight: 32 }}
-                    loop={true}
-                    autoplay={{
-                      delay: 2500,
-                      disableOnInteraction: false,
-                      pauseOnMouseEnter: true,
-                    }}
-                    breakpoints={{
-                      300: {
-                        slidesPerView: 1,
-                        spaceBetween: 8,
-                      },
-                      640: {
-                        slidesPerView: 2,
-                        spaceBetween: 8,
-                      },
-                      950: {
-                        slidesPerView: 3,
-                        spaceBetween: 8,
-                      },
-                      1024: {
-                        slidesPerView: 5,
-                        spaceBetween: 8,
-                      },
-                      1400: {
-                        slidesPerView: 6,
-                        spaceBetween: 8,
-                      },
-                      1700: {
-                        slidesPerView: 7,
-                        spaceBetween: 8,
-                      },
-                      2000: {
-                        slidesPerView: 8,
-                        spaceBetween: 8,
-                      },
-                    }}
-                  >
-                    {bankListData?.itens
-                      .filter((b) => b?.status === true)
-                      .map((bank: any, index) => (
-                        <SwiperSlide key={bank?.id}>
-                          <BankCard
-                            bank={bank}
-                            key={bank?.id}
-                            data-test-id={`bank-${index}`}
-                          />
-                        </SwiperSlide>
-                      ))}
-                  </Swiper>
+                  {isMobile ? (
+                    <Row gutter={[8, 8]}>
+                      {bankListData?.itens
+                        .filter((b) => b?.status === true)
+                        .map((bank: any, index) => (
+                          <Col span={24}>
+                            <BankCard
+                              bank={bank}
+                              key={bank?.id}
+                              data-test-id={`bank-${index}`}
+                            />
+                          </Col>
+                        ))}
+                    </Row>
+                  ) : (
+                    <Swiper
+                      data-test-id="swiper-1"
+                      slidesPerView={6}
+                      spaceBetween={8}
+                      pagination={{
+                        clickable: true,
+                      }}
+                      modules={[Autoplay, Pagination]}
+                      draggable
+                      grabCursor
+                      className="mySwiper"
+                      style={{
+                        height: 260,
+                        paddingLeft: 24,
+                        paddingRight: 24,
+                      }}
+                      loop={true}
+                      autoplay={{
+                        delay: 2500,
+                        disableOnInteraction: false,
+                        pauseOnMouseEnter: true,
+                      }}
+                      breakpoints={{
+                        300: {
+                          slidesPerView: 1,
+                          spaceBetween: 8,
+                        },
+                        640: {
+                          slidesPerView: 2,
+                          spaceBetween: 8,
+                        },
+                        950: {
+                          slidesPerView: 3,
+                          spaceBetween: 8,
+                        },
+                        1024: {
+                          slidesPerView: 5,
+                          spaceBetween: 8,
+                        },
+                        1400: {
+                          slidesPerView: 5,
+                          spaceBetween: 8,
+                        },
+                        1700: {
+                          slidesPerView: 7,
+                          spaceBetween: 8,
+                        },
+                        2000: {
+                          slidesPerView: 8,
+                          spaceBetween: 8,
+                        },
+                      }}
+                    >
+                      {bankListData?.itens
+                        .filter((b) => b?.status === true)
+                        .map((bank: any, index) => (
+                          <SwiperSlide key={bank?.id}>
+                            <BankCard
+                              bank={bank}
+                              key={bank?.id}
+                              data-test-id={`bank-${index}`}
+                            />
+                          </SwiperSlide>
+                        ))}
+                    </Swiper>
+                  )}
                 </Col>
               )}
             </Row>
