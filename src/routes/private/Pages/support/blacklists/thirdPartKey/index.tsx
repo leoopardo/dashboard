@@ -126,6 +126,7 @@ export const ThirdPartKeyBlacklist = () => {
             data={ThirdPartKey}
             items={ThirdPartKey?.items}
             error={ThirdPartKeyError}
+            refetch={refetchThirdPartKey}
             columns={[
               { name: "pix_key", type: "id" },
               { name: "pix_key_type", type: "text", sort: true },

@@ -2728,6 +2728,7 @@ export const SidebarNavigation = () => {
                   null,
                   false,
                   undefined,
+                  {},
                   <Link
                     onClickCapture={() => {
                       setCollapsed(false);
