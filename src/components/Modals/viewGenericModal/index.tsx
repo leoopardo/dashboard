@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { DownloadOutlined } from "@ant-design/icons";
 import { defaultTheme } from "@src/styles/defaultTheme";
-import dayjs from "dayjs";
 import {
   Button,
   Descriptions,
@@ -158,7 +157,11 @@ export const ViewModal = ({
                       textAlign: "center",
                     }}
                   >
-                    {dayjs(sortItems[key]).add(3, 'h').format("DD/MM/YYYY HH:mm:ss")}
+                    {`${new Date(
+                      sortItems[key]
+                    ).toLocaleDateString()}  ${new Date(
+                      sortItems[key]
+                    ).toLocaleTimeString()}`}
                   </Descriptions.Item>
                 );
 
