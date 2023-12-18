@@ -90,7 +90,6 @@ export const TransferBetweenAccountsReports = () => {
 
       <Grid container style={{ marginTop: "15px" }}>
         <Grid item xs={12}>
-          {" "}
           <CustomTable
             query={query}
             setCurrentItem={setCurrentItem}
@@ -110,6 +109,7 @@ export const TransferBetweenAccountsReports = () => {
                 onClick: () => setIsViewModalOpen(true),
               },
             ]}
+            refetch={refetchTransferBetweenAccountsReportsData}
             data={TransferBetweenAccountsReportsData}
             items={TransferBetweenAccountsReportsData?.items}
             error={TransferBetweenAccountsReportsDataError}

@@ -316,6 +316,7 @@ export const MerchantManual = () => {
             loading={isMerchantMovimentsDataFetching}
             refetch={() => refetchMerchantMovimentsData()}
             disableActions
+            actions={[{}]}
             label={[
               "merchant_name",
               "category_name",
