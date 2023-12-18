@@ -261,6 +261,7 @@ export const AggregatorUsers = () => {
                 },
               },
             ]}
+            refetch={refetchUsersData}
             data={UsersData}
             items={UsersData?.items}
             error={UsersDataError}

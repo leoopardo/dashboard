@@ -240,11 +240,11 @@ export const Persons = () => {
 
       <Grid container style={{ marginTop: "15px" }}>
         <Grid item xs={12}>
-          {" "}
           <CustomTable
             query={query}
             setCurrentItem={setCurrentItem}
             setQuery={setQuery}
+            refetch={refetchPersonsData}
             actions={[
               {
                 label: "details",
