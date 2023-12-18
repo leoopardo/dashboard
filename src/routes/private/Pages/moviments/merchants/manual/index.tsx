@@ -93,12 +93,6 @@ export const MerchantManual = () => {
     refetchMerchantMovimentsData();
   }, [query]);
 
-  // const onSubmitIn = () => {
-  //   setOperationInIOpen(false);
-  //   setOperationOutOpen(false);
-  //   setOperationInTokenModalOpen(true);
-  // };
-
   useEffect(() => {
     setOperationInBody((state) => ({ ...state, validation_token: tokenState }));
   }, [tokenState]);
@@ -322,6 +316,7 @@ export const MerchantManual = () => {
             loading={isMerchantMovimentsDataFetching}
             refetch={() => refetchMerchantMovimentsData()}
             disableActions
+            actions={[{}]}
             label={[
               "merchant_name",
               "category_name",

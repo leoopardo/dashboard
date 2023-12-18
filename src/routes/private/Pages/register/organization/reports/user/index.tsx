@@ -107,6 +107,7 @@ export const OrganizationUserReports = () => {
                 onClick: () => setIsViewModalOpen(true),
               },
             ]}
+            refetch={refetchUsersReportsData}
             data={UsersReportsData}
             items={UsersReportsData?.items}
             error={UsersReportsDataError}

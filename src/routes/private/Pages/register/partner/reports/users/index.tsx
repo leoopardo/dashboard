@@ -90,7 +90,6 @@ export const PartnerUsersReports = () => {
 
       <Grid container style={{ marginTop: "15px" }}>
         <Grid item xs={12}>
-          {" "}
           <CustomTable
             query={query}
             setCurrentItem={setCurrentItem}
@@ -110,6 +109,7 @@ export const PartnerUsersReports = () => {
                 onClick: () => setIsViewModalOpen(true),
               },
             ]}
+            refetch={refetchPartnerUsersReportsData}
             data={PartnerUsersReportsData}
             items={PartnerUsersReportsData?.items}
             error={PartnerUsersReportsDataError}

@@ -296,6 +296,7 @@ export const Partners = () => {
                 },
               },
             ]}
+            refetch={refetchPartnersData}
             data={PartnersData}
             items={PartnersData?.items}
             error={PartnersDataError}

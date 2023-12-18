@@ -270,7 +270,6 @@ export const Operators = () => {
 
       <Grid container style={{ marginTop: "15px" }}>
         <Grid item xs={12}>
-          {" "}
           <CustomTable
             query={query}
             setCurrentItem={setCurrentItem}
@@ -291,6 +290,7 @@ export const Operators = () => {
                 },
               },
             ]}
+            refetch={refetchOperatorData}
             data={OperatorData}
             items={OperatorData?.items}
             error={OperatorDataError}

@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import axios from "axios";
+import { api } from "@src/config/api";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import secureLocalStorage from "react-secure-storage";
@@ -12,8 +12,8 @@ export function useGetPreManualUploads(params: any) {
   >(
     "PreManualUploads",
     async () => {
-      const response = await axios.get(
-        "http://192.168.10.14:8081/v4/core/pre-entry-account/bulk/create/reports",
+      const response = await api.get(
+        "/core/pre-entry-account/bulk/create/reports",
         {
           params,
           headers: {

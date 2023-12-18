@@ -90,7 +90,6 @@ export const OrganizationManualReports = () => {
 
       <Grid container style={{ marginTop: "15px" }}>
         <Grid item xs={12}>
-          {" "}
           <CustomTable
             query={query}
             setCurrentItem={setCurrentItem}
@@ -111,6 +110,7 @@ export const OrganizationManualReports = () => {
                 onClick: () => setIsViewModalOpen(true),
               },
             ]}
+            refetch={refetchOrganizationManualReportsData}
             data={OrganizationManualReportsData}
             items={OrganizationManualReportsData?.items}
             error={OrganizationManualReportsDataError}

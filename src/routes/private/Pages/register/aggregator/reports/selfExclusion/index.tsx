@@ -90,7 +90,6 @@ export const SelfExclusionReports = () => {
 
       <Grid container style={{ marginTop: "15px" }}>
         <Grid item xs={12}>
-          {" "}
           <CustomTable
             query={query}
             setCurrentItem={setCurrentItem}
@@ -111,6 +110,7 @@ export const SelfExclusionReports = () => {
                 onClick: () => setIsViewModalOpen(true),
               },
             ]}
+            refetch={refetchSelfExclusionReportsData}
             data={SelfExclusionReportsData}
             items={SelfExclusionReportsData?.items}
             error={SelfExclusionReportsDataError}

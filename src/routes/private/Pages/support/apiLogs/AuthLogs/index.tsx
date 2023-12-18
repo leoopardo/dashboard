@@ -85,6 +85,7 @@ export const AuthLogs = () => {
             items={AuthLogs?.items}
             error={AuthLogsError}
             removeTotal
+            refetch={refetchAuthLogs}
             columns={[
               { name: "_id", type: "id", sort: true },
               { name: "merchant_name", type: "text" },

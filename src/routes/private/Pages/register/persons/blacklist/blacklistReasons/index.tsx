@@ -136,6 +136,7 @@ export const PersonBlacklistReasons = () => {
             columns={columns}
             loading={reasonsIsFetching}
             label={["cpf", "merchant_name"]}
+            refetch={refetchReasons}
             actions={[
               {
                 icon: <DeleteOutlined style={{ fontSize: 22 }} />,

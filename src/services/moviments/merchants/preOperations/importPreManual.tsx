@@ -1,4 +1,4 @@
-import axios from "axios";
+import { api } from "@src/config/api";
 import { useMutation } from "react-query";
 import secureLocalStorage from "react-secure-storage";
 
@@ -8,8 +8,8 @@ export function useImportPreManualTransaction(
   const { isLoading, error, mutate, isSuccess } = useMutation<
     { content: string } | null | undefined
   >("importPreManual", async () => {
-    const response = await axios.post(
-      "http://192.168.10.14:8081/v4/core/pre-entry-account/bulk/create",
+    const response = await api.post(
+      "/core/pre-entry-account/bulk/create",
       body,
       {
         headers: {
