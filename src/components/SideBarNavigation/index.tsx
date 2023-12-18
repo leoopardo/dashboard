@@ -825,18 +825,27 @@ export const SidebarNavigation = () => {
                 {t("menus.merchant_users")}
               </Link>
             ),
-            // getItem(
-            //   "manual_entry_category",
-            //   null,
-            //   null,
-            //   false,
-            //   undefined,
-            //   {
-            //     display: permissions?.register?.merchant?.release_category?.menu
-            //       ? undefined
-            //       : "none",
-            //   }
-            // ),
+            getItem(
+              "manual_entry_category",
+              null,
+              null,
+              false,
+              undefined,
+              {
+                display: permissions?.register?.merchant?.release_category?.menu
+                  ? undefined
+                  : "none",
+              },
+              <Link
+              onClickCapture={() => {
+                setCollapsed(false);
+                handleChangeSidebar(false);
+              }}
+              to={"/register/merchant/manual_entry_category"}
+            >
+              {t("menus.manual_entry_category")}
+            </Link>
+            ),
             getItem(
               "fee_plans",
               null,
