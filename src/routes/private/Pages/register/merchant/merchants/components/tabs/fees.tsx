@@ -128,6 +128,22 @@ export const FeesTab = (props: { id?: string }) => {
   // }, [body, bodyUpdate]);
 
   useEffect(() => {
+    // Remove focus from input when scroll
+    const handleWheel = () => {
+      const activeElement = document.activeElement as HTMLElement;
+      if (activeElement?.tagName.toLowerCase() === 'input') {
+        activeElement?.blur();
+      }
+    };
+
+    document.addEventListener('wheel', handleWheel);
+
+    return () => {
+      document.removeEventListener('wheel', handleWheel);
+    };
+  }, []); 
+
+  useEffect(() => {
     refetchMerchantFeesData();
   }, [UpdateIsSuccess]);
 
@@ -240,6 +256,7 @@ export const FeesTab = (props: { id?: string }) => {
               size="large"
               type="number"
               step={0.01}
+              // eslint-disable-next-line @typescript-eslint/no-empty-function
               name="cashin_pix_fee_percent"
               disabled={body?.cashin_pix_fee_type === "VALUE"}
               value={body?.cashin_pix_fee_percent}
