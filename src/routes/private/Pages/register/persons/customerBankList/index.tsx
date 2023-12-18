@@ -179,8 +179,11 @@ export const CostumerBanks = () => {
             items={clientbankListData?.items}
             error={clientbankListError}
             columns={columns}
+            refetch={refetchClientBankList}
             loading={isClientBankListFetching}
             label={["bank_name", "ispb"]}
+            disableActions
+            actions={[{}]}
           />
         </Grid>
       </Grid>

@@ -194,6 +194,7 @@ export const BankBlacklist = () => {
               { name: "user_name", type: "text" },
               { name: "createdAt", type: "date", sort: true },
             ]}
+            refetch={refetchBankBlacklist}
             loading={isBankBlacklistFetching}
             actions={
               permissions.support.blacklist.banks.support_blacklist_bank_delete

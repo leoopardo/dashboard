@@ -263,6 +263,7 @@ export const OperatorUsers = () => {
                 },
               },
             ]}
+            refetch={refetchUsersData}
             data={UsersData}
             items={UsersData?.items}
             error={UsersDataError}

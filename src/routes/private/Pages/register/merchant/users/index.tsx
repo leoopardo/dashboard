@@ -225,6 +225,7 @@ export const MerchantUser = () => {
             error={UsersDataError}
             columns={columns}
             loading={isUsersDataFetching}
+            refetch={refetchUsersData}
             label={[
               "name",
               "permission_group.name",

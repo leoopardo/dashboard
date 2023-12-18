@@ -95,7 +95,6 @@ export const MerchantBlacklistReports = () => {
 
       <Grid container style={{ marginTop: "15px" }}>
         <Grid item xs={12}>
-          {" "}
           <CustomTable
             query={query}
             setCurrentItem={setCurrentItem}
@@ -117,6 +116,7 @@ export const MerchantBlacklistReports = () => {
                 disabled: () => type !== 1 && type !== 2,
               },
             ]}
+            refetch={refetchMerchantBlacklistReportsData}
             data={MerchantBlacklistReportsData}
             items={MerchantBlacklistReportsData?.items}
             error={MerchantBlacklistReportsDataError}

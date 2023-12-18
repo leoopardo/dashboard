@@ -412,6 +412,7 @@ export const MerchantView = () => {
             checkbox
             setSelectedRows={setSelectedItems}
             selectedKeys={selectedItems}
+            refetch={refetchMerchantData}
             actions={[
               permissions.register.merchant.merchant.merchant_list && {
                 label: "details",

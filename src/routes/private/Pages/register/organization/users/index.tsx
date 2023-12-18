@@ -249,6 +249,7 @@ export const OrganizationUser = () => {
               },
             ]}
             data={UsersData}
+            refetch={refetchUsersData}
             items={UsersData?.items}
             error={UsersDataError}
             columns={[

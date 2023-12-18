@@ -300,6 +300,7 @@ export const Aggregators = () => {
                 },
               },
             ]}
+            refetch={refetchAggregatorsData}
             data={AggregatorsData}
             items={AggregatorsData?.items}
             error={AggregatorsDataError}

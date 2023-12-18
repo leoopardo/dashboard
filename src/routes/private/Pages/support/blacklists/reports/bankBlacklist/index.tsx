@@ -82,7 +82,6 @@ export const BankBlackistReports = () => {
 
       <Grid container style={{ marginTop: "15px" }}>
         <Grid item xs={12}>
-          {" "}
           <CustomTable
             query={query}
             setCurrentItem={setCurrentItem}
@@ -98,6 +97,7 @@ export const BankBlackistReports = () => {
                 disabled: (item) => item.status !== "COMPLETED",
               },
             ]}
+            refetch={refetchBankBlackistReportsData}
             data={BankBlackistReportsData}
             items={BankBlackistReportsData?.items}
             error={BankBlackistReportsDataError}

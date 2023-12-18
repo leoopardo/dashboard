@@ -300,6 +300,8 @@ export const OrgonizationManual = () => {
             items={OrganizationMovimentsData?.items}
             error={OrganizationMovimentsDataError}
             refetch={refetchOrganizationMovimentsData}
+            disableActions
+            actions={[{}]}
             columns={[
               { name: "_id", type: "id", sort: true },
               { name: "category_name", type: "text", sort: true },
@@ -310,7 +312,6 @@ export const OrgonizationManual = () => {
               { name: "status", type: "status" },
             ]}
             loading={isOrganizationMovimentsDataFetching}
-            
             label={[
               "user_name",
               "category_name",

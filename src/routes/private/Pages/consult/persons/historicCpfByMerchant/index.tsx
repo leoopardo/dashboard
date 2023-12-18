@@ -137,6 +137,7 @@ export const HistoricCpfByMerchant = () => {
             columns={columns}
             loading={isHistoricCpfByMerchantDataFetching}
             label={["merchant_name"]}
+            refetch={refetchHistoricCpfByMerchantData}
             actions={[
               {
                 label: "details",

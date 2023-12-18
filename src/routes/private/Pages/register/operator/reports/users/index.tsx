@@ -89,7 +89,6 @@ export const OperatorUsersReports = () => {
 
       <Grid container style={{ marginTop: "15px" }}>
         <Grid item xs={12}>
-          {" "}
           <CustomTable
             query={query}
             setCurrentItem={setCurrentItem}
@@ -109,6 +108,7 @@ export const OperatorUsersReports = () => {
                 onClick: () => setIsViewModalOpen(true),
               },
             ]}
+            refetch={refetchOperatorUsersReportsData}
             data={OperatorUsersReportsData}
             items={OperatorUsersReportsData?.items}
             error={OperatorUsersReportsDataError}

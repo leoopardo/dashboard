@@ -106,6 +106,7 @@ export const PaidDepositsReports = () => {
                 onClick: () => setIsViewModalOpen(true),
               },
             ]}
+            refetch={refetchPaidDepositsReportsData}
             data={PaidDepositsReportsData}
             items={PaidDepositsReportsData?.items}
             error={PaidDepositsReportsDataError}

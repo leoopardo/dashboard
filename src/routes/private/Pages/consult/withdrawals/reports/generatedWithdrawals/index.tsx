@@ -91,7 +91,6 @@ export const GeneratedWithdrawalsReports = () => {
 
       <Grid container style={{ marginTop: "15px" }}>
         <Grid item xs={12}>
-          {" "}
           <CustomTable
             query={query}
             setCurrentItem={setCurrentItem}
@@ -112,6 +111,7 @@ export const GeneratedWithdrawalsReports = () => {
                 onClick: () => setIsViewModalOpen(true),
               },
             ]}
+            refetch={refetchGeneratedWithdrawalsReportsData}
             data={GeneratedWithdrawalsReportsData}
             items={GeneratedWithdrawalsReportsData?.items}
             error={GeneratedWithdrawalsReportsDataError}

@@ -231,6 +231,7 @@ export const PermissionsGroups = () => {
               },
             },
           ]}
+          refetch={refetchPermissionGroupsData}
           data={PermissionGroupsData}
           items={PermissionGroupsData?.permission_groups}
           error={PermissionGroupsDataError}

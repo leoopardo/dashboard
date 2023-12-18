@@ -133,6 +133,7 @@ export const InvalidPixKeyBlacklist = () => {
             data={InvalidPixKey}
             items={InvalidPixKey?.items}
             error={InvalidPixKeyError}
+            refetch={refetchInvalidPixKey}
             columns={[
               { name: "pix_key", type: "id" },
               { name: "last_check", type: "date" },

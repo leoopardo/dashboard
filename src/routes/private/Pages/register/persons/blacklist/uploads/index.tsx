@@ -107,6 +107,7 @@ export const PersonBlacklistUploads = () => {
             data={data}
             items={data?.items}
             error={error}
+            refetch={refetch}
             columns={[
               { name: "_id", type: "id" },
               { name: "created_by_name", type: "text" },

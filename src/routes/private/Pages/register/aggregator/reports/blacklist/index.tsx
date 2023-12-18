@@ -90,7 +90,6 @@ export const AggregatorsBlacklistReports = () => {
 
       <Grid container style={{ marginTop: "15px" }}>
         <Grid item xs={12}>
-          {" "}
           <CustomTable
             query={query}
             setCurrentItem={setCurrentItem}
@@ -111,6 +110,7 @@ export const AggregatorsBlacklistReports = () => {
                 onClick: () => setIsViewModalOpen(true),
               },
             ]}
+            refetch={refetchAggregatorBlacklistsReportsData}
             data={AggregatorBlacklistsReportsData}
             items={AggregatorBlacklistsReportsData?.items}
             error={AggregatorBlacklistsReportsDataError}

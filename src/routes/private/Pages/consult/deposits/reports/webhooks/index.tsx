@@ -36,6 +36,7 @@ export const DepositsWebhooks = () => {
 
   useEffect(() => {
     refetchDepositsWebhooks();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query]);
 
   return (
@@ -96,6 +97,7 @@ export const DepositsWebhooks = () => {
                     data={depositsWebhooks}
                     items={depositsWebhooks?.items}
                     error={depositsWebhooksError}
+                    refetch={refetchDepositsWebhooks}
                     columns={[
                       { name: "_id", type: "id" },
                       { name: "user_name", type: "text" },
@@ -140,6 +142,7 @@ export const DepositsWebhooks = () => {
                     data={depositsWebhooks}
                     items={depositsWebhooks?.items}
                     error={depositsWebhooksError}
+                    refetch={refetchDepositsWebhooks}
                     columns={[
                       { name: "_id", type: "id" },
                       { name: "user_name", type: "text" },
