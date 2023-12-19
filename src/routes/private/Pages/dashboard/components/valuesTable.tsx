@@ -156,7 +156,7 @@ export const ValuesTable = ({ query, refs }: ValuesTableInterface) => {
             <Col span={24} key={item.key}>
               <Card
                 title={t(`table.${item.type}`)}
-                bodyStyle={{ display: "flex", flexWrap: "wrap", padding: 8 }}
+                bodyStyle={{ display: "block", flexWrap: "wrap", padding: 8 }}
                 headStyle={{ padding: 8 }}
               >
                 <Typography.Title
