@@ -19,6 +19,7 @@ export interface IOrganizationUpdateConfig {
   cash_in_max_value_receive_by_different_payer?: number;
   cash_out_max_value?: number;
   operation_type?: string;
+  accept_cnpj_cash_in?: boolean;
   btg_merchant_customer_id?: string;
   under_age_verify?: boolean;
   fastpix_in_permission?: boolean;

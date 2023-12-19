@@ -462,7 +462,8 @@
     "label_name": "Nome do banco",
     "v3_id": "ID V3",
     "position": "Cargo",
-    "search": "Pesquisar"
+    "search": "Pesquisar",
+    "allows_generate_qrcode": "Permite gerar QRCode PJ"
   },
   "table": {
     "id": "ID",
