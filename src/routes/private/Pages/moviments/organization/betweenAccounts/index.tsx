@@ -102,7 +102,7 @@ export const OrganizationTransfersBetweenAccounts = () => {
             <Statistic
               title={t("table.processing")}
               value={moneyFormatter(
-                TransferBetweenAccountsData?.total_processing || 0
+                199.989
               )}
               precision={2}
               valueStyle={{ color: defaultTheme.colors.processing }}
