@@ -552,7 +552,7 @@ export const Dashboard = () => {
                 </Typography>
               </Typography>
             ),
-            target: () => ref1.current,
+            target: !isMobile ? () => ref1.current : null,
             nextButtonProps: {
               onClick: () => setActiveKey("2"),
             },
