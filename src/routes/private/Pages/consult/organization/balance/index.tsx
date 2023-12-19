@@ -4,6 +4,7 @@ import { useGetOrganizationBalance } from "@src/services/consult/organization/ba
 import { Descriptions, Divider, Spin } from "antd";
 import { useTranslation } from "react-i18next";
 import { OrganizationBalance as OrganizationBalanceTotals } from "../../../dashboard/components/organizationBalance";
+import { moneyFormatter } from "@src/utils/moneyFormatter";
 
 export const OrganizationBalance = () => {
   const { OrganizationBalance, isOrganizationBalanceFetching } =
@@ -44,10 +45,7 @@ export const OrganizationBalance = () => {
                 textAlign: "center",
               }}
             >
-              {new Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(OrganizationBalance?.in || 0)}
+              {moneyFormatter(OrganizationBalance?.in || 0)}
             </Descriptions.Item>
             <Descriptions.Item
               key={"out"}
@@ -59,10 +57,7 @@ export const OrganizationBalance = () => {
                 textAlign: "center",
               }}
             >
-              {new Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(OrganizationBalance?.out || 0)}
+              {moneyFormatter(OrganizationBalance?.out || 0)}
             </Descriptions.Item>
 
             <Descriptions.Item
@@ -135,10 +130,7 @@ export const OrganizationBalance = () => {
                 textAlign: "center",
               }}
             >
-              {new Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(OrganizationBalance?.pix_amount_fee || 0)}
+              {moneyFormatter(OrganizationBalance?.pix_amount_fee || 0)}
             </Descriptions.Item>
             <Descriptions.Item
               key={"withdraw_amount_fee"}
@@ -150,10 +142,7 @@ export const OrganizationBalance = () => {
                 textAlign: "center",
               }}
             >
-              {new Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(OrganizationBalance?.withdraw_amount_fee || 0)}
+              {moneyFormatter(OrganizationBalance?.withdraw_amount_fee || 0)}
             </Descriptions.Item>
             <Descriptions.Item
               key={"refund_amount_fee"}
@@ -165,10 +154,7 @@ export const OrganizationBalance = () => {
                 textAlign: "center",
               }}
             >
-              {new Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(OrganizationBalance?.refund_amount_fee || 0)}
+              {moneyFormatter(OrganizationBalance?.refund_amount_fee || 0)}
             </Descriptions.Item>
           </Descriptions>
         </Grid>

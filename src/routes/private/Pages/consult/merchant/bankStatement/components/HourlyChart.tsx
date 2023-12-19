@@ -1,5 +1,6 @@
 import { MerchantHourlyItem } from "@src/services/types/consult/merchant/bankStatement";
 import { defaultTheme } from "@src/styles/defaultTheme";
+import { moneyFormatter } from "@src/utils/moneyFormatter";
 import {
   CategoryScale,
   Chart as ChartJS,
@@ -96,10 +97,7 @@ export function MerchantHourlyLineChart({
             data: items?.map((item) => item.value_in),
             tooltip: {
               valueFormatter: (value: number) =>
-              new Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(value ?? 0),
+              moneyFormatter(value ?? 0),
             },
           },
           {
@@ -109,10 +107,7 @@ export function MerchantHourlyLineChart({
             data: items?.map((item) => item.value_out),
             tooltip: {
               valueFormatter: (value: number) =>
-              new Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(value ?? 0),
+              moneyFormatter(value ?? 0),
             },
           },
         ],
