@@ -471,6 +471,33 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
               </Form.Item>
             </Col>
 
+            <Col xs={{ span: 24 }} md={{ span: 6 }}>
+              <Form.Item
+                label={t("input.allows_generate_qrcode")}
+                name="accept_cnpj_cash_in"
+              >
+                <Select
+                data-test-id="accept_cnpj_cash_in"
+                  size="large"
+                  options={[
+                    { value: true, label: t('table.true') },
+                    { value: false, label: t('table.false') },
+                  ]}
+                  value={bodyUpdate?.accept_cnpj_cash_in}
+                  onChange={(value) => {
+                    setBody((state) => ({
+                      ...state,
+                      accept_cnpj_cash_in: value,
+                    }));
+                    setBodyUpdate((state) => ({
+                      ...state,
+                      accept_cnpj_cash_in: value,
+                    }));
+                  }}
+                />
+              </Form.Item>
+              </Col>
+
             <Col span={24} />
             <Col span={24}>
               <Divider orientation="left">
