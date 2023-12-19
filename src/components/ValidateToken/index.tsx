@@ -175,6 +175,19 @@ export const ValidateToken = ({
   }, [success, error, ValidatePhoneSuccess, ValidatePhoneError]);
 
   useEffect(() => {
+    if (!Self?.phone_validated && tokenState.length === 6) {
+      setLoading(true);
+      setTimeout(() => {
+        ValidatePhone();
+        setValidationPhoneSent(false);
+        setValidationTokenSent(false);
+        setValidateBody({ action, cellphone: undefined });
+      }, 1000);
+      setTimeout(() => {
+        setLoading(false);
+        setTokenState("");
+      }, 2300);
+    }
     if (tokenState.length === 6) {
       setLoading(true);
       setTimeout(() => {
@@ -365,7 +378,9 @@ export const ValidateToken = ({
                 ValidateToken();
                 ableToResendFunction();
               }}
-              disabled={remainingTime?.seconds && ((remainingTime?.seconds >= 0) as any)}
+              disabled={
+                remainingTime?.seconds && ((remainingTime?.seconds >= 0) as any)
+              }
             >
               {remainingTime && `${remainingTime.minutes} `}
               {t("modal.resend_token_by_sms")}

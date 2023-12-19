@@ -122,8 +122,8 @@ export const CustomTable = (props: TableProps) => {
           });
       }
     }
-    return act
-  }, [isMobile, t])
+    return act;
+  }, [isMobile, t]);
 
   useEffect(() => {
     if (
@@ -533,15 +533,13 @@ export const CustomTable = (props: TableProps) => {
               dataIndex: column?.name,
               render: (text: string) => (
                 <div style={{ width: "100%", textAlign: "center" }}>
-                  {bankListData?.itens.find(
-                    (bank) => bank?.bank === text
-                  )?.icon_url ? (
+                  {bankListData?.itens.find((bank) => bank?.bank === text)
+                    ?.icon_url ? (
                     <Tooltip placement="topLeft" title={text} arrow>
                       <Avatar
                         src={
                           bankListData?.itens.find(
-                            (bank) =>
-                              bank?.bank === text
+                            (bank) => bank?.bank === text
                           )?.icon_url ?? null
                         }
                         size="large"
@@ -1264,6 +1262,7 @@ export const CustomTable = (props: TableProps) => {
                       ? props?.data?.limit * props?.data?.page
                       : props?.data?.limit * props?.data?.page + 1
                     : props?.data?.total,
+                  showSizeChanger: true,
 
                   /* onChange: (page) => {
                   props.setQuery((state: any) => ({ ...state, page }));

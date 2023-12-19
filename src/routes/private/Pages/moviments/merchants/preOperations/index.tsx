@@ -469,7 +469,7 @@ export const MerchantPreManual = () => {
             setIsConfirmOpen={setConfirmDelete}
             itemToAction={currentItem?._id}
             onConfirmAction={() => deletePreManualTransactionMutate()}
-            removeTotal
+            
             label={["user_name", "type"]}
           />
         </Grid>
