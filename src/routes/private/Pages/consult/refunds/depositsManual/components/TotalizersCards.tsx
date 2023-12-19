@@ -9,6 +9,7 @@ import {
   refundDepositsQuery,
 } from "../../../../../../../services/types/consult/refunds/refundsDeposits.interface";
 import { defaultTheme } from "../../../../../../../styles/defaultTheme";
+import { moneyFormatter } from "@src/utils/moneyFormatter";
 
 interface TotalizersInterface {
   data: refundDepositTotal | null | undefined;
@@ -52,10 +53,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
                   </span>
                 </>
               }
-              value={new Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(props?.data?.refunded_value || 0)}
+              value={moneyFormatter(props?.data?.refunded_value || 0)}
               precision={2}
               valueStyle={{
                 color: defaultTheme.colors.success,
@@ -95,10 +93,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
                   </span>
                 </>
               }
-              value={new Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(props?.data?.paid_to_merchant_value || 0)}
+              value={moneyFormatter(props?.data?.paid_to_merchant_value || 0)}
               precision={2}
               valueStyle={{
                 color: defaultTheme.colors.success,
@@ -138,10 +133,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
                   </span>
                 </>
               }
-              value={new Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(props?.data?.error_value || 0)}
+              value={moneyFormatter(props?.data?.error_value || 0)}
               precision={2}
               valueStyle={{
                 color: defaultTheme.colors.error,
@@ -180,10 +172,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
                   )}
                 </span>
               </>}
-              value={new Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(props?.data?.processing_value || 0)}
+              value={moneyFormatter(props?.data?.processing_value || 0)}
               precision={2}
               valueStyle={{
                 color: defaultTheme.colors.processing,
@@ -220,10 +209,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
                   )}
                 </span>
               </>}
-              value={new Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(props?.data?.waiting_value || 0)}
+              value={moneyFormatter(props?.data?.waiting_value || 0)}
               precision={2}
               valueStyle={{
                 color: defaultTheme.colors.warnning,

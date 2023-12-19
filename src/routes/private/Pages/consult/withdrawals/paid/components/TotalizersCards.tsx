@@ -8,6 +8,7 @@ import {
 } from "../../../../../../../services/types/consult/withdrawals/paidWithdrawals.interface";
 import { defaultTheme } from "../../../../../../../styles/defaultTheme";
 import { useTheme } from "@src/contexts/ThemeContext";
+import { moneyFormatter } from "@src/utils/moneyFormatter";
 
 interface TotalizersInterface {
   data: paidWithdrawalsTotal | null | undefined;
@@ -39,10 +40,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
             <Statistic
               loading={props.loading}
               title={`${t("table.paid")}: ${props?.data?.paid_total || 0}`}
-              value={new Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(props?.data?.paid_value || 0)}
+              value={moneyFormatter(props?.data?.paid_value || 0)}
               precision={2}
               valueStyle={{
                 color: defaultTheme.colors.success,

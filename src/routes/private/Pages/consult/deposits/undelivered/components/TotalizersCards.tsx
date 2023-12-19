@@ -9,6 +9,7 @@ import {
 import { defaultTheme } from "../../../../../../../styles/defaultTheme";
 import { useTheme } from "@src/contexts/ThemeContext";
 import { getPercent } from "@src/utils/getPercent";
+import { moneyFormatter } from "@src/utils/moneyFormatter";
 
 interface TotalizersInterface {
   data: generatedDepositTotal | null | undefined;
@@ -52,10 +53,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
                   </span>
                 </>
               }
-              value={new Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(props?.data?.paid_value || 0)}
+              value={moneyFormatter(props?.data?.paid_value || 0)}
               precision={2}
               valueStyle={{
                 color: defaultTheme.colors.success,
@@ -100,10 +98,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
                   </span>
                 </>
               }
-              value={new Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(props?.data?.refund_value || 0)}
+              value={moneyFormatter(props?.data?.refund_value || 0)}
               precision={2}
               valueStyle={{
                 color: defaultTheme.colors.success,
@@ -144,10 +139,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
                   </span>
                 </>
               }
-              value={new Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(props?.data?.canceled_value || 0)}
+              value={moneyFormatter(props?.data?.canceled_value || 0)}
               precision={2}
               valueStyle={{
                 color: defaultTheme.colors.error,
@@ -188,10 +180,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
                   </span>
                 </>
               }
-              value={new Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(props?.data?.expired_value || 0)}
+              value={moneyFormatter(props?.data?.expired_value || 0)}
               precision={2}
               valueStyle={{
                 color: defaultTheme.colors.error,
@@ -231,10 +220,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
                   </span>
                 </>
               }
-              value={new Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(props?.data?.waiting_value || 0)}
+              value={moneyFormatter(props?.data?.waiting_value || 0)}
               precision={2}
               valueStyle={{
                 color: defaultTheme.colors.warnning,
@@ -275,10 +261,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
                   </span>
                 </>
               }
-              value={new Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(props?.data?.awaiting_refund_value || 0)}
+              value={moneyFormatter(props?.data?.awaiting_refund_value || 0)}
               precision={2}
               valueStyle={{
                 color: defaultTheme.colors.warnning,
