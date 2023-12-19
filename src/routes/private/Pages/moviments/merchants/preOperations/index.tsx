@@ -484,7 +484,6 @@ export const MerchantPreManual = () => {
           filters={[
             "start_date",
             "end_date",
-            "status",
             "aggregator_id",
             "partner_id",
             "merchant_id",
@@ -493,7 +492,6 @@ export const MerchantPreManual = () => {
           ]}
           refetch={refetchPreManualData}
           selectOptions={{
-            status: ["PROCESSING", "SUCCESS", "CANCELED"],
             category_id:
               categoryData?.items?.map((category) => {
                 return { label: category?.name, value: category?.id };
