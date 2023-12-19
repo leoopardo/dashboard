@@ -185,6 +185,7 @@ export const Dashboard = () => {
               ?.report_paybrokers_balance_list
               ? 40
               : 0,
+          transform: permissions?.report?.paybrokers?.bank_balance?.menu ? "" : "translateY(-74px)",
           padding: 15,
         }}
       >
