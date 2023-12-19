@@ -422,7 +422,7 @@ export const Dashboard = () => {
             span={24}
             style={{
               paddingTop: "20px",
-              paddingBottom: user.aggregator_id ? "60px" : undefined,
+              paddingBottom: user.type === 3 ? "60px" : undefined,
             }}
           >
             <Row gutter={[16, 0]}>
