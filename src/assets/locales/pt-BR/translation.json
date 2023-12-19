@@ -357,7 +357,7 @@
     "cash_in_max_value_receive_by_pj": "Valor máximo depósito PJ:",
     "cash_in_receive_by_different_payer": "Depósito de terceiros habilitádo:",
     "cash_in_max_value_receive_by_different_payer": "Valor máximo depósito de terceiros:",
-    "cash_out_max_value": "Valor máximo saques:",
+    "cash_out_max_value": "Valor máximo saques/dia:",
     "cash_in_max_value_by_month": "Valor máximo depósitos por mês:",
     "cash_out_max_value_by_month": "Valor máximo saques por mês:",
     "cash_in_permission": "Depósitos habilitado:",

@@ -318,7 +318,7 @@
     "cash_in_max_value_receive_by_pj": "PJ deposit max value:",
     "cash_in_receive_by_different_payer": "Third-party deposit enabled:",
     "cash_in_max_value_receive_by_different_payer": "Third-party deposit max value:",
-    "cash_out_max_value": "Withdraw max value:",
+    "cash_out_max_value": "Withdraw max value/day:",
     "cash_in_max_value_by_month": "Month deposit max value:",
     "cash_out_max_value_by_month": "Month withdraw max value:",
     "cash_in_permission": "Enabled deposits:",
