@@ -185,6 +185,7 @@ export const Dashboard = () => {
               ?.report_paybrokers_balance_list
               ? 40
               : 0,
+          transform: permissions?.report?.paybrokers?.bank_balance?.menu ? "" : "translateY(-74px)",
           padding: 15,
         }}
       >
@@ -421,7 +422,7 @@ export const Dashboard = () => {
             span={24}
             style={{
               paddingTop: "20px",
-              paddingBottom: user.aggregator_id ? "60px" : undefined,
+              paddingBottom: user.type === 3 ? "60px" : undefined,
             }}
           >
             <Row gutter={[16, 0]}>
