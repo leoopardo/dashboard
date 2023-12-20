@@ -409,7 +409,7 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
                 />
               </Form.Item>
             </Col>
-            <Col xs={{ span: 24 }} md={{ span: 12 }}>
+            <Col xs={{ span: 24 }} md={{ span: 11 }}>
               <Form.Item
                 label={t("input.btg_id")}
                 name="btg_merchant_customer_id"
