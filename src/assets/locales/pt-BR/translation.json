@@ -827,7 +827,7 @@
     "available_balance": "Saldo disponível",
     "operations_value": "Valor de operações",
     "category_id": "Categoria",
-    "refetch_data": "Recarregar dados",
+    "refetch_data": "Recarregar dados da tabela",
     "reference_day": "Data de referência",
     "invalid": "Inválido",
     "download_payment_voucher": "Baixar comprovante",
