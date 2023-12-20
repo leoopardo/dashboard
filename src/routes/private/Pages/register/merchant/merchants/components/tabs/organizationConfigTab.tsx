@@ -183,7 +183,7 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
                 ]}
               >
                 <CurrencyInput
-                data-test-id="cash_out_max_value"
+                  data-test-id="cash_out_max_value"
                   onChangeValue={(_event, originalValue) => {
                     setBodyUpdate((state) => ({
                       ...state,
@@ -308,7 +308,7 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
                 valuePropName="checked"
               >
                 <Switch
-                data-test-id="cash_in_receive_by_different_payer"
+                  data-test-id="cash_in_receive_by_different_payer"
                   checked={bodyUpdate?.cash_in_receive_by_different_payer}
                   onChange={(value) => {
                     setBodyUpdate((state) => ({
@@ -334,7 +334,7 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
                 ]}
               >
                 <CurrencyInput
-                data-test-id="cash_in_max_value_receive_by_different_payer"
+                  data-test-id="cash_in_max_value_receive_by_different_payer"
                   onChangeValue={(_event, originalValue) => {
                     setBodyUpdate((state) => ({
                       ...state,
@@ -371,7 +371,7 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
             >
               <Form.Item label={""} name="pix_refund_fee_min">
                 <Checkbox
-                data-test-id="pix_refund_fee_min"
+                  data-test-id="pix_refund_fee_min"
                   checked={differentPayerUnlimited}
                   onChange={handleDifferentPayerUnlimitedChange}
                 >
@@ -381,13 +381,13 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
             </Col>
           </Row>
           <Row gutter={[8, 8]} align="middle">
-            <Col xs={{ span: 24 }} md={{ span: 6 }}>
+            <Col xs={{ span: 24 }} md={{ span: 12 }}>
               <Form.Item
                 label={t("input.operation_type")}
                 name="operation_type"
               >
                 <Select
-                data-test-id="operation_type"
+                  data-test-id="operation_type"
                   size="large"
                   options={[
                     { value: 1, label: "EFX" },
@@ -409,13 +409,13 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
                 />
               </Form.Item>
             </Col>
-            <Col xs={{ span: 16 }} md={{ span: 6 }}>
+            <Col xs={{ span: 24 }} md={{ span: 11 }}>
               <Form.Item
                 label={t("input.btg_id")}
                 name="btg_merchant_customer_id"
               >
                 <Input
-                data-test-id="btg_merchant_customer_id"
+                  data-test-id="btg_merchant_customer_id"
                   size="large"
                   value={bodyUpdate?.btg_merchant_customer_id}
                   onChange={(e) => {
@@ -431,13 +431,13 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
                 />
               </Form.Item>
             </Col>
-            <Col xs={{ span: 4 }} md={{ span: 4 }}>
+            <Col xs={{ span: 8 }} md={{ span: 8 }}>
               <Form.Item
                 label={t("table.under_age_verify")}
                 name="under_age_verify"
               >
                 <Switch
-                data-test-id="under_age_verify"
+                  data-test-id="under_age_verify"
                   checked={bodyUpdate?.under_age_verify}
                   onChange={(value) => {
                     setBody((state) => ({
@@ -452,10 +452,10 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
                 />
               </Form.Item>
             </Col>
-            <Col xs={{ span: 4 }} md={{ span: 4 }}>
+            <Col xs={{ span: 8 }} md={{ span: 8 }}>
               <Form.Item label={t("table.status")} name="status">
                 <Switch
-                data-test-id="status"
+                  data-test-id="status"
                   checked={bodyUpdate?.status}
                   onChange={(value) => {
                     setBody((state) => ({
@@ -471,19 +471,14 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
               </Form.Item>
             </Col>
 
-            <Col xs={{ span: 24 }} md={{ span: 6 }}>
+            <Col xs={{ span: 8 }} md={{ span: 8 }}>
               <Form.Item
                 label={t("input.allows_generate_qrcode")}
                 name="accept_cnpj_cash_in"
               >
-                <Select
-                data-test-id="accept_cnpj_cash_in"
-                  size="large"
-                  options={[
-                    { value: true, label: t('table.true') },
-                    { value: false, label: t('table.false') },
-                  ]}
-                  value={bodyUpdate?.accept_cnpj_cash_in}
+                <Switch
+                  data-test-id="accept_cnpj_cash_in"
+                  checked={bodyUpdate?.accept_cnpj_cash_in}
                   onChange={(value) => {
                     setBody((state) => ({
                       ...state,
@@ -496,7 +491,7 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
                   }}
                 />
               </Form.Item>
-              </Col>
+            </Col>
 
             <Col span={24} />
             <Col span={24}>
@@ -511,7 +506,7 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
                 valuePropName="checked"
               >
                 <Switch
-                data-test-id="fastpix_in_permission"
+                  data-test-id="fastpix_in_permission"
                   checked={bodyUpdate?.fastpix_in_permission}
                   onChange={(value) => {
                     setBodyUpdate((state) => ({
@@ -528,7 +523,7 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
                 name="fastpix_in_type"
               >
                 <Select
-                data-test-id="fastpix_in_type"
+                  data-test-id="fastpix_in_type"
                   size="large"
                   options={
                     ["FIXED", "FREE"]?.map((item, index) => ({
@@ -550,7 +545,7 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
             <Col xs={{ span: 24 }} md={{ span: 6 }}>
               <Form.Item label={t("table.merchant_hash")}>
                 <Input
-                data-test-id="merchant_hash"
+                  data-test-id="merchant_hash"
                   size="large"
                   name="merchant_hash"
                   value={bodyUpdate?.merchant_hash}
@@ -593,7 +588,7 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
                 name="fastpix_in_min_value"
               >
                 <CurrencyInput
-                data-test-id="fastpix_in_min_value"
+                  data-test-id="fastpix_in_min_value"
                   onChangeValue={(_event, originalValue) => {
                     setBodyUpdate((state) => ({
                       ...state,
@@ -617,7 +612,7 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
                 name="fastpix_in_max_value"
               >
                 <CurrencyInput
-                data-test-id="fastpix_in_max_value"
+                  data-test-id="fastpix_in_max_value"
                   onChangeValue={(_event, originalValue) => {
                     setBodyUpdate((state) => ({
                       ...state,
@@ -643,7 +638,12 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
             style={{ display: "flex", flexDirection: "row-reverse" }}
           >
             <Grid item xs={12} md={3} style={{ marginTop: "50px" }}>
-              <button data-test-id="submit" type="submit" ref={submitRef} style={{ display: "none" }}>
+              <button
+                data-test-id="submit"
+                type="submit"
+                ref={submitRef}
+                style={{ display: "none" }}
+              >
                 Submit
               </button>
               <Popconfirm
@@ -663,7 +663,7 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
                 onCancel={() => setIsConfirmOpen(false)}
               >
                 <Button
-                data-test-id="update"
+                  data-test-id="update"
                   size="large"
                   type="primary"
                   style={{ width: "100%" }}

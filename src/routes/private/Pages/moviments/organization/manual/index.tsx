@@ -29,6 +29,7 @@ import { useTranslation } from "react-i18next";
 import { CreateMovimentModal } from "../../components/createMovimentModal";
 
 export const OrgonizationManual = () => {
+  const { t } = useTranslation();
   const { permissions } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
@@ -59,7 +60,6 @@ export const OrgonizationManual = () => {
   const [operationInBody, setOperationInBody] =
     useState<CreateManualTransaction | null>(null);
 
-  const { t } = useTranslation();
 
   const {
     OrganizationMovimentsData,
@@ -68,7 +68,7 @@ export const OrgonizationManual = () => {
     refetchOrganizationMovimentsData,
   } = useGetOrganizationMoviments(query);
 
-  const { mutate, error, isSuccess } =
+  const { mutate, error, isSuccess, reset } =
     useCreateManualTransaction(operationInBody);
 
   const {
@@ -83,15 +83,23 @@ export const OrgonizationManual = () => {
     page: 1,
   });
 
-  useEffect(() => {
-    refetchOrganizationMovimentsData();
-  }, [query]);
-
   const onSubmitIn = () => {
     setOperationInIOpen(false);
     setOperationOutOpen(false);
     setOperationInTokenModalOpen(true);
   };
+
+  useEffect(() => {
+    refetchOrganizationMovimentsData();
+  }, [query]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      setOperationInBody(null)
+      reset();
+    }
+  }, [isSuccess]);
+
 
   useEffect(() => {
     setOperationInBody((state) => ({ ...state, validation_token: tokenState }));

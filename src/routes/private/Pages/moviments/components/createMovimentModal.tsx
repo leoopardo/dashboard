@@ -38,7 +38,7 @@ export const CreateMovimentModal = ({
       value: undefined,
       description: undefined,
     });
-  }, [type]);
+  }, [type, open]);
 
   const onChange = (event: any) => {
     const { value } = event.target;
