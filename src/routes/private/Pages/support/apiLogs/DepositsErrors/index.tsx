@@ -200,6 +200,7 @@ export const DepositsErrors = () => {
             items={DepositsErrorsLogs?.items}
             error={DepositsErrorsLogsError}
             removeTotal
+            refetch={refetchDepositsErrorsLogs}
             columns={[
               { name: "_id", type: "id", sort: true },
               {

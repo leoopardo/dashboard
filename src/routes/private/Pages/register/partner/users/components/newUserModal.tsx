@@ -395,7 +395,7 @@ export const NewUserModal = ({
         </Form.Item>
         <Form.Item
           data-test-id="confirm-password"
-          label={t(`table.password`)}
+          label={t(`table.confirm_password`)}
           name="confirmPasswprd"
           dependencies={["password"]}
           style={{ margin: 10 }}

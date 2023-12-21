@@ -241,6 +241,7 @@ export const OrganizationCategories = () => {
                 },
               },
             ]}
+            refetch={refetchCategoriesData}
             data={CategoriesData}
             items={CategoriesData?.items}
             error={CategoriesDataError}

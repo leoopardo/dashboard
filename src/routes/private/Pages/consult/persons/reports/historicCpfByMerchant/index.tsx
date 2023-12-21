@@ -95,7 +95,6 @@ export const HistoricCpfByMerchantReports = () => {
 
       <Grid container style={{ marginTop: "15px" }}>
         <Grid item xs={12}>
-          {" "}
           <CustomTable
             query={query}
             setCurrentItem={setCurrentItem}
@@ -116,6 +115,7 @@ export const HistoricCpfByMerchantReports = () => {
                 onClick: () => setIsViewModalOpen(true),
               },
             ]}
+            refetch={refetchReportsHistoricCpfMerchantData}
             data={ReportsHistoricCpfMerchantData}
             items={ReportsHistoricCpfMerchantData?.items}
             error={ReportsHistoricCpfMerchantDataError}

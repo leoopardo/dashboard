@@ -98,6 +98,7 @@ export const WithdrawWebhooks = () => {
                     data={WithdrawWebhooks}
                     items={WithdrawWebhooks?.items}
                     error={WithdrawWebhooksError}
+                    refetch={refetchWithdrawWebhooks}
                     columns={[
                       { name: "_id", type: "id" },
                       { name: "user_name", type: "text" },
@@ -142,6 +143,7 @@ export const WithdrawWebhooks = () => {
                     data={WithdrawWebhooks}
                     items={WithdrawWebhooks?.items}
                     error={WithdrawWebhooksError}
+                    refetch={refetchWithdrawWebhooks}
                     columns={[
                       { name: "_id", type: "id" },
                       { name: "user_name", type: "text" },

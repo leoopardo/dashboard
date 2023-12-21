@@ -24,6 +24,7 @@ import {
 } from "@src/services/types/moviments/organization/transferBetweenAccounts.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
 import { defaultTheme } from "@src/styles/defaultTheme";
+import { moneyFormatter } from "@src/utils/moneyFormatter";
 import { Button, Card, Col, Row, Statistic } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -89,10 +90,7 @@ export const OrganizationTransfersBetweenAccounts = () => {
           <Card bordered={false} style={{ width: "100%" }}>
             <Statistic
               title={t("table.success")}
-              value={new Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(TransferBetweenAccountsData?.total_success || 0)}
+              value={moneyFormatter(TransferBetweenAccountsData?.total_success || 0)}
               precision={2}
               valueStyle={{ color: defaultTheme.colors.success }}
               loading={isTransferBetweenAccountsDataFetching}
@@ -103,10 +101,9 @@ export const OrganizationTransfersBetweenAccounts = () => {
           <Card bordered={false} style={{ width: "100%" }}>
             <Statistic
               title={t("table.processing")}
-              value={new Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(TransferBetweenAccountsData?.total_processing || 0)}
+              value={moneyFormatter(
+                199.989
+              )}
               precision={2}
               valueStyle={{ color: defaultTheme.colors.processing }}
               loading={isTransferBetweenAccountsDataFetching}
@@ -117,10 +114,7 @@ export const OrganizationTransfersBetweenAccounts = () => {
           <Card bordered={false} style={{ width: "100%" }}>
             <Statistic
               title={t("table.canceled")}
-              value={new Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(TransferBetweenAccountsData?.total_canceled || 0)}
+              value={moneyFormatter(TransferBetweenAccountsData?.total_canceled || 0)}
               precision={2}
               valueStyle={{ color: defaultTheme.colors.canceled }}
               loading={isTransferBetweenAccountsDataFetching}

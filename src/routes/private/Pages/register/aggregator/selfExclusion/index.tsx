@@ -209,6 +209,7 @@ export const AggregatorSelfExclusion = () => {
               { name: "end_date", type: "date", key: refEndDate },
               { name: "createdAt", type: "date", key: refCreatedAt },
             ]}
+            refetch={refetchSelfExclusionData}
             loading={isSelfExclusionDataFetching}
             label={["cpf", "merchant_name"]}
             actions={[

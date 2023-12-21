@@ -277,6 +277,7 @@ export const MutateModal = ({
                             t("table.initial_date"),
                             t("table.final_date"),
                           ]}
+                          inputReadOnly
                           onChange={(value: any) => {
                             const [startDate, endDate] = value;
                             setBody((state: any) => ({

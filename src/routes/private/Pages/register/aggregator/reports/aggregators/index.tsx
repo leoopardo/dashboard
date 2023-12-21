@@ -91,7 +91,6 @@ export const AggregatorsReports = () => {
 
       <Grid container style={{ marginTop: "15px" }}>
         <Grid item xs={12}>
-          {" "}
           <CustomTable
             query={query}
             setCurrentItem={setCurrentItem}
@@ -112,6 +111,7 @@ export const AggregatorsReports = () => {
                 onClick: () => setIsViewModalOpen(true),
               },
             ]}
+            refetch={refetchAggregatorsReportsData}
             data={AggregatorsReportsData}
             items={AggregatorsReportsData?.items}
             error={AggregatorsReportsDataError}

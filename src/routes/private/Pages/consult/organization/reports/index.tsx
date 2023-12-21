@@ -93,7 +93,6 @@ export const ConsultOrganizationReports = () => {
 
       <Grid container style={{ marginTop: "15px" }}>
         <Grid item xs={12}>
-          {" "}
           <CustomTable
             query={query}
             setCurrentItem={setCurrentItem}
@@ -114,6 +113,7 @@ export const ConsultOrganizationReports = () => {
                 onClick: () => setIsViewModalOpen(true),
               },
             ]}
+            refetch={refetchConsultOrganizationReportsData}
             data={ConsultOrganizationReportsData}
             items={ConsultOrganizationReportsData?.items}
             error={ConsultOrganizationReportsDataError}

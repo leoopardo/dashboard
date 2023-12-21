@@ -201,6 +201,7 @@ export const WithdrawalsErrors = () => {
             items={WithdrawalsErrorsLogs?.items}
             error={WithdrawalsErrorsLogsError}
             removeTotal
+            refetch={refetchWithdrawalsErrorsLogs}
             columns={[
               { name: "_id", type: "id", sort: true },
               { name: "merchant_id", type: "text" },

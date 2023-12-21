@@ -84,7 +84,6 @@ export const CustomerBanksReports = () => {
 
       <Grid container style={{ marginTop: "15px" }}>
         <Grid item xs={12}>
-          {" "}
           <CustomTable
             query={query}
             setCurrentItem={setCurrentItem}
@@ -107,6 +106,7 @@ export const CustomerBanksReports = () => {
             data={CustomerBanksReportsData}
             items={CustomerBanksReportsData?.items}
             error={CustomerBanksReportsDataError}
+            refetch={refetchCustomerBanksReportsData}
             columns={[
               { name: "_id", type: "id" },
               { name: "createdAt", type: "date",sort: true  },

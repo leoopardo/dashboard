@@ -29,6 +29,9 @@ export const DepositsReceipts = () => {
   const { t } = useTranslation();
   const isMobile = useMediaQuery({ maxWidth: "750px" });
 
+  console.log(receiptsError);
+  
+
   return (
     <Row style={{ padding: 25 }}>
       <Col xs={{ span: 24 }} md={{ span: 8 }}>
@@ -143,9 +146,9 @@ export const DepositsReceipts = () => {
       <Toast
         error={receiptsError}
         success={isSuccess}
-        actionError="found"
-        actionSuccess="founded"
-        errorMessage={`${t("error.400")}`}
+        actionError={t("messages.found")}
+        actionSuccess={t("messages.founded")}
+        
       />
       {isViewModalOpen && (
         <ViewModal

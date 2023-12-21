@@ -114,6 +114,7 @@ export const ConsultMerchantReports = () => {
                 onClick: () => setIsViewModalOpen(true),
               },
             ]}
+            refetch={refetchConsultMerchantReportsData}
             data={ConsultMerchantReportsData}
             items={ConsultMerchantReportsData?.items}
             error={ConsultMerchantReportsDataError}

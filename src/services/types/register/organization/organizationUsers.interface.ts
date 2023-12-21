@@ -18,6 +18,7 @@ export interface OrganizationUserQuery {
 }
 
 export interface OrganizationUserItem {
+  [x: string]: any;
   id: number;
   organization_id: number;
   aggregator: { id: number; name: string };

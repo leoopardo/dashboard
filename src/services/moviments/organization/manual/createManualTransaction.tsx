@@ -6,7 +6,7 @@ import { queryClient } from "../../../queryClient";
 export function useCreateManualTransaction(
   body: CreateManualTransaction | null
 ) {
-  const { isLoading, error, mutate, isSuccess } = useMutation<
+  const { isLoading, error, mutate, isSuccess, reset } = useMutation<
     CreateManualTransaction | null | undefined
   >("createMerchantManualMoviment", async () => {
     const response = await api.post(
@@ -23,5 +23,6 @@ export function useCreateManualTransaction(
     error,
     mutate,
     isSuccess,
+    reset
   };
 }

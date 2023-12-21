@@ -160,6 +160,7 @@ export const MerchantFeePlans = () => {
             columns={columns}
             loading={isFeePlansDataFetching}
             label={["name", "username"]}
+            refetch={refetchFeePlansData}
             actions={[
               {
                 label: "details",

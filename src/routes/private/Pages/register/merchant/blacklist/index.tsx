@@ -226,6 +226,7 @@ export const MerchantBlacklist = () => {
             columns={columns}
             loading={isMerchantBlacklistDataFetching}
             label={["cpf", "merchant_name"]}
+            refetch={refetchMerchantBlacklistData}
             actions={[
               {
                 label: "delete",

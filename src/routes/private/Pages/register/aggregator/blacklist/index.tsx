@@ -234,6 +234,7 @@ export const AggregatorBlacklist = () => {
             data={AggregatorsBlacklistData}
             items={AggregatorsBlacklistData?.items}
             error={AggregatorsBlacklistDataError}
+            refetch={refetchAggregatorsBlacklistData}
             columns={[
               { name: "cpf", type: "document", key: refDoc },
               { name: "merchant_name", type: "text", key: refMerchant },
@@ -247,9 +248,10 @@ export const AggregatorBlacklist = () => {
                 key: refCreatedAt,
               },
             ]}
+            disableActions
             loading={isAggregatorsBlacklistDataFetching}
             label={["cpf", "merchant_name"]}
-            actions={[]}
+            actions={[{}]}
           />
         </Grid>
       </Grid>

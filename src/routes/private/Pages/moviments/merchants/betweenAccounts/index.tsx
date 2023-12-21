@@ -144,9 +144,8 @@ export const TransfersBetweenAccounts = () => {
                           style: "currency",
                           currency: "BRL",
                         }).format(
-                          TransferBetweenAccountsData?.total_processing || 0
+                        Number(TransferBetweenAccountsData?.total_processing.toFixed(2)) || 0
                         )}
-                        precision={2}
                         valueStyle={{ color: defaultTheme.colors.processing }}
                         loading={isTransferBetweenAccountsDataFetching}
                       />

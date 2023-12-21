@@ -151,9 +151,11 @@ export const MerchantBlacklistReasons = () => {
             items={merchantBlacklistData?.items}
             error={merchantBlacklistDataError}
             columns={columns}
+            refetch={refetchMerchantBlacklistData}
+            disableActions
             loading={isMerchantBlacklistDataFetching}
             label={["cpf", "merchant_name"]}
-            actions={[]}
+            actions={[{}]}
           />
         </Grid>
       </Grid>

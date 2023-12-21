@@ -111,7 +111,13 @@ export const NewUserModal = ({
   useEffect(() => {
     if (currentUser && action === "update")
       setBody(() => ({
-        ...currentUser,
+        status: currentUser.status,
+        group_id: currentUser.permission_group.id,
+        aggregator_id: currentUser.aggregator.id,
+        email: currentUser.email,
+        cellphone: currentUser.cellphone,
+        username: currentUser.username,
+        name: currentUser.name,
         user_id: currentUser.id,
       }));
   }, [currentUser]);
@@ -286,7 +292,7 @@ export const NewUserModal = ({
               style={{ margin: 10 }}
               rules={[
                 {
-                  required: !body.aggregator_id && action === "create",
+                  required: !body.aggregator_id,
                   message:
                     t("input.required", {
                       field: t(`table.aggregator`).toLowerCase(),
@@ -308,8 +314,11 @@ export const NewUserModal = ({
           style={{ margin: 10 }}
           rules={[
             {
-              required: !body.group_id && action === "create" ? true : false,
-              message: t("input.required", { field: t("input.group") }) || "",
+              validator: () => !body.group_id
+                ? Promise.reject(
+                    t("input.required", { field: t("input.group") }) || ""
+                  )
+                : Promise.resolve(),
             },
           ]}
         >

@@ -357,7 +357,7 @@
     "cash_in_max_value_receive_by_pj": "Valor máximo depósito PJ:",
     "cash_in_receive_by_different_payer": "Depósito de terceiros habilitádo:",
     "cash_in_max_value_receive_by_different_payer": "Valor máximo depósito de terceiros:",
-    "cash_out_max_value": "Valor máximo saques:",
+    "cash_out_max_value": "Valor máximo saques/dia:",
     "cash_in_max_value_by_month": "Valor máximo depósitos por mês:",
     "cash_out_max_value_by_month": "Valor máximo saques por mês:",
     "cash_in_permission": "Depósitos habilitado:",
@@ -462,7 +462,8 @@
     "label_name": "Nome do banco",
     "v3_id": "ID V3",
     "position": "Cargo",
-    "search": "Pesquisar"
+    "search": "Pesquisar",
+    "allows_generate_qrcode": "Permite gerar QRCode PJ"
   },
   "table": {
     "id": "ID",
@@ -826,7 +827,7 @@
     "available_balance": "Saldo disponível",
     "operations_value": "Valor de operações",
     "category_id": "Categoria",
-    "refetch_data": "Recarregar dados",
+    "refetch_data": "Recarregar dados da tabela",
     "reference_day": "Data de referência",
     "invalid": "Inválido",
     "download_payment_voucher": "Baixar comprovante",

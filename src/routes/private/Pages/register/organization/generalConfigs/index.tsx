@@ -21,6 +21,7 @@ import {
   Tooltip,
 } from "antd";
 import { useEffect, useRef, useState } from "react";
+import { CurrencyInput } from "react-currency-mask";
 import { useTranslation } from "react-i18next";
 
 export const GeneralConfigs = () => {
@@ -52,7 +53,6 @@ export const GeneralConfigs = () => {
     }));
   };
 
-
   const [isTuorOpen, setIsTuorOpen] = useState<boolean>(false);
   const refCashInMaxValue = useRef(null);
   const refCashInReceiveByPj = useRef(null);
@@ -80,10 +80,9 @@ export const GeneralConfigs = () => {
   const tabAdmin = document.querySelector('[data-node-key="2"]');
 
   useEffect(() => {
-    setFirstChildDivId(tabFinancial, 'tab-financial');
-    setFirstChildDivId(tabAdmin, 'tab-admin');
-  }, [tabFinancial, tabAdmin])
-
+    setFirstChildDivId(tabFinancial, "tab-financial");
+    setFirstChildDivId(tabAdmin, "tab-admin");
+  }, [tabFinancial, tabAdmin]);
 
   useEffect(() => {
     formRef.current?.setFieldsValue(data);
@@ -101,11 +100,22 @@ export const GeneralConfigs = () => {
                 label={t("input.cash_in_max_value")}
                 name="cash_in_max_value"
               >
-                <Input
-                  size="large"
-                  name="cash_in_max_value"
-                  value={body.cash_in_max_value}
-                  onChange={handleChange}
+                <CurrencyInput
+                  data-test-id="cash_in_max_value"
+                  onChangeValue={(_event, originalValue) => {
+                    setBody((state) => ({
+                      ...state,
+                      cash_in_max_value: +originalValue,
+                    }));
+                  }}
+                  value={body?.cash_out_max_value}
+                  InputElement={
+                    <Input
+                      size="large"
+                      style={{ width: "100%" }}
+                      value={body?.cash_in_max_value}
+                    />
+                  }
                 />
               </Form.Item>
             </Grid>
@@ -135,11 +145,22 @@ export const GeneralConfigs = () => {
                 label={t("input.cash_in_max_value_receive_by_pj")}
                 name="cash_in_max_value_receive_by_pj"
               >
-                <Input
-                  size="large"
-                  name="cash_in_max_value_receive_by_pj"
-                  value={body.cash_in_max_value_receive_by_pj}
-                  onChange={handleChange}
+                <CurrencyInput
+                  data-test-id="cash_in_max_value_receive_by_pj"
+                  onChangeValue={(_event, originalValue) => {
+                    setBody((state) => ({
+                      ...state,
+                      cash_in_max_value_receive_by_pj: +originalValue,
+                    }));
+                  }}
+                  value={body?.cash_in_max_value_receive_by_pj}
+                  InputElement={
+                    <Input
+                      size="large"
+                      style={{ width: "100%" }}
+                      value={body?.cash_in_max_value_receive_by_pj}
+                    />
+                  }
                 />
               </Form.Item>
             </Grid>
@@ -174,11 +195,23 @@ export const GeneralConfigs = () => {
                 label={t("input.cash_in_max_value_receive_by_different_payer")}
                 name="cash_in_max_value_receive_by_different_payer"
               >
-                <Input
-                  size="large"
-                  name="cash_in_max_value_receive_by_different_payer"
-                  value={body.cash_in_max_value_receive_by_different_payer}
-                  onChange={handleChange}
+                <CurrencyInput
+                  data-test-id="cash_in_max_value_receive_by_different_payer"
+                  onChangeValue={(_event, originalValue) => {
+                    setBody((state) => ({
+                      ...state,
+                      cash_in_max_value_receive_by_different_payer:
+                        +originalValue,
+                    }));
+                  }}
+                  value={body?.cash_in_max_value_receive_by_different_payer}
+                  InputElement={
+                    <Input
+                      size="large"
+                      style={{ width: "100%" }}
+                      value={body?.cash_in_max_value_receive_by_different_payer}
+                    />
+                  }
                 />
               </Form.Item>
             </Grid>
@@ -187,11 +220,22 @@ export const GeneralConfigs = () => {
                 label={t("input.cash_out_max_value")}
                 name="cash_out_max_value"
               >
-                <Input
-                  size="large"
-                  name="cash_out_max_value"
-                  value={body.cash_out_max_value}
-                  onChange={handleChange}
+                <CurrencyInput
+                  data-test-id="cash_out_max_value"
+                  onChangeValue={(_event, originalValue) => {
+                    setBody((state) => ({
+                      ...state,
+                      cash_out_max_value: +originalValue,
+                    }));
+                  }}
+                  value={body?.cash_out_max_value}
+                  InputElement={
+                    <Input
+                      size="large"
+                      style={{ width: "100%" }}
+                      value={body?.cash_out_max_value}
+                    />
+                  }
                 />
               </Form.Item>
             </Grid>
@@ -200,11 +244,22 @@ export const GeneralConfigs = () => {
                 label={t("input.cash_in_max_value_by_month")}
                 name="cash_in_max_value_by_month"
               >
-                <Input
-                  size="large"
-                  name="cash_in_max_value_by_month"
-                  value={body.cash_in_max_value_by_month}
-                  onChange={handleChange}
+                <CurrencyInput
+                  data-test-id="cash_in_max_value_by_month"
+                  onChangeValue={(_event, originalValue) => {
+                    setBody((state) => ({
+                      ...state,
+                      cash_in_max_value_by_month: +originalValue,
+                    }));
+                  }}
+                  value={body?.cash_in_max_value_by_month}
+                  InputElement={
+                    <Input
+                      size="large"
+                      style={{ width: "100%" }}
+                      value={body?.cash_in_max_value_by_month}
+                    />
+                  }
                 />
               </Form.Item>
             </Grid>
@@ -213,11 +268,22 @@ export const GeneralConfigs = () => {
                 label={t("input.cash_out_max_value_by_month")}
                 name="cash_out_max_value_by_month"
               >
-                <Input
-                  size="large"
-                  name="cash_out_max_value_by_month"
-                  value={body.cash_out_max_value_by_month}
-                  onChange={handleChange}
+                <CurrencyInput
+                  data-test-id="cash_out_max_value_by_month"
+                  onChangeValue={(_event, originalValue) => {
+                    setBody((state) => ({
+                      ...state,
+                      cash_out_max_value_by_month: +originalValue,
+                    }));
+                  }}
+                  value={body?.cash_out_max_value_by_month}
+                  InputElement={
+                    <Input
+                      size="large"
+                      style={{ width: "100%" }}
+                      value={body?.cash_out_max_value_by_month}
+                    />
+                  }
                 />
               </Form.Item>
             </Grid>
@@ -693,9 +759,7 @@ export const GeneralConfigs = () => {
           },
           {
             title: t("input.max_value_to_switch_bank_acc"),
-            description: t(
-              "wiki.max_value_to_switch_bank_acc_description"
-            ),
+            description: t("wiki.max_value_to_switch_bank_acc_description"),
             target: () => refMaxValueToSwitchBankAcc.current,
           },
           {
@@ -705,7 +769,9 @@ export const GeneralConfigs = () => {
           },
           {
             title: t("input.check_last_waiting_pix_time_minutes"),
-            description: t("wiki.check_last_waiting_pix_time_minutes_description"),
+            description: t(
+              "wiki.check_last_waiting_pix_time_minutes_description"
+            ),
             target: () => refCheckLastWaitinPix.current,
           },
           {
@@ -715,7 +781,9 @@ export const GeneralConfigs = () => {
           },
           {
             title: t("input.time_receive_after_expire_qr_code_hours"),
-            description: t("wiki.time_receive_after_expire_qr_code_hours_description"),
+            description: t(
+              "wiki.time_receive_after_expire_qr_code_hours_description"
+            ),
             target: () => refTimeReceiveAfterExpire.current,
           },
         ]}

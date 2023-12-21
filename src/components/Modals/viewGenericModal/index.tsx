@@ -158,9 +158,9 @@ export const ViewModal = ({
                     }}
                   >
                     {`${new Date(
-                      new Date(sortItems[key]).toDateString()
-                    ).toLocaleDateString()} ${new Date(
-                      new Date(sortItems[key]).toDateString()
+                      sortItems[key]
+                    ).toLocaleDateString()}  ${new Date(
+                      sortItems[key]
                     ).toLocaleTimeString()}`}
                   </Descriptions.Item>
                 );
@@ -202,7 +202,7 @@ export const ViewModal = ({
                       style={{
                         color:
                           typeof sortItems[key] === "string"
-                            ? (defaultTheme.colors as any)[
+                            ? (defaultTheme?.colors as any)[
                                 sortItems[key]?.toLocaleLowerCase()
                               ]
                             : undefined,
