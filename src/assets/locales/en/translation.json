@@ -739,7 +739,9 @@
     "add_row": "Add row",
     "upload_file": "Upload file",
     "total_rows": "Total rows",
-    "failed_rows": "Failed rows",
+    "failed_rows": "Failed",
+    "success_rows": "Success",
+    
     "created_by_ip": "Created by ip",
     "WAITING": "Waiting",
     "created_by": "Created by",
