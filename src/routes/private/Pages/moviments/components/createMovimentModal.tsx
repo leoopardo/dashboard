@@ -85,7 +85,7 @@ export const CreateMovimentModal = ({
                 required: !body?.merchant_id,
                 message:
                   t("input.required", {
-                    field: t("table.merchant_id"),
+                    field: t("table.merchant"),
                   }) || "",
               },
             ]}

@@ -66,6 +66,7 @@ export const MerchantPreManual = () => {
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [currentItem, setCurrentItem] =
     useState<GetMerchantMovimentsItem | null>(null);
+  const { category_id, ...currentData } = currentItem || {};
   const [operationInOpen, setOperationInIOpen] = useState<boolean>(false);
   const [operationOutOpen, setOperationOutOpen] = useState<boolean>(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
@@ -77,7 +78,6 @@ export const MerchantPreManual = () => {
     useState<CreateMerchantManualTransaction | null>(null);
   const [updateBody, setUpdateBody] =
     useState<CreateMerchantManualTransaction | null>(null);
-
   const [selectedRows, setSelectedRows] = useState<any[] | []>([]);
   const {
     isPreManualDataFetching,
@@ -149,7 +149,7 @@ export const MerchantPreManual = () => {
       value: currentItem?.value,
       type: currentItem?.type as CreateMerchantManualTransaction["type"],
     });
-  }, [currentItem]);
+  }, [currentItem, isUpdateModalOpen]);
 
   useEffect(() => {
     setOperationInBody((state) => ({ ...state, validation_token: tokenState }));
@@ -509,15 +509,16 @@ export const MerchantPreManual = () => {
           type="update"
           open={isUpdateModalOpen}
           setOpen={setIsUpdateModalOpen}
+          query={query}
           fields={[
-            { label: "merchant_id", required: false },
+            { label: "merchant_id", required: true },
             {
               label: "category_id",
-              required: false,
+              required: true,
               selectOption: true,
               noTranslate: true,
             },
-            { label: "value", required: false },
+            { label: "value", required: true },
             { label: "type", required: false, selectOption: true },
             { label: "description", required: false },
           ]}
@@ -584,7 +585,7 @@ export const MerchantPreManual = () => {
         <ViewModal
           open={isViewModalOpen}
           setOpen={setIsViewModalOpen}
-          item={currentItem}
+          item={currentData}
           loading={false}
           modalName={t("modal.report_details")}
         />

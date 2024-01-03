@@ -234,7 +234,7 @@ export const UpdatePartner = () => {
                     validator: validateFormCnpj,
                   },
                   {
-                    required: true,
+                    required: false,
                     message:
                       t("input.required", {
                         field: t(`input.cnpj`),
