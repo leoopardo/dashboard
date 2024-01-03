@@ -8,13 +8,13 @@ import { PersonBlacklistReasonsItem } from "@src/services/types/register/persons
 import { Button, Typography } from "antd";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
-import moment from "moment";
 import { HistoricCpfByMerchantQuery } from "@src/services/types/consult/persons/hsitoricCpfByMerchant";
 import { FilterChips } from "@src/components/FiltersModal/filterChips";
 import { FiltersModal } from "@src/components/FiltersModal";
 import { useExportHistoricCpfByMerchantDetails } from "@src/services/consult/persons/exportCsvHistoricCpfByMerchantDetails";
 import { useGetHistoricCpfByMerchantDetails } from "@src/services/consult/persons/historicCpfByMerchantDetails";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
+import moment from "moment";
 
 export const HistoricCpfByMerchantDetails = () => {
   const location = useLocation();
@@ -42,7 +42,7 @@ export const HistoricCpfByMerchantDetails = () => {
     refetchHistoricCpfByMerchantDetailsData,
   } = useGetHistoricCpfByMerchantDetails({
     ...query,
-    merchant_id: location.state?.merchant_id,
+    merchant_id: location.state?.item?.merchant_id,
   });
 
   const {
@@ -52,11 +52,12 @@ export const HistoricCpfByMerchantDetails = () => {
     HistoricCpfByMerchantDetailsMutate,
   } = useExportHistoricCpfByMerchantDetails({
     ...query,
-    merchant_id: location.state?.merchant_id,
+    merchant_id: location.state?.item?.merchant_id,
   });
 
-  const [, setCurrentItem] =
-    useState<PersonBlacklistReasonsItem | null>(null);
+  console.log(location?.state?.query);
+  
+  const [, setCurrentItem] = useState<PersonBlacklistReasonsItem | null>(null);
 
   const columns: ColumnInterface[] = [
     { name: "_id", type: "id", head: "id" },
@@ -75,7 +76,7 @@ export const HistoricCpfByMerchantDetails = () => {
   return (
     <Grid container style={{ padding: "25px" }}>
       <Typography.Title level={4}>
-        {t("table.merchant")}: {location.state.merchant_name}
+        {t("table.merchant")}: {location?.state?.item?.merchant_name}
       </Typography.Title>
 
       <Grid
