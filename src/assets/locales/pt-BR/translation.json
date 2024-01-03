@@ -974,7 +974,9 @@
     "cryptography": "Criptografia",
     "decrypt_key": "Chave de descriptografia",
     "custom_date": "Escolher data",
-    "locked": "Bloqueado"
+    "locked": "Bloqueado",
+    "assertiva_count": "ASSERTIVA",
+    "serpro_count": "SERPRO"
   },
   "actions": {
     "details": "Detalhes",

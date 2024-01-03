@@ -17,4 +17,6 @@ export interface SerproAssertivaData {
   limit: number;
   page: number;
   total: number;
+  assertiva_count_total: number;
+  serpro_count_total: number;
 }

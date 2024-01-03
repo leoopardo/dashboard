@@ -968,7 +968,9 @@
     "cryptography": "Cryptography",
     "decrypt_key": "Decrypt key",
     "custom_date": "Set date",
-    "locked": "Locked"
+    "locked": "Locked",
+    "assertiva_count": "ASSERTIVA",
+    "serpro_count": "SERPRO"
   },
   "actions": {
     "details": "Details",
