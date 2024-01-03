@@ -34,36 +34,43 @@ export const FilterChips = ({
   const { merchant, refetcMerchant } = useListMerchantById({
     page: 1,
     limit: 200,
-    merchant_id: query.merchant_id ?? undefined,
+    merchant_id: query?.merchant_id ?? undefined,
+    enabled: query?.merchant_id ? true : false,
   });
   const currentMerchant = merchant;
   const { Partner, refetcPartner } = useListPartnerById({
     page: 1,
     limit: 200,
-    partner_id: query.partner_id ?? undefined,
+    partner_id: query?.partner_id ?? undefined,
+    enabled: query?.partner_id ? true : false,
   });
   const { Aggregator, refetcAggregator } = useListAggregatorById({
     page: 1,
     limit: 200,
-    aggregator_id: query.aggregator_id ?? undefined,
+    aggregator_id: query?.aggregator_id ?? undefined,
+    enabled: query?.aggregator_id ? true : false,
   });
   const { Operator, refetcOperator } = useListOperatorById({
     page: 1,
     limit: 200,
-    operator_id: query.operator_id ?? undefined,
+    operator_id: query?.operator_id ?? undefined,
+    enabled: query?.operator_id ? true : false,
   });
   const { CategoriesData } = useGetOrganizationCategories({
     limit: 200,
     page: 1,
+    enabled: query?.category_id ? true : false,
   });
   const { categoryData } = useGetRowsMerchantManualEntryCategory({
     limit: 200,
     page: 1,
     sort_field: "created_at",
     sort_order: "DESC",
+    enabled: query?.category_id ? true : false,
   });
   const { ProfilesData } = useGetProfiles({
     group: true,
+    enabled: query?.profiles ? true : false,
   });
 
   const [filtersQuery, setFiltersQuery] = useState<any>(query);

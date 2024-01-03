@@ -4,6 +4,7 @@ export interface MerchantManualEntryCategoryQuery {
   sort_field: string;
   sort_order: string;
   status?: boolean;
+  enabled: boolean;
   page: number;
   limit: number;
 }

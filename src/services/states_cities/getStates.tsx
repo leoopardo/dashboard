@@ -3,7 +3,7 @@ import axios from "axios";
 import { useQuery } from "react-query";
 import { StateItem } from "../types/states_cities.interface";
 
-export function useGetStates() {
+export function useGetStates(enabled?: boolean) {
   const { data, isFetching, error, refetch } = useQuery<
     StateItem[] | null | undefined
   >(
@@ -19,6 +19,7 @@ export function useGetStates() {
       refetchInterval: false,
       refetchIntervalInBackground: false,
       refetchOnMount: false,
+      enabled
     }
   );
 

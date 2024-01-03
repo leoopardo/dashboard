@@ -157,7 +157,8 @@
     "organization_settings": "Organization settings",
     "merchant_settings": "Merchant settings",
     "historic_cpf_merchant": "CPF historic by merchant",
-    "historic_cpf_merchant_details": "CPF historic by merchant details"
+    "historic_cpf_merchant_details": "CPF historic by merchant details",
+    "serpro_assertiva": "SERPRO - ASSERTIVA"
   },
 
   "titles": {

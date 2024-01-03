@@ -11,7 +11,7 @@ export function useListOperatorById(params: any) {
       params,
     });
     return response.data;
-  });
+  }, {enabled: params.enabled === true});
 
   const Operator = data;
   const isOperatorFetching = isFetching;

@@ -12,12 +12,16 @@ export function useGetRowsMerchantManualEntryCategory(
 ) {
   const { data, isFetching, error, refetch } = useQuery<
     MerchantManualEntryCategoryResponse | null | undefined
-  >("MerchantManualEntryCategory", async () => {
-    const response = await api.get("core/entry-account/category", {
-      params,
-    });
-    return response.data;
-  });
+  >(
+    "MerchantManualEntryCategory",
+    async () => {
+      const response = await api.get("core/entry-account/category", {
+        params,
+      });
+      return response.data;
+    },
+    { enabled: params.enabled === true }
+  );
 
   const categoryData = data;
   const isCategoryDataFetching = isFetching;
