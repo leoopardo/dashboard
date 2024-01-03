@@ -163,10 +163,11 @@
     "permissions_groups": "Grupos de permissões",
     "license": "Licenças",
     "licenses": "Licenças",
-    "current_accounts": "Contas Corrente",
     "custom_webhook": "Personalizar webhook",
+    "current_accounts": "Contas Corrente",
     "consult_person_reports": "Relatórios",
-    "recents": "Recentes"
+    "recents": "Recentes",
+    "serpro_assertiva": "SERPRO - ASSERTIVA"
   },
 
   "titles": {
@@ -1019,7 +1020,9 @@
     "receiver_data": "Dados do recebedor",
     "deposit_webhook": "Webhook de depósito",
     "withdraw_webhook": "Webhook de saque",
-    "webhook_preview": "Pré-visualização do webhook"
+    "webhook_preview": "Pré-visualização do webhook",
+    "assertiva_count": "ASSERTIVA",
+    "serpro_count": "SERPRO"
   },
   "actions": {
     "details": "Detalhes",
