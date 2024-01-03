@@ -11,7 +11,7 @@ export function useListMerchantById(params: any) {
       params,
     });
     return response.data;
-  });
+  }, {enabled: params.enabled === true});
 
   const merchant = data;
   const isMerchantFetching = isFetching;

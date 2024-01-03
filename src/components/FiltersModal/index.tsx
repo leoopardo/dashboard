@@ -81,11 +81,14 @@ export const FiltersModal = ({
   const user = queryClient.getQueryData("validate") as ValidateInterface;
   const { t } = useTranslation();
   const [filtersQuery, setFiltersQuery] = useState<any>(query);
-  const { states } = useGetStates();
+  const { states } = useGetStates(filters.includes("state"));
   const [isAgeRangeAbled, setIsAgeRangeAbled] = useState<boolean>(false);
   const [isValueRangeAbled, setIsValueRangeAbled] = useState<boolean>(false);
   const [currState, setCurrState] = useState<string>("");
-  const { cities, refetchCities } = useGetCities(currState);
+  const { cities, refetchCities } = useGetCities(
+    currState,
+    filters.includes("city")
+  );
   const submitRef = useRef<HTMLButtonElement>(null);
   const formRef = useRef<FormInstance>(null);
   const [rangePickerValue, setRangePickerValue] = useState<
@@ -116,7 +119,7 @@ export const FiltersModal = ({
   }, [query]);
 
   useEffect(() => {
-    refetchCities();
+    if (currState) refetchCities();
   }, [currState]);
 
   const isAgeAbled = (isAbled: boolean) => {
@@ -235,7 +238,12 @@ export const FiltersModal = ({
     //   setRangePickerValue("last_month");
     // }
     else {
-      if (!haveInitialDate && !query[startDateKeyName] && !query[endDateKeyName]) return;
+      if (
+        !haveInitialDate &&
+        !query[startDateKeyName] &&
+        !query[endDateKeyName]
+      )
+        return;
       if (!query[startDateKeyName] && !query[endDateKeyName]) {
         setFiltersQuery((state: any) => ({
           ...state,
@@ -481,6 +489,61 @@ export const FiltersModal = ({
                     >
                       <ConfigProvider locale={locale}>
                         <RangePicker
+                          presets={[
+                            {
+                              label: t("table.today"),
+                              value: [
+                                dayjs().startOf("day"),
+                                dayjs().add(1, "day").startOf("day"),
+                              ],
+                            },
+                            {
+                              label: t("table.yesterday"),
+                              value: [
+                                dayjs().subtract(1, "day").startOf("day"),
+                                dayjs().startOf("day"),
+                              ],
+                            },
+                            {
+                              label: t("table.this_month"),
+                              value: [
+                                dayjs().startOf("M"),
+                                dayjs().endOf("M").add(1, "D").startOf("day"),
+                              ],
+                            },
+                            {
+                              label: t("table.last_month"),
+                              value: [
+                                dayjs().subtract(1, "M").startOf("M"),
+                                dayjs()
+                                  .subtract(1, "M")
+                                  .endOf("M")
+                                  .add(1, "D")
+                                  .startOf("day"),
+                              ],
+                            },
+                            {
+                              label: t("table.last_7"),
+                              value: [
+                                dayjs().add(-7, "d").startOf("day"),
+                                dayjs().add(1, "day").startOf("day"),
+                              ],
+                            },
+                            {
+                              label: t("table.last_14"),
+                              value: [
+                                dayjs().add(-14, "d").startOf("day"),
+                                dayjs().add(1, "day").startOf("day"),
+                              ],
+                            },
+                            {
+                              label: t("table.last_30"),
+                              value: [
+                                dayjs().add(-30, "d").startOf("day"),
+                                dayjs().add(1, "day").startOf("day"),
+                              ],
+                            },
+                          ]}
                           changeOnBlur
                           ref={rangePickerRef}
                           data-test-id="range-picker-date-filter"
