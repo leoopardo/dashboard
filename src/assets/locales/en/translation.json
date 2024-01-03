@@ -159,8 +159,9 @@
     "historic_cpf_merchant": "CPF historic by merchant",
     "historic_cpf_merchant_details": "CPF historic by merchant details",
     "licenses": "Licenses",
+    "custom_webhook": "Custom webhooks",
     "current_accounts": "Current accounts",
-    "custom_webhook": "Custom webhooks"
+    "serpro_assertiva": "SERPRO - ASSERTIVA"
   },
 
   "titles": {
