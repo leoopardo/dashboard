@@ -1,37 +1,23 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
 import { FilterOutlined } from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
-import { PersonBlacklistReasonsItem } from "@src/services/types/register/persons/blacklist/reasons.interface";
-import { Button, Typography } from "antd";
-import { useTranslation } from "react-i18next";
-import { useLocation } from "react-router-dom";
-import { HistoricCpfByMerchantQuery } from "@src/services/types/consult/persons/hsitoricCpfByMerchant";
-import { FilterChips } from "@src/components/FiltersModal/filterChips";
 import { FiltersModal } from "@src/components/FiltersModal";
+import { FilterChips } from "@src/components/FiltersModal/filterChips";
+import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { useExportHistoricCpfByMerchantDetails } from "@src/services/consult/persons/exportCsvHistoricCpfByMerchantDetails";
 import { useGetHistoricCpfByMerchantDetails } from "@src/services/consult/persons/historicCpfByMerchantDetails";
-import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
-import moment from "moment";
+import { HistoricCpfByMerchantQuery } from "@src/services/types/consult/persons/hsitoricCpfByMerchant";
+import { PersonBlacklistReasonsItem } from "@src/services/types/register/persons/blacklist/reasons.interface";
+import { Button, Typography } from "antd";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useLocation } from "react-router-dom";
 
 export const HistoricCpfByMerchantDetails = () => {
   const location = useLocation();
-  const INITIAL_QUERY: HistoricCpfByMerchantQuery = {
-    limit: 25,
-    page: 1,
-    start_date: moment(new Date())
-      .startOf("day")
-      .utc()
-      .format("YYYY-MM-DDTHH:mm:ss.SSS"),
-    end_date: moment(new Date())
-      .add(1, "day")
-      .startOf("day")
-      .utc()
-      .format("YYYY-MM-DDTHH:mm:ss.SSS"),
-  };
-
+  const INITIAL_QUERY: HistoricCpfByMerchantQuery = location?.state?.query;
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [query, setQuery] = useState<HistoricCpfByMerchantQuery>(INITIAL_QUERY);
   const { t } = useTranslation();
