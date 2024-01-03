@@ -1009,7 +1009,9 @@
     "receiver_data": "Receiver data",
     "deposit_webhook": "Deposit webhook",
     "withdraw_webhook": "Withdraw webhook",
-    "webhook_preview": "Webhook preview"
+    "webhook_preview": "Webhook preview",
+    "assertiva_count": "ASSERTIVA",
+    "serpro_count": "SERPRO"
   },
   "actions": {
     "details": "Details",

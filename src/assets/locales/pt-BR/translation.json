@@ -1016,7 +1016,9 @@
     "receiver_data": "Dados do recebedor",
     "deposit_webhook": "Webhook de depósito",
     "withdraw_webhook": "Webhook de saque",
-    "webhook_preview": "Pré-visualização do webhook"
+    "webhook_preview": "Pré-visualização do webhook",
+    "assertiva_count": "ASSERTIVA",
+    "serpro_count": "SERPRO"
   },
   "actions": {
     "details": "Detalhes",
