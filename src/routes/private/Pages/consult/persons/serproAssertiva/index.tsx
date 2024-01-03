@@ -4,7 +4,8 @@ import { CustomTable } from "@src/components/CustomTable";
 import { FiltersModal } from "@src/components/FiltersModal";
 import { FilterChips } from "@src/components/FiltersModal/filterChips";
 import { useGetSerproAssertiva } from "@src/services/consult/persons/serproAssertiva/getSerproAssertiva";
-import { Button, Col, Row } from "antd";
+import { defaultTheme } from "@src/styles/defaultTheme";
+import { Button, Card, Col, Row, Statistic } from "antd";
 import moment from "moment";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -31,6 +32,46 @@ export const SerproAssertiva = () => {
   const { t } = useTranslation();
   return (
     <Row style={{ padding: 25 }} gutter={[8, 8]}>
+      <Col xs={24} style={{ marginBottom: 8 }}>
+        <Row
+          gutter={[8, 8]}
+          style={{ display: "flex", justifyContent: "center" }}
+        >
+          <Col xs={{ span: 24 }} md={{ span: 4 }}>
+            <Card bordered={false}>
+              <Statistic
+                title={t("table.assertiva_count")}
+                value={data?.assertiva_count_total}
+                precision={0}
+                valueStyle={{ color: defaultTheme.colors.chartYellow }}
+              />
+            </Card>
+          </Col>
+          <Col xs={{ span: 24 }} md={{ span: 4 }}>
+            <Card bordered={false}>
+              <Statistic
+                title={t("table.serpro_count")}
+                value={data?.serpro_count_total}
+                precision={0}
+                valueStyle={{ color: defaultTheme.colors.chartBlue }}
+              />
+            </Card>
+          </Col>
+          <Col xs={{ span: 24 }} md={{ span: 4 }}>
+            <Card bordered={false}>
+              <Statistic
+                title="Total"
+                value={
+                  (data?.assertiva_count_total || 0) +
+                  (data?.serpro_count_total || 0)
+                }
+                precision={0}
+                valueStyle={{ color: defaultTheme.colors.chartGreen }}
+              />
+            </Card>
+          </Col>
+        </Row>
+      </Col>
       <Col xs={24}>
         <Row gutter={[8, 8]} align="middle">
           <Col xs={{ span: 24 }} md={{ span: 8 }} lg={{ span: 4 }}>
@@ -61,17 +102,20 @@ export const SerproAssertiva = () => {
       <Col span={24}>
         <CustomTable
           query={query}
-          setCurrentItem={() => {return}}
+          setCurrentItem={() => {
+            return;
+          }}
           setQuery={setQuery}
           data={data}
           refetch={refetch}
           items={data?.items}
           error={error}
           columns={[
-            { name: "_id", type: "id", sort: true},
-            { name: "assertiva_count", type: "text", sort: true},
-            { name: "serpro_count", type: "text", sort: true},
-            { name: "date", type: "date", sort: true},
+            { name: "_id", type: "id" },
+            { name: "date", type: "date" },
+            { name: "assertiva_count", type: "text" },
+            { name: "serpro_count", type: "text" },
+            { name: "createdAt", type: "date" },
           ]}
           loading={isFetching}
           label={["name"]}
@@ -84,7 +128,7 @@ export const SerproAssertiva = () => {
           setOpen={setIsFiltersOpen}
           query={query}
           setQuery={setQuery}
-          filters={["start_date", "end_date", "merchant_id"]}
+          filters={["start_date", "end_date"]}
           refetch={() => {
             return;
           }}
