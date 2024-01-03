@@ -11,7 +11,7 @@ export function useListAggregatorById(params: any) {
       params,
     });
     return response.data;
-  });
+  }, {enabled: params.enabled === true});
 
   const Aggregator = data;
   const isAggregatorFetching = isFetching;

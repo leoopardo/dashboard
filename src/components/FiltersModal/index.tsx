@@ -80,11 +80,14 @@ export const FiltersModal = ({
   const user = queryClient.getQueryData("validate") as ValidateInterface;
   const { t } = useTranslation();
   const [filtersQuery, setFiltersQuery] = useState<any>(query);
-  const { states } = useGetStates();
+  const { states } = useGetStates(filters.includes("state"));
   const [isAgeRangeAbled, setIsAgeRangeAbled] = useState<boolean>(false);
   const [isValueRangeAbled, setIsValueRangeAbled] = useState<boolean>(false);
   const [currState, setCurrState] = useState<string>("");
-  const { cities, refetchCities } = useGetCities(currState);
+  const { cities, refetchCities } = useGetCities(
+    currState,
+    filters.includes("city")
+  );
   const submitRef = useRef<HTMLButtonElement>(null);
   const formRef = useRef<FormInstance>(null);
   const isMobile = useMediaQuery({ maxWidth: "550px" });
@@ -111,7 +114,7 @@ export const FiltersModal = ({
   }, [query]);
 
   useEffect(() => {
-    refetchCities();
+    if (currState) refetchCities();
   }, [currState]);
 
   const isAgeAbled = (isAbled: boolean) => {
@@ -272,21 +275,30 @@ export const FiltersModal = ({
                   ]}
                 >
                   <ConfigProvider locale={locale}>
-                    <RangePicker 
+                    <RangePicker
                       presets={
                         !isMobile
                           ? [
                               {
                                 label: t("table.last_7"),
-                                value: [dayjs().add(-7, "d").startOf("day"), dayjs().add(1, "day").startOf("day")],
+                                value: [
+                                  dayjs().add(-7, "d").startOf("day"),
+                                  dayjs().add(1, "day").startOf("day"),
+                                ],
                               },
                               {
                                 label: t("table.last_14"),
-                                value: [dayjs().add(-14, "d").startOf("day"), dayjs().add(1, "day").startOf("day")],
+                                value: [
+                                  dayjs().add(-14, "d").startOf("day"),
+                                  dayjs().add(1, "day").startOf("day"),
+                                ],
                               },
                               {
                                 label: t("table.last_30"),
-                                value: [dayjs().add(-30, "d").startOf("day"), dayjs().add(1, "day").startOf("day")],
+                                value: [
+                                  dayjs().add(-30, "d").startOf("day"),
+                                  dayjs().add(1, "day").startOf("day"),
+                                ],
                               },
                               {
                                 label: t("table.today"),
@@ -313,7 +325,11 @@ export const FiltersModal = ({
                                 label: t("table.last_month"),
                                 value: [
                                   dayjs().subtract(1, "M").startOf("M"),
-                                  dayjs().subtract(1, "M").endOf("M").add(1, "D").startOf("day"),
+                                  dayjs()
+                                    .subtract(1, "M")
+                                    .endOf("M")
+                                    .add(1, "D")
+                                    .startOf("day"),
                                 ],
                               },
                             ]
@@ -867,7 +883,9 @@ export const FiltersModal = ({
                     showSearch
                     filterOption={(input, option) => {
                       return (
-                        `${option?.label}`?.toLowerCase()?.indexOf(input?.toLowerCase()) >= 0
+                        `${option?.label}`
+                          ?.toLowerCase()
+                          ?.indexOf(input?.toLowerCase()) >= 0
                       );
                     }}
                     options={

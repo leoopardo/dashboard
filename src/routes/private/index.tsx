@@ -113,6 +113,7 @@ import { ImportContastationDeposit } from "./Pages/support/contastation/importCS
 import { ContestationUploads } from "./Pages/support/contastation/uploads";
 import { Permission } from "./permission";
 import { Redirect } from "./redirect";
+import { SerproAssertiva } from "./Pages/consult/persons/serproAssertiva";
 export const PrivateRoutes = () => {
   const { responseValidate } = useValidate();
 
@@ -524,7 +525,7 @@ export const PrivateRoutes = () => {
               />
             </Route>
           </Route>
-          {/* checar cpf */}
+          {/* Consultas de pessoas */}
           <Route path="consult_persons">
             <Route
               path="check_cpf"
@@ -566,6 +567,19 @@ export const PrivateRoutes = () => {
                 }
               />
             </Route>
+            <Route
+              path="serpro_assertiva"
+              element={
+                <Permission
+                  permission={
+                    responseValidate?.permissions?.report?.person?.check_cpf
+                      ?.menu
+                  }
+                >
+                  <SerproAssertiva />
+                </Permission>
+              }
+            />
 
             <Route path="reports">
               <Route

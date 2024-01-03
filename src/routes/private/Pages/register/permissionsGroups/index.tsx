@@ -91,6 +91,7 @@ export const PermissionsGroups = () => {
   } = useUpdatePermissionGroup(updateGroupBody);
   const { ProfilesData } = useGetProfiles({
     group: true,
+    enabled: true
   });
 
   useEffect(() => {

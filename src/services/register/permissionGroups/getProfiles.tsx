@@ -4,15 +4,19 @@ import { api } from "@config/api";
 import { ProfileInterface } from "@src/services/types/register/permissionsGroup/permissionsGroupinterface";
 import { useQuery } from "react-query";
 
-export function useGetProfiles(params: { group?: boolean }) {
+export function useGetProfiles(params: { group?: boolean; enabled?: boolean }) {
   const { data, isFetching, error, isSuccess, refetch } = useQuery<
     ProfileInterface[] | null | undefined
-  >("Profiles", async () => {
-    const response = await api.get("core/profile", {
-      params,
-    });
-    return response.data;
-  });
+  >(
+    "Profiles",
+    async () => {
+      const response = await api.get("core/profile", {
+        params,
+      });
+      return response.data;
+    },
+    { enabled: params.enabled === true }
+  );
 
   const ProfilesData = data;
   const isProfilesDataFetching = isFetching;
