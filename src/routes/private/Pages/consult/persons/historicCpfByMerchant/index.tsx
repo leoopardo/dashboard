@@ -34,6 +34,7 @@ export const HistoricCpfByMerchant = () => {
   const navigate = useNavigate();
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [query, setQuery] = useState<HistoricCpfByMerchantQuery>(INITIAL_QUERY);
+  const [navigateTo, setNavigateTo] = useState<boolean>(false);
   const { t } = useTranslation();
   const {
     HistoricCpfByMerchantData,
@@ -49,7 +50,8 @@ export const HistoricCpfByMerchant = () => {
     HistoricCpfByMerchantReportsMutate,
   } = useExportHistoricCpfByMerchant(query);
 
-  const [, setCurrentItem] = useState<PersonBlacklistReasonsItem | null>(null);
+  const [currentItem, setCurrentItem] =
+    useState<PersonBlacklistReasonsItem | null>(null);
 
   const columns: ColumnInterface[] = [
     { name: "merchant_id", type: "text", head: "id" },
@@ -60,6 +62,13 @@ export const HistoricCpfByMerchant = () => {
   useEffect(() => {
     refetchHistoricCpfByMerchantData();
   }, [query]);
+
+  useEffect(() => {
+    if (navigateTo) {
+      navigate("details", { state: { item: currentItem, query } });
+      setNavigateTo(false);
+    }
+  }, [navigateTo]);
 
   return (
     <Grid container style={{ padding: "25px" }}>
@@ -86,6 +95,7 @@ export const HistoricCpfByMerchant = () => {
             endDateKeyName="end_date"
             query={query}
             setQuery={setQuery}
+            haveInitialDate
           />
         </Grid>
 
@@ -142,7 +152,10 @@ export const HistoricCpfByMerchant = () => {
               {
                 label: "details",
                 icon: <EyeFilled style={{ fontSize: "18px" }} />,
-                onClick: (item) => navigate("details", { state: item }),
+                onClick: (item) => {
+                  setCurrentItem(item);
+                  setNavigateTo(true);
+                },
               },
             ]}
           />
@@ -161,6 +174,7 @@ export const HistoricCpfByMerchant = () => {
           startDateKeyName="start_date"
           endDateKeyName="end_date"
           initialQuery={INITIAL_QUERY}
+          haveInitialDate
         />
       )}
     </Grid>
