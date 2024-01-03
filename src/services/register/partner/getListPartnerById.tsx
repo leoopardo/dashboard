@@ -11,7 +11,7 @@ export function useListPartnerById(params: any) {
       params,
     });
     return response.data;
-  });
+  }, {enabled: params.enabled === true});
 
   const Partner = data;
   const isPartnerFetching = isFetching;

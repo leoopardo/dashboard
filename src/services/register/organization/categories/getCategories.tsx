@@ -26,6 +26,7 @@ export function useGetOrganizationCategories(
       refetchInterval: false,
       refetchIntervalInBackground: false,
       refetchOnMount: false,
+      enabled: params.enabled === true,
     }
   );
 
