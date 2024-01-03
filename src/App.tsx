@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import PBLogo from "@assets/icon.png";
-import { ConfigProvider, Layout, Spin } from "antd";
+import { ConfigProvider, FloatButton, Layout, Spin } from "antd";
 import { useEffect, useState } from "react";
 import ReactGA from "react-ga4";
 import { Toaster } from "react-hot-toast";
@@ -19,6 +19,8 @@ import { PublicRoutes } from "./routes/public";
 import { useValidate } from "./services/siginIn/validate.tsx";
 import { defaultTheme } from "./styles/defaultTheme/index.ts";
 import { GlobalStyle } from "./styles/globalStyles.ts";
+import { ArrowUpOutlined } from "@ant-design/icons";
+import { useViewportScroll, motion } from "framer-motion";
 const Logo = import.meta.env.VITE_APP_ICON ?? PBLogo;
 
 ReactGA.initialize(import.meta.env.VITE_APP_ANALYTICS_ID ?? "");
@@ -31,7 +33,12 @@ function App() {
   const [isIconSet, setIsIconSet] = useState<boolean>(false);
   const { isSuccess, validateError } = useValidate();
   const { theme } = useTheme();
+  const { scrollYProgress } = useViewportScroll();
+  const [showButton, setShowButton] = useState(false);
 
+  scrollYProgress.onChange((v) => {
+    setShowButton(document.documentElement.scrollHeight > 1300 && v > 0.3);
+  }); // Ajuste este valor conforme necessário
   useEffect(() => {
     if (!isIconSet) {
       const link: any = document.querySelector("link[rel~='icon']");
@@ -100,8 +107,9 @@ function App() {
                       : defaultTheme.colors.secondary,
                   padding: 0,
                   margin: 0,
-                  paddingXS: 5
+                  paddingXS: 5,
                 },
+                FloatButton: { colorBgElevated: "#e4e4e4" },
 
                 Button: {
                   colorTextLightSolid:
@@ -200,6 +208,25 @@ function App() {
                           }}
                         >
                           {element}
+                          <motion.div
+                            initial={{ opacity: !showButton ? 0 : 1 }}
+                            animate={{ opacity: showButton ? 1 : 0 }}
+                            transition={{ duration: 0.5 }}
+                          >
+                            <FloatButton
+                              data-test-id="float-button"
+                              style={{ backgroundColor: "#b6b6b6" }}
+                              tooltip={<div>{t("messages.scrool_top")}</div>}
+                              icon={<ArrowUpOutlined  data-test-id="float-button" />}
+                              onClick={() =>
+                                window.scrollTo({
+                                  top: 0,
+                                  left: 0,
+                                  behavior: "smooth",
+                                })
+                              }
+                            />
+                          </motion.div>
                         </Content>
                       </Layout>
                     </div>
