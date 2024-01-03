@@ -128,7 +128,7 @@ export const SerproAssertiva = () => {
           setOpen={setIsFiltersOpen}
           query={query}
           setQuery={setQuery}
-          filters={["start_date", "end_date", "merchant_id"]}
+          filters={["start_date", "end_date"]}
           refetch={() => {
             return;
           }}
