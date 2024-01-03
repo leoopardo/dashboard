@@ -1090,6 +1090,7 @@ export const MutateModal = ({
                         data-test-id={`${field.label}-input`}
                         size="large"
                         name="description"
+                        maxLength={255}
                         value={body?.description}
                         rows={3}
                         onChange={handleChange}
