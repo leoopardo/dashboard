@@ -957,7 +957,9 @@
     "today": "Hoje",
     "yesterday": "Ontem",
     "this_month": "Este mês",
-    "last_month": "Mês passado"
+    "last_month": "Mês passado",
+    "assertiva_count": "ASSERTIVA",
+    "serpro_count": "SERPRO"
   },
   "actions": {
     "details": "Detalhes",
