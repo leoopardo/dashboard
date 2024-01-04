@@ -934,7 +934,7 @@
     "payment_repeated_to_same_qrcode": "Payment repeated to same qrcode",
     "refund_reason": "Refund reason",
     "profiles": "Entity types",
-    "bank_acc_number": "Bank account numbr",
+    "bank_acc_number": "Bank account number",
     "pixtype": "PIX type",
     "profile_name": "Entity type",
     "linked_user_total": "Linked users",
