@@ -160,7 +160,8 @@
     "historic_cpf_merchant": "Histórico de CPF por Merchant",
     "historic_cpf_merchant_details": "Detalhes de CPF por Merchant",
     "settings": "Configurações",
-    "permissions_groups": "Grupos de permissões"
+    "permissions_groups": "Grupos de permissões",
+    "licenses": "Licenças"
   },
 
   "titles": {
@@ -173,9 +174,9 @@
     "total_aggregator_active": "Total de {{entity}} ativos",
     "total_registred_inactive": "Total de {{entity}} inativas",
     "total_aggregator_inactive": "Total de {{entity}} inativos",
+    "total_expired": "Total de {{entity}} expiradas",
     "total": "Total de {{entity}}",
     "operation_approve": "Aprovar Lançamentos",
-    "total_expired": "Total expirado",
     "deposits_bank": "Bancos de depósito",
     "withdraw_bank": "Bancos de saque",
     "fastpix_bank": "Bancos de FastPix",
@@ -278,6 +279,7 @@
     "update": "Atualizar",
     "update_menu": "Atualizar {{menu}}",
     "new_user": "novo usuário",
+    "new_license": "nova licença",
     "update_user": "Atualizar usuário",
     "new_categorie": "nova categoria",
     "update_general_configs": "Atualizar configurações gerais",
@@ -318,6 +320,7 @@
     "update_category": "Atualizar categoria",
     "modal_update_bank": "Atualizar banco",
     "modal_update_merchant": "Atualizar Empresa",
+    "new_license": "Nova licença",
     "new_partner": "Nova plataforma",
     "new_operator": "Novo operador",
     "update_operator": "Atualizar operador",
@@ -464,7 +467,8 @@
     "v3_id": "ID V3",
     "position": "Cargo",
     "search": "Pesquisar",
-    "allows_generate_qrcode": "Permite gerar QRCode PJ"
+    "allows_generate_qrcode": "Permite gerar QRCode PJ",
+    "license_number": "Número da licença"
   },
   "table": {
     "id": "ID",
@@ -956,7 +960,16 @@
     "today": "Hoje",
     "yesterday": "Ontem",
     "this_month": "Este mês",
-    "last_month": "Mês passado"
+    "last_month": "Mês passado",
+    "indeterminate_validity": "Vigência indeterminada",
+    "start_validity_date": "Data inicial de vigência",
+    "end_validity_date": "Data final de vigência",
+    "validity_date": "Período de vigência",
+    "license_data": "Dados da licensa",
+    "license": "Licença",
+    "linked_merchants": "Merchants vinculados",
+    "createdat_start": "Data inicial",
+    "createdat_end": "Data final"
   },
   "actions": {
     "details": "Detalhes",

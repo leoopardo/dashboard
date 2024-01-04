@@ -145,6 +145,8 @@ export const ViewModal = ({
               case "end_date_filter":
               case "initial_date_filter":
               case "final_date_filter":
+              case "start_validity_date":
+              case "end_validity_date":
                 return (
                   <Descriptions.Item
                     data-test-id={`details-${key}`}

@@ -300,6 +300,61 @@ export const MutateModal = ({
                     </Form.Item>
                   </Col>
                 );
+              
+                case "validity_date":
+                return (
+                  <Col span={24}>
+                    <Form.Item
+                      label={t("table.validity_date")}
+                      style={{ margin: 10 }}
+                      name="date"
+                      rules={[{ required: field.required }]}
+                    >
+                      <ConfigProvider locale={locale}>
+                        <RangePicker
+                          data-test-id="date-picker"
+                          size="large"
+                          panelRender={panelRender}
+                          format={
+                            navigator.language === "pt-BR"
+                              ? "DD/MM/YYYY HH:mm"
+                              : "YYYY/MM/DD HH:mm"
+                          }
+                          popupStyle={{ marginLeft: "40px" }}
+                          showTime
+                          value={[
+                            body?.start_validity_date
+                              ? dayjs(body?.start_validity_date).subtract(3, "hours")
+                              : null,
+                            body?.end_validity_date
+                              ? dayjs(body?.end_validity_date).subtract(3, "hours")
+                              : null,
+                          ]}
+                          clearIcon={<></>}
+                          placeholder={[
+                            t("table.start_date"),
+                            t("table.end_date"),
+                          ]}
+                          inputReadOnly
+                          onChange={(value: any) => {
+                            setBody((state: any) => ({
+                              ...state,
+                              start_validity_date: moment(value[0]?.$d).format(
+                                "YYYY-MM-DDTHH:mm:ss.SSS"
+                              ),
+                              end_validity_date: dayjs(
+                                moment(value[1]?.$d)
+                                  .add(3, "hours")
+                                  .format("YYYY-MM-DDTHH:mm:00.000")
+                              ),
+                            }));
+                            formRef?.current?.validateFields();
+                          }}
+                        />
+                      </ConfigProvider>
+                    </Form.Item>
+                  </Col>
+                );
               case "merchant_id":
                 if (permissions.register.merchant.merchant.merchant_list) {
                   return (
@@ -659,6 +714,7 @@ export const MutateModal = ({
               case "cash_in":
               case "cash_out":
               case "fastpix_in":
+              case "indeterminate_validity":
                 return (
                   <Col
                     span={12}

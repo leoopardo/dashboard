@@ -14,6 +14,7 @@ export interface MerchantsQuery {
   start_date?: string;
   end_date?: string;
   merchant_id?: number;
+  license_id_list?: number;
   partner_id?: number;
   name?: string;
   status?: boolean;

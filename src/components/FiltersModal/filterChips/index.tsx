@@ -171,6 +171,7 @@ export const FilterChips = ({
           case "age_end":
           case "value_end":
           case "delivered_at":
+          case "license_id_list":
             return;
 
           case "age_start":
