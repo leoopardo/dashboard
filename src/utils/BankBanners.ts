@@ -12,7 +12,7 @@ const BanksBanners = {
   "Genial Filial 01": Genial1,
   "Genial Filial 02": Genial2,
   "Bs2 Filial 01": BS21,
-  teste: Bs2,
+  Bs2: Bs2,
   "Bit Capital": BitCapital,
 };
 
