@@ -209,15 +209,23 @@ function App() {
                         >
                           {element}
                           <motion.div
-                            initial={{ opacity: !showButton ? 0 : 1 }}
-                            animate={{ opacity: showButton ? 1 : 0 }}
+                            initial={{
+                              opacity: !showButton ? 0 : 1,
+                              display: !showButton ? "none" : "flex",
+                            }}
+                            animate={{
+                              opacity: showButton ? 1 : 0,
+                              display: showButton ? "flex" : "none",
+                            }}
                             transition={{ duration: 0.5 }}
                           >
                             <FloatButton
                               data-test-id="float-button"
                               style={{ backgroundColor: "#b6b6b6" }}
                               tooltip={<div>{t("messages.scrool_top")}</div>}
-                              icon={<ArrowUpOutlined  data-test-id="float-button" />}
+                              icon={
+                                <ArrowUpOutlined data-test-id="float-button" />
+                              }
                               onClick={() =>
                                 window.scrollTo({
                                   top: 0,
