@@ -76,6 +76,8 @@ function App() {
     signInStorage();
   }, [isSuccess, validateError]);
 
+  console.log("teste");
+
   return (
     <I18nextProvider i18n={i18n} defaultNS={"translation"}>
       <ThemeProvider theme={defaultTheme}>
