@@ -4,6 +4,7 @@ import { StyleWrapperDatePicker } from "@src/components/FiltersModal/styles";
 import { CellphoneInput } from "@src/components/Inputs/CellphoneInput";
 import { AggregatorSelect } from "@src/components/Selects/aggregatorSelect";
 import { OperatorSelect } from "@src/components/Selects/operatorSelect";
+import { LicenseSelect } from "@src/components/Selects/licenseSelect";
 import { ValidateToken } from "@src/components/ValidateToken";
 import { useListClientClientBanks } from "@src/services/bank/listClientBanks";
 import { useGetMerchantBalanceTotal } from "@src/services/consult/merchant/balance/getMerchantBalanceTotal";
@@ -300,8 +301,8 @@ export const MutateModal = ({
                     </Form.Item>
                   </Col>
                 );
-              
-                case "validity_date":
+
+              case "validity_date":
                 return (
                   <Col span={24}>
                     <Form.Item
@@ -324,10 +325,16 @@ export const MutateModal = ({
                           showTime
                           value={[
                             body?.start_validity_date
-                              ? dayjs(body?.start_validity_date).subtract(3, "hours")
+                              ? dayjs(body?.start_validity_date).subtract(
+                                  3,
+                                  "hours"
+                                )
                               : null,
                             body?.end_validity_date
-                              ? dayjs(body?.end_validity_date).subtract(3, "hours")
+                              ? dayjs(body?.end_validity_date).subtract(
+                                  3,
+                                  "hours"
+                                )
                               : null,
                           ]}
                           clearIcon={<></>}
@@ -449,6 +456,33 @@ export const MutateModal = ({
                   );
                 }
                 return;
+
+              case "license_id":
+                  return (
+                    <Col span={24}>
+                      <Form.Item
+                        data-test-id="license-select-form-item"
+                        label={t(`table.${field.label}`)}
+                        name={field.label}
+                        style={{ margin: 10 }}
+                        rules={[
+                          {
+                            required: field.required && !body?.partner_id,
+                            message:
+                              t("input.required", {
+                                field: t(`table.${field.label}`),
+                              }) || "",
+                          },
+                        ]}
+                      >
+                        <LicenseSelect
+                          data-test-id="license-select"
+                          setQueryFunction={setBody}
+                          queryOptions={body}
+                        />
+                      </Form.Item>
+                    </Col>
+                  );
 
               case "aggregator_id":
                 if (
@@ -814,13 +848,13 @@ export const MutateModal = ({
 
                           const timer = setTimeout(
                             () =>
-                            setBody((state: any) => ({
-                              ...state,
-                              [field.label]: value,
-                            })),
+                              setBody((state: any) => ({
+                                ...state,
+                                [field.label]: value,
+                              })),
                             500
                           );
-                      
+
                           return () => {
                             clearTimeout(timer);
                           };
@@ -868,13 +902,13 @@ export const MutateModal = ({
 
                           const timer = setTimeout(
                             () =>
-                            setBody((state: any) => ({
-                              ...state,
-                              [field.label]: value,
-                            })),
+                              setBody((state: any) => ({
+                                ...state,
+                                [field.label]: value,
+                              })),
                             500
                           );
-                      
+
                           return () => {
                             clearTimeout(timer);
                           };

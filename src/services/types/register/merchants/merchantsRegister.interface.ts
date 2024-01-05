@@ -37,6 +37,8 @@ export interface MerchantsItem {
   email?: string | null;
   id?: number;
   merchantConfig?: IMerchantConfig;
+  license?:  {id?: number, name?: string};
+  license_id?: number;
   aggregator?: {id?: number, name?: string};
   operator?: {id?: number, name?: string};
   name?: string;
@@ -73,6 +75,7 @@ export interface MerchantByIdResponse {
   licenses: any[];
   merchant_type: string;
   name: string;
+  license: {id: number, name: string};
   operator: {id: number, name: string};
   organization_id: number;
   partner: {id: number, name: string};

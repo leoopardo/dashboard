@@ -17,6 +17,7 @@ import { MutateModal } from "@src/components/Modals/mutateGenericModal";
 import { AggregatorSelect } from "@src/components/Selects/aggregatorSelect";
 import { OperatorSelect } from "@src/components/Selects/operatorSelect";
 import { PartnerSelect } from "@src/components/Selects/partnerSelect";
+import { LicenseSelect } from "@src/components/Selects/licenseSelect";
 import { Toast } from "@src/components/Toast";
 import { queryClient } from "@src/services/queryClient";
 import { useDeleteMerchantAttachment } from "@src/services/register/merchant/attachments/deleteAttachment";
@@ -120,7 +121,7 @@ export const UpdateMerchant = () => {
   const [deleteFileId, setDeleteFileId] = useState<string>("");
 
   const { MerchantByIdData } = useGetMerchantById(location.state.id);
-
+  console.log({MerchantByIdData})
   const {
     ResponsiblesData,
     ResponsiblesDataError,
@@ -207,6 +208,7 @@ export const UpdateMerchant = () => {
       partner_id: currentMerchant?.partner?.id,
       aggregator_id: currentMerchant?.aggregator?.id,
       operator_id: currentMerchant?.operator?.id,
+      license_id:  Array.isArray(currentMerchant?.licenses) ? currentMerchant?.licenses[0]?.id : undefined,
       country: currentMerchant?.country ?? undefined,
     });
 
@@ -231,6 +233,23 @@ export const UpdateMerchant = () => {
           onFinish={() => UpdateMutate()}
         >
           <Row gutter={[8, 8]} style={{ width: "100%" }}>
+          <Col xs={{ span: 24 }} md={{ span: 24 }}>
+              <Form.Item
+                label={t("table.status")}
+                name="status"
+                valuePropName="checked"
+              >
+                <Switch
+                  checked={merchantBody?.status}
+                  onChange={(checked) => {
+                    setMerchantBody((state) => ({
+                      ...state,
+                      status: checked,
+                    }));
+                  }}
+                />
+              </Form.Item>
+            </Col>
             <Col xs={{ span: 24 }} md={{ span: 4 }}>
               <Form.Item
                 label={t("table.name")}
@@ -371,6 +390,14 @@ export const UpdateMerchant = () => {
               </Form.Item>
             </Col>
             <Col xs={{ span: 24 }} md={{ span: 4 }}>
+              <Form.Item label={t("table.license")} name="license_id">
+                <LicenseSelect
+                  queryOptions={merchantBody}
+                  setQueryFunction={setMerchantBody}
+                />
+              </Form.Item>
+            </Col>
+            <Col xs={{ span: 24 }} md={{ span: 4 }}>
               <Form.Item label={t("table.partner")} name="partner_id">
                 <PartnerSelect
                   queryOptions={merchantBody}
@@ -386,7 +413,7 @@ export const UpdateMerchant = () => {
                 />
               </Form.Item>
             </Col>
-            <Col xs={{ span: 24 }} md={{ span: 6 }}>
+            <Col xs={{ span: 24 }} md={{ span: 4 }}>
               <Form.Item label={t("table.operator")} name="operator_id">
                 <OperatorSelect
                   queryOptions={merchantBody}
@@ -394,23 +421,7 @@ export const UpdateMerchant = () => {
                 />
               </Form.Item>
             </Col>
-            <Col xs={{ span: 24 }} md={{ span: 2 }}>
-              <Form.Item
-                label={t("table.status")}
-                name="status"
-                valuePropName="checked"
-              >
-                <Switch
-                  checked={merchantBody?.status}
-                  onChange={(checked) => {
-                    setMerchantBody((state) => ({
-                      ...state,
-                      status: checked,
-                    }));
-                  }}
-                />
-              </Form.Item>
-            </Col>
+           
           </Row>
 
           <Row
