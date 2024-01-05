@@ -981,7 +981,8 @@
     "missing_process_handler": "Missing process handler",
     "test": "Test",
     "token_without_aggregator_id": "It is necessary to be linked to an aggregator to perform the action.",
-    "can_only_be_deleted_by_organization": "Can only be deleted by organizations."
+    "can_only_be_deleted_by_organization": "Can only be deleted by organizations.",
+    "token_characters": "The token must contain 6 characters."
   },
   "logs": {
     "login": "Login",
