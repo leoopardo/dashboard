@@ -289,6 +289,10 @@ export const UpdateAggregator = () => {
                 rules={[
                   {
                     type: "email",
+                    message:
+                      t("input.invalid", {
+                        field: t("input.email"),
+                      }) || "",
                   },
                 ]}
               >
