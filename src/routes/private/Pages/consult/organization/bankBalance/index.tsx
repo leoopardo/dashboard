@@ -24,9 +24,21 @@ export const OrganizationBankBalance = () => {
           icon={<ReloadOutlined />}
         ></Button>
       </Col>
-      {bankListData?.itens.map((bank) => (
-        <BankCard bank={bank} />
-      ))}
+      <Row
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          width: "100%",
+          height: "100%",
+          flexWrap: "wrap",
+          marginTop: -60
+        }}
+        gutter={[16, 16]}
+      >
+        {bankListData?.itens.map((bank) => (
+          <BankCard bank={bank} />
+        ))}
+      </Row>
     </Row>
   );
 };

@@ -165,13 +165,13 @@ export const ValidateToken = ({
       setIsOpen(false);
     }
 
-    /*  if (error || ValidatePhoneError) {
+     if (error || ValidatePhoneError) {
       message.error(
         t("messages.action_error", {
           action: t("messages.validated"),
         })
       );
-    } */
+    }
   }, [success, error, ValidatePhoneSuccess, ValidatePhoneError]);
 
   useEffect(() => {
@@ -235,6 +235,12 @@ export const ValidateToken = ({
               key="submit"
               type="primary"
               onClick={() => {
+                if(tokenState.length < 6) {
+                  message.error(
+                    t("error.token_characters")
+                  );
+                  return;
+                }
                 submit();
                 setValidationPhoneSent(false);
                 setValidationTokenSent(false);
@@ -262,7 +268,7 @@ export const ValidateToken = ({
           value={tokenState.toUpperCase()}
           onChange={setTokenState}
           numInputs={6}
-          renderInput={(props) => <input {...props} />}
+          renderInput={(props) => <input  {...props} />}
           shouldAutoFocus
           inputType="tel"
           inputStyle={{
