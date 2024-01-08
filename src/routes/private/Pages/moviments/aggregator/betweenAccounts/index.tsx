@@ -58,7 +58,7 @@ export const AggregatorTransfersBetweenAccounts = () => {
     refetchTransferBetweenAccountsData,
   } = useGetAggregatorTransferBetweenAccounts(query);
 
-  const { error, isLoading, isSuccess, mutate } =
+  const { error, isLoading, isSuccess, mutate, reset } =
     useCreateAggregatorTransferBetweenAccounts({
       ...body,
       aggregator_id: user?.aggregator_id || body?.aggregator_id,
@@ -319,6 +319,7 @@ export const AggregatorTransfersBetweenAccounts = () => {
           submitLoading={isLoading}
           error={error}
           success={isSuccess}
+          clear={reset}
           submitText={`${t("buttons.create")}`}
         />
       )}

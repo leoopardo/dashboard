@@ -168,8 +168,10 @@
     "total_registred": "Total {{entity}} registred",
     "total_onboarding": "Total {{entity}} onboarding",
     "total_registred_active": "Total {{entity}} registred active",
+    "total_aggregator_active": "Total {{entity}} active",
     "total_registred_inactive": "Total {{entity}} registred inactive",
     "total_expired": "Total {{entity}} expired",
+    "total_aggregator_inactive": "Total {{entity}} inactive",
     "total": "Total {{entity}}",
     "operation_approve": "Approve Operations",
     "deposits_bank": "Deposit banks",
@@ -309,6 +311,7 @@
     "confirm_password": "PLease confirm your password",
     "doest_match": "The new password that you entered do not match!",
     "name": "Name",
+    "invalid": "Invalid {{field}}",
     "username": "Username",
     "min_of": "Min of {{min}} characters",
     "id": "Invalid {{field}}",
@@ -995,7 +998,8 @@
     "test": "Test",
     "token_without_aggregator_id": "It is necessary to be linked to an aggregator to perform the action.",
     "can_only_be_deleted_by_organization": "Can only be deleted by organizations.",
-    "token_characters": "The token must contain 6 characters."
+    "token_characters": "The token must contain 6 characters.",
+    "same_to_and_from_balance": "The origin and destination balances must be different."
   },
   "logs": {
     "login": "Login",
