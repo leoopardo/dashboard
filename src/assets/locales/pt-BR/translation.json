@@ -994,7 +994,8 @@
     "test": "Teste",
     "token_without_aggregator_id": "Necessário estar vinculado a um agregador para realizar a ação",
     "can_only_be_deleted_by_organization": "Pode ser removido apenas por organizações.",
-    "token_characters": "O token deve conter 6 caracteres."
+    "token_characters": "O token deve conter 6 caracteres.",
+    "same_to_and_from_balance": "A origem e o destino do saldo devem ser diferentes."
   },
   "logs": {
     "login": "Login",
