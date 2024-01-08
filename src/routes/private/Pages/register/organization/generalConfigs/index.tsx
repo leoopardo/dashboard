@@ -568,6 +568,21 @@ export const GeneralConfigs = () => {
               <Form.Item
                 label={t("input.time_to_prevent_repeated_withdraw_minutes")}
                 name="time_to_prevent_repeated_withdraw_minutes"
+                rules={[
+                  {
+                    validator:() => {
+                      const numericValue = body?.time_to_prevent_repeated_withdraw_minutes;
+
+                      if (numericValue === 0) {
+                        return Promise.reject(
+                          t("messages.min_value_higher_then_zero") || ""
+                        );
+                      }
+              
+                      return Promise.resolve();
+                    },
+                  },
+                ]}
               >
                 <Input
                   size="large"
@@ -609,6 +624,21 @@ export const GeneralConfigs = () => {
               <Form.Item
                 label={t("input.check_last_waiting_pix_time_minutes")}
                 name="check_last_waiting_pix_time_minutes"
+                rules={[
+                  {
+                    validator:() => {
+                      const numericValue = body?.check_last_waiting_pix_time_minutes;
+
+                      if (numericValue === 0) {
+                        return Promise.reject(
+                          t("messages.min_value_higher_then_zero") || ""
+                        );
+                      }
+              
+                      return Promise.resolve();
+                    },
+                  },
+                ]}
               >
                 <Input
                   size="large"
@@ -622,6 +652,21 @@ export const GeneralConfigs = () => {
               <Form.Item
                 label={t("input.paybrokers_qr_code_expire_hours")}
                 name="paybrokers_qr_code_expire_hours"
+                rules={[
+                  {
+                    validator:() => {
+                      const numericValue = body?.paybrokers_qr_code_expire_hours;
+
+                      if (numericValue === 0) {
+                        return Promise.reject(
+                          t("messages.min_value_higher_then_zero") || ""
+                        );
+                      }
+              
+                      return Promise.resolve();
+                    },
+                  },
+                ]}
               >
                 <Input
                   size="large"
@@ -635,6 +680,21 @@ export const GeneralConfigs = () => {
               <Form.Item
                 label={t("input.time_receive_after_expire_qr_code_hours")}
                 name="time_receive_after_expire_qr_code_hours"
+                rules={[
+                  {
+                    validator:() => {
+                      const numericValue = body?.time_receive_after_expire_qr_code_hours;
+
+                      if (numericValue === 0) {
+                        return Promise.reject(
+                          t("messages.min_value_higher_then_zero") || ""
+                        );
+                      }
+              
+                      return Promise.resolve();
+                    },
+                  },
+                ]}
               >
                 <Input
                   size="large"
@@ -648,6 +708,21 @@ export const GeneralConfigs = () => {
               <Form.Item
                 label={t("input.fastpix_qr_code_expire_seconds")}
                 name="fastpix_qr_code_expire_seconds"
+                rules={[
+                  {
+                    validator:() => {
+                      const numericValue = body?.fastpix_qr_code_expire_seconds;
+
+                      if (numericValue === 0) {
+                        return Promise.reject(
+                          t("messages.min_value_higher_then_zero") || ""
+                        );
+                      }
+              
+                      return Promise.resolve();
+                    },
+                  },
+                ]}
               >
                 <Input
                   size="large"
