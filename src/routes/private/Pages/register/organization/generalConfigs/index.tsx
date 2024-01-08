@@ -79,6 +79,13 @@ export const GeneralConfigs = () => {
   const tabFinancial = document.querySelector('[data-node-key="1"]');
   const tabAdmin = document.querySelector('[data-node-key="2"]');
 
+  const handleSubmit = () => {
+    delete body.id;
+    delete body.organization_id;
+    updateMutate();
+    setIsConfirmOpen(false);
+  };
+
   useEffect(() => {
     setFirstChildDivId(tabFinancial, "tab-financial");
     setFirstChildDivId(tabAdmin, "tab-admin");
@@ -93,12 +100,32 @@ export const GeneralConfigs = () => {
       key: "1",
       label: t("table.financial"),
       children: (
-        <Form ref={formRef} layout="vertical" initialValues={data ? data : {}}>
+        <Form
+          ref={formRef}
+          layout="vertical"
+          initialValues={data ? data : {}}
+          onFinish={handleSubmit}
+        >
           <Grid container spacing={1}>
             <Grid item xs={12} md={4} ref={refCashInMaxValue}>
               <Form.Item
                 label={t("input.cash_in_max_value")}
                 name="cash_in_max_value"
+                rules={[
+                  {
+                    validator:() => {
+                      const numericValue = body?.cash_in_max_value;
+
+                      if (numericValue === 0) {
+                        return Promise.reject(
+                          t("messages.min_value_higher_then_zero") || ""
+                        );
+                      }
+              
+                      return Promise.resolve();
+                    },
+                  },
+                ]}
               >
                 <CurrencyInput
                   data-test-id="cash_in_max_value"
@@ -108,7 +135,6 @@ export const GeneralConfigs = () => {
                       cash_in_max_value: +originalValue,
                     }));
                   }}
-                  value={body?.cash_out_max_value}
                   InputElement={
                     <Input
                       size="large"
@@ -144,6 +170,22 @@ export const GeneralConfigs = () => {
               <Form.Item
                 label={t("input.cash_in_max_value_receive_by_pj")}
                 name="cash_in_max_value_receive_by_pj"
+                rules={[
+                  {
+                    validator: () => {
+                      const numericValue =
+                        body?.cash_in_max_value_receive_by_pj;
+
+                      if (numericValue === 0) {
+                        return Promise.reject(
+                          t("messages.min_value_higher_then_zero") || ""
+                        );
+                      }
+
+                      return Promise.resolve();
+                    },
+                  },
+                ]}
               >
                 <CurrencyInput
                   data-test-id="cash_in_max_value_receive_by_pj"
@@ -194,6 +236,21 @@ export const GeneralConfigs = () => {
               <Form.Item
                 label={t("input.cash_in_max_value_receive_by_different_payer")}
                 name="cash_in_max_value_receive_by_different_payer"
+                rules={[
+                  {
+                    validator:() => {
+                      const numericValue = body?.cash_in_max_value_receive_by_different_payer;
+
+                      if (numericValue === 0) {
+                        return Promise.reject(
+                          t("messages.min_value_higher_then_zero") || ""
+                        );
+                      }
+              
+                      return Promise.resolve();
+                    },
+                  },
+                ]}
               >
                 <CurrencyInput
                   data-test-id="cash_in_max_value_receive_by_different_payer"
@@ -219,6 +276,21 @@ export const GeneralConfigs = () => {
               <Form.Item
                 label={t("input.cash_out_max_value")}
                 name="cash_out_max_value"
+                rules={[
+                  {
+                    validator:() => {
+                      const numericValue = body?.cash_out_max_value;
+
+                      if (numericValue === 0) {
+                        return Promise.reject(
+                          t("messages.min_value_higher_then_zero") || ""
+                        );
+                      }
+              
+                      return Promise.resolve();
+                    },
+                  },
+                ]}
               >
                 <CurrencyInput
                   data-test-id="cash_out_max_value"
@@ -243,6 +315,21 @@ export const GeneralConfigs = () => {
               <Form.Item
                 label={t("input.cash_in_max_value_by_month")}
                 name="cash_in_max_value_by_month"
+                rules={[
+                  {
+                    validator:() => {
+                      const numericValue = body?.cash_in_max_value_by_month;
+
+                      if (numericValue === 0) {
+                        return Promise.reject(
+                          t("messages.min_value_higher_then_zero") || ""
+                        );
+                      }
+              
+                      return Promise.resolve();
+                    },
+                  },
+                ]}
               >
                 <CurrencyInput
                   data-test-id="cash_in_max_value_by_month"
@@ -267,6 +354,21 @@ export const GeneralConfigs = () => {
               <Form.Item
                 label={t("input.cash_out_max_value_by_month")}
                 name="cash_out_max_value_by_month"
+                rules={[
+                  {
+                    validator:() => {
+                      const numericValue = body?.cash_out_max_value_by_month;
+
+                      if (numericValue === 0) {
+                        return Promise.reject(
+                          t("messages.min_value_higher_then_zero") || ""
+                        );
+                      }
+              
+                      return Promise.resolve();
+                    },
+                  },
+                ]}
               >
                 <CurrencyInput
                   data-test-id="cash_out_max_value_by_month"
@@ -304,7 +406,7 @@ export const GeneralConfigs = () => {
       key: "2",
       label: t("table.administrative"),
       children: (
-        <Form ref={formRef} layout="vertical" initialValues={data ? data : {}}>
+        <Form ref={formRef} layout="vertical" initialValues={data ? data : {}} onFinish={handleSubmit}>
           <Grid
             container
             spacing={1}
@@ -627,10 +729,7 @@ export const GeneralConfigs = () => {
             open={isConfirmOpen}
             style={{ maxWidth: "340px" }}
             onConfirm={() => {
-              delete body.id;
-              delete body.organization_id;
-              updateMutate();
-              setIsConfirmOpen(false);
+              formRef.current?.submit();
             }}
             okButtonProps={{ loading: updateIsLoading }}
             okText={t("messages.yes_update")}
