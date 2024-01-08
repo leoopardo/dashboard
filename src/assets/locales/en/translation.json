@@ -309,6 +309,7 @@
     "confirm_password": "PLease confirm your password",
     "doest_match": "The new password that you entered do not match!",
     "name": "Name",
+    "invalid": "Invalid {{field}}",
     "username": "Username",
     "min_of": "Min of {{min}} characters",
     "id": "Invalid {{field}}",
