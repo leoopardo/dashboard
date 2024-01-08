@@ -320,6 +320,10 @@ export const UpdateMerchant = () => {
                 rules={[
                   {
                     type: "email",
+                    message:
+                      t("input.invalid", {
+                        field: t("input.email"),
+                      }) || "",
                   },
                 ]}
               >
