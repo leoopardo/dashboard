@@ -291,7 +291,7 @@ export const OrgonizationManual = () => {
                 error={OrganizationManualReportsError}
                 success={OrganizationManualReportsIsSuccess}
                 loading={OrganizationManualReportsIsLoading}
-                reportPath="/moviment/organization_moviments/organization_moviments_reports"
+                reportPath="/moviment/organization_moviments/organization_moviments_reports/organization_manual_moviments_reports"
               />
             </Grid>
           )}
