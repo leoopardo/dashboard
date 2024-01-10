@@ -3,7 +3,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {
-  AppstoreAddOutlined,
   DownloadOutlined,
   SendOutlined,
   UploadOutlined,
@@ -13,19 +12,21 @@ import { useUpdateMerchantBlacklist } from "@src/services/register/merchant/blac
 import {
   Button,
   Col,
+  Empty,
   Form,
   Input,
   InputRef,
-  Popconfirm,
   Row,
   Table,
   Upload,
+  notification,
 } from "antd";
+import { Buffer } from "buffer";
 import { FormInstance } from "antd/lib/form/Form";
-import { unparse } from "papaparse";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useCSVDownloader, usePapaParse } from "react-papaparse";
+import { useNavigate } from "react-router-dom";
 
 const EditableContext = React.createContext<FormInstance<any> | null>(null);
 
@@ -132,12 +133,15 @@ interface DataType {
   CPF: string;
   REASON: string;
   DESCRIPTION: string;
+  MERCHANT_ID: string;
+  CAN_BE_DELETED_ONLY_BY_ORGANIZATION: string;
 }
 
 type ColumnTypes = Exclude<EditableTableProps["columns"], undefined>;
 
 export const ImportBlacklist = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const { readRemoteFile } = usePapaParse();
   const initialData: DataType[] = [
     {
@@ -145,19 +149,42 @@ export const ImportBlacklist = () => {
       CPF: "11111111111",
       REASON: "Fraude",
       DESCRIPTION: "Solicitado pelo merchant xyz",
+      MERCHANT_ID: "1",
+      CAN_BE_DELETED_ONLY_BY_ORGANIZATION: "false",
     },
   ];
-  const [dataSource, setDataSource] = useState<DataType[]>(initialData);
+  const [dataSource, setDataSource] = useState<DataType[]>([]);
   const [body, setBody] = useState<{ content: string }>({ content: "" });
   const { error, isLoading, isSuccess, mutate } =
     useUpdateMerchantBlacklist(body);
   const uploadRef = useRef<HTMLButtonElement | null>(null);
   const { CSVDownloader } = useCSVDownloader();
 
-  const handleDelete = (key: React.Key) => {
-    const newData = dataSource.filter((item) => item.key !== key);
-    setDataSource(newData);
+  const [api, contextHolder] = notification.useNotification();
+
+  const openNotificationWithIcon = () => {
+    const BtnNavigate = (
+      <Button
+        onClick={() =>
+          navigate("/register/merchant/merchant_blacklists/uploads_merchant_blacklist")
+        }
+      >
+        Uploads
+      </Button>
+    );
+    api.info({
+      message: t("messages.creating_csv"),
+      description: t("messages.creating_csv_message"),
+      duration: 0,
+      btn: BtnNavigate,
+    });
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      openNotificationWithIcon();
+    }
+  }, [error, isSuccess]);
 
   const defaultColumns: (ColumnTypes[number] & {
     editable?: boolean;
@@ -180,45 +207,16 @@ export const ImportBlacklist = () => {
       editable: true,
     },
     {
-      title: "",
-      dataIndex: "actions",
-      render: (_, record: any) =>
-        dataSource.length >= 1 ? (
-          <Popconfirm
-            title={t("messages.are_you_sure", {
-              action: t("messages.delete").toLocaleLowerCase(),
-              itens: t("table.row").toLocaleLowerCase(),
-            })}
-            onConfirm={() => handleDelete(record?.key)}
-            cancelText={t("messages.no_cancel")}
-            okText={t("messages.yes_delete")}
-          >
-            <a>{t("messages.delete")}</a>
-          </Popconfirm>
-        ) : null,
+      title: t("table.merchant_id"),
+      dataIndex: "MERCHANT_ID",
+      editable: true,
+    },
+    {
+      title: t("input.can_be_deleted_only_by_organization"),
+      dataIndex: "CAN_BE_DELETED_ONLY_BY_ORGANIZATION",
+      editable: true,
     },
   ];
-
-  const handleAdd = () => {
-    const newData: DataType = {
-      key: dataSource.length + 1,
-      CPF: "11111111111",
-      REASON: "Fraude",
-      DESCRIPTION: "Solicitado pelo merchant xyz",
-    };
-    setDataSource([...dataSource, newData]);
-  };
-
-  const handleSave = (row: DataType) => {
-    const newData = [...dataSource];
-    const index = newData.findIndex((item) => row.key === item.key);
-    const item = newData[index];
-    newData.splice(index, 1, {
-      ...item,
-      ...row,
-    });
-    setDataSource(newData);
-  };
 
   const components = {
     body: {
@@ -235,35 +233,20 @@ export const ImportBlacklist = () => {
       ...col,
       onCell: (record: DataType) => ({
         record,
-        editable: col.editable,
         dataIndex: col.dataIndex,
         title: col.title,
-        handleSave,
       }),
     };
   });
 
   const handleUpload = () => {
-    const csvHeader = ["CPF", "REASON", "DESCRIPTION"];
-
-    const csvData = unparse({
-      fields: csvHeader,
-      data: dataSource,
-    });
-    const base64Encoded = btoa(csvData.replace(/(\r\n|\n|\r)/gm, "\n"));
-
-    setBody({ content: base64Encoded });
+    mutate();
+    setBody({ content: "" });
   };
-
-  useEffect(() => {
-    if (body.content) {
-      mutate();
-      setBody({ content: "" });
-    }
-  }, [body]);
 
   return (
     <Row style={{ padding: 25 }}>
+      {contextHolder}
       <Col span={24} style={{ marginBottom: 8 }}>
         <Row gutter={[8, 8]} style={{ width: "100%" }}>
           <Col xs={{ span: 24 }} md={{ span: 6 }} lg={{ span: 4 }}>
@@ -295,7 +278,17 @@ export const ImportBlacklist = () => {
                   },
                   download: true,
                 });
+                const reader = new FileReader();
+                reader.readAsText(file);
+                reader.onload = () => {
+                  console.log(`${reader.result}`);
 
+                  const base64Enconded = Buffer.from(
+                    `${reader?.result}`?.replace(/(\r\n|\n|\r)/gm, "\n").trim()
+                  ).toString("base64");
+
+                  setBody({ content: base64Enconded });
+                };
                 return false;
               }}
             >
@@ -311,23 +304,7 @@ export const ImportBlacklist = () => {
               </button>
             </Upload>
           </Col>
-          <Col xs={{ span: 24 }} md={{ span: 6 }} lg={{ span: 4 }}>
-            <Button
-              size="large"
-              onClick={handleAdd}
-              type="primary"
-              style={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                textAlign: "center",
-              }}
-              icon={<AppstoreAddOutlined />}
-            >
-              {t("table.add_row")}
-            </Button>
-          </Col>
+
           <Col
             xs={{ span: 24 }}
             md={{ span: 6 }}
@@ -351,21 +328,29 @@ export const ImportBlacklist = () => {
                   CPF: 11111111111,
                   REASON: "Fraude",
                   DESCRIPTION: "Solicitado pelo merchant xyz",
+                  MERCHANT_ID: "1",
+                  CAN_BE_DELETED_ONLY_BY_ORGANIZATION: "false",
                 },
                 {
-                  CPF: 22222222222,
-                  REASON: "Administrativo",
+                  CPF: 11111111111,
+                  REASON: "Fraude",
                   DESCRIPTION: "Solicitado pelo merchant xyz",
+                  MERCHANT_ID: "1",
+                  CAN_BE_DELETED_ONLY_BY_ORGANIZATION: "false",
                 },
                 {
-                  CPF: 33333333333,
-                  REASON: "Interno",
+                  CPF: 11111111111,
+                  REASON: "Fraude",
                   DESCRIPTION: "Solicitado pelo merchant xyz",
+                  MERCHANT_ID: "1",
+                  CAN_BE_DELETED_ONLY_BY_ORGANIZATION: "false",
                 },
                 {
-                  CPF: 44444444444,
-                  REASON: "Morte",
+                  CPF: 11111111111,
+                  REASON: "Fraude",
                   DESCRIPTION: "Solicitado pelo merchant xyz",
+                  MERCHANT_ID: "1",
+                  CAN_BE_DELETED_ONLY_BY_ORGANIZATION: "false",
                 },
               ]}
             >
@@ -375,8 +360,8 @@ export const ImportBlacklist = () => {
               </a>
             </CSVDownloader>
           </Col>
-          <Col xs={{ span: 0 }} md={{ span: 0 }} lg={{ span: 8 }} />
-          <Col xs={{ span: 24 }} md={{ span: 6 }} lg={{ span: 4 }}>
+          <Col xs={{ span: 0 }} md={{ span: 0 }} lg={{ span: 10 }} />
+          <Col xs={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }}>
             <Button
               size="large"
               type="dashed"
@@ -393,7 +378,7 @@ export const ImportBlacklist = () => {
               }}
               icon={<SendOutlined style={{ fontSize: 16 }} />}
             >
-              {t("buttons.confirm_import")}
+              Confirmar upload
             </Button>
           </Col>
         </Row>
@@ -407,6 +392,15 @@ export const ImportBlacklist = () => {
           bordered
           dataSource={dataSource}
           columns={columns as ColumnTypes}
+          locale={{
+            emptyText: (
+              <Empty
+                style={{ padding: 15, paddingBottom: 30 }}
+                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                description={t("messages.empty_table_data")}
+              />
+            ),
+          }}
         />
       </Col>
 
