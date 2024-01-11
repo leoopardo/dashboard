@@ -242,8 +242,8 @@ export const PrivateRoutes = () => {
               element={
                 <Permission
                   permission={
-                    responseValidate?.permissions?.report?.merchant?.balance
-                      ?.report_merchant_balance_export_csv
+                    responseValidate?.permissions?.report?.merchant?.extract
+                      ?.report_merchant_extract_export_csv
                   }
                 >
                   <ConsultMerchantReports />
