@@ -428,8 +428,10 @@
     "v3_id": "ID V3",
     "position": "Position",
     "search": "Search",
-    "allows_generate_qrcode": "Allows generate QRCode"
+    "allows_generate_qrcode": "Allows generate QRCode",
+    "add_all_columns": "Add all columns"
   },
+  
   "modal": {
     "confirm": "Confirm",
     "validate_token": "Validate token",
