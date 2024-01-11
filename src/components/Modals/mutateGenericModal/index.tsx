@@ -395,6 +395,35 @@ export const MutateModal = ({
                 }
                 return;
 
+              case "email":
+                return (
+                  <Form.Item
+                    data-test-id="email"
+                    label={t(`table.email`)}
+                    name="email"
+                    style={{ margin: 10, width: "100%" }}
+                    rules={[
+                      {
+                        type: "email",
+                        message:
+                          t("input.invalid", {
+                            field: t("input.email"),
+                          }) || "",
+                      },
+                    ]}
+                  >
+                    <Input
+                    style={{width: "100%"}}
+                      data-test-id="email-input"
+                      size="large"
+                      name="email"
+                      autoComplete="new-password"
+                      value={body.cellphone}
+                      onChange={handleChange}
+                    />
+                  </Form.Item>
+                );
+
               case "aggregator_id":
                 if (
                   permissions.register.aggregator.aggregator.aggregator_list &&
@@ -758,13 +787,13 @@ export const MutateModal = ({
 
                           const timer = setTimeout(
                             () =>
-                            setBody((state: any) => ({
-                              ...state,
-                              [field.label]: value,
-                            })),
+                              setBody((state: any) => ({
+                                ...state,
+                                [field.label]: value,
+                              })),
                             500
                           );
-                      
+
                           return () => {
                             clearTimeout(timer);
                           };
@@ -812,13 +841,13 @@ export const MutateModal = ({
 
                           const timer = setTimeout(
                             () =>
-                            setBody((state: any) => ({
-                              ...state,
-                              [field.label]: value,
-                            })),
+                              setBody((state: any) => ({
+                                ...state,
+                                [field.label]: value,
+                              })),
                             500
                           );
-                      
+
                           return () => {
                             clearTimeout(timer);
                           };
