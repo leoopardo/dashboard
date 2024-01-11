@@ -3,6 +3,7 @@
 import { DownloadOutlined } from "@ant-design/icons";
 import {
   Button,
+  Checkbox,
   Col,
   Form,
   Modal,
@@ -13,6 +14,7 @@ import {
   Typography,
   notification,
 } from "antd";
+import { CheckboxChangeEvent } from "antd/es/checkbox";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
@@ -83,6 +85,10 @@ export const ExportCustomReportsModal = ({
     secureLocalStorage.setItem(reportName, selectedFields.join("%"));
     secureLocalStorage.setItem("comma", `${comma}`);
   };
+
+  const handleSelectAll = (e: CheckboxChangeEvent) => {
+    e.target.checked ?  setSelectedFields(fields ?? []) : setSelectedFields([])
+  }
 
   useEffect(() => {
     const storage: string[] | undefined = `${secureLocalStorage?.getItem(
@@ -184,6 +190,8 @@ export const ExportCustomReportsModal = ({
                   />
                 </Form.Item>
               )}
+              <Checkbox style={{marginBottom: "20px"}} onChange={handleSelectAll}>{t("input.add_all_columns")}</Checkbox>
+
               <Form.Item label={t("input.csv_columns")} required>
                 <Space.Compact style={{ width: "100%" }} size="large">
                   <Select
@@ -216,6 +224,8 @@ export const ExportCustomReportsModal = ({
               </Form.Item>
             </Form>
           </Col>
+
+
           {selectedFields.length >= 1 && (
             <Col span={24}>
               <Typography>{t("messages.preview_csv")}</Typography>
