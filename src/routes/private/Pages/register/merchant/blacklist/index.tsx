@@ -75,9 +75,10 @@ export const MerchantBlacklist = () => {
     MerchantBlacklistReportsMutate,
   } = useCreateMerchantBlacklistReports(query);
 
-  const { isDeleteLoading, mutateDelete, DeleteError, isDeleteSuccess } = useDeleteMechantBlacklist({
-    cpf: currentItem?.cpf,
-  });
+  const { isDeleteLoading, mutateDelete, DeleteError, isDeleteSuccess } =
+    useDeleteMechantBlacklist({
+      cpf: currentItem?.cpf,
+    });
 
   const columns: ColumnInterface[] = [
     { name: "cpf", type: "document" },
@@ -234,10 +235,10 @@ export const MerchantBlacklist = () => {
                 onClick: () => setIsDeleteOpen(true),
                 disabled: (item) =>
                   !permissions?.register?.merchant?.blacklist
-                    ?.merchant_blacklist_delete &&
-                  !item?.can_be_deleted_only_by_organization &&
-                  type !== 1 &&
-                  type !== 2,
+                    ?.merchant_blacklist_delete ||
+                  (!item?.can_be_deleted_only_by_organization &&
+                    type !== 1 &&
+                    type !== 2),
               },
             ]}
           />
