@@ -553,7 +553,7 @@
     "page": "Page",
     "limit": "Limit",
     "pending": "Pending",
-    "paid_to_merchant": "Paid to merchant",
+    "paid_to_merchant": "Refund to merchant",
     "error": "Error",
     "success": "Success",
     "primary_logs": "Primary notifications logs",

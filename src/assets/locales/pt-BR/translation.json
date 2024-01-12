@@ -551,7 +551,7 @@
     "page": "Página",
     "limit": "Limite",
     "pending": "Aguardando",
-    "paid_to_merchant": "Pago para empresa",
+    "paid_to_merchant": "Devolvido para empresa",
     "error": "Erro",
     "success": "Sucesso",
     "primary_logs": "Logs de notificação primário",
