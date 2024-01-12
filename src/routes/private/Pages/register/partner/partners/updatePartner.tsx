@@ -234,7 +234,7 @@ export const UpdatePartner = () => {
                     validator: validateFormCnpj,
                   },
                   {
-                    required: true,
+                    required: false,
                     message:
                       t("input.required", {
                         field: t(`input.cnpj`),
@@ -273,6 +273,10 @@ export const UpdatePartner = () => {
                 rules={[
                   {
                     type: "email",
+                    message:
+                      t("input.invalid", {
+                        field: t("input.email"),
+                      }) || "",
                   },
                 ]}
               >

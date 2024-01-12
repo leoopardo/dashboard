@@ -61,7 +61,7 @@ const INITIAL_QUERY = {
 export const Dashboard = () => {
   const { t } = useTranslation();
   const { error } = useErrorContext();
-  const { permissions } = queryClient.getQueryData(
+  const { permissions, type } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
   const user = queryClient.getQueryData("validate") as ValidateInterface;
@@ -133,7 +133,7 @@ export const Dashboard = () => {
       ),
     });
   }
-
+  
   return (
     <Row
       style={{
@@ -185,7 +185,7 @@ export const Dashboard = () => {
               ?.report_paybrokers_balance_list
               ? 40
               : 0,
-          transform: permissions?.report?.paybrokers?.bank_balance?.menu ? "" : "translateY(-74px)",
+          transform: permissions?.report?.paybrokers?.bank_balance?.menu ? "" : type === 2 ? "translateY(-17px)" :  "translateY(-74px)",
           padding: 15,
         }}
       >

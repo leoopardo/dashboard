@@ -232,6 +232,7 @@
     "preview_csv": "Prévia do CSV",
     "preview_file": "arquivo prévia",
     "value_chart_area": "Gráfico de valores",
+    "scrool_top": "Voltar ao topo",
     "operations_number_chart_area": "Gráfico de número de operações",
     "operation_approve": "Deseja aprovar os lançamentos selecionados?",
     "no_cellphone": "Você deve adicionar um número de telefone ao seu usuário. Para isso, acesse 'Editar usuário' no canto superior esquerdo da tela.",
@@ -463,10 +464,11 @@
     "v3_id": "ID V3",
     "position": "Cargo",
     "search": "Pesquisar",
-    "allows_generate_qrcode": "Permite gerar QRCode PJ"
+    "allows_generate_qrcode": "Permite gerar QRCode PJ",
+    "add_all_columns": "Adicionar todas as colunas"
   },
   "table": {
-    "id": "ID",
+    "id": "id",
     "bank": "Banco",
     "merchant_name": "Empresa",
     "value": "Valor",
@@ -478,7 +480,7 @@
     "buyer_document": "Documento do comprador",
     "document": "Documento",
     "status": "Situação",
-    "_id": "ID",
+    "_id": "id",
     "paid": "Pago",
     "txid": "TX ID",
     "waiting": "Aguardando",
@@ -549,7 +551,7 @@
     "page": "Página",
     "limit": "Limite",
     "pending": "Aguardando",
-    "paid_to_merchant": "Pago para empresa",
+    "paid_to_merchant": "Devolvido para empresa",
     "error": "Erro",
     "success": "Sucesso",
     "primary_logs": "Logs de notificação primário",
@@ -827,7 +829,7 @@
     "available_balance": "Saldo disponível",
     "operations_value": "Valor de operações",
     "category_id": "Categoria",
-    "refetch_data": "Recarregar dados",
+    "refetch_data": "Recarregar dados da tabela",
     "reference_day": "Data de referência",
     "invalid": "Inválido",
     "download_payment_voucher": "Baixar comprovante",
@@ -992,7 +994,9 @@
     "missing_process_handler": "Manipulador de processo não encontrado.",
     "test": "Teste",
     "token_without_aggregator_id": "Necessário estar vinculado a um agregador para realizar a ação",
-    "can_only_be_deleted_by_organization": "Pode ser removido apenas por organizações."
+    "can_only_be_deleted_by_organization": "Pode ser removido apenas por organizações.",
+    "token_characters": "O token deve conter 6 caracteres.",
+    "same_to_and_from_balance": "A origem e o destino do saldo devem ser diferentes."
   },
   "logs": {
     "login": "Login",

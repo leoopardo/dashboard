@@ -272,7 +272,7 @@ export const FiltersModal = ({
                   ]}
                 >
                   <ConfigProvider locale={locale}>
-                    <RangePicker
+                    <RangePicker 
                       presets={
                         !isMobile
                           ? [
@@ -367,6 +367,7 @@ export const FiltersModal = ({
                       autoFocus={false}
                       autoComplete="off"
                       allowClear
+                      inputReadOnly
                     />
                   </ConfigProvider>
                 </Form.Item>

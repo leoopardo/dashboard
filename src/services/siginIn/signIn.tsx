@@ -31,9 +31,11 @@ export function useToken(
       secureLocalStorage.setItem("token", response.data.token);
     }
     sessionStorage.setItem("token", response.data.token);
-
     return response.data;
   });
+
+  console.log(error);
+  
 
   useEffect(() => {
     if (data?.token) {

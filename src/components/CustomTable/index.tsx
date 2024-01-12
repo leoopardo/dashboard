@@ -29,6 +29,7 @@ import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
+import CachedIcon from "@mui/icons-material/Cached";
 import { Mobile } from "./mobile";
 
 export interface ColumnInterface {
@@ -761,18 +762,22 @@ export const CustomTable = (props: TableProps) => {
                 <Tooltip title={t("table.refetch_data")}>
                   <Button
                     data-test-id="refetch-button"
-                    type="link"
+                    type="primary"
                     onClick={() => {
                       if (props?.refetch) props.refetch();
                     }}
+                    loading={props.loading}
                     style={{
                       width: "100%",
+                      height: "100%",
                       display: "flex",
                       justifyContent: "center",
+                      color: "#fff",
+                      backgroundColor: defaultTheme.colors.secondary,
+                      margin: 0,
                     }}
-                  >
-                    <ReloadOutlined style={{ fontSize: "16px" }} />
-                  </Button>
+                    icon={<CachedIcon style={{ fontSize: "28px" }} />}
+                  ></Button>
                 </Tooltip>
               ) : (
                 ""
@@ -780,6 +785,7 @@ export const CustomTable = (props: TableProps) => {
               key: column?.name,
               dataIndex: column?.name,
               width: 60,
+              style: { backgroudColor: "red" },
               render: (_a: any, record: any) => (
                 <div
                   style={{ width: "100%", textAlign: "center" }}
@@ -1164,6 +1170,7 @@ export const CustomTable = (props: TableProps) => {
                   {t(`table.${column?.head ?? column?.name}`)}
                 </Typography>
               ),
+              fixed: "left",
               key: column?.sort_name
                 ? column.sort_name
                 : Array.isArray(column?.name)

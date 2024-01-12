@@ -339,7 +339,7 @@ export const Partners = () => {
           setOpen={setIsNewCategorieModal}
           fields={[
             { label: "name", required: true },
-            { label: "cnpj", required: true },
+            { label: "cnpj", required: false },
             { label: "cellphone", required: false },
             { label: "email", required: false },
             { label: "country", required: true },

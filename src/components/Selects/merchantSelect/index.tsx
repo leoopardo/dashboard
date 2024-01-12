@@ -34,9 +34,11 @@ export const MerchantSelect = ({
     limit: 200,
     merchant_id: queryOptions.merchant_id ?? undefined,
   });
+
   const [value, setValue] = useState<any>(null);
   const debounceSearch = useDebounce(query.name);
   const [options, setOptions] = useState<any | undefined>();
+
   useEffect(() => {
     if (!queryOptions?.merchant_id) {
       setValue(undefined);
@@ -44,15 +46,18 @@ export const MerchantSelect = ({
         setOptions([...merchantsData.items]);
       }
     }
-    if (!value && queryOptions.merchant_id) {
-      if (merchant && merchantsData) {
-        setOptions([...merchantsData.items, merchant]);
-      }
 
+    if (queryOptions.merchant_id && merchant && merchantsData) {
+      setOptions([...merchantsData.items, merchant]);
+    }
+
+    if (!value && queryOptions.merchant_id && merchant) {
       setValue(merchant?.name);
     }
-  }, [merchantsData, merchant, queryOptions]);
 
+ 
+  }, [merchantsData, merchant, queryOptions]);
+  
   useEffect(() => {
     setQuery((state) => ({
       ...state,

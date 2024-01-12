@@ -126,7 +126,11 @@ export const ResendWebhookModal = ({
               <ConfigProvider locale={locale}>
                 <RangePicker
                   size="small"
-                  format="YYYY-MM-DD HH:mm:ss"
+                  format={
+                    navigator.language === "pt-BR"
+                      ? "DD/MM/YYYY HH:mm"
+                      : "YYYY/MM/DD HH:mm"
+                  }
                   showTime
                   value={[
                     dayjs(body.start_date, "YYYY-MM-DD HH:mm:ss"),
@@ -151,6 +155,7 @@ export const ResendWebhookModal = ({
                     }));
                     formRef?.current?.validateFields();
                   }}
+                  inputReadOnly
                 />
               </ConfigProvider>
             </Form.Item>

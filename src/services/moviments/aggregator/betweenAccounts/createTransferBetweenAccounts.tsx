@@ -6,7 +6,7 @@ import { queryClient } from "../../../queryClient";
 export function useCreateAggregatorTransferBetweenAccounts(
   body: AggregatorTransferBetweenAccountsbody | null
 ) {
-  const { isLoading, error, mutate, isSuccess } = useMutation<
+  const { isLoading, error, mutate, isSuccess, reset } = useMutation<
   AggregatorTransferBetweenAccountsbody | null | undefined
   >("createAggregatorTransferBetweenAccounts", async () => {
     const response = await api.post("core/aggregator/account/balance/transfer/create", body, {});
@@ -19,5 +19,6 @@ export function useCreateAggregatorTransferBetweenAccounts(
     error,
     mutate,
     isSuccess,
+    reset
   };
 }

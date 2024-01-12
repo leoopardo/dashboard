@@ -7,9 +7,7 @@ export function useCreateRefundWithdrawalsReports(body: ReportsQuery) {
   const { isLoading, error, mutate, isSuccess, reset } = useMutation<
   ReportsQuery | null | undefined
   >("CreateRefundWithdrawalsReports", async () => {
-    const response = await api.post("refund/csv/withdraw", body, {
-      params: body,
-    });
+    const response = await api.post("refund/csv/withdraw", body, {});
     await queryClient.refetchQueries({ queryKey: ["RefundWithdrawalsReports"] });
     return response.data;
   });
