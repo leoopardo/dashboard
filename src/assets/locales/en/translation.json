@@ -951,7 +951,10 @@
     "today": "Today",
     "yesterday": "Yesterday",
     "this_month": "This month",
-    "last_month": "Last month"
+    "last_month": "Last month",
+    "cash_in_max_value_per_day": "Deposit max value/day",
+    "cash_out_max_value_per_day": "Withdraw max value/day",
+    "cash_out_transaction_limit_per_day": "Withdrawal limit/day"
   },
   "actions": {
     "details": "Details",

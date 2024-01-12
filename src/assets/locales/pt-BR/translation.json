@@ -957,7 +957,10 @@
     "today": "Hoje",
     "yesterday": "Ontem",
     "this_month": "Este mês",
-    "last_month": "Mês passado"
+    "last_month": "Mês passado",
+    "cash_in_max_value_per_day": "Val. máx. depósito/dia",
+    "cash_out_max_value_per_day": "Val. máx. saques/dia",
+    "cash_out_transaction_limit_per_day": "Limite de saque/dia"
   },
   "actions": {
     "details": "Detalhes",
