@@ -468,7 +468,7 @@
     "add_all_columns": "Adicionar todas as colunas"
   },
   "table": {
-    "id": "ID",
+    "id": "id",
     "bank": "Banco",
     "merchant_name": "Empresa",
     "value": "Valor",
@@ -480,7 +480,7 @@
     "buyer_document": "Documento do comprador",
     "document": "Documento",
     "status": "Situação",
-    "_id": "ID",
+    "_id": "id",
     "paid": "Pago",
     "txid": "TX ID",
     "waiting": "Aguardando",
