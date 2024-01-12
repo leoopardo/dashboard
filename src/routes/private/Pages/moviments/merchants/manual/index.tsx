@@ -285,7 +285,7 @@ export const MerchantManual = () => {
                 error={MerchantManualReportsError}
                 success={MerchantManualReportsIsSuccess}
                 loading={MerchantManualReportsIsLoading}
-                reportPath="/moviment/merchant_moviments/merchant_moviments_reports"
+                reportPath="/moviment/merchant_moviments/merchant_moviments_reports/merchant_manual_moviments_reports"
               />
             </Grid>
           )}

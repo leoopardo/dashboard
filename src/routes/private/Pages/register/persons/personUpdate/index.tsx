@@ -24,8 +24,8 @@ import {
   DatePicker,
   Empty,
   Form,
+  FormInstance,
   Input,
-  InputNumber,
   Popconfirm,
   Select,
   Spin,
@@ -47,6 +47,7 @@ import { useLocation, useParams } from "react-router-dom";
 import { FilterChips } from "@src/components/FiltersModal/filterChips";
 import { FiltersModal } from "@src/components/FiltersModal";
 import { setFirstChildDivId } from "@src/utils/functions";
+import { CurrencyInput } from "react-currency-mask";
 
 const INITIAL_QUERY: PersonsQuery = {
   limit: 25,
@@ -114,6 +115,7 @@ export const PersonUpdate = () => {
   const { Files, isFilesFetching, refetchFiles } = useGetFiles(
     currentData?.cpf
   );
+  const formRef = useRef<FormInstance>(null);
 
   const columns: ColumnInterface[] = [
     { name: "_id", type: "id" },
@@ -129,7 +131,6 @@ export const PersonUpdate = () => {
   };
 
   useEffect(() => {
-    setBody(currentData);
     refetchFiles();
     setCurrState(currentData?.state);
   }, [PersonsData]);
@@ -167,6 +168,10 @@ export const PersonUpdate = () => {
     setFirstChildDivId(tabHistoric, "tab-historic");
   }, [tabGeneralData, tabBlocks, tabLimits, tabAttachments, tabHistoric]);
 
+  useEffect(() => {
+    formRef.current?.setFieldsValue(PersonsData);
+  }, [PersonsData]);
+
   const items: TabsProps["items"] = [
     {
       key: "1",
@@ -186,6 +191,7 @@ export const PersonUpdate = () => {
       ) : (
         <Form
           layout="vertical"
+          ref={formRef}
           initialValues={{
             ...PersonsData?.items[0],
             birth_date: dayjs(
@@ -236,8 +242,9 @@ export const PersonUpdate = () => {
                   style={{ width: "100%" }}
                   size="large"
                   name="birth_date"
+                  format={"DD/MM/YYYY"}
                   value={
-                    body?.birth_date
+                    formRef.current?.getFieldValue("birth_date")
                       ? dayjs(body?.birth_date, "YYYY-MM-DD HH:mm:ss")
                       : null
                   }
@@ -310,7 +317,7 @@ export const PersonUpdate = () => {
               <Form.Item label={t("table.city")} name="city">
                 <AutoComplete
                   size="large"
-                  disabled={!body?.state}
+                  disabled={!formRef.current?.getFieldValue("state")}
                   style={{ width: "100%", height: "40px" }}
                   placeholder={t(`table.city`)}
                   value={body?.city}
@@ -662,21 +669,21 @@ export const PersonUpdate = () => {
                 label={t("table.cash_in_max_value")}
                 name="cash_in_max_value"
               >
-                <InputNumber
-                  style={{ width: "100%" }}
-                  size="large"
-                  name="cash_in_max_value"
-                  formatter={(value) =>
-                    value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                  }
-                  addonBefore="R$"
-                  value={body?.cash_in_max_value}
-                  onChange={(e) => {
+                <CurrencyInput
+                  data-test-id="cash_in_max_value"
+                  onChangeValue={(_event, originalValue) => {
                     setBody((state) => ({
                       ...state,
-                      cash_in_max_value: e,
+                      cash_in_max_value: +originalValue,
                     }));
                   }}
+                  InputElement={
+                    <Input
+                      size="large"
+                      style={{ width: "100%" }}
+                      value={body?.cash_in_max_value}
+                    />
+                  }
                 />
               </Form.Item>
             </Grid>
@@ -685,21 +692,21 @@ export const PersonUpdate = () => {
                 label={t("table.cash_out_max_value")}
                 name="cash_out_max_value"
               >
-                <InputNumber
-                  style={{ width: "100%" }}
-                  size="large"
-                  name="cash_out_max_value"
-                  formatter={(value) =>
-                    value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                  }
-                  addonBefore="R$"
-                  value={body?.cash_out_max_value}
-                  onChange={(e) => {
+                 <CurrencyInput
+                  data-test-id="cash_out_max_value"
+                  onChangeValue={(_event, originalValue) => {
                     setBody((state) => ({
                       ...state,
-                      cash_out_max_value: e,
+                      cash_out_max_value: +originalValue,
                     }));
                   }}
+                  InputElement={
+                    <Input
+                      size="large"
+                      style={{ width: "100%" }}
+                      value={body?.cash_out_max_value}
+                    />
+                  }
                 />
               </Form.Item>
             </Grid>
@@ -712,7 +719,7 @@ export const PersonUpdate = () => {
                 <Select
                   size="large"
                   options={[
-                    { label: 0, value: 0 },
+                    { label: t('input.unlimited')?.slice(0, -1), value: 0 },
                     { label: 1, value: 1 },
                     { label: 2, value: 2 },
                     { label: 3, value: 3 },

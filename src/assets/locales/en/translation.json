@@ -431,8 +431,10 @@
     "position": "Position",
     "search": "Search",
     "allows_generate_qrcode": "Allows generate QRCode",
-    "license_number": "License number"
+    "license_number": "License number",
+    "add_all_columns": "Add all columns"
   },
+  
   "modal": {
     "confirm": "Confirm",
     "validate_token": "Validate token",
@@ -472,7 +474,7 @@
     "update_group": "Update group"
   },
   "table": {
-    "id": "ID",
+    "id": "id",
     "bank": "Bank",
     "merchant_name": "Merchant",
     "value": "Value",
@@ -484,7 +486,7 @@
     "payer_name": "Payer",
     "document": "Document",
     "status": "Status",
-    "_id": "ID",
+    "_id": "id",
     "paid": "Paid",
     "waiting": "Waiting",
     "waiting_refund": "Waiting refund",
@@ -555,7 +557,7 @@
     "page": "Page",
     "limit": "Limit",
     "pending": "Pending",
-    "paid_to_merchant": "Paid to merchant",
+    "paid_to_merchant": "Refund to merchant",
     "error": "Error",
     "success": "Success",
     "primary_logs": "Primary notifications logs",

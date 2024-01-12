@@ -8,7 +8,7 @@ export function useGetMerchantBlacklistUploads(params: PersonBlacklistUploadsQue
   const { data, isFetching, error, refetch } = useQuery<
   PersonBlacklistUploadsData | null | undefined
   >("MerchantBlacklistUploads", async () => {
-    const response = await api.get("customer/persons/bulk_create", {
+    const response = await api.get("blacklist/merchant-black-list/bulk/reports", {
       params,
     });
     return response.data;

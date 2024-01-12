@@ -468,10 +468,11 @@
     "position": "Cargo",
     "search": "Pesquisar",
     "allows_generate_qrcode": "Permite gerar QRCode PJ",
-    "license_number": "Número da licença"
+    "license_number": "Número da licença",
+    "add_all_columns": "Adicionar todas as colunas"
   },
   "table": {
-    "id": "ID",
+    "id": "id",
     "bank": "Banco",
     "merchant_name": "Empresa",
     "value": "Valor",
@@ -483,7 +484,7 @@
     "buyer_document": "Documento do comprador",
     "document": "Documento",
     "status": "Situação",
-    "_id": "ID",
+    "_id": "id",
     "paid": "Pago",
     "txid": "TX ID",
     "waiting": "Aguardando",
@@ -554,7 +555,7 @@
     "page": "Página",
     "limit": "Limite",
     "pending": "Aguardando",
-    "paid_to_merchant": "Pago para empresa",
+    "paid_to_merchant": "Devolvido para empresa",
     "error": "Erro",
     "success": "Sucesso",
     "primary_logs": "Logs de notificação primário",

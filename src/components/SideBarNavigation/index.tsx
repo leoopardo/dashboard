@@ -893,32 +893,54 @@ export const SidebarNavigation = () => {
               ),
               // todo
 
-              // getItem(
-              //   "import_merchant_blacklist",
-              //   null,
-              //   null,
-              //   false,
-              //   undefined,
-              //   {
-              //     display: permissions?.register?.merchant?.blacklist
-              //       ?.merchant_blacklist_create
-              //       ? undefined
-              //       : "none",
-              //   }
-              // ),
-              // getItem(
-              //   "uploads_merchant_blacklist",
-              //   null,
-              //   null,
-              //   false,
-              //   undefined,
-              //   {
-              //     display: permissions?.register?.merchant?.blacklist
-              //       ?.merchant_blacklist_create
-              //       ? undefined
-              //       : "none",
-              //   }
-              // ),
+              getItem(
+                "import_merchant_blacklist",
+                null,
+                null,
+                false,
+                undefined,
+                {
+                  display: permissions?.register?.merchant?.blacklist
+                    ?.merchant_blacklist_create
+                    ? undefined
+                    : "none",
+                },  <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={
+                  "/register/merchant/merchant_blacklists/import_merchant_blacklist"
+                }
+                title={`${t("menus.import_merchant_blacklist")}`}
+              >
+                {t("menus.import_merchant_blacklist")}
+              </Link>
+              ),
+              getItem(
+                "uploads_merchant_blacklist",
+                null,
+                null,
+                false,
+                undefined,
+                {
+                  display: permissions?.register?.merchant?.blacklist
+                    ?.merchant_blacklist_create
+                    ? undefined
+                    : "none",
+                },  <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={
+                  "/register/merchant/merchant_blacklists/uploads_merchant_blacklist"
+                }
+                title={`${t("menus.uploads_merchant_blacklist")}`}
+              >
+                {t("menus.uploads_merchant_blacklist")}
+              </Link>
+              ),
               getItem(
                 "merchant_blacklist_reasons",
                 null,
