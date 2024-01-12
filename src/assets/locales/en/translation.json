@@ -470,7 +470,7 @@
     "update_group": "Update group"
   },
   "table": {
-    "id": "ID",
+    "id": "id",
     "bank": "Bank",
     "merchant_name": "Merchant",
     "value": "Value",
@@ -482,7 +482,7 @@
     "payer_name": "Payer",
     "document": "Document",
     "status": "Status",
-    "_id": "ID",
+    "_id": "id",
     "paid": "Paid",
     "waiting": "Waiting",
     "waiting_refund": "Waiting refund",
