@@ -5,7 +5,7 @@ export interface refundWithdrawalsQuery {
   sort_field?: "string";
   start_date?: string;
   end_date?: string;
-  status?: "REFUNDED" | "PAID_TO_MERCHANT" | "ERROR" | "PROCESSING" | "PENDING";
+  status?: "REFUNDED" | "REFUND_TO_MERCHANT" | "ERROR" | "PROCESSING" | "PENDING";
   endToEndId?: string;
   txid?: string;
   reference_id?: string;

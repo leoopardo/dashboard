@@ -362,7 +362,7 @@ export const RefundWithdrawals = () => {
           ]}
           refetch={refetchRefundWithdrawalsTotal}
           selectOptions={{
-            status: ["PAID_TO_MERCHANT", "ERROR", "PROCESSING", "WAITING"],
+            status: ["REFUND_TO_MERCHANT", "ERROR", "PROCESSING", "WAITING"],
             gender: ["MALE", "FEMALE", "OTHER"],
             refund_reason: [
               "DIVERGENT VALUE",

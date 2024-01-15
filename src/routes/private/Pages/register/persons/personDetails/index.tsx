@@ -357,6 +357,24 @@ export const PersonDetails = () => {
               {!isPersonsDataFetching &&
                 Object.keys(LimitsData).map((key, index) => {
                   switch (key) {
+                    case "cash_out_transaction_limit":
+                      return (
+                        <Descriptions.Item
+                          key={index}
+                          label={t(`table.${key}`)}
+                          labelStyle={{
+                            maxWidth: "120px !important",
+                            margin: 0,
+                            padding: 0,
+                            textAlign: "center",
+                          }}
+                        >
+                          {(currentData as any)[key]
+                            ? (currentData as any)[key]
+                            : "-"}
+                        </Descriptions.Item>
+                      );
+
                     default:
                       return (
                         <Descriptions.Item
