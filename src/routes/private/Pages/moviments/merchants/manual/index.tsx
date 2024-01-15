@@ -32,7 +32,7 @@ import { CreateMovimentModal } from "../../components/createMovimentModal";
 import { Toast } from "@src/components/Toast";
 
 export const MerchantManual = () => {
-  const { permissions } = queryClient.getQueryData(
+  const { permissions, type } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
 
@@ -112,8 +112,31 @@ export const MerchantManual = () => {
         {MerchantMovimentsData &&
           Object.keys(MerchantMovimentsData).map((key) => {
             switch (key) {
-              case "total_in_processing":
               case "total_in_canceled":
+                return (
+                type === 2 || type === 1 ? (
+                  <Grid
+                    key={key}
+                    item
+                    xs={5}
+                    md="auto"
+                    style={{
+                      margin: "10px",
+                    }}
+                  >
+                    <Statistic
+                      valueStyle={{ color: "#3f8600", fontSize: "20px" }}
+                      prefix={<ArrowUpOutlined />}
+                      title={t(`table.${key}`)}
+                      loading={isMerchantMovimentsDataFetching}
+                      value={new Intl.NumberFormat("pt-BR", {
+                        style: "currency",
+                        currency: "BRL",
+                      }).format(MerchantMovimentsData[key] || 0)}
+                    />
+                  </Grid>
+                  ) : ( <></> ));
+              case "total_in_processing":
               case "total_in_success":
                 return (
                   <Grid
@@ -138,7 +161,6 @@ export const MerchantManual = () => {
                   </Grid>
                 );
               case "total_out_processing":
-              case "total_out_canceled":
               case "total_out_success":
                 return (
                   <Grid
@@ -160,6 +182,29 @@ export const MerchantManual = () => {
                     />
                   </Grid>
                 );
+
+                case "total_out_canceled":
+                  return (
+                    type === 2 || type === 1 ? (
+                    <Grid
+                      key={key}
+                      item
+                      xs={5}
+                      md="auto"
+                      style={{ margin: "10px" }}
+                    >
+                      <Statistic
+                        valueStyle={{ color: "#cf1322", fontSize: "20px" }}
+                        prefix={<ArrowDownOutlined />}
+                        title={t(`table.${key}`)}
+                        loading={isMerchantMovimentsDataFetching}
+                        value={new Intl.NumberFormat("pt-BR", {
+                          style: "currency",
+                          currency: "BRL",
+                        }).format(MerchantMovimentsData[key] || 0)}
+                      />
+                    </Grid>
+                     ) : ( <></> ));
               default:
                 return;
             }
@@ -212,7 +257,7 @@ export const MerchantManual = () => {
           container
           item
           xs={12}
-          md={8}
+          md={7}
           spacing={1}
           style={{
             display: "flex",
