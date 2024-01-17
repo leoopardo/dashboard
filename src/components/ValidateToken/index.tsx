@@ -162,10 +162,12 @@ export const ValidateToken = ({
         })
       );
       resetFunction && resetFunction();
-      setIsOpen(false);
+      if (success || (ValidatePhoneSuccess && editSelf)) {
+        setIsOpen(false);
+      }
     }
 
-     if (error || ValidatePhoneError) {
+    if (error || ValidatePhoneError) {
       message.error(
         t("messages.action_error", {
           action: t("messages.validated"),
@@ -186,9 +188,9 @@ export const ValidateToken = ({
       setTimeout(() => {
         setLoading(false);
         setTokenState("");
-      }, 2300);
+      }, 1000);
     }
-    if (tokenState.length === 6) {
+    if (Self?.phone_validated && tokenState.length === 6) {
       setLoading(true);
       setTimeout(() => {
         submit();
@@ -235,10 +237,8 @@ export const ValidateToken = ({
               key="submit"
               type="primary"
               onClick={() => {
-                if(tokenState.length < 6) {
-                  message.error(
-                    t("error.token_characters")
-                  );
+                if (tokenState.length < 6) {
+                  message.error(t("error.token_characters"));
                   return;
                 }
                 submit();
@@ -268,7 +268,7 @@ export const ValidateToken = ({
           value={tokenState.toUpperCase()}
           onChange={setTokenState}
           numInputs={6}
-          renderInput={(props) => <input  {...props} />}
+          renderInput={(props) => <input {...props} />}
           shouldAutoFocus
           inputType="tel"
           inputStyle={{
@@ -337,6 +337,7 @@ export const ValidateToken = ({
                 ValidatePhone();
                 setValidationPhoneSent(false);
                 setValidationTokenSent(false);
+                setTokenState("");
                 setValidateBody({ action, cellphone: undefined });
               }}
             >
@@ -383,6 +384,7 @@ export const ValidateToken = ({
               onClick={() => {
                 ValidateToken();
                 ableToResendFunction();
+                setTokenState("");
               }}
               disabled={
                 remainingTime?.seconds && ((remainingTime?.seconds >= 0) as any)
