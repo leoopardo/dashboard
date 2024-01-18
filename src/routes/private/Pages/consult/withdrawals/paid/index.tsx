@@ -74,6 +74,7 @@ export const PaidWithdrawals = () => {
 
   useEffect(() => {
     refetchPaidWithdrawalsTotalRows();
+    refetchPaidWithdrawalsTotal()
   }, [query]);
 
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);

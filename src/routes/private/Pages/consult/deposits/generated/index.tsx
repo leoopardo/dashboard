@@ -63,7 +63,6 @@ export const GeneratedDeposits = () => {
   const [query, setQuery] = useState<generatedDepositTotalQuery>(INITIAL_QUERY);
   const { depositsTotal, isDepositsTotalFetching, refetchDepositsTotal } =
     useGetTotalGeneratedDeposits(query);
-
   const {
     depositsRows,
     depositsRowsError,
@@ -73,6 +72,7 @@ export const GeneratedDeposits = () => {
 
   useEffect(() => {
     refetchDepositsTotalRows();
+    refetchDepositsTotal();
   }, [query]);
 
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
@@ -368,6 +368,7 @@ export const GeneratedDeposits = () => {
           <CustomTable
             query={query}
             setCurrentItem={setCurrentItem}
+            // eslint-disable-next-line @typescript-eslint/no-empty-function
             setQuery={setQuery}
             data={depositsRows}
             items={depositsRows?.items}
@@ -394,7 +395,6 @@ export const GeneratedDeposits = () => {
                 label: "resend_webhook",
                 icon: <SendOutlined style={{ fontSize: "18px" }} />,
                 onClick: (item) => {
-                  
                   setWebhookBody((state) => ({
                     ...state,
                     end_date: undefined,
@@ -420,7 +420,7 @@ export const GeneratedDeposits = () => {
               "status",
               "createdAt",
               "delivered_at",
-              "value"
+              "value",
             ]}
           />
         </Col>

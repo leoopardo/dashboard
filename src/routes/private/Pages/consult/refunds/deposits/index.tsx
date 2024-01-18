@@ -124,6 +124,7 @@ export const RefundDeposits = () => {
   ];
 
   useEffect(() => {
+    refetchRefundDepositsTotal()
     refetchRefundDepositsTotalRows();
   }, [query]);
 

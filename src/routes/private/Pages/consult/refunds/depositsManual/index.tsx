@@ -95,6 +95,7 @@ export const RefundDepositsManual = () => {
   });
 
   useEffect(() => {
+    refetchRefundDepositManualTotal()
     refetchRefundDepositsManual();
   }, [query]);
 
