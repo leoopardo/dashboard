@@ -82,13 +82,8 @@ export const UpdateOperator = () => {
   const tabResponsible = document.querySelector('[data-node-key="2"]');
   const tabAttachments = document.querySelector('[data-node-key="3"]');
 
-  const {
-    OperatorData,
-    OperatorDataError,
-    isOperatorDataFetching,
-    refetchOperatorData,
-    isSuccessOperatorData,
-  } = useGetOperator({ operator_id: location.state.id });
+  const { OperatorData, isOperatorDataFetching, isSuccessOperatorData } =
+    useGetOperator({ operator_id: location.state.id });
 
   const [OperatorBody, setOperatorBody] = useState<OperatorItem>({});
   const { UpdateError, UpdateIsLoading, UpdateMutate, UpdateIsSuccess } =
@@ -194,12 +189,10 @@ export const UpdateOperator = () => {
   }, [tabOperatorsData, tabResponsible, tabAttachments]);
 
   useEffect(() => {
-    if(!isSuccessOperatorData) return;
-    setOperatorBody(OperatorData);
+    if (!isSuccessOperatorData) return;
+    setOperatorBody(OperatorData as any);
   }, [isSuccessOperatorData]);
-console.log(OperatorData, OperatorBody);
-
-
+  console.log(OperatorData, OperatorBody);
 
   const items: TabsProps["items"] = [
     {
@@ -286,7 +279,6 @@ console.log(OperatorData, OperatorBody);
               <Col xs={{ span: 24 }} md={{ span: 6 }}>
                 <Form.Item
                   label={t("table.email")}
-                 
                   rules={[
                     {
                       type: "email",
