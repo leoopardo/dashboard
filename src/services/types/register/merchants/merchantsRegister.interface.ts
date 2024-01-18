@@ -45,8 +45,8 @@ export interface MerchantsItem {
   update_at?: string;
   merchant_id?: number;
   partner_id?: number;
-  aggregator_id?: number;
-  operator_id?: number;
+  aggregator_id?: number | null;
+  operator_id?: number | null;
   country?: string;
 }
 
