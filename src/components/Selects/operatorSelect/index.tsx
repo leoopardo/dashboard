@@ -60,11 +60,12 @@ export const OperatorSelect = ({
   }, [query]);
 
   useEffect(() => {
-    setQueryFunction((state: any) => ({
-      ...state,
-      operator_id: null,
-      group_id: undefined,
-    }));
+    if (!queryOptions?.aggregator_id)
+      setQueryFunction((state: any) => ({
+        ...state,
+        operator_id: null,
+        group_id: undefined,
+      }));
   }, [queryOptions?.aggregator_id]);
 
   useEffect(() => {
@@ -74,7 +75,7 @@ export const OperatorSelect = ({
   useEffect(() => {
     if (
       !operatorsData?.items.some(
-        (operator) => operator.id === queryOptions?.operator_id
+        (operator) => operator?.id === queryOptions?.operator_id
       )
     ) {
       return setValue(undefined);
