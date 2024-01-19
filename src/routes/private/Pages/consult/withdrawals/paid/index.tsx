@@ -417,7 +417,6 @@ export const PaidWithdrawals = () => {
           filters={[
             "initial_date",
             "final_date",
-            "status",
             "partner_id",
             "merchant_id",
             "aggregator_id",
@@ -432,14 +431,6 @@ export const PaidWithdrawals = () => {
           ]}
           refetch={refetchPaidWithdrawalsTotalRows}
           selectOptions={{
-            status: [
-              "PAID",
-              "REFUNDED",
-              "EXPIRED",
-              "CANCELED",
-              "WAITING",
-              "WAITING_REFUND",
-            ],
             gender: ["MALE", "FEMALE", "OTHER"],
           }}
           startDateKeyName="initial_date"
