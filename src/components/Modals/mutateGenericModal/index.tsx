@@ -1114,6 +1114,15 @@ export const MutateModal = ({
                       name={field.label}
                       style={{ margin: 10 }}
                       help=""
+                      rules={[
+                        {
+                          required: field.required,
+                          message:
+                            t("input.required", {
+                              field: t(`table.reason`),
+                            }) || "",
+                        },
+                      ]}
                     >
                       <Input.TextArea
                         data-test-id={`${field.label}-input`}

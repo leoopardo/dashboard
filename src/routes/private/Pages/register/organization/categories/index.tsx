@@ -309,7 +309,7 @@ export const OrganizationCategories = () => {
           setOpen={setIsUpdateCategorieModalOpen}
           fields={[
             { label: "name", required: true },
-            { label: "description", required: false },
+            { label: "description", required: true },
             { label: "status", required: false },
           ]}
           body={updateBody}
