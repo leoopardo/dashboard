@@ -396,7 +396,6 @@ export const PaidDeposits = () => {
           filters={[
             "initial_date",
             "final_date",
-            "status",
             "partner_id",
             "merchant_id",
             "aggregator_id",
@@ -412,14 +411,6 @@ export const PaidDeposits = () => {
           ]}
           refetch={refetchPaidTotalRows}
           selectOptions={{
-            status: [
-              "PAID",
-              "REFUNDED",
-              "EXPIRED",
-              "CANCELED",
-              "WAITING",
-              "WAITING_REFUND",
-            ],
             gender: ["MALE", "FEMALE", "OTHER"],
             pix_type: ["STANDARD", "FASTPIX"],
           }}
