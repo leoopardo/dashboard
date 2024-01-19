@@ -8,17 +8,14 @@ import { useValidateFastPix } from "@src/services/FASTPIX/siginIn/validate";
 import { queryClient } from "@src/services/queryClient";
 import { defaultTheme } from "@src/styles/defaultTheme";
 import {
-  Button,
   Col,
-  Form,
-  Input,
   Layout,
   Progress,
   Row,
   Spin,
-  Typography,
+  Typography
 } from "antd";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -43,16 +40,11 @@ export const AuthFromFastPix = () => {
     `${token}`
   );
   const {
-    FastPixCredentialsMutate,
-    FastPixCredentialsIsLoading,
     FastPixCredentialsError,
     FastPixCredentialsIsSuccess,
   } = useChangeFastPixCredentials({ body: changeCredentials });
   const { refetchValidate, isValidateFetching, isSuccess, responseValidate } =
     useValidateFastPix();
-  const [confirmPassword, setConfirmPassword] = useState<string>("");
-  const [, setCantSubmit] = useState<boolean>(true);
-  const submitRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     Login();
@@ -67,7 +59,7 @@ export const AuthFromFastPix = () => {
   }, [tokenSuccess]);
 
   useEffect(() => {
-    if (tokenSuccess && !LoginError && !responseValidate?.pending_password_change) {
+    if (tokenSuccess && !LoginError) {
       const interval = setInterval(() => {
         setCount((prevCount) => {
           const newCount = prevCount + 20;
@@ -84,12 +76,12 @@ export const AuthFromFastPix = () => {
     setChangeCredentials({ username: responseValidate?.username });
   }, [responseValidate, isSuccess]);
 
-  const handleChangeCredentials = (event: any) => {
-    setChangeCredentials((state: any) => ({
-      ...state,
-      [event.target.name]: event.target.value,
-    }));
-  };
+  // const handleChangeCredentials = (event: any) => {
+  //   setChangeCredentials((state: any) => ({
+  //     ...state,
+  //     [event.target.name]: event.target.value,
+  //   }));
+  // };
 
   return (
     <Layout
@@ -118,196 +110,7 @@ export const AuthFromFastPix = () => {
           >
             <Spin />
           </Row>
-        ) : tokenSuccess && !LoginError && responseValidate?.pending_password_change ? (
-          <Row>
-            <Col
-              span={24}
-              style={{ display: "flex", justifyContent: "center" }}
-            >
-              <Typography.Title
-                level={1}
-                style={{ color: defaultTheme.colors.secondary }}
-              >
-                {t("paysbet.welcome")}: {responseValidate?.name}
-              </Typography.Title>
-            </Col>
-            <Col
-              span={24}
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                marginBottom: 40,
-              }}
-            >
-              <Typography.Title
-                level={3}
-                style={{ color: defaultTheme.colors.info }}
-              >
-                {t("paysbet.first_access")}
-              </Typography.Title>
-            </Col>
-
-            <Form
-              style={{ width: "100%" }}
-              layout="vertical"
-              onFinish={FastPixCredentialsMutate}
-            >
-              <Row
-                style={{
-                  width: "100%",
-                  display: "flex",
-                  justifyContent: "center",
-                }}
-                gutter={8}
-                align="top"
-              >
-                <Row
-                  style={{
-                    width: "100%",
-                    display: "flex",
-                    justifyContent: "center",
-                    marginTop: -8,
-                  }}
-                  gutter={8}
-                  align="top"
-                >
-                  <Col xs={{ span: 24 }} md={{ span: 8 }}>
-                    <Form.Item label={t("login.user")}>
-                      <Input
-                        size="large"
-                        onChange={handleChangeCredentials}
-                        value={changeCredentials.username}
-                      />
-                    </Form.Item>
-                  </Col>
-                </Row>
-
-                <Row
-                  style={{
-                    width: "100%",
-                    display: "flex",
-                    justifyContent: "center",
-                    marginTop: -8,
-                  }}
-                  gutter={8}
-                  align="top"
-                >
-                  <Col xs={{ span: 24 }} md={{ span: 8 }}>
-                    <Form.Item
-                      label={t(`table.password`)}
-                      name="password"
-                      dependencies={["confirmPasswprd"]}
-                      hasFeedback
-                      rules={[
-                        {
-                          required: true,
-                          message:
-                            t("input.required(a)", {
-                              field: t("input.password"),
-                            }) || "",
-                        },
-                        ({ getFieldValue }) => ({
-                          validator(_, value) {
-                            if (
-                              !value ||
-                              getFieldValue("confirmPasswprd") === value
-                            ) {
-                              setCantSubmit(false);
-                              return Promise.resolve();
-                            }
-                            setCantSubmit(true);
-                            return Promise.reject(
-                              new Error(t("input.doest_match") || "")
-                            );
-                          },
-                        }),
-                      ]}
-                    >
-                      <Input.Password
-                        type="password"
-                        size="large"
-                        name="password"
-                        autoComplete="new-password"
-                        value={changeCredentials.password}
-                        onChange={handleChangeCredentials}
-                      />
-                    </Form.Item>
-                  </Col>
-                </Row>
-                <Row
-                  style={{
-                    width: "100%",
-                    display: "flex",
-                    justifyContent: "center",
-                    marginTop: -8,
-                  }}
-                  gutter={8}
-                  align="top"
-                >
-                  <Col xs={{ span: 24 }} md={{ span: 8 }}>
-                    <Form.Item
-                      label={t(`table.confirm_password`)}
-                      name="confirmPasswprd"
-                      dependencies={["password"]}
-                      rules={[
-                        {
-                          required: true,
-                          message: t("input.confirm_password") || "",
-                        },
-                        ({ getFieldValue }) => ({
-                          validator(_, value) {
-                            if (!value || getFieldValue("password") === value) {
-                              setCantSubmit(false);
-                              return Promise.resolve();
-                            }
-                            setCantSubmit(true);
-                            return Promise.reject(
-                              new Error(t("input.doest_match") || "")
-                            );
-                          },
-                        }),
-                      ]}
-                      hasFeedback
-                    >
-                      <Input.Password
-                        type="password"
-                        size="large"
-                        name="confirmPasswprd"
-                        value={confirmPassword}
-                        onChange={(event) =>
-                          setConfirmPassword(event.target.value)
-                        }
-                      />
-                    </Form.Item>
-                  </Col>
-                </Row>
-
-                <Col xs={{ span: 24 }} md={{ span: 8 }}>
-                  <Button
-                    type="primary"
-                    size="large"
-                    style={{ width: "100%" }}
-                    loading={FastPixCredentialsIsLoading}
-                    onClick={() => submitRef.current?.click()}
-                  >
-                    {t("paysbet.update")}
-                  </Button>
-                </Col>
-                <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                  <button
-                    type="submit"
-                    ref={submitRef}
-                    style={{ display: "none" }}
-                  >
-                    Submit
-                  </button>
-                </Form.Item>
-              </Row>
-            </Form>
-          </Row>
-        ) : tokenSuccess &&
-          !LoginError &&
-          !responseValidate?.pending_password_change ? (
+        ) : tokenSuccess && !LoginError ? (
           <Row>
             <Col span={24} style={{}}>
               <Typography.Title
