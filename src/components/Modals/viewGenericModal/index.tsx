@@ -133,6 +133,42 @@ export const ViewModal = ({
             if (!sortItems[key]) {
               return;
             }
+            if (key === "merchantConfig") {
+              return (
+                <>
+                  {sortItems[key].cryptography && (
+                    <Descriptions.Item
+                      data-test-id={`details-cryptography`}
+                      key={key}
+                      label={t(`table.cryptography`)}
+                      labelStyle={{
+                        maxWidth: "120px !important",
+                        margin: 0,
+                        padding: 0,
+                        textAlign: "center",
+                      }}
+                    >
+                      {sortItems[key]?.cryptography}
+                    </Descriptions.Item>
+                  )}
+                  {sortItems[key].decrypt_key && (
+                    <Descriptions.Item
+                      data-test-id={`details-decrypt_key`}
+                      key={key}
+                      label={t(`table.decrypt_key`)}
+                      labelStyle={{
+                        maxWidth: "120px !important",
+                        margin: 0,
+                        padding: 0,
+                        textAlign: "center",
+                      }}
+                    >
+                      {sortItems[key]?.decrypt_key}
+                    </Descriptions.Item>
+                  )}
+                </>
+              );
+            }
             if (typeof sortItems[key] === ("object" || "array")) return;
             switch (key) {
               case "created_at":
