@@ -15,6 +15,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import { ViewModal } from "../components/ViewModal";
+import { moneyFormatter } from "@src/utils/moneyFormatter";
 
 export const DepositsReceipts = () => {
   const [endToEndId, setEndToEndId] = useState<string | undefined>(undefined);
@@ -85,10 +86,7 @@ export const DepositsReceipts = () => {
             )}
             {receipts?.transaction?.value && (
               <Descriptions.Item label={t("table.value")}>
-                {new Intl.NumberFormat("pt-BR", {
-                  style: "currency",
-                  currency: "BRL",
-                }).format(Number(receipts?.transaction?.value) || 0)}
+                {moneyFormatter(Number(receipts?.transaction?.value) || 0)}
               </Descriptions.Item>
             )}
             {receipts?.transaction?.payer_name && (

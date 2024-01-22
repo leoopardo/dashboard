@@ -7,6 +7,7 @@ import {
 import { Grid } from "@mui/material";
 import { useCreateWithdrawVoucherRefund } from "@src/services/consult/withdrawals/generatedWithdrawals/generateWithdrawVoucher";
 import { useGetWithdraw } from "@src/services/consult/withdrawals/generatedWithdrawals/getWithdraw";
+import { moneyFormatter } from "@src/utils/moneyFormatter";
 import {
   Button,
   Descriptions,
@@ -171,10 +172,7 @@ export const ViewModal = (props: ViewModalProps) => {
                         textAlign: "center",
                       }}
                     >
-                      {new Intl.NumberFormat("pt-BR", {
-                        style: "currency",
-                        currency: "BRL",
-                      }).format(Number(withdraw?.value) || 0)}
+                      {moneyFormatter(Number(withdraw?.value) || 0)}
                     </Descriptions.Item>
 
                     <Descriptions.Item

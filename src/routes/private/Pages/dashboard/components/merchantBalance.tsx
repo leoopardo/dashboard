@@ -85,10 +85,7 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
                   onMouseEnter={() => setIsHoverCurrency("dolar")}
                   onMouseLeave={() => setIsHoverCurrency("real")}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "USD",
-                  }).format(MerchantBalance?.usd_balance_to_transactions ?? 0)}
+                  {moneyFormatter(MerchantBalance?.usd_balance_to_transactions ?? 0)}
                 </Typography.Title>
               ) : (
                 <Typography.Title
@@ -97,10 +94,7 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
                   onMouseEnter={() => setIsHoverCurrency("dolar")}
                   onMouseLeave={() => setIsHoverCurrency("real")}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "USD",
-                  }).format(MerchantBalance?.usd_balance_to_transactions ?? 0)}
+                  {moneyFormatter(MerchantBalance?.usd_balance_to_transactions ?? 0)}
                 </Typography.Title>
               )}
 
@@ -115,10 +109,7 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
                   onMouseEnter={() => setIsHoverCurrency("euro")}
                   onMouseLeave={() => setIsHoverCurrency("real")}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "EUR",
-                  }).format(MerchantBalance?.eur_balance_to_transactions ?? 0)}
+                  {moneyFormatter(MerchantBalance?.eur_balance_to_transactions ?? 0)}
                 </Typography.Title>
               ) : (
                 <Typography.Title
@@ -127,10 +118,7 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
                   onMouseEnter={() => setIsHoverCurrency("euro")}
                   onMouseLeave={() => setIsHoverCurrency("real")}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "EUR",
-                  }).format(MerchantBalance?.eur_balance_to_transactions ?? 0)}
+                  {moneyFormatter(MerchantBalance?.eur_balance_to_transactions ?? 0)}
                 </Typography.Title>
               )}
 
@@ -145,10 +133,7 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
                   onMouseEnter={() => setIsHoverCurrency("btc")}
                   onMouseLeave={() => setIsHoverCurrency("real")}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "BTC",
-                  }).format(MerchantBalance?.btc_balance_to_transactions ?? 0)}
+                  {moneyFormatter(MerchantBalance?.btc_balance_to_transactions ?? 0)}
                 </Typography.Title>
               ) : (
                 <Typography.Title
@@ -157,10 +142,7 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
                   onMouseEnter={() => setIsHoverCurrency("btc")}
                   onMouseLeave={() => setIsHoverCurrency("real")}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "BTC",
-                  }).format(MerchantBalance?.btc_balance_to_transactions ?? 0)}
+                  {moneyFormatter(MerchantBalance?.btc_balance_to_transactions ?? 0)}
                 </Typography.Title>
               )} */}
             </Card>
@@ -215,10 +197,7 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
                   onMouseEnter={() => setIsHoverCurrency("dolar")}
                   onMouseLeave={() => setIsHoverCurrency("real")}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "USD",
-                  }).format(MerchantBalance?.usd_balance_to_payment ?? 0)}
+                  {moneyFormatter(MerchantBalance?.usd_balance_to_payment ?? 0)}
                 </Typography.Title>
               ) : (
                 <Typography.Title
@@ -227,10 +206,7 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
                   onMouseEnter={() => setIsHoverCurrency("dolar")}
                   onMouseLeave={() => setIsHoverCurrency("real")}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "USD",
-                  }).format(MerchantBalance?.usd_balance_to_payment ?? 0)}
+                  {moneyFormatter(MerchantBalance?.usd_balance_to_payment ?? 0)}
                 </Typography.Title>
               )}
 
@@ -245,10 +221,7 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
                   onMouseEnter={() => setIsHoverCurrency("euro")}
                   onMouseLeave={() => setIsHoverCurrency("real")}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "EUR",
-                  }).format(MerchantBalance?.eur_balance_to_payment ?? 0)}
+                  {moneyFormatter(MerchantBalance?.eur_balance_to_payment ?? 0)}
                 </Typography.Title>
               ) : (
                 <Typography.Title
@@ -257,10 +230,7 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
                   onMouseEnter={() => setIsHoverCurrency("euro")}
                   onMouseLeave={() => setIsHoverCurrency("real")}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "EUR",
-                  }).format(MerchantBalance?.eur_balance_to_payment ?? 0)}
+                  {moneyFormatter(MerchantBalance?.eur_balance_to_payment ?? 0)}
                 </Typography.Title>
               )}
 
@@ -275,10 +245,7 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
                   onMouseEnter={() => setIsHoverCurrency("btc")}
                   onMouseLeave={() => setIsHoverCurrency("real")}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "BTC",
-                  }).format(MerchantBalance?.btc_balance_to_payment ?? 0)}
+                  {moneyFormatter(MerchantBalance?.btc_balance_to_payment ?? 0)}
                 </Typography.Title>
               ) : (
                 <Typography.Title
@@ -287,10 +254,7 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
                   onMouseEnter={() => setIsHoverCurrency("btc")}
                   onMouseLeave={() => setIsHoverCurrency("real")}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "BTC",
-                  }).format(MerchantBalance?.btc_balance_to_payment ?? 0)}
+                  {moneyFormatter(MerchantBalance?.btc_balance_to_payment ?? 0)}
                 </Typography.Title>
               )} */}
             </Card>
@@ -345,10 +309,7 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
                   onMouseEnter={() => setIsHoverCurrency("dolar")}
                   onMouseLeave={() => setIsHoverCurrency("real")}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "USD",
-                  }).format(MerchantBalance?.usd_balance_reserved ?? 0)}
+                  {moneyFormatter(MerchantBalance?.usd_balance_reserved ?? 0)}
                 </Typography.Title>
               ) : (
                 <Typography.Title
@@ -357,10 +318,7 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
                   onMouseEnter={() => setIsHoverCurrency("dolar")}
                   onMouseLeave={() => setIsHoverCurrency("real")}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "USD",
-                  }).format(MerchantBalance?.usd_balance_reserved ?? 0)}
+                  {moneyFormatter(MerchantBalance?.usd_balance_reserved ?? 0)}
                 </Typography.Title>
               )}
 
@@ -375,10 +333,7 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
                   onMouseEnter={() => setIsHoverCurrency("euro")}
                   onMouseLeave={() => setIsHoverCurrency("real")}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "EUR",
-                  }).format(MerchantBalance?.eur_balance_reserved ?? 0)}
+                  {moneyFormatter(MerchantBalance?.eur_balance_reserved ?? 0)}
                 </Typography.Title>
               ) : (
                 <Typography.Title
@@ -387,10 +342,7 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
                   onMouseEnter={() => setIsHoverCurrency("euro")}
                   onMouseLeave={() => setIsHoverCurrency("real")}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "EUR",
-                  }).format(MerchantBalance?.eur_balance_reserved ?? 0)}
+                  {moneyFormatter(MerchantBalance?.eur_balance_reserved ?? 0)}
                 </Typography.Title>
               )}
 
@@ -405,10 +357,7 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
                   onMouseEnter={() => setIsHoverCurrency("btc")}
                   onMouseLeave={() => setIsHoverCurrency("real")}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "BTC",
-                  }).format(MerchantBalance?.btc_balance_reserved ?? 0)}
+                  {moneyFormatter(MerchantBalance?.btc_balance_reserved ?? 0)}
                 </Typography.Title>
               ) : (
                 <Typography.Title
@@ -417,10 +366,7 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
                   onMouseEnter={() => setIsHoverCurrency("btc")}
                   onMouseLeave={() => setIsHoverCurrency("real")}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "BTC",
-                  }).format(MerchantBalance?.btc_balance_reserved ?? 0)}
+                  {moneyFormatter(MerchantBalance?.btc_balance_reserved ?? 0)}
                 </Typography.Title>
               )} */}
             </Card>
@@ -475,10 +421,7 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
                   onMouseEnter={() => setIsHoverCurrency("dolar")}
                   onMouseLeave={() => setIsHoverCurrency("real")}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "USD",
-                  }).format(MerchantBalance?.usd_balance_total ?? 0)}
+                  {moneyFormatter(MerchantBalance?.usd_balance_total ?? 0)}
                 </Typography.Title>
               ) : (
                 <Typography.Title
@@ -487,10 +430,7 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
                   onMouseEnter={() => setIsHoverCurrency("dolar")}
                   onMouseLeave={() => setIsHoverCurrency("real")}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "USD",
-                  }).format(MerchantBalance?.usd_balance_total ?? 0)}
+                  {moneyFormatter(MerchantBalance?.usd_balance_total ?? 0)}
                 </Typography.Title>
               )}
 
@@ -505,10 +445,7 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
                   onMouseEnter={() => setIsHoverCurrency("euro")}
                   onMouseLeave={() => setIsHoverCurrency("real")}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "EUR",
-                  }).format(MerchantBalance?.eur_balance_total ?? 0)}
+                  {moneyFormatter(MerchantBalance?.eur_balance_total ?? 0)}
                 </Typography.Title>
               ) : (
                 <Typography.Title
@@ -517,10 +454,7 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
                   onMouseEnter={() => setIsHoverCurrency("euro")}
                   onMouseLeave={() => setIsHoverCurrency("real")}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "EUR",
-                  }).format(MerchantBalance?.eur_balance_total ?? 0)}
+                  {moneyFormatter(MerchantBalance?.eur_balance_total ?? 0)}
                 </Typography.Title>
               )}
 
@@ -535,10 +469,7 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
                   onMouseEnter={() => setIsHoverCurrency("btc")}
                   onMouseLeave={() => setIsHoverCurrency("real")}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "BTC",
-                  }).format(MerchantBalance?.btc_balance_total ?? 0)}
+                  {moneyFormatter(MerchantBalance?.btc_balance_total ?? 0)}
                 </Typography.Title>
               ) : (
                 <Typography.Title
@@ -547,10 +478,7 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
                   onMouseEnter={() => setIsHoverCurrency("btc")}
                   onMouseLeave={() => setIsHoverCurrency("real")}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "BTC",
-                  }).format(MerchantBalance?.btc_balance_total ?? 0)}
+                  {moneyFormatter(MerchantBalance?.btc_balance_total ?? 0)}
                 </Typography.Title>
               )} */}
             </Card>

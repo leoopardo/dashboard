@@ -28,6 +28,7 @@ import { Button, Card, Col, Row, Statistic, Tabs } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { MerchantBalance } from "../../../dashboard/components/merchantBalance";
+import { moneyFormatter } from "@src/utils/moneyFormatter";
 
 export const TransfersBetweenAccounts = () => {
   const { permissions } = queryClient.getQueryData(
@@ -124,10 +125,7 @@ export const TransfersBetweenAccounts = () => {
                     <Card bordered={false} style={{ width: "100%" }}>
                       <Statistic
                         title={t("table.success")}
-                        value={new Intl.NumberFormat("pt-BR", {
-                          style: "currency",
-                          currency: "BRL",
-                        }).format(
+                        value={moneyFormatter(
                           TransferBetweenAccountsData?.total_success || 0
                         )}
                         precision={2}
@@ -140,10 +138,7 @@ export const TransfersBetweenAccounts = () => {
                     <Card bordered={false} style={{ width: "100%" }}>
                       <Statistic
                         title={t("table.processing")}
-                        value={new Intl.NumberFormat("pt-BR", {
-                          style: "currency",
-                          currency: "BRL",
-                        }).format(
+                        value={moneyFormatter(
                         Number(TransferBetweenAccountsData?.total_processing.toFixed(2)) || 0
                         )}
                         valueStyle={{ color: defaultTheme.colors.processing }}
@@ -155,10 +150,7 @@ export const TransfersBetweenAccounts = () => {
                     <Card bordered={false} style={{ width: "100%" }}>
                       <Statistic
                         title={t("table.canceled")}
-                        value={new Intl.NumberFormat("pt-BR", {
-                          style: "currency",
-                          currency: "BRL",
-                        }).format(
+                        value={moneyFormatter(
                           TransferBetweenAccountsData?.total_canceled || 0
                         )}
                         precision={2}

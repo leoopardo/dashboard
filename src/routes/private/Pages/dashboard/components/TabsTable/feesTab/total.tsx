@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { useErrorContext } from "@src/contexts/ErrorContext";
 import { TableProps } from "..";
 import { useEffect } from "react";
+import { moneyFormatter } from "@src/utils/moneyFormatter";
 
 export const TotalFees = ({ query, chart }: TableProps) => {
   const { t } = useTranslation();
@@ -67,10 +68,7 @@ export const TotalFees = ({ query, chart }: TableProps) => {
                   )?.map((merchant) => merchant?.total ?? 0),
                   tooltip: {
                     valueFormatter: function (value: number) {
-                      return new Intl.NumberFormat("pt-BR", {
-                        style: "currency",
-                        currency: "BRL",
-                      }).format(Number(value) || 0);
+                      return moneyFormatter(Number(value) || 0);
                     },
                   },
                 },

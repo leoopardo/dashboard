@@ -39,6 +39,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { CreateMovimentModal } from "../../components/createMovimentModal";
 import { ApproveModal } from "./components/approveModal";
+import { moneyFormatter } from "@src/utils/moneyFormatter";
 
 export const MerchantPreManual = () => {
   const { t } = useTranslation();
@@ -195,10 +196,7 @@ export const MerchantPreManual = () => {
                         prefix={<ArrowUpOutlined />}
                         title={t(`table.${key}`)}
                         loading={isPreManualDataFetching}
-                        value={new Intl.NumberFormat("pt-BR", {
-                          style: "currency",
-                          currency: "BRL",
-                        }).format(preManualData[key] || 0)}
+                        value={moneyFormatter(preManualData[key] || 0)}
                       />
                     </Grid>
                   );
@@ -218,10 +216,7 @@ export const MerchantPreManual = () => {
                         prefix={<ArrowDownOutlined />}
                         title={t(`table.${key}`)}
                         loading={isPreManualDataFetching}
-                        value={new Intl.NumberFormat("pt-BR", {
-                          style: "currency",
-                          currency: "BRL",
-                        }).format(preManualData[key] || 0)}
+                        value={moneyFormatter(preManualData[key] || 0)}
                       />
                     </Grid>
                   );
@@ -287,10 +282,7 @@ export const MerchantPreManual = () => {
               {selectedRows &&
                 selectedRows.length > 0 &&
                 selectedRows?.filter((i) => i?.type == "in").length > 0 &&
-                `${t("table.in")}: ${new Intl.NumberFormat("pt-BR", {
-                  style: "currency",
-                  currency: "BRL",
-                }).format(
+                `${t("table.in")}: ${moneyFormatter(
                   selectedRows
                     ?.filter((i) => i?.type == "in")
                     ?.map((i) => i?.value)
@@ -301,10 +293,7 @@ export const MerchantPreManual = () => {
               {selectedRows &&
                 selectedRows.length > 0 &&
                 selectedRows?.filter((i) => i?.type == "out").length > 0 &&
-                `${t("table.out")}: ${new Intl.NumberFormat("pt-BR", {
-                  style: "currency",
-                  currency: "BRL",
-                })?.format(
+                `${t("table.out")}: ${moneyFormatter(
                   selectedRows
                     ?.filter((i) => i?.type == "out")
                     ?.map((i) => i?.value)
@@ -314,10 +303,7 @@ export const MerchantPreManual = () => {
             <h2 style={{ color: defaultTheme.colors.info }}>
               {selectedRows &&
                 selectedRows.length > 0 &&
-                `Total: ${new Intl.NumberFormat("pt-BR", {
-                  style: "currency",
-                  currency: "BRL",
-                }).format(
+                `Total: ${moneyFormatter(
                   selectedRows?.map((i) => i?.value)?.reduce((p, n) => p + n) ??
                     0
                 )}`}

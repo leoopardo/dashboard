@@ -14,6 +14,7 @@ import {
   MerchantResponsiblesItem,
   MerchantResponsiblesQuery,
 } from "@src/services/types/register/merchants/responsibles/responsibles.interface";
+import { moneyFormatter } from "@src/utils/moneyFormatter";
 import {
   Avatar,
   Button,
@@ -399,10 +400,7 @@ export const MerchantDetails = () => {
                   textAlign: "center",
                 }}
               >
-                {new Intl.NumberFormat("pt-BR", {
-                  style: "currency",
-                  currency: "BRL",
-                }).format(
+                {moneyFormatter(
                   Number(merchantFeesData?.fees?.cashin_pix_fee_value) || 0
                 )}
               </Descriptions.Item>
@@ -447,10 +445,7 @@ export const MerchantDetails = () => {
                   textAlign: "center",
                 }}
               >
-                {new Intl.NumberFormat("pt-BR", {
-                  style: "currency",
-                  currency: "BRL",
-                }).format(
+                {moneyFormatter(
                   Number(merchantFeesData?.fees?.customer_withdraw_fee_value) ||
                     0
                 )}
@@ -496,10 +491,7 @@ export const MerchantDetails = () => {
                   textAlign: "center",
                 }}
               >
-                {new Intl.NumberFormat("pt-BR", {
-                  style: "currency",
-                  currency: "BRL",
-                }).format(
+                {moneyFormatter(
                   Number(merchantFeesData?.fees?.fastpix_in_fee_value) || 0
                 )}
               </Descriptions.Item>
@@ -545,10 +537,7 @@ export const MerchantDetails = () => {
                   textAlign: "center",
                 }}
               >
-                {new Intl.NumberFormat("pt-BR", {
-                  style: "currency",
-                  currency: "BRL",
-                }).format(
+                {moneyFormatter(
                   Number(merchantFeesData?.fees?.fastpix_refund_fee_value) || 0
                 )}
               </Descriptions.Item>

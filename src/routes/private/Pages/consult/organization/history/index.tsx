@@ -14,6 +14,7 @@ import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import { OrganizationHistoryLineChart } from "./components/historyLineChart";
 import { formatFilterDate } from "@src/utils/formatDate";
+import { moneyFormatter } from "@src/utils/moneyFormatter";
 
 export const OrganizationHistory = () => {
   const { t } = useTranslation();
@@ -47,40 +48,28 @@ export const OrganizationHistory = () => {
       dataIndex: "balance_to_transactions",
       key: "balance_to_transactions",
       render: (value) =>
-        new Intl.NumberFormat("pt-BR", {
-          style: "currency",
-          currency: "BRL",
-        }).format(value ?? 0),
+        moneyFormatter(value ?? 0),
     },
     {
       title: t("table.balance_to_payment"),
       dataIndex: "balance_to_payment",
       key: "balance_to_payment",
       render: (value) =>
-        new Intl.NumberFormat("pt-BR", {
-          style: "currency",
-          currency: "BRL",
-        }).format(value ?? 0),
+        moneyFormatter(value ?? 0),
     },
     {
       title: t("table.balance_reserved"),
       dataIndex: "balance_reserved",
       key: "balance_reserved",
       render: (value) =>
-        new Intl.NumberFormat("pt-BR", {
-          style: "currency",
-          currency: "BRL",
-        }).format(value ?? 0),
+        moneyFormatter(value ?? 0),
     },
     {
       title: t("table.total_transactions"),
       dataIndex: "total_transactions",
       key: "total_transactions",
       render: (value) =>
-        new Intl.NumberFormat("pt-BR", {
-          style: "currency",
-          currency: "BRL",
-        }).format(value ?? 0),
+        moneyFormatter(value ?? 0),
     },
   ];
 
@@ -91,60 +80,42 @@ export const OrganizationHistory = () => {
         dataIndex: "cash_in_number",
         key: "cash_in_number",
         render: (value) =>
-          new Intl.NumberFormat("pt-BR", {
-            style: "currency",
-            currency: "BRL",
-          }).format(value ?? 0),
+          moneyFormatter(value ?? 0),
       },
       {
         title: t("table.cash_in_value"),
         dataIndex: "cash_in_value",
         key: "cash_in_value",
         render: (value) =>
-          new Intl.NumberFormat("pt-BR", {
-            style: "currency",
-            currency: "BRL",
-          }).format(value ?? 0),
+          moneyFormatter(value ?? 0),
       },
       {
         title: t("table.cash_in_fee"),
         dataIndex: "cash_in_fee",
         key: "cash_in_fee",
         render: (value) =>
-          new Intl.NumberFormat("pt-BR", {
-            style: "currency",
-            currency: "BRL",
-          }).format(value ?? 0),
+          moneyFormatter(value ?? 0),
       },
       {
         title: t("table.cash_out_number"),
         dataIndex: "cash_out_number",
         key: "cash_out_number",
         render: (value) =>
-          new Intl.NumberFormat("pt-BR", {
-            style: "currency",
-            currency: "BRL",
-          }).format(value ?? 0),
+          moneyFormatter(value ?? 0),
       },
       {
         title: t("table.cash_out_value"),
         dataIndex: "cash_out_value",
         key: "cash_out_value",
         render: (value) =>
-          new Intl.NumberFormat("pt-BR", {
-            style: "currency",
-            currency: "BRL",
-          }).format(value ?? 0),
+          moneyFormatter(value ?? 0),
       },
       {
         title: t("table.cash_out_fee"),
         dataIndex: "cash_out_fee",
         key: "cash_out_fee",
         render: (value) =>
-          new Intl.NumberFormat("pt-BR", {
-            style: "currency",
-            currency: "BRL",
-          }).format(value ?? 0),
+          moneyFormatter(value ?? 0),
       },
     ];
 

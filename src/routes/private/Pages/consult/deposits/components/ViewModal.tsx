@@ -15,6 +15,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useGetDeposit } from "../../../../../../services/consult/deposits/generatedDeposits/getDeposit";
+import { moneyFormatter } from "@src/utils/moneyFormatter";
 
 interface ViewModalProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -215,10 +216,7 @@ export const ViewModal = (props: ViewModalProps) => {
                           }}
                         >
                           {" "}
-                          {new Intl.NumberFormat("pt-BR", {
-                            style: "currency",
-                            currency: "BRL",
-                          }).format(Number(deposit[key]) || 0)}
+                          {moneyFormatter(Number(deposit[key]) || 0)}
                         </Descriptions.Item>
                       );
 

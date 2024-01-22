@@ -20,6 +20,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Totalizers } from "./components/Totalizers";
 import { useTheme } from "@src/contexts/ThemeContext";
+import { moneyFormatter } from "@src/utils/moneyFormatter";
 
 const INITIAL_QUERY: OrganizationBankStatementTotalsQuery = {
   start_date: moment(new Date())
@@ -264,10 +265,7 @@ export const OrganizationBankStatement = () => {
                 yAxis: {
                   axisLabel: {
                     formatter: (value: number) =>
-                      new Intl.NumberFormat("pt-BR", {
-                        style: "currency",
-                        currency: "BRL",
-                      }).format(value ?? 0),
+                    moneyFormatter(value ?? 0),
                   },
                 },
                 series: [
@@ -275,30 +273,21 @@ export const OrganizationBankStatement = () => {
                     type: "bar",
                     tooltip: {
                       valueFormatter: (value: number) =>
-                        new Intl.NumberFormat("pt-BR", {
-                          style: "currency",
-                          currency: "BRL",
-                        }).format(value ?? 0),
+                        moneyFormatter(value ?? 0),
                     },
                   },
                   {
                     type: "bar",
                     tooltip: {
                       valueFormatter: (value: number) =>
-                        new Intl.NumberFormat("pt-BR", {
-                          style: "currency",
-                          currency: "BRL",
-                        }).format(value ?? 0),
+                        moneyFormatter(value ?? 0),
                     },
                   },
                   {
                     type: "bar",
                     tooltip: {
                       valueFormatter: (value: number) =>
-                        new Intl.NumberFormat("pt-BR", {
-                          style: "currency",
-                          currency: "BRL",
-                        }).format(value ?? 0),
+                        moneyFormatter(value ?? 0),
                     },
                   },
                 ],

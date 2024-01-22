@@ -8,6 +8,7 @@ import { useListOperatorById } from "@src/services/register/operator/getListOper
 import { useGetOrganizationCategories } from "@src/services/register/organization/categories/getCategories";
 import { useListPartnerById } from "@src/services/register/partner/getListPartnerById";
 import { useGetProfiles } from "@src/services/register/permissionGroups/getProfiles";
+import { moneyFormatter } from "@src/utils/moneyFormatter";
 import { Col, Row, Tag } from "antd";
 import moment from "moment";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
@@ -355,15 +356,9 @@ export const FilterChips = ({
                   }
                 >
                   {t(`table.value`)}:{" "}
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "BRL",
-                  }).format(filtersQuery.value_start)}{" "}
+                  {moneyFormatter(filtersQuery.value_start)}{" "}
                   -{" "}
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "BRL",
-                  }).format(filtersQuery.value_end)}
+                  {moneyFormatter(filtersQuery.value_end)}
                 </Tag>
               </Col>
             );
