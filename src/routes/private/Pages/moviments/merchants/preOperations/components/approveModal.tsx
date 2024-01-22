@@ -45,6 +45,7 @@ export const ApproveModal: FC<IProp> = ({
       label: `${t("titles.operation_approve_all")} (${total || 0})`,
       key: "2",
       icon: <BlockOutlined style={{ fontSize: 22 }} />,
+      disabled: !total,
       onClick: () => {
         setApproveAll(query);
         setIsValidateTokenOpen(true);
