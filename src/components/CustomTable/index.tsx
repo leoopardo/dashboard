@@ -1017,6 +1017,7 @@ export const CustomTable = (props: TableProps) => {
                 ? column?.name + `${Math.random()}`
                 : column?.name,
               dataIndex: column?.name,
+              width: 180,
               render: (text: any, record: any) => (
                 <Grid
                   container

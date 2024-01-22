@@ -87,7 +87,6 @@ export const MerchantManualReports = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -120,6 +119,8 @@ export const MerchantManualReports = () => {
               { name: "_id", type: "id" },
               { name: "createdAt", type: "date" },
               { name: "created_by_name", type: "text" },
+                 { name: "start_date_filter", type: "date" },
+              { name: "end_date_filter", type: "date" },
               { name: "rows", type: "text" },
               { name: "progress", type: "progress" },
             ]}
