@@ -144,6 +144,7 @@ function App() {
                 Layout: {
                   colorBgHeader: theme === "dark" ? "#222222" : "#ffffff",
                 },
+                Segmented: {colorBgElevated:defaultTheme.colors.secondary}
               },
 
               token: {
