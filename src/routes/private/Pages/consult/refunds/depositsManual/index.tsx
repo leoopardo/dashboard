@@ -465,6 +465,7 @@ export const RefundDepositsManual = () => {
 
       {isFiltersOpen && (
         <FiltersModal
+          maxRange
           open={isFiltersOpen}
           setOpen={setIsFiltersOpen}
           query={query}
