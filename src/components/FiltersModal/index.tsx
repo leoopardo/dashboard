@@ -533,8 +533,6 @@ export const FiltersModal = ({
                                 : null,
                             }));
 
-                            console.log(startDate);
-
                             formRef?.current?.validateFields();
                           }}
                           autoFocus={false}

@@ -104,7 +104,7 @@ export const FilterChips = ({
       ...q,
     });
   }, [query]);
-
+  
   return (
     <Row gutter={[4, 4]} wrap style={{ width: "100%" }}>
       {Object.keys(filtersQuery).map((key) => {

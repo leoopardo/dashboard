@@ -157,7 +157,8 @@
     "organization_settings": "Organization settings",
     "merchant_settings": "Merchant settings",
     "historic_cpf_merchant": "CPF historic by merchant",
-    "historic_cpf_merchant_details": "CPF historic by merchant details"
+    "historic_cpf_merchant_details": "CPF historic by merchant details",
+    "current_accounts": "Current accounts"
   },
 
   "titles": {
@@ -303,7 +304,8 @@
     "help": "Help",
     "confirm_import": "Confirm import",
     "merchant_blacklist_details": "Merchants blacklist details",
-    "create_group": "Create group"
+    "create_group": "Create group",
+    "add_current_account": "Add current account"
   },
   "input": {
     "required": "Please input the {{field}}",
@@ -436,6 +438,8 @@
   
   "modal": {
     "confirm": "Confirm",
+    "update": "Update",
+    "add":  "Add",
     "validate_token": "Validate token",
     "token_expires_in": "Token expires in",
     "resend_token_by_sms": "Resend token by SMS",
@@ -959,7 +963,8 @@
     "cash_out_transaction_limit_per_day": "Withdrawal limit/day",
     "cryptography": "Cryptography",
     "decrypt_key": "Decrypt key",
-    "custom_date": "Set date"
+    "custom_date": "Set date",
+    "locked": "Locked"
   },
   "actions": {
     "details": "Details",

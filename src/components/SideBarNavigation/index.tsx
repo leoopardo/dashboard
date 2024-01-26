@@ -171,6 +171,28 @@ export const SidebarNavigation = () => {
               </Link>
             ),
             getItem(
+              "current_accounts",
+              null,
+              null,
+              false,
+              undefined,
+              {
+                display: permissions?.register?.paybrokers?.release_category
+                  ?.menu
+                  ? undefined
+                  : "none",
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/register/organization/current_accounts"}
+              >
+                {t("menus.current_accounts")}
+              </Link>
+            ),
+            getItem(
               "bank_maintain",
               null,
               null,
