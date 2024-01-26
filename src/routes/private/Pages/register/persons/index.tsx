@@ -375,7 +375,7 @@ export const Persons = () => {
         comma={comma}
         setIsComma={setIsComma}
         setCsvFields={setCsvFields}
-        reportName="Merchant"
+        reportName="persons"
       />
       <Toast
         actionSuccess={t("messages.updated")}

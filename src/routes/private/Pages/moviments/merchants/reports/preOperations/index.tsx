@@ -25,8 +25,12 @@ export const MerchantPreManualReports = () => {
   const [currentItem, setCurrentItem] = useState<any>();
   const [, setDisable] = useState<boolean>(false);
 
-  const {isPreManualReportsDataFetching, preManualReportsData, preManualReportsDataError, refetchPreManualReportsData} = useGetPreManualReports(query)
-
+  const {
+    isPreManualReportsDataFetching,
+    preManualReportsData,
+    preManualReportsDataError,
+    refetchPreManualReportsData,
+  } = useGetPreManualReports(query);
 
   useEffect(() => {
     refetchPreManualReportsData();
@@ -83,7 +87,6 @@ export const MerchantPreManualReports = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -116,6 +119,8 @@ export const MerchantPreManualReports = () => {
               { name: "_id", type: "id" },
               { name: "createdAt", type: "date" },
               { name: "created_by_name", type: "text" },
+                 { name: "start_date_filter", type: "date" },
+              { name: "end_date_filter", type: "date" },
               { name: "rows", type: "text" },
               { name: "progress", type: "progress" },
             ]}

@@ -86,7 +86,6 @@ export const AggregatorsReports = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -119,6 +118,8 @@ export const AggregatorsReports = () => {
               { name: "_id", type: "id", sort: true },
               { name: "createdAt", type: "date", sort: true },
               { name: "created_by_name", type: "text" },
+                 { name: "start_date_filter", type: "date" },
+              { name: "end_date_filter", type: "date" },
               { name: "rows", type: "text" },
               { name: "progress", type: "progress" },
             ]}

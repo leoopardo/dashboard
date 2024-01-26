@@ -41,7 +41,8 @@ export const PixKeyWhitelistReports = () => {
         spacing={1}
       >
         <Grid item xs={12} md={4} lg={2}>
-           <Button size="large"
+          <Button
+            size="large"
             style={{ width: "100%" }}
             loading={isPixKeyWhitelistReportsDataFetching}
             type="primary"
@@ -102,11 +103,13 @@ export const PixKeyWhitelistReports = () => {
             items={PixKeyWhitelistReportsData?.items}
             error={PixKeyWhitelistReportsDataError}
             columns={[
-              { name: "_id", type: "id"  },
-              { name: "createdAt", type: "date",sort: true  },
+              { name: "_id", type: "id" },
+              { name: "createdAt", type: "date", sort: true },
               { name: "created_by_name", type: "text" },
-              { name: "rows", type: "text"  },
-              { name: "progress", type: "progress"  },
+                 { name: "start_date_filter", type: "date" },
+              { name: "end_date_filter", type: "date" },
+              { name: "rows", type: "text" },
+              { name: "progress", type: "progress" },
             ]}
             loading={isPixKeyWhitelistReportsDataFetching}
             label={["createdAt", "progress"]}

@@ -118,6 +118,8 @@ export const PaidWithdrawalsReports = () => {
               { name: "_id", type: "id" },
               { name: "createdAt", type: "date", sort: true },
               { name: "created_by_name", type: "text" },
+              { name: "initial_date_filter", type: "date" },
+              { name: "final_date_filter", type: "date" },
               { name: "rows", type: "text" },
               { name: "progress", type: "progress" },
             ]}

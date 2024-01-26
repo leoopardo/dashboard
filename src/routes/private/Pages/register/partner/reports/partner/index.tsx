@@ -48,7 +48,8 @@ export const PartnerReports = () => {
         spacing={1}
       >
         <Grid item xs={12} md={4} lg={2}>
-           <Button size="large"
+          <Button
+            size="large"
             style={{ width: "100%" }}
             loading={isPartnersReportsDataFetching}
             type="primary"
@@ -104,8 +105,8 @@ export const PartnerReports = () => {
                 disabled: (item) => item.status !== "COMPLETED",
               },
               {
-                label: 'details',
-                icon: <EyeFilled style={{ fontSize: '20px' }} />,
+                label: "details",
+                icon: <EyeFilled style={{ fontSize: "20px" }} />,
                 onClick: () => setIsViewModalOpen(true),
               },
             ]}
@@ -114,9 +115,11 @@ export const PartnerReports = () => {
             items={PartnersReportsData?.items}
             error={PartnersReportsDataError}
             columns={[
-              { name: "_id", type: "id",sort: true },
-              { name: "createdAt", type: "date",sort: true },
+              { name: "_id", type: "id", sort: true },
+              { name: "createdAt", type: "date", sort: true },
               { name: "created_by_name", type: "text" },
+                 { name: "start_date_filter", type: "date" },
+              { name: "end_date_filter", type: "date" },
               { name: "rows", type: "text" },
               { name: "progress", type: "progress" },
             ]}
@@ -148,7 +151,7 @@ export const PartnerReports = () => {
           setOpen={setIsViewModalOpen}
           item={currentItem}
           loading={false}
-          modalName={t('modal.report_details')}
+          modalName={t("modal.report_details")}
         />
       )}
     </Grid>
