@@ -54,7 +54,6 @@ export const AuthFromFastPix = () => {
     if (tokenSuccess) {
       queryClient.invalidateQueries();
       refetchValidate();
-      console.log("logado");
     }
   }, [tokenSuccess]);
 

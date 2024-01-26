@@ -357,7 +357,7 @@ export const GeneratedWithdrawals = () => {
                   setWebhookId(item?._id);
                   setIsResendWebhookModalOpen(true);
                 },
-                disabled: (item) => item.status !== "PAID",
+                disabled: (item) => item.status !== "PAID" && item.status !== "CANCELED",
               },
             ]}
             removeTotal

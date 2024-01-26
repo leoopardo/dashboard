@@ -29,5 +29,5 @@ export interface DepositWebhooksData {
   limit: number;
   page: number;
   total: number;
-  items: DepositWebhooksItem[];
+  itens: DepositWebhooksItem[];
 }

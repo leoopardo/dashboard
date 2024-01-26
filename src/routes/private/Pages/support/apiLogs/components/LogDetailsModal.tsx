@@ -115,7 +115,7 @@ export const LogDetailsModal = ({
                             width: "100%",
                             wordBreak: "break-all",
                           }}
-                          src={data?.payload ?? {}}
+                          src={data?.response ?? {}}
                           theme="ocean"
                           collapseStringsAfterLength={90}
                         />
