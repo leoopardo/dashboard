@@ -103,6 +103,7 @@ export const RefundWithdrawals = () => {
   ];
 
   useEffect(() => {
+    refetchRefundWithdrawalsTotal()
     refetchRefundWithdrawals();
   }, [query]);
 

@@ -1,35 +1,32 @@
-import { useEffect, useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { api } from "../../../../config/api";
 import { refundManualDepositsQuery } from "../../../types/consult/refunds/refundmanualDeposits.interface";
 import { refundDepositTotal } from "../../../types/consult/refunds/refundsDeposits.interface";
+import { useQuery } from "react-query";
 
 export function useGetTotalRefundDepositManual(params: refundManualDepositsQuery) {
-  const [data, setData] = useState<refundDepositTotal | null>(null);
-  const [error, setError] = useState<any>(null);
-  const [isFetching, setIsFetching] = useState<boolean>(false);
-
-  const fetchTotalDepositManual = async () => {
-    try {
-      setIsFetching(true);
+  const { data, isFetching, error, refetch } = useQuery<
+  refundDepositTotal | null | undefined
+  >(
+    "refundDepositManualTotal",
+    async () => {
       const response = await api.get("refund/pix-manual/total", {
         params,
       });
-      setData(response.data);
-    } catch (error) {
-      setError(error);
-    } finally {
-      setIsFetching(false);
+      return response.data;
+    },
+    {
+      refetchInterval: false,
+      refetchIntervalInBackground: false,
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
     }
-  };
-
-  useEffect(() => {
-    fetchTotalDepositManual();
-  }, [params]);
+  );
 
   const refundDepositManualTotal = data;
   const isRefundDepositManualTotalFetching = isFetching;
   const refundDepositManualTotalError: any = error;
-  const refetchRefundDepositManualTotal = fetchTotalDepositManual;
+  const refetchRefundDepositManualTotal = refetch;
 
   return {
     refundDepositManualTotal,
