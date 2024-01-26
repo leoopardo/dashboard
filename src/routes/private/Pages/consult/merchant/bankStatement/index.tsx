@@ -134,7 +134,7 @@ export const MerchantBankStatement = () => {
             />
           </Grid>
         )}
-        <Grid item xs={12} md="auto">
+        <Grid item xs={12} md={2} lg={1}>
           <Button
             style={{ width: "100%" }}
             type="link"
