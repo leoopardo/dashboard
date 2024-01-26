@@ -21,6 +21,7 @@ import { useMediaQuery } from "react-responsive";
 import { useLocation, useParams } from "react-router-dom";
 import { TotalizersCards as DepositsCards } from "../../../consult/deposits/generated/components/TotalizersCards";
 import { TotalizersCards } from "../../../consult/withdrawals/generated/components/TotalizersCards";
+import { moneyFormatter } from "@src/utils/moneyFormatter";
 
 export const PersonDetails = () => {
   const { t } = useTranslation();
@@ -388,10 +389,7 @@ export const PersonDetails = () => {
                           }}
                         >
                           {(currentData as any)[key]
-                            ? new Intl.NumberFormat("pt-BR", {
-                                style: "currency",
-                                currency: "BRL",
-                              }).format((currentData as any)[key])
+                            ? moneyFormatter((currentData as any)[key])
                             : "-"}
                         </Descriptions.Item>
                       );

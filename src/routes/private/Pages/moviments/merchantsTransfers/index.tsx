@@ -17,6 +17,7 @@ import { useListMerchants } from "@src/services/merchant/listMerchants";
 import { useCreateTransferBetweenMerchants } from "@src/services/moviments/transfersMerchants/createTransferBetweenMerchants";
 import { useGetTransferBetweenMerchants } from "@src/services/moviments/transfersMerchants/getTransferBetweenMerchants";
 import { GetTransferMerchantQuery } from "@src/services/types/moviments/transfersMerchants/getTransferBetweenMerchants.interface";
+import { moneyFormatter } from "@src/utils/moneyFormatter";
 import { Button, Card, Col, Row, Statistic } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -127,10 +128,7 @@ export const TransferBetweenMerchants = () => {
                         }}
                         title={t(`table.${key}`)}
                         loading={isTransferMerchantsDataFetching}
-                        value={new Intl.NumberFormat("pt-BR", {
-                          style: "currency",
-                          currency: "BRL",
-                        }).format(transferMerchantsData[key] || 0)}
+                        value={moneyFormatter(transferMerchantsData[key] || 0)}
                       />
                     </Card>
                   </Grid>

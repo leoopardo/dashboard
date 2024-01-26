@@ -24,6 +24,7 @@ import {
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ColumnInterface, actionsInterface } from "..";
+import { moneyFormatter } from "@src/utils/moneyFormatter";
 
 interface MobileProps {
   columns: ColumnInterface[];
@@ -242,20 +243,14 @@ export const Mobile = (props: MobileProps) => {
                           ) : (
                             " "
                           )}{" "}
-                          {new Intl.NumberFormat("pt-BR", {
-                            style: "currency",
-                            currency: "BRL",
-                          }).format(item[label] ?? 0)}
+                          {moneyFormatter(item[label] ?? 0)}
                         </Typography>
                       );
 
                     case "total":
                       return !props.removeValue ? (
                         <Typography key={label}>
-                          {new Intl.NumberFormat("pt-BR", {
-                            style: "currency",
-                            currency: "BRL",
-                          }).format(Number(item[label]) || 0)}
+                          {moneyFormatter(Number(item[label]) || 0)}
                         </Typography>
                       ) : (
                         <Typography key={label}>
@@ -269,10 +264,7 @@ export const Mobile = (props: MobileProps) => {
                       return (
                         <Typography key={label}>
                           <span>{t(`table.${label && label}`)}:</span>{" "}
-                          {new Intl.NumberFormat("pt-BR", {
-                            style: "currency",
-                            currency: "BRL",
-                          }).format(item[label] ?? 0)}
+                          {moneyFormatter(item[label] ?? 0)}
                         </Typography>
                       );
 
@@ -391,10 +383,7 @@ export const Mobile = (props: MobileProps) => {
                             key={value?.name}
                             style={{ width: "100%", textAlign: "center" }}
                           >
-                            {new Intl.NumberFormat("pt-BR", {
-                              style: "currency",
-                              currency: "BRL",
-                            }).format(Number(item[value?.name]) || 0)}
+                            {moneyFormatter(Number(item[value?.name]) || 0)}
                           </Typography>
                         </Descriptions.Item>
                       );

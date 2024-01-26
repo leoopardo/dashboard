@@ -323,10 +323,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
                 {!props.loading && <ReloadOutlined />}
               </Button>
             </>}
-            value={new Intl.NumberFormat("pt-BR", {
-              style: "currency",
-              currency: "BRL",
-            }).format(props?.data?.transaction_value || 0)}
+            value={moneyFormatter(props?.data?.transaction_value || 0)}
             precision={2}
             valueStyle={{
               color: theme === "dark" ? "#fff" : defaultTheme.colors.dark,

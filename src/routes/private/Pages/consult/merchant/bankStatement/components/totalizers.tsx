@@ -7,6 +7,7 @@ import { Grid } from "@mui/material";
 import { useGetMerchantBankStatementTotals } from "@src/services/consult/merchant/bankStatement/getTotals";
 import { MerchantBankStatementTotalsQuery } from "@src/services/types/consult/merchant/bankStatement";
 import { defaultTheme } from "@src/styles/defaultTheme";
+import { moneyFormatter } from "@src/utils/moneyFormatter";
 import { Divider, Statistic, Typography } from "antd";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
@@ -48,10 +49,7 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
         <Statistic
           style={{ textAlign: "center" }}
           title="Resultado do período"
-          value={new Intl.NumberFormat("pt-BR", {
-            style: "currency",
-            currency: "BRL",
-          }).format(MerchantBankStatementTotals?.result_total ?? 0)}
+          value={moneyFormatter(MerchantBankStatementTotals?.result_total ?? 0)}
           precision={2}
           valueStyle={{ color: defaultTheme.colors.secondary }}
         />
@@ -132,10 +130,7 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
                       <Statistic
                         loading={isMerchantBankStatementTotalsFetching}
                         title={t(`table.${key}`)}
-                        value={new Intl.NumberFormat("pt-BR", {
-                          style: "currency",
-                          currency: "BRL",
-                        }).format(MerchantBankStatementTotals[key] || 0)}
+                        value={moneyFormatter(MerchantBankStatementTotals[key] || 0)}
                         precision={2}
                         valueStyle={{
                           color: defaultTheme.colors.paid,
@@ -222,10 +217,7 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
                       <Statistic
                         loading={isMerchantBankStatementTotalsFetching}
                         title={t(`table.${key}`)}
-                        value={new Intl.NumberFormat("pt-BR", {
-                          style: "currency",
-                          currency: "BRL",
-                        }).format(MerchantBankStatementTotals[key] || 0)}
+                        value={moneyFormatter(MerchantBankStatementTotals[key] || 0)}
                         precision={2}
                         valueStyle={{
                           color: defaultTheme.colors.error,

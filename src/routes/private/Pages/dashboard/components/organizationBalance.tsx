@@ -65,10 +65,7 @@ export const OrganizationBalance = () => {
                   onMouseEnter={() => setIsHoverCurrency("dolar")}
                   onMouseLeave={() => setIsHoverCurrency("real")}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "USD",
-                  }).format(
+                  {moneyFormatter(
                     OrganizationBalance?.usd_balance_to_transactions ?? 0
                   )}
                 </Typography.Title>
@@ -79,10 +76,7 @@ export const OrganizationBalance = () => {
                   onMouseEnter={() => setIsHoverCurrency("dolar")}
                   onMouseLeave={() => setIsHoverCurrency("real")}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "USD",
-                  }).format(
+                  {moneyFormatter(
                     OrganizationBalance?.usd_balance_to_transactions ?? 0
                   )}
                 </Typography.Title>
@@ -99,10 +93,7 @@ export const OrganizationBalance = () => {
                   onMouseEnter={() => setIsHoverCurrency("euro")}
                   onMouseLeave={() => setIsHoverCurrency("real")}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "EUR",
-                  }).format(
+                  {moneyFormatter(
                     OrganizationBalance?.eur_balance_to_transactions ?? 0
                   )}
                 </Typography.Title>
@@ -113,10 +104,7 @@ export const OrganizationBalance = () => {
                   onMouseEnter={() => setIsHoverCurrency("euro")}
                   onMouseLeave={() => setIsHoverCurrency("real")}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "EUR",
-                  }).format(
+                  {moneyFormatter(
                     OrganizationBalance?.eur_balance_to_transactions ?? 0
                   )}
                 </Typography.Title>
@@ -133,10 +121,7 @@ export const OrganizationBalance = () => {
                   onMouseEnter={() => setIsHoverCurrency("btc")}
                   onMouseLeave={() => setIsHoverCurrency("real")}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "BTC",
-                  }).format(
+                  {moneyFormatter(
                     OrganizationBalance?.btc_balance_to_transactions ?? 0
                   )}
                 </Typography.Title>
@@ -147,10 +132,7 @@ export const OrganizationBalance = () => {
                   onMouseEnter={() => setIsHoverCurrency("btc")}
                   onMouseLeave={() => setIsHoverCurrency("real")}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "BTC",
-                  }).format(
+                  {moneyFormatter(
                     OrganizationBalance?.btc_balance_to_transactions ?? 0
                   )}
                 </Typography.Title>
@@ -201,10 +183,7 @@ export const OrganizationBalance = () => {
                   onMouseEnter={() => setIsHoverCurrency("dolar")}
                   onMouseLeave={() => setIsHoverCurrency("real")}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "USD",
-                  }).format(OrganizationBalance?.usd_balance_to_payment ?? 0)}
+                  {moneyFormatter(OrganizationBalance?.usd_balance_to_payment ?? 0)}
                 </Typography.Title>
               ) : (
                 <Typography.Title
@@ -213,10 +192,7 @@ export const OrganizationBalance = () => {
                   onMouseEnter={() => setIsHoverCurrency("dolar")}
                   onMouseLeave={() => setIsHoverCurrency("real")}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "USD",
-                  }).format(OrganizationBalance?.usd_balance_to_payment ?? 0)}
+                  {moneyFormatter(OrganizationBalance?.usd_balance_to_payment ?? 0)}
                 </Typography.Title>
               )}
 
@@ -231,10 +207,7 @@ export const OrganizationBalance = () => {
                   onMouseEnter={() => setIsHoverCurrency("euro")}
                   onMouseLeave={() => setIsHoverCurrency("real")}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "EUR",
-                  }).format(OrganizationBalance?.eur_balance_to_payment ?? 0)}
+                  {moneyFormatter(OrganizationBalance?.eur_balance_to_payment ?? 0)}
                 </Typography.Title>
               ) : (
                 <Typography.Title
@@ -243,10 +216,7 @@ export const OrganizationBalance = () => {
                   onMouseEnter={() => setIsHoverCurrency("euro")}
                   onMouseLeave={() => setIsHoverCurrency("real")}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "EUR",
-                  }).format(OrganizationBalance?.eur_balance_to_payment ?? 0)}
+                  {moneyFormatter(OrganizationBalance?.eur_balance_to_payment ?? 0)}
                 </Typography.Title>
               )}
 
@@ -261,10 +231,7 @@ export const OrganizationBalance = () => {
                   onMouseEnter={() => setIsHoverCurrency("btc")}
                   onMouseLeave={() => setIsHoverCurrency("real")}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "BTC",
-                  }).format(OrganizationBalance?.btc_balance_to_payment ?? 0)}
+                  {moneyFormatter(OrganizationBalance?.btc_balance_to_payment ?? 0)}
                 </Typography.Title>
               ) : (
                 <Typography.Title
@@ -273,10 +240,7 @@ export const OrganizationBalance = () => {
                   onMouseEnter={() => setIsHoverCurrency("btc")}
                   onMouseLeave={() => setIsHoverCurrency("real")}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "BTC",
-                  }).format(OrganizationBalance?.btc_balance_to_payment ?? 0)}
+                  {moneyFormatter(OrganizationBalance?.btc_balance_to_payment ?? 0)}
                 </Typography.Title>
               )} */}
             </Card>
@@ -325,10 +289,7 @@ export const OrganizationBalance = () => {
                   onMouseEnter={() => setIsHoverCurrency("dolar")}
                   onMouseLeave={() => setIsHoverCurrency("real")}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "USD",
-                  }).format(OrganizationBalance?.usd_balance_reserved ?? 0)}
+                  {moneyFormatter(OrganizationBalance?.usd_balance_reserved ?? 0)}
                 </Typography.Title>
               ) : (
                 <Typography.Title
@@ -337,10 +298,7 @@ export const OrganizationBalance = () => {
                   onMouseEnter={() => setIsHoverCurrency("dolar")}
                   onMouseLeave={() => setIsHoverCurrency("real")}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "USD",
-                  }).format(OrganizationBalance?.usd_balance_reserved ?? 0)}
+                  {moneyFormatter(OrganizationBalance?.usd_balance_reserved ?? 0)}
                 </Typography.Title>
               )}
 
@@ -355,10 +313,7 @@ export const OrganizationBalance = () => {
                   onMouseEnter={() => setIsHoverCurrency("euro")}
                   onMouseLeave={() => setIsHoverCurrency("real")}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "EUR",
-                  }).format(OrganizationBalance?.eur_balance_reserved ?? 0)}
+                  {moneyFormatter(OrganizationBalance?.eur_balance_reserved ?? 0)}
                 </Typography.Title>
               ) : (
                 <Typography.Title
@@ -367,10 +322,7 @@ export const OrganizationBalance = () => {
                   onMouseEnter={() => setIsHoverCurrency("euro")}
                   onMouseLeave={() => setIsHoverCurrency("real")}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "EUR",
-                  }).format(OrganizationBalance?.eur_balance_reserved ?? 0)}
+                  {moneyFormatter(OrganizationBalance?.eur_balance_reserved ?? 0)}
                 </Typography.Title>
               )}
 
@@ -385,10 +337,7 @@ export const OrganizationBalance = () => {
                   onMouseEnter={() => setIsHoverCurrency("btc")}
                   onMouseLeave={() => setIsHoverCurrency("real")}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "BTC",
-                  }).format(OrganizationBalance?.btc_balance_reserved ?? 0)}
+                  {moneyFormatter(OrganizationBalance?.btc_balance_reserved ?? 0)}
                 </Typography.Title>
               ) : (
                 <Typography.Title
@@ -397,10 +346,7 @@ export const OrganizationBalance = () => {
                   onMouseEnter={() => setIsHoverCurrency("btc")}
                   onMouseLeave={() => setIsHoverCurrency("real")}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "BTC",
-                  }).format(OrganizationBalance?.btc_balance_reserved ?? 0)}
+                  {moneyFormatter(OrganizationBalance?.btc_balance_reserved ?? 0)}
                 </Typography.Title>
               )} */}
             </Card>
@@ -449,10 +395,7 @@ export const OrganizationBalance = () => {
                   onMouseEnter={() => setIsHoverCurrency("dolar")}
                   onMouseLeave={() => setIsHoverCurrency("real")}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "USD",
-                  }).format(OrganizationBalance?.usd_balance_total ?? 0)}
+                  {moneyFormatter(OrganizationBalance?.usd_balance_total ?? 0)}
                 </Typography.Title>
               ) : (
                 <Typography.Title
@@ -461,10 +404,7 @@ export const OrganizationBalance = () => {
                   onMouseEnter={() => setIsHoverCurrency("dolar")}
                   onMouseLeave={() => setIsHoverCurrency("real")}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "USD",
-                  }).format(OrganizationBalance?.usd_balance_total ?? 0)}
+                  {moneyFormatter(OrganizationBalance?.usd_balance_total ?? 0)}
                 </Typography.Title>
               )}
 
@@ -479,10 +419,7 @@ export const OrganizationBalance = () => {
                   onMouseEnter={() => setIsHoverCurrency("euro")}
                   onMouseLeave={() => setIsHoverCurrency("real")}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "EUR",
-                  }).format(OrganizationBalance?.eur_balance_total ?? 0)}
+                  {moneyFormatter(OrganizationBalance?.eur_balance_total ?? 0)}
                 </Typography.Title>
               ) : (
                 <Typography.Title
@@ -491,10 +428,7 @@ export const OrganizationBalance = () => {
                   onMouseEnter={() => setIsHoverCurrency("euro")}
                   onMouseLeave={() => setIsHoverCurrency("real")}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "EUR",
-                  }).format(OrganizationBalance?.eur_balance_total ?? 0)}
+                  {moneyFormatter(OrganizationBalance?.eur_balance_total ?? 0)}
                 </Typography.Title>
               )}
 
@@ -509,10 +443,7 @@ export const OrganizationBalance = () => {
                   onMouseEnter={() => setIsHoverCurrency("btc")}
                   onMouseLeave={() => setIsHoverCurrency("real")}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "BTC",
-                  }).format(OrganizationBalance?.btc_balance_total ?? 0)}
+                  {moneyFormatter(OrganizationBalance?.btc_balance_total ?? 0)}
                 </Typography.Title>
               ) : (
                 <Typography.Title
@@ -521,10 +452,7 @@ export const OrganizationBalance = () => {
                   onMouseEnter={() => setIsHoverCurrency("btc")}
                   onMouseLeave={() => setIsHoverCurrency("real")}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "BTC",
-                  }).format(OrganizationBalance?.btc_balance_total ?? 0)}
+                  {moneyFormatter(OrganizationBalance?.btc_balance_total ?? 0)}
                 </Typography.Title>
               )} */}
             </Card>
