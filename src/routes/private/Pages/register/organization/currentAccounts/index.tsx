@@ -247,9 +247,9 @@ console.log("currentItem", currentItem)
           setOpen={setIsFiltersOpen}
           query={query}
           setQuery={setQuery}
-          filters={["start_date", "end_date"]}
+          filters={["start_date", "end_date", 'locked']}
           refetch={refetchCurrentAccountData}
-          selectOptions={{}}
+          selectOptions={{locked: ["true", "false"]}}
           startDateKeyName="start_date"
           endDateKeyName="end_date"
           haveInitialDate
