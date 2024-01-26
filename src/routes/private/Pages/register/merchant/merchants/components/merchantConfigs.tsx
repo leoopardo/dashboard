@@ -12,6 +12,7 @@ import { MerchantConfigTab } from "./tabs/merchantConfigTab";
 import { OrganizationConfigTab } from "./tabs/organizationConfigTab";
 import { setFirstChildDivTestId } from "@src/utils/functions";
 import { useEffect } from "react";
+import { AccountTab } from "./tabs/account";
 
 export const MerchantConfigs = () => {
   const { permissions } = queryClient.getQueryData(
@@ -90,6 +91,18 @@ export const MerchantConfigs = () => {
           : "none",
       },
       disabled: !permissions.register.merchant.merchant.merchant_config_fees,
+    },
+    {
+      key: "7",
+      label: t("menus.current_accounts"),
+      children: <AccountTab id={params.id} />,
+      style: {
+        display: permissions.register.merchant.merchant.merchant_config_merchant
+          ? undefined
+          : "none",
+      },
+      disabled:
+        !permissions.register.merchant.merchant.merchant_config_merchant,
     },
     {
       key: "3",

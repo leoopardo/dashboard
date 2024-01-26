@@ -40,6 +40,7 @@ import { ViewMerchantModal } from "./components/ViewMerchantModal";
 import { TotalizerPerBanks } from "./components/totalizerPerBank";
 import { TotalizersCards } from "./components/totalizersCards";
 import { UpdateBanks } from "./components/updatebanks";
+import UpdateAccountsModal from "@src/components/Modals/updateAccountsModal";
 
 const INITIAL_QUERY: MerchantsQuery = {
   limit: 25,
@@ -57,6 +58,7 @@ export const MerchantView = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [query, setQuery] = useState<MerchantsQuery>(INITIAL_QUERY);
+  const [updateAccountsModal, setUpdateAccountsModal] = useState<boolean>(false);
   const [activeTotalizer, setActiveTotalizer] = useState<
     "total_banks" | "total_merchants"
   >("total_banks");
@@ -364,6 +366,10 @@ export const MerchantView = () => {
             </Button>
           </Grid>
         )}
+
+        <Grid item xs={12} md={4} lg={2}>
+          <UpdateAccountsModal open={updateAccountsModal} setOpen={setUpdateAccountsModal} selectedFields={[]} loading={false} />
+        </Grid>
 
         {permissions.register.merchant.merchant.merchant_export_csv && (
           <Grid item xs={12} md={"auto"}>

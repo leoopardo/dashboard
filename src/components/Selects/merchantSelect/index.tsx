@@ -12,12 +12,14 @@ interface MerchantSelectProps {
   setQueryFunction: Dispatch<SetStateAction<any>>;
   queryOptions: any;
   name?: boolean;
+  multiple?: boolean;
 }
 
 export const MerchantSelect = ({
   setQueryFunction,
   queryOptions,
   name,
+  multiple
 }: MerchantSelectProps) => {
   const { t } = useTranslation();
   const [query, setQuery] = useState<MerchantQuery>({
@@ -75,6 +77,7 @@ export const MerchantSelect = ({
     <Select
       data-test-id="merchant-select"
       allowClear
+      mode={ multiple ? "multiple" : undefined}
       style={{ width: "100%" }}
       showSearch
       size="large"
