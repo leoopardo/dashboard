@@ -103,6 +103,7 @@ export const RefundWithdrawals = () => {
   ];
 
   useEffect(() => {
+    refetchRefundWithdrawalsTotal()
     refetchRefundWithdrawals();
   }, [query]);
 
@@ -341,6 +342,7 @@ export const RefundWithdrawals = () => {
       )}
       {isFiltersOpen && (
         <FiltersModal
+          maxRange
           open={isFiltersOpen}
           setOpen={setIsFiltersOpen}
           query={query}

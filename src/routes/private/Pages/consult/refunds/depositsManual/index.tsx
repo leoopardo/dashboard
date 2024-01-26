@@ -95,6 +95,7 @@ export const RefundDepositsManual = () => {
   });
 
   useEffect(() => {
+    refetchRefundDepositManualTotal()
     refetchRefundDepositsManual();
   }, [query]);
 
@@ -465,6 +466,7 @@ export const RefundDepositsManual = () => {
 
       {isFiltersOpen && (
         <FiltersModal
+          maxRange
           open={isFiltersOpen}
           setOpen={setIsFiltersOpen}
           query={query}

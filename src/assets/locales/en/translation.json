@@ -960,7 +960,8 @@
     "cash_out_max_value_per_day": "Withdraw max value/day",
     "cash_out_transaction_limit_per_day": "Withdrawal limit/day",
     "cryptography": "Cryptography",
-    "decrypt_key": "Decrypt key"
+    "decrypt_key": "Decrypt key",
+    "custom_date": "Set date"
   },
   "actions": {
     "details": "Details",

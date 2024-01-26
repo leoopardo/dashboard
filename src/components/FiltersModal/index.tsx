@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { CalendarOutlined } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { queryClient } from "@src/services/queryClient";
@@ -13,6 +14,7 @@ import {
   Drawer,
   Form,
   FormInstance,
+  Segmented,
   Select,
   Slider,
   Typography,
@@ -25,6 +27,7 @@ import weekday from "dayjs/plugin/weekday";
 import moment from "moment";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useMediaQuery } from "react-responsive";
 import { useGetCities } from "../../services/states_cities/getCities";
 import { useGetStates } from "../../services/states_cities/getStates";
 import { AggregatorSelect } from "../Selects/aggregatorSelect";
@@ -36,7 +39,6 @@ import { PartnerSelect } from "../Selects/partnerSelect";
 import { ReasonSelect } from "../Selects/reasonSelect";
 import { FilterChips } from "./filterChips";
 import { StyleWrapperDatePicker } from "./styles";
-import { useMediaQuery } from "react-responsive";
 const { RangePicker } = DatePicker;
 
 dayjs.extend(weekday);
@@ -87,7 +89,12 @@ export const FiltersModal = ({
   const { cities, refetchCities } = useGetCities(currState);
   const submitRef = useRef<HTMLButtonElement>(null);
   const formRef = useRef<FormInstance>(null);
-  const isMobile = useMediaQuery({ maxWidth: "550px" });
+  const [rangePickerValue, setRangePickerValue] = useState<
+    "today" | "yesterday" | "this_month" | "custom" | undefined
+  >("today");
+  const isMobile = useMediaQuery({ maxWidth: "750px" });
+  const [viewDateInput, setViewDateInput] = useState<boolean>(false);
+  const rangePickerRef = useRef<any>(null);
 
   useEffect(() => {
     if (query.age_start) {
@@ -151,6 +158,80 @@ export const FiltersModal = ({
   const panelRender = (panelNode: any) => (
     <StyleWrapperDatePicker>{panelNode}</StyleWrapperDatePicker>
   );
+
+  useEffect(() => {
+    if (
+      moment(new Date(query[startDateKeyName])).format(
+        "YYYY-MM-DDTHH:mm:00.000"
+      ) ===
+        moment(new Date())
+          .startOf("day")
+          .add(3, "hours")
+          .format("YYYY-MM-DDTHH:mm:00.000") &&
+      moment(new Date(query[endDateKeyName])).format(
+        "YYYY-MM-DDTHH:mm:00.000"
+      ) ===
+        moment(new Date())
+          .add(1, "day")
+          .startOf("day")
+          .add(3, "hours")
+          .format("YYYY-MM-DDTHH:mm:00.000")
+    ) {
+      setRangePickerValue("today");
+    } else if (
+      moment(new Date(query[startDateKeyName])).format(
+        "YYYY-MM-DDTHH:mm:00.000"
+      ) ===
+        moment(new Date())
+          .subtract(1, "day")
+          .startOf("day")
+          .add(3, "hours")
+          .format("YYYY-MM-DDTHH:mm:00.000") &&
+      moment(new Date(query[endDateKeyName])).format(
+        "YYYY-MM-DDTHH:mm:00.000"
+      ) ===
+        moment(new Date())
+          .startOf("day")
+          .add(3, "hours")
+          .format("YYYY-MM-DDTHH:mm:00.000")
+    ) {
+      setRangePickerValue("yesterday");
+    } else if (
+      moment(new Date(query[startDateKeyName])).format(
+        "YYYY-MM-DDTHH:mm:00.000"
+      ) ===
+        moment(new Date())
+          .startOf("M")
+          .add(3, "hours")
+          .format("YYYY-MM-DDTHH:mm:00.000") &&
+      moment(new Date(query[endDateKeyName])).format(
+        "YYYY-MM-DDTHH:mm:00.000"
+      ) ===
+        moment(new Date())
+          .endOf("M")
+          .add(1, "day")
+          .startOf("day")
+          .add(3, "hours")
+          .format("YYYY-MM-DDTHH:mm:00.000")
+    ) {
+      setRangePickerValue("this_month");
+    } else {
+      if (!query[startDateKeyName] && !query[endDateKeyName]) {
+        setFiltersQuery((state: any) => ({
+          ...state,
+          [startDateKeyName]: moment(new Date())
+            .startOf("day")
+            .format("YYYY-MM-DDTHH:mm:00.000"),
+          [endDateKeyName]: moment(new Date())
+            .add(1, "day")
+            .startOf("day")
+            .format("YYYY-MM-DDTHH:mm:00.000"),
+        }));
+        return;
+      }
+      setRangePickerValue("custom");
+    }
+  }, [query]);
 
   return (
     <Drawer
@@ -250,7 +331,6 @@ export const FiltersModal = ({
                   data-test-id="form-item-start-date"
                   label={t("table.date")}
                   style={{ marginBottom: 10 }}
-                  name={startDateKeyName}
                   rules={[
                     {
                       required:
@@ -271,105 +351,194 @@ export const FiltersModal = ({
                     },
                   ]}
                 >
-                  <ConfigProvider locale={locale}>
-                    <RangePicker 
-                      presets={
-                        !isMobile
-                          ? [
-                              {
-                                label: t("table.last_7"),
-                                value: [dayjs().add(-7, "d").startOf("day"), dayjs().add(1, "day").startOf("day")],
-                              },
-                              {
-                                label: t("table.last_14"),
-                                value: [dayjs().add(-14, "d").startOf("day"), dayjs().add(1, "day").startOf("day")],
-                              },
-                              {
-                                label: t("table.last_30"),
-                                value: [dayjs().add(-30, "d").startOf("day"), dayjs().add(1, "day").startOf("day")],
-                              },
-                              {
-                                label: t("table.today"),
-                                value: [
-                                  dayjs().startOf("day"),
-                                  dayjs().add(1, "day").startOf("day"),
-                                ],
-                              },
-                              {
-                                label: t("table.yesterday"),
-                                value: [
-                                  dayjs().subtract(1, "day").startOf("day"),
-                                  dayjs().startOf("day"),
-                                ],
-                              },
-                              {
-                                label: t("table.this_month"),
-                                value: [
-                                  dayjs().startOf("M"),
-                                  dayjs().endOf("M").add(1, "D").startOf("day"),
-                                ],
-                              },
-                              {
-                                label: t("table.last_month"),
-                                value: [
-                                  dayjs().subtract(1, "M").startOf("M"),
-                                  dayjs().subtract(1, "M").endOf("M").add(1, "D").startOf("day"),
-                                ],
-                              },
-                            ]
-                          : undefined
-                      }
-                      data-test-id="range-picker-date-filter"
-                      panelRender={panelRender}
-                      format={
-                        navigator.language === "pt-BR"
-                          ? "DD/MM/YYYY HH:mm"
-                          : "YYYY/MM/DD HH:mm"
-                      }
-                      showMinute={disableMinutes ? false : true}
-                      popupStyle={{ marginLeft: "40px" }}
-                      showTime
-                      value={[
-                        filtersQuery[startDateKeyName]
-                          ? dayjs(filtersQuery[startDateKeyName])
-                          : dayjs(
-                              moment(new Date())
-                                .startOf("day")
-                                .format("YYYY-MM-DDTHH:mm:00.000")
-                            ),
-                        filtersQuery[endDateKeyName]
-                          ? dayjs(filtersQuery[endDateKeyName])
-                          : dayjs(
-                              moment(new Date())
-                                .add(1, "day")
-                                .startOf("day")
-                                .format("YYYY-MM-DDTHH:mm:00.000")
-                            ),
-                      ]}
-                      clearIcon={<></>}
-                      placeholder={[
-                        t("table.initial_date"),
-                        t("table.final_date"),
-                      ]}
-                      onChange={(value: any) => {
-                        const [startDate, endDate] = value;
+                  <Segmented
+                    style={{ marginBottom: 8 }}
+                    options={[
+                      { label: t("table.today"), value: "today" },
+                      { label: t("table.yesterday"), value: "yesterday" },
+                      { label: t("table.this_month"), value: "this_month" },
+                      {
+                        label: t("table.custom_date"),
+                        value: "custom",
+                        icon: <CalendarOutlined />,
+                      },
+                    ]}
+                    value={rangePickerValue}
+                    defaultValue={rangePickerValue}
+                    onChange={(value: any) => {
+                      setRangePickerValue(value);
+                      if (value === "today") {
                         setFiltersQuery((state: any) => ({
                           ...state,
-                          [startDateKeyName]: startDate
-                            ? startDate.format("YYYY-MM-DDTHH:mm:00.000")
-                            : null,
-                          [endDateKeyName]: endDate
-                            ? endDate.format("YYYY-MM-DDTHH:mm:59.999")
-                            : null,
+                          [startDateKeyName]: moment(new Date())
+                            .startOf("day")
+                            .format("YYYY-MM-DDTHH:mm:00.000"),
+                          [endDateKeyName]: moment(new Date())
+                            .add(1, "day")
+                            .startOf("day")
+                            .format("YYYY-MM-DDTHH:mm:00.000"),
                         }));
-                        formRef?.current?.validateFields();
-                      }}
-                      autoFocus={false}
-                      autoComplete="off"
-                      allowClear
-                      inputReadOnly
-                    />
-                  </ConfigProvider>
+                      }
+                      if (value === "yesterday") {
+                        setFiltersQuery((state: any) => ({
+                          ...state,
+                          [startDateKeyName]: moment(new Date())
+                            .subtract(1, "day")
+                            .startOf("day")
+                            .format("YYYY-MM-DDTHH:mm:00.000"),
+                          [endDateKeyName]: moment(new Date())
+                            .startOf("day")
+                            .format("YYYY-MM-DDTHH:mm:00.000"),
+                        }));
+                      }
+                      if (value === "this_month") {
+                        setFiltersQuery((state: any) => ({
+                          ...state,
+                          [startDateKeyName]: moment(new Date())
+                            .startOf("M")
+                            .format("YYYY-MM-DDTHH:mm:00.000"),
+                          [endDateKeyName]: moment(new Date())
+                            .endOf("M")
+                            .add(1, "day")
+                            .startOf("day")
+                            .format("YYYY-MM-DDTHH:mm:00.000"),
+                        }));
+                      }
+                      if (value === "custom") {
+                        setTimeout(() => {
+                          setViewDateInput(true);
+                        }, 250);
+                      } else {
+                        setViewDateInput(false);
+                      }
+                    }}
+                  />
+
+                  {viewDateInput && (
+                    <ConfigProvider locale={locale}>
+                      <RangePicker
+                        presets={
+                          !isMobile
+                            ? [
+                                {
+                                  label: t("table.today"),
+                                  value: [
+                                    dayjs().startOf("day"),
+                                    dayjs().add(1, "day").startOf("day"),
+                                  ],
+                                },
+                                {
+                                  label: t("table.yesterday"),
+                                  value: [
+                                    dayjs().subtract(1, "day").startOf("day"),
+                                    dayjs().startOf("day"),
+                                  ],
+                                },
+                                {
+                                  label: t("table.this_month"),
+                                  value: [
+                                    dayjs().startOf("M"),
+                                    dayjs()
+                                      .endOf("M")
+                                      .add(1, "D")
+                                      .startOf("day"),
+                                  ],
+                                },
+                                {
+                                  label: t("table.last_month"),
+                                  value: [
+                                    dayjs().subtract(1, "M").startOf("M"),
+                                    dayjs()
+                                      .subtract(1, "M")
+                                      .endOf("M")
+                                      .add(1, "D")
+                                      .startOf("day"),
+                                  ],
+                                },
+                                {
+                                  label: t("table.last_7"),
+                                  value: [
+                                    dayjs().add(-7, "d").startOf("day"),
+                                    dayjs().add(1, "day").startOf("day"),
+                                  ],
+                                },
+                                {
+                                  label: t("table.last_14"),
+                                  value: [
+                                    dayjs().add(-14, "d").startOf("day"),
+                                    dayjs().add(1, "day").startOf("day"),
+                                  ],
+                                },
+                                {
+                                  label: t("table.last_30"),
+                                  value: [
+                                    dayjs().add(-30, "d").startOf("day"),
+                                    dayjs().add(1, "day").startOf("day"),
+                                  ],
+                                },
+                              ]
+                            : undefined
+                        }
+                        changeOnBlur
+                        ref={rangePickerRef}
+                        data-test-id="range-picker-date-filter"
+                        panelRender={panelRender}
+                        format={
+                          navigator.language === "pt-BR"
+                            ? "DD/MM/YYYY HH:mm"
+                            : "YYYY/MM/DD HH:mm"
+                        }
+                        showMinute={disableMinutes ? false : true}
+                        popupStyle={{ marginLeft: "40px" }}
+                        showTime
+                        value={[
+                          filtersQuery[startDateKeyName]
+                            ? dayjs(filtersQuery[startDateKeyName])
+                            : dayjs(
+                                moment(new Date())
+                                  .startOf("day")
+                                  .format("YYYY-MM-DDTHH:mm:00.000")
+                              ),
+                          filtersQuery[endDateKeyName]
+                            ? dayjs(filtersQuery[endDateKeyName])
+                            : dayjs(
+                                moment(new Date())
+                                  .add(1, "day")
+                                  .startOf("day")
+                                  .format("YYYY-MM-DDTHH:mm:00.000")
+                              ),
+                        ]}
+                        clearIcon={<></>}
+                        placeholder={[
+                          t("table.initial_date"),
+                          t("table.final_date"),
+                        ]}
+                        onCalendarChange={(value: any) => {
+                          console.log(value);
+                        }}
+                        onChange={(value: any) => {
+                          const [startDate, endDate] = value;
+                          setFiltersQuery((state: any) => ({
+                            ...state,
+                            [startDateKeyName]: startDate
+                              ? startDate.format("YYYY-MM-DDTHH:mm:00.000")
+                              : null,
+                            [endDateKeyName]: endDate
+                              ? endDate.format("YYYY-MM-DDTHH:mm:59.999")
+                              : null,
+                          }));
+
+                          console.log(startDate);
+
+                          formRef?.current?.validateFields();
+                        }}
+                        autoFocus={false}
+                        autoComplete="off"
+                        allowClear
+                        inputReadOnly
+                      />
+                    </ConfigProvider>
+                  )}
                 </Form.Item>
               );
 
@@ -460,7 +629,11 @@ export const FiltersModal = ({
                   container
                   item
                   xs={12}
-                  style={{ display: "flex", alignItems: "center", margin: 10 }}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    margin: 10,
+                  }}
                 >
                   <Grid item xs={3}>
                     <Checkbox
@@ -499,7 +672,11 @@ export const FiltersModal = ({
                   container
                   item
                   xs={12}
-                  style={{ display: "flex", alignItems: "center", margin: 10 }}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    margin: 10,
+                  }}
                 >
                   <Grid item xs={3}>
                     <Checkbox
@@ -867,7 +1044,9 @@ export const FiltersModal = ({
                     showSearch
                     filterOption={(input, option) => {
                       return (
-                        `${option?.label}`?.toLowerCase()?.indexOf(input?.toLowerCase()) >= 0
+                        `${option?.label}`
+                          ?.toLowerCase()
+                          ?.indexOf(input?.toLowerCase()) >= 0
                       );
                     }}
                     options={

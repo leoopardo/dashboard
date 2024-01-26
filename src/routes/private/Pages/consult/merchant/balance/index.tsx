@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import { MerchantBalance as MerchantBalanceTotals } from "../../../dashboard/components/merchantBalance";
+import { moneyFormatter } from "@src/utils/moneyFormatter";
 
 export const MerchantBalance = () => {
   const { t } = useTranslation();
@@ -56,40 +57,28 @@ export const MerchantBalance = () => {
       dataIndex: "balance_to_transactions",
       key: "balance_to_transactions",
       render: (value) =>
-        new Intl.NumberFormat("pt-BR", {
-          style: "currency",
-          currency: "BRL",
-        }).format(value ?? 0),
+      moneyFormatter(value ?? 0),
     },
     {
       title: t("table.balance_to_payment"),
       dataIndex: "balance_to_payment",
       key: "balance_to_payment",
       render: (value) =>
-        new Intl.NumberFormat("pt-BR", {
-          style: "currency",
-          currency: "BRL",
-        }).format(value ?? 0),
+      moneyFormatter(value ?? 0),
     },
     {
       title: t("table.balance_reserved"),
       dataIndex: "balance_reserved",
       key: "balance_reserved",
       render: (value) =>
-        new Intl.NumberFormat("pt-BR", {
-          style: "currency",
-          currency: "BRL",
-        }).format(value ?? 0),
+      moneyFormatter(value ?? 0),
     },
     {
       title: t("table.balance_total"),
       dataIndex: "balance_total",
       key: "balance_total",
       render: (value) =>
-        new Intl.NumberFormat("pt-BR", {
-          style: "currency",
-          currency: "BRL",
-        }).format(value ?? 0),
+      moneyFormatter(value ?? 0),
     },
     {
       title: (
@@ -121,20 +110,14 @@ export const MerchantBalance = () => {
         dataIndex: "in",
         key: "in",
         render: (value) =>
-          new Intl.NumberFormat("pt-BR", {
-            style: "currency",
-            currency: "BRL",
-          }).format(value ?? 0),
+          moneyFormatter(value ?? 0),
       },
       {
         title: t("table.out"),
         dataIndex: "out",
         key: "out",
         render: (value) =>
-          new Intl.NumberFormat("pt-BR", {
-            style: "currency",
-            currency: "BRL",
-          }).format(value ?? 0),
+          moneyFormatter(value ?? 0),
       },
       {
         title: t("table.pix_transactions_total"),
@@ -147,20 +130,14 @@ export const MerchantBalance = () => {
         dataIndex: "pix_amount_value",
         key: "pix_amount_value",
         render: (value) =>
-          new Intl.NumberFormat("pt-BR", {
-            style: "currency",
-            currency: "BRL",
-          }).format(value ?? 0),
+          moneyFormatter(value ?? 0),
       },
       {
         title: t("table.pix_amount_fee"),
         dataIndex: "pix_amount_fee",
         key: "pix_amount_fee",
         render: (value) =>
-          new Intl.NumberFormat("pt-BR", {
-            style: "currency",
-            currency: "BRL",
-          }).format(value ?? 0),
+          moneyFormatter(value ?? 0),
       },
       {
         title: t("table.withdraw_transactions_total"),
@@ -173,20 +150,14 @@ export const MerchantBalance = () => {
         dataIndex: "withdraw_amount_value",
         key: "withdraw_amount_value",
         render: (value) =>
-          new Intl.NumberFormat("pt-BR", {
-            style: "currency",
-            currency: "BRL",
-          }).format(value ?? 0),
+          moneyFormatter(value ?? 0),
       },
       {
         title: t("table.withdraw_amount_fee"),
         dataIndex: "withdraw_amount_fee",
         key: "withdraw_amount_fee",
         render: (value) =>
-          new Intl.NumberFormat("pt-BR", {
-            style: "currency",
-            currency: "BRL",
-          }).format(value ?? 0),
+          moneyFormatter(value ?? 0),
       },
       {
         title: t("table.refund_transactions_total"),
@@ -199,10 +170,7 @@ export const MerchantBalance = () => {
         dataIndex: "refund_amount_fee",
         key: "refund_amount_fee",
         render: (value) =>
-          new Intl.NumberFormat("pt-BR", {
-            style: "currency",
-            currency: "BRL",
-          }).format(value ?? 0),
+          moneyFormatter(value ?? 0),
       },
     ];
 

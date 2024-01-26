@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { DownloadOutlined } from "@ant-design/icons";
 import { defaultTheme } from "@src/styles/defaultTheme";
+import { moneyFormatter } from "@src/utils/moneyFormatter";
 import {
   Button,
   Descriptions,
@@ -349,10 +350,7 @@ export const ViewModal = ({
                       textAlign: "center",
                     }}
                   >
-                    {new Intl.NumberFormat("pt-BR", {
-                      style: "currency",
-                      currency: "BRL",
-                    }).format(Number(sortItems[key]) || 0)}
+                    {moneyFormatter(Number(sortItems[key]) || 0)}
                   </Descriptions.Item>
                 );
 

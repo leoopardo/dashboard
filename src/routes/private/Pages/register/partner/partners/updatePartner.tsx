@@ -56,7 +56,7 @@ import { FormInstance } from "antd/lib/form/Form";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import ReactInputMask from "react-input-mask";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { setFirstChildDivId, validateFormCnpj } from "@src/utils/functions";
 
 export const UpdatePartner = () => {
@@ -68,7 +68,7 @@ export const UpdatePartner = () => {
   const tabindex0 = document.querySelector('[data-node-key="1"]');
   const tabindex1 = document.querySelector('[data-node-key="2"]');
   const tabindex2 = document.querySelector('[data-node-key="3"]');
-
+  const navigate = useNavigate();
   const [partnerBody, setPartnerBody] = useState<PartnerItem>({
     partner_id: location?.state?.id,
     name: location?.state?.name,
@@ -186,10 +186,18 @@ export const UpdatePartner = () => {
   }, [deleteFileId]);
 
   useEffect(() => {
-    setFirstChildDivId(tabindex0, 'tab-partner-data');
-    setFirstChildDivId(tabindex1, 'tab-responsibles');
-    setFirstChildDivId(tabindex2, 'tab-attachments');
-  }, [tabindex0, tabindex1, tabindex2])
+    setFirstChildDivId(tabindex0, "tab-partner-data");
+    setFirstChildDivId(tabindex1, "tab-responsibles");
+    setFirstChildDivId(tabindex2, "tab-attachments");
+  }, [tabindex0, tabindex1, tabindex2]);
+
+  useEffect(() => {
+    if (UpdateIsSuccess) {
+      navigate("/register/partner/partners/update", {
+        state: { ...location.state, ...partnerBody },
+      });
+    }
+  }, [UpdateIsSuccess]);
 
   const items: TabsProps["items"] = [
     {

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useGetMerchantBankStatementTotals } from "@src/services/consult/merchant/bankStatement/getTotals";
+import { moneyFormatter } from "@src/utils/moneyFormatter";
 import { Card, Col, Row, Table, Typography } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { useEffect, useState } from "react";
@@ -67,10 +68,7 @@ export const ValuesTable = ({ query, refs }: ValuesTableInterface) => {
       dataIndex: "value",
       render: (value) => (
         <Typography>
-          {new Intl.NumberFormat("pt-BR", {
-            style: "currency",
-            currency: "BRL",
-          }).format(Number(value) || 0)}
+          {moneyFormatter(Number(value) || 0)}
         </Typography>
       ),
     },
@@ -79,10 +77,7 @@ export const ValuesTable = ({ query, refs }: ValuesTableInterface) => {
       dataIndex: "ticket",
       render: (value) => (
         <Typography>
-          {new Intl.NumberFormat("pt-BR", {
-            style: "currency",
-            currency: "BRL",
-          }).format(Number(value) || 0)}
+          {moneyFormatter(Number(value) || 0)}
         </Typography>
       ),
     },
@@ -91,10 +86,7 @@ export const ValuesTable = ({ query, refs }: ValuesTableInterface) => {
       dataIndex: "fee",
       render: (value) => (
         <Typography>
-          {new Intl.NumberFormat("pt-BR", {
-            style: "currency",
-            currency: "BRL",
-          }).format(Number(value) || 0)}
+          {moneyFormatter(Number(value) || 0)}
         </Typography>
       ),
     },
@@ -174,10 +166,7 @@ export const ValuesTable = ({ query, refs }: ValuesTableInterface) => {
                 >
                   {t("table.value")}:{" "}
                   <span style={{ textDecoration: "underline" }}>
-                    {new Intl.NumberFormat("pt-BR", {
-                      style: "currency",
-                      currency: "BRL",
-                    }).format(Number(item?.value) || 0)}
+                    {moneyFormatter(Number(item?.value) || 0)}
                   </span>
                 </Typography.Title>
                 <Typography.Title
@@ -186,10 +175,7 @@ export const ValuesTable = ({ query, refs }: ValuesTableInterface) => {
                 >
                   {t("table.fee")}:{" "}
                   <span style={{ textDecoration: "underline" }}>
-                    {new Intl.NumberFormat("pt-BR", {
-                      style: "currency",
-                      currency: "BRL",
-                    }).format(Number(item?.fee) || 0)}
+                    {moneyFormatter(Number(item?.fee) || 0)}
                   </span>
                 </Typography.Title>
                 <Typography.Title
@@ -198,10 +184,7 @@ export const ValuesTable = ({ query, refs }: ValuesTableInterface) => {
                 >
                   {t("table.ticket")}:{" "}
                   <span style={{ textDecoration: "underline" }}>
-                    {new Intl.NumberFormat("pt-BR", {
-                      style: "currency",
-                      currency: "BRL",
-                    }).format(Number(item?.ticket) || 0)}
+                    {moneyFormatter(Number(item?.ticket) || 0)}
                   </span>
                 </Typography.Title>
               </Card>

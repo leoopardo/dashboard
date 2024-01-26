@@ -30,6 +30,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { CreateMovimentModal } from "../../components/createMovimentModal";
 import { Toast } from "@src/components/Toast";
+import { moneyFormatter } from "@src/utils/moneyFormatter";
 
 export const MerchantManual = () => {
   const { permissions, type } = queryClient.getQueryData(
@@ -129,10 +130,7 @@ export const MerchantManual = () => {
                       prefix={<ArrowUpOutlined />}
                       title={t(`table.${key}`)}
                       loading={isMerchantMovimentsDataFetching}
-                      value={new Intl.NumberFormat("pt-BR", {
-                        style: "currency",
-                        currency: "BRL",
-                      }).format(MerchantMovimentsData[key] || 0)}
+                      value={moneyFormatter(MerchantMovimentsData[key] || 0)}
                     />
                   </Grid>
                   ) : ( <></> ));
@@ -153,10 +151,7 @@ export const MerchantManual = () => {
                       prefix={<ArrowUpOutlined />}
                       title={t(`table.${key}`)}
                       loading={isMerchantMovimentsDataFetching}
-                      value={new Intl.NumberFormat("pt-BR", {
-                        style: "currency",
-                        currency: "BRL",
-                      }).format(MerchantMovimentsData[key] || 0)}
+                      value={moneyFormatter(MerchantMovimentsData[key] || 0)}
                     />
                   </Grid>
                 );
@@ -175,10 +170,7 @@ export const MerchantManual = () => {
                       prefix={<ArrowDownOutlined />}
                       title={t(`table.${key}`)}
                       loading={isMerchantMovimentsDataFetching}
-                      value={new Intl.NumberFormat("pt-BR", {
-                        style: "currency",
-                        currency: "BRL",
-                      }).format(MerchantMovimentsData[key] || 0)}
+                      value={moneyFormatter(MerchantMovimentsData[key] || 0)}
                     />
                   </Grid>
                 );
@@ -198,10 +190,7 @@ export const MerchantManual = () => {
                         prefix={<ArrowDownOutlined />}
                         title={t(`table.${key}`)}
                         loading={isMerchantMovimentsDataFetching}
-                        value={new Intl.NumberFormat("pt-BR", {
-                          style: "currency",
-                          currency: "BRL",
-                        }).format(MerchantMovimentsData[key] || 0)}
+                        value={moneyFormatter(MerchantMovimentsData[key] || 0)}
                       />
                     </Grid>
                      ) : ( <></> ));

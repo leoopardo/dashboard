@@ -31,6 +31,7 @@ import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import CachedIcon from "@mui/icons-material/Cached";
 import { Mobile } from "./mobile";
+import { moneyFormatter } from "@src/utils/moneyFormatter";
 
 export interface ColumnInterface {
   name: string | any;
@@ -372,10 +373,7 @@ export const CustomTable = (props: TableProps) => {
                   key={column?.name}
                   style={{ width: "100%", textAlign: "center" }}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "BRL",
-                  }).format(Number(text) || 0)}
+                  {moneyFormatter(Number(text) || 0)}
                 </Typography>
               ),
               sorter: column.sort
@@ -1017,6 +1015,7 @@ export const CustomTable = (props: TableProps) => {
                 ? column?.name + `${Math.random()}`
                 : column?.name,
               dataIndex: column?.name,
+              width: 180,
               render: (text: any, record: any) => (
                 <Grid
                   container

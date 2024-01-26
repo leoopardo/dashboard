@@ -7,6 +7,7 @@ import { Grid } from "@mui/material";
 import { useGetOrganizationBankStatementTotals } from "@src/services/consult/organization/bankStatement/getTotals";
 import { OrganizationBankStatementTotalsQuery } from "@src/services/types/consult/organization/bankStatement/totals.interface";
 import { defaultTheme } from "@src/styles/defaultTheme";
+import { moneyFormatter } from "@src/utils/moneyFormatter";
 import { Divider, Statistic, Typography } from "antd";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
@@ -107,10 +108,7 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
                   <Statistic
                     loading={isOrganizationBankStatementTotalsFetching}
                     title={t(`table.${key}`)}
-                    value={new Intl.NumberFormat("pt-BR", {
-                      style: "currency",
-                      currency: "BRL",
-                    }).format(OrganizationBankStatementTotals[key] || 0)}
+                    value={moneyFormatter(OrganizationBankStatementTotals[key] || 0)}
                     precision={2}
                     valueStyle={{
                       color: defaultTheme.colors.paid,
@@ -193,10 +191,7 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
                   <Statistic
                     loading={isOrganizationBankStatementTotalsFetching}
                     title={t(`table.${key}`)}
-                    value={new Intl.NumberFormat("pt-BR", {
-                      style: "currency",
-                      currency: "BRL",
-                    }).format(OrganizationBankStatementTotals[key] || 0)}
+                    value={moneyFormatter(OrganizationBankStatementTotals[key] || 0)}
                     precision={2}
                     valueStyle={{
                       color: defaultTheme.colors.error,
@@ -274,10 +269,7 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
                   <Statistic
                     loading={isOrganizationBankStatementTotalsFetching}
                     title={t(`table.${key}`)}
-                    value={new Intl.NumberFormat("pt-BR", {
-                      style: "currency",
-                      currency: "BRL",
-                    }).format(OrganizationBankStatementTotals[key] || 0)}
+                    value={moneyFormatter(OrganizationBankStatementTotals[key] || 0)}
                     precision={2}
                     prefix={" "}
                     valueStyle={{ fontSize: "16px" }}

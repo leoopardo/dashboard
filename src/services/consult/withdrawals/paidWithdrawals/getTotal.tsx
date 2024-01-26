@@ -1,39 +1,34 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useState } from "react";
 import { api } from "../../../../config/api";
 import {
   paidWithdrawalsRowsQuery,
   paidWithdrawalsTotal,
 } from "../../../types/consult/withdrawals/paidWithdrawals.interface";
+import { useQuery } from "react-query";
 
 export function useGetTotalPaidWithdrawals(params: paidWithdrawalsRowsQuery) {
-  const [data, setData] = useState<paidWithdrawalsTotal | null>(null);
-  const [error, setError] = useState<any>(null);
-  const [isFetching, setIsFetching] = useState<boolean>(false);
-
-  const fetchTotalWithdrawals = async () => {
-    try {
-      setIsFetching(true);
+  const { data, isFetching, error, refetch } = useQuery<
+  paidWithdrawalsTotal | null | undefined
+  >(
+    "withdrawPaidTotal",
+    async () => {
       const response = await api.get("report/withdraw/total/paid-at", {
         params,
       });
-      setData(response.data);
-    } catch (error) {
-      setError(error);
-    } finally {
-      setIsFetching(false);
+      return response.data;
+    },
+    {
+      refetchInterval: false,
+      refetchIntervalInBackground: false,
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
     }
-  };
-
-  useEffect(() => {
-    fetchTotalWithdrawals();
-  }, [params]);
-
+  );
   const PaidWithdrawalsTotal = data;
   const isPaidWithdrawalsTotalFetching = isFetching;
   const PaidWithdrawalsTotalError: any = error;
-  const refetchPaidWithdrawalsTotal = fetchTotalWithdrawals;
+  const refetchPaidWithdrawalsTotal = refetch;
 
   return {
     PaidWithdrawalsTotal,

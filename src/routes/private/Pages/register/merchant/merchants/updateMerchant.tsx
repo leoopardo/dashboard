@@ -60,7 +60,7 @@ import { FormInstance } from "antd/lib/form/Form";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import ReactInputMask from "react-input-mask";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useGetMerchantById } from "@src/services/register/merchant/merchant/getMerchant";
 
 export const UpdateMerchant = () => {
@@ -69,7 +69,10 @@ export const UpdateMerchant = () => {
   ) as ValidateInterface;
   const { t } = useTranslation();
   const location = useLocation();
-  const [merchantBody, setMerchantBody] = useState<MerchantsItem | undefined>();
+  const navigate = useNavigate();
+  const [merchantBody, setMerchantBody] = useState<MerchantsItem | undefined>({
+    ...location.state,
+  });
   const INITIAL_RESPONSIBLE_QUERY: MerchantResponsiblesQuery = {
     merchant_id: location.state.id,
     limit: 25,
@@ -220,6 +223,14 @@ export const UpdateMerchant = () => {
     setFirstChildDivId(tabResponsible, "tab-responsibles");
     setFirstChildDivId(tabAttachments, "tab-attachments");
   }, [tabMerchantsData, tabResponsible, tabAttachments]);
+
+  useEffect(() => {
+    if (UpdateIsSuccess) {
+      navigate("/register/merchant/merchants/update", {
+        state: { ...location.state, ...merchantBody },
+      });
+    }
+  }, [UpdateIsSuccess]);
 
   const items: TabsProps["items"] = [
     {

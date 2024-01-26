@@ -27,6 +27,7 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { CreateMovimentModal } from "../../components/createMovimentModal";
+import { moneyFormatter } from "@src/utils/moneyFormatter";
 
 export const OrgonizationManual = () => {
   const { t } = useTranslation();
@@ -134,10 +135,7 @@ export const OrgonizationManual = () => {
                       prefix={<ArrowUpOutlined />}
                       title={t(`table.${key}`)}
                       loading={isOrganizationMovimentsDataFetching}
-                      value={new Intl.NumberFormat("pt-BR", {
-                        style: "currency",
-                        currency: "BRL",
-                      }).format(OrganizationMovimentsData[key] || 0)}
+                      value={moneyFormatter(OrganizationMovimentsData[key] || 0)}
                     />
                   </Grid>
                 );
@@ -157,10 +155,7 @@ export const OrgonizationManual = () => {
                       prefix={<ArrowDownOutlined />}
                       title={t(`table.${key}`)}
                       loading={isOrganizationMovimentsDataFetching}
-                      value={new Intl.NumberFormat("pt-BR", {
-                        style: "currency",
-                        currency: "BRL",
-                      }).format(OrganizationMovimentsData[key] || 0)}
+                      value={moneyFormatter(OrganizationMovimentsData[key] || 0)}
                     />
                   </Grid>
                 );

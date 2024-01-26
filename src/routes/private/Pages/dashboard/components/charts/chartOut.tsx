@@ -3,6 +3,7 @@
 import { useTheme } from "@src/contexts/ThemeContext";
 import { useGetTotalGeneratedWithdrawals } from "@src/services/consult/withdrawals/generatedWithdrawals/getTotal";
 import { generatedWithdrawalsRowsQuery } from "@src/services/types/consult/withdrawals/generatedWithdrawals.interface";
+import { moneyFormatter } from "@src/utils/moneyFormatter";
 import { Card, Typography } from "antd";
 import ReactECharts from "echarts-for-react";
 import { useEffect, useState } from "react";
@@ -51,10 +52,7 @@ export const ChartOut = ({ query }: ChartInInterface) => {
         >
           <Typography.Text strong>
             {t("table.withdraw_conversion")}:{" "}
-            {new Intl.NumberFormat("pt-BR", {
-              style: "currency",
-              currency: "BRL",
-            }).format(Number(WithdrawalsTotal?.paid_value) || 0)}
+            {moneyFormatter(Number(WithdrawalsTotal?.paid_value) || 0)}
           </Typography.Text>
         </div>
       }
@@ -74,10 +72,7 @@ export const ChartOut = ({ query }: ChartInInterface) => {
             {
               tooltip: {
                 valueFormatter: function (value: number) {
-                  return new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "BRL",
-                  }).format(Number(value) || 0);
+                  return moneyFormatter(Number(value) || 0);
                 },
               },
               name: t("table.deposit_conversion"),
