@@ -59,7 +59,7 @@ import { FormInstance } from "antd/lib/form/Form";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import ReactInputMask from "react-input-mask";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export const UpdateOperator = () => {
   const { permissions } = queryClient.getQueryData(
@@ -73,7 +73,7 @@ export const UpdateOperator = () => {
     limit: 25,
     page: 1,
   };
-
+  const navigate = useNavigate();
   const submitRef = useRef<HTMLButtonElement>(null);
   const { Countries } = useGetrefetchCountries();
   const formRef = useRef<FormInstance>(null);
@@ -85,7 +85,9 @@ export const UpdateOperator = () => {
   const { OperatorData, isOperatorDataFetching, isSuccessOperatorData } =
     useGetOperator({ operator_id: location.state.id });
 
-  const [OperatorBody, setOperatorBody] = useState<OperatorItem>({});
+  const [OperatorBody, setOperatorBody] = useState<OperatorItem>({
+    ...location.state,
+  });
   const { UpdateError, UpdateIsLoading, UpdateMutate, UpdateIsSuccess } =
     useUpdateOperator({ ...OperatorBody, operator_id: location.state.id });
 
@@ -192,7 +194,14 @@ export const UpdateOperator = () => {
     if (!isSuccessOperatorData) return;
     setOperatorBody(OperatorData as any);
   }, [isSuccessOperatorData]);
-  console.log(OperatorData, OperatorBody);
+
+  useEffect(() => {
+    if (UpdateIsSuccess) {
+      navigate("/register/operator/operators/update", {
+        state: { ...location.state, ...OperatorBody },
+      });
+    }
+  }, [UpdateIsSuccess]);
 
   const items: TabsProps["items"] = [
     {
@@ -330,7 +339,19 @@ export const UpdateOperator = () => {
                 </Form.Item>
               </Col>
               <Col xs={{ span: 24 }} md={{ span: 6 }}>
-                <Form.Item label={t("table.aggregator")} name="aggregator_id">
+                <Form.Item
+                  rules={[
+                    {
+                      required: !OperatorBody.aggregator_id,
+                      message:
+                        t("input.required", {
+                          field: t(`table.aggregator`),
+                        }) || "",
+                    },
+                  ]}
+                  label={t("table.aggregator")}
+                  name="aggregator_id"
+                >
                   <AggregatorSelect
                     aggregatorId={
                       OperatorBody.aggregator_id ??
