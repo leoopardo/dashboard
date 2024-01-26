@@ -342,6 +342,7 @@ export const RefundWithdrawals = () => {
       )}
       {isFiltersOpen && (
         <FiltersModal
+          maxRange
           open={isFiltersOpen}
           setOpen={setIsFiltersOpen}
           query={query}
