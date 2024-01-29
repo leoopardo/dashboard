@@ -376,6 +376,7 @@ export interface ValidateInterface {
           report_chargeback_manual_deposit_chargeback_delete: boolean;
           report_chargeback_manual_deposit_chargeback_receipt: boolean;
           report_chargeback_manual_deposit_chargeback_export_csv: boolean;
+          report_chargeback_manual_deposit_chargeback_paid_to_enduser: boolean;
         };
         withdraw_chargeback: {
           menu: boolean;
