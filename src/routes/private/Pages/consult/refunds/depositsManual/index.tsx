@@ -115,7 +115,7 @@ export const RefundDepositsManual = () => {
   });
   const { mutate, isLoading } = useCreatePixManualRefund(currentItem?._id);
   const { isPayToMerchantLoading, mutatePayToMerchant } =
-    useCreatePayToMerchantRefund(currentItem?._id);
+    useCreatePayToMerchantRefund(currentItem?.endToEndId);
   const { isDeleteLoading, mutateDelete } = useDeletePixManualRefund(
     currentItem?._id
   );
