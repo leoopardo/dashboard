@@ -11,12 +11,14 @@ interface PartnerSelectProps {
   setQueryFunction: Dispatch<SetStateAction<any>>;
   queryOptions: any;
   disabled?: boolean;
+  multiple?: boolean;
 }
 
 export const PartnerSelect = ({
   setQueryFunction,
   queryOptions,
   disabled,
+  multiple
 }: PartnerSelectProps) => {
   const { t } = useTranslation();
   const [query, setQuery] = useState<PartnerQuery>({
@@ -67,6 +69,7 @@ export const PartnerSelect = ({
     <Select
       data-test-id="partner-select"
       allowClear
+      mode={multiple ? "multiple" : undefined}
       onClear={() => {
         setQueryFunction((state: any) => ({
           ...state,

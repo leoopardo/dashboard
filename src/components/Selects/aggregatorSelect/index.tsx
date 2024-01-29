@@ -10,11 +10,13 @@ import { useTranslation } from "react-i18next";
 interface MerchantSelectProps {
   setQueryFunction: Dispatch<SetStateAction<any>>;
   aggregatorId: any;
+  multiple?: boolean;
 }
 
 export const AggregatorSelect = ({
   setQueryFunction,
   aggregatorId,
+  multiple
 }: MerchantSelectProps) => {
   const { t } = useTranslation();
   const [query, setQuery] = useState<AggregatorQuery>({
@@ -63,6 +65,7 @@ export const AggregatorSelect = ({
       data-test-id="aggregator-select"
       allowClear
       showSearch
+      mode={multiple ?  "multiple" : undefined}
       size="large"
       loading={isAggregatorsFetching}
       value={value}

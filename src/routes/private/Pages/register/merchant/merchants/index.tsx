@@ -41,6 +41,8 @@ import { TotalizerPerBanks } from "./components/totalizerPerBank";
 import { TotalizersCards } from "./components/totalizersCards";
 import { UpdateBanks } from "./components/updatebanks";
 import UpdateAccountsModal from "@src/components/Modals/updateAccountsModal";
+import { TotalizersAccounts } from "./totalizersAccounts";
+import { useGetMerchantsAccountTotals } from "@src/services/register/merchant/merchant/getMerchantsAccountTotals";
 
 const INITIAL_QUERY: MerchantsQuery = {
   limit: 25,
@@ -58,7 +60,8 @@ export const MerchantView = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [query, setQuery] = useState<MerchantsQuery>(INITIAL_QUERY);
-  const [updateAccountsModal, setUpdateAccountsModal] = useState<boolean>(false);
+  const [updateAccountsModal, setUpdateAccountsModal] =
+    useState<boolean>(false);
   const [activeTotalizer, setActiveTotalizer] = useState<
     "total_banks" | "total_merchants"
   >("total_banks");
@@ -121,6 +124,7 @@ export const MerchantView = () => {
     fields: csvFields,
     comma_separate_value: comma,
   });
+
 
   const { fields } = useGetMerchantReportFields();
   const [isExportReportsOpen, setIsExportReportsOpen] =
@@ -198,43 +202,38 @@ export const MerchantView = () => {
   }
 
   if (!user.merchant_id) {
-    TotalizersTabs.push({
-      label: `${t("titles.total", {
-        entity: t("menus.merchants")?.toLowerCase(),
-      })}`,
-      key: "total_merchants",
-      children: (
-        <TotalizersCards
-          params={query}
-          loading={isMerchantTotalsDataFetching}
-          data={MerchantTotalsData || undefined}
-        />
-      ),
-    });
+    TotalizersTabs.push(
+      {
+        label: `${t("titles.total", {
+          entity: t("menus.merchants")?.toLowerCase(),
+        })}`,
+        key: "total_merchants",
+        children: (
+          <TotalizersCards
+            params={query}
+            loading={isMerchantTotalsDataFetching}
+            data={MerchantTotalsData || undefined}
+          />
+        ),
+      },
+      {
+        label: `${t("titles.total", {
+          entity: t("menus.current_accounts")?.toLowerCase(),
+        })}`,
+        key: "total_current_accounts",
+        children: (
+          <TotalizersAccounts
+            params={query}
+            loading={isMerchantTotalsDataFetching}
+          />
+        ),
+      },
+     
+    );
   }
 
   return (
     <Grid container style={{ padding: "25px" }}>
-      {/* <Grid
-        item
-        xs={12}
-        md={12}
-        style={{
-          display: "flex",
-          justifyContent: "flex-end",
-          marginBottom: -50,
-        }}
-      >
-        <Tooltip title={t("buttons.help")}>
-          <Button
-            style={{ zIndex: 999 }}
-            type="link"
-            onClick={() => setIsTuorOpen((state) => !state)}
-          >
-            <InfoCircleOutlined />
-          </Button>
-        </Tooltip>
-      </Grid> */}
       {!user.merchant_id && (
         <Grid item xs={12} ref={refPerBanks}>
           <Grid item xs={12} ref={ref}>
@@ -368,7 +367,12 @@ export const MerchantView = () => {
         )}
 
         <Grid item xs={12} md={4} lg={2}>
-          <UpdateAccountsModal open={updateAccountsModal} setOpen={setUpdateAccountsModal} selectedFields={[]} loading={false} />
+          <UpdateAccountsModal
+            open={updateAccountsModal}
+            setOpen={setUpdateAccountsModal}
+            selectedFields={[]}
+            loading={false}
+          />
         </Grid>
 
         {permissions.register.merchant.merchant.merchant_export_csv && (
