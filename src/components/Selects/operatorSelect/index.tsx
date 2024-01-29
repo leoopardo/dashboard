@@ -30,7 +30,7 @@ export const OperatorSelect = ({
   });
   const { operatorsData, refetcOperators, isOperatorsFetching } =
     useListOperators(query);
-  const [value, setValue] = useState<any>(null);
+  const [value, setValue] = useState<any>(undefined);
   const debounceSearch = useDebounce(query.name);
 
   useEffect(() => {
@@ -126,7 +126,7 @@ export const OperatorSelect = ({
         setQueryFunction((state: any) => ({
           ...state,
           [multiple ? "operators_ids" : "operator_id"] : value,
-          group_id: null,
+          group_id: undefined,
         }));
         setValue(
           operatorsData?.items.find((operator) => operator.id === value)?.name

@@ -37,7 +37,7 @@ export const MerchantSelect = ({
     merchant_id: queryOptions.merchant_id ?? undefined,
   });
 
-  const [value, setValue] = useState<any>(null);
+  const [value, setValue] = useState<any>(undefined);
   const debounceSearch = useDebounce(query.name);
   const [options, setOptions] = useState<any | undefined>();
 
@@ -86,7 +86,7 @@ export const MerchantSelect = ({
       onClear={() => {
         setQueryFunction((state: any) => ({
           ...state,
-          merchant_id: null,
+          [multiple ? "merchants_ids" : "merchant_id"]: null,
           group_id: undefined,
         }));
       }}
@@ -108,7 +108,7 @@ export const MerchantSelect = ({
           setQueryFunction((state: any) => ({
             ...state,
             merchant_name: undefined,
-            merchant_id: undefined,
+            [multiple ? "merchants_ids" : "merchant_id"]: undefined,
             group_id: undefined,
           }));
           return;
@@ -116,7 +116,7 @@ export const MerchantSelect = ({
         setQueryFunction((state: any) => ({
           ...state,
           merchant_name: name ? (option as any)["label"] : undefined,
-          merchant_id: value,
+          [multiple ? "merchants_ids" : "merchant_id"]: value,
           group_id: undefined,
         }));
         setValue(

@@ -109,3 +109,11 @@ export interface MerchantsPerBankResponse {
   valuesOut: any;
   valuesFastpix: any;
 }
+
+export interface MerchantAccountUpdateBody {
+ merchants_ids: number[],
+ partners_ids: number[],
+ aggregators_ids: number[],
+ operators_ids: number[]
+ account_id: number
+}

@@ -29,7 +29,7 @@ export const PartnerSelect = ({
   });
   const { partnersData, refetcPartners, isPartnersFetching } =
     useListPartners(query);
-  const [value, setValue] = useState<any>(null);
+  const [value, setValue] = useState<any>(undefined);
   const debounceSearch = useDebounce(query.name);
 
   useEffect(() => {
@@ -73,7 +73,7 @@ export const PartnerSelect = ({
       onClear={() => {
         setQueryFunction((state: any) => ({
           ...state,
-          partner_id: null,
+          [multiple ? "partners_ids" : "partner_id"]: null,
           group_id: undefined,
         }));
       }}
@@ -101,7 +101,7 @@ export const PartnerSelect = ({
           setValue(undefined);
           setQueryFunction((state: any) => ({
             ...state,
-            partner_id: undefined,
+            [multiple ? "partners_ids" : "partner_id"]: undefined,
             merchant_id: undefined,
             group_id: undefined,
           }));
@@ -109,7 +109,7 @@ export const PartnerSelect = ({
         }
         setQueryFunction((state: any) => ({
           ...state,
-          partner_id: value,
+          [multiple ? "partners_ids" : "partner_id"]: value,
           merchant_id: undefined,
           group_id: undefined,
         }));

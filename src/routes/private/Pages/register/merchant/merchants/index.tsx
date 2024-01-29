@@ -40,9 +40,8 @@ import { ViewMerchantModal } from "./components/ViewMerchantModal";
 import { TotalizerPerBanks } from "./components/totalizerPerBank";
 import { TotalizersCards } from "./components/totalizersCards";
 import { UpdateBanks } from "./components/updatebanks";
-import UpdateAccountsModal from "@src/components/Modals/updateAccountsModal";
+import UpdateAccountsModal from "./components/updateAccountsModal";
 import { TotalizersAccounts } from "./totalizersAccounts";
-import { useGetMerchantsAccountTotals } from "@src/services/register/merchant/merchant/getMerchantsAccountTotals";
 
 const INITIAL_QUERY: MerchantsQuery = {
   limit: 25,
@@ -124,7 +123,6 @@ export const MerchantView = () => {
     fields: csvFields,
     comma_separate_value: comma,
   });
-
 
   const { fields } = useGetMerchantReportFields();
   const [isExportReportsOpen, setIsExportReportsOpen] =
@@ -227,8 +225,7 @@ export const MerchantView = () => {
             loading={isMerchantTotalsDataFetching}
           />
         ),
-      },
-     
+      }
     );
   }
 
@@ -372,11 +369,19 @@ export const MerchantView = () => {
             setOpen={setUpdateAccountsModal}
             selectedFields={[]}
             loading={false}
+            items={selectedItems}
+            setItems={setSelectedItems}
           />
         </Grid>
 
         {permissions.register.merchant.merchant.merchant_export_csv && (
-          <Grid item xs={12} md={"auto"}>
+          <Grid
+            item
+            xs={12}
+            md={"auto"}
+            container
+            style={{ marginLeft: "auto" }}
+          >
             <Tooltip
               placement="topRight"
               title={
