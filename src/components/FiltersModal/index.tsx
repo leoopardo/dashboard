@@ -16,7 +16,7 @@ import {
   Segmented,
   Select,
   Slider,
-  Typography,
+  Typography
 } from "antd";
 import locale from "antd/locale/pt_BR";
 import dayjs from "dayjs";
