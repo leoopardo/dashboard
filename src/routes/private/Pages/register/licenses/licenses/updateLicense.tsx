@@ -48,12 +48,14 @@ import { useGetRowsMerchantRegister } from "@src/services/register/merchant/merc
 import dayjs from "dayjs";
 import { MerchantsQuery } from "@src/services/types/register/merchants/merchantsRegister.interface";
 import { useUpdateLicense } from "@src/services/register/licenses/updateLicense";
+import { queryClient } from "@src/services/queryClient";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 const { RangePicker } = DatePicker;
 
 export const UpdateLicense = () => {
-  /*   const { permissions } = queryClient.getQueryData(
+  const { permissions } = queryClient.getQueryData(
     "validate"
-  ) as ValidateInterface; */
+  ) as ValidateInterface;
   const { t } = useTranslation();
   const location = useLocation();
 
@@ -85,8 +87,7 @@ export const UpdateLicense = () => {
 
   const [_currentResponsible, setCurrentMerchantAttached] =
     useState<LicenseAttachmentItem | null>(null);
-  const [isFiltersOpen, setIsFiltersOpen] =
-    useState<boolean>(false);
+  const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [fileBody, setFileBody] = useState<
     CreateLicenseFileInterface | undefined
   >({
@@ -353,6 +354,7 @@ export const UpdateLicense = () => {
     {
       key: "2",
       label: `${t("table.document")}s`,
+      disabled: !permissions.register.licenses.licenses.license_file_list,
       children: LicenseAttachmentIsLoading ? (
         <div
           style={{
@@ -372,6 +374,7 @@ export const UpdateLicense = () => {
               style={{ maxHeight: "150px" }}
               listType="picture"
               multiple={false}
+             disabled={!permissions.register.licenses.licenses.license_file_create}
               onRemove={(file) => {
                 setDeleteFileId(file?.uid);
               }}
@@ -382,6 +385,10 @@ export const UpdateLicense = () => {
                   url: file.file_url,
                 };
               })}
+              showUploadList={{
+                showRemoveIcon:
+                  permissions.register.licenses.licenses.license_file_delete,
+              }}
               height={1000}
               beforeUpload={(file) => {
                 setFileBody({

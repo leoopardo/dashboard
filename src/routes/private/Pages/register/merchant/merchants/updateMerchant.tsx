@@ -126,7 +126,6 @@ export const UpdateMerchant = () => {
   const [deleteFileId, setDeleteFileId] = useState<string>("");
 
   const { MerchantByIdData } = useGetMerchantById(location.state.id);
-  console.log({MerchantByIdData})
   const {
     ResponsiblesData,
     ResponsiblesDataError,
