@@ -30,7 +30,6 @@ type MenuItem = Required<MenuProps>["items"][number];
 
 export const SidebarNavigation = () => {
   const { t } = useTranslation();
-  // const navigate = useNavigate();
   const { resetErrors } = useErrorContext();
   const LargeDesktop = useMediaQuery({ maxHeight: "800px" });
   const isMobile = useMediaQuery({ maxWidth: "950px" });
@@ -177,7 +176,7 @@ export const SidebarNavigation = () => {
               false,
               undefined,
               {
-                display: permissions?.register?.paybrokers?.release_category
+                display: permissions?.register?.paybrokers?.account
                   ?.menu
                   ? undefined
                   : "none",

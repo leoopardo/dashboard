@@ -158,29 +158,31 @@ export const CurrentAccountPage: FC = () => {
           </Button>
         </Col>
 
-        <Col
-          xs={{ span: 24 }}
-          md={{ span: isSmallDesktop ? 8 : 6 }}
-          lg={{ span: isSmallDesktop ? 8 : 6 }}
-        >
-          <Button
-            type="primary"
-            loading={isCurrentAccountDataFetching}
-            onClick={() => {
-              setIsCreateModalOpen(true);
-            }}
-            style={{
-              height: 40,
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-            icon={<PlusOutlined style={{ fontSize: "20px" }} />}
+        {permissions.register.paybrokers.account.account_api_create && (
+          <Col
+            xs={{ span: 24 }}
+            md={{ span: isSmallDesktop ? 8 : 6 }}
+            lg={{ span: isSmallDesktop ? 8 : 6 }}
           >
-            {t("buttons.add_current_account")}
-          </Button>
-        </Col>
+            <Button
+              type="primary"
+              loading={isCurrentAccountDataFetching}
+              onClick={() => {
+                setIsCreateModalOpen(true);
+              }}
+              style={{
+                height: 40,
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+              icon={<PlusOutlined style={{ fontSize: "20px" }} />}
+            >
+              {t("buttons.add_current_account")}
+            </Button>
+          </Col>
+        )}
       </Row>
 
       <CustomTable
@@ -205,7 +207,7 @@ export const CurrentAccountPage: FC = () => {
               setIsViewModalOpen(true);
             },
           },
-          permissions.register.partner.partner.partner_update && {
+          permissions.register.paybrokers.account.account_api_update && {
             id: "table-edit-button",
             label: "edit",
             icon: <EditOutlined style={{ fontSize: "20px" }} />,
