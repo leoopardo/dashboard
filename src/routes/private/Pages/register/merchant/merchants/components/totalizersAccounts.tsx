@@ -10,7 +10,6 @@ export const TotalizersAccounts = (props: {
 }) => {
   const { MerchantAccountTotalsData } = useGetMerchantsAccountTotals({
     ...props.params,
-    locked: false,
   });
 
   return (
@@ -51,7 +50,7 @@ export const TotalizersAccounts = (props: {
       )}
 
       {!props?.loading &&
-        MerchantAccountTotalsData?.items.map((item: any) => (
+        MerchantAccountTotalsData?.items.slice(0, 10).map((item: any) => (
           <Grid item xs={12} md={2.4}>
             <Card bordered={false} style={{ minHeight: "133px" }}>
               <Statistic

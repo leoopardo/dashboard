@@ -40,8 +40,8 @@ import { ViewMerchantModal } from "./components/ViewMerchantModal";
 import { TotalizerPerBanks } from "./components/totalizerPerBank";
 import { TotalizersCards } from "./components/totalizersCards";
 import { UpdateBanks } from "./components/updatebanks";
-import UpdateAccountsModal from "./components/updateAccountsModal";
-import { TotalizersAccounts } from "./totalizersAccounts";
+import UpdateAccountsModal from "./components/updateAccountModal";
+import { TotalizersAccounts } from "./components/totalizersAccounts";
 
 const INITIAL_QUERY: MerchantsQuery = {
   limit: 25,
@@ -214,6 +214,11 @@ export const MerchantView = () => {
           />
         ),
       },
+    );
+  }
+
+  if (permissions.register.merchant.merchant.merchant_account_api_get) {
+    TotalizersTabs.push(
       {
         label: `${t("titles.total", {
           entity: t("menus.current_accounts")?.toLowerCase(),

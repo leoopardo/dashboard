@@ -20,10 +20,8 @@ export const AccountTab = (props: { id?: string }) => {
   }>({ merchant_id: props.id ? Number(props.id) : 0, account_id: undefined });
   const [query, setQuery] = useState<any>({});
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
-  const { isMerchantBankFetching, merchantBankData, refetchMerchantBankData } =
-    useMerchantBankConfig(props.id);
 
-  const { MerchantData } = useShowMerchantAccount(Number(props?.id), query);
+  const { MerchantData, refetchMerchantData, isMerchantDataFetching } = useShowMerchantAccount(Number(props?.id), query);
   
   const { UpdateMutate, UpdateError, UpdateIsSuccess } =
     useUpdateMerchantAccount({
@@ -32,7 +30,7 @@ export const AccountTab = (props: { id?: string }) => {
     });
 
   useEffect(() => {
-    refetchMerchantBankData();
+    refetchMerchantData();
   }, [UpdateIsSuccess]);
 
   useEffect(() => {
@@ -46,7 +44,7 @@ export const AccountTab = (props: { id?: string }) => {
     <Form
       ref={formRef}
       layout="vertical"
-      initialValues={merchantBankData ? merchantBankData : {}}
+      initialValues={MerchantData ? MerchantData : {}}
     >
       <Typography style={{ marginTop: 10, marginBottom: 20 }}>
         {t("table.bank_acc_number")}:{" "}
@@ -95,7 +93,7 @@ export const AccountTab = (props: { id?: string }) => {
               UpdateMutate();
               setIsConfirmOpen(false);
             }}
-            okButtonProps={{ loading: isMerchantBankFetching }}
+            okButtonProps={{ loading: isMerchantDataFetching }}
             okText={t("messages.yes_update")}
             cancelText={t("messages.no_cancel")}
             onCancel={() => setIsConfirmOpen(false)}
@@ -105,7 +103,7 @@ export const AccountTab = (props: { id?: string }) => {
               size="large"
               type="primary"
               style={{ width: "100%" }}
-              loading={isMerchantBankFetching}
+              loading={isMerchantDataFetching}
               onClick={() => setIsConfirmOpen(true)}
             >
               {t("buttons.update_general_configs")}

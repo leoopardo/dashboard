@@ -5,9 +5,9 @@ import { api } from "@src/config/api";
 export function useUpdateMerchantAccount(body: {merchant_id: number, account_id: number}) {
   const { isLoading, error, mutate, isSuccess, reset } = useMutation<
   {merchant_id: number, account_id: number} | null | undefined
-  >("UpdatePartner", async () => {
+  >("UpdateMerchantAccount", async () => {
     const response = await api.put("core/merchant/config/account/bulk/update", body, {});
-    await queryClient.refetchQueries({ queryKey: ["OrganizationCurrentAccounts"] });
+    await queryClient.refetchQueries({ queryKey: ["MerchantsAccountTotals"] });
     return response.data;
   });
 

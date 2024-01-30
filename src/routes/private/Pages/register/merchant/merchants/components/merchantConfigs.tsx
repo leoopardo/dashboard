@@ -93,19 +93,19 @@ export const MerchantConfigs = () => {
       disabled: !permissions.register.merchant.merchant.merchant_config_fees,
     },
     {
-      key: "7",
+      key: "3",
       label: t("menus.current_accounts"),
       children: <AccountTab id={params.id} />,
       style: {
-        display: permissions.register.merchant.merchant.merchant_config_merchant
+        display: permissions.register.merchant.merchant.merchant_account_api_update
           ? undefined
           : "none",
       },
       disabled:
-        !permissions.register.merchant.merchant.merchant_config_merchant,
+        !permissions.register.merchant.merchant.merchant_account_api_update,
     },
     {
-      key: "3",
+      key: "4",
       label: t("menus.merchant_settings"),
       children: <MerchantConfigTab id={params.id} />,
       style: {
@@ -117,7 +117,7 @@ export const MerchantConfigs = () => {
         !permissions.register.merchant.merchant.merchant_config_merchant,
     },
     {
-      key: "4",
+      key: "5",
       label: t("menus.organization_settings"),
       children: <OrganizationConfigTab id={params.id} />,
       style: {
@@ -130,7 +130,7 @@ export const MerchantConfigs = () => {
         !permissions.register.merchant.merchant.merchant_config_paybrokers,
     },
     {
-      key: "5",
+      key: "6",
       label: `${t("menus.credentials")}`,
       children: <CredentialConfigTab id={params.id} />,
       style: {
@@ -143,7 +143,7 @@ export const MerchantConfigs = () => {
         !permissions.register.merchant.merchant.merchant_config_credentials,
     },
     {
-      key: "6",
+      key: "7",
       label: "IPs",
       children: <IpsConfigTab id={params.id} />,
       style: {

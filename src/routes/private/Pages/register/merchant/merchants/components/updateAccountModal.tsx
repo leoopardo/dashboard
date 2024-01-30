@@ -82,6 +82,7 @@ const UpdateAccountsModal: FC<UpdateAccountsModalProps> = ({
     if (UpdateIsSuccess) {
       setOpen(false);
       formRef.current?.resetFields();
+      setItems(null)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [UpdateIsSuccess]);
