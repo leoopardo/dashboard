@@ -10,6 +10,7 @@ import { useCreatePaymentVoucherRefund } from "@src/services/consult/refund/refu
 import { useGetRefundManualOne } from "@src/services/consult/refund/refundDepositsManual/getRefund";
 import { useGetRefundWithdrawOne } from "@src/services/consult/refund/refundWithdrawals/getRefund";
 import { defaultTheme } from "@src/styles/defaultTheme";
+import { moneyFormatter } from "@src/utils/moneyFormatter";
 import {
   Button,
   Descriptions,
@@ -43,10 +44,8 @@ export const ViewModal = (props: ViewModalProps) => {
     PaymentVoucherError,
     isPaymentVoucherSuccess,
   } = useCreatePaymentVoucherRefund(props?.item?.endToEndId);
-  const {
-    mutateDepositPaymentVoucher,
-    isDepositPaymentVoucherLoading,
-  } = useCreateDepositPaymentVoucherRefund(props?.item?.endToEndId);
+  const { mutateDepositPaymentVoucher, isDepositPaymentVoucherLoading } =
+    useCreateDepositPaymentVoucherRefund(props?.item?.endToEndId);
   const [currOption, setCurrOption] = useState<any>("transaction");
   const { depositsRows, refetchDepositsTotalRows } =
     useGetRowsGeneratedDeposits({
@@ -204,10 +203,7 @@ export const ViewModal = (props: ViewModalProps) => {
                     textAlign: "center",
                   }}
                 >
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "BRL",
-                  }).format(Number(Refund?.value) || 0)}
+                  {moneyFormatter(Number(Refund?.value) || 0)}
                 </Descriptions.Item>
                 <Descriptions.Item
                   key={"status"}
@@ -273,22 +269,25 @@ export const ViewModal = (props: ViewModalProps) => {
                     Refund?.createdAt
                   ).toLocaleTimeString()}`}
                 </Descriptions.Item>
-                <Descriptions.Item
-                  key={"refund_date"}
-                  label={t(`table.refund_date`)}
-                  labelStyle={{
-                    maxWidth: "120px !important",
-                    margin: 0,
-                    padding: 0,
-                    textAlign: "center",
-                  }}
-                >
-                  {`${new Date(
-                    Refund?.refund_date
-                  ).toLocaleDateString()} ${new Date(
-                    Refund?.refund_date
-                  ).toLocaleTimeString()}`}
-                </Descriptions.Item>
+                {Refund?.refund_date && (
+                  <Descriptions.Item
+                    key={"refund_date"}
+                    label={t(`table.refund_date`)}
+                    labelStyle={{
+                      maxWidth: "120px !important",
+                      margin: 0,
+                      padding: 0,
+                      textAlign: "center",
+                    }}
+                  >
+                    {`${new Date(
+                      Refund?.refund_date
+                    ).toLocaleDateString()} ${new Date(
+                      Refund?.refund_date
+                    ).toLocaleTimeString()}`}
+                  </Descriptions.Item>
+                )}
+
                 {!Refund?.url_pdf ? (
                   <Descriptions.Item
                     key={"generate_payment_voucher"}
@@ -406,10 +405,7 @@ export const ViewModal = (props: ViewModalProps) => {
                   textAlign: "center",
                 }}
               >
-                {new Intl.NumberFormat("pt-BR", {
-                  style: "currency",
-                  currency: "BRL",
-                }).format(Number(RefundManual?.value) || 0)}
+                {moneyFormatter(Number(RefundManual?.value) || 0)}
               </Descriptions.Item>
               <Descriptions.Item
                 key={"status"}
@@ -440,22 +436,25 @@ export const ViewModal = (props: ViewModalProps) => {
                   RefundManual?.createdAt
                 ).toLocaleTimeString()}`}
               </Descriptions.Item>
-              <Descriptions.Item
-                key={"refund_date"}
-                label={t(`table.refund_date`)}
-                labelStyle={{
-                  maxWidth: "120px !important",
-                  margin: 0,
-                  padding: 0,
-                  textAlign: "center",
-                }}
-              >
-                {`${new Date(
-                  RefundManual?.refund_date
-                ).toLocaleDateString()} ${new Date(
-                  RefundManual?.refund_date
-                ).toLocaleTimeString()}`}
-              </Descriptions.Item>
+              {RefundManual?.refund_date && (
+                <Descriptions.Item
+                  key={"refund_date"}
+                  label={t(`table.refund_date`)}
+                  labelStyle={{
+                    maxWidth: "120px !important",
+                    margin: 0,
+                    padding: 0,
+                    textAlign: "center",
+                  }}
+                >
+                  {`${new Date(
+                    RefundManual?.refund_date
+                  ).toLocaleDateString()} ${new Date(
+                    RefundManual?.refund_date
+                  ).toLocaleTimeString()}`}
+                </Descriptions.Item>
+              )}
+
               {!RefundManual?.url_pdf ? (
                 <Descriptions.Item
                   key={"generate_payment_voucher"}
@@ -608,10 +607,7 @@ export const ViewModal = (props: ViewModalProps) => {
                           }}
                         >
                           {" "}
-                          {new Intl.NumberFormat("pt-BR", {
-                            style: "currency",
-                            currency: "BRL",
-                          }).format(Number(RefundWithdraw[key]) || 0)}
+                          {moneyFormatter(Number(RefundWithdraw[key]) || 0)}
                         </Descriptions.Item>
                       );
 
@@ -699,10 +695,9 @@ export const ViewModal = (props: ViewModalProps) => {
                           }}
                         >
                           {" "}
-                          {new Intl.NumberFormat("pt-BR", {
-                            style: "currency",
-                            currency: "BRL",
-                          }).format(Number(depositsRows?.items[0][key]) || 0)}
+                          {moneyFormatter(
+                            Number(depositsRows?.items[0][key]) || 0
+                          )}
                         </Descriptions.Item>
                       );
 

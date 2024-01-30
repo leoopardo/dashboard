@@ -1,39 +1,35 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useState } from "react";
 import { api } from "../../../../config/api";
 import {
   refundDepositTotal,
   refundDepositsQuery,
 } from "../../../types/consult/refunds/refundsDeposits.interface";
+import { useQuery } from "react-query";
 
 export function useGetTotalRefundDeposits(params: refundDepositsQuery) {
-  const [data, setData] = useState<refundDepositTotal | null>(null);
-  const [error, setError] = useState<any>(null);
-  const [isFetching, setIsFetching] = useState<boolean>(false);
-
-  const fetchTotalDeposits = async () => {
-    try {
-      setIsFetching(true);
+  const { data, isFetching, error, refetch } = useQuery<
+  refundDepositTotal | null | undefined
+  >(
+    "refundDepositsTotal",
+    async () => {
       const response = await api.get("refund/pix/total", {
         params,
       });
-      setData(response.data);
-    } catch (error) {
-      setError(error);
-    } finally {
-      setIsFetching(false);
+      return response.data;
+    },
+    {
+      refetchInterval: false,
+      refetchIntervalInBackground: false,
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
     }
-  };
-
-  useEffect(() => {
-    fetchTotalDeposits();
-  }, [params]);
+  );
 
   const refundDepositsTotal = data;
   const isRefundDepositsTotalFetching = isFetching;
   const refundDepositsTotalError: any = error;
-  const refetchRefundDepositsTotal = fetchTotalDeposits;
+  const refetchRefundDepositsTotal = refetch;
 
   return {
     refundDepositsTotal,

@@ -39,6 +39,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { CreateMovimentModal } from "../../components/createMovimentModal";
 import { ApproveModal } from "./components/approveModal";
+import { moneyFormatter } from "@src/utils/moneyFormatter";
 
 export const MerchantPreManual = () => {
   const { t } = useTranslation();
@@ -79,6 +80,7 @@ export const MerchantPreManual = () => {
   const [updateBody, setUpdateBody] =
     useState<CreateMerchantManualTransaction | null>(null);
   const [selectedRows, setSelectedRows] = useState<any[] | []>([]);
+  const [approveAll, setApproveAll] = useState<any>(null);
   const {
     isPreManualDataFetching,
     preManualData,
@@ -104,8 +106,11 @@ export const MerchantPreManual = () => {
     approvePreManualSuccess,
     approvePreManualReset,
   } = useApprovePreManualTransaction({
-    pre_entry_account_ids: selectedRowsId(selectedRows),
+    pre_entry_account_ids: !approveAll
+      ? selectedRowsId(selectedRows)
+      : undefined,
     validation_token: tokenState,
+    ...approveAll,
   });
 
   const {
@@ -157,6 +162,7 @@ export const MerchantPreManual = () => {
 
   useEffect(() => {
     setSelectedRows([]);
+    setApproveAll(null);
   }, [approvePreManualSuccess]);
 
   return (
@@ -195,10 +201,7 @@ export const MerchantPreManual = () => {
                         prefix={<ArrowUpOutlined />}
                         title={t(`table.${key}`)}
                         loading={isPreManualDataFetching}
-                        value={new Intl.NumberFormat("pt-BR", {
-                          style: "currency",
-                          currency: "BRL",
-                        }).format(preManualData[key] || 0)}
+                        value={moneyFormatter(preManualData[key] || 0)}
                       />
                     </Grid>
                   );
@@ -218,10 +221,7 @@ export const MerchantPreManual = () => {
                         prefix={<ArrowDownOutlined />}
                         title={t(`table.${key}`)}
                         loading={isPreManualDataFetching}
-                        value={new Intl.NumberFormat("pt-BR", {
-                          style: "currency",
-                          currency: "BRL",
-                        }).format(preManualData[key] || 0)}
+                        value={moneyFormatter(preManualData[key] || 0)}
                       />
                     </Grid>
                   );
@@ -273,7 +273,6 @@ export const MerchantPreManual = () => {
         spacing={1}
       >
         {selectedRows && selectedRows.length > 0 && (
-  
           <Grid
             xs={12}
             style={{
@@ -287,10 +286,7 @@ export const MerchantPreManual = () => {
               {selectedRows &&
                 selectedRows.length > 0 &&
                 selectedRows?.filter((i) => i?.type == "in").length > 0 &&
-                `${t("table.in")}: ${new Intl.NumberFormat("pt-BR", {
-                  style: "currency",
-                  currency: "BRL",
-                }).format(
+                `${t("table.in")}: ${moneyFormatter(
                   selectedRows
                     ?.filter((i) => i?.type == "in")
                     ?.map((i) => i?.value)
@@ -301,10 +297,7 @@ export const MerchantPreManual = () => {
               {selectedRows &&
                 selectedRows.length > 0 &&
                 selectedRows?.filter((i) => i?.type == "out").length > 0 &&
-                `${t("table.out")}: ${new Intl.NumberFormat("pt-BR", {
-                  style: "currency",
-                  currency: "BRL",
-                })?.format(
+                `${t("table.out")}: ${moneyFormatter(
                   selectedRows
                     ?.filter((i) => i?.type == "out")
                     ?.map((i) => i?.value)
@@ -314,10 +307,7 @@ export const MerchantPreManual = () => {
             <h2 style={{ color: defaultTheme.colors.info }}>
               {selectedRows &&
                 selectedRows.length > 0 &&
-                `Total: ${new Intl.NumberFormat("pt-BR", {
-                  style: "currency",
-                  currency: "BRL",
-                }).format(
+                `Total: ${moneyFormatter(
                   selectedRows?.map((i) => i?.value)?.reduce((p, n) => p + n) ??
                     0
                 )}`}
@@ -410,6 +400,10 @@ export const MerchantPreManual = () => {
                 loading={approvePreManualLoading}
                 reset={approvePreManualReset}
                 setIsValidateTokenOpen={setOperationInTokenModalOpen}
+                selectedRows={selectedRows}
+                query={query}
+                setApproveAll={setApproveAll}
+                total={preManualData?.total}
               />
             </Grid>
           )}
@@ -469,7 +463,6 @@ export const MerchantPreManual = () => {
             setIsConfirmOpen={setConfirmDelete}
             itemToAction={currentItem?._id}
             onConfirmAction={() => deletePreManualTransactionMutate()}
-            
             label={["user_name", "type"]}
           />
         </Grid>

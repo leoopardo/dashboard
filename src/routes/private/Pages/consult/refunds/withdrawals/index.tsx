@@ -103,6 +103,7 @@ export const RefundWithdrawals = () => {
   ];
 
   useEffect(() => {
+    refetchRefundWithdrawalsTotal()
     refetchRefundWithdrawals();
   }, [query]);
 
@@ -341,6 +342,7 @@ export const RefundWithdrawals = () => {
       )}
       {isFiltersOpen && (
         <FiltersModal
+          maxRange
           open={isFiltersOpen}
           setOpen={setIsFiltersOpen}
           query={query}
@@ -362,7 +364,7 @@ export const RefundWithdrawals = () => {
           ]}
           refetch={refetchRefundWithdrawalsTotal}
           selectOptions={{
-            status: ["PAID_TO_MERCHANT", "ERROR", "PROCESSING", "WAITING"],
+            status: ["REFUND_TO_MERCHANT", "ERROR", "PROCESSING", "WAITING"],
             gender: ["MALE", "FEMALE", "OTHER"],
             refund_reason: [
               "DIVERGENT VALUE",

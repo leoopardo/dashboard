@@ -68,13 +68,18 @@ export const PartnerSelect = ({
       data-test-id="partner-select"
       allowClear
       onClear={() => {
-        setValue(undefined);
+        setQueryFunction((state: any) => ({
+          ...state,
+          partner_id: null,
+          group_id: undefined,
+        }));
       }}
       showSearch
       size="large"
       loading={isPartnersFetching}
       disabled={disabled}
       value={value}
+     
       onSelect={() => {
         delete query.name;
         refetcPartners();

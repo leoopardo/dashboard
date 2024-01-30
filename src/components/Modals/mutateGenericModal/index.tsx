@@ -41,6 +41,7 @@ import { useTranslation } from "react-i18next";
 import ReactInputMask from "react-input-mask";
 import { MerchantSelect } from "../../Selects/merchantSelect";
 import { PartnerSelect } from "../../Selects/partnerSelect";
+import { moneyFormatter } from "@src/utils/moneyFormatter";
 const { RangePicker } = DatePicker;
 
 interface mutateProps {
@@ -1203,6 +1204,15 @@ export const MutateModal = ({
                       name={field.label}
                       style={{ margin: 10 }}
                       help=""
+                      rules={[
+                        {
+                          required: field.required,
+                          message:
+                            t("input.required", {
+                              field: t(`table.reason`),
+                            }) || "",
+                        },
+                      ]}
                     >
                       <Input.TextArea
                         data-test-id={`${field.label}-input`}
@@ -1255,10 +1265,7 @@ export const MutateModal = ({
                                       label: merchantBetweenAccounts
                                         ? `${t(
                                             `table.${option?.label?.toLowerCase()}`
-                                          )}: ${new Intl.NumberFormat("pt-BR", {
-                                            style: "currency",
-                                            currency: "BRL",
-                                          }).format(
+                                          )}: ${moneyFormatter(
                                             MerchantBalance[
                                               option?.label?.toLowerCase()
                                             ] || 0

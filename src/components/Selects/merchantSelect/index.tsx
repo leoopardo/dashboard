@@ -80,6 +80,13 @@ export const MerchantSelect = ({
       size="large"
       loading={isMerchantFetching}
       value={value}
+      onClear={() => {
+        setQueryFunction((state: any) => ({
+          ...state,
+          merchant_id: null,
+          group_id: undefined,
+        }));
+      }}
       onSelect={() => {
         delete query.name;
         refetcMerchant();

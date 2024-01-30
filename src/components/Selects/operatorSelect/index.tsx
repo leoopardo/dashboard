@@ -22,6 +22,8 @@ export const OperatorSelect = ({
     limit: 200,
     sort_field: "name",
     sort_order: "ASC",
+    aggregator_id:
+      queryOptions?.aggregator_id || queryOptions?.aggregator?.id || undefined,
     name: "",
   });
   const { operatorsData, refetcOperators, isOperatorsFetching } =
@@ -43,7 +45,7 @@ export const OperatorSelect = ({
         setValue(initial?.name);
       }
     }
-  }, [queryOptions, operatorsData]);
+  }, [queryOptions?.aggregator_id,queryOptions?.operator_id, operatorsData]);
 
   useEffect(() => {
     setQuery((state) => ({
@@ -51,7 +53,20 @@ export const OperatorSelect = ({
       aggregator_id:
         queryOptions?.aggregator_id ?? queryOptions?.aggregator?.id,
     }));
-  }, [queryOptions]);
+  }, [queryOptions?.aggregator_id]);
+
+  useEffect(() => {
+    refetcOperators();
+  }, [query]);
+
+  useEffect(() => {
+    if (!queryOptions?.aggregator_id)
+      setQueryFunction((state: any) => ({
+        ...state,
+        operator_id: null,
+        group_id: undefined,
+      }));
+  }, [queryOptions?.aggregator_id,queryOptions?.operator_id,]);
 
   useEffect(() => {
     refetcOperators();
@@ -60,7 +75,7 @@ export const OperatorSelect = ({
   useEffect(() => {
     if (
       !operatorsData?.items.some(
-        (operator) => operator.id === queryOptions?.operator_id
+        (operator) => operator?.id === queryOptions?.operator_id
       )
     ) {
       return setValue(undefined);
@@ -75,6 +90,13 @@ export const OperatorSelect = ({
       size="large"
       loading={isOperatorsFetching}
       value={value}
+      onClear={() => {
+        setQueryFunction((state: any) => ({
+          ...state,
+          operator_id: null,
+          group_id: undefined,
+        }));
+      }}
       onSelect={() => {
         delete query.name;
         refetcOperators();

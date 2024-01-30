@@ -173,7 +173,9 @@
     "total_expired": "Total {{entity}} expired",
     "total_aggregator_inactive": "Total {{entity}} inactive",
     "total": "Total {{entity}}",
-    "operation_approve": "Approve Operations",
+    "operation_approve": "Approve selected",
+    "operation_approve_all": "Approve all",
+    "Approvement": "Approvement",
     "deposits_bank": "Deposit banks",
     "withdraw_bank": "Withdrawal banks",
     "fastpix_bank": "FastPix banks",
@@ -964,7 +966,16 @@
     "license": "License",
     "linked_merchants": "Linked merchants",
     "createdat_start": "Inicial date",
-    "createdat_end": "Final date"
+    "createdat_end": "Final date",
+    "yesterday_abrev": "Yest..",
+    "this_month_abrev": "This m...",
+    "last_month_abrev": "Last m...",
+    "cash_in_max_value_per_day": "Deposit max value/day",
+    "cash_out_max_value_per_day": "Withdraw max value/day",
+    "cash_out_transaction_limit_per_day": "Withdrawal limit/day",
+    "cryptography": "Cryptography",
+    "decrypt_key": "Decrypt key",
+    "custom_date": "Set date"
   },
   "actions": {
     "details": "Details",

@@ -21,6 +21,7 @@ import { useMediaQuery } from "react-responsive";
 import { useLocation, useParams } from "react-router-dom";
 import { TotalizersCards as DepositsCards } from "../../../consult/deposits/generated/components/TotalizersCards";
 import { TotalizersCards } from "../../../consult/withdrawals/generated/components/TotalizersCards";
+import { moneyFormatter } from "@src/utils/moneyFormatter";
 
 export const PersonDetails = () => {
   const { t } = useTranslation();
@@ -357,6 +358,24 @@ export const PersonDetails = () => {
               {!isPersonsDataFetching &&
                 Object.keys(LimitsData).map((key, index) => {
                   switch (key) {
+                    case "cash_out_transaction_limit":
+                      return (
+                        <Descriptions.Item
+                          key={index}
+                          label={t(`table.${key}`)}
+                          labelStyle={{
+                            maxWidth: "120px !important",
+                            margin: 0,
+                            padding: 0,
+                            textAlign: "center",
+                          }}
+                        >
+                          {(currentData as any)[key]
+                            ? (currentData as any)[key]
+                            : "-"}
+                        </Descriptions.Item>
+                      );
+
                     default:
                       return (
                         <Descriptions.Item
@@ -370,10 +389,7 @@ export const PersonDetails = () => {
                           }}
                         >
                           {(currentData as any)[key]
-                            ? new Intl.NumberFormat("pt-BR", {
-                                style: "currency",
-                                currency: "BRL",
-                              }).format((currentData as any)[key])
+                            ? moneyFormatter((currentData as any)[key])
                             : "-"}
                         </Descriptions.Item>
                       );

@@ -30,7 +30,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
       justify="center"
       style={{ width: "100%" }}
     >
-      {(props.query.status === "PAID_TO_MERCHANT" || !props.query.status) && (
+      {(props.query.status === "REFUND_TO_MERCHANT" || !props.query.status) && (
         <Col
           style={{ maxWidth: "220px" }}
           xs={{ span: isMobile ? 10 : undefined }}
@@ -43,7 +43,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
               loading={props.loading}
               title={
                 <>
-                  <>{t("table.paid_to_merchant")}</>:{" "}
+                  <>{t("table.refund_to_merchant")}</>:{" "}
                   <span style={{ fontSize: "12px" }}>
                     {props?.data?.paid_to_merchant_total || 0} /{" "}
                     {getPercent(
@@ -207,10 +207,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
                 {!props.loading && <ReloadOutlined />}
               </Button>
             </>}
-            value={new Intl.NumberFormat("pt-BR", {
-              style: "currency",
-              currency: "BRL",
-            }).format(props?.data?.transactions_value || 0)}
+            value={moneyFormatter(props?.data?.transactions_value || 0)}
             precision={2}
             valueStyle={{
               color: theme === "dark" ? "#fff" : defaultTheme.colors.dark,

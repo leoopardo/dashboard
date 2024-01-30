@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { DownloadOutlined } from "@ant-design/icons";
 import { defaultTheme } from "@src/styles/defaultTheme";
+import { moneyFormatter } from "@src/utils/moneyFormatter";
 import {
   Button,
   Descriptions,
@@ -132,6 +133,42 @@ export const ViewModal = ({
 
             if (!sortItems[key]) {
               return;
+            }
+            if (key === "merchantConfig") {
+              return (
+                <>
+                  {sortItems[key].cryptography && (
+                    <Descriptions.Item
+                      data-test-id={`details-cryptography`}
+                      key={key}
+                      label={t(`table.cryptography`)}
+                      labelStyle={{
+                        maxWidth: "120px !important",
+                        margin: 0,
+                        padding: 0,
+                        textAlign: "center",
+                      }}
+                    >
+                      {sortItems[key]?.cryptography}
+                    </Descriptions.Item>
+                  )}
+                  {sortItems[key].decrypt_key && (
+                    <Descriptions.Item
+                      data-test-id={`details-decrypt_key`}
+                      key={key}
+                      label={t(`table.decrypt_key`)}
+                      labelStyle={{
+                        maxWidth: "120px !important",
+                        margin: 0,
+                        padding: 0,
+                        textAlign: "center",
+                      }}
+                    >
+                      {sortItems[key]?.decrypt_key}
+                    </Descriptions.Item>
+                  )}
+                </>
+              );
             }
             if (typeof sortItems[key] === ("object" || "array")) return;
             switch (key) {
@@ -315,10 +352,7 @@ export const ViewModal = ({
                       textAlign: "center",
                     }}
                   >
-                    {new Intl.NumberFormat("pt-BR", {
-                      style: "currency",
-                      currency: "BRL",
-                    }).format(Number(sortItems[key]) || 0)}
+                    {moneyFormatter(Number(sortItems[key]) || 0)}
                   </Descriptions.Item>
                 );
 

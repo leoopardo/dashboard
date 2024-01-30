@@ -176,7 +176,9 @@
     "total_aggregator_inactive": "Total de {{entity}} inativos",
     "total_expired": "Total de {{entity}} expiradas",
     "total": "Total de {{entity}}",
-    "operation_approve": "Aprovar Lançamentos",
+    "operation_approve": "Aprovar selecionados",
+    "operation_approve_all": "Aprovar todos",
+    "Approvement": "Aprovação",
     "deposits_bank": "Bancos de depósito",
     "withdraw_bank": "Bancos de saque",
     "fastpix_bank": "Bancos de FastPix",
@@ -970,7 +972,16 @@
     "license": "Licença",
     "linked_merchants": "Merchants vinculados",
     "createdat_start": "Data inicial",
-    "createdat_end": "Data final"
+    "createdat_end": "Data final",
+    "yesterday_abrev": "Ont..",
+    "this_month_abrev": "Este m...",
+    "last_month_abrev": "Mês pass...",
+    "cash_in_max_value_per_day": "Val. máx. depósito/dia",
+    "cash_out_max_value_per_day": "Val. máx. saques/dia",
+    "cash_out_transaction_limit_per_day": "Limite de saque/dia",
+    "cryptography": "Criptografia",
+    "decrypt_key": "Chave de descriptografia",
+    "custom_date": "Escolher data"
   },
   "actions": {
     "details": "Detalhes",

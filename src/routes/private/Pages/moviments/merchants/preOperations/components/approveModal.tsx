@@ -1,52 +1,69 @@
-import { Dispatch, SetStateAction, useState, FC } from 'react';
-import { FileAddOutlined } from '@ant-design/icons';
-import { Button, Popconfirm, Tooltip, notification } from 'antd';
-import { useTranslation } from 'react-i18next';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import {
+  BlockOutlined,
+  DownOutlined,
+  OneToOneOutlined,
+} from "@ant-design/icons";
+import { Button, Dropdown, MenuProps } from "antd";
+import { Dispatch, FC, SetStateAction } from "react";
+import { useTranslation } from "react-i18next";
 
 interface IProp {
-  setIsValidateTokenOpen: Dispatch<SetStateAction<boolean>>
-  reset: () => void
-  loading: boolean
-  disabled: boolean
+  setIsValidateTokenOpen: Dispatch<SetStateAction<boolean>>;
+  reset: () => void;
+  loading: boolean;
+  disabled: boolean;
+  selectedRows: any[];
+  query: any;
+  setApproveAll: Dispatch<SetStateAction<any>>;
+  total?: number;
 }
 
-export const ApproveModal: FC<IProp> = ({ setIsValidateTokenOpen, loading, disabled, reset }) => {
+export const ApproveModal: FC<IProp> = ({
+  setIsValidateTokenOpen,
+  loading,
+  disabled,
+  reset,
+  selectedRows,
+  query,
+  setApproveAll,
+  total,
+}) => {
   const { t } = useTranslation();
-  const [open, setOpen] = useState(false);
-  const [, contextHolder] = notification.useNotification();
+
+  const items: MenuProps["items"] = [
+    {
+      label: `${t("titles.operation_approve")} (${selectedRows.length})`,
+      key: "1",
+      icon: <OneToOneOutlined style={{ fontSize: 20 }} />,
+      disabled: disabled,
+      onClick: () => {
+        setIsValidateTokenOpen(true);
+      },
+    },
+    {
+      label: `${t("titles.operation_approve_all")} (${total || 0})`,
+      key: "2",
+      icon: <BlockOutlined style={{ fontSize: 22 }} />,
+      disabled: !total,
+      onClick: () => {
+        setApproveAll(query);
+        setIsValidateTokenOpen(true);
+      },
+    },
+  ];
 
   return (
-    <Popconfirm
-      title={t('titles.operation_approve')}
-      description={t('messages.operation_approve')}
-      onConfirm={() => {
-        setIsValidateTokenOpen(true);
-        setOpen(false);
-      }}
-      onCancel={() => setOpen(false)}
-      open={open}
-      okText={t('messages.yes_confirm')}
-      cancelText={t('messages.no_cancel')}
-      placement="bottom"
+    <Dropdown
+      menu={{ items }}
+      placement="bottomLeft"
+      arrow
+      onOpenChange={() => reset()}
     >
-      {contextHolder}
-      <Tooltip placement="topRight" title={t('titles.operation_approve')} arrow>
-        <Button
-          disabled={disabled}
-          style={{ width: '100%' }}
-          size="large"
-          type="default"
-          shape="round"
-          block
-          onClick={() => {
-            reset()
-            setOpen(true)
-          }}
-          loading={loading}
-        >
-          {!loading && <FileAddOutlined style={{ fontSize: 22 }} />} Aprovar
-        </Button>
-      </Tooltip>
-    </Popconfirm>
+      <Button size="large" style={{ width: "100%" }} loading={loading}>
+        {t("titles.Approvement")}
+        <DownOutlined />
+      </Button>
+    </Dropdown>
   );
 };

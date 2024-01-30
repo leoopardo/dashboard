@@ -66,6 +66,13 @@ export const AggregatorSelect = ({
       size="large"
       loading={isAggregatorsFetching}
       value={value}
+      onClear={() => {
+        setQueryFunction((state: any) => ({
+          ...state,
+          aggregator_id: null,
+          group_id: undefined,
+        }));
+      }}
       onSelect={() => {
         delete query.name;
         refetcAggregators();

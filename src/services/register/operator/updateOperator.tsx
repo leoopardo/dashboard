@@ -4,7 +4,7 @@ import { useMutation } from "react-query";
 import { api } from "../../../config/api";
 
 export function useUpdateOperator(body: OperatorItem) {
-  const { isLoading, error, mutate, isSuccess } = useMutation<
+  const { isLoading, error, mutate, isSuccess, data } = useMutation<
     OperatorItem | null | undefined
   >("UpdateOperator", async () => {
     const response = await api.put("core/operator/update", body, {});
@@ -21,6 +21,6 @@ export function useUpdateOperator(body: OperatorItem) {
     UpdateMutate,
     UpdateIsLoading,
     UpdateError,
-    UpdateIsSuccess,
+    UpdateIsSuccess,data
   };
 }

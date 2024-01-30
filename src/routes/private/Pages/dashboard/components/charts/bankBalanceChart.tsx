@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useListBanks } from "@src/services/bank/listBanks";
 import { useGetOrganizationBankBalance } from "@src/services/consult/organization/bankBalance/getOrganizationBankBalance";
+import { moneyFormatter } from "@src/utils/moneyFormatter";
 import ReactECharts from "echarts-for-react";
 import { useTranslation } from "react-i18next";
 
@@ -58,10 +59,7 @@ export const BankBalanceChart = () => {
             yAxis: {
               axisLabel: {
                 formatter: function (value: number) {
-                  return new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "BRL",
-                  }).format(Number(value) || 0);
+                  return moneyFormatter(Number(value) || 0);
                 },
               },
             },
@@ -72,10 +70,7 @@ export const BankBalanceChart = () => {
                 type: "bar",
                 tooltip: {
                   valueFormatter: function (value: number) {
-                    return new Intl.NumberFormat("pt-BR", {
-                      style: "currency",
-                      currency: "BRL",
-                    }).format(Number(value) || 0);
+                    return moneyFormatter(Number(value) || 0);
                   },
                 },
               },
@@ -83,10 +78,7 @@ export const BankBalanceChart = () => {
                 type: "bar",
                 tooltip: {
                   valueFormatter: function (value: number) {
-                    return new Intl.NumberFormat("pt-BR", {
-                      style: "currency",
-                      currency: "BRL",
-                    }).format(Number(value) || 0);
+                    return moneyFormatter(Number(value) || 0);
                   },
                 },
               },
@@ -94,10 +86,7 @@ export const BankBalanceChart = () => {
                 type: "bar",
                 tooltip: {
                   valueFormatter: function (value: number) {
-                    return new Intl.NumberFormat("pt-BR", {
-                      style: "currency",
-                      currency: "BRL",
-                    }).format(Number(value) || 0);
+                    return moneyFormatter(Number(value) || 0);
                   },
                 },
               },

@@ -57,7 +57,7 @@ import { FormInstance } from "antd/lib/form/Form";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import ReactInputMask from "react-input-mask";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export const UpdateAggregator = () => {
   const { permissions } = queryClient.getQueryData(
@@ -72,6 +72,7 @@ export const UpdateAggregator = () => {
     cellphone: location.state.cellphone,
     email: location.state.email,
     country: location.state.country,
+    status: location.state.status,
   });
   const INITIAL_RESPONSIBLE_QUERY: AggregatorResponsiblesQuery = {
     aggregator_id: location.state.id,
@@ -81,7 +82,7 @@ export const UpdateAggregator = () => {
 
   const submitRef = useRef<HTMLButtonElement>(null);
   const { Countries } = useGetrefetchCountries();
-
+  const navigate = useNavigate();
   const formRef = useRef<FormInstance>(null);
   const {
     UpdateError,
@@ -198,10 +199,18 @@ export const UpdateAggregator = () => {
   }, [deleteFileId]);
 
   useEffect(() => {
-    setFirstChildDivId(tabAggregatorsData, 'tab-aggregators-data');
-    setFirstChildDivId(tabResponsible, 'tab-responsibles');
-    setFirstChildDivId(tabAttachments, 'tab-attachments');
-  }, [tabAggregatorsData, tabResponsible, tabAttachments])
+    setFirstChildDivId(tabAggregatorsData, "tab-aggregators-data");
+    setFirstChildDivId(tabResponsible, "tab-responsibles");
+    setFirstChildDivId(tabAttachments, "tab-attachments");
+  }, [tabAggregatorsData, tabResponsible, tabAttachments]);
+
+  useEffect(() => {
+    if (UpdateIsSuccess) {
+      navigate("/register/aggregator/aggregators/update", {
+        state: { ...location.state, ...aggregatorBody },
+      });
+    }
+  }, [UpdateIsSuccess]);
 
   const items: TabsProps["items"] = [
     {

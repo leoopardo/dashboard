@@ -666,7 +666,7 @@ export const PersonUpdate = () => {
           >
             <Grid item xs={12} md={4} lg={3}>
               <Form.Item
-                label={t("table.cash_in_max_value")}
+                label={t("table.cash_in_max_value_per_day")}
                 name="cash_in_max_value"
               >
                 <CurrencyInput
@@ -689,7 +689,7 @@ export const PersonUpdate = () => {
             </Grid>
             <Grid item xs={12} md={4} lg={3}>
               <Form.Item
-                label={t("table.cash_out_max_value")}
+                label={t("table.cash_out_max_value_per_day")}
                 name="cash_out_max_value"
               >
                  <CurrencyInput
@@ -713,7 +713,7 @@ export const PersonUpdate = () => {
 
             <Grid item xs={12} md={4} lg={2}>
               <Form.Item
-                label={t("table.cash_out_transaction_limit")}
+                label={t("table.cash_out_transaction_limit_per_day")}
                 name="cash_out_transaction_limit"
               >
                 <Select

@@ -23,6 +23,7 @@ import {
   CreateOperatorFileInterface,
   useCreateOperatorAttachment,
 } from "@src/services/register/operator/attachments/uploadAttachment";
+import { useGetOperator } from "@src/services/register/operator/getOperators";
 import { useCreateOperatorResponsible } from "@src/services/register/operator/responsibles/createResponsible";
 import { useDeleteOperatorResponsible } from "@src/services/register/operator/responsibles/deleteResponsible";
 import { useGetOperatorResponsibles } from "@src/services/register/operator/responsibles/getResponsibles";
@@ -58,7 +59,7 @@ import { FormInstance } from "antd/lib/form/Form";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import ReactInputMask from "react-input-mask";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export const UpdateOperator = () => {
   const { permissions } = queryClient.getQueryData(
@@ -66,20 +67,13 @@ export const UpdateOperator = () => {
   ) as ValidateInterface;
   const { t } = useTranslation();
   const location = useLocation();
-  const [OperatorBody, setOperatorBody] = useState<OperatorItem>({
-    operator_id: location.state.id,
-    name: location.state.name,
-    cnpj: location.state.cnpj,
-    cellphone: location.state.cellphone,
-    email: location.state.email,
-    country: location.state.country,
-  });
+
   const INITIAL_RESPONSIBLE_QUERY: OperatorResponsiblesQuery = {
     operator_id: location.state.id,
     limit: 25,
     page: 1,
   };
-
+  const navigate = useNavigate();
   const submitRef = useRef<HTMLButtonElement>(null);
   const { Countries } = useGetrefetchCountries();
   const formRef = useRef<FormInstance>(null);
@@ -88,6 +82,12 @@ export const UpdateOperator = () => {
   const tabResponsible = document.querySelector('[data-node-key="2"]');
   const tabAttachments = document.querySelector('[data-node-key="3"]');
 
+  const { OperatorData, isOperatorDataFetching, isSuccessOperatorData } =
+    useGetOperator({ operator_id: location.state.id });
+
+  const [OperatorBody, setOperatorBody] = useState<OperatorItem>({
+    ...location.state,
+  });
   const { UpdateError, UpdateIsLoading, UpdateMutate, UpdateIsSuccess } =
     useUpdateOperator({ ...OperatorBody, operator_id: location.state.id });
 
@@ -147,7 +147,6 @@ export const UpdateOperator = () => {
   } = useDeleteOperatorResponsible({
     operator_responsible_id: currentResponsible?.id,
   });
-
   const { OperatorAttachmentsData } = useGetOperatorAttachments({
     operator_id: location.state.id,
   });
@@ -191,6 +190,19 @@ export const UpdateOperator = () => {
     setFirstChildDivId(tabAttachments, "tab-attachments");
   }, [tabOperatorsData, tabResponsible, tabAttachments]);
 
+  useEffect(() => {
+    if (!isSuccessOperatorData) return;
+    setOperatorBody(OperatorData as any);
+  }, [isSuccessOperatorData]);
+
+  useEffect(() => {
+    if (UpdateIsSuccess) {
+      navigate("/register/operator/operators/update", {
+        state: { ...location.state, ...OperatorBody },
+      });
+    }
+  }, [UpdateIsSuccess]);
+
   const items: TabsProps["items"] = [
     {
       key: "1",
@@ -202,156 +214,172 @@ export const UpdateOperator = () => {
           initialValues={location.state}
           onFinish={() => UpdateMutate()}
         >
-          <Row gutter={[8, 8]} style={{ width: "100%" }}>
-            <Col xs={{ span: 24 }} md={{ span: 6 }}>
-              <Form.Item
-                label={t("table.name")}
-                name="name"
-                rules={[
-                  {
-                    required: true,
-                    message:
-                      t("input.required", {
-                        field: t(`input.name`),
-                      }) || "",
-                  },
-                ]}
-              >
-                <Input
+          {" "}
+          {isOperatorDataFetching ? (
+            <Spin />
+          ) : (
+            <Row gutter={[8, 8]} style={{ width: "100%" }}>
+              <Col xs={{ span: 24 }} md={{ span: 6 }}>
+                <Form.Item
+                  label={t("table.name")}
                   name="name"
-                  size="large"
-                  value={OperatorBody?.name}
-                  onChange={handleChangeOperator}
-                />
-              </Form.Item>
-            </Col>
-            <Col xs={{ span: 24 }} md={{ span: 6 }}>
-              <Form.Item
-                label={t("table.cnpj")}
-                name="cnpj"
-                rules={[
-                  {
-                    validator: validateFormCnpj,
-                  },
-                  {
-                    required: true,
-                    message:
-                      t("input.required", {
-                        field: t(`input.cnpj`),
-                      }) || "",
-                  },
-                ]}
-              >
-                <ReactInputMask
-                  value={OperatorBody?.cnpj}
-                  mask="99.999.999/9999-99"
-                  onChange={(event) => {
-                    const value = event.target.value.replace(/[^\d]/g, "");
-                    if (!value) {
-                      delete OperatorBody?.cnpj;
-                      return;
-                    }
-                    setOperatorBody((state: any) => ({
-                      ...state,
-                      cnpj: value,
-                    }));
-                  }}
+                  rules={[
+                    {
+                      required: true,
+                      message:
+                        t("input.required", {
+                          field: t(`input.name`),
+                        }) || "",
+                    },
+                  ]}
                 >
-                  <Input size="large" />
-                </ReactInputMask>
-              </Form.Item>
-            </Col>
-            <Col xs={{ span: 24 }} md={{ span: 6 }}>
-              <Form.Item label={t("table.cellphone")} name="name">
-                <CellphoneInput
-                  body={OperatorBody ?? location?.state?.cellphone}
-                  setBody={setOperatorBody}
-                />
-              </Form.Item>
-            </Col>
-            <Col xs={{ span: 24 }} md={{ span: 6 }}>
-              <Form.Item
-                label={t("table.email")}
-                name="email"
-                rules={[
-                  {
-                    type: "email",
-                    message:
-                      t("input.invalid", {
-                        field: t("input.email"),
-                      }) || "",
-                  },
-                ]}
-              >
-                <Input
-                  name="email"
-                  size="large"
-                  value={OperatorBody?.email}
-                  onChange={handleChangeOperator}
-                />
-              </Form.Item>
-            </Col>
-            <Col xs={{ span: 24 }} md={{ span: 6 }}>
-              <Form.Item label={t("table.country")} name="country">
-                <Select
-                  showSearch
-                  options={Countries?.map((country, index) => {
-                    return {
-                      key: index,
-                      label: (
-                        <Typography>
-                          <Avatar
-                            src={country.flags.svg}
-                            style={{ marginRight: 10 }}
-                          />
-                          {country?.name.common}
-                        </Typography>
-                      ),
-                      value: country.name.common,
-                    };
-                  })}
-                  filterOption={(inputValue, option) =>
-                    option?.value
-                      .toUpperCase()
-                      .indexOf(inputValue.toUpperCase()) !== -1
-                  }
-                  size="large"
-                  value={OperatorBody?.country}
-                  onChange={(value) =>
-                    setOperatorBody((state) => ({ ...state, country: value }))
-                  }
-                />
-              </Form.Item>
-            </Col>
-            <Col xs={{ span: 24 }} md={{ span: 6 }}>
-              <Form.Item label={t("table.aggregator")} name="aggregator_id">
-                <AggregatorSelect
-                  aggregatorId={
-                    OperatorBody.aggregator_id ?? location?.state?.aggregator_id
-                  }
-                  setQueryFunction={setOperatorBody}
-                />
-              </Form.Item>
-            </Col>
-            <Col xs={{ span: 24 }} md={{ span: 2 }}>
-              <Form.Item
-                label={t("table.status")}
-                name="status"
-                valuePropName="checked"
-              >
-                <Switch
-                  checked={OperatorBody?.status}
-                  onChange={(checked) => {
-                    setOperatorBody((state) => ({
-                      ...state,
-                      status: checked,
-                    }));
-                  }}
-                />
-              </Form.Item>
-            </Col>
-          </Row>
-
+                  <Input
+                    name="name"
+                    size="large"
+                    value={OperatorBody?.name}
+                    onChange={handleChangeOperator}
+                  />
+                </Form.Item>
+              </Col>
+              <Col xs={{ span: 24 }} md={{ span: 6 }}>
+                <Form.Item
+                  label={t("table.cnpj")}
+                  name="cnpj"
+                  rules={[
+                    {
+                      validator: validateFormCnpj,
+                    },
+                    {
+                      required: true,
+                      message:
+                        t("input.required", {
+                          field: t(`input.cnpj`),
+                        }) || "",
+                    },
+                  ]}
+                >
+                  <ReactInputMask
+                    value={OperatorBody?.cnpj}
+                    mask="99.999.999/9999-99"
+                    onChange={(event) => {
+                      const value = event.target.value.replace(/[^\d]/g, "");
+                      if (!value) {
+                        delete OperatorBody?.cnpj;
+                        return;
+                      }
+                      setOperatorBody((state: any) => ({
+                        ...state,
+                        cnpj: value,
+                      }));
+                    }}
+                  >
+                    <Input size="large" />
+                  </ReactInputMask>
+                </Form.Item>
+              </Col>
+              <Col xs={{ span: 24 }} md={{ span: 6 }}>
+                <Form.Item label={t("table.cellphone")} name="name">
+                  <CellphoneInput
+                    body={OperatorBody ?? location?.state?.cellphone}
+                    setBody={setOperatorBody}
+                  />
+                </Form.Item>
+              </Col>
+              <Col xs={{ span: 24 }} md={{ span: 6 }}>
+                <Form.Item
+                  label={t("table.email")}
+                  rules={[
+                    {
+                      type: "email",
+                      message:
+                        t("input.invalid", {
+                          field: t("input.email"),
+                        }) || "",
+                    },
+                  ]}
+                >
+                  <Input
+                    name="email"
+                    size="large"
+                    value={OperatorBody?.email}
+                    onChange={handleChangeOperator}
+                  />
+                </Form.Item>
+              </Col>
+              <Col xs={{ span: 24 }} md={{ span: 6 }}>
+                <Form.Item label={t("table.country")} name="country">
+                  <Select
+                    showSearch
+                    options={Countries?.map((country, index) => {
+                      return {
+                        key: index,
+                        label: (
+                          <Typography>
+                            <Avatar
+                              src={country.flags.svg}
+                              style={{ marginRight: 10 }}
+                            />
+                            {country?.name.common}
+                          </Typography>
+                        ),
+                        value: country.name.common,
+                      };
+                    })}
+                    filterOption={(inputValue, option) =>
+                      option?.value
+                        .toUpperCase()
+                        .indexOf(inputValue.toUpperCase()) !== -1
+                    }
+                    size="large"
+                    value={OperatorBody?.country}
+                    onChange={(value) =>
+                      setOperatorBody((state) => ({ ...state, country: value }))
+                    }
+                  />
+                </Form.Item>
+              </Col>
+              <Col xs={{ span: 24 }} md={{ span: 6 }}>
+                <Form.Item
+                  rules={[
+                    {
+                      required: !OperatorBody.aggregator_id,
+                      message:
+                        t("input.required", {
+                          field: t(`table.aggregator`),
+                        }) || "",
+                    },
+                  ]}
+                  label={t("table.aggregator")}
+                  name="aggregator_id"
+                >
+                  <AggregatorSelect
+                    aggregatorId={
+                      OperatorBody.aggregator_id ??
+                      location?.state?.aggregator_id
+                    }
+                    setQueryFunction={setOperatorBody}
+                  />
+                </Form.Item>
+              </Col>
+              <Col xs={{ span: 24 }} md={{ span: 2 }}>
+                <Form.Item
+                  label={t("table.status")}
+                  name="status"
+                  valuePropName="checked"
+                >
+                  <Switch
+                    checked={OperatorBody?.status}
+                    onChange={(checked) => {
+                      setOperatorBody((state) => ({
+                        ...state,
+                        status: checked,
+                      }));
+                    }}
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
+          )}
           <Row
             style={{
               display: "flex",
@@ -373,7 +401,6 @@ export const UpdateOperator = () => {
               </Button>
             </Col>
           </Row>
-
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
             <button type="submit" ref={submitRef} style={{ display: "none" }}>
               Submit
