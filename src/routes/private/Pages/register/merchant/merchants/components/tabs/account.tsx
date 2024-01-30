@@ -7,7 +7,7 @@ import { useMerchantBankConfig } from "@services/register/merchant/merchant/bank
 import CurrentAccountsSelect from "@src/components/Selects/currentAccountsSelect";
 import { useShowMerchantAccount } from "@src/services/register/merchant/merchant/showMerchantAccount";
 import { useUpdateMerchantAccount } from "@src/services/register/merchant/merchant/updateMerchantAccount";
-import { Button, Form, FormInstance, Popconfirm } from "antd";
+import { Button, Form, FormInstance, Popconfirm, Typography } from "antd";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -24,7 +24,7 @@ export const AccountTab = (props: { id?: string }) => {
     useMerchantBankConfig(props.id);
 
   const { MerchantData } = useShowMerchantAccount(Number(props?.id), query);
-
+  
   const { UpdateMutate, UpdateError, UpdateIsSuccess } =
     useUpdateMerchantAccount({
       merchant_id: body.merchant_id,
@@ -48,6 +48,17 @@ export const AccountTab = (props: { id?: string }) => {
       layout="vertical"
       initialValues={merchantBankData ? merchantBankData : {}}
     >
+      <Typography style={{ marginTop: 10, marginBottom: 20 }}>
+        {t("table.bank_acc_number")}:{" "}
+        {MerchantData?.account?.name ? (
+          <Typography.Text strong>
+            {MerchantData?.account?.name}
+          </Typography.Text>
+        ) : (
+          <Typography.Text strong>{t("table.unassigned")}</Typography.Text>
+        )}
+      </Typography>
+
       <Grid container spacing={1}>
         <Grid item xs={12} md={4}>
           <Form.Item label={t("table.bank_acc_number")}>
