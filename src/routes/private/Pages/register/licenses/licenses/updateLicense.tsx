@@ -40,16 +40,18 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import { setFirstChildDivId } from "@src/utils/functions";
-import { LicenseAttachmentItem, LicenseItem } from "@src/services/types/register/licenses/licenses.interface";
+import {
+  LicenseAttachmentItem,
+  LicenseItem,
+} from "@src/services/types/register/licenses/licenses.interface";
 import { useGetRowsMerchantRegister } from "@src/services/register/merchant/merchant/getMerchants";
-import moment from "moment";
 import dayjs from "dayjs";
 import { MerchantsQuery } from "@src/services/types/register/merchants/merchantsRegister.interface";
 import { useUpdateLicense } from "@src/services/register/licenses/updateLicense";
 const { RangePicker } = DatePicker;
 
 export const UpdateLicense = () => {
-/*   const { permissions } = queryClient.getQueryData(
+  /*   const { permissions } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface; */
   const { t } = useTranslation();
@@ -61,8 +63,6 @@ export const UpdateLicense = () => {
 
   const [licenseBody, setLicenseBody] = useState<LicenseItem>({
     license_id: location?.state?.id,
-    name: location?.state?.name,
-    country: location?.state?.country,
   });
 
   const INITIAL_QUERY: MerchantsQuery = {
@@ -81,10 +81,11 @@ export const UpdateLicense = () => {
     useUpdateLicense(licenseBody);
   const [merchantAttachedQuery, setMerchantAttachedQuery] =
     useState<MerchantsQuery>(INITIAL_QUERY);
+  const [rangeDate, setRangeDate] = useState<any>([]);
 
   const [_currentResponsible, setCurrentMerchantAttached] =
     useState<LicenseAttachmentItem | null>(null);
-  const [isResponsibleFiltersOpen, setIsResponsibleFiltersOpen] =
+  const [isFiltersOpen, setIsFiltersOpen] =
     useState<boolean>(false);
   const [fileBody, setFileBody] = useState<
     CreateLicenseFileInterface | undefined
@@ -102,7 +103,7 @@ export const UpdateLicense = () => {
     refetchMerchantData,
   } = useGetRowsMerchantRegister(merchantAttachedQuery);
   const { LicenseDataAttachments } = useGetLicensesAttachments({
-    license_id: location.state.id,
+    license_id: location.state?.id,
   });
   const {
     LicenseAttachmentError,
@@ -132,18 +133,16 @@ export const UpdateLicense = () => {
   }, [fileBody]);
 
   useEffect(() => {
-    setLicenseBody({
-      license_id: ShowLicenseData?.id,
-      name: ShowLicenseData?.name,
-      country: ShowLicenseData?.country,
-      indeterminate_validity: ShowLicenseData?.indeterminate_validity,
-      number: ShowLicenseData?.number,
-      status: ShowLicenseData?.status,
-      start_validity_date: ShowLicenseData?.start_validity_date,
-      end_validity_date: ShowLicenseData?.end_validity_date,
-    });
     formRef.current?.setFieldsValue(ShowLicenseData);
-  }, [ShowLicenseData]);
+    setRangeDate([
+      ShowLicenseData?.start_validity_date
+        ? dayjs(ShowLicenseData?.start_validity_date)
+        : null,
+      ShowLicenseData?.end_validity_date
+        ? dayjs(ShowLicenseData?.end_validity_date)
+        : null,
+    ]);
+  }, [location, ShowLicenseData]);
 
   useEffect(() => {
     if (deleteFileId) {
@@ -184,34 +183,30 @@ export const UpdateLicense = () => {
                     }
                     popupStyle={{ marginLeft: "40px" }}
                     showTime
-                    value={[
-                      licenseBody?.start_validity_date
-                        ? dayjs(licenseBody?.start_validity_date).subtract(
-                            3,
-                            "hours"
-                          )
-                        : null,
-                      licenseBody?.end_validity_date
-                        ? dayjs(licenseBody?.end_validity_date).subtract(
-                            3,
-                            "hours"
-                          )
-                        : null,
-                    ]}
-                    clearIcon={<></>}
+                    value={rangeDate}
                     placeholder={[t("table.start_date"), t("table.end_date")]}
                     onChange={(value: any) => {
-                      setLicenseBody((state: any) => ({
-                        ...state,
-                        start_validity_date: moment(value[0]?.$d).format(
-                          "YYYY-MM-DDTHH:mm:ss.SSS"
-                        ),
-                        end_validity_date: dayjs(
-                          moment(value[1]?.$d)
-                            .add(3, "hours")
-                            .format("YYYY-MM-DDTHH:mm:00.000")
-                        ),
-                      }));
+                      setRangeDate(value);
+                      if (value) {
+                        setLicenseBody((state: any) => ({
+                          ...state,
+                          start_validity_date: dayjs(value[0]?.$d).format(
+                            "YYYY-MM-DDTHH:mm:ss.SSS"
+                          ),
+                          end_validity_date: dayjs(
+                            dayjs(value[1]?.$d)
+                              .add(3, "hours")
+                              .format("YYYY-MM-DDTHH:mm:00.000")
+                          ),
+                        }));
+                      } else {
+                        setLicenseBody((state: any) => ({
+                          ...state,
+                          start_validity_date: null,
+                          end_validity_date: null,
+                        }));
+                      }
+
                       formRef?.current?.validateFields();
                     }}
                   />
@@ -245,15 +240,7 @@ export const UpdateLicense = () => {
               <Form.Item
                 label={t("input.license_number")}
                 name="number"
-                rules={[
-                  {
-                    required: true,
-                    message:
-                      t("input.required", {
-                        field: t(`input.license_number`),
-                      }) || "",
-                  },
-                ]}
+                rules={[]}
               >
                 <Input
                   name="number"
@@ -452,7 +439,7 @@ export const UpdateLicense = () => {
                 style={{ width: "100%" }}
                 loading={isMerchantDataFetching}
                 type="primary"
-                onClick={() => setIsResponsibleFiltersOpen(true)}
+                onClick={() => setIsFiltersOpen(true)}
               >
                 {t("table.filters")}
               </Button>
@@ -460,8 +447,8 @@ export const UpdateLicense = () => {
             <Col xs={{ span: 24 }} md={{ span: 12 }} lg={{ span: 15 }}>
               <FilterChips
                 disabled={["license_id"]}
-                startDateKeyName="start_date"
-                endDateKeyName="end_date"
+                startDateKeyName=""
+                endDateKeyName=""
                 query={merchantAttachedQuery}
                 setQuery={setMerchantAttachedQuery}
               />
@@ -488,17 +475,17 @@ export const UpdateLicense = () => {
             />
           </Col>
 
-          {isResponsibleFiltersOpen && (
+          {isFiltersOpen && (
             <FiltersModal
-              open={isResponsibleFiltersOpen}
-              setOpen={setIsResponsibleFiltersOpen}
+              open={isFiltersOpen}
+              setOpen={setIsFiltersOpen}
               query={merchantAttachedQuery}
               setQuery={setMerchantAttachedQuery}
               filters={["status"]}
               refetch={refetchMerchantData}
               selectOptions={{}}
-              startDateKeyName="start_date"
-              endDateKeyName="end_date"
+              startDateKeyName=""
+              endDateKeyName=""
               initialQuery={INITIAL_QUERY}
             />
           )}

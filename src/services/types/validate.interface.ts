@@ -208,6 +208,17 @@ export interface ValidateInterface {
           };
         };
       };
+      licenses: {
+        menu: boolean;
+        licenses: {
+          menu: boolean;
+          licenses_list: boolean;
+          licenses_create: boolean;
+          licenses_update: boolean;
+          licenses_delete: boolean;
+          licenses_export_csv: boolean;
+        };
+      };
     };
     transactions: {
       menu: boolean;

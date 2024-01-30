@@ -1301,7 +1301,7 @@ export const SidebarNavigation = () => {
               false,
               undefined,
               {
-                display: permissions?.register?.paybrokers?.users?.menu
+                display: permissions?.register?.licenses.menu
                   ? undefined
                   : "none",
               },

@@ -6,6 +6,7 @@ import {
 import { defaultTheme } from "@src/styles/defaultTheme";
 import { Card, Statistic } from "antd";
 import ReactECharts from "echarts-for-react";
+import { useMediaQuery } from "react-responsive";
 import { t } from "i18next";
 
 export const TotalizersCards = (props: {
@@ -13,6 +14,8 @@ export const TotalizersCards = (props: {
   data?: LicenseTotalResponse;
   loading: boolean;
 }) => {
+  const isSmallScreen = useMediaQuery({ maxWidth: "1020px" });
+
   return (
     <Grid
       container
@@ -104,7 +107,7 @@ export const TotalizersCards = (props: {
             })}
             style={{
               maxWidth: 200,
-              height: 90,
+              height: isSmallScreen ? 100 : 90,
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",
@@ -115,8 +118,16 @@ export const TotalizersCards = (props: {
           />
         </Card>
       </Grid>
-      <Grid item xs={12} md={ !props.data?.registered_licenses_totals ||
-        props.data?.registered_licenses_totals === 0 ? 3 : 2}>
+      <Grid
+        item
+        xs={12}
+        md={
+          !props.data?.registered_licenses_totals ||
+          props.data?.registered_licenses_totals === 0
+            ? 3
+            : 2
+        }
+      >
         <Card bordered={false}>
           <Statistic
             loading={props?.loading}
@@ -125,7 +136,7 @@ export const TotalizersCards = (props: {
             })}
             style={{
               maxWidth: 200,
-              height: 90,
+              height: isSmallScreen ? 100 : 90,
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",
@@ -139,8 +150,16 @@ export const TotalizersCards = (props: {
           />
         </Card>
       </Grid>
-      <Grid item xs={12} md={!props.data?.registered_licenses_totals ||
-        props.data?.registered_licenses_totals === 0 ? 3 : 2}>
+      <Grid
+        item
+        xs={12}
+        md={
+          !props.data?.registered_licenses_totals ||
+          props.data?.registered_licenses_totals === 0
+            ? 3
+            : 2
+        }
+      >
         <Card bordered={false}>
           <Statistic
             loading={props?.loading}
@@ -149,7 +168,7 @@ export const TotalizersCards = (props: {
             })}
             style={{
               maxWidth: 200,
-              height: 90,
+              height: isSmallScreen ? 100 : 90,
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",
@@ -163,8 +182,16 @@ export const TotalizersCards = (props: {
           />
         </Card>
       </Grid>
-      <Grid item xs={12} md={!props.data?.registered_licenses_totals ||
-        props.data?.registered_licenses_totals === 0 ? 3 : 2}>
+      <Grid
+        item
+        xs={12}
+        md={
+          !props.data?.registered_licenses_totals ||
+          props.data?.registered_licenses_totals === 0
+            ? 3
+            : 2
+        }
+      >
         <Card bordered={false}>
           <Statistic
             loading={props?.loading}
@@ -173,7 +200,7 @@ export const TotalizersCards = (props: {
             })}
             style={{
               maxWidth: 200,
-              height: 90,
+              height: isSmallScreen ? 100 : 90,
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",
@@ -183,13 +210,20 @@ export const TotalizersCards = (props: {
             valueStyle={{
               color: defaultTheme.colors.expired,
               fontSize: "24px",
-              marginTop: 27,
             }}
           />
         </Card>
       </Grid>
-      <Grid item xs={12} md={!props.data?.registered_licenses_totals ||
-        props.data?.registered_licenses_totals === 0 ? 3 : 2}>
+      <Grid
+        item
+        xs={12}
+        md={
+          !props.data?.registered_licenses_totals ||
+          props.data?.registered_licenses_totals === 0
+            ? 3
+            : 2
+        }
+      >
         <Card bordered={false}>
           <Statistic
             loading={props?.loading}
@@ -198,7 +232,7 @@ export const TotalizersCards = (props: {
             })}
             style={{
               maxWidth: 200,
-              height: 90,
+              height: isSmallScreen ? 100 : 90,
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",
