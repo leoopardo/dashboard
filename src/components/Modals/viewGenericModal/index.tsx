@@ -131,7 +131,7 @@ export const ViewModal = ({
               return;
             }
 
-            if (!sortItems[key]) {
+            if (!sortItems[key] && sortItems[key] !== 0) {
               return;
             }
             if (key === "merchantConfig") {
@@ -220,7 +220,7 @@ export const ViewModal = ({
                     })}`}
                   </Descriptions.Item>
                 );
-
+                
               case "status":
                 return (
                   <Descriptions.Item
@@ -299,9 +299,11 @@ export const ViewModal = ({
                     {t(`table.${sortItems[key]}`)}
                   </Descriptions.Item>
                 );
+
               case "flag_pep":
               case "flag_aux_gov":
               case "black_list":
+              case "locked":
                 return (
                   <Descriptions.Item
                     data-test-id={`details-${key}`}

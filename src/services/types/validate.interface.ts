@@ -13,6 +13,12 @@ export interface ValidateInterface {
     register: {
       paybrokers: {
         menu: boolean;
+        account: {
+          menu: boolean;
+          account_api_create: boolean;
+          account_api_list: boolean;
+          account_api_update: boolean;
+        };
         users: {
           menu: boolean;
           paybrokers_user_list: boolean;

@@ -47,7 +47,7 @@ export const OperatorSelect = ({
         setValue(initial?.name);
       }
     }
-  }, [queryOptions, operatorsData]);
+  }, [queryOptions?.aggregator_id,queryOptions?.operator_id, operatorsData]);
 
   useEffect(() => {
     setQuery((state) => ({
@@ -55,7 +55,7 @@ export const OperatorSelect = ({
       aggregator_id:
         queryOptions?.aggregator_id ?? queryOptions?.aggregator?.id,
     }));
-  }, [queryOptions]);
+  }, [queryOptions?.aggregator_id]);
 
   useEffect(() => {
     refetcOperators();
@@ -68,7 +68,7 @@ export const OperatorSelect = ({
         [multiple ? "operators_ids" : "operator_id"]: null,
         group_id: undefined,
       }));
-  }, [queryOptions?.aggregator_id]);
+  }, [queryOptions?.aggregator_id,queryOptions?.operator_id,]);
 
   useEffect(() => {
     refetcOperators();
