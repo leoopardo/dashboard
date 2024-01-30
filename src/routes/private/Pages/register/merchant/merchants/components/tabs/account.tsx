@@ -3,7 +3,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Toast } from "@components/Toast";
 import { Grid } from "@mui/material";
-import { useMerchantBankConfig } from "@services/register/merchant/merchant/bankConfig/getBankConfig";
 import CurrentAccountsSelect from "@src/components/Selects/currentAccountsSelect";
 import { useShowMerchantAccount } from "@src/services/register/merchant/merchant/showMerchantAccount";
 import { useUpdateMerchantAccount } from "@src/services/register/merchant/merchant/updateMerchantAccount";
