@@ -17,6 +17,7 @@ import {
   Select,
   Slider,
   Typography,
+  Tooltip,
 } from "antd";
 import locale from "antd/locale/pt_BR";
 import dayjs from "dayjs";
@@ -336,12 +337,37 @@ export const FiltersModal = ({
                     style={{ marginBottom: 8 }}
                     options={[
                       { label: t("table.today"), value: "today" },
-                      { label: t("table.yesterday"), value: "yesterday" },
-                      { label: t("table.this_month"), value: "this_month" },
                       {
-                        label: t("table.custom_date"),
+                        label: (
+                          <Tooltip title={t("table.yesterday")}>
+                            {t("table.yesterday_abrev")}
+                          </Tooltip>
+                        ),
+                        value: "yesterday",
+                      },
+                      {
+                        label: (
+                          <Tooltip title={t("table.this_month")}>
+                            {t("table.this_month_abrev")}
+                          </Tooltip>
+                        ),
+                        value: "this_month",
+                      },
+                      {
+                        label: (
+                          <Tooltip title={t("table.last_month")}>
+                            {t("table.last_month_abrev")}
+                          </Tooltip>
+                        ),
+                        value: "this_month",
+                      },
+                      {
                         value: "custom",
-                        icon: <CalendarOutlined />,
+                        icon: (
+                          <Tooltip title={t("table.custom_date")}>
+                            <CalendarOutlined />{" "}
+                          </Tooltip>
+                        ),
                       },
                     ]}
                     value={rangePickerValue}
