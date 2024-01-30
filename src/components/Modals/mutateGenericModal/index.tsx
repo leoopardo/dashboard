@@ -773,6 +773,32 @@ export const MutateModal = ({
                 }
                 return;
 
+                case "locked":
+                  return (
+                    <Col
+                      span={12}
+                    >
+                      <Form.Item
+                        data-test-id={`${field.label}-form-item`}
+                        label={t(`table.${field.label}`)}
+                        name={field.label}
+                        style={{ margin: 10 }}
+                        valuePropName="checked"
+                      >
+                        <Switch
+                          data-test-id={`${field.label}-switch`}
+                          checked={body[field.label]}
+                          onChange={(e) =>
+                            setBody((state: any) => ({
+                              ...state,
+                              [field.label]: e,
+                            }))
+                          }
+                        />
+                      </Form.Item>
+                    </Col>
+                  );
+
               case "status":
               case "cash_in":
               case "cash_out":

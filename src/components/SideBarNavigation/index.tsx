@@ -30,7 +30,6 @@ type MenuItem = Required<MenuProps>["items"][number];
 
 export const SidebarNavigation = () => {
   const { t } = useTranslation();
-  // const navigate = useNavigate();
   const { resetErrors } = useErrorContext();
   const LargeDesktop = useMediaQuery({ maxHeight: "800px" });
   const isMobile = useMediaQuery({ maxWidth: "950px" });
@@ -168,6 +167,28 @@ export const SidebarNavigation = () => {
                 to={"/register/organization/categories"}
               >
                 {t("menus.categories")}
+              </Link>
+            ),
+            getItem(
+              "current_accounts",
+              null,
+              null,
+              false,
+              undefined,
+              {
+                display: permissions?.register?.paybrokers?.account
+                  ?.menu
+                  ? undefined
+                  : "none",
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/register/organization/current_accounts"}
+              >
+                {t("menus.current_accounts")}
               </Link>
             ),
             getItem(

@@ -161,7 +161,8 @@
     "historic_cpf_merchant_details": "Detalhes de CPF por Merchant",
     "settings": "Configurações",
     "permissions_groups": "Grupos de permissões",
-    "licenses": "Licenças"
+    "licenses": "Licenças",
+    "current_accounts": "Contas Corrente"
   },
 
   "titles": {
@@ -308,10 +309,13 @@
     "help": "Ajuda",
     "confirm_import": "Confirmar importação",
     "merchant_blacklist_details": "Detalhes de blacklist de empresas",
-    "create_group": "Criar grupo"
+    "create_group": "Criar grupo",
+    "add_current_account": "Adicionar conta corrente"
   },
   "modal": {
     "confirm": "Confirmar",
+    "update": "Atualizar",
+    "add": "Adicionar",
     "validate_token": "Validar token",
     "token_expires_in": "Token expira em",
     "resend_token_by_sms": "Reenviar token por SMS",
@@ -981,7 +985,8 @@
     "cash_out_transaction_limit_per_day": "Limite de saque/dia",
     "cryptography": "Criptografia",
     "decrypt_key": "Chave de descriptografia",
-    "custom_date": "Escolher data"
+    "custom_date": "Escolher data",
+    "locked": "Bloqueado"
   },
   "actions": {
     "details": "Detalhes",

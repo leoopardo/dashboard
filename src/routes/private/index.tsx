@@ -114,6 +114,7 @@ import { ContestationUploads } from "./Pages/support/contastation/uploads";
 import { Licenses } from "./Pages/register/licenses/licenses";
 import { LicenseReports } from "./Pages/register/licenses/reports/license";
 import { UpdateLicense } from "./Pages/register/licenses/licenses/updateLicense";
+import { CurrentAccountPage } from "./Pages/register/organization/currentAccounts";
 import { Permission } from "./permission";
 import { Redirect } from "./redirect";
 export const PrivateRoutes = () => {
@@ -628,6 +629,21 @@ export const PrivateRoutes = () => {
                 </Permission>
               }
             />
+            {/* Ajustar permissões*/}
+             <Route
+              path="current_accounts"
+              element={
+                <Permission
+                  permission={
+                    responseValidate?.permissions?.register?.paybrokers
+                      ?.menu
+                  }
+                >
+                  <CurrentAccountPage />
+                </Permission>
+              }
+            />
+              {/* Ajustar permissões*/}
             <Route
               path="bank_maintain"
               element={
