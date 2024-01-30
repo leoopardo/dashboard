@@ -3,7 +3,6 @@ import { FC, useEffect, useState } from "react";
 import { CustomTable } from "@src/components/CustomTable";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { OrganizationBankStatementTotalsQuery } from "@src/services/types/consult/organization/bankStatement/totals.interface";
-import moment from "moment";
 import { Button, Col, Row } from "antd";
 import { FilterChips } from "@src/components/FiltersModal/filterChips";
 import {
@@ -26,17 +25,7 @@ import { useCreateOrganizationCurrentAccount } from "@src/services/reports/regis
 import { Toast } from "@src/components/Toast";
 import { UpdateUserModal } from "./components/UpdateAccount";
 
-const INITIAL_QUERY: OrganizationBankStatementTotalsQuery = {
-  start_date: moment(new Date())
-    .startOf("day")
-    .add(3, "hours")
-    .format("YYYY-MM-DDTHH:mm:ss.SSS"),
-  end_date: moment(new Date())
-    .add(1, "day")
-    .startOf("day")
-    .add(3, "hours")
-    .format("YYYY-MM-DDTHH:mm:ss.SSS"),
-};
+const INITIAL_QUERY: OrganizationBankStatementTotalsQuery = {};
 
 export const CurrentAccountPage: FC = () => {
   const { permissions } = queryClient.getQueryData(
@@ -45,7 +34,6 @@ export const CurrentAccountPage: FC = () => {
   const { t } = useTranslation();
   const isSmallDesktop = useMediaQuery({ maxWidth: 1200 });
   const [currentItem, setCurrentItem] = useState<any>();
-console.log("currentItem", currentItem)
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState<boolean>(false);
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
@@ -65,6 +53,7 @@ console.log("currentItem", currentItem)
   const {
     CurrentAccountData,
     isCurrentAccountDataFetching,
+    CurrentAccountDataError,
     refetchCurrentAccountData,
   } = useGetOrganizationCurrentAccounts(query);
 
@@ -100,7 +89,7 @@ console.log("currentItem", currentItem)
     refetchCurrentAccountData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query]);
-  
+
   return (
     <Row
       gutter={[8, 8]}
@@ -132,7 +121,6 @@ console.log("currentItem", currentItem)
             endDateKeyName="end_date"
             query={query}
             setQuery={setQuery}
-            haveInitialDate
           />
         </Col>
       </Row>
@@ -201,9 +189,9 @@ console.log("currentItem", currentItem)
         setQuery={setQuery}
         data={CurrentAccountData}
         items={CurrentAccountData?.items}
-        error={false}
+        error={CurrentAccountDataError}
         columns={[
-          { name: "ID", type: "id", head: "id", sort: true },
+          { name: "id", type: "document", head: "id", sort: true },
           { name: "name", type: "text", sort: true },
           { name: "locked", type: "boolean", sort: true },
           { name: "updated_at", type: "date", sort: true },
@@ -213,13 +201,7 @@ console.log("currentItem", currentItem)
             id: "table-details-button",
             label: "details",
             icon: <EyeFilled style={{ fontSize: "20px" }} />,
-            onClick: (item) => {
-              setCurrentItem({
-                id: item.id,
-                name: item.name,
-                locked: item.locked,
-                updatedAt: item.updateAt,
-              });
+            onClick: () => {
               setIsViewModalOpen(true);
             },
           },
@@ -247,12 +229,11 @@ console.log("currentItem", currentItem)
           setOpen={setIsFiltersOpen}
           query={query}
           setQuery={setQuery}
-          filters={["start_date", "end_date", 'locked']}
+          filters={["start_date", "end_date", "locked"]}
           refetch={refetchCurrentAccountData}
-          selectOptions={{locked: ["true", "false"]}}
+          selectOptions={{ locked: ["true", "false"] }}
           startDateKeyName="start_date"
           endDateKeyName="end_date"
-          haveInitialDate
           initialQuery={INITIAL_QUERY}
         />
       )}

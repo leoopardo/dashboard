@@ -10,7 +10,13 @@ import {
   Switch,
   Typography,
 } from "antd";
-import React, { Dispatch, SetStateAction, useEffect, useRef } from "react";
+import React, {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { useTranslation } from "react-i18next";
 
 interface UpdateAccountProps {
@@ -38,6 +44,7 @@ export const UpdateUserModal = ({
   const { t } = useTranslation();
   const submitRef = useRef<HTMLButtonElement>(null);
   const formRef = React.useRef<FormInstance>(null);
+  const [locked, setLocked] = useState<boolean>(currenItem?.locked);
 
   function handleChangeUserBody(event: any) {
     setUpdateBody((state) => ({
@@ -112,10 +119,10 @@ export const UpdateUserModal = ({
               {t("table.false")}
             </Typography>
             <Switch
-              data-test-id="status-switch"
-              checked={formRef.current?.getFieldValue("locked")}
+              data-test-id="locked-switch"
+              checked={locked}
               onChange={(checked) => {
-                formRef.current?.setFieldValue("locked", checked);
+                setLocked(checked);
                 setUpdateBody((state) => ({ ...state, locked: checked }));
               }}
             />{" "}
