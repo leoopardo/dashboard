@@ -303,8 +303,8 @@ export const Licenses = () => {
           fields={[
             { label: "validity_date", required: false },
             { label: "name", required: true },
-            { label: "number", required: true, head: "license_number" },
-            { label: "country", required: true },
+            { label: "number", required: false, head: "license_number" },
+            { label: "country", required: false },
             { label: "status", required: false },
             { label: "indeterminate_validity", required: false },
           ]}
