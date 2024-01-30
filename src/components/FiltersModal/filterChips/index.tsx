@@ -104,7 +104,7 @@ export const FilterChips = ({
       ...q,
     });
   }, [query]);
-
+  
   return (
     <Row gutter={[4, 4]} wrap style={{ width: "100%" }}>
       {Object.keys(filtersQuery).map((key) => {
@@ -389,6 +389,32 @@ export const FilterChips = ({
                 </Tag>
               </Col>
             );
+
+            case "locked":
+              return (
+                <Col key={key}>
+                  <Tag
+                    data-test-id="filter-chip-status"
+                    style={{
+                      width: "100%",
+                      textOverflow: "ellipsis",
+                      overflow: "hidden",
+                      wordBreak: "break-all",
+                      display: disabled?.includes(key) ? "none" : undefined,
+                    }}
+                    key={key}
+                    color="cyan"
+                    icon={
+                      <CloseCircleOutlined onClick={() => deleteFilter(key)} />
+                    }
+                  >
+                    {t(`table.${key}`)}:{" "}
+                    {t(
+                      `table.${filtersQuery[key]}`
+                    )}
+                  </Tag>
+                </Col>
+              );
 
           case "status":
             return (
