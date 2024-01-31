@@ -84,6 +84,8 @@ export interface ValidateInterface {
           merchant_config_paybrokers: boolean;
           merchant_config_credentials: boolean;
           merchant_config_ips: boolean;
+          merchant_account_api_get: boolean;
+          merchant_account_api_update: boolean;
         };
         release_category: {
           menu: boolean;

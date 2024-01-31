@@ -10,11 +10,13 @@ import { useTranslation } from "react-i18next";
 interface MerchantSelectProps {
   setQueryFunction: Dispatch<SetStateAction<any>>;
   aggregatorId: any;
+  multiple?: boolean;
 }
 
 export const AggregatorSelect = ({
   setQueryFunction,
   aggregatorId,
+  multiple
 }: MerchantSelectProps) => {
   const { t } = useTranslation();
   const [query, setQuery] = useState<AggregatorQuery>({
@@ -26,7 +28,7 @@ export const AggregatorSelect = ({
   });
   const { aggregatorsData, refetcAggregators, isAggregatorsFetching } =
     useListAggregators(query);
-  const [value, setValue] = useState<any>(null);
+  const [value, setValue] = useState<any>(undefined);
   const debounceSearch = useDebounce(query.name, 500);
 
   useEffect(() => {
@@ -63,13 +65,14 @@ export const AggregatorSelect = ({
       data-test-id="aggregator-select"
       allowClear
       showSearch
+      mode={multiple ?  "multiple" : undefined}
       size="large"
       loading={isAggregatorsFetching}
       value={value}
       onClear={() => {
         setQueryFunction((state: any) => ({
           ...state,
-          aggregator_id: null,
+          [multiple ? "aggregators_ids" : "aggregator_id"]: null,
           group_id: undefined,
         }));
       }}
@@ -91,7 +94,7 @@ export const AggregatorSelect = ({
           setValue(undefined);
           setQueryFunction((state: any) => ({
             ...state,
-            aggregator_id: undefined,
+            [multiple ? "aggregators_ids" : "aggregator_id"]: undefined,
             group_id: undefined,
             operator_id: undefined,
           }));
@@ -99,7 +102,7 @@ export const AggregatorSelect = ({
         }
         setQueryFunction((state: any) => ({
           ...state,
-          aggregator_id: value,
+          [multiple ? "aggregators_ids" : "aggregator_id"]: value,
           group_id: undefined,
           operator_id: undefined,
         }));
