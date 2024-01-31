@@ -1345,7 +1345,7 @@ export const SidebarNavigation = () => {
               false,
               undefined,
               {
-                display: permissions?.register?.paybrokers?.users?.menu
+                display: permissions?.register?.licenses.licenses.license_export_csv
                   ? undefined
                   : "none",
               },

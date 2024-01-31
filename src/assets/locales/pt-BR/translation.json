@@ -1025,7 +1025,10 @@
     "token_without_aggregator_id": "Necessário estar vinculado a um agregador para realizar a ação",
     "can_only_be_deleted_by_organization": "Pode ser removido apenas por organizações.",
     "token_characters": "O token deve conter 6 caracteres.",
-    "same_to_and_from_balance": "A origem e o destino do saldo devem ser diferentes."
+    "same_to_and_from_balance": "A origem e o destino do saldo devem ser diferentes.",
+    "license_not_found": "Licença não encontrada.",
+    "invalid_license": "Licença inválida.",
+    "cannot_delete_license_with_merchants": "Não é possível deletar uma licença que possui empresas vinculadas."
   },
   "logs": {
     "login": "Login",

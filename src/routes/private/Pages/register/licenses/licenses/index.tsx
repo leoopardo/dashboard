@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
+  DeleteOutlined,
   EditOutlined,
   EyeFilled,
   FileAddOutlined,
@@ -34,6 +35,7 @@ import { TotalizersCards } from "./components/totalizersCards";
 import { useGetLicenseReportFields } from "@src/services/reports/register/license/getLicenseReportFields";
 import { useCreateLicense } from "@src/services/register/licenses/createLicense";
 import { useCreateLicenseReports } from "@src/services/register/licenses/createLicenseReports";
+import { useDeleteLicense } from "@src/services/register/licenses/deleteLicense";
 
 const INITIAL_QUERY: LicenseQuery = {
   limit: 25,
@@ -69,6 +71,7 @@ export const Licenses = () => {
   const [isNewLicenseModal, setIsNewLicenseModal] = useState<boolean>(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<LicenseItem | null>(null);
+  const [confirmDelete, setConfirmDelete] = useState<boolean>(false);
   const [createBody, setCreateBody] = useState<LicenseItem>({
     name: "",
     country: "",
@@ -99,8 +102,9 @@ export const Licenses = () => {
     reset,
   } = useCreateLicense(createBody);
 
-
-
+  const { deleteLicenseMutate, deleteLicenseError, deleteLicenseIsSuccess } = useDeleteLicense({
+    license_id: currentItem?.id,
+  });
 
   useEffect(() => {
     isSuccessLicenseDataTotalData && refetchLicenseDataTotalData();
@@ -247,7 +251,18 @@ export const Licenses = () => {
                   navigate("update", { state: item });
                 },
               },
+              {
+                label: "delete",
+                icon: <DeleteOutlined style={{ fontSize: "20px" }} />,
+                onClick: () => {
+                  setConfirmDelete(true);
+                },
+              },
             ]}
+            isConfirmOpen={confirmDelete}
+            setIsConfirmOpen={setConfirmDelete}
+            itemToAction={currentItem?.license_id as any}
+            onConfirmAction={() => deleteLicenseMutate()}
             refetch={refetchLicenseData}
             data={LicenseData}
             items={LicenseData?.items}
@@ -353,6 +368,13 @@ export const Licenses = () => {
         setIsComma={setIsComma}
         setCsvFields={setCsvFields}
         reportName="License"
+      />
+
+      <Toast
+        error={deleteLicenseError}
+        success={deleteLicenseIsSuccess}
+        actionError={t("messages.delete")}
+        actionSuccess={t("messages.delete")}
       />
     </Grid>
   );
