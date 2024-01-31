@@ -251,7 +251,7 @@ export const Licenses = () => {
                   navigate("update", { state: item });
                 },
               },
-              {
+               permissions.register.licenses.licenses.license_delete && {
                 label: "delete",
                 icon: <DeleteOutlined style={{ fontSize: "20px" }} />,
                 onClick: () => {
