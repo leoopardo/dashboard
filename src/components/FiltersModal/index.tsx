@@ -235,6 +235,7 @@ export const FiltersModal = ({
     //   setRangePickerValue("last_month");
     // }
     else {
+      if (!haveInitialDate) return;
       if (!query[startDateKeyName] && !query[endDateKeyName]) {
         setFiltersQuery((state: any) => ({
           ...state,
@@ -384,7 +385,7 @@ export const FiltersModal = ({
                         value: "custom",
                         icon: (
                           <Tooltip title={t("table.custom_date")}>
-                            <CalendarOutlined />{" "}{t("table.custom_date")}
+                            <CalendarOutlined /> {t("table.custom_date")}
                           </Tooltip>
                         ),
                       },
