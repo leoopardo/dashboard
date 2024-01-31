@@ -1,14 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  ReportsData,
-  ReportsQuery,
-} from "@src/services/types/reports/reports.interface";
 import { useQuery } from "react-query";
 import { api } from "../../../../config/api";
+import { AccountQuery, OrganizationCurrentAccountsResponse } from "@src/services/types/register/organization/accounts.interface";
 
-export function useGetOrganizationCurrentAccounts(params: ReportsQuery) {
+export function useGetOrganizationCurrentAccounts(params: AccountQuery) {
   const { data, isFetching, error, refetch } = useQuery<
-    ReportsData | null | undefined
+  OrganizationCurrentAccountsResponse | null | undefined
   >("OrganizationCurrentAccounts", async () => {
     const response = await api.get("core/account/", {
       params,

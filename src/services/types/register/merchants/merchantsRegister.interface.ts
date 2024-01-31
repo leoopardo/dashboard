@@ -15,6 +15,7 @@ export interface MerchantsQuery {
   end_date?: string;
   merchant_id?: number;
   partner_id?: number;
+  locked?: boolean;
   name?: string;
   status?: boolean;
   sort_field: string;
@@ -88,9 +89,31 @@ export interface MerchantsTotalResponse {
   expired_merchant_totals: number;
 }
 
+export interface MerchantsTotalAccountItem {
+  id?: number;
+  name?: string;
+  locked?: boolean;
+  totalMerchant?: number;
+}
+
+export interface MerchantsTotalAccountResponse {
+  total: number;
+  limit: number;
+  page: number;
+  items: MerchantsTotalAccountItem[];
+}
+
 export interface MerchantsPerBankResponse {
   total: number;
   valuesIn: any;
   valuesOut: any;
   valuesFastpix: any;
+}
+
+export interface MerchantAccountUpdateBody {
+ merchants_ids: number[],
+ partners_ids: number[],
+ aggregators_ids: number[],
+ operators_ids: number[]
+ account_id: number
 }
