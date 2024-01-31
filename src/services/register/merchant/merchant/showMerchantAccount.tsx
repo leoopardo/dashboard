@@ -12,7 +12,7 @@ export function useShowMerchantAccount(id: number, params: MerchantsQuery) {
   const { data, isFetching, error, refetch, isSuccess } = useQuery<
   AccountShowItem | null | undefined
   >(
-    "MerchantsRegister",
+    "MerchantsShowRegister",
     async () => {
       const response = await api.get(`core/merchant/config/account/${id}`, {
         params,

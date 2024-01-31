@@ -41,3 +41,8 @@ export interface IMerchantLogoBody {
   merchant_id?: number;
   base64_file?: string;
 }
+
+export interface IMerchantAccountUpdate {
+  merchant_id?: number;
+  account_id?: number;
+}

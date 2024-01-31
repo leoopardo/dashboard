@@ -82,6 +82,7 @@ const UpdateAccountsModal: FC<UpdateAccountsModalProps> = ({
     if (UpdateIsSuccess) {
       setOpen(false);
       formRef.current?.resetFields();
+      setQuery(null)
       setItems(null)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -117,6 +118,7 @@ const UpdateAccountsModal: FC<UpdateAccountsModalProps> = ({
         open={open}
         onClose={() => {
           setOpen(false);
+          setItems(null);
           formRef.current?.resetFields();
         }}
         bodyStyle={{ overflowX: "hidden" }}
@@ -189,14 +191,14 @@ const UpdateAccountsModal: FC<UpdateAccountsModalProps> = ({
               mode="multiple"
               size="large"
               loading={isMerchantFetching}
-              value={query.merchants_ids}
+              value={query?.merchants_ids}
               onSelect={() => {
-                delete query.name;
+                delete query?.name;
                 refetcMerchant();
               }}
               onSearch={(value) => {
                 if (value === "") {
-                  delete query.name;
+                  delete query?.name;
                   refetcMerchant();
                   return;
                 }
@@ -208,7 +210,7 @@ const UpdateAccountsModal: FC<UpdateAccountsModalProps> = ({
                 setItems(
                   value.map((id: any) => {
                     return (
-                      MerchantData?.items.find((merch) => merch.id === id) ?? {
+                      MerchantData?.items.find((merch) => merch?.id === id) ?? {
                         id,
                       }
                     );
@@ -217,8 +219,8 @@ const UpdateAccountsModal: FC<UpdateAccountsModalProps> = ({
               }}
               options={merchantsData?.items.map((merch) => {
                 return {
-                  label: merch.name,
-                  value: merch.id,
+                  label: merch?.name,
+                  value: merch?.id,
                 };
               })}
               filterOption={(input, option) => {
@@ -237,7 +239,7 @@ const UpdateAccountsModal: FC<UpdateAccountsModalProps> = ({
             style={{ margin: 10 }}
             rules={[
               {
-                required: query.account_id === undefined,
+                required: query?.account_id === undefined,
                 message:
                   t("input.required", {
                     field: t(`table.bank_acc_number`).toLowerCase(),

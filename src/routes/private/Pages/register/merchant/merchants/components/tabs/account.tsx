@@ -4,8 +4,8 @@
 import { Toast } from "@components/Toast";
 import { Grid } from "@mui/material";
 import CurrentAccountsSelect from "@src/components/Selects/currentAccountsSelect";
+import { useUpdateAccountConfig } from "@src/services/register/merchant/merchant/accountConfig/updateAccountConfig";
 import { useShowMerchantAccount } from "@src/services/register/merchant/merchant/showMerchantAccount";
-import { useUpdateMerchantAccount } from "@src/services/register/merchant/merchant/updateMerchantAccount";
 import { Button, Form, FormInstance, Popconfirm, Typography } from "antd";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -20,17 +20,17 @@ export const AccountTab = (props: { id?: string }) => {
   const [query, setQuery] = useState<any>({});
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
-  const { MerchantData, refetchMerchantData, isMerchantDataFetching } = useShowMerchantAccount(Number(props?.id), query);
-  
-  const { UpdateMutate, UpdateError, UpdateIsSuccess } =
-    useUpdateMerchantAccount({
+  const { MerchantData, isMerchantDataFetching } = useShowMerchantAccount(
+    Number(props?.id),
+    query
+  );
+
+  const { UpdateMutate, UpdateError, UpdateIsSuccess } = useUpdateAccountConfig(
+    {
       merchant_id: body.merchant_id,
       account_id: body.account_id || 0,
-    });
-
-  useEffect(() => {
-    refetchMerchantData();
-  }, [UpdateIsSuccess]);
+    }
+  );
 
   useEffect(() => {
     setBody({
