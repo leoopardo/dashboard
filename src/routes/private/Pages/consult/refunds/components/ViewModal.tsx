@@ -288,7 +288,7 @@ export const ViewModal = (props: ViewModalProps) => {
                   </Descriptions.Item>
                 )}
 
-                {!Refund?.url_pdf ? (
+                {!Refund?.url_pdf && Refund.status === "REFUNDED" ? (
                   <Descriptions.Item
                     key={"generate_payment_voucher"}
                     label={t(`table.generate_payment_voucher`)}
@@ -308,7 +308,7 @@ export const ViewModal = (props: ViewModalProps) => {
                       {t(`table.generate_payment_voucher`)}
                     </Button>
                   </Descriptions.Item>
-                ) : (
+                ) : Refund?.url_pdf && Refund.status === "REFUNDED" && (
                   <Descriptions.Item
                     key={"download_payment_voucher"}
                     label={t(`table.download_payment_voucher`)}
