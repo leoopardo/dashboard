@@ -122,6 +122,7 @@ const UpdateAccountsModal: FC<UpdateAccountsModalProps> = ({
         onClose={() => {
           setOpen(false);
           setItems(null);
+          setEntity("merchants");
           formRef.current?.resetFields();
         }}
         bodyStyle={{ overflowX: "hidden" }}
