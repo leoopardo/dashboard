@@ -228,7 +228,7 @@ function App() {
                               style={{ backgroundColor: "#b6b6b6" }}
                               tooltip={<div>{t("messages.scrool_top")}</div>}
                               icon={
-                                <ArrowUpOutlined data-test-id="float-button" />
+                                <ArrowUpOutlined data-test-id="float-button" style={{color: "#000"}} />
                               }
                               onClick={() =>
                                 window.scrollTo({

@@ -12,6 +12,7 @@ import { MerchantConfigTab } from "./tabs/merchantConfigTab";
 import { OrganizationConfigTab } from "./tabs/organizationConfigTab";
 import { setFirstChildDivTestId } from "@src/utils/functions";
 import { useEffect } from "react";
+import { AccountTab } from "./tabs/account";
 
 export const MerchantConfigs = () => {
   const { permissions } = queryClient.getQueryData(
@@ -93,6 +94,18 @@ export const MerchantConfigs = () => {
     },
     {
       key: "3",
+      label: t("menus.current_accounts"),
+      children: <AccountTab id={params.id} />,
+      style: {
+        display: permissions.register.merchant.merchant.merchant_account_api_update
+          ? undefined
+          : "none",
+      },
+      disabled:
+        !permissions.register.merchant.merchant.merchant_account_api_update,
+    },
+    {
+      key: "4",
       label: t("menus.merchant_settings"),
       children: <MerchantConfigTab id={params.id} />,
       style: {
@@ -104,7 +117,7 @@ export const MerchantConfigs = () => {
         !permissions.register.merchant.merchant.merchant_config_merchant,
     },
     {
-      key: "4",
+      key: "5",
       label: t("menus.organization_settings"),
       children: <OrganizationConfigTab id={params.id} />,
       style: {
@@ -117,7 +130,7 @@ export const MerchantConfigs = () => {
         !permissions.register.merchant.merchant.merchant_config_paybrokers,
     },
     {
-      key: "5",
+      key: "6",
       label: `${t("menus.credentials")}`,
       children: <CredentialConfigTab id={params.id} />,
       style: {
@@ -130,7 +143,7 @@ export const MerchantConfigs = () => {
         !permissions.register.merchant.merchant.merchant_config_credentials,
     },
     {
-      key: "6",
+      key: "7",
       label: "IPs",
       children: <IpsConfigTab id={params.id} />,
       style: {
