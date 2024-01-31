@@ -120,8 +120,8 @@ export const UpdateBanks = ({
             }}
             value={all}
           >
-            <Radio value="all">Todas as empresas</Radio>
-            <Radio value="partner">Plataforma</Radio>
+            <Radio value="all">{t("table.all_merchants")}</Radio>
+            <Radio value="partner"> {t("table.partner")}</Radio>
           </Radio.Group>
         )}
         <Form

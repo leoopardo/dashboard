@@ -7,7 +7,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { Button, Form, Drawer, FormInstance, Select } from "antd";
+import { Button, Form, Drawer, FormInstance, Select, Radio, Space } from "antd";
 import CurrentAccountsSelect from "@src/components/Selects/currentAccountsSelect";
 import { useTranslation } from "react-i18next";
 import { OperatorSelect } from "@src/components/Selects/operatorSelect";
@@ -46,6 +46,9 @@ const UpdateAccountsModal: FC<UpdateAccountsModalProps> = ({
   const { t } = useTranslation();
   const formRef = useRef<FormInstance>(null);
   const submitRef = useRef<HTMLButtonElement>(null);
+  const [entity, setEntity] = useState<
+    "all" | "aggregators" | "partners" | "operators" | "merchants"
+  >("merchants");
   const [query, setQuery] = useState<any>({
     merchants_ids: items?.map((merchant) => merchant?.id),
   });
@@ -82,8 +85,8 @@ const UpdateAccountsModal: FC<UpdateAccountsModalProps> = ({
     if (UpdateIsSuccess) {
       setOpen(false);
       formRef.current?.resetFields();
-      setQuery(null)
-      setItems(null)
+      setQuery(null);
+      setItems(null);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [UpdateIsSuccess]);
@@ -146,92 +149,24 @@ const UpdateAccountsModal: FC<UpdateAccountsModalProps> = ({
             UpdateMutate();
           }}
         >
-          <Form.Item
-            label={`${t(`table.aggregator`)}es`}
-            name="merchants_ids"
-            style={{ margin: 10 }}
+          <Radio.Group
+            onChange={(e) => {
+              setEntity(e.target.value);
+              setItems(null);
+            }}
+            value={entity}
+            style={{ marginBottom: 20 }}
           >
-            <AggregatorSelect
-              setQueryFunction={setQuery}
-              aggregatorId={query}
-              multiple
-            />
-          </Form.Item>
-
-          <Form.Item
-            label={`${t(`table.partner`)}s`}
-            name="merchants_ids"
-            style={{ margin: 10 }}
-          >
-            <PartnerSelect
-              setQueryFunction={setQuery}
-              queryOptions={query}
-              multiple
-            />
-          </Form.Item>
-
-          <Form.Item
-            label={`${t(`table.operator`)}es`}
-            name="merchants_ids"
-            style={{ margin: 10 }}
-          >
-            <OperatorSelect
-              setQueryFunction={setQuery}
-              queryOptions={query}
-              multiple
-            />
-          </Form.Item>
-
-          <Form.Item
-            label={t(`table.merchant`)}
-            name="merchants_ids"
-            style={{ margin: 10 }}
-          >
-            <Select
-              mode="multiple"
-              size="large"
-              loading={isMerchantFetching}
-              value={query?.merchants_ids}
-              onSelect={() => {
-                delete query?.name;
-                refetcMerchant();
-              }}
-              onSearch={(value) => {
-                if (value === "") {
-                  delete query?.name;
-                  refetcMerchant();
-                  return;
-                }
-
-                setQuery((state: any) => ({ ...state, name: value }));
-              }}
-              onChange={(value) => {
-                setQuery((state: any) => ({ ...state, merchants_ids: value }));
-                setItems(
-                  value.map((id: any) => {
-                    return (
-                      MerchantData?.items.find((merch) => merch?.id === id) ?? {
-                        id,
-                      }
-                    );
-                  })
-                );
-              }}
-              options={merchantsData?.items.map((merch) => {
-                return {
-                  label: merch?.name,
-                  value: merch?.id,
-                };
-              })}
-              filterOption={(input, option) => {
-                return (
-                  `${option?.label}`
-                    ?.toLowerCase()
-                    ?.indexOf(input?.toLowerCase()) >= 0
-                );
-              }}
-            />
-          </Form.Item>
+            <Space direction="vertical">
+              <Radio value="all">
+              {t("table.all_merchants")}
+              </Radio>
+              <Radio value="aggregators">{t("table.aggregators")}</Radio>
+              <Radio value="merchants">{t("menus.merchants")}</Radio>
+              <Radio value="partners">{t("menus.partners")}</Radio>
+              <Radio value="operators">{t("menus.operators")}</Radio>
+            </Space>
+          </Radio.Group>
 
           <Form.Item
             label={t(`table.bank_acc_number`)}
@@ -256,6 +191,107 @@ const UpdateAccountsModal: FC<UpdateAccountsModalProps> = ({
               filterIdValue={undefined}
             />
           </Form.Item>
+
+          {entity === "aggregators" && (
+            <Form.Item
+              label={`${t(`table.aggregators`)}`}
+              name="merchants_ids"
+              style={{ margin: 10 }}
+            >
+              <AggregatorSelect
+                setQueryFunction={setQuery}
+                aggregatorId={query}
+                multiple
+              />
+            </Form.Item>
+          )}
+
+          {entity === "partners" && (
+            <Form.Item
+              label={`${t(`table.partner`)}s`}
+              name="merchants_ids"
+              style={{ margin: 10 }}
+            >
+              <PartnerSelect
+                setQueryFunction={setQuery}
+                queryOptions={query}
+                multiple
+              />
+            </Form.Item>
+          )}
+
+          {entity === "operators" && (
+            <Form.Item
+              label={`${t(`table.operators`)}`}
+              name="merchants_ids"
+              style={{ margin: 10 }}
+            >
+              <OperatorSelect
+                setQueryFunction={setQuery}
+                queryOptions={query}
+                multiple
+              />
+            </Form.Item>
+          )}
+
+          {entity === "merchants" && (
+            <Form.Item
+              label={t(`table.merchant`)}
+              name="merchants_ids"
+              style={{ margin: 10 }}
+            >
+              <Select
+                mode="multiple"
+                size="large"
+                loading={isMerchantFetching}
+                value={query?.merchants_ids}
+                onSelect={() => {
+                  delete query?.name;
+                  refetcMerchant();
+                }}
+                onSearch={(value) => {
+                  if (value === "") {
+                    delete query?.name;
+                    refetcMerchant();
+                    return;
+                  }
+
+                  setQuery((state: any) => ({ ...state, name: value }));
+                }}
+                onChange={(value) => {
+                  setQuery((state: any) => ({
+                    ...state,
+                    merchants_ids: value,
+                  }));
+                  setItems(
+                    value.map((id: any) => {
+                      return (
+                        MerchantData?.items.find(
+                          (merch) => merch?.id === id
+                        ) ?? {
+                          id,
+                        }
+                      );
+                    })
+                  );
+                }}
+                options={merchantsData?.items.map((merch) => {
+                  return {
+                    label: merch?.name,
+                    value: merch?.id,
+                  };
+                })}
+                filterOption={(input, option) => {
+                  return (
+                    `${option?.label}`
+                      ?.toLowerCase()
+                      ?.indexOf(input?.toLowerCase()) >= 0
+                  );
+                }}
+              />
+            </Form.Item>
+          )}
+
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
             <button type="submit" ref={submitRef} style={{ display: "none" }}>
               Submit
