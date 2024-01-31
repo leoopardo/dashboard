@@ -113,7 +113,7 @@ export const FilterChips = ({
         }
         switch (key) {
           case startDateKeyName:
-            return query[startDateKeyName] ? (
+            return query[startDateKeyName] && startDateKeyName !== "" ? (
               <Col key={key}>
                 <Tag
                   data-test-id="filter-chip-date"
@@ -172,6 +172,7 @@ export const FilterChips = ({
           case "age_end":
           case "value_end":
           case "delivered_at":
+          case "license_id_list":
             return;
 
           case "age_start":
@@ -355,10 +356,8 @@ export const FilterChips = ({
                     />
                   }
                 >
-                  {t(`table.value`)}:{" "}
-                  {moneyFormatter(filtersQuery.value_start)}{" "}
-                  -{" "}
-                  {moneyFormatter(filtersQuery.value_end)}
+                  {t(`table.value`)}: {moneyFormatter(filtersQuery.value_start)}{" "}
+                  - {moneyFormatter(filtersQuery.value_end)}
                 </Tag>
               </Col>
             );

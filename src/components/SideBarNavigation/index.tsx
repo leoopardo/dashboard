@@ -1311,6 +1311,63 @@ export const SidebarNavigation = () => {
             display: permissions?.register?.person?.menu ? undefined : "none",
           }
         ),
+        getItem(
+          "licenses",
+          null,
+          [
+            getItem(
+              "licenses",
+              null,
+              null,
+              false,
+              undefined,
+              {
+                display: permissions?.register?.licenses.menu
+                  ? undefined
+                  : "none",
+              },
+
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/register/licenses"}
+                title={`${t("menus.licenses")}`}
+              >
+                {t("menus.licenses")}
+              </Link>
+            ),
+            getItem(
+              "reports",
+              null,
+              null,
+              false,
+              undefined,
+              {
+                display: permissions?.register?.licenses.licenses.license_export_csv
+                  ? undefined
+                  : "none",
+              },
+
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/register/licenses/reports"}
+                title={`${t("menus.licenses")}`}
+              >
+                {t("menus.reports")}
+              </Link>
+            ),
+          ],
+          undefined,
+          undefined,
+          {
+            display: permissions?.register?.person?.menu ? undefined : "none",
+          }
+        ),
       ],
       undefined,
       undefined,
