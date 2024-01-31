@@ -235,7 +235,7 @@ export const FiltersModal = ({
     //   setRangePickerValue("last_month");
     // }
     else {
-      if (!haveInitialDate) return;
+      if (!haveInitialDate && !query[startDateKeyName] && !query[endDateKeyName]) return;
       if (!query[startDateKeyName] && !query[endDateKeyName]) {
         setFiltersQuery((state: any) => ({
           ...state,
