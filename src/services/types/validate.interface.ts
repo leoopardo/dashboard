@@ -221,9 +221,9 @@ export interface ValidateInterface {
           license_create: boolean;
           license_delete: boolean;
           license_export_csv: boolean;
-          license_file_create: boolean;
-          license_file_delete: boolean;
-          license_file_list: boolean;
+          license_files_create: boolean;
+          license_files_delete: boolean;
+          license_files_list: boolean;
           license_list: boolean;
           license_update: boolean;
         };

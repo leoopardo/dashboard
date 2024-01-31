@@ -248,12 +248,13 @@ export const ViewModal = ({
                       }}
                     >
                       {typeof sortItems[key] === "boolean" ||
+                      sortItems[key] === 0 ||
                       sortItems[key] === 1 ||
                       sortItems[key] === 2
                         ? sortItems[key] || sortItems[key] === 1
                           ? t("table.active")
                           : t("table.inactive")
-                        : t(`table.${sortItems[key]?.toLocaleLowerCase()}`)}
+                        : t(`table.${sortItems[key]?.toString().toLocaleLowerCase()}`)}
                     </Typography.Title>
                   </Descriptions.Item>
                 );
@@ -306,6 +307,7 @@ export const ViewModal = ({
               case "flag_aux_gov":
               case "black_list":
               case "locked":
+              case "indeterminate_validity":
                 return (
                   <Descriptions.Item
                     data-test-id={`details-${key}`}

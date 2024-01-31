@@ -6,7 +6,7 @@ import { InboxOutlined } from "@ant-design/icons";
 import { CustomTable } from "@src/components/CustomTable";
 import { FiltersModal } from "@src/components/FiltersModal";
 import { FilterChips } from "@src/components/FiltersModal/filterChips";
-
+import "./styles.css";
 import { Toast } from "@src/components/Toast";
 import { useGetrefetchCountries } from "@src/services/states_cities/getCountries";
 import { useGetLicensesAttachments } from "@src/services/register/licenses/getLicenseAttachments";
@@ -124,6 +124,14 @@ export const UpdateLicense = () => {
       ...state,
       [event.target.name]: event.target.value,
     }));
+  };
+
+  const removedDisplayNoneItems = (items: TabsProps["items"]) => {
+    const currentItems = items?.filter(
+      (item) => item?.style?.display !== "none"
+    );
+
+    return currentItems;
   };
 
   useEffect(() => {
@@ -354,7 +362,11 @@ export const UpdateLicense = () => {
     {
       key: "2",
       label: `${t("table.document")}s`,
-      disabled: !permissions.register.licenses.licenses.license_file_list,
+      style: {
+        display: permissions.register.licenses.licenses.license_files_list
+          ? undefined
+          : "none",
+      },
       children: LicenseAttachmentIsLoading ? (
         <div
           style={{
@@ -371,10 +383,13 @@ export const UpdateLicense = () => {
         <Row gutter={[8, 8]}>
           <Col span={24}>
             <Dragger
+              className={permissions.register.licenses.licenses.license_files_create ? "show" :"hide"}
               style={{ maxHeight: "150px" }}
               listType="picture"
               multiple={false}
-             disabled={!permissions.register.licenses.licenses.license_file_create}
+              disabled={
+                !permissions.register.licenses.licenses.license_files_create
+              }
               onRemove={(file) => {
                 setDeleteFileId(file?.uid);
               }}
@@ -387,7 +402,7 @@ export const UpdateLicense = () => {
               })}
               showUploadList={{
                 showRemoveIcon:
-                  permissions.register.licenses.licenses.license_file_delete,
+                  permissions.register.licenses.licenses.license_files_delete,
               }}
               height={1000}
               beforeUpload={(file) => {
@@ -421,6 +436,7 @@ export const UpdateLicense = () => {
                 {t("messages.upload_description")}
               </Typography>
             </Dragger>
+
           </Col>
 
           {!LicenseDataAttachments?.total && !fileBody?.base64_file && (
@@ -508,7 +524,11 @@ export const UpdateLicense = () => {
         </Typography.Title>
       </Col>
       <Col span={24}>
-        <Tabs defaultActiveKey="1" items={items} data-test-id="tab" />
+        <Tabs
+          defaultActiveKey="1"
+          items={removedDisplayNoneItems(items)}
+          data-test-id="tab"
+        />
       </Col>
       <Toast
         actionSuccess={t("messages.updated")}

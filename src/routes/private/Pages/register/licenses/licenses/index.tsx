@@ -99,6 +99,9 @@ export const Licenses = () => {
     reset,
   } = useCreateLicense(createBody);
 
+
+
+
   useEffect(() => {
     isSuccessLicenseDataTotalData && refetchLicenseDataTotalData();
     isLicenseDataFetching && refetchLicenseData();
