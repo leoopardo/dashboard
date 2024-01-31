@@ -213,26 +213,28 @@ export const FiltersModal = ({
           .format("YYYY-MM-DDTHH:mm:00.000")
     ) {
       setRangePickerValue("this_month");
-    } else if (
-      moment(new Date(query[startDateKeyName])).format(
-        "YYYY-MM-DDTHH:mm:00.000"
-      ) ===
-        moment(new Date())
-          .subtract(1, "M")
-          .startOf("M")
-          .add(3, "hours")
-          .format("YYYY-MM-DDTHH:mm:00.000") &&
-      moment(new Date(query[endDateKeyName])).format(
-        "YYYY-MM-DDTHH:mm:00.000"
-      ) ===
-        moment(new Date())
-          .startOf("M")
-          .startOf("day")
-          .add(3, "hours")
-          .format("YYYY-MM-DDTHH:mm:00.000")
-    ) {
-      setRangePickerValue("last_month");
-    } else {
+    }
+    //  else if (
+    //   moment(new Date(query[startDateKeyName])).format(
+    //     "YYYY-MM-DDTHH:mm:00.000"
+    //   ) ===
+    //     moment(new Date())
+    //       .subtract(1, "M")
+    //       .startOf("M")
+    //       .add(3, "hours")
+    //       .format("YYYY-MM-DDTHH:mm:00.000") &&
+    //   moment(new Date(query[endDateKeyName])).format(
+    //     "YYYY-MM-DDTHH:mm:00.000"
+    //   ) ===
+    //     moment(new Date())
+    //       .startOf("M")
+    //       .startOf("day")
+    //       .add(3, "hours")
+    //       .format("YYYY-MM-DDTHH:mm:00.000")
+    // ) {
+    //   setRangePickerValue("last_month");
+    // }
+    else {
       if (!query[startDateKeyName] && !query[endDateKeyName]) {
         setFiltersQuery((state: any) => ({
           ...state,
@@ -351,13 +353,13 @@ export const FiltersModal = ({
                   style={{ marginBottom: 10 }}
                 >
                   <Segmented
-                    style={{ marginBottom: 8 }}
+                    style={{ marginBottom: 8, marginLeft: -8 }}
                     options={[
                       { label: t("table.today"), value: "today" },
                       {
                         label: (
                           <Tooltip title={t("table.yesterday")}>
-                            {t("table.yesterday_abrev")}
+                            {t("table.yesterday")}
                           </Tooltip>
                         ),
                         value: "yesterday",
@@ -365,24 +367,24 @@ export const FiltersModal = ({
                       {
                         label: (
                           <Tooltip title={t("table.this_month")}>
-                            {t("table.this_month_abrev")}
+                            {t("table.this_month")}
                           </Tooltip>
                         ),
                         value: "this_month",
                       },
-                      {
-                        label: (
-                          <Tooltip title={t("table.last_month")}>
-                            {t("table.last_month_abrev")}
-                          </Tooltip>
-                        ),
-                        value: "last_month",
-                      },
+                      // {
+                      //   label: (
+                      //     <Tooltip title={t("table.last_month")}>
+                      //       {t("table.last_month_abrev")}
+                      //     </Tooltip>
+                      //   ),
+                      //   value: "last_month",
+                      // },
                       {
                         value: "custom",
                         icon: (
                           <Tooltip title={t("table.custom_date")}>
-                            <CalendarOutlined />{" "}
+                            <CalendarOutlined />{" "}{t("table.custom_date")}
                           </Tooltip>
                         ),
                       },
