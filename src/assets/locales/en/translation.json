@@ -1023,7 +1023,8 @@
     "token_characters": "The token must contain 6 characters.",
     "same_to_and_from_balance": "The origin and destination balances must be different.",
     "license_not_found": "License not found",
-    "cannot_delete_license_with_merchants": "It is not possible to delete a license that is linked to merchants."
+    "cannot_delete_license_with_merchants": "It is not possible to delete a license that is linked to merchants.",
+    "no_banks_selected": "No banks selected"
   },
   "logs": {
     "login": "Login",

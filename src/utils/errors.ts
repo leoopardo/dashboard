@@ -9,4 +9,5 @@ export const ErrorList = {
   ["SAME_TO_AND_FROM_BALANCE"]: "same_to_and_from_balance",
   ["LICENSE NOT FOUND"]: "license_not_found",
   ["CANNOT DELETE LICENSE WITH MERCHANTS"]: "cannot_delete_license_with_merchants",
+  ["NO BANKS SELECTED"]: "no_banks_selected",
 };
