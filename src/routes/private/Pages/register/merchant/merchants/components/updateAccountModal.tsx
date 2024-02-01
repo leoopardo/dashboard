@@ -22,6 +22,7 @@ import {
 } from "@src/services/types/register/merchants/merchantsRegister.interface";
 import { useListMerchants } from "@src/services/merchant/listMerchants";
 import { queryClient } from "@src/services/queryClient";
+import { IMerchantAccount } from "@src/services/types/register/merchants/merchantConfig.interface";
 
 interface UpdateAccountsModalProps {
   open: boolean;
@@ -49,7 +50,7 @@ const UpdateAccountsModal: FC<UpdateAccountsModalProps> = ({
   const [entity, setEntity] = useState<
     "all" | "aggregators" | "partners" | "operators" | "merchants"
   >("merchants");
-  const [query, setQuery] = useState<any>({
+  const [query, setQuery] = useState<IMerchantAccount | null>({
     merchants_ids: items?.map((merchant) => merchant?.id),
   });
 
@@ -146,7 +147,7 @@ const UpdateAccountsModal: FC<UpdateAccountsModalProps> = ({
           ref={formRef}
           layout="vertical"
           disabled={loading}
-          initialValues={query}
+          initialValues={query || {}}
           onFinish={() => {
             UpdateMutate();
           }}
