@@ -10,4 +10,8 @@ export const ErrorList = {
   ["LICENSE NOT FOUND"]: "license_not_found",
   ["CANNOT DELETE LICENSE WITH MERCHANTS"]: "cannot_delete_license_with_merchants",
   ["NO BANKS SELECTED"]: "no_banks_selected",
+  ["BANK BEING USED FOR CASH IN"]: "disable_bank_being_used_for_cash_in",
+  ["BANK BEING USED FOR CASH OUT"]: "disable_bank_being_used_for_cash_out",
+  ["BANK BEING USED FOR FASTPIX IN"]: "disable_bank_being_used_for_fastpix_in",
+  ["BANK BEING USED"]: "disable_bank_being_used",
 };
