@@ -980,7 +980,11 @@
     "cryptography": "Cryptography",
     "decrypt_key": "Decrypt key",
     "custom_date": "Set date",
-    "locked": "Locked"
+    "locked": "Locked",
+    "operators": "Operators",
+    "aggregators": "Aggregators",
+    "all_merchants": "All merchants",
+    "all_banks": "All banks"
   },
   "actions": {
     "details": "Details",

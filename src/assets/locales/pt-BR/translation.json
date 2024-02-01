@@ -986,7 +986,11 @@
     "cryptography": "Criptografia",
     "decrypt_key": "Chave de descriptografia",
     "custom_date": "Escolher data",
-    "locked": "Bloqueado"
+    "locked": "Bloqueado",
+    "operators": "Operadores",
+    "aggregators": "Agregadores",
+    "all_merchants": "Todas as empresas",
+    "all_banks": "Todos os bancos"
   },
   "actions": {
     "details": "Detalhes",

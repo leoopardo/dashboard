@@ -55,6 +55,7 @@ export const MerchantView = () => {
     "validate"
   ) as ValidateInterface;
   const isMobile = useMediaQuery({ maxWidth: "950px" });
+  const isDesktop = useMediaQuery({ maxWidth: "1320px" });
   const user = queryClient.getQueryData("validate") as ValidateInterface;
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -200,38 +201,34 @@ export const MerchantView = () => {
   }
 
   if (!user.merchant_id) {
-    TotalizersTabs.push(
-      {
-        label: `${t("titles.total", {
-          entity: t("menus.merchants")?.toLowerCase(),
-        })}`,
-        key: "total_merchants",
-        children: (
-          <TotalizersCards
-            params={query}
-            loading={isMerchantTotalsDataFetching}
-            data={MerchantTotalsData || undefined}
-          />
-        ),
-      },
-    );
+    TotalizersTabs.push({
+      label: `${t("titles.total", {
+        entity: t("menus.merchants")?.toLowerCase(),
+      })}`,
+      key: "total_merchants",
+      children: (
+        <TotalizersCards
+          params={query}
+          loading={isMerchantTotalsDataFetching}
+          data={MerchantTotalsData || undefined}
+        />
+      ),
+    });
   }
 
   if (permissions.register.merchant.merchant.merchant_account_api_get) {
-    TotalizersTabs.push(
-      {
-        label: `${t("titles.total", {
-          entity: t("menus.current_accounts")?.toLowerCase(),
-        })}`,
-        key: "total_current_accounts",
-        children: (
-          <TotalizersAccounts
-            params={query}
-            loading={isMerchantTotalsDataFetching}
-          />
-        ),
-      }
-    );
+    TotalizersTabs.push({
+      label: `${t("titles.total", {
+        entity: t("menus.current_accounts")?.toLowerCase(),
+      })}`,
+      key: "total_current_accounts",
+      children: (
+        <TotalizersAccounts
+          params={query}
+          loading={isMerchantTotalsDataFetching}
+        />
+      ),
+    });
   }
 
   return (
@@ -287,7 +284,7 @@ export const MerchantView = () => {
       </Grid>
 
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
-        <Grid item xs={12} md={6} lg={4} ref={ref2}>
+        <Grid item xs={12} md={6} lg={isDesktop ? 2 : 3} ref={ref2}>
           <Input.Search
             size="large"
             ref={searchref}
@@ -324,7 +321,7 @@ export const MerchantView = () => {
           </Button>
         </Grid>
         {permissions.register.merchant.merchant.merchant_config_banks && (
-          <Grid item xs={12} md={4} lg={2}>
+          <Grid item xs={12} md={3} lg={2}>
             <Button
               type="primary"
               loading={isMerchantDataFetching}
@@ -345,7 +342,7 @@ export const MerchantView = () => {
           </Grid>
         )}
         {permissions.register.merchant.merchant.merchant_create && (
-          <Grid item xs={12} md={4} lg={2}>
+          <Grid item xs={12} md={3} lg={2}>
             <Button
               ref={ref4}
               type="primary"
@@ -368,7 +365,7 @@ export const MerchantView = () => {
           </Grid>
         )}
 
-        <Grid item xs={12} md={4} lg={2}>
+        <Grid item xs={12} md={3} lg={2}>
           <UpdateAccountsModal
             open={updateAccountsModal}
             setOpen={setUpdateAccountsModal}
@@ -380,13 +377,7 @@ export const MerchantView = () => {
         </Grid>
 
         {permissions.register.merchant.merchant.merchant_export_csv && (
-          <Grid
-            item
-            xs={12}
-            md={"auto"}
-            container
-            style={{ marginLeft: "auto" }}
-          >
+          <Grid item xs={12} md={2} lg={isDesktop ? 2 : 1} container>
             <Tooltip
               placement="topRight"
               title={
@@ -405,7 +396,7 @@ export const MerchantView = () => {
                 size="large"
                 loading={isMerchantDataFetching}
                 disabled={MerchantData?.total === 0 || MerchantDataError}
-                icon={<FileAddOutlined style={{ fontSize: 22 }} />}
+                icon={<FileAddOutlined />}
               >
                 CSV
               </Button>
