@@ -370,7 +370,7 @@ export const MerchantView = () => {
             open={updateAccountsModal}
             setOpen={setUpdateAccountsModal}
             selectedFields={[]}
-            loading={false}
+            loading={isMerchantDataFetching}
             items={selectedItems}
             setItems={setSelectedItems}
           />

@@ -115,7 +115,7 @@ export const PartnerSelect = ({
         }));
         setValue(
           partnersData?.items.find(
-            (partner) => partner.id === queryOptions.partner_id
+            (partner) => partner.id === queryOptions?.partner_id
           )?.name
         );
       }}

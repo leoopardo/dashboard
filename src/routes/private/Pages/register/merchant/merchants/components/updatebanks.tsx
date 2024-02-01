@@ -67,6 +67,19 @@ export const UpdateBanks = ({
     "all" | "aggregators" | "partners" | "operators" | "merchants"
   >("merchants");
 
+  const requiredFields = (field: string, value: number[] | undefined) => {
+    if (
+      body &&
+      (!body[field as keyof IMerchantBankUpdate] ||
+        (body[field as keyof IMerchantBankUpdate] as (number | undefined)[])
+          ?.length === 0) &&
+      (!value || (value as number[])?.length === 0)
+    ) {
+      return true;
+    }
+    return false;
+  };
+
   useEffect(() => {
     setBody((state) => ({
       ...state,
@@ -80,8 +93,6 @@ export const UpdateBanks = ({
       reset();
     }
   }, [UpdateBankIsSuccess]);
-
-  console.log({body})
 
   return (
     <>
@@ -110,6 +121,7 @@ export const UpdateBanks = ({
             setEntity(e.target.value);
             setItems(null);
             setBody(null);
+            formRef.current?.resetFields();
           }}
           value={entity}
           style={{ marginBottom: 20 }}
@@ -138,9 +150,12 @@ export const UpdateBanks = ({
               style={{ margin: 10 }}
               rules={[
                 {
-                  required: entity === "aggregators" && !body?.aggregators_ids,
+                  required:
+                    entity === "aggregators" &&
+                    (!body?.aggregators_ids ||
+                      body?.aggregators_ids?.length === 0),
                   validator(_, value) {
-                    if (!body?.aggregators_ids && !value) {
+                    if (requiredFields("aggregators_ids", value)) {
                       return Promise.reject(
                         t("input.required", {
                           field: t(`table.aggregator`).toLowerCase(),
@@ -167,9 +182,11 @@ export const UpdateBanks = ({
               style={{ margin: 10 }}
               rules={[
                 {
-                  required: entity === "partners" && !body?.partners_ids,
+                  required:
+                    entity === "partners" &&
+                    (!body?.partners_ids || body?.partners_ids?.length === 0),
                   validator(_, value) {
-                    if (!body?.partners_ids && !value) {
+                    if (requiredFields("partners_ids", value)) {
                       return Promise.reject(
                         t("input.required", {
                           field: t(`table.partner`).toLowerCase(),
@@ -196,9 +213,11 @@ export const UpdateBanks = ({
               style={{ margin: 10 }}
               rules={[
                 {
-                  required: entity === "operators" && !body?.operators_ids,
+                  required:
+                    entity === "operators" &&
+                    (!body?.operators_ids || body?.operators_ids?.length === 0),
                   validator(_, value) {
-                    if (!body?.operators_ids && !value) {
+                    if (requiredFields("operators_ids", value)) {
                       return Promise.reject(
                         t("input.required", {
                           field: t(`table.operator`).toLowerCase(),
@@ -211,8 +230,8 @@ export const UpdateBanks = ({
               ]}
             >
               <OperatorSelect
-                 setQueryFunction={setBody}
-                 queryOptions={body}
+                setQueryFunction={setBody}
+                queryOptions={body}
                 multiple
               />
             </Form.Item>
@@ -225,9 +244,11 @@ export const UpdateBanks = ({
               style={{ margin: 10 }}
               rules={[
                 {
-                  required: entity === "merchants" && !body?.merchants_ids,
+                  required:
+                    entity === "merchants" &&
+                    (!body?.merchants_ids || body?.merchants_ids?.length === 0),
                   validator(_, value) {
-                    if (!body?.merchants_ids && !value) {
+                    if (requiredFields("merchants_ids", value)) {
                       return Promise.reject(
                         t("input.required", {
                           field: t(`table.merchant`).toLowerCase(),
@@ -294,9 +315,22 @@ export const UpdateBanks = ({
             label={t(`input.deposit_bank`)}
             name="deposit"
             style={{ margin: 10 }}
+            rules={[
+              {
+                required: [
+                  "cash_in_bank",
+                  "cash_out_bank",
+                  "fastpix_in_bank",
+                ].every((key) =>
+                  body ? (body as any)[key] === undefined : true
+                ),
+                message: t("error.no_banks_selected") || "",
+              },
+            ]}
           >
             <Select
               size="large"
+              allowClear
               options={
                 bankListData?.itens
                   ?.filter((bank) => bank?.cash_in && bank.status)
@@ -325,9 +359,22 @@ export const UpdateBanks = ({
             label={t(`input.withdraw_bank`)}
             name="withdraw"
             style={{ margin: 10 }}
+            rules={[
+              {
+                required: [
+                  "cash_in_bank",
+                  "cash_out_bank",
+                  "fastpix_in_bank",
+                ].every((key) =>
+                  body ? (body as any)[key] === undefined : true
+                ),
+                message: t("error.no_banks_selected") || "",
+              },
+            ]}
           >
             <Select
               size="large"
+              allowClear
               options={
                 bankListData?.itens
                   ?.filter((bank) => bank?.cash_out && bank.status)
@@ -354,11 +401,24 @@ export const UpdateBanks = ({
           </Form.Item>
           <Form.Item
             label={t(`input.fastpix_in_bank`)}
-            name="fastpix_in_bank"
+            name="fastpix_in"
             style={{ margin: 10 }}
+            rules={[
+              {
+                required: [
+                  "cash_in_bank",
+                  "cash_out_bank",
+                  "fastpix_in_bank",
+                ].every((key) =>
+                  body ? (body as any)[key] === undefined : true
+                ),
+                message: t("error.no_banks_selected") || "",
+              },
+            ]}
           >
             <Select
               size="large"
+              allowClear
               options={
                 bankListData?.itens
                   ?.filter((bank) => bank?.fastpix_in && bank.status)
