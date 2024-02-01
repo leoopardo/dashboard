@@ -1024,7 +1024,11 @@
     "same_to_and_from_balance": "The origin and destination balances must be different.",
     "license_not_found": "License not found",
     "cannot_delete_license_with_merchants": "It is not possible to delete a license that is linked to merchants.",
-    "no_banks_selected": "No banks selected"
+    "no_banks_selected": "No banks selected",
+    "disable_bank_being_used_for_cash_in": "It is not possible to disable a bank that is being used for deposits.",
+    "disable_bank_being_used_for_cash_out": "It is not possible to disable a bank that is being used for withdrawals.",
+    "disable_bank_being_used_for_fastpix_in": "It is not possible to disable a bank that is being used for FastPix deposits.",
+    "disable_bank_being_used": "It is not possible to disable a bank that is being used."
   },
   "logs": {
     "login": "Login",
