@@ -122,6 +122,7 @@ const UpdateAccountsModal: FC<UpdateAccountsModalProps> = ({
         onClose={() => {
           setOpen(false);
           setItems(null);
+          setQuery(null);
           setEntity("merchants");
           formRef.current?.resetFields();
         }}
@@ -154,6 +155,7 @@ const UpdateAccountsModal: FC<UpdateAccountsModalProps> = ({
             onChange={(e) => {
               setEntity(e.target.value);
               setItems(null);
+              setQuery(null);
             }}
             value={entity}
             style={{ marginBottom: 20 }}
@@ -174,13 +176,20 @@ const UpdateAccountsModal: FC<UpdateAccountsModalProps> = ({
             name="account_id"
             style={{ margin: 10 }}
             rules={[
-              {
-                required: query?.account_id === undefined,
-                message:
-                  t("input.required", {
-                    field: t(`table.bank_acc_number`).toLowerCase(),
-                  }) || "",
-              },
+              
+              () => ({
+                required: !query?.account_id,
+                validator(_, value) {
+                  if (!query?.account_id && !value) {
+                    return Promise.reject(
+                      t("input.required", {
+                        field: t(`table.bank_acc_number`).toLowerCase(),
+                      }) || ""
+                    );
+                  }
+                  return Promise.resolve();
+                },
+              }),
             ]}
           >
             <CurrentAccountsSelect
@@ -196,8 +205,23 @@ const UpdateAccountsModal: FC<UpdateAccountsModalProps> = ({
           {entity === "aggregators" && (
             <Form.Item
               label={`${t(`table.aggregators`)}`}
-              name="merchants_ids"
+              name="aggregators_ids"
               style={{ margin: 10 }}
+              rules={[
+                {
+                  required: entity === "aggregators" && !query?.aggregators_ids,
+                  validator(_, value) {
+                    if (!query?.aggregators_ids && !value) {
+                      return Promise.reject(
+                        t("input.required", {
+                          field: t(`table.aggregator`).toLowerCase(),
+                        }) || ""
+                      );
+                    }
+                    return Promise.resolve();
+                  },
+                },
+              ]}
             >
               <AggregatorSelect
                 setQueryFunction={setQuery}
@@ -210,8 +234,23 @@ const UpdateAccountsModal: FC<UpdateAccountsModalProps> = ({
           {entity === "partners" && (
             <Form.Item
               label={`${t(`table.partner`)}s`}
-              name="merchants_ids"
+              name="partners_ids"
               style={{ margin: 10 }}
+              rules={[
+                {
+                  required: entity === "partners" && !query?.partners_ids,
+                  validator(_, value) {
+                    if (!query?.partners_ids && !value) {
+                      return Promise.reject(
+                        t("input.required", {
+                          field: t(`table.partner`).toLowerCase(),
+                        }) || ""
+                      );
+                    }
+                    return Promise.resolve();
+                  },
+                },
+              ]}
             >
               <PartnerSelect
                 setQueryFunction={setQuery}
@@ -224,8 +263,23 @@ const UpdateAccountsModal: FC<UpdateAccountsModalProps> = ({
           {entity === "operators" && (
             <Form.Item
               label={`${t(`table.operators`)}`}
-              name="merchants_ids"
+              name="operators_ids"
               style={{ margin: 10 }}
+              rules={[
+                {
+                  required: entity === "operators" && !query?.operators_ids,
+                  validator(_, value) {
+                    if (!query?.operators_ids && !value) {
+                      return Promise.reject(
+                        t("input.required", {
+                          field: t(`table.operator`).toLowerCase(),
+                        }) || ""
+                      );
+                    }
+                    return Promise.resolve();
+                  },
+                },
+              ]}
             >
               <OperatorSelect
                 setQueryFunction={setQuery}
@@ -240,6 +294,21 @@ const UpdateAccountsModal: FC<UpdateAccountsModalProps> = ({
               label={t(`table.merchant`)}
               name="merchants_ids"
               style={{ margin: 10 }}
+              rules={[
+                {
+                  required: entity === "merchants" && !query?.merchants_ids,
+                  validator(_, value) {
+                    if (!query?.merchants_ids && !value) {
+                      return Promise.reject(
+                        t("input.required", {
+                          field: t(`table.merchant`).toLowerCase(),
+                        }) || ""
+                      );
+                    }
+                    return Promise.resolve();
+                  },
+                },
+              ]}
             >
               <Select
                 mode="multiple"
