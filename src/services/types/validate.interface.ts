@@ -13,6 +13,12 @@ export interface ValidateInterface {
     register: {
       paybrokers: {
         menu: boolean;
+        account: {
+          menu: boolean;
+          account_api_create: boolean;
+          account_api_list: boolean;
+          account_api_update: boolean;
+        };
         users: {
           menu: boolean;
           paybrokers_user_list: boolean;
@@ -78,6 +84,8 @@ export interface ValidateInterface {
           merchant_config_paybrokers: boolean;
           merchant_config_credentials: boolean;
           merchant_config_ips: boolean;
+          merchant_account_api_get: boolean;
+          merchant_account_api_update: boolean;
         };
         release_category: {
           menu: boolean;
@@ -206,6 +214,20 @@ export interface ValidateInterface {
             person_blacklist_reason_delete: boolean;
             person_blacklist_export_csv: boolean;
           };
+        };
+      };
+      licenses: {
+        menu: boolean;
+        licenses: {
+          menu: boolean;
+          license_create: boolean;
+          license_delete: boolean;
+          license_export_csv: boolean;
+          license_files_create: boolean;
+          license_files_delete: boolean;
+          license_files_list: boolean;
+          license_list: boolean;
+          license_update: boolean;
         };
       };
     };

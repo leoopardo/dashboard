@@ -40,6 +40,8 @@ import { ViewMerchantModal } from "./components/ViewMerchantModal";
 import { TotalizerPerBanks } from "./components/totalizerPerBank";
 import { TotalizersCards } from "./components/totalizersCards";
 import { UpdateBanks } from "./components/updatebanks";
+import UpdateAccountsModal from "./components/updateAccountModal";
+import { TotalizersAccounts } from "./components/totalizersAccounts";
 
 const INITIAL_QUERY: MerchantsQuery = {
   limit: 25,
@@ -53,10 +55,13 @@ export const MerchantView = () => {
     "validate"
   ) as ValidateInterface;
   const isMobile = useMediaQuery({ maxWidth: "950px" });
+  const isDesktop = useMediaQuery({ maxWidth: "1320px" });
   const user = queryClient.getQueryData("validate") as ValidateInterface;
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [query, setQuery] = useState<MerchantsQuery>(INITIAL_QUERY);
+  const [updateAccountsModal, setUpdateAccountsModal] =
+    useState<boolean>(false);
   const [activeTotalizer, setActiveTotalizer] = useState<
     "total_banks" | "total_merchants"
   >("total_banks");
@@ -211,28 +216,23 @@ export const MerchantView = () => {
     });
   }
 
+  if (permissions.register.merchant.merchant.merchant_account_api_get) {
+    TotalizersTabs.push({
+      label: `${t("titles.total", {
+        entity: t("menus.current_accounts")?.toLowerCase(),
+      })}`,
+      key: "total_current_accounts",
+      children: (
+        <TotalizersAccounts
+          params={query}
+          loading={isMerchantTotalsDataFetching}
+        />
+      ),
+    });
+  }
+
   return (
     <Grid container style={{ padding: "25px" }}>
-      {/* <Grid
-        item
-        xs={12}
-        md={12}
-        style={{
-          display: "flex",
-          justifyContent: "flex-end",
-          marginBottom: -50,
-        }}
-      >
-        <Tooltip title={t("buttons.help")}>
-          <Button
-            style={{ zIndex: 999 }}
-            type="link"
-            onClick={() => setIsTuorOpen((state) => !state)}
-          >
-            <InfoCircleOutlined />
-          </Button>
-        </Tooltip>
-      </Grid> */}
       {!user.merchant_id && (
         <Grid item xs={12} ref={refPerBanks}>
           <Grid item xs={12} ref={ref}>
@@ -284,7 +284,7 @@ export const MerchantView = () => {
       </Grid>
 
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
-        <Grid item xs={12} md={6} lg={4} ref={ref2}>
+        <Grid item xs={12} md={6} lg={isDesktop ? 2 : 3} ref={ref2}>
           <Input.Search
             size="large"
             ref={searchref}
@@ -321,7 +321,7 @@ export const MerchantView = () => {
           </Button>
         </Grid>
         {permissions.register.merchant.merchant.merchant_config_banks && (
-          <Grid item xs={12} md={4} lg={2}>
+          <Grid item xs={12} md={3} lg={2}>
             <Button
               type="primary"
               loading={isMerchantDataFetching}
@@ -342,7 +342,7 @@ export const MerchantView = () => {
           </Grid>
         )}
         {permissions.register.merchant.merchant.merchant_create && (
-          <Grid item xs={12} md={4} lg={2}>
+          <Grid item xs={12} md={3} lg={2}>
             <Button
               ref={ref4}
               type="primary"
@@ -365,8 +365,19 @@ export const MerchantView = () => {
           </Grid>
         )}
 
+        <Grid item xs={12} md={3} lg={2}>
+          <UpdateAccountsModal
+            open={updateAccountsModal}
+            setOpen={setUpdateAccountsModal}
+            selectedFields={[]}
+            loading={false}
+            items={selectedItems}
+            setItems={setSelectedItems}
+          />
+        </Grid>
+
         {permissions.register.merchant.merchant.merchant_export_csv && (
-          <Grid item xs={12} md={"auto"}>
+          <Grid item xs={12} md={2} lg={isDesktop ? 2 : 1} container>
             <Tooltip
               placement="topRight"
               title={
@@ -385,7 +396,7 @@ export const MerchantView = () => {
                 size="large"
                 loading={isMerchantDataFetching}
                 disabled={MerchantData?.total === 0 || MerchantDataError}
-                icon={<FileAddOutlined style={{ fontSize: 22 }} />}
+                icon={<FileAddOutlined />}
               >
                 CSV
               </Button>
@@ -456,6 +467,7 @@ export const MerchantView = () => {
             { label: "name", required: false },
             { label: "domain", required: false },
             { label: "v3_id", required: false, type: "number" },
+            { label: "license_id", required: false },
             { label: "partner_id", required: true },
             { label: "aggregator_id", required: false },
             { label: "operator_id", required: false },
@@ -525,6 +537,7 @@ export const MerchantView = () => {
             { label: "name", required: true },
             { label: "domain", required: true },
             { label: "v3_id", required: false, type: "number" },
+            { label: "license_id", required: false },
             { label: "partner_id", required: true },
             { label: "aggregator_id", required: false },
             { label: "operator_id", required: false },

@@ -157,7 +157,9 @@
     "organization_settings": "Organization settings",
     "merchant_settings": "Merchant settings",
     "historic_cpf_merchant": "CPF historic by merchant",
-    "historic_cpf_merchant_details": "CPF historic by merchant details"
+    "historic_cpf_merchant_details": "CPF historic by merchant details",
+    "licenses": "Licenses",
+    "current_accounts": "Current accounts"
   },
 
   "titles": {
@@ -169,12 +171,12 @@
     "total_registred_active": "Total {{entity}} registred active",
     "total_aggregator_active": "Total {{entity}} active",
     "total_registred_inactive": "Total {{entity}} registred inactive",
+    "total_expired": "Total {{entity}} expired",
     "total_aggregator_inactive": "Total {{entity}} inactive",
     "total": "Total {{entity}}",
     "operation_approve": "Approve selected",
     "operation_approve_all": "Approve all",
     "Approvement": "Approvement",
-    "total_expired": "Total expired",
     "deposits_bank": "Deposit banks",
     "withdraw_bank": "Withdrawal banks",
     "fastpix_bank": "FastPix banks",
@@ -277,6 +279,7 @@
     "update": "Update",
     "update_menu": "Atualizar {{menu}}",
     "new_user": "new user",
+    "new_license": "new license",
     "update_user": "Update user",
     "new_categorie": "new categorie",
     "update_general_configs": "Update general configs",
@@ -303,7 +306,8 @@
     "help": "Help",
     "confirm_import": "Confirm import",
     "merchant_blacklist_details": "Merchants blacklist details",
-    "create_group": "Create group"
+    "create_group": "Create group",
+    "add_current_account": "Add current account"
   },
   "input": {
     "required": "Please input the {{field}}",
@@ -431,11 +435,14 @@
     "position": "Position",
     "search": "Search",
     "allows_generate_qrcode": "Allows generate QRCode",
+    "license_number": "License number",
     "add_all_columns": "Add all columns"
   },
   
   "modal": {
     "confirm": "Confirm",
+    "update": "Update",
+    "add":  "Add",
     "validate_token": "Validate token",
     "token_expires_in": "Token expires in",
     "resend_token_by_sms": "Resend token by SMS",
@@ -443,6 +450,7 @@
     "category": "Category",
     "user": "User",
     "new_category": "New category",
+    "new_license": "New license",
     "update_category": "Update category",
     "modal_update_bank": "Update bank",
     "modal_update_merchant": "Update Merchant",
@@ -956,12 +964,29 @@
     "yesterday": "Yesterday",
     "this_month": "This month",
     "last_month": "Last month",
+    "indeterminate_validity": "Indeterminate validity",
+    "start_validity_date": "Start validity date",
+    "end_validity_date": "End validity date",
+    "validity_date": "Período de vigência",
+    "license_data": "License data",
+    "license": "License",
+    "linked_merchants": "Linked merchants",
+    "createdat_start": "Inicial date",
+    "createdat_end": "Final date",
+    "yesterday_abrev": "Yest..",
+    "this_month_abrev": "This m...",
+    "last_month_abrev": "Last m...",
     "cash_in_max_value_per_day": "Deposit max value/day",
     "cash_out_max_value_per_day": "Withdraw max value/day",
     "cash_out_transaction_limit_per_day": "Withdrawal limit/day",
     "cryptography": "Cryptography",
     "decrypt_key": "Decrypt key",
-    "custom_date": "Set date"
+    "custom_date": "Set date",
+    "locked": "Locked",
+    "operators": "Operators",
+    "aggregators": "Aggregators",
+    "all_merchants": "All merchants",
+    "all_banks": "All banks"
   },
   "actions": {
     "details": "Details",
@@ -998,7 +1023,9 @@
     "token_without_aggregator_id": "It is necessary to be linked to an aggregator to perform the action.",
     "can_only_be_deleted_by_organization": "Can only be deleted by organizations.",
     "token_characters": "The token must contain 6 characters.",
-    "same_to_and_from_balance": "The origin and destination balances must be different."
+    "same_to_and_from_balance": "The origin and destination balances must be different.",
+    "license_not_found": "License not found",
+    "cannot_delete_license_with_merchants": "It is not possible to delete a license that is linked to merchants."
   },
   "logs": {
     "login": "Login",

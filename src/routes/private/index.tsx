@@ -111,6 +111,10 @@ import { BankBlackistReports } from "./Pages/support/blacklists/reports/bankBlac
 import { ThirdPartKeyBlacklist } from "./Pages/support/blacklists/thirdPartKey";
 import { ImportContastationDeposit } from "./Pages/support/contastation/importCSV";
 import { ContestationUploads } from "./Pages/support/contastation/uploads";
+import { Licenses } from "./Pages/register/licenses/licenses";
+import { LicenseReports } from "./Pages/register/licenses/reports/license";
+import { UpdateLicense } from "./Pages/register/licenses/licenses/updateLicense";
+import { CurrentAccountPage } from "./Pages/register/organization/currentAccounts";
 import { Permission } from "./permission";
 import { Redirect } from "./redirect";
 export const PrivateRoutes = () => {
@@ -625,6 +629,21 @@ export const PrivateRoutes = () => {
                 </Permission>
               }
             />
+            {/* Ajustar permissões*/}
+             <Route
+              path="current_accounts"
+              element={
+                <Permission
+                  permission={
+                    responseValidate?.permissions?.register?.paybrokers
+                      ?.menu
+                  }
+                >
+                  <CurrentAccountPage />
+                </Permission>
+              }
+            />
+              {/* Ajustar permissões*/}
             <Route
               path="bank_maintain"
               element={
@@ -1203,7 +1222,7 @@ export const PrivateRoutes = () => {
             </Route>
           </Route>
 
-          {/* cadastros de pessos */}
+          {/* cadastros de pessoas */}
           <Route path="person">
             <Route path="persons">
               <Route
@@ -1331,6 +1350,35 @@ export const PrivateRoutes = () => {
               />
             </Route>
           </Route>
+           {/* cadastros de licensas */}
+           <Route path="licenses">
+           <Route
+                index
+                element={
+                  <Licenses />
+               /*    <Permission
+                    permission={
+                      responseValidate?.permissions?.register?.person?.person
+                        ?.menu
+                    }
+                  >
+                    <Persons />
+                  </Permission> */
+                }
+              />
+               <Route
+                path="update"
+                element={
+                  <UpdateLicense />
+                }
+              />
+               <Route
+                path="reports"
+                element={
+                  <LicenseReports />
+                }
+              />
+           </Route>
         </Route>
         {/* movimentações */}
         <Route path="moviment">

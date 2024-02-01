@@ -160,7 +160,9 @@
     "historic_cpf_merchant": "Histórico de CPF por Merchant",
     "historic_cpf_merchant_details": "Detalhes de CPF por Merchant",
     "settings": "Configurações",
-    "permissions_groups": "Grupos de permissões"
+    "permissions_groups": "Grupos de permissões",
+    "licenses": "Licenças",
+    "current_accounts": "Contas Corrente"
   },
 
   "titles": {
@@ -173,11 +175,11 @@
     "total_aggregator_active": "Total de {{entity}} ativos",
     "total_registred_inactive": "Total de {{entity}} inativas",
     "total_aggregator_inactive": "Total de {{entity}} inativos",
+    "total_expired": "Total de {{entity}} expiradas",
     "total": "Total de {{entity}}",
     "operation_approve": "Aprovar selecionados",
     "operation_approve_all": "Aprovar todos",
     "Approvement": "Aprovação",
-    "total_expired": "Total expirado",
     "deposits_bank": "Bancos de depósito",
     "withdraw_bank": "Bancos de saque",
     "fastpix_bank": "Bancos de FastPix",
@@ -280,6 +282,7 @@
     "update": "Atualizar",
     "update_menu": "Atualizar {{menu}}",
     "new_user": "novo usuário",
+    "new_license": "nova licença",
     "update_user": "Atualizar usuário",
     "new_categorie": "nova categoria",
     "update_general_configs": "Atualizar configurações gerais",
@@ -306,10 +309,13 @@
     "help": "Ajuda",
     "confirm_import": "Confirmar importação",
     "merchant_blacklist_details": "Detalhes de blacklist de empresas",
-    "create_group": "Criar grupo"
+    "create_group": "Criar grupo",
+    "add_current_account": "Adicionar conta corrente"
   },
   "modal": {
     "confirm": "Confirmar",
+    "update": "Atualizar",
+    "add": "Adicionar",
     "validate_token": "Validar token",
     "token_expires_in": "Token expira em",
     "resend_token_by_sms": "Reenviar token por SMS",
@@ -320,6 +326,7 @@
     "update_category": "Atualizar categoria",
     "modal_update_bank": "Atualizar banco",
     "modal_update_merchant": "Atualizar Empresa",
+    "new_license": "Nova licença",
     "new_partner": "Nova plataforma",
     "new_operator": "Novo operador",
     "update_operator": "Atualizar operador",
@@ -468,6 +475,7 @@
     "position": "Cargo",
     "search": "Pesquisar",
     "allows_generate_qrcode": "Permite gerar QRCode PJ",
+    "license_number": "Número da licença",
     "add_all_columns": "Adicionar todas as colunas"
   },
   "table": {
@@ -964,12 +972,29 @@
     "yesterday": "Ontem",
     "this_month": "Este mês",
     "last_month": "Mês passado",
+    "indeterminate_validity": "Vigência indeterminada",
+    "start_validity_date": "Data inicial de vigência",
+    "end_validity_date": "Data final de vigência",
+    "validity_date": "Período de vigência",
+    "license_data": "Dados da licensa",
+    "license": "Licença",
+    "linked_merchants": "Merchants vinculados",
+    "createdat_start": "Data inicial",
+    "createdat_end": "Data final",
+    "yesterday_abrev": "Ont..",
+    "this_month_abrev": "Este m...",
+    "last_month_abrev": "Mês pass...",
     "cash_in_max_value_per_day": "Val. máx. depósito/dia",
     "cash_out_max_value_per_day": "Val. máx. saques/dia",
     "cash_out_transaction_limit_per_day": "Limite de saque/dia",
     "cryptography": "Criptografia",
     "decrypt_key": "Chave de descriptografia",
-    "custom_date": "Escolher data"
+    "custom_date": "Escolher data",
+    "locked": "Bloqueado",
+    "operators": "Operadores",
+    "aggregators": "Agregadores",
+    "all_merchants": "Todas as empresas",
+    "all_banks": "Todos os bancos"
   },
   "actions": {
     "details": "Detalhes",
@@ -1008,7 +1033,10 @@
     "token_without_aggregator_id": "Necessário estar vinculado a um agregador para realizar a ação",
     "can_only_be_deleted_by_organization": "Pode ser removido apenas por organizações.",
     "token_characters": "O token deve conter 6 caracteres.",
-    "same_to_and_from_balance": "A origem e o destino do saldo devem ser diferentes."
+    "same_to_and_from_balance": "A origem e o destino do saldo devem ser diferentes.",
+    "license_not_found": "Licença não encontrada.",
+    "invalid_license": "Licença inválida.",
+    "cannot_delete_license_with_merchants": "Não é possível deletar uma licença que possui empresas vinculadas."
   },
   "logs": {
     "login": "Login",

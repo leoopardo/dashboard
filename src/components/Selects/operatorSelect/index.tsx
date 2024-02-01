@@ -10,11 +10,13 @@ import { useTranslation } from "react-i18next";
 interface operatorSelectProps {
   setQueryFunction: Dispatch<SetStateAction<any>>;
   queryOptions: any;
+  multiple?: boolean;
 }
 
 export const OperatorSelect = ({
   setQueryFunction,
   queryOptions,
+  multiple
 }: operatorSelectProps) => {
   const { t } = useTranslation();
   const [query, setQuery] = useState<OperatorQuery>({
@@ -28,7 +30,7 @@ export const OperatorSelect = ({
   });
   const { operatorsData, refetcOperators, isOperatorsFetching } =
     useListOperators(query);
-  const [value, setValue] = useState<any>(null);
+  const [value, setValue] = useState<any>(undefined);
   const debounceSearch = useDebounce(query.name);
 
   useEffect(() => {
@@ -45,7 +47,7 @@ export const OperatorSelect = ({
         setValue(initial?.name);
       }
     }
-  }, [queryOptions, operatorsData]);
+  }, [queryOptions?.aggregator_id,queryOptions?.operator_id, operatorsData]);
 
   useEffect(() => {
     setQuery((state) => ({
@@ -53,7 +55,7 @@ export const OperatorSelect = ({
       aggregator_id:
         queryOptions?.aggregator_id ?? queryOptions?.aggregator?.id,
     }));
-  }, [queryOptions]);
+  }, [queryOptions?.aggregator_id]);
 
   useEffect(() => {
     refetcOperators();
@@ -63,10 +65,10 @@ export const OperatorSelect = ({
     if (!queryOptions?.aggregator_id)
       setQueryFunction((state: any) => ({
         ...state,
-        operator_id: null,
+        [multiple ? "operators_ids" : "operator_id"]: null,
         group_id: undefined,
       }));
-  }, [queryOptions?.aggregator_id]);
+  }, [queryOptions?.aggregator_id,queryOptions?.operator_id,]);
 
   useEffect(() => {
     refetcOperators();
@@ -87,13 +89,14 @@ export const OperatorSelect = ({
       data-test-id="operator-select"
       allowClear
       showSearch
+      mode={ multiple ? "multiple" : undefined}
       size="large"
       loading={isOperatorsFetching}
       value={value}
       onClear={() => {
         setQueryFunction((state: any) => ({
           ...state,
-          operator_id: null,
+          [multiple ? "operators_ids" : "operator_id"]: null,
           group_id: undefined,
         }));
       }}
@@ -115,15 +118,15 @@ export const OperatorSelect = ({
           setValue(undefined);
           setQueryFunction((state: any) => ({
             ...state,
-            operator_id: undefined,
+            [multiple ? "operators_ids" : "operator_id"]: undefined,
             group_id: undefined,
           }));
           return;
         }
         setQueryFunction((state: any) => ({
           ...state,
-          operator_id: value,
-          group_id: null,
+          [multiple ? "operators_ids" : "operator_id"] : value,
+          group_id: undefined,
         }));
         setValue(
           operatorsData?.items.find((operator) => operator.id === value)?.name

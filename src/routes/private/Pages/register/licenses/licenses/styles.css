@@ -1,0 +1,7 @@
+.show .ant-upload, .ant-upload-drag {
+    display: block; 
+}
+
+.hide .ant-upload, .ant-upload-drag {
+    display: none; 
+}

@@ -236,7 +236,7 @@ export const MerchantBlacklist = () => {
                 disabled: (item) =>
                   !permissions?.register?.merchant?.blacklist
                     ?.merchant_blacklist_delete ||
-                  (!item?.can_be_deleted_only_by_organization &&
+                  (item?.can_be_deleted_only_by_organization &&
                     type !== 1 &&
                     type !== 2),
               },

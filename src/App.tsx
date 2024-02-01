@@ -144,7 +144,10 @@ function App() {
                 Layout: {
                   colorBgHeader: theme === "dark" ? "#222222" : "#ffffff",
                 },
-                Segmented: {colorBgElevated:defaultTheme.colors.secondary}
+                Segmented: {
+                  colorBgElevated: defaultTheme.colors.secondary,
+                  colorBgLayout: theme === "dark" ?  "#272727" : "#f0f0f0",
+                },
               },
 
               token: {
@@ -225,7 +228,7 @@ function App() {
                               style={{ backgroundColor: "#b6b6b6" }}
                               tooltip={<div>{t("messages.scrool_top")}</div>}
                               icon={
-                                <ArrowUpOutlined data-test-id="float-button" />
+                                <ArrowUpOutlined data-test-id="float-button" style={{color: "#000"}} />
                               }
                               onClick={() =>
                                 window.scrollTo({

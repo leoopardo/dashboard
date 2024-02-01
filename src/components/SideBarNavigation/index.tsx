@@ -30,7 +30,6 @@ type MenuItem = Required<MenuProps>["items"][number];
 
 export const SidebarNavigation = () => {
   const { t } = useTranslation();
-  // const navigate = useNavigate();
   const { resetErrors } = useErrorContext();
   const LargeDesktop = useMediaQuery({ maxHeight: "800px" });
   const isMobile = useMediaQuery({ maxWidth: "950px" });
@@ -168,6 +167,28 @@ export const SidebarNavigation = () => {
                 to={"/register/organization/categories"}
               >
                 {t("menus.categories")}
+              </Link>
+            ),
+            getItem(
+              "current_accounts",
+              null,
+              null,
+              false,
+              undefined,
+              {
+                display: permissions?.register?.paybrokers?.account
+                  ?.menu
+                  ? undefined
+                  : "none",
+              },
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/register/organization/current_accounts"}
+              >
+                {t("menus.current_accounts")}
               </Link>
             ),
             getItem(
@@ -1282,6 +1303,63 @@ export const SidebarNavigation = () => {
                     ? undefined
                     : "none",
               }
+            ),
+          ],
+          undefined,
+          undefined,
+          {
+            display: permissions?.register?.person?.menu ? undefined : "none",
+          }
+        ),
+        getItem(
+          "licenses",
+          null,
+          [
+            getItem(
+              "licenses",
+              null,
+              null,
+              false,
+              undefined,
+              {
+                display: permissions?.register?.licenses.menu
+                  ? undefined
+                  : "none",
+              },
+
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/register/licenses"}
+                title={`${t("menus.licenses")}`}
+              >
+                {t("menus.licenses")}
+              </Link>
+            ),
+            getItem(
+              "reports",
+              null,
+              null,
+              false,
+              undefined,
+              {
+                display: permissions?.register?.licenses.licenses.license_export_csv
+                  ? undefined
+                  : "none",
+              },
+
+              <Link
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/register/licenses/reports"}
+                title={`${t("menus.licenses")}`}
+              >
+                {t("menus.reports")}
+              </Link>
             ),
           ],
           undefined,
