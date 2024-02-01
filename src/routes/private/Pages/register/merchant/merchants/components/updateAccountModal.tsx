@@ -22,6 +22,7 @@ import {
 } from "@src/services/types/register/merchants/merchantsRegister.interface";
 import { useListMerchants } from "@src/services/merchant/listMerchants";
 import { queryClient } from "@src/services/queryClient";
+import { IMerchantAccount } from "@src/services/types/register/merchants/merchantConfig.interface";
 
 interface UpdateAccountsModalProps {
   open: boolean;
@@ -49,7 +50,7 @@ const UpdateAccountsModal: FC<UpdateAccountsModalProps> = ({
   const [entity, setEntity] = useState<
     "all" | "aggregators" | "partners" | "operators" | "merchants"
   >("merchants");
-  const [query, setQuery] = useState<any>({
+  const [query, setQuery] = useState<IMerchantAccount | null>({
     merchants_ids: items?.map((merchant) => merchant?.id),
   });
 
@@ -74,6 +75,19 @@ const UpdateAccountsModal: FC<UpdateAccountsModalProps> = ({
     return newObj;
   };
 
+  const requiredFields = (field: string, value: number[] | undefined) => {
+    if (
+      query &&
+      (!query[field as keyof IMerchantAccount] ||
+        (query[field as keyof IMerchantAccount] as (number | undefined)[])
+          ?.length === 0) &&
+      (!value || (value as number[])?.length === 0)
+    ) {
+      return true;
+    }
+    return false;
+  };
+
   const { UpdateMutate, UpdateError, UpdateIsLoading, UpdateIsSuccess } =
     useUpdateMerchantAccount(removeNullAndEmptyProps(query));
 
@@ -87,6 +101,7 @@ const UpdateAccountsModal: FC<UpdateAccountsModalProps> = ({
       formRef.current?.resetFields();
       setQuery(null);
       setItems(null);
+      setEntity("merchants");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [UpdateIsSuccess]);
@@ -105,6 +120,7 @@ const UpdateAccountsModal: FC<UpdateAccountsModalProps> = ({
     <>
       <Button
         type="primary"
+        loading={loading}
         style={{
           height: 40,
           width: "100%",
@@ -146,7 +162,7 @@ const UpdateAccountsModal: FC<UpdateAccountsModalProps> = ({
           ref={formRef}
           layout="vertical"
           disabled={loading}
-          initialValues={query}
+          initialValues={query || {}}
           onFinish={() => {
             UpdateMutate();
           }}
@@ -161,9 +177,7 @@ const UpdateAccountsModal: FC<UpdateAccountsModalProps> = ({
             style={{ marginBottom: 20 }}
           >
             <Space direction="vertical">
-              <Radio value="all">
-              {t("table.all_merchants")}
-              </Radio>
+              <Radio value="all">{t("table.all_merchants")}</Radio>
               <Radio value="aggregators">{t("table.aggregators")}</Radio>
               <Radio value="merchants">{t("menus.merchants")}</Radio>
               <Radio value="partners">{t("menus.partners")}</Radio>
@@ -176,7 +190,6 @@ const UpdateAccountsModal: FC<UpdateAccountsModalProps> = ({
             name="account_id"
             style={{ margin: 10 }}
             rules={[
-              
               () => ({
                 required: !query?.account_id,
                 validator(_, value) {
@@ -209,9 +222,12 @@ const UpdateAccountsModal: FC<UpdateAccountsModalProps> = ({
               style={{ margin: 10 }}
               rules={[
                 {
-                  required: entity === "aggregators" && !query?.aggregators_ids,
+                  required:
+                    entity === "aggregators" &&
+                    (!query?.aggregators_ids ||
+                      query?.aggregators_ids?.length === 0),
                   validator(_, value) {
-                    if (!query?.aggregators_ids && !value) {
+                    if(requiredFields("aggregators_ids", value)) {
                       return Promise.reject(
                         t("input.required", {
                           field: t(`table.aggregator`).toLowerCase(),
@@ -238,9 +254,11 @@ const UpdateAccountsModal: FC<UpdateAccountsModalProps> = ({
               style={{ margin: 10 }}
               rules={[
                 {
-                  required: entity === "partners" && !query?.partners_ids,
+                  required:
+                    entity === "partners" &&
+                    (!query?.partners_ids || query?.partners_ids?.length === 0),
                   validator(_, value) {
-                    if (!query?.partners_ids && !value) {
+                    if(requiredFields("partners_ids", value)) {
                       return Promise.reject(
                         t("input.required", {
                           field: t(`table.partner`).toLowerCase(),
@@ -267,9 +285,12 @@ const UpdateAccountsModal: FC<UpdateAccountsModalProps> = ({
               style={{ margin: 10 }}
               rules={[
                 {
-                  required: entity === "operators" && !query?.operators_ids,
+                  required:
+                    entity === "operators" &&
+                    (!query?.operators_ids ||
+                      query?.operators_ids?.length === 0),
                   validator(_, value) {
-                    if (!query?.operators_ids && !value) {
+                    if(requiredFields("operators_ids", value)) {
                       return Promise.reject(
                         t("input.required", {
                           field: t(`table.operator`).toLowerCase(),
@@ -296,9 +317,12 @@ const UpdateAccountsModal: FC<UpdateAccountsModalProps> = ({
               style={{ margin: 10 }}
               rules={[
                 {
-                  required: entity === "merchants" && !query?.merchants_ids,
+                  required:
+                    entity === "merchants" &&
+                    (!query?.merchants_ids ||
+                      query?.merchants_ids?.length === 0),
                   validator(_, value) {
-                    if (!query?.merchants_ids && !value) {
+                    if(requiredFields("merchants_ids", value)) {
                       return Promise.reject(
                         t("input.required", {
                           field: t(`table.merchant`).toLowerCase(),
