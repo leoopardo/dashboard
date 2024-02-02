@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useGetLicenses } from "@src/services/register/licenses/getLicenses";
+import { useListLicenses } from "@src/services/register/licenses/listLicenses";
 import { LicenseQuery } from "@src/services/types/register/licenses/licenses.interface";
 import useDebounce from "@src/utils/useDebounce";
 import { Select } from "antd";
@@ -25,7 +25,7 @@ export const LicenseSelect = ({
     name: "",
   });
   const { LicenseData, isLicenseDataFetching, refetchLicenseData } =
-    useGetLicenses(query);
+    useListLicenses(query);
 
   const [value, setValue] = useState<any>(null);
   const debounceSearch = useDebounce(query.name);
