@@ -212,7 +212,7 @@ export const UpdateAggregator = () => {
     }
   }, [UpdateIsSuccess]);
 
-  const items: TabsProps["items"] = [
+  const items: TabsProps["items"] | any = [
     {
       key: "1",
       label: t("table.aggregator_data"),
@@ -389,7 +389,7 @@ export const UpdateAggregator = () => {
         </Form>
       ),
     },
-    {
+    permissions.register.aggregator.aggregator.aggregator_responsible_list && {
       key: "2",
       label: t("table.responsibles"),
       children: (
@@ -415,18 +415,21 @@ export const UpdateAggregator = () => {
                 setQuery={setResponsibleQuery}
               />
             </Col>
-            <Col xs={{ span: 24 }} md={{ span: 8 }} lg={{ span: 5 }}>
-              <Button
-                size="large"
-                style={{ width: "100%" }}
-                loading={isResponsiblesDataFetching}
-                type="dashed"
-                onClick={() => setIsCreateResponsibleOpen(true)}
-              >
-                <PlusOutlined />
-                {`${t("buttons.create")} ${t("buttons.responsible")}`}
-              </Button>
-            </Col>{" "}
+            {permissions.register.aggregator.aggregator
+              .aggregator_responsible_create && (
+              <Col xs={{ span: 24 }} md={{ span: 8 }} lg={{ span: 5 }}>
+                <Button
+                  size="large"
+                  style={{ width: "100%" }}
+                  loading={isResponsiblesDataFetching}
+                  type="dashed"
+                  onClick={() => setIsCreateResponsibleOpen(true)}
+                >
+                  <PlusOutlined />
+                  {`${t("buttons.create")} ${t("buttons.responsible")}`}
+                </Button>
+              </Col>
+            )}
           </Row>
 
           <Col span={24}>
@@ -436,7 +439,7 @@ export const UpdateAggregator = () => {
               setQuery={setResponsibleQuery}
               actions={[
                 permissions.register.aggregator.aggregator
-                  .aggregator_update && {
+                  .aggregator_responsible_update && {
                   label: "edit",
                   icon: <EditOutlined style={{ fontSize: "20px" }} />,
                   onClick: (item) => {
@@ -452,7 +455,7 @@ export const UpdateAggregator = () => {
                   },
                 },
                 permissions.register.aggregator.aggregator
-                  .aggregator_update && {
+                  .aggregator_responsible_delete && {
                   label: "delete",
                   icon: <DeleteOutlined style={{ fontSize: "20px" }} />,
                   onClick: () => {
@@ -552,7 +555,7 @@ export const UpdateAggregator = () => {
         </Row>
       ),
     },
-    {
+    permissions.register.aggregator.aggregator.aggregator_files_list && {
       key: "3",
       label: t("table.attachments"),
       children: AggregatorAttachmentIsLoading ? (
@@ -571,6 +574,10 @@ export const UpdateAggregator = () => {
         <Row gutter={[8, 8]}>
           <Col span={24}>
             <Dragger
+              disabled={
+                !permissions.register.aggregator.aggregator
+                  .aggregator_files_create
+              }
               style={{ maxHeight: "150px" }}
               listType="picture"
               multiple={false}
