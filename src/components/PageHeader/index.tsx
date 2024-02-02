@@ -295,6 +295,7 @@ export const PageHeader = () => {
       {isValidateCellphoneModalOpen && (
         <ValidateToken
           action="USER_UPDATE"
+          editSelf
           body={{}}
           open={isValidateCellphoneModalOpen}
           setIsOpen={setIsValidateCellphoneModalOpen}
