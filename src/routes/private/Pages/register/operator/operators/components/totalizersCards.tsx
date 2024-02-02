@@ -30,80 +30,82 @@ export const TotalizersCards = (props: {
       }
     >
       {props.data?.registered_operators_totals &&
-        props.data?.registered_operators_totals > 0 && (
-          <Grid
-            item
-            xs={12}
-            md={3}
-            style={{
-              marginTop: "-75px",
-              marginBottom: isMobile ? "-60px" : undefined,
-              marginLeft: "-10%",
-              marginRight: "-20px",
-              overflow: "hidden",
-              maxHeight: "300px",
-            }}
-          >
-            <ReactECharts
-              option={{
-                darkMode: theme === "dark",
-                legend: {
-                  show: false,
-                  textStyle: {
-                    color: "#a0a0a0",
+      props.data?.registered_operators_totals > 0 ? (
+        <Grid
+          item
+          xs={12}
+          md={3}
+          style={{
+            marginTop: "-75px",
+            marginBottom: isMobile ? "-60px" : undefined,
+            marginLeft: "-10%",
+            marginRight: "-20px",
+            overflow: "hidden",
+            maxHeight: "300px",
+          }}
+        >
+          <ReactECharts
+            option={{
+              darkMode: theme === "dark",
+              legend: {
+                show: false,
+                textStyle: {
+                  color: "#a0a0a0",
+                },
+              },
+              tooltip: {
+                trigger: "item",
+              },
+
+              color: ["#91cc75", "#fac858", "#ea7ccc"],
+
+              series: [
+                {
+                  name: t("menus.operators"),
+                  type: "pie",
+                  radius: ["40%", "70%"],
+                  center: ["50%", "70%"],
+                  // adjust the start angle
+                  startAngle: 180,
+                  label: {
+                    show: false,
                   },
-                },
-                tooltip: {
-                  trigger: "item",
-                },
-
-                color: ["#91cc75", "#fac858", "#ea7ccc"],
-
-                series: [
-                  {
-                    name: t("menus.operators"),
-                    type: "pie",
-                    radius: ["40%", "70%"],
-                    center: ["50%", "70%"],
-                    // adjust the start angle
-                    startAngle: 180,
-                    label: {
-                      show: false,
+                  data: [
+                    {
+                      value: props?.data?.active_operators_totals,
+                      name: t("table.active"),
                     },
-                    data: [
-                      {
-                        value: props?.data?.active_operators_totals,
-                        name: t("table.active"),
-                      },
-                      {
-                        value: props?.data?.inactive_operators_totals,
-                        name: t("table.inactive"),
-                      },
-                      {
-                        // make an record to fill the bottom 50%
-                        value:
-                          (props?.data?.active_operators_totals || 0) +
-                          (props?.data?.inactive_operators_totals || 0),
-                        itemStyle: {
-                          top: "-20%",
-                          color: "none",
-                          decal: {
-                            symbol: "none",
-                          },
-                        },
-                        label: {
-                          show: false,
+                    {
+                      value: props?.data?.inactive_operators_totals,
+                      name: t("table.inactive"),
+                    },
+                    {
+                      // make an record to fill the bottom 50%
+                      value:
+                        (props?.data?.active_operators_totals || 0) +
+                        (props?.data?.inactive_operators_totals || 0),
+                      itemStyle: {
+                        top: "-20%",
+                        color: "none",
+                        decal: {
+                          symbol: "none",
                         },
                       },
-                    ],
-                  },
-                ],
-              }}
-              opts={{ renderer: "svg" }}
-              lazyUpdate
-            />
-          </Grid>
-        )}
+                      label: {
+                        show: false,
+                      },
+                    },
+                  ],
+                },
+              ],
+            }}
+            opts={{ renderer: "svg" }}
+            lazyUpdate
+          />
+        </Grid>
+      ) : (
+        <></>
+      )}
 
       <Grid item xs={12} md={3}>
         <Card bordered={false}>

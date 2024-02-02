@@ -212,7 +212,9 @@ export const UpdateMerchant = () => {
       partner_id: currentMerchant?.partner?.id,
       aggregator_id: currentMerchant?.aggregator?.id,
       operator_id: currentMerchant?.operator?.id,
-      license_id:  Array.isArray(currentMerchant?.licenses) ? currentMerchant?.licenses[0]?.id : undefined,
+      license_id: Array.isArray(currentMerchant?.licenses)
+        ? currentMerchant?.licenses[0]?.id
+        : undefined,
       country: currentMerchant?.country ?? undefined,
     });
 
@@ -233,7 +235,7 @@ export const UpdateMerchant = () => {
     }
   }, [UpdateIsSuccess]);
 
-  const items: TabsProps["items"] = [
+  const items: TabsProps["items"] | any = [
     {
       key: "1",
       label: t("table.merchant_data"),
@@ -245,7 +247,7 @@ export const UpdateMerchant = () => {
           onFinish={() => UpdateMutate()}
         >
           <Row gutter={[8, 8]} style={{ width: "100%" }}>
-          <Col xs={{ span: 24 }} md={{ span: 24 }}>
+            <Col xs={{ span: 24 }} md={{ span: 24 }}>
               <Form.Item
                 label={t("table.status")}
                 name="status"
@@ -437,7 +439,6 @@ export const UpdateMerchant = () => {
                 />
               </Form.Item>
             </Col>
-           
           </Row>
 
           <Row
@@ -470,7 +471,7 @@ export const UpdateMerchant = () => {
         </Form>
       ),
     },
-    {
+    permissions.register.merchant.merchant.merchant_responsible_list && {
       key: "2",
       label: t("table.responsibles"),
       children: (
@@ -496,18 +497,21 @@ export const UpdateMerchant = () => {
                 setQuery={setResponsibleQuery}
               />
             </Col>
-            <Col xs={{ span: 24 }} md={{ span: 8 }} lg={{ span: 5 }}>
-              <Button
-                size="large"
-                style={{ width: "100%" }}
-                loading={isResponsiblesDataFetching}
-                type="dashed"
-                onClick={() => setIsCreateResponsibleOpen(true)}
-              >
-                <PlusOutlined />
-                {`${t("buttons.create")} ${t("buttons.responsible")}`}
-              </Button>
-            </Col>{" "}
+            {permissions.register.merchant.merchant
+              .merchant_responsible_create && (
+              <Col xs={{ span: 24 }} md={{ span: 8 }} lg={{ span: 5 }}>
+                <Button
+                  size="large"
+                  style={{ width: "100%" }}
+                  loading={isResponsiblesDataFetching}
+                  type="dashed"
+                  onClick={() => setIsCreateResponsibleOpen(true)}
+                >
+                  <PlusOutlined />
+                  {`${t("buttons.create")} ${t("buttons.responsible")}`}
+                </Button>
+              </Col>
+            )}
           </Row>
 
           <Col span={24}>
@@ -516,7 +520,8 @@ export const UpdateMerchant = () => {
               setCurrentItem={setCurrentResponsible}
               setQuery={setResponsibleQuery}
               actions={[
-                permissions.register.merchant.merchant.merchant_update && {
+                permissions.register.merchant.merchant
+                  .merchant_responsible_update && {
                   label: "edit",
                   icon: <EditOutlined style={{ fontSize: "20px" }} />,
                   onClick: (item) => {
@@ -531,7 +536,8 @@ export const UpdateMerchant = () => {
                     setIsUpdateResponsibleOpen(true);
                   },
                 },
-                permissions.register.merchant.merchant.merchant_update && {
+                permissions.register.merchant.merchant
+                  .merchant_responsible_delete && {
                   label: "delete",
                   icon: <DeleteOutlined style={{ fontSize: "20px" }} />,
                   onClick: () => {
@@ -631,7 +637,7 @@ export const UpdateMerchant = () => {
         </Row>
       ),
     },
-    {
+    permissions.register.merchant.merchant.merchant_files_list && {
       key: "3",
       label: t("table.attachments"),
       children: MerchantAttachmentIsLoading ? (
@@ -652,6 +658,9 @@ export const UpdateMerchant = () => {
             <Dragger
               style={{ maxHeight: "150px" }}
               listType="picture"
+              disabled={
+                !permissions.register.merchant.merchant.merchant_files_create
+              }
               multiple={false}
               onRemove={(file) => {
                 setDeleteFileId(file?.uid);
