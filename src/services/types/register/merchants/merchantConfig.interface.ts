@@ -46,3 +46,12 @@ export interface IMerchantAccountUpdate {
   merchant_id?: number;
   account_id?: number;
 }
+
+export interface IMerchantAccount {
+  merchants_ids?: (number | undefined)[] | null;
+  account_id?: number;
+  name?: string;
+  partners_ids?: (number | undefined)[] | null;
+  operators_ids?: (number | undefined)[] | null;
+  aggregators_ids?: (number | undefined)[] | null;
+}

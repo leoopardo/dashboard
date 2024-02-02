@@ -12,4 +12,6 @@ export interface IMerchantBankUpdate {
   cash_in_bank?: string;
   cash_out_bank?: string;
   partners_ids?: (number | undefined)[] | null;
+  operators_ids?: (number | undefined)[] | null;
+  aggregators_ids?: (number | undefined)[] | null;
 }

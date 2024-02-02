@@ -7,7 +7,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { Button, Form, Drawer, FormInstance, Select } from "antd";
+import { Button, Form, Drawer, FormInstance, Select, Radio, Space } from "antd";
 import CurrentAccountsSelect from "@src/components/Selects/currentAccountsSelect";
 import { useTranslation } from "react-i18next";
 import { OperatorSelect } from "@src/components/Selects/operatorSelect";
@@ -22,6 +22,7 @@ import {
 } from "@src/services/types/register/merchants/merchantsRegister.interface";
 import { useListMerchants } from "@src/services/merchant/listMerchants";
 import { queryClient } from "@src/services/queryClient";
+import { IMerchantAccount } from "@src/services/types/register/merchants/merchantConfig.interface";
 
 interface UpdateAccountsModalProps {
   open: boolean;
@@ -46,7 +47,10 @@ const UpdateAccountsModal: FC<UpdateAccountsModalProps> = ({
   const { t } = useTranslation();
   const formRef = useRef<FormInstance>(null);
   const submitRef = useRef<HTMLButtonElement>(null);
-  const [query, setQuery] = useState<any>({
+  const [entity, setEntity] = useState<
+    "all" | "aggregators" | "partners" | "operators" | "merchants"
+  >("merchants");
+  const [query, setQuery] = useState<IMerchantAccount | null>({
     merchants_ids: items?.map((merchant) => merchant?.id),
   });
 
@@ -71,6 +75,19 @@ const UpdateAccountsModal: FC<UpdateAccountsModalProps> = ({
     return newObj;
   };
 
+  const requiredFields = (field: string, value: number[] | undefined) => {
+    if (
+      query &&
+      (!query[field as keyof IMerchantAccount] ||
+        (query[field as keyof IMerchantAccount] as (number | undefined)[])
+          ?.length === 0) &&
+      (!value || (value as number[])?.length === 0)
+    ) {
+      return true;
+    }
+    return false;
+  };
+
   const { UpdateMutate, UpdateError, UpdateIsLoading, UpdateIsSuccess } =
     useUpdateMerchantAccount(removeNullAndEmptyProps(query));
 
@@ -82,8 +99,9 @@ const UpdateAccountsModal: FC<UpdateAccountsModalProps> = ({
     if (UpdateIsSuccess) {
       setOpen(false);
       formRef.current?.resetFields();
-      setQuery(null)
-      setItems(null)
+      setQuery(null);
+      setItems(null);
+      setEntity("merchants");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [UpdateIsSuccess]);
@@ -102,6 +120,7 @@ const UpdateAccountsModal: FC<UpdateAccountsModalProps> = ({
     <>
       <Button
         type="primary"
+        loading={loading}
         style={{
           height: 40,
           width: "100%",
@@ -119,6 +138,8 @@ const UpdateAccountsModal: FC<UpdateAccountsModalProps> = ({
         onClose={() => {
           setOpen(false);
           setItems(null);
+          setQuery(null);
+          setEntity("merchants");
           formRef.current?.resetFields();
         }}
         bodyStyle={{ overflowX: "hidden" }}
@@ -141,110 +162,47 @@ const UpdateAccountsModal: FC<UpdateAccountsModalProps> = ({
           ref={formRef}
           layout="vertical"
           disabled={loading}
-          initialValues={query}
+          initialValues={query || {}}
           onFinish={() => {
             UpdateMutate();
           }}
         >
-          <Form.Item
-            label={`${t(`table.aggregator`)}es`}
-            name="merchants_ids"
-            style={{ margin: 10 }}
+          <Radio.Group
+            onChange={(e) => {
+              setEntity(e.target.value);
+              setItems(null);
+              setQuery(null);
+            }}
+            value={entity}
+            style={{ marginBottom: 20 }}
           >
-            <AggregatorSelect
-              setQueryFunction={setQuery}
-              aggregatorId={query}
-              multiple
-            />
-          </Form.Item>
-
-          <Form.Item
-            label={`${t(`table.partner`)}s`}
-            name="merchants_ids"
-            style={{ margin: 10 }}
-          >
-            <PartnerSelect
-              setQueryFunction={setQuery}
-              queryOptions={query}
-              multiple
-            />
-          </Form.Item>
-
-          <Form.Item
-            label={`${t(`table.operator`)}es`}
-            name="merchants_ids"
-            style={{ margin: 10 }}
-          >
-            <OperatorSelect
-              setQueryFunction={setQuery}
-              queryOptions={query}
-              multiple
-            />
-          </Form.Item>
-
-          <Form.Item
-            label={t(`table.merchant`)}
-            name="merchants_ids"
-            style={{ margin: 10 }}
-          >
-            <Select
-              mode="multiple"
-              size="large"
-              loading={isMerchantFetching}
-              value={query?.merchants_ids}
-              onSelect={() => {
-                delete query?.name;
-                refetcMerchant();
-              }}
-              onSearch={(value) => {
-                if (value === "") {
-                  delete query?.name;
-                  refetcMerchant();
-                  return;
-                }
-
-                setQuery((state: any) => ({ ...state, name: value }));
-              }}
-              onChange={(value) => {
-                setQuery((state: any) => ({ ...state, merchants_ids: value }));
-                setItems(
-                  value.map((id: any) => {
-                    return (
-                      MerchantData?.items.find((merch) => merch?.id === id) ?? {
-                        id,
-                      }
-                    );
-                  })
-                );
-              }}
-              options={merchantsData?.items.map((merch) => {
-                return {
-                  label: merch?.name,
-                  value: merch?.id,
-                };
-              })}
-              filterOption={(input, option) => {
-                return (
-                  `${option?.label}`
-                    ?.toLowerCase()
-                    ?.indexOf(input?.toLowerCase()) >= 0
-                );
-              }}
-            />
-          </Form.Item>
+            <Space direction="vertical">
+              <Radio value="all">{t("table.all_merchants")}</Radio>
+              <Radio value="aggregators">{t("table.aggregators")}</Radio>
+              <Radio value="merchants">{t("menus.merchants")}</Radio>
+              <Radio value="partners">{t("menus.partners")}</Radio>
+              <Radio value="operators">{t("menus.operators")}</Radio>
+            </Space>
+          </Radio.Group>
 
           <Form.Item
             label={t(`table.bank_acc_number`)}
             name="account_id"
             style={{ margin: 10 }}
             rules={[
-              {
-                required: query?.account_id === undefined,
-                message:
-                  t("input.required", {
-                    field: t(`table.bank_acc_number`).toLowerCase(),
-                  }) || "",
-              },
+              () => ({
+                required: !query?.account_id,
+                validator(_, value) {
+                  if (!query?.account_id && !value) {
+                    return Promise.reject(
+                      t("input.required", {
+                        field: t(`table.bank_acc_number`).toLowerCase(),
+                      }) || ""
+                    );
+                  }
+                  return Promise.resolve();
+                },
+              }),
             ]}
           >
             <CurrentAccountsSelect
@@ -256,6 +214,178 @@ const UpdateAccountsModal: FC<UpdateAccountsModalProps> = ({
               filterIdValue={undefined}
             />
           </Form.Item>
+
+          {entity === "aggregators" && (
+            <Form.Item
+              label={`${t(`table.aggregators`)}`}
+              name="aggregators_ids"
+              style={{ margin: 10 }}
+              rules={[
+                {
+                  required:
+                    entity === "aggregators" &&
+                    (!query?.aggregators_ids ||
+                      query?.aggregators_ids?.length === 0),
+                  validator(_, value) {
+                    if(requiredFields("aggregators_ids", value)) {
+                      return Promise.reject(
+                        t("input.required", {
+                          field: t(`table.aggregator`).toLowerCase(),
+                        }) || ""
+                      );
+                    }
+                    return Promise.resolve();
+                  },
+                },
+              ]}
+            >
+              <AggregatorSelect
+                setQueryFunction={setQuery}
+                aggregatorId={query}
+                multiple
+              />
+            </Form.Item>
+          )}
+
+          {entity === "partners" && (
+            <Form.Item
+              label={`${t(`table.partner`)}s`}
+              name="partners_ids"
+              style={{ margin: 10 }}
+              rules={[
+                {
+                  required:
+                    entity === "partners" &&
+                    (!query?.partners_ids || query?.partners_ids?.length === 0),
+                  validator(_, value) {
+                    if(requiredFields("partners_ids", value)) {
+                      return Promise.reject(
+                        t("input.required", {
+                          field: t(`table.partner`).toLowerCase(),
+                        }) || ""
+                      );
+                    }
+                    return Promise.resolve();
+                  },
+                },
+              ]}
+            >
+              <PartnerSelect
+                setQueryFunction={setQuery}
+                queryOptions={query}
+                multiple
+              />
+            </Form.Item>
+          )}
+
+          {entity === "operators" && (
+            <Form.Item
+              label={`${t(`table.operators`)}`}
+              name="operators_ids"
+              style={{ margin: 10 }}
+              rules={[
+                {
+                  required:
+                    entity === "operators" &&
+                    (!query?.operators_ids ||
+                      query?.operators_ids?.length === 0),
+                  validator(_, value) {
+                    if(requiredFields("operators_ids", value)) {
+                      return Promise.reject(
+                        t("input.required", {
+                          field: t(`table.operator`).toLowerCase(),
+                        }) || ""
+                      );
+                    }
+                    return Promise.resolve();
+                  },
+                },
+              ]}
+            >
+              <OperatorSelect
+                setQueryFunction={setQuery}
+                queryOptions={query}
+                multiple
+              />
+            </Form.Item>
+          )}
+
+          {entity === "merchants" && (
+            <Form.Item
+              label={t(`table.merchant`)}
+              name="merchants_ids"
+              style={{ margin: 10 }}
+              rules={[
+                {
+                  required:
+                    entity === "merchants" &&
+                    (!query?.merchants_ids ||
+                      query?.merchants_ids?.length === 0),
+                  validator(_, value) {
+                    if(requiredFields("merchants_ids", value)) {
+                      return Promise.reject(
+                        t("input.required", {
+                          field: t(`table.merchant`).toLowerCase(),
+                        }) || ""
+                      );
+                    }
+                    return Promise.resolve();
+                  },
+                },
+              ]}
+            >
+              <Select
+                mode="multiple"
+                size="large"
+                loading={isMerchantFetching}
+                value={query?.merchants_ids}
+                onSelect={() => {
+                  delete query?.name;
+                  refetcMerchant();
+                }}
+                onSearch={(value) => {
+                  if (value === "") {
+                    delete query?.name;
+                    refetcMerchant();
+                    return;
+                  }
+
+                  setQuery((state: any) => ({ ...state, name: value }));
+                }}
+                onChange={(value) => {
+                  setQuery((state: any) => ({
+                    ...state,
+                    merchants_ids: value,
+                  }));
+                  setItems(
+                    value.map((id: any) => {
+                      return (
+                        MerchantData?.items.find(
+                          (merch) => merch?.id === id
+                        ) ?? {
+                          id,
+                        }
+                      );
+                    })
+                  );
+                }}
+                options={merchantsData?.items.map((merch) => {
+                  return {
+                    label: merch?.name,
+                    value: merch?.id,
+                  };
+                })}
+                filterOption={(input, option) => {
+                  return (
+                    `${option?.label}`
+                      ?.toLowerCase()
+                      ?.indexOf(input?.toLowerCase()) >= 0
+                  );
+                }}
+              />
+            </Form.Item>
+          )}
+
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
             <button type="submit" ref={submitRef} style={{ display: "none" }}>
               Submit

@@ -986,7 +986,11 @@
     "cryptography": "Criptografia",
     "decrypt_key": "Chave de descriptografia",
     "custom_date": "Escolher data",
-    "locked": "Bloqueado"
+    "locked": "Bloqueado",
+    "operators": "Operadores",
+    "aggregators": "Agregadores",
+    "all_merchants": "Todas as empresas",
+    "all_banks": "Todos os bancos"
   },
   "actions": {
     "details": "Detalhes",
@@ -1028,7 +1032,12 @@
     "same_to_and_from_balance": "A origem e o destino do saldo devem ser diferentes.",
     "license_not_found": "Licença não encontrada.",
     "invalid_license": "Licença inválida.",
-    "cannot_delete_license_with_merchants": "Não é possível deletar uma licença que possui empresas vinculadas."
+    "cannot_delete_license_with_merchants": "Não é possível deletar uma licença que possui empresas vinculadas.",
+    "no_banks_selected": "Nenhum banco selecionado.",
+    "disable_bank_being_used_for_cash_in": "Não é possível desabilitar entradas. Banco sendo utilizado por empresas.",
+    "disable_bank_being_used_for_cash_out": "Não é possível desabilitar saídas. Banco sendo utilizado por empresas.",
+    "disable_bank_being_used_for_fastpix_in": "Não é possível desabilitar FastPix. Banco sendo utilizado por empresas.",
+    "disable_bank_being_used": "Não é possível inativar banco. Banco sendo utilizado por empresas."
   },
   "logs": {
     "login": "Login",
