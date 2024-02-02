@@ -436,7 +436,8 @@
     "search": "Search",
     "allows_generate_qrcode": "Allows generate QRCode",
     "license_number": "License number",
-    "add_all_columns": "Add all columns"
+    "add_all_columns": "Add all columns",
+    "ip": "IP"
   },
   
   "modal": {
@@ -1028,7 +1029,8 @@
     "disable_bank_being_used_for_cash_in": "It is not possible to disable a bank that is being used for deposits.",
     "disable_bank_being_used_for_cash_out": "It is not possible to disable a bank that is being used for withdrawals.",
     "disable_bank_being_used_for_fastpix_in": "It is not possible to disable a bank that is being used for FastPix deposits.",
-    "disable_bank_being_used": "It is not possible to disable a bank that is being used."
+    "disable_bank_being_used": "It is not possible to disable a bank that is being used.",
+    "phone_must_be_a_valid_phone_number": "The phone number must be a valid phone number."
   },
   "logs": {
     "login": "Login",
