@@ -95,8 +95,9 @@ export const GeneralConfigs = () => {
     formRef.current?.setFieldsValue(data);
   }, [data]);
 
-  const items: TabsProps["items"] = [
-    {
+  const items: TabsProps["items"] | any = [
+    permissions.register.paybrokers.general_configs
+      .general_configs_update_financial && {
       key: "1",
       label: t("table.financial"),
       children: (
@@ -113,7 +114,7 @@ export const GeneralConfigs = () => {
                 name="cash_in_max_value"
                 rules={[
                   {
-                    validator:() => {
+                    validator: () => {
                       const numericValue = body?.cash_in_max_value;
 
                       if (numericValue === 0) {
@@ -121,7 +122,7 @@ export const GeneralConfigs = () => {
                           t("messages.min_value_higher_then_zero") || ""
                         );
                       }
-              
+
                       return Promise.resolve();
                     },
                   },
@@ -238,15 +239,16 @@ export const GeneralConfigs = () => {
                 name="cash_in_max_value_receive_by_different_payer"
                 rules={[
                   {
-                    validator:() => {
-                      const numericValue = body?.cash_in_max_value_receive_by_different_payer;
+                    validator: () => {
+                      const numericValue =
+                        body?.cash_in_max_value_receive_by_different_payer;
 
                       if (numericValue === 0) {
                         return Promise.reject(
                           t("messages.min_value_higher_then_zero") || ""
                         );
                       }
-              
+
                       return Promise.resolve();
                     },
                   },
@@ -278,7 +280,7 @@ export const GeneralConfigs = () => {
                 name="cash_out_max_value"
                 rules={[
                   {
-                    validator:() => {
+                    validator: () => {
                       const numericValue = body?.cash_out_max_value;
 
                       if (numericValue === 0) {
@@ -286,7 +288,7 @@ export const GeneralConfigs = () => {
                           t("messages.min_value_higher_then_zero") || ""
                         );
                       }
-              
+
                       return Promise.resolve();
                     },
                   },
@@ -317,7 +319,7 @@ export const GeneralConfigs = () => {
                 name="cash_in_max_value_by_month"
                 rules={[
                   {
-                    validator:() => {
+                    validator: () => {
                       const numericValue = body?.cash_in_max_value_by_month;
 
                       if (numericValue === 0) {
@@ -325,7 +327,7 @@ export const GeneralConfigs = () => {
                           t("messages.min_value_higher_then_zero") || ""
                         );
                       }
-              
+
                       return Promise.resolve();
                     },
                   },
@@ -356,7 +358,7 @@ export const GeneralConfigs = () => {
                 name="cash_out_max_value_by_month"
                 rules={[
                   {
-                    validator:() => {
+                    validator: () => {
                       const numericValue = body?.cash_out_max_value_by_month;
 
                       if (numericValue === 0) {
@@ -364,7 +366,7 @@ export const GeneralConfigs = () => {
                           t("messages.min_value_higher_then_zero") || ""
                         );
                       }
-              
+
                       return Promise.resolve();
                     },
                   },
@@ -402,11 +404,17 @@ export const GeneralConfigs = () => {
         !permissions.register.paybrokers.general_configs
           .general_configs_update_financial,
     },
-    {
+    permissions.register.paybrokers.general_configs
+      .general_configs_update_adminstrative && {
       key: "2",
       label: t("table.administrative"),
       children: (
-        <Form ref={formRef} layout="vertical" initialValues={data ? data : {}} onFinish={handleSubmit}>
+        <Form
+          ref={formRef}
+          layout="vertical"
+          initialValues={data ? data : {}}
+          onFinish={handleSubmit}
+        >
           <Grid
             container
             spacing={1}
@@ -570,15 +578,16 @@ export const GeneralConfigs = () => {
                 name="time_to_prevent_repeated_withdraw_minutes"
                 rules={[
                   {
-                    validator:() => {
-                      const numericValue = body?.time_to_prevent_repeated_withdraw_minutes;
+                    validator: () => {
+                      const numericValue =
+                        body?.time_to_prevent_repeated_withdraw_minutes;
 
                       if (numericValue === 0) {
                         return Promise.reject(
                           t("messages.min_value_higher_then_zero") || ""
                         );
                       }
-              
+
                       return Promise.resolve();
                     },
                   },
@@ -626,15 +635,16 @@ export const GeneralConfigs = () => {
                 name="check_last_waiting_pix_time_minutes"
                 rules={[
                   {
-                    validator:() => {
-                      const numericValue = body?.check_last_waiting_pix_time_minutes;
+                    validator: () => {
+                      const numericValue =
+                        body?.check_last_waiting_pix_time_minutes;
 
                       if (numericValue === 0) {
                         return Promise.reject(
                           t("messages.min_value_higher_then_zero") || ""
                         );
                       }
-              
+
                       return Promise.resolve();
                     },
                   },
@@ -654,15 +664,16 @@ export const GeneralConfigs = () => {
                 name="paybrokers_qr_code_expire_hours"
                 rules={[
                   {
-                    validator:() => {
-                      const numericValue = body?.paybrokers_qr_code_expire_hours;
+                    validator: () => {
+                      const numericValue =
+                        body?.paybrokers_qr_code_expire_hours;
 
                       if (numericValue === 0) {
                         return Promise.reject(
                           t("messages.min_value_higher_then_zero") || ""
                         );
                       }
-              
+
                       return Promise.resolve();
                     },
                   },
@@ -682,15 +693,16 @@ export const GeneralConfigs = () => {
                 name="time_receive_after_expire_qr_code_hours"
                 rules={[
                   {
-                    validator:() => {
-                      const numericValue = body?.time_receive_after_expire_qr_code_hours;
+                    validator: () => {
+                      const numericValue =
+                        body?.time_receive_after_expire_qr_code_hours;
 
                       if (numericValue === 0) {
                         return Promise.reject(
                           t("messages.min_value_higher_then_zero") || ""
                         );
                       }
-              
+
                       return Promise.resolve();
                     },
                   },
@@ -710,7 +722,7 @@ export const GeneralConfigs = () => {
                 name="fastpix_qr_code_expire_seconds"
                 rules={[
                   {
-                    validator:() => {
+                    validator: () => {
                       const numericValue = body?.fastpix_qr_code_expire_seconds;
 
                       if (numericValue === 0) {
@@ -718,7 +730,7 @@ export const GeneralConfigs = () => {
                           t("messages.min_value_higher_then_zero") || ""
                         );
                       }
-              
+
                       return Promise.resolve();
                     },
                   },
@@ -752,6 +764,7 @@ export const GeneralConfigs = () => {
       container
       style={{
         padding: "25px",
+        paddingTop: 0,
         display: "flex",
       }}
     >
