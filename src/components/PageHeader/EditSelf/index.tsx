@@ -124,7 +124,7 @@ export const EditSelfModal = ({
               },
               ({ getFieldValue }) => ({
                 validator(_, value) {
-                  if (!value || getFieldValue("confirmPasswprd") === value) {
+                  if (!value || getFieldValue("confirm") === value) {
                     setCantSubmit(false);
                     return Promise.resolve();
                   }
