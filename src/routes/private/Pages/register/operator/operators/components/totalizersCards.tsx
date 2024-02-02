@@ -30,7 +30,7 @@ export const TotalizersCards = (props: {
       }
     >
       {props.data?.registered_operators_totals &&
-        props.data?.registered_operators_totals > 0 && (
+        props.data?.registered_operators_totals > 0 ? (
           <Grid
             item
             xs={12}
@@ -103,7 +103,7 @@ export const TotalizersCards = (props: {
               lazyUpdate
             />
           </Grid>
-        )}
+        ) : <></>}
 
       <Grid item xs={12} md={3}>
         <Card bordered={false}>
