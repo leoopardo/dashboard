@@ -96,6 +96,7 @@ export const UpdateMerchant = () => {
     UpdateReset,
   } = useUpdateMerchant({
     ...merchantBody,
+    status: merchantBody?.status ? true : false,
     v3_id: Number(merchantBody?.v3_id) ?? undefined,
     merchant_id: location.state.id,
     aggregator_id: merchantBody?.aggregator_id ?? null,
@@ -256,6 +257,8 @@ export const UpdateMerchant = () => {
                 <Switch
                   checked={merchantBody?.status}
                   onChange={(checked) => {
+                    console.log(checked, merchantBody);
+                    
                     setMerchantBody((state) => ({
                       ...state,
                       status: checked,
