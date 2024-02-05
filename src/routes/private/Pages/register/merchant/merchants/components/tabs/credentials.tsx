@@ -208,7 +208,7 @@ export const CredentialConfigTab = (props: { id?: string }) => {
           open={isUpdateModalOpen}
           setOpen={setIsUpdateModalOpen}
           fields={[
-            { label: "name", required: false },
+            { label: "name", required: true },
             { label: "type", required: false },
           ]}
           body={updateBody}
@@ -227,7 +227,7 @@ export const CredentialConfigTab = (props: { id?: string }) => {
           open={isCreateModalOpen}
           setOpen={setIsCreateModalOpen}
           fields={[
-            { label: "name", required: false },
+            { label: "name", required: true },
             { label: "type", required: false },
           ]}
           body={createBody}
