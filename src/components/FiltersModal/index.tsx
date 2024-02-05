@@ -16,7 +16,6 @@ import {
   Segmented,
   Select,
   Slider,
-  Tooltip,
   Typography,
 } from "antd";
 import locale from "antd/locale/pt_BR";
@@ -27,6 +26,7 @@ import weekday from "dayjs/plugin/weekday";
 import moment from "moment";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useMediaQuery } from "react-responsive";
 import { useGetCities } from "../../services/states_cities/getCities";
 import { useGetStates } from "../../services/states_cities/getStates";
 import { AggregatorSelect } from "../Selects/aggregatorSelect";
@@ -89,8 +89,9 @@ export const FiltersModal = ({
   const submitRef = useRef<HTMLButtonElement>(null);
   const formRef = useRef<FormInstance>(null);
   const [rangePickerValue, setRangePickerValue] = useState<
-    "today" | "yesterday" | "this_month" | "last_month" | "custom" | undefined
+    "today" | "yesterday" | "this_month" | "custom" | undefined
   >("today");
+  const isMobile = useMediaQuery({ maxWidth: "750px" });
   const [viewDateInput, setViewDateInput] = useState<boolean>(false);
   const rangePickerRef = useRef<any>(null);
 
@@ -213,29 +214,7 @@ export const FiltersModal = ({
           .format("YYYY-MM-DDTHH:mm:00.000")
     ) {
       setRangePickerValue("this_month");
-    }
-    //  else if (
-    //   moment(new Date(query[startDateKeyName])).format(
-    //     "YYYY-MM-DDTHH:mm:00.000"
-    //   ) ===
-    //     moment(new Date())
-    //       .subtract(1, "M")
-    //       .startOf("M")
-    //       .add(3, "hours")
-    //       .format("YYYY-MM-DDTHH:mm:00.000") &&
-    //   moment(new Date(query[endDateKeyName])).format(
-    //     "YYYY-MM-DDTHH:mm:00.000"
-    //   ) ===
-    //     moment(new Date())
-    //       .startOf("M")
-    //       .startOf("day")
-    //       .add(3, "hours")
-    //       .format("YYYY-MM-DDTHH:mm:00.000")
-    // ) {
-    //   setRangePickerValue("last_month");
-    // }
-    else {
-      if (!haveInitialDate && !query[startDateKeyName] && !query[endDateKeyName]) return;
+    } else {
       if (!query[startDateKeyName] && !query[endDateKeyName]) {
         setFiltersQuery((state: any) => ({
           ...state,
@@ -354,40 +333,15 @@ export const FiltersModal = ({
                   style={{ marginBottom: 10 }}
                 >
                   <Segmented
-                    style={{ marginBottom: 8, marginLeft: -8 }}
+                    style={{ marginBottom: 8 }}
                     options={[
                       { label: t("table.today"), value: "today" },
+                      { label: t("table.yesterday"), value: "yesterday" },
+                      { label: t("table.this_month"), value: "this_month" },
                       {
-                        label: (
-                          <Tooltip title={t("table.yesterday")}>
-                            {t("table.yesterday")}
-                          </Tooltip>
-                        ),
-                        value: "yesterday",
-                      },
-                      {
-                        label: (
-                          <Tooltip title={t("table.this_month")}>
-                            {t("table.this_month")}
-                          </Tooltip>
-                        ),
-                        value: "this_month",
-                      },
-                      // {
-                      //   label: (
-                      //     <Tooltip title={t("table.last_month")}>
-                      //       {t("table.last_month_abrev")}
-                      //     </Tooltip>
-                      //   ),
-                      //   value: "last_month",
-                      // },
-                      {
+                        label: t("table.custom_date"),
                         value: "custom",
-                        icon: (
-                          <Tooltip title={t("table.custom_date")}>
-                            <CalendarOutlined /> {t("table.custom_date")}
-                          </Tooltip>
-                        ),
+                        icon: <CalendarOutlined />,
                       },
                     ]}
                     value={rangePickerValue}
@@ -431,19 +385,6 @@ export const FiltersModal = ({
                             .format("YYYY-MM-DDTHH:mm:00.000"),
                         }));
                       }
-                      if (value === "last_month") {
-                        setFiltersQuery((state: any) => ({
-                          ...state,
-                          [startDateKeyName]: moment(new Date())
-                            .subtract(1, "M")
-                            .startOf("M")
-                            .format("YYYY-MM-DDTHH:mm:00.000"),
-                          [endDateKeyName]: moment(new Date())
-                            .startOf("M")
-                            .startOf("day")
-                            .format("YYYY-MM-DDTHH:mm:00.000"),
-                        }));
-                      }
                       if (value === "custom") {
                         setTimeout(() => {
                           setViewDateInput(true);
@@ -481,6 +422,68 @@ export const FiltersModal = ({
                     >
                       <ConfigProvider locale={locale}>
                         <RangePicker
+                          presets={
+                            !isMobile
+                              ? [
+                                  {
+                                    label: t("table.today"),
+                                    value: [
+                                      dayjs().startOf("day"),
+                                      dayjs().add(1, "day").startOf("day"),
+                                    ],
+                                  },
+                                  {
+                                    label: t("table.yesterday"),
+                                    value: [
+                                      dayjs().subtract(1, "day").startOf("day"),
+                                      dayjs().startOf("day"),
+                                    ],
+                                  },
+                                  {
+                                    label: t("table.this_month"),
+                                    value: [
+                                      dayjs().startOf("M"),
+                                      dayjs()
+                                        .endOf("M")
+                                        .add(1, "D")
+                                        .startOf("day"),
+                                    ],
+                                  },
+                                  {
+                                    label: t("table.last_month"),
+                                    value: [
+                                      dayjs().subtract(1, "M").startOf("M"),
+                                      dayjs()
+                                        .subtract(1, "M")
+                                        .endOf("M")
+                                        .add(1, "D")
+                                        .startOf("day"),
+                                    ],
+                                  },
+                                  {
+                                    label: t("table.last_7"),
+                                    value: [
+                                      dayjs().add(-7, "d").startOf("day"),
+                                      dayjs().add(1, "day").startOf("day"),
+                                    ],
+                                  },
+                                  {
+                                    label: t("table.last_14"),
+                                    value: [
+                                      dayjs().add(-14, "d").startOf("day"),
+                                      dayjs().add(1, "day").startOf("day"),
+                                    ],
+                                  },
+                                  {
+                                    label: t("table.last_30"),
+                                    value: [
+                                      dayjs().add(-30, "d").startOf("day"),
+                                      dayjs().add(1, "day").startOf("day"),
+                                    ],
+                                  },
+                                ]
+                              : undefined
+                          }
                           changeOnBlur
                           ref={rangePickerRef}
                           data-test-id="range-picker-date-filter"
@@ -529,6 +532,8 @@ export const FiltersModal = ({
                                 ? endDate.format("YYYY-MM-DDTHH:mm:59.999")
                                 : null,
                             }));
+
+                            console.log(startDate);
 
                             formRef?.current?.validateFields();
                           }}
@@ -909,9 +914,15 @@ export const FiltersModal = ({
                         [filter]: `[${value}]`,
                       }));
                     }}
+                    allowClear
+                    onClear={() => {
+                      const filters = { ...filtersQuery };
+                      delete filters[filter];
+                      setFiltersQuery(filters);
+                    }}
                     showSearch
                     options={
-                      ["", ...selectOptions[filter]]?.map((option: any) => {
+                      [...selectOptions[filter]]?.map((option: any) => {
                         if (option === "") {
                           return { value: "", label: "" };
                         }
@@ -941,6 +952,12 @@ export const FiltersModal = ({
                       removeIcon={<>x</>}
                       style={{ width: "100%", height: "40px" }}
                       placeholder={t("table.status")}
+                      onClear={() => {
+                        const filters = { ...filtersQuery };
+                        delete filters[filter];
+                        setFiltersQuery(filters);
+                      }}
+                      allowClear
                       options={[
                         { value: "true", label: t("table.active") },
                         { value: "false", label: t("table.inactive") },
@@ -966,8 +983,14 @@ export const FiltersModal = ({
                           [filter]: value,
                         }));
                       }}
+                      onClear={() => {
+                        const filters = { ...filtersQuery };
+                        delete filters[filter];
+                        setFiltersQuery(filters);
+                      }}
+                      allowClear
                       options={
-                        ["", ...selectOptions[filter]]?.map((option: any) => {
+                        [...selectOptions[filter]]?.map((option: any) => {
                           if (option === "") {
                             return { value: "", label: "" };
                           }
@@ -1013,8 +1036,14 @@ export const FiltersModal = ({
                       }));
                     }}
                     showSearch
+                    onClear={() => {
+                      const filters = { ...filtersQuery };
+                      delete filters[filter];
+                      setFiltersQuery(filters);
+                    }}
+                    allowClear
                     options={
-                      ["", ...selectOptions[filter]]?.map((option: any) => {
+                      [...selectOptions[filter]]?.map((option: any) => {
                         if (option === "") {
                           return { value: "", label: "" };
                         }
@@ -1044,17 +1073,11 @@ export const FiltersModal = ({
                   style={{ marginBottom: 10 }}
                 >
                   <Select
-                    allowClear
                     data-test-id="select-default"
                     size="large"
                     style={{ width: "100%", height: "40px" }}
                     placeholder={t(`table.${filter}`)}
                     value={[filtersQuery[filter]] ?? null}
-                    onClear={() => {
-                      const filters = { ...filtersQuery };
-                      delete filters[filter];
-                      setFiltersQuery(filters);
-                    }}
                     onChange={(value) => {
                       setFiltersQuery((state: any) => ({
                         ...state,
@@ -1069,8 +1092,14 @@ export const FiltersModal = ({
                           ?.indexOf(input?.toLowerCase()) >= 0
                       );
                     }}
+                    onClear={() => {
+                      const filters = { ...filtersQuery };
+                      delete filters[filter];
+                      setFiltersQuery(filters);
+                    }}
+                    allowClear
                     options={
-                      ["", ...selectOptions[filter]]?.map((option: any) => {
+                      [...selectOptions[filter]]?.map((option: any) => {
                         if (option === "") {
                           return { value: "", label: "" };
                         }
