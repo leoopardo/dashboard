@@ -24,23 +24,21 @@ export const Toast = ({
   useEffect(() => {
     if (error) {
       toast.error(
-        errorMessage ?? (ErrorList as any)[error?.response?.data?.message]
+        (ErrorList as any)[error?.response?.data?.message].length >= 1
+          ? t(`error.${(ErrorList as any)[error?.response?.data?.message[0]]}`)
+          : errorMessage ?? (ErrorList as any)[error?.response?.data?.message]
           ? t(`error.${(ErrorList as any)[error?.response?.data?.message]}`)
-          : t(
-              "messages.action_error",
-              {
-                action: actionError,
-                id: "toast-error",
-              },
-             
-            )
+          : t("messages.action_error", {
+              action: actionError,
+              id: "toast-error",
+            })
       );
     }
     if (success) {
       toast.success(
         t("messages.action_success", {
           action: actionSuccess,
-          id: "toast-success"
+          id: "toast-success",
         })
       );
     }
