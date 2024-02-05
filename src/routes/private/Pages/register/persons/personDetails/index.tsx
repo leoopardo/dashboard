@@ -100,6 +100,7 @@ export const PersonDetails = () => {
   const { paidRows, paidRowsError, isPaidRowsFetching } =
     useGetRowsPaidDeposits(pDepositQuery);
 
+
   ////////// withdrawals --------------------
 
   const [WithdrawalsQuery, setWithdrawalsQuery] =
