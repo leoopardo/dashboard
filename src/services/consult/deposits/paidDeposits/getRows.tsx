@@ -10,7 +10,7 @@ export function useGetRowsPaidDeposits(params: paidDepositRowsQuery) {
   const { data, isFetching, error, refetch } = useQuery<
     paidDepositRowsResponse | null | undefined
   >(
-    "depositsRows",
+    "depositsPaidRows",
     async () => {
       const response = await api.get("report/pix/rows/paid-at", {
         params
