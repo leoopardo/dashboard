@@ -18,10 +18,10 @@ export const ConsultOrganizationReports = () => {
   const INITIAL_QUERY: ReportsQuery = {
     limit: 25,
     page: 1,
-    start_date: moment(new Date())
+    createdat_start: moment(new Date())
       .startOf("day")
       .format("YYYY-MM-DDTHH:mm:ss.SSS"),
-    end_date: moment(new Date())
+    createdat_end: moment(new Date())
       .add(1, "day")
       .startOf("day")
       .format("YYYY-MM-DDTHH:mm:ss.SSS"),
@@ -63,8 +63,8 @@ export const ConsultOrganizationReports = () => {
         </Grid>
         <Grid item xs={12} md={6} lg={8}>
           <FilterChips
-            startDateKeyName="start_date"
-            endDateKeyName="end_date"
+            startDateKeyName="createdat_start"
+            endDateKeyName="createdat_end"
             query={query}
             setQuery={setQuery}
           />
@@ -121,7 +121,7 @@ export const ConsultOrganizationReports = () => {
               { name: "_id", type: "id" },
               { name: "createdAt", type: "date", sort: true },
               { name: "created_by_name", type: "text" },
-                 { name: "start_date_filter", type: "date" },
+              { name: "start_date_filter", type: "date" },
               { name: "end_date_filter", type: "date" },
               { name: "rows", type: "text" },
               { name: "progress", type: "progress" },
@@ -138,13 +138,13 @@ export const ConsultOrganizationReports = () => {
           setOpen={setIsFiltersOpen}
           query={query}
           setQuery={setQuery}
-          filters={["start_date", "end_date"]}
+          filters={["createdat_start", "createdat_end"]}
           refetch={() => {
             return;
           }}
           selectOptions={{}}
-          startDateKeyName="start_date"
-          endDateKeyName="end_date"
+          startDateKeyName="createdat_start"
+          endDateKeyName="createdat_end"
           initialQuery={INITIAL_QUERY}
         />
       )}
