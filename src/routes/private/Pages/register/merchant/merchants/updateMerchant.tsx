@@ -257,8 +257,6 @@ export const UpdateMerchant = () => {
                 <Switch
                   checked={merchantBody?.status}
                   onChange={(checked) => {
-                    console.log(checked, merchantBody);
-                    
                     setMerchantBody((state) => ({
                       ...state,
                       status: checked,
