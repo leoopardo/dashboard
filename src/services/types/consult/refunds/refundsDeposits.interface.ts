@@ -7,7 +7,8 @@ export interface refundDepositsQuery {
   end_date?: string;
   status?:
     | "REFUNDED"
-    | "REFUND_TO_MERCHANT"
+    | "PAID_TO_MERCHANT"
+    | "PAID_TO_ENDUSER"
     | "ERROR"
     | "PROCESSING"
     | "PENDING"
@@ -48,6 +49,8 @@ export interface refundDepositTotal {
   processing_value: number;
   paid_to_merchant_total: number;
   paid_to_merchant_value: number;
+  paid_to_enduser_total: number;
+  paid_to_enduser_value: number;
 }
 
 export interface refundDepositRowsResponse {

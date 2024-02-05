@@ -7,7 +7,8 @@ export interface refundManualDepositsQuery {
   end_date?: string;
   status?:
     | "REFUNDED"
-    | "REFUND_TO_MERCHANT"
+    | "PAID_TO_MERCHANT"
+    | "PAID_TO_ENDUSER"
     | "ERROR"
     | "PROCESSING"
     | "PENDING"
