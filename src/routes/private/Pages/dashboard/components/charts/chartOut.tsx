@@ -75,7 +75,7 @@ export const ChartOut = ({ query }: ChartInInterface) => {
                   return moneyFormatter(Number(value) || 0);
                 },
               },
-              name: t("table.deposit_conversion"),
+              name: t("table.withdraw_conversion"),
               type: "pie",
               radius: "50%",
               data: [
