@@ -298,6 +298,7 @@ export const NewUserModal = ({
             <PartnerSelect
               queryOptions={body ?? currentUser}
               setQueryFunction={setBody}
+              notClearble
             />
           </Form.Item>
         )}
@@ -326,6 +327,7 @@ export const NewUserModal = ({
             filterIdValue={
               user?.partner_id ?? body?.partner_id ?? currentUser?.partner.id
             }
+            notClearble
           />
         </Form.Item>
 
