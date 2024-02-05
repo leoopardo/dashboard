@@ -64,6 +64,7 @@ export const RefundDepositsManual = () => {
   const { permissions } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
+  const user = queryClient.getQueryData("validate") as ValidateInterface;
   const { t } = useTranslation();
   const [query, setQuery] = useState<refundManualDepositsQuery>(INITIAL_QUERY);
   const {
@@ -343,8 +344,9 @@ export const RefundDepositsManual = () => {
                   !item?.merchant_id ||
                   !["WAITING", "ERROR"].includes(item?.status),
               },
-              permissions?.report?.chargeback?.manual_deposit_chargeback
-                ?.report_chargeback_manual_deposit_chargeback_paid_to_enduser && {
+              (user.type === 1 ||
+                permissions?.report?.chargeback?.manual_deposit_chargeback
+                  ?.report_chargeback_manual_deposit_chargeback_paid_to_enduser) && {
                 label: "pay_to_enduser",
                 icon: <UserSwitchOutlined style={{ fontSize: "18px" }} />,
                 onClick: () => setIsPayEndUserModalOpen(true),
