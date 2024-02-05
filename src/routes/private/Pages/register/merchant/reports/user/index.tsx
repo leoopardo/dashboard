@@ -55,8 +55,8 @@ export const MerchantUserReports = () => {
         </Grid>
         <Grid item xs={12} md={6} lg={8}>
           <FilterChips
-            startDateKeyName="start_date"
-            endDateKeyName="end_date"
+            startDateKeyName="createdat_start"
+            endDateKeyName="createdat_start"
             query={query}
             setQuery={setQuery}
           />
@@ -130,13 +130,13 @@ export const MerchantUserReports = () => {
           setOpen={setIsFiltersOpen}
           query={query}
           setQuery={setQuery}
-          filters={["start_date", "end_date"]}
+          filters={["createdat_start", "createdat_start"]}
           refetch={() => {
             return;
           }}
           selectOptions={{}}
-          startDateKeyName="start_date"
-          endDateKeyName="end_date"
+          startDateKeyName="createdat_start"
+          endDateKeyName="createdat_start"
           initialQuery={INITIAL_QUERY}
         />
       )}

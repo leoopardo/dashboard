@@ -60,8 +60,8 @@ export const PartnerUsersReports = () => {
         </Grid>
         <Grid item xs={12} md={6} lg={8}>
           <FilterChips
-            startDateKeyName="start_date"
-            endDateKeyName="end_date"
+            startDateKeyName="createdat_start"
+            endDateKeyName="createdat_end"
             query={query}
             setQuery={setQuery}
           />
@@ -135,13 +135,13 @@ export const PartnerUsersReports = () => {
           setOpen={setIsFiltersOpen}
           query={query}
           setQuery={setQuery}
-          filters={["start_date", "end_date"]}
+          filters={["createdat_start", "createdat_end"]}
           refetch={() => {
             return;
           }}
           selectOptions={{}}
-          startDateKeyName="start_date"
-          endDateKeyName="end_date"
+          startDateKeyName="createdat_start"
+          endDateKeyName="createdat_end"
           initialQuery={INITIAL_QUERY}
         />
       )}

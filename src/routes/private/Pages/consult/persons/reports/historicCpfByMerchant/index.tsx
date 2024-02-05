@@ -19,11 +19,11 @@ export const HistoricCpfByMerchantReports = () => {
   const INITIAL_QUERY: ReportsQuery = {
     limit: 25,
     page: 1,
-    start_date: moment(new Date())
+    createdat_start: moment(new Date())
       .startOf("day")
       .add(3, "hours")
       .format("YYYY-MM-DDTHH:mm:ss.SSS"),
-    end_date: moment(new Date())
+    createdat_end: moment(new Date())
       .add(1, "day")
       .startOf("day")
       .add(3, "hours")
@@ -65,8 +65,8 @@ export const HistoricCpfByMerchantReports = () => {
         </Grid>
         <Grid item xs={12} md={6} lg={8}>
           <FilterChips
-            startDateKeyName="start_date"
-            endDateKeyName="end_date"
+            startDateKeyName="createdat_start"
+            endDateKeyName="createdat_end"
             query={query}
             setQuery={setQuery}
           />
@@ -123,7 +123,7 @@ export const HistoricCpfByMerchantReports = () => {
               { name: "_id", type: "id", sort: true },
               { name: "createdAt", type: "date", sort: true },
               { name: "created_by_name", type: "text" },
-                 { name: "start_date_filter", type: "date" },
+              { name: "start_date_filter", type: "date" },
               { name: "end_date_filter", type: "date" },
               { name: "rows", type: "text", sort: true },
               { name: "progress", type: "progress", sort: true },
@@ -140,13 +140,13 @@ export const HistoricCpfByMerchantReports = () => {
           setOpen={setIsFiltersOpen}
           query={query}
           setQuery={setQuery}
-          filters={["start_date", "end_date"]}
+          filters={["createdat_start", "createdat_end"]}
           refetch={() => {
             return;
           }}
           selectOptions={{}}
-          startDateKeyName="start_date"
-          endDateKeyName="end_date"
+          startDateKeyName="createdat_start"
+          endDateKeyName="createdat_end"
           initialQuery={INITIAL_QUERY}
         />
       )}

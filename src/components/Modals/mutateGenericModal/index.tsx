@@ -1229,13 +1229,12 @@ export const MutateModal = ({
                       label={t(`table.${field.label}`)}
                       name={field.label}
                       style={{ margin: 10 }}
-                      help=""
                       rules={[
                         {
                           required: field.required,
                           message:
                             t("input.required", {
-                              field: t(`table.reason`),
+                              field: t(`table.reason`).toLowerCase(),
                             }) || "",
                         },
                       ]}

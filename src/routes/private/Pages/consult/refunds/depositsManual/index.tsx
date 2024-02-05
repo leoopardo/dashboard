@@ -8,6 +8,7 @@ import {
   FilterOutlined,
   ReloadOutlined,
   ShopOutlined,
+  UserSwitchOutlined,
 } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import ReplayIcon from "@mui/icons-material/Replay";
@@ -43,6 +44,7 @@ import { FiltersModal } from "../../../../../../components/FiltersModal";
 import { FilterChips } from "../../../../../../components/FiltersModal/filterChips";
 import { ViewModal } from "../components/ViewModal";
 import { TotalizersCards } from "./components/TotalizersCards";
+import { useCreatePayToEndUserRefund } from "@src/services/consult/refund/refundDepositsManual/createPayToEndUser";
 
 const INITIAL_QUERY: refundManualDepositsQuery = {
   page: 1,
@@ -62,6 +64,7 @@ export const RefundDepositsManual = () => {
   const { permissions } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
+  const user = queryClient.getQueryData("validate") as ValidateInterface;
   const { t } = useTranslation();
   const [query, setQuery] = useState<refundManualDepositsQuery>(INITIAL_QUERY);
   const {
@@ -95,7 +98,7 @@ export const RefundDepositsManual = () => {
   });
 
   useEffect(() => {
-    refetchRefundDepositManualTotal()
+    refetchRefundDepositManualTotal();
     refetchRefundDepositsManual();
   }, [query]);
 
@@ -109,6 +112,8 @@ export const RefundDepositsManual = () => {
   const [isRefundModalOpen, setIsRefundModalOpen] = useState<boolean>(false);
   const [isPayMerchantModalOpen, setIsPayMerchantModalOpen] =
     useState<boolean>(false);
+  const [isPayEndUserModalOpen, setIsPayEndUserModalOpen] =
+    useState<boolean>(false);
   const [isUpdateMerchantModalOpen, setIsUpdateMerchantModalOpen] =
     useState<boolean>(false);
   const [updateBody, setUpdateBody] = useState<UpdateMerchantRefundBody>({
@@ -116,7 +121,9 @@ export const RefundDepositsManual = () => {
   });
   const { mutate, isLoading } = useCreatePixManualRefund(currentItem?._id);
   const { isPayToMerchantLoading, mutatePayToMerchant } =
-    useCreatePayToMerchantRefund(currentItem?._id);
+    useCreatePayToMerchantRefund(currentItem?.endToEndId);
+  const { isPayToEndUserLoading, mutatePayToEndUser } =
+    useCreatePayToEndUserRefund(currentItem?.endToEndId);
   const { isDeleteLoading, mutateDelete } = useDeletePixManualRefund(
     currentItem?._id
   );
@@ -312,36 +319,41 @@ export const RefundDepositsManual = () => {
                 icon: <EyeFilled style={{ fontSize: "18px" }} />,
                 onClick: () => setIsViewModalOpen(true),
               },
-              {
+              permissions?.report?.chargeback?.manual_deposit_chargeback
+                ?.report_chargeback_manual_deposit_chargeback_validate_status && {
                 label: "refresh",
                 icon: <ReloadOutlined style={{ fontSize: "18px" }} />,
                 onClick: () => refetchRefundStatusManual(),
-                disabled: (item) =>
-                  !permissions?.report?.chargeback?.manual_deposit_chargeback
-                    ?.report_chargeback_manual_deposit_chargeback_validate_status ||
-                  item.status !== "PROCESSING",
+                disabled: (item) => item.status !== "PROCESSING",
               },
-              {
+              permissions?.report?.chargeback?.manual_deposit_chargeback
+                ?.report_chargeback_manual_deposit_chargeback_refund && {
                 label: "refund",
                 icon: <ReplayIcon style={{ fontSize: "18px" }} />,
                 onClick: () => setIsRefundModalOpen(true),
                 disabled: (item) =>
-                  !permissions?.report?.chargeback?.manual_deposit_chargeback
-                    ?.report_chargeback_manual_deposit_chargeback_refund ||
                   !item?.merchant_id ||
                   !["WAITING", "ERROR"].includes(item?.status),
               },
-              {
+              permissions?.report?.chargeback?.manual_deposit_chargeback
+                ?.report_chargeback_manual_deposit_chargeback_paid_to_merchant && {
                 label: "pay_to_merchant",
                 icon: <ShopOutlined style={{ fontSize: "18px" }} />,
                 onClick: () => setIsPayMerchantModalOpen(true),
                 disabled: (item) =>
-                  !permissions?.report?.chargeback?.manual_deposit_chargeback
-                    ?.report_chargeback_manual_deposit_chargeback_paid_to_merchant ||
                   !item?.merchant_id ||
                   !["WAITING", "ERROR"].includes(item?.status),
               },
-              {
+              (user.type === 1 ||
+                permissions?.report?.chargeback?.manual_deposit_chargeback
+                  ?.report_chargeback_manual_deposit_chargeback_paid_to_enduser) && {
+                label: "pay_to_enduser",
+                icon: <UserSwitchOutlined style={{ fontSize: "18px" }} />,
+                onClick: () => setIsPayEndUserModalOpen(true),
+                disabled: (item) => !["ERROR"].includes(item?.status),
+              },
+              permissions?.report?.chargeback?.manual_deposit_chargeback
+                ?.report_chargeback_manual_deposit_chargeback_update_merchant && {
                 label: "edit_merchant",
                 icon: <EditOutlined style={{ fontSize: "18px" }} />,
                 onClick: (item) => {
@@ -351,17 +363,13 @@ export const RefundDepositsManual = () => {
                   }));
                   setIsUpdateMerchantModalOpen(true);
                 },
-                disabled: () =>
-                  !permissions?.report?.chargeback?.manual_deposit_chargeback
-                    ?.report_chargeback_manual_deposit_chargeback_update_merchant,
               },
-              {
+              permissions?.report?.chargeback?.manual_deposit_chargeback
+                ?.report_chargeback_manual_deposit_chargeback_delete && {
                 label: "delete",
                 icon: <DeleteOutlined style={{ fontSize: "18px" }} />,
-                onClick: () => setIsPayMerchantModalOpen(true),
+                onClick: () => setIsDeleteOpen(true),
                 disabled: (item) =>
-                  !permissions?.report?.chargeback?.manual_deposit_chargeback
-                    ?.report_chargeback_manual_deposit_chargeback_delete ||
                   !["WAITING", "ERROR"].includes(item?.status),
               },
             ]}
@@ -433,6 +441,19 @@ export const RefundDepositsManual = () => {
           loading={isPayToMerchantLoading}
         />
       )}
+      {isPayEndUserModalOpen && (
+        <Confirmation
+          open={isPayEndUserModalOpen}
+          setOpen={setIsPayEndUserModalOpen}
+          submit={mutatePayToEndUser}
+          title={t("actions.pay_to_enduser")}
+          description={`${t("messages.are_you_sure", {
+            action: t("actions.pay_to_enduser").toLocaleLowerCase(),
+            itens: currentItem?._id,
+          })}`}
+          loading={isPayToEndUserLoading}
+        />
+      )}
 
       {isDeleteOpen && (
         <Confirmation
@@ -487,6 +508,7 @@ export const RefundDepositsManual = () => {
             status: [
               "REFUNDED",
               "PAID_TO_MERCHANT",
+              "PAID_TO_ENDUSER",
               "ERROR",
               "PROCESSIGN",
               "WAITING",
