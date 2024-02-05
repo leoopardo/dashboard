@@ -254,6 +254,7 @@ export const ImportBlacklist = () => {
             </Button>
             <Upload
               multiple={false}
+              accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
               style={{ minWidth: "100%", display: "none" }}
               action=""
               onRemove={() => setDataSource(initialData)}
