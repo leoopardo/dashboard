@@ -444,29 +444,29 @@ export const Mobile = (props: MobileProps) => {
                               title={item[value?.name]}
                               arrow
                             >
-                              <Avatar
-                                src={
-                                  Array.isArray(value?.name) &&
-                                  item[value?.name[0]]
-                                    ? bankListData?.itens.find(
-                                        (bank) =>
-                                          bank?.label_name
-                                            ?.split(" ")
-                                            .join("_") ===
-                                          item[value?.name[0]][value?.name[1]]
-                                      )?.icon_url ?? null
-                                    : bankListData?.itens.find(
-                                        (bank) =>
-                                          bank.label_name
-                                            ?.split(" ")
-                                            .join("_") === item[value?.name]
-                                      )?.icon_url ?? null
-                                }
-                                size="large"
-                                shape="square"
-                              >
-                                <BankOutlined />
-                              </Avatar>
+                              {item[value?.name[0]][value?.name[1]] ? (
+                                <Avatar
+                                  src={
+                                    Array.isArray(value?.name) &&
+                                    item[value?.name[0]]
+                                      ? bankListData?.itens.find(
+                                          (bank) =>
+                                            bank?.bank ===
+                                            item[value?.name[0]][value?.name[1]]
+                                        )?.icon_url ?? null
+                                      : bankListData?.itens.find(
+                                          (bank) =>
+                                            bank?.bank === item[value?.name]
+                                        )?.icon_url ?? null
+                                  }
+                                  size="large"
+                                  shape="square"
+                                >
+                                  <BankOutlined />
+                                </Avatar>
+                              ) : (
+                                "-"
+                              )}
                             </Tooltip>
                           </div>
                         </Descriptions.Item>
@@ -583,10 +583,16 @@ export const Mobile = (props: MobileProps) => {
                             {Array.isArray(value?.name) && item[value?.name[0]]
                               ? t(
                                   `table.${
-                                    item[value?.name[0]][value?.name[1]?.toString().toLowerCase()]
+                                    item[value?.name[0]][
+                                      value?.name[1]?.toString().toLowerCase()
+                                    ]
                                   }`
                                 )
-                              : t(`table.${item[value?.name]?.toString().toLowerCase()}`)}
+                              : t(
+                                  `table.${item[value?.name]
+                                    ?.toString()
+                                    .toLowerCase()}`
+                                )}
                           </Typography>
                         </Descriptions.Item>
                       );
