@@ -1424,6 +1424,11 @@
     "servicos_logs_errosSaques_exportar": "Exportar",
     "servicos_logs_errosAutenticacao_exportar": "Exportar",
     "servicos_buscarLote_saques": "Saques",
-    "servicos_buscarLote_deposito": "Depósitos"
+    "servicos_buscarLote_deposito": "Depósitos",
+    "manutencao_contasApi": "Contas API",
+    "operacoes_devolucoes_manual_pagarMerchant": "Pagar empresa",
+    "operacoes_devolucoes_manual_atualizarMerchant": "Atualizar empresa",
+    "operacoes_devolucoes_manual_pagarUsuarioFinal": "Pagar usuário final",
+    "configuracoes_contas_merchant":"Contas de empresa"
   }
 }

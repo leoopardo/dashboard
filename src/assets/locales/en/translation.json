@@ -439,11 +439,11 @@
     "add_all_columns": "Add all columns",
     "ip": "IP"
   },
-  
+
   "modal": {
     "confirm": "Confirm",
     "update": "Update",
-    "add":  "Add",
+    "add": "Add",
     "validate_token": "Validate token",
     "token_expires_in": "Token expires in",
     "resend_token_by_sms": "Resend token by SMS",
@@ -1388,6 +1388,11 @@
     "servicos_logs_errosSaques_exportar": "Export",
     "servicos_logs_errosAutenticacao_exportar": "Export",
     "servicos_buscarLote_saques": "Withdrawals",
-    "servicos_buscarLote_deposito": "Deposits"
+    "servicos_buscarLote_deposito": "Deposits",
+    "manutencao_contasApi": "API Accounts",
+    "operacoes_devolucoes_manual_pagarMerchant": "Pay merchant",
+    "operacoes_devolucoes_manual_atualizarMerchant": "Update merchant",
+    "operacoes_devolucoes_manual_pagarUsuarioFinal": "Pay end user",
+    "configuracoes_contas_merchant":"Merchant accounts"
   }
 }
