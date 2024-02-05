@@ -143,16 +143,7 @@ export const ImportBlacklist = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { readRemoteFile } = usePapaParse();
-  const initialData: DataType[] = [
-    {
-      key: "1",
-      CPF: "11111111111",
-      REASON: "Fraude",
-      DESCRIPTION: "Solicitado pelo merchant xyz",
-      MERCHANT_ID: "1",
-      CAN_BE_DELETED_ONLY_BY_ORGANIZATION: "false",
-    },
-  ];
+  const initialData: DataType[] = [];
   const [dataSource, setDataSource] = useState<DataType[]>([]);
   const [body, setBody] = useState<{ content: string }>({ content: "" });
   const { error, isLoading, isSuccess, mutate } =
