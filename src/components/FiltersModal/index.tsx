@@ -38,6 +38,7 @@ import { PartnerSelect } from "../Selects/partnerSelect";
 import { ReasonSelect } from "../Selects/reasonSelect";
 import { FilterChips } from "./filterChips";
 import { StyleWrapperDatePicker } from "./styles";
+import { getUtcOffset } from "@src/utils/getUtc";
 const { RangePicker } = DatePicker;
 
 dayjs.extend(weekday);
@@ -108,10 +109,10 @@ export const FiltersModal = ({
       page: null,
       limit: null,
       [startDateKeyName]: query[startDateKeyName]
-        ? moment(query[startDateKeyName]).subtract(3, "hours")
+        ? moment(query[startDateKeyName]).toString()
         : null,
       [endDateKeyName]: query[endDateKeyName]
-        ? moment(query[endDateKeyName]).subtract(3, "hours")
+        ? moment(query[endDateKeyName]).toString()
         : null,
     });
   }, [query]);
@@ -165,7 +166,7 @@ export const FiltersModal = ({
       ) ===
         moment(new Date())
           .startOf("day")
-          .add(3, "hours")
+          .utc()
           .format("YYYY-MM-DDTHH:mm:00.000") &&
       moment(new Date(query[endDateKeyName])).format(
         "YYYY-MM-DDTHH:mm:00.000"
@@ -173,7 +174,7 @@ export const FiltersModal = ({
         moment(new Date())
           .add(1, "day")
           .startOf("day")
-          .add(3, "hours")
+          .utc()
           .format("YYYY-MM-DDTHH:mm:00.000")
     ) {
       setRangePickerValue("today");
@@ -184,14 +185,14 @@ export const FiltersModal = ({
         moment(new Date())
           .subtract(1, "day")
           .startOf("day")
-          .add(3, "hours")
+          .utc()
           .format("YYYY-MM-DDTHH:mm:00.000") &&
       moment(new Date(query[endDateKeyName])).format(
         "YYYY-MM-DDTHH:mm:00.000"
       ) ===
         moment(new Date())
           .startOf("day")
-          .add(3, "hours")
+          .utc()
           .format("YYYY-MM-DDTHH:mm:00.000")
     ) {
       setRangePickerValue("yesterday");
@@ -201,7 +202,7 @@ export const FiltersModal = ({
       ) ===
         moment(new Date())
           .startOf("M")
-          .add(3, "hours")
+          .utc()
           .format("YYYY-MM-DDTHH:mm:00.000") &&
       moment(new Date(query[endDateKeyName])).format(
         "YYYY-MM-DDTHH:mm:00.000"
@@ -210,7 +211,7 @@ export const FiltersModal = ({
           .endOf("M")
           .add(1, "day")
           .startOf("day")
-          .add(3, "hours")
+          .utc()
           .format("YYYY-MM-DDTHH:mm:00.000")
     ) {
       setRangePickerValue("this_month");
@@ -280,17 +281,15 @@ export const FiltersModal = ({
         <Grid item xs={12}>
           <FilterChips
             data-test-id="filter-chips"
-            query={
-              {
-                ...filtersQuery,
-                [startDateKeyName]: filtersQuery[startDateKeyName]
-                  ? moment(filtersQuery[startDateKeyName]).add(3, "hours")
-                  : undefined,
-                [endDateKeyName]: filtersQuery[endDateKeyName]
-                  ? moment(filtersQuery[endDateKeyName]).add(3, "hours")
-                  : undefined,
-              } || query
-            }
+            query={{
+              ...filtersQuery,
+              [startDateKeyName]: filtersQuery[startDateKeyName]
+                ? moment(new Date(filtersQuery[startDateKeyName])).utc().toString()
+                : undefined,
+              [endDateKeyName]: filtersQuery[endDateKeyName]
+                ? moment(new Date(filtersQuery[endDateKeyName])).utc().toString()
+                : undefined,
+            }}
             setQuery={setQuery}
             startDateKeyName={startDateKeyName}
             endDateKeyName={endDateKeyName}
@@ -310,12 +309,12 @@ export const FiltersModal = ({
             ...filtersQuery,
             [startDateKeyName]: filtersQuery[startDateKeyName]
               ? moment(filtersQuery[startDateKeyName])
-                  .add(3, "hours")
+                  .utc()
                   .format("YYYY-MM-DDTHH:mm:00.000")
               : undefined,
             [endDateKeyName]: filtersQuery[endDateKeyName]
               ? moment(filtersQuery[endDateKeyName])
-                  .add(3, "hours")
+                  .utc()
                   .format("YYYY-MM-DDTHH:mm:00.000")
               : undefined,
             page: 1,
@@ -499,14 +498,25 @@ export const FiltersModal = ({
                           showTime
                           value={[
                             filtersQuery[startDateKeyName]
-                              ? dayjs(filtersQuery[startDateKeyName])
+                              ? dayjs(
+                                  moment(
+                                    new Date(filtersQuery[startDateKeyName])
+                                  )
+                                    .add(getUtcOffset(), "hours")
+                                    .toString()
+                                )
                               : dayjs(
                                   moment(new Date())
                                     .startOf("day")
                                     .format("YYYY-MM-DDTHH:mm:00.000")
                                 ),
                             filtersQuery[endDateKeyName]
-                              ? dayjs(filtersQuery[endDateKeyName])
+                              ? dayjs(
+                                  moment(new Date(filtersQuery[endDateKeyName]))
+                                    .add(getUtcOffset(), "hours")
+                                    .toString()
+                                    .toString()
+                                )
                               : dayjs(
                                   moment(new Date())
                                     .add(1, "day")

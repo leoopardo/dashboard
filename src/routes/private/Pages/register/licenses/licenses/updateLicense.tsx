@@ -204,7 +204,6 @@ export const UpdateLicense = () => {
                           ),
                           end_validity_date: dayjs(
                             dayjs(value[1]?.$d)
-                              .add(3, "hours")
                               .format("YYYY-MM-DDTHH:mm:00.000")
                           ),
                         }));

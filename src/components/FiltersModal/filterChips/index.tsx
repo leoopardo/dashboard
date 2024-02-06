@@ -104,7 +104,7 @@ export const FilterChips = ({
       ...q,
     });
   }, [query]);
-  
+
   return (
     <Row gutter={[4, 4]} wrap style={{ width: "100%" }}>
       {Object.keys(filtersQuery).map((key) => {
@@ -135,13 +135,13 @@ export const FilterChips = ({
                         if (haveInitialDate) {
                           q[key] = moment(new Date())
                             .startOf("day")
-                            .add(3, "hours")
+                            .utc()
                             .format("YYYY-MM-DDTHH:mm:ss.SSS");
 
                           q[endDateKeyName] = moment(new Date())
                             .add(1, "day")
                             .startOf("day")
-                            .add(3, "hours")
+                            .utc()
                             .format("YYYY-MM-DDTHH:mm:ss.SSS");
                         }
                         setQuery(q);
@@ -150,19 +150,19 @@ export const FilterChips = ({
                   }
                 >
                   {t(`table.date`)}:{" "}
-                  {`${moment(filtersQuery[key])
-                    .subtract(3, "hours")
-                    .format(
-                      navigator.language === "pt-BR"
-                        ? "DD/MM/YYYY HH:mm"
-                        : "YYYY/MM/DD HH:mm"
-                    )} - ${moment(filtersQuery[endDateKeyName])
-                    .subtract(3, "hours")
-                    .format(
-                      navigator.language === "pt-BR"
-                        ? "DD/MM/YYYY HH:mm"
-                        : "YYYY/MM/DD HH:mm"
-                    )} `}
+                  {`${`${new Date(
+                    query[startDateKeyName] &&
+                      `${query[startDateKeyName]?.split("Z")[0]}Z`
+                  ).toLocaleDateString()} ${new Date(
+                    query[startDateKeyName] &&
+                      `${query[startDateKeyName]?.split("Z")[0]}Z`
+                  ).toLocaleTimeString()}`} - ${`${new Date(
+                    query[endDateKeyName] &&
+                      `${query[endDateKeyName]?.split("Z")[0]}Z`
+                  ).toLocaleDateString()} ${new Date(
+                    query[endDateKeyName] &&
+                      `${query[endDateKeyName]?.split("Z")[0]}Z`
+                  ).toLocaleTimeString()}`} `}
                 </Tag>
               </Col>
             ) : (
@@ -389,31 +389,28 @@ export const FilterChips = ({
               </Col>
             );
 
-            case "locked":
-              return (
-                <Col key={key}>
-                  <Tag
-                    data-test-id="filter-chip-status"
-                    style={{
-                      width: "100%",
-                      textOverflow: "ellipsis",
-                      overflow: "hidden",
-                      wordBreak: "break-all",
-                      display: disabled?.includes(key) ? "none" : undefined,
-                    }}
-                    key={key}
-                    color="cyan"
-                    icon={
-                      <CloseCircleOutlined onClick={() => deleteFilter(key)} />
-                    }
-                  >
-                    {t(`table.${key}`)}:{" "}
-                    {t(
-                      `table.${filtersQuery[key]}`
-                    )}
-                  </Tag>
-                </Col>
-              );
+          case "locked":
+            return (
+              <Col key={key}>
+                <Tag
+                  data-test-id="filter-chip-status"
+                  style={{
+                    width: "100%",
+                    textOverflow: "ellipsis",
+                    overflow: "hidden",
+                    wordBreak: "break-all",
+                    display: disabled?.includes(key) ? "none" : undefined,
+                  }}
+                  key={key}
+                  color="cyan"
+                  icon={
+                    <CloseCircleOutlined onClick={() => deleteFilter(key)} />
+                  }
+                >
+                  {t(`table.${key}`)}: {t(`table.${filtersQuery[key]}`)}
+                </Tag>
+              </Col>
+            );
 
           case "status":
             return (

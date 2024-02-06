@@ -60,11 +60,11 @@ export const AggregatorSelfExclusion = () => {
     document: "",
     start_date: moment(new Date())
       .startOf("day")
-      .add(3, "hours")
+      .utc()
       .format("YYYY-MM-DDTHH:mm:ss.SSS"),
     end_date: moment(new Date())
       .endOf("day")
-      .add(3, "hours")
+      .utc()
       .format("YYYY-MM-DDTHH:mm:ss.SSS"),
   };
   const [body, setBody] = useState<CreateSelfExclusion>(initialBody);

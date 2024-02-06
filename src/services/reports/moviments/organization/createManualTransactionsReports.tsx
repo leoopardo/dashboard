@@ -14,12 +14,12 @@ export function useCreateOrganizationManualReports(body: GetMovimentsQuery) {
         ...body,
         start_date: body.start_date
           ? moment(body.start_date)
-              .add(3, "hours")
+              .utc()
               .format("YYYY-MM-DDTHH:mm:ss.SSS")
           : null,
         end_date: body.end_date
           ? moment(body.end_date)
-              .add(3, "hours")
+              .utc()
               .format("YYYY-MM-DDTHH:mm:ss.SSS")
           : null,
       },
