@@ -216,6 +216,7 @@ export const FiltersModal = ({
       setRangePickerValue("this_month");
     } else {
       if (!query[startDateKeyName] && !query[endDateKeyName]) {
+        if (!haveInitialDate) return;
         setFiltersQuery((state: any) => ({
           ...state,
           [startDateKeyName]: moment(new Date())
