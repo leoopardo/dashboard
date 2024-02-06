@@ -15,4 +15,5 @@ export const ErrorList = {
   ["BANK BEING USED FOR FASTPIX IN"]: "disable_bank_being_used_for_fastpix_in",
   ["BANK BEING USED"]: "disable_bank_being_used",
   ["cellphone must be a valid phone number"]: "phone_must_be_a_valid_phone_number",
+  ["Forbidden resource"]: "forbidden_resource",
 };
