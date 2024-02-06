@@ -94,7 +94,7 @@ export const Persons = () => {
     useUpdatePartner(updateBody);
 
   const columns: ColumnInterface[] = [
-    { name: "cpf", type: "cpf" },
+    { name: "cpf", type: "document" },
     { name: "situation_text", type: "text" },
     { name: "name", type: "text" },
     { name: "birth_date", type: "birth" },
