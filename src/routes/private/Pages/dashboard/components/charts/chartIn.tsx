@@ -3,11 +3,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useTheme } from "@src/contexts/ThemeContext";
 import { useGetTotalGeneratedDeposits } from "@src/services/consult/deposits/generatedDeposits/getTotal";
-import { generatedDepositTotalQuery } from "@src/services/types/consult/deposits/generatedDeposits.interface";
 import { moneyFormatter } from "@src/utils/moneyFormatter";
 import { Card, Typography } from "antd";
 import ReactECharts from "echarts-for-react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 interface ChartInInterface {
@@ -16,8 +15,9 @@ interface ChartInInterface {
 
 export const ChartIn = ({ query }: ChartInInterface) => {
   const { t } = useTranslation();
-  const [formatedQuery, setFormatedQuery] =
-    useState<generatedDepositTotalQuery>({
+
+  const { depositsTotal, isDepositsTotalFetching, refetchDepositsTotal } =
+    useGetTotalGeneratedDeposits({
       ...query,
       start_date: undefined,
       end_date: undefined,
@@ -25,16 +25,7 @@ export const ChartIn = ({ query }: ChartInInterface) => {
       final_date: query?.end_date,
     });
 
-  const { depositsTotal, isDepositsTotalFetching, refetchDepositsTotal } =
-    useGetTotalGeneratedDeposits(formatedQuery);
   useEffect(() => {
-    setFormatedQuery({
-      ...query,
-      start_date: undefined,
-      end_date: undefined,
-      initial_date: query?.start_date,
-      final_date: query?.end_date,
-    });
     refetchDepositsTotal();
   }, [query]);
   const { theme } = useTheme();
