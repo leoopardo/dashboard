@@ -62,7 +62,6 @@ export const GeneratedWithdrawals = () => {
   const [query, setQuery] =
     useState<generatedWithdrawalsRowsQuery>(INITIAL_QUERY);
 
-    console.log({query})
   const {
     WithdrawalsTotal,
     isWithdrawalsTotalFetching,
