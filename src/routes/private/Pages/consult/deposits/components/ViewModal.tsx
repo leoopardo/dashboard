@@ -238,11 +238,12 @@ export const ViewModal = (props: ViewModalProps) => {
                             textAlign: "center",
                           }}
                         >
-                          {`${new Date(
-                            deposit[key]
-                          ).toLocaleDateString()} ${new Date(
-                            deposit[key]
-                          ).toLocaleTimeString()}`}
+                          {`${new Date(deposit[key]).toLocaleDateString(
+                            "pt-BR",
+                            {
+                              timeZone: "UTC",
+                            }
+                          )}`}
                         </Descriptions.Item>
                       );
                     case "buyer_city":

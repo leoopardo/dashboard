@@ -402,11 +402,12 @@ export const ViewModal = (props: ViewModalProps) => {
                             textAlign: "center",
                           }}
                         >
-                          {`${new Date(
-                            withdraw[key]
-                          ).toLocaleDateString()} ${new Date(
-                            withdraw[key]
-                          ).toLocaleTimeString()}`}
+                           {`${new Date(withdraw[key]).toLocaleDateString(
+                            "pt-BR",
+                            {
+                              timeZone: "UTC",
+                            }
+                          )}`}
                         </Descriptions.Item>
                       );
                     case "receiver_name":
