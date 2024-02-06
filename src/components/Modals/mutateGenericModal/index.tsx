@@ -286,12 +286,12 @@ export const MutateModal = ({
                               ...state,
                               start_date: startDate
                                 ? moment(startDate)
-                                    .add(3, "hours")
+                                    .utc()
                                     .format("YYYY-MM-DDTHH:mm:00.000")
                                 : null,
                               end_date: endDate
                                 ? endDate
-                                    .add(3, "hours")
+                                    .utc()
                                     .format("YYYY-MM-DDTHH:mm:59.999")
                                 : null,
                             }));
@@ -352,7 +352,7 @@ export const MutateModal = ({
                               ),
                               end_validity_date: dayjs(
                                 moment(value[1]?.$d)
-                                  .add(3, "hours")
+                                  .utc()
                                   .format("YYYY-MM-DDTHH:mm:00.000")
                               ),
                             }));

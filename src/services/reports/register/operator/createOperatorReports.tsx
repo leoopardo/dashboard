@@ -8,7 +8,7 @@ export function useCreateOperatorReports(body: OperatorQuery) {
     OperatorQuery | null | undefined
   >("CreateOperatorReports", async () => {
     const response = await api.post("report/csv/operator", body, {
-      params: body,
+     
     });
     await queryClient.refetchQueries({ queryKey: ["OperatorsReports"] });
     return response.data;

@@ -314,8 +314,8 @@ export const CustomTable = (props: TableProps) => {
                   <Typography
                     key={column?.name}
                     style={{ width: "100%", textAlign: "center", minWidth: 50 }}
-                  >{`${new Date(text).toLocaleDateString()} ${new Date(
-                    text
+                  >{`${new Date(`${text.split("Z")[0]}Z`).toLocaleDateString()} ${new Date(
+                    `${text.split("Z")[0]}Z`
                   ).toLocaleTimeString()}`}</Typography>
                 ) : (
                   <Typography

@@ -48,12 +48,12 @@ export const GeneratedWithdrawals = () => {
     limit: 25,
     initial_date: moment(new Date())
       .startOf("day")
-      .add(3, "hours")
+      .utc()
       .format("YYYY-MM-DDTHH:mm:ss.SSS"),
     final_date: moment(new Date())
       .add(1, "day")
       .startOf("day")
-      .add(3, "hours")
+      .utc()
       .format("YYYY-MM-DDTHH:mm:ss.SSS"),
     status: "PAID",
   };

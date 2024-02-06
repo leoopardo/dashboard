@@ -7,9 +7,7 @@ export function useCreateAggregatorReports(body: AggregatorQuery) {
   const { isLoading, error, mutate, isSuccess, reset } = useMutation<
     AggregatorQuery | null | undefined
   >("CreateAggregatorReports", async () => {
-    const response = await api.post("report/csv/aggregator", body, {
-      params: body,
-    });
+    const response = await api.post("report/csv/aggregator", body, {});
     await queryClient.refetchQueries({ queryKey: ["AggregatorReports"] });
     return response.data;
   });
