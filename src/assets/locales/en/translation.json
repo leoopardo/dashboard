@@ -1034,7 +1034,8 @@
     "disable_bank_being_used_for_cash_out": "It is not possible to disable a bank that is being used for withdrawals.",
     "disable_bank_being_used_for_fastpix_in": "It is not possible to disable a bank that is being used for FastPix deposits.",
     "disable_bank_being_used": "It is not possible to disable a bank that is being used.",
-    "phone_must_be_a_valid_phone_number": "The phone number must be a valid phone number."
+    "phone_must_be_a_valid_phone_number": "The phone number must be a valid phone number.",
+    "forbidden_resource": "This user does not have permission to perform this function. Please contact support."
   },
   "logs": {
     "login": "Login",
