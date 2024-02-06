@@ -1260,7 +1260,9 @@ export const CustomTable = (props: TableProps) => {
                   pageSize: Number(props?.query?.limit ?? 25),
                   showTotal: (total, range) => {
                     return props.removeTotal
-                      ? `${range[0]} - ${range[1]}`
+                      ? `${range[0]} - ${props?.items?.length < props?.data?.limit
+                        ? props?.data?.limit * props?.data?.page
+                        : props?.data?.limit * props?.data?.page + 1}`
                       : `${range[0]} - ${range[1]} de ${total}`;
                   },
                   total: props.removeTotal

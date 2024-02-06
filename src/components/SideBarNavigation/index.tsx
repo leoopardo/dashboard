@@ -2701,7 +2701,7 @@ export const SidebarNavigation = () => {
                   false,
                   undefined,
                   {
-                    display: permissions?.report?.person?.check_cpf?.menu
+                    display: permissions?.report?.person?.check_cpf?.report_person_check_cpf_list
                       ? undefined
                       : "none",
                   },
