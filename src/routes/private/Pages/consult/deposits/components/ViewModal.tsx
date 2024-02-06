@@ -179,7 +179,6 @@ export const ViewModal = (props: ViewModalProps) => {
                           >
                             <QRCode
                               value={deposit[key] || "-"}
-                              icon={import.meta.env.VITE_APP_ICON}
                               errorLevel="L"
                               type="canvas"
                               style={{ marginBottom: "5px" }}
