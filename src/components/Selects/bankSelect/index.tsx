@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useListBanks } from "@src/services/bank/listBanks";
 import { Avatar, Empty, Select } from "antd";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { MerchantQuery } from "../../../services/types/register/merchants/merchants.interface";
 
