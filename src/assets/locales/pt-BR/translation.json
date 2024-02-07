@@ -230,8 +230,8 @@
     "export_csv": "Gerar relatório CSV",
     "no_records_to_export": "Não há registros para gerar um CSV",
     "20_minutes_consult": "Consulta realizada a mais de 20 minutos",
-    "validate_phone_text": "Seu telefone ainda não foi validado, este primeiro token realizará a validação do seu número. Após isso receberá um token para confirmar a ação realizada.",
-    "validate_text": "Insira o token para confirmar a ação",
+    "validate_phone_text": "Seu telefone ainda não foi validado, este primeiro token realizará a validação do número com final {{phone}}. Após isso receberá um token para confirmar a ação realizada.",
+    "validate_text": "Insira o token enviado para o telefone com final {{phone}} para confirmar a ação",
     "forgot_password": "Esqueci minha senha",
     "preview_csv": "Prévia do CSV",
     "preview_file": "arquivo prévia",
@@ -239,7 +239,7 @@
     "scrool_top": "Voltar ao topo",
     "operations_number_chart_area": "Gráfico de número de operações",
     "operation_approve": "Deseja aprovar os lançamentos selecionados?",
-    "no_cellphone": "Você deve adicionar um número de telefone ao seu usuário. Para isso, acesse 'Editar usuário' no canto superior esquerdo da tela.",
+    "no_cellphone": "Você deve adicionar um número de telefone ao seu usuário. Selecione o Telefone e em seguida valide o token.",
     "10000": "Operação realizada com sucesso",
     "10001": "Transação não paga",
     "10002": "Transação paga, notificação enviada...",
@@ -1434,6 +1434,6 @@
     "operacoes_devolucoes_manual_pagarMerchant": "Pagar empresa",
     "operacoes_devolucoes_manual_atualizarMerchant": "Atualizar empresa",
     "operacoes_devolucoes_manual_pagarUsuarioFinal": "Pagar usuário final",
-    "configuracoes_contas_merchant":"Contas de empresa"
+    "configuracoes_contas_merchant": "Contas de empresa"
   }
 }
