@@ -5,6 +5,7 @@ import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { queryClient } from "@src/services/queryClient";
 import { ValidateInterface } from "@src/services/types/validate.interface";
+import { getUtcOffset } from "@src/utils/getUtc";
 import {
   Button,
   Checkbox,
@@ -38,7 +39,6 @@ import { PartnerSelect } from "../Selects/partnerSelect";
 import { ReasonSelect } from "../Selects/reasonSelect";
 import { FilterChips } from "./filterChips";
 import { StyleWrapperDatePicker } from "./styles";
-import { getUtcOffset } from "@src/utils/getUtc";
 const { RangePicker } = DatePicker;
 
 dayjs.extend(weekday);
@@ -109,10 +109,10 @@ export const FiltersModal = ({
       page: null,
       limit: null,
       [startDateKeyName]: query[startDateKeyName]
-        ? moment(query[startDateKeyName]).toString()
+        ? moment(query[startDateKeyName]).add(getUtcOffset(), "hours").toString()
         : null,
       [endDateKeyName]: query[endDateKeyName]
-        ? moment(query[endDateKeyName]).toString()
+        ? moment(query[endDateKeyName]).add(getUtcOffset(), "hours").toString()
         : null,
     });
   }, [query]);
@@ -502,7 +502,6 @@ export const FiltersModal = ({
                                   moment(
                                     new Date(filtersQuery[startDateKeyName])
                                   )
-                                    .add(getUtcOffset(), "hours")
                                     .toString()
                                 )
                               : dayjs(
@@ -513,7 +512,6 @@ export const FiltersModal = ({
                             filtersQuery[endDateKeyName]
                               ? dayjs(
                                   moment(new Date(filtersQuery[endDateKeyName]))
-                                    .add(getUtcOffset(), "hours")
                                     .toString()
                                     .toString()
                                 )
