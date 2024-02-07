@@ -126,7 +126,7 @@ export const MerchantsBlacklistUploads = () => {
                 },
               },
             ]}
-            label={["bank_name", "receiver_name", "pix_key"]}
+            label={["created_by_name", "createdAt"]}
           />
         </Grid>
       </Grid>

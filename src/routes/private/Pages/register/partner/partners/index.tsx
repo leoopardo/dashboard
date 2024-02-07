@@ -312,7 +312,7 @@ export const Partners = () => {
               },
             ]}
             loading={isPartnersDataFetching}
-            label={["name", "description"]}
+            label={["name"]}
           />
         </Grid>
       </Grid>
