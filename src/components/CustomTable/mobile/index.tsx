@@ -444,7 +444,7 @@ export const Mobile = (props: MobileProps) => {
                               title={item[value?.name]}
                               arrow
                             >
-                              {item[value?.name[0]][value?.name[1]] ? (
+                              {value?.name.length === 2 ? (
                                 <Avatar
                                   src={
                                     Array.isArray(value?.name) &&
@@ -465,7 +465,17 @@ export const Mobile = (props: MobileProps) => {
                                   <BankOutlined />
                                 </Avatar>
                               ) : (
-                                "-"
+                                <Avatar
+                                  src={
+                                    bankListData?.itens.find(
+                                      (bank) => bank?.bank === item[value?.name]
+                                    )?.icon_url ?? null
+                                  }
+                                  size="large"
+                                  shape="square"
+                                >
+                                  <BankOutlined />
+                                </Avatar>
                               )}
                             </Tooltip>
                           </div>
