@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useListBanks } from "@src/services/bank/listBanks";
 import { Avatar, Empty, Select } from "antd";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { MerchantQuery } from "../../../services/types/register/merchants/merchants.interface";
 
@@ -28,17 +28,23 @@ export const BanksSelect = ({
     limit: 200,
   });
   const { bankListData } = useListBanks(query);
-  const [value, setValue] = useState<any>(null);
-
-  useEffect(() => {
+  const [value, setValue] = useState<any>(
+    field
+      ? bankListData?.itens?.find(
+          (bank) => bank?.label_name === queryOptions[field]
+        )?.label_name
+      : null
+  );
+  /* useEffect(() => {
     if (field) {
+      console.log('aqui', queryOptions[field])
       setValue(
         bankListData?.itens?.find(
           (bank) => bank?.label_name === queryOptions[field]
         )?.label_name
       );
     }
-  }, [bankListData, queryOptions, field]);
+  }, [bankListData, queryOptions, field]); */
 
   return (
     <Select
