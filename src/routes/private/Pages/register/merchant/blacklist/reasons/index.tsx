@@ -56,7 +56,6 @@ export const MerchantBlacklistReasons = () => {
     { name: "create_user_name", type: "text" },
     { name: "merchant_name", type: "text" },
     { name: "reason_name", head: "reason", type: "text", sort: true },
-    { name: "create_user_name", type: "text" },
     { name: "createdAt", type: "date", sort: true },
   ];
 
@@ -154,7 +153,7 @@ export const MerchantBlacklistReasons = () => {
             refetch={refetchMerchantBlacklistData}
             disableActions
             loading={isMerchantBlacklistDataFetching}
-            label={["cpf", "merchant_name"]}
+            label={[ "merchant_name", "reason_name"]}
             actions={[{}]}
           />
         </Grid>
