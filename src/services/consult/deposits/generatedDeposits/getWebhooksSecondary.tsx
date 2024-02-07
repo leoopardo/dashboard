@@ -13,7 +13,7 @@ export function useGetDepositWebhooks2(id: string, params: WebhooksQuery) {
     "webhooks2",
     async () => {
       const response = await api.get(
-        `report/logs/webhooks/pix/secondary${id}`,
+        `report/logs/webhooks/pix/secondary/${id}`,
         {
           params,
         }
