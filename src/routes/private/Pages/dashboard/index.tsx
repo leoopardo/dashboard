@@ -369,6 +369,7 @@ export const Dashboard = () => {
               marginRight: "-40px",
               paddingBottom: 20,
               paddingTop: 20,
+              marginTop: 8,
               paddingLeft: 8,
               paddingRight: 8,
             }}
