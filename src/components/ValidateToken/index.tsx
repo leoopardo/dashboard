@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Grid } from "@mui/material";
-import { Button, Modal, Typography, message } from "antd";
+import { Button, Col, Modal, Row, Typography, message } from "antd";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import OTPInput from "react-otp-input";
@@ -9,6 +9,8 @@ import { useGetSelf } from "../../services/getSelf";
 import { useValidatePhone } from "../../services/sendValidationPhone";
 import { useValidateToken } from "../../services/sendValidationToken";
 import Countdown from "../countdown";
+import { CellphoneInput } from "../Inputs/CellphoneInput";
+import { useUpdateSelf } from "@src/services/getSelf/update";
 
 interface ValidateTokenProps {
   open: boolean;
@@ -43,6 +45,12 @@ export const ValidateToken = ({
     useState<boolean>(false);
   const [validationPhoneSent, setValidationPhoneSent] =
     useState<boolean>(false);
+  const [phone, setPhone] = useState<{ cellphone: string | undefined }>({
+    cellphone: undefined,
+  });
+  const { mutate } = useUpdateSelf({
+    cellphone: phone.cellphone,
+  });
   const [loading, setLoading] = useState<boolean>(false);
   const [validateBody, setValidateBody] = useState<{
     action: string;
@@ -253,7 +261,12 @@ export const ValidateToken = ({
         </Grid>,
       ]}
     >
-      <Typography.Text>{t("messages.validate_text")}</Typography.Text>
+      <Typography.Text>
+        {t("messages.validate_text", {
+          phone: Self?.cellphone?.substring(10, 14),
+        })}
+        .
+      </Typography.Text>
       <Grid
         container
         justifyContent="center"
@@ -349,7 +362,7 @@ export const ValidateToken = ({
     >
       {Self?.cellphone || editSelf ? (
         <>
-          <Typography.Text>{t("messages.validate_phone_text")}</Typography.Text>
+          <Typography.Text>{t("messages.validate_phone_text", {phone: Self?.cellphone?.substring(10, 14)})}</Typography.Text>
           <Grid
             container
             justifyContent="center"
@@ -404,12 +417,20 @@ export const ValidateToken = ({
       centered
       title={t("modal.validate_phone_number")}
       open={open}
+      onOk={() => mutate()}
       onCancel={() => {
         setIsOpen(false);
         setValidationPhoneSent(false);
         setValidationTokenSent(false);
         setValidateBody({ action, cellphone: undefined });
       }}
-    ></Modal>
+    >
+      {t("messages.no_cellphone")}
+      <Row style={{ marginTop: 16, paddingBottom: 8 }}>
+        <Col span={24}>
+          <CellphoneInput body={phone} setBody={setPhone} />
+        </Col>
+      </Row>
+    </Modal>
   );
 };
