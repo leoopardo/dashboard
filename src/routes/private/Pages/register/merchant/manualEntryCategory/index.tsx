@@ -167,7 +167,7 @@ export const MerchantManualEntryCategory = () => {
             error={categoryDataError}
             columns={columns}
             loading={isCategoryDataFetching}
-            label={["name", "username"]}
+            label={["name", "description"]}
             refetch={refetchCategoryData}
             actions={[
               permissions.register.merchant.release_category

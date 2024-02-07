@@ -159,7 +159,7 @@ export const MerchantFeePlans = () => {
             error={feePlansDataError}
             columns={columns}
             loading={isFeePlansDataFetching}
-            label={["name", "username"]}
+            label={["name"]}
             refetch={refetchFeePlansData}
             actions={[
               {
