@@ -314,8 +314,8 @@ export const CustomTable = (props: TableProps) => {
                   <Typography
                     key={column?.name}
                     style={{ width: "100%", textAlign: "center", minWidth: 50 }}
-                  >{`${new Date(text).toLocaleDateString()} ${new Date(
-                    text
+                  >{`${new Date(`${text.split("Z")[0]}Z`).toLocaleDateString()} ${new Date(
+                    `${text.split("Z")[0]}Z`
                   ).toLocaleTimeString()}`}</Typography>
                 ) : (
                   <Typography
@@ -371,7 +371,7 @@ export const CustomTable = (props: TableProps) => {
               render: (text: string) => (
                 <Typography
                   key={column?.name}
-                  style={{ width: "100%", textAlign: "center" }}
+                  style={{ width: "100%", textAlign: "center", minWidth: 80 }}
                 >
                   {moneyFormatter(Number(text) || 0)}
                 </Typography>
@@ -872,7 +872,7 @@ export const CustomTable = (props: TableProps) => {
                     >
                       {text
                         ? text.length > 15 && columns.length >= 5
-                          ? `${`${text}`.substring(0, 15)}...`
+                          ? `${`${text}`.substring(0, 8)}...`
                           : text
                         : "-"}
                     </Typography>

@@ -2,5 +2,5 @@ export function moneyFormatter(value: number) {
   return new Intl.NumberFormat("pt-BR", {
     style: "currency",
     currency: "BRL",
-  }).format(Math.floor(value * 100) / 100);
+  }).format((value * 100) / 100);
 }

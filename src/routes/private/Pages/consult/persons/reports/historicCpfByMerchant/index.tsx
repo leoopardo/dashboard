@@ -21,12 +21,12 @@ export const HistoricCpfByMerchantReports = () => {
     page: 1,
     createdat_start: moment(new Date())
       .startOf("day")
-      .add(3, "hours")
+      .utc()
       .format("YYYY-MM-DDTHH:mm:ss.SSS"),
     createdat_end: moment(new Date())
       .add(1, "day")
       .startOf("day")
-      .add(3, "hours")
+      .utc()
       .format("YYYY-MM-DDTHH:mm:ss.SSS"),
   };
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
