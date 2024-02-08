@@ -132,7 +132,7 @@ export const FiltersModal = ({
     if (isAbled && !query.age_start) {
       setFiltersQuery((state: any) => ({
         ...state,
-        age_start: 0,
+        age_start: 1,
         age_end: 100,
       }));
     }
@@ -667,6 +667,7 @@ export const FiltersModal = ({
                       data-test-id="slider-age-range"
                       disabled={!isAgeRangeAbled}
                       range
+                      min={1}
                       step={10}
                       value={[filtersQuery.age_start, filtersQuery.age_end]}
                       onChange={(value) => {
