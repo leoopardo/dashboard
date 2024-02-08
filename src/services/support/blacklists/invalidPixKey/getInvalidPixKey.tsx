@@ -19,12 +19,12 @@ export function useGetInvalidPixKey(params: ThirdPartQuery, fetch?: boolean) {
         ...params,
         start_date: params.start_date
           ? moment(params.start_date)
-              .add(3, "hours")
+              .utc()
               .format("YYYY-MM-DDTHH:mm:ss.SSS")
           : null,
         end_date: params.end_date
           ? moment(params.end_date)
-              .add(3, "hours")
+              .utc()
               .format("YYYY-MM-DDTHH:mm:ss.SSS")
           : null,
       },

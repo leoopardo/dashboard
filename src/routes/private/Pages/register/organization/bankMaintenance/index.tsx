@@ -81,8 +81,8 @@ export const BankMaintenence = () => {
     refetchBankMainteneceData();
   }, [query]);
   useEffect(() => {
-    setUpdateBody(currentItem);
-  }, [currentItem]);
+     setUpdateBody(currentItem);
+  }, [currentItem, isUpdateBankModalOpen]);
 
   return (
     <Grid container style={{ padding: "25px" }}>

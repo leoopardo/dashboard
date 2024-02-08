@@ -45,12 +45,12 @@ const INITIAL_QUERY: generatedDepositTotalQuery = {
   status: "PAID",
   initial_date: moment(new Date())
     .startOf("day")
-    .add(3, "hours")
+    .utc()
     .format("YYYY-MM-DDTHH:mm:ss.SSS"),
   final_date: moment(new Date())
     .add(1, "day")
     .startOf("day")
-    .add(3, "hours")
+    .utc()
     .format("YYYY-MM-DDTHH:mm:ss.SSS"),
 };
 
@@ -69,6 +69,8 @@ export const GeneratedDeposits = () => {
     isDepositsRowsFetching,
     refetchDepositsTotalRows,
   } = useGetRowsGeneratedDeposits(query);
+
+  console.log(new Date(), new Date().toUTCString());
 
   useEffect(() => {
     refetchDepositsTotalRows();
@@ -220,12 +222,12 @@ export const GeneratedDeposits = () => {
                     setQuery((state) => ({
                       initial_date: moment(new Date())
                         .startOf("day")
-                        .add(3, "hours")
+                        .utc()
                         .format("YYYY-MM-DDTHH:mm:ss.SSS"),
                       final_date: moment(new Date())
                         .add(1, "day")
                         .startOf("day")
-                        .add(3, "hours")
+                        .utc()
                         .format("YYYY-MM-DDTHH:mm:ss.SSS"),
                       ...state,
                     }));

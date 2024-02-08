@@ -21,12 +21,12 @@ const INITIAL_QUERY: HistoricCpfByMerchantQuery = {
   page: 1,
   start_date: moment(new Date())
     .startOf("day")
-    .add(3, "hours")
+    .utc()
     .format("YYYY-MM-DDTHH:mm:ss.SSS"),
   end_date: moment(new Date())
     .add(1, "day")
     .startOf("day")
-    .add(3, "hours")
+    .utc()
     .format("YYYY-MM-DDTHH:mm:ss.SSS"),
 };
 

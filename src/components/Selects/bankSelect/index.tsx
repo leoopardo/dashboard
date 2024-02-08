@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useListBanks } from "@src/services/bank/listBanks";
-import { AutoComplete, Avatar, Empty } from "antd";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Avatar, Empty, Select } from "antd";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { MerchantQuery } from "../../../services/types/register/merchants/merchants.interface";
 
@@ -25,23 +25,29 @@ export const BanksSelect = ({
   const { t } = useTranslation();
   const [query] = useState<MerchantQuery>({
     page: 1,
-    limit: 200
+    limit: 200,
   });
   const { bankListData } = useListBanks(query);
-  const [value, setValue] = useState<any>(null);
-
-  useEffect(() => {
+  const [value, setValue] = useState<any>(
+    field
+      ? bankListData?.itens?.find(
+          (bank) => bank?.label_name === queryOptions[field]
+        )?.label_name
+      : null
+  );
+  /* useEffect(() => {
     if (field) {
+      console.log('aqui', queryOptions[field])
       setValue(
         bankListData?.itens?.find(
           (bank) => bank?.label_name === queryOptions[field]
         )?.label_name
       );
     }
-  }, [bankListData, queryOptions, field]);
+  }, [bankListData, queryOptions, field]); */
 
   return (
-    <AutoComplete
+    <Select
       size="large"
       options={
         bankListData?.itens?.map((item, index) => {
@@ -57,6 +63,12 @@ export const BanksSelect = ({
           };
         }) ?? []
       }
+      onClear={() => {
+        const q = { ...queryOptions };
+        delete q[field || "bank"];
+        setQueryFunction(q);
+      }}
+      allowClear
       notFoundContent={<Empty />}
       value={currentValue || value}
       style={{ width: "100%", height: 40 }}

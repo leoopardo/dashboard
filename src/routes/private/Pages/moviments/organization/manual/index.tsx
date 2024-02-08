@@ -42,12 +42,12 @@ export const OrgonizationManual = () => {
     sort_order: "DESC",
     start_date: moment(new Date())
       .startOf("day")
-      .add(3, "hours")
+      .utc()
       .format("YYYY-MM-DDTHH:mm:ss.SSS"),
     end_date: moment(new Date())
       .add(1, "day")
       .startOf("day")
-      .add(3, "hours")
+      .utc()
       .format("YYYY-MM-DDTHH:mm:ss.SSS"),
   };
   const [tokenState, setTokenState] = useState<string>("");

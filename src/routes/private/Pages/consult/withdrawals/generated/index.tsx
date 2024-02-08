@@ -36,29 +36,32 @@ import { ViewModal } from "../components/ViewModal";
 import { WebhookModal } from "../components/webhooksModal";
 import { TotalizersCards } from "./components/TotalizersCards";
 
-const INITIAL_QUERY: generatedWithdrawalsRowsQuery = {
-  page: 1,
-  limit: 25,
-  initial_date: moment(new Date())
-    .startOf("day")
-    .add(3, "hours")
-    .format("YYYY-MM-DDTHH:mm:ss.SSS"),
-  final_date: moment(new Date())
-    .add(1, "day")
-    .startOf("day")
-    .add(3, "hours")
-    .format("YYYY-MM-DDTHH:mm:ss.SSS"),
-  status: "PAID",
-};
+
 
 export const GeneratedWithdrawals = () => {
   const { permissions } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
 
+  const INITIAL_QUERY: generatedWithdrawalsRowsQuery = {
+    page: 1,
+    limit: 25,
+    initial_date: moment(new Date())
+      .startOf("day")
+      .utc()
+      .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+    final_date: moment(new Date())
+      .add(1, "day")
+      .startOf("day")
+      .utc()
+      .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+    status: "PAID",
+  };
+
   const { t } = useTranslation();
   const [query, setQuery] =
     useState<generatedWithdrawalsRowsQuery>(INITIAL_QUERY);
+
   const {
     WithdrawalsTotal,
     isWithdrawalsTotalFetching,

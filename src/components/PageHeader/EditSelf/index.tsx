@@ -86,7 +86,7 @@ export const EditSelfModal = ({
       }
     >
       {!body && SelfFetching ? (
-        <Spin size="large"/>
+        <Spin size="large" />
       ) : (
         <Form
           ref={formRef}
@@ -117,7 +117,11 @@ export const EditSelfModal = ({
             dependencies={["confirm"]}
             hasFeedback={body.password !== undefined}
             rules={[
-              { min: 8, message: t("input.min_of", { min: 8 }) || "" },
+              {
+                pattern:
+                  /^(?=.*[0-9])(?=.*[A-Z])(?=.*[!@#$%^&*()_+])[0-9a-zA-Z!@#$%^&*()_+]*$/,
+                message: `${t("input.password_type")}`,
+              },
               ({ getFieldValue }) => ({
                 validator(_, value) {
                   if (!value || getFieldValue("confirm") === value) {

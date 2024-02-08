@@ -364,17 +364,18 @@ export const MerchantView = () => {
             </Button>
           </Grid>
         )}
-
-        <Grid item xs={12} md={3} lg={2}>
-          <UpdateAccountsModal
-            open={updateAccountsModal}
-            setOpen={setUpdateAccountsModal}
-            selectedFields={[]}
-            loading={isMerchantDataFetching}
-            items={selectedItems}
-            setItems={setSelectedItems}
-          />
-        </Grid>
+        {permissions.register.merchant.merchant.merchant_account_api_update && (
+          <Grid item xs={12} md={3} lg={2}>
+            <UpdateAccountsModal
+              open={updateAccountsModal}
+              setOpen={setUpdateAccountsModal}
+              selectedFields={[]}
+              loading={isMerchantDataFetching}
+              items={selectedItems}
+              setItems={setSelectedItems}
+            />
+          </Grid>
+        )}
 
         {permissions.register.merchant.merchant.merchant_export_csv && (
           <Grid item xs={12} md={2} lg={isDesktop ? 2 : 1} container>

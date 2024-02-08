@@ -19,7 +19,7 @@ export const MerchantSelect = ({
   setQueryFunction,
   queryOptions,
   name,
-  multiple
+  multiple,
 }: MerchantSelectProps) => {
   const { t } = useTranslation();
   const [query, setQuery] = useState<MerchantQuery>({
@@ -41,6 +41,18 @@ export const MerchantSelect = ({
   const debounceSearch = useDebounce(query.name);
   const [options, setOptions] = useState<any | undefined>();
 
+  function getUniqueObjectsByName(arr: any[]): any[] {
+    const uniqueObjects = arr.reduce((uniqueArr, obj) => {
+      const foundObj = uniqueArr.find((item: any) => item.name === obj.name);
+      if (!foundObj) {
+        uniqueArr.push(obj);
+      }
+      return uniqueArr;
+    }, []);
+
+    return uniqueObjects;
+  }
+
   useEffect(() => {
     if (!queryOptions?.merchant_id) {
       setValue(undefined);
@@ -56,10 +68,8 @@ export const MerchantSelect = ({
     if (!value && queryOptions.merchant_id && merchant) {
       setValue(merchant?.name);
     }
-
- 
   }, [merchantsData, merchant, queryOptions]);
-  
+
   useEffect(() => {
     setQuery((state) => ({
       ...state,
@@ -77,7 +87,7 @@ export const MerchantSelect = ({
     <Select
       data-test-id="merchant-select"
       allowClear
-      mode={ multiple ? "multiple" : undefined}
+      mode={multiple ? "multiple" : undefined}
       style={{ width: "100%" }}
       showSearch
       size="large"
@@ -125,7 +135,7 @@ export const MerchantSelect = ({
       }}
       options={
         options
-          ? options?.map((merch: any) => {
+          ? getUniqueObjectsByName(options)?.map((merch: any) => {
               return {
                 label: merch.name,
                 value: merch.id,

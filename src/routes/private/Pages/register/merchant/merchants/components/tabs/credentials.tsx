@@ -210,6 +210,7 @@ export const CredentialConfigTab = (props: { id?: string }) => {
           fields={[
             { label: "name", required: false },
             { label: "type", required: false },
+            { label: "status", required: false },
           ]}
           body={updateBody}
           setBody={setUpdateBody}

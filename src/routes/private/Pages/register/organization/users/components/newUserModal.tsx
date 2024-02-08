@@ -290,6 +290,7 @@ export const NewUserModal = ({
             setBody={setBody}
             filterIdProp="organization_id"
             filterIdValue={responseValidate?.organization_id}
+            notClearble
           />
         </Form.Item>
 

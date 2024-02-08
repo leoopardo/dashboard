@@ -9,6 +9,7 @@ export interface refundDepositsQuery {
     | "REFUNDED"
     | "PAID_TO_MERCHANT"
     | "PAID_TO_ENDUSER"
+    | "REFUND_TO_MERCHANT"
     | "ERROR"
     | "PROCESSING"
     | "PENDING"

@@ -4,6 +4,9 @@ VITE_API_URL="https://dev-v4.paybrokers.io/v4/"
 ## prod
 # VITE_API_URL="https://frontend.v4.paybrokers.io/v4/"
 
+## stage
+# VITE_API_URL=https://api.stage.paybrokers.com.br/v4/
+
 
 ## LOGO AND ICON URL
 VITE_APP_LOGO="/src/assets/logo.png"

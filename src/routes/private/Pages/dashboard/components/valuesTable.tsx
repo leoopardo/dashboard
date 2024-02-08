@@ -127,7 +127,7 @@ export const ValuesTable = ({ query, refs }: ValuesTableInterface) => {
           type: "total",
           operation_number: MerchantBankStatementTotals?.number_total ?? 0,
           value: MerchantBankStatementTotals?.value_total ?? 0,
-          ticket: MerchantBankStatementTotals?.fee_total ?? 0,
+          ticket: MerchantBankStatementTotals?.average_ticket_total ?? 0,
           fee: MerchantBankStatementTotals?.fee_total ?? 0,
         },
       ]);
@@ -184,7 +184,7 @@ export const ValuesTable = ({ query, refs }: ValuesTableInterface) => {
                 >
                   {t("table.ticket")}:{" "}
                   <span style={{ textDecoration: "underline" }}>
-                    {moneyFormatter(Number(item?.ticket) || 0)}
+                    {moneyFormatter( 0)}
                   </span>
                 </Typography.Title>
               </Card>

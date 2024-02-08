@@ -230,8 +230,8 @@
     "export_csv": "Gerar relatório CSV",
     "no_records_to_export": "Não há registros para gerar um CSV",
     "20_minutes_consult": "Consulta realizada a mais de 20 minutos",
-    "validate_phone_text": "Seu telefone ainda não foi validado, este primeiro token realizará a validação do seu número. Após isso receberá um token para confirmar a ação realizada.",
-    "validate_text": "Insira o token para confirmar a ação",
+    "validate_phone_text": "Seu telefone ainda não foi validado, este primeiro token realizará a validação do número com final {{phone}}. Após isso receberá um token para confirmar a ação realizada.",
+    "validate_text": "Insira o token enviado para o telefone com final {{phone}} para confirmar a ação",
     "forgot_password": "Esqueci minha senha",
     "preview_csv": "Prévia do CSV",
     "preview_file": "arquivo prévia",
@@ -239,7 +239,7 @@
     "scrool_top": "Voltar ao topo",
     "operations_number_chart_area": "Gráfico de número de operações",
     "operation_approve": "Deseja aprovar os lançamentos selecionados?",
-    "no_cellphone": "Você deve adicionar um número de telefone ao seu usuário. Para isso, acesse 'Editar usuário' no canto superior esquerdo da tela.",
+    "no_cellphone": "Você deve adicionar um número de telefone ao seu usuário. Selecione o Telefone e em seguida valide o token.",
     "10000": "Operação realizada com sucesso",
     "10001": "Transação não paga",
     "10002": "Transação paga, notificação enviada...",
@@ -316,6 +316,7 @@
     "confirm": "Confirmar",
     "update": "Atualizar",
     "add": "Adicionar",
+    "details": "Detalhes",
     "validate_token": "Validar token",
     "token_expires_in": "Token expira em",
     "resend_token_by_sms": "Reenviar token por SMS",
@@ -475,7 +476,8 @@
     "search": "Pesquisar",
     "allows_generate_qrcode": "Permite gerar QRCode PJ",
     "license_number": "Número da licença",
-    "add_all_columns": "Adicionar todas as colunas"
+    "add_all_columns": "Adicionar todas as colunas",
+    "ip": "IP"
   },
   "table": {
     "id": "id",
@@ -1039,7 +1041,9 @@
     "disable_bank_being_used_for_cash_in": "Não é possível desabilitar entradas. Banco sendo utilizado por empresas.",
     "disable_bank_being_used_for_cash_out": "Não é possível desabilitar saídas. Banco sendo utilizado por empresas.",
     "disable_bank_being_used_for_fastpix_in": "Não é possível desabilitar FastPix. Banco sendo utilizado por empresas.",
-    "disable_bank_being_used": "Não é possível inativar banco. Banco sendo utilizado por empresas."
+    "disable_bank_being_used": "Não é possível inativar banco. Banco sendo utilizado por empresas.",
+    "phone_must_be_a_valid_phone_number": "Numero de telefone inválido.",
+    "forbidden_resource": "Este usuário não tem permissão para executar essa função. Entre em contato com o suporte."
   },
   "logs": {
     "login": "Login",
@@ -1422,6 +1426,11 @@
     "servicos_logs_errosSaques_exportar": "Exportar",
     "servicos_logs_errosAutenticacao_exportar": "Exportar",
     "servicos_buscarLote_saques": "Saques",
-    "servicos_buscarLote_deposito": "Depósitos"
+    "servicos_buscarLote_deposito": "Depósitos",
+    "manutencao_contasApi": "Contas API",
+    "operacoes_devolucoes_manual_pagarMerchant": "Pagar empresa",
+    "operacoes_devolucoes_manual_atualizarMerchant": "Atualizar empresa",
+    "operacoes_devolucoes_manual_pagarUsuarioFinal": "Pagar usuário final",
+    "configuracoes_contas_merchant": "Contas de empresa"
   }
 }

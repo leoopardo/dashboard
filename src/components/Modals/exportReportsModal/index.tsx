@@ -4,6 +4,7 @@ import { FileAddOutlined } from "@ant-design/icons";
 import { Button, Popconfirm, Tooltip, notification } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Toast } from "@src/components/Toast";
 import { useNavigate } from "react-router-dom";
 
 interface ExportReportsInterface {
@@ -90,6 +91,13 @@ export const ExportReportsModal = ({
           CSV
         </Button>
       </Tooltip>
+
+      <Toast
+        actionSuccess={t("messages.error")}
+        actionError={t("messages.error")}
+        error={error}
+        success={false}
+      />
     </Popconfirm>
   );
 };
