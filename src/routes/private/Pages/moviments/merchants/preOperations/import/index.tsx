@@ -27,6 +27,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useCSVDownloader, usePapaParse } from "react-papaparse";
 import { useNavigate } from "react-router-dom";
+import Papa from "papaparse";
 
 const EditableContext = React.createContext<FormInstance<any> | null>(null);
 
@@ -277,10 +278,12 @@ export const ImportPreOperations = () => {
                 const reader = new FileReader();
                 reader.readAsText(file);
                 reader.onload = () => {
-                  console.log(`${reader.result}`);
-
+                  
+                  const parse = Papa.parse(reader?.result as any);
                   const base64Enconded = Buffer.from(
-                    `${reader?.result}`?.replace(/(\r\n|\n|\r)/gm, "\n").trim()
+                    `${Papa.unparse(parse.data, { delimiter: ";" })}`
+                      ?.replace(/(\r\n|\n|\r)/gm, "\n")
+                      .trim()
                   ).toString("base64");
 
                   setBody({ content: base64Enconded });
