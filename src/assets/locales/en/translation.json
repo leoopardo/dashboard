@@ -444,6 +444,7 @@
     "confirm": "Confirm",
     "update": "Update",
     "add": "Add",
+    "details": "Details",
     "validate_token": "Validate token",
     "token_expires_in": "Token expires in",
     "resend_token_by_sms": "Resend token by SMS",
