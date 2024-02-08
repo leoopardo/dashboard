@@ -26,8 +26,9 @@ import { Buffer } from "buffer";
 import Papa from "papaparse";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useCSVDownloader, usePapaParse } from "react-papaparse";
+import { useCSVDownloader } from "react-papaparse";
 import { useNavigate } from "react-router-dom";
+import * as XLSX from "xlsx";
 
 const EditableContext = React.createContext<FormInstance<any> | null>(null);
 
@@ -143,7 +144,6 @@ type ColumnTypes = Exclude<EditableTableProps["columns"], undefined>;
 export const ImportBlacklist = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { readRemoteFile } = usePapaParse();
   const initialData: DataType[] = [];
   const [dataSource, setDataSource] = useState<DataType[]>([]);
   const [body, setBody] = useState<{ content: string }>({ content: "" });
@@ -262,30 +262,64 @@ export const ImportBlacklist = () => {
               style={{ minWidth: "100%", display: "none" }}
               action=""
               onRemove={() => setDataSource(initialData)}
-              beforeUpload={(file: any) => {
-                readRemoteFile(file, {
-                  header: true,
-                  complete: (results) => {
+              beforeUpload={(file) => {
+                const fileType = file.type;
+                if (
+                  fileType ===
+                  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                ) {
+                  const reader = new FileReader();
+                  reader.onload = (event) => {
+                    const binaryString = event?.target?.result;
+                    const workbook = XLSX.read(binaryString, {
+                      type: "binary",
+                    });
+                    const sheetName = workbook.SheetNames[0];
+                    const sheet = workbook.Sheets[sheetName];
+                    const data = XLSX.utils.sheet_to_csv(sheet);
+                    const parsedData = Papa.parse(data, { header: true });
                     setDataSource(
-                      results?.data?.map((row: any, i) => {
-                        return { ...row, key: i + 1 };
-                      })
+                      parsedData.data.map((row: any, i) => ({
+                        ...row,
+                        key: i + 1,
+                      }))
                     );
-                  },
-                  download: true,
-                });
-                const reader = new FileReader();
-                reader.readAsText(file);
-                reader.onload = () => {
-                  const parse = Papa.parse(reader?.result as any);
-                  const base64Enconded = Buffer.from(
-                    `${Papa.unparse(parse.data, { delimiter: ";" })}`
-                      ?.replace(/(\r\n|\n|\r)/gm, "\n")
-                      .trim()
-                  ).toString("base64");
+                    console.log(
+                      Papa.unparse(parsedData.data, { delimiter: ";" })
+                    );
 
-                  setBody({ content: base64Enconded });
-                };
+                    const base64Encoded = Buffer.from(
+                      Papa.unparse(parsedData.data, { delimiter: ";" })
+                        .replace(/(\r\n|\n|\r)/gm, "\n")
+                        .trim()
+                    ).toString("base64");
+                    setBody({ content: base64Encoded });
+                  };
+                  reader.readAsBinaryString(file);
+                } else if (fileType === "text/csv") {
+                  const reader = new FileReader();
+                  reader.onload = (event) => {
+                    const csvData: any = event?.target?.result;
+                    const parsedData = Papa.parse(csvData, { header: true });
+                    setDataSource(
+                      parsedData.data.map((row: any, i) => ({
+                        ...row,
+                        key: i + 1,
+                      }))
+                    );
+                    console.log(
+                      Papa.unparse(parsedData.data, { delimiter: ";" })
+                    );
+
+                    const base64Encoded = Buffer.from(
+                      Papa.unparse(parsedData.data, { delimiter: ";" })
+                        .replace(/(\r\n|\n|\r)/gm, "\n")
+                        .trim()
+                    ).toString("base64");
+                    setBody({ content: base64Encoded });
+                  };
+                  reader.readAsText(file);
+                }
                 return false;
               }}
             >
