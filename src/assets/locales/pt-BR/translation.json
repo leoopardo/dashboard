@@ -316,6 +316,7 @@
     "confirm": "Confirmar",
     "update": "Atualizar",
     "add": "Adicionar",
+    "details": "Detalhes",
     "validate_token": "Validar token",
     "token_expires_in": "Token expira em",
     "resend_token_by_sms": "Reenviar token por SMS",
