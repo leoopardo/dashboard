@@ -13,7 +13,7 @@ export function useGetRowsPaidDeposits(params: paidDepositRowsQuery) {
     "depositsPaidRows",
     async () => {
       const response = await api.get("report/pix/rows/paid-at", {
-        params
+        params,
       });
       return response.data;
     },
