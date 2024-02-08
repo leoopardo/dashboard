@@ -184,7 +184,7 @@ export const ValuesTable = ({ query, refs }: ValuesTableInterface) => {
                 >
                   {t("table.ticket")}:{" "}
                   <span style={{ textDecoration: "underline" }}>
-                    {moneyFormatter(Number(item?.ticket) || 0)}
+                    {moneyFormatter( 0)}
                   </span>
                 </Typography.Title>
               </Card>
