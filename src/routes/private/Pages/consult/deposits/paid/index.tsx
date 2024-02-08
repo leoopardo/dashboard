@@ -96,6 +96,7 @@ export const PaidDeposits = () => {
 
   useEffect(() => {
     refetchPaidTotalRows();
+    refetchPaidTotal()
   }, [query]);
 
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);

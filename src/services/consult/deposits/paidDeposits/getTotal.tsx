@@ -17,12 +17,6 @@ export function useGetTotalPaidDeposits(params: paidDepositRowsQuery) {
         params,
       });
       return response.data;
-    },
-    {
-      refetchInterval: false,
-      refetchIntervalInBackground: false,
-      refetchOnMount: false,
-      refetchOnWindowFocus: false,
     }
   );
 

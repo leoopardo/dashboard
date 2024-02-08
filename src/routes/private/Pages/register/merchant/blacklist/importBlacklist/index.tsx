@@ -21,8 +21,9 @@ import {
   Upload,
   notification,
 } from "antd";
-import { Buffer } from "buffer";
 import { FormInstance } from "antd/lib/form/Form";
+import { Buffer } from "buffer";
+import Papa from "papaparse";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useCSVDownloader, usePapaParse } from "react-papaparse";
@@ -157,7 +158,9 @@ export const ImportBlacklist = () => {
     const BtnNavigate = (
       <Button
         onClick={() =>
-          navigate("/register/merchant/merchant_blacklists/uploads_merchant_blacklist")
+          navigate(
+            "/register/merchant/merchant_blacklists/uploads_merchant_blacklist"
+          )
         }
       >
         Uploads
@@ -233,6 +236,7 @@ export const ImportBlacklist = () => {
   const handleUpload = () => {
     mutate();
     setBody({ content: "" });
+    setDataSource([]);
   };
 
   return (
@@ -273,10 +277,11 @@ export const ImportBlacklist = () => {
                 const reader = new FileReader();
                 reader.readAsText(file);
                 reader.onload = () => {
-                  console.log(`${reader.result}`);
-
+                  const parse = Papa.parse(reader?.result as any);
                   const base64Enconded = Buffer.from(
-                    `${reader?.result}`?.replace(/(\r\n|\n|\r)/gm, "\n").trim()
+                    `${Papa.unparse(parse.data, { delimiter: ";" })}`
+                      ?.replace(/(\r\n|\n|\r)/gm, "\n")
+                      .trim()
                   ).toString("base64");
 
                   setBody({ content: base64Enconded });
