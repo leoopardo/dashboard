@@ -1434,6 +1434,7 @@
     "configuracoes_contas_merchant": "Contas de empresa",
     "cadastros_merchants_responsaveis": "Responsáveis",
     "cadastros_merchants_arquivos": "Arquivos",
-    "financeiro_transferencias_merchantManualPre": "Pré lançamento manuais"
+    "financeiro_transferencias_merchantManualPre": "Pré lançamento manuais",
+    "financeiro_transferencias_merchantManualPre_aprovar": "Aprovar"
   }
 }
