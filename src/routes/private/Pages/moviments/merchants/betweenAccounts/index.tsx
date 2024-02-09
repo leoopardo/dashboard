@@ -139,7 +139,11 @@ export const TransfersBetweenAccounts = () => {
                       <Statistic
                         title={t("table.processing")}
                         value={moneyFormatter(
-                        Number(TransferBetweenAccountsData?.total_processing.toFixed(2)) || 0
+                          Number(
+                            TransferBetweenAccountsData?.total_processing.toFixed(
+                              2
+                            )
+                          ) || 0
                         )}
                         valueStyle={{ color: defaultTheme.colors.processing }}
                         loading={isTransferBetweenAccountsDataFetching}
@@ -210,7 +214,6 @@ export const TransfersBetweenAccounts = () => {
           </Button>
         </Col>
 
-        {/* arrumar permissões */}
         {permissions?.transactions?.merchant?.internal_transfers
           ?.merchant_internal_transfers_export_csv && (
           <Col xs={{ span: 24 }} md={{ span: 3 }} lg={{ span: 3 }}>
