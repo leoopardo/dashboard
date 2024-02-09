@@ -1431,6 +1431,9 @@
     "operacoes_devolucoes_manual_pagarMerchant": "Pagar empresa",
     "operacoes_devolucoes_manual_atualizarMerchant": "Atualizar empresa",
     "operacoes_devolucoes_manual_pagarUsuarioFinal": "Pagar usuário final",
-    "configuracoes_contas_merchant": "Contas de empresa"
+    "configuracoes_contas_merchant": "Contas de empresa",
+    "cadastros_merchants_responsáveis": "Responsáveis",
+    "cadastros_merchants_arquivos": "Arquivos",
+    "financeiro_transferencias_merchantManualPre": "Pré lançamento manuais"
   }
 }
