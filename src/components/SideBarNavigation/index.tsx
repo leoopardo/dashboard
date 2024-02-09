@@ -1786,8 +1786,8 @@ export const SidebarNavigation = () => {
                   undefined,
                   {
                     display: permissions?.transactions?.merchant
-                      ?.manual_transactions
-                      ?.merchant_manual_transactions_export_csv
+                      ?.internal_transfers
+                      ?.merchant_internal_transfers_export_csv
                       ? undefined
                       : "none",
                   },
@@ -2701,7 +2701,8 @@ export const SidebarNavigation = () => {
                   false,
                   undefined,
                   {
-                    display: permissions?.report?.person?.check_cpf?.report_person_check_cpf_list
+                    display: permissions?.report?.person?.check_cpf
+                      ?.report_person_check_cpf_list
                       ? undefined
                       : "none",
                   },
