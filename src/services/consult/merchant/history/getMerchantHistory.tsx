@@ -13,7 +13,7 @@ export function useGetMerchantHistory(params: MerchantHistoryQuery) {
   >(
     "MerchantHistory",
     async () => {
-      const response = await api.get("account/merchant-account/history", {
+      const response = await api.get("core/merchant/account/history", {
         params,
       });
       return response.data;

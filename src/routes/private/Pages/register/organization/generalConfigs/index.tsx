@@ -107,7 +107,7 @@ export const GeneralConfigs = () => {
           initialValues={data ? data : {}}
           onFinish={handleSubmit}
         >
-          <Grid container spacing={1}>
+          <Grid container spacing={1} style={{ display: "flex", alignItems: "end" }}>
             <Grid item xs={12} md={4} ref={refCashInMaxValue}>
               <Form.Item
                 label={t("input.cash_in_max_value")}
