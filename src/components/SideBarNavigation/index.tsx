@@ -1600,9 +1600,7 @@ export const SidebarNavigation = () => {
           false,
           undefined,
           {
-            display: permissions?.transactions?.paybrokers?.menu
-              ? undefined
-              : "none",
+            display: "none",
           }
         ),
         // - MOVIMENTAÇÕES DE EMPRESA
@@ -1859,7 +1857,7 @@ export const SidebarNavigation = () => {
           false,
           undefined,
           {
-            display: type !== 3 ? undefined : "none",
+            display: "none",
           },
           <Link
             onClickCapture={() => {
