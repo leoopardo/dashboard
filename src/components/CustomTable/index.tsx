@@ -930,7 +930,7 @@ export const CustomTable = (props: TableProps) => {
                 : column?.name,
               dataIndex: column?.name,
               render: (text: string) =>
-                text && text.length > 15 ? (
+                text && text.length >= 20 ? (
                   <Tooltip title={text}>
                     <Typography
                       style={{
@@ -941,7 +941,7 @@ export const CustomTable = (props: TableProps) => {
                       full-text={text}
                     >
                       {text
-                        ? text.length > 15 && columns.length >= 5
+                        ? text.length > 15 && columns.length >= 6
                           ? `${`${text}`.substring(0, 8)}...`
                           : text
                         : "-"}
