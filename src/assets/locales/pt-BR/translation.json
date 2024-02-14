@@ -477,7 +477,8 @@
     "allows_generate_qrcode": "Permite gerar QRCode PJ",
     "license_number": "Número da licença",
     "add_all_columns": "Adicionar todas as colunas",
-    "ip": "IP"
+    "ip": "IP",
+    "reason_name": "Motivo"
   },
   "table": {
     "id": "id",
