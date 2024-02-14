@@ -437,7 +437,8 @@
     "allows_generate_qrcode": "Allows generate QRCode",
     "license_number": "License number",
     "add_all_columns": "Add all columns",
-    "ip": "IP"
+    "ip": "IP",
+    "reason_name": "Reason"
   },
 
   "modal": {
