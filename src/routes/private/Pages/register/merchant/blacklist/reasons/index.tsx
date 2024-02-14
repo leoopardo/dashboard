@@ -179,7 +179,7 @@ export const MerchantBlacklistReasons = () => {
           type="create"
           open={isCreateReasonOpen}
           setOpen={setIsCreateReasonOpen}
-          fields={[{ label: "reason_name", required: true }]}
+          fields={[{ label: "merchant_id", required: true }, { label: "reason_name", required: true }]}
           body={body}
           setBody={setBody}
           modalName={t("modal.new_reason")}
