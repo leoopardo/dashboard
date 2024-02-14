@@ -20,7 +20,7 @@ export interface generatedWithdrawalsTotalQuery {
   reference_id?: string;
   buyer_document?: string;
   receiver_document?: string;
-  delivered_at?: boolean;
+  delivered_at?: "true" | "false";
   buyer_name?: string;
   payer_name?: string;
   withdraw_id?: string;
@@ -56,7 +56,7 @@ export interface generatedWithdrawalsRowsQuery {
   gender?: "MALE" | "FEMALE" | "OTHER";
   state?: string;
   city?: string;
-  delivered_at?: boolean;
+  delivered_at?: "true" | "false";
   value_start?: number;
   value_end?: number;
   buyer_name?: string;
@@ -68,7 +68,7 @@ export interface generatedWithdrawalsRowsQuery {
   payment_id?: string;
   receiver_name?: string;
   description?: string;
-  delivered_at_secondary?: boolean;
+  delivered_at_secondary?: "true" | "false";
   withdraw_id?: string;
 }
 
