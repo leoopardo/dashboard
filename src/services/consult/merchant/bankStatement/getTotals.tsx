@@ -15,7 +15,7 @@ export function useGetMerchantBankStatementTotals(
     const response = await api.get("account/report/merchant-account/total", {
       params,
     });
-    return response.data;
+    return response?.data;
   }, {
     
   });

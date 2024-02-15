@@ -146,12 +146,17 @@ export const Dashboard = () => {
             : "translateY(0px)",
       }}
     >
-      {permissions?.report?.paybrokers?.balance
-        ?.report_paybrokers_balance_list && (
+      {(permissions?.report?.paybrokers?.balance
+            ?.report_paybrokers_balance_list ||
+            permissions?.report?.merchant?.balance
+              ?.report_merchant_balance_list) && (
         <Layout
           ref={ref1}
           style={{
             margin: -28,
+            marginBottom: permissions?.report?.merchant?.balance
+            ?.report_merchant_balance_list && !permissions?.report?.paybrokers?.balance
+            ?.report_paybrokers_balance_list ? 25 : -36,
             paddingTop: 20,
             paddingBottom: 16,
             paddingLeft: 6,
