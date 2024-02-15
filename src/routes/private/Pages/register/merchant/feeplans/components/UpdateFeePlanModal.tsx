@@ -18,6 +18,7 @@ import {
   InputNumber,
   Select,
   Space,
+  Switch,
 } from "antd";
 import {
   ChangeEvent,
@@ -68,7 +69,7 @@ export const UpdateFeePlanModal = ({
   const divRef = useRef<HTMLDivElement>(null);
   const [createFeeDetails, setCreateFeeDetails] =
     useState<ICreateDetails | null>(null);
-  const { feePlansDetailsData, refetchFeePlansDetailsData,  } =
+  const { feePlansDetailsData, refetchFeePlansDetailsData } =
     useGetFeePlansDetails({ fee_plans_id: currentUser?.id });
   const [feePage] = useState(1);
   const { createFeePlansDetailsFetching, isSuccess } =
@@ -118,7 +119,7 @@ export const UpdateFeePlanModal = ({
     setOpen(false);
   }
   useEffect(() => {
-   action === "update" && setFees(feePlansDetailsData?.items ?? []);
+    action === "update" && setFees(feePlansDetailsData?.items ?? []);
   }, [currentUser, feePlansDetailsData, action]);
 
   useEffect(() => {
@@ -144,12 +145,16 @@ export const UpdateFeePlanModal = ({
       open={open}
       onClose={() => {
         setOpen(false);
-        setFees([])
+        setFees([]);
         formRef.current?.resetFields();
         if (setCurrentUser) setCurrentUser(null);
       }}
       bodyStyle={{ overflowX: "hidden" }}
-      title={action === "create" ? t("buttons.new_fee") : t("buttons.update_menu", {menu: t("table.fee")})}
+      title={
+        action === "create"
+          ? t("buttons.new_fee")
+          : t("buttons.update_menu", { menu: t("table.fee") })
+      }
       footer={
         <Button
           loading={loading}
@@ -217,6 +222,7 @@ export const UpdateFeePlanModal = ({
             ]}
           >
             <Select
+              disabled={action === "update"}
               size="large"
               options={[
                 { label: t("table.monthly"), value: "MONTHLY" },
@@ -256,6 +262,7 @@ export const UpdateFeePlanModal = ({
             ]}
           >
             <Select
+              disabled={action === "update"}
               size="large"
               options={[
                 { label: t("table.cashin"), value: "CASHIN" },
@@ -295,6 +302,7 @@ export const UpdateFeePlanModal = ({
             ]}
           >
             <Select
+              disabled={action === "update"}
               size="large"
               options={[
                 { label: t("table.transactions"), value: "TRANSACTIONS" },
@@ -318,12 +326,31 @@ export const UpdateFeePlanModal = ({
               placeholder={t(`input.range_type`)}
             />
           </Form.Item>
+
           {action === "update" && (
             <Grid
               container
-              justifyContent={"flex-end"}
-              style={{ paddingRight: "10px" }}
+              justifyContent={"space-between"}
+              style={{ paddingRight: "10px", alignItems: "center"}}
             >
+              <Form.Item
+                data-test-id={`status-form-item`}
+                label={t(`table.status`)}
+                name="status"
+                style={{ margin: 10 }}
+                valuePropName="checked"
+              >
+                <Switch
+                  data-test-id={`status-switch`}
+                  checked={body?.status}
+                  onChange={(e) =>
+                    setBody((state: any) => ({
+                      ...state,
+                      status: e,
+                    }))
+                  }
+                />
+              </Form.Item>
               <Button
                 type="dashed"
                 onClick={() => {

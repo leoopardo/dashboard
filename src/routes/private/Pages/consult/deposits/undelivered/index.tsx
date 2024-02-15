@@ -39,7 +39,7 @@ import { TotalizersCards } from "./components/TotalizersCards";
 const INITIAL_QUERY: generatedDepositTotalQuery = {
   page: 1,
   limit: 25,
-  delivered_at: false,
+  delivered_at: "false",
   initial_date: moment(new Date())
     .startOf("day")
     .utc()
@@ -317,11 +317,11 @@ export const UndeliveredDeposits = () => {
                 ? setQuery((state) => ({
                     ...state,
                     delivered_at_secondary: undefined,
-                    delivered_at: false,
+                    delivered_at: "false",
                   }))
                 : setQuery((state) => ({
                     ...state,
-                    delivered_at_secondary: false,
+                    delivered_at_secondary: "false",
                     delivered_at: undefined,
                   }));
             }}
