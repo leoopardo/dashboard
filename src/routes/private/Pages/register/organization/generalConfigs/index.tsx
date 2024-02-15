@@ -283,6 +283,7 @@ export const GeneralConfigs = () => {
               <Form.Item
                 label={t("input.cash_out_max_value")}
                 name="cash_out_max_value"
+                dependencies={["cash_out_max_value_by_month"]}
                 rules={[
                   {
                     validator: () => {
@@ -297,8 +298,29 @@ export const GeneralConfigs = () => {
                       return Promise.resolve();
                     },
                   },
+                  () => ({
+                    validator() {
+                      if (
+                        body?.cash_out_max_value_by_month &&
+                        body?.cash_out_max_value &&
+                        body?.cash_out_max_value_by_month >=
+                          body?.cash_out_max_value
+                      ) {
+                        return Promise.resolve();
+                      }
+                      return Promise.reject(
+                        new Error(t("input.withdraw_by_month_cant_be_smaller_than_day") || "")
+                      );
+                    },
+                  }),
                 ]}
               >
+                <Input
+                  name="cash_out_max_value"
+                  size="large"
+                  style={{ width: "100%", display: "none" }}
+                  value={body?.cash_out_max_value}
+                />
                 <CurrencyInput
                   data-test-id="cash_out_max_value"
                   onChangeValue={(_event, originalValue) => {
@@ -361,6 +383,7 @@ export const GeneralConfigs = () => {
               <Form.Item
                 label={t("input.cash_out_max_value_by_month")}
                 name="cash_out_max_value_by_month"
+                dependencies={["cash_out_max_value"]}
                 rules={[
                   {
                     validator: () => {
@@ -375,6 +398,21 @@ export const GeneralConfigs = () => {
                       return Promise.resolve();
                     },
                   },
+                  () => ({
+                    validator() {
+                      if (
+                        body?.cash_out_max_value_by_month &&
+                        body?.cash_out_max_value &&
+                        body?.cash_out_max_value_by_month >=
+                          body?.cash_out_max_value
+                      ) {
+                        return Promise.resolve();
+                      }
+                      return Promise.reject(
+                        new Error(t("input.withdraw_by_month_cant_be_smaller_than_day") || "")
+                      );
+                    },
+                  }),
                 ]}
               >
                 <CurrencyInput
