@@ -19,7 +19,7 @@ export function useGetMerchantRanking(
 
       }
     );
-    return response.data;
+    return response?.data;
   });
 
   useEffect(() => {
