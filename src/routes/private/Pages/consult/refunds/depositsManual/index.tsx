@@ -128,7 +128,7 @@ export const RefundDepositsManual = () => {
     currentItem?._id
   );
   const { refetchRefundStatusManual, isRefundStatusManualFetching } =
-    useGetRefundStatusManual(currentItem?._id);
+    useGetRefundStatusManual(currentItem?.endToEndId);
 
   const {
     mutateUpdateMerchant,
