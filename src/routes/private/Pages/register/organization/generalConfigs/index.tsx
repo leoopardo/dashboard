@@ -16,6 +16,7 @@ import {
   Input,
   Popconfirm,
   Select,
+  Switch,
   Tabs,
   TabsProps,
   Tooltip,
@@ -65,7 +66,7 @@ export const GeneralConfigs = () => {
   const refCashInPermission = useRef(null);
   const refAutoSwitchBanks = useRef(null);
   const refCashOutPermission = useRef(null);
-  const refCheckLast = useRef(null);
+  // const refCheckLast = useRef(null);
   const refCallbackDeposit = useRef(null);
   const refCallbackWithdraw = useRef(null);
   const refCashInDisabledMessage = useRef(null);
@@ -73,7 +74,7 @@ export const GeneralConfigs = () => {
   const reftimeToPreventRepeatedWithdraw = useRef(null);
   const refMaxValueToSwitchBankAcc = useRef(null);
   const refMinValueToSwitchBankAcc = useRef(null);
-  const refCheckLastWaitinPix = useRef(null);
+  // const refCheckLastWaitinPix = useRef(null);
   const refPaybrokersQrCode = useRef(null);
   const refTimeReceiveAfterExpire = useRef(null);
   const tabFinancial = document.querySelector('[data-node-key="1"]');
@@ -107,10 +108,14 @@ export const GeneralConfigs = () => {
           initialValues={data ? data : {}}
           onFinish={handleSubmit}
         >
-          <Grid container spacing={1} style={{ display: "flex", alignItems: "end" }}>
+          <Grid
+            container
+            spacing={1}
+            style={{ display: "flex", alignItems: "end" }}
+          >
             <Grid item xs={12} md={4} ref={refCashInMaxValue}>
               <Form.Item
-                label={t("input.cash_in_max_value")}               
+                label={t("input.cash_in_max_value")}
                 name="cash_in_max_value"
                 rules={[
                   {
@@ -417,73 +422,74 @@ export const GeneralConfigs = () => {
         >
           <Grid
             container
-            spacing={1}
+            spacing={2}
             style={{ display: "flex", alignItems: "flex-end" }}
           >
-            <Grid item xs={12} md={2} ref={refCashInPermission}>
+            <Grid item xs={12} md={1} ref={refCashInPermission}>
               <Form.Item
-                label={t("input.cash_in_permission")}
-                name="cash_in_permission"
+                data-test-id={`cash_in_permission-form-item`}
+                label={t(`table.cash_in_permission`)}
+                name={"cash_in_permission"}
+                valuePropName="checked"
               >
-                <Select
-                  size="large"
-                  options={[
-                    { value: true, label: t("table.true") },
-                    { value: false, label: t("table.false") },
-                  ]}
-                  value={body.cash_in_permission}
-                  onChange={(_value, option: any) =>
-                    setBody((state) => ({
+                <Switch
+                  data-test-id={`cash_in_permission-switch`}
+                  checked={body.cash_in_permission}
+                  onChange={(e) =>
+                    setBody((state: any) => ({
                       ...state,
-                      cash_in_permission: option.value,
+                      cash_in_permission: e,
                     }))
                   }
                 />
               </Form.Item>
             </Grid>{" "}
-            <Grid item xs={12} md={2} ref={refAutoSwitchBanks}>
+            <Grid item xs={12} md={5} ref={refCashInDisabledMessage}>
               <Form.Item
-                label={t("input.auto_switch_bank_acc")}
-                name="auto_switch_bank_acc"
+                label={t("input.cash_in_disabled_message")}
+                name="cash_in_disabled_message"
               >
-                <Select
+                <Input
                   size="large"
-                  options={[
-                    { value: true, label: t("table.true") },
-                    { value: false, label: t("table.false") },
-                  ]}
-                  value={body.auto_switch_bank_acc}
-                  onChange={(_value, option: any) =>
-                    setBody((state) => ({
+                  name="cash_in_disabled_message"
+                  value={body.cash_in_disabled_message}
+                  onChange={handleChange}
+                />
+              </Form.Item>
+            </Grid>
+            <Grid item xs={12} md={1} ref={refCashOutPermission}>
+              <Form.Item
+                data-test-id={`cash_out_permission-form-item`}
+                label={t(`table.cash_out_permission`)}
+                name={"cash_out_permission"}
+                valuePropName="checked"
+              >
+                <Switch
+                  data-test-id={`cash_out_permission-switch`}
+                  checked={body.cash_out_permission}
+                  onChange={(e) =>
+                    setBody((state: any) => ({
                       ...state,
-                      auto_switch_bank_acc: option.value,
+                      cash_out_permission: e,
                     }))
                   }
                 />
               </Form.Item>
-            </Grid>{" "}
-            <Grid item xs={12} md={2} ref={refCashOutPermission}>
+            </Grid>
+            <Grid item xs={12} md={5} ref={refCashOutDisabledMessage}>
               <Form.Item
-                label={t("input.cash_out_permission")}
-                name="cash_out_permission"
+                label={t("input.cash_out_disabled_message")}
+                name="cash_out_disabled_message"
               >
-                <Select
+                <Input
                   size="large"
-                  options={[
-                    { value: true, label: t("table.true") },
-                    { value: false, label: t("table.false") },
-                  ]}
-                  value={body.cash_out_permission}
-                  onChange={(_value, option: any) =>
-                    setBody((state) => ({
-                      ...state,
-                      cash_out_permission: option.value,
-                    }))
-                  }
+                  name="cash_out_disabled_message"
+                  value={body.cash_out_disabled_message}
+                  onChange={handleChange}
                 />
               </Form.Item>
-            </Grid>{" "}
-            <Grid item xs={12} md={2} ref={refCheckLast}>
+            </Grid>
+            {/* <Grid item xs={12} md={2} ref={refCheckLast}>
               <Form.Item
                 label={t("input.check_last_waiting_pix")}
                 name="check_last_waiting_pix"
@@ -503,71 +509,52 @@ export const GeneralConfigs = () => {
                   }
                 />
               </Form.Item>
-            </Grid>
-            <Grid item xs={12} md={2} ref={refCallbackDeposit}>
+            </Grid> */}
+            <Grid item xs={12} md={2} ref={refAutoSwitchBanks}>
               <Form.Item
-                label={t("input.callback_deposit_api_enable")}
-                name="callback_deposit_api_enable"
+                data-test-id={`auto_switch_bank_acc-form-item`}
+                label={t(`input.auto_switch_bank_acc`)}
+                name={"auto_switch_bank_acc"}
+                valuePropName="checked"
               >
-                <Select
-                  size="large"
-                  options={[
-                    { value: true, label: t("table.true") },
-                    { value: false, label: t("table.false") },
-                  ]}
-                  value={body.callback_deposit_api_enable}
-                  onChange={(_value, option: any) =>
-                    setBody((state) => ({
+                <Switch
+                  data-test-id={`auto_switch_bank_acc-switch`}
+                  checked={body.auto_switch_bank_acc}
+                  onChange={(e) =>
+                    setBody((state: any) => ({
                       ...state,
-                      callback_deposit_api_enable: option.value,
+                      auto_switch_bank_acc: e,
                     }))
                   }
                 />
               </Form.Item>
             </Grid>
-            <Grid item xs={12} md={2} ref={refCallbackWithdraw}>
+            <Grid item xs={12} md={3} ref={refMaxValueToSwitchBankAcc}>
               <Form.Item
-                label={t("input.callback_withdraw_api_enable")}
-                name="callback_withdraw_api_enable"
-              >
-                <Select
-                  size="large"
-                  options={[
-                    { value: true, label: t("table.true") },
-                    { value: false, label: t("table.false") },
-                  ]}
-                  value={body.callback_withdraw_api_enable}
-                  onChange={(_value, option: any) =>
-                    setBody((state) => ({
-                      ...state,
-                      callback_withdraw_api_enable: option.value,
-                    }))
-                  }
-                />
-              </Form.Item>
-            </Grid>
-            <Grid item xs={12} md={4} ref={refCashInDisabledMessage}>
-              <Form.Item
-                label={t("input.cash_in_disabled_message")}
-                name="cash_in_disabled_message"
+                label={t("input.max_value_to_switch_bank_acc")}
+                name="max_value_to_switch_bank_acc"
               >
                 <Input
+                  disabled={!body.auto_switch_bank_acc}
+                  type="number"
                   size="large"
-                  name="cash_in_disabled_message"
-                  value={body.cash_in_disabled_message}
+                  name="max_value_to_switch_bank_acc"
+                  value={body.max_value_to_switch_bank_acc}
                   onChange={handleChange}
                 />
               </Form.Item>
             </Grid>
-            <Grid item xs={12} md={4} ref={refCashOutDisabledMessage}>
+            <Grid item xs={12} md={3} ref={refMinValueToSwitchBankAcc}>
               <Form.Item
-                label={t("input.cash_out_disabled_message")}
-                name="cash_out_disabled_message"
+                label={t("input.min_value_to_switch_bank_acc")}
+                name="min_value_to_switch_bank_acc"
               >
                 <Input
+                  disabled={!body.auto_switch_bank_acc}
+                  type="number"
                   size="large"
-                  name="cash_out_disabled_message"
-                  value={body.cash_out_disabled_message}
+                  name="min_value_to_switch_bank_acc"
+                  value={body.min_value_to_switch_bank_acc}
                   onChange={handleChange}
                 />
               </Form.Item>
@@ -601,35 +588,7 @@ export const GeneralConfigs = () => {
                 />
               </Form.Item>
             </Grid>
-            <Grid item xs={12} md={4} ref={refMaxValueToSwitchBankAcc}>
-              <Form.Item
-                label={t("input.max_value_to_switch_bank_acc")}
-                name="max_value_to_switch_bank_acc"
-              >
-                <Input
-                  type="number"
-                  size="large"
-                  name="max_value_to_switch_bank_acc"
-                  value={body.max_value_to_switch_bank_acc}
-                  onChange={handleChange}
-                />
-              </Form.Item>
-            </Grid>
-            <Grid item xs={12} md={4} ref={refMinValueToSwitchBankAcc}>
-              <Form.Item
-                label={t("input.min_value_to_switch_bank_acc")}
-                name="min_value_to_switch_bank_acc"
-              >
-                <Input
-                  type="number"
-                  size="large"
-                  name="min_value_to_switch_bank_acc"
-                  value={body.min_value_to_switch_bank_acc}
-                  onChange={handleChange}
-                />
-              </Form.Item>
-            </Grid>
-            <Grid item xs={12} md={4} ref={refCheckLastWaitinPix}>
+            {/* <Grid item xs={12} md={4} ref={refCheckLastWaitinPix}>
               <Form.Item
                 label={t("input.check_last_waiting_pix_time_minutes")}
                 name="check_last_waiting_pix_time_minutes"
@@ -657,7 +616,7 @@ export const GeneralConfigs = () => {
                   onChange={handleChange}
                 />
               </Form.Item>
-            </Grid>
+            </Grid> */}
             <Grid item xs={12} md={4} ref={refPaybrokersQrCode}>
               <Form.Item
                 label={t("input.paybrokers_qr_code_expire_hours")}
@@ -716,7 +675,7 @@ export const GeneralConfigs = () => {
                 />
               </Form.Item>
             </Grid>
-            <Grid item xs={12} md={4} ref={refTimeReceiveAfterExpire}>
+            <Grid item xs={12} md={4}>
               <Form.Item
                 label={t("input.fastpix_qr_code_expire_seconds")}
                 name="fastpix_qr_code_expire_seconds"
@@ -741,6 +700,44 @@ export const GeneralConfigs = () => {
                   name="fastpix_qr_code_expire_seconds"
                   value={body.fastpix_qr_code_expire_seconds}
                   onChange={handleChange}
+                />
+              </Form.Item>
+            </Grid>
+            <Grid item xs={12} md={2} ref={refCallbackDeposit}>
+              <Form.Item
+                data-test-id={`callback_deposit_api_enable-form-item`}
+                label={t(`input.callback_deposit_api_enable`)}
+                name={"callback_deposit_api_enable"}
+                valuePropName="checked"
+              >
+                <Switch
+                  data-test-id={`callback_deposit_api_enable-switch`}
+                  checked={body.callback_deposit_api_enable}
+                  onChange={(e) =>
+                    setBody((state: any) => ({
+                      ...state,
+                      callback_deposit_api_enable: e,
+                    }))
+                  }
+                />
+              </Form.Item>
+            </Grid>
+            <Grid item xs={12} md={2} ref={refCallbackWithdraw}>
+              <Form.Item
+                data-test-id={`callback_withdraw_api_enable-form-item`}
+                label={t(`input.callback_withdraw_api_enable`)}
+                name={"callback_withdraw_api_enable"}
+                valuePropName="checked"
+              >
+                <Switch
+                  data-test-id={`callback_withdraw_api_enable-switch`}
+                  checked={body.callback_withdraw_api_enable}
+                  onChange={(e) =>
+                    setBody((state: any) => ({
+                      ...state,
+                      callback_withdraw_api_enable: e,
+                    }))
+                  }
                 />
               </Form.Item>
             </Grid>
@@ -894,6 +891,7 @@ export const GeneralConfigs = () => {
               onClick: () => setactiveKey("2"),
             },
           },
+          //
           {
             title: t("input.cash_in_permission"),
             description: t("wiki.cash_in_permission_description"),
@@ -903,46 +901,25 @@ export const GeneralConfigs = () => {
             },
           },
           {
-            title: t("input.auto_switch_bank_acc"),
-            description: t("wiki.auto_switch_bank_acc_description"),
-            target: () => refAutoSwitchBanks.current,
+            title: t("input.cash_in_disabled_message"),
+            description: t("wiki.cash_in_disabled_message_description"),
+            target: () => refCashInDisabledMessage.current,
           },
           {
             title: t("input.cash_out_permission"),
             description: t("wiki.cash_out_permission_description"),
             target: () => refCashOutPermission.current,
           },
-          {
-            title: t("input.check_last_waiting_pix"),
-            description: t("wiki.check_last_waiting_pix_description"),
-            target: () => refCheckLast.current,
-          },
-          {
-            title: t("input.callback_deposit_api_enable"),
-            description: t("wiki.callback_deposit_api_enable_description"),
-            target: () => refCallbackDeposit.current,
-          },
-          {
-            title: t("input.callback_withdraw_api_enable"),
-            description: t("wiki.callback_withdraw_api_enable_description"),
-            target: () => refCallbackWithdraw.current,
-          },
-          {
-            title: t("input.cash_in_disabled_message"),
-            description: t("wiki.cash_in_disabled_message_description"),
-            target: () => refCashInDisabledMessage.current,
-          },
+
           {
             title: t("input.cash_out_disabled_message"),
             description: t("wiki.cash_out_disabled_message_description"),
             target: () => refCashOutDisabledMessage.current,
           },
           {
-            title: t("input.time_to_prevent_repeated_withdraw_minutes"),
-            description: t(
-              "wiki.time_to_prevent_repeated_withdraw_minutes_description"
-            ),
-            target: () => reftimeToPreventRepeatedWithdraw.current,
+            title: t("input.auto_switch_bank_acc"),
+            description: t("wiki.auto_switch_bank_acc_description"),
+            target: () => refAutoSwitchBanks.current,
           },
           {
             title: t("input.max_value_to_switch_bank_acc"),
@@ -954,13 +931,28 @@ export const GeneralConfigs = () => {
             description: t("wiki.min_value_to_switch_bank_acc_description"),
             target: () => refMinValueToSwitchBankAcc.current,
           },
+
+          // {
+          //   title: t("input.check_last_waiting_pix"),
+          //   description: t("wiki.check_last_waiting_pix_description"),
+          //   target: () => refCheckLast.current,
+          // },
+
           {
-            title: t("input.check_last_waiting_pix_time_minutes"),
+            title: t("input.time_to_prevent_repeated_withdraw_minutes"),
             description: t(
-              "wiki.check_last_waiting_pix_time_minutes_description"
+              "wiki.time_to_prevent_repeated_withdraw_minutes_description"
             ),
-            target: () => refCheckLastWaitinPix.current,
+            target: () => reftimeToPreventRepeatedWithdraw.current,
           },
+
+          // {
+          //   title: t("input.check_last_waiting_pix_time_minutes"),
+          //   description: t(
+          //     "wiki.check_last_waiting_pix_time_minutes_description"
+          //   ),
+          //   target: () => refCheckLastWaitinPix.current,
+          // },
           {
             title: t("input.paybrokers_qr_code_expire_hours"),
             description: t("wiki.paybrokers_qr_code_expire_hours_description"),
@@ -972,6 +964,16 @@ export const GeneralConfigs = () => {
               "wiki.time_receive_after_expire_qr_code_hours_description"
             ),
             target: () => refTimeReceiveAfterExpire.current,
+          },
+          {
+            title: t("input.callback_deposit_api_enable"),
+            description: t("wiki.callback_deposit_api_enable_description"),
+            target: () => refCallbackDeposit.current,
+          },
+          {
+            title: t("input.callback_withdraw_api_enable"),
+            description: t("wiki.callback_withdraw_api_enable_description"),
+            target: () => refCallbackWithdraw.current,
           },
         ]}
         pageStep={{
