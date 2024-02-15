@@ -479,7 +479,8 @@
     "license_number": "Número da licença",
     "add_all_columns": "Adicionar todas as colunas",
     "ip": "IP",
-    "reason_name": "Motivo"
+    "reason_name": "Motivo",
+    "withdraw_by_month_cant_be_smaller_than_day": "O valor de saques por mês não pode ser menor que o valor de saques por dia"
   },
   "table": {
     "id": "id",
