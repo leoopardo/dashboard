@@ -119,7 +119,6 @@ export const PersonUpdate = () => {
     currentData?.cpf
   );
 
-
   const columns: ColumnInterface[] = [
     { name: "_id", type: "id" },
     { name: "cpf", type: "document" },
@@ -175,6 +174,15 @@ export const PersonUpdate = () => {
     formRef.current?.setFieldsValue(PersonsData);
   }, [PersonsData]);
 
+  useEffect(() => {
+    setBody({
+      ...PersonsData?.items[0],
+      birth_date:PersonsData?.items[0].birth_date ? moment(new Date(`${PersonsData?.items[0].birth_date}`))
+        .add(1, "day")
+        .toISOString() : undefined,
+    });
+  }, [PersonsData]);
+
   const items: TabsProps["items"] = [
     {
       key: "1",
@@ -198,7 +206,7 @@ export const PersonUpdate = () => {
           initialValues={{
             ...PersonsData?.items[0],
             birth_date: dayjs(
-              `${moment(PersonsData?.items[0]?.birth_date).add(1, "days")}`,
+              `${moment(PersonsData?.items[0]?.birth_date)}`,
               "YYYY-MM-DD HH:mm:ss"
             ),
           }}
@@ -498,7 +506,11 @@ export const PersonUpdate = () => {
             columnSpacing={1}
             style={{ display: "flex", alignItems: "flex-end" }}
           >
-            <button type="submit" ref={submitRefBlock} style={{ display: "none" }}>
+            <button
+              type="submit"
+              ref={submitRefBlock}
+              style={{ display: "none" }}
+            >
               Submit
             </button>
             <Grid item xs={12} md={4} lg={1}>
