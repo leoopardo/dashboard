@@ -31,6 +31,11 @@ export function useValidate(rememberMe?: boolean, token?: string) {
     },
     {
       refetchOnWindowFocus: rememberMe ? "always" : false,
+      onError(err) {
+        console.log(err);
+        secureLocalStorage.removeItem("token");
+        sessionStorage.removeItem("token");
+      },
     }
   );
   useEffect(() => {
@@ -54,7 +59,7 @@ export function useValidate(rememberMe?: boolean, token?: string) {
     toast.error(t("error.disabled_entity"));
 
     disabledNotification = true;
-   
+
     secureLocalStorage.removeItem("token");
     sessionStorage.removeItem("token");
     queryClient.cancelMutations();
