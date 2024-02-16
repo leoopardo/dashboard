@@ -286,10 +286,6 @@ export const ImportPreOperations = () => {
                         key: i + 1,
                       }))
                     );
-                    console.log(
-                      Papa.unparse(parsedData.data, { delimiter: ";" })
-                    );
-
                     const base64Encoded = Buffer.from(
                       Papa.unparse(parsedData.data, { delimiter: ";" })
                         .replace(/(\r\n|\n|\r)/gm, "\n")
@@ -309,10 +305,7 @@ export const ImportPreOperations = () => {
                         key: i + 1,
                       }))
                     );
-                    console.log(
-                      Papa.unparse(parsedData.data, { delimiter: ";" })
-                    );
-
+             
                     const base64Encoded = Buffer.from(
                       Papa.unparse(parsedData.data, { delimiter: ";" })
                         .replace(/(\r\n|\n|\r)/gm, "\n")

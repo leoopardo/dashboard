@@ -267,8 +267,7 @@ export const ImportPersonsBlacklist = () => {
                 const reader = new FileReader();
                 reader.readAsText(file);
                 reader.onload = () => {
-                  console.log(`${reader.result}`);
-
+      
                   const base64Enconded = Buffer.from(
                     `${reader?.result}`?.replace(/(\r\n|\n|\r)/gm, "\n").trim()
                   ).toString("base64");

@@ -34,9 +34,6 @@ export function useToken(
     return response.data;
   });
 
-  console.log(error);
-  
-
   useEffect(() => {
     if (data?.token) {
       queryClient.refetchQueries(["validate"]);
