@@ -62,7 +62,7 @@ export const FiltersModal = ({
           onClick={() => {
             submitRef.current?.click();
           }}
-          style={{ width: "100%", height: "50px" }}
+          style={{ width: "100%", height: "50px", borderRadius: 0 }}
         >
           {t("table.apply_filters")}
         </Button>

@@ -84,7 +84,7 @@ export const MutateModal = ({
           data-test-id="submit-button"
           loading={submitLoading}
           type="primary"
-          style={{ width: "100%" }}
+          style={{ width: "100%", borderRadius: 0 }}
           size="large"
           onClick={() => submitRef.current?.click()}
         >
@@ -101,7 +101,7 @@ export const MutateModal = ({
       da forma correta pois estava o modal estava sendo exibido 
       de acordo com a variável "open", dessa forma os campos são exibidos
       com o "open" e o modal pode ser fechado normalmente */}
-      
+
       {open && (
         <MutateModalFields
           body={body}
