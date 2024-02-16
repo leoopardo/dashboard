@@ -86,7 +86,7 @@ export const EditSelfModal = ({
       }
     >
       {!body && SelfFetching ? (
-        <Spin size="large" />
+        <Spin tip={t("messages.loading")} size="large" />
       ) : (
         <Form
           ref={formRef}

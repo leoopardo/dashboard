@@ -2,18 +2,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { CalendarOutlined } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
-import { Grid } from "@mui/material";
 import { queryClient } from "@src/services/queryClient";
 import { ValidateInterface } from "@src/services/types/validate.interface";
 import { getUtcOffset } from "@src/utils/getUtc";
 import {
   Button,
   Checkbox,
+  Col,
   ConfigProvider,
   DatePicker,
   Drawer,
   Form,
   FormInstance,
+  Row,
   Segmented,
   Select,
   Slider,
@@ -109,7 +110,9 @@ export const FiltersModal = ({
       page: null,
       limit: null,
       [startDateKeyName]: query[startDateKeyName]
-        ? moment(query[startDateKeyName]).add(getUtcOffset(), "hours").toString()
+        ? moment(query[startDateKeyName])
+            .add(getUtcOffset(), "hours")
+            .toString()
         : null,
       [endDateKeyName]: query[endDateKeyName]
         ? moment(query[endDateKeyName]).add(getUtcOffset(), "hours").toString()
@@ -243,6 +246,7 @@ export const FiltersModal = ({
       bodyStyle={{ overflowX: "hidden" }}
       onClose={() => setOpen(false)}
       open={open}
+      footerStyle={{padding: 0}}
       footer={
         <Button
           data-test-id="button-apply-filters"
@@ -256,17 +260,16 @@ export const FiltersModal = ({
         </Button>
       }
     >
-      <Grid
-        container
+      <Row
+        gutter={[8, 8]}
         style={{ marginBottom: "10px", display: "flex", alignItems: "center" }}
-        spacing={1}
       >
-        <Grid item xs={10}>
+        <Col span={20}>
           <Typography data-test-id="used-filters-text">
             {t("table.used_filters")}:
           </Typography>
-        </Grid>
-        <Grid item xs={2}>
+        </Col>
+        <Col span={4}>
           <Button
             data-test-id="button-clear-filters"
             type="dashed"
@@ -277,17 +280,21 @@ export const FiltersModal = ({
           >
             <FilterAltOffOutlinedIcon />
           </Button>
-        </Grid>
-        <Grid item xs={12}>
+        </Col>
+        <Col span={24}>
           <FilterChips
             data-test-id="filter-chips"
             query={{
               ...filtersQuery,
               [startDateKeyName]: filtersQuery[startDateKeyName]
-                ? moment(new Date(filtersQuery[startDateKeyName])).utc().toString()
+                ? moment(new Date(filtersQuery[startDateKeyName]))
+                    .utc()
+                    .toString()
                 : undefined,
               [endDateKeyName]: filtersQuery[endDateKeyName]
-                ? moment(new Date(filtersQuery[endDateKeyName])).utc().toString()
+                ? moment(new Date(filtersQuery[endDateKeyName]))
+                    .utc()
+                    .toString()
                 : undefined,
             }}
             setQuery={setQuery}
@@ -296,8 +303,8 @@ export const FiltersModal = ({
             haveInitialDate={haveInitialDate}
             disabled={disabled}
           />
-        </Grid>
-      </Grid>
+        </Col>
+      </Row>
 
       <Form
         data-test-id="form-filters"
@@ -501,8 +508,7 @@ export const FiltersModal = ({
                               ? dayjs(
                                   moment(
                                     new Date(filtersQuery[startDateKeyName])
-                                  )
-                                    .toString()
+                                  ).toString()
                                 )
                               : dayjs(
                                   moment(new Date())
@@ -542,7 +548,6 @@ export const FiltersModal = ({
                                 : null,
                             }));
 
-                        
                             formRef?.current?.validateFields();
                           }}
                           autoFocus={false}
@@ -639,17 +644,14 @@ export const FiltersModal = ({
 
             case "age_start":
               return (
-                <Grid
-                  container
-                  item
-                  xs={12}
+                <Row
+                  gutter={[8, 8]}
                   style={{
                     display: "flex",
                     alignItems: "center",
-                    margin: 10,
                   }}
                 >
-                  <Grid item xs={3}>
+                  <Col span={6}>
                     <Checkbox
                       data-test-id="checkbox-age-range"
                       checked={isAgeRangeAbled}
@@ -660,8 +662,8 @@ export const FiltersModal = ({
                     >
                       {t("table.age")}
                     </Checkbox>
-                  </Grid>
-                  <Grid item xs={8}>
+                  </Col>
+                  <Col span={18}>
                     <Slider
                       data-test-id="slider-age-range"
                       disabled={!isAgeRangeAbled}
@@ -677,23 +679,20 @@ export const FiltersModal = ({
                         }));
                       }}
                     />
-                  </Grid>
-                </Grid>
+                  </Col>
+                </Row>
               );
 
             case "value_start":
               return (
-                <Grid
-                  container
-                  item
-                  xs={12}
+                <Row
+                  gutter={[8, 8]}
                   style={{
                     display: "flex",
                     alignItems: "center",
-                    margin: 10,
                   }}
                 >
-                  <Grid item xs={3}>
+                  <Col span={6}>
                     <Checkbox
                       data-test-id="checkbox-value-range"
                       checked={isValueRangeAbled}
@@ -704,8 +703,8 @@ export const FiltersModal = ({
                     >
                       {t("table.value")}
                     </Checkbox>
-                  </Grid>
-                  <Grid item xs={8}>
+                  </Col>
+                  <Col span={18}>
                     <Slider
                       data-test-id="slider-value-range"
                       disabled={!isValueRangeAbled}
@@ -721,8 +720,8 @@ export const FiltersModal = ({
                         }));
                       }}
                     />
-                  </Grid>
-                </Grid>
+                  </Col>
+                </Row>
               );
 
             case "state":

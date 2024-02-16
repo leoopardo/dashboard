@@ -211,6 +211,7 @@ export const MutateModal = ({
       }}
       bodyStyle={{ overflowX: "hidden" }}
       title={modalName}
+      footerStyle={{ padding: 0 }}
       footer={
         <Button
           data-test-id="submit-button"
@@ -459,31 +460,31 @@ export const MutateModal = ({
                 return;
 
               case "license_id":
-                  return (
-                    <Col span={24}>
-                      <Form.Item
-                        data-test-id="license-select-form-item"
-                        label={t(`table.${field.label}`)}
-                        name={field.label}
-                        style={{ margin: 10 }}
-                        rules={[
-                          {
-                            required: field.required && !body?.partner_id,
-                            message:
-                              t("input.required", {
-                                field: t(`table.${field.label}`),
-                              }) || "",
-                          },
-                        ]}
-                      >
-                        <LicenseSelect
-                          data-test-id="license-select"
-                          setQueryFunction={setBody}
-                          queryOptions={body}
-                        />
-                      </Form.Item>
-                    </Col>
-                  );
+                return (
+                  <Col span={24}>
+                    <Form.Item
+                      data-test-id="license-select-form-item"
+                      label={t(`table.${field.label}`)}
+                      name={field.label}
+                      style={{ margin: 10 }}
+                      rules={[
+                        {
+                          required: field.required && !body?.partner_id,
+                          message:
+                            t("input.required", {
+                              field: t(`table.${field.label}`),
+                            }) || "",
+                        },
+                      ]}
+                    >
+                      <LicenseSelect
+                        data-test-id="license-select"
+                        setQueryFunction={setBody}
+                        queryOptions={body}
+                      />
+                    </Form.Item>
+                  </Col>
+                );
               case "email":
                 return (
                   <Form.Item
@@ -502,7 +503,7 @@ export const MutateModal = ({
                     ]}
                   >
                     <Input
-                    style={{width: "100%"}}
+                      style={{ width: "100%" }}
                       data-test-id="email-input"
                       size="large"
                       name="email"
@@ -773,31 +774,29 @@ export const MutateModal = ({
                 }
                 return;
 
-                case "locked":
-                  return (
-                    <Col
-                      span={12}
+              case "locked":
+                return (
+                  <Col span={12}>
+                    <Form.Item
+                      data-test-id={`${field.label}-form-item`}
+                      label={t(`table.${field.label}`)}
+                      name={field.label}
+                      style={{ margin: 10 }}
+                      valuePropName="checked"
                     >
-                      <Form.Item
-                        data-test-id={`${field.label}-form-item`}
-                        label={t(`table.${field.label}`)}
-                        name={field.label}
-                        style={{ margin: 10 }}
-                        valuePropName="checked"
-                      >
-                        <Switch
-                          data-test-id={`${field.label}-switch`}
-                          checked={body[field.label]}
-                          onChange={(e) =>
-                            setBody((state: any) => ({
-                              ...state,
-                              [field.label]: e,
-                            }))
-                          }
-                        />
-                      </Form.Item>
-                    </Col>
-                  );
+                      <Switch
+                        data-test-id={`${field.label}-switch`}
+                        checked={body[field.label]}
+                        onChange={(e) =>
+                          setBody((state: any) => ({
+                            ...state,
+                            [field.label]: e,
+                          }))
+                        }
+                      />
+                    </Form.Item>
+                  </Col>
+                );
 
               case "status":
               case "cash_in":

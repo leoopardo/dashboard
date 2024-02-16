@@ -22,10 +22,10 @@ export const Search = ({ query, setQuery, searchOption }: SearchInterface) => {
 
   return (
     <Input.Search
+    readOnly={!searchOption}
       size="large"
       placeholder={`${t("table.search")}`}
       value={search}
-      disabled={!searchOption}
       style={{ width: "100%" }}
       onChange={(event) => {
         setSearch(event.target.value);

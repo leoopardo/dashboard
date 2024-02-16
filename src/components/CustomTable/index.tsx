@@ -7,31 +7,32 @@ import {
   InfoCircleTwoTone,
   ReloadOutlined,
 } from "@ant-design/icons";
-import { Grid } from "@mui/material";
+import CachedIcon from "@mui/icons-material/Cached";
 import { useListBanks } from "@src/services/bank/listBanks";
 import { defaultTheme } from "@src/styles/defaultTheme";
+import { ErrorList } from "@src/utils/errors";
+import { formatCPF } from "@src/utils/functions";
+import { moneyFormatter } from "@src/utils/moneyFormatter";
 import {
   Avatar,
   Button,
+  Col,
   Dropdown,
   Empty,
   Modal,
   Pagination,
   Progress,
+  Row,
   Table,
   Tooltip,
   Typography,
 } from "antd";
-import { ErrorList } from "@src/utils/errors";
-import { formatCPF } from "@src/utils/functions";
 import type { ColumnsType, TableProps as TablePropsAntD } from "antd/es/table";
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
-import CachedIcon from "@mui/icons-material/Cached";
 import { Mobile } from "./mobile";
-import { moneyFormatter } from "@src/utils/moneyFormatter";
 
 export interface ColumnInterface {
   name: string | any; // (nome da coluna caso não passe head) e chave do objeto a ser acessado nos items
@@ -830,7 +831,7 @@ export const CustomTable = (props: TableProps) => {
                 <Tooltip title={t("table.refetch_data")}>
                   <Button
                     data-test-id="refetch-button"
-                    type="primary"
+                    type="link"
                     onClick={() => {
                       if (props?.refetch) props.refetch();
                     }}
@@ -840,11 +841,9 @@ export const CustomTable = (props: TableProps) => {
                       height: "100%",
                       display: "flex",
                       justifyContent: "center",
-                      color: "#fff",
-                      backgroundColor: defaultTheme.colors.secondary,
                       margin: 0,
                     }}
-                    icon={<CachedIcon style={{ fontSize: "28px" }} />}
+                    icon={<CachedIcon style={{ fontSize: "28px"}} />}
                   ></Button>
                 </Tooltip>
               ) : (
@@ -1087,8 +1086,8 @@ export const CustomTable = (props: TableProps) => {
               dataIndex: column?.name,
               width: 180,
               render: (text: any, record: any) => (
-                <Grid
-                  container
+                <Row
+                  gutter={[8,8]}
                   style={{
                     width: "100%",
                     textAlign: "center",
@@ -1097,7 +1096,7 @@ export const CustomTable = (props: TableProps) => {
                     justifyContent: "center",
                   }}
                 >
-                  <Grid item xs={record?.error_message ? 11 : 12}>
+                  <Col xs={{span: record?.error_message ? 21 : 24}}>
                     <Progress
                       type="line"
                       percent={text?.split("/")[0]}
@@ -1111,9 +1110,9 @@ export const CustomTable = (props: TableProps) => {
                           : "active"
                       }
                     />
-                  </Grid>
+                  </Col>
                   {record?.error_message && (
-                    <Grid item xs={1}>
+                    <Col span={3}>
                       <Tooltip
                         title={
                           (ErrorList as any)[record?.error_message]
@@ -1130,9 +1129,9 @@ export const CustomTable = (props: TableProps) => {
                           style={{ marginBottom: "8px" }}
                         />
                       </Tooltip>
-                    </Grid>
+                    </Col>
                   )}
-                </Grid>
+                </Row>
               ),
               sorter: column.sort
                 ? () => {
@@ -1293,8 +1292,8 @@ export const CustomTable = (props: TableProps) => {
   return (
     <>
       {!isMobile ? (
-        <Grid container>
-          <Grid item xs={12}>
+        <Row gutter={[8,8]}>
+          <Col span={24}>
             <Table
               size={props.size ?? "middle"}
               tableLayout="auto"
@@ -1382,7 +1381,7 @@ export const CustomTable = (props: TableProps) => {
               sticky
               bordered
             />
-          </Grid>
+          </Col>
           {props.bankStatement && (
             <div
               style={{
@@ -1402,13 +1401,13 @@ export const CustomTable = (props: TableProps) => {
               />
             </div>
           )}
-        </Grid>
+        </Row>
       ) : (
-        <Grid
-          container
+        <Row
+          gutter={[8,8]}
           style={{ display: "flex", justifyContent: "center", width: "100%" }}
         >
-          <Grid item xs={12}>
+          <Col span={24}>
             {props.refetch && (
               <Button
                 style={{ width: "100%" }}
@@ -1430,7 +1429,7 @@ export const CustomTable = (props: TableProps) => {
               selectedKeys={props?.selectedKeys}
               loading={props.loading}
             />
-          </Grid>
+          </Col>
           {!props.removePagination && !props.bankStatement && props.items && (
             <Pagination
               style={{ marginTop: 8 }}
@@ -1472,7 +1471,7 @@ export const CustomTable = (props: TableProps) => {
               />
             </div>
           )}
-        </Grid>
+        </Row>
       )}
       {props.isConfirmOpen && (
         <Modal

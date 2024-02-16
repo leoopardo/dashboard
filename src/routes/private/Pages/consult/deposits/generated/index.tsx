@@ -188,9 +188,21 @@ export const GeneratedDeposits = () => {
         gutter={[8, 8]}
       >
         <Col xs={{ span: 24 }} md={{ span: 18 }} lg={{ span: 9 }}>
-          {!isMobile && (
+          {!isMobile ? (
             <Space.Compact style={{ width: "100%" }} size="large">
               <Select
+                allowClear
+                onClear={() => {
+                  delete query.pix_id;
+                  delete query.endToEndId;
+                  delete query.txid;
+                  delete query.reference_id;
+                  delete query.payer_document;
+                  delete query.buyer_document;
+                  delete query.buyer_name;
+                  delete query.payer_name;
+                  delete query.description;
+                }}
                 style={{ width: "60%" }}
                 size="large"
                 onChange={(value) => {
@@ -218,6 +230,7 @@ export const GeneratedDeposits = () => {
                     delete query.final_date;
                   } else {
                     setQuery((state) => ({
+                      ...state,
                       initial_date: moment(new Date())
                         .startOf("day")
                         .utc()
@@ -227,7 +240,7 @@ export const GeneratedDeposits = () => {
                         .startOf("day")
                         .utc()
                         .format("YYYY-MM-DDTHH:mm:ss.SSS"),
-                      ...state,
+                     
                     }));
                   }
                   setSearchOption(value);
@@ -246,36 +259,82 @@ export const GeneratedDeposits = () => {
                   { value: "description", label: t("table.description") },
                 ]}
               />
-
               <Search
                 query={query}
                 setQuery={setQuery}
                 searchOption={searchOption}
               />
             </Space.Compact>
-          )}
-
-          {isMobile && (
+          ) : (
             <Select
-              style={{ width: "100%" }}
-              size="large"
-              onChange={(value) => {
-                setSearchOption(value);
-              }}
-              value={searchOption}
-              placeholder={t("input.options")}
-              options={[
-                { value: "pix_id", label: t("table.pix_id") },
-                { value: "endToEndId", label: t("table.endToEndId") },
-                { value: "payer_document", label: t("table.payer_document") },
-                { value: "buyer_document", label: t("table.buyer_document") },
-                { value: "buyer_name", label: t("table.buyer_name") },
-                { value: "payer_name", label: t("table.payer_name") },
-                { value: "txid", label: t("table.txid") },
-                { value: "reference_id", label: t("table.reference_id") },
-                { value: "description", label: t("table.description") },
-              ]}
-            />
+                allowClear
+                onClear={() => {
+                  delete query.pix_id;
+                  delete query.endToEndId;
+                  delete query.txid;
+                  delete query.reference_id;
+                  delete query.payer_document;
+                  delete query.buyer_document;
+                  delete query.buyer_name;
+                  delete query.payer_name;
+                  delete query.description;
+                }}
+                style={{ width: "100%" }}
+                size="large"
+                onChange={(value) => {
+                  delete query.pix_id;
+                  delete query.endToEndId;
+                  delete query.txid;
+                  delete query.reference_id;
+                  delete query.payer_document;
+                  delete query.buyer_document;
+                  delete query.buyer_name;
+                  delete query.payer_name;
+                  delete query.description;
+
+                  if (
+                    [
+                      "pix_id",
+                      "endToEndId",
+                      "txid",
+                      "reference_id",
+                      "payer_document",
+                      "buyer_document",
+                    ].includes(value)
+                  ) {
+                    delete query.initial_date;
+                    delete query.final_date;
+                  } else {
+                    setQuery((state) => ({
+                      ...state,
+                      initial_date: moment(new Date())
+                        .startOf("day")
+                        .utc()
+                        .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+                      final_date: moment(new Date())
+                        .add(1, "day")
+                        .startOf("day")
+                        .utc()
+                        .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+                     
+                    }));
+                  }
+                  setSearchOption(value);
+                }}
+                value={searchOption}
+                placeholder={t("input.options")}
+                options={[
+                  { value: "pix_id", label: t("table.pix_id") },
+                  { value: "endToEndId", label: t("table.endToEndId") },
+                  { value: "payer_document", label: t("table.payer_document") },
+                  { value: "buyer_document", label: t("table.buyer_document") },
+                  { value: "buyer_name", label: t("table.buyer_name") },
+                  { value: "payer_name", label: t("table.payer_name") },
+                  { value: "txid", label: t("table.txid") },
+                  { value: "reference_id", label: t("table.reference_id") },
+                  { value: "description", label: t("table.description") },
+                ]}
+              />
           )}
         </Col>
 
