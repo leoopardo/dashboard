@@ -70,8 +70,6 @@ export const GeneratedDeposits = () => {
     refetchDepositsTotalRows,
   } = useGetRowsGeneratedDeposits(query);
 
-  console.log(new Date(), new Date().toUTCString());
-
   useEffect(() => {
     refetchDepositsTotalRows();
     refetchDepositsTotal();
