@@ -34,6 +34,7 @@ export const DepositsWebhooks = () => {
     refetchDepositsWebhooks,
   } = useGetDepositsWebhooks(query);
 
+
   useEffect(() => {
     refetchDepositsWebhooks();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -95,20 +96,22 @@ export const DepositsWebhooks = () => {
                     setCurrentItem={setCurrentItem}
                     setQuery={setQuery}
                     data={depositsWebhooks}
-                    items={depositsWebhooks?.items}
+                    items={depositsWebhooks?.itens}
                     error={depositsWebhooksError}
                     refetch={refetchDepositsWebhooks}
                     columns={[
-                      { name: "_id", type: "id" },
-                      { name: "user_name", type: "text" },
-                      { name: "webhook_type", type: "translate" },
-                      { name: "success", type: "boolean" },
-                      { name: "failed", type: "boolean" },
-                      { name: "error", type: "text" },
+                    
+                      { name: "user_id", type: "text" },
+                      { name: "merchant_id", type: "text" },
+                      { name: "webhook_url_type_filter", type: "translate" },
+                    
+                      { name: "success_rows", type: "text" },
+                      { name: "failed_rows", type: "text" },
+                      
                       { name: "progress", type: "progress" },
                       { name: "createdAt", type: "date" },
-                      { name: "start_date", type: "date" },
-                      { name: "end_date", type: "date" },
+                      { name: "start_date_filter", type: "date" },
+                      { name: "end_date_filter", type: "date" },
                     ]}
                     loading={isDepositsWebhooksFetching}
                     actions={[
@@ -140,7 +143,7 @@ export const DepositsWebhooks = () => {
                     setCurrentItem={setCurrentItem}
                     setQuery={setQuery}
                     data={depositsWebhooks}
-                    items={depositsWebhooks?.items}
+                    items={depositsWebhooks?.itens}
                     error={depositsWebhooksError}
                     refetch={refetchDepositsWebhooks}
                     columns={[
