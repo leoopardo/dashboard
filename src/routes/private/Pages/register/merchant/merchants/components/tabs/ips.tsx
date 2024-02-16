@@ -125,7 +125,6 @@ export const IpsConfigTab = (props: { id?: string }) => {
         </Grid>
       </Grid>
 
-      {isCreateModalOpen && (
         <MutateModal
           type="create"
           open={isCreateModalOpen}
@@ -139,7 +138,7 @@ export const IpsConfigTab = (props: { id?: string }) => {
           error={createIpsError}
           success={createIpsIsSuccess}
         />
-      )}
+        
       <Toast
         actionSuccess={t("messages.deleted")}
         actionError={t("messages.deleted")}

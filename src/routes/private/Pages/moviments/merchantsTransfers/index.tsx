@@ -1,10 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  ArrowUpOutlined,
-  DollarOutlined,
-  EyeFilled,
-} from "@ant-design/icons";
+import { ArrowUpOutlined, DollarOutlined, EyeFilled } from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
@@ -209,20 +205,18 @@ export const TransferBetweenMerchants = () => {
         </Grid>
       </Grid>
 
-      {isFiltersOpen && (
-        <FiltersModal
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          filters={["start_date", "end_date", "merchant_id"]}
-          refetch={refetchTransferMerchantsData}
-          selectOptions={{}}
-          startDateKeyName="start_date"
-          endDateKeyName="end_date"
-          initialQuery={INITIAL_QUERY}
-        />
-      )}
+      <FiltersModal
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        filters={["start_date", "end_date", "merchant_id"]}
+        refetch={refetchTransferMerchantsData}
+        selectOptions={{}}
+        startDateKeyName="start_date"
+        endDateKeyName="end_date"
+        initialQuery={INITIAL_QUERY}
+      />
 
       {isValidateTokenOpen && (
         <ValidateToken
@@ -238,86 +232,84 @@ export const TransferBetweenMerchants = () => {
         />
       )}
 
-      {isTransferModalOpen && (
-        <MutateModal
-          type="create"
-          open={isTransferModalOpen}
-          setOpen={setIsTransferModalOpen}
-          fields={[
+      <MutateModal
+        type="create"
+        open={isTransferModalOpen}
+        setOpen={setIsTransferModalOpen}
+        fields={[
+          {
+            label: "merchant_origin",
+            required: true,
+            asyncOption: {
+              options: merchantsData?.items,
+              optionLabel: "name",
+              optionValue: "id",
+              bodyProp: "debit_merchant_id",
+            },
+          },
+          {
+            label: "debit_balance_type",
+            required: true,
+            selectOption: true,
+          },
+          {
+            label: "merchant_destination",
+            required: true,
+            asyncOption: {
+              options: merchantsData?.items,
+              optionLabel: "name",
+              optionValue: "id",
+              bodyProp: "credit_merchant_id",
+            },
+          },
+          {
+            label: "credit_balance_type",
+            required: true,
+            selectOption: true,
+          },
+          { label: "value", required: true },
+        ]}
+        body={transferBody}
+        setBody={setTransferBody}
+        selectOptions={{
+          debit_balance_type: [
             {
-              label: "merchant_origin",
-              required: true,
-              asyncOption: {
-                options: merchantsData?.items,
-                optionLabel: "name",
-                optionValue: "id",
-                bodyProp: "debit_merchant_id",
-              },
+              label: "balance_reserved",
+              value: "balance_reserved",
             },
             {
-              label: "debit_balance_type",
-              required: true,
-              selectOption: true,
+              label: "balance_to_payment",
+              value: "balance_to_payment",
             },
             {
-              label: "merchant_destination",
-              required: true,
-              asyncOption: {
-                options: merchantsData?.items,
-                optionLabel: "name",
-                optionValue: "id",
-                bodyProp: "credit_merchant_id",
-              },
+              label: "balance_to_transactions",
+              value: "balance_to_transactions",
+            },
+          ],
+          credit_balance_type: [
+            {
+              label: "balance_reserved",
+              value: "balance_reserved",
             },
             {
-              label: "credit_balance_type",
-              required: true,
-              selectOption: true,
+              label: "balance_to_payment",
+              value: "balance_to_payment",
             },
-            { label: "value", required: true },
-          ]}
-          body={transferBody}
-          setBody={setTransferBody}
-          selectOptions={{
-            debit_balance_type:  [
-              {
-                label: "balance_reserved",
-                value: "balance_reserved",
-              },
-              {
-                label: "balance_to_payment",
-                value: "balance_to_payment",
-              },
-              {
-                label: "balance_to_transactions",
-                value: "balance_to_transactions",
-              },
-            ],
-            credit_balance_type:  [
-              {
-                label: "balance_reserved",
-                value: "balance_reserved",
-              },
-              {
-                label: "balance_to_payment",
-                value: "balance_to_payment",
-              },
-              {
-                label: "balance_to_transactions",
-                value: "balance_to_transactions",
-              },
-            ],
-          }}
-          modalName={t("table.transfer")}
-          submit={() => {
-            setIsValidateTokenOpen(true);
-          }}
-          submitLoading={false}
-          error={false}
-          success={false}
-          submitText={`${t("buttons.create")}`}
-        />
-      )}
+            {
+              label: "balance_to_transactions",
+              value: "balance_to_transactions",
+            },
+          ],
+        }}
+        modalName={t("table.transfer")}
+        submit={() => {
+          setIsValidateTokenOpen(true);
+        }}
+        submitLoading={false}
+        error={false}
+        success={false}
+        submitText={`${t("buttons.create")}`}
+      />
 
       <Toast
         actionSuccess={t("messages.create")}
@@ -325,15 +317,14 @@ export const TransferBetweenMerchants = () => {
         error={error}
         success={isSuccess}
       />
-      {isViewModalOpen && (
-        <ViewModal
-          item={currentItem}
-          loading={isTransferMerchantsDataFetching}
-          modalName={`${t("modal.user")}: ${currentItem?.name}`}
-          open={isViewModalOpen}
-          setOpen={setIsViewModalOpen}
-        />
-      )}
+
+      <ViewModal
+        item={currentItem}
+        loading={isTransferMerchantsDataFetching}
+        modalName={`${t("modal.user")}: ${currentItem?.name}`}
+        open={isViewModalOpen}
+        setOpen={setIsViewModalOpen}
+      />
     </Row>
   );
 };

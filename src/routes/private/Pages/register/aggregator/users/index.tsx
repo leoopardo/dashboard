@@ -70,7 +70,8 @@ export const AggregatorUsers = () => {
     AggregatorUsersReportsIsLoading,
     AggregatorUsersReportsIsSuccess,
     AggregatorUsersReportsMutate,
-  } = useCreateAggregatorUsersReports({ ...query,
+  } = useCreateAggregatorUsersReports({
+    ...query,
     fields: csvFields,
     comma_separate_value: comma,
   });
@@ -101,17 +102,8 @@ export const AggregatorUsers = () => {
   const refCreatedAt = useRef(null);
 
   const filters = aggregator_id
-    ? [
-        "start_date",
-        "end_date",
-        "status",
-      ]
-    : [
-        "start_date",
-        "end_date",
-        "status",
-        "aggregator_id",
-      ];
+    ? ["start_date", "end_date", "status"]
+    : ["start_date", "end_date", "status", "aggregator_id"];
 
   return (
     <Grid container style={{ padding: "25px" }}>
@@ -299,26 +291,30 @@ export const AggregatorUsers = () => {
               },
             ]}
             loading={isUsersDataFetching}
-            label={["name", "aggregator.name","permission_group.name", "updated_at"]}
+            label={[
+              "name",
+              "aggregator.name",
+              "permission_group.name",
+              "updated_at",
+            ]}
           />
         </Grid>
       </Grid>
 
-      {isFiltersOpen && (
-        <FiltersModal
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          filters={filters}
-          refetch={refetchUsersData}
-          selectOptions={{}}
-          startDateKeyName="start_date"
-          endDateKeyName="end_date"
-          initialQuery={INITIAL_QUERY}
-        />
-      )}
-      {isNewUserModal && (
+      <FiltersModal
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        filters={filters}
+        refetch={refetchUsersData}
+        selectOptions={{}}
+        startDateKeyName="start_date"
+        endDateKeyName="end_date"
+        initialQuery={INITIAL_QUERY}
+      />
+
+    
         <NewUserModal
           action={action}
           open={isNewUserModal}
@@ -328,7 +324,7 @@ export const AggregatorUsers = () => {
           setUpdateBody={setUpdateUserBody}
           setIsValidateTokenOpen={setIsValidateTokenOpen}
         />
-      )}
+      
       {isValidateTokenOpen && (
         <ValidateToken
           action="USER_UPDATE"
@@ -349,15 +345,13 @@ export const AggregatorUsers = () => {
         success={updateSuccess}
       />
 
-      {isViewModalOpen && (
-        <ViewModal
-          item={currentItem}
-          loading={isUsersDataFetching}
-          modalName={`${t("modal.user")}: ${currentItem?.name}`}
-          open={isViewModalOpen}
-          setOpen={setIsViewModalOpen}
-        />
-      )}
+      <ViewModal
+        item={currentItem}
+        loading={isUsersDataFetching}
+        modalName={`${t("modal.user")}: ${currentItem?.name}`}
+        open={isViewModalOpen}
+        setOpen={setIsViewModalOpen}
+      />
 
       <TuorComponent
         open={isTuorOpen}

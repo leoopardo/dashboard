@@ -56,7 +56,8 @@ export const PersonBlacklistUploads = () => {
         spacing={1}
       >
         <Grid item xs={12} md={2} lg={2}>
-           <Button size="large"
+          <Button
+            size="large"
             style={{ width: "100%" }}
             loading={isFetching}
             type="primary"
@@ -131,30 +132,26 @@ export const PersonBlacklistUploads = () => {
         </Grid>
       </Grid>
 
-      {isFiltersOpen && (
-        <FiltersModal
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          filters={["createdat_start", "createdat_end"]}
-          refetch={refetch}
-          selectOptions={{}}
-          startDateKeyName="createdat_start"
-          endDateKeyName="createdat_end"
-          initialQuery={INITIAL_QUERY}
-        />
-      )}
+      <FiltersModal
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        filters={["createdat_start", "createdat_end"]}
+        refetch={refetch}
+        selectOptions={{}}
+        startDateKeyName="createdat_start"
+        endDateKeyName="createdat_end"
+        initialQuery={INITIAL_QUERY}
+      />
 
-      {isViewModalOpen && (
-        <ViewModal
-          item={currentItem}
-          loading={isFetching}
-          open={isViewModalOpen}
-          setOpen={setIsViewModalOpen}
-          modalName={t("actions.details")}
-        />
-      )}
+      <ViewModal
+        item={currentItem}
+        loading={isFetching}
+        open={isViewModalOpen}
+        setOpen={setIsViewModalOpen}
+        modalName={t("actions.details")}
+      />
     </Grid>
   );
 };

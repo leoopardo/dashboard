@@ -347,7 +347,6 @@ export const OrganizationBankStatement = () => {
         </Grid>
       </Grid>
 
-      {isFiltersOpen && (
         <FiltersModal
           open={isFiltersOpen}
           setOpen={setIsFiltersOpen}
@@ -361,7 +360,7 @@ export const OrganizationBankStatement = () => {
           endDateKeyName="end_date"
           initialQuery={INITIAL_QUERY}
         />
-      )}
+      
     </Grid>
   );
 };

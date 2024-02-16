@@ -72,7 +72,8 @@ export const PartnerUsers = () => {
     PartnerReportsIsSuccess,
     PartnerReportsMutate,
     PartnerReportsReset,
-  } = useCreatePartnerUserReports({ ...query,
+  } = useCreatePartnerUserReports({
+    ...query,
     fields: csvFields,
     comma_separate_value: comma,
   });
@@ -289,31 +290,35 @@ export const PartnerUsers = () => {
               },
             ]}
             loading={isUsersDataFetching}
-            label={["name", "partner.name","permission_group.name", "updated_at"]}
+            label={[
+              "name",
+              "partner.name",
+              "permission_group.name",
+              "updated_at",
+            ]}
           />
         </Grid>
       </Grid>
 
-      {isFiltersOpen && (
-        <FiltersModal
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          filters={[
-            "start_date",
-            "end_date",
-            "status",
-            "partner_id",
-            "merchant_id",
-          ]}
-          refetch={refetchUsersData}
-          selectOptions={{}}
-          startDateKeyName="start_date"
-          endDateKeyName="end_date"
-          initialQuery={INITIAL_QUERY}
-        />
-      )}
+      <FiltersModal
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        filters={[
+          "start_date",
+          "end_date",
+          "status",
+          "partner_id",
+          "merchant_id",
+        ]}
+        refetch={refetchUsersData}
+        selectOptions={{}}
+        startDateKeyName="start_date"
+        endDateKeyName="end_date"
+        initialQuery={INITIAL_QUERY}
+      />
+
       {isNewUserModal && (
         <NewUserModal
           action={action}
@@ -344,15 +349,15 @@ export const PartnerUsers = () => {
         error={updateError}
         success={updateSuccess}
       />
-      {isViewModalOpen && (
-        <ViewModal
-          item={currentItem}
-          loading={isUsersDataFetching}
-          modalName={`${t("modal.user")}: ${currentItem?.name}`}
-          open={isViewModalOpen}
-          setOpen={setIsViewModalOpen}
-        />
-      )}
+
+      <ViewModal
+        item={currentItem}
+        loading={isUsersDataFetching}
+        modalName={`${t("modal.user")}: ${currentItem?.name}`}
+        open={isViewModalOpen}
+        setOpen={setIsViewModalOpen}
+      />
+
       <ExportCustomReportsModal
         open={isExportReportsOpen}
         setOpen={setIsExportReportsOpen}

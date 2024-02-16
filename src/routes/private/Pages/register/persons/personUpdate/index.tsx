@@ -965,7 +965,6 @@ export const PersonUpdate = () => {
             />
           )}
 
-          {isFiltersOpen && (
             <FiltersModal
               open={isFiltersOpen}
               setOpen={setIsFiltersOpen}
@@ -986,7 +985,6 @@ export const PersonUpdate = () => {
               endDateKeyName="final_date"
               initialQuery={INITIAL_QUERY}
             />
-          )}
         </Grid>
       ),
     },

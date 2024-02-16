@@ -519,7 +519,6 @@ export const Dashboard = () => {
         )}
       </Col>
 
-      {isFiltersOpen && (
         <FiltersModal
           data-test-id="filters-modal"
           open={isFiltersOpen}
@@ -547,7 +546,7 @@ export const Dashboard = () => {
           haveInitialDate
           maxRange
         />
-      )}
+      
       <TuorComponent
         data-test-id="tuor-component"
         open={isTuorOpen}

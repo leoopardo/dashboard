@@ -7,14 +7,24 @@ import {
 } from "@ant-design/icons";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
-import { Grid } from "@mui/material";
 import { useErrorContext } from "@src/contexts/ErrorContext";
 import { useTheme } from "@src/contexts/ThemeContext";
 import { useGetSelf } from "@src/services/getSelf";
 import { queryClient } from "@src/services/queryClient";
 import { useValidate } from "@src/services/siginIn/validate";
-import { Avatar, Dropdown, MenuProps, Radio, Space, theme as t } from "antd";
+import { ValidateInterface } from "@src/services/types/validate.interface";
+import {
+  Avatar,
+  Col,
+  Dropdown,
+  MenuProps,
+  Radio,
+  Row,
+  Space,
+  theme as t,
+} from "antd";
 import React, { useState } from "react";
+import ReactGA from "react-ga4";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import secureLocalStorage from "react-secure-storage";
@@ -22,10 +32,8 @@ import brazil from "../../assets/brazil-.png";
 import eua from "../../assets/united-states.png";
 import { defaultTheme } from "../../styles/defaultTheme";
 import { BreadcrumbComponent } from "../Breadcrumb";
-import { EditSelfModal } from "./EditSelf";
-import ReactGA from "react-ga4";
-import { ValidateInterface } from "@src/services/types/validate.interface";
 import { ValidateToken } from "../ValidateToken";
+import { EditSelfModal } from "./EditSelf";
 const { useToken } = t;
 
 export const PageHeader = () => {
@@ -136,21 +144,20 @@ export const PageHeader = () => {
       ];
 
   return !isMobile ? (
-    <Grid
-      container
-      style={{
-        width: "100%",
-      }}
-    >
-      <Grid item xs={12} md={9} lg={9} style={{ paddingLeft: "25px" }}>
+    <Row gutter={[8, 8]} style={{ width: "100%" }}>
+      <Col
+        xs={{ span: 24 }}
+        md={{ span: 20 }}
+        lg={{ span: 20 }}
+        style={{ paddingLeft: "35px" }}
+      >
         <BreadcrumbComponent />
-      </Grid>
+      </Col>
 
-      <Grid
-        item
-        xs={12}
-        md={3}
-        lg={3}
+      <Col
+        xs={{ span: 24 }}
+        md={{ span: 4 }}
+        lg={{ span: 4 }}
         style={{
           display: "flex",
           justifyContent: "end",
@@ -283,7 +290,7 @@ export const PageHeader = () => {
             {responseValidate?.name.toLocaleUpperCase()[0]}
           </Avatar>
         </Dropdown>
-      </Grid>
+      </Col>
 
       {isEditUserModalOpen && (
         <EditSelfModal
@@ -306,20 +313,11 @@ export const PageHeader = () => {
           }}
         />
       )}
-    </Grid>
+    </Row>
   ) : (
-    <Grid
-      container
-      style={{
-        width: "97vw",
-        display: isMobile ? "inherit" : "none",
-      }}
-    >
-      <Grid
-        item
-        xs={12}
-        md={12}
-        lg={2}
+    <Row gutter={[8, 8]} style={{ width: "97vw" }}>
+      <Col
+        span={24}
         style={{
           display: "flex",
           justifyContent: "flex-end",
@@ -446,13 +444,10 @@ export const PageHeader = () => {
             {responseValidate?.name.toLocaleUpperCase()[0]}
           </Avatar>
         </Dropdown>
-      </Grid>
+      </Col>
 
-      <Grid
-        item
-        xs={12}
-        md={10}
-        lg={10}
+      <Col
+        span={24}
         style={{
           display: "flex",
           alignItems: "center",
@@ -460,7 +455,7 @@ export const PageHeader = () => {
         }}
       >
         <BreadcrumbComponent />
-      </Grid>
+      </Col>
 
       <EditSelfModal
         open={isEditUserModalOpen}
@@ -481,6 +476,6 @@ export const PageHeader = () => {
           }}
         />
       )}
-    </Grid>
+    </Row>
   );
 };

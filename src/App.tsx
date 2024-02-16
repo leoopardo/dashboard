@@ -57,7 +57,8 @@ function App() {
         alignItems: "center",
       }}
     >
-      <Spin tip={t("messages.loading")} size="large">
+      <img src={import.meta.env.VITE_APP_ICON} style={{width: "7vw"}}/>
+      <Spin tip={t("messages.loading")} size="large" style={{marginTop: -26}}>
         <Layout className="content" />
       </Spin>
     </Layout>

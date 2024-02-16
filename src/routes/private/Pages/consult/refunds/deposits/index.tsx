@@ -8,7 +8,6 @@ import {
 } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import ReplayIcon from "@mui/icons-material/Replay";
-import { Grid } from "@mui/material";
 import { Search } from "@src/components/Inputs/search";
 import { Confirmation } from "@src/components/Modals/confirmation";
 import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
@@ -19,10 +18,11 @@ import { useUpatePayToMerchant } from "@src/services/consult/refund/refundDeposi
 import { queryClient } from "@src/services/queryClient";
 import { useCreateRefundDepositsReports } from "@src/services/reports/consult/refund/deposit/createRefundDepositReports";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Select, Tooltip } from "antd";
+import { Button, Col, Row, Select, Space, Tooltip } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useMediaQuery } from "react-responsive";
 import {
   ColumnInterface,
   CustomTable,
@@ -58,7 +58,7 @@ export const RefundDeposits = () => {
   ) as ValidateInterface;
   const { t } = useTranslation();
   const [query, setQuery] = useState<refundDepositsQuery>(INITIAL_QUERY);
-
+  const isMobile = useMediaQuery({ maxWidth: "750px" });
   const {
     refundDepositsTotal,
     isRefundDepositsTotalFetching,
@@ -118,18 +118,23 @@ export const RefundDeposits = () => {
     { name: "pix_type", head: "payment_type", type: "pix_type" },
     { name: "buyer_name", type: "text" },
     { name: "buyer_document", type: "document" },
-    {name:"payer_document", type:"document"},
+    { name: "payer_document", type: "document" },
     { name: "reason", type: "text" },
     { name: "status", type: "status" },
   ];
 
   useEffect(() => {
-    refetchRefundDepositsTotal()
+    refetchRefundDepositsTotal();
     refetchRefundDepositsTotalRows();
   }, [query]);
 
   return (
-    <Grid container style={{ padding: "25px" }}>
+    <Row
+      gutter={[8, 8]}
+      align="middle"
+      justify="center"
+      style={{ padding: "25px" }}
+    >
       <TotalizersCards
         data={refundDepositsTotal}
         fetchData={() => {
@@ -140,12 +145,13 @@ export const RefundDeposits = () => {
         query={query}
       />
 
-      <Grid
-        container
-        style={{ marginTop: "20px", display: "flex", alignItems: "center" }}
-        spacing={1}
+      <Row
+        align="middle"
+        justify="start"
+        gutter={[8, 8]}
+        style={{ width: "100%" }}
       >
-        <Grid item xs={12} md={4} lg={2}>
+        <Col xs={{ span: 24 }} md={{ span: 4 }}>
           <Button
             size="large"
             style={{ width: "100%" }}
@@ -158,8 +164,8 @@ export const RefundDeposits = () => {
           >
             {t("table.filters")}
           </Button>
-        </Grid>
-        <Grid item xs={12} md={8} lg={10}>
+        </Col>
+        <Col xs={{ span: 24 }} md={{ span: 20 }}>
           <FilterChips
             startDateKeyName="start_date"
             endDateKeyName="end_date"
@@ -171,75 +177,163 @@ export const RefundDeposits = () => {
               )
             }
           />
-        </Grid>
-      </Grid>
+        </Col>
+      </Row>
 
-      <Grid container style={{ marginTop: "5px" }} spacing={1}>
-        <Grid item xs={12} md={2} lg={2}>
-          <Select
-            style={{ width: "100%" }}
-            size="large"
-            onChange={(value) => {
-              delete query.pix_id;
-              delete query.endToEndId;
-              delete query.txid;
-              delete query.rtrid;
-              delete query.buyer_document;
-              delete query.buyer_name;
-              if (
-                [
-                  "pix_id",
-                  "endToEndId",
-                  "txid",
-                  "rtrid",
-                  "buyer_document",
-                ].includes(value)
-              ) {
-                delete query.start_date;
-                delete query.end_date;
-              } else {
-                setQuery((state) => ({
-                  start_date: moment(new Date()).format(
-                    "YYYY-MM-DDTHH:mm:ss.SSS"
-                  ),
-                  end_date: moment(new Date())
-                    .add(1, "hour")
-                    .format("YYYY-MM-DDTHH:mm:ss.SSS"),
-                  ...state,
-                }));
-              }
-              setSearchOption(value);
-            }}
-            value={searchOption}
-            placeholder={t("input.options")}
-            options={[
-              { value: "pix_id", label: t("table.pix_id") },
-              { value: "endToEndId", label: t("table.endToEndId") },
-              { value: "txid", label: t("table.txid") },
-              { value: "rtrid", label: t("table.refund_id") },
-              { value: "payer_document", label: t("table.payer_document") },
-              { value: "buyer_document", label: t("table.buyer_document") },
-              { value: "buyer_name", label: t("table.buyer_name") },
-              { value: "payer_name", label: t("table.payer_name") },
-            ]}
-          />
-        </Grid>
-        <Grid item xs={12} md={4} lg={4}>
-          <Search
-            query={query}
-            setQuery={setQuery}
-            searchOption={searchOption}
-          />
-        </Grid>
-        <Grid item xs={12} md={2} lg={2}>
+      <Row
+        align="middle"
+        justify="start"
+        style={{ width: "100%" }}
+        gutter={[8, 8]}
+      >
+        <Col xs={{ span: 24 }} md={{ span: 18 }} lg={{ span: 9 }}>
+          {!isMobile ? (
+            <Space.Compact style={{ width: "100%" }} size="large">
+              <Select
+                allowClear
+                onClear={() => {
+                  delete query.pix_id;
+                  delete query.endToEndId;
+                  delete query.txid;
+                  delete query.rtrid;
+                  delete query.buyer_document;
+                  delete query.buyer_name;
+                }}
+                style={{ width: "60%" }}
+                size="large"
+                onChange={(value) => {
+                  delete query.pix_id;
+                  delete query.endToEndId;
+                  delete query.txid;
+                  delete query.rtrid;
+                  delete query.buyer_document;
+                  delete query.buyer_name;
+                  if (
+                    [
+                      "pix_id",
+                      "endToEndId",
+                      "txid",
+                      "rtrid",
+                      "buyer_document",
+                    ].includes(value)
+                  ) {
+                    delete query.start_date;
+                    delete query.end_date;
+                  } else {
+                    setQuery((state) => ({
+                      ...state,
+                      start_date: moment(new Date())
+                        .startOf("day")
+                        .utc()
+                        .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+                      end_date: moment(new Date())
+                        .add(1, "day")
+                        .startOf("day")
+                        .utc()
+                        .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+                    }));
+                  }
+                  setSearchOption(value);
+                }}
+                value={searchOption}
+                placeholder={t("input.options")}
+                options={[
+                  { value: "pix_id", label: t("table.pix_id") },
+                  { value: "endToEndId", label: t("table.endToEndId") },
+                  { value: "txid", label: t("table.txid") },
+                  { value: "rtrid", label: t("table.refund_id") },
+                  { value: "payer_document", label: t("table.payer_document") },
+                  { value: "buyer_document", label: t("table.buyer_document") },
+                  { value: "buyer_name", label: t("table.buyer_name") },
+                  { value: "payer_name", label: t("table.payer_name") },
+                ]}
+              />{" "}
+              <Search
+                query={query}
+                setQuery={setQuery}
+                searchOption={searchOption}
+              />
+            </Space.Compact>
+          ) : (
+            <Select
+              allowClear
+              onClear={() => {
+                delete query.pix_id;
+                delete query.endToEndId;
+                delete query.txid;
+                delete query.rtrid;
+                delete query.buyer_document;
+                delete query.buyer_name;
+              }}
+              style={{ width: "100%" }}
+              size="large"
+              onChange={(value) => {
+                delete query.pix_id;
+                delete query.endToEndId;
+                delete query.txid;
+                delete query.rtrid;
+                delete query.buyer_document;
+                delete query.buyer_name;
+                if (
+                  [
+                    "pix_id",
+                    "endToEndId",
+                    "txid",
+                    "rtrid",
+                    "buyer_document",
+                  ].includes(value)
+                ) {
+                  delete query.start_date;
+                  delete query.end_date;
+                } else {
+                  setQuery((state) => ({
+                    ...state,
+                    start_date: moment(new Date())
+                      .startOf("day")
+                      .utc()
+                      .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+                    end_date: moment(new Date())
+                      .add(1, "day")
+                      .startOf("day")
+                      .utc()
+                      .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+                  }));
+                }
+                setSearchOption(value);
+              }}
+              value={searchOption}
+              placeholder={t("input.options")}
+              options={[
+                { value: "pix_id", label: t("table.pix_id") },
+                { value: "endToEndId", label: t("table.endToEndId") },
+                { value: "txid", label: t("table.txid") },
+                { value: "rtrid", label: t("table.refund_id") },
+                { value: "payer_document", label: t("table.payer_document") },
+                { value: "buyer_document", label: t("table.buyer_document") },
+                { value: "buyer_name", label: t("table.buyer_name") },
+                { value: "payer_name", label: t("table.payer_name") },
+              ]}
+            />
+          )}
+        </Col>
+        {isMobile && (
+          <Col xs={{ span: 24 }}>
+            <Search
+              query={query}
+              setQuery={setQuery}
+              searchOption={searchOption}
+            />
+          </Col>
+        )}
+        <Col xs={{ span: 24 }} md={{ span: 5 }} lg={{ span: 4 }}>
           <Button
             size="large"
             type="dashed"
             loading={isRefundDepositsRowsFetching}
             danger
             onClick={() => {
-              setQuery(INITIAL_QUERY);
               setSearchOption(undefined);
+              setQuery(INITIAL_QUERY);
             }}
             style={{
               display: "flex",
@@ -251,10 +345,11 @@ export const RefundDeposits = () => {
           >
             {t("table.clear_filters")}
           </Button>
-        </Grid>
+        </Col>
+
         {permissions?.report?.chargeback?.deposit_chargeback
           ?.report_chargeback_deposit_chargeback_export_csv && (
-          <Grid item xs={12} md="auto">
+          <Col xs={{ span: 24 }} md={{ span: 6 }} lg={{ span: 3 }}>
             <Tooltip
               placement="topLeft"
               title={
@@ -280,12 +375,12 @@ export const RefundDeposits = () => {
                 CSV
               </Button>
             </Tooltip>
-          </Grid>
+          </Col>
         )}
-      </Grid>
+      </Row>
 
-      <Grid container style={{ marginTop: "15px" }}>
-        <Grid item xs={12}>
+      <Row style={{ width: "100%" }}>
+        <Col xs={24}>
           <CustomTable
             query={query}
             error={refundDepositsRowsError}
@@ -326,8 +421,8 @@ export const RefundDeposits = () => {
             removeTotal
             label={["merchant_name", "status", "reason", "createdAt", "value"]}
           />
-        </Grid>
-      </Grid>
+        </Col>
+      </Row>
 
       <ExportCustomReportsModal
         open={isExportReportsOpen}
@@ -372,75 +467,73 @@ export const RefundDeposits = () => {
           loading={isLoading}
         />
       )}
-      {isViewModalOpen && (
-        <ViewModal
-          open={isViewModalOpen}
-          setOpen={setIsViewModalOpen}
-          item={currentItem}
-          type="Refund"
-        />
-      )}
-      {isFiltersOpen && (
-        <FiltersModal
+
+      <ViewModal
+        open={isViewModalOpen}
+        setOpen={setIsViewModalOpen}
+        item={currentItem}
+        type="Refund"
+      />
+
+      <FiltersModal
         maxRange
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          haveInitialDate={
-            !["pix_id", "endToEndId", "txid", "rtrid"].includes(
-              searchOption as any
-            )
-          }
-          filters={[
-            "start_date",
-            "end_date",
-            "status",
-            "partner_id",
-            "merchant_id",
-            "aggregator_id",
-            "operator_id",
-            "bank",
-            "payer_bank",
-            "pix_type",
-            "refund_reason",
-            "state",
-            "city",
-            "gender",
-            "age_start",
-            "value_start",
-          ]}
-          refetch={refetchRefundDepositsTotalRows}
-          selectOptions={{
-            status: [
-              "REFUNDED",
-              "PAID_TO_MERCHANT",
-              "ERROR",
-              "PROCESSING",
-              "WAITING",
-            ],
-            pix_type: ["STANDARD", "FASTPIX"],
-            gender: ["MALE", "FEMALE", "OTHER"],
-            refund_reason: [
-              "DIVERGENT VALUE",
-              "PAYMENT FROM QR CODE EXPIRED",
-              "PAYMENT REFUND: THIRD PARTY PAYMENT UNAVAILABLE",
-              "PAYMENT REFUND: CNPJ NOT ACCEPTED",
-              "DAILY TRANSACTION LIMIT EXCEEDED FOR THIS CLIENT",
-              "MONTH TRANSACTION LIMIT EXCEEDED FOR THIS CLIENT",
-              "DAILY TRANSACTION TO THIRD LIMIT EXCEEDED FOR THIS CLIENT",
-              "DAILY TRANSACTION LIMIT EXCEEDED FOR THIS CNPJ",
-              "PAYER IRREGULAR DOCUMENT, PLEASE CONTACT SUPPORT TO REGULARIZE DOCUMENT",
-              "PAYER UNDERAGE",
-              "PAYER BLOCKED BY MERCHANT",
-              "PAYMENT REPEATED TO SAME QRCODE",
-            ],
-          }}
-          startDateKeyName="start_date"
-          endDateKeyName="end_date"
-          initialQuery={INITIAL_QUERY}
-        />
-      )}
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        haveInitialDate={
+          !["pix_id", "endToEndId", "txid", "rtrid"].includes(
+            searchOption as any
+          )
+        }
+        filters={[
+          "start_date",
+          "end_date",
+          "status",
+          "partner_id",
+          "merchant_id",
+          "aggregator_id",
+          "operator_id",
+          "bank",
+          "payer_bank",
+          "pix_type",
+          "refund_reason",
+          "state",
+          "city",
+          "gender",
+          "age_start",
+          "value_start",
+        ]}
+        refetch={refetchRefundDepositsTotalRows}
+        selectOptions={{
+          status: [
+            "REFUNDED",
+            "PAID_TO_MERCHANT",
+            "ERROR",
+            "PROCESSING",
+            "WAITING",
+          ],
+          pix_type: ["STANDARD", "FASTPIX"],
+          gender: ["MALE", "FEMALE", "OTHER"],
+          refund_reason: [
+            "DIVERGENT VALUE",
+            "PAYMENT FROM QR CODE EXPIRED",
+            "PAYMENT REFUND: THIRD PARTY PAYMENT UNAVAILABLE",
+            "PAYMENT REFUND: CNPJ NOT ACCEPTED",
+            "DAILY TRANSACTION LIMIT EXCEEDED FOR THIS CLIENT",
+            "MONTH TRANSACTION LIMIT EXCEEDED FOR THIS CLIENT",
+            "DAILY TRANSACTION TO THIRD LIMIT EXCEEDED FOR THIS CLIENT",
+            "DAILY TRANSACTION LIMIT EXCEEDED FOR THIS CNPJ",
+            "PAYER IRREGULAR DOCUMENT, PLEASE CONTACT SUPPORT TO REGULARIZE DOCUMENT",
+            "PAYER UNDERAGE",
+            "PAYER BLOCKED BY MERCHANT",
+            "PAYMENT REPEATED TO SAME QRCODE",
+          ],
+        }}
+        startDateKeyName="start_date"
+        endDateKeyName="end_date"
+        initialQuery={INITIAL_QUERY}
+      />
 
       <Toast
         actionError={t("messages.refund")}
@@ -454,6 +547,6 @@ export const RefundDeposits = () => {
         error={payToMerchanterror}
         success={payToMerchantSuccess}
       />
-    </Grid>
+    </Row>
   );
 };

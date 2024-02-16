@@ -129,7 +129,6 @@ export const MerchantReports = () => {
         </Grid>
       </Grid>
 
-      {isFiltersOpen && (
         <FiltersModal
           open={isFiltersOpen}
           setOpen={setIsFiltersOpen}
@@ -144,8 +143,7 @@ export const MerchantReports = () => {
           endDateKeyName="createdat_start"
           initialQuery={INITIAL_QUERY}
         />
-      )}
-      {isViewModalOpen && (
+
         <ViewModal
           open={isViewModalOpen}
           setOpen={setIsViewModalOpen}
@@ -153,7 +151,7 @@ export const MerchantReports = () => {
           loading={false}
           modalName={t("modal.report_details")}
         />
-      )}
+    
     </Grid>
   );
 };

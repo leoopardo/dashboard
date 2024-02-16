@@ -218,7 +218,6 @@ export const BankBlacklist = () => {
         </Grid>
       </Grid>
 
-      {isFiltersOpen && (
         <FiltersModal
           open={isFiltersOpen}
           setOpen={setIsFiltersOpen}
@@ -231,9 +230,7 @@ export const BankBlacklist = () => {
           endDateKeyName="end_date"
           initialQuery={INITIAL_QUERY}
         />
-      )}
 
-      {isCreateOpen && (
         <MutateModal
           type="create"
           open={isCreateOpen}
@@ -250,7 +247,6 @@ export const BankBlacklist = () => {
           error={CreateError}
           success={CreateIsSuccess}
         />
-      )}
       <Toast
         actionSuccess={t("messages.created")}
         actionError={t("messages.create")}

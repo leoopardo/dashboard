@@ -243,7 +243,6 @@ export const MerchantBankStatement = () => {
         />
       )}
 
-      {isFiltersOpen && (
         <FiltersModal
           open={isFiltersOpen}
           setOpen={setIsFiltersOpen}
@@ -268,7 +267,7 @@ export const MerchantBankStatement = () => {
           maxRange
           disableMinutes
         />
-      )}
+      
     </Grid>
   );
 };

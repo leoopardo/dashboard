@@ -116,7 +116,6 @@ export const BankBlackistReports = () => {
         </Grid>
       </Grid>
 
-      {isFiltersOpen && (
         <FiltersModal
           open={isFiltersOpen}
           setOpen={setIsFiltersOpen}
@@ -131,7 +130,6 @@ export const BankBlackistReports = () => {
           endDateKeyName="createdat_end"
           initialQuery={INITIAL_QUERY}
         />
-      )}
     </Grid>
   );
 };

@@ -321,74 +321,68 @@ export const Aggregators = () => {
         </Grid>
       </Grid>
 
-      {isFiltersOpen && (
-        <FiltersModal
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          filters={["start_date", "end_date", "status"]}
-          refetch={refetchAggregatorsData}
-          selectOptions={{}}
-          startDateKeyName="start_date"
-          endDateKeyName="end_date"
-          initialQuery={INITIAL_QUERY}
-        />
-      )}
+      <FiltersModal
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        filters={["start_date", "end_date", "status"]}
+        refetch={refetchAggregatorsData}
+        selectOptions={{}}
+        startDateKeyName="start_date"
+        endDateKeyName="end_date"
+        initialQuery={INITIAL_QUERY}
+      />
 
-      {isNewCategorieModal && (
-        <MutateModal
-          type="create"
-          open={isNewCategorieModal}
-          setOpen={setIsNewCategorieModal}
-          fields={[
-            { label: "name", required: true },
-            { label: "cnpj", required: true },
-            { label: "cellphone", required: false },
-            { label: "email", required: false, type: "email" },
-            { label: "country", required: true },
-          ]}
-          body={createBody}
-          setBody={setCreateBody}
-          modalName={t("modal.new_aggregator")}
-          submit={AggregatorMutate}
-          submitLoading={AggregatorIsLoading}
-          error={AggregatorError}
-          success={AggregatorIsSuccess}
-          clear={AggregatorReset}
-        />
-      )}
-      {isUpdateCategorieModalOpen && (
-        <MutateModal
-          type="update"
-          open={isUpdateCategorieModalOpen}
-          setOpen={setIsUpdateCategorieModalOpen}
-          fields={[
-            { label: "name", required: false },
-            { label: "cnpj", required: false },
-            { label: "cellphone", required: false },
-            { label: "email", required: false },
-            { label: "country", required: false },
-          ]}
-          body={updateBody}
-          setBody={setUpdateBody}
-          modalName={t("modal.update_aggregator")}
-          submit={UpdateMutate}
-          submitLoading={UpdateIsLoading}
-          error={UpdateError}
-          success={UpdateIsSuccess}
-          clear={UpdateReset}
-        />
-      )}
-      {isViewModalOpen && (
-        <ViewModal
-          item={currentItem}
-          loading={isAggregatorsDataFetching}
-          modalName={`${t("menus.aggregator")}: ${currentItem?.name}`}
-          open={isViewModalOpen}
-          setOpen={setIsViewModalOpen}
-        />
-      )}
+      <MutateModal
+        type="create"
+        open={isNewCategorieModal}
+        setOpen={setIsNewCategorieModal}
+        fields={[
+          { label: "name", required: true },
+          { label: "cnpj", required: true },
+          { label: "cellphone", required: false },
+          { label: "email", required: false, type: "email" },
+          { label: "country", required: true },
+        ]}
+        body={createBody}
+        setBody={setCreateBody}
+        modalName={t("modal.new_aggregator")}
+        submit={AggregatorMutate}
+        submitLoading={AggregatorIsLoading}
+        error={AggregatorError}
+        success={AggregatorIsSuccess}
+        clear={AggregatorReset}
+      />
+
+      <MutateModal
+        type="update"
+        open={isUpdateCategorieModalOpen}
+        setOpen={setIsUpdateCategorieModalOpen}
+        fields={[
+          { label: "name", required: false },
+          { label: "cnpj", required: false },
+          { label: "cellphone", required: false },
+          { label: "email", required: false },
+          { label: "country", required: false },
+        ]}
+        body={updateBody}
+        setBody={setUpdateBody}
+        modalName={t("modal.update_aggregator")}
+        submit={UpdateMutate}
+        submitLoading={UpdateIsLoading}
+        error={UpdateError}
+        success={UpdateIsSuccess}
+        clear={UpdateReset}
+      />
+
+      <ViewModal
+        item={currentItem}
+        loading={isAggregatorsDataFetching}
+        modalName={`${t("menus.aggregator")}: ${currentItem?.name}`}
+        open={isViewModalOpen}
+        setOpen={setIsViewModalOpen}
+      />
 
       <Toast
         actionSuccess={t("messages.created")}

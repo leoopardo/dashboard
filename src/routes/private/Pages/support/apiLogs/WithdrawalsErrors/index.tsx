@@ -226,7 +226,7 @@ export const WithdrawalsErrors = () => {
           />
         </Grid>
       </Grid>
-      {isFiltersOpen && (
+
         <FiltersModal
           open={isFiltersOpen}
           setOpen={setIsFiltersOpen}
@@ -248,7 +248,6 @@ export const WithdrawalsErrors = () => {
           endDateKeyName="end_date"
           initialQuery={INITIAL_QUERY}
         />
-      )}
 
       {isDetailsOpen && (
         <LogDetailsModal

@@ -109,7 +109,7 @@ export const AuthLogs = () => {
           />
         </Grid>
       </Grid>
-      {isFiltersOpen && (
+
         <FiltersModal
           open={isFiltersOpen}
           setOpen={setIsFiltersOpen}
@@ -123,7 +123,6 @@ export const AuthLogs = () => {
           endDateKeyName="end_date"
           initialQuery={INITIAL_QUERY}
         />
-      )}
 
       {isDetailsOpen && (
         <ViewModal
