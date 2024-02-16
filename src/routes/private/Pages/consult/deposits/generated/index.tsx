@@ -240,7 +240,6 @@ export const GeneratedDeposits = () => {
                         .startOf("day")
                         .utc()
                         .format("YYYY-MM-DDTHH:mm:ss.SSS"),
-                     
                     }));
                   }
                   setSearchOption(value);
@@ -267,74 +266,73 @@ export const GeneratedDeposits = () => {
             </Space.Compact>
           ) : (
             <Select
-                allowClear
-                onClear={() => {
-                  delete query.pix_id;
-                  delete query.endToEndId;
-                  delete query.txid;
-                  delete query.reference_id;
-                  delete query.payer_document;
-                  delete query.buyer_document;
-                  delete query.buyer_name;
-                  delete query.payer_name;
-                  delete query.description;
-                }}
-                style={{ width: "100%" }}
-                size="large"
-                onChange={(value) => {
-                  delete query.pix_id;
-                  delete query.endToEndId;
-                  delete query.txid;
-                  delete query.reference_id;
-                  delete query.payer_document;
-                  delete query.buyer_document;
-                  delete query.buyer_name;
-                  delete query.payer_name;
-                  delete query.description;
+              allowClear
+              onClear={() => {
+                delete query.pix_id;
+                delete query.endToEndId;
+                delete query.txid;
+                delete query.reference_id;
+                delete query.payer_document;
+                delete query.buyer_document;
+                delete query.buyer_name;
+                delete query.payer_name;
+                delete query.description;
+              }}
+              style={{ width: "100%" }}
+              size="large"
+              onChange={(value) => {
+                delete query.pix_id;
+                delete query.endToEndId;
+                delete query.txid;
+                delete query.reference_id;
+                delete query.payer_document;
+                delete query.buyer_document;
+                delete query.buyer_name;
+                delete query.payer_name;
+                delete query.description;
 
-                  if (
-                    [
-                      "pix_id",
-                      "endToEndId",
-                      "txid",
-                      "reference_id",
-                      "payer_document",
-                      "buyer_document",
-                    ].includes(value)
-                  ) {
-                    delete query.initial_date;
-                    delete query.final_date;
-                  } else {
-                    setQuery((state) => ({
-                      ...state,
-                      initial_date: moment(new Date())
-                        .startOf("day")
-                        .utc()
-                        .format("YYYY-MM-DDTHH:mm:ss.SSS"),
-                      final_date: moment(new Date())
-                        .add(1, "day")
-                        .startOf("day")
-                        .utc()
-                        .format("YYYY-MM-DDTHH:mm:ss.SSS"),
-                     
-                    }));
-                  }
-                  setSearchOption(value);
-                }}
-                value={searchOption}
-                placeholder={t("input.options")}
-                options={[
-                  { value: "pix_id", label: t("table.pix_id") },
-                  { value: "endToEndId", label: t("table.endToEndId") },
-                  { value: "payer_document", label: t("table.payer_document") },
-                  { value: "buyer_document", label: t("table.buyer_document") },
-                  { value: "buyer_name", label: t("table.buyer_name") },
-                  { value: "payer_name", label: t("table.payer_name") },
-                  { value: "txid", label: t("table.txid") },
-                  { value: "reference_id", label: t("table.reference_id") },
-                  { value: "description", label: t("table.description") },
-                ]}
-              />
+                if (
+                  [
+                    "pix_id",
+                    "endToEndId",
+                    "txid",
+                    "reference_id",
+                    "payer_document",
+                    "buyer_document",
+                  ].includes(value)
+                ) {
+                  delete query.initial_date;
+                  delete query.final_date;
+                } else {
+                  setQuery((state) => ({
+                    ...state,
+                    initial_date: moment(new Date())
+                      .startOf("day")
+                      .utc()
+                      .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+                    final_date: moment(new Date())
+                      .add(1, "day")
+                      .startOf("day")
+                      .utc()
+                      .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+                  }));
+                }
+                setSearchOption(value);
+              }}
+              value={searchOption}
+              placeholder={t("input.options")}
+              options={[
+                { value: "pix_id", label: t("table.pix_id") },
+                { value: "endToEndId", label: t("table.endToEndId") },
+                { value: "payer_document", label: t("table.payer_document") },
+                { value: "buyer_document", label: t("table.buyer_document") },
+                { value: "buyer_name", label: t("table.buyer_name") },
+                { value: "payer_name", label: t("table.payer_name") },
+                { value: "txid", label: t("table.txid") },
+                { value: "reference_id", label: t("table.reference_id") },
+                { value: "description", label: t("table.description") },
+              ]}
+            />
           )}
         </Col>
 
@@ -484,13 +482,13 @@ export const GeneratedDeposits = () => {
           />
         </Col>
       </Row>
-      {isViewModalOpen && (
-        <ViewModal
-          open={isViewModalOpen}
-          setOpen={setIsViewModalOpen}
-          id={currentItem?._id}
-        />
-      )}
+
+      <ViewModal
+        open={isViewModalOpen}
+        setOpen={setIsViewModalOpen}
+        id={currentItem?._id}
+      />
+
       {isWebhookModalOpen && (
         <WebhookModal
           open={isWebhookModalOpen}
@@ -516,53 +514,51 @@ export const GeneratedDeposits = () => {
         reportName="depositReportsFields"
       />
 
-      {isFiltersOpen && (
-        <FiltersModal
-          maxRange
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          haveInitialDate={
-            !["pix_id", "endToEndId", "txid", "reference_id"].includes(
-              searchOption as any
-            )
-          }
-          filters={[
-            "initial_date",
-            "final_date",
-            "status",
-            "partner_id",
-            "merchant_id",
-            "aggregator_id",
-            "operator_id",
-            "bank",
-            "payer_bank",
-            "pix_type",
-            "state",
-            "city",
-            "gender",
-            "age_start",
-            "value_start",
-          ]}
-          refetch={refetchDepositsTotalRows}
-          selectOptions={{
-            status: [
-              "PAID",
-              "REFUNDED",
-              "EXPIRED",
-              "CANCELED",
-              "WAITING",
-              "WAITING_REFUND",
-            ],
-            gender: ["MALE", "FEMALE", "OTHER"],
-            pix_type: ["STANDARD", "FASTPIX"],
-          }}
-          startDateKeyName="initial_date"
-          endDateKeyName="final_date"
-          initialQuery={INITIAL_QUERY}
-        />
-      )}
+      <FiltersModal
+        maxRange
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        haveInitialDate={
+          !["pix_id", "endToEndId", "txid", "reference_id"].includes(
+            searchOption as any
+          )
+        }
+        filters={[
+          "initial_date",
+          "final_date",
+          "status",
+          "partner_id",
+          "merchant_id",
+          "aggregator_id",
+          "operator_id",
+          "bank",
+          "payer_bank",
+          "pix_type",
+          "state",
+          "city",
+          "gender",
+          "age_start",
+          "value_start",
+        ]}
+        refetch={refetchDepositsTotalRows}
+        selectOptions={{
+          status: [
+            "PAID",
+            "REFUNDED",
+            "EXPIRED",
+            "CANCELED",
+            "WAITING",
+            "WAITING_REFUND",
+          ],
+          gender: ["MALE", "FEMALE", "OTHER"],
+          pix_type: ["STANDARD", "FASTPIX"],
+        }}
+        startDateKeyName="initial_date"
+        endDateKeyName="final_date"
+        initialQuery={INITIAL_QUERY}
+      />
       {isResendWebhookModalOpen && (
         <ResendWebhookModal
           open={isResendWebhookModalOpen}

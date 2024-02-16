@@ -221,7 +221,6 @@ export const PaidDeposits = () => {
                         .startOf("day")
                         .utc()
                         .format("YYYY-MM-DDTHH:mm:ss.SSS"),
-                     
                     }));
                   }
                   setSearchOption(value);
@@ -286,7 +285,6 @@ export const PaidDeposits = () => {
                       .startOf("day")
                       .utc()
                       .format("YYYY-MM-DDTHH:mm:ss.SSS"),
-                   
                   }));
                 }
                 setSearchOption(value);
@@ -443,13 +441,12 @@ export const PaidDeposits = () => {
           />
         </Col>
       </Row>
-      {isViewModalOpen && (
-        <ViewModal
-          open={isViewModalOpen}
-          setOpen={setIsViewModalOpen}
-          id={currentItem?._id}
-        />
-      )}
+
+      <ViewModal
+        open={isViewModalOpen}
+        setOpen={setIsViewModalOpen}
+        id={currentItem?._id}
+      />
 
       <ExportCustomReportsModal
         open={isExportReportsOpen}
@@ -468,44 +465,43 @@ export const PaidDeposits = () => {
         reportName="paidDepositsReportsFields"
       />
 
-      {isFiltersOpen && (
-        <FiltersModal
-          maxRange
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          haveInitialDate={
-            !["pix_id", "endToEndId", "txid", "reference_id"].includes(
-              searchOption as any
-            )
-          }
-          filters={[
-            "initial_date",
-            "final_date",
-            "partner_id",
-            "merchant_id",
-            "aggregator_id",
-            "operator_id",
-            "bank",
-            "payer_bank",
-            "pix_type",
-            "state",
-            "city",
-            "gender",
-            "age_start",
-            "value_start",
-          ]}
-          refetch={refetchPaidTotalRows}
-          selectOptions={{
-            gender: ["MALE", "FEMALE", "OTHER"],
-            pix_type: ["STANDARD", "FASTPIX"],
-          }}
-          startDateKeyName="initial_date"
-          endDateKeyName="final_date"
-          initialQuery={INITIAL_QUERY}
-        />
-      )}
+      <FiltersModal
+        maxRange
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        haveInitialDate={
+          !["pix_id", "endToEndId", "txid", "reference_id"].includes(
+            searchOption as any
+          )
+        }
+        filters={[
+          "initial_date",
+          "final_date",
+          "partner_id",
+          "merchant_id",
+          "aggregator_id",
+          "operator_id",
+          "bank",
+          "payer_bank",
+          "pix_type",
+          "state",
+          "city",
+          "gender",
+          "age_start",
+          "value_start",
+        ]}
+        refetch={refetchPaidTotalRows}
+        selectOptions={{
+          gender: ["MALE", "FEMALE", "OTHER"],
+          pix_type: ["STANDARD", "FASTPIX"],
+        }}
+        startDateKeyName="initial_date"
+        endDateKeyName="final_date"
+        initialQuery={INITIAL_QUERY}
+      />
+
       {isWebhookModalOpen && (
         <WebhookModal
           open={isWebhookModalOpen}

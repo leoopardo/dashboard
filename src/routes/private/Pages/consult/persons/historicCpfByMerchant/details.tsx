@@ -157,7 +157,6 @@ export const HistoricCpfByMerchantDetails = () => {
         </Grid>
       </Grid>
 
-      {isFiltersOpen && (
         <FiltersModal
           open={isFiltersOpen}
           setOpen={setIsFiltersOpen}
@@ -170,7 +169,7 @@ export const HistoricCpfByMerchantDetails = () => {
           endDateKeyName="end_date"
           initialQuery={INITIAL_QUERY}
         />
-      )}
+      
     </Grid>
   );
 };

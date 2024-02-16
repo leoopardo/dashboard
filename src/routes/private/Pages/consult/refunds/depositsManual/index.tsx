@@ -485,14 +485,12 @@ export const RefundDepositsManual = () => {
         reportName="RefundManulReportsFields"
       />
 
-      {isViewModalOpen && (
-        <ViewModal
-          open={isViewModalOpen}
-          setOpen={setIsViewModalOpen}
-          item={currentItem}
-          type="manual"
-        />
-      )}
+      <ViewModal
+        open={isViewModalOpen}
+        setOpen={setIsViewModalOpen}
+        item={currentItem}
+        type="manual"
+      />
 
       {isRefundModalOpen && (
         <Confirmation
@@ -549,58 +547,54 @@ export const RefundDepositsManual = () => {
         />
       )}
 
-      {isUpdateMerchantModalOpen && (
-        <MutateModal
-          type="update"
-          open={isUpdateMerchantModalOpen}
-          setOpen={setIsUpdateMerchantModalOpen}
-          fields={[{ label: "merchant_name", required: true }]}
-          body={updateBody}
-          setBody={setUpdateBody}
-          modalName={t("modal.update_merchant")}
-          submit={mutateUpdateMerchant}
-          submitLoading={isUpdateMerchantLoading}
-          error={UpdateMerchantError}
-          success={isUpdateMerchantSuccess}
-        />
-      )}
+      <MutateModal
+        type="update"
+        open={isUpdateMerchantModalOpen}
+        setOpen={setIsUpdateMerchantModalOpen}
+        fields={[{ label: "merchant_name", required: true }]}
+        body={updateBody}
+        setBody={setUpdateBody}
+        modalName={t("modal.update_merchant")}
+        submit={mutateUpdateMerchant}
+        submitLoading={isUpdateMerchantLoading}
+        error={UpdateMerchantError}
+        success={isUpdateMerchantSuccess}
+      />
 
-      {isFiltersOpen && (
-        <FiltersModal
-          maxRange
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          haveInitialDate
-          filters={[
-            "start_date",
-            "end_date",
-            "status",
-            "merchant_id",
-            "aggregator_id",
-            "aggregator_id",
-            "operator_id",
-            "pix_type",
-          ]}
-          refetch={refetchRefundDepositManualTotal}
-          selectOptions={{
-            status: [
-              "REFUNDED",
-              "PAID_TO_MERCHANT",
-              "PAID_TO_ENDUSER",
-              "ERROR",
-              "PROCESSIGN",
-              "WAITING",
-            ],
-            pix_type: ["STANDARD", "FASTPIX"],
-            gender: ["MALE", "FEMALE", "OTHER"],
-          }}
-          startDateKeyName="start_date"
-          endDateKeyName="end_date"
-          initialQuery={INITIAL_QUERY}
-        />
-      )}
+      <FiltersModal
+        maxRange
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        haveInitialDate
+        filters={[
+          "start_date",
+          "end_date",
+          "status",
+          "merchant_id",
+          "aggregator_id",
+          "aggregator_id",
+          "operator_id",
+          "pix_type",
+        ]}
+        refetch={refetchRefundDepositManualTotal}
+        selectOptions={{
+          status: [
+            "REFUNDED",
+            "PAID_TO_MERCHANT",
+            "PAID_TO_ENDUSER",
+            "ERROR",
+            "PROCESSIGN",
+            "WAITING",
+          ],
+          pix_type: ["STANDARD", "FASTPIX"],
+          gender: ["MALE", "FEMALE", "OTHER"],
+        }}
+        startDateKeyName="start_date"
+        endDateKeyName="end_date"
+        initialQuery={INITIAL_QUERY}
+      />
     </Row>
   );
 };

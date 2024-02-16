@@ -467,73 +467,70 @@ export const MerchantPreManual = () => {
           />
         </Grid>
       </Grid>
-      {isFiltersOpen && (
-        <FiltersModal
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          haveInitialDate
-          filters={[
-            "start_date",
-            "end_date",
-            "aggregator_id",
-            "partner_id",
-            "merchant_id",
-            "category_id",
-            "type",
-          ]}
-          refetch={refetchPreManualData}
-          selectOptions={{
-            category_id:
-              categoryData?.items?.map((category) => {
-                return { label: category?.name, value: category?.id };
-              }) || [],
-            type: ["in", "out"],
-          }}
-          startDateKeyName="start_date"
-          endDateKeyName="end_date"
-          initialQuery={INITIAL_QUERY}
-        />
-      )}
 
-      {isUpdateModalOpen && (
-        <MutateModal
-          type="update"
-          open={isUpdateModalOpen}
-          setOpen={setIsUpdateModalOpen}
-          query={query}
-          fields={[
-            { label: "merchant_id", required: true },
-            {
-              label: "category_id",
-              required: true,
-              selectOption: true,
-              noTranslate: true,
-            },
-            { label: "value", required: true },
-            { label: "type", required: false, selectOption: true },
-            { label: "description", required: false },
-          ]}
-          body={updateBody}
-          selectOptions={{
-            type: [
-              { label: "in", value: "in" },
-              { label: "out", value: "out" },
-            ],
-            category_id:
-              categoryData?.items?.map((category) => {
-                return { label: category?.name, value: category?.id };
-              }) || [],
-          }}
-          setBody={setUpdateBody}
-          modalName={t("modal.pre_manual")}
-          submit={updatePreManualTransactionMutate}
-          submitLoading={updatePreManualTransactionIsLoading}
-          error={updatePreManualTransactionError}
-          success={updatePreManualTransactionIsSuccess}
-        />
-      )}
+      <FiltersModal
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        haveInitialDate
+        filters={[
+          "start_date",
+          "end_date",
+          "aggregator_id",
+          "partner_id",
+          "merchant_id",
+          "category_id",
+          "type",
+        ]}
+        refetch={refetchPreManualData}
+        selectOptions={{
+          category_id:
+            categoryData?.items?.map((category) => {
+              return { label: category?.name, value: category?.id };
+            }) || [],
+          type: ["in", "out"],
+        }}
+        startDateKeyName="start_date"
+        endDateKeyName="end_date"
+        initialQuery={INITIAL_QUERY}
+      />
+
+      <MutateModal
+        type="update"
+        open={isUpdateModalOpen}
+        setOpen={setIsUpdateModalOpen}
+        query={query}
+        fields={[
+          { label: "merchant_id", required: true },
+          {
+            label: "category_id",
+            required: true,
+            selectOption: true,
+            noTranslate: true,
+          },
+          { label: "value", required: true },
+          { label: "type", required: false, selectOption: true },
+          { label: "description", required: false },
+        ]}
+        body={updateBody}
+        selectOptions={{
+          type: [
+            { label: "in", value: "in" },
+            { label: "out", value: "out" },
+          ],
+          category_id:
+            categoryData?.items?.map((category) => {
+              return { label: category?.name, value: category?.id };
+            }) || [],
+        }}
+        setBody={setUpdateBody}
+        modalName={t("modal.pre_manual")}
+        submit={updatePreManualTransactionMutate}
+        submitLoading={updatePreManualTransactionIsLoading}
+        error={updatePreManualTransactionError}
+        success={updatePreManualTransactionIsSuccess}
+      />
 
       {operationInOpen && (
         <CreateMovimentModal
@@ -574,15 +571,13 @@ export const MerchantPreManual = () => {
         />
       )}
 
-      {isViewModalOpen && (
-        <ViewModal
-          open={isViewModalOpen}
-          setOpen={setIsViewModalOpen}
-          item={currentData}
-          loading={false}
-          modalName={t("modal.report_details")}
-        />
-      )}
+      <ViewModal
+        open={isViewModalOpen}
+        setOpen={setIsViewModalOpen}
+        item={currentData}
+        loading={false}
+        modalName={t("modal.report_details")}
+      />
 
       <Toast
         actionSuccess={t("messages.created")}

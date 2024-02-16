@@ -119,7 +119,7 @@ export const MerchantManualReports = () => {
               { name: "_id", type: "id" },
               { name: "createdAt", type: "date" },
               { name: "created_by_name", type: "text" },
-                 { name: "start_date_filter", type: "date" },
+              { name: "start_date_filter", type: "date" },
               { name: "end_date_filter", type: "date" },
               { name: "rows", type: "text" },
               { name: "progress", type: "progress" },
@@ -130,31 +130,28 @@ export const MerchantManualReports = () => {
         </Grid>
       </Grid>
 
-      {isFiltersOpen && (
-        <FiltersModal
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          filters={["createdat_start", "createdat_end"]}
-          refetch={() => {
-            return;
-          }}
-          selectOptions={{}}
-          startDateKeyName="createdat_start"
-          endDateKeyName="createdat_end"
-          initialQuery={INITIAL_QUERY}
-        />
-      )}
-      {isViewModalOpen && (
-        <ViewModal
-          open={isViewModalOpen}
-          setOpen={setIsViewModalOpen}
-          item={currentItem}
-          loading={false}
-          modalName={t("modal.report_details")}
-        />
-      )}
+      <FiltersModal
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        filters={["createdat_start", "createdat_end"]}
+        refetch={() => {
+          return;
+        }}
+        selectOptions={{}}
+        startDateKeyName="createdat_start"
+        endDateKeyName="createdat_end"
+        initialQuery={INITIAL_QUERY}
+      />
+
+      <ViewModal
+        open={isViewModalOpen}
+        setOpen={setIsViewModalOpen}
+        item={currentItem}
+        loading={false}
+        modalName={t("modal.report_details")}
+      />
     </Grid>
   );
 };

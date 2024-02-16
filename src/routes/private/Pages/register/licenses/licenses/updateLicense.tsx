@@ -497,7 +497,6 @@ export const UpdateLicense = () => {
             />
           </Col>
 
-          {isFiltersOpen && (
             <FiltersModal
               open={isFiltersOpen}
               setOpen={setIsFiltersOpen}
@@ -510,7 +509,7 @@ export const UpdateLicense = () => {
               endDateKeyName=""
               initialQuery={INITIAL_QUERY}
             />
-          )}
+          
         </Row>
       ),
     },

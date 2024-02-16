@@ -207,14 +207,12 @@ export const CheckDocument = () => {
         </Grid>
       </Grid>
 
-      {isViewModalOpen && (
-        <ViewModal
-          modalName={`Blacklist: ${CheckCpfData?.cpf}`}
-          open={isViewModalOpen}
-          setOpen={setIsViewModalOpen}
-          cpf={CheckCpfData?.cpf}
-        />
-      )}
+      <ViewModal
+        modalName={`Blacklist: ${CheckCpfData?.cpf}`}
+        open={isViewModalOpen}
+        setOpen={setIsViewModalOpen}
+        cpf={CheckCpfData?.cpf}
+      />
     </Grid>
   );
 };

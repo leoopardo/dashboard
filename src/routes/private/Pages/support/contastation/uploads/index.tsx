@@ -132,30 +132,26 @@ export const ContestationUploads = () => {
         </Grid>
       </Grid>
 
-      {isFiltersOpen && (
-        <FiltersModal
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          filters={["createdat_start", "createdat_end"]}
-          refetch={refetch}
-          selectOptions={{}}
-          startDateKeyName="createdat_start"
-          endDateKeyName="createdat_end"
-          initialQuery={INITIAL_QUERY}
-        />
-      )}
+      <FiltersModal
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        filters={["createdat_start", "createdat_end"]}
+        refetch={refetch}
+        selectOptions={{}}
+        startDateKeyName="createdat_start"
+        endDateKeyName="createdat_end"
+        initialQuery={INITIAL_QUERY}
+      />
 
-      {isViewModalOpen && (
-        <ViewModal
-          item={currentItem}
-          loading={isFetching}
-          open={isViewModalOpen}
-          setOpen={setIsViewModalOpen}
-          modalName={t("actions.details")}
-        />
-      )}
+      <ViewModal
+        item={currentItem}
+        loading={isFetching}
+        open={isViewModalOpen}
+        setOpen={setIsViewModalOpen}
+        modalName={t("actions.details")}
+      />
     </Grid>
   );
 };

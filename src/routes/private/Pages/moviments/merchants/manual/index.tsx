@@ -361,7 +361,7 @@ export const MerchantManual = () => {
           />
         </Grid>
       </Grid>
-      {isFiltersOpen && (
+   
         <FiltersModal
           open={isFiltersOpen}
           setOpen={setIsFiltersOpen}
@@ -392,8 +392,7 @@ export const MerchantManual = () => {
           endDateKeyName="end_date"
           initialQuery={INITIAL_QUERY}
         />
-      )}
-
+   
       {operationInOpen && (
         <CreateMovimentModal
           open={operationInOpen}

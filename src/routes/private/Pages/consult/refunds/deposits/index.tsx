@@ -467,75 +467,73 @@ export const RefundDeposits = () => {
           loading={isLoading}
         />
       )}
-      {isViewModalOpen && (
-        <ViewModal
-          open={isViewModalOpen}
-          setOpen={setIsViewModalOpen}
-          item={currentItem}
-          type="Refund"
-        />
-      )}
-      {isFiltersOpen && (
-        <FiltersModal
-          maxRange
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          haveInitialDate={
-            !["pix_id", "endToEndId", "txid", "rtrid"].includes(
-              searchOption as any
-            )
-          }
-          filters={[
-            "start_date",
-            "end_date",
-            "status",
-            "partner_id",
-            "merchant_id",
-            "aggregator_id",
-            "operator_id",
-            "bank",
-            "payer_bank",
-            "pix_type",
-            "refund_reason",
-            "state",
-            "city",
-            "gender",
-            "age_start",
-            "value_start",
-          ]}
-          refetch={refetchRefundDepositsTotalRows}
-          selectOptions={{
-            status: [
-              "REFUNDED",
-              "PAID_TO_MERCHANT",
-              "ERROR",
-              "PROCESSING",
-              "WAITING",
-            ],
-            pix_type: ["STANDARD", "FASTPIX"],
-            gender: ["MALE", "FEMALE", "OTHER"],
-            refund_reason: [
-              "DIVERGENT VALUE",
-              "PAYMENT FROM QR CODE EXPIRED",
-              "PAYMENT REFUND: THIRD PARTY PAYMENT UNAVAILABLE",
-              "PAYMENT REFUND: CNPJ NOT ACCEPTED",
-              "DAILY TRANSACTION LIMIT EXCEEDED FOR THIS CLIENT",
-              "MONTH TRANSACTION LIMIT EXCEEDED FOR THIS CLIENT",
-              "DAILY TRANSACTION TO THIRD LIMIT EXCEEDED FOR THIS CLIENT",
-              "DAILY TRANSACTION LIMIT EXCEEDED FOR THIS CNPJ",
-              "PAYER IRREGULAR DOCUMENT, PLEASE CONTACT SUPPORT TO REGULARIZE DOCUMENT",
-              "PAYER UNDERAGE",
-              "PAYER BLOCKED BY MERCHANT",
-              "PAYMENT REPEATED TO SAME QRCODE",
-            ],
-          }}
-          startDateKeyName="start_date"
-          endDateKeyName="end_date"
-          initialQuery={INITIAL_QUERY}
-        />
-      )}
+
+      <ViewModal
+        open={isViewModalOpen}
+        setOpen={setIsViewModalOpen}
+        item={currentItem}
+        type="Refund"
+      />
+
+      <FiltersModal
+        maxRange
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        haveInitialDate={
+          !["pix_id", "endToEndId", "txid", "rtrid"].includes(
+            searchOption as any
+          )
+        }
+        filters={[
+          "start_date",
+          "end_date",
+          "status",
+          "partner_id",
+          "merchant_id",
+          "aggregator_id",
+          "operator_id",
+          "bank",
+          "payer_bank",
+          "pix_type",
+          "refund_reason",
+          "state",
+          "city",
+          "gender",
+          "age_start",
+          "value_start",
+        ]}
+        refetch={refetchRefundDepositsTotalRows}
+        selectOptions={{
+          status: [
+            "REFUNDED",
+            "PAID_TO_MERCHANT",
+            "ERROR",
+            "PROCESSING",
+            "WAITING",
+          ],
+          pix_type: ["STANDARD", "FASTPIX"],
+          gender: ["MALE", "FEMALE", "OTHER"],
+          refund_reason: [
+            "DIVERGENT VALUE",
+            "PAYMENT FROM QR CODE EXPIRED",
+            "PAYMENT REFUND: THIRD PARTY PAYMENT UNAVAILABLE",
+            "PAYMENT REFUND: CNPJ NOT ACCEPTED",
+            "DAILY TRANSACTION LIMIT EXCEEDED FOR THIS CLIENT",
+            "MONTH TRANSACTION LIMIT EXCEEDED FOR THIS CLIENT",
+            "DAILY TRANSACTION TO THIRD LIMIT EXCEEDED FOR THIS CLIENT",
+            "DAILY TRANSACTION LIMIT EXCEEDED FOR THIS CNPJ",
+            "PAYER IRREGULAR DOCUMENT, PLEASE CONTACT SUPPORT TO REGULARIZE DOCUMENT",
+            "PAYER UNDERAGE",
+            "PAYER BLOCKED BY MERCHANT",
+            "PAYMENT REPEATED TO SAME QRCODE",
+          ],
+        }}
+        startDateKeyName="start_date"
+        endDateKeyName="end_date"
+        initialQuery={INITIAL_QUERY}
+      />
 
       <Toast
         actionError={t("messages.refund")}

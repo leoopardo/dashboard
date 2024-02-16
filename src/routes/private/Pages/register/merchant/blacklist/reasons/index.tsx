@@ -153,52 +153,49 @@ export const MerchantBlacklistReasons = () => {
             refetch={refetchMerchantBlacklistData}
             disableActions
             loading={isMerchantBlacklistDataFetching}
-            label={[ "merchant_name", "reason_name"]}
+            label={["merchant_name", "reason_name"]}
             actions={[{}]}
           />
         </Grid>
       </Grid>
 
-      {isFiltersOpen && (
-        <FiltersModal
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          filters={["start_date", "end_date"]}
-          refetch={refetchMerchantBlacklistData}
-          selectOptions={{}}
-          startDateKeyName="start_date"
-          endDateKeyName="end_date"
-          initialQuery={INITIAL_QUERY}
-        />
-      )}
+      <FiltersModal
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        filters={["start_date", "end_date"]}
+        refetch={refetchMerchantBlacklistData}
+        selectOptions={{}}
+        startDateKeyName="start_date"
+        endDateKeyName="end_date"
+        initialQuery={INITIAL_QUERY}
+      />
 
-      {isCreateReasonOpen && (
-        <MutateModal
-          type="create"
-          open={isCreateReasonOpen}
-          setOpen={setIsCreateReasonOpen}
-          fields={[{ label: "merchant_id", required: true }, { label: "reason_name", required: true }]}
-          body={body}
-          setBody={setBody}
-          modalName={t("modal.new_reason")}
-          submit={mutate}
-          submitLoading={isLoading}
-          error={error}
-          success={isSuccess}
-        />
-      )}
+      <MutateModal
+        type="create"
+        open={isCreateReasonOpen}
+        setOpen={setIsCreateReasonOpen}
+        fields={[
+          { label: "merchant_id", required: true },
+          { label: "reason_name", required: true },
+        ]}
+        body={body}
+        setBody={setBody}
+        modalName={t("modal.new_reason")}
+        submit={mutate}
+        submitLoading={isLoading}
+        error={error}
+        success={isSuccess}
+      />
 
-      {isViewModalOpen && (
-        <ViewModal
-          item={currentItem}
-          loading={isMerchantBlacklistDataFetching}
-          modalName={`CPF: ${currentItem?.cpf}`}
-          open={isViewModalOpen}
-          setOpen={setIsViewModalOpen}
-        />
-      )}
+      <ViewModal
+        item={currentItem}
+        loading={isMerchantBlacklistDataFetching}
+        modalName={`CPF: ${currentItem?.cpf}`}
+        open={isViewModalOpen}
+        setOpen={setIsViewModalOpen}
+      />
     </Grid>
   );
 };

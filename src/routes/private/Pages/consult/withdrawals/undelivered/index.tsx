@@ -562,61 +562,60 @@ export const UndeliveredWithdrawals = () => {
           />
         </Col>
       </Row>
-      {isViewModalOpen && (
-        <ViewModal
-          open={isViewModalOpen}
-          setOpen={setIsViewModalOpen}
-          id={currentItem?._id}
-        />
-      )}
-      {isFiltersOpen && (
-        <FiltersModal
-          maxRange
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          haveInitialDate={
-            ![
-              "organization_id",
-              "endToEndId",
-              "payment_id",
-              "reference_id",
-            ].includes(searchOption as any)
-          }
-          filters={[
-            "initial_date",
-            "final_date",
-            "status",
-            "partner_id",
-            "merchant_id",
-            "aggregator_id",
-            "operator_id",
-            "bank",
-            "payer_bank",
-            "state",
-            "city",
-            "gender",
-            "age_start",
-            "value_start",
-          ]}
-          refetch={refetchWithdrawalsTotalRows}
-          selectOptions={{
-            status: [
-              "PAID",
-              "REFUNDED",
-              "EXPIRED",
-              "CANCELED",
-              "WAITING",
-              "WAITING_REFUND",
-            ],
-            gender: ["MALE", "FEMALE", "OTHER"],
-          }}
-          startDateKeyName="initial_date"
-          endDateKeyName="final_date"
-          initialQuery={INITIAL_QUERY}
-        />
-      )}
+
+      <ViewModal
+        open={isViewModalOpen}
+        setOpen={setIsViewModalOpen}
+        id={currentItem?._id}
+      />
+
+      <FiltersModal
+        maxRange
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        haveInitialDate={
+          ![
+            "organization_id",
+            "endToEndId",
+            "payment_id",
+            "reference_id",
+          ].includes(searchOption as any)
+        }
+        filters={[
+          "initial_date",
+          "final_date",
+          "status",
+          "partner_id",
+          "merchant_id",
+          "aggregator_id",
+          "operator_id",
+          "bank",
+          "payer_bank",
+          "state",
+          "city",
+          "gender",
+          "age_start",
+          "value_start",
+        ]}
+        refetch={refetchWithdrawalsTotalRows}
+        selectOptions={{
+          status: [
+            "PAID",
+            "REFUNDED",
+            "EXPIRED",
+            "CANCELED",
+            "WAITING",
+            "WAITING_REFUND",
+          ],
+          gender: ["MALE", "FEMALE", "OTHER"],
+        }}
+        startDateKeyName="initial_date"
+        endDateKeyName="final_date"
+        initialQuery={INITIAL_QUERY}
+      />
+
       {isWebhookModalOpen && (
         <WebhookModal
           open={isWebhookModalOpen}

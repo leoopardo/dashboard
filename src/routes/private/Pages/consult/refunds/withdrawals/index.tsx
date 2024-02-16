@@ -313,8 +313,8 @@ export const RefundWithdrawals = () => {
             loading={isRefundWithdrawalsFetching}
             danger
             onClick={() => {
-              
-              setSearchOption(undefined);setQuery(INITIAL_QUERY);
+              setSearchOption(undefined);
+              setQuery(INITIAL_QUERY);
             }}
             style={{
               height: 40,
@@ -414,14 +414,12 @@ export const RefundWithdrawals = () => {
         reportName="RefundWithdrawalsReportsFields"
       />
 
-      {isViewModalOpen && (
-        <ViewModal
-          open={isViewModalOpen}
-          setOpen={setIsViewModalOpen}
-          item={currentItem}
-          type="withdraw"
-        />
-      )}
+      <ViewModal
+        open={isViewModalOpen}
+        setOpen={setIsViewModalOpen}
+        item={currentItem}
+        type="withdraw"
+      />
 
       {isRefundModalOpen && (
         <Confirmation
@@ -436,52 +434,51 @@ export const RefundWithdrawals = () => {
           loading={isLoading}
         />
       )}
-      {isFiltersOpen && (
-        <FiltersModal
-          maxRange
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          haveInitialDate={
-            !["pix_id", "endToEndId", "reference_id", "rtrid"].includes(
-              searchOption as any
-            )
-          }
-          filters={[
-            "start_date",
-            "end_date",
-            "status",
-            "merchant_id",
-            "aggregator_id",
-            "aggregator_id",
-            "operator_id",
-            "refund_reason",
-          ]}
-          refetch={refetchRefundWithdrawalsTotal}
-          selectOptions={{
-            status: ["REFUND_TO_MERCHANT", "ERROR", "PROCESSING", "WAITING"],
-            gender: ["MALE", "FEMALE", "OTHER"],
-            refund_reason: [
-              "DIVERGENT VALUE",
-              "PAYMENT FROM QR CODE EXPIRED",
-              "PAYMENT REFUND: THIRD PARTY PAYMENT UNAVAILABLE",
-              "PAYMENT REFUND: CNPJ NOT ACCEPTED",
-              "DAILY TRANSACTION LIMIT EXCEEDED FOR THIS CLIENT",
-              "MONTH TRANSACTION LIMIT EXCEEDED FOR THIS CLIENT",
-              "DAILY TRANSACTION TO THIRD LIMIT EXCEEDED FOR THIS CLIENT",
-              "DAILY TRANSACTION LIMIT EXCEEDED FOR THIS CNPJ",
-              "PAYER IRREGULAR DOCUMENT, PLEASE CONTACT SUPPORT TO REGULARIZE DOCUMENT",
-              "PAYER UNDERAGE",
-              "PAYER BLOCKED BY MERCHANT",
-              "PAYMENT REPEATED TO SAME QRCODE",
-            ],
-          }}
-          startDateKeyName="start_date"
-          endDateKeyName="end_date"
-          initialQuery={INITIAL_QUERY}
-        />
-      )}
+
+      <FiltersModal
+        maxRange
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        haveInitialDate={
+          !["pix_id", "endToEndId", "reference_id", "rtrid"].includes(
+            searchOption as any
+          )
+        }
+        filters={[
+          "start_date",
+          "end_date",
+          "status",
+          "merchant_id",
+          "aggregator_id",
+          "aggregator_id",
+          "operator_id",
+          "refund_reason",
+        ]}
+        refetch={refetchRefundWithdrawalsTotal}
+        selectOptions={{
+          status: ["REFUND_TO_MERCHANT", "ERROR", "PROCESSING", "WAITING"],
+          gender: ["MALE", "FEMALE", "OTHER"],
+          refund_reason: [
+            "DIVERGENT VALUE",
+            "PAYMENT FROM QR CODE EXPIRED",
+            "PAYMENT REFUND: THIRD PARTY PAYMENT UNAVAILABLE",
+            "PAYMENT REFUND: CNPJ NOT ACCEPTED",
+            "DAILY TRANSACTION LIMIT EXCEEDED FOR THIS CLIENT",
+            "MONTH TRANSACTION LIMIT EXCEEDED FOR THIS CLIENT",
+            "DAILY TRANSACTION TO THIRD LIMIT EXCEEDED FOR THIS CLIENT",
+            "DAILY TRANSACTION LIMIT EXCEEDED FOR THIS CNPJ",
+            "PAYER IRREGULAR DOCUMENT, PLEASE CONTACT SUPPORT TO REGULARIZE DOCUMENT",
+            "PAYER UNDERAGE",
+            "PAYER BLOCKED BY MERCHANT",
+            "PAYMENT REPEATED TO SAME QRCODE",
+          ],
+        }}
+        startDateKeyName="start_date"
+        endDateKeyName="end_date"
+        initialQuery={INITIAL_QUERY}
+      />
     </Row>
   );
 };

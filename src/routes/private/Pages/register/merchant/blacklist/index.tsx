@@ -245,20 +245,18 @@ export const MerchantBlacklist = () => {
         </Grid>
       </Grid>
 
-      {isFiltersOpen && (
-        <FiltersModal
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          filters={["start_date", "end_date", "merchant_id", "reason"]}
-          refetch={refetchMerchantBlacklistData}
-          selectOptions={{}}
-          startDateKeyName="start_date"
-          endDateKeyName="end_date"
-          initialQuery={INITIAL_QUERY}
-        />
-      )}
+      <FiltersModal
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        filters={["start_date", "end_date", "merchant_id", "reason"]}
+        refetch={refetchMerchantBlacklistData}
+        selectOptions={{}}
+        startDateKeyName="start_date"
+        endDateKeyName="end_date"
+        initialQuery={INITIAL_QUERY}
+      />
 
       {isDeleteOpen && (
         <Confirmation
@@ -274,50 +272,47 @@ export const MerchantBlacklist = () => {
         />
       )}
 
-      {isUpdateModalOpen && (
-        <MutateModal
-          type="update"
-          open={isUpdateModalOpen}
-          setOpen={setIsUpdateModalOpen}
-          fields={[
-            type == 1 || type === 2
-              ? {
-                  label: "can_be_deleted_only_by_organization",
-                  required: true,
-                }
-              : undefined,
-            { label: "cpf", required: true },
-            { label: "reason", required: true },
-            { label: "description", required: true },
-            !merchant_id
-              ? {
-                  label: "merchant_id",
-                  required: true,
-                  selectOption: true,
-                }
-              : undefined,
-          ]}
-          body={body}
-          setBody={setBody}
-          modalName={t("modal.new_bank_blacklist")}
-          submit={mutate}
-          submitLoading={isLoading}
-          selectOptions={{}}
-          error={error}
-          success={isSuccess}
-          submitText={`${t("buttons.create")}`}
-        />
-      )}
+      <MutateModal
+        type="update"
+        open={isUpdateModalOpen}
+        setOpen={setIsUpdateModalOpen}
+        fields={[
+          type == 1 || type === 2
+            ? {
+                label: "can_be_deleted_only_by_organization",
+                required: true,
+              }
+            : undefined,
+          { label: "cpf", required: true },
+          { label: "reason", required: true },
+          { label: "description", required: true },
+          !merchant_id
+            ? {
+                label: "merchant_id",
+                required: true,
+                selectOption: true,
+              }
+            : undefined,
+        ]}
+        body={body}
+        setBody={setBody}
+        modalName={t("modal.new_bank_blacklist")}
+        submit={mutate}
+        submitLoading={isLoading}
+        selectOptions={{}}
+        error={error}
+        success={isSuccess}
+        submitText={`${t("buttons.create")}`}
+      />
 
-      {isViewModalOpen && (
-        <ViewModal
-          item={currentItem}
-          loading={isMerchantBlacklistDataFetching}
-          modalName={`CPF: ${currentItem?.cpf}`}
-          open={isViewModalOpen}
-          setOpen={setIsViewModalOpen}
-        />
-      )}
+      <ViewModal
+        item={currentItem}
+        loading={isMerchantBlacklistDataFetching}
+        modalName={`CPF: ${currentItem?.cpf}`}
+        open={isViewModalOpen}
+        setOpen={setIsViewModalOpen}
+      />
+
       <Toast
         actionError={t("messages.create")}
         actionSuccess={t("messages.created")}

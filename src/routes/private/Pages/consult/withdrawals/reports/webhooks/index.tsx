@@ -177,31 +177,28 @@ export const WithdrawWebhooks = () => {
         />
       </Row>
 
-      {isFiltersOpen && (
-        <FiltersModal
-          maxRange
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          haveInitialDate
-          filters={["start_date", "end_date", "partner_id", "merchant_id"]}
-          refetch={refetchWithdrawWebhooks}
-          selectOptions={{}}
-          startDateKeyName="start_date"
-          endDateKeyName="end_date"
-          initialQuery={INITIAL_QUERY}
-        />
-      )}
-      {isViewModalOpen && (
-        <ViewModal
-          item={currentItem}
-          loading={isWithdrawWebhooksFetching}
-          modalName={t("modal.details")}
-          open={isViewModalOpen}
-          setOpen={setIsViewModalOpen}
-        />
-      )}
+      <FiltersModal
+        maxRange
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        haveInitialDate
+        filters={["start_date", "end_date", "partner_id", "merchant_id"]}
+        refetch={refetchWithdrawWebhooks}
+        selectOptions={{}}
+        startDateKeyName="start_date"
+        endDateKeyName="end_date"
+        initialQuery={INITIAL_QUERY}
+      />
+
+      <ViewModal
+        item={currentItem}
+        loading={isWithdrawWebhooksFetching}
+        modalName={t("modal.details")}
+        open={isViewModalOpen}
+        setOpen={setIsViewModalOpen}
+      />
     </Row>
   );
 };

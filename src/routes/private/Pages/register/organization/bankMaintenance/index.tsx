@@ -150,7 +150,7 @@ export const BankMaintenence = () => {
           />
         </Grid>
       </Grid>
-      {isUpdateBankModalOpen && (
+
         <MutateModal
           type="update"
           open={isUpdateBankModalOpen}
@@ -179,7 +179,7 @@ export const BankMaintenence = () => {
           success={updateBankSuccess}
           clear={reset}
         />
-      )}
+        
       <TuorComponent
         open={isTuorOpen}
         setOpen={setIsTuorOpen}

@@ -258,26 +258,25 @@ export const PermissionsGroups = () => {
           label={["name"]}
         />
       </Col>
-      {isCreateModalOpen && (
-        <MutateModal
-          type="create"
-          open={isCreateModalOpen}
-          setOpen={setIsCreateModalOpen}
-          fields={[
-            { label: "name", required: true },
-            { label: "profile_id", required: true },
-            { label: "description", required: false },
-          ]}
-          body={createGroupBody}
-          setBody={setCreateGroupBody}
-          modalName={t("modal.create_group")}
-          submit={PermissionGroupMutate}
-          submitLoading={PermissionGroupIsLoading}
-          error={PermissionGroupError}
-          success={PermissionGroupIsSuccess}
-          clear={PermissionGroupReset}
-        />
-      )}
+
+      <MutateModal
+        type="create"
+        open={isCreateModalOpen}
+        setOpen={setIsCreateModalOpen}
+        fields={[
+          { label: "name", required: true },
+          { label: "profile_id", required: true },
+          { label: "description", required: false },
+        ]}
+        body={createGroupBody}
+        setBody={setCreateGroupBody}
+        modalName={t("modal.create_group")}
+        submit={PermissionGroupMutate}
+        submitLoading={PermissionGroupIsLoading}
+        error={PermissionGroupError}
+        success={PermissionGroupIsSuccess}
+        clear={PermissionGroupReset}
+      />
       {isDeleteModalOpen && (
         <Confirmation
           open={isDeleteModalOpen}
@@ -294,25 +293,24 @@ export const PermissionsGroups = () => {
         />
       )}
 
-      {isUpdateModalOpen && (
-        <MutateModal
-          type="update"
-          open={isUpdateModalOpen}
-          setOpen={setIsUpdateModalOpen}
-          fields={[
-            { label: "name", required: true },
-            { label: "description", required: false },
-          ]}
-          body={updateGroupBody}
-          setBody={setUpdateGroupBody}
-          modalName={t("modal.update_group")}
-          submit={UpdatePermissionGroupMutate}
-          submitLoading={UpdatePermissionGroupIsLoading}
-          error={UpdatePermissionGroupError}
-          success={UpdatePermissionGroupIsSuccess}
-          clear={UpdatePermissionGroupReset}
-        />
-      )}
+      <MutateModal
+        type="update"
+        open={isUpdateModalOpen}
+        setOpen={setIsUpdateModalOpen}
+        fields={[
+          { label: "name", required: true },
+          { label: "description", required: false },
+        ]}
+        body={updateGroupBody}
+        setBody={setUpdateGroupBody}
+        modalName={t("modal.update_group")}
+        submit={UpdatePermissionGroupMutate}
+        submitLoading={UpdatePermissionGroupIsLoading}
+        error={UpdatePermissionGroupError}
+        success={UpdatePermissionGroupIsSuccess}
+        clear={UpdatePermissionGroupReset}
+      />
+
       {isPermissionsModalOpen && (
         <PermissionsModal
           open={isPermissionsModalOpen}
@@ -320,37 +318,36 @@ export const PermissionsGroups = () => {
           group={currentItem}
         />
       )}
-      {isViewModalOpen && (
-        <ViewModal
-          item={currentItem}
-          loading={isPermissionGroupsDataFetching}
-          modalName={`${t("table.group")}: ${currentItem?.name}`}
-          open={isViewModalOpen}
-          setOpen={setIsViewModalOpen}
-        />
-      )}
-      {isFiltersOpen && (
-        <FiltersModal
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          filters={["start_date", "end_date", "profiles"]}
-          refetch={refetchPermissionGroupsData}
-          selectOptions={{
-            profiles: ProfilesData?.map((p) => ({
-              label: t(`table.${p?.name?.toLocaleLowerCase()}`),
-              value: p?.id,
-            })),
-          }}
-          startDateKeyName="start_date"
-          endDateKeyName="end_date"
-          initialQuery={{
-            limit: 25,
-            page: 1,
-          }}
-        />
-      )}
+
+      <ViewModal
+        item={currentItem}
+        loading={isPermissionGroupsDataFetching}
+        modalName={`${t("table.group")}: ${currentItem?.name}`}
+        open={isViewModalOpen}
+        setOpen={setIsViewModalOpen}
+      />
+
+      <FiltersModal
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        filters={["start_date", "end_date", "profiles"]}
+        refetch={refetchPermissionGroupsData}
+        selectOptions={{
+          profiles: ProfilesData?.map((p) => ({
+            label: t(`table.${p?.name?.toLocaleLowerCase()}`),
+            value: p?.id,
+          })),
+        }}
+        startDateKeyName="start_date"
+        endDateKeyName="end_date"
+        initialQuery={{
+          limit: 25,
+          page: 1,
+        }}
+      />
+
       <Toast
         actionError={t("messages.create")}
         actionSuccess={t("messages.created")}

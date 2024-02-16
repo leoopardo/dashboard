@@ -245,7 +245,6 @@ export const PaidWithdrawals = () => {
                         .startOf("day")
                         .utc()
                         .format("YYYY-MM-DDTHH:mm:ss.SSS"),
-                     
                     }));
                   }
                   setSearchOption(value);
@@ -309,7 +308,6 @@ export const PaidWithdrawals = () => {
                       .startOf("day")
                       .utc()
                       .format("YYYY-MM-DDTHH:mm:ss.SSS"),
-                   
                   }));
                 }
                 setSearchOption(value);
@@ -489,52 +487,49 @@ export const PaidWithdrawals = () => {
         reportName="PaidWithdrawalsReportsFields"
       />
 
-      {isViewModalOpen && (
-        <ViewModal
-          open={isViewModalOpen}
-          setOpen={setIsViewModalOpen}
-          id={currentItem?._id}
-        />
-      )}
-      {isFiltersOpen && (
-        <FiltersModal
-          maxRange
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          haveInitialDate={
-            ![
-              "organization_id",
-              "endToEndId",
-              "payment_id",
-              "reference_id",
-            ].includes(searchOption as any)
-          }
-          filters={[
-            "initial_date",
-            "final_date",
-            "partner_id",
-            "merchant_id",
-            "aggregator_id",
-            "operator_id",
-            "bank",
-            "payer_bank",
-            "state",
-            "city",
-            "gender",
-            "age_start",
-            "value_start",
-          ]}
-          refetch={refetchPaidWithdrawalsTotalRows}
-          selectOptions={{
-            gender: ["MALE", "FEMALE", "OTHER"],
-          }}
-          startDateKeyName="initial_date"
-          endDateKeyName="final_date"
-          initialQuery={INITIAL_QUERY}
-        />
-      )}
+      <ViewModal
+        open={isViewModalOpen}
+        setOpen={setIsViewModalOpen}
+        id={currentItem?._id}
+      />
+
+      <FiltersModal
+        maxRange
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        haveInitialDate={
+          ![
+            "organization_id",
+            "endToEndId",
+            "payment_id",
+            "reference_id",
+          ].includes(searchOption as any)
+        }
+        filters={[
+          "initial_date",
+          "final_date",
+          "partner_id",
+          "merchant_id",
+          "aggregator_id",
+          "operator_id",
+          "bank",
+          "payer_bank",
+          "state",
+          "city",
+          "gender",
+          "age_start",
+          "value_start",
+        ]}
+        refetch={refetchPaidWithdrawalsTotalRows}
+        selectOptions={{
+          gender: ["MALE", "FEMALE", "OTHER"],
+        }}
+        startDateKeyName="initial_date"
+        endDateKeyName="final_date"
+        initialQuery={INITIAL_QUERY}
+      />
       {isWebhookModalOpen && (
         <WebhookModal
           open={isWebhookModalOpen}

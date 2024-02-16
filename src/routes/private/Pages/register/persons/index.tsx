@@ -163,8 +163,10 @@ export const Persons = () => {
                 allowClear
                 onClear={() => {
                   const q = { ...query };
-                  delete q[searchOption as "name" | "cpf" | "email" | "cellphone"];
-                  setQuery(q)
+                  delete q[
+                    searchOption as "name" | "cpf" | "email" | "cellphone"
+                  ];
+                  setQuery(q);
                   setSearchOption(undefined);
                 }}
                 style={{ width: "65%" }}
@@ -326,83 +328,77 @@ export const Persons = () => {
         </Col>
       </Row>
 
-      {isFiltersOpen && (
-        <FiltersModal
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          filters={[
-            "initial_date",
-            "final_date",
-            "black_list",
-            "flag_pep",
-            "flag_aux_gov",
-            "flag_alert",
-            "state",
-            "city",
-            "gender",
-          ]}
-          refetch={refetchPersonsData}
-          selectOptions={{
-            black_list: ["true", "false"],
-            flag_pep: ["true", "false"],
-            flag_aux_gov: ["true", "false"],
-            flag_alert: ["0", "1", "2", "3", "4", "5"],
-            gender: ["MALE", "FEMALE"],
-          }}
-          startDateKeyName="initial_date"
-          endDateKeyName="final_date"
-          initialQuery={INITIAL_QUERY}
-        />
-      )}
+      <FiltersModal
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        filters={[
+          "initial_date",
+          "final_date",
+          "black_list",
+          "flag_pep",
+          "flag_aux_gov",
+          "flag_alert",
+          "state",
+          "city",
+          "gender",
+        ]}
+        refetch={refetchPersonsData}
+        selectOptions={{
+          black_list: ["true", "false"],
+          flag_pep: ["true", "false"],
+          flag_aux_gov: ["true", "false"],
+          flag_alert: ["0", "1", "2", "3", "4", "5"],
+          gender: ["MALE", "FEMALE"],
+        }}
+        startDateKeyName="initial_date"
+        endDateKeyName="final_date"
+        initialQuery={INITIAL_QUERY}
+      />
 
-      {isNewModal && (
-        <MutateModal
-          type="create"
-          open={isNewModal}
-          setOpen={setIsNewModal}
-          fields={[{ label: "cpf", required: true }]}
-          body={createBody}
-          setBody={setCreateBody}
-          modalName={t("modal.new_person")}
-          submit={PersonMutate}
-          submitLoading={PersonIsLoading}
-          error={PersonError}
-          success={PersonIsSuccess}
-          clear={reset}
-        />
-      )}
-      {isUpdateModalOpen && (
-        <MutateModal
-          type="update"
-          open={isUpdateModalOpen}
-          setOpen={setIsUpdateModalOpen}
-          fields={[
-            { label: "name", required: false },
-            { label: "cnpj", required: false },
-            { label: "cellphone", required: false },
-            { label: "email", required: false },
-            { label: "country", required: false },
-          ]}
-          body={updateBody}
-          setBody={setUpdateBody}
-          modalName={t("modal.update_person")}
-          submit={UpdateMutate}
-          submitLoading={UpdateIsLoading}
-          error={UpdateError}
-          success={UpdateIsSuccess}
-        />
-      )}
-      {isViewModalOpen && (
-        <ViewModal
-          item={currentItem}
-          loading={isPersonsDataFetching}
-          modalName={`${t("modal.person")}: ${currentItem?.name}`}
-          open={isViewModalOpen}
-          setOpen={setIsViewModalOpen}
-        />
-      )}
+      <MutateModal
+        type="create"
+        open={isNewModal}
+        setOpen={setIsNewModal}
+        fields={[{ label: "cpf", required: true }]}
+        body={createBody}
+        setBody={setCreateBody}
+        modalName={t("modal.new_person")}
+        submit={PersonMutate}
+        submitLoading={PersonIsLoading}
+        error={PersonError}
+        success={PersonIsSuccess}
+        clear={reset}
+      />
+
+      <MutateModal
+        type="update"
+        open={isUpdateModalOpen}
+        setOpen={setIsUpdateModalOpen}
+        fields={[
+          { label: "name", required: false },
+          { label: "cnpj", required: false },
+          { label: "cellphone", required: false },
+          { label: "email", required: false },
+          { label: "country", required: false },
+        ]}
+        body={updateBody}
+        setBody={setUpdateBody}
+        modalName={t("modal.update_person")}
+        submit={UpdateMutate}
+        submitLoading={UpdateIsLoading}
+        error={UpdateError}
+        success={UpdateIsSuccess}
+      />
+
+      <ViewModal
+        item={currentItem}
+        loading={isPersonsDataFetching}
+        modalName={`${t("modal.person")}: ${currentItem?.name}`}
+        open={isViewModalOpen}
+        setOpen={setIsViewModalOpen}
+      />
 
       <ExportCustomReportsModal
         open={isExportReportsOpen}

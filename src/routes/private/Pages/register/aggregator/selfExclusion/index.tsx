@@ -227,7 +227,6 @@ export const AggregatorSelfExclusion = () => {
         </Grid>
       </Grid>
 
-      {isCreateSelfExclusionOpen && (
         <MutateModal
           type="update"
           open={isCreateSelfExclusionOpen}
@@ -246,9 +245,7 @@ export const AggregatorSelfExclusion = () => {
           submitText={`${t("buttons.create")}`}
           clear={reset}
         />
-      )}
-
-      {isFiltersOpen && (
+        
         <FiltersModal
           open={isFiltersOpen}
           setOpen={setIsFiltersOpen}
@@ -261,7 +258,6 @@ export const AggregatorSelfExclusion = () => {
           endDateKeyName="end_date"
           initialQuery={INITIAL_QUERY}
         />
-      )}
 
       <Toast
         actionError={t("messages.create")}

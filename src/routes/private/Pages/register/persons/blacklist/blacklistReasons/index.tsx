@@ -152,7 +152,6 @@ export const PersonBlacklistReasons = () => {
         </Grid>
       </Grid>
 
-      {isCreateReasonOpen && (
         <MutateModal
           type="create"
           open={isCreateReasonOpen}
@@ -166,7 +165,6 @@ export const PersonBlacklistReasons = () => {
           error={error}
           success={isSuccess}
         />
-      )}
 
       <Toast
         actionError={t("messages.create")}

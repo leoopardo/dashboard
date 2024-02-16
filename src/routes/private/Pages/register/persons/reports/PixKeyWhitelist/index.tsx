@@ -117,7 +117,6 @@ export const PixKeyWhitelistReports = () => {
         </Grid>
       </Grid>
 
-      {isFiltersOpen && (
         <FiltersModal
           open={isFiltersOpen}
           setOpen={setIsFiltersOpen}
@@ -132,7 +131,7 @@ export const PixKeyWhitelistReports = () => {
           endDateKeyName="createdat_end"
           initialQuery={INITIAL_QUERY}
         />
-      )}
+        
     </Grid>
   );
 };
