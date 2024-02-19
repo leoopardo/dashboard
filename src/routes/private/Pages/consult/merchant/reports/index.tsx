@@ -89,7 +89,6 @@ export const ConsultMerchantReports = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -122,8 +121,12 @@ export const ConsultMerchantReports = () => {
               { name: "_id", type: "id" },
               { name: "createdAt", type: "date", sort: true },
               { name: "created_by_name", type: "text" },
-                 { name: "start_date_filter", type: "date" },
-              { name: "end_date_filter", type: "date" },
+              {
+                name: "start_date_filter",
+                head: "start_date",
+                type: "date",
+              },
+              { name: "end_date_filter", head: "end_date", type: "date" },
               { name: "rows", type: "text" },
               { name: "progress", type: "progress" },
             ]}
@@ -133,31 +136,28 @@ export const ConsultMerchantReports = () => {
         </Grid>
       </Grid>
 
-      {isFiltersOpen && (
-        <FiltersModal
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          filters={["start_date", "end_date"]}
-          refetch={() => {
-            return;
-          }}
-          selectOptions={{}}
-          startDateKeyName="start_date"
-          endDateKeyName="end_date"
-          initialQuery={INITIAL_QUERY}
-        />
-      )}
-      {isViewModalOpen && (
-        <ViewModal
-          open={isViewModalOpen}
-          setOpen={setIsViewModalOpen}
-          item={currentItem}
-          loading={false}
-          modalName={t("modal.report_details")}
-        />
-      )}
+      <FiltersModal
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        filters={["start_date", "end_date"]}
+        refetch={() => {
+          return;
+        }}
+        selectOptions={{}}
+        startDateKeyName="start_date"
+        endDateKeyName="end_date"
+        initialQuery={INITIAL_QUERY}
+      />
+
+      <ViewModal
+        open={isViewModalOpen}
+        setOpen={setIsViewModalOpen}
+        item={currentItem}
+        loading={false}
+        modalName={t("modal.report_details")}
+      />
     </Grid>
   );
 };

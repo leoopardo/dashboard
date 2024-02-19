@@ -70,19 +70,6 @@ export const AggregatorBlacklist = () => {
   const [search, setSearch] = useState<string>("");
   const debounceSearch = useDebounce(search);
 
-  useEffect(() => {
-    refetchAggregatorsBlacklistData();
-  }, [query]);
-
-  useEffect(() => {
-    if (!debounceSearch) {
-      const q = { ...query };
-      delete q.cpf;
-      return setQuery(q);
-    }
-    setQuery((state) => ({ ...state, cpf: debounceSearch }));
-  }, [debounceSearch]);
-
   const [isTuorOpen, setIsTuorOpen] = useState<boolean>(false);
   const ref1 = useRef(null);
   const ref2 = useRef(null);
@@ -96,6 +83,19 @@ export const AggregatorBlacklist = () => {
   const refDescription = useRef(null);
   const refWhoAdd = useRef(null);
   const refCreatedAt = useRef(null);
+
+  useEffect(() => {
+    refetchAggregatorsBlacklistData();
+  }, [query]);
+
+  useEffect(() => {
+    if (!debounceSearch) {
+      const q = { ...query };
+      delete q.cpf;
+      return setQuery(q);
+    }
+    setQuery((state) => ({ ...state, cpf: debounceSearch }));
+  }, [debounceSearch]);
 
   return (
     <Grid container style={{ padding: "25px" }}>
@@ -256,51 +256,46 @@ export const AggregatorBlacklist = () => {
         </Grid>
       </Grid>
 
-      {isFiltersOpen && (
-        <FiltersModal
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          filters={["start_date", "end_date", "merchant_id"]}
-          refetch={refetchAggregatorsBlacklistData}
-          selectOptions={{}}
-          startDateKeyName="start_date"
-          endDateKeyName="end_date"
-          initialQuery={INITIAL_QUERY}
-        />
-      )}
+      <FiltersModal
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        filters={["start_date", "end_date", "merchant_id"]}
+        refetch={refetchAggregatorsBlacklistData}
+        selectOptions={{}}
+        startDateKeyName="start_date"
+        endDateKeyName="end_date"
+        initialQuery={INITIAL_QUERY}
+      />
 
-      {isUpdateModalOpen && (
-        <MutateModal
-          type="create"
-          open={isUpdateModalOpen}
-          setOpen={setIsUpdateModalOpen}
-          fields={[
-            { label: "cpf", required: true },
-            { label: "reason", required: true },
-            { label: "description", required: true },
-          ]}
-          body={body}
-          setBody={setBody}
-          modalName={t("modal.new_bank_blacklist")}
-          submit={mutate}
-          submitLoading={isLoading}
-          error={error}
-          success={isSuccess}
-          clear={reset}
-        />
-      )}
+      <MutateModal
+        type="create"
+        open={isUpdateModalOpen}
+        setOpen={setIsUpdateModalOpen}
+        fields={[
+          { label: "cpf", required: true },
+          { label: "reason", required: true },
+          { label: "description", required: true },
+        ]}
+        body={body}
+        setBody={setBody}
+        modalName={t("modal.new_bank_blacklist")}
+        submit={mutate}
+        submitLoading={isLoading}
+        error={error}
+        success={isSuccess}
+        clear={reset}
+      />
 
-      {isViewModalOpen && (
-        <ViewModal
-          item={currentItem}
-          loading={isAggregatorsBlacklistDataFetching}
-          modalName={`CPF: ${currentItem?.cpf}`}
-          open={isViewModalOpen}
-          setOpen={setIsViewModalOpen}
-        />
-      )}
+      <ViewModal
+        item={currentItem}
+        loading={isAggregatorsBlacklistDataFetching}
+        modalName={`CPF: ${currentItem?.cpf}`}
+        open={isViewModalOpen}
+        setOpen={setIsViewModalOpen}
+      />
+
       <TuorComponent
         open={isTuorOpen}
         setOpen={setIsTuorOpen}

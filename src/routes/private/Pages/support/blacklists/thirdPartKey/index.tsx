@@ -65,8 +65,8 @@ export const ThirdPartKeyBlacklist = () => {
         </Grid>
         <Grid item xs={12} md={8} lg={10}>
           <FilterChips
-            startDateKeyName="start_date"
-            endDateKeyName="end_date"
+            startDateKeyName="createdat_start"
+            endDateKeyName="createdat_end"
             query={query}
             setQuery={setQuery}
           />
@@ -154,20 +154,18 @@ export const ThirdPartKeyBlacklist = () => {
         </Grid>
       </Grid>
 
-      {isFiltersOpen && (
         <FiltersModal
           open={isFiltersOpen}
           setOpen={setIsFiltersOpen}
           query={query}
           setQuery={setQuery}
-          filters={["start_date", "end_date"]}
+          filters={["createdat_start", "createdat_end"]}
           refetch={refetchThirdPartKey}
           selectOptions={{}}
-          startDateKeyName="start_date"
-          endDateKeyName="end_date"
+          startDateKeyName="createdat_start"
+          endDateKeyName="createdat_end"
           initialQuery={INITIAL_QUERY}
         />
-      )}
 
       <Toast
         actionSuccess={t("messages.deleted")}

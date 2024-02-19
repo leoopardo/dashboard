@@ -57,6 +57,7 @@ export const OrganizationCategories = () => {
     refetchCategoriesData,
   } = useGetOrganizationCategories(query);
 
+  const [isTuorOpen, setIsTuorOpen] = useState<boolean>(false);
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [isNewCategorieModal, setIsNewCategorieModal] =
     useState<boolean>(false);
@@ -77,8 +78,13 @@ export const OrganizationCategories = () => {
   const { isLoading, mutate, error, isSuccess, reset } =
     useCreateOrganizationCategory(createBody);
 
-  const { updateError, updateIsLoading, updateMutate, updateSuccess, updateReset } =
-    useUpdateOrganizationCategory(updateBody);
+  const {
+    updateError,
+    updateIsLoading,
+    updateMutate,
+    updateSuccess,
+    updateReset,
+  } = useUpdateOrganizationCategory(updateBody);
 
   const {
     CategoryReportsError,
@@ -86,6 +92,17 @@ export const OrganizationCategories = () => {
     CategoryReportsIsSuccess,
     CategoryReportsMutate,
   } = useCreateOrganizationCategoryReports(query);
+
+  const ref1 = useRef(null);
+  const ref2 = useRef(null);
+  const ref3 = useRef(null);
+  const ref4 = useRef(null);
+  const ref5 = useRef(null);
+  const refId = useRef(null);
+  const refName = useRef(null);
+  const refDescription = useRef(null);
+  const refStatus = useRef(null);
+  const refCreatedAt = useRef(null);
 
   useEffect(() => {
     refetchCategoriesData();
@@ -97,18 +114,6 @@ export const OrganizationCategories = () => {
       entry_account_category_id: currentItem?.id,
     });
   }, [currentItem]);
-
-  const [isTuorOpen, setIsTuorOpen] = useState<boolean>(false);
-  const ref1 = useRef(null);
-  const ref2 = useRef(null);
-  const ref3 = useRef(null);
-  const ref4 = useRef(null);
-  const ref5 = useRef(null);
-  const refId = useRef(null);
-  const refName = useRef(null);
-  const refDescription = useRef(null);
-  const refStatus = useRef(null);
-  const refCreatedAt = useRef(null);
 
   return (
     <Grid container style={{ padding: "25px" }}>
@@ -268,69 +273,64 @@ export const OrganizationCategories = () => {
         </Grid>
       </Grid>
 
-      {isFiltersOpen && (
-        <FiltersModal
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          filters={["start_date", "end_date", "status"]}
-          refetch={refetchCategoriesData}
-          selectOptions={{}}
-          startDateKeyName="start_date"
-          endDateKeyName="end_date"
-          initialQuery={INITIAL_QUERY}
-        />
-      )}
+      <FiltersModal
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        filters={["start_date", "end_date", "status"]}
+        refetch={refetchCategoriesData}
+        selectOptions={{}}
+        startDateKeyName="start_date"
+        endDateKeyName="end_date"
+        initialQuery={INITIAL_QUERY}
+      />
 
-      {isNewCategorieModal && (
-        <MutateModal
-          type="create"
-          open={isNewCategorieModal}
-          setOpen={setIsNewCategorieModal}
-          fields={[
-            { label: "name", required: true },
-            { label: "description", required: true },
-          ]}
-          body={createBody}
-          setBody={setCreateBody}
-          modalName={t("modal.new_category")}
-          submit={mutate}
-          submitLoading={isLoading}
-          error={error}
-          success={isSuccess}
-          clear={reset}
-        />
-      )}
-      {isUpdateCategorieModalOpen && (
-        <MutateModal
-          type="update"
-          open={isUpdateCategorieModalOpen}
-          setOpen={setIsUpdateCategorieModalOpen}
-          fields={[
-            { label: "name", required: true },
-            { label: "description", required: true },
-            { label: "status", required: false },
-          ]}
-          body={updateBody}
-          setBody={setUpdateBody}
-          modalName={t("modal.update_category")}
-          submit={updateMutate}
-          submitLoading={updateIsLoading}
-          error={updateError}
-          success={updateSuccess}
-          clear={updateReset}
-        />
-      )}
-      {isViewModalOpen && (
-        <ViewModal
-          item={currentItem}
-          loading={isCategoriesDataFetching}
-          modalName={`${t("modal.category")}: ${currentItem?.name}`}
-          open={isViewModalOpen}
-          setOpen={setIsViewModalOpen}
-        />
-      )}
+      <MutateModal
+        type="create"
+        open={isNewCategorieModal}
+        setOpen={setIsNewCategorieModal}
+        fields={[
+          { label: "name", required: true },
+          { label: "description", required: true },
+        ]}
+        body={createBody}
+        setBody={setCreateBody}
+        modalName={t("modal.new_category")}
+        submit={mutate}
+        submitLoading={isLoading}
+        error={error}
+        success={isSuccess}
+        clear={reset}
+      />
+
+      <MutateModal
+        type="update"
+        open={isUpdateCategorieModalOpen}
+        setOpen={setIsUpdateCategorieModalOpen}
+        fields={[
+          { label: "name", required: true },
+          { label: "description", required: true },
+          { label: "status", required: false },
+        ]}
+        body={updateBody}
+        setBody={setUpdateBody}
+        modalName={t("modal.update_category")}
+        submit={updateMutate}
+        submitLoading={updateIsLoading}
+        error={updateError}
+        success={updateSuccess}
+        clear={updateReset}
+      />
+
+      <ViewModal
+        item={currentItem}
+        loading={isCategoriesDataFetching}
+        modalName={`${t("modal.category")}: ${currentItem?.name}`}
+        open={isViewModalOpen}
+        setOpen={setIsViewModalOpen}
+      />
+
       <Toast
         actionSuccess={t("messages.updated")}
         actionError={t("messages.update")}

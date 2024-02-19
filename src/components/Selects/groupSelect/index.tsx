@@ -12,6 +12,7 @@ interface GroupSelectProps {
   body: any;
   filterIdProp: string;
   filterIdValue: number | undefined;
+  notClearble?: boolean;
 }
 
 export const GroupSelect = ({
@@ -19,6 +20,7 @@ export const GroupSelect = ({
   body,
   filterIdProp,
   filterIdValue,
+  notClearble
 }: GroupSelectProps) => {
   const { t } = useTranslation();
   const [query, setQuery] = useState<GroupQuery>({
@@ -43,7 +45,7 @@ export const GroupSelect = ({
   return (
     <Select
     data-test-id="group-select"
-      allowClear
+      allowClear={!notClearble}
       showSearch
       size="large"
       loading={isGroupsFetching}

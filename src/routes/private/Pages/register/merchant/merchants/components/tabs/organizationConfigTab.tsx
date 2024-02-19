@@ -96,29 +96,9 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
   };
 
   const handleSubmit = () => {
-    /*  const stopRequest = array.some((item) => {
-      if(item.isUnlimited === false && body && body[item.props as keyof typeof body] === null ) {
-        setIsConfirmOpen(false);
-          return true
-        } else return false
-    })
-  
-    if(stopRequest) return; */
-
     UpdateMutate();
     setIsConfirmOpen(false);
   };
-
-  useEffect(() => {
-    refetchOrganizationConfigData();
-  }, [UpdateIsSuccess]);
-
-  useEffect(() => {
-    setBodyUpdate({
-      ...organizationConfigData?.merchantConfig,
-      status: organizationConfigData?.status,
-    });
-  }, [organizationConfigData]);
 
   const generateHandomString = () => {
     let randomString = "";
@@ -132,6 +112,17 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
     }
     return randomString;
   };
+
+  useEffect(() => {
+    refetchOrganizationConfigData();
+  }, [UpdateIsSuccess]);
+
+  useEffect(() => {
+    setBodyUpdate({
+      ...organizationConfigData?.merchantConfig,
+      status: organizationConfigData?.status,
+    });
+  }, [organizationConfigData]);
 
   return (
     <>

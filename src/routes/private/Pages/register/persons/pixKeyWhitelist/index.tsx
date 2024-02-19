@@ -90,7 +90,8 @@ export const PixKeyWhitelist = () => {
         spacing={1}
       >
         <Grid item xs={12} md={4} lg={2}>
-           <Button size="large"
+          <Button
+            size="large"
             style={{ width: "100%" }}
             loading={isPixKeyWhitelistDataFetching}
             type="primary"
@@ -105,7 +106,6 @@ export const PixKeyWhitelist = () => {
             endDateKeyName="end_date"
             query={query}
             setQuery={setQuery}
-             
           />
         </Grid>
       </Grid>
@@ -193,30 +193,26 @@ export const PixKeyWhitelist = () => {
         </Grid>
       </Grid>
 
-      {isFiltersOpen && (
-        <FiltersModal
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-           
-          filters={["start_date", "end_date"]}
-          refetch={refetchPixKeyWhitelistData}
-          selectOptions={{}}
-          startDateKeyName="start_date"
-          endDateKeyName="end_date"
-          initialQuery={INITIAL_QUERY}
-        />
-      )}
-      {isViewModalOpen && (
-        <ViewModal
-          item={currentItem}
-          loading={isPixKeyWhitelistDataFetching}
-          modalName={`${t("table.pix_key")}: ${currentItem?.pix_key}`}
-          open={isViewModalOpen}
-          setOpen={setIsViewModalOpen}
-        />
-      )}
+      <FiltersModal
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        filters={["start_date", "end_date"]}
+        refetch={refetchPixKeyWhitelistData}
+        selectOptions={{}}
+        startDateKeyName="start_date"
+        endDateKeyName="end_date"
+        initialQuery={INITIAL_QUERY}
+      />
+
+      <ViewModal
+        item={currentItem}
+        loading={isPixKeyWhitelistDataFetching}
+        modalName={`${t("table.pix_key")}: ${currentItem?.pix_key}`}
+        open={isViewModalOpen}
+        setOpen={setIsViewModalOpen}
+      />
 
       <Toast
         actionSuccess={t("messages.deleted")}

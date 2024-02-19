@@ -2,11 +2,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useTheme } from "@src/contexts/ThemeContext";
 import { useGetTotalGeneratedWithdrawals } from "@src/services/consult/withdrawals/generatedWithdrawals/getTotal";
-import { generatedWithdrawalsRowsQuery } from "@src/services/types/consult/withdrawals/generatedWithdrawals.interface";
 import { moneyFormatter } from "@src/utils/moneyFormatter";
 import { Card, Typography } from "antd";
 import ReactECharts from "echarts-for-react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 interface ChartInInterface {
@@ -15,28 +14,20 @@ interface ChartInInterface {
 
 export const ChartOut = ({ query }: ChartInInterface) => {
   const { t } = useTranslation();
-  const [formatedQuery, setFormatedQuery] =
-    useState<generatedWithdrawalsRowsQuery>({
-      ...query,
-      start_date: undefined,
-      end_date: undefined,
-      initial_date: query?.start_date,
-      final_date: query?.end_date,
-    });
   const { theme } = useTheme();
   const {
     WithdrawalsTotal,
     isWithdrawalsTotalFetching,
     refetchWithdrawalsTotal,
-  } = useGetTotalGeneratedWithdrawals(formatedQuery);
+  } = useGetTotalGeneratedWithdrawals({
+    ...query,
+    start_date: undefined,
+    end_date: undefined,
+    initial_date: query?.start_date,
+    final_date: query?.end_date,
+  });
+  
   useEffect(() => {
-    setFormatedQuery({
-      ...query,
-      start_date: undefined,
-      end_date: undefined,
-      initial_date: query?.start_date,
-      final_date: query?.end_date,
-    });
     refetchWithdrawalsTotal();
   }, [query]);
 
@@ -75,7 +66,7 @@ export const ChartOut = ({ query }: ChartInInterface) => {
                   return moneyFormatter(Number(value) || 0);
                 },
               },
-              name: t("table.deposit_conversion"),
+              name: t("table.withdraw_conversion"),
               type: "pie",
               radius: "50%",
               data: [

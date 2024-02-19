@@ -9,20 +9,20 @@ import { useEffect } from "react";
 
 export const TotalOperations = ({ query, chart }: TableProps) => {
   const { t } = useTranslation();
-  const {handleChangeError} = useErrorContext()
+  const { handleChangeError } = useErrorContext();
   const { RankingData, RankingError, isRankingFetching, RankingDataSuccess } =
-    useGetMerchantRanking("operations", "total", query)
-    
-     useEffect(() => {
-      if(RankingDataSuccess) {
-        handleChangeError({rankingOperations: false})
-      }
-  
-      if(RankingError) {
-        handleChangeError({rankingOperations: true})
-      }
+    useGetMerchantRanking("operations", "total", query);
+
+  useEffect(() => {
+    if (RankingDataSuccess) {
+      handleChangeError({ rankingOperations: false });
+    }
+
+    if (RankingError) {
+      handleChangeError({ rankingOperations: true });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [RankingError, RankingDataSuccess])
+  }, [RankingError, RankingDataSuccess]);
 
   return chart ? (
     <>
@@ -36,9 +36,12 @@ export const TotalOperations = ({ query, chart }: TableProps) => {
                   type: "shadow",
                 },
               },
-              legend: {textStyle: {
-                color: "#a0a0a0",
-              },},textStyle: {
+              legend: {
+                textStyle: {
+                  color: "#a0a0a0",
+                },
+              },
+              textStyle: {
                 color: "#a0a0a0",
               },
               grid: {
@@ -54,17 +57,15 @@ export const TotalOperations = ({ query, chart }: TableProps) => {
               yAxis: {
                 type: "category",
                 data: RankingData?.sort((a, b) =>
-                a.total > b.total ? 1 : -1
-              )?.map((merchant) => merchant?.name ?? "-"),
+                  a.total > b.total ? 1 : -1
+                )?.map((merchant) => merchant?.name ?? "-"),
               },
               series: [
                 {
                   type: "bar",
                   data: RankingData?.sort((a, b) =>
-                  a.total > b.total ? 1 : -1
-                )?.map(
-                    (merchant) => merchant?.total ?? 0
-                  ),
+                    a.total > b.total ? 1 : -1
+                  )?.map((merchant) => merchant?.total ?? 0),
                 },
               ],
             }}
@@ -93,7 +94,7 @@ export const TotalOperations = ({ query, chart }: TableProps) => {
       }}
       actions={[]}
       data={RankingData}
-      items={RankingData?.sort((a, b) => a.total > b.total ? -1 : 1)}
+      items={RankingData?.sort((a, b) => (a.total > b.total ? -1 : 1))}
       error={RankingError}
       removeValue
       columns={[
@@ -104,7 +105,6 @@ export const TotalOperations = ({ query, chart }: TableProps) => {
       label={["name", "total"]}
       removePagination
       disableScrollToTop
-    
     />
   );
 };

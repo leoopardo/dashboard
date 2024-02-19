@@ -49,12 +49,12 @@ import { ValuesTable } from "./components/valuesTable";
 const INITIAL_QUERY = {
   start_date: moment(new Date())
     .startOf("day")
-    .add(3, "hours")
+    .utc()
     .format("YYYY-MM-DDTHH:mm:ss.SSS"),
   end_date: moment(new Date())
     .add(1, "day")
     .startOf("day")
-    .add(3, "hours")
+    .utc()
     .format("YYYY-MM-DDTHH:mm:ss.SSS"),
 };
 
@@ -133,7 +133,7 @@ export const Dashboard = () => {
       ),
     });
   }
-  
+
   return (
     <Row
       style={{
@@ -146,12 +146,21 @@ export const Dashboard = () => {
             : "translateY(0px)",
       }}
     >
-      {permissions?.report?.paybrokers?.balance
-        ?.report_paybrokers_balance_list && (
+      {(permissions?.report?.paybrokers?.balance
+        ?.report_paybrokers_balance_list ||
+        permissions?.report?.merchant?.balance
+          ?.report_merchant_balance_list) && (
         <Layout
           ref={ref1}
           style={{
             margin: -28,
+            marginBottom:
+              permissions?.report?.merchant?.balance
+                ?.report_merchant_balance_list &&
+              !permissions?.report?.paybrokers?.balance
+                ?.report_paybrokers_balance_list
+                ? 25
+                : -36,
             paddingTop: 20,
             paddingBottom: 16,
             paddingLeft: 6,
@@ -185,8 +194,19 @@ export const Dashboard = () => {
               ?.report_paybrokers_balance_list
               ? 40
               : 0,
-          transform: permissions?.report?.paybrokers?.bank_balance?.menu ? "" : type === 2 ? "translateY(-17px)" :  "translateY(-74px)",
-          padding: 15,
+          transform: permissions?.report?.paybrokers?.bank_balance?.menu
+            ? ""
+            : type === 2
+            ? "translateY(-17px)"
+            : "translateY(-74px)",
+          paddingTop: permissions?.report?.paybrokers?.bank_balance?.menu
+            ? 15
+            : 0,
+          paddingBottom: permissions?.report?.paybrokers?.bank_balance?.menu
+            ? 15
+            : 0,
+          paddingLeft: 15,
+          paddingRight: 15,
         }}
       >
         {permissions?.report?.paybrokers?.bank_balance?.menu && (
@@ -358,6 +378,7 @@ export const Dashboard = () => {
               marginRight: "-40px",
               paddingBottom: 20,
               paddingTop: 20,
+              marginTop: 8,
               paddingLeft: 8,
               paddingRight: 8,
             }}
@@ -418,31 +439,42 @@ export const Dashboard = () => {
             </Row>
           </Layout>
 
-          <Col
-            span={24}
-            style={{
-              paddingTop: "20px",
-              paddingBottom: user.type === 3 ? "60px" : undefined,
-            }}
-          >
-            <Row gutter={[16, 0]}>
-              <Divider orientation="left" data-test-id="divider-2">
-                <Typography.Title
-                  level={isMobile ? 5 : 3}
-                  ref={refInOut}
-                  data-test-id="text-3"
-                >
-                  {t("table.in_out_conversion")}
-                </Typography.Title>
-              </Divider>
-              <Col xs={{ span: 24 }} md={{ span: 12 }} ref={refIn}>
-                <ChartIn query={query} data-test-id="chart-in" />
-              </Col>
-              <Col xs={{ span: 24 }} md={{ span: 12 }} ref={refOut}>
-                <ChartOut query={query} data-test-id="chart-out" />
-              </Col>
-            </Row>
-          </Col>
+          {(permissions.report.deposit.generated_deposit
+            .report_deposit_generated_deposit_list_totals ||
+            permissions.report.withdraw.generated_withdraw
+              .report_withdraw_generated_withdraw_list_totals) && (
+            <Col
+              span={24}
+              style={{
+                paddingTop: "20px",
+                paddingBottom: "60px",
+              }}
+            >
+              <Row gutter={[16, 0]}>
+                <Divider orientation="left" data-test-id="divider-2">
+                  <Typography.Title
+                    level={isMobile ? 5 : 3}
+                    ref={refInOut}
+                    data-test-id="text-3"
+                  >
+                    {t("table.in_out_conversion")}
+                  </Typography.Title>
+                </Divider>
+                {permissions.report.deposit.generated_deposit
+                  .report_deposit_generated_deposit_list_totals && (
+                  <Col xs={{ span: 24 }} md={{ span: 12 }} ref={refIn}>
+                    <ChartIn query={query} data-test-id="chart-in" />
+                  </Col>
+                )}
+                {permissions.report.withdraw.generated_withdraw
+                  .report_withdraw_generated_withdraw_list_totals && (
+                  <Col xs={{ span: 24 }} md={{ span: 12 }} ref={refOut}>
+                    <ChartOut query={query} data-test-id="chart-out" />
+                  </Col>
+                )}
+              </Row>
+            </Col>
+          )}
         </Row>
 
         {!user.merchant_id && permissions.report.merchant.balance.menu && (
@@ -491,35 +523,34 @@ export const Dashboard = () => {
         )}
       </Col>
 
-      {isFiltersOpen && (
-        <FiltersModal
-          data-test-id="filters-modal"
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          filters={[
-            "start_date",
-            "end_date",
-            "partner_id",
-            "merchant_id",
-            "aggregator_id",
-            "operator_id",
-            "type",
-            "payment_type",
-          ]}
-          refetch={refetchMerchantBankStatementTotalsTotal}
-          selectOptions={{
-            type: ["deposit", "withdraw"],
-            payment_type: ["pix"],
-          }}
-          startDateKeyName="start_date"
-          endDateKeyName="end_date"
-          initialQuery={INITIAL_QUERY}
-          haveInitialDate
-          maxRange
-        />
-      )}
+      <FiltersModal
+        data-test-id="filters-modal"
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        filters={[
+          "start_date",
+          "end_date",
+          "partner_id",
+          "merchant_id",
+          "aggregator_id",
+          "operator_id",
+          "type",
+          "payment_type",
+        ]}
+        refetch={refetchMerchantBankStatementTotalsTotal}
+        selectOptions={{
+          type: ["deposit", "withdraw"],
+          payment_type: ["pix"],
+        }}
+        startDateKeyName="start_date"
+        endDateKeyName="end_date"
+        initialQuery={INITIAL_QUERY}
+        haveInitialDate
+        maxRange
+      />
+
       <TuorComponent
         data-test-id="tuor-component"
         open={isTuorOpen}

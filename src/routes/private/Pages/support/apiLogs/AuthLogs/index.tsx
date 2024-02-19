@@ -26,18 +26,14 @@ export const AuthLogs = () => {
       .startOf("day")
       .format("YYYY-MM-DDTHH:mm:ss.SSS"),
   };
+  const { t } = useTranslation();
   const [query, setQuery] = useState<AuthLogsQuery>(INITIAL_QUERY);
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [currentItem, setCurrentItem] = useState<DepositLogsItem | null>(null);
   const [isDetailsOpen, setIsDetailsOpen] = useState<boolean>(false);
 
-  const { t } = useTranslation();
-
   const { AuthLogs, AuthLogsError, isAuthLogsFetching, refetchAuthLogs } =
     useGetAuthLogs(query);
-
-  // const { DepositErrorLog, refetchDepositErrorLog } =
-  //   useGetDepositsErrorsLogById(AuthLogs?._id);
 
   useEffect(() => {
     refetchAuthLogs();
@@ -109,21 +105,20 @@ export const AuthLogs = () => {
           />
         </Grid>
       </Grid>
-      {isFiltersOpen && (
-        <FiltersModal
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          haveInitialDate
-          filters={["start_date", "end_date"]}
-          refetch={refetchAuthLogs}
-          selectOptions={{}}
-          startDateKeyName="start_date"
-          endDateKeyName="end_date"
-          initialQuery={INITIAL_QUERY}
-        />
-      )}
+
+      <FiltersModal
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        haveInitialDate
+        filters={["start_date", "end_date"]}
+        refetch={refetchAuthLogs}
+        selectOptions={{}}
+        startDateKeyName="start_date"
+        endDateKeyName="end_date"
+        initialQuery={INITIAL_QUERY}
+      />
 
       {isDetailsOpen && (
         <ViewModal

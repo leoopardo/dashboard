@@ -60,8 +60,8 @@ export const MerchantReports = () => {
         </Grid>
         <Grid item xs={12} md={6} lg={8}>
           <FilterChips
-            startDateKeyName="start_date"
-            endDateKeyName="end_date"
+            startDateKeyName="createdat_end"
+            endDateKeyName="createdat_start"
             query={query}
             setQuery={setQuery}
           />
@@ -129,23 +129,21 @@ export const MerchantReports = () => {
         </Grid>
       </Grid>
 
-      {isFiltersOpen && (
         <FiltersModal
           open={isFiltersOpen}
           setOpen={setIsFiltersOpen}
           query={query}
           setQuery={setQuery}
-          filters={["start_date", "end_date"]}
+          filters={["createdat_end", "createdat_start"]}
           refetch={() => {
             return;
           }}
           selectOptions={{}}
-          startDateKeyName="start_date"
-          endDateKeyName="end_date"
+          startDateKeyName="createdat_end"
+          endDateKeyName="createdat_start"
           initialQuery={INITIAL_QUERY}
         />
-      )}
-      {isViewModalOpen && (
+
         <ViewModal
           open={isViewModalOpen}
           setOpen={setIsViewModalOpen}
@@ -153,7 +151,7 @@ export const MerchantReports = () => {
           loading={false}
           modalName={t("modal.report_details")}
         />
-      )}
+    
     </Grid>
   );
 };

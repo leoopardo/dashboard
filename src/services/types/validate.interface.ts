@@ -60,6 +60,13 @@ export interface ValidateInterface {
           partner_create: boolean;
           partner_update: boolean;
           partner_export_csv: boolean;
+          partner_responsible_list: boolean;
+          partner_responsible_create: boolean;
+          partner_responsible_update: boolean;
+          partner_responsible_delete: boolean;
+          partner_files_list: boolean;
+          partner_files_create: boolean;
+          partner_files_delete: boolean;
         };
       };
       merchant: {
@@ -86,6 +93,13 @@ export interface ValidateInterface {
           merchant_config_ips: boolean;
           merchant_account_api_get: boolean;
           merchant_account_api_update: boolean;
+          merchant_responsible_list: boolean;
+          merchant_responsible_create: boolean;
+          merchant_responsible_update: boolean;
+          merchant_responsible_delete: boolean;
+          merchant_files_list: boolean;
+          merchant_files_create: boolean;
+          merchant_files_delete: boolean;
         };
         release_category: {
           menu: boolean;
@@ -133,6 +147,13 @@ export interface ValidateInterface {
           aggregator_create: boolean;
           aggregator_update: boolean;
           aggregator_export_csv: boolean;
+          aggregator_responsible_list: boolean;
+          aggregator_responsible_create: boolean;
+          aggregator_responsible_update: boolean;
+          aggregator_responsible_delete: boolean;
+          aggregator_files_list: boolean;
+          aggregator_files_create: boolean;
+          aggregator_files_delete: boolean;
         };
         aggregator_config: {
           menu: boolean;
@@ -177,6 +198,13 @@ export interface ValidateInterface {
           operator_create: boolean;
           operator_update: boolean;
           operator_export_csv: boolean;
+          operator_responsible_list: boolean;
+          operator_responsible_create: boolean;
+          operator_responsible_update: boolean;
+          operator_responsible_delete: boolean;
+          operator_files_list: boolean;
+          operator_files_create: boolean;
+          operator_files_delete: boolean;
         };
       };
       person: {
@@ -398,6 +426,7 @@ export interface ValidateInterface {
           report_chargeback_manual_deposit_chargeback_delete: boolean;
           report_chargeback_manual_deposit_chargeback_receipt: boolean;
           report_chargeback_manual_deposit_chargeback_export_csv: boolean;
+          report_chargeback_manual_deposit_chargeback_paid_to_enduser: boolean;
         };
         withdraw_chargeback: {
           menu: boolean;

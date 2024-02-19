@@ -31,6 +31,11 @@ export const CreateMovimentModal = ({
   const submitRef = useRef<HTMLButtonElement>(null);
   const formRef = useRef<FormInstance>(null);
 
+  const onChange = (event: any) => {
+    const { value } = event.target;
+    setBody((state: any) => ({ ...state, [event.target.name]: value }));
+  };
+
   useEffect(() => {
     setBody({
       type,
@@ -39,11 +44,6 @@ export const CreateMovimentModal = ({
       description: undefined,
     });
   }, [type, open]);
-
-  const onChange = (event: any) => {
-    const { value } = event.target;
-    setBody((state: any) => ({ ...state, [event.target.name]: value }));
-  };
 
   return (
     <Drawer

@@ -10,6 +10,7 @@ export interface MerchantBankStatementTotalsQuery {
 export interface MerchantBankStatementTotalsData {
   average_ticket_in: number;
   average_ticket_out: number;
+  average_ticket_total: number;
   fee_in: number;
   fee_out: number;
   fee_total: number;

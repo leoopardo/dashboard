@@ -9,23 +9,21 @@ import { useEffect } from "react";
 
 export const DepositOperations = ({ query, chart }: TableProps) => {
   const { t } = useTranslation();
-  const {handleChangeError} = useErrorContext()
-  const { RankingData, RankingError, isRankingFetching,RankingDataSuccess } =
+  const { handleChangeError } = useErrorContext();
+  const { RankingData, RankingError, isRankingFetching, RankingDataSuccess } =
     useGetMerchantRanking("operations", "deposit", query);
 
-  
   useEffect(() => {
-    if(RankingDataSuccess) {
-      handleChangeError({rankingOperations: false})
+    if (RankingDataSuccess) {
+      handleChangeError({ rankingOperations: false });
     }
 
-    if(RankingError) {
-      handleChangeError({rankingOperations: true})
+    if (RankingError) {
+      handleChangeError({ rankingOperations: true });
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [RankingError, RankingDataSuccess])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [RankingError, RankingDataSuccess]);
 
-  
   return chart ? (
     <>
       {RankingData?.length ? (
@@ -86,7 +84,8 @@ export const DepositOperations = ({ query, chart }: TableProps) => {
       )}
     </>
   ) : (
-    <CustomTable size="small"
+    <CustomTable
+      size="small"
       query={{}}
       setCurrentItem={() => {
         return;
@@ -101,7 +100,7 @@ export const DepositOperations = ({ query, chart }: TableProps) => {
       error={RankingError}
       columns={[
         { name: "name", type: "text" },
-        { name: "total", type: "text"},
+        { name: "total", type: "text" },
       ]}
       loading={isRankingFetching}
       label={["name", "total"]}

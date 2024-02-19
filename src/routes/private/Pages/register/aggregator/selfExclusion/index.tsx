@@ -60,18 +60,19 @@ export const AggregatorSelfExclusion = () => {
     document: "",
     start_date: moment(new Date())
       .startOf("day")
-      .add(3, "hours")
+      .utc()
       .format("YYYY-MM-DDTHH:mm:ss.SSS"),
     end_date: moment(new Date())
       .endOf("day")
-      .add(3, "hours")
+      .utc()
       .format("YYYY-MM-DDTHH:mm:ss.SSS"),
   };
   const [body, setBody] = useState<CreateSelfExclusion>(initialBody);
   const [currentItem, setCurrentItem] = useState<SelfExclusionItem | null>(
     null
   );
-  const { error, isLoading, isSuccess, mutate, reset } = useCreateSelfExclusion(body);
+  const { error, isLoading, isSuccess, mutate, reset } =
+    useCreateSelfExclusion(body);
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false);
   const {
@@ -79,14 +80,6 @@ export const AggregatorSelfExclusion = () => {
     deleteSelfExclusionIsSuccess,
     deleteSelfExclusionMutate,
   } = useDeleteSelfExclusion(currentItem?._id);
-
-  useEffect(() => {
-    refetchSelfExclusionData();
-  }, [query]);
-
-  useEffect(() => {
-    setBody(initialBody);
-  }, [isCreateSelfExclusionOpen]);
 
   const [isTuorOpen, setIsTuorOpen] = useState<boolean>(false);
   const ref1 = useRef(null);
@@ -101,6 +94,14 @@ export const AggregatorSelfExclusion = () => {
   const refStartDate = useRef(null);
   const refEndDate = useRef(null);
   const refCreatedAt = useRef(null);
+
+  useEffect(() => {
+    refetchSelfExclusionData();
+  }, [query]);
+
+  useEffect(() => {
+    setBody(initialBody);
+  }, [isCreateSelfExclusionOpen]);
 
   return (
     <Grid container style={{ padding: "25px" }}>
@@ -227,41 +228,37 @@ export const AggregatorSelfExclusion = () => {
         </Grid>
       </Grid>
 
-      {isCreateSelfExclusionOpen && (
-        <MutateModal
-          type="update"
-          open={isCreateSelfExclusionOpen}
-          setOpen={setIsCreateSelfExclusionOpen}
-          fields={[
-            { label: "document",head: "cpf", required: true },
-            { label: "date", required: false },
-          ]}
-          body={body}
-          setBody={setBody}
-          modalName={t("buttons.create_self_exclusion")}
-          submit={mutate}
-          submitLoading={isLoading}
-          error={error}
-          success={isSuccess}
-          submitText={`${t("buttons.create")}`}
-          clear={reset}
-        />
-      )}
+      <MutateModal
+        type="update"
+        open={isCreateSelfExclusionOpen}
+        setOpen={setIsCreateSelfExclusionOpen}
+        fields={[
+          { label: "document", head: "cpf", required: true },
+          { label: "date", required: false },
+        ]}
+        body={body}
+        setBody={setBody}
+        modalName={t("buttons.create_self_exclusion")}
+        submit={mutate}
+        submitLoading={isLoading}
+        error={error}
+        success={isSuccess}
+        submitText={`${t("buttons.create")}`}
+        clear={reset}
+      />
 
-      {isFiltersOpen && (
-        <FiltersModal
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          filters={["start_date", "end_date", "merchant_id"]}
-          refetch={refetchSelfExclusionData}
-          selectOptions={{}}
-          startDateKeyName="start_date"
-          endDateKeyName="end_date"
-          initialQuery={INITIAL_QUERY}
-        />
-      )}
+      <FiltersModal
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        filters={["start_date", "end_date", "merchant_id"]}
+        refetch={refetchSelfExclusionData}
+        selectOptions={{}}
+        startDateKeyName="start_date"
+        endDateKeyName="end_date"
+        initialQuery={INITIAL_QUERY}
+      />
 
       <Toast
         actionError={t("messages.create")}

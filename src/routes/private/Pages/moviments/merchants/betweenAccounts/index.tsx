@@ -139,7 +139,11 @@ export const TransfersBetweenAccounts = () => {
                       <Statistic
                         title={t("table.processing")}
                         value={moneyFormatter(
-                        Number(TransferBetweenAccountsData?.total_processing.toFixed(2)) || 0
+                          Number(
+                            TransferBetweenAccountsData?.total_processing.toFixed(
+                              2
+                            )
+                          ) || 0
                         )}
                         valueStyle={{ color: defaultTheme.colors.processing }}
                         loading={isTransferBetweenAccountsDataFetching}
@@ -210,7 +214,6 @@ export const TransfersBetweenAccounts = () => {
           </Button>
         </Col>
 
-        {/* arrumar permissões */}
         {permissions?.transactions?.merchant?.internal_transfers
           ?.merchant_internal_transfers_export_csv && (
           <Col xs={{ span: 24 }} md={{ span: 3 }} lg={{ span: 3 }}>
@@ -264,102 +267,98 @@ export const TransfersBetweenAccounts = () => {
           />
         </Col>
       </Row>
-      {isFiltersOpen && (
-        <FiltersModal
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          filters={["start_date", "end_date", "merchant_id", "from", "to"]}
-          refetch={() => {
-            return "";
-          }}
-          selectOptions={{
-            from: [
-              "balance_reserved",
-              "balance_to_payment",
-              "balance_to_transactions",
-            ],
-            to: [
-              "balance_reserved",
-              "balance_to_payment",
-              "balance_to_transactions",
-            ],
-          }}
-          startDateKeyName="start_date"
-          endDateKeyName="end_date"
-          initialQuery={INITIAL_QUERY}
-        />
-      )}
-      {isNewTransferModalOpen && (
-        <MutateModal
-          type="create"
-          validateToken
-          validateTokenAction="MERCHANT_BALANCE_TRANSFER_CREATE"
-          open={isNewTransferModalOpen}
-          setOpen={setIsNewTransferModalOpen}
-          fields={user?.merchant_id ? fieldMerch : fieldsIfNotMerch}
-          merchantBetweenAccounts
-          body={body}
-          setBody={setBody}
-          selectOptions={{
-            from:
-              user?.type === 1 || user?.type === 2
-                ? [
-                    {
-                      label: "balance_reserved",
-                      value: "balance_reserved",
-                    },
-                    {
-                      label: "balance_to_payment",
-                      value: "balance_to_payment",
-                    },
-                    {
-                      label: "balance_to_transactions",
-                      value: "balance_to_transactions",
-                    },
-                  ]
-                : [
-                    {
-                      label: "balance_to_payment",
-                      value: "balance_to_payment",
-                    },
-                    {
-                      label: "balance_to_transactions",
-                      value: "balance_to_transactions",
-                    },
-                  ],
-            to: [
-              { label: "balance_reserved", value: "balance_reserved" },
-              {
-                label: "balance_to_payment",
-                value: "balance_to_payment",
-              },
-              {
-                label: "balance_to_transactions",
-                value: "balance_to_transactions",
-              },
-            ].filter((item) => item.value !== body?.from),
-          }}
-          modalName={t("table.transfer")}
-          submit={mutate}
-          submitLoading={isLoading}
-          error={error}
-          success={isSuccess}
-          submitText={`${t("buttons.create")}`}
-          clear={reset}
-        />
-      )}
 
-      {isViewModalOpen && (
-        <ViewModal
-          item={currentItem}
-          loading={isTransferBetweenAccountsDataFetching}
-          modalName={t("actions.details")}
-          setOpen={setIsViewModalOpen}
-          open={isViewModalOpen}
-        />
-      )}
+      <FiltersModal
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        filters={["start_date", "end_date", "merchant_id", "from", "to"]}
+        refetch={() => {
+          return "";
+        }}
+        selectOptions={{
+          from: [
+            "balance_reserved",
+            "balance_to_payment",
+            "balance_to_transactions",
+          ],
+          to: [
+            "balance_reserved",
+            "balance_to_payment",
+            "balance_to_transactions",
+          ],
+        }}
+        startDateKeyName="start_date"
+        endDateKeyName="end_date"
+        initialQuery={INITIAL_QUERY}
+      />
+
+      <MutateModal
+        type="create"
+        validateToken
+        validateTokenAction="MERCHANT_BALANCE_TRANSFER_CREATE"
+        open={isNewTransferModalOpen}
+        setOpen={setIsNewTransferModalOpen}
+        fields={user?.merchant_id ? fieldMerch : fieldsIfNotMerch}
+        merchantBetweenAccounts
+        body={body}
+        setBody={setBody}
+        selectOptions={{
+          from:
+            user?.type === 1 || user?.type === 2
+              ? [
+                  {
+                    label: "balance_reserved",
+                    value: "balance_reserved",
+                  },
+                  {
+                    label: "balance_to_payment",
+                    value: "balance_to_payment",
+                  },
+                  {
+                    label: "balance_to_transactions",
+                    value: "balance_to_transactions",
+                  },
+                ]
+              : [
+                  {
+                    label: "balance_to_payment",
+                    value: "balance_to_payment",
+                  },
+                  {
+                    label: "balance_to_transactions",
+                    value: "balance_to_transactions",
+                  },
+                ],
+          to: [
+            { label: "balance_reserved", value: "balance_reserved" },
+            {
+              label: "balance_to_payment",
+              value: "balance_to_payment",
+            },
+            {
+              label: "balance_to_transactions",
+              value: "balance_to_transactions",
+            },
+          ].filter((item) => item.value !== body?.from),
+        }}
+        modalName={t("table.transfer")}
+        submit={mutate}
+        submitLoading={isLoading}
+        error={error}
+        success={isSuccess}
+        submitText={`${t("buttons.create")}`}
+        clear={reset}
+      />
+
+      <ViewModal
+        item={currentItem}
+        loading={isTransferBetweenAccountsDataFetching}
+        modalName={t("actions.details")}
+        setOpen={setIsViewModalOpen}
+        open={isViewModalOpen}
+      />
 
       <Toast
         actionError={t("messages.create")}

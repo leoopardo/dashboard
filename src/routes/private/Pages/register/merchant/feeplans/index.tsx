@@ -159,7 +159,7 @@ export const MerchantFeePlans = () => {
             error={feePlansDataError}
             columns={columns}
             loading={isFeePlansDataFetching}
-            label={["name", "username"]}
+            label={["name"]}
             refetch={refetchFeePlansData}
             actions={[
               {
@@ -192,32 +192,30 @@ export const MerchantFeePlans = () => {
         </Grid>
       </Grid>
 
-      {isFiltersOpen && (
-        <FiltersModal
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          filters={[
-            "start_date",
-            "end_date",
-            "status",
-            "plan_type",
-            "transaction_type",
-            "range_type",
-          ]}
-          refetch={refetchFeePlansData}
-          selectOptions={{
-            status: ["true", "false"],
-            plan_type: ["MONTHLY", "CONTINUOS"],
-            transaction_type: ["CASHIN", "CASHOUT"],
-            range_type: ["VALUE", "TRANSACTIONS"],
-          }}
-          startDateKeyName="start_date"
-          endDateKeyName="end_date"
-          initialQuery={INITIAL_QUERY}
-        />
-      )}
+      <FiltersModal
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        filters={[
+          "start_date",
+          "end_date",
+          "status",
+          "plan_type",
+          "transaction_type",
+          "range_type",
+        ]}
+        refetch={refetchFeePlansData}
+        selectOptions={{
+          status: ["true", "false"],
+          plan_type: ["MONTHLY", "CONTINUOS"],
+          transaction_type: ["CASHIN", "CASHOUT"],
+          range_type: ["VALUE", "TRANSACTIONS"],
+        }}
+        startDateKeyName="start_date"
+        endDateKeyName="end_date"
+        initialQuery={INITIAL_QUERY}
+      />
 
       {isCreateModalOpen && (
         <UpdateFeePlanModal
@@ -250,18 +248,16 @@ export const MerchantFeePlans = () => {
         />
       )}
 
-      {isViewModalOpen && (
-        <ViewModal
-          open={isViewModalOpen}
-          setOpen={setIsViewModalOpen}
-          item={{
-            ...currentItem,
-            merchant_fee_plans_details: feePlansDetailsData?.items,
-          }}
-          loading={isFeePlansDataFetching}
-          modalName={`${t("menus.fee_plans")}: ${currentItem?.name}`}
-        />
-      )}
+      <ViewModal
+        open={isViewModalOpen}
+        setOpen={setIsViewModalOpen}
+        item={{
+          ...currentItem,
+          merchant_fee_plans_details: feePlansDetailsData?.items,
+        }}
+        loading={isFeePlansDataFetching}
+        modalName={`${t("menus.fee_plans")}: ${currentItem?.name}`}
+      />
 
       <Toast
         actionSuccess={t("messages.created")}

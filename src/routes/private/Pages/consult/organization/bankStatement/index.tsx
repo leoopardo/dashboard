@@ -25,12 +25,12 @@ import { moneyFormatter } from "@src/utils/moneyFormatter";
 const INITIAL_QUERY: OrganizationBankStatementTotalsQuery = {
   start_date: moment(new Date())
     .startOf("day")
-    .add(3, "hours")
+    .utc()
     .format("YYYY-MM-DDTHH:mm:ss.SSS"),
   end_date: moment(new Date())
     .add(1, "day")
     .startOf("day")
-    .add(3, "hours")
+    .utc()
     .format("YYYY-MM-DDTHH:mm:ss.SSS"),
 };
 
@@ -347,7 +347,6 @@ export const OrganizationBankStatement = () => {
         </Grid>
       </Grid>
 
-      {isFiltersOpen && (
         <FiltersModal
           open={isFiltersOpen}
           setOpen={setIsFiltersOpen}
@@ -361,7 +360,7 @@ export const OrganizationBankStatement = () => {
           endDateKeyName="end_date"
           initialQuery={INITIAL_QUERY}
         />
-      )}
+      
     </Grid>
   );
 };

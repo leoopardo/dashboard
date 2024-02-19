@@ -227,8 +227,8 @@
     "export_csv": "Generate CSV report",
     "no_records_to_export": "No records to export",
     "20_minutes_consult": "The consultation has been ongoing for over 20 minutes.",
-    "validate_phone_text": "Your phone nomber are not validated, this first token will validate your number. After that, you will receive a token to confirm the action performed.",
-    "validate_text": "Insert token to confirm action.",
+    "validate_phone_text": "Your phone has not been validated yet. This first token will validate the number ending in {{phone}}. After this, you will receive a token to confirm the action taken.",
+    "validate_text": "Enter the token sent to the phone ending in {{phone}} to confirm the action.",
     "forgot_password": "Forgot my password",
     "preview_csv": "Preview CSV",
     "preview_file": "preview file",
@@ -436,13 +436,17 @@
     "search": "Search",
     "allows_generate_qrcode": "Allows generate QRCode",
     "license_number": "License number",
-    "add_all_columns": "Add all columns"
+    "add_all_columns": "Add all columns",
+    "ip": "IP",
+    "reason_name": "Reason",
+    "withdraw_by_month_cant_be_smaller_than_day": "Withdraw by month can't be smaller than withdraw by day"
   },
-  
+
   "modal": {
     "confirm": "Confirm",
     "update": "Update",
-    "add":  "Add",
+    "add": "Add",
+    "details": "Details",
     "validate_token": "Validate token",
     "token_expires_in": "Token expires in",
     "resend_token_by_sms": "Resend token by SMS",
@@ -564,6 +568,7 @@
     "limit": "Limit",
     "pending": "Pending",
     "paid_to_merchant": "Refund to merchant",
+    "paid_to_enduser": "Refund to end user",
     "error": "Error",
     "success": "Success",
     "primary_logs": "Primary notifications logs",
@@ -687,7 +692,7 @@
     "merchant": "Merchant",
     "percent": "Percent",
     "fee": "Fee",
-    "category_name": "Cstegory",
+    "category_name": "Category",
     "user_name": "Username",
     "total_in_canceled": "In (Canceled)",
     "total_in_processing": "In (Processing)",
@@ -998,6 +1003,7 @@
     "download": "Download",
     "refund": "refund",
     "pay_to_merchant": "Pay merchant",
+    "pay_to_enduser": "Pay end user",
     "refresh": "Refresh status",
     "edit_merchant": "Edit merchant",
     "check_payments": "Check payments",
@@ -1030,7 +1036,9 @@
     "disable_bank_being_used_for_cash_in": "It is not possible to disable a bank that is being used for deposits.",
     "disable_bank_being_used_for_cash_out": "It is not possible to disable a bank that is being used for withdrawals.",
     "disable_bank_being_used_for_fastpix_in": "It is not possible to disable a bank that is being used for FastPix deposits.",
-    "disable_bank_being_used": "It is not possible to disable a bank that is being used."
+    "disable_bank_being_used": "It is not possible to disable a bank that is being used.",
+    "phone_must_be_a_valid_phone_number": "The phone number must be a valid phone number.",
+    "forbidden_resource": "This user does not have permission to perform this function. Please contact support."
   },
   "logs": {
     "login": "Login",
@@ -1386,6 +1394,15 @@
     "servicos_logs_errosSaques_exportar": "Export",
     "servicos_logs_errosAutenticacao_exportar": "Export",
     "servicos_buscarLote_saques": "Withdrawals",
-    "servicos_buscarLote_deposito": "Deposits"
+    "servicos_buscarLote_deposito": "Deposits",
+    "manutencao_contasApi": "API Accounts",
+    "operacoes_devolucoes_manual_pagarMerchant": "Pay merchant",
+    "operacoes_devolucoes_manual_atualizarMerchant": "Update merchant",
+    "operacoes_devolucoes_manual_pagarUsuarioFinal": "Pay end user",
+    "configuracoes_contas_merchant": "Merchant accounts",
+    "cadastros_merchants_responsaveis": "Responsibles",
+    "cadastros_merchants_arquivos": "Files",
+    "financeiro_transferencias_merchantManualPre": "Pré-operations",
+    "financeiro_transferencias_merchantManualPre_aprovar": "Approve"
   }
 }

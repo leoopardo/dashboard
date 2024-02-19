@@ -11,19 +11,19 @@ import { moneyFormatter } from "@src/utils/moneyFormatter";
 export const WithdrawFees = ({ query, chart }: TableProps) => {
   const { t } = useTranslation();
   const { handleChangeError } = useErrorContext();
-  const { RankingData,  RankingError, isRankingFetching, RankingDataSuccess } =
+  const { RankingData, RankingError, isRankingFetching, RankingDataSuccess } =
     useGetMerchantRanking("fee", "withdraw", query);
 
-    useEffect(() => {
-      if (RankingDataSuccess) {
-        handleChangeError({ rankingFee: false });
-      }
-  
-      if (RankingError) {
-        handleChangeError({ rankingFee: true });
-      }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [RankingError, RankingDataSuccess]);
+  useEffect(() => {
+    if (RankingDataSuccess) {
+      handleChangeError({ rankingFee: false });
+    }
+
+    if (RankingError) {
+      handleChangeError({ rankingFee: true });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [RankingError, RankingDataSuccess]);
   return chart ? (
     <>
       {RankingData?.length ? (
@@ -37,9 +37,12 @@ export const WithdrawFees = ({ query, chart }: TableProps) => {
                 },
               },
               color: ["#ee6666be"],
-              legend: {textStyle: {
-                color: "#a0a0a0",
-              },},textStyle: {
+              legend: {
+                textStyle: {
+                  color: "#a0a0a0",
+                },
+              },
+              textStyle: {
                 color: "#a0a0a0",
               },
               grid: {
@@ -55,17 +58,15 @@ export const WithdrawFees = ({ query, chart }: TableProps) => {
               yAxis: {
                 type: "category",
                 data: RankingData?.sort((a, b) =>
-                a.total > b.total ? 1 : -1
-              )?.map((merchant) => merchant?.name ?? "-"),
+                  a.total > b.total ? 1 : -1
+                )?.map((merchant) => merchant?.name ?? "-"),
               },
               series: [
                 {
                   type: "bar",
                   data: RankingData?.sort((a, b) =>
-                  a.total > b.total ? 1 : -1
-                )?.map(
-                    (merchant) => merchant?.total ?? 0
-                  ),
+                    a.total > b.total ? 1 : -1
+                  )?.map((merchant) => merchant?.total ?? 0),
                   tooltip: {
                     valueFormatter: function (value: number) {
                       return moneyFormatter(Number(value) || 0);
@@ -89,7 +90,7 @@ export const WithdrawFees = ({ query, chart }: TableProps) => {
     </>
   ) : (
     <CustomTable
-    size="small"
+      size="small"
       query={{}}
       setCurrentItem={() => {
         return;
@@ -99,7 +100,7 @@ export const WithdrawFees = ({ query, chart }: TableProps) => {
       }}
       actions={[]}
       data={RankingData}
-      items={RankingData?.sort((a, b) => a.total > b.total ? -1 : 1)}
+      items={RankingData?.sort((a, b) => (a.total > b.total ? -1 : 1))}
       error={RankingError}
       columns={[
         { name: "name", type: "text" },

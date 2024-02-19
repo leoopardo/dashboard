@@ -60,8 +60,8 @@ export const GeneratedWithdrawalsReports = () => {
         </Grid>
         <Grid item xs={12} md={6} lg={8}>
           <FilterChips
-            startDateKeyName="start_date"
-            endDateKeyName="end_date"
+            startDateKeyName="createdat_start"
+            endDateKeyName="createdat_end"
             query={query}
             setQuery={setQuery}
           />
@@ -86,7 +86,6 @@ export const GeneratedWithdrawalsReports = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-       
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -130,31 +129,28 @@ export const GeneratedWithdrawalsReports = () => {
         </Grid>
       </Grid>
 
-      {isFiltersOpen && (
-        <FiltersModal
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          filters={["start_date", "end_date"]}
-          refetch={() => {
-            return;
-          }}
-          selectOptions={{}}
-          startDateKeyName="start_date"
-          endDateKeyName="end_date"
-          initialQuery={INITIAL_QUERY}
-        />
-      )}
-      {isViewModalOpen && (
-        <ViewModal
-          open={isViewModalOpen}
-          setOpen={setIsViewModalOpen}
-          item={currentItem}
-          loading={false}
-          modalName={t("modal.report_details")}
-        />
-      )}
+      <FiltersModal
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        filters={["createdat_start", "createdat_end"]}
+        refetch={() => {
+          return;
+        }}
+        selectOptions={{}}
+        startDateKeyName="createdat_start"
+        endDateKeyName="createdat_end"
+        initialQuery={INITIAL_QUERY}
+      />
+
+      <ViewModal
+        open={isViewModalOpen}
+        setOpen={setIsViewModalOpen}
+        item={currentItem}
+        loading={false}
+        modalName={t("modal.report_details")}
+      />
     </Grid>
   );
 };

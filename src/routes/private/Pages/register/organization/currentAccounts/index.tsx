@@ -225,49 +225,44 @@ export const CurrentAccountPage: FC = () => {
         loading={false}
         removeTotal
       />
-      {isFiltersOpen && (
-        <FiltersModal
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          filters={["start_date", "end_date", "locked"]}
-          refetch={refetchCurrentAccountData}
-          selectOptions={{ locked: ["true", "false"] }}
-          startDateKeyName="start_date"
-          endDateKeyName="end_date"
-          initialQuery={INITIAL_QUERY}
-        />
-      )}
 
-      {isViewModalOpen && (
-        <ViewModal
-          item={currentItem}
-          loading={false}
-          modalName={`${t("table.bank_acc_number")}: ${currentItem?.name}`}
-          open={isViewModalOpen}
-          setOpen={setIsViewModalOpen}
-        />
-      )}
+      <FiltersModal
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        filters={["start_date", "end_date", "locked"]}
+        refetch={refetchCurrentAccountData}
+        selectOptions={{ locked: ["true", "false"] }}
+        startDateKeyName="start_date"
+        endDateKeyName="end_date"
+        initialQuery={INITIAL_QUERY}
+      />
 
-      {isCreateModalOpen && (
-        <MutateModal
-          type="create"
-          open={isCreateModalOpen}
-          setOpen={setIsCreateModalOpen}
-          fields={[{ label: "name", required: true }]}
-          body={body}
-          setBody={setBody}
-          modalName={`${t("modal.add")} ${t(
-            "table.bank_acc_number"
-          ).toLowerCase()}`}
-          submit={createCurrentAccountMutate}
-          submitLoading={createCurrentAccountIsLoading}
-          error={createCurrentAccountError}
-          success={createCurrentAccountIsSuccess}
-          clear={createCurrentAccountReset}
-        />
-      )}
+      <ViewModal
+        item={currentItem}
+        loading={false}
+        modalName={`${t("table.bank_acc_number")}: ${currentItem?.name}`}
+        open={isViewModalOpen}
+        setOpen={setIsViewModalOpen}
+      />
+
+      <MutateModal
+        type="create"
+        open={isCreateModalOpen}
+        setOpen={setIsCreateModalOpen}
+        fields={[{ label: "name", required: true }]}
+        body={body}
+        setBody={setBody}
+        modalName={`${t("modal.add")} ${t(
+          "table.bank_acc_number"
+        ).toLowerCase()}`}
+        submit={createCurrentAccountMutate}
+        submitLoading={createCurrentAccountIsLoading}
+        error={createCurrentAccountError}
+        success={createCurrentAccountIsSuccess}
+        clear={createCurrentAccountReset}
+      />
 
       {isUpdateModalOpen && (
         <UpdateUserModal

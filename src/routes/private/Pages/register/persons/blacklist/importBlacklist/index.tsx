@@ -74,12 +74,6 @@ export const EditableCell: React.FC<EditableCellProps> = ({
   const inputRef = useRef<InputRef>(null);
   const form = useContext(EditableContext)!;
 
-  useEffect(() => {
-    if (editing) {
-      inputRef.current!.focus();
-    }
-  }, [editing]);
-
   const toggleEdit = () => {
     setEditing(!editing);
     form.setFieldsValue({ [dataIndex]: record[dataIndex] });
@@ -122,6 +116,12 @@ export const EditableCell: React.FC<EditableCellProps> = ({
       </div>
     );
   }
+
+  useEffect(() => {
+    if (editing) {
+      inputRef.current!.focus();
+    }
+  }, [editing]);
 
   return <td {...restProps}>{childNode}</td>;
 };
@@ -176,12 +176,6 @@ export const ImportPersonsBlacklist = () => {
     });
   };
 
-  useEffect(() => {
-    if (isSuccess) {
-      openNotificationWithIcon();
-    }
-  }, [error, isSuccess]);
-
   const defaultColumns: (ColumnTypes[number] & {
     editable?: boolean;
     dataIndex: string;
@@ -230,6 +224,12 @@ export const ImportPersonsBlacklist = () => {
     setBody({ content: "" });
   };
 
+  useEffect(() => {
+    if (isSuccess) {
+      openNotificationWithIcon();
+    }
+  }, [error, isSuccess]);
+
   return (
     <Row style={{ padding: 25 }}>
       {contextHolder}
@@ -267,8 +267,6 @@ export const ImportPersonsBlacklist = () => {
                 const reader = new FileReader();
                 reader.readAsText(file);
                 reader.onload = () => {
-                  console.log(`${reader.result}`);
-
                   const base64Enconded = Buffer.from(
                     `${reader?.result}`?.replace(/(\r\n|\n|\r)/gm, "\n").trim()
                   ).toString("base64");

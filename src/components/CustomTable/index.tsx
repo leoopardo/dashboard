@@ -7,95 +7,97 @@ import {
   InfoCircleTwoTone,
   ReloadOutlined,
 } from "@ant-design/icons";
-import { Grid } from "@mui/material";
+import CachedIcon from "@mui/icons-material/Cached";
 import { useListBanks } from "@src/services/bank/listBanks";
 import { defaultTheme } from "@src/styles/defaultTheme";
+import { ErrorList } from "@src/utils/errors";
+import { formatCPF } from "@src/utils/functions";
+import { moneyFormatter } from "@src/utils/moneyFormatter";
 import {
   Avatar,
   Button,
+  Col,
   Dropdown,
   Empty,
   Modal,
   Pagination,
   Progress,
+  Row,
   Table,
   Tooltip,
   Typography,
 } from "antd";
-import { ErrorList } from "@src/utils/errors";
-import { formatCPF } from "@src/utils/functions";
 import type { ColumnsType, TableProps as TablePropsAntD } from "antd/es/table";
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
-import CachedIcon from "@mui/icons-material/Cached";
 import { Mobile } from "./mobile";
-import { moneyFormatter } from "@src/utils/moneyFormatter";
 
 export interface ColumnInterface {
-  name: string | any;
-  head?: string;
+  name: string | any; // (nome da coluna caso não passe head) e chave do objeto a ser acessado nos items
+  head?: string; // nome da coluna (opcional) caso não seja passado, será usado o name
   type:
-    | "id"
-    | "cpf"
-    | "birth"
-    | "text"
-    | "translate"
-    | "pix_type"
-    | "date"
-    | "document"
-    | "value"
-    | "action"
-    | "status"
+    | "id" // exibe um botão de copiar contendo o id em um tooltip
+    | "showId" //exibe o id junto a um botão de copiar
+    | "cpf" // Não usar esse type, usar document
+    | "birth" // exibe formatação para data de nascimento (dd/mm/yyyy)
+    | "text" // exibe texto
+    | "translate" // exibe texto traduzido
+    | "pix_type" // exibe tipo de pix (FastPix ou Regular)
+    | "date" // exibe data
+    | "document" // exibe documento formatado para CPF
+    | "value" // exibe valor formatado para moeda R$
+    | "action" // exibe botões de ação
+    | "status" // exibe status (ativo ou inativo ou status de transação)
     | "actions"
-    | "icon"
-    | "boolean"
-    | "bankNameToIcon"
-    | "progress"
-    | "merchant_name"
-    | "partner_name"
+    | "icon" // exibe ícone de banco caso seja url
+    | "boolean" // exibe booleano (sim e não)
+    | "bankNameToIcon" // exibe ícone de banco caso seja o nome do banco
+    | "progress" // exibe barra de progresso
+    | "merchant_name" // exibe nome da empresa caso seja um obj
+    | "partner_name" // exibe nome da plataforma caso seja um obj
     | "";
-  sort?: boolean;
+  sort?: boolean; // habilita ordenação
   key?: any;
-  sort_name?: string;
+  sort_name?: string; //nome do campo para ordenação
 }
 
 export interface actionsInterface {
-  label?: string;
-  icon?: any;
-  id?: string;
-  onClick?: (item?: any) => void;
-  disabled?: (item?: any) => boolean;
+  label?: string; // label da ação
+  icon?: any; // ícone da ação
+  id?: string; // id da ação
+  onClick?: (item?: any) => void; // função a ser executada ao clicar na ação
+  disabled?: (item?: any) => boolean; // função que retorna se a ação está desabilitada
 }
 
 interface TableProps {
-  data: any;
-  items: any;
-  columns: ColumnInterface[];
-  loading: boolean;
-  query: any;
-  error?: any;
-  removeValue?: boolean;
-  setQuery: Dispatch<SetStateAction<any>>;
-  label?: string[];
-  setCurrentItem: Dispatch<SetStateAction<any>>;
-  removeTotal?: boolean;
-  actions?: (actionsInterface | false)[];
-  removePagination?: boolean;
-  isConfirmOpen?: boolean;
-  setIsConfirmOpen?: Dispatch<SetStateAction<boolean>>;
-  itemToAction?: string | null;
-  onConfirmAction?: () => void;
-  disableScrollToTop?: boolean;
-  checkbox?: boolean;
-  setSelectedRows?: Dispatch<SetStateAction<any>>;
-  selectedKeys?: any;
-  refetch?: () => void;
-  disableActions?: boolean;
+  data: any; // dados da tabela pode conter dados da paginação;
+  items: any; // itens da tabela. array contendo somente os itens a ser mapeados
+  columns: ColumnInterface[]; // colunas da tabela
+  loading: boolean; // define se a tabela está carregando
+  query: any; // váriavel contendo os parâmetros de busca para a chamada que mapeia a tabela
+  error?: any; // erro da chamada que mapeia a tabela
+  removeValue?: boolean; //remove o valor total da tabela caso mobile
+  setQuery: Dispatch<SetStateAction<any>>; // função para setar os parâmetros de busca
+  label?: string[]; // valores que aparecerão nos accordeons da tabela mobile
+  setCurrentItem: Dispatch<SetStateAction<any>>; // função para setar o item atual, ou seja, o que o usuário clicou no botão de ações
+  removeTotal?: boolean; // remove a contagem total de registros da tabela
+  actions?: (actionsInterface | false)[]; // array de objetos contendo as ações que aparecerão na tabela
+  removePagination?: boolean; // remove a paginação da tabela
+  isConfirmOpen?: boolean; // define se o modal de confirmação está aberto
+  setIsConfirmOpen?: Dispatch<SetStateAction<boolean>>; // função para setar o modal de confirmação
+  itemToAction?: string | null; // item que será afetado pela ação de confirmação
+  onConfirmAction?: () => void; // função que será executada ao confirmar a ação
+  disableScrollToTop?: boolean; // desabilita o scroll para o topo da página
+  checkbox?: boolean; // habilita a seleção de linhas
+  setSelectedRows?: Dispatch<SetStateAction<any>>; // função para setar as linhas selecionadas
+  selectedKeys?: any; // chaves das linhas selecionadas
+  refetch?: () => void; // função para rebuscar dos dados
+  disableActions?: boolean; // desabilita as ações
   rowKey?: string;
-  size?: "large" | "middle" | "small";
-  bankStatement?: boolean;
+  size?: "large" | "middle" | "small"; // tamanho da tabela
+  bankStatement?: boolean; // define se a tabela é de extrato bancário
 }
 
 export const CustomTable = (props: TableProps) => {
@@ -164,6 +166,73 @@ export const CustomTable = (props: TableProps) => {
       props?.columns?.map((column) => {
         switch (column.type) {
           case "id":
+            return {
+              title: (
+                <Tooltip title={t(`table.${column?.head || column?.name}`)}>
+                  <Typography
+                    style={{
+                      width: "100%",
+                      maxHeight: "50px",
+                      overflow: "hidden",
+                      textAlign: "center",
+                      textOverflow: "ellipsis",
+                    }}
+                    ref={column.key}
+                  >
+                    {t(`table.${column?.head || column?.name}`)}
+                  </Typography>
+                </Tooltip>
+              ),
+              key: column?.sort_name
+                ? column.sort_name
+                : Array.isArray(column?.name)
+                ? column?.name + `${Math.random()}`
+                : column?.name,
+              width: 85,
+              dataIndex: column?.name,
+              render: (text: string) => (
+                <div
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Tooltip title={text}>
+                    <Button
+                      size="large"
+                      type="ghost"
+                      onClick={() => {
+                        navigator.clipboard.writeText(text);
+                        toast.success(t("table.copied"));
+                      }}
+                    >
+                      <CopyOutlined
+                        style={{ color: defaultTheme.colors.info }}
+                      />
+                    </Button>
+                  </Tooltip>
+                </div>
+              ),
+              sorter: column.sort
+                ? () => {
+                    props.setQuery((state: any) => ({
+                      ...state,
+                      sort_field: column?.sort_name
+                        ? column.sort_name
+                        : Array.isArray(column?.name)
+                        ? column?.name[1]
+                        : column?.name,
+                      sort_order:
+                        props.query.sort_order === "DESC" ? "ASC" : "DESC",
+                    }));
+
+                    return 0;
+                  }
+                : undefined,
+            };
+
+          case "showId":
             return {
               title: (
                 <Tooltip title={t(`table.${column?.head || column?.name}`)}>
@@ -314,8 +383,10 @@ export const CustomTable = (props: TableProps) => {
                   <Typography
                     key={column?.name}
                     style={{ width: "100%", textAlign: "center", minWidth: 50 }}
-                  >{`${new Date(text).toLocaleDateString()} ${new Date(
-                    text
+                  >{`${new Date(
+                    `${text.split("Z")[0]}Z`
+                  ).toLocaleDateString()} ${new Date(
+                    `${text.split("Z")[0]}Z`
                   ).toLocaleTimeString()}`}</Typography>
                 ) : (
                   <Typography
@@ -371,7 +442,7 @@ export const CustomTable = (props: TableProps) => {
               render: (text: string) => (
                 <Typography
                   key={column?.name}
-                  style={{ width: "100%", textAlign: "center" }}
+                  style={{ width: "100%", textAlign: "center", minWidth: 80 }}
                 >
                   {moneyFormatter(Number(text) || 0)}
                 </Typography>
@@ -760,7 +831,7 @@ export const CustomTable = (props: TableProps) => {
                 <Tooltip title={t("table.refetch_data")}>
                   <Button
                     data-test-id="refetch-button"
-                    type="primary"
+                    type="link"
                     onClick={() => {
                       if (props?.refetch) props.refetch();
                     }}
@@ -770,11 +841,9 @@ export const CustomTable = (props: TableProps) => {
                       height: "100%",
                       display: "flex",
                       justifyContent: "center",
-                      color: "#fff",
-                      backgroundColor: defaultTheme.colors.secondary,
                       margin: 0,
                     }}
-                    icon={<CachedIcon style={{ fontSize: "28px" }} />}
+                    icon={<CachedIcon style={{ fontSize: "28px"}} />}
                   ></Button>
                 </Tooltip>
               ) : (
@@ -860,7 +929,7 @@ export const CustomTable = (props: TableProps) => {
                 : column?.name,
               dataIndex: column?.name,
               render: (text: string) =>
-                text && text.length > 15 ? (
+                text && text.length >= 20 ? (
                   <Tooltip title={text}>
                     <Typography
                       style={{
@@ -871,8 +940,8 @@ export const CustomTable = (props: TableProps) => {
                       full-text={text}
                     >
                       {text
-                        ? text.length > 15 && columns.length >= 5
-                          ? `${`${text}`.substring(0, 15)}...`
+                        ? text.length > 15 && columns.length >= 6
+                          ? `${`${text}`.substring(0, 8)}...`
                           : text
                         : "-"}
                     </Typography>
@@ -1017,8 +1086,8 @@ export const CustomTable = (props: TableProps) => {
               dataIndex: column?.name,
               width: 180,
               render: (text: any, record: any) => (
-                <Grid
-                  container
+                <Row
+                  gutter={[8,8]}
                   style={{
                     width: "100%",
                     textAlign: "center",
@@ -1027,7 +1096,7 @@ export const CustomTable = (props: TableProps) => {
                     justifyContent: "center",
                   }}
                 >
-                  <Grid item xs={record?.error_message ? 11 : 12}>
+                  <Col xs={{span: record?.error_message ? 21 : 24}}>
                     <Progress
                       type="line"
                       percent={text?.split("/")[0]}
@@ -1041,9 +1110,9 @@ export const CustomTable = (props: TableProps) => {
                           : "active"
                       }
                     />
-                  </Grid>
+                  </Col>
                   {record?.error_message && (
-                    <Grid item xs={1}>
+                    <Col span={3}>
                       <Tooltip
                         title={
                           (ErrorList as any)[record?.error_message]
@@ -1060,9 +1129,9 @@ export const CustomTable = (props: TableProps) => {
                           style={{ marginBottom: "8px" }}
                         />
                       </Tooltip>
-                    </Grid>
+                    </Col>
                   )}
-                </Grid>
+                </Row>
               ),
               sorter: column.sort
                 ? () => {
@@ -1223,8 +1292,8 @@ export const CustomTable = (props: TableProps) => {
   return (
     <>
       {!isMobile ? (
-        <Grid container>
-          <Grid item xs={12}>
+        <Row gutter={[8,8]}>
+          <Col span={24}>
             <Table
               size={props.size ?? "middle"}
               tableLayout="auto"
@@ -1260,7 +1329,11 @@ export const CustomTable = (props: TableProps) => {
                   pageSize: Number(props?.query?.limit ?? 25),
                   showTotal: (total, range) => {
                     return props.removeTotal
-                      ? `${range[0]} - ${range[1]}`
+                      ? `${range[0]} - ${
+                          props?.items?.length < props?.data?.limit
+                            ? props?.data?.limit * props?.data?.page
+                            : props?.data?.limit * props?.data?.page + 1
+                        }`
                       : `${range[0]} - ${range[1]} de ${total}`;
                   },
                   total: props.removeTotal
@@ -1308,7 +1381,7 @@ export const CustomTable = (props: TableProps) => {
               sticky
               bordered
             />
-          </Grid>
+          </Col>
           {props.bankStatement && (
             <div
               style={{
@@ -1328,13 +1401,13 @@ export const CustomTable = (props: TableProps) => {
               />
             </div>
           )}
-        </Grid>
+        </Row>
       ) : (
-        <Grid
-          container
+        <Row
+          gutter={[8,8]}
           style={{ display: "flex", justifyContent: "center", width: "100%" }}
         >
-          <Grid item xs={12}>
+          <Col span={24}>
             {props.refetch && (
               <Button
                 style={{ width: "100%" }}
@@ -1356,7 +1429,7 @@ export const CustomTable = (props: TableProps) => {
               selectedKeys={props?.selectedKeys}
               loading={props.loading}
             />
-          </Grid>
+          </Col>
           {!props.removePagination && !props.bankStatement && props.items && (
             <Pagination
               style={{ marginTop: 8 }}
@@ -1398,7 +1471,7 @@ export const CustomTable = (props: TableProps) => {
               />
             </div>
           )}
-        </Grid>
+        </Row>
       )}
       {props.isConfirmOpen && (
         <Modal

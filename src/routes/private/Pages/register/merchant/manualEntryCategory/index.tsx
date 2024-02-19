@@ -167,7 +167,7 @@ export const MerchantManualEntryCategory = () => {
             error={categoryDataError}
             columns={columns}
             loading={isCategoryDataFetching}
-            label={["name", "username"]}
+            label={["name", "description"]}
             refetch={refetchCategoryData}
             actions={[
               permissions.register.merchant.release_category
@@ -183,7 +183,6 @@ export const MerchantManualEntryCategory = () => {
         </Grid>
       </Grid>
 
-      {isFiltersOpen && (
         <FiltersModal
           open={isFiltersOpen}
           setOpen={setIsFiltersOpen}
@@ -196,9 +195,7 @@ export const MerchantManualEntryCategory = () => {
           endDateKeyName="end_date"
           initialQuery={INITIAL_QUERY}
         />
-      )}
 
-      {isCreateModalOpen && (
         <MutateModal
           type="create"
           open={isCreateModalOpen}
@@ -215,9 +212,7 @@ export const MerchantManualEntryCategory = () => {
           error={error}
           success={isSuccess}
         />
-      )}
 
-      {isUpdateModalOpen && (
         <MutateModal
           type="update"
           open={isUpdateModalOpen}
@@ -235,7 +230,6 @@ export const MerchantManualEntryCategory = () => {
           error={updateError}
           success={updateIsSuccess}
         />
-      )}
 
       <Toast
         actionSuccess={t("messages.created")}

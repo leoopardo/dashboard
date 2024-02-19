@@ -14,7 +14,7 @@ export function useCreateMerchantBlacklistReason(
     MerchantBlacklistReasonsItem | null | undefined
   >("CreateMerchantBlacklistReason", async () => {
     const response = await api.post(
-      "blacklist/aggregator-black-list/reasons",
+      "blacklist/merchant-black-list/reasons",
       body,
       {}
     );

@@ -90,7 +90,9 @@ export const AggregatorTransfersBetweenAccounts = () => {
           <Card bordered={false} style={{ width: "100%" }}>
             <Statistic
               title={t("table.success")}
-              value={moneyFormatter(TransferBetweenAccountsData?.total_success || 0)}
+              value={moneyFormatter(
+                TransferBetweenAccountsData?.total_success || 0
+              )}
               precision={2}
               valueStyle={{ color: defaultTheme.colors.success }}
               loading={isTransferBetweenAccountsDataFetching}
@@ -101,7 +103,9 @@ export const AggregatorTransfersBetweenAccounts = () => {
           <Card bordered={false} style={{ width: "100%" }}>
             <Statistic
               title={t("table.processing")}
-              value={moneyFormatter(TransferBetweenAccountsData?.total_processing || 0)}
+              value={moneyFormatter(
+                TransferBetweenAccountsData?.total_processing || 0
+              )}
               precision={2}
               valueStyle={{ color: defaultTheme.colors.processing }}
               loading={isTransferBetweenAccountsDataFetching}
@@ -112,7 +116,9 @@ export const AggregatorTransfersBetweenAccounts = () => {
           <Card bordered={false} style={{ width: "100%" }}>
             <Statistic
               title={t("table.canceled")}
-              value={moneyFormatter(TransferBetweenAccountsData?.total_canceled || 0)}
+              value={moneyFormatter(
+                TransferBetweenAccountsData?.total_canceled || 0
+              )}
               precision={2}
               valueStyle={{ color: defaultTheme.colors.canceled }}
               loading={isTransferBetweenAccountsDataFetching}
@@ -217,122 +223,118 @@ export const AggregatorTransfersBetweenAccounts = () => {
           />
         </Col>
       </Row>
-      {isFiltersOpen && (
-        <FiltersModal
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          filters={["start_date", "end_date", "aggregator_id", "from", "to"]}
-          refetch={() => {
-            return "";
-          }}
-          selectOptions={{
-            from: [
-              "balance_reserved",
-              "balance_to_payment",
-              "balance_to_transactions",
-            ],
-            to: [
-              "balance_reserved",
-              "balance_to_payment",
-              "balance_to_transactions",
-            ],
-          }}
-          startDateKeyName="start_date"
-          endDateKeyName="end_date"
-          initialQuery={INITIAL_QUERY}
-        />
-      )}
-      {isNewTransferModalOpen && (
-        <MutateModal
-          type="create"
-          validateToken
-          validateTokenAction="AGGREGATOR_BALANCE_TRANSFER_CREATE"
-          open={isNewTransferModalOpen}
-          setOpen={setIsNewTransferModalOpen}
-          fields={
-            user?.aggregator_id
+
+      <FiltersModal
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        filters={["start_date", "end_date", "aggregator_id", "from", "to"]}
+        refetch={() => {
+          return "";
+        }}
+        selectOptions={{
+          from: [
+            "balance_reserved",
+            "balance_to_payment",
+            "balance_to_transactions",
+          ],
+          to: [
+            "balance_reserved",
+            "balance_to_payment",
+            "balance_to_transactions",
+          ],
+        }}
+        startDateKeyName="start_date"
+        endDateKeyName="end_date"
+        initialQuery={INITIAL_QUERY}
+      />
+
+      <MutateModal
+        type="create"
+        validateToken
+        validateTokenAction="AGGREGATOR_BALANCE_TRANSFER_CREATE"
+        open={isNewTransferModalOpen}
+        setOpen={setIsNewTransferModalOpen}
+        fields={
+          user?.aggregator_id
+            ? [
+                {
+                  label: "from",
+                  required: true,
+                  selectOption: true,
+                },
+                { label: "to", required: true, selectOption: true },
+                { label: "value", required: true },
+              ]
+            : [
+                { label: "aggregator_id", required: true },
+                {
+                  label: "from",
+                  required: true,
+                  selectOption: true,
+                },
+                { label: "to", required: true, selectOption: true },
+                { label: "value", required: true },
+              ]
+        }
+        body={body}
+        setBody={setBody}
+        selectOptions={{
+          from:
+            user?.type === 1 || user?.type === 2
               ? [
                   {
-                    label: "from",
-                    required: true,
-                    selectOption: true,
+                    label: "balance_reserved",
+                    value: "balance_reserved",
                   },
-                  { label: "to", required: true, selectOption: true },
-                  { label: "value", required: true },
+                  {
+                    label: "balance_to_payment",
+                    value: "balance_to_payment",
+                  },
+                  {
+                    label: "balance_to_transactions",
+                    value: "balance_to_transactions",
+                  },
                 ]
               : [
-                  { label: "aggregator_id", required: true },
                   {
-                    label: "from",
-                    required: true,
-                    selectOption: true,
+                    label: "balance_to_payment",
+                    value: "balance_to_payment",
                   },
-                  { label: "to", required: true, selectOption: true },
-                  { label: "value", required: true },
-                ]
-          }
-          body={body}
-          setBody={setBody}
-          selectOptions={{
-            from:
-            user?.type === 1 || user?.type === 2
-                ? [
-                    {
-                      label: "balance_reserved",
-                      value: "balance_reserved",
-                    },
-                    {
-                      label: "balance_to_payment",
-                      value: "balance_to_payment",
-                    },
-                    {
-                      label: "balance_to_transactions",
-                      value: "balance_to_transactions",
-                    },
-                  ]
-                : [
-                    {
-                      label: "balance_to_payment",
-                      value: "balance_to_payment",
-                    },
-                    {
-                      label: "balance_to_transactions",
-                      value: "balance_to_transactions",
-                    },
-                  ],
-            to: [
-              { label: "balance_reserved", value: "balance_reserved" },
-              {
-                label: "balance_to_payment",
-                value: "balance_to_payment",
-              },
-              {
-                label: "balance_to_transactions",
-                value: "balance_to_transactions",
-              },
-            ],
-          }}
-          modalName={t("table.transfer")}
-          submit={mutate}
-          submitLoading={isLoading}
-          error={error}
-          success={isSuccess}
-          clear={reset}
-          submitText={`${t("buttons.create")}`}
-        />
-      )}
+                  {
+                    label: "balance_to_transactions",
+                    value: "balance_to_transactions",
+                  },
+                ],
+          to: [
+            { label: "balance_reserved", value: "balance_reserved" },
+            {
+              label: "balance_to_payment",
+              value: "balance_to_payment",
+            },
+            {
+              label: "balance_to_transactions",
+              value: "balance_to_transactions",
+            },
+          ],
+        }}
+        modalName={t("table.transfer")}
+        submit={mutate}
+        submitLoading={isLoading}
+        error={error}
+        success={isSuccess}
+        clear={reset}
+        submitText={`${t("buttons.create")}`}
+      />
 
-      {isViewModalOpen && (
-        <ViewModal
-          item={currentItem}
-          loading={isTransferBetweenAccountsDataFetching}
-          modalName={t("actions.details")}
-          setOpen={setIsViewModalOpen}
-          open={isViewModalOpen}
-        />
-      )}
+      <ViewModal
+        item={currentItem}
+        loading={isTransferBetweenAccountsDataFetching}
+        modalName={t("actions.details")}
+        setOpen={setIsViewModalOpen}
+        open={isViewModalOpen}
+      />
 
       <Toast
         actionError={t("messages.create")}

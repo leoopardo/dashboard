@@ -70,7 +70,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
           </Card>
         </Col>
       )}
-      {(props.query.status === "REFUND_TO_MERCHANT" || !props.query.status) && (
+      {(props.query.status === "PAID_TO_MERCHANT" || !props.query.status) && (
         <Col
           style={{ maxWidth: "220px" }}
           xs={{ span: isMobile ? 10 : undefined }}
@@ -94,6 +94,45 @@ export const TotalizersCards = (props: TotalizersInterface) => {
                 </>
               }
               value={moneyFormatter(props?.data?.paid_to_merchant_value || 0)}
+              precision={2}
+              valueStyle={{
+                color: defaultTheme.colors.success,
+                fontSize: isMobile ? "12px" : "18px",
+                wordBreak: "break-all",
+              }}style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+                minHeight: isMobile ? undefined : "75px",
+              }}
+            />
+          </Card>
+        </Col>
+      )}
+      {(props.query.status === "PAID_TO_ENDUSER" || !props.query.status) && (
+        <Col
+          style={{ maxWidth: "220px" }}
+          xs={{ span: isMobile ? 10 : undefined }}
+        >
+          <Card
+            bordered={false}
+            style={{ height: isMobile ? undefined : "120px" }}
+          >
+            <Statistic
+              loading={props.loading}
+              title={
+                <>
+                  <>{t("table.paid_to_enduser")}</>:{" "}
+                  <span style={{ fontSize: "12px" }}>
+                    {props?.data?.paid_to_enduser_total || 0} /{" "}
+                    {getPercent(
+                      props?.data?.paid_to_enduser_total ?? 0,
+                      props.data?.transactions_total ?? 0
+                    )}
+                  </span>
+                </>
+              }
+              value={moneyFormatter(props?.data?.paid_to_enduser_value || 0)}
               precision={2}
               valueStyle={{
                 color: defaultTheme.colors.success,

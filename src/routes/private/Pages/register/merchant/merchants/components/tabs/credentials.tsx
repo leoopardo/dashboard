@@ -202,55 +202,50 @@ export const CredentialConfigTab = (props: { id?: string }) => {
         </Grid>
       </Grid>
 
-      {isUpdateModalOpen && (
-        <MutateModal
-          type="update"
-          open={isUpdateModalOpen}
-          setOpen={setIsUpdateModalOpen}
-          fields={[
-            { label: "name", required: false },
-            { label: "type", required: false },
-          ]}
-          body={updateBody}
-          setBody={setUpdateBody}
-          modalName={t("modal.modal_update_merchant")}
-          submit={() => setIsUpdateValidateTokenOpen(true)}
-          submitLoading={UpdateIsLoading}
-          error={UpdateError}
-          success={UpdateIsSuccess}
-        />
-      )}
+      <MutateModal
+        type="update"
+        open={isUpdateModalOpen}
+        setOpen={setIsUpdateModalOpen}
+        fields={[
+          { label: "name", required: false },
+          { label: "type", required: false },
+          { label: "status", required: false },
+        ]}
+        body={updateBody}
+        setBody={setUpdateBody}
+        modalName={t("modal.modal_update_merchant")}
+        submit={() => setIsUpdateValidateTokenOpen(true)}
+        submitLoading={UpdateIsLoading}
+        error={UpdateError}
+        success={UpdateIsSuccess}
+      />
 
-      {isCreateModalOpen && (
-        <MutateModal
-          type="create"
-          open={isCreateModalOpen}
-          setOpen={setIsCreateModalOpen}
-          fields={[
-            { label: "name", required: false },
-            { label: "type", required: false },
-          ]}
-          body={createBody}
-          setBody={setCreateBody}
-          modalName={`${t("buttons.create")} ${t("menus.merchant")}`}
-          submit={() => setIsCreateValidateTokenOpen(true)}
-          submitLoading={CreateCredentialsIsLoading}
-          error={UpdateError}
-          success={UpdateIsSuccess}
-        />
-      )}
+      <MutateModal
+        type="create"
+        open={isCreateModalOpen}
+        setOpen={setIsCreateModalOpen}
+        fields={[
+          { label: "name", required: false },
+          { label: "type", required: false },
+        ]}
+        body={createBody}
+        setBody={setCreateBody}
+        modalName={`${t("buttons.create")} ${t("menus.merchant")}`}
+        submit={() => setIsCreateValidateTokenOpen(true)}
+        submitLoading={CreateCredentialsIsLoading}
+        error={UpdateError}
+        success={UpdateIsSuccess}
+      />
 
-      {isViewModalOpen && (
-        <ViewModal
-          item={showCredentialConfigData ?? createdCredential}
-          loading={isShowCredentialConfigFetching}
-          modalName={`${t("menus.merchant")}: ${
-            currentItem?.name || createdCredential?.name
-          }`}
-          open={isViewModalOpen}
-          setOpen={setIsViewModalOpen}
-        />
-      )}
+      <ViewModal
+        item={showCredentialConfigData ?? createdCredential}
+        loading={isShowCredentialConfigFetching}
+        modalName={`${t("menus.merchant")}: ${
+          currentItem?.name || createdCredential?.name
+        }`}
+        open={isViewModalOpen}
+        setOpen={setIsViewModalOpen}
+      />
 
       {isUpdateValidateTokenOpen && (
         <ValidateToken

@@ -12,13 +12,15 @@ interface PartnerSelectProps {
   queryOptions: any;
   disabled?: boolean;
   multiple?: boolean;
+  notClearble?: boolean;
 }
 
 export const PartnerSelect = ({
   setQueryFunction,
   queryOptions,
   disabled,
-  multiple
+  multiple,
+  notClearble,
 }: PartnerSelectProps) => {
   const { t } = useTranslation();
   const [query, setQuery] = useState<PartnerQuery>({
@@ -68,7 +70,7 @@ export const PartnerSelect = ({
   return (
     <Select
       data-test-id="partner-select"
-      allowClear
+      allowClear={!notClearble}
       mode={multiple ? "multiple" : undefined}
       onClear={() => {
         setQueryFunction((state: any) => ({
@@ -82,7 +84,6 @@ export const PartnerSelect = ({
       loading={isPartnersFetching}
       disabled={disabled}
       value={value}
-     
       onSelect={() => {
         delete query.name;
         refetcPartners();

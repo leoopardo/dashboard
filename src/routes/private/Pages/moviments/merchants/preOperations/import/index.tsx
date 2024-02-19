@@ -23,10 +23,12 @@ import {
 } from "antd";
 import { FormInstance } from "antd/lib/form/Form";
 import { Buffer } from "buffer";
+import Papa from "papaparse";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useCSVDownloader, usePapaParse } from "react-papaparse";
+import { useCSVDownloader } from "react-papaparse";
 import { useNavigate } from "react-router-dom";
+import * as XLSX from "xlsx";
 
 const EditableContext = React.createContext<FormInstance<any> | null>(null);
 
@@ -142,7 +144,6 @@ type ColumnTypes = Exclude<EditableTableProps["columns"], undefined>;
 export const ImportPreOperations = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { readRemoteFile } = usePapaParse();
   const initialData: DataType[] = [
     {
       key: "1",
@@ -181,12 +182,6 @@ export const ImportPreOperations = () => {
       btn: BtnNavigate,
     });
   };
-
-  useEffect(() => {
-    if (isSuccess) {
-      openNotificationWithIcon();
-    }
-  }, [error, isSuccess]);
 
   const defaultColumns: (ColumnTypes[number] & {
     editable?: boolean;
@@ -240,6 +235,12 @@ export const ImportPreOperations = () => {
     setBody({ content: "" });
   };
 
+  useEffect(() => {
+    if (isSuccess) {
+      openNotificationWithIcon();
+    }
+  }, [error, isSuccess]);
+
   return (
     <Row style={{ padding: 25 }}>
       {contextHolder}
@@ -259,32 +260,61 @@ export const ImportPreOperations = () => {
             </Button>
             <Upload
               multiple={false}
+              accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
               style={{ minWidth: "100%", display: "none" }}
               action=""
               onRemove={() => setDataSource(initialData)}
-              beforeUpload={(file: any) => {
-                readRemoteFile(file, {
-                  header: true,
-                  complete: (results) => {
+              beforeUpload={(file) => {
+                const fileType = file.type;
+                if (
+                  fileType ===
+                  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                ) {
+                  const reader = new FileReader();
+                  reader.onload = (event) => {
+                    const binaryString = event?.target?.result;
+                    const workbook = XLSX.read(binaryString, {
+                      type: "binary",
+                    });
+                    const sheetName = workbook.SheetNames[0];
+                    const sheet = workbook.Sheets[sheetName];
+                    const data = XLSX.utils.sheet_to_csv(sheet);
+                    const parsedData = Papa.parse(data, { header: true });
                     setDataSource(
-                      results?.data?.map((row: any, i) => {
-                        return { ...row, key: i + 1 };
-                      })
+                      parsedData.data.map((row: any, i) => ({
+                        ...row,
+                        key: i + 1,
+                      }))
                     );
-                  },
-                  download: true,
-                });
-                const reader = new FileReader();
-                reader.readAsText(file);
-                reader.onload = () => {
-                  console.log(`${reader.result}`);
+                    const base64Encoded = Buffer.from(
+                      Papa.unparse(parsedData.data, { delimiter: ";" })
+                        .replace(/(\r\n|\n|\r)/gm, "\n")
+                        .trim()
+                    ).toString("base64");
+                    setBody({ content: base64Encoded });
+                  };
+                  reader.readAsBinaryString(file);
+                } else if (fileType === "text/csv") {
+                  const reader = new FileReader();
+                  reader.onload = (event) => {
+                    const csvData: any = event?.target?.result;
+                    const parsedData = Papa.parse(csvData, { header: true });
+                    setDataSource(
+                      parsedData.data.map((row: any, i) => ({
+                        ...row,
+                        key: i + 1,
+                      }))
+                    );
 
-                  const base64Enconded = Buffer.from(
-                    `${reader?.result}`?.replace(/(\r\n|\n|\r)/gm, "\n").trim()
-                  ).toString("base64");
-
-                  setBody({ content: base64Enconded });
-                };
+                    const base64Encoded = Buffer.from(
+                      Papa.unparse(parsedData.data, { delimiter: ";" })
+                        .replace(/(\r\n|\n|\r)/gm, "\n")
+                        .trim()
+                    ).toString("base64");
+                    setBody({ content: base64Encoded });
+                  };
+                  reader.readAsText(file);
+                }
                 return false;
               }}
             >

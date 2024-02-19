@@ -70,11 +70,11 @@ export const OrganizationBalance = () => {
                 textAlign: "center",
               }}
             >
-              {`${new Date(
+              { OrganizationBalance?.updatedAt ? `${new Date(
                 OrganizationBalance?.updatedAt ?? ""
               ).toLocaleDateString()} ${new Date(
                 OrganizationBalance?.updatedAt ?? ""
-              ).toLocaleTimeString()}`}
+              ).toLocaleTimeString()}` : "-"}
             </Descriptions.Item>
           </Descriptions>
         </Grid>

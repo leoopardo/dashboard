@@ -68,7 +68,10 @@ export const PersonUpdate = () => {
   const [isViewOpen, setIsViewOpen] = useState<boolean>(false);
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [deleteFileId, setDeleteFileId] = useState<string>("");
+  const formRef = useRef<FormInstance>(null);
+  const formRefBlock = useRef<FormInstance>(null);
   const submitRef1 = useRef<HTMLButtonElement>(null);
+  const submitRefBlock = useRef<HTMLButtonElement>(null);
 
   const tabGeneralData = document.querySelector('[data-node-key="1"]');
   const tabBlocks = document.querySelector('[data-node-key="2"]');
@@ -115,7 +118,6 @@ export const PersonUpdate = () => {
   const { Files, isFilesFetching, refetchFiles } = useGetFiles(
     currentData?.cpf
   );
-  const formRef = useRef<FormInstance>(null);
 
   const columns: ColumnInterface[] = [
     { name: "_id", type: "id" },
@@ -172,6 +174,15 @@ export const PersonUpdate = () => {
     formRef.current?.setFieldsValue(PersonsData);
   }, [PersonsData]);
 
+  useEffect(() => {
+    setBody({
+      ...PersonsData?.items[0],
+      birth_date:PersonsData?.items[0].birth_date ? moment(new Date(`${PersonsData?.items[0].birth_date}`))
+        .add(1, "day")
+        .toISOString() : undefined,
+    });
+  }, [PersonsData]);
+
   const items: TabsProps["items"] = [
     {
       key: "1",
@@ -195,7 +206,7 @@ export const PersonUpdate = () => {
           initialValues={{
             ...PersonsData?.items[0],
             birth_date: dayjs(
-              `${moment(PersonsData?.items[0]?.birth_date).add(1, "days")}`,
+              `${moment(PersonsData?.items[0]?.birth_date)}`,
               "YYYY-MM-DD HH:mm:ss"
             ),
           }}
@@ -481,12 +492,27 @@ export const PersonUpdate = () => {
           <Spin size="large" />
         </div>
       ) : (
-        <Form layout="vertical" initialValues={PersonsData?.items[0]}>
+        <Form
+          layout="vertical"
+          initialValues={PersonsData?.items[0]}
+          ref={formRefBlock}
+          onFinish={() => {
+            UpdateMutate();
+            setIsConfirmOpen(false);
+          }}
+        >
           <Grid
             container
             columnSpacing={1}
             style={{ display: "flex", alignItems: "flex-end" }}
           >
+            <button
+              type="submit"
+              ref={submitRefBlock}
+              style={{ display: "none" }}
+            >
+              Submit
+            </button>
             <Grid item xs={12} md={4} lg={1}>
               <Form.Item label={t("table.black_list")} name="black_list">
                 <Select
@@ -509,6 +535,26 @@ export const PersonUpdate = () => {
               <Form.Item
                 label={t("table.black_list_reason")}
                 name="black_list_reason"
+                rules={[
+                  {
+                    required: body?.black_list,
+                    validator: (_, value) => {
+                      if (
+                        body?.black_list &&
+                        !body?.black_list_reason &&
+                        !value
+                      ) {
+                        return Promise.reject(
+                          t("input.required", {
+                            field: t("table.black_list_reason"),
+                          }) || ""
+                        );
+                      }
+
+                      return Promise.resolve();
+                    },
+                  },
+                ]}
               >
                 <AutoComplete
                   size="large"
@@ -619,7 +665,7 @@ export const PersonUpdate = () => {
                   open={isConfirmOpen}
                   style={{ maxWidth: "340px" }}
                   onConfirm={() => {
-                    submitRef1.current?.click();
+                    submitRefBlock.current?.click();
                   }}
                   okButtonProps={{ loading: UpdateIsLoading }}
                   okText={t("messages.yes_update")}
@@ -692,7 +738,7 @@ export const PersonUpdate = () => {
                 label={t("table.cash_out_max_value_per_day")}
                 name="cash_out_max_value"
               >
-                 <CurrencyInput
+                <CurrencyInput
                   data-test-id="cash_out_max_value"
                   onChangeValue={(_event, originalValue) => {
                     setBody((state) => ({
@@ -719,7 +765,7 @@ export const PersonUpdate = () => {
                 <Select
                   size="large"
                   options={[
-                    { label: t('input.unlimited')?.slice(0, -1), value: 0 },
+                    { label: t("input.unlimited")?.slice(0, -1), value: 0 },
                     { label: 1, value: 1 },
                     { label: 2, value: 2 },
                     { label: 3, value: 3 },
@@ -919,7 +965,6 @@ export const PersonUpdate = () => {
             />
           )}
 
-          {isFiltersOpen && (
             <FiltersModal
               open={isFiltersOpen}
               setOpen={setIsFiltersOpen}
@@ -940,7 +985,6 @@ export const PersonUpdate = () => {
               endDateKeyName="final_date"
               initialQuery={INITIAL_QUERY}
             />
-          )}
         </Grid>
       ),
     },

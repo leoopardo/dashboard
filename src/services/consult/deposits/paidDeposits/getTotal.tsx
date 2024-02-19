@@ -11,18 +11,12 @@ export function useGetTotalPaidDeposits(params: paidDepositRowsQuery) {
   const { data, isFetching, error, refetch } = useQuery<
   paidDepositTotal | null | undefined
   >(
-    "depositsTotal",
+    "depositsPaidTotal",
     async () => {
       const response = await api.get("report/pix/total/paid-at", {
         params,
       });
       return response.data;
-    },
-    {
-      refetchInterval: false,
-      refetchIntervalInBackground: false,
-      refetchOnMount: false,
-      refetchOnWindowFocus: false,
     }
   );
 

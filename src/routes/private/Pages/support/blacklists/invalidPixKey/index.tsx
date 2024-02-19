@@ -164,7 +164,6 @@ export const InvalidPixKeyBlacklist = () => {
         </Grid>
       </Grid>
 
-      {isFiltersOpen && (
         <FiltersModal
           open={isFiltersOpen}
           setOpen={setIsFiltersOpen}
@@ -177,8 +176,7 @@ export const InvalidPixKeyBlacklist = () => {
           endDateKeyName="end_date"
           initialQuery={INITIAL_QUERY}
         />
-      )}
-
+        
       <Toast
         actionSuccess={t("messages.checked")}
         actionError={t("messages.check")}

@@ -83,7 +83,10 @@ export const NewUserModal = ({
   });
 
   function handleChangeUserBody(event: any) {
-    setBody((state) => ({ ...state, [event.target.name]: event.target.value || null }));
+    setBody((state) => ({
+      ...state,
+      [event.target.name]: event.target.value || null,
+    }));
   }
 
   function CreateUser() {
@@ -298,6 +301,7 @@ export const NewUserModal = ({
             <PartnerSelect
               queryOptions={body ?? currentUser}
               setQueryFunction={setBody}
+              notClearble
             />
           </Form.Item>
         )}
@@ -326,6 +330,7 @@ export const NewUserModal = ({
             filterIdValue={
               user?.partner_id ?? body?.partner_id ?? currentUser?.partner.id
             }
+            notClearble
           />
         </Form.Item>
 

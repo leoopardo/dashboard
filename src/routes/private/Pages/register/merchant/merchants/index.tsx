@@ -161,23 +161,6 @@ export const MerchantView = () => {
     { name: "created_at", type: "date", sort: true },
   ];
 
-  useEffect(() => {
-    const id = currentItem?.id;
-    isConfigOpen && navigate(`${id}`);
-  }, [isConfigOpen]);
-
-  useEffect(() => {
-    isSuccessMerchantData && refetchMerchantData();
-    isSuccessMerchantTotalsData && refetchMerchantTotalsData();
-  }, [query]);
-
-  useEffect(() => {
-    setUpdateBody({
-      ...currentItem,
-      merchant_id: currentItem?.id,
-    });
-  }, [currentItem]);
-
   const [isTuorOpen, setIsTuorOpen] = useState<boolean>(false);
   const ref = useRef(null);
   const ref1 = useRef(null);
@@ -230,6 +213,23 @@ export const MerchantView = () => {
       ),
     });
   }
+
+  useEffect(() => {
+    const id = currentItem?.id;
+    isConfigOpen && navigate(`${id}`);
+  }, [isConfigOpen]);
+
+  useEffect(() => {
+    isSuccessMerchantData && refetchMerchantData();
+    isSuccessMerchantTotalsData && refetchMerchantTotalsData();
+  }, [query]);
+
+  useEffect(() => {
+    setUpdateBody({
+      ...currentItem,
+      merchant_id: currentItem?.id,
+    });
+  }, [currentItem]);
 
   return (
     <Grid container style={{ padding: "25px" }}>
@@ -364,17 +364,18 @@ export const MerchantView = () => {
             </Button>
           </Grid>
         )}
-
-        <Grid item xs={12} md={3} lg={2}>
-          <UpdateAccountsModal
-            open={updateAccountsModal}
-            setOpen={setUpdateAccountsModal}
-            selectedFields={[]}
-            loading={isMerchantDataFetching}
-            items={selectedItems}
-            setItems={setSelectedItems}
-          />
-        </Grid>
+        {permissions.register.merchant.merchant.merchant_account_api_update && (
+          <Grid item xs={12} md={3} lg={2}>
+            <UpdateAccountsModal
+              open={updateAccountsModal}
+              setOpen={setUpdateAccountsModal}
+              selectedFields={[]}
+              loading={isMerchantDataFetching}
+              items={selectedItems}
+              setItems={setSelectedItems}
+            />
+          </Grid>
+        )}
 
         {permissions.register.merchant.merchant.merchant_export_csv && (
           <Grid item xs={12} md={2} lg={isDesktop ? 2 : 1} container>
@@ -458,33 +459,31 @@ export const MerchantView = () => {
         </Grid>
       </Grid>
 
-      {isUpdateModalOpen && (
-        <MutateModal
-          type="update"
-          open={isUpdateModalOpen}
-          setOpen={setIsUpdateModalOpen}
-          fields={[
-            { label: "name", required: false },
-            { label: "domain", required: false },
-            { label: "v3_id", required: false, type: "number" },
-            { label: "license_id", required: false },
-            { label: "partner_id", required: true },
-            { label: "aggregator_id", required: false },
-            { label: "operator_id", required: false },
-            { label: "cnpj", required: false },
-            { label: "cellphone", required: false },
-            { label: "email", required: false },
-          ]}
-          body={updateBody}
-          setBody={setUpdateBody}
-          modalName={t("modal.modal_update_merchant")}
-          submit={UpdateMutate}
-          submitLoading={UpdateIsLoading}
-          error={UpdateError}
-          success={UpdateIsSuccess}
-          clear={UpdateReset}
-        />
-      )}
+      <MutateModal
+        type="update"
+        open={isUpdateModalOpen}
+        setOpen={setIsUpdateModalOpen}
+        fields={[
+          { label: "name", required: false },
+          { label: "domain", required: false },
+          { label: "v3_id", required: false, type: "number" },
+          { label: "license_id", required: false },
+          { label: "partner_id", required: true },
+          { label: "aggregator_id", required: false },
+          { label: "operator_id", required: false },
+          { label: "cnpj", required: false },
+          { label: "cellphone", required: false },
+          { label: "email", required: false },
+        ]}
+        body={updateBody}
+        setBody={setUpdateBody}
+        modalName={t("modal.modal_update_merchant")}
+        submit={UpdateMutate}
+        submitLoading={UpdateIsLoading}
+        error={UpdateError}
+        success={UpdateIsSuccess}
+        clear={UpdateReset}
+      />
 
       {isViewModalOpen && (
         <ViewMerchantModal
@@ -505,57 +504,54 @@ export const MerchantView = () => {
         />
       )}
 
-      {isFiltersOpen && (
-        <FiltersModal
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          filters={[
-            "start_date",
-            "end_date",
-            "status",
-            "aggregator_id",
-            "operator_id",
-            "partner_id",
-            "cash_in_bank",
-            "cash_out_bank",
-          ]}
-          refetch={refetchMerchantData}
-          selectOptions={{}}
-          startDateKeyName="start_date"
-          endDateKeyName="end_date"
-          initialQuery={INITIAL_QUERY}
-        />
-      )}
-      {isNewMerchantModal && (
-        <MutateModal
-          type="create"
-          open={isNewMerchantModal}
-          setOpen={setIsNewMerchantModal}
-          fields={[
-            { label: "name", required: true },
-            { label: "domain", required: true },
-            { label: "v3_id", required: false, type: "number" },
-            { label: "license_id", required: false },
-            { label: "partner_id", required: true },
-            { label: "aggregator_id", required: false },
-            { label: "operator_id", required: false },
-            { label: "cnpj", required: false },
-            { label: "cellphone", required: false },
-            { label: "email", required: false },
-            { label: "country", required: false },
-          ]}
-          body={createBody}
-          setBody={setCreateBody}
-          modalName={t("modal.modal_create_merchant")}
-          submit={CreateMutate}
-          submitLoading={CreateIsLoading}
-          error={CreateError}
-          success={CreateIsSuccess}
-          clear={ClearCreate}
-        />
-      )}
+      <FiltersModal
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        filters={[
+          "start_date",
+          "end_date",
+          "status",
+          "aggregator_id",
+          "operator_id",
+          "partner_id",
+          "cash_in_bank",
+          "cash_out_bank",
+        ]}
+        refetch={refetchMerchantData}
+        selectOptions={{}}
+        startDateKeyName="start_date"
+        endDateKeyName="end_date"
+        initialQuery={INITIAL_QUERY}
+      />
+
+      <MutateModal
+        type="create"
+        open={isNewMerchantModal}
+        setOpen={setIsNewMerchantModal}
+        fields={[
+          { label: "name", required: true },
+          { label: "domain", required: true },
+          { label: "v3_id", required: false, type: "number" },
+          { label: "license_id", required: false },
+          { label: "partner_id", required: true },
+          { label: "aggregator_id", required: false },
+          { label: "operator_id", required: false },
+          { label: "cnpj", required: false },
+          { label: "cellphone", required: false },
+          { label: "email", required: false },
+          { label: "country", required: false },
+        ]}
+        body={createBody}
+        setBody={setCreateBody}
+        modalName={t("modal.modal_create_merchant")}
+        submit={CreateMutate}
+        submitLoading={CreateIsLoading}
+        error={CreateError}
+        success={CreateIsSuccess}
+        clear={ClearCreate}
+      />
 
       <Toast
         actionSuccess={t("messages.updated")}

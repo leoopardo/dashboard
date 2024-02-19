@@ -176,8 +176,7 @@ export const SidebarNavigation = () => {
               false,
               undefined,
               {
-                display: permissions?.register?.paybrokers?.account
-                  ?.menu
+                display: permissions?.register?.paybrokers?.account?.menu
                   ? undefined
                   : "none",
               },
@@ -407,8 +406,7 @@ export const SidebarNavigation = () => {
                   false,
                   undefined,
                   {
-                    display: permissions?.register?.aggregator?.aggregator
-                      ?.aggregator_export_csv
+                    display: permissions?.register?.aggregator?.blacklist?.menu
                       ? undefined
                       : "none",
                   },
@@ -429,13 +427,9 @@ export const SidebarNavigation = () => {
               false,
               undefined,
               {
-                display:
-                  permissions?.register?.aggregator?.aggregator
-                    ?.aggregator_export_csv ||
-                  permissions?.register?.aggregator?.users
-                    ?.aggregator_user_export_csv
-                    ? undefined
-                    : "none",
+                display: permissions?.register?.aggregator?.blacklist?.menu
+                  ? undefined
+                  : "none",
               }
             ),
             getItem(
@@ -858,14 +852,14 @@ export const SidebarNavigation = () => {
                   : "none",
               },
               <Link
-              onClickCapture={() => {
-                setCollapsed(false);
-                handleChangeSidebar(false);
-              }}
-              to={"/register/merchant/manual_entry_category"}
-            >
-              {t("menus.manual_entry_category")}
-            </Link>
+                onClickCapture={() => {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }}
+                to={"/register/merchant/manual_entry_category"}
+              >
+                {t("menus.manual_entry_category")}
+              </Link>
             ),
             getItem(
               "fee_plans",
@@ -925,18 +919,19 @@ export const SidebarNavigation = () => {
                     ?.merchant_blacklist_create
                     ? undefined
                     : "none",
-                },  <Link
-                onClickCapture={() => {
-                  setCollapsed(false);
-                  handleChangeSidebar(false);
-                }}
-                to={
-                  "/register/merchant/merchant_blacklists/import_merchant_blacklist"
-                }
-                title={`${t("menus.import_merchant_blacklist")}`}
-              >
-                {t("menus.import_merchant_blacklist")}
-              </Link>
+                },
+                <Link
+                  onClickCapture={() => {
+                    setCollapsed(false);
+                    handleChangeSidebar(false);
+                  }}
+                  to={
+                    "/register/merchant/merchant_blacklists/import_merchant_blacklist"
+                  }
+                  title={`${t("menus.import_merchant_blacklist")}`}
+                >
+                  {t("menus.import_merchant_blacklist")}
+                </Link>
               ),
               getItem(
                 "uploads_merchant_blacklist",
@@ -949,18 +944,19 @@ export const SidebarNavigation = () => {
                     ?.merchant_blacklist_create
                     ? undefined
                     : "none",
-                },  <Link
-                onClickCapture={() => {
-                  setCollapsed(false);
-                  handleChangeSidebar(false);
-                }}
-                to={
-                  "/register/merchant/merchant_blacklists/uploads_merchant_blacklist"
-                }
-                title={`${t("menus.uploads_merchant_blacklist")}`}
-              >
-                {t("menus.uploads_merchant_blacklist")}
-              </Link>
+                },
+                <Link
+                  onClickCapture={() => {
+                    setCollapsed(false);
+                    handleChangeSidebar(false);
+                  }}
+                  to={
+                    "/register/merchant/merchant_blacklists/uploads_merchant_blacklist"
+                  }
+                  title={`${t("menus.uploads_merchant_blacklist")}`}
+                >
+                  {t("menus.uploads_merchant_blacklist")}
+                </Link>
               ),
               getItem(
                 "merchant_blacklist_reasons",
@@ -1345,7 +1341,8 @@ export const SidebarNavigation = () => {
               false,
               undefined,
               {
-                display: permissions?.register?.licenses.licenses.license_export_csv
+                display: permissions?.register?.licenses.licenses
+                  .license_export_csv
                   ? undefined
                   : "none",
               },
@@ -1365,7 +1362,7 @@ export const SidebarNavigation = () => {
           undefined,
           undefined,
           {
-            display: permissions?.register?.person?.menu ? undefined : "none",
+            display: permissions?.register?.licenses?.menu ? undefined : "none",
           }
         ),
       ],
@@ -1603,9 +1600,7 @@ export const SidebarNavigation = () => {
           false,
           undefined,
           {
-            display: permissions?.transactions?.paybrokers?.menu
-              ? undefined
-              : "none",
+            display: "none",
           }
         ),
         // - MOVIMENTAÇÕES DE EMPRESA
@@ -1789,8 +1784,8 @@ export const SidebarNavigation = () => {
                   undefined,
                   {
                     display: permissions?.transactions?.merchant
-                      ?.manual_transactions
-                      ?.merchant_manual_transactions_export_csv
+                      ?.internal_transfers
+                      ?.merchant_internal_transfers_export_csv
                       ? undefined
                       : "none",
                   },
@@ -1862,7 +1857,7 @@ export const SidebarNavigation = () => {
           false,
           undefined,
           {
-            display: type !== 3 ? undefined : "none",
+            display: "none",
           },
           <Link
             onClickCapture={() => {
@@ -2704,7 +2699,8 @@ export const SidebarNavigation = () => {
                   false,
                   undefined,
                   {
-                    display: permissions?.report?.person?.check_cpf?.menu
+                    display: permissions?.report?.person?.check_cpf
+                      ?.report_person_check_cpf_list
                       ? undefined
                       : "none",
                   },

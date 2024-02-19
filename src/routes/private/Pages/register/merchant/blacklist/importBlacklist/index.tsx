@@ -21,12 +21,14 @@ import {
   Upload,
   notification,
 } from "antd";
-import { Buffer } from "buffer";
 import { FormInstance } from "antd/lib/form/Form";
+import { Buffer } from "buffer";
+import Papa from "papaparse";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useCSVDownloader, usePapaParse } from "react-papaparse";
+import { useCSVDownloader } from "react-papaparse";
 import { useNavigate } from "react-router-dom";
+import * as XLSX from "xlsx";
 
 const EditableContext = React.createContext<FormInstance<any> | null>(null);
 
@@ -74,12 +76,6 @@ export const EditableCell: React.FC<EditableCellProps> = ({
   const inputRef = useRef<InputRef>(null);
   const form = useContext(EditableContext)!;
 
-  useEffect(() => {
-    if (editing) {
-      inputRef.current!.focus();
-    }
-  }, [editing]);
-
   const toggleEdit = () => {
     setEditing(!editing);
     form.setFieldsValue({ [dataIndex]: record[dataIndex] });
@@ -123,6 +119,12 @@ export const EditableCell: React.FC<EditableCellProps> = ({
     );
   }
 
+  useEffect(() => {
+    if (editing) {
+      inputRef.current!.focus();
+    }
+  }, [editing]);
+
   return <td {...restProps}>{childNode}</td>;
 };
 
@@ -142,17 +144,7 @@ type ColumnTypes = Exclude<EditableTableProps["columns"], undefined>;
 export const ImportBlacklist = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { readRemoteFile } = usePapaParse();
-  const initialData: DataType[] = [
-    {
-      key: "1",
-      CPF: "11111111111",
-      REASON: "Fraude",
-      DESCRIPTION: "Solicitado pelo merchant xyz",
-      MERCHANT_ID: "1",
-      CAN_BE_DELETED_ONLY_BY_ORGANIZATION: "false",
-    },
-  ];
+  const initialData: DataType[] = [];
   const [dataSource, setDataSource] = useState<DataType[]>([]);
   const [body, setBody] = useState<{ content: string }>({ content: "" });
   const { error, isLoading, isSuccess, mutate } =
@@ -162,11 +154,19 @@ export const ImportBlacklist = () => {
 
   const [api, contextHolder] = notification.useNotification();
 
+  const handleUpload = () => {
+    mutate();
+    setBody({ content: "" });
+    setDataSource([]);
+  };
+
   const openNotificationWithIcon = () => {
     const BtnNavigate = (
       <Button
         onClick={() =>
-          navigate("/register/merchant/merchant_blacklists/uploads_merchant_blacklist")
+          navigate(
+            "/register/merchant/merchant_blacklists/uploads_merchant_blacklist"
+          )
         }
       >
         Uploads
@@ -239,11 +239,6 @@ export const ImportBlacklist = () => {
     };
   });
 
-  const handleUpload = () => {
-    mutate();
-    setBody({ content: "" });
-  };
-
   return (
     <Row style={{ padding: 25 }}>
       {contextHolder}
@@ -263,32 +258,62 @@ export const ImportBlacklist = () => {
             </Button>
             <Upload
               multiple={false}
+              accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
               style={{ minWidth: "100%", display: "none" }}
               action=""
               onRemove={() => setDataSource(initialData)}
-              beforeUpload={(file: any) => {
-                readRemoteFile(file, {
-                  header: true,
-                  complete: (results) => {
+              beforeUpload={(file) => {
+                const fileType = file.type;
+                if (
+                  fileType ===
+                  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                ) {
+                  const reader = new FileReader();
+                  reader.onload = (event) => {
+                    const binaryString = event?.target?.result;
+                    const workbook = XLSX.read(binaryString, {
+                      type: "binary",
+                    });
+                    const sheetName = workbook.SheetNames[0];
+                    const sheet = workbook.Sheets[sheetName];
+                    const data = XLSX.utils.sheet_to_csv(sheet);
+                    const parsedData = Papa.parse(data, { header: true });
                     setDataSource(
-                      results?.data?.map((row: any, i) => {
-                        return { ...row, key: i + 1 };
-                      })
+                      parsedData.data.map((row: any, i) => ({
+                        ...row,
+                        key: i + 1,
+                      }))
                     );
-                  },
-                  download: true,
-                });
-                const reader = new FileReader();
-                reader.readAsText(file);
-                reader.onload = () => {
-                  console.log(`${reader.result}`);
 
-                  const base64Enconded = Buffer.from(
-                    `${reader?.result}`?.replace(/(\r\n|\n|\r)/gm, "\n").trim()
-                  ).toString("base64");
+                    const base64Encoded = Buffer.from(
+                      Papa.unparse(parsedData.data, { delimiter: ";" })
+                        .replace(/(\r\n|\n|\r)/gm, "\n")
+                        .trim()
+                    ).toString("base64");
+                    setBody({ content: base64Encoded });
+                  };
+                  reader.readAsBinaryString(file);
+                } else if (fileType === "text/csv") {
+                  const reader = new FileReader();
+                  reader.onload = (event) => {
+                    const csvData: any = event?.target?.result;
+                    const parsedData = Papa.parse(csvData, { header: true });
+                    setDataSource(
+                      parsedData.data.map((row: any, i) => ({
+                        ...row,
+                        key: i + 1,
+                      }))
+                    );
 
-                  setBody({ content: base64Enconded });
-                };
+                    const base64Encoded = Buffer.from(
+                      Papa.unparse(parsedData.data, { delimiter: ";" })
+                        .replace(/(\r\n|\n|\r)/gm, "\n")
+                        .trim()
+                    ).toString("base64");
+                    setBody({ content: base64Encoded });
+                  };
+                  reader.readAsText(file);
+                }
                 return false;
               }}
             >
