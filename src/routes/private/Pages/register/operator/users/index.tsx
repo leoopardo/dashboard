@@ -326,20 +326,20 @@ export const OperatorUsers = () => {
         endDateKeyName="end_date"
         initialQuery={INITIAL_QUERY}
       />
-      {isNewUserModal && (
-        <NewUserModal
-          action={action}
-          open={isNewUserModal}
-          setBody={setBodyCreate}
-          setOpen={setIsNewUserModal}
-          currentUser={currentItem}
-          body={bodyCreate}
-          setCurrentUser={setCurrentItem}
-          setUpdateBody={setUpdateUserBody}
-          fuctionMutate={mutate}
-          setIsValidateTokenOpen={setIsValidateTokenOpen}
-        />
-      )}
+
+      <NewUserModal
+        action={action}
+        open={isNewUserModal}
+        setBody={setBodyCreate}
+        setOpen={setIsNewUserModal}
+        currentUser={currentItem}
+        body={bodyCreate}
+        setCurrentUser={setCurrentItem}
+        setUpdateBody={setUpdateUserBody}
+        fuctionMutate={mutate}
+        setIsValidateTokenOpen={setIsValidateTokenOpen}
+      />
+
       {isValidateTokenOpen && (
         <ValidateToken
           action="USER_UPDATE"

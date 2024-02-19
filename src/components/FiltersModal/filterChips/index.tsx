@@ -32,7 +32,7 @@ export const FilterChips = ({
   disabled,
 }: FilterChipsProps) => {
   const { t } = useTranslation();
-  const { merchant, refetcMerchant } = useListMerchantById({
+  const { merchant, refetchMerchantById } = useListMerchantById({
     page: 1,
     limit: 200,
     merchant_id: query.merchant_id ?? undefined,
@@ -78,7 +78,7 @@ export const FilterChips = ({
 
   useEffect(() => {
     if (query.merchant_id) {
-      refetcMerchant();
+      refetchMerchantById();
     }
 
     if (query.partner_id) {
