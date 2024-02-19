@@ -11,17 +11,17 @@ export function useListMerchantById(params: any) {
       params,
     });
     return response.data;
-  });
+  }, {enabled: false, keepPreviousData: false});
 
   const merchant = data;
-  const isMerchantFetching = isFetching;
+  const isMerchantByIdFetching = isFetching;
   const merchantError: any = error;
-  const refetcMerchant = refetch;
+  const refetchMerchantById = refetch;
 
   return {
     merchant,
-    isMerchantFetching,
+    isMerchantByIdFetching,
     merchantError,
-    refetcMerchant,
+    refetchMerchantById,
   };
 }

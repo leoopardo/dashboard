@@ -302,17 +302,16 @@ export const MerchantUser = () => {
         success={updateIsSuccess}
       />
 
-      {isNewUserModal && (
-        <UpdateUserModal
-          action={requestType}
-          open={isNewUserModal}
-          setOpen={setIsNewUserModal}
-          currentUser={currentItem}
-          setCurrentUser={setCurrentItem}
-          setUpdateBody={setUpdateUserBody}
-          setIsValidateTokenOpen={setIsValidateTokenOpen}
-        />
-      )}
+      <UpdateUserModal
+        action={requestType}
+        open={isNewUserModal}
+        setOpen={setIsNewUserModal}
+        currentUser={currentItem}
+        setCurrentUser={setCurrentItem}
+        setUpdateBody={setUpdateUserBody}
+        setIsValidateTokenOpen={setIsValidateTokenOpen}
+      />
+
       <ExportCustomReportsModal
         open={isExportReportsOpen}
         setOpen={setIsExportReportsOpen}

@@ -319,17 +319,16 @@ export const PartnerUsers = () => {
         initialQuery={INITIAL_QUERY}
       />
 
-      {isNewUserModal && (
-        <NewUserModal
-          action={action}
-          open={isNewUserModal}
-          setOpen={setIsNewUserModal}
-          currentUser={currentItem}
-          setCurrentUser={setCurrentItem}
-          setUpdateBody={setUpdateUserBody}
-          setIsValidateTokenOpen={setIsValidateTokenOpen}
-        />
-      )}
+      <NewUserModal
+        action={action}
+        open={isNewUserModal}
+        setOpen={setIsNewUserModal}
+        currentUser={currentItem}
+        setCurrentUser={setCurrentItem}
+        setUpdateBody={setUpdateUserBody}
+        setIsValidateTokenOpen={setIsValidateTokenOpen}
+      />
+
       {isValidateTokenOpen && (
         <ValidateToken
           action="USER_UPDATE"
