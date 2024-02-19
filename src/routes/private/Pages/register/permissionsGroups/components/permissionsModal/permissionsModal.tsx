@@ -36,7 +36,6 @@ export const PermissionsModal = ({
 
   const { PermissionGroupData, isPermissionGroupDataFetching } =
     useGetPermissionGroup(group?.id);
-
   const { PermissionMutate } = useCreatePermission(group?.id, permissionList);
 
   useEffect(() => {

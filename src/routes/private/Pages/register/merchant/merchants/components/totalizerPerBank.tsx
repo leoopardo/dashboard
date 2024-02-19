@@ -17,10 +17,13 @@ import { t } from "i18next";
 
 interface TotalizerPerBanksInterface {
   query: MerchantsQuery;
-  ref: any
+  ref: any;
 }
 
-export const TotalizerPerBanks = ({ query, ref }: TotalizerPerBanksInterface) => {
+export const TotalizerPerBanks = ({
+  query,
+  ref,
+}: TotalizerPerBanksInterface) => {
   const { MerchantsPerBankData, isMerchantsPerBankDataFetching } =
     useGetMerchantsPerBank(query);
   const { bankListData } = useListBanks({
@@ -28,16 +31,12 @@ export const TotalizerPerBanks = ({ query, ref }: TotalizerPerBanksInterface) =>
     page: 1,
   });
 
- /*  if (MerchantsPerBankData?.valuesIn) {
-    console.log(
-      Object.keys(MerchantsPerBankData?.valuesIn).map((bank) => {
-        return { value: MerchantsPerBankData?.valuesIn[bank], name: bank };
-      })
-    );
-  } */
-
   return (
-    <Row gutter={[8, 8]} style={{ overflow: "hidden", marginBottom: "80px" }} ref={ref}>
+    <Row
+      gutter={[8, 8]}
+      style={{ overflow: "hidden", marginBottom: "80px" }}
+      ref={ref}
+    >
       <Col xs={{ span: 24 }} md={{ span: 8 }}>
         <Card
           loading={isMerchantsPerBankDataFetching}

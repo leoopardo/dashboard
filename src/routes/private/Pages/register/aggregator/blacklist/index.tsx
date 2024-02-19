@@ -70,19 +70,6 @@ export const AggregatorBlacklist = () => {
   const [search, setSearch] = useState<string>("");
   const debounceSearch = useDebounce(search);
 
-  useEffect(() => {
-    refetchAggregatorsBlacklistData();
-  }, [query]);
-
-  useEffect(() => {
-    if (!debounceSearch) {
-      const q = { ...query };
-      delete q.cpf;
-      return setQuery(q);
-    }
-    setQuery((state) => ({ ...state, cpf: debounceSearch }));
-  }, [debounceSearch]);
-
   const [isTuorOpen, setIsTuorOpen] = useState<boolean>(false);
   const ref1 = useRef(null);
   const ref2 = useRef(null);
@@ -96,6 +83,19 @@ export const AggregatorBlacklist = () => {
   const refDescription = useRef(null);
   const refWhoAdd = useRef(null);
   const refCreatedAt = useRef(null);
+
+  useEffect(() => {
+    refetchAggregatorsBlacklistData();
+  }, [query]);
+
+  useEffect(() => {
+    if (!debounceSearch) {
+      const q = { ...query };
+      delete q.cpf;
+      return setQuery(q);
+    }
+    setQuery((state) => ({ ...state, cpf: debounceSearch }));
+  }, [debounceSearch]);
 
   return (
     <Grid container style={{ padding: "25px" }}>

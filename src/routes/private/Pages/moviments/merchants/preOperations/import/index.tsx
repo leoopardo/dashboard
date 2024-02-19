@@ -183,12 +183,6 @@ export const ImportPreOperations = () => {
     });
   };
 
-  useEffect(() => {
-    if (isSuccess) {
-      openNotificationWithIcon();
-    }
-  }, [error, isSuccess]);
-
   const defaultColumns: (ColumnTypes[number] & {
     editable?: boolean;
     dataIndex: string;
@@ -240,6 +234,12 @@ export const ImportPreOperations = () => {
     mutate();
     setBody({ content: "" });
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      openNotificationWithIcon();
+    }
+  }, [error, isSuccess]);
 
   return (
     <Row style={{ padding: 25 }}>
@@ -305,7 +305,7 @@ export const ImportPreOperations = () => {
                         key: i + 1,
                       }))
                     );
-             
+
                     const base64Encoded = Buffer.from(
                       Papa.unparse(parsedData.data, { delimiter: ";" })
                         .replace(/(\r\n|\n|\r)/gm, "\n")

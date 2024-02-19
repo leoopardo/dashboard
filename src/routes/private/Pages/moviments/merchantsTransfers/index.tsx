@@ -26,9 +26,6 @@ const INITIAL_QUERY: GetTransferMerchantQuery = {
 };
 
 export const TransferBetweenMerchants = () => {
-  // const { permissions } = queryClient.getQueryData(
-  //   "validate"
-  // ) as ValidateInterface;
   const [query, setQuery] = useState<GetTransferMerchantQuery>(INITIAL_QUERY);
   const { t } = useTranslation();
   const [transferBody, setTransferBody] = useState<any | null>({

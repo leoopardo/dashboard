@@ -23,9 +23,7 @@ export const MerchantConfigs = () => {
   const params = useParams();
   const location = useLocation();
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  const onChange = () => {
-
-  };
+  const onChange = () => {};
 
   const tabBanks = document.querySelector('[data-node-key="1"]');
   const tabFees = document.querySelector('[data-node-key="2"]');
@@ -48,7 +46,10 @@ export const MerchantConfigs = () => {
             setFirstChildDivTestId(tabCredential, "tab-credential");
             return "5";
           }
-          setFirstChildDivTestId(tabOrganizationConfig, "tab-organization-config");
+          setFirstChildDivTestId(
+            tabOrganizationConfig,
+            "tab-organization-config"
+          );
           return "4";
         }
         setFirstChildDivTestId(tabMerchantConfig, "tab-merchant-config");
@@ -97,7 +98,8 @@ export const MerchantConfigs = () => {
       label: t("menus.current_accounts"),
       children: <AccountTab id={params.id} />,
       style: {
-        display: permissions.register.merchant.merchant.merchant_account_api_update
+        display: permissions.register.merchant.merchant
+          .merchant_account_api_update
           ? undefined
           : "none",
       },
@@ -162,7 +164,16 @@ export const MerchantConfigs = () => {
     setFirstChildDivTestId(tabOrganizationConfig, "tab-organization-config");
     setFirstChildDivTestId(tabCredential, "tab-credential");
     setFirstChildDivTestId(tabIps, "tab-ips");
-  }, [tabBanks, tabFees, tabMerchantConfig, tabOrganizationConfig, tabCredential, tabIps, params, location])
+  }, [
+    tabBanks,
+    tabFees,
+    tabMerchantConfig,
+    tabOrganizationConfig,
+    tabCredential,
+    tabIps,
+    params,
+    location,
+  ]);
 
   return (
     <Grid

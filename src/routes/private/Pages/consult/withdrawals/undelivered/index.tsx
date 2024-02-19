@@ -90,10 +90,6 @@ export const UndeliveredWithdrawals = () => {
     comma_separate_value: isComma,
   });
 
-  useEffect(() => {
-    refetchWithdrawalsTotalRows();
-  }, [query]);
-
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<any>();
   const [searchOption, setSearchOption] = useState<string | undefined>(
@@ -136,6 +132,10 @@ export const UndeliveredWithdrawals = () => {
     { name: "pix_key", type: "text" },
     { name: "status", type: "status" },
   ];
+
+  useEffect(() => {
+    refetchWithdrawalsTotalRows();
+  }, [query]);
 
   return (
     <Row

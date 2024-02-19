@@ -15,6 +15,7 @@ interface ChartInInterface {
 
 export const ChartIn = ({ query }: ChartInInterface) => {
   const { t } = useTranslation();
+  const { theme } = useTheme();
 
   const { depositsTotal, isDepositsTotalFetching, refetchDepositsTotal } =
     useGetTotalGeneratedDeposits({
@@ -28,7 +29,6 @@ export const ChartIn = ({ query }: ChartInInterface) => {
   useEffect(() => {
     refetchDepositsTotal();
   }, [query]);
-  const { theme } = useTheme();
 
   return (
     <Card

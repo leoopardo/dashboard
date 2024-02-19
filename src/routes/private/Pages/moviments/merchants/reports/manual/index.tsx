@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 export const MerchantManualReports = () => {
+  const { t } = useTranslation();
   const INITIAL_QUERY: ReportsQuery = {
     limit: 25,
     page: 1,
@@ -40,7 +41,6 @@ export const MerchantManualReports = () => {
     currentItem?.report_url ? setDisable(false) : setDisable(true);
   }, [currentItem]);
 
-  const { t } = useTranslation();
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid

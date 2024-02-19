@@ -72,11 +72,6 @@ export const PaidWithdrawals = () => {
 
   const { fields } = useGetPaidWithdrawReportFields();
 
-  useEffect(() => {
-    refetchPaidWithdrawalsTotalRows();
-    refetchPaidWithdrawalsTotal();
-  }, [query]);
-
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<any>();
   const [searchOption, setSearchOption] = useState<string | undefined>(
@@ -130,6 +125,11 @@ export const PaidWithdrawals = () => {
     { name: "pix_key", type: "text" },
     { name: "status", type: "status" },
   ];
+
+  useEffect(() => {
+    refetchPaidWithdrawalsTotalRows();
+    refetchPaidWithdrawalsTotal();
+  }, [query]);
 
   return (
     <Row

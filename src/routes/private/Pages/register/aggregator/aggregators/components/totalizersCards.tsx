@@ -15,6 +15,7 @@ export const TotalizersCards = (props: {
   loading: boolean;
 }) => {
   const isMobile = useMediaQuery({ maxWidth: "950px" });
+
   return (
     <Grid
       container
