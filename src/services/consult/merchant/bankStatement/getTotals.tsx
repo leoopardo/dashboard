@@ -12,6 +12,7 @@ export function useGetMerchantBankStatementTotals(
   const { data, isFetching, error, refetch } = useQuery<
     MerchantBankStatementTotalsData | null | undefined
   >("MerchantBankStatementTotals", async () => {
+    
     const response = await api.get("account/report/merchant-account/total", {
       params,
     });

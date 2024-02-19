@@ -3,6 +3,7 @@ import { InfoCircleFilled, ReloadOutlined } from "@ant-design/icons";
 import { useGetBankBalance } from "@src/services/consult/organization/bankBalance/getBankBalance";
 import { defaultTheme } from "@src/styles/defaultTheme";
 import BanksBanners from "@src/utils/BankBanners";
+import { moneyFormatter } from "@src/utils/moneyFormatter";
 import {
   Card,
   Col,
@@ -105,9 +106,8 @@ export const BankCard = ({ bank }: BankcardInterface) => {
               <Col span={24} style={{marginBottom: 8}}>
                 <Statistic
                   title="Total:"
-                  value={OrganizationBankBalance?.value}
+                  value={moneyFormatter(OrganizationBankBalance?.value || 0)}
                   precision={2}
-                  prefix="R$"
                   valueStyle={{
                     fontSize: "20px",
                   }}
@@ -116,9 +116,8 @@ export const BankCard = ({ bank }: BankcardInterface) => {
               <Col span={24} style={{marginBottom: 8}}>
                 <Statistic
                   title={`${t("table.blocked_value")}:`}
-                  value={OrganizationBankBalance?.value_blocked}
+                  value={moneyFormatter(OrganizationBankBalance?.value_blocked || 0 )}
                   precision={2}
-                  prefix="R$"
                   valueStyle={{
                     fontSize: "16px",
                     color: defaultTheme.colors.error,

@@ -129,7 +129,7 @@
     "between_accounts_transfer": "Transferências entre contas",
     "between_accounts_transfers": "Transferências entre contas",
     "between_accounts_transfers_import": "Importar CSV",
-    "merchant_manual_moviments_reports": "Movimentações manual",
+    "merchant_manual_moviments_reports": "Lançamentos manuais",
     "merchant_between_accounts_reports": "Transferências entre contas",
     "organization_transfer_between_accounts": "Transferências entre contas",
     "organization_manual_moviments_reports": "Lançamentos manuais",
@@ -375,8 +375,8 @@
     "cash_out_permission": "Saques habilitado:",
     "auto_switch_bank_acc": "Troca automática de bancos habilitado:",
     "check_last_waiting_pix": "Checagem de PIX Aguardando:",
-    "callback_deposit_api_enable": "Habilitar API Callback Depósitos:",
-    "callback_withdraw_api_enable": "Habilitar API Callback Saques:",
+    "callback_deposit_api_enable": "API Callback Depósitos habilitada?",
+    "callback_withdraw_api_enable": "API Callback Saques habilitada?",
     "cash_in_disabled_message": "Mensagem depósito desabilitado:",
     "cash_out_disabled_message": "Mensagem saque desabilitado:",
     "time_to_prevent_repeated_withdraw_minutes": "Intervalo mínimo saque repetido (minutos):",
@@ -427,6 +427,7 @@
     "primary": "Primário",
     "secondary": "Secundário",
     "both": "Ambos",
+ 
     "options": "Opções",
     "csv_columns": "Selecione as colunas do CSV",
     "comma_separator": "Separador de casas decimais",
@@ -477,7 +478,9 @@
     "allows_generate_qrcode": "Permite gerar QRCode PJ",
     "license_number": "Número da licença",
     "add_all_columns": "Adicionar todas as colunas",
-    "ip": "IP"
+    "ip": "IP",
+    "reason_name": "Motivo",
+    "withdraw_by_month_cant_be_smaller_than_day": "O valor de saques por mês não pode ser menor que o valor de saques por dia"
   },
   "table": {
     "id": "id",
@@ -759,7 +762,10 @@
     "add_row": "Adicionar linha",
     "upload_file": "Fazer upload",
     "total_rows": "Total de linhas",
-    "failed_rows": "Linhas com erro",
+    "failed_rows": "Nº erro",
+    "success_rows":"Nº sucesso",
+    "webhook_url_type_filter": "Tipo",
+    "both":"Ambos",
     "created_by_ip": "Ip do criador",
     "WAITING": "Aguardando",
     "created_by": "Criado por",
@@ -1431,6 +1437,10 @@
     "operacoes_devolucoes_manual_pagarMerchant": "Pagar empresa",
     "operacoes_devolucoes_manual_atualizarMerchant": "Atualizar empresa",
     "operacoes_devolucoes_manual_pagarUsuarioFinal": "Pagar usuário final",
-    "configuracoes_contas_merchant": "Contas de empresa"
+    "configuracoes_contas_merchant": "Contas de empresa",
+    "cadastros_merchants_responsaveis": "Responsáveis",
+    "cadastros_merchants_arquivos": "Arquivos",
+    "financeiro_transferencias_merchantManualPre": "Pré lançamento manuais",
+    "financeiro_transferencias_merchantManualPre_aprovar": "Aprovar"
   }
 }

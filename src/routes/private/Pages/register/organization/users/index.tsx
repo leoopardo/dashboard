@@ -283,20 +283,19 @@ export const OrganizationUser = () => {
         </Grid>
       </Grid>
 
-      {isFiltersOpen && (
-        <FiltersModal
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          filters={["start_date", "end_date", "status"]}
-          refetch={refetchUsersData}
-          selectOptions={{}}
-          startDateKeyName="start_date"
-          endDateKeyName="end_date"
-          initialQuery={INITIAL_QUERY}
-        />
-      )}
+      <FiltersModal
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        filters={["start_date", "end_date", "status"]}
+        refetch={refetchUsersData}
+        selectOptions={{}}
+        startDateKeyName="start_date"
+        endDateKeyName="end_date"
+        initialQuery={INITIAL_QUERY}
+      />
+
       {isNewUserModal && (
         <NewUserModal
           action={action}
@@ -328,15 +327,14 @@ export const OrganizationUser = () => {
         error={updateError}
         success={updateSuccess}
       />
-      {isViewModalOpen && (
-        <ViewModal
-          item={currentItem}
-          loading={isUsersDataFetching}
-          modalName={`${t("modal.user")}: ${currentItem?.name}`}
-          open={isViewModalOpen}
-          setOpen={setIsViewModalOpen}
-        />
-      )}
+
+      <ViewModal
+        item={currentItem}
+        loading={isUsersDataFetching}
+        modalName={`${t("modal.user")}: ${currentItem?.name}`}
+        open={isViewModalOpen}
+        setOpen={setIsViewModalOpen}
+      />
 
       <TuorComponent
         open={isTuorOpen}

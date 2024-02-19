@@ -14,7 +14,7 @@ export const WithdrawFinancial = ({ query, chart }: TableProps) => {
   const { RankingData, RankingError, isRankingFetching, RankingDataSuccess } =
     useGetMerchantRanking("value", "withdraw", query);
 
-     useEffect(() => {
+  useEffect(() => {
     if (RankingDataSuccess) {
       handleChangeError({ rankingValue: false });
     }
@@ -90,7 +90,7 @@ export const WithdrawFinancial = ({ query, chart }: TableProps) => {
     </>
   ) : (
     <CustomTable
-    size="small"
+      size="small"
       query={{}}
       setCurrentItem={() => {
         return;

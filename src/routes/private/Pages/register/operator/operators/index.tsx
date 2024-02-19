@@ -90,7 +90,8 @@ export const Operators = () => {
     OperatorIsLoading,
     OperatorMutate,
     OperatorError,
-    OperatorIsSuccess,reset
+    OperatorIsSuccess,
+    reset,
   } = useCreateOperator(createBody);
 
   const { UpdateError, UpdateIsSuccess } = useUpdateOperator(updateBody);
@@ -102,7 +103,8 @@ export const Operators = () => {
     OperatorReportsIsLoading,
     OperatorReportsIsSuccess,
     OperatorReportsMutate,
-  } = useCreateOperatorReports({ ...query,
+  } = useCreateOperatorReports({
+    ...query,
     fields: csvFields,
     comma_separate_value: comma,
   });
@@ -110,6 +112,18 @@ export const Operators = () => {
   const { fields } = useGetOperatorsReportFields();
   const [isExportReportsOpen, setIsExportReportsOpen] =
     useState<boolean>(false);
+
+  const [isTuorOpen, setIsTuorOpen] = useState<boolean>(false);
+  const ref = useRef(null);
+  const ref1 = useRef(null);
+  const ref2 = useRef(null);
+  const ref3 = useRef(null);
+  const ref4 = useRef(null);
+  const ref5 = useRef(null);
+  const refId = useRef(null);
+  const refName = useRef(null);
+  const refStatus = useRef(null);
+  const refCreatedAt = useRef(null);
 
   useEffect(() => {
     if (isSuccessOperatorData) {
@@ -126,18 +140,6 @@ export const Operators = () => {
       operator_id: currentItem?.id,
     });
   }, [currentItem]);
-
-  const [isTuorOpen, setIsTuorOpen] = useState<boolean>(false);
-  const ref = useRef(null);
-  const ref1 = useRef(null);
-  const ref2 = useRef(null);
-  const ref3 = useRef(null);
-  const ref4 = useRef(null);
-  const ref5 = useRef(null);
-  const refId = useRef(null);
-  const refName = useRef(null);
-  const refStatus = useRef(null);
-  const refCreatedAt = useRef(null);
 
   return (
     <Grid container style={{ padding: "25px" }}>
@@ -311,53 +313,49 @@ export const Operators = () => {
         </Grid>
       </Grid>
 
-      {isFiltersOpen && (
-        <FiltersModal
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          filters={["start_date", "end_date", "status"]}
-          refetch={refetchOperatorData}
-          selectOptions={{}}
-          startDateKeyName="start_date"
-          endDateKeyName="end_date"
-          initialQuery={INITIAL_QUERY}
-        />
-      )}
+      <FiltersModal
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        filters={["start_date", "end_date", "status"]}
+        refetch={refetchOperatorData}
+        selectOptions={{}}
+        startDateKeyName="start_date"
+        endDateKeyName="end_date"
+        initialQuery={INITIAL_QUERY}
+      />
 
-      {isNewCategorieModal && (
-        <MutateModal
-          type="create"
-          open={isNewCategorieModal}
-          setOpen={setIsNewCategorieModal}
-          fields={[
-            { label: "name", required: true },
-            { label: "cnpj", required: true },
-            { label: "cellphone", required: false },
-            { label: "email", required: false },
-            { label: "country", required: true },
-            { label: "aggregator_id", required: false },
-          ]}
-          body={createBody}
-          setBody={setCreateBody}
-          modalName={t("modal.new_operator")}
-          submit={OperatorMutate}
-          submitLoading={OperatorIsLoading}
-          error={OperatorError}
-          success={OperatorIsSuccess}
-          clear={reset}
-        />
-      )}
-      {isViewModalOpen && (
-        <ViewModal
-          item={currentItem}
-          loading={isOperatorDataFetching}
-          modalName={`${t("menus.operator")}: ${currentItem?.name}`}
-          open={isViewModalOpen}
-          setOpen={setIsViewModalOpen}
-        />
-      )}
+      <MutateModal
+        type="create"
+        open={isNewCategorieModal}
+        setOpen={setIsNewCategorieModal}
+        fields={[
+          { label: "name", required: true },
+          { label: "cnpj", required: true },
+          { label: "cellphone", required: false },
+          { label: "email", required: false },
+          { label: "country", required: true },
+          { label: "aggregator_id", required: false },
+        ]}
+        body={createBody}
+        setBody={setCreateBody}
+        modalName={t("modal.new_operator")}
+        submit={OperatorMutate}
+        submitLoading={OperatorIsLoading}
+        error={OperatorError}
+        success={OperatorIsSuccess}
+        clear={reset}
+      />
+
+      <ViewModal
+        item={currentItem}
+        loading={isOperatorDataFetching}
+        modalName={`${t("menus.operator")}: ${currentItem?.name}`}
+        open={isViewModalOpen}
+        setOpen={setIsViewModalOpen}
+      />
+
       <Toast
         actionSuccess={t("messages.updated")}
         actionError={t("messages.update")}

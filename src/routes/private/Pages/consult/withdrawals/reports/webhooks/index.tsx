@@ -96,20 +96,22 @@ export const WithdrawWebhooks = () => {
                     setCurrentItem={setCurrentItem}
                     setQuery={setQuery}
                     data={WithdrawWebhooks}
-                    items={WithdrawWebhooks?.items}
+                    items={WithdrawWebhooks?.itens}
                     error={WithdrawWebhooksError}
                     refetch={refetchWithdrawWebhooks}
                     columns={[
-                      { name: "_id", type: "id" },
-                      { name: "user_name", type: "text" },
-                      { name: "webhook_type", type: "translate" },
-                      { name: "success", type: "boolean" },
-                      { name: "failed", type: "boolean" },
-                      { name: "error", type: "text" },
+                    
+                      { name: "user_id", type: "text" },
+                      { name: "merchant_id", type: "text" },
+                      { name: "webhook_url_type_filter", type: "translate" },
+                    
+                      { name: "success_rows", type: "text" },
+                      { name: "failed_rows", type: "text" },
+                      
                       { name: "progress", type: "progress" },
                       { name: "createdAt", type: "date" },
-                      { name: "start_date", type: "date" },
-                      { name: "end_date", type: "date" },
+                      { name: "start_date_filter", type: "date" },
+                      { name: "end_date_filter", type: "date" },
                     ]}
                     loading={isWithdrawWebhooksFetching}
                     actions={[
@@ -141,7 +143,7 @@ export const WithdrawWebhooks = () => {
                     setCurrentItem={setCurrentItem}
                     setQuery={setQuery}
                     data={WithdrawWebhooks}
-                    items={WithdrawWebhooks?.items}
+                    items={WithdrawWebhooks?.itens}
                     error={WithdrawWebhooksError}
                     refetch={refetchWithdrawWebhooks}
                     columns={[
@@ -177,31 +179,28 @@ export const WithdrawWebhooks = () => {
         />
       </Row>
 
-      {isFiltersOpen && (
-        <FiltersModal
-          maxRange
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          haveInitialDate
-          filters={["start_date", "end_date", "partner_id", "merchant_id"]}
-          refetch={refetchWithdrawWebhooks}
-          selectOptions={{}}
-          startDateKeyName="start_date"
-          endDateKeyName="end_date"
-          initialQuery={INITIAL_QUERY}
-        />
-      )}
-      {isViewModalOpen && (
-        <ViewModal
-          item={currentItem}
-          loading={isWithdrawWebhooksFetching}
-          modalName={t("modal.details")}
-          open={isViewModalOpen}
-          setOpen={setIsViewModalOpen}
-        />
-      )}
+      <FiltersModal
+        maxRange
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        haveInitialDate
+        filters={["start_date", "end_date", "partner_id", "merchant_id"]}
+        refetch={refetchWithdrawWebhooks}
+        selectOptions={{}}
+        startDateKeyName="start_date"
+        endDateKeyName="end_date"
+        initialQuery={INITIAL_QUERY}
+      />
+
+      <ViewModal
+        item={currentItem}
+        loading={isWithdrawWebhooksFetching}
+        modalName={t("modal.details")}
+        open={isViewModalOpen}
+        setOpen={setIsViewModalOpen}
+      />
     </Row>
   );
 };

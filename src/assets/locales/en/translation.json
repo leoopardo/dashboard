@@ -437,7 +437,9 @@
     "allows_generate_qrcode": "Allows generate QRCode",
     "license_number": "License number",
     "add_all_columns": "Add all columns",
-    "ip": "IP"
+    "ip": "IP",
+    "reason_name": "Reason",
+    "withdraw_by_month_cant_be_smaller_than_day": "Withdraw by month can't be smaller than withdraw by day"
   },
 
   "modal": {
@@ -758,7 +760,9 @@
     "add_row": "Add row",
     "upload_file": "Upload file",
     "total_rows": "Total rows",
-    "failed_rows": "Failed rows",
+    "failed_rows": "Failed",
+    "success_rows": "Success",
+    
     "created_by_ip": "Created by ip",
     "WAITING": "Waiting",
     "created_by": "Created by",
@@ -1395,6 +1399,10 @@
     "operacoes_devolucoes_manual_pagarMerchant": "Pay merchant",
     "operacoes_devolucoes_manual_atualizarMerchant": "Update merchant",
     "operacoes_devolucoes_manual_pagarUsuarioFinal": "Pay end user",
-    "configuracoes_contas_merchant":"Merchant accounts"
+    "configuracoes_contas_merchant": "Merchant accounts",
+    "cadastros_merchants_responsaveis": "Responsibles",
+    "cadastros_merchants_arquivos": "Files",
+    "financeiro_transferencias_merchantManualPre": "Pré-operations",
+    "financeiro_transferencias_merchantManualPre_aprovar": "Approve"
   }
 }

@@ -11,7 +11,6 @@ import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
-import { Grid } from "@mui/material";
 import { Search } from "@src/components/Inputs/search";
 import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
@@ -28,9 +27,10 @@ import {
   PersonsQuery,
 } from "@src/services/types/register/persons/persons.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Select, Tooltip } from "antd";
+import { Button, Col, Row, Select, Space, Tooltip } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useMediaQuery } from "react-responsive";
 import { useNavigate } from "react-router-dom";
 
 const INITIAL_QUERY: PersonsQuery = {
@@ -46,7 +46,7 @@ export const Persons = () => {
   const { permissions } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
-
+  const isMobile = useMediaQuery({ maxWidth: "750px" });
   const [query, setQuery] = useState<PersonsQuery>(INITIAL_QUERY);
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const [isNewModal, setIsNewModal] = useState<boolean>(false);
@@ -116,13 +116,19 @@ export const Persons = () => {
     });
   }, [currentItem]);
   return (
-    <Grid container style={{ padding: "25px" }}>
-      <Grid
-        container
-        style={{ display: "flex", alignItems: "center" }}
-        spacing={1}
+    <Row
+      gutter={[8, 8]}
+      align="middle"
+      justify="center"
+      style={{ padding: "25px" }}
+    >
+      <Row
+        gutter={[8, 8]}
+        align="middle"
+        justify="start"
+        style={{ width: "100%" }}
       >
-        <Grid item xs={12} md={4} lg={2}>
+        <Col xs={{ span: 24 }} md={{ span: 4 }}>
           <Button
             size="large"
             style={{ width: "100%" }}
@@ -133,41 +139,80 @@ export const Persons = () => {
           >
             {t("table.filters")}
           </Button>
-        </Grid>
-        <Grid item xs={12} md={8} lg={10}>
+        </Col>
+        <Col xs={{ span: 24 }} md={{ span: 20 }}>
           <FilterChips
             startDateKeyName="initial_date"
             endDateKeyName="final_date"
             query={query}
             setQuery={setQuery}
           />
-        </Grid>
-      </Grid>
+        </Col>
+      </Row>
 
-      <Grid container style={{ marginTop: "5px" }} spacing={1}>
-        <Grid item xs={12} md={2} lg={2}>
-          <Select
-            style={{ width: "100%" }}
-            size="large"
-            onChange={(value) => setSearchOption(value)}
-            value={searchOption}
-            placeholder={t("input.options")}
-            options={[
-              { value: "name", label: t("table.name") },
-              { value: "cellphone", label: t("table.cellphone") },
-              { value: "cpf", label: t("table.cpf") },
-              { value: "email", label: t("table.email") },
-            ]}
-          />
-        </Grid>
-        <Grid item xs={12} md={3} lg={3}>
-          <Search
-            query={query}
-            setQuery={setQuery}
-            searchOption={searchOption}
-          />
-        </Grid>
-        <Grid item xs={12} md={3} lg={2}>
+      <Row
+        gutter={[8, 8]}
+        align="middle"
+        justify="start"
+        style={{ width: "100%" }}
+      >
+        <Col xs={{ span: 24 }} md={{ span: 10 }}>
+          {!isMobile ? (
+            <Space.Compact style={{ width: "100%" }} size="large">
+              <Select
+                allowClear
+                onClear={() => {
+                  const q = { ...query };
+                  delete q[
+                    searchOption as "name" | "cpf" | "email" | "cellphone"
+                  ];
+                  setQuery(q);
+                  setSearchOption(undefined);
+                }}
+                style={{ width: "65%" }}
+                size="large"
+                onChange={(value) => setSearchOption(value)}
+                value={searchOption}
+                placeholder={t("input.options")}
+                options={[
+                  { value: "name", label: t("table.name") },
+                  { value: "cellphone", label: t("table.cellphone") },
+                  { value: "cpf", label: t("table.cpf") },
+                  { value: "email", label: t("table.email") },
+                ]}
+              />{" "}
+              <Search
+                query={query}
+                setQuery={setQuery}
+                searchOption={searchOption}
+              />
+            </Space.Compact>
+          ) : (
+            <Select
+              style={{ width: "100%" }}
+              size="large"
+              onChange={(value) => setSearchOption(value)}
+              value={searchOption}
+              placeholder={t("input.options")}
+              options={[
+                { value: "name", label: t("table.name") },
+                { value: "cellphone", label: t("table.cellphone") },
+                { value: "cpf", label: t("table.cpf") },
+                { value: "email", label: t("table.email") },
+              ]}
+            />
+          )}
+        </Col>
+        {isMobile && (
+          <Col xs={{ span: 24 }} md={{ span: 24 }}>
+            <Search
+              query={query}
+              setQuery={setQuery}
+              searchOption={searchOption}
+            />
+          </Col>
+        )}
+        <Col xs={{ span: 24 }} md={{ span: 4 }}>
           <Button
             type="dashed"
             loading={isPersonsDataFetching}
@@ -187,9 +232,9 @@ export const Persons = () => {
           >
             {t("table.clear_filters")}
           </Button>
-        </Grid>
+        </Col>
         {permissions.register.person.person.person_person_create && (
-          <Grid item xs={12} md={3} lg={2}>
+          <Col xs={{ span: 24 }} md={{ span: 4 }}>
             <Button
               type="primary"
               loading={isPersonsDataFetching}
@@ -207,11 +252,11 @@ export const Persons = () => {
             >
               {`${t("buttons.create")} ${t("buttons.person")}`}
             </Button>
-          </Grid>
+          </Col>
         )}
 
         {permissions.register.person.person.person_person_export_csv && (
-          <Grid item xs={12} md={"auto"}>
+          <Col xs={{ span: 24 }} md={{ span: 2 }}>
             <Tooltip
               placement="topRight"
               title={
@@ -234,12 +279,12 @@ export const Persons = () => {
                 CSV
               </Button>
             </Tooltip>
-          </Grid>
+          </Col>
         )}
-      </Grid>
+      </Row>
 
-      <Grid container style={{ marginTop: "15px" }}>
-        <Grid item xs={12}>
+      <Row style={{ width: "100%" }}>
+        <Col xs={24}>
           <CustomTable
             query={query}
             setCurrentItem={setCurrentItem}
@@ -280,86 +325,80 @@ export const Persons = () => {
             label={["name", "cpf"]}
             removeTotal
           />
-        </Grid>
-      </Grid>
+        </Col>
+      </Row>
 
-      {isFiltersOpen && (
-        <FiltersModal
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          filters={[
-            "initial_date",
-            "final_date",
-            "black_list",
-            "flag_pep",
-            "flag_aux_gov",
-            "flag_alert",
-            "state",
-            "city",
-            "gender",
-          ]}
-          refetch={refetchPersonsData}
-          selectOptions={{
-            black_list: ["true", "false"],
-            flag_pep: ["true", "false"],
-            flag_aux_gov: ["true", "false"],
-            flag_alert: ["0", "1", "2", "3", "4", "5"],
-            gender: ["MALE", "FEMALE"],
-          }}
-          startDateKeyName="initial_date"
-          endDateKeyName="final_date"
-          initialQuery={INITIAL_QUERY}
-        />
-      )}
+      <FiltersModal
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        filters={[
+          "initial_date",
+          "final_date",
+          "black_list",
+          "flag_pep",
+          "flag_aux_gov",
+          "flag_alert",
+          "state",
+          "city",
+          "gender",
+        ]}
+        refetch={refetchPersonsData}
+        selectOptions={{
+          black_list: ["true", "false"],
+          flag_pep: ["true", "false"],
+          flag_aux_gov: ["true", "false"],
+          flag_alert: ["0", "1", "2", "3", "4", "5"],
+          gender: ["MALE", "FEMALE"],
+        }}
+        startDateKeyName="initial_date"
+        endDateKeyName="final_date"
+        initialQuery={INITIAL_QUERY}
+      />
 
-      {isNewModal && (
-        <MutateModal
-          type="create"
-          open={isNewModal}
-          setOpen={setIsNewModal}
-          fields={[{ label: "cpf", required: true }]}
-          body={createBody}
-          setBody={setCreateBody}
-          modalName={t("modal.new_person")}
-          submit={PersonMutate}
-          submitLoading={PersonIsLoading}
-          error={PersonError}
-          success={PersonIsSuccess}
-          clear={reset}
-        />
-      )}
-      {isUpdateModalOpen && (
-        <MutateModal
-          type="update"
-          open={isUpdateModalOpen}
-          setOpen={setIsUpdateModalOpen}
-          fields={[
-            { label: "name", required: false },
-            { label: "cnpj", required: false },
-            { label: "cellphone", required: false },
-            { label: "email", required: false },
-            { label: "country", required: false },
-          ]}
-          body={updateBody}
-          setBody={setUpdateBody}
-          modalName={t("modal.update_person")}
-          submit={UpdateMutate}
-          submitLoading={UpdateIsLoading}
-          error={UpdateError}
-          success={UpdateIsSuccess}
-        />
-      )}
-      {isViewModalOpen && (
-        <ViewModal
-          item={currentItem}
-          loading={isPersonsDataFetching}
-          modalName={`${t("modal.person")}: ${currentItem?.name}`}
-          open={isViewModalOpen}
-          setOpen={setIsViewModalOpen}
-        />
-      )}
+      <MutateModal
+        type="create"
+        open={isNewModal}
+        setOpen={setIsNewModal}
+        fields={[{ label: "cpf", required: true }]}
+        body={createBody}
+        setBody={setCreateBody}
+        modalName={t("modal.new_person")}
+        submit={PersonMutate}
+        submitLoading={PersonIsLoading}
+        error={PersonError}
+        success={PersonIsSuccess}
+        clear={reset}
+      />
+
+      <MutateModal
+        type="update"
+        open={isUpdateModalOpen}
+        setOpen={setIsUpdateModalOpen}
+        fields={[
+          { label: "name", required: false },
+          { label: "cnpj", required: false },
+          { label: "cellphone", required: false },
+          { label: "email", required: false },
+          { label: "country", required: false },
+        ]}
+        body={updateBody}
+        setBody={setUpdateBody}
+        modalName={t("modal.update_person")}
+        submit={UpdateMutate}
+        submitLoading={UpdateIsLoading}
+        error={UpdateError}
+        success={UpdateIsSuccess}
+      />
+
+      <ViewModal
+        item={currentItem}
+        loading={isPersonsDataFetching}
+        modalName={`${t("modal.person")}: ${currentItem?.name}`}
+        open={isViewModalOpen}
+        setOpen={setIsViewModalOpen}
+      />
 
       <ExportCustomReportsModal
         open={isExportReportsOpen}
@@ -389,6 +428,6 @@ export const Persons = () => {
         error={PersonError}
         success={PersonIsSuccess}
       />
-    </Grid>
+    </Row>
   );
 };

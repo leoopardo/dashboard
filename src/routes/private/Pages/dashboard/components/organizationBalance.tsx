@@ -2,6 +2,7 @@
 import { ReloadOutlined } from "@ant-design/icons";
 import { useGetOrganizationBalance } from "@src/services/consult/organization/balance/getPerBank";
 import { defaultTheme } from "@src/styles/defaultTheme";
+import { moneyFormatter } from "@src/utils/moneyFormatter";
 import { Button, Card, Col, Row, Statistic } from "antd";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -30,10 +31,11 @@ export const OrganizationBalance = () => {
               {isHoverCurrency === "real" ? (
                 <Statistic
                   title={t("table.balance_to_transactions")}
-                  value={OrganizationBalance?.balance_to_transactions ?? 0}
+                  value={moneyFormatter(
+                    OrganizationBalance?.balance_to_transactions ?? 0
+                  )}
                   loading={isOrganizationBalanceFetching}
                   precision={2}
-                  prefix="R$"
                   valueStyle={{
                     color: defaultTheme.colors.info,
                     fontSize: "22px",
@@ -43,10 +45,11 @@ export const OrganizationBalance = () => {
                 <>
                   <Statistic
                     title={t("table.balance_to_transactions")}
-                    value={OrganizationBalance?.balance_to_transactions ?? 0}
+                    value={moneyFormatter(
+                      OrganizationBalance?.balance_to_transactions ?? 0
+                    )}
                     loading={isOrganizationBalanceFetching}
                     precision={2}
-                    prefix="R$"
                     valueStyle={{
                       fontSize: "16px",
                     }}
@@ -150,9 +153,10 @@ export const OrganizationBalance = () => {
               {isHoverCurrency === "real" ? (
                 <Statistic
                   title={t("table.balance_to_payment")}
-                  value={OrganizationBalance?.balance_to_payment ?? 0}
+                  value={moneyFormatter(
+                    OrganizationBalance?.balance_to_payment ?? 0
+                  )}
                   precision={2}
-                  prefix="R$"
                   valueStyle={{
                     color: defaultTheme.colors.error,
                     fontSize: "22px",
@@ -162,9 +166,10 @@ export const OrganizationBalance = () => {
                 <>
                   <Statistic
                     title={t("table.balance_to_payment")}
-                    value={OrganizationBalance?.balance_to_payment ?? 0}
+                    value={moneyFormatter(
+                      OrganizationBalance?.balance_to_payment ?? 0
+                    )}
                     precision={2}
-                    prefix="R$"
                     valueStyle={{
                       fontSize: "16px",
                     }}
@@ -256,9 +261,10 @@ export const OrganizationBalance = () => {
               {isHoverCurrency === "real" ? (
                 <Statistic
                   title={t("table.balance_reserved")}
-                  value={OrganizationBalance?.balance_reserved ?? 0}
+                  value={moneyFormatter(
+                    OrganizationBalance?.balance_reserved ?? 0
+                  )}
                   precision={2}
-                  prefix="R$"
                   valueStyle={{
                     color: defaultTheme.colors.waiting,
                     fontSize: "22px",
@@ -268,9 +274,10 @@ export const OrganizationBalance = () => {
                 <>
                   <Statistic
                     title={t("table.balance_reserved")}
-                    value={OrganizationBalance?.balance_reserved ?? 0}
+                    value={moneyFormatter(
+                      OrganizationBalance?.balance_reserved ?? 0
+                    )}
                     precision={2}
-                    prefix="R$"
                     valueStyle={{
                       fontSize: "16px",
                     }}
@@ -362,9 +369,10 @@ export const OrganizationBalance = () => {
               {isHoverCurrency === "real" ? (
                 <Statistic
                   title="Total"
-                  value={OrganizationBalance?.balance_total ?? 0}
+                  value={moneyFormatter(
+                    OrganizationBalance?.balance_total ?? 0
+                  )}
                   precision={2}
-                  prefix="R$"
                   valueStyle={{
                     color: defaultTheme.colors.secondary,
                     fontSize: "22px",
@@ -374,9 +382,10 @@ export const OrganizationBalance = () => {
                 <>
                   <Statistic
                     title="Total"
-                    value={OrganizationBalance?.balance_total ?? 0}
+                    value={moneyFormatter(
+                      OrganizationBalance?.balance_total ?? 0
+                    )}
                     precision={2}
-                    prefix="R$"
                     valueStyle={{
                       fontSize: "16px",
                     }}

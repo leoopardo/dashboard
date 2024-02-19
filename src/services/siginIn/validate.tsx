@@ -54,7 +54,7 @@ export function useValidate(rememberMe?: boolean, token?: string) {
     toast.error(t("error.disabled_entity"));
 
     disabledNotification = true;
-   
+
     secureLocalStorage.removeItem("token");
     sessionStorage.removeItem("token");
     queryClient.cancelMutations();

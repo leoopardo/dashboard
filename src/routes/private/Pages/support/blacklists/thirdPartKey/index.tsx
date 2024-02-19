@@ -154,7 +154,6 @@ export const ThirdPartKeyBlacklist = () => {
         </Grid>
       </Grid>
 
-      {isFiltersOpen && (
         <FiltersModal
           open={isFiltersOpen}
           setOpen={setIsFiltersOpen}
@@ -167,7 +166,6 @@ export const ThirdPartKeyBlacklist = () => {
           endDateKeyName="createdat_end"
           initialQuery={INITIAL_QUERY}
         />
-      )}
 
       <Toast
         actionSuccess={t("messages.deleted")}

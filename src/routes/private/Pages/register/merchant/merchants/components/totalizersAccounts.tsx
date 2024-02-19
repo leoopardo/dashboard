@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Card, Skeleton, Statistic } from "antd";
 import { Grid } from "@mui/material";
 import { defaultTheme } from "@src/styles/defaultTheme";

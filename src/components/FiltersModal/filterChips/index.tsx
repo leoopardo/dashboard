@@ -116,10 +116,23 @@ export const FilterChips = ({
             return query[startDateKeyName] && startDateKeyName !== "" ? (
               <Col key={key}>
                 <Tag
+                  title={`${`${new Date(
+                    query[startDateKeyName] &&
+                      `${query[startDateKeyName]?.split("Z")[0]}Z`
+                  ).toLocaleDateString()} ${new Date(
+                    query[startDateKeyName] &&
+                      `${query[startDateKeyName]?.split("Z")[0]}Z`
+                  ).toLocaleTimeString()}`} - ${`${new Date(
+                    query[endDateKeyName] &&
+                      `${query[endDateKeyName]?.split("Z")[0]}Z`
+                  ).toLocaleDateString()} ${new Date(
+                    query[endDateKeyName] &&
+                      `${query[endDateKeyName]?.split("Z")[0]}Z`
+                  ).toLocaleTimeString()}`} `}
                   data-test-id="filter-chip-date"
                   key={key}
                   style={{
-                    width: "100%",
+                    maxWidth: "330px",
                     textOverflow: "ellipsis",
                     overflow: "hidden",
                     wordBreak: "break-all",

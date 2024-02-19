@@ -63,6 +63,7 @@ export const ExportCustomReportsModal = ({
   const [preview, setPreview] = useState<any>();
   const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(false);
+  const [selectAll, setSelectAll] = useState<boolean>(false);
 
   const [api, contextHolder] = notification.useNotification();
 
@@ -87,8 +88,9 @@ export const ExportCustomReportsModal = ({
   };
 
   const handleSelectAll = (e: CheckboxChangeEvent) => {
-    e.target.checked ?  setSelectedFields(fields ?? []) : setSelectedFields([])
-  }
+    setSelectAll(e.target.checked);
+    e.target.checked ? setSelectedFields(fields ?? []) : setSelectedFields([]);
+  };
 
   useEffect(() => {
     const storage: string[] | undefined = `${secureLocalStorage?.getItem(
@@ -100,8 +102,18 @@ export const ExportCustomReportsModal = ({
     )}`;
 
     if (storage && storage[0] !== "null") setSelectedFields(storage);
+
     if (commaSeparator && setIsComma) setIsComma(commaSeparator == "true");
   }, []);
+
+  useEffect(() => {
+    const storage: string[] | undefined = `${secureLocalStorage?.getItem(
+      reportName
+    )}`?.split("%");
+    if (storage.length === fields?.length) {
+      setSelectAll(true);
+    }
+  }, [fields]);
 
   useEffect(() => {
     const obj1: any = {};
@@ -190,7 +202,13 @@ export const ExportCustomReportsModal = ({
                   />
                 </Form.Item>
               )}
-              <Checkbox style={{marginBottom: "20px"}} onChange={handleSelectAll}>{t("input.add_all_columns")}</Checkbox>
+              <Checkbox
+                style={{ marginBottom: "20px" }}
+                onChange={handleSelectAll}
+                checked={selectAll}
+              >
+                {t("input.add_all_columns")}
+              </Checkbox>
 
               <Form.Item label={t("input.csv_columns")} required>
                 <Space.Compact style={{ width: "100%" }} size="large">
@@ -224,7 +242,6 @@ export const ExportCustomReportsModal = ({
               </Form.Item>
             </Form>
           </Col>
-
 
           {selectedFields.length >= 1 && (
             <Col span={24}>

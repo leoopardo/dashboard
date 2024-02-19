@@ -4,6 +4,7 @@ import { useGetBankBalance } from "@src/services/consult/organization/bankBalanc
 import { BankItem } from "@src/services/types/banks.interface";
 import { defaultTheme } from "@src/styles/defaultTheme";
 import BanksBanners from "@src/utils/BankBanners";
+import { moneyFormatter } from "@src/utils/moneyFormatter";
 import { Card, Spin, Statistic, Tooltip, Typography } from "antd";
 import { motion } from "framer-motion";
 import moment from "moment";
@@ -106,18 +107,16 @@ export const BankCard = ({ bank }: BankcardInterface) => {
       >
         <Statistic
           title="Total:"
-          value={OrganizationBankBalance?.value}
+          value={moneyFormatter(OrganizationBankBalance?.value || 0)}
           precision={2}
-          prefix="R$"
           valueStyle={{
             fontSize: "16px",
           }}
         />
         <Statistic
           title={`${t("table.blocked_value")}:`}
-          value={OrganizationBankBalance?.value_blocked}
+          value={moneyFormatter(OrganizationBankBalance?.value_blocked || 0)}
           precision={2}
-          prefix="R$"
           valueStyle={{
             fontSize: "14px",
             color: defaultTheme.colors.error,

@@ -69,6 +69,7 @@ export const Partners = () => {
     isSuccessPartnersTotalsData,
     refetchPartnersTotalsData,
   } = useGetPartnersTotals(query);
+  const [isTuorOpen, setIsTuorOpen] = useState<boolean>(false);
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [isNewCategorieModal, setIsNewCategorieModal] =
     useState<boolean>(false);
@@ -132,7 +133,6 @@ export const Partners = () => {
     });
   }, [currentItem]);
 
-  const [isTuorOpen, setIsTuorOpen] = useState<boolean>(false);
   const ref = useRef(null);
   const ref1 = useRef(null);
   const ref2 = useRef(null);
@@ -317,74 +317,68 @@ export const Partners = () => {
         </Grid>
       </Grid>
 
-      {isFiltersOpen && (
-        <FiltersModal
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          filters={["start_date", "end_date", "status"]}
-          refetch={refetchPartnersData}
-          selectOptions={{}}
-          startDateKeyName="start_date"
-          endDateKeyName="end_date"
-          initialQuery={INITIAL_QUERY}
-        />
-      )}
+      <FiltersModal
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        filters={["start_date", "end_date", "status"]}
+        refetch={refetchPartnersData}
+        selectOptions={{}}
+        startDateKeyName="start_date"
+        endDateKeyName="end_date"
+        initialQuery={INITIAL_QUERY}
+      />
 
-      {isNewCategorieModal && (
-        <MutateModal
-          type="create"
-          open={isNewCategorieModal}
-          setOpen={setIsNewCategorieModal}
-          fields={[
-            { label: "name", required: true },
-            { label: "cnpj", required: false },
-            { label: "cellphone", required: false },
-            { label: "email", required: false },
-            { label: "country", required: true },
-          ]}
-          body={createBody}
-          setBody={setCreateBody}
-          modalName={t("modal.new_partner")}
-          submit={PartnerMutate}
-          submitLoading={PartnerIsLoading}
-          error={PartnerError}
-          success={PartnerIsSuccess}
-          clear={reset}
-        />
-      )}
-      {isUpdateCategorieModalOpen && (
-        <MutateModal
-          type="update"
-          open={isUpdateCategorieModalOpen}
-          setOpen={setIsUpdateCategorieModalOpen}
-          fields={[
-            { label: "name", required: false },
-            { label: "cnpj", required: false },
-            { label: "cellphone", required: false },
-            { label: "email", required: false },
-            { label: "country", required: false },
-          ]}
-          body={updateBody}
-          setBody={setUpdateBody}
-          modalName={t("modal.update_category")}
-          submit={UpdateMutate}
-          submitLoading={UpdateIsLoading}
-          error={UpdateError}
-          success={UpdateIsSuccess}
-          clear={UpdateReset}
-        />
-      )}
-      {isViewModalOpen && (
-        <ViewModal
-          item={currentItem}
-          loading={isPartnersDataFetching}
-          modalName={`${t("menus.partner")}: ${currentItem?.name}`}
-          open={isViewModalOpen}
-          setOpen={setIsViewModalOpen}
-        />
-      )}
+      <MutateModal
+        type="create"
+        open={isNewCategorieModal}
+        setOpen={setIsNewCategorieModal}
+        fields={[
+          { label: "name", required: true },
+          { label: "cnpj", required: false },
+          { label: "cellphone", required: false },
+          { label: "email", required: false },
+          { label: "country", required: true },
+        ]}
+        body={createBody}
+        setBody={setCreateBody}
+        modalName={t("modal.new_partner")}
+        submit={PartnerMutate}
+        submitLoading={PartnerIsLoading}
+        error={PartnerError}
+        success={PartnerIsSuccess}
+        clear={reset}
+      />
+      <MutateModal
+        type="update"
+        open={isUpdateCategorieModalOpen}
+        setOpen={setIsUpdateCategorieModalOpen}
+        fields={[
+          { label: "name", required: false },
+          { label: "cnpj", required: false },
+          { label: "cellphone", required: false },
+          { label: "email", required: false },
+          { label: "country", required: false },
+        ]}
+        body={updateBody}
+        setBody={setUpdateBody}
+        modalName={t("modal.update_category")}
+        submit={UpdateMutate}
+        submitLoading={UpdateIsLoading}
+        error={UpdateError}
+        success={UpdateIsSuccess}
+        clear={UpdateReset}
+      />
+
+      <ViewModal
+        item={currentItem}
+        loading={isPartnersDataFetching}
+        modalName={`${t("menus.partner")}: ${currentItem?.name}`}
+        open={isViewModalOpen}
+        setOpen={setIsViewModalOpen}
+      />
+
       <Toast
         actionSuccess={t("messages.updated")}
         actionError={t("messages.update")}

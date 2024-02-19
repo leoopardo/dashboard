@@ -90,7 +90,9 @@ export const OrganizationTransfersBetweenAccounts = () => {
           <Card bordered={false} style={{ width: "100%" }}>
             <Statistic
               title={t("table.success")}
-              value={moneyFormatter(TransferBetweenAccountsData?.total_success || 0)}
+              value={moneyFormatter(
+                TransferBetweenAccountsData?.total_success || 0
+              )}
               precision={2}
               valueStyle={{ color: defaultTheme.colors.success }}
               loading={isTransferBetweenAccountsDataFetching}
@@ -101,9 +103,7 @@ export const OrganizationTransfersBetweenAccounts = () => {
           <Card bordered={false} style={{ width: "100%" }}>
             <Statistic
               title={t("table.processing")}
-              value={moneyFormatter(
-                199.989
-              )}
+              value={moneyFormatter(199.989)}
               precision={2}
               valueStyle={{ color: defaultTheme.colors.processing }}
               loading={isTransferBetweenAccountsDataFetching}
@@ -114,7 +114,9 @@ export const OrganizationTransfersBetweenAccounts = () => {
           <Card bordered={false} style={{ width: "100%" }}>
             <Statistic
               title={t("table.canceled")}
-              value={moneyFormatter(TransferBetweenAccountsData?.total_canceled || 0)}
+              value={moneyFormatter(
+                TransferBetweenAccountsData?.total_canceled || 0
+              )}
               precision={2}
               valueStyle={{ color: defaultTheme.colors.canceled }}
               loading={isTransferBetweenAccountsDataFetching}
@@ -218,109 +220,105 @@ export const OrganizationTransfersBetweenAccounts = () => {
           />
         </Col>
       </Row>
-      {isFiltersOpen && (
-        <FiltersModal
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          filters={["start_date", "end_date", "from", "to"]}
-          refetch={() => {
-            return "";
-          }}
-          selectOptions={{
-            from: [
-              "balance_reserved",
-              "balance_to_payment",
-              "balance_to_transactions",
-            ],
-            to: [
-              "balance_reserved",
-              "balance_to_payment",
-              "balance_to_transactions",
-            ],
-          }}
-          startDateKeyName="start_date"
-          endDateKeyName="end_date"
-          initialQuery={INITIAL_QUERY}
-        />
-      )}
-      {isNewTransferModalOpen && (
-        <MutateModal
-          type="create"
-          validateToken
-          validateTokenAction="ORGANIZATION_BALANCE_TRANSFER_CREATE"
-          open={isNewTransferModalOpen}
-          setOpen={setIsNewTransferModalOpen}
-          fields={[
-            {
-              label: "from",
-              required: true,
-              selectOption: true,
-            },
-            { label: "to", required: true, selectOption: true },
-            { label: "value", required: true },
-          ]}
-          body={body}
-          setBody={setBody}
-          selectOptions={{
-            from:
-              user?.type === 1 || user?.type === 2
-                ? [
-                    {
-                      label: "balance_reserved",
-                      value: "balance_reserved",
-                    },
-                    {
-                      label: "balance_to_payment",
-                      value: "balance_to_payment",
-                    },
-                    {
-                      label: "balance_to_transactions",
-                      value: "balance_to_transactions",
-                    },
-                  ]
-                : [
-                    {
-                      label: "balance_to_payment",
-                      value: "balance_to_payment",
-                    },
-                    {
-                      label: "balance_to_transactions",
-                      value: "balance_to_transactions",
-                    },
-                  ],
-            to: [
-              { label: "balance_reserved", value: "balance_reserved" },
-              {
-                label: "balance_to_payment",
-                value: "balance_to_payment",
-              },
-              {
-                label: "balance_to_transactions",
-                value: "balance_to_transactions",
-              },
-            ],
-          }}
-          modalName={t("table.transfer")}
-          submit={mutate}
-          clear={reset}
-          submitLoading={isLoading}
-          error={error}
-          success={isSuccess}
-          submitText={`${t("buttons.create")}`}
-        />
-      )}
 
-      {isViewModalOpen && (
-        <ViewModal
-          item={currentItem}
-          loading={isTransferBetweenAccountsDataFetching}
-          modalName={t("actions.details")}
-          setOpen={setIsViewModalOpen}
-          open={isViewModalOpen}
-        />
-      )}
+      <FiltersModal
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        filters={["start_date", "end_date", "from", "to"]}
+        refetch={() => {
+          return "";
+        }}
+        selectOptions={{
+          from: [
+            "balance_reserved",
+            "balance_to_payment",
+            "balance_to_transactions",
+          ],
+          to: [
+            "balance_reserved",
+            "balance_to_payment",
+            "balance_to_transactions",
+          ],
+        }}
+        startDateKeyName="start_date"
+        endDateKeyName="end_date"
+        initialQuery={INITIAL_QUERY}
+      />
+
+      <MutateModal
+        type="create"
+        validateToken
+        validateTokenAction="ORGANIZATION_BALANCE_TRANSFER_CREATE"
+        open={isNewTransferModalOpen}
+        setOpen={setIsNewTransferModalOpen}
+        fields={[
+          {
+            label: "from",
+            required: true,
+            selectOption: true,
+          },
+          { label: "to", required: true, selectOption: true },
+          { label: "value", required: true },
+        ]}
+        body={body}
+        setBody={setBody}
+        selectOptions={{
+          from:
+            user?.type === 1 || user?.type === 2
+              ? [
+                  {
+                    label: "balance_reserved",
+                    value: "balance_reserved",
+                  },
+                  {
+                    label: "balance_to_payment",
+                    value: "balance_to_payment",
+                  },
+                  {
+                    label: "balance_to_transactions",
+                    value: "balance_to_transactions",
+                  },
+                ]
+              : [
+                  {
+                    label: "balance_to_payment",
+                    value: "balance_to_payment",
+                  },
+                  {
+                    label: "balance_to_transactions",
+                    value: "balance_to_transactions",
+                  },
+                ],
+          to: [
+            { label: "balance_reserved", value: "balance_reserved" },
+            {
+              label: "balance_to_payment",
+              value: "balance_to_payment",
+            },
+            {
+              label: "balance_to_transactions",
+              value: "balance_to_transactions",
+            },
+          ],
+        }}
+        modalName={t("table.transfer")}
+        submit={mutate}
+        clear={reset}
+        submitLoading={isLoading}
+        error={error}
+        success={isSuccess}
+        submitText={`${t("buttons.create")}`}
+      />
+
+      <ViewModal
+        item={currentItem}
+        loading={isTransferBetweenAccountsDataFetching}
+        modalName={t("actions.details")}
+        setOpen={setIsViewModalOpen}
+        open={isViewModalOpen}
+      />
 
       <Toast
         actionError={t("messages.create")}

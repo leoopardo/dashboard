@@ -19,13 +19,13 @@ export interface generatedDepositTotalQuery {
   reference_id?: string;
   buyer_document?: string;
   payer_document?: string;
-  delivered_at?: boolean;
+  delivered_at?: "ttue" | "false";
   buyer_name?: string;
   payer_name?: string;
   fields?: any;
   comma_separate_value?: boolean;
   description?: string;
-  delivered_at_secondary?: boolean;
+  delivered_at_secondary?: "true" | "false";
 }
 
 export interface generatedDepositRowsQuery {

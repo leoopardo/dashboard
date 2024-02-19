@@ -188,29 +188,26 @@ export const CostumerBanks = () => {
         </Grid>
       </Grid>
 
-      {isFiltersOpen && (
-        <FiltersModal
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          filters={["start_date", "end_date"]}
-          refetch={refetchClientBankList}
-          selectOptions={{}}
-          startDateKeyName="start_date"
-          endDateKeyName="end_date"
-          initialQuery={INITIAL_QUERY}
-        />
-      )}
-      {isViewModalOpen && (
-        <ViewModal
-          item={currentItem}
-          loading={isClientBankListFetching}
-          modalName={`${t("menus.partner")}: ${currentItem?._id}`}
-          open={isViewModalOpen}
-          setOpen={setIsViewModalOpen}
-        />
-      )}
+      <FiltersModal
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        filters={["start_date", "end_date"]}
+        refetch={refetchClientBankList}
+        selectOptions={{}}
+        startDateKeyName="start_date"
+        endDateKeyName="end_date"
+        initialQuery={INITIAL_QUERY}
+      />
+
+      <ViewModal
+        item={currentItem}
+        loading={isClientBankListFetching}
+        modalName={`${t("menus.partner")}: ${currentItem?._id}`}
+        open={isViewModalOpen}
+        setOpen={setIsViewModalOpen}
+      />
     </Grid>
   );
 };

@@ -83,7 +83,10 @@ export const NewUserModal = ({
   });
 
   function handleChangeUserBody(event: any) {
-    setBody((state) => ({ ...state, [event.target.name]: event.target.value || null }));
+    setBody((state) => ({
+      ...state,
+      [event.target.name]: event.target.value || null,
+    }));
   }
 
   function CreateUser() {

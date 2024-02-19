@@ -18,6 +18,7 @@ export const OrganizationUserReports = () => {
     limit: 25,
     page: 1,
   };
+  const { t } = useTranslation();
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [query, setQuery] = useState<ReportsQuery>(INITIAL_QUERY);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
@@ -39,7 +40,6 @@ export const OrganizationUserReports = () => {
     currentItem?.report_url ? setDisable(false) : setDisable(true);
   }, [currentItem]);
 
-  const { t } = useTranslation();
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid container spacing={1}>
@@ -126,31 +126,28 @@ export const OrganizationUserReports = () => {
         </Grid>
       </Grid>
 
-      {isFiltersOpen && (
-        <FiltersModal
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          filters={["createdat_start", "createdat_end"]}
-          refetch={() => {
-            return;
-          }}
-          selectOptions={{}}
-          startDateKeyName="createdat_start"
-          endDateKeyName="createdat_end"
-          initialQuery={INITIAL_QUERY}
-        />
-      )}
-      {isViewModalOpen && (
-        <ViewModal
-          open={isViewModalOpen}
-          setOpen={setIsViewModalOpen}
-          item={currentItem}
-          loading={false}
-          modalName={t("modal.report_details")}
-        />
-      )}
+      <FiltersModal
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        filters={["createdat_start", "createdat_end"]}
+        refetch={() => {
+          return;
+        }}
+        selectOptions={{}}
+        startDateKeyName="createdat_start"
+        endDateKeyName="createdat_end"
+        initialQuery={INITIAL_QUERY}
+      />
+
+      <ViewModal
+        open={isViewModalOpen}
+        setOpen={setIsViewModalOpen}
+        item={currentItem}
+        loading={false}
+        modalName={t("modal.report_details")}
+      />
     </Grid>
   );
 };

@@ -10,20 +10,20 @@ import { moneyFormatter } from "@src/utils/moneyFormatter";
 
 export const TotalFinancial = ({ query, chart }: TableProps) => {
   const { t } = useTranslation();
-  const {handleChangeError} = useErrorContext()
+  const { handleChangeError } = useErrorContext();
   const { RankingData, RankingError, isRankingFetching, RankingDataSuccess } =
     useGetMerchantRanking("value", "total", query);
 
-       useEffect(() => {
-      if (RankingDataSuccess) {
-        handleChangeError({ rankingValue: false });
-      }
-  
-      if (RankingError) {
-        handleChangeError({ rankingValue: true });
-      }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [RankingError, RankingDataSuccess]);
+  useEffect(() => {
+    if (RankingDataSuccess) {
+      handleChangeError({ rankingValue: false });
+    }
+
+    if (RankingError) {
+      handleChangeError({ rankingValue: true });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [RankingError, RankingDataSuccess]);
 
   return chart ? (
     <>
@@ -90,7 +90,7 @@ export const TotalFinancial = ({ query, chart }: TableProps) => {
     </>
   ) : (
     <CustomTable
-    size="small"
+      size="small"
       query={{}}
       setCurrentItem={() => {
         return;

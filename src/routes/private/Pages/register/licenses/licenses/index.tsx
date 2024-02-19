@@ -102,9 +102,10 @@ export const Licenses = () => {
     reset,
   } = useCreateLicense(createBody);
 
-  const { deleteLicenseMutate, deleteLicenseError, deleteLicenseIsSuccess } = useDeleteLicense({
-    license_id: currentItem?.id,
-  });
+  const { deleteLicenseMutate, deleteLicenseError, deleteLicenseIsSuccess } =
+    useDeleteLicense({
+      license_id: currentItem?.id,
+    });
 
   useEffect(() => {
     isSuccessLicenseDataTotalData && refetchLicenseDataTotalData();
@@ -251,7 +252,7 @@ export const Licenses = () => {
                   navigate("update", { state: item });
                 },
               },
-               permissions.register.licenses.licenses.license_delete && {
+              permissions.register.licenses.licenses.license_delete && {
                 label: "delete",
                 icon: <DeleteOutlined style={{ fontSize: "20px" }} />,
                 onClick: () => {
@@ -298,54 +299,49 @@ export const Licenses = () => {
         </Grid>
       </Grid>
 
-      {isFiltersOpen && (
-        <FiltersModal
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          filters={["start_date", "end_date", "status"]}
-          refetch={refetchLicenseData}
-          selectOptions={{}}
-          startDateKeyName="start_date"
-          endDateKeyName="end_date"
-          initialQuery={INITIAL_QUERY}
-        />
-      )}
+      <FiltersModal
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        filters={["start_date", "end_date", "status"]}
+        refetch={refetchLicenseData}
+        selectOptions={{}}
+        startDateKeyName="start_date"
+        endDateKeyName="end_date"
+        initialQuery={INITIAL_QUERY}
+      />
 
-      {isNewLicenseModal && (
-        <MutateModal
-          type="create"
-          open={isNewLicenseModal}
-          setOpen={setIsNewLicenseModal}
-          fields={[
-            { label: "validity_date", required: false },
-            { label: "name", required: true },
-            { label: "number", required: false, head: "license_number" },
-            { label: "country", required: false },
-            { label: "status", required: false },
-            { label: "indeterminate_validity", required: false },
-          ]}
-          body={createBody}
-          setBody={setCreateBody}
-          modalName={t("modal.new_license")}
-          submit={LicenseMutate}
-          submitLoading={LicenseIsLoading}
-          error={LicenseError}
-          success={LicenseIsSuccess}
-          clear={reset}
-        />
-      )}
+      <MutateModal
+        type="create"
+        open={isNewLicenseModal}
+        setOpen={setIsNewLicenseModal}
+        fields={[
+          { label: "validity_date", required: false },
+          { label: "name", required: true },
+          { label: "number", required: false, head: "license_number" },
+          { label: "country", required: false },
+          { label: "status", required: false },
+          { label: "indeterminate_validity", required: false },
+        ]}
+        body={createBody}
+        setBody={setCreateBody}
+        modalName={t("modal.new_license")}
+        submit={LicenseMutate}
+        submitLoading={LicenseIsLoading}
+        error={LicenseError}
+        success={LicenseIsSuccess}
+        clear={reset}
+      />
 
-      {isViewModalOpen && (
-        <ViewModal
-          item={currentItem}
-          loading={isLicenseDataFetching}
-          modalName={`${t("menus.licenses")}: ${currentItem?.name}`}
-          open={isViewModalOpen}
-          setOpen={setIsViewModalOpen}
-        />
-      )}
+      <ViewModal
+        item={currentItem}
+        loading={isLicenseDataFetching}
+        modalName={`${t("menus.licenses")}: ${currentItem?.name}`}
+        open={isViewModalOpen}
+        setOpen={setIsViewModalOpen}
+      />
+
       <Toast
         actionSuccess={t("messages.created")}
         actionError={t("messages.create")}

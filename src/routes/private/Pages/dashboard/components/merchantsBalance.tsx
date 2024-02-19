@@ -25,10 +25,11 @@ export const MerchantsBalance = ({
   useEffect(() => {
     refetchMerchantBalance();
   }, [query]);
+  
   return (
     <Col span={24}>
-      <Divider orientation="left" data-test-id="divider-1" >
-        <Typography.Title ref={ref} data-test-id="text-1" level={4} >
+      <Divider orientation="left" data-test-id="divider-1">
+        <Typography.Title ref={ref} data-test-id="text-1" level={4}>
           {t("table.merchants_balance")}
         </Typography.Title>
       </Divider>
