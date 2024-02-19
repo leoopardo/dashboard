@@ -205,7 +205,7 @@ function App() {
                       >
                         <Content
                           style={{
-                            padding: 2,
+                            padding: 0,
                             margin: 0,
                             height: "100%",
                             background:

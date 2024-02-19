@@ -25,6 +25,7 @@ import {
   Tabs,
   Tooltip,
   Typography,
+  theme,
 } from "antd";
 import moment from "moment";
 import { useRef, useState } from "react";
@@ -61,7 +62,7 @@ const INITIAL_QUERY = {
 export const Dashboard = () => {
   const { t } = useTranslation();
   const { error } = useErrorContext();
-  const { permissions, type } = queryClient.getQueryData(
+  const { permissions } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
   const user = queryClient.getQueryData("validate") as ValidateInterface;
@@ -137,13 +138,10 @@ export const Dashboard = () => {
   return (
     <Row
       style={{
-        margin: "0 20px",
-        transform:
-          permissions?.report?.paybrokers?.balance
-            ?.report_paybrokers_balance_list ||
-          permissions?.report?.merchant?.balance?.report_merchant_balance_list
-            ? "translateY(17px)"
-            : "translateY(0px)",
+        backgroundColor: theme.useToken().token.colorBgLayout,
+        minHeight: "100vh",
+        width: "100%",
+        padding: 26,
       }}
     >
       {(permissions?.report?.paybrokers?.balance
@@ -153,7 +151,6 @@ export const Dashboard = () => {
         <Layout
           ref={ref1}
           style={{
-            margin: -28,
             marginBottom:
               permissions?.report?.merchant?.balance
                 ?.report_merchant_balance_list &&
@@ -161,9 +158,7 @@ export const Dashboard = () => {
                 ?.report_paybrokers_balance_list
                 ? 25
                 : -36,
-            paddingTop: 20,
             paddingBottom: 16,
-            paddingLeft: 6,
             display: "flex",
             justifyContent: "center",
           }}
@@ -194,19 +189,13 @@ export const Dashboard = () => {
               ?.report_paybrokers_balance_list
               ? 40
               : 0,
-          transform: permissions?.report?.paybrokers?.bank_balance?.menu
-            ? ""
-            : type === 2
-            ? "translateY(-17px)"
-            : "translateY(-74px)",
+
           paddingTop: permissions?.report?.paybrokers?.bank_balance?.menu
             ? 15
             : 0,
           paddingBottom: permissions?.report?.paybrokers?.bank_balance?.menu
             ? 15
             : 0,
-          paddingLeft: 15,
-          paddingRight: 15,
         }}
       >
         {permissions?.report?.paybrokers?.bank_balance?.menu && (
@@ -374,13 +363,6 @@ export const Dashboard = () => {
           <Layout
             style={{
               width: "100%",
-              marginLeft: "-40px",
-              marginRight: "-40px",
-              paddingBottom: 20,
-              paddingTop: 20,
-              marginTop: 8,
-              paddingLeft: 8,
-              paddingRight: 8,
             }}
           >
             <Row gutter={[4, 4]} align="middle">
@@ -446,7 +428,6 @@ export const Dashboard = () => {
             <Col
               span={24}
               style={{
-                paddingTop: "20px",
                 paddingBottom: "60px",
               }}
             >
@@ -488,13 +469,9 @@ export const Dashboard = () => {
             <Layout
               style={{
                 width: "100%",
-                marginLeft: -50,
-                marginRight: -50,
                 marginTop: 25,
                 paddingBottom: 20,
                 paddingTop: 20,
-                paddingLeft: 12,
-                paddingRight: 12,
               }}
             >
               <MerchantsBalance
