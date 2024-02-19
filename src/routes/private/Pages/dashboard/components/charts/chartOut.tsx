@@ -26,6 +26,7 @@ export const ChartOut = ({ query }: ChartInInterface) => {
     initial_date: query?.start_date,
     final_date: query?.end_date,
   });
+  
   useEffect(() => {
     refetchWithdrawalsTotal();
   }, [query]);

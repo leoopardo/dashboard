@@ -26,11 +26,11 @@ import { CurrencyInput } from "react-currency-mask";
 import { useTranslation } from "react-i18next";
 
 export const GeneralConfigs = () => {
+  const { t } = useTranslation();
   const { permissions } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
 
-  const { t } = useTranslation();
   const { data, isFetching } = useGetGeneralconfigs();
   const [activeKey, setactiveKey] = useState<"1" | "2">(
     permissions.register.paybrokers.general_configs
@@ -66,7 +66,6 @@ export const GeneralConfigs = () => {
   const refCashInPermission = useRef(null);
   const refAutoSwitchBanks = useRef(null);
   const refCashOutPermission = useRef(null);
-  // const refCheckLast = useRef(null);
   const refCallbackDeposit = useRef(null);
   const refCallbackWithdraw = useRef(null);
   const refCashInDisabledMessage = useRef(null);
@@ -74,7 +73,6 @@ export const GeneralConfigs = () => {
   const reftimeToPreventRepeatedWithdraw = useRef(null);
   const refMaxValueToSwitchBankAcc = useRef(null);
   const refMinValueToSwitchBankAcc = useRef(null);
-  // const refCheckLastWaitinPix = useRef(null);
   const refPaybrokersQrCode = useRef(null);
   const refTimeReceiveAfterExpire = useRef(null);
   const tabFinancial = document.querySelector('[data-node-key="1"]');
@@ -315,7 +313,6 @@ export const GeneralConfigs = () => {
                   // }),
                 ]}
               >
-              
                 <CurrencyInput
                   data-test-id="cash_out_max_value"
                   onChangeValue={(_event, originalValue) => {

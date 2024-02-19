@@ -77,7 +77,6 @@ export const FeesTab = (props: { id?: string }) => {
   };
 
   useEffect(() => {
-    // Remove focus from input when scroll
     const handleWheel = () => {
       const activeElement = document.activeElement as HTMLElement;
       if (activeElement?.tagName.toLowerCase() === 'input') {

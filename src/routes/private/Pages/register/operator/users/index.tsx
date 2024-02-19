@@ -43,9 +43,10 @@ export const OperatorUsers = () => {
   const { permissions } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
+  const { t } = useTranslation();
   const user = queryClient.getQueryData("validate") as ValidateInterface;
   const [query, setQuery] = useState<PartnerQuery>(INITIAL_QUERY);
-  const { t } = useTranslation();
+  const [isTuorOpen, setIsTuorOpen] = useState<boolean>(false);
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [isNewUserModal, setIsNewUserModal] = useState<boolean>(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
@@ -95,15 +96,10 @@ export const OperatorUsers = () => {
   const [isExportReportsOpen, setIsExportReportsOpen] =
     useState<boolean>(false);
 
-  useEffect(() => {
-    refetchUsersData();
-  }, [query]);
-
   const handleUpdateTokenValidate = () => {
     updateMutate();
   };
 
-  const [isTuorOpen, setIsTuorOpen] = useState<boolean>(false);
   const ref1 = useRef(null);
   const ref2 = useRef(null);
   const ref3 = useRef(null);
@@ -116,6 +112,10 @@ export const OperatorUsers = () => {
   const refLast = useRef(null);
   const refStatus = useRef(null);
   const refCreatedAt = useRef(null);
+
+  useEffect(() => {
+    refetchUsersData();
+  }, [query]);
 
   return (
     <Grid container style={{ padding: "25px" }}>

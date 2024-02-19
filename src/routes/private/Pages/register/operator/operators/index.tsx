@@ -113,6 +113,18 @@ export const Operators = () => {
   const [isExportReportsOpen, setIsExportReportsOpen] =
     useState<boolean>(false);
 
+  const [isTuorOpen, setIsTuorOpen] = useState<boolean>(false);
+  const ref = useRef(null);
+  const ref1 = useRef(null);
+  const ref2 = useRef(null);
+  const ref3 = useRef(null);
+  const ref4 = useRef(null);
+  const ref5 = useRef(null);
+  const refId = useRef(null);
+  const refName = useRef(null);
+  const refStatus = useRef(null);
+  const refCreatedAt = useRef(null);
+
   useEffect(() => {
     if (isSuccessOperatorData) {
       refetchOperatorData();
@@ -128,18 +140,6 @@ export const Operators = () => {
       operator_id: currentItem?.id,
     });
   }, [currentItem]);
-
-  const [isTuorOpen, setIsTuorOpen] = useState<boolean>(false);
-  const ref = useRef(null);
-  const ref1 = useRef(null);
-  const ref2 = useRef(null);
-  const ref3 = useRef(null);
-  const ref4 = useRef(null);
-  const ref5 = useRef(null);
-  const refId = useRef(null);
-  const refName = useRef(null);
-  const refStatus = useRef(null);
-  const refCreatedAt = useRef(null);
 
   return (
     <Grid container style={{ padding: "25px" }}>

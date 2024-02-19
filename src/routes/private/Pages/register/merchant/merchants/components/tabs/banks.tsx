@@ -276,7 +276,7 @@ export const BanksTab = (props: { id?: string }) => {
             onCancel={() => setIsConfirmOpen(false)}
           >
             <Button
-            data-test-id="update-general-configs"
+              data-test-id="update-general-configs"
               size="large"
               type="primary"
               style={{ width: "100%" }}

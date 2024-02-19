@@ -91,6 +91,7 @@ export const EditableCell: React.FC<EditableCellProps> = ({
       toggleEdit();
       handleSave({ ...record, ...values });
     } catch (errInfo) {
+      return;
     }
   };
 

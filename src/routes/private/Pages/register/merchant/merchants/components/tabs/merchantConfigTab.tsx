@@ -96,14 +96,6 @@ export const MerchantConfigTab = (props: { id?: string }) => {
     setIsConfirmOpen(false);
   };
 
-  useEffect(() => {
-    refetchMerchantConfigData();
-  }, [UpdateIsSuccess]);
-
-  useEffect(() => {
-    formRef.current?.setFieldsValue(merchantConfigData?.merchantConfig);
-  }, [merchantConfigData]);
-
   const getBase64 = (file: RcFile): Promise<string> =>
     new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -125,6 +117,14 @@ export const MerchantConfigTab = (props: { id?: string }) => {
       file.name || file.url!.substring(file.url!.lastIndexOf("/") + 1)
     );
   };
+
+  useEffect(() => {
+    refetchMerchantConfigData();
+  }, [UpdateIsSuccess]);
+
+  useEffect(() => {
+    formRef.current?.setFieldsValue(merchantConfigData?.merchantConfig);
+  }, [merchantConfigData]);
 
   useEffect(() => {
     if (FastPixLogoBody.base64_file) {
@@ -251,7 +251,7 @@ export const MerchantConfigTab = (props: { id?: string }) => {
             name="webhook_url_optional"
           >
             <Input
-            data-test-id="webhook_url_optional"
+              data-test-id="webhook_url_optional"
               size="large"
               name="webhook_url_optional"
               value={body?.webhook_url_optional}
@@ -308,7 +308,7 @@ export const MerchantConfigTab = (props: { id?: string }) => {
               name="fastpix_redirect_url"
             >
               <Input
-              data-test-id="fastpix_redirect_url"
+                data-test-id="fastpix_redirect_url"
                 size="large"
                 name="fastpix_redirect_url"
                 value={body?.fastpix_redirect_url}
@@ -331,7 +331,7 @@ export const MerchantConfigTab = (props: { id?: string }) => {
               name="fastpix_token_time"
             >
               <InputNumber
-              data-test-id="fastpix_token_time"
+                data-test-id="fastpix_token_time"
                 style={{ width: "100%" }}
                 size="large"
                 name="fastpix_token_time"
@@ -469,7 +469,12 @@ export const MerchantConfigTab = (props: { id?: string }) => {
         style={{ display: "flex", flexDirection: "row-reverse" }}
       >
         <Grid item xs={12} md={4} lg={2}>
-          <button data-test-id="submit" type="submit" ref={submitRef} style={{ display: "none" }}>
+          <button
+            data-test-id="submit"
+            type="submit"
+            ref={submitRef}
+            style={{ display: "none" }}
+          >
             Submit
           </button>
           <Popconfirm

@@ -33,6 +33,8 @@ import { Toast } from "@src/components/Toast";
 import { moneyFormatter } from "@src/utils/moneyFormatter";
 
 export const MerchantManual = () => {
+  const { t } = useTranslation();
+  const { SelfError } = useGetSelf();
   const { permissions, type } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
@@ -62,9 +64,6 @@ export const MerchantManual = () => {
     useState<boolean>(false);
   const [operationInBody, setOperationInBody] =
     useState<CreateMerchantManualTransaction | null>(null);
-
-  const { t } = useTranslation();
-  const { SelfError } = useGetSelf();
 
   const {
     MerchantMovimentsData,
@@ -114,8 +113,7 @@ export const MerchantManual = () => {
           Object.keys(MerchantMovimentsData).map((key) => {
             switch (key) {
               case "total_in_canceled":
-                return (
-                type === 2 || type === 1 ? (
+                return type === 2 || type === 1 ? (
                   <Grid
                     key={key}
                     item
@@ -133,7 +131,9 @@ export const MerchantManual = () => {
                       value={moneyFormatter(MerchantMovimentsData[key] || 0)}
                     />
                   </Grid>
-                  ) : ( <></> ));
+                ) : (
+                  <></>
+                );
               case "total_in_processing":
               case "total_in_success":
                 return (
@@ -175,25 +175,26 @@ export const MerchantManual = () => {
                   </Grid>
                 );
 
-                case "total_out_canceled":
-                  return (
-                    type === 2 || type === 1 ? (
-                    <Grid
-                      key={key}
-                      item
-                      xs={5}
-                      md="auto"
-                      style={{ margin: "10px" }}
-                    >
-                      <Statistic
-                        valueStyle={{ color: "#cf1322", fontSize: "20px" }}
-                        prefix={<ArrowDownOutlined />}
-                        title={t(`table.${key}`)}
-                        loading={isMerchantMovimentsDataFetching}
-                        value={moneyFormatter(MerchantMovimentsData[key] || 0)}
-                      />
-                    </Grid>
-                     ) : ( <></> ));
+              case "total_out_canceled":
+                return type === 2 || type === 1 ? (
+                  <Grid
+                    key={key}
+                    item
+                    xs={5}
+                    md="auto"
+                    style={{ margin: "10px" }}
+                  >
+                    <Statistic
+                      valueStyle={{ color: "#cf1322", fontSize: "20px" }}
+                      prefix={<ArrowDownOutlined />}
+                      title={t(`table.${key}`)}
+                      loading={isMerchantMovimentsDataFetching}
+                      value={moneyFormatter(MerchantMovimentsData[key] || 0)}
+                    />
+                  </Grid>
+                ) : (
+                  <></>
+                );
               default:
                 return;
             }
@@ -361,38 +362,38 @@ export const MerchantManual = () => {
           />
         </Grid>
       </Grid>
-   
-        <FiltersModal
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          haveInitialDate
-          filters={[
-            "start_date",
-            "end_date",
-            "status",
-            "partner_id",
-            "aggregator_id",
-            "merchant_id",
-            "operator_id",
-            "category_id",
-            "type",
-          ]}
-          refetch={refetchMerchantMovimentsData}
-          selectOptions={{
-            status: ["PROCESSING", "SUCCESS", "CANCELED"],
-            category_id:
-              categoryData?.items?.map((category) => {
-                return { label: category?.name, value: category?.id };
-              }) || [],
-            type: ["in", "out"],
-          }}
-          startDateKeyName="start_date"
-          endDateKeyName="end_date"
-          initialQuery={INITIAL_QUERY}
-        />
-   
+
+      <FiltersModal
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        haveInitialDate
+        filters={[
+          "start_date",
+          "end_date",
+          "status",
+          "partner_id",
+          "aggregator_id",
+          "merchant_id",
+          "operator_id",
+          "category_id",
+          "type",
+        ]}
+        refetch={refetchMerchantMovimentsData}
+        selectOptions={{
+          status: ["PROCESSING", "SUCCESS", "CANCELED"],
+          category_id:
+            categoryData?.items?.map((category) => {
+              return { label: category?.name, value: category?.id };
+            }) || [],
+          type: ["in", "out"],
+        }}
+        startDateKeyName="start_date"
+        endDateKeyName="end_date"
+        initialQuery={INITIAL_QUERY}
+      />
+
       {operationInOpen && (
         <CreateMovimentModal
           open={operationInOpen}

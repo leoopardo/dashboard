@@ -17,9 +17,6 @@ export const BankBalanceChart = () => {
     page: 1,
   });
 
-
-  //   OrganizationBankBalance?.banks.map((bank) => bank.name)
-  //   OrganizationBankBalance?.banks.map((bank) => bank.value)
   return (
     <>
       {OrganizationBankBalance && bankListData && bankListData?.itens && (

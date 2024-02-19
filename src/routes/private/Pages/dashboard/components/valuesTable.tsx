@@ -28,10 +28,16 @@ export const ValuesTable = ({ query, refs }: ValuesTableInterface) => {
     isMerchantBankStatementTotalsFetching,
     refetchMerchantBankStatementTotalsTotal,
   } = useGetMerchantBankStatementTotals(query);
-
-  useEffect(() => {
-    refetchMerchantBankStatementTotalsTotal();
-  }, [query]);
+  const [data, setData] = useState<
+    {
+      type: string;
+      operation_number: number;
+      value: number;
+      ticket: number;
+      fee: number;
+      key: string;
+    }[]
+  >([]);
 
   interface DataType {
     type: string;
@@ -67,41 +73,28 @@ export const ValuesTable = ({ query, refs }: ValuesTableInterface) => {
       title: <Typography ref={refs[2]}>{t("table.value")}</Typography>,
       dataIndex: "value",
       render: (value) => (
-        <Typography>
-          {moneyFormatter(Number(value) || 0)}
-        </Typography>
+        <Typography>{moneyFormatter(Number(value) || 0)}</Typography>
       ),
     },
     {
       title: <Typography ref={refs[3]}>{t("table.ticket")}</Typography>,
       dataIndex: "ticket",
       render: (value) => (
-        <Typography>
-          {moneyFormatter(Number(value) || 0)}
-        </Typography>
+        <Typography>{moneyFormatter(Number(value) || 0)}</Typography>
       ),
     },
     {
       title: <Typography ref={refs[4]}>{t("table.fee")}</Typography>,
       dataIndex: "fee",
       render: (value) => (
-        <Typography>
-          {moneyFormatter(Number(value) || 0)}
-        </Typography>
+        <Typography>{moneyFormatter(Number(value) || 0)}</Typography>
       ),
     },
   ];
 
-  const [data, setData] = useState<
-    {
-      type: string;
-      operation_number: number;
-      value: number;
-      ticket: number;
-      fee: number;
-      key: string;
-    }[]
-  >([]);
+  useEffect(() => {
+    refetchMerchantBankStatementTotalsTotal();
+  }, [query]);
 
   useEffect(() => {
     if (!isMerchantBankStatementTotalsFetching && MerchantBankStatementTotals)
@@ -184,7 +177,7 @@ export const ValuesTable = ({ query, refs }: ValuesTableInterface) => {
                 >
                   {t("table.ticket")}:{" "}
                   <span style={{ textDecoration: "underline" }}>
-                    {moneyFormatter( 0)}
+                    {moneyFormatter(0)}
                   </span>
                 </Typography.Title>
               </Card>
