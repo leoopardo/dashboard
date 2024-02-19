@@ -147,16 +147,20 @@ export const Dashboard = () => {
       }}
     >
       {(permissions?.report?.paybrokers?.balance
-            ?.report_paybrokers_balance_list ||
-            permissions?.report?.merchant?.balance
-              ?.report_merchant_balance_list) && (
+        ?.report_paybrokers_balance_list ||
+        permissions?.report?.merchant?.balance
+          ?.report_merchant_balance_list) && (
         <Layout
           ref={ref1}
           style={{
             margin: -28,
-            marginBottom: permissions?.report?.merchant?.balance
-            ?.report_merchant_balance_list && !permissions?.report?.paybrokers?.balance
-            ?.report_paybrokers_balance_list ? 25 : -36,
+            marginBottom:
+              permissions?.report?.merchant?.balance
+                ?.report_merchant_balance_list &&
+              !permissions?.report?.paybrokers?.balance
+                ?.report_paybrokers_balance_list
+                ? 25
+                : -36,
             paddingTop: 20,
             paddingBottom: 16,
             paddingLeft: 6,
@@ -519,34 +523,34 @@ export const Dashboard = () => {
         )}
       </Col>
 
-        <FiltersModal
-          data-test-id="filters-modal"
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          filters={[
-            "start_date",
-            "end_date",
-            "partner_id",
-            "merchant_id",
-            "aggregator_id",
-            "operator_id",
-            "type",
-            "payment_type",
-          ]}
-          refetch={refetchMerchantBankStatementTotalsTotal}
-          selectOptions={{
-            type: ["deposit", "withdraw"],
-            payment_type: ["pix"],
-          }}
-          startDateKeyName="start_date"
-          endDateKeyName="end_date"
-          initialQuery={INITIAL_QUERY}
-          haveInitialDate
-          maxRange
-        />
-      
+      <FiltersModal
+        data-test-id="filters-modal"
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        filters={[
+          "start_date",
+          "end_date",
+          "partner_id",
+          "merchant_id",
+          "aggregator_id",
+          "operator_id",
+          "type",
+          "payment_type",
+        ]}
+        refetch={refetchMerchantBankStatementTotalsTotal}
+        selectOptions={{
+          type: ["deposit", "withdraw"],
+          payment_type: ["pix"],
+        }}
+        startDateKeyName="start_date"
+        endDateKeyName="end_date"
+        initialQuery={INITIAL_QUERY}
+        haveInitialDate
+        maxRange
+      />
+
       <TuorComponent
         data-test-id="tuor-component"
         open={isTuorOpen}

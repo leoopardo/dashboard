@@ -14,7 +14,7 @@ export const DepositFinancial = ({ query, chart }: TableProps) => {
   const { RankingData, RankingError, isRankingFetching, RankingDataSuccess } =
     useGetMerchantRanking("value", "deposit", query);
 
-      useEffect(() => {
+  useEffect(() => {
     if (RankingDataSuccess) {
       handleChangeError({ rankingValue: false });
     }

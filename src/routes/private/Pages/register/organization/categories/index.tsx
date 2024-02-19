@@ -57,6 +57,7 @@ export const OrganizationCategories = () => {
     refetchCategoriesData,
   } = useGetOrganizationCategories(query);
 
+  const [isTuorOpen, setIsTuorOpen] = useState<boolean>(false);
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [isNewCategorieModal, setIsNewCategorieModal] =
     useState<boolean>(false);
@@ -92,18 +93,6 @@ export const OrganizationCategories = () => {
     CategoryReportsMutate,
   } = useCreateOrganizationCategoryReports(query);
 
-  useEffect(() => {
-    refetchCategoriesData();
-  }, [query]);
-
-  useEffect(() => {
-    setUpdateBody({
-      ...currentItem,
-      entry_account_category_id: currentItem?.id,
-    });
-  }, [currentItem]);
-
-  const [isTuorOpen, setIsTuorOpen] = useState<boolean>(false);
   const ref1 = useRef(null);
   const ref2 = useRef(null);
   const ref3 = useRef(null);
@@ -114,6 +103,17 @@ export const OrganizationCategories = () => {
   const refDescription = useRef(null);
   const refStatus = useRef(null);
   const refCreatedAt = useRef(null);
+
+  useEffect(() => {
+    refetchCategoriesData();
+  }, [query]);
+
+  useEffect(() => {
+    setUpdateBody({
+      ...currentItem,
+      entry_account_category_id: currentItem?.id,
+    });
+  }, [currentItem]);
 
   return (
     <Grid container style={{ padding: "25px" }}>

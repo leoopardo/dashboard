@@ -9,20 +9,20 @@ import { useEffect } from "react";
 
 export const WithdrawOperations = ({ query, chart }: TableProps) => {
   const { t } = useTranslation();
-  const {handleChangeError} = useErrorContext()
-  const { RankingData,  RankingError, isRankingFetching, RankingDataSuccess } =
+  const { handleChangeError } = useErrorContext();
+  const { RankingData, RankingError, isRankingFetching, RankingDataSuccess } =
     useGetMerchantRanking("operations", "withdraw", query);
 
-    useEffect(() => {
-      if(RankingDataSuccess) {
-        handleChangeError({rankingOperations: false})
-      }
-  
-      if(RankingError) {
-        handleChangeError({rankingOperations: true})
-      }
+  useEffect(() => {
+    if (RankingDataSuccess) {
+      handleChangeError({ rankingOperations: false });
+    }
+
+    if (RankingError) {
+      handleChangeError({ rankingOperations: true });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [RankingError, RankingDataSuccess])
+  }, [RankingError, RankingDataSuccess]);
   return chart ? (
     <>
       {RankingData?.length ? (
@@ -84,7 +84,7 @@ export const WithdrawOperations = ({ query, chart }: TableProps) => {
     </>
   ) : (
     <CustomTable
-    size="small"
+      size="small"
       query={{}}
       setCurrentItem={() => {
         return;

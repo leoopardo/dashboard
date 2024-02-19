@@ -69,6 +69,7 @@ export const Partners = () => {
     isSuccessPartnersTotalsData,
     refetchPartnersTotalsData,
   } = useGetPartnersTotals(query);
+  const [isTuorOpen, setIsTuorOpen] = useState<boolean>(false);
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [isNewCategorieModal, setIsNewCategorieModal] =
     useState<boolean>(false);
@@ -132,7 +133,6 @@ export const Partners = () => {
     });
   }, [currentItem]);
 
-  const [isTuorOpen, setIsTuorOpen] = useState<boolean>(false);
   const ref = useRef(null);
   const ref1 = useRef(null);
   const ref2 = useRef(null);

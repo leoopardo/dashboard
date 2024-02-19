@@ -52,10 +52,9 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
                 <Statistic
                   data-test-id="statistic-1"
                   title={t("table.balance_to_transactions")}
-                  value={
-                    moneyFormatter(MerchantBalance?.balance_to_transactions || 0)
-                    
-                  }
+                  value={moneyFormatter(
+                    MerchantBalance?.balance_to_transactions || 0
+                  )}
                   precision={2}
                   valueStyle={{
                     color: defaultTheme.colors.info,
@@ -67,11 +66,9 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
                   <Statistic
                     data-test-id="statistic-2"
                     title={t("table.balance_to_transactions")}
-                    value={
-                      moneyFormatter(
-                        MerchantBalance?.balance_to_transactions || 0
-                      )
-                    }
+                    value={moneyFormatter(
+                      MerchantBalance?.balance_to_transactions || 0
+                    )}
                     precision={2}
                     valueStyle={{
                       fontSize: "16px",
@@ -169,9 +166,9 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
                 <Statistic
                   data-test-id="statistic-3"
                   title={t("table.balance_to_payment")}
-                  value={
-                    moneyFormatter(MerchantBalance?.balance_to_payment || 0)
-                  }
+                  value={moneyFormatter(
+                    MerchantBalance?.balance_to_payment || 0
+                  )}
                   precision={2}
                   valueStyle={{
                     color: defaultTheme.colors.error,
@@ -183,9 +180,9 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
                   <Statistic
                     data-test-id="statistic-4"
                     title={t("table.balance_to_payment")}
-                    value={
-                      moneyFormatter(MerchantBalance?.balance_to_payment || 0)
-                    }
+                    value={moneyFormatter(
+                      MerchantBalance?.balance_to_payment || 0
+                    )}
                     precision={2}
                     valueStyle={{
                       fontSize: "16px",
@@ -295,7 +292,9 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
                   <Statistic
                     data-test-id="statistic-6"
                     title={t("table.balance_reserved")}
-                    value={moneyFormatter(MerchantBalance?.balance_reserved || 0)}
+                    value={moneyFormatter(
+                      MerchantBalance?.balance_reserved || 0
+                    )}
                     precision={2}
                     valueStyle={{
                       fontSize: "16px",

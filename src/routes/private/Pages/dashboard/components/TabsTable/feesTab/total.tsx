@@ -14,7 +14,7 @@ export const TotalFees = ({ query, chart }: TableProps) => {
   const { RankingData, RankingError, isRankingFetching, RankingDataSuccess } =
     useGetMerchantRanking("fee", "total", query);
 
-    useEffect(() => {
+  useEffect(() => {
     if (RankingDataSuccess) {
       handleChangeError({ rankingFee: false });
     }
@@ -89,7 +89,7 @@ export const TotalFees = ({ query, chart }: TableProps) => {
     </>
   ) : (
     <CustomTable
-    size="small"
+      size="small"
       query={{}}
       setCurrentItem={() => {
         return;

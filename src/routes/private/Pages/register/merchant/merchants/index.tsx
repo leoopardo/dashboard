@@ -161,23 +161,6 @@ export const MerchantView = () => {
     { name: "created_at", type: "date", sort: true },
   ];
 
-  useEffect(() => {
-    const id = currentItem?.id;
-    isConfigOpen && navigate(`${id}`);
-  }, [isConfigOpen]);
-
-  useEffect(() => {
-    isSuccessMerchantData && refetchMerchantData();
-    isSuccessMerchantTotalsData && refetchMerchantTotalsData();
-  }, [query]);
-
-  useEffect(() => {
-    setUpdateBody({
-      ...currentItem,
-      merchant_id: currentItem?.id,
-    });
-  }, [currentItem]);
-
   const [isTuorOpen, setIsTuorOpen] = useState<boolean>(false);
   const ref = useRef(null);
   const ref1 = useRef(null);
@@ -230,6 +213,23 @@ export const MerchantView = () => {
       ),
     });
   }
+
+  useEffect(() => {
+    const id = currentItem?.id;
+    isConfigOpen && navigate(`${id}`);
+  }, [isConfigOpen]);
+
+  useEffect(() => {
+    isSuccessMerchantData && refetchMerchantData();
+    isSuccessMerchantTotalsData && refetchMerchantTotalsData();
+  }, [query]);
+
+  useEffect(() => {
+    setUpdateBody({
+      ...currentItem,
+      merchant_id: currentItem?.id,
+    });
+  }, [currentItem]);
 
   return (
     <Grid container style={{ padding: "25px" }}>

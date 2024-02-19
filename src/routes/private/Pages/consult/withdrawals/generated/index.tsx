@@ -73,10 +73,7 @@ export const GeneratedWithdrawals = () => {
     witrawalsRowsError,
   } = useGetRowsGeneratedWithdrawals(query);
 
-  useEffect(() => {
-    refetchWithdrawalsTotalRows();
-    refetchWithdrawalsTotal();
-  }, [query]);
+
 
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const [isWebhookModalOpen, setIsWebhookModalOpen] = useState<boolean>(false);
@@ -132,6 +129,11 @@ export const GeneratedWithdrawals = () => {
     { name: "pix_key", type: "text" },
     { name: "status", type: "status" },
   ];
+
+  useEffect(() => {
+    refetchWithdrawalsTotalRows();
+    refetchWithdrawalsTotal();
+  }, [query]);
 
   return (
     <Row

@@ -79,10 +79,6 @@ export const AggregatorUsers = () => {
   const [isExportReportsOpen, setIsExportReportsOpen] =
     useState<boolean>(false);
 
-  useEffect(() => {
-    refetchUsersData();
-  }, [query]);
-
   const handleUpdateTokenValidate = () => {
     updateMutate();
   };
@@ -104,6 +100,10 @@ export const AggregatorUsers = () => {
   const filters = aggregator_id
     ? ["start_date", "end_date", "status"]
     : ["start_date", "end_date", "status", "aggregator_id"];
+
+  useEffect(() => {
+    refetchUsersData();
+  }, [query]);
 
   return (
     <Grid container style={{ padding: "25px" }}>
@@ -314,17 +314,16 @@ export const AggregatorUsers = () => {
         initialQuery={INITIAL_QUERY}
       />
 
-    
-        <NewUserModal
-          action={action}
-          open={isNewUserModal}
-          setOpen={setIsNewUserModal}
-          currentUser={currentItem}
-          setCurrentUser={setCurrentItem}
-          setUpdateBody={setUpdateUserBody}
-          setIsValidateTokenOpen={setIsValidateTokenOpen}
-        />
-      
+      <NewUserModal
+        action={action}
+        open={isNewUserModal}
+        setOpen={setIsNewUserModal}
+        currentUser={currentItem}
+        setCurrentUser={setCurrentItem}
+        setUpdateBody={setUpdateUserBody}
+        setIsValidateTokenOpen={setIsValidateTokenOpen}
+      />
+
       {isValidateTokenOpen && (
         <ValidateToken
           action="USER_UPDATE"
