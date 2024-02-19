@@ -59,6 +59,9 @@ export const MerchantSelect = ({
   useEffect(() => {
     setValue(undefined);
     refetchMerchantById();
+  }, [queryOptions.merchant_id]);
+
+  useEffect(() => {
     if (!queryOptions?.merchant_id) {
       setValue(undefined);
       if (merchantsData) {
@@ -95,7 +98,6 @@ export const MerchantSelect = ({
       merchant_id: undefined,
       partner_id: queryOptions.partner_id,
     }));
-    setValue(undefined);
   }, [debounceSearch, queryOptions]);
 
   useEffect(() => {
