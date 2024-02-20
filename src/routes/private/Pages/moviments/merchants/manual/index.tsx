@@ -12,7 +12,6 @@ import { FiltersModal } from "@src/components/FiltersModal";
 import { FilterChips } from "@src/components/FiltersModal/filterChips";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { ValidateToken } from "@src/components/ValidateToken";
-import { useGetSelf } from "@src/services/getSelf";
 import { useGetMerchantMoviments } from "@src/services/moviments/merchants/manual/GetManualTransactions";
 import { useCreateMerchantManualTransaction } from "@src/services/moviments/merchants/manual/createManualTransaction";
 import { queryClient } from "@src/services/queryClient";
@@ -34,7 +33,6 @@ import { moneyFormatter } from "@src/utils/moneyFormatter";
 
 export const MerchantManual = () => {
   const { t } = useTranslation();
-  const { SelfError } = useGetSelf();
   const { permissions, type } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
