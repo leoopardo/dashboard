@@ -71,10 +71,6 @@ export const TransfersBetweenAccounts = () => {
     MerchantTransferBetweenAccountsMutate,
   } = useCreateMerchantTransferBetweenAccountsReports(query);
 
-  useEffect(() => {
-    refetchTransferBetweenAccountsData();
-  }, [query]);
-
   const fieldsIfNotMerch = [
     {
       label: "merchant_id",
@@ -97,6 +93,10 @@ export const TransfersBetweenAccounts = () => {
     { label: "to", required: true, selectOption: true },
     { label: "value", required: true },
   ];
+
+  useEffect(() => {
+    refetchTransferBetweenAccountsData();
+  }, [query]);
 
   return (
     <Row style={{ padding: 25 }}>

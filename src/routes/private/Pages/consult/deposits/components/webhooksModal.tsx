@@ -41,16 +41,16 @@ export const WebhookModal = (props: webhooksModalProps) => {
   const [query2, setQuery2] = useState<WebhooksQuery>(INITIAL_QUERY);
   const [items, setItems] = useState<CollapseProps["items"]>([]);
 
-  const onClose = () => {
-    props.setOpen(false);
-  };
-
   const { depositWebhooks, isDepositWebhooksFetching } = useGetDepositWebhooks(
     props.id,
     query
   );
   const { depositWebhooks2 } = useGetDepositWebhooks2(props.id, query2);
   const [currOption, setCurrOption] = useState<any>("1");
+
+  const onClose = () => {
+    props.setOpen(false);
+  };
 
   useEffect(() => {
     setItems(

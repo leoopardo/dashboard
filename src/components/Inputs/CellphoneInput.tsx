@@ -26,23 +26,6 @@ export const CellphoneInput = ({
   const [number, setNumber] = useState<string>("");
   const [started, setStarted] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (Countries && countries && !started) {
-      setCodeFlag(
-        Countries?.filter((item, index, self) => {
-          return self.indexOf(item) === index;
-        }).map((c) => {
-          return {
-            phoneCode: countries?.find((c2) => c2.isoCode === c.cca2)
-              ?.phonecode,
-            flag: c.flags.svg,
-          };
-        })
-      );
-      setStarted(true);
-    }
-  }, [Countries, countries]);
-
   function parsePhoneNumber(phoneNumber?: string) {
     const item = { ddi: "", phone: "" };
     for (const ddi in DDIs) {
@@ -53,29 +36,6 @@ export const CellphoneInput = ({
     }
     return item;
   }
-
-  useEffect(() => {
-    if (body?.cellphone) {
-      setSearch(parsePhoneNumber(body?.cellphone).ddi);
-      setDDI(parsePhoneNumber(body?.cellphone).ddi);
-      setNumber(parsePhoneNumber(body?.cellphone).phone);
-    }
-  }, []);
-
-  useEffect(() => {
-    const timer = setTimeout(
-      () =>
-      setBody((state: any) => ({
-        ...state,
-        cellphone: DDI && number ? `${DDI}${number}` : undefined,
-      })),
-      500
-    );
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [DDI, number]);
 
   function getCellphoneFormat() {
     switch (DDI) {
@@ -150,6 +110,46 @@ export const CellphoneInput = ({
         return "999999999999";
     }
   }
+
+  useEffect(() => {
+    if (body?.cellphone) {
+      setSearch(parsePhoneNumber(body?.cellphone).ddi);
+      setDDI(parsePhoneNumber(body?.cellphone).ddi);
+      setNumber(parsePhoneNumber(body?.cellphone).phone);
+    }
+  }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(
+      () =>
+        setBody((state: any) => ({
+          ...state,
+          cellphone: DDI && number ? `${DDI}${number}` : undefined,
+        })),
+      500
+    );
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [DDI, number]);
+
+  useEffect(() => {
+    if (Countries && countries && !started) {
+      setCodeFlag(
+        Countries?.filter((item, index, self) => {
+          return self.indexOf(item) === index;
+        }).map((c) => {
+          return {
+            phoneCode: countries?.find((c2) => c2.isoCode === c.cca2)
+              ?.phonecode,
+            flag: c.flags.svg,
+          };
+        })
+      );
+      setStarted(true);
+    }
+  }, [Countries, countries]);
 
   return (
     <Space.Compact size="large" style={{ width: "100%" }}>

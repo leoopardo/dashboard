@@ -41,10 +41,6 @@ export const MerchantBalance = () => {
 
   const [, setCurrentItem] = useState<MerchantBalanceItem | null>();
 
-  useEffect(() => {
-    refetchMerchantBalance();
-  }, [query]);
-
   const columns: TableColumnsType<MerchantBalanceItem> = [
     {
       title: t("table.merchant"),
@@ -56,29 +52,25 @@ export const MerchantBalance = () => {
       title: t("table.balance_to_transactions"),
       dataIndex: "balance_to_transactions",
       key: "balance_to_transactions",
-      render: (value) =>
-      moneyFormatter(value ?? 0),
+      render: (value) => moneyFormatter(value ?? 0),
     },
     {
       title: t("table.balance_to_payment"),
       dataIndex: "balance_to_payment",
       key: "balance_to_payment",
-      render: (value) =>
-      moneyFormatter(value ?? 0),
+      render: (value) => moneyFormatter(value ?? 0),
     },
     {
       title: t("table.balance_reserved"),
       dataIndex: "balance_reserved",
       key: "balance_reserved",
-      render: (value) =>
-      moneyFormatter(value ?? 0),
+      render: (value) => moneyFormatter(value ?? 0),
     },
     {
       title: t("table.balance_total"),
       dataIndex: "balance_total",
       key: "balance_total",
-      render: (value) =>
-      moneyFormatter(value ?? 0),
+      render: (value) => moneyFormatter(value ?? 0),
     },
     {
       title: (
@@ -109,15 +101,13 @@ export const MerchantBalance = () => {
         title: t("table.in"),
         dataIndex: "in",
         key: "in",
-        render: (value) =>
-          moneyFormatter(value ?? 0),
+        render: (value) => moneyFormatter(value ?? 0),
       },
       {
         title: t("table.out"),
         dataIndex: "out",
         key: "out",
-        render: (value) =>
-          moneyFormatter(value ?? 0),
+        render: (value) => moneyFormatter(value ?? 0),
       },
       {
         title: t("table.pix_transactions_total"),
@@ -129,15 +119,13 @@ export const MerchantBalance = () => {
         title: t("table.pix_amount_value"),
         dataIndex: "pix_amount_value",
         key: "pix_amount_value",
-        render: (value) =>
-          moneyFormatter(value ?? 0),
+        render: (value) => moneyFormatter(value ?? 0),
       },
       {
         title: t("table.pix_amount_fee"),
         dataIndex: "pix_amount_fee",
         key: "pix_amount_fee",
-        render: (value) =>
-          moneyFormatter(value ?? 0),
+        render: (value) => moneyFormatter(value ?? 0),
       },
       {
         title: t("table.withdraw_transactions_total"),
@@ -149,15 +137,13 @@ export const MerchantBalance = () => {
         title: t("table.withdraw_amount_value"),
         dataIndex: "withdraw_amount_value",
         key: "withdraw_amount_value",
-        render: (value) =>
-          moneyFormatter(value ?? 0),
+        render: (value) => moneyFormatter(value ?? 0),
       },
       {
         title: t("table.withdraw_amount_fee"),
         dataIndex: "withdraw_amount_fee",
         key: "withdraw_amount_fee",
-        render: (value) =>
-          moneyFormatter(value ?? 0),
+        render: (value) => moneyFormatter(value ?? 0),
       },
       {
         title: t("table.refund_transactions_total"),
@@ -169,8 +155,7 @@ export const MerchantBalance = () => {
         title: t("table.refund_amount_fee"),
         dataIndex: "refund_amount_fee",
         key: "refund_amount_fee",
-        render: (value) =>
-          moneyFormatter(value ?? 0),
+        render: (value) => moneyFormatter(value ?? 0),
       },
     ];
 
@@ -191,7 +176,11 @@ export const MerchantBalance = () => {
     }
     setExpanded(keys);
   };
-  
+
+  useEffect(() => {
+    refetchMerchantBalance();
+  }, [query]);
+
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid xs={12}>

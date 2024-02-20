@@ -468,8 +468,7 @@ export const Mobile = (props: MobileProps) => {
                                 <Avatar
                                   src={
                                     bankListData?.itens.find(
-                                      (bank) =>
-                                        bank?.bank === item[value?.name]
+                                      (bank) => bank?.bank === item[value?.name]
                                     )?.icon_url ?? null
                                   }
                                   size="large"

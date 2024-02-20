@@ -18,6 +18,8 @@ import { ViewModal } from "../components/ViewModal";
 import { moneyFormatter } from "@src/utils/moneyFormatter";
 
 export const DepositsReceipts = () => {
+  const { t } = useTranslation();
+  const isMobile = useMediaQuery({ maxWidth: "750px" });
   const [endToEndId, setEndToEndId] = useState<string | undefined>(undefined);
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const {
@@ -27,8 +29,6 @@ export const DepositsReceipts = () => {
     receiptsError,
     isSuccess,
   } = useGetReceipts(endToEndId);
-  const { t } = useTranslation();
-  const isMobile = useMediaQuery({ maxWidth: "750px" });
 
   return (
     <Row style={{ padding: 25 }}>

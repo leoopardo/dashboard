@@ -97,10 +97,6 @@ export const MerchantManual = () => {
     setOperationInBody((state) => ({ ...state, validation_token: tokenState }));
   }, [tokenState]);
 
-  useEffect(() => {
-    console.error(SelfError);
-  }, [SelfError]);
-
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid

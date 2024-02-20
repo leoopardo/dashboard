@@ -70,7 +70,7 @@ export const Dashboard = () => {
   const [isBankChart, setIsBankChart] = useState<boolean>(
     secureLocalStorage.getItem("isBankChart") === "true"
   );
-
+  const totilizersTabs = [];
   const isMobile = useMediaQuery({ maxWidth: "767px" });
 
   const [query, setQuery] =
@@ -107,8 +107,6 @@ export const Dashboard = () => {
 
   const { refetchMerchantBankStatementTotalsTotal } =
     useGetMerchantBankStatementTotals(query);
-
-  const totilizersTabs = [];
 
   if (
     permissions?.report?.paybrokers?.balance?.report_paybrokers_balance_list

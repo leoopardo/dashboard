@@ -42,10 +42,6 @@ export const ViewModalFields = (props: ViewModalProps) => {
       pix_id: props?.item?.pix_id,
     });
 
-  useEffect(() => {
-    refetchDepositsTotalRows();
-  }, [Refund]);
-
   const types: any = {
     Refund: [
       { label: t("table.transaction"), value: "transaction" },
@@ -65,6 +61,10 @@ export const ViewModalFields = (props: ViewModalProps) => {
     ],
     manual: [{ label: t("table.transaction"), value: "transaction" }],
   };
+
+  useEffect(() => {
+    refetchDepositsTotalRows();
+  }, [Refund]);
 
   return (
     <>

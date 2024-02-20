@@ -45,10 +45,10 @@ export const OrganizationCategories = () => {
   const { permissions } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
+  const { t } = useTranslation();
 
   const [query, setQuery] =
     useState<OrganizationCategoriesQuery>(INITIAL_QUERY);
-  const { t } = useTranslation();
 
   const {
     CategoriesData,

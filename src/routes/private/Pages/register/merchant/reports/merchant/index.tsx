@@ -18,6 +18,8 @@ export const MerchantReports = () => {
     limit: 25,
     page: 1,
   };
+  const { t } = useTranslation();
+
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [query, setQuery] = useState<ReportsQuery>(INITIAL_QUERY);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
@@ -39,7 +41,6 @@ export const MerchantReports = () => {
     currentItem?.report_url ? setDisable(false) : setDisable(true);
   }, [currentItem]);
 
-  const { t } = useTranslation();
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid
@@ -118,7 +119,7 @@ export const MerchantReports = () => {
               { name: "_id", type: "id", sort: true },
               { name: "createdAt", type: "date", sort: true },
               { name: "created_by_name", type: "text" },
-                 { name: "start_date_filter", type: "date" },
+              { name: "start_date_filter", type: "date" },
               { name: "end_date_filter", type: "date" },
               { name: "rows", type: "text" },
               { name: "progress", type: "progress" },
@@ -129,29 +130,28 @@ export const MerchantReports = () => {
         </Grid>
       </Grid>
 
-        <FiltersModal
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          filters={["createdat_end", "createdat_start"]}
-          refetch={() => {
-            return;
-          }}
-          selectOptions={{}}
-          startDateKeyName="createdat_end"
-          endDateKeyName="createdat_start"
-          initialQuery={INITIAL_QUERY}
-        />
+      <FiltersModal
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        filters={["createdat_end", "createdat_start"]}
+        refetch={() => {
+          return;
+        }}
+        selectOptions={{}}
+        startDateKeyName="createdat_end"
+        endDateKeyName="createdat_start"
+        initialQuery={INITIAL_QUERY}
+      />
 
-        <ViewModal
-          open={isViewModalOpen}
-          setOpen={setIsViewModalOpen}
-          item={currentItem}
-          loading={false}
-          modalName={t("modal.report_details")}
-        />
-    
+      <ViewModal
+        open={isViewModalOpen}
+        setOpen={setIsViewModalOpen}
+        item={currentItem}
+        loading={false}
+        modalName={t("modal.report_details")}
+      />
     </Grid>
   );
 };

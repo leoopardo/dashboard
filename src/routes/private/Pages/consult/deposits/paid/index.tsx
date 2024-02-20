@@ -95,11 +95,6 @@ export const PaidDeposits = () => {
     comma_separate_value: isComma,
   });
 
-  useEffect(() => {
-    refetchPaidTotalRows();
-    refetchPaidTotal();
-  }, [query]);
-
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<any>();
   const [searchOption, setSearchOption] = useState<string | undefined>(
@@ -120,6 +115,11 @@ export const PaidDeposits = () => {
     { name: "buyer_document", type: "document" },
     { name: "status", type: "status" },
   ];
+
+  useEffect(() => {
+    refetchPaidTotalRows();
+    refetchPaidTotal();
+  }, [query]);
 
   return (
     <Row

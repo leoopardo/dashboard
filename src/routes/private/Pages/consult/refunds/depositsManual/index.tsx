@@ -98,11 +98,6 @@ export const RefundDepositsManual = () => {
     comma_separate_value: isComma,
   });
 
-  useEffect(() => {
-    refetchRefundDepositManualTotal();
-    refetchRefundDepositsManual();
-  }, [query]);
-
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<any>();
   const [searchOption, setSearchOption] = useState<string | undefined>(
@@ -156,6 +151,11 @@ export const RefundDepositsManual = () => {
     { name: "reason", type: "text" },
     { name: "status", type: "status" },
   ];
+
+  useEffect(() => {
+    refetchRefundDepositManualTotal();
+    refetchRefundDepositsManual();
+  }, [query]);
 
   return (
     <Row

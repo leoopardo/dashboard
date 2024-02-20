@@ -73,8 +73,6 @@ export const GeneratedWithdrawals = () => {
     witrawalsRowsError,
   } = useGetRowsGeneratedWithdrawals(query);
 
-
-
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const [isWebhookModalOpen, setIsWebhookModalOpen] = useState<boolean>(false);
   const [isResendWebhookModalOpen, setIsResendWebhookModalOpen] =
@@ -444,7 +442,8 @@ export const GeneratedWithdrawals = () => {
                   setWebhookId(item?._id);
                   setIsResendWebhookModalOpen(true);
                 },
-                disabled: (item) => item.status !== "PAID" && item.status !== "CANCELED",
+                disabled: (item) =>
+                  item.status !== "PAID" && item.status !== "CANCELED",
               },
             ]}
             removeTotal

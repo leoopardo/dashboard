@@ -129,6 +129,12 @@ export const CustomTable = (props: TableProps) => {
     return act;
   }, [isMobile, t]);
 
+  const rowSelection = {
+    onChange: (_selectedRowKeys: any, selectedRows: any) => {
+      props.setSelectedRows ? props?.setSelectedRows(selectedRows) : undefined;
+    },
+  };
+
   useEffect(() => {
     if (
       props.actions &&
@@ -154,12 +160,6 @@ export const CustomTable = (props: TableProps) => {
       });
     }
   }, [props.query.page]);
-
-  const rowSelection = {
-    onChange: (_selectedRowKeys: any, selectedRows: any) => {
-      props.setSelectedRows ? props?.setSelectedRows(selectedRows) : undefined;
-    },
-  };
 
   useEffect(() => {
     setColumns(
@@ -843,7 +843,7 @@ export const CustomTable = (props: TableProps) => {
                       justifyContent: "center",
                       margin: 0,
                     }}
-                    icon={<CachedIcon style={{ fontSize: "28px"}} />}
+                    icon={<CachedIcon style={{ fontSize: "28px" }} />}
                   ></Button>
                 </Tooltip>
               ) : (
@@ -1087,7 +1087,7 @@ export const CustomTable = (props: TableProps) => {
               width: 180,
               render: (text: any, record: any) => (
                 <Row
-                  gutter={[8,8]}
+                  gutter={[8, 8]}
                   style={{
                     width: "100%",
                     textAlign: "center",
@@ -1096,7 +1096,7 @@ export const CustomTable = (props: TableProps) => {
                     justifyContent: "center",
                   }}
                 >
-                  <Col xs={{span: record?.error_message ? 21 : 24}}>
+                  <Col xs={{ span: record?.error_message ? 21 : 24 }}>
                     <Progress
                       type="line"
                       percent={text?.split("/")[0]}
@@ -1292,7 +1292,7 @@ export const CustomTable = (props: TableProps) => {
   return (
     <>
       {!isMobile ? (
-        <Row gutter={[8,8]}>
+        <Row gutter={[8, 8]}>
           <Col span={24}>
             <Table
               size={props.size ?? "middle"}
@@ -1404,7 +1404,7 @@ export const CustomTable = (props: TableProps) => {
         </Row>
       ) : (
         <Row
-          gutter={[8,8]}
+          gutter={[8, 8]}
           style={{ display: "flex", justifyContent: "center", width: "100%" }}
         >
           <Col span={24}>
