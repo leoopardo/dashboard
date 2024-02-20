@@ -32,7 +32,6 @@ const CurrentAccountsSelect: FC<CurrentAccountsSelectProps> = ({
       showSearch
       size="large"
       loading={isCurrentAccountDataFetching}
-      // disabled={!filterIdValue}
       onSearch={(value) => {
         if (value === "") {
           delete query.filterIdProp;

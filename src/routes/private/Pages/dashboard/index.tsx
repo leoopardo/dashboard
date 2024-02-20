@@ -676,31 +676,6 @@ export const Dashboard = () => {
             description: t("wiki.out_conversions_description"),
             target: () => refOut.current,
           },
-          // permissions.report.merchant.balance.menu && {
-          //   title: t("wiki.merchants_balance"),
-          //   description: t("wiki.merchants_balance_description"),
-          //   target: () => refMerchantsBalance.current,
-          // },
-          // permissions.report.merchant.balance.menu && {
-          //   title: t("wiki.merchant_name"),
-          //   description: t("wiki.merchant_name_description"),
-          //   target: () => refMerchantsBalance.current,
-          // },
-          // permissions.report.merchant.balance.menu && {
-          //   title: t("wiki.balance_to_transaction"),
-          //   description: t("wiki.balance_to_transaction_description"),
-          //   target: () => refMerchantsBalance.current,
-          // },
-          // permissions.report.merchant.balance.menu && {
-          //   title: t("wiki.balance_to_payment"),
-          //   description: t("wiki.balance_to_payment_description"),
-          //   target: () => refMerchantsBalance.current,
-          // },
-          // permissions.report.merchant.balance.menu && {
-          //   title: t("wiki.balance_reserved"),
-          //   description: t("wiki.balance_reserved_description"),
-          //   target: () => refMerchantsBalance.current,
-          // },
         ]}
         pageStep={{
           title: t("menus.dashboard"),
