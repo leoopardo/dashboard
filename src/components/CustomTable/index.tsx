@@ -6,6 +6,7 @@ import {
   EllipsisOutlined,
   InfoCircleTwoTone,
   ReloadOutlined,
+  WarningOutlined,
 } from "@ant-design/icons";
 import CachedIcon from "@mui/icons-material/Cached";
 import { useListBanks } from "@src/services/bank/listBanks";
@@ -33,6 +34,7 @@ import { toast } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import { Mobile } from "./mobile";
+import moment from "moment";
 
 export interface ColumnInterface {
   name: string | any; // (nome da coluna caso não passe head) e chave do objeto a ser acessado nos items
@@ -45,7 +47,8 @@ export interface ColumnInterface {
     | "text" // exibe texto
     | "translate" // exibe texto traduzido
     | "pix_type" // exibe tipo de pix (FastPix ou Regular)
-    | "date" // exibe data
+    | "date" // exibe data   
+    | "small_date" // exibe data com no maximo 80px de largura
     | "document" // exibe documento formatado para CPF
     | "value" // exibe valor formatado para moeda R$
     | "action" // exibe botões de ação
@@ -102,7 +105,7 @@ interface TableProps {
 
 export const CustomTable = (props: TableProps) => {
   const { t } = useTranslation();
-  const isMobile = useMediaQuery({ maxWidth: "900px" });
+  const isMobile = useMediaQuery({ maxWidth: "950px" });
   const [columns, setColumns] = useState<ColumnsType<ColumnInterface>>([]);
   const [sortOrder] = useState(false);
   const [sorterObj, setSorterObj] = useState<any | undefined>();
@@ -188,7 +191,6 @@ export const CustomTable = (props: TableProps) => {
                 : Array.isArray(column?.name)
                 ? column?.name + `${Math.random()}`
                 : column?.name,
-              width: 85,
               dataIndex: column?.name,
               render: (text: string) => (
                 <div
@@ -354,17 +356,155 @@ export const CustomTable = (props: TableProps) => {
                 : undefined,
             };
 
-          case "date":
+            case "date":
+              return {
+                title: (
+                  <Tooltip title={t(`table.${column?.head || column?.name}`)}>
+                    <Typography
+                      style={{
+                        maxHeight: "50px",
+                        overflow: "hidden",
+                        textAlign: "center",
+                        textOverflow: "ellipsis",
+                        wordBreak: "keep-all",
+                      }}
+                      ref={column.key}
+                    >
+                      {t(`table.${column?.head || column?.name}`)}
+                    </Typography>
+                  </Tooltip>
+                ),
+                key: column?.sort_name
+                  ? column.sort_name
+                  : Array.isArray(column?.name)
+                  ? column?.name + `${Math.random()}`
+                  : column?.name,
+                dataIndex: column?.name,
+                render: (text: string, record: any) => {
+                  if (column.name === "delivered_at" && record?.paid_at) {
+                    return text ? (
+                      <Tooltip
+                        title={`Tempo de entrega: ${
+                          record?.paid_at &&
+                          moment
+                            .duration(
+                              moment(new Date(text)).diff(
+                                moment(new Date(record?.paid_at))
+                              )
+                            )
+                            .asMinutes()
+                            .toFixed(2)
+                        } minutos`}
+                      >
+                        <Typography
+                          key={column?.name}
+                          style={{
+                            width: "100%",
+                            textAlign: "center",
+                            display: "flex",
+                            minWidth: 50,
+                            wordBreak: "keep-all",
+                            color:
+                              record?.paid_at &&
+                              +moment
+                                .duration(
+                                  moment(new Date(text)).diff(
+                                    moment(new Date(record?.paid_at))
+                                  )
+                                )
+                                .asMinutes()
+                                .toFixed(2) >= 1
+                                ? defaultTheme.colors.error
+                                : defaultTheme.colors.success,
+                          }}
+                        >{`${new Date(
+                          `${text.split("Z")[0]}Z`
+                        ).toLocaleDateString()} ${new Date(
+                          `${text.split("Z")[0]}Z`
+                        ).toLocaleTimeString()}`}</Typography>
+                        {+moment
+                          .duration(
+                            moment(new Date(text)).diff(
+                              moment(new Date(record?.paid_at))
+                            )
+                          )
+                          .asMinutes()
+                          .toFixed(2) >= 1 && (
+                          <WarningOutlined
+                            style={{
+                              marginLeft: "40%",
+                              color: defaultTheme.colors.error,
+                            }}
+                          />
+                        )}
+                      </Tooltip>
+                    ) : (
+                      <Typography
+                        key={column?.name}
+                        style={{
+                          width: "100%",
+                          textAlign: "center",
+                          minWidth: 50,
+                        }}
+                      >
+                        -
+                      </Typography>
+                    );
+                  }
+                  return text ? (
+                    <Typography
+                      key={column?.name}
+                      style={{
+                        width: "100%",
+                        textAlign: "center",
+                        minWidth: 50,
+                        wordBreak: "keep-all",
+                      }}
+                    >{`${new Date(
+                      `${text.split("Z")[0]}Z`
+                    ).toLocaleDateString()} ${new Date(
+                      `${text.split("Z")[0]}Z`
+                    ).toLocaleTimeString()}`}</Typography>
+                  ) : (
+                    <Typography
+                      key={column?.name}
+                      style={{ width: "100%", textAlign: "center", minWidth: 50 }}
+                    >
+                      -
+                    </Typography>
+                  );
+                },
+  
+                sorter: column.sort
+                  ? () => {
+                      props.setQuery((state: any) => ({
+                        ...state,
+                        sort_field: column?.sort_name
+                          ? column.sort_name
+                          : Array.isArray(column?.name)
+                          ? column?.name[1]
+                          : column?.name,
+                        sort_order:
+                          props.query.sort_order === "DESC" ? "ASC" : "DESC",
+                      }));
+  
+                      return 0;
+                    }
+                  : undefined,
+              };
+  
+
+          case "small_date":
             return {
               title: (
                 <Tooltip title={t(`table.${column?.head || column?.name}`)}>
                   <Typography
                     style={{
-                      width: "100%",
                       maxHeight: "50px",
                       overflow: "hidden",
                       textAlign: "center",
                       textOverflow: "ellipsis",
+                      wordBreak: "keep-all",
                     }}
                     ref={column.key}
                   >
@@ -372,17 +512,23 @@ export const CustomTable = (props: TableProps) => {
                   </Typography>
                 </Tooltip>
               ),
+              width: 80,
               key: column?.sort_name
                 ? column.sort_name
                 : Array.isArray(column?.name)
                 ? column?.name + `${Math.random()}`
                 : column?.name,
               dataIndex: column?.name,
-              render: (text: string) =>
-                text ? (
+              render: (text: string) => {
+                return text ? (
                   <Typography
                     key={column?.name}
-                    style={{ width: "100%", textAlign: "center", minWidth: 50 }}
+                    style={{
+                      width: "100%",
+                      textAlign: "center",
+                      minWidth: 50,
+                      wordBreak: "keep-all",
+                    }}
                   >{`${new Date(
                     `${text.split("Z")[0]}Z`
                   ).toLocaleDateString()} ${new Date(
@@ -395,7 +541,8 @@ export const CustomTable = (props: TableProps) => {
                   >
                     -
                   </Typography>
-                ),
+                );
+              },
 
               sorter: column.sort
                 ? () => {
@@ -605,7 +752,16 @@ export const CustomTable = (props: TableProps) => {
                 <div style={{ width: "100%", textAlign: "center" }}>
                   {bankListData?.itens.find((bank) => bank?.bank === text)
                     ?.icon_url ? (
-                    <Tooltip placement="topLeft" title={text} arrow>
+                    <Tooltip
+                      placement="topLeft"
+                      title={
+                        bankListData?.itens?.find((bank) => bank?.bank === text)
+                          ?.label_name ??
+                        text ??
+                        null
+                      }
+                      arrow
+                    >
                       <Avatar
                         src={
                           bankListData?.itens.find(
@@ -619,7 +775,20 @@ export const CustomTable = (props: TableProps) => {
                       </Avatar>
                     </Tooltip>
                   ) : text ? (
-                    <Typography>{text}</Typography>
+                    <Tooltip
+                      placement="topLeft"
+                      title={
+                        bankListData?.itens.find((bank) => bank?.bank === text)
+                          ?.label_name ??
+                        text ??
+                        null
+                      }
+                      arrow
+                    >
+                      <Avatar size="large" shape="square">
+                        <BankOutlined />
+                      </Avatar>
+                    </Tooltip>
                   ) : (
                     <Typography style={{ minWidth: "30px" }}>-</Typography>
                   )}
@@ -655,6 +824,7 @@ export const CustomTable = (props: TableProps) => {
                       overflow: "hidden",
                       textAlign: "center",
                       textOverflow: "ellipsis",
+                      wordBreak: "keep-all",
                     }}
                   >
                     {t(`table.${column?.head || column?.name}`)}
@@ -673,7 +843,11 @@ export const CustomTable = (props: TableProps) => {
                     typeof text === "boolean" || text === 1 || text === 0 ? (
                       <Typography
                         key={column?.name}
-                        style={{ width: "100%", textAlign: "center" }}
+                        style={{
+                          width: "100%",
+                          textAlign: "center",
+                          wordBreak: "keep-all",
+                        }}
                       >
                         {text === true || text === 1
                           ? t("table.active")
@@ -689,6 +863,7 @@ export const CustomTable = (props: TableProps) => {
                             text?.toLocaleLowerCase()
                           ],
                           fontWeight: 600,
+                          wordBreak: "keep-all",
                         }}
                       >
                         {text ? t(`table.${text?.toLocaleLowerCase()}`) : "-"}
@@ -1025,7 +1200,11 @@ export const CustomTable = (props: TableProps) => {
             return {
               title: (
                 <Typography
-                  style={{ width: "100%", textAlign: "center" }}
+                  style={{
+                    width: "100%",
+                    textAlign: "center",
+                    wordBreak: "keep-all",
+                  }}
                   ref={column.key}
                 >
                   {t(`table.${column?.head || column?.name}`)}
@@ -1043,6 +1222,7 @@ export const CustomTable = (props: TableProps) => {
                     width: "100%",
                     textAlign: "center",
                     minWidth: "30px",
+                    wordBreak: "keep-all",
                   }}
                 >
                   {text
@@ -1295,7 +1475,7 @@ export const CustomTable = (props: TableProps) => {
         <Row gutter={[8, 8]}>
           <Col span={24}>
             <Table
-              size={props.size ?? "middle"}
+              size={"small"}
               tableLayout="auto"
               onChange={onChange}
               locale={{

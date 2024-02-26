@@ -23,7 +23,7 @@ export function useGetTotalRefundDepositManual(params: refundManualDepositsQuery
     }
   );
 
-  const refundDepositManualTotal = data;
+  const refundDepositManualTotal = error ? ({} as refundDepositTotal) : data;
   const isRefundDepositManualTotalFetching = isFetching;
   const refundDepositManualTotalError: any = error;
   const refetchRefundDepositManualTotal = refetch;

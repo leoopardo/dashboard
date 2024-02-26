@@ -114,7 +114,7 @@ export const RefundDeposits = () => {
     { name: "bank", type: "bankNameToIcon" },
     { name: "merchant_name", type: "text" },
     { name: "value", type: "value" },
-    { name: "createdAt", type: "date" },
+    { name: "createdAt", type: "small_date" },
     { name: "pix_type", head: "payment_type", type: "pix_type" },
     { name: "buyer_name", type: "text" },
     { name: "buyer_document", type: "document" },
