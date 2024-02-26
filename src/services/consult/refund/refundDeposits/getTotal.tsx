@@ -26,7 +26,7 @@ export function useGetTotalRefundDeposits(params: refundDepositsQuery) {
     }
   );
 
-  const refundDepositsTotal = data;
+  const refundDepositsTotal = error ? ({} as refundDepositTotal) : data;
   const isRefundDepositsTotalFetching = isFetching;
   const refundDepositsTotalError: any = error;
   const refetchRefundDepositsTotal = refetch;

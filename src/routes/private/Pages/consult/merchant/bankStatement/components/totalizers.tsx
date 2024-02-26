@@ -24,13 +24,13 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
     refetchMerchantBankStatementTotalsTotal,
   } = useGetMerchantBankStatementTotals(query);
 
-  useEffect(() => {
-    refetchMerchantBankStatementTotalsTotal();
-  }, [query]);
-
   const MoneyIcon = (props: Partial<CustomIconComponentProps>) => (
     <Icon component={() => <AttachMoneyIcon />} {...props} />
   );
+
+  useEffect(() => {
+    refetchMerchantBankStatementTotalsTotal();
+  }, [query]);
 
   return (
     <Grid container>
@@ -130,7 +130,9 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
                       <Statistic
                         loading={isMerchantBankStatementTotalsFetching}
                         title={t(`table.${key}`)}
-                        value={moneyFormatter(MerchantBankStatementTotals[key] || 0)}
+                        value={moneyFormatter(
+                          MerchantBankStatementTotals[key] || 0
+                        )}
                         precision={2}
                         valueStyle={{
                           color: defaultTheme.colors.paid,
@@ -217,7 +219,9 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
                       <Statistic
                         loading={isMerchantBankStatementTotalsFetching}
                         title={t(`table.${key}`)}
-                        value={moneyFormatter(MerchantBankStatementTotals[key] || 0)}
+                        value={moneyFormatter(
+                          MerchantBankStatementTotals[key] || 0
+                        )}
                         precision={2}
                         valueStyle={{
                           color: defaultTheme.colors.error,

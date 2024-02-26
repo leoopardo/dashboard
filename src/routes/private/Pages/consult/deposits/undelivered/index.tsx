@@ -85,10 +85,6 @@ export const UndeliveredDeposits = () => {
     comma_separate_value: isComma,
   });
 
-  useEffect(() => {
-    refetchDepositsTotalRows();
-  }, [query]);
-
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<any>();
   const [searchOption, setSearchOption] = useState<string | undefined>(
@@ -118,12 +114,16 @@ export const UndeliveredDeposits = () => {
     { name: "merchant_name", type: "text" },
     { name: "partner_name", type: "text" },
     { name: "value", type: "value" },
-    { name: "createdAt", type: "date" },
-    { name: "delivered_at", type: "date" },
+    { name: "createdAt", type: "small_date" },
+    { name: "delivered_at", type: "small_date" },
     { name: "buyer_name", type: "text" },
     { name: "buyer_document", type: "document" },
     { name: "status", type: "status" },
   ];
+
+  useEffect(() => {
+    refetchDepositsTotalRows();
+  }, [query]);
 
   return (
     <Row

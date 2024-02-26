@@ -63,7 +63,7 @@ export const PartnerUsers = () => {
       ...updateUserBody,
       validation_token: tokenState,
     });
-
+  const [isTuorOpen, setIsTuorOpen] = useState<boolean>(false);
   const [csvFields, setCsvFields] = useState<any>();
   const [comma, setIsComma] = useState<boolean>(false);
   const {
@@ -83,15 +83,10 @@ export const PartnerUsers = () => {
 
   const [action, setAction] = useState<"create" | "update">("create");
 
-  useEffect(() => {
-    refetchUsersData();
-  }, [query]);
-
   const handleUpdateTokenValidate = () => {
     updateMutate();
   };
 
-  const [isTuorOpen, setIsTuorOpen] = useState<boolean>(false);
   const ref1 = useRef(null);
   const ref2 = useRef(null);
   const ref3 = useRef(null);
@@ -104,6 +99,10 @@ export const PartnerUsers = () => {
   const refLast = useRef(null);
   const refStatus = useRef(null);
   const refCreatedAt = useRef(null);
+
+  useEffect(() => {
+    refetchUsersData();
+  }, [query]);
 
   return (
     <Grid container style={{ padding: "25px" }}>

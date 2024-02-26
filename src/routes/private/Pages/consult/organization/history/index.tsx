@@ -32,10 +32,6 @@ export const OrganizationHistory = () => {
   const [expanded, setExpanded] = useState<string[]>([]);
   const [, setCurrentItem] = useState<OrganizationHistoryItem | null>();
 
-  useEffect(() => {
-    refetchOrganizationHistory();
-  }, [query]);
-
   const columns: TableColumnsType<OrganizationHistoryItem> = [
     {
       title: t("table.reference_day"),
@@ -47,29 +43,25 @@ export const OrganizationHistory = () => {
       title: t("table.balance_to_transactions"),
       dataIndex: "balance_to_transactions",
       key: "balance_to_transactions",
-      render: (value) =>
-        moneyFormatter(value ?? 0),
+      render: (value) => moneyFormatter(value ?? 0),
     },
     {
       title: t("table.balance_to_payment"),
       dataIndex: "balance_to_payment",
       key: "balance_to_payment",
-      render: (value) =>
-        moneyFormatter(value ?? 0),
+      render: (value) => moneyFormatter(value ?? 0),
     },
     {
       title: t("table.balance_reserved"),
       dataIndex: "balance_reserved",
       key: "balance_reserved",
-      render: (value) =>
-        moneyFormatter(value ?? 0),
+      render: (value) => moneyFormatter(value ?? 0),
     },
     {
       title: t("table.total_transactions"),
       dataIndex: "total_transactions",
       key: "total_transactions",
-      render: (value) =>
-        moneyFormatter(value ?? 0),
+      render: (value) => moneyFormatter(value ?? 0),
     },
   ];
 
@@ -79,43 +71,37 @@ export const OrganizationHistory = () => {
         title: t("table.cash_in_number"),
         dataIndex: "cash_in_number",
         key: "cash_in_number",
-        render: (value) =>
-          moneyFormatter(value ?? 0),
+        render: (value) => moneyFormatter(value ?? 0),
       },
       {
         title: t("table.cash_in_value"),
         dataIndex: "cash_in_value",
         key: "cash_in_value",
-        render: (value) =>
-          moneyFormatter(value ?? 0),
+        render: (value) => moneyFormatter(value ?? 0),
       },
       {
         title: t("table.cash_in_fee"),
         dataIndex: "cash_in_fee",
         key: "cash_in_fee",
-        render: (value) =>
-          moneyFormatter(value ?? 0),
+        render: (value) => moneyFormatter(value ?? 0),
       },
       {
         title: t("table.cash_out_number"),
         dataIndex: "cash_out_number",
         key: "cash_out_number",
-        render: (value) =>
-          moneyFormatter(value ?? 0),
+        render: (value) => moneyFormatter(value ?? 0),
       },
       {
         title: t("table.cash_out_value"),
         dataIndex: "cash_out_value",
         key: "cash_out_value",
-        render: (value) =>
-          moneyFormatter(value ?? 0),
+        render: (value) => moneyFormatter(value ?? 0),
       },
       {
         title: t("table.cash_out_fee"),
         dataIndex: "cash_out_fee",
         key: "cash_out_fee",
-        render: (value) =>
-          moneyFormatter(value ?? 0),
+        render: (value) => moneyFormatter(value ?? 0),
       },
     ];
 
@@ -137,6 +123,10 @@ export const OrganizationHistory = () => {
     setExpanded(keys);
   };
 
+  useEffect(() => {
+    refetchOrganizationHistory();
+  }, [query]);
+
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid container style={{ display: "flex", flexDirection: "row-reverse" }}>
@@ -148,9 +138,7 @@ export const OrganizationHistory = () => {
             loading={isOrganizationHistoryFetching}
             onClickCapture={() => refetchOrganizationHistory()}
             icon={<ReloadOutlined />}
-          >
-    
-          </Button>
+          ></Button>
         </Grid>
       </Grid>
 

@@ -28,6 +28,8 @@ export const HistoricCpfByMerchantDetailsReports = () => {
       .utc()
       .format("YYYY-MM-DDTHH:mm:ss.SSS"),
   };
+  const { t } = useTranslation();
+
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [query, setQuery] = useState<ReportsQuery>(INITIAL_QUERY);
@@ -44,7 +46,6 @@ export const HistoricCpfByMerchantDetailsReports = () => {
     refetchReportsHistoricCpfMerchantDetailsData();
   }, [query]);
 
-  const { t } = useTranslation();
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid

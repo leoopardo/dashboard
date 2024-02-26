@@ -18,6 +18,8 @@ export const PersonsReports = () => {
     limit: 25,
     page: 1,
   };
+  const { t } = useTranslation();
+
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [query, setQuery] = useState<ReportsQuery>(INITIAL_QUERY);
@@ -34,7 +36,6 @@ export const PersonsReports = () => {
     refetchPersonsReportsData();
   }, [query]);
 
-  const { t } = useTranslation();
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid

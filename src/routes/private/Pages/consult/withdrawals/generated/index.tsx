@@ -73,8 +73,6 @@ export const GeneratedWithdrawals = () => {
     witrawalsRowsError,
   } = useGetRowsGeneratedWithdrawals(query);
 
-
-
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const [isWebhookModalOpen, setIsWebhookModalOpen] = useState<boolean>(false);
   const [isResendWebhookModalOpen, setIsResendWebhookModalOpen] =
@@ -121,11 +119,11 @@ export const GeneratedWithdrawals = () => {
     { name: "merchant_name", type: "text" },
     { name: "partner_name", type: "text" },
     { name: "value", type: "value" },
-    { name: "createdAt", type: "date" },
-    { name: "delivered_at", type: "date" },
+    { name: "createdAt", type: "small_date" },
+    { name: "delivered_at", type: "small_date" },
     { name: "receiver_name", type: "text" },
     { name: "receiver_document", type: "document" },
-    { name: "pix_type", head: "payment_type", type: "pix_type" },
+    { name: "pix_type", head: "pix_type", type: "pix_type" },
     { name: "pix_key", type: "text" },
     { name: "status", type: "status" },
   ];
@@ -444,7 +442,8 @@ export const GeneratedWithdrawals = () => {
                   setWebhookId(item?._id);
                   setIsResendWebhookModalOpen(true);
                 },
-                disabled: (item) => item.status !== "PAID" && item.status !== "CANCELED",
+                disabled: (item) =>
+                  item.status !== "PAID" && item.status !== "CANCELED",
               },
             ]}
             removeTotal

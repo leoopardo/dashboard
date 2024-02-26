@@ -20,7 +20,7 @@ export const GroupSelect = ({
   body,
   filterIdProp,
   filterIdValue,
-  notClearble
+  notClearble,
 }: GroupSelectProps) => {
   const { t } = useTranslation();
   const [query, setQuery] = useState<GroupQuery>({
@@ -30,13 +30,13 @@ export const GroupSelect = ({
     sort_order: "ASC",
     [filterIdProp]: filterIdValue,
   });
-  const { groupsData, refetcGroups, isGroupsFetching } = useListUserGroups(query);
+  const { groupsData, refetcGroups, isGroupsFetching } =
+    useListUserGroups(query);
   const debounceSearch = useDebounce(query.filterIdProp);
 
   useEffect(() => {
     setQuery((state) => ({ ...state, [filterIdProp]: filterIdValue }));
   }, [filterIdProp, filterIdValue]);
-  
 
   useEffect(() => {
     refetcGroups();
@@ -44,7 +44,7 @@ export const GroupSelect = ({
 
   return (
     <Select
-    data-test-id="group-select"
+      data-test-id="group-select"
       allowClear={!notClearble}
       showSearch
       size="large"
@@ -79,12 +79,12 @@ export const GroupSelect = ({
         );
       }}
       onChange={(value) => {
-        setBody((state: any) => ({ ...state, group_id: value }))
+        setBody((state: any) => ({ ...state, group_id: value }));
       }}
-     /*  onSelect={(value) =>
+      /*  onSelect={(value) =>
         refetcGroups()
       } */
-     
+
       placeholder={t("table.group")}
     />
   );

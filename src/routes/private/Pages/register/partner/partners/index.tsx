@@ -121,6 +121,17 @@ export const Partners = () => {
     UpdateReset,
   } = useUpdatePartner(updateBody);
 
+  const ref = useRef(null);
+  const ref1 = useRef(null);
+  const ref2 = useRef(null);
+  const ref3 = useRef(null);
+  const ref4 = useRef(null);
+  const ref5 = useRef(null);
+  const refId = useRef(null);
+  const refName = useRef(null);
+  const refStatus = useRef(null);
+  const refCreatedAt = useRef(null);
+
   useEffect(() => {
     isSuccessPartnersTotalsData && refetchPartnersTotalsData();
     isSuccessPartnersData && refetchPartnersData();
@@ -132,17 +143,6 @@ export const Partners = () => {
       partner_id: currentItem?.id,
     });
   }, [currentItem]);
-
-  const ref = useRef(null);
-  const ref1 = useRef(null);
-  const ref2 = useRef(null);
-  const ref3 = useRef(null);
-  const ref4 = useRef(null);
-  const ref5 = useRef(null);
-  const refId = useRef(null);
-  const refName = useRef(null);
-  const refStatus = useRef(null);
-  const refCreatedAt = useRef(null);
 
   return (
     <Grid container style={{ padding: "25px" }}>

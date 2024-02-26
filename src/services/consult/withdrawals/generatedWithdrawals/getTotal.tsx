@@ -29,7 +29,7 @@ export function useGetTotalGeneratedWithdrawals(
   );
 
 
-  const WithdrawalsTotal = data;
+  const WithdrawalsTotal = error ? ({} as generatedWithdrawalsTotal) : data;
   const isWithdrawalsTotalFetching = isFetching;
   const WithdrawalsTotalError: any = error;
   const refetchWithdrawalsTotal = refetch;
