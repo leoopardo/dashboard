@@ -762,7 +762,7 @@
     "total_rows": "Total rows",
     "failed_rows": "Failed",
     "success_rows": "Success",
-    
+
     "created_by_ip": "Created by ip",
     "WAITING": "Waiting",
     "created_by": "Created by",
@@ -991,7 +991,8 @@
     "operators": "Operators",
     "aggregators": "Aggregators",
     "all_merchants": "All merchants",
-    "all_banks": "All banks"
+    "all_banks": "All banks",
+    "refund": "Refund"
   },
   "actions": {
     "details": "Details",

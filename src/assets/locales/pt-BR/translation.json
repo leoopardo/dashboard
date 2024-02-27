@@ -999,7 +999,8 @@
     "operators": "Operadores",
     "aggregators": "Agregadores",
     "all_merchants": "Todas as empresas",
-    "all_banks": "Todos os bancos"
+    "all_banks": "Todos os bancos",
+    "refund": "Devolução"
   },
   "actions": {
     "details": "Detalhes",

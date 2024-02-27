@@ -1,20 +1,28 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { CopyOutlined } from "@ant-design/icons";
+import {
+  CopyOutlined,
+  DownloadOutlined,
+  FilePdfOutlined,
+} from "@ant-design/icons";
 import { Grid } from "@mui/material";
+import { useCreateDepositPaymentVoucherRefund } from "@src/services/consult/refund/refundDeposits/generatePaymentVoucher";
+import { useGetRefund } from "@src/services/consult/refund/refundDeposits/getRefund";
+import { useGetRowsRefundDeposits } from "@src/services/consult/refund/refundDeposits/getRows";
 import { moneyFormatter } from "@src/utils/moneyFormatter";
 import {
-    Button,
-    Descriptions,
-    Input,
-    QRCode,
-    Segmented,
-    Spin,
-    Typography
+  Button,
+  Descriptions,
+  Input,
+  QRCode,
+  Segmented,
+  Spin,
+  Typography,
 } from "antd";
 import { Dispatch, SetStateAction, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useGetDeposit } from "../../../../../../services/consult/deposits/generatedDeposits/getDeposit";
+import { useMediaQuery } from "react-responsive";
 
 interface ViewModalProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -26,7 +34,20 @@ export const ViewModalFields = (props: ViewModalProps) => {
   const { t } = useTranslation();
 
   const { deposit, isDepositFetching } = useGetDeposit(`${props.id}`);
-  const [currOption, setCurrOption] = useState<any>("transaction");
+  const isMobile = useMediaQuery({ maxWidth: 950 });
+  const [currOption, setCurrOption] = useState<
+    "transaction" | "buyer" | "payer" | "refund"
+  >("transaction");
+  const { refundDepositsRows } = useGetRowsRefundDeposits({
+    pix_id: `${props?.id}`,
+    limit: 10,
+    page: 1,
+  });
+  const { Refund, refetchRefund, isRefundFetching } = useGetRefund(
+    `${refundDepositsRows?.items[0]?._id}`
+  );
+  const { mutateDepositPaymentVoucher, isDepositPaymentVoucherLoading } =
+    useCreateDepositPaymentVoucherRefund(Refund?.endToEndId);
 
   return (
     <>
@@ -45,13 +66,30 @@ export const ViewModalFields = (props: ViewModalProps) => {
                 value: "payer",
                 disabled: deposit?.status !== "PAID",
               },
+              {
+                label: t("table.refund"),
+                value: "refund",
+                disabled: deposit?.status !== "REFUNDED",
+              },
             ]}
-            onChange={(value) => {
+            onChange={(value: any) => {
               setCurrOption(value);
+              value === "refund" && refetchRefund();
             }}
           />
         </Grid>{" "}
-        {isDepositFetching && <Spin />}{" "}
+        {(isDepositFetching || isRefundFetching) && (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              width: "100%",
+              margin: 25,
+            }}
+          >
+            <Spin />
+          </div>
+        )}
         {deposit && (
           <Grid xs={12}>
             <Descriptions bordered style={{ margin: 0, padding: 0 }} column={1}>
@@ -164,14 +202,18 @@ export const ViewModalFields = (props: ViewModalProps) => {
                               display: "flex",
                               flexDirection: "column",
                               justifyContent: "center",
-                              alignItems: "center",
+                              alignItems: "start",
                             }}
                           >
                             <QRCode
                               value={deposit[key] || "-"}
                               errorLevel="L"
                               type="canvas"
-                              style={{ marginBottom: "5px" }}
+                              bgColor="#ffffff"
+                              icon={import.meta.env.VITE_APP_ICON}
+                              iconSize={18}
+                              size={isMobile ? 150 : 230}
+                              style={{ marginBottom: "8px" }}
                             />
                             <Input
                               placeholder="-"
@@ -246,7 +288,8 @@ export const ViewModalFields = (props: ViewModalProps) => {
                     case "buyer_street":
                     case "buyer_zip_code":
                       return (
-                        deposit[key] !== "N/A" && (
+                        deposit[key] !== "N/A" &&
+                        deposit[key] && (
                           <Descriptions.Item
                             key={key}
                             label={t(`table.${key}`)}
@@ -333,6 +376,184 @@ export const ViewModalFields = (props: ViewModalProps) => {
                       return;
                   }
                 })}
+
+              {currOption === "refund" && Refund && (
+                <>
+                  <Descriptions.Item
+                    key={"endToEndId"}
+                    label={t(`table.endToEndId`)}
+                    labelStyle={{
+                      maxWidth: "120px !important",
+                      margin: 0,
+                      padding: 0,
+                      textAlign: "center",
+                    }}
+                  >
+                    {Refund?.endToEndId}
+                  </Descriptions.Item>
+                  <Descriptions.Item
+                    key={"buyer_name"}
+                    label={t(`table.buyer_name`)}
+                    labelStyle={{
+                      maxWidth: "120px !important",
+                      margin: 0,
+                      padding: 0,
+                      textAlign: "center",
+                    }}
+                  >
+                    {Refund?.buyer_name}
+                  </Descriptions.Item>
+                  <Descriptions.Item
+                    key={"buyer_document"}
+                    label={t(`table.buyer_document`)}
+                    labelStyle={{
+                      maxWidth: "120px !important",
+                      margin: 0,
+                      padding: 0,
+                      textAlign: "center",
+                    }}
+                  >
+                    {Refund?.buyer_document}
+                  </Descriptions.Item>
+                  <Descriptions.Item
+                    key={"payer_name"}
+                    label={t(`table.payer_name`)}
+                    labelStyle={{
+                      maxWidth: "120px !important",
+                      margin: 0,
+                      padding: 0,
+                      textAlign: "center",
+                    }}
+                  >
+                    {Refund?.payer_name}
+                  </Descriptions.Item>
+                  <Descriptions.Item
+                    key={"payer_document"}
+                    label={t(`table.payer_document`)}
+                    labelStyle={{
+                      maxWidth: "120px !important",
+                      margin: 0,
+                      padding: 0,
+                      textAlign: "center",
+                    }}
+                  >
+                    {Refund?.payer_document}
+                  </Descriptions.Item>
+                  <Descriptions.Item
+                    key={"value"}
+                    label={t(`table.value`)}
+                    labelStyle={{
+                      maxWidth: "120px !important",
+                      margin: 0,
+                      padding: 0,
+                      textAlign: "center",
+                    }}
+                  >
+                    {moneyFormatter(Refund?.value || 0)}
+                  </Descriptions.Item>
+                  <Descriptions.Item
+                    key={"reason"}
+                    label={t(`table.reason`)}
+                    labelStyle={{
+                      maxWidth: "120px !important",
+                      margin: 0,
+                      padding: 0,
+                      textAlign: "center",
+                    }}
+                  >
+                    {Refund?.reason}
+                  </Descriptions.Item>
+                  <Descriptions.Item
+                    key={"status"}
+                    label={t(`table.status`)}
+                    labelStyle={{
+                      maxWidth: "120px !important",
+                      margin: 0,
+                      padding: 0,
+                      textAlign: "center",
+                    }}
+                  >
+                    {t(`table.${Refund?.status?.toLocaleLowerCase()}`)}
+                  </Descriptions.Item>
+                  <Descriptions.Item
+                    key={"created_at"}
+                    label={t(`table.created_at`)}
+                    labelStyle={{
+                      maxWidth: "120px !important",
+                      margin: 0,
+                      padding: 0,
+                      textAlign: "center",
+                    }}
+                  >
+                    {`${new Date(
+                      Refund?.createdAt
+                    ).toLocaleDateString()} ${new Date(
+                      Refund?.createdAt
+                    ).toLocaleTimeString()}`}
+                  </Descriptions.Item>
+                  <Descriptions.Item
+                    key={"refunded_at"}
+                    label={t(`table.refund_date`)}
+                    labelStyle={{
+                      maxWidth: "120px !important",
+                      margin: 0,
+                      padding: 0,
+                      textAlign: "center",
+                    }}
+                  >
+                    {`${new Date(
+                      Refund?.refund_date
+                    ).toLocaleDateString()} ${new Date(
+                      Refund?.refund_date
+                    ).toLocaleTimeString()}`}
+                  </Descriptions.Item>
+                  {!Refund?.url_pdf && Refund.status === "REFUNDED" ? (
+                    <Descriptions.Item
+                      key={"generate_payment_voucher"}
+                      label={t(`table.generate_payment_voucher`)}
+                      labelStyle={{
+                        maxWidth: "120px !important",
+                        margin: 0,
+                        padding: 0,
+                        textAlign: "center",
+                      }}
+                    >
+                      <Button
+                        type="dashed"
+                        onClick={() => mutateDepositPaymentVoucher()}
+                        loading={isDepositPaymentVoucherLoading}
+                      >
+                        <FilePdfOutlined />
+                        {t(`table.generate_payment_voucher`)}
+                      </Button>
+                    </Descriptions.Item>
+                  ) : (
+                    Refund?.url_pdf &&
+                    Refund.status === "REFUNDED" && (
+                      <Descriptions.Item
+                        key={"download_payment_voucher"}
+                        label={t(`table.download_payment_voucher`)}
+                        labelStyle={{
+                          maxWidth: "120px !important",
+                          margin: 0,
+                          padding: 0,
+                          textAlign: "center",
+                        }}
+                      >
+                        <Button
+                          onClick={() => {
+                            window.location.assign(Refund?.url_pdf);
+                          }}
+                          type="primary"
+                        >
+                          <DownloadOutlined />
+                          {t(`table.download_payment_voucher`)}
+                        </Button>
+                      </Descriptions.Item>
+                    )
+                  )}
+                </>
+              )}
             </Descriptions>
           </Grid>
         )}
