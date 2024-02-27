@@ -162,7 +162,8 @@
     "settings": "Configurações",
     "permissions_groups": "Grupos de permissões",
     "licenses": "Licenças",
-    "current_accounts": "Contas Corrente"
+    "current_accounts": "Contas Corrente",
+    "custom_webhook": "Personalizar webhook"
   },
 
   "titles": {
@@ -480,7 +481,11 @@
     "add_all_columns": "Adicionar todas as colunas",
     "ip": "IP",
     "reason_name": "Motivo",
-    "withdraw_by_month_cant_be_smaller_than_day": "O valor de saques por mês não pode ser menor que o valor de saques por dia"
+    "withdraw_by_month_cant_be_smaller_than_day": "O valor de saques por mês não pode ser menor que o valor de saques por dia",
+    "deposit_standard_webhook": "Webhook de depósito padrão",
+    "deposit_webhook_data": "Dados do webhook de depósito",
+    "withdraw_webhook_data": "Dados do webhook de saque",
+    "withdraw_standard_webhook": "Webhook de saque padrão"
   },
   "table": {
     "id": "id",
@@ -999,7 +1004,11 @@
     "operators": "Operadores",
     "aggregators": "Agregadores",
     "all_merchants": "Todas as empresas",
-    "all_banks": "Todos os bancos"
+    "all_banks": "Todos os bancos",
+    "receiver_data": "Dados do recebedor",
+    "deposit_webhook": "Webhook de depósito",
+    "withdraw_webhook": "Webhook de saque",
+    "webhook_preview": "Pré-visualização do webhook"
   },
   "actions": {
     "details": "Detalhes",
@@ -1016,7 +1025,8 @@
     "edit_merchant": "Editar empresa",
     "check_payments": "Checar pagamentos",
     "resend_webhook": "Reenviar webhook",
-    "permissions": "Permissões"
+    "permissions": "Permissões",
+    "custom_webhook":"Personalizar webhook"
   },
   "error": {
     "400": "Nenhum dado encontrado.",

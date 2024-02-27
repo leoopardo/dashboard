@@ -159,7 +159,8 @@
     "historic_cpf_merchant": "CPF historic by merchant",
     "historic_cpf_merchant_details": "CPF historic by merchant details",
     "licenses": "Licenses",
-    "current_accounts": "Current accounts"
+    "current_accounts": "Current accounts",
+    "custom_webhook": "Custom webhooks"
   },
 
   "titles": {
@@ -439,7 +440,11 @@
     "add_all_columns": "Add all columns",
     "ip": "IP",
     "reason_name": "Reason",
-    "withdraw_by_month_cant_be_smaller_than_day": "Withdraw by month can't be smaller than withdraw by day"
+    "withdraw_by_month_cant_be_smaller_than_day": "Withdraw by month can't be smaller than withdraw by day",
+    "deposit_standard_webhook": "Deposit standard webhook",
+    "deposit_webhook_data": "Deposit webhook data",
+    "withdraw_webhook_data": "Withdraw webhook data",
+    "withdraw_standard_webhook": "Withdraw standard webhook"
   },
 
   "modal": {
@@ -991,7 +996,11 @@
     "operators": "Operators",
     "aggregators": "Aggregators",
     "all_merchants": "All merchants",
-    "all_banks": "All banks"
+    "all_banks": "All banks",
+    "receiver_data": "Receiver data",
+    "deposit_webhook": "Deposit webhook",
+    "withdraw_webhook": "Withdraw webhook",
+    "webhook_preview": "Webhook preview"
   },
   "actions": {
     "details": "Details",
@@ -1008,7 +1017,8 @@
     "edit_merchant": "Edit merchant",
     "check_payments": "Check payments",
     "resend_webhook": "Resend webhook",
-    "permissions": "Permissions"
+    "permissions": "Permissions",
+    "custom_webhook":"Custom webhook"
   },
   "error": {
     "400": "Any records found.",

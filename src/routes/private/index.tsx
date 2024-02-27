@@ -115,6 +115,7 @@ import { Licenses } from "./Pages/register/licenses/licenses";
 import { LicenseReports } from "./Pages/register/licenses/reports/license";
 import { UpdateLicense } from "./Pages/register/licenses/licenses/updateLicense";
 import { CurrentAccountPage } from "./Pages/register/organization/currentAccounts";
+import { CustomWebhookPartners } from "./Pages/register/partner/partners/components/CustomWebhook/customWebhook";
 import { Permission } from "./permission";
 import { Redirect } from "./redirect";
 export const PrivateRoutes = () => {
@@ -630,20 +631,19 @@ export const PrivateRoutes = () => {
               }
             />
             {/* Ajustar permissões*/}
-             <Route
+            <Route
               path="current_accounts"
               element={
                 <Permission
                   permission={
-                    responseValidate?.permissions?.register?.paybrokers
-                      ?.menu
+                    responseValidate?.permissions?.register?.paybrokers?.menu
                   }
                 >
                   <CurrentAccountPage />
                 </Permission>
               }
             />
-              {/* Ajustar permissões*/}
+            {/* Ajustar permissões*/}
             <Route
               path="bank_maintain"
               element={
@@ -888,6 +888,20 @@ export const PrivateRoutes = () => {
                     }
                   >
                     <UpdatePartner />
+                  </Permission>
+                }
+              />
+            {/* Ajustar permissões*/}
+              <Route
+                path="custom_webhook"
+                element={
+                  <Permission
+                    permission={
+                      responseValidate?.permissions?.register?.partner?.partner
+                        ?.menu
+                    }
+                  >
+                    <CustomWebhookPartners />
                   </Permission>
                 }
               />
@@ -1350,13 +1364,13 @@ export const PrivateRoutes = () => {
               />
             </Route>
           </Route>
-           {/* cadastros de licensas */}
-           <Route path="licenses">
-           <Route
-                index
-                element={
-                  <Licenses />
-               /*    <Permission
+          {/* cadastros de licensas */}
+          <Route path="licenses">
+            <Route
+              index
+              element={
+                <Licenses />
+                /*    <Permission
                     permission={
                       responseValidate?.permissions?.register?.person?.person
                         ?.menu
@@ -1364,21 +1378,11 @@ export const PrivateRoutes = () => {
                   >
                     <Persons />
                   </Permission> */
-                }
-              />
-               <Route
-                path="update"
-                element={
-                  <UpdateLicense />
-                }
-              />
-               <Route
-                path="reports"
-                element={
-                  <LicenseReports />
-                }
-              />
-           </Route>
+              }
+            />
+            <Route path="update" element={<UpdateLicense />} />
+            <Route path="reports" element={<LicenseReports />} />
+          </Route>
         </Route>
         {/* movimentações */}
         <Route path="moviment">
