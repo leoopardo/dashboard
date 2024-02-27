@@ -18,6 +18,7 @@ import {
   Button,
   CollapseProps,
   FormInstance,
+  Alert,
 } from "antd";
 import { t } from "i18next";
 import { useEffect, useRef, useState } from "react";
@@ -37,6 +38,7 @@ export const TabDepositWebhook = ({
     useState<boolean>(false);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [active, setActive] = useState<string | string[]>(["1"]);
+  const [openAlert, setOpenAlert] = useState<boolean>(false);
   const [selectedDepositFields, setSelectedDepositFields] = useState<string[]>(
     []
   );
@@ -78,7 +80,7 @@ export const TabDepositWebhook = ({
     mutateDeleteCustomDepositWebhook,
     DeleteCustomDepositWebhookError,
     isDeleteSCustomDepositWebhookuccess,
-    isDeleteCustomDepositWebhookLoading
+    isDeleteCustomDepositWebhookLoading,
   } = useDeleteCustomDepositWebhook(currentPartner);
 
   const depositFields = {
@@ -147,11 +149,12 @@ export const TabDepositWebhook = ({
       : CreateCustomDepositWebhookMutate();
 
     setIsConfirmOpen(false);
+    setOpenAlert(false);
   };
 
   useEffect(() => {
     refetchCustomWebhookDeposit();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPartner]);
 
   useEffect(() => {
@@ -182,6 +185,16 @@ export const TabDepositWebhook = ({
 
   return (
     <Row>
+      {openAlert && (
+        <Alert
+          style={{ width: "100%", padding: 10, margin: "10px 0" }}
+          message={t("messages.need_to_update")}
+          type="warning"
+          showIcon
+          onClose={() => setOpenAlert(false)}
+        />
+      )}
+
       <Row style={{ width: "100%" }} gutter={[8, 8]}>
         <Col lg={{ span: 12 }} style={{ paddingRight: 10 }}>
           <Form
@@ -197,7 +210,10 @@ export const TabDepositWebhook = ({
               >
                 <Switch
                   checked={depositWebhookStandard}
-                  onChange={(checked) => setDepositWebhookStandard(checked)}
+                  onChange={(checked) => {
+                    setOpenAlert(true);
+                    setDepositWebhookStandard(checked)
+                  }}
                 />
               </Form.Item>
             )}
@@ -207,7 +223,7 @@ export const TabDepositWebhook = ({
               <Form.Item label={t("input.deposit_webhook_data")} required>
                 <Space.Compact style={{ width: "100%" }} size="large">
                   <Select
-                  loading={isCustomWebhookDepositFetching}
+                    loading={isCustomWebhookDepositFetching}
                     disabled={depositWebhookStandard}
                     style={{ width: "100%" }}
                     options={Object.keys(depositFields)?.map((field) => {
@@ -228,6 +244,7 @@ export const TabDepositWebhook = ({
                     }
                     mode="multiple"
                     onChange={(_value, option) => {
+                      setOpenAlert(true);
                       setSelectedDepositFields(
                         (option as { title: string; value: string }[])?.map(
                           (i) => {

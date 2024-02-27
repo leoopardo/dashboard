@@ -18,6 +18,7 @@ import {
   Button,
   CollapseProps,
   FormInstance,
+  Alert,
 } from "antd";
 import { t } from "i18next";
 import { useEffect, useRef, useState } from "react";
@@ -39,6 +40,7 @@ export const TabWithdrawWebhook = ({
   const [selectedWithdrawFields, setSelectedWithdrawFields] = useState<
     string[]
   >([]);
+  const [openAlert, setOpenAlert] = useState<boolean>(false);
 
   const sanitizedSelectedFields = (fields: any[]) => {
     const selectedFields: { [key: string]: boolean } = {
@@ -150,6 +152,7 @@ export const TabWithdrawWebhook = ({
       : CreateCustomWithdrawWebhookMutate();
 
     setIsConfirmOpen(false);
+    setOpenAlert(false)
   };
   const onCollapseChange = (key: string | string[]) => {
     setActive(key);
@@ -188,6 +191,15 @@ export const TabWithdrawWebhook = ({
 
   return (
     <Row>
+       {openAlert && (
+        <Alert
+          style={{ width: "100%", padding: 10, margin: "10px 0" }}
+          message={t("messages.need_to_update")}
+          type="warning"
+          showIcon
+          onClose={() => setOpenAlert(false)}
+        />
+      )}
       <Row style={{ width: "100%" }} gutter={[8, 8]}>
         <Col lg={{ span: 12 }} style={{ paddingRight: 10 }}>
           <Form
@@ -204,6 +216,7 @@ export const TabWithdrawWebhook = ({
                 <Switch
                   checked={withdrawWebhookStandard}
                   onChange={(checked) => {
+                    setOpenAlert(true)
                     setWithdrawWebhookStandard(checked);
                   }}
                 />
@@ -234,6 +247,7 @@ export const TabWithdrawWebhook = ({
                     }
                     mode="multiple"
                     onChange={(_value, option) => {
+                      setOpenAlert(true)
                       setSelectedWithdrawFields(
                         (option as { title: string; value: string }[])?.map(
                           (i) => {
