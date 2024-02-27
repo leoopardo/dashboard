@@ -146,8 +146,8 @@ export const RefundDepositsManual = () => {
     { name: "payer_name", type: "text" },
     { name: "payer_document", type: "document" },
     { name: "pix_type", head: "payment_type", type: "pix_type" },
-    { name: "createdAt", type: "date" },
-    { name: "refund_date", type: "date" },
+    { name: "createdAt", type: "small_date" },
+    { name: "refund_date", type: "small_date" },
     { name: "reason", type: "text" },
     { name: "status", type: "status" },
   ];

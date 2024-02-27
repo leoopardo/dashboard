@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useGetrefetchCountries } from "@src/services/states_cities/getCountries";
 import { DDIs } from "@src/utils/DDIsList";
-import { AutoComplete, Avatar, Input, Space, Typography } from "antd";
+import { Avatar, Input, Select, Space, Typography } from "antd";
 import { Country } from "country-state-city";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import ReactInputMask from "react-input-mask";
@@ -153,7 +153,9 @@ export const CellphoneInput = ({
 
   return (
     <Space.Compact size="large" style={{ width: "100%" }}>
-      <AutoComplete
+      <Select
+        showSearch
+        allowClear
         data-test-id="cellphone-ddi"
         style={{ width: "60%" }}
         value={search}
@@ -195,7 +197,7 @@ export const CellphoneInput = ({
             />
           }
         />
-      </AutoComplete>
+      </Select>
       <ReactInputMask
         data-test-id="cellphone-number"
         value={number}

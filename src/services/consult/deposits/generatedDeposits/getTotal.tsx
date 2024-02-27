@@ -10,9 +10,8 @@ import { useQuery } from "react-query";
 export function useGetTotalGeneratedDeposits(
   params: generatedDepositTotalQuery
 ) {
-
   const { data, isFetching, error, refetch } = useQuery<
-  generatedDepositTotal | null | undefined
+    generatedDepositTotal | null | undefined
   >(
     "depositsTotal",
     async () => {
@@ -26,11 +25,11 @@ export function useGetTotalGeneratedDeposits(
       refetchIntervalInBackground: false,
       refetchOnMount: false,
       refetchOnWindowFocus: false,
+      keepPreviousData: false,
     }
   );
 
-
-  const depositsTotal = data;
+  const depositsTotal = error ? ({} as generatedDepositTotal) : data;
   const isDepositsTotalFetching = isFetching;
   const depositsTotalError: any = error;
   const refetchDepositsTotal = refetch;
