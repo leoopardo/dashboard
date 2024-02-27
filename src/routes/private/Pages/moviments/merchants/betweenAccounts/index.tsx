@@ -29,11 +29,15 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { MerchantBalance } from "../../../dashboard/components/merchantBalance";
 import { moneyFormatter } from "@src/utils/moneyFormatter";
+import { MerchantBalanceTotalsData } from "@src/services/types/consult/merchant/balance";
 
 export const TransfersBetweenAccounts = () => {
   const { permissions } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
+  const MerchantTotals = queryClient.getQueryData(
+    "MerchantBalanceTotals"
+  ) as MerchantBalanceTotalsData;
   const user = queryClient.getQueryData("validate") as ValidateInterface;
   const INITIAL_QUERY: MerchantTransferBetweenAccountsQuery = {
     limit: 25,
@@ -80,6 +84,19 @@ export const TransfersBetweenAccounts = () => {
       label: "from",
       required: true,
       selectOption: true,
+      validator: () => {
+        const from = body?.from ? parseFloat(MerchantTotals[String(body.from.toString()) || ''] ?? '0') : 0;
+        const value = parseFloat(body?.value?.toString() ?? '0');
+        
+        if (!isNaN(from) && !isNaN(value) && from >= value) {
+          console.log('resolve')
+          return Promise.resolve();
+        }
+        
+        return Promise.reject(
+          new Error(t("error.from_value_must_be_more_than_to_value") || "")
+        );
+      }
     },
     { label: "to", required: true, selectOption: true },
     { label: "value", required: true },
@@ -89,8 +106,20 @@ export const TransfersBetweenAccounts = () => {
       label: "from",
       required: true,
       selectOption: true,
+      validator: () => {
+        const from = body?.from ? parseFloat(MerchantTotals[String(body.from.toString()) || ''] ?? '0') : 0;
+        const value = parseFloat(body?.value?.toString() ?? '0');
+        
+        if (!isNaN(from) && !isNaN(value) && from > value) {
+          return Promise.resolve();
+        }
+        
+        return Promise.reject(
+          new Error(t("input.doest_match") || "")
+        );
+      }
     },
-    { label: "to", required: true, selectOption: true },
+    { label: "to", required: true, selectOption: true, },
     { label: "value", required: true },
   ];
 
@@ -322,10 +351,6 @@ export const TransfersBetweenAccounts = () => {
                   },
                 ]
               : [
-                  {
-                    label: "balance_to_payment",
-                    value: "balance_to_payment",
-                  },
                   {
                     label: "balance_to_transactions",
                     value: "balance_to_transactions",

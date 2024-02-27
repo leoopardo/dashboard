@@ -52,6 +52,7 @@ interface mutateProps {
             required: boolean;
             selectOption?: boolean;
             noTranslate?: boolean;
+            validator?: any;
             feesDetails?: boolean;
             asyncOption?: {
               options?: any[];
@@ -1245,6 +1246,11 @@ export const MutateModalFields = ({
                               t("input.required", {
                                 field: t(`input.${field.label}`),
                               }) || "",
+                          },
+                          field?.validator && {
+                            validator(rule, value) {
+                              return field.validator(rule, value);
+                            },
                           },
                         ]}
                       >

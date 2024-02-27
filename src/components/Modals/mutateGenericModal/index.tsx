@@ -17,6 +17,7 @@ interface mutateProps {
             selectOption?: boolean;
             noTranslate?: boolean;
             feesDetails?: boolean;
+            validator?: any;
             asyncOption?: {
               options?: any[];
               optionLabel?: string;
