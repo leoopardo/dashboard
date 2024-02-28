@@ -1269,6 +1269,7 @@
     "cadastros_plataformas_responsaveis": "Responsibles",
     "cadastros_plataformas_arquivos": "Files",
     "cadastros_plataformas_exportar": "Export",
+    "cadastros_plataformas_configurarWebhook": "Webhook",
     "cadastros_merchants_cambio": "Exchange",
     "cadastros_merchants_configuracoesBancarias": "Banking Configurations",
     "cadastros_merchants_configuracoesMerchant": "Company Configurations",

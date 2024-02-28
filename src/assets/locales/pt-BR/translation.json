@@ -1306,6 +1306,7 @@
     "cadastros_plataformas_responsaveis": "Responsáveis",
     "cadastros_plataformas_arquivos": "Arquivos",
     "cadastros_plataformas_exportar": "Exportar",
+    "cadastros_plataformas_configurarWebhook": "Webhook",
     "cadastros_merchants_cambio": "Câmbio",
     "cadastros_merchants_configuracoesBancarias": "Configurações bancárias",
     "cadastros_merchants_configuracoesMerchant": "Configurações de empresa",

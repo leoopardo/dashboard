@@ -196,14 +196,13 @@ export const TabDepositWebhook = ({
       )}
 
       <Row style={{ width: "100%" }} gutter={[8, 8]}>
-        <Col lg={{ span: 12 }} style={{ paddingRight: 10 }}>
-          <Form
-            ref={formDepositRef}
-            layout="vertical"
-            onFinish={() => onDepositSubmit()}
-          >
-            {permissions.register.partner.partner
-              .partner_customWebhook_delete && (
+        {permissions.register.partner.partner.partner_customWebhook_update && (
+          <Col lg={{ span: 12 }} style={{ paddingRight: 10 }}>
+            <Form
+              ref={formDepositRef}
+              layout="vertical"
+              onFinish={() => onDepositSubmit()}
+            >
               <Form.Item
                 label={t("input.deposit_standard_webhook")}
                 name="depositStandard"
@@ -212,14 +211,11 @@ export const TabDepositWebhook = ({
                   checked={depositWebhookStandard}
                   onChange={(checked) => {
                     setOpenAlert(true);
-                    setDepositWebhookStandard(checked)
+                    setDepositWebhookStandard(checked);
                   }}
                 />
               </Form.Item>
-            )}
 
-            {permissions.register.partner.partner
-              .partner_customWebhook_update && (
               <Form.Item label={t("input.deposit_webhook_data")} required>
                 <Space.Compact style={{ width: "100%" }} size="large">
                   <Select
@@ -256,9 +252,9 @@ export const TabDepositWebhook = ({
                   />
                 </Space.Compact>
               </Form.Item>
-            )}
-          </Form>
-        </Col>
+            </Form>
+          </Col>
+        )}
 
         <Col sm={{ span: 24 }} lg={{ span: 12 }}>
           <Collapse
@@ -268,49 +264,51 @@ export const TabDepositWebhook = ({
             onChange={onCollapseChange}
           />
         </Col>
-        <Row
-          style={{ width: "100%", marginTop: 10, paddingRight: 10 }}
-          justify={"end"}
-        >
-          <Col xs={{ span: 24 }} md={{ span: 12 }} lg={{ span: 6 }}>
-            <Popconfirm
-              title={t("messages.confirm_action_title", {
-                action: t("messages.update"),
-              })}
-              description={t("messages.are_you_sure", {
-                action: t("messages.update"),
-                itens: t("menus.general_configs").toLowerCase(),
-              })}
-              open={isConfirmOpen}
-              style={{ maxWidth: "340px" }}
-              onConfirm={() => {
-                formDepositRef.current?.submit();
-              }}
-              okButtonProps={{
-                loading:
-                  isDeleteCustomDepositWebhookLoading ||
-                  CreateCustomDepositWebhookIsLoading,
-              }}
-              okText={t("messages.yes_update")}
-              cancelText={t("messages.no_cancel")}
-              onCancel={() => setIsConfirmOpen(false)}
-            >
-              <Button
-                data-test-id="submit-button"
-                type="primary"
-                style={{ width: "100%" }}
-                loading={
-                  isDeleteCustomDepositWebhookLoading ||
-                  CreateCustomDepositWebhookIsLoading
-                }
-                size="large"
-                onClick={() => setIsConfirmOpen(true)}
+        {permissions.register.partner.partner.partner_customWebhook_update && (
+          <Row
+            style={{ width: "100%", marginTop: 10, paddingRight: 10 }}
+            justify={"end"}
+          >
+            <Col xs={{ span: 24 }} md={{ span: 12 }} lg={{ span: 6 }}>
+              <Popconfirm
+                title={t("messages.confirm_action_title", {
+                  action: t("messages.update"),
+                })}
+                description={t("messages.are_you_sure", {
+                  action: t("messages.update"),
+                  itens: t("menus.general_configs").toLowerCase(),
+                })}
+                open={isConfirmOpen}
+                style={{ maxWidth: "340px" }}
+                onConfirm={() => {
+                  formDepositRef.current?.submit();
+                }}
+                okButtonProps={{
+                  loading:
+                    isDeleteCustomDepositWebhookLoading ||
+                    CreateCustomDepositWebhookIsLoading,
+                }}
+                okText={t("messages.yes_update")}
+                cancelText={t("messages.no_cancel")}
+                onCancel={() => setIsConfirmOpen(false)}
               >
-                {t("buttons.update")}
-              </Button>
-            </Popconfirm>
-          </Col>
-        </Row>
+                <Button
+                  data-test-id="submit-button"
+                  type="primary"
+                  style={{ width: "100%" }}
+                  loading={
+                    isDeleteCustomDepositWebhookLoading ||
+                    CreateCustomDepositWebhookIsLoading
+                  }
+                  size="large"
+                  onClick={() => setIsConfirmOpen(true)}
+                >
+                  {t("buttons.update")}
+                </Button>
+              </Popconfirm>
+            </Col>
+          </Row>
+        )}
       </Row>
 
       <Toast

@@ -152,7 +152,7 @@ export const TabWithdrawWebhook = ({
       : CreateCustomWithdrawWebhookMutate();
 
     setIsConfirmOpen(false);
-    setOpenAlert(false)
+    setOpenAlert(false);
   };
   const onCollapseChange = (key: string | string[]) => {
     setActive(key);
@@ -191,7 +191,7 @@ export const TabWithdrawWebhook = ({
 
   return (
     <Row>
-       {openAlert && (
+      {openAlert && (
         <Alert
           style={{ width: "100%", padding: 10, margin: "10px 0" }}
           message={t("messages.need_to_update")}
@@ -201,67 +201,69 @@ export const TabWithdrawWebhook = ({
         />
       )}
       <Row style={{ width: "100%" }} gutter={[8, 8]}>
-        <Col lg={{ span: 12 }} style={{ paddingRight: 10 }}>
-          <Form
-            ref={formWithdrawRef}
-            layout="vertical"
-            onFinish={() => onWithdrawSubmit()}
-          >
-            {permissions.register.partner.partner
-              .partner_customWebhook_delete && (
-              <Form.Item
-                label={t("input.withdraw_standard_webhook")}
-                name="withdrawStandard"
+        {
+          permissions.register.partner.partner.partner_customWebhook_update && (
+            <Col lg={{ span: 12 }} style={{ paddingRight: 10 }}>
+              <Form
+                ref={formWithdrawRef}
+                layout="vertical"
+                onFinish={() => onWithdrawSubmit()}
               >
-                <Switch
-                  checked={withdrawWebhookStandard}
-                  onChange={(checked) => {
-                    setOpenAlert(true)
-                    setWithdrawWebhookStandard(checked);
-                  }}
-                />
-              </Form.Item>
-            )}
-
-            {permissions.register.partner.partner
-              .partner_customWebhook_update && (
-              <Form.Item label={t("input.withdraw_webhook_data")} required>
-                <Space.Compact style={{ width: "100%" }} size="large">
-                  <Select
-                    loading={isCustomWebhookWithdrawFetching}
-                    disabled={withdrawWebhookStandard}
-                    style={{ width: "100%" }}
-                    options={Object.keys(withdrawField).map((field) => ({
-                      title: field,
-                      value: t(`table.${field}`),
-                    }))}
-                    value={
-                      selectedWithdrawFields.length >= 1
-                        ? selectedWithdrawFields.map((field: any) => {
-                            return {
-                              title: field,
-                              value: t(`table.${field}`),
-                            };
-                          })
-                        : []
-                    }
-                    mode="multiple"
-                    onChange={(_value, option) => {
-                      setOpenAlert(true)
-                      setSelectedWithdrawFields(
-                        (option as { title: string; value: string }[])?.map(
-                          (i) => {
-                            return i.title;
-                          }
-                        )
-                      );
+                <Form.Item
+                  label={t("input.withdraw_standard_webhook")}
+                  name="withdrawStandard"
+                >
+                  <Switch
+                    checked={withdrawWebhookStandard}
+                    onChange={(checked) => {
+                      setOpenAlert(true);
+                      setWithdrawWebhookStandard(checked);
                     }}
                   />
-                </Space.Compact>
-              </Form.Item>
-            )}
-          </Form>
-        </Col>
+                </Form.Item>
+
+               
+                    <Form.Item
+                      label={t("input.withdraw_webhook_data")}
+                      required
+                    >
+                      <Space.Compact style={{ width: "100%" }} size="large">
+                        <Select
+                          loading={isCustomWebhookWithdrawFetching}
+                          disabled={withdrawWebhookStandard}
+                          style={{ width: "100%" }}
+                          options={Object.keys(withdrawField).map((field) => ({
+                            title: field,
+                            value: t(`table.${field}`),
+                          }))}
+                          value={
+                            selectedWithdrawFields.length >= 1
+                              ? selectedWithdrawFields.map((field: any) => {
+                                  return {
+                                    title: field,
+                                    value: t(`table.${field}`),
+                                  };
+                                })
+                              : []
+                          }
+                          mode="multiple"
+                          onChange={(_value, option) => {
+                            setOpenAlert(true);
+                            setSelectedWithdrawFields(
+                              (
+                                option as { title: string; value: string }[]
+                              )?.map((i) => {
+                                return i.title;
+                              })
+                            );
+                          }}
+                        />
+                      </Space.Compact>
+                    </Form.Item>
+              </Form>
+            </Col>
+          )
+        }
 
         <Col sm={{ span: 24 }} lg={{ span: 12 }}>
           <Collapse
@@ -272,51 +274,55 @@ export const TabWithdrawWebhook = ({
           />
         </Col>
 
-        <Row
-          style={{ width: "100%", marginTop: 10, paddingRight: 10 }}
-          justify={"end"}
-        >
-          <Col xs={{ span: 24 }} md={{ span: 12 }} lg={{ span: 6 }}>
-            <Popconfirm
-              title={t("messages.confirm_action_title", {
-                action: t("messages.update"),
-              })}
-              description={t("messages.are_you_sure", {
-                action: t("messages.update"),
-                itens: t("menus.general_configs").toLowerCase(),
-              })}
-              open={isConfirmOpen}
-              style={{ maxWidth: "340px" }}
-              onConfirm={() => {
-                formWithdrawRef.current?.submit();
-              }}
-              okButtonProps={{
-                loading:
-                  isDeleteCustomWithdrawWebhookLoading ||
-                  CreateCustomWithdrawWebhookIsLoading,
-              }}
-              okText={t("messages.yes_update")}
-              cancelText={t("messages.no_cancel")}
-              onCancel={() => setIsConfirmOpen(false)}
+        {
+          permissions.register.partner.partner.partner_customWebhook_update && (
+            <Row
+              style={{ width: "100%", marginTop: 10, paddingRight: 10 }}
+              justify={"end"}
             >
-              <Button
-                data-test-id="submit-button"
-                type="primary"
-                loading={
-                  isDeleteCustomWithdrawWebhookLoading ||
-                  CreateCustomWithdrawWebhookIsLoading
-                }
-                style={{ width: "100%" }}
-                size="large"
-                onClick={() => {
-                  setIsConfirmOpen(true);
-                }}
-              >
-                {t("buttons.update")}
-              </Button>
-            </Popconfirm>
-          </Col>
-        </Row>
+              <Col xs={{ span: 24 }} md={{ span: 12 }} lg={{ span: 6 }}>
+                <Popconfirm
+                  title={t("messages.confirm_action_title", {
+                    action: t("messages.update"),
+                  })}
+                  description={t("messages.are_you_sure", {
+                    action: t("messages.update"),
+                    itens: t("menus.general_configs").toLowerCase(),
+                  })}
+                  open={isConfirmOpen}
+                  style={{ maxWidth: "340px" }}
+                  onConfirm={() => {
+                    formWithdrawRef.current?.submit();
+                  }}
+                  okButtonProps={{
+                    loading:
+                      isDeleteCustomWithdrawWebhookLoading ||
+                      CreateCustomWithdrawWebhookIsLoading,
+                  }}
+                  okText={t("messages.yes_update")}
+                  cancelText={t("messages.no_cancel")}
+                  onCancel={() => setIsConfirmOpen(false)}
+                >
+                  <Button
+                    data-test-id="submit-button"
+                    type="primary"
+                    loading={
+                      isDeleteCustomWithdrawWebhookLoading ||
+                      CreateCustomWithdrawWebhookIsLoading
+                    }
+                    style={{ width: "100%" }}
+                    size="large"
+                    onClick={() => {
+                      setIsConfirmOpen(true);
+                    }}
+                  >
+                    {t("buttons.update")}
+                  </Button>
+                </Popconfirm>
+              </Col>
+            </Row>
+          )
+        }
       </Row>
 
       <Toast
