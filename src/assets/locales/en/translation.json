@@ -591,6 +591,7 @@
     "phone_validated": "Phone validated?",
     "true": "Yes",
     "false": "No",
+    "receiver_bank_name": "Receiver bank",
     "group": "Group",
     "password": "Password",
     "sort_field": "Sort field",

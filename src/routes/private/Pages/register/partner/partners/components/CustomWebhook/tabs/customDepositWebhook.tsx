@@ -88,7 +88,7 @@ export const TabDepositWebhook = ({
     merchant_name: "Merchant Name",
     reference_id: "789",
     endToEndId: "987",
-    value: 1000,
+    value: 100.01,
     buyer_name: "Buyer Name",
     buyer_document: "Buyer Document",
     payer_name: "Payer Name",
@@ -101,11 +101,11 @@ export const TabDepositWebhook = ({
     buyer_email: "buyer@example.com",
     description: "Description of the deposit",
     status: "completed",
-    paid_at: new Date(),
-    paid_value: 800,
+    paid_at: "2023-12-31T23:59:59.999Z",
+    paid_value: 100.01,
     buyer_city: "Buyer City",
     buyer_state: "Buyer State",
-    createdAt: new Date(),
+    createdAt: "2023-12-31T23:59:59.999Z",
   };
 
   const CollapseDepositItem: CollapseProps["items"] = [
