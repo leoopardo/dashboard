@@ -263,7 +263,10 @@ export const ValidateToken = ({
     >
       <Typography.Text>
         {t("messages.validate_text", {
-          phone: Self?.cellphone?.substring(10, 14),
+          phone: Self?.cellphone?.substring(
+            Self?.cellphone.length - 4,
+            Self?.cellphone.length
+          ),
         })}
         .
       </Typography.Text>
@@ -362,7 +365,14 @@ export const ValidateToken = ({
     >
       {Self?.cellphone || editSelf ? (
         <>
-          <Typography.Text>{t("messages.validate_phone_text", {phone: Self?.cellphone?.substring(10, 14)})}</Typography.Text>
+          <Typography.Text>
+            {t("messages.validate_phone_text", {
+              phone: Self?.cellphone?.substring(
+                Self?.cellphone.length - 4,
+                Self?.cellphone.length
+              ),
+            })}
+          </Typography.Text>
           <Grid
             container
             justifyContent="center"
