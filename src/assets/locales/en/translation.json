@@ -992,7 +992,8 @@
     "aggregators": "Aggregators",
     "all_merchants": "All merchants",
     "all_banks": "All banks",
-    "refund": "Refund"
+    "refund": "Refund",
+    "deadline": "Deadline"
   },
   "actions": {
     "details": "Details",
