@@ -112,7 +112,7 @@ export const SerproAssertiva = () => {
           error={error}
           columns={[
             { name: "_id", type: "id" },
-            { name: "date", type: "date" },
+            { name: "date", type: "birth" },
             { name: "assertiva_count", type: "text" },
             { name: "serpro_count", type: "text" },
             { name: "createdAt", type: "date" },
