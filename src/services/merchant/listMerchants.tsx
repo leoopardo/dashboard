@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { api } from "../../config/api";
 import {
@@ -17,10 +16,6 @@ export function useListMerchants(params: MerchantQuery) {
     });
     return response.data;
   }, {enabled: false});
-
-  useEffect(() => {
-    refetch();
-  }, [params?.name]);
 
   const merchantsData = error
     ? ({ items: [], limit: 200, page: 1, total: 0 } as MerchantResponse)

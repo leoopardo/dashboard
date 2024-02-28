@@ -31,6 +31,7 @@ export const MerchantSelect = ({
     aggregator_id: queryOptions?.aggregator_id,
     operator_id: queryOptions?.operator_id,
   });
+
   const { merchantsData, refetcMerchant, isMerchantFetching } =
     useListMerchants(query);
   const { merchant, refetchMerchantById, isMerchantByIdFetching } =
@@ -102,7 +103,12 @@ export const MerchantSelect = ({
 
   useEffect(() => {
     refetcMerchant();
-  }, [debounceSearch, query]);
+  }, [
+    debounceSearch,
+    queryOptions?.partner_id,
+    queryOptions?.aggregator_id,
+    queryOptions?.operator_id,
+  ]);
 
   return isMerchantFetching || isMerchantByIdFetching ? (
     <Select placeholder={t("table.merchant_name")} loading size="large" />
