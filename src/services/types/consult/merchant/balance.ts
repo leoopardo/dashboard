@@ -30,6 +30,7 @@ export interface MerchantBalanceData {
   items: MerchantBalanceItem[];
 }
 export interface MerchantBalanceTotalsData {
+  [key: string]: any;
   _id: string;
   balance_reserved: number;
   balance_to_payment: number;
