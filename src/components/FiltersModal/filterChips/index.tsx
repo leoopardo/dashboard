@@ -69,11 +69,8 @@ export const FilterChips = ({
 
   const [filtersQuery, setFiltersQuery] = useState<any>(query);
   const deleteFilter = (key: string) => {
-    if (query[key]) {
-      const q = { ...filtersQuery, limit: 25, page: 1 };
-      delete q[key];
-      setQuery(q);
-    }
+    setQuery((state: any) => ({ ...state, [key]: undefined }));
+    setFiltersQuery((state: any) => ({ ...state, [key]: undefined }));
   };
 
   useEffect(() => {

@@ -1009,7 +1009,8 @@
     "receiver_data": "Dados do recebedor",
     "deposit_webhook": "Webhook de depósito",
     "withdraw_webhook": "Webhook de saque",
-    "webhook_preview": "Pré-visualização do webhook"
+    "webhook_preview": "Pré-visualização do webhook",
+    "refund": "Devolução"
   },
   "actions": {
     "details": "Detalhes",

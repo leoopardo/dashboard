@@ -768,7 +768,7 @@
     "total_rows": "Total rows",
     "failed_rows": "Failed",
     "success_rows": "Success",
-    
+
     "created_by_ip": "Created by ip",
     "WAITING": "Waiting",
     "created_by": "Created by",
@@ -1001,7 +1001,8 @@
     "receiver_data": "Receiver data",
     "deposit_webhook": "Deposit webhook",
     "withdraw_webhook": "Withdraw webhook",
-    "webhook_preview": "Webhook preview"
+    "webhook_preview": "Webhook preview",
+    "refund": "Refund"
   },
   "actions": {
     "details": "Details",

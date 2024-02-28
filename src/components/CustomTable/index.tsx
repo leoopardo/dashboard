@@ -47,7 +47,7 @@ export interface ColumnInterface {
     | "text" // exibe texto
     | "translate" // exibe texto traduzido
     | "pix_type" // exibe tipo de pix (FastPix ou Regular)
-    | "date" // exibe data   
+    | "date" // exibe data
     | "small_date" // exibe data com no maximo 80px de largura
     | "document" // exibe documento formatado para CPF
     | "value" // exibe valor formatado para moeda R$
@@ -356,143 +356,72 @@ export const CustomTable = (props: TableProps) => {
                 : undefined,
             };
 
-            case "date":
-              return {
-                title: (
-                  <Tooltip title={t(`table.${column?.head || column?.name}`)}>
-                    <Typography
-                      style={{
-                        maxHeight: "50px",
-                        overflow: "hidden",
-                        textAlign: "center",
-                        textOverflow: "ellipsis",
-                        wordBreak: "keep-all",
-                      }}
-                      ref={column.key}
-                    >
-                      {t(`table.${column?.head || column?.name}`)}
-                    </Typography>
-                  </Tooltip>
-                ),
-                key: column?.sort_name
-                  ? column.sort_name
-                  : Array.isArray(column?.name)
-                  ? column?.name + `${Math.random()}`
-                  : column?.name,
-                dataIndex: column?.name,
-                render: (text: string, record: any) => {
-                  if (column.name === "delivered_at" && record?.paid_at) {
-                    return text ? (
-                      <Tooltip
-                        title={`Tempo de entrega: ${
-                          record?.paid_at &&
-                          moment
-                            .duration(
-                              moment(new Date(text)).diff(
-                                moment(new Date(record?.paid_at))
-                              )
-                            )
-                            .asMinutes()
-                            .toFixed(2)
-                        } minutos`}
-                      >
-                        <Typography
-                          key={column?.name}
-                          style={{
-                            width: "100%",
-                            textAlign: "center",
-                            display: "flex",
-                            minWidth: 50,
-                            wordBreak: "keep-all",
-                            color:
-                              record?.paid_at &&
-                              +moment
-                                .duration(
-                                  moment(new Date(text)).diff(
-                                    moment(new Date(record?.paid_at))
-                                  )
-                                )
-                                .asMinutes()
-                                .toFixed(2) >= 1
-                                ? defaultTheme.colors.error
-                                : defaultTheme.colors.success,
-                          }}
-                        >{`${new Date(
-                          `${text.split("Z")[0]}Z`
-                        ).toLocaleDateString()} ${new Date(
-                          `${text.split("Z")[0]}Z`
-                        ).toLocaleTimeString()}`}</Typography>
-                        {+moment
-                          .duration(
-                            moment(new Date(text)).diff(
-                              moment(new Date(record?.paid_at))
-                            )
-                          )
-                          .asMinutes()
-                          .toFixed(2) >= 1 && (
-                          <WarningOutlined
-                            style={{
-                              marginLeft: "40%",
-                              color: defaultTheme.colors.error,
-                            }}
-                          />
-                        )}
-                      </Tooltip>
-                    ) : (
-                      <Typography
-                        key={column?.name}
-                        style={{
-                          width: "100%",
-                          textAlign: "center",
-                          minWidth: 50,
-                        }}
-                      >
-                        -
-                      </Typography>
-                    );
+          case "date":
+            return {
+              title: (
+                <Tooltip title={t(`table.${column?.head || column?.name}`)}>
+                  <Typography
+                    style={{
+                      maxHeight: "50px",
+                      overflow: "hidden",
+                      textAlign: "center",
+                      textOverflow: "ellipsis",
+                      wordBreak: "keep-all",
+                    }}
+                    ref={column.key}
+                  >
+                    {t(`table.${column?.head || column?.name}`)}
+                  </Typography>
+                </Tooltip>
+              ),
+              key: column?.sort_name
+                ? column.sort_name
+                : Array.isArray(column?.name)
+                ? column?.name + `${Math.random()}`
+                : column?.name,
+              dataIndex: column?.name,
+              render: (text: string) => {
+                return text ? (
+                  <Typography
+                    key={column?.name}
+                    style={{
+                      width: "100%",
+                      textAlign: "center",
+                      minWidth: 50,
+                      wordBreak: "keep-all",
+                    }}
+                  >{`${new Date(
+                    `${text.split("Z")[0]}Z`
+                  ).toLocaleDateString()} ${new Date(
+                    `${text.split("Z")[0]}Z`
+                  ).toLocaleTimeString()}`}</Typography>
+                ) : (
+                  <Typography
+                    key={column?.name}
+                    style={{ width: "100%", textAlign: "center", minWidth: 50 }}
+                  >
+                    -
+                  </Typography>
+                );
+              },
+
+              sorter: column.sort
+                ? () => {
+                    props.setQuery((state: any) => ({
+                      ...state,
+                      sort_field: column?.sort_name
+                        ? column.sort_name
+                        : Array.isArray(column?.name)
+                        ? column?.name[1]
+                        : column?.name,
+                      sort_order:
+                        props.query.sort_order === "DESC" ? "ASC" : "DESC",
+                    }));
+
+                    return 0;
                   }
-                  return text ? (
-                    <Typography
-                      key={column?.name}
-                      style={{
-                        width: "100%",
-                        textAlign: "center",
-                        minWidth: 50,
-                        wordBreak: "keep-all",
-                      }}
-                    >{`${new Date(
-                      `${text.split("Z")[0]}Z`
-                    ).toLocaleDateString()} ${new Date(
-                      `${text.split("Z")[0]}Z`
-                    ).toLocaleTimeString()}`}</Typography>
-                  ) : (
-                    <Typography
-                      key={column?.name}
-                      style={{ width: "100%", textAlign: "center", minWidth: 50 }}
-                    >
-                      -
-                    </Typography>
-                  );
-                },
-  
-                sorter: column.sort
-                  ? () => {
-                      props.setQuery((state: any) => ({
-                        ...state,
-                        sort_field: column?.sort_name
-                          ? column.sort_name
-                          : Array.isArray(column?.name)
-                          ? column?.name[1]
-                          : column?.name,
-                        sort_order:
-                          props.query.sort_order === "DESC" ? "ASC" : "DESC",
-                      }));
-  
-                      return 0;
-                    }
-                  : undefined,
-              };
-  
+                : undefined,
+            };
 
           case "small_date":
             return {
@@ -512,14 +441,84 @@ export const CustomTable = (props: TableProps) => {
                   </Typography>
                 </Tooltip>
               ),
-              width: 80,
               key: column?.sort_name
                 ? column.sort_name
                 : Array.isArray(column?.name)
                 ? column?.name + `${Math.random()}`
                 : column?.name,
               dataIndex: column?.name,
-              render: (text: string) => {
+              width: 80,
+              render: (text: string, record: any) => {
+                if (column.name === "delivered_at" && record?.paid_at) {
+                  return text ? (
+                    <Tooltip
+                      title={`Tempo de entrega: ${
+                        record?.paid_at &&
+                        moment
+                          .duration(
+                            moment(new Date(text)).diff(
+                              moment(new Date(record?.paid_at))
+                            )
+                          )
+                          .asMinutes()
+                          .toFixed(2)
+                      } minutos`}
+                    >
+                      <Typography
+                        key={column?.name}
+                        style={{
+                          width: "100%",
+                          textAlign: "center",
+                          display: "flex",
+                          minWidth: 50,
+                          wordBreak: "keep-all",
+                          color:
+                            record?.paid_at &&
+                            +moment
+                              .duration(
+                                moment(new Date(text)).diff(
+                                  moment(new Date(record?.paid_at))
+                                )
+                              )
+                              .asMinutes()
+                              .toFixed(2) >= 1
+                              ? defaultTheme.colors.error
+                              : defaultTheme.colors.success,
+                        }}
+                      >{`${new Date(
+                        `${text.split("Z")[0]}Z`
+                      ).toLocaleDateString()} ${new Date(
+                        `${text.split("Z")[0]}Z`
+                      ).toLocaleTimeString()}`}</Typography>
+                      {+moment
+                        .duration(
+                          moment(new Date(text)).diff(
+                            moment(new Date(record?.paid_at))
+                          )
+                        )
+                        .asMinutes()
+                        .toFixed(2) >= 1 && (
+                        <WarningOutlined
+                          style={{
+                            marginLeft: "40%",
+                            color: defaultTheme.colors.error,
+                          }}
+                        />
+                      )}
+                    </Tooltip>
+                  ) : (
+                    <Typography
+                      key={column?.name}
+                      style={{
+                        width: "100%",
+                        textAlign: "center",
+                        minWidth: 50,
+                      }}
+                    >
+                      -
+                    </Typography>
+                  );
+                }
                 return text ? (
                   <Typography
                     key={column?.name}
