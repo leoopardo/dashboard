@@ -7,6 +7,7 @@ import {
   FilterOutlined,
   InfoCircleOutlined,
   PlusOutlined,
+  ToolOutlined,
 } from "@ant-design/icons";
 import { CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
@@ -295,6 +296,12 @@ export const Partners = () => {
                   navigate("update", { state: item });
                 },
               },
+              permissions.register.partner.partner.partner_customWebhook_list && {
+                label: "custom_webhook",
+                icon: <ToolOutlined style={{ fontSize: "20px" }} />,
+                onClick: (item) =>
+                  navigate("custom_webhook", { state: item }),
+              },
             ]}
             refetch={refetchPartnersData}
             data={PartnersData}
@@ -489,6 +496,7 @@ export const Partners = () => {
           description: t("wiki.partners_description"),
         }}
       />
+
       <ExportCustomReportsModal
         open={isExportReportsOpen}
         setOpen={setIsExportReportsOpen}
