@@ -118,7 +118,7 @@ export const SerproAssertiva = () => {
             { name: "createdAt", type: "date" },
           ]}
           loading={isFetching}
-          label={["name"]}
+          label={["assertiva_count", "serpro_count", "createdAt"]}
         />
       </Col>
 
