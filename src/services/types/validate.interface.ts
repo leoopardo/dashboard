@@ -67,6 +67,9 @@ export interface ValidateInterface {
           partner_files_list: boolean;
           partner_files_create: boolean;
           partner_files_delete: boolean;
+          partner_customWebhook_delete: boolean;
+          partner_customWebhook_list: boolean;
+          partner_customWebhook_update: boolean;
         };
       };
       merchant: {
