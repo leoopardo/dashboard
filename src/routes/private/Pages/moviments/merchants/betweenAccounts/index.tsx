@@ -89,7 +89,6 @@ export const TransfersBetweenAccounts = () => {
         const value = parseFloat(body?.value?.toString() ?? '0');
         
         if (!isNaN(from) && !isNaN(value) && from >= value) {
-          console.log('resolve')
           return Promise.resolve();
         }
         
@@ -110,12 +109,12 @@ export const TransfersBetweenAccounts = () => {
         const from = body?.from ? parseFloat(MerchantTotals[String(body.from.toString()) || ''] ?? '0') : 0;
         const value = parseFloat(body?.value?.toString() ?? '0');
         
-        if (!isNaN(from) && !isNaN(value) && from > value) {
+        if (!isNaN(from) && !isNaN(value) && from >= value) {
           return Promise.resolve();
         }
         
         return Promise.reject(
-          new Error(t("input.doest_match") || "")
+          new Error(t("error.from_value_must_be_more_than_to_value") || "")
         );
       }
     },
