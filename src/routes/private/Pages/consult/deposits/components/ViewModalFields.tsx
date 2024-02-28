@@ -23,6 +23,8 @@ import { toast } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useGetDeposit } from "../../../../../../services/consult/deposits/generatedDeposits/getDeposit";
 import { useMediaQuery } from "react-responsive";
+import { queryClient } from "@src/services/queryClient";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 
 interface ViewModalProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -32,7 +34,9 @@ interface ViewModalProps {
 
 export const ViewModalFields = (props: ViewModalProps) => {
   const { t } = useTranslation();
-
+  const { permissions } = queryClient.getQueryData(
+    "validate"
+  ) as ValidateInterface;
   const { deposit, isDepositFetching } = useGetDeposit(`${props.id}`);
   const isMobile = useMediaQuery({ maxWidth: 950 });
   const [currOption, setCurrOption] = useState<
@@ -69,7 +73,10 @@ export const ViewModalFields = (props: ViewModalProps) => {
               {
                 label: t("table.refund"),
                 value: "refund",
-                disabled: deposit?.status !== "REFUNDED",
+                disabled:
+                  deposit?.status !== "REFUNDED" ||
+                  !permissions?.report?.chargeback?.deposit_chargeback
+                    ?.report_chargeback_deposit_chargeback_list,
               },
             ]}
             onChange={(value: any) => {
