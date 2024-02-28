@@ -114,6 +114,7 @@ export const PaidDeposits = () => {
     { name: "buyer_name", type: "text" },
     { name: "buyer_document", type: "document" },
     { name: "status", type: "status" },
+    { name: "deadline", type: "deadline" },
   ];
 
   useEffect(() => {

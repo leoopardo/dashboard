@@ -266,7 +266,11 @@
     "10024": "Do you want to delete this bank",
     "10025": "Do you want to delete this key",
     "10113": "Trasaction Paid by CNPJ, refunded.",
-    "10114": "Trasaction Paid by CNPJ, refund being processed (ETA: 24h to review and approval)."
+    "10114": "Trasaction Paid by CNPJ, refund being processed (ETA: 24h to review and approval).",
+    "delivered_on_time": "Delivered on time",
+    "delivered_late": "Delivered late",
+    "not_delivered_on_time": "Not delivered on time",
+    "not_delivered_late": "Not delivered late"
   },
   "login": {
     "sign_in": "Sign in",
@@ -999,11 +1003,12 @@
     "aggregators": "Aggregators",
     "all_merchants": "All merchants",
     "all_banks": "All banks",
+    "refund": "Refund",
+    "deadline": "Deadline",
     "receiver_data": "Receiver data",
     "deposit_webhook": "Deposit webhook",
     "withdraw_webhook": "Withdraw webhook",
-    "webhook_preview": "Webhook preview",
-    "refund": "Refund"
+    "webhook_preview": "Webhook preview"
   },
   "actions": {
     "details": "Details",
@@ -1021,7 +1026,7 @@
     "check_payments": "Check payments",
     "resend_webhook": "Resend webhook",
     "permissions": "Permissions",
-    "custom_webhook":"Custom webhook"
+    "custom_webhook": "Custom webhook"
   },
   "error": {
     "400": "Any records found.",
@@ -1051,7 +1056,8 @@
     "disable_bank_being_used_for_fastpix_in": "It is not possible to disable a bank that is being used for FastPix deposits.",
     "disable_bank_being_used": "It is not possible to disable a bank that is being used.",
     "phone_must_be_a_valid_phone_number": "The phone number must be a valid phone number.",
-    "forbidden_resource": "This user does not have permission to perform this function. Please contact support."
+    "forbidden_resource": "This user does not have permission to perform this function. Please contact support.",
+    "from_value_must_be_more_than_to_value": "The initial value must be greater than the final value."
   },
   "logs": {
     "login": "Login",

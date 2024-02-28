@@ -269,7 +269,11 @@
     "10024": "Deseja excluir o banco",
     "10025": "Deseja excluir a chave",
     "10113": "Transação paga por uma conta PJ, devolvido",
-    "10114": "Transação paga por uma conta PJ, em processo de devolução (24h para revisão e aprovação)."
+    "10114": "Transação paga por uma conta PJ, em processo de devolução (24h para revisão e aprovação).",
+    "delivered_on_time": "Entregue no prazo",
+    "delivered_late": "Entregue atrasado",
+    "not_delivered_on_time": "Não entregue no prazo",
+    "not_delivered_late": "Não entregue atrasado"
   },
   "login": {
     "sign_in": "Faça login",
@@ -1006,11 +1010,12 @@
     "aggregators": "Agregadores",
     "all_merchants": "Todas as empresas",
     "all_banks": "Todos os bancos",
+    "refund": "Devolução",
+    "deadline": "Prazo",
     "receiver_data": "Dados do recebedor",
     "deposit_webhook": "Webhook de depósito",
     "withdraw_webhook": "Webhook de saque",
-    "webhook_preview": "Pré-visualização do webhook",
-    "refund": "Devolução"
+    "webhook_preview": "Pré-visualização do webhook"
   },
   "actions": {
     "details": "Detalhes",
@@ -1061,7 +1066,8 @@
     "disable_bank_being_used_for_fastpix_in": "Não é possível desabilitar FastPix. Banco sendo utilizado por empresas.",
     "disable_bank_being_used": "Não é possível inativar banco. Banco sendo utilizado por empresas.",
     "phone_must_be_a_valid_phone_number": "Numero de telefone inválido.",
-    "forbidden_resource": "Este usuário não tem permissão para executar essa função. Entre em contato com o suporte."
+    "forbidden_resource": "Este usuário não tem permissão para executar essa função. Entre em contato com o suporte.",
+    "from_value_must_be_more_than_to_value": "O valor de origem deve ser maior que o valor a ser transferido."
   },
   "logs": {
     "login": "Login",
