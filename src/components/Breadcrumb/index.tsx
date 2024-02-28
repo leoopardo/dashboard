@@ -12,7 +12,6 @@ import { useLocation } from "react-router-dom";
 
 export const BreadcrumbComponent = () => {
   const { t } = useTranslation();
-  // const { handleChangeSidebar } = useMenu();
   const isMobile = useMediaQuery({ maxWidth: "750px" });
   const [breadcrumbs, setBreadcrumbs] = useState<
     Partial<BreadcrumbItemType & BreadcrumbSeparatorType>[]

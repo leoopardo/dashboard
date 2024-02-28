@@ -64,6 +64,7 @@ export interface refundDepositRowsItems {
   buyer_document: string;
   buyer_name: string;
   createdAt: string;
+  refund_date: string;
   endToEndId: string;
   merchant_id: number;
   merchant_name: string;

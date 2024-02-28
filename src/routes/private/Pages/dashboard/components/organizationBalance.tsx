@@ -16,6 +16,7 @@ export const OrganizationBalance = () => {
   } = useGetOrganizationBalance();
   const [isHoverCurrency] = useState<"real" | "dolar" | "euro" | "btc">("real");
   const [show] = useState<boolean>(true);
+  
   return (
     <Row align="top" style={{ width: "100%" }} gutter={[8, 8]}>
       {show && (

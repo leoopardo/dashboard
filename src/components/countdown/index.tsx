@@ -41,7 +41,6 @@ function Countdown({ success, quantSeconds }: countdowProps) {
 
   return (
     <Container>
-      
       <Tag icon={<WarningOutlined />} color="error">
         {remainingTime &&
           !(remainingTime?.minutes === 0 && remainingTime?.seconds === 0) && (

@@ -32,7 +32,7 @@ export const FilterChips = ({
   disabled,
 }: FilterChipsProps) => {
   const { t } = useTranslation();
-  const { merchant, refetcMerchant } = useListMerchantById({
+  const { merchant, refetchMerchantById } = useListMerchantById({
     page: 1,
     limit: 200,
     merchant_id: query.merchant_id ?? undefined,
@@ -69,16 +69,13 @@ export const FilterChips = ({
 
   const [filtersQuery, setFiltersQuery] = useState<any>(query);
   const deleteFilter = (key: string) => {
-    if (query[key]) {
-      const q = { ...filtersQuery, limit: 25, page: 1 };
-      delete q[key];
-      setQuery(q);
-    }
+    setQuery((state: any) => ({ ...state, [key]: undefined }));
+    setFiltersQuery((state: any) => ({ ...state, [key]: undefined }));
   };
 
   useEffect(() => {
     if (query.merchant_id) {
-      refetcMerchant();
+      refetchMerchantById();
     }
 
     if (query.partner_id) {

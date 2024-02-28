@@ -70,7 +70,7 @@ export const FiltersModal = ({
     >
       {/* Foi criado um componente somente para os campos do modal de filtro
       pois da forma que estava a animação de fechar o modal nao acontecia
-      da forma correta pois estava o modal estava sendo exibido 
+      da forma correta pois o modal estava sendo exibido 
       de acordo com a variável "open", dessa forma os campos são exibidos
       com o "open" e o modal pode ser fechado normalmente */}
 

@@ -28,14 +28,17 @@ export const MerchantSelect = ({
     sort_field: "name",
     sort_order: "ASC",
     partner_id: queryOptions?.partner_id,
+    aggregator_id: queryOptions?.aggregator_id,
+    operator_id: queryOptions?.operator_id,
   });
   const { merchantsData, refetcMerchant, isMerchantFetching } =
     useListMerchants(query);
-  const { merchant } = useListMerchantById({
-    page: 1,
-    limit: 200,
-    merchant_id: queryOptions.merchant_id ?? undefined,
-  });
+  const { merchant, refetchMerchantById, isMerchantByIdFetching } =
+    useListMerchantById({
+      page: 1,
+      limit: 200,
+      merchant_id: queryOptions.merchant_id ?? undefined,
+    });
 
   const [value, setValue] = useState<any>(undefined);
   const debounceSearch = useDebounce(query.name);
@@ -54,11 +57,30 @@ export const MerchantSelect = ({
   }
 
   useEffect(() => {
+    setValue(undefined);
+    refetchMerchantById();
+  }, [queryOptions.merchant_id]);
+
+  useEffect(() => {
     if (!queryOptions?.merchant_id) {
       setValue(undefined);
       if (merchantsData) {
         setOptions([...merchantsData.items]);
       }
+      return;
+    }
+
+    if (
+      merchantsData?.items.find(
+        (merchant) => merchant.id === queryOptions.merchant_id
+      )
+    ) {
+      setValue(
+        merchantsData?.items.find(
+          (merchant) => merchant.id === queryOptions.merchant_id
+        )?.name
+      );
+      return;
     }
 
     if (queryOptions.merchant_id && merchant && merchantsData) {
@@ -73,9 +95,8 @@ export const MerchantSelect = ({
   useEffect(() => {
     setQuery((state) => ({
       ...state,
+      merchant_id: undefined,
       partner_id: queryOptions.partner_id,
-      aggregator_id: queryOptions.aggregator_id,
-      operator_id: queryOptions.operator_id,
     }));
   }, [debounceSearch, queryOptions]);
 
@@ -83,15 +104,18 @@ export const MerchantSelect = ({
     refetcMerchant();
   }, [debounceSearch, query]);
 
-  return (
+  return isMerchantFetching || isMerchantByIdFetching ? (
+    <Select placeholder={t("table.merchant_name")} loading size="large" />
+  ) : (
     <Select
       data-test-id="merchant-select"
       allowClear
       mode={multiple ? "multiple" : undefined}
       style={{ width: "100%" }}
+      disabled={isMerchantFetching || isMerchantByIdFetching}
       showSearch
       size="large"
-      loading={isMerchantFetching}
+      loading={isMerchantFetching || isMerchantByIdFetching}
       value={value}
       onClear={() => {
         setQueryFunction((state: any) => ({

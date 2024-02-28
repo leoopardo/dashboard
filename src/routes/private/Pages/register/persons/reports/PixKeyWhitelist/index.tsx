@@ -17,6 +17,8 @@ export const PixKeyWhitelistReports = () => {
     limit: 25,
     page: 1,
   };
+  const { t } = useTranslation();
+
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [query, setQuery] = useState<ReportsQuery>(INITIAL_QUERY);
   const [, setCurrentItem] = useState<any>();
@@ -32,7 +34,6 @@ export const PixKeyWhitelistReports = () => {
     refetchPixKeyWhitelistReportsData();
   }, [query]);
 
-  const { t } = useTranslation();
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid
@@ -106,7 +107,7 @@ export const PixKeyWhitelistReports = () => {
               { name: "_id", type: "id" },
               { name: "createdAt", type: "date", sort: true },
               { name: "created_by_name", type: "text" },
-                 { name: "start_date_filter", type: "date" },
+              { name: "start_date_filter", type: "date" },
               { name: "end_date_filter", type: "date" },
               { name: "rows", type: "text" },
               { name: "progress", type: "progress" },
@@ -117,21 +118,20 @@ export const PixKeyWhitelistReports = () => {
         </Grid>
       </Grid>
 
-        <FiltersModal
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          filters={["createdat_start", "createdat_end"]}
-          refetch={() => {
-            return;
-          }}
-          selectOptions={{}}
-          startDateKeyName="createdat_start"
-          endDateKeyName="createdat_end"
-          initialQuery={INITIAL_QUERY}
-        />
-        
+      <FiltersModal
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        filters={["createdat_start", "createdat_end"]}
+        refetch={() => {
+          return;
+        }}
+        selectOptions={{}}
+        startDateKeyName="createdat_start"
+        endDateKeyName="createdat_end"
+        initialQuery={INITIAL_QUERY}
+      />
     </Grid>
   );
 };

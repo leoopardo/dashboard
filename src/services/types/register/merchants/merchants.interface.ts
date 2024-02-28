@@ -1,5 +1,7 @@
 export interface MerchantQuery {
   partner_id?: number;
+  aggregator_id?: number;
+  operator_id?: number;
   start_date?: string;
   end_date?: string;
   name?: string;

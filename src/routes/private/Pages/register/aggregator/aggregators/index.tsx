@@ -121,18 +121,6 @@ export const Aggregators = () => {
     UpdateReset,
   } = useUpdateAggregator(updateBody);
 
-  useEffect(() => {
-    isSuccessAggregatorsTotalsData && refetchAggregatorsTotalsData();
-    isSuccessAggregatorsData && refetchAggregatorsData();
-  }, [query]);
-
-  useEffect(() => {
-    setUpdateBody({
-      ...currentItem,
-      aggregator_id: currentItem?.id,
-    });
-  }, [currentItem]);
-
   const [isTuorOpen, setIsTuorOpen] = useState<boolean>(false);
   const ref = useRef(null);
   const ref1 = useRef(null);
@@ -144,6 +132,18 @@ export const Aggregators = () => {
   const refName = useRef(null);
   const refStatus = useRef(null);
   const refCreatedAt = useRef(null);
+
+  useEffect(() => {
+    isSuccessAggregatorsTotalsData && refetchAggregatorsTotalsData();
+    isSuccessAggregatorsData && refetchAggregatorsData();
+  }, [query]);
+
+  useEffect(() => {
+    setUpdateBody({
+      ...currentItem,
+      aggregator_id: currentItem?.id,
+    });
+  }, [currentItem]);
 
   return (
     <Grid container style={{ padding: "25px" }}>

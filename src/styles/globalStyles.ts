@@ -14,13 +14,14 @@ export const GlobalStyle = createGlobalStyle`
     }
     
     ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 /* Customizing the scrollbar track */
 ::-webkit-scrollbar-track {
   background-color: transparent;
   background-color: #ebebeb;
+  background-color: ${(props) => props.theme.colors.dark}; /* Set scrollbar track background to dark */
 }
 
 /* Customizing the scrollbar thumb */

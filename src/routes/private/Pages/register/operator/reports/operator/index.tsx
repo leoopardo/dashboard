@@ -18,6 +18,8 @@ export const OperatorReports = () => {
     limit: 25,
     page: 1,
   };
+  const { t } = useTranslation();
+
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [query, setQuery] = useState<ReportsQuery>(INITIAL_QUERY);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
@@ -39,7 +41,6 @@ export const OperatorReports = () => {
     currentItem?.report_url ? setDisable(false) : setDisable(true);
   }, [currentItem]);
 
-  const { t } = useTranslation();
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid

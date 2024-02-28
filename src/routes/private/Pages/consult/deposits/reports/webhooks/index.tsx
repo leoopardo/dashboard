@@ -34,7 +34,6 @@ export const DepositsWebhooks = () => {
     refetchDepositsWebhooks,
   } = useGetDepositsWebhooks(query);
 
-
   useEffect(() => {
     refetchDepositsWebhooks();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -52,8 +51,8 @@ export const DepositsWebhooks = () => {
           <Button
             size="large"
             style={{ width: "100%" }}
-            loading={isDepositsWebhooksFetching}
             type="primary"
+            loading={isDepositsWebhooksFetching}
             onClick={() => setIsFiltersOpen(true)}
           >
             {t("table.filters")}
@@ -100,14 +99,13 @@ export const DepositsWebhooks = () => {
                     error={depositsWebhooksError}
                     refetch={refetchDepositsWebhooks}
                     columns={[
-                    
                       { name: "user_id", type: "text" },
                       { name: "merchant_id", type: "text" },
                       { name: "webhook_url_type_filter", type: "translate" },
-                    
+
                       { name: "success_rows", type: "text" },
                       { name: "failed_rows", type: "text" },
-                      
+
                       { name: "progress", type: "progress" },
                       { name: "createdAt", type: "date" },
                       { name: "start_date_filter", type: "date" },

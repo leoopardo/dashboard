@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { FC } from "react";
 import { Empty, Select } from "antd";
 import { useGetOrganizationCurrentAccounts } from "@src/services/reports/register/organization/getCurrentAccounts";
@@ -32,7 +33,6 @@ const CurrentAccountsSelect: FC<CurrentAccountsSelectProps> = ({
       showSearch
       size="large"
       loading={isCurrentAccountDataFetching}
-      // disabled={!filterIdValue}
       onSearch={(value) => {
         if (value === "") {
           delete query.filterIdProp;

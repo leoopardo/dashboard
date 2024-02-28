@@ -9,19 +9,15 @@ import { useQuery } from "react-query";
 
 export function useGetTotalPaidDeposits(params: paidDepositRowsQuery) {
   const { data, isFetching, error, refetch } = useQuery<
-  paidDepositTotal | null | undefined
-  >(
-    "depositsPaidTotal",
-    async () => {
-      const response = await api.get("report/pix/total/paid-at", {
-        params,
-      });
-      return response.data;
-    }
-  );
+    paidDepositTotal | null | undefined
+  >("depositsPaidTotal", async () => {
+    const response = await api.get("report/pix/total/paid-at", {
+      params,
+    });
+    return response.data;
+  });
 
-
-  const paidTotal = data;
+  const paidTotal = error ? ({} as paidDepositTotal) : data;
   const isPaidTotalFetching = isFetching;
   const paidTotalError: any = error;
   const refetchPaidTotal = refetch;

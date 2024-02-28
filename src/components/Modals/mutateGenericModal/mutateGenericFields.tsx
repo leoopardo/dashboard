@@ -125,19 +125,6 @@ export const MutateModalFields = ({
       limit: 200,
     });
 
-  useEffect(() => {
-    refetchMerchantBalance();
-  }, [body?.merchant_id]);
-
-  const { ProfilesData, isProfilesDataFetching } = useGetProfiles({
-    group: true,
-  });
-
-  const { merchantBlacklistData } = useGetRowsMerchantBlacklistReasons({
-    limit: 200,
-    page: 1,
-  });
-
   const handleChange = (event: any) => {
     const timer = setTimeout(
       () =>
@@ -152,6 +139,23 @@ export const MutateModalFields = ({
       clearTimeout(timer);
     };
   };
+
+  useEffect(() => {
+    refetchMerchantBalance();
+  }, [body?.merchant_id]);
+
+  const { ProfilesData, isProfilesDataFetching } = useGetProfiles({
+    group: true,
+  });
+
+  const { merchantBlacklistData } = useGetRowsMerchantBlacklistReasons({
+    limit: 200,
+    page: 1,
+  });
+
+  const panelRender = (panelNode: any) => (
+    <StyleWrapperDatePicker>{panelNode}</StyleWrapperDatePicker>
+  );
 
   useEffect(() => {
     if (clear) clear();
@@ -174,10 +178,6 @@ export const MutateModalFields = ({
       setBody((state: any) => ({ ...state, merchant_id: state?.merchant?.id }));
     }
   }, []);
-
-  const panelRender = (panelNode: any) => (
-    <StyleWrapperDatePicker>{panelNode}</StyleWrapperDatePicker>
-  );
 
   useEffect(() => {
     if (type === "create") {

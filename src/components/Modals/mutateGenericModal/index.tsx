@@ -96,7 +96,7 @@ export const MutateModal = ({
         </Button>
       }
     >
-        {/* Foi criado um componente somente para os campos do modal 
+      {/* Foi criado um componente somente para os campos do modal 
       pois da forma que estava a animação de fechar o modal nao acontecia
       da forma correta pois estava o modal estava sendo exibido 
       de acordo com a variável "open", dessa forma os campos são exibidos
