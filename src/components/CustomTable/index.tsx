@@ -853,7 +853,7 @@ export const CustomTable = (props: TableProps) => {
                   ) {
                     return (
                       <Tooltip
-                        title={`Entregue dentro do prazo: ${minutes
+                        title={`${t("messages.delivered_on_time")}: ${minutes
                           .toString()
                           .padStart(2, "0")}m:${seconds
                           .toString()
@@ -878,7 +878,7 @@ export const CustomTable = (props: TableProps) => {
                   ) {
                     return (
                       <Tooltip
-                        title={`Não entregue dentro do prazo: ${minutes
+                        title={`${t("messages.not_delivered_on_time")}: ${minutes
                           .toString()
                           .padStart(2, "0")}m:${seconds
                           .toString()
@@ -903,7 +903,7 @@ export const CustomTable = (props: TableProps) => {
                   ) {
                     return (
                       <Tooltip
-                        title={`Entregue com atrazo:  ${
+                        title={`${t("messages.delivered_late")}:  ${
                           minutes > 60
                             ? ">1h"
                             : `${minutes.toString().padStart(2, "0")}m:${seconds
@@ -930,7 +930,7 @@ export const CustomTable = (props: TableProps) => {
                   ) {
                     return (
                       <Tooltip
-                        title={`Não entregue com atrazo: ${
+                        title={`${t("messages.not_delivered_late")}: ${
                           minutes > 60
                             ? ">1h"
                             : `${minutes.toString().padStart(2, "0")}m:${seconds
