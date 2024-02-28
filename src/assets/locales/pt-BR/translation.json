@@ -1066,7 +1066,8 @@
     "disable_bank_being_used_for_fastpix_in": "Não é possível desabilitar FastPix. Banco sendo utilizado por empresas.",
     "disable_bank_being_used": "Não é possível inativar banco. Banco sendo utilizado por empresas.",
     "phone_must_be_a_valid_phone_number": "Numero de telefone inválido.",
-    "forbidden_resource": "Este usuário não tem permissão para executar essa função. Entre em contato com o suporte."
+    "forbidden_resource": "Este usuário não tem permissão para executar essa função. Entre em contato com o suporte.",
+    "from_value_must_be_more_than_to_value": "O valor de origem deve ser maior que o valor a ser transferido."
   },
   "logs": {
     "login": "Login",
