@@ -507,7 +507,7 @@ export const ViewModalFields = (props: ViewModalProps) => {
                       Refund?.refund_date
                     ).toLocaleTimeString()}`}
                   </Descriptions.Item>
-                  {!Refund?.url_pdf && Refund.status === "REFUNDED" ? (
+                  {!Refund?.url_pdf ? (
                     <Descriptions.Item
                       key={"generate_payment_voucher"}
                       label={t(`table.generate_payment_voucher`)}
@@ -528,29 +528,26 @@ export const ViewModalFields = (props: ViewModalProps) => {
                       </Button>
                     </Descriptions.Item>
                   ) : (
-                    Refund?.url_pdf &&
-                    Refund.status === "REFUNDED" && (
-                      <Descriptions.Item
-                        key={"download_payment_voucher"}
-                        label={t(`table.download_payment_voucher`)}
-                        labelStyle={{
-                          maxWidth: "120px !important",
-                          margin: 0,
-                          padding: 0,
-                          textAlign: "center",
+                    <Descriptions.Item
+                      key={"download_payment_voucher"}
+                      label={t(`table.download_payment_voucher`)}
+                      labelStyle={{
+                        maxWidth: "120px !important",
+                        margin: 0,
+                        padding: 0,
+                        textAlign: "center",
+                      }}
+                    >
+                      <Button
+                        onClick={() => {
+                          window.location.assign(Refund?.url_pdf);
                         }}
+                        type="primary"
                       >
-                        <Button
-                          onClick={() => {
-                            window.location.assign(Refund?.url_pdf);
-                          }}
-                          type="primary"
-                        >
-                          <DownloadOutlined />
-                          {t(`table.download_payment_voucher`)}
-                        </Button>
-                      </Descriptions.Item>
-                    )
+                        <DownloadOutlined />
+                        {t(`table.download_payment_voucher`)}
+                      </Button>
+                    </Descriptions.Item>
                   )}
                 </>
               )}
