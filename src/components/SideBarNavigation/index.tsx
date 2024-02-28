@@ -2688,7 +2688,8 @@ export const SidebarNavigation = () => {
               false,
               undefined,
               {
-                display: permissions?.report?.person?.check_cpf?.menu
+                display: permissions?.report?.person?.check_serpro
+                  ?.report_check_document_serpro
                   ? undefined
                   : "none",
               },
