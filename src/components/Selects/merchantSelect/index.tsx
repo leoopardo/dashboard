@@ -98,21 +98,17 @@ export const MerchantSelect = ({
       merchant_id: undefined,
       partner_id: queryOptions.partner_id,
     }));
-  }, [debounceSearch, queryOptions]);
+  }, [ queryOptions]);
 
   useEffect(() => {
     refetcMerchant();
   }, [debounceSearch, query]);
 
-  return isMerchantFetching || isMerchantByIdFetching ? (
-    <Select placeholder={t("table.merchant_name")} loading size="large" />
-  ) : (
-    <Select
+  return <Select
       data-test-id="merchant-select"
       allowClear
       mode={multiple ? "multiple" : undefined}
       style={{ width: "100%" }}
-      disabled={isMerchantFetching || isMerchantByIdFetching}
       showSearch
       size="large"
       loading={isMerchantFetching || isMerchantByIdFetching}
@@ -174,5 +170,4 @@ export const MerchantSelect = ({
       }}
       placeholder={t("table.merchant_name")}
     />
-  );
 };
