@@ -2611,7 +2611,7 @@ export const SidebarNavigation = () => {
                 null,
                 false,
                 {
-                  display: permissions?.report?.person?.check_cpf?.menu
+                  display: permissions?.report?.person?.check_serpro
                     ? undefined
                     : "none",
                 },
