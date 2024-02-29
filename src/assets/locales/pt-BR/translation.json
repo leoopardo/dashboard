@@ -161,9 +161,11 @@
     "historic_cpf_merchant_details": "Detalhes de CPF por Merchant",
     "settings": "Configurações",
     "permissions_groups": "Grupos de permissões",
+    "license": "Licenças",
     "licenses": "Licenças",
     "current_accounts": "Contas Corrente",
-    "custom_webhook": "Personalizar webhook"
+    "custom_webhook": "Personalizar webhook",
+    "consult_person_reports": "Relatórios"
   },
 
   "titles": {

@@ -1326,7 +1326,7 @@ export const SidebarNavigation = () => {
           }
         ),
         getItem(
-          "licenses",
+          "license",
           null,
           [
             getItem(
@@ -2682,11 +2682,11 @@ export const SidebarNavigation = () => {
               </Link>
             ),
             getItem(
-              "reports",
+              "consult_person_reports",
               null,
               [
                 getItem(
-                  "historic_cpf_merchant",
+                  "historic_cpf_merchant_reports",
                   null,
                   null,
                   false,

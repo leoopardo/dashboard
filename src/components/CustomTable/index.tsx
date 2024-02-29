@@ -105,6 +105,7 @@ interface TableProps {
 export const CustomTable = (props: TableProps) => {
   const { t } = useTranslation();
   const isMobile = useMediaQuery({ maxWidth: "950px" });
+  const isSmallDesktop = useMediaQuery({ maxWidth: "1250px" });
   const [columns, setColumns] = useState<ColumnsType<ColumnInterface>>([]);
   const [sortOrder] = useState(false);
   const [sorterObj, setSorterObj] = useState<any | undefined>();
@@ -256,7 +257,7 @@ export const CustomTable = (props: TableProps) => {
                 : Array.isArray(column?.name)
                 ? column?.name + `${Math.random()}`
                 : column?.name,
-              width: 85,
+              width: isSmallDesktop ? 85 : undefined,
               dataIndex: column?.name,
               render: (text: string) => (
                 <div
@@ -446,7 +447,7 @@ export const CustomTable = (props: TableProps) => {
                 ? column?.name + `${Math.random()}`
                 : column?.name,
               dataIndex: column?.name,
-              width: 75,
+              width: isSmallDesktop ? 75 : undefined,
               render: (text: string) => {
                 return text ? (
                   <Typography
@@ -878,9 +879,9 @@ export const CustomTable = (props: TableProps) => {
                   ) {
                     return (
                       <Tooltip
-                        title={`${t("messages.not_delivered_on_time")}: ${minutes
-                          .toString()
-                          .padStart(2, "0")}m:${seconds
+                        title={`${t(
+                          "messages.not_delivered_on_time"
+                        )}: ${minutes.toString().padStart(2, "0")}m:${seconds
                           .toString()
                           .padStart(2, "0")}s`}
                       >
@@ -1198,7 +1199,7 @@ export const CustomTable = (props: TableProps) => {
                 : column?.name,
               dataIndex: column?.name,
               render: (text: string) =>
-                text && text.length >= 20 ? (
+                isSmallDesktop && text && text.length >= 20 ? (
                   <Tooltip title={text}>
                     <Typography
                       style={{
