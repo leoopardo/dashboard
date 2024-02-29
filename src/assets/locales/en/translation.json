@@ -4,7 +4,7 @@
     "consult": "Consult",
     "organization": "Organization",
     "register": "Register",
-    "users": "Users",
+    "users": "Organization users",
     "categories": "Categories",
     "bank_maintain": "Banks maintenance",
     "general_configs": "General configs",
@@ -158,9 +158,12 @@
     "merchant_settings": "Merchant settings",
     "historic_cpf_merchant": "CPF historic by merchant",
     "historic_cpf_merchant_details": "CPF historic by merchant details",
+    "license": "Licenses",
     "licenses": "Licenses",
     "current_accounts": "Current accounts",
-    "custom_webhook": "Custom webhooks"
+    "custom_webhook": "Custom webhooks",
+    "consult_person_reports": "Reports",
+    "recents": "Recents"
   },
 
   "titles": {

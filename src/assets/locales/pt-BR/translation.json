@@ -4,7 +4,7 @@
     "consult": "Consultas",
     "organization": "Organização",
     "register": "Cadastro",
-    "users": "Usuários",
+    "users": "Usuários organização",
     "categories": "Categorias",
     "bank_maintain": "Manuteção de bancos",
     "general_configs": "Configurações gerais",
@@ -161,9 +161,12 @@
     "historic_cpf_merchant_details": "Detalhes de CPF por Merchant",
     "settings": "Configurações",
     "permissions_groups": "Grupos de permissões",
+    "license": "Licenças",
     "licenses": "Licenças",
     "current_accounts": "Contas Corrente",
-    "custom_webhook": "Personalizar webhook"
+    "custom_webhook": "Personalizar webhook",
+    "consult_person_reports": "Relatórios",
+    "recents": "Recentes"
   },
 
   "titles": {
