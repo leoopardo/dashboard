@@ -18,7 +18,7 @@ import { queryClient } from "@src/services/queryClient";
 import { ValidateInterface } from "@src/services/types/validate.interface";
 import { Button, Menu, MenuProps, Tour } from "antd";
 import { motion } from "framer-motion";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import { Link, useLocation } from "react-router-dom";
@@ -32,7 +32,7 @@ export const SidebarNavigation = () => {
   const { t } = useTranslation();
   const { resetErrors } = useErrorContext();
   const LargeDesktop = useMediaQuery({ maxHeight: "800px" });
-  const isMobile = useMediaQuery({ maxWidth: "950px" });
+  const isMobile = useMediaQuery({ maxWidth: "1250px" });
   const [collapsed, setCollapsed] = useState(true);
   const { handleChangeSidebar, isSidebarOpen } = useMenu();
   const [items, setItems] = useState<MenuItem[]>([]);
@@ -40,6 +40,24 @@ export const SidebarNavigation = () => {
   const [openKeys, setOpenKeys] = useState(["institution"]);
   const { theme } = useTheme();
   const location = useLocation();
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: any) => {
+      if (ref.current && !(ref.current as any).contains(event.target)) {
+        setTimeout(() => {
+          handleChangeSidebar(false);
+          setCollapsed(false);
+        }, 200);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const [isMenuTourOpen, setIsMenuTourOpen] = useState(true);
 
@@ -3034,6 +3052,7 @@ export const SidebarNavigation = () => {
         position: "fixed",
         zIndex: 999,
       }}
+      ref={ref}
     >
       <Tour open={isMenuTourOpen} onClose={() => setIsMenuTourOpen(true)} />
       <motion.div

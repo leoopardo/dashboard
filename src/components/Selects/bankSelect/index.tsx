@@ -35,16 +35,6 @@ export const BanksSelect = ({
         )?.label_name
       : null
   );
-  /* useEffect(() => {
-    if (field) {
-      console.log('aqui', queryOptions[field])
-      setValue(
-        bankListData?.itens?.find(
-          (bank) => bank?.label_name === queryOptions[field]
-        )?.label_name
-      );
-    }
-  }, [bankListData, queryOptions, field]); */
 
   return (
     <Select

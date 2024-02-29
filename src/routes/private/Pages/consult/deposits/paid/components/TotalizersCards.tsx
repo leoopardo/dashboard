@@ -21,6 +21,7 @@ export const TotalizersCards = (props: TotalizersInterface) => {
   const isMobile = useMediaQuery({ maxWidth: "900px" });
   const { t } = useTranslation();
   const { theme } = useTheme();
+  
   return (
     <Row
       gutter={[8, 8]}

@@ -29,6 +29,11 @@ export const MerchantCategorieSelect = ({
   const [value, setValue] = useState<any>(null);
   const debounceSearch = useDebounce(query.name);
 
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const val = event?.target?.value;
+    setQuery((state) => ({ ...state, name: val }));
+  };
+
   useEffect(() => {
     if (CategoriesData && !value) {
       const initial = CategoriesData?.items.find(
@@ -54,11 +59,6 @@ export const MerchantCategorieSelect = ({
   useEffect(() => {
     refetchCategoriesData();
   }, [debounceSearch]);
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const val = event?.target?.value;
-    setQuery((state) => ({ ...state, name: val }));
-  };
 
   return (
     <AutoComplete

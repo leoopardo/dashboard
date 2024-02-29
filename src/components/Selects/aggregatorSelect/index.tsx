@@ -31,22 +31,24 @@ export const AggregatorSelect = ({
   const [value, setValue] = useState<any>(undefined);
   const debounceSearch = useDebounce(query.name, 500);
 
+  
   useEffect(() => {
     if (!aggregatorId) {
       setValue(undefined);
     }
     if (aggregatorsData && !value) {
       const initial = aggregatorsData?.items.find(
-        (aggregator) => aggregator.id === aggregatorId
-      );
+            (aggregator) => aggregator.id === aggregatorId
+          )
+    
       if (initial) {
         setValue(initial?.name);
       }
     }
-  }, [aggregatorId, aggregatorsData]);
+  }, [aggregatorsData, aggregatorId]);
 
   useEffect(() => {
-    if (aggregatorsData) {
+    if (aggregatorId) {
       const initial = aggregatorsData?.items.find(
         (aggregator) => aggregator.id === aggregatorId
       );
@@ -59,6 +61,35 @@ export const AggregatorSelect = ({
   useEffect(() => {
     refetcAggregators();
   }, [debounceSearch]);
+
+  // useEffect(() => {
+  //   if (!aggregatorId) {
+  //     setValue(undefined);
+  //   }
+  //   if (aggregatorsData && !value) {
+  //     const initial = aggregatorsData?.items.find(
+  //       (aggregator) => aggregator.id === aggregatorId
+  //     );
+  //     if (initial) {
+  //       setValue(initial?.name);
+  //     }
+  //   }
+  // }, [aggregatorId, aggregatorsData]);
+
+  // useEffect(() => {
+  //   if (aggregatorsData) {
+  //     const initial = aggregatorsData?.items.find(
+  //       (aggregator) => aggregator.id === aggregatorId
+  //     );
+  //     if (initial) {
+  //       setValue(initial?.name);
+  //     }
+  //   }
+  // }, [aggregatorId]);
+
+  // useEffect(() => {
+  //   refetcAggregators();
+  // }, [debounceSearch]);
 
   return (
     <Select

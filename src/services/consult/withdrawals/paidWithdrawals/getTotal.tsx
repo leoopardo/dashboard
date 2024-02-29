@@ -25,7 +25,7 @@ export function useGetTotalPaidWithdrawals(params: paidWithdrawalsRowsQuery) {
       refetchOnWindowFocus: false,
     }
   );
-  const PaidWithdrawalsTotal = data;
+  const PaidWithdrawalsTotal = error ? ({} as paidWithdrawalsTotal) : data;
   const isPaidWithdrawalsTotalFetching = isFetching;
   const PaidWithdrawalsTotalError: any = error;
   const refetchPaidWithdrawalsTotal = refetch;

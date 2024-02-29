@@ -27,7 +27,7 @@ ReactGA.initialize(import.meta.env.VITE_APP_ANALYTICS_ID ?? "");
 
 function App() {
   const { t } = useTranslation();
-  const isMobile = useMediaQuery({ maxWidth: "950px" });
+  const isMobile = useMediaQuery({ maxWidth: "1250px" });
   const { isSidebarOpen } = useMenu();
   const { Content } = Layout;
   const [isIconSet, setIsIconSet] = useState<boolean>(false);
@@ -79,7 +79,7 @@ function App() {
 
   return (
     <I18nextProvider i18n={i18n} defaultNS={"translation"}>
-      <ThemeProvider theme={defaultTheme}>
+      <ThemeProvider theme={theme === "dark" ? defaultTheme : {colors: {...defaultTheme.colors, dark: "#ebebeb"}}}>
         <BrowserRouter>
           <GlobalStyle />
           <ConfigProvider
@@ -89,7 +89,7 @@ function App() {
                   colorError: "#000",
                   colorText: "#000",
                 },
-
+    
                 Menu: {
                   colorTextLightSolid:
                     theme === "dark"
@@ -199,13 +199,13 @@ function App() {
 
                       <Layout
                         style={{
-                          padding: "0 24px 24px",
+                          padding: isMobile ? "4px" : "0 8px 8px",
                           minHeight: "94vh",
                         }}
                       >
                         <Content
                           style={{
-                            padding: 2,
+                            padding: 0,
                             margin: 0,
                             height: "100%",
                             background:

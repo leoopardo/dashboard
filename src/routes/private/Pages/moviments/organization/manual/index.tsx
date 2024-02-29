@@ -61,7 +61,6 @@ export const OrgonizationManual = () => {
   const [operationInBody, setOperationInBody] =
     useState<CreateManualTransaction | null>(null);
 
-
   const {
     OrganizationMovimentsData,
     isOrganizationMovimentsDataFetching,
@@ -96,11 +95,10 @@ export const OrgonizationManual = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      setOperationInBody(null)
+      setOperationInBody(null);
       reset();
     }
   }, [isSuccess]);
-
 
   useEffect(() => {
     setOperationInBody((state) => ({ ...state, validation_token: tokenState }));
@@ -135,7 +133,9 @@ export const OrgonizationManual = () => {
                       prefix={<ArrowUpOutlined />}
                       title={t(`table.${key}`)}
                       loading={isOrganizationMovimentsDataFetching}
-                      value={moneyFormatter(OrganizationMovimentsData[key] || 0)}
+                      value={moneyFormatter(
+                        OrganizationMovimentsData[key] || 0
+                      )}
                     />
                   </Grid>
                 );
@@ -155,7 +155,9 @@ export const OrgonizationManual = () => {
                       prefix={<ArrowDownOutlined />}
                       title={t(`table.${key}`)}
                       loading={isOrganizationMovimentsDataFetching}
-                      value={moneyFormatter(OrganizationMovimentsData[key] || 0)}
+                      value={moneyFormatter(
+                        OrganizationMovimentsData[key] || 0
+                      )}
                     />
                   </Grid>
                 );
@@ -326,27 +328,32 @@ export const OrgonizationManual = () => {
         </Grid>
       </Grid>
 
-        <FiltersModal
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          haveInitialDate
-          filters={["start_date", "end_date", "status", "category_id", "type"]}
-          refetch={refetchOrganizationMovimentsData}
-          selectOptions={{
-            status: ["PROCESSING", "SUCCESS", "CANCELED"],
-            category_id:
-              CategoriesData?.items?.map((category) => {
-                return { label: category?.name || " ", value: category?.id || " " };
-              }) || [],
-            type: [{label: "in", value: "in"}, {label: "out", value: "out"}],
-          }}
-        
-          startDateKeyName="start_date"
-          endDateKeyName="end_date"
-          initialQuery={INITIAL_QUERY}
-        />
+      <FiltersModal
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        haveInitialDate
+        filters={["start_date", "end_date", "status", "category_id", "type"]}
+        refetch={refetchOrganizationMovimentsData}
+        selectOptions={{
+          status: ["PROCESSING", "SUCCESS", "CANCELED"],
+          category_id:
+            CategoriesData?.items?.map((category) => {
+              return {
+                label: category?.name || " ",
+                value: category?.id || " ",
+              };
+            }) || [],
+          type: [
+            { label: "in", value: "in" },
+            { label: "out", value: "out" },
+          ],
+        }}
+        startDateKeyName="start_date"
+        endDateKeyName="end_date"
+        initialQuery={INITIAL_QUERY}
+      />
 
       {operationInOpen && (
         <CreateMovimentModal

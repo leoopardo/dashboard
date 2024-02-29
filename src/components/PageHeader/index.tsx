@@ -38,7 +38,7 @@ const { useToken } = t;
 
 export const PageHeader = () => {
   const user = queryClient.getQueryData("validate") as ValidateInterface;
-  const isMobile = useMediaQuery({ maxWidth: "950px" });
+  const isMobile = useMediaQuery({ maxWidth: "1250px" });
   const { t, i18n } = useTranslation();
   const { responseValidate } = useValidate();
   const { resetErrors } = useErrorContext();

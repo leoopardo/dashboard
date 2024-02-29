@@ -26,6 +26,8 @@ export const ConsultMerchantReports = () => {
       .startOf("day")
       .format("YYYY-MM-DDTHH:mm:ss.SSS"),
   };
+  const { t } = useTranslation();
+
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [query, setQuery] = useState<ReportsQuery>(INITIAL_QUERY);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
@@ -42,7 +44,6 @@ export const ConsultMerchantReports = () => {
     refetchConsultMerchantReportsData();
   }, [query]);
 
-  const { t } = useTranslation();
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid

@@ -16,6 +16,8 @@ export const BankBlackistReports = () => {
     limit: 10,
     page: 1,
   };
+  const { t } = useTranslation();
+
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [query, setQuery] = useState<ReportsQuery>(INITIAL_QUERY);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -32,7 +34,6 @@ export const BankBlackistReports = () => {
     refetchBankBlackistReportsData();
   }, [query]);
 
-  const { t } = useTranslation();
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid

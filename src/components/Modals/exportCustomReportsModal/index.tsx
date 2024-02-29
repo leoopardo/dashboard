@@ -92,6 +92,20 @@ export const ExportCustomReportsModal = ({
     e.target.checked ? setSelectedFields(fields ?? []) : setSelectedFields([]);
   };
 
+  const openNotificationWithIcon = (type: NotificationType) => {
+    const BtnNavigate = (
+      <Button onClick={() => navigate(reportPath)}>
+        {reportPageName ?? t("menus.reports")}
+      </Button>
+    );
+    api[type]({
+      message: t("messages.creating_csv"),
+      description: t("messages.creating_csv_message"),
+      duration: 0,
+      btn: BtnNavigate,
+    });
+  };
+
   useEffect(() => {
     const storage: string[] | undefined = `${secureLocalStorage?.getItem(
       reportName
@@ -133,20 +147,6 @@ export const ExportCustomReportsModal = ({
     }
     setPreview([obj1, obj2, obj3]);
   }, [selectedFields]);
-
-  const openNotificationWithIcon = (type: NotificationType) => {
-    const BtnNavigate = (
-      <Button onClick={() => navigate(reportPath)}>
-        {reportPageName ?? t("menus.reports")}
-      </Button>
-    );
-    api[type]({
-      message: t("messages.creating_csv"),
-      description: t("messages.creating_csv_message"),
-      duration: 0,
-      btn: BtnNavigate,
-    });
-  };
 
   useEffect(() => {
     if (success) {

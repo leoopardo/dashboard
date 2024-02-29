@@ -18,6 +18,8 @@ export const RefundManualDepositsReports = () => {
     limit: 10,
     page: 1,
   };
+  const { t } = useTranslation();
+
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [query, setQuery] = useState<ReportsQuery>(INITIAL_QUERY);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
@@ -34,7 +36,6 @@ export const RefundManualDepositsReports = () => {
     refetchRefundManualDepositsReportsData();
   }, [query]);
 
-  const { t } = useTranslation();
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid

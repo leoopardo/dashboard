@@ -63,7 +63,7 @@ export const PartnerUsers = () => {
       ...updateUserBody,
       validation_token: tokenState,
     });
-
+  const [isTuorOpen, setIsTuorOpen] = useState<boolean>(false);
   const [csvFields, setCsvFields] = useState<any>();
   const [comma, setIsComma] = useState<boolean>(false);
   const {
@@ -83,15 +83,10 @@ export const PartnerUsers = () => {
 
   const [action, setAction] = useState<"create" | "update">("create");
 
-  useEffect(() => {
-    refetchUsersData();
-  }, [query]);
-
   const handleUpdateTokenValidate = () => {
     updateMutate();
   };
 
-  const [isTuorOpen, setIsTuorOpen] = useState<boolean>(false);
   const ref1 = useRef(null);
   const ref2 = useRef(null);
   const ref3 = useRef(null);
@@ -104,6 +99,10 @@ export const PartnerUsers = () => {
   const refLast = useRef(null);
   const refStatus = useRef(null);
   const refCreatedAt = useRef(null);
+
+  useEffect(() => {
+    refetchUsersData();
+  }, [query]);
 
   return (
     <Grid container style={{ padding: "25px" }}>
@@ -319,17 +318,16 @@ export const PartnerUsers = () => {
         initialQuery={INITIAL_QUERY}
       />
 
-      {isNewUserModal && (
-        <NewUserModal
-          action={action}
-          open={isNewUserModal}
-          setOpen={setIsNewUserModal}
-          currentUser={currentItem}
-          setCurrentUser={setCurrentItem}
-          setUpdateBody={setUpdateUserBody}
-          setIsValidateTokenOpen={setIsValidateTokenOpen}
-        />
-      )}
+      <NewUserModal
+        action={action}
+        open={isNewUserModal}
+        setOpen={setIsNewUserModal}
+        currentUser={currentItem}
+        setCurrentUser={setCurrentItem}
+        setUpdateBody={setUpdateUserBody}
+        setIsValidateTokenOpen={setIsValidateTokenOpen}
+      />
+
       {isValidateTokenOpen && (
         <ValidateToken
           action="USER_UPDATE"

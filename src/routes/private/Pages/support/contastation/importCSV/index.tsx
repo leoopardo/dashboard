@@ -73,11 +73,7 @@ export const EditableCell: React.FC<EditableCellProps> = ({
   const inputRef = useRef<InputRef>(null);
   const form = useContext(EditableContext)!;
 
-  useEffect(() => {
-    if (editing) {
-      inputRef.current!.focus();
-    }
-  }, [editing]);
+
 
   const toggleEdit = () => {
     setEditing(!editing);
@@ -122,6 +118,12 @@ export const EditableCell: React.FC<EditableCellProps> = ({
     );
   }
 
+  useEffect(() => {
+    if (editing) {
+      inputRef.current!.focus();
+    }
+  }, [editing]);
+  
   return <td {...restProps}>{childNode}</td>;
 };
 

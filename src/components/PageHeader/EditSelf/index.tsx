@@ -36,7 +36,6 @@ export const EditSelfModal = ({
   const [isValidateTokenOpen, setIsValidateTokenOpen] =
     useState<boolean>(false);
   const [tokenState, setTokenState] = useState<string>("");
-  // const submitRef = useRef<HTMLButtonElement>(null);
 
   const { error, isLoading, isSuccess, mutate, reset } = useUpdateSelf({
     ...body,

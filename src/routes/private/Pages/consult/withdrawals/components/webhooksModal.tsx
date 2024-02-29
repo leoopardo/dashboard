@@ -47,6 +47,10 @@ export const WebhookModal = (props: webhooksModalProps) => {
 
   const [currOption, setCurrOption] = useState<any>("1");
 
+  const onChange = (key: string | string[]) => {
+    setActive(key);
+  };
+
   useEffect(() => {
     setItems(
       withdrawalsWebhooks?.items?.map((item: WebhooksItem) => {
@@ -93,10 +97,6 @@ export const WebhookModal = (props: webhooksModalProps) => {
       })
     );
   }, [currOption, props.id, withdrawalsWebhooks]);
-
-  const onChange = (key: string | string[]) => {
-    setActive(key);
-  };
 
   return (
     <Drawer

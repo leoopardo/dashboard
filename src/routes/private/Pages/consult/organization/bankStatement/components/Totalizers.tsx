@@ -24,13 +24,13 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
     refetchOrganizationBankStatementTotalsTotal,
   } = useGetOrganizationBankStatementTotals(query);
 
-  useEffect(() => {
-    refetchOrganizationBankStatementTotalsTotal();
-  }, [query]);
-
   const MoneyIcon = (props: Partial<CustomIconComponentProps>) => (
     <Icon component={() => <AttachMoneyIcon />} {...props} />
   );
+
+  useEffect(() => {
+    refetchOrganizationBankStatementTotalsTotal();
+  }, [query]);
 
   return (
     <Grid container>
@@ -73,7 +73,8 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
             style={{
               display: "flex",
               justifyContent: "center",
-              alignItems: "center", width: "100%",
+              alignItems: "center",
+              width: "100%",
             }}
           >
             <ArrowUpOutlined style={{ marginRight: "-5px" }} />
@@ -108,7 +109,9 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
                   <Statistic
                     loading={isOrganizationBankStatementTotalsFetching}
                     title={t(`table.${key}`)}
-                    value={moneyFormatter(OrganizationBankStatementTotals[key] || 0)}
+                    value={moneyFormatter(
+                      OrganizationBankStatementTotals[key] || 0
+                    )}
                     precision={2}
                     valueStyle={{
                       color: defaultTheme.colors.paid,
@@ -138,7 +141,8 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          marginTop: "25px",  width: "100%",
+          marginTop: "25px",
+          width: "100%",
         }}
       >
         <Grid
@@ -155,7 +159,8 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
             style={{
               display: "flex",
               justifyContent: "center",
-              alignItems: "center",  width: "100%",
+              alignItems: "center",
+              width: "100%",
             }}
           >
             <ArrowDownOutlined style={{ marginRight: "-5px" }} />
@@ -191,7 +196,9 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
                   <Statistic
                     loading={isOrganizationBankStatementTotalsFetching}
                     title={t(`table.${key}`)}
-                    value={moneyFormatter(OrganizationBankStatementTotals[key] || 0)}
+                    value={moneyFormatter(
+                      OrganizationBankStatementTotals[key] || 0
+                    )}
                     precision={2}
                     valueStyle={{
                       color: defaultTheme.colors.error,
@@ -269,7 +276,9 @@ export const Totalizers = ({ query }: TotalizersInterface) => {
                   <Statistic
                     loading={isOrganizationBankStatementTotalsFetching}
                     title={t(`table.${key}`)}
-                    value={moneyFormatter(OrganizationBankStatementTotals[key] || 0)}
+                    value={moneyFormatter(
+                      OrganizationBankStatementTotals[key] || 0
+                    )}
                     precision={2}
                     prefix={" "}
                     valueStyle={{ fontSize: "16px" }}
