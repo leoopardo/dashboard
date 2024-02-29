@@ -101,7 +101,13 @@ export const SidebarNavigation = () => {
             const userRecentPaths = userRecents ? userRecents.paths : [];
 
             const path = e.keyPath.reverse().join("/");
-            if (userRecentPaths.includes(path)) return; // Verificar se o caminho já está nos recentes
+            console.log(path, userRecentPaths);
+
+            if (
+              userRecentPaths.includes(path) ||
+              userRecentPaths.includes(path.split("/").reverse().join("/"))
+            )
+              return; // Verificar se o caminho já está nos recentes
 
             const updatedRecents = [
               ...recents.filter((user) => user.id !== id), // Remover os recentes antigos do usuário
