@@ -4,7 +4,7 @@
     "consult": "Consult",
     "organization": "Organization",
     "register": "Register",
-    "users": "Users",
+    "users": "Organization users",
     "categories": "Categories",
     "bank_maintain": "Banks maintenance",
     "general_configs": "General configs",
@@ -162,7 +162,8 @@
     "licenses": "Licenses",
     "current_accounts": "Current accounts",
     "custom_webhook": "Custom webhooks",
-    "consult_person_reports": "Reports"
+    "consult_person_reports": "Reports",
+    "recents": "Recents"
   },
 
   "titles": {
