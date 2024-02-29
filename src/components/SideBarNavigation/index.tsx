@@ -100,14 +100,9 @@ export const SidebarNavigation = () => {
             const userRecents = recents.find((user) => user.id === id); // Procurar recentes do usuário pelo ID
             const userRecentPaths = userRecents ? userRecents.paths : [];
 
-            const path = e.keyPath.reverse().join("/");
-            console.log(path, userRecentPaths);
+            const path = e.keyPath.join("/");
 
-            if (
-              userRecentPaths.includes(path) ||
-              userRecentPaths.includes(path.split("/").reverse().join("/"))
-            )
-              return; // Verificar se o caminho já está nos recentes
+            if (userRecentPaths.includes(path)) return; // Verificar se o caminho já está nos recentes
 
             const updatedRecents = [
               ...recents.filter((user) => user.id !== id), // Remover os recentes antigos do usuário
@@ -1366,7 +1361,11 @@ export const SidebarNavigation = () => {
             permissions?.register?.person.menu
               ? undefined
               : "none",
-        }
+        },
+        undefined,
+        undefined,
+        undefined,
+        undefined
       ),
       // - MOVIMENTAÇÕES
       getItem(
@@ -2969,7 +2968,7 @@ export const SidebarNavigation = () => {
       ),
       ...(recents?.find((obj) => obj?.id === id)?.paths ?? []).map((path) =>
         getItem(
-          `${path.split("/")[path.split("/").length - 1]}_recent`,
+          `${path.split("/").reverse().join("/")[path.split("/").length - 1]}_recent`,
           null,
           null,
           false,
@@ -2984,9 +2983,11 @@ export const SidebarNavigation = () => {
               setCollapsed(false);
               handleChangeSidebar(false);
             }}
-            to={path}
+            to={path.split("/").reverse().join("/")}
           >
-            {t(`menus.${path.split("/")[path.split("/").length - 1]}`)}
+            {t(
+              `menus.${path.split("/").reverse()[path.split("/").length - 1]}`
+            )}
           </Link>,
           undefined,
           undefined,
