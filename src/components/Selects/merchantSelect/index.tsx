@@ -31,6 +31,7 @@ export const MerchantSelect = ({
     aggregator_id: queryOptions?.aggregator_id,
     operator_id: queryOptions?.operator_id,
   });
+
   const { merchantsData, refetcMerchant, isMerchantFetching } =
     useListMerchants(query);
   const { merchant, refetchMerchantById, isMerchantByIdFetching } =
@@ -98,11 +99,16 @@ export const MerchantSelect = ({
       merchant_id: undefined,
       partner_id: queryOptions.partner_id,
     }));
-  }, [ queryOptions]);
+  }, [queryOptions]);
 
   useEffect(() => {
     refetcMerchant();
-  }, [debounceSearch, query]);
+  }, [
+    debounceSearch,
+    queryOptions?.partner_id,
+    queryOptions?.aggregator_id,
+    queryOptions?.operator_id,
+  ]);
 
   return <Select
       data-test-id="merchant-select"
@@ -110,8 +116,8 @@ export const MerchantSelect = ({
       mode={multiple ? "multiple" : undefined}
       style={{ width: "100%" }}
       showSearch
-      size="large"
       loading={isMerchantFetching || isMerchantByIdFetching}
+      size="large"
       value={value}
       onClear={() => {
         setQueryFunction((state: any) => ({

@@ -6,7 +6,6 @@ import {
   EllipsisOutlined,
   InfoCircleTwoTone,
   ReloadOutlined,
-  WarningOutlined,
 } from "@ant-design/icons";
 import CachedIcon from "@mui/icons-material/Cached";
 import { useListBanks } from "@src/services/bank/listBanks";
@@ -34,7 +33,6 @@ import { toast } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import { Mobile } from "./mobile";
-import moment from "moment";
 
 export interface ColumnInterface {
   name: string | any; // (nome da coluna caso não passe head) e chave do objeto a ser acessado nos items
@@ -60,6 +58,7 @@ export interface ColumnInterface {
     | "progress" // exibe barra de progresso
     | "merchant_name" // exibe nome da empresa caso seja um obj
     | "partner_name" // exibe nome da plataforma caso seja um obj
+    | "deadline" // exibe prazo de entrega
     | "";
   sort?: boolean; // habilita ordenação
   key?: any;
@@ -106,6 +105,7 @@ interface TableProps {
 export const CustomTable = (props: TableProps) => {
   const { t } = useTranslation();
   const isMobile = useMediaQuery({ maxWidth: "950px" });
+  const isSmallDesktop = useMediaQuery({ maxWidth: "1250px" });
   const [columns, setColumns] = useState<ColumnsType<ColumnInterface>>([]);
   const [sortOrder] = useState(false);
   const [sorterObj, setSorterObj] = useState<any | undefined>();
@@ -257,7 +257,7 @@ export const CustomTable = (props: TableProps) => {
                 : Array.isArray(column?.name)
                 ? column?.name + `${Math.random()}`
                 : column?.name,
-              width: 85,
+              width: isSmallDesktop ? 85 : undefined,
               dataIndex: column?.name,
               render: (text: string) => (
                 <div
@@ -447,78 +447,8 @@ export const CustomTable = (props: TableProps) => {
                 ? column?.name + `${Math.random()}`
                 : column?.name,
               dataIndex: column?.name,
-              width: 80,
-              render: (text: string, record: any) => {
-                if (column.name === "delivered_at" && record?.paid_at) {
-                  return text ? (
-                    <Tooltip
-                      title={`Tempo de entrega: ${
-                        record?.paid_at &&
-                        moment
-                          .duration(
-                            moment(new Date(text)).diff(
-                              moment(new Date(record?.paid_at))
-                            )
-                          )
-                          .asMinutes()
-                          .toFixed(2)
-                      } minutos`}
-                    >
-                      <Typography
-                        key={column?.name}
-                        style={{
-                          width: "100%",
-                          textAlign: "center",
-                          display: "flex",
-                          minWidth: 50,
-                          wordBreak: "keep-all",
-                          color:
-                            record?.paid_at &&
-                            +moment
-                              .duration(
-                                moment(new Date(text)).diff(
-                                  moment(new Date(record?.paid_at))
-                                )
-                              )
-                              .asMinutes()
-                              .toFixed(2) >= 1
-                              ? defaultTheme.colors.error
-                              : defaultTheme.colors.success,
-                        }}
-                      >{`${new Date(
-                        `${text.split("Z")[0]}Z`
-                      ).toLocaleDateString()} ${new Date(
-                        `${text.split("Z")[0]}Z`
-                      ).toLocaleTimeString()}`}</Typography>
-                      {+moment
-                        .duration(
-                          moment(new Date(text)).diff(
-                            moment(new Date(record?.paid_at))
-                          )
-                        )
-                        .asMinutes()
-                        .toFixed(2) >= 1 && (
-                        <WarningOutlined
-                          style={{
-                            marginLeft: "40%",
-                            color: defaultTheme.colors.error,
-                          }}
-                        />
-                      )}
-                    </Tooltip>
-                  ) : (
-                    <Typography
-                      key={column?.name}
-                      style={{
-                        width: "100%",
-                        textAlign: "center",
-                        minWidth: 50,
-                      }}
-                    >
-                      -
-                    </Typography>
-                  );
-                }
+              width: isSmallDesktop ? 75 : undefined,
+              render: (text: string) => {
                 return text ? (
                   <Typography
                     key={column?.name}
@@ -824,6 +754,7 @@ export const CustomTable = (props: TableProps) => {
                       textAlign: "center",
                       textOverflow: "ellipsis",
                       wordBreak: "keep-all",
+                      minWidth: 60,
                     }}
                   >
                     {t(`table.${column?.head || column?.name}`)}
@@ -846,6 +777,7 @@ export const CustomTable = (props: TableProps) => {
                           width: "100%",
                           textAlign: "center",
                           wordBreak: "keep-all",
+                          minWidth: 50,
                         }}
                       >
                         {text === true || text === 1
@@ -863,12 +795,176 @@ export const CustomTable = (props: TableProps) => {
                           ],
                           fontWeight: 600,
                           wordBreak: "keep-all",
+                          minWidth: 50,
                         }}
                       >
                         {text ? t(`table.${text?.toLocaleLowerCase()}`) : "-"}
                       </Typography>
                     ),
                 };
+              },
+              sorter: column.sort
+                ? () => {
+                    props.setQuery((state: any) => ({
+                      ...state,
+                      sort_field: column?.sort_name
+                        ? column.sort_name
+                        : Array.isArray(column?.name)
+                        ? column?.name[1]
+                        : column?.name,
+                      sort_order:
+                        props.query.sort_order === "DESC" ? "ASC" : "DESC",
+                    }));
+
+                    return 0;
+                  }
+                : undefined,
+            };
+
+          case "deadline":
+            return {
+              title: <></>,
+              key: column?.sort_name
+                ? column.sort_name
+                : Array.isArray(column?.name)
+                ? column?.name + `${Math.random()}`
+                : column?.name,
+              dataIndex: column?.name,
+              width: 40,
+              render: (_text: string, record: any) => {
+                function calculateDeadline(paid_at: any) {
+                  // Calcula a diferença entre a data atual e a data de pagamento em milissegundos
+                  let difference;
+                  if (record?.delivered_at) {
+                    difference =
+                      new Date(record?.delivered_at).getTime() -
+                      paid_at.getTime();
+                  } else {
+                    difference = Date.now() - paid_at.getTime();
+                  }
+
+                  // Calcula os minutos e segundos restantes
+                  const minutes = Math.floor(difference / (1000 * 60));
+                  const seconds = Math.floor((difference / 1000) % 60);
+                  if (
+                    +`${minutes.toString().padStart(2, "0")}.${seconds
+                      .toString()
+                      .padStart(2, "0")}` <= 1 &&
+                    record.delivered_at
+                  ) {
+                    return (
+                      <Tooltip
+                        title={`${t("messages.delivered_on_time")}: ${minutes
+                          .toString()
+                          .padStart(2, "0")}m:${seconds
+                          .toString()
+                          .padStart(2, "0")}s`}
+                      >
+                        <div
+                          style={{
+                            width: 20,
+                            height: 20,
+                            borderRadius: "50%",
+                            backgroundColor: defaultTheme.colors.success,
+                          }}
+                        />
+                      </Tooltip>
+                    );
+                  }
+                  if (
+                    +`${minutes.toString().padStart(2, "0")}.${seconds
+                      .toString()
+                      .padStart(2, "0")}` <= 1 &&
+                    !record.delivered_at
+                  ) {
+                    return (
+                      <Tooltip
+                        title={`${t(
+                          "messages.not_delivered_on_time"
+                        )}: ${minutes.toString().padStart(2, "0")}m:${seconds
+                          .toString()
+                          .padStart(2, "0")}s`}
+                      >
+                        <div
+                          style={{
+                            width: 20,
+                            height: 20,
+                            borderRadius: "50%",
+                            backgroundColor: defaultTheme.colors.success,
+                          }}
+                        />
+                      </Tooltip>
+                    );
+                  }
+                  if (
+                    +`${minutes.toString().padStart(2, "0")}.${seconds
+                      .toString()
+                      .padStart(2, "0")}` > 1 &&
+                    record.delivered_at
+                  ) {
+                    return (
+                      <Tooltip
+                        title={`${t("messages.delivered_late")}:  ${
+                          minutes > 60
+                            ? ">1h"
+                            : `${minutes.toString().padStart(2, "0")}m:${seconds
+                                .toString()
+                                .padStart(2, "0")}s`
+                        }`}
+                      >
+                        <div
+                          style={{
+                            width: 20,
+                            height: 20,
+                            borderRadius: "50%",
+                            backgroundColor: defaultTheme.colors.error,
+                          }}
+                        />
+                      </Tooltip>
+                    );
+                  }
+                  if (
+                    +`${minutes.toString().padStart(2, "0")}.${seconds
+                      .toString()
+                      .padStart(2, "0")}` > 1 &&
+                    !record.delivered_at
+                  ) {
+                    return (
+                      <Tooltip
+                        title={`${t("messages.not_delivered_late")}: ${
+                          minutes > 60
+                            ? ">1h"
+                            : `${minutes.toString().padStart(2, "0")}m:${seconds
+                                .toString()
+                                .padStart(2, "0")}s`
+                        }`}
+                      >
+                        <div
+                          style={{
+                            width: 20,
+                            height: 20,
+                            borderRadius: "50%",
+                            backgroundColor: defaultTheme.colors.error,
+                          }}
+                        />
+                      </Tooltip>
+                    );
+                  }
+                  // Se nenhuma das condições for atendida, retorne "-" como fallback
+                  return "-";
+                }
+
+                const paymentDate = new Date(record?.paid_at); // Suponha que esta seja a data de pagamento
+                const deadlineDate = calculateDeadline(paymentDate);
+
+                return (
+                  <Typography
+                    key={column?.name}
+                    style={{ width: "100%", textAlign: "center" }}
+                  >
+                    {deadlineDate}
+                  </Typography>
+                );
               },
               sorter: column.sort
                 ? () => {
@@ -1103,7 +1199,7 @@ export const CustomTable = (props: TableProps) => {
                 : column?.name,
               dataIndex: column?.name,
               render: (text: string) =>
-                text && text.length >= 20 ? (
+                isSmallDesktop && text && text.length >= 20 ? (
                   <Tooltip title={text}>
                     <Typography
                       style={{

@@ -128,6 +128,7 @@ export const GeneratedDeposits = () => {
     { name: "buyer_name", type: "text" },
     { name: "buyer_document", type: "document" },
     { name: "status", type: "status" },
+    { name: "deadline", type: "deadline" },
   ];
   return (
     <Row

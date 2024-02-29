@@ -4,7 +4,7 @@
     "consult": "Consultas",
     "organization": "Organização",
     "register": "Cadastro",
-    "users": "Usuários",
+    "users": "Usuários organização",
     "categories": "Categorias",
     "bank_maintain": "Manuteção de bancos",
     "general_configs": "Configurações gerais",
@@ -161,8 +161,12 @@
     "historic_cpf_merchant_details": "Detalhes de CPF por Merchant",
     "settings": "Configurações",
     "permissions_groups": "Grupos de permissões",
+    "license": "Licenças",
     "licenses": "Licenças",
-    "current_accounts": "Contas Corrente"
+    "current_accounts": "Contas Corrente",
+    "custom_webhook": "Personalizar webhook",
+    "consult_person_reports": "Relatórios",
+    "recents": "Recentes"
   },
 
   "titles": {
@@ -240,6 +244,7 @@
     "operations_number_chart_area": "Gráfico de número de operações",
     "operation_approve": "Deseja aprovar os lançamentos selecionados?",
     "no_cellphone": "Você deve adicionar um número de telefone ao seu usuário. Selecione o Telefone e em seguida valide o token.",
+    "need_to_update": "As informações só serão salvas após a confirmação da atualização dos dados pelo botão 'Atualizar', localizado no canto inferior direito da tela.",
     "10000": "Operação realizada com sucesso",
     "10001": "Transação não paga",
     "10002": "Transação paga, notificação enviada...",
@@ -267,7 +272,11 @@
     "10024": "Deseja excluir o banco",
     "10025": "Deseja excluir a chave",
     "10113": "Transação paga por uma conta PJ, devolvido",
-    "10114": "Transação paga por uma conta PJ, em processo de devolução (24h para revisão e aprovação)."
+    "10114": "Transação paga por uma conta PJ, em processo de devolução (24h para revisão e aprovação).",
+    "delivered_on_time": "Entregue no prazo",
+    "delivered_late": "Entregue atrasado",
+    "not_delivered_on_time": "Não entregue no prazo",
+    "not_delivered_late": "Não entregue atrasado"
   },
   "login": {
     "sign_in": "Faça login",
@@ -480,7 +489,11 @@
     "add_all_columns": "Adicionar todas as colunas",
     "ip": "IP",
     "reason_name": "Motivo",
-    "withdraw_by_month_cant_be_smaller_than_day": "O valor de saques por mês não pode ser menor que o valor de saques por dia"
+    "withdraw_by_month_cant_be_smaller_than_day": "O valor de saques por mês não pode ser menor que o valor de saques por dia",
+    "deposit_standard_webhook": "Webhook de depósito padrão",
+    "deposit_webhook_data": "Dados do webhook de depósito",
+    "withdraw_webhook_data": "Dados do webhook de saque",
+    "withdraw_standard_webhook": "Webhook de saque padrão"
   },
   "table": {
     "id": "id",
@@ -1000,7 +1013,12 @@
     "aggregators": "Agregadores",
     "all_merchants": "Todas as empresas",
     "all_banks": "Todos os bancos",
-    "refund": "Devolução"
+    "refund": "Devolução",
+    "deadline": "Prazo",
+    "receiver_data": "Dados do recebedor",
+    "deposit_webhook": "Webhook de depósito",
+    "withdraw_webhook": "Webhook de saque",
+    "webhook_preview": "Pré-visualização do webhook"
   },
   "actions": {
     "details": "Detalhes",
@@ -1017,7 +1035,8 @@
     "edit_merchant": "Editar empresa",
     "check_payments": "Checar pagamentos",
     "resend_webhook": "Reenviar webhook",
-    "permissions": "Permissões"
+    "permissions": "Permissões",
+    "custom_webhook":"Personalizar webhook"
   },
   "error": {
     "400": "Nenhum dado encontrado.",
@@ -1050,7 +1069,8 @@
     "disable_bank_being_used_for_fastpix_in": "Não é possível desabilitar FastPix. Banco sendo utilizado por empresas.",
     "disable_bank_being_used": "Não é possível inativar banco. Banco sendo utilizado por empresas.",
     "phone_must_be_a_valid_phone_number": "Numero de telefone inválido.",
-    "forbidden_resource": "Este usuário não tem permissão para executar essa função. Entre em contato com o suporte."
+    "forbidden_resource": "Este usuário não tem permissão para executar essa função. Entre em contato com o suporte.",
+    "from_value_must_be_more_than_to_value": "O valor de origem deve ser maior que o valor a ser transferido."
   },
   "logs": {
     "login": "Login",
@@ -1295,6 +1315,7 @@
     "cadastros_plataformas_responsaveis": "Responsáveis",
     "cadastros_plataformas_arquivos": "Arquivos",
     "cadastros_plataformas_exportar": "Exportar",
+    "cadastros_plataformas_configurarWebhook": "Webhook",
     "cadastros_merchants_cambio": "Câmbio",
     "cadastros_merchants_configuracoesBancarias": "Configurações bancárias",
     "cadastros_merchants_configuracoesMerchant": "Configurações de empresa",
