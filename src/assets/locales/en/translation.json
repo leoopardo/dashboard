@@ -158,12 +158,10 @@
     "merchant_settings": "Merchant settings",
     "historic_cpf_merchant": "CPF historic by merchant",
     "historic_cpf_merchant_details": "CPF historic by merchant details",
-    "license": "Licenses",
     "licenses": "Licenses",
-    "current_accounts": "Current accounts",
     "custom_webhook": "Custom webhooks",
-    "consult_person_reports": "Reports",
-    "recents": "Recents"
+    "current_accounts": "Current accounts",
+    "serpro_assertiva": "SERPRO - ASSERTIVA"
   },
 
   "titles": {
@@ -1011,7 +1009,9 @@
     "receiver_data": "Receiver data",
     "deposit_webhook": "Deposit webhook",
     "withdraw_webhook": "Withdraw webhook",
-    "webhook_preview": "Webhook preview"
+    "webhook_preview": "Webhook preview",
+    "assertiva_count": "ASSERTIVA",
+    "serpro_count": "SERPRO"
   },
   "actions": {
     "details": "Details",

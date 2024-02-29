@@ -446,6 +446,9 @@ export interface ValidateInterface {
           menu: boolean;
           report_person_check_cpf_list: boolean;
         };
+        check_serpro: {
+          report_check_document_serpro: boolean;
+        };
       };
     };
     support: {

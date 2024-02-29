@@ -2606,6 +2606,26 @@ export const SidebarNavigation = () => {
                 </Link>
               ),
               getItem(
+                "serpro_assertiva",
+                null,
+                null,
+                false,
+                {
+                  display: permissions?.report?.person?.check_serpro
+                    ? undefined
+                    : "none",
+                },
+                <Link
+                  onClickCapture={() => {
+                    setCollapsed(false);
+                    handleChangeSidebar(false);
+                  }}
+                  to={"/consult/consult_persons/serpro_assertiva"}
+                >
+                  SERPRO / ASSERTIVA
+                </Link>
+              ),
+              getItem(
                 "consult_person_reports",
                 null,
                 [
