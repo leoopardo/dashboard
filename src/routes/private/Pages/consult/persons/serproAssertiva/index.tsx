@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { FilterOutlined } from "@ant-design/icons";
 import { CustomTable } from "@src/components/CustomTable";
@@ -32,6 +33,7 @@ export const SerproAssertiva = () => {
   useEffect(() => {
     refetch();
   }, [query]);
+  
   const { t } = useTranslation();
   return (
     <Row style={{ padding: 25 }} gutter={[8, 8]}>
