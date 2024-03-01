@@ -16,10 +16,11 @@ export function useGetCheckCpf(cpf?: string) {
       refetchInterval: false,
       refetchIntervalInBackground: false,
       refetchOnMount: false,
+      keepPreviousData: false,
     }
   );
 
-  const CheckCpfData = data;
+  const CheckCpfData = error ? undefined : data;
   const isCheckCpfDataFetching = isFetching;
   const CheckCpfDataError: any = error;
   const CheckCpfDataSuccess: any = isSuccess;

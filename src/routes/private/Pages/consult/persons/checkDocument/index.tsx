@@ -60,6 +60,9 @@ export const CheckDocument = () => {
             icon={<FilterAltOffOutlinedIcon />}
             onClick={() => {
               setSearch("");
+              setTimeout(() => {
+                refetchCheckCpfData();
+              }, 100);
             }}
             style={{
               height: 40,
@@ -172,7 +175,7 @@ export const CheckDocument = () => {
                     );
                 }
               })}
-            {merchantsBlacklistData?.CheckCpfData?.total && (
+            {CheckCpfData && merchantsBlacklistData?.CheckCpfData?.total && (
               <>
                 {merchantsBlacklistData?.CheckCpfData?.total > 0 ? (
                   <Descriptions.Item

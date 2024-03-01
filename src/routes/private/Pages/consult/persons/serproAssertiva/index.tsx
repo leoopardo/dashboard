@@ -7,7 +7,7 @@ import { useGetSerproAssertiva } from "@src/services/consult/persons/serproAsser
 import { defaultTheme } from "@src/styles/defaultTheme";
 import { Button, Card, Col, Row, Statistic } from "antd";
 import moment from "moment";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 export const SerproAssertiva = () => {
@@ -29,6 +29,9 @@ export const SerproAssertiva = () => {
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const { data, isFetching, refetch, error } = useGetSerproAssertiva(query);
 
+  useEffect(() => {
+    refetch();
+  }, [query]);
   const { t } = useTranslation();
   return (
     <Row style={{ padding: 25 }} gutter={[8, 8]}>
