@@ -6,7 +6,7 @@ export interface OrganizationCategoriesQuery {
   status?: boolean;
   sort_field?: string;
   sort_order?: string;
-  enabled: boolean;
+  enabled?: boolean;
   page: number;
   limit: number;
 }
