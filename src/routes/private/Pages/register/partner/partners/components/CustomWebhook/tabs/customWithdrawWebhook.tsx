@@ -19,6 +19,7 @@ import {
   CollapseProps,
   FormInstance,
   Alert,
+  message,
 } from "antd";
 import { t } from "i18next";
 import { useEffect, useRef, useState } from "react";
@@ -147,6 +148,11 @@ export const TabWithdrawWebhook = ({
   ];
 
   const onWithdrawSubmit = () => {
+    if(withdrawWebhookStandard && customWebhookWithdraw?.default){
+      setIsConfirmOpen(false);
+      return message.error(t("messages.already_use_default_webhook"));
+    }
+
     withdrawWebhookStandard
       ? mutateDeleteCustomWithdrawWebhook()
       : CreateCustomWithdrawWebhookMutate();

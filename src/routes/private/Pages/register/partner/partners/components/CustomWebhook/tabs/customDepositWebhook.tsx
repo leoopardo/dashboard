@@ -19,6 +19,7 @@ import {
   CollapseProps,
   FormInstance,
   Alert,
+  message,
 } from "antd";
 import { t } from "i18next";
 import { useEffect, useRef, useState } from "react";
@@ -144,6 +145,12 @@ export const TabDepositWebhook = ({
   };
 
   const onDepositSubmit = () => {
+
+    if(depositWebhookStandard && customWebhookDeposit?.default){
+      setIsConfirmOpen(false);
+      return message.error(t("messages.already_use_default_webhook"));
+    }
+
     depositWebhookStandard
       ? mutateDeleteCustomDepositWebhook()
       : CreateCustomDepositWebhookMutate();
