@@ -1199,7 +1199,24 @@ export const CustomTable = (props: TableProps) => {
                 : column?.name,
               dataIndex: column?.name,
               render: (text: string) =>
-                isSmallDesktop && text && text.length >= 20 ? (
+              text && text.length >= 30 ? (
+                <Tooltip title={text}>
+                  <Typography
+                    style={{
+                      width: "100%",
+                      textAlign: "center",
+                      minWidth: 50,
+                    }}
+                    full-text={text}
+                  >
+                    {text
+                      ? text.length > 30
+                        ? `${`${text}`.substring(0, 30)}...`
+                        : text
+                      : "-"}
+                  </Typography>
+                </Tooltip>
+              ) : isSmallDesktop && text && text.length >= 20 ? (
                   <Tooltip title={text}>
                     <Typography
                       style={{

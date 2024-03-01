@@ -2622,7 +2622,7 @@ export const SidebarNavigation = () => {
                   }}
                   to={"/consult/consult_persons/serpro_assertiva"}
                 >
-                  SERPRO / ASSERTIVA
+                  {t("menus.serpro_assertiva")}
                 </Link>
               ),
               getItem(
