@@ -244,6 +244,7 @@
     "operations_number_chart_area": "Gráfico de número de operações",
     "operation_approve": "Deseja aprovar os lançamentos selecionados?",
     "no_cellphone": "Você deve adicionar um número de telefone ao seu usuário. Selecione o Telefone e em seguida valide o token.",
+    "already_use_default_webhook": "O webhook já está configurado como padrão.",
     "need_to_update": "As informações só serão salvas após a confirmação da atualização dos dados pelo botão 'Atualizar', localizado no canto inferior direito da tela.",
     "10000": "Operação realizada com sucesso",
     "10001": "Transação não paga",
