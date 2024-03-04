@@ -236,7 +236,7 @@ export const RefundDepositsManual = () => {
                   ) {
                     delete query?.start_date;
                     delete query?.end_date;
-                  } else {
+                  } else if(!query.start_date && !query.end_date) {
                     setQuery((state) => ({
                       ...state,
                       start_date: moment(new Date())
@@ -286,7 +286,7 @@ export const RefundDepositsManual = () => {
                 if (["rtrid", "endToEndId", "payer_document"].includes(value)) {
                   delete query?.start_date;
                   delete query?.end_date;
-                } else {
+                } else if(!query.start_date && !query.end_date) {
                   setQuery((state) => ({
                     ...state,
                     start_date: moment(new Date())

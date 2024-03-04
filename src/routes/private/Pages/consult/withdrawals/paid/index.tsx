@@ -233,7 +233,7 @@ export const PaidWithdrawals = () => {
                   ) {
                     delete query.initial_date;
                     delete query.final_date;
-                  } else {
+                  } else if(!query.initial_date && !query.final_date) {
                     setQuery((state) => ({
                       ...state,
                       initial_date: moment(new Date())
@@ -296,7 +296,7 @@ export const PaidWithdrawals = () => {
                 ) {
                   delete query.initial_date;
                   delete query.final_date;
-                } else {
+                } else if(!query.initial_date && !query.final_date) {
                   setQuery((state) => ({
                     ...state,
                     initial_date: moment(new Date())
