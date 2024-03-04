@@ -234,7 +234,7 @@ export const FiltersModalFields = ({
       setRangePickerValue("custom");
       setViewDateInput(true);
     }
-  }, [query]);
+  }, [query[startDateKeyName], query[endDateKeyName]]);
 
   return (
     <>
