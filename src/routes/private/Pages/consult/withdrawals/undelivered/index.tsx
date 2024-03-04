@@ -237,7 +237,7 @@ export const UndeliveredWithdrawals = () => {
                   ) {
                     delete query.initial_date;
                     delete query.final_date;
-                  } else {
+                  }  if(!query.initial_date && !query.final_date) {
                     setQuery((state) => ({
                       ...state,
                       initial_date: moment(new Date())
@@ -313,7 +313,7 @@ export const UndeliveredWithdrawals = () => {
                 ) {
                   delete query.initial_date;
                   delete query.final_date;
-                } else {
+                }  if(!query.initial_date && !query.final_date) {
                   setQuery((state) => ({
                     ...state,
                     initial_date: moment(new Date())
