@@ -11,12 +11,12 @@ export function useGetDepositsErrorsTotal(params: DepositsLogsStepsTotalQuery) {
     DepositsLogsStepsTotalItem[] | null | undefined
   >("DepositsErrorsTotal", async () => {
     const response = await api.get("report/logs/deposit/steps/total", {
-      params
+      params,
     });
     return response.data;
   });
 
-  const DepositsErrorsTotal = data;
+  const DepositsErrorsTotal = error ? undefined : data;
   const isDepositsErrorsTotalFetching = isFetching;
   const DepositsErrorsTotalError: any = error;
   const refetchDepositsErrorsTotal = refetch;

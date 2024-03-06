@@ -18,7 +18,7 @@ import { useUpatePayToMerchant } from "@src/services/consult/refund/refundDeposi
 import { queryClient } from "@src/services/queryClient";
 import { useCreateRefundDepositsReports } from "@src/services/reports/consult/refund/deposit/createRefundDepositReports";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Col, Row, Select, Space, Tooltip } from "antd";
+import { Alert, Button, Col, Row, Select, Space, Tooltip } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -37,6 +37,7 @@ import {
 } from "../../../../../../services/types/consult/refunds/refundsDeposits.interface";
 import { ViewModal } from "../components/ViewModal";
 import { TotalizersCards } from "./components/TotalizersCards";
+import { ErrorList } from "@src/utils/errors";
 
 const INITIAL_QUERY: refundDepositsQuery = {
   page: 1,
@@ -63,6 +64,7 @@ export const RefundDeposits = () => {
     refundDepositsTotal,
     isRefundDepositsTotalFetching,
     refetchRefundDepositsTotal,
+    refundDepositsTotalError
   } = useGetTotalRefundDeposits(query);
 
   const {
@@ -144,6 +146,38 @@ export const RefundDeposits = () => {
         loading={isRefundDepositsTotalFetching}
         query={query}
       />
+      {permissions.report.deposit.generated_deposit
+        .report_deposit_generated_deposit_list_totals &&
+        !isRefundDepositsTotalFetching &&
+        refundDepositsTotalError && (
+          <Col span={24}>
+            {refundDepositsTotalError?.response?.data?.status == 500 ? (
+              <Alert
+                message={`${t("table.error")}:`}
+                description={t(`error.500`)}
+                type="error"
+                closable
+                onClose={() => {
+                  refetchRefundDepositsTotal();
+                }}
+              />
+            ) : (
+              <Alert
+                message={`${t("table.error")}:`}
+                description={t(
+                  `error.${
+                    (ErrorList as any)[refundDepositsTotalError?.response?.data?.message]
+                  }`
+                )}
+                type="error"
+                closable
+                onClose={() => {
+                  refetchRefundDepositsTotal();
+                }}
+              />
+            )}
+          </Col>
+        )}
 
       <Row
         align="middle"

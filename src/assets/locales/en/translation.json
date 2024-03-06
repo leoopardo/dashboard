@@ -1061,7 +1061,8 @@
     "disable_bank_being_used": "It is not possible to disable a bank that is being used.",
     "phone_must_be_a_valid_phone_number": "The phone number must be a valid phone number.",
     "forbidden_resource": "This user does not have permission to perform this function. Please contact support.",
-    "from_value_must_be_more_than_to_value": "The initial value must be greater than the final value."
+    "from_value_must_be_more_than_to_value": "The initial value must be greater than the final value.",
+    "is_possible_to_create_report_from_max_30_days": "It is only possible to create a report for a maximum of 30 days."
   },
   "logs": {
     "login": "Login",

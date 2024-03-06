@@ -19,7 +19,7 @@ import { queryClient } from "@src/services/queryClient";
 import { useCreateGeneratedWithdrawalsReports } from "@src/services/reports/consult/withdrawals/generated/createGeneratedWithdrawalsReports";
 import { ResendWebhookBody } from "@src/services/types/consult/deposits/createResendWebhook.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Col, Row, Select, Space, Tabs, Tooltip } from "antd";
+import { Alert, Button, Col, Row, Select, Space, Tabs, Tooltip } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -35,6 +35,7 @@ import { ResendWebhookModal } from "../../deposits/components/ResendWebhookModal
 import { ViewModal } from "../components/ViewModal";
 import { WebhookModal } from "../components/webhooksModal";
 import { TotalizersCards } from "./components/TotalizersCards";
+import { ErrorList } from "@src/utils/errors";
 
 const INITIAL_QUERY: generatedWithdrawalsRowsQuery = {
   page: 1,
@@ -64,6 +65,7 @@ export const UndeliveredWithdrawals = () => {
     WithdrawalsTotal,
     isWithdrawalsTotalFetching,
     refetchWithdrawalsTotal,
+    WithdrawalsTotalError,
   } = useGetTotalGeneratedWithdrawals(query);
 
   const {
@@ -157,6 +159,41 @@ export const UndeliveredWithdrawals = () => {
         />
       )}
 
+      {permissions.report.deposit.generated_deposit
+        .report_deposit_generated_deposit_list_totals &&
+        !isWithdrawalsTotalFetching &&
+        WithdrawalsTotalError && (
+          <Col span={24}>
+            {WithdrawalsTotalError?.response?.data?.status == 500 ? (
+              <Alert
+                message={`${t("table.error")}:`}
+                description={t(`error.500`)}
+                type="error"
+                closable
+                onClose={() => {
+                  refetchWithdrawalsTotal();
+                }}
+              />
+            ) : (
+              <Alert
+                message={`${t("table.error")}:`}
+                description={t(
+                  `error.${
+                    (ErrorList as any)[
+                      WithdrawalsTotalError?.response?.data?.message
+                    ]
+                  }`
+                )}
+                type="error"
+                closable
+                onClose={() => {
+                  refetchWithdrawalsTotal();
+                }}
+              />
+            )}
+          </Col>
+        )}
+
       <Row
         align="middle"
         justify="start"
@@ -237,7 +274,8 @@ export const UndeliveredWithdrawals = () => {
                   ) {
                     delete query.initial_date;
                     delete query.final_date;
-                  }  if(!query.initial_date && !query.final_date) {
+                  }
+                  if (!query.initial_date && !query.final_date) {
                     setQuery((state) => ({
                       ...state,
                       initial_date: moment(new Date())
@@ -313,7 +351,8 @@ export const UndeliveredWithdrawals = () => {
                 ) {
                   delete query.initial_date;
                   delete query.final_date;
-                }  if(!query.initial_date && !query.final_date) {
+                }
+                if (!query.initial_date && !query.final_date) {
                   setQuery((state) => ({
                     ...state,
                     initial_date: moment(new Date())

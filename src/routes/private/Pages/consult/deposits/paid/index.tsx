@@ -17,7 +17,8 @@ import { queryClient } from "@src/services/queryClient";
 import { useCreatePaidDepositsReports } from "@src/services/reports/consult/deposits/createPaidDepositsReports";
 import { ResendWebhookBody } from "@src/services/types/consult/deposits/createResendWebhook.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Col, Row, Select, Space, Tooltip } from "antd";
+import { ErrorList } from "@src/utils/errors";
+import { Alert, Button, Col, Row, Select, Space, Tooltip } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -61,7 +62,7 @@ export const PaidDeposits = () => {
     useState<boolean>(false);
   const [csvFields, setCsvFields] = useState<any>();
   const [isComma, setIsComma] = useState<boolean>(true);
-  const { paidTotal, isPaidTotalFetching, refetchPaidTotal } =
+  const { paidTotal, isPaidTotalFetching, refetchPaidTotal, paidTotalError } =
     useGetTotalPaidDeposits(query);
   const [isWebhookModalOpen, setIsWebhookModalOpen] = useState<boolean>(false);
   const [isResendWebhookModalOpen, setIsResendWebhookModalOpen] =
@@ -141,6 +142,40 @@ export const PaidDeposits = () => {
           query={query}
         />
       )}
+      {permissions.report.deposit.generated_deposit
+        .report_deposit_generated_deposit_list_totals &&
+        !isPaidTotalFetching &&
+        paidTotalError && (
+          <Col span={24}>
+            {paidTotalError?.response?.data?.status == 500 ? (
+              <Alert
+                message={`${t("table.error")}:`}
+                description={t(`error.500`)}
+                type="error"
+                closable
+                onClose={() => {
+                  refetchPaidTotal();
+                }}
+              />
+            ) : (
+              <Alert
+                message={`${t("table.error")}:`}
+                description={t(
+                  `error.${
+                    (ErrorList as any)[
+                      paidTotalError?.response?.data?.message
+                    ]
+                  }`
+                )}
+                type="error"
+                closable
+                onClose={() => {
+                  refetchPaidTotal();
+                }}
+              />
+            )}
+          </Col>
+        )}
 
       <Row
         align="middle"
