@@ -85,7 +85,7 @@ interface TableProps {
   label?: string[]; // valores que aparecerão nos accordeons da tabela mobile
   setCurrentItem: Dispatch<SetStateAction<any>>; // função para setar o item atual, ou seja, o que o usuário clicou no botão de ações
   removeTotal?: boolean; // remove a contagem total de registros da tabela
-  actions?: (actionsInterface | false)[]; // array de objetos contendo as ações que aparecerão na tabela
+  actions?: (actionsInterface | false | undefined)[]; // array de objetos contendo as ações que aparecerão na tabela
   removePagination?: boolean; // remove a paginação da tabela
   isConfirmOpen?: boolean; // define se o modal de confirmação está aberto
   setIsConfirmOpen?: Dispatch<SetStateAction<boolean>>; // função para setar o modal de confirmação

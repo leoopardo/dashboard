@@ -11,6 +11,9 @@ declare module "styled-components" {
       refunded: string;
       success: string;
       refunded_withdraw: string;
+      paid_to_merchant: string;
+      paid_to_end_user: string;
+      refund_to_end_user: string;
       completed: string;
       invalid: string;
       paid: string;
@@ -24,6 +27,7 @@ declare module "styled-components" {
       pending: string;
       waiting: string;
       waiting_refund: string;
+      waiting_refund_to_end_user: string;
       info: string;
       chartGreen: string;
       chartYellow: string;
