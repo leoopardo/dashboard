@@ -1022,7 +1022,8 @@
     "withdraw_webhook": "Webhook de saque",
     "webhook_preview": "Pré-visualização do webhook",
     "assertiva_count": "ASSERTIVA",
-    "serpro_count": "SERPRO"
+    "serpro_count": "SERPRO",
+    "waiting_refund_to_end_user": "Aguardando devolução para usuário final"
   },
   "actions": {
     "details": "Detalhes",

@@ -5,6 +5,7 @@ import {
   FileAddOutlined,
   FilterOutlined,
   ShopOutlined,
+  UserSwitchOutlined,
 } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import ReplayIcon from "@mui/icons-material/Replay";
@@ -38,6 +39,7 @@ import {
 import { ViewModal } from "../components/ViewModal";
 import { TotalizersCards } from "./components/TotalizersCards";
 import { ErrorList } from "@src/utils/errors";
+import { usePayRefundToEndUser } from "@src/services/consult/refund/refundDeposits/payToEndUserRefund";
 
 const INITIAL_QUERY: refundDepositsQuery = {
   page: 1,
@@ -64,7 +66,7 @@ export const RefundDeposits = () => {
     refundDepositsTotal,
     isRefundDepositsTotalFetching,
     refetchRefundDepositsTotal,
-    refundDepositsTotalError
+    refundDepositsTotalError,
   } = useGetTotalRefundDeposits(query);
 
   const {
@@ -77,6 +79,8 @@ export const RefundDeposits = () => {
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const [isRefundModalOpen, setIsRefundModalOpen] = useState<boolean>(false);
   const [isPayToMerchantModalOpen, setIsPayToMerchantModalOpen] =
+    useState<boolean>(false);
+  const [isPayToEndUserModalOpen, setIsPayToEndUserModalOpen] =
     useState<boolean>(false);
   const [currentItem, setCurrentItem] =
     useState<refundDepositRowsItems | null>();
@@ -91,6 +95,13 @@ export const RefundDeposits = () => {
 
   const { payToMerchantSuccess, payToMerchanterror, payToMerchantMutate } =
     useUpatePayToMerchant(currentItem?._id);
+
+  const {
+    PayRefundToEndUserIsLoading,
+    PayRefundToEndUserMutate,
+    PayRefundToEndUserSuccess,
+    PayRefundToEndUsererror,
+  } = usePayRefundToEndUser(currentItem?._id);
 
   const [csvFields, setCsvFields] = useState<any>();
   const [isComma, setIsComma] = useState<boolean>(true);
@@ -166,7 +177,9 @@ export const RefundDeposits = () => {
                 message={`${t("table.error")}:`}
                 description={t(
                   `error.${
-                    (ErrorList as any)[refundDepositsTotalError?.response?.data?.message]
+                    (ErrorList as any)[
+                      refundDepositsTotalError?.response?.data?.message
+                    ]
                   }`
                 )}
                 type="error"
@@ -253,7 +266,7 @@ export const RefundDeposits = () => {
                   ) {
                     delete query.start_date;
                     delete query.end_date;
-                  } else if(!query.start_date && !query.end_date) {
+                  } else if (!query.start_date && !query.end_date) {
                     setQuery((state) => ({
                       ...state,
                       start_date: moment(new Date())
@@ -319,7 +332,7 @@ export const RefundDeposits = () => {
                 ) {
                   delete query.start_date;
                   delete query.end_date;
-                } else if(!query.start_date && !query.end_date) {
+                } else if (!query.start_date && !query.end_date) {
                   setQuery((state) => ({
                     ...state,
                     start_date: moment(new Date())
@@ -442,12 +455,19 @@ export const RefundDeposits = () => {
                 disabled: (item) =>
                   !["WAITING", "ERROR"].includes(item?.status),
               },
-
               permissions?.report?.chargeback?.deposit_chargeback
                 ?.report_chargeback_deposit_chargeback_paid_to_merchant && {
                 label: "pay_to_merchant",
                 icon: <ShopOutlined style={{ fontSize: "18px" }} />,
                 onClick: () => setIsPayToMerchantModalOpen(true),
+                disabled: (item) =>
+                  !["WAITING", "ERROR"].includes(item?.status),
+              },
+              permissions?.report?.chargeback?.deposit_chargeback
+                ?.report_chargeback_deposit_chargeback_paid_to_merchant && {
+                label: "pay_to_enduser",
+                icon: <UserSwitchOutlined style={{ fontSize: "18px" }} />,
+                onClick: () => setIsPayToEndUserModalOpen(true),
                 disabled: (item) =>
                   !["WAITING", "ERROR"].includes(item?.status),
               },
@@ -499,6 +519,19 @@ export const RefundDeposits = () => {
             itens: currentItem?._id,
           })}`}
           loading={isLoading}
+        />
+      )}
+      {isPayToEndUserModalOpen && (
+        <Confirmation
+          open={isPayToEndUserModalOpen}
+          setOpen={setIsPayToEndUserModalOpen}
+          submit={PayRefundToEndUserMutate}
+          title={t("actions.pay_to_enduser")}
+          description={`${t("messages.are_you_sure", {
+            action: t("actions.pay_to_enduser").toLocaleLowerCase(),
+            itens: currentItem?._id,
+          })}`}
+          loading={PayRefundToEndUserIsLoading}
         />
       )}
 
@@ -580,6 +613,12 @@ export const RefundDeposits = () => {
         actionSuccess={t("messages.refunded")}
         error={payToMerchanterror}
         success={payToMerchantSuccess}
+      />
+      <Toast
+        actionError={t("messages.refund")}
+        actionSuccess={t("messages.refunded")}
+        error={PayRefundToEndUsererror}
+        success={PayRefundToEndUserSuccess}
       />
     </Row>
   );
