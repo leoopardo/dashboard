@@ -337,7 +337,7 @@ export const MutateModalFields = ({
                   </Col>
                 );
               case "merchant_id":
-                if (permissions.register.merchant.merchant.merchant_list) {
+                if (permissions?.register?.merchant?.merchant?.merchant_list) {
                   return (
                     <Col span={24}>
                       <Form.Item
@@ -369,7 +369,7 @@ export const MutateModalFields = ({
                   );
                 } else return;
               case "merchant_name":
-                if (permissions.register.merchant.merchant.merchant_list) {
+                if (permissions?.register?.merchant?.merchant?.merchant_list) {
                   return (
                     <Col span={24}>
                       <Form.Item
@@ -400,7 +400,7 @@ export const MutateModalFields = ({
 
               case "partner_id":
                 if (
-                  permissions.register.partner.partner.partner_list &&
+                  permissions?.register?.partner?.partner?.partner_list &&
                   !user.partner_id
                 ) {
                   return (
@@ -488,7 +488,7 @@ export const MutateModalFields = ({
 
               case "aggregator_id":
                 if (
-                  permissions.register.aggregator.aggregator.aggregator_list &&
+                  permissions?.register?.aggregator?.aggregator?.aggregator_list &&
                   !user?.aggregator_id
                 ) {
                   return (
@@ -715,7 +715,7 @@ export const MutateModalFields = ({
 
               case "operator_id":
                 if (
-                  permissions.register.operator.operator.operator_list &&
+                  permissions?.register?.operator?.operator?.operator_list &&
                   !user?.operator_id
                 ) {
                   return (
@@ -777,8 +777,7 @@ export const MutateModalFields = ({
               case "indeterminate_validity":
                 return (
                   <Col
-                    span={12}
-                    style={{ display: "flex", justifyContent: "center" }}
+                    style={{ display: "flex", justifyContent: "flex-start" }}
                   >
                     <Form.Item
                       data-test-id={`${field.label}-form-item`}
@@ -789,7 +788,7 @@ export const MutateModalFields = ({
                     >
                       <Switch
                         data-test-id={`${field.label}-switch`}
-                        checked={body[field.label]}
+                        checked={body[field.label] == true}
                         onChange={(e) =>
                           setBody((state: any) => ({
                             ...state,
