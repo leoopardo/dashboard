@@ -125,10 +125,9 @@ export const SerproAssertiva = () => {
           ]}
           loading={isFetching}
           label={["assertiva_count", "serpro_count", "createdAt"]}
+          initial_query={INITIAL_QUERY}
         />
       </Col>
-
-      {isFiltersOpen && (
         <FiltersModal
           open={isFiltersOpen}
           setOpen={setIsFiltersOpen}
@@ -144,7 +143,6 @@ export const SerproAssertiva = () => {
           initialQuery={INITIAL_QUERY}
           haveInitialDate
         />
-      )}
     </Row>
   );
 };
