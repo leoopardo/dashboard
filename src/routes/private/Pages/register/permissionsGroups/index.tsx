@@ -353,6 +353,12 @@ export const PermissionsGroups = () => {
         success={PermissionGroupIsSuccess}
       />
       <Toast
+        actionError={t("messages.update")}
+        actionSuccess={t("messages.updated")}
+        error={UpdatePermissionGroupError}
+        success={UpdatePermissionGroupIsSuccess}
+      />
+      <Toast
         actionError={t("messages.delete")}
         actionSuccess={t("messages.deleted")}
         error={DeletePermissionGroupError}
