@@ -2611,7 +2611,7 @@ export const SidebarNavigation = () => {
                 null,
                 false,
                 {
-                  display: permissions?.report?.person?.check_serpro
+                  display: permissions?.report?.person?.check_serpro?.report_check_document_serpro
                     ? undefined
                     : "none",
                 },
