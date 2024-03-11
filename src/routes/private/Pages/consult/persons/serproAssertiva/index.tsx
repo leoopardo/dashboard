@@ -99,6 +99,8 @@ export const SerproAssertiva = () => {
               endDateKeyName="end_date"
               query={query}
               setQuery={setQuery}
+              haveInitialDate
+              initial_query={INITIAL_QUERY}
             />
           </Col>
         </Row>
@@ -140,6 +142,7 @@ export const SerproAssertiva = () => {
           startDateKeyName="start_date"
           endDateKeyName="end_date"
           initialQuery={INITIAL_QUERY}
+          haveInitialDate
         />
       )}
     </Row>

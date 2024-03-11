@@ -21,6 +21,7 @@ interface FilterChipsProps {
   endDateKeyName: string;
   haveInitialDate?: boolean;
   disabled?: string[];
+  initial_query?: any;
 }
 
 export const FilterChips = ({
@@ -30,6 +31,7 @@ export const FilterChips = ({
   startDateKeyName,
   haveInitialDate,
   disabled,
+  initial_query,
 }: FilterChipsProps) => {
   const { t } = useTranslation();
   const { merchant, refetchMerchantById } = useListMerchantById({
@@ -150,16 +152,20 @@ export const FilterChips = ({
                         delete q[key];
                         delete q[endDateKeyName];
                         if (haveInitialDate) {
-                          q[key] = moment(new Date())
-                            .startOf("day")
-                            .utc()
-                            .format("YYYY-MM-DDTHH:mm:ss.SSS");
+                          q[key] =
+                            initial_query[startDateKeyName] ??
+                            moment(new Date())
+                              .startOf("day")
+                              .utc()
+                              .format("YYYY-MM-DDTHH:mm:ss.SSS");
 
-                          q[endDateKeyName] = moment(new Date())
-                            .add(1, "day")
-                            .startOf("day")
-                            .utc()
-                            .format("YYYY-MM-DDTHH:mm:ss.SSS");
+                          q[endDateKeyName] =
+                            initial_query[endDateKeyName] ??
+                            moment(new Date())
+                              .add(1, "day")
+                              .startOf("day")
+                              .utc()
+                              .format("YYYY-MM-DDTHH:mm:ss.SSS");
                         }
                         setQuery(q);
                       }}

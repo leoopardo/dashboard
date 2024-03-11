@@ -1013,8 +1013,8 @@
     "deposit_webhook": "Deposit webhook",
     "withdraw_webhook": "Withdraw webhook",
     "webhook_preview": "Webhook preview",
-    "assertiva_count": "ASSERTIVA",
-    "serpro_count": "SERPRO",
+    "assertiva_count": "Assertiva",
+    "serpro_count": "Serpro",
     "waiting_refund_to_end_user": "Waiting refund to end user"
   },
   "actions": {
