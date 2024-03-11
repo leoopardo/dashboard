@@ -161,7 +161,9 @@
     "licenses": "Licenses",
     "custom_webhook": "Custom webhooks",
     "current_accounts": "Current accounts",
-    "serpro_assertiva": "SERPRO - ASSERTIVA"
+    "serpro_assertiva": "Consult totalizers",
+    "physical_persons": "Pessoas físicas",
+    "legal_persons": "Pessoas jurídicas"
   },
 
   "titles": {
