@@ -577,8 +577,8 @@ export const PrivateRoutes = () => {
               element={
                 <Permission
                   permission={
-                    responseValidate?.permissions?.report?.person?.check_cpf
-                      ?.menu
+                    responseValidate?.permissions?.report?.person?.check_serpro
+                      ?.report_check_document_serpro
                   }
                 >
                   <SerproAssertiva />
@@ -905,7 +905,7 @@ export const PrivateRoutes = () => {
                   </Permission>
                 }
               />
-            {/* Ajustar permissões*/}
+              {/* Ajustar permissões*/}
               <Route
                 path="custom_webhook"
                 element={
