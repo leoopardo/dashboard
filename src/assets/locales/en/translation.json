@@ -158,12 +158,12 @@
     "merchant_settings": "Merchant settings",
     "historic_cpf_merchant": "CPF historic by merchant",
     "historic_cpf_merchant_details": "CPF historic by merchant details",
-    "license": "Licenses",
     "licenses": "Licenses",
-    "current_accounts": "Current accounts",
     "custom_webhook": "Custom webhooks",
-    "consult_person_reports": "Reports",
-    "recents": "Recents"
+    "current_accounts": "Current accounts",
+    "serpro_assertiva": "Consult totalizers",
+    "physical_persons": "Pessoas físicas",
+    "legal_persons": "Pessoas jurídicas"
   },
 
   "titles": {
@@ -1012,7 +1012,10 @@
     "receiver_data": "Receiver data",
     "deposit_webhook": "Deposit webhook",
     "withdraw_webhook": "Withdraw webhook",
-    "webhook_preview": "Webhook preview"
+    "webhook_preview": "Webhook preview",
+    "assertiva_count": "Assertiva",
+    "serpro_count": "Serpro",
+    "waiting_refund_to_end_user": "Waiting refund to end user"
   },
   "actions": {
     "details": "Details",
@@ -1061,7 +1064,8 @@
     "disable_bank_being_used": "It is not possible to disable a bank that is being used.",
     "phone_must_be_a_valid_phone_number": "The phone number must be a valid phone number.",
     "forbidden_resource": "This user does not have permission to perform this function. Please contact support.",
-    "from_value_must_be_more_than_to_value": "The initial value must be greater than the final value."
+    "from_value_must_be_more_than_to_value": "The initial value must be greater than the final value.",
+    "is_possible_to_create_report_from_max_30_days": "It is only possible to create a report for a maximum of 30 days."
   },
   "logs": {
     "login": "Login",

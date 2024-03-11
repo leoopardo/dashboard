@@ -8,7 +8,7 @@ export interface PermissionsGroupsItemInterface {
   id?: number;
   name?: string;
   description?: string;
-  status?: number;
+  status?: number | string;
   profile_name?: string;
   linked_user_total?: number;
 }
@@ -33,7 +33,7 @@ export interface PermissionsGroupsQueryInterface {
 export interface PermissionGroupBodyInterface {
   name?: string;
   profile_id?: number;
-  status?: string;
+  status?: string | number | boolean;
   description?: string;
   group_id?: number;
 }

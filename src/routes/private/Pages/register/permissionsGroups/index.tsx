@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
   DeleteOutlined,
@@ -31,6 +32,7 @@ import { Button, Col, Row } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { PermissionsModal } from "./components/permissionsModal/permissionsModal";
+import { ProfileTypeNumbers } from "./constants";
 
 export const PermissionsGroups = () => {
   const { t } = useTranslation();
@@ -59,7 +61,6 @@ export const PermissionsGroups = () => {
       name: "",
       description: "",
       profile_id: undefined,
-      status: "true",
     });
   const {
     PermissionGroupsData,
@@ -76,6 +77,8 @@ export const PermissionsGroups = () => {
     PermissionGroupReset,
   } = useCreatePermissionGroup({ ...createGroupBody, status: "true" });
 
+  console.log(updateGroupBody);
+
   const {
     DeletePermissionGroupError,
     DeletePermissionGroupIsLoading,
@@ -88,9 +91,13 @@ export const PermissionsGroups = () => {
     UpdatePermissionGroupIsSuccess,
     UpdatePermissionGroupMutate,
     UpdatePermissionGroupReset,
-  } = useUpdatePermissionGroup(updateGroupBody);
+  } = useUpdatePermissionGroup({
+    ...updateGroupBody,
+    status: `${updateGroupBody.status}`,
+  });
   const { ProfilesData } = useGetProfiles({
     group: true,
+    enabled: true,
   });
 
   useEffect(() => {
@@ -99,17 +106,6 @@ export const PermissionsGroups = () => {
       setIsPermissionsModalOpen(true);
     }
   }, [PermissionGroupIsSuccess]);
-
-  useEffect(() => {
-    setUpdateGroupBody({
-      description: currentItem?.description,
-      name: currentItem?.name,
-      profile_id: ProfilesData?.find(
-        (p) => p?.name === currentItem?.profile_name
-      )?.id,
-      group_id: currentItem?.id,
-    });
-  }, [currentItem]);
 
   return (
     <Row style={{ padding: 25 }} gutter={[8, 8]}>
@@ -202,8 +198,9 @@ export const PermissionsGroups = () => {
                 setUpdateGroupBody({
                   description: item.description,
                   name: item.name,
-                  profile_id: item?.profile_name,
+                  profile_id: (ProfileTypeNumbers as any)[item?.profile_name],
                   group_id: item.id,
+                  status: item.status == '1',
                 });
                 setIsUpdateModalOpen(true);
               },
@@ -300,6 +297,7 @@ export const PermissionsGroups = () => {
         fields={[
           { label: "name", required: true },
           { label: "description", required: false },
+          { label: "status", required: false },
         ]}
         body={updateGroupBody}
         setBody={setUpdateGroupBody}
@@ -353,6 +351,12 @@ export const PermissionsGroups = () => {
         actionSuccess={t("messages.created")}
         error={PermissionGroupError}
         success={PermissionGroupIsSuccess}
+      />
+      <Toast
+        actionError={t("messages.update")}
+        actionSuccess={t("messages.updated")}
+        error={UpdatePermissionGroupError}
+        success={UpdatePermissionGroupIsSuccess}
       />
       <Toast
         actionError={t("messages.delete")}

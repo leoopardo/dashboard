@@ -3,7 +3,7 @@ import { DefaultTheme } from "styled-components";
 export const defaultTheme: DefaultTheme = {
   colors: {
     dark: "#4A4A4A",
-    grey:"#00000073",
+    grey: "#00000073",
     primary: import.meta.env.VITE_APP_COLOR_PRIMARY,
     secondary: import.meta.env.VITE_APP_COLOR_SECONDARY,
 
@@ -14,6 +14,9 @@ export const defaultTheme: DefaultTheme = {
     refunded: "#3f8600",
     refund_to_merchant: "#3f8600",
     completed: "#3f8600",
+    paid_to_merchant: "#3f8600",
+    paid_to_end_user: "#3f8600",
+    refund_to_end_user: "#3f8600",
     error: "#cf1322",
     canceled: "#cf1322",
     expired: "#cf1322",
@@ -24,6 +27,7 @@ export const defaultTheme: DefaultTheme = {
     pending: "#cfa913",
     waiting: "#cfa913",
     waiting_refund: "#cfa913",
+    waiting_refund_to_end_user: "#cfa913",
     info: "#4682B4",
 
     chartGreen: "#60873e",

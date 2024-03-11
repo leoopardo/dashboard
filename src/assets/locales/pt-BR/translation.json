@@ -163,10 +163,11 @@
     "permissions_groups": "Grupos de permissões",
     "license": "Licenças",
     "licenses": "Licenças",
-    "current_accounts": "Contas Corrente",
     "custom_webhook": "Personalizar webhook",
+    "current_accounts": "Contas Corrente",
     "consult_person_reports": "Relatórios",
-    "recents": "Recentes"
+    "recents": "Recentes",
+    "serpro_assertiva": "Totalizador de consultas"
   },
 
   "titles": {
@@ -1019,7 +1020,10 @@
     "receiver_data": "Dados do recebedor",
     "deposit_webhook": "Webhook de depósito",
     "withdraw_webhook": "Webhook de saque",
-    "webhook_preview": "Pré-visualização do webhook"
+    "webhook_preview": "Pré-visualização do webhook",
+    "assertiva_count": "Assertiva",
+    "serpro_count": "Serpro",
+    "waiting_refund_to_end_user": "Aguardando devolução para usuário final"
   },
   "actions": {
     "details": "Detalhes",
@@ -1071,7 +1075,8 @@
     "disable_bank_being_used": "Não é possível inativar banco. Banco sendo utilizado por empresas.",
     "phone_must_be_a_valid_phone_number": "Numero de telefone inválido.",
     "forbidden_resource": "Este usuário não tem permissão para executar essa função. Entre em contato com o suporte.",
-    "from_value_must_be_more_than_to_value": "O valor de origem deve ser maior que o valor a ser transferido."
+    "from_value_must_be_more_than_to_value": "O valor de origem deve ser maior que o valor a ser transferido.",
+    "is_possible_to_create_report_from_max_30_days": "É possível criar relatórios de no máximo 30 dias."
   },
   "logs": {
     "login": "Login",

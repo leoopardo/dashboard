@@ -85,7 +85,7 @@ interface TableProps {
   label?: string[]; // valores que aparecerão nos accordeons da tabela mobile
   setCurrentItem: Dispatch<SetStateAction<any>>; // função para setar o item atual, ou seja, o que o usuário clicou no botão de ações
   removeTotal?: boolean; // remove a contagem total de registros da tabela
-  actions?: (actionsInterface | false)[]; // array de objetos contendo as ações que aparecerão na tabela
+  actions?: (actionsInterface | false | undefined)[]; // array de objetos contendo as ações que aparecerão na tabela
   removePagination?: boolean; // remove a paginação da tabela
   isConfirmOpen?: boolean; // define se o modal de confirmação está aberto
   setIsConfirmOpen?: Dispatch<SetStateAction<boolean>>; // função para setar o modal de confirmação
@@ -1199,7 +1199,24 @@ export const CustomTable = (props: TableProps) => {
                 : column?.name,
               dataIndex: column?.name,
               render: (text: string) =>
-                isSmallDesktop && text && text.length >= 20 ? (
+              text && text.length >= 30 ? (
+                <Tooltip title={text}>
+                  <Typography
+                    style={{
+                      width: "100%",
+                      textAlign: "center",
+                      minWidth: 50,
+                    }}
+                    full-text={text}
+                  >
+                    {text
+                      ? text.length > 30
+                        ? `${`${text}`.substring(0, 30)}...`
+                        : text
+                      : "-"}
+                  </Typography>
+                </Tooltip>
+              ) : isSmallDesktop && text && text.length >= 20 ? (
                   <Tooltip title={text}>
                     <Typography
                       style={{

@@ -17,7 +17,7 @@ import { queryClient } from "@src/services/queryClient";
 import { useCreatePaidWithdrawalsReports } from "@src/services/reports/consult/withdrawals/paid/createGeneratedWithdrawalsReports";
 import { ResendWebhookBody } from "@src/services/types/consult/deposits/createResendWebhook.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Col, Row, Select, Space, Tooltip } from "antd";
+import { Alert, Button, Col, Row, Select, Space, Tooltip } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -35,6 +35,7 @@ import { ResendWebhookModal } from "../../deposits/components/ResendWebhookModal
 import { ViewModal } from "../components/ViewModal";
 import { WebhookModal } from "../components/webhooksModal";
 import { TotalizersCards } from "./components/TotalizersCards";
+import { ErrorList } from "@src/utils/errors";
 
 const INITIAL_QUERY: paidWithdrawalsRowsQuery = {
   page: 1,
@@ -61,6 +62,7 @@ export const PaidWithdrawals = () => {
     PaidWithdrawalsTotal,
     isPaidWithdrawalsTotalFetching,
     refetchPaidWithdrawalsTotal,
+    PaidWithdrawalsTotalError,
   } = useGetTotalPaidWithdrawals(query);
 
   const {
@@ -151,6 +153,41 @@ export const PaidWithdrawals = () => {
         />
       )}
 
+      {permissions.report.deposit.generated_deposit
+        .report_deposit_generated_deposit_list_totals &&
+        !isPaidWithdrawalsTotalFetching &&
+        PaidWithdrawalsTotalError && (
+          <Col span={24}>
+            {PaidWithdrawalsTotalError?.response?.data?.status == 500 ? (
+              <Alert
+                message={`${t("table.error")}:`}
+                description={t(`error.500`)}
+                type="error"
+                closable
+                onClose={() => {
+                  refetchPaidWithdrawalsTotal();
+                }}
+              />
+            ) : (
+              <Alert
+                message={`${t("table.error")}:`}
+                description={t(
+                  `error.${
+                    (ErrorList as any)[
+                      PaidWithdrawalsTotalError?.response?.data?.message
+                    ]
+                  }`
+                )}
+                type="error"
+                closable
+                onClose={() => {
+                  refetchPaidWithdrawalsTotal();
+                }}
+              />
+            )}
+          </Col>
+        )}
+
       <Row
         align="middle"
         justify="start"
@@ -233,7 +270,7 @@ export const PaidWithdrawals = () => {
                   ) {
                     delete query.initial_date;
                     delete query.final_date;
-                  } else {
+                  } else if (!query.initial_date && !query.final_date) {
                     setQuery((state) => ({
                       ...state,
                       initial_date: moment(new Date())
@@ -296,7 +333,7 @@ export const PaidWithdrawals = () => {
                 ) {
                   delete query.initial_date;
                   delete query.final_date;
-                } else {
+                } else if (!query.initial_date && !query.final_date) {
                   setQuery((state) => ({
                     ...state,
                     initial_date: moment(new Date())

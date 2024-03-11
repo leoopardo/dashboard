@@ -20,7 +20,7 @@ import { queryClient } from "@src/services/queryClient";
 import { useCreateGeneratedDepositsReports } from "@src/services/reports/consult/deposits/createGeneratedDepositsReports";
 import { ResendWebhookBody } from "@src/services/types/consult/deposits/createResendWebhook.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Col, Row, Select, Space } from "antd";
+import { Alert, Button, Col, Row, Select, Space } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -38,6 +38,7 @@ import { ResendWebhookModal } from "../components/ResendWebhookModal";
 import { ViewModal } from "../components/ViewModal";
 import { WebhookModal } from "../components/webhooksModal";
 import { TotalizersCards } from "./components/TotalizersCards";
+import { ErrorList } from "@src/utils/errors";
 
 const INITIAL_QUERY: generatedDepositTotalQuery = {
   page: 1,
@@ -61,8 +62,12 @@ export const GeneratedDeposits = () => {
   const isMobile = useMediaQuery({ maxWidth: "750px" });
   const { t } = useTranslation();
   const [query, setQuery] = useState<generatedDepositTotalQuery>(INITIAL_QUERY);
-  const { depositsTotal, isDepositsTotalFetching, refetchDepositsTotal } =
-    useGetTotalGeneratedDeposits(query);
+  const {
+    depositsTotal,
+    isDepositsTotalFetching,
+    refetchDepositsTotal,
+    depositsTotalError,
+  } = useGetTotalGeneratedDeposits(query);
   const {
     depositsRows,
     depositsRowsError,
@@ -148,6 +153,40 @@ export const GeneratedDeposits = () => {
           query={query}
         />
       )}
+      {permissions.report.deposit.generated_deposit
+        .report_deposit_generated_deposit_list_totals &&
+        !isDepositsTotalFetching &&
+        depositsTotalError && (
+          <Col span={24}>
+            {depositsTotalError?.response?.data?.status == 500 ? (
+              <Alert
+                message={`${t("table.error")}:`}
+                description={t(`error.500`)}
+                type="error"
+                closable
+                onClose={() => {
+                  refetchDepositsTotal();
+                }}
+              />
+            ) : (
+              <Alert
+                message={`${t("table.error")}:`}
+                description={t(
+                  `error.${
+                    (ErrorList as any)[
+                      depositsTotalError?.response?.data?.message
+                    ]
+                  }`
+                )}
+                type="error"
+                closable
+                onClose={() => {
+                  refetchDepositsTotal();
+                }}
+              />
+            )}
+          </Col>
+        )}
 
       <Row
         align="middle"
@@ -229,7 +268,7 @@ export const GeneratedDeposits = () => {
                   ) {
                     delete query.initial_date;
                     delete query.final_date;
-                  } else {
+                  } else if (!query.initial_date && !query.final_date) {
                     setQuery((state) => ({
                       ...state,
                       initial_date: moment(new Date())
@@ -304,7 +343,7 @@ export const GeneratedDeposits = () => {
                 ) {
                   delete query.initial_date;
                   delete query.final_date;
-                } else {
+                } else if (!query.initial_date && !query.final_date) {
                   setQuery((state) => ({
                     ...state,
                     initial_date: moment(new Date())

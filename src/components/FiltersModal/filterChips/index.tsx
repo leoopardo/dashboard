@@ -21,6 +21,7 @@ interface FilterChipsProps {
   endDateKeyName: string;
   haveInitialDate?: boolean;
   disabled?: string[];
+  initial_query?: any;
 }
 
 export const FilterChips = ({
@@ -30,41 +31,49 @@ export const FilterChips = ({
   startDateKeyName,
   haveInitialDate,
   disabled,
+  initial_query,
 }: FilterChipsProps) => {
   const { t } = useTranslation();
   const { merchant, refetchMerchantById } = useListMerchantById({
     page: 1,
     limit: 200,
-    merchant_id: query.merchant_id ?? undefined,
+    merchant_id: query?.merchant_id ?? undefined,
+    enabled: query?.merchant_id ? true : false,
   });
   const currentMerchant = merchant;
   const { Partner, refetcPartner } = useListPartnerById({
     page: 1,
     limit: 200,
-    partner_id: query.partner_id ?? undefined,
+    partner_id: query?.partner_id ?? undefined,
+    enabled: query?.partner_id ? true : false,
   });
   const { Aggregator, refetcAggregator } = useListAggregatorById({
     page: 1,
     limit: 200,
-    aggregator_id: query.aggregator_id ?? undefined,
+    aggregator_id: query?.aggregator_id ?? undefined,
+    enabled: query?.aggregator_id ? true : false,
   });
   const { Operator, refetcOperator } = useListOperatorById({
     page: 1,
     limit: 200,
-    operator_id: query.operator_id ?? undefined,
+    operator_id: query?.operator_id ?? undefined,
+    enabled: query?.operator_id ? true : false,
   });
   const { CategoriesData } = useGetOrganizationCategories({
     limit: 200,
     page: 1,
+    enabled: query?.category_id ? true : false,
   });
   const { categoryData } = useGetRowsMerchantManualEntryCategory({
     limit: 200,
     page: 1,
     sort_field: "created_at",
     sort_order: "DESC",
+    enabled: query?.category_id ? true : false,
   });
   const { ProfilesData } = useGetProfiles({
     group: true,
+    enabled: query?.profiles ? true : false,
   });
 
   const [filtersQuery, setFiltersQuery] = useState<any>(query);
@@ -143,16 +152,20 @@ export const FilterChips = ({
                         delete q[key];
                         delete q[endDateKeyName];
                         if (haveInitialDate) {
-                          q[key] = moment(new Date())
-                            .startOf("day")
-                            .utc()
-                            .format("YYYY-MM-DDTHH:mm:ss.SSS");
+                          q[key] =
+                            initial_query[startDateKeyName] ??
+                            moment(new Date())
+                              .startOf("day")
+                              .utc()
+                              .format("YYYY-MM-DDTHH:mm:ss.SSS");
 
-                          q[endDateKeyName] = moment(new Date())
-                            .add(1, "day")
-                            .startOf("day")
-                            .utc()
-                            .format("YYYY-MM-DDTHH:mm:ss.SSS");
+                          q[endDateKeyName] =
+                            initial_query[endDateKeyName] ??
+                            moment(new Date())
+                              .add(1, "day")
+                              .startOf("day")
+                              .utc()
+                              .format("YYYY-MM-DDTHH:mm:ss.SSS");
                         }
                         setQuery(q);
                       }}

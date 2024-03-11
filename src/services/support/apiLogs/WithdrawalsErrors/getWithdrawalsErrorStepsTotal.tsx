@@ -13,12 +13,12 @@ export function useGetWithdrawalsErrorsTotal(
     DepositsLogsStepsTotalItem[] | null | undefined
   >("WithdrawalsErrorsTotal", async () => {
     const response = await api.get("report/logs/withdraw/steps/total", {
-      params
+      params,
     });
     return response.data;
   });
 
-  const WithdrawalsErrorsTotal = data;
+  const WithdrawalsErrorsTotal = error ? undefined : data;
   const isWithdrawalsErrorsTotalFetching = isFetching;
   const WithdrawalsErrorsTotalError: any = error;
   const refetchWithdrawalsErrorsTotal = refetch;

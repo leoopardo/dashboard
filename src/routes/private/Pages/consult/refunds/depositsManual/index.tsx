@@ -32,7 +32,7 @@ import {
   refundManualDepositsQuery,
 } from "@src/services/types/consult/refunds/refundmanualDeposits.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Col, Row, Select, Space, Tooltip } from "antd";
+import { Alert, Button, Col, Row, Select, Space, Tooltip } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -45,6 +45,7 @@ import { FiltersModal } from "../../../../../../components/FiltersModal";
 import { FilterChips } from "../../../../../../components/FiltersModal/filterChips";
 import { ViewModal } from "../components/ViewModal";
 import { TotalizersCards } from "./components/TotalizersCards";
+import { ErrorList } from "@src/utils/errors";
 
 const INITIAL_QUERY: refundManualDepositsQuery = {
   page: 1,
@@ -72,6 +73,7 @@ export const RefundDepositsManual = () => {
     isRefundDepositManualTotalFetching,
     refetchRefundDepositManualTotal,
     refundDepositManualTotal,
+    refundDepositManualTotalError,
   } = useGetTotalRefundDepositManual(query);
 
   const {
@@ -174,6 +176,41 @@ export const RefundDepositsManual = () => {
         query={query}
       />
 
+      {permissions.report.deposit.generated_deposit
+        .report_deposit_generated_deposit_list_totals &&
+        !isRefundDepositManualTotalFetching &&
+        refundDepositManualTotalError && (
+          <Col span={24}>
+            {refundDepositManualTotalError?.response?.data?.status == 500 ? (
+              <Alert
+                message={`${t("table.error")}:`}
+                description={t(`error.500`)}
+                type="error"
+                closable
+                onClose={() => {
+                  refetchRefundDepositManualTotal();
+                }}
+              />
+            ) : (
+              <Alert
+                message={`${t("table.error")}:`}
+                description={t(
+                  `error.${
+                    (ErrorList as any)[
+                      refundDepositManualTotalError?.response?.data?.message
+                    ]
+                  }`
+                )}
+                type="error"
+                closable
+                onClose={() => {
+                  refetchRefundDepositManualTotal();
+                }}
+              />
+            )}
+          </Col>
+        )}
+
       <Row
         align="middle"
         justify="start"
@@ -236,7 +273,7 @@ export const RefundDepositsManual = () => {
                   ) {
                     delete query?.start_date;
                     delete query?.end_date;
-                  } else {
+                  } else if (!query.start_date && !query.end_date) {
                     setQuery((state) => ({
                       ...state,
                       start_date: moment(new Date())
@@ -286,7 +323,7 @@ export const RefundDepositsManual = () => {
                 if (["rtrid", "endToEndId", "payer_document"].includes(value)) {
                   delete query?.start_date;
                   delete query?.end_date;
-                } else {
+                } else if (!query.start_date && !query.end_date) {
                   setQuery((state) => ({
                     ...state,
                     start_date: moment(new Date())
