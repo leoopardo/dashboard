@@ -112,6 +112,12 @@ export const MerchantUser = () => {
     updateIsSuccess && setIsValidateTokenOpen(false);
   }, [updateIsSuccess]);
 
+  useEffect(() => {
+    if (!isViewModalOpen) {
+      setCurrentItem(null);
+    }
+  }, [isViewModalOpen]);
+
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid
