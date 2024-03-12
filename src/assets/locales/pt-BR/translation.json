@@ -1077,7 +1077,9 @@
     "phone_must_be_a_valid_phone_number": "Numero de telefone inválido.",
     "forbidden_resource": "Este usuário não tem permissão para executar essa função. Entre em contato com o suporte.",
     "from_value_must_be_more_than_to_value": "O valor de origem deve ser maior que o valor a ser transferido.",
-    "is_possible_to_create_report_from_max_30_days": "É possível criar relatórios de no máximo 30 dias."
+    "is_possible_to_create_report_from_max_30_days": "É possível criar relatórios de no máximo 30 dias.",
+    "document_already_on_blacklist": "Documento já está na blacklist.",
+    "invalidCPFOrCNPJ": "Insira um CPF ou CNPJ válido."
   },
   "logs": {
     "login": "Login",
