@@ -196,6 +196,7 @@ export const TabWithdrawWebhook = ({
   }, [currentPartner]);
 
   return (
+   !isCustomWebhookWithdrawFetching && (
     <Row>
       {openAlert && (
         <Alert
@@ -336,5 +337,5 @@ export const TabWithdrawWebhook = ({
         success={CreateCustomWithdrawWebhookIsSuccess}
       />
     </Row>
-  );
+  ));
 };
