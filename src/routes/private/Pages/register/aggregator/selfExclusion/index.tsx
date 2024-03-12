@@ -67,7 +67,7 @@ export const AggregatorSelfExclusion = () => {
       .utc()
       .format("YYYY-MM-DDTHH:mm:ss.SSS"),
   };
-  const [body, setBody] = useState<CreateSelfExclusion>(initialBody);
+  const [body, setBody] = useState<CreateSelfExclusion>({ ...initialBody });
   const [currentItem, setCurrentItem] = useState<SelfExclusionItem | null>(
     null
   );
@@ -100,9 +100,10 @@ export const AggregatorSelfExclusion = () => {
   }, [query]);
 
   useEffect(() => {
-    setBody(initialBody);
+    if (!isCreateSelfExclusionOpen) {
+      setBody(initialBody);
+    }
   }, [isCreateSelfExclusionOpen]);
-
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid
@@ -212,7 +213,7 @@ export const AggregatorSelfExclusion = () => {
             ]}
             refetch={refetchSelfExclusionData}
             loading={isSelfExclusionDataFetching}
-            label={["cpf", "merchant_name"]}
+            label={["document", "start_date", "end_date", "status"]}
             actions={[
               {
                 icon: <DeleteOutlined style={{ fontSize: 22 }} />,

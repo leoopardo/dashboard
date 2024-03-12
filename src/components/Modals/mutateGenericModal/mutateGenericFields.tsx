@@ -39,6 +39,7 @@ import { useTranslation } from "react-i18next";
 import ReactInputMask from "react-input-mask";
 import { MerchantSelect } from "../../Selects/merchantSelect";
 import { PartnerSelect } from "../../Selects/partnerSelect";
+import { getUtcOffset } from "@src/utils/getUtc";
 const { RangePicker } = DatePicker;
 
 interface mutateProps {
@@ -229,47 +230,40 @@ export const MutateModalFields = ({
                     >
                       <ConfigProvider locale={locale}>
                         <RangePicker
-                          data-test-id="date-picker"
-                          size="large"
-                          panelRender={panelRender}
+                          size="small"
                           format={
                             navigator.language === "pt-BR"
                               ? "DD/MM/YYYY HH:mm"
                               : "YYYY/MM/DD HH:mm"
                           }
-                          popupStyle={{ marginLeft: "40px" }}
                           showTime
                           value={[
-                            body?.start_date
-                              ? dayjs(body?.start_date).subtract(3, "hours")
-                              : null,
-                            body?.end_date
-                              ? dayjs(body?.end_date).subtract(3, "hours")
-                              : null,
+                            dayjs(body.start_date, "YYYY-MM-DD HH:mm:ss").add(getUtcOffset(), "hours"),
+                            dayjs(body.end_date, "YYYY-MM-DD HH:mm:ss").add(getUtcOffset(), "hours"),
                           ]}
                           clearIcon={<></>}
+                          popupStyle={{ marginLeft: "40px" }}
+                          style={{
+                            width: "100%",
+                            height: "40px",
+                          }}
                           placeholder={[
                             t("table.initial_date"),
                             t("table.final_date"),
                           ]}
-                          inputReadOnly
                           onChange={(value: any) => {
-                            const [startDate, endDate] = value;
                             setBody((state: any) => ({
                               ...state,
-                              start_date: startDate
-                                ? moment(startDate)
-                                    .utc()
-                                    .format("YYYY-MM-DDTHH:mm:00.000")
-                                : null,
-                              end_date: endDate
-                                ? endDate
-                                    .utc()
-                                    .format("YYYY-MM-DDTHH:mm:59.999")
-                                : null,
+                              start_date: moment(value[0]?.$d).utc().format(
+                                "YYYY-MM-DDTHH:mm:ss.SSS"
+                              ),
+                              end_date: moment(value[1]?.$d).utc().format(
+                                "YYYY-MM-DDTHH:mm:ss.SSS"
+                              ),
                             }));
                             formRef?.current?.validateFields();
                           }}
+                          inputReadOnly
                         />
                       </ConfigProvider>
                     </Form.Item>
@@ -488,7 +482,8 @@ export const MutateModalFields = ({
 
               case "aggregator_id":
                 if (
-                  permissions?.register?.aggregator?.aggregator?.aggregator_list &&
+                  permissions?.register?.aggregator?.aggregator
+                    ?.aggregator_list &&
                   !user?.aggregator_id
                 ) {
                   return (
