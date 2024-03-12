@@ -190,7 +190,7 @@ export const TabDepositWebhook = ({
   }, [customWebhookDeposit]);
 
   return (
-    !isCustomWebhookDepositFetching && (
+    !isCustomWebhookDepositFetching ? (
     <Row>
       {openAlert && (
         <Alert
@@ -332,5 +332,5 @@ export const TabDepositWebhook = ({
         success={isDeleteSCustomDepositWebhookuccess}
       />
     </Row>
-  ));
+  ) : <></>);
 };
