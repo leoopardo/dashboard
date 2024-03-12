@@ -17,4 +17,5 @@ export const ErrorList = {
   ["cellphone must be a valid phone number"]: "phone_must_be_a_valid_phone_number",
   ["Forbidden resource"]: "forbidden_resource",
   ["is possible to create report from max 30 days"]: "is_possible_to_create_report_from_max_30_days",
+  ["DOCUMENT ALREADY ON BLACKLIST"]: "document_already_on_blacklist",
 };
