@@ -126,8 +126,7 @@ export const SerproAssertiva = () => {
             { name: "serpro_cnpj_count", type: "text" },
           ]}
           loading={isFetching}
-          label={["assertiva_count", "serpro_count", "createdAt"]}
-          
+          label={["assertiva_count", "serpro_count", "createdAt"]}          
         />
       </Col>
       <FiltersModal
