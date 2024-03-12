@@ -364,7 +364,7 @@
     "deposit_bank": "Deposit bank",
     "withdraw_bank": "Withdraw bank",
     "cpf": "CPF",
-    "document": "CPF",
+    "document": "Document",
     "deposit_fee_type": "Deposit fee type",
     "deposit_fee_plan": "Deposit fee plan",
     "deposit_fee_percent": "Deposit fee percent",
@@ -1015,7 +1015,8 @@
     "webhook_preview": "Webhook preview",
     "assertiva_count": "Assertiva",
     "serpro_count": "Serpro",
-    "waiting_refund_to_end_user": "Waiting refund to end user"
+    "waiting_refund_to_end_user": "Waiting refund to end user",
+    "document_type": "Document type"
   },
   "actions": {
     "details": "Details",

@@ -583,10 +583,17 @@ export const CustomTable = (props: TableProps) => {
                     justifyContent: "center",
                   }}
                 >
-                  {`${text}`?.replace(
-                    /(\d{3})(\d{3})(\d{3})(\d{2})/,
-                    "$1.$2.$3-$4"
-                  ) || "-"}
+                  {+`${text}`?.replace(/\D/g, "").length === 11
+                    ? `${text}`?.replace(
+                        /(\d{3})(\d{3})(\d{3})(\d{2})/,
+                        "$1.$2.$3-$4"
+                      )
+                    : +`${text}`?.replace(/\D/g, "").length === 14
+                    ? `${text}`?.replace(
+                        /(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/,
+                        "$1.$2.$3/$4-$5"
+                      )
+                    : text ?? "-"}
                 </Typography.Text>
               ),
               sorter: column.sort
@@ -1199,24 +1206,24 @@ export const CustomTable = (props: TableProps) => {
                 : column?.name,
               dataIndex: column?.name,
               render: (text: string) =>
-              text && text.length >= 30 ? (
-                <Tooltip title={text}>
-                  <Typography
-                    style={{
-                      width: "100%",
-                      textAlign: "center",
-                      minWidth: 50,
-                    }}
-                    full-text={text}
-                  >
-                    {text
-                      ? text.length > 30
-                        ? `${`${text}`.substring(0, 30)}...`
-                        : text
-                      : "-"}
-                  </Typography>
-                </Tooltip>
-              ) : isSmallDesktop && text && text.length >= 20 ? (
+                text && text.length >= 30 ? (
+                  <Tooltip title={text}>
+                    <Typography
+                      style={{
+                        width: "100%",
+                        textAlign: "center",
+                        minWidth: 50,
+                      }}
+                      full-text={text}
+                    >
+                      {text
+                        ? text.length > 30
+                          ? `${`${text}`.substring(0, 30)}...`
+                          : text
+                        : "-"}
+                    </Typography>
+                  </Tooltip>
+                ) : isSmallDesktop && text && text.length >= 20 ? (
                   <Tooltip title={text}>
                     <Typography
                       style={{
