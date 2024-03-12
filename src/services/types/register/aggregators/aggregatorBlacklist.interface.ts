@@ -1,7 +1,7 @@
 export interface AggregatorBlacklistQuery {
   limit: number;
   page: number;
-  cpf?: string;
+  document?: string;
   reason?: string;
   start_date?: string;
   end_date?: string;
@@ -11,7 +11,7 @@ export interface AggregatorBlacklistQuery {
 }
 
 export interface AggregatorBlacklistItem {
-  cpf: string;
+  document: string;
   merchant: string;
   reason: string;
   description: string;

@@ -192,7 +192,7 @@ export const MerchantBlacklistReasons = () => {
       <ViewModal
         item={currentItem}
         loading={isMerchantBlacklistDataFetching}
-        modalName={`CPF: ${currentItem?.cpf}`}
+        modalName={`${t("table.document")}: ${currentItem?.document}`}
         open={isViewModalOpen}
         setOpen={setIsViewModalOpen}
       />
