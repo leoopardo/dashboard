@@ -405,7 +405,7 @@
     "deposit_bank": "Banco depósito",
     "withdraw_bank": "Banco saque",
     "cpf": "CPF",
-    "document": "CPF",
+    "document": "Documento",
     "deposit_fee_type": "Tipo de taxa de depósito",
     "deposit_fee_plan": "Plano de taxa de depósito",
     "deposit_fee_percent": "Percentual de taxa de depósito",
@@ -1023,7 +1023,8 @@
     "webhook_preview": "Pré-visualização do webhook",
     "assertiva_count": "Assertiva",
     "serpro_count": "Serpro",
-    "waiting_refund_to_end_user": "Aguardando devolução para usuário final"
+    "waiting_refund_to_end_user": "Aguardando devolução para usuário final",
+    "document_type": "Tipo de documento"
   },
   "actions": {
     "details": "Detalhes",

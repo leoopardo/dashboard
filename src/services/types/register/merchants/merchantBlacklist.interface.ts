@@ -2,7 +2,7 @@ export interface MerchantBlacklistQuery {
   start_date?: string;
   end_date?: string;
   merchant_id?: number;
-  cpf?: string;
+  document?: string;
   reason?: string;
   limit?: number;
   page?: number;
@@ -12,7 +12,7 @@ export interface MerchantBlacklistQuery {
 
 export interface MerchantBlacklistItem {
   _id?: string;
-  cpf?: string;
+  document?: string;
   create_user_id?: number;
   create_user_name?: string;
   createdAt?: string;
