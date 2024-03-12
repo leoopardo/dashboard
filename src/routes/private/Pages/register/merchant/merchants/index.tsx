@@ -290,7 +290,7 @@ export const MerchantView = () => {
             ref={searchref}
             placeholder={t("table.search") || ""}
             onSearch={(value) =>
-              setQuery((state) => ({ ...state, name: value }))
+              setQuery((state) => ({ ...state, search: value }))
             }
           />
         </Grid>

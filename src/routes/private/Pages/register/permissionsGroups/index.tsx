@@ -135,7 +135,7 @@ export const PermissionsGroups = () => {
       <Col span={24}>
         <Row style={{ width: "100%" }} gutter={[8, 8]}>
           <Col xs={{ span: 24 }} md={{ span: 10 }}>
-            <Search query={query} setQuery={setQuery} searchOption="name" />
+            <Search query={query} setQuery={setQuery} searchOption="search"  />
           </Col>
           <Col xs={{ span: 24 }} md={{ span: 4 }}>
             <Button
