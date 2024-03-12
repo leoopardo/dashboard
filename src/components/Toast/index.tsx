@@ -21,11 +21,13 @@ export const Toast = ({
   success,
 }: ToastInterface) => {
   const { t } = useTranslation();
+  console.log((ErrorList as any)[error?.response?.data?.message]);
+
   useEffect(() => {
     if (error) {
       toast.error(
         (ErrorList as any)[error?.response?.data?.message] &&
-          (ErrorList as any)[error?.response?.data?.message]?.length >= 1
+          Array.isArray((ErrorList as any)[error?.response?.data?.message])
           ? t(`error.${(ErrorList as any)[error?.response?.data?.message[0]]}`)
           : errorMessage ?? (ErrorList as any)[error?.response?.data?.message]
           ? t(`error.${(ErrorList as any)[error?.response?.data?.message]}`)

@@ -105,6 +105,12 @@ export const AggregatorUsers = () => {
     refetchUsersData();
   }, [query]);
 
+  useEffect(() => {
+    if (!isViewModalOpen) {
+      setCurrentItem(null);
+    }
+  }, [isViewModalOpen]);
+
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid
