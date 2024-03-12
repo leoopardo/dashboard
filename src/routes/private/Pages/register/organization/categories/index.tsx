@@ -161,7 +161,7 @@ export const OrganizationCategories = () => {
 
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
         <Grid item xs={12} md={5} lg={5} ref={ref2}>
-          <Search query={query} setQuery={setQuery} searchOption="name" />
+          <Search query={query} setQuery={setQuery} searchOption="name"  />
         </Grid>
         <Grid item xs={12} md={2} lg={2}>
           <Button
