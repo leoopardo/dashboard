@@ -9,18 +9,8 @@ import { useCreatePartnerUser } from "@src/services/register/partner/users/creat
 import { useUpdatePartnerUser } from "@src/services/register/partner/users/updateUser";
 import { OrganizationUserItem } from "@src/services/types/register/organization/organizationUsers.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import {
-  Form,
-  Input,
-  Switch,
-  Typography
-} from "antd";
-import {
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useState
-} from "react";
+import { Form, Input, Switch, Typography } from "antd";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 interface NewuserModalprops {
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -55,7 +45,7 @@ export const NewUserModalFields = ({
   setIsValidateTokenOpen,
   action,
   formRef,
-  submitRef
+  submitRef,
 }: NewuserModalprops) => {
   const user = queryClient.getQueryData("validate") as ValidateInterface;
   const { t } = useTranslation();
@@ -304,29 +294,30 @@ export const NewUserModalFields = ({
           />
         </Form.Item>
 
-        <Form.Item
-          data-test-id="status"
-          label={t("table.status")}
-          name="status"
-          style={{ margin: 10 }}
-        >
-          <div style={{ display: "flex", flexDirection: "row" }}>
-            <Typography style={{ marginRight: 8 }}>
-              {t("table.inactive")}
-            </Typography>
-            <Switch
-              data-test-id="status-switch"
-              disabled={action === "create"}
-              checked={body?.status}
-              onChange={(checked) =>
-                setBody((state) => ({ ...state, status: checked }))
-              }
-            />{" "}
-            <Typography style={{ marginLeft: 8 }}>
-              {t("table.active")}
-            </Typography>
-          </div>
-        </Form.Item>
+        {action === "update" && (
+          <Form.Item
+            data-test-id="status"
+            label={t("table.status")}
+            name="status"
+            style={{ margin: 10 }}
+          >
+            <div style={{ display: "flex", flexDirection: "row" }}>
+              <Typography style={{ marginRight: 8 }}>
+                {t("table.inactive")}
+              </Typography>
+              <Switch
+                data-test-id="status-switch"
+                checked={body?.status}
+                onChange={(checked) =>
+                  setBody((state) => ({ ...state, status: checked }))
+                }
+              />{" "}
+              <Typography style={{ marginLeft: 8 }}>
+                {t("table.active")}
+              </Typography>
+            </div>
+          </Form.Item>
+        )}
 
         <Form.Item
           data-test-id="password"

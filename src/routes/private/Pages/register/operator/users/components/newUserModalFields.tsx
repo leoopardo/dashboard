@@ -276,29 +276,31 @@ export const NewUserModalFields = ({
           />
         </Form.Item>
 
-        <Form.Item
-          data-test-id="status"
-          label={t("table.status")}
-          name="status"
-          style={{ margin: 10 }}
-        >
-          <div style={{ display: "flex", flexDirection: "row" }}>
-            <Typography style={{ marginRight: 8 }}>
-              {t("table.inactive")}
-            </Typography>
-            <Switch
-              data-test-id="status-switch"
-              disabled={action === "create"}
-              checked={body?.status}
-              onChange={(checked) =>
-                setBody((state) => ({ ...state, status: checked }))
-              }
-            />{" "}
-            <Typography style={{ marginLeft: 8 }}>
-              {t("table.active")}
-            </Typography>
-          </div>
-        </Form.Item>
+        {action === "update" && (
+          <Form.Item
+            data-test-id="status"
+            label={t("table.status")}
+            name="status"
+            style={{ margin: 10 }}
+          >
+            <div style={{ display: "flex", flexDirection: "row" }}>
+              <Typography style={{ marginRight: 8 }}>
+                {t("table.inactive")}
+              </Typography>
+              <Switch
+                data-test-id="status-switch"
+                checked={body?.status}
+                onChange={(checked) =>
+                  setBody((state) => ({ ...state, status: checked }))
+                }
+              />{" "}
+              <Typography style={{ marginLeft: 8 }}>
+                {t("table.active")}
+              </Typography>
+            </div>
+          </Form.Item>
+        )}
+
         <Form.Item
           data-test-id="password"
           label={t(`table.password`)}

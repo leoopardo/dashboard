@@ -7,18 +7,8 @@ import { CellphoneInput } from "@src/components/Inputs/CellphoneInput";
 import { Toast } from "@src/components/Toast";
 import { useValidate } from "@src/services/siginIn/validate";
 import { OrganizationUserItem } from "@src/services/types/register/organization/organizationUsers.interface";
-import {
-  Form,
-  Input,
-  Switch,
-  Typography
-} from "antd";
-import {
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useState
-} from "react";
+import { Form, Input, Switch, Typography } from "antd";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 interface NewuserModalprops {
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -55,7 +45,7 @@ export const NewUserModalFields = ({
   setIsValidateTokenOpen,
   action,
   formRef,
-  submitRef
+  submitRef,
 }: NewuserModalprops) => {
   const { t } = useTranslation();
   const { responseValidate } = useValidate();
@@ -79,7 +69,10 @@ export const NewUserModalFields = ({
   const { updateLoading } = useUpdateOrganizationUser(body);
 
   function handleChangeUserBody(event: any) {
-    setBody((state) => ({ ...state, [event.target.name]: event.target.value|| null }));
+    setBody((state) => ({
+      ...state,
+      [event.target.name]: event.target.value || null,
+    }));
   }
 
   function CreateUser() {
@@ -267,29 +260,30 @@ export const NewUserModalFields = ({
           />
         </Form.Item>
 
-        <Form.Item
-          data-test-id="status"
-          label={t("table.status")}
-          name="status"
-          style={{ margin: 10 }}
-        >
-          <div style={{ display: "flex", flexDirection: "row" }}>
-            <Typography style={{ marginRight: 8 }}>
-              {t("table.inactive")}
-            </Typography>
-            <Switch
-              data-test-id="status-switch"
-              disabled={action === "create"}
-              checked={body?.status}
-              onChange={(checked) =>
-                setBody((state) => ({ ...state, status: checked }))
-              }
-            />{" "}
-            <Typography style={{ marginLeft: 8 }}>
-              {t("table.active")}
-            </Typography>
-          </div>
-        </Form.Item>
+        {action === "update" && (
+          <Form.Item
+            data-test-id="status"
+            label={t("table.status")}
+            name="status"
+            style={{ margin: 10 }}
+          >
+            <div style={{ display: "flex", flexDirection: "row" }}>
+              <Typography style={{ marginRight: 8 }}>
+                {t("table.inactive")}
+              </Typography>
+              <Switch
+                data-test-id="status-switch"
+                checked={body?.status}
+                onChange={(checked) =>
+                  setBody((state) => ({ ...state, status: checked }))
+                }
+              />{" "}
+              <Typography style={{ marginLeft: 8 }}>
+                {t("table.active")}
+              </Typography>
+            </div>
+          </Form.Item>
+        )}
 
         <Form.Item
           data-test-id="password"
