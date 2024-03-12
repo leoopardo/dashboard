@@ -14,18 +14,14 @@ export const CustomWebhookPartners = () => {
       key: "1",
       label: t("table.deposit_webhook"),
       children: (
-        <>
           <TabDepositWebhook currentPartner={currentPartner} />
-        </>
       ),
     },
     {
       key: "2",
       label: t("table.withdraw_webhook"),
       children: (
-        <>
           <TabWithdrawWebhook currentPartner={currentPartner} />
-        </>
       ),
     },
   ];
