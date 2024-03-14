@@ -537,8 +537,7 @@ export const PrivateRoutes = () => {
               element={
                 <Permission
                   permission={
-                    responseValidate?.permissions?.report?.person?.check_cpf
-                      ?.menu
+                    responseValidate?.permissions?.report?.person?.report_person_check_cpf_list
                   }
                 >
                   <CheckDocument />
@@ -577,8 +576,7 @@ export const PrivateRoutes = () => {
               element={
                 <Permission
                   permission={
-                    responseValidate?.permissions?.report?.person?.check_serpro
-                      ?.report_check_document_serpro
+                    responseValidate?.permissions?.report?.person?.report_check_document_total
                   }
                 >
                   <SerproAssertiva />
