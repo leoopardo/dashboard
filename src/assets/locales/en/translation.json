@@ -1014,7 +1014,8 @@
     "withdraw_webhook": "Withdraw webhook",
     "webhook_preview": "Webhook preview",
     "assertiva_count": "Assertiva",
-    "serpro_count": "Serpro",
+    "serpro_count": "Serpro CPF",
+    "serpro_cnpj_count": "Serpro CNPJ",
     "waiting_refund_to_end_user": "Waiting refund to end user",
     "document_type": "Document type"
   },
