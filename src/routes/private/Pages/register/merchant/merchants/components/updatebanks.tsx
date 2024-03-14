@@ -106,6 +106,7 @@ export const UpdateBanks = ({
         title={`${t("buttons.update")} ${t("table.bank")}`}
         footer={
           <Button
+            data-test-id="submit-button"
             loading={UpdateIsLoading}
             type="primary"
             style={{ width: "100%" }}
