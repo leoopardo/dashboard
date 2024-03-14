@@ -248,23 +248,6 @@ export const UpdateMerchant = () => {
           onFinish={() => UpdateMutate()}
         >
           <Row gutter={[8, 8]} style={{ width: "100%" }}>
-            <Col xs={{ span: 24 }} md={{ span: 24 }}>
-              <Form.Item
-                label={t("table.status")}
-                name="status"
-                valuePropName="checked"
-              >
-                <Switch
-                  checked={merchantBody?.status}
-                  onChange={(checked) => {
-                    setMerchantBody((state) => ({
-                      ...state,
-                      status: checked,
-                    }));
-                  }}
-                />
-              </Form.Item>
-            </Col>
             <Col xs={{ span: 24 }} md={{ span: 4 }}>
               <Form.Item
                 label={t("table.name")}
@@ -440,7 +423,23 @@ export const UpdateMerchant = () => {
                 />
               </Form.Item>
             </Col>
-          </Row>
+          </Row> <Col xs={{ span: 24 }} md={{ span: 4 }}>
+              <Form.Item
+                label={t("table.status")}
+                name="status"
+                valuePropName="checked"
+              >
+                <Switch
+                  checked={merchantBody?.status}
+                  onChange={(checked) => {
+                    setMerchantBody((state) => ({
+                      ...state,
+                      status: checked,
+                    }));
+                  }}
+                />
+              </Form.Item>
+            </Col>
 
           <Row
             style={{

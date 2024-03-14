@@ -422,7 +422,7 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
                 />
               </Form.Item>
             </Col>
-            <Col xs={{ span: 8 }} md={{ span: 8 }}>
+            <Col xs={{ span: 8 }} md={{ span: 3 }}>
               <Form.Item
                 label={t("table.under_age_verify")}
                 name="under_age_verify"
@@ -443,7 +443,7 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
                 />
               </Form.Item>
             </Col>
-            <Col xs={{ span: 8 }} md={{ span: 8 }}>
+            {/* <Col xs={{ span: 8 }} md={{ span: 8 }}>
               <Form.Item label={t("table.status")} name="status">
                 <Switch
                   data-test-id="status"
@@ -460,9 +460,9 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
                   }}
                 />
               </Form.Item>
-            </Col>
+            </Col> */}
 
-            <Col xs={{ span: 8 }} md={{ span: 8 }}>
+            <Col xs={{ span: 8 }} md={{ span: 4 }}>
               <Form.Item
                 label={t("input.allows_generate_qrcode")}
                 name="accept_cnpj_cash_in"
