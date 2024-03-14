@@ -54,15 +54,15 @@ import {
   Switch,
   Tabs,
   TabsProps,
-  Typography,
+  Typography,Upload
 } from "antd";
-import Dragger from "antd/es/upload/Dragger";
 import { FormInstance } from "antd/lib/form/Form";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import ReactInputMask from "react-input-mask";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useGetMerchantById } from "@src/services/register/merchant/merchant/getMerchant";
+import { motion } from "framer-motion";
 
 export const UpdateMerchant = () => {
   const { permissions } = queryClient.getQueryData(
@@ -656,7 +656,7 @@ export const UpdateMerchant = () => {
       ) : (
         <Row gutter={[8, 8]}>
           <Col span={24}>
-            <Dragger
+            <Upload
               style={{ maxHeight: "150px" }}
               listType="picture"
               disabled={
@@ -673,7 +673,6 @@ export const UpdateMerchant = () => {
                   url: file.file_url,
                 };
               })}
-              height={1000}
               beforeUpload={(file) => {
                 setFileBody({
                   base64_file: "",
@@ -695,16 +694,30 @@ export const UpdateMerchant = () => {
                 return false;
               }}
             >
-              <Typography className="ant-upload-drag-icon">
-                <InboxOutlined />
-              </Typography>
-              <Typography className="ant-upload-text">
-                {t("messages.upload_label")}
-              </Typography>
-              <Typography className="ant-upload-hint">
-                {t("messages.upload_description")}
-              </Typography>
-            </Dragger>
+              <motion.div
+                style={{
+                  width: "calc(100vw - 28%)",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  border: "2px dashed #acacac53",
+                  padding: 24,
+                  cursor: "pointer",
+                  transition: "all 0.3s ease",
+                  borderRadius: 10,
+                }}
+                whileHover={{ backgroundColor: "#c5c5c522" }}
+                transition={{ duration: 0.5 }}
+              >
+                <Typography>
+                  <InboxOutlined style={{ fontSize: 32 }} />
+                </Typography>
+                <Typography.Title level={3}>
+                  {t("messages.upload_label")}
+                </Typography.Title>
+                <Typography>{t("messages.upload_description")}</Typography>
+              </motion.div>
+            </Upload>
           </Col>
 
           {!MerchantAttachmentsData?.total && !fileBody?.base64_file && (

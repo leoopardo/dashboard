@@ -1,7 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { InboxOutlined } from "@ant-design/icons";
+import { EyeFilled, InboxOutlined } from "@ant-design/icons";
 import { Grid } from "@mui/material";
+import { ColumnInterface, CustomTable } from "@src/components/CustomTable";
+import { FiltersModal } from "@src/components/FiltersModal";
+import { FilterChips } from "@src/components/FiltersModal/filterChips";
 import { Toast } from "@src/components/Toast";
 import { useDeleteDeleteFile } from "@src/services/register/persons/persons/files/deleteFile";
 import { useGetFiles } from "@src/services/register/persons/persons/files/getFiles";
@@ -11,6 +14,7 @@ import {
 } from "@src/services/register/persons/persons/files/uploadFile";
 import { useGetBlacklistReasons } from "@src/services/register/persons/persons/getPersonBlacklistReasons";
 import { useGetPersons } from "@src/services/register/persons/persons/getPersons";
+import { useGetPersonHistory, useGetPersonHistoryDetails } from "@src/services/register/persons/persons/getPersonsHistory";
 import { useUpdatePerson } from "@src/services/register/persons/persons/updatePerson";
 import { useGetCities } from "@src/services/states_cities/getCities";
 import { useGetStates } from "@src/services/states_cities/getStates";
@@ -18,6 +22,7 @@ import {
   PersonsItem,
   PersonsQuery,
 } from "@src/services/types/register/persons/persons.interface";
+import { setFirstChildDivId } from "@src/utils/functions";
 import {
   AutoComplete,
   Button,
@@ -31,23 +36,18 @@ import {
   Spin,
   Tabs,
   TabsProps,
+  Typography,
+  Upload,
 } from "antd";
-import { EyeFilled } from "@ant-design/icons";
-import { CustomTable, ColumnInterface } from "@src/components/CustomTable";
-import { ViewModal } from "./components/ViewModal";
-import Dragger from "antd/es/upload/Dragger";
 import dayjs from "dayjs";
+import { motion } from "framer-motion";
 import moment from "moment";
 import { useEffect, useRef, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { useGetPersonHistory } from "@src/services/register/persons/persons/getPersonsHistory";
-import ReactInputMask from "react-input-mask";
-import { useGetPersonHistoryDetails } from "@src/services/register/persons/persons/getPersonsHistory";
-import { useLocation, useParams } from "react-router-dom";
-import { FilterChips } from "@src/components/FiltersModal/filterChips";
-import { FiltersModal } from "@src/components/FiltersModal";
-import { setFirstChildDivId } from "@src/utils/functions";
 import { CurrencyInput } from "react-currency-mask";
+import { useTranslation } from "react-i18next";
+import ReactInputMask from "react-input-mask";
+import { useLocation, useParams } from "react-router-dom";
+import { ViewModal } from "./components/ViewModal";
 
 const INITIAL_QUERY: PersonsQuery = {
   limit: 25,
@@ -177,9 +177,11 @@ export const PersonUpdate = () => {
   useEffect(() => {
     setBody({
       ...PersonsData?.items[0],
-      birth_date:PersonsData?.items[0].birth_date ? moment(new Date(`${PersonsData?.items[0].birth_date}`))
-        .add(1, "day")
-        .toISOString() : undefined,
+      birth_date: PersonsData?.items[0].birth_date
+        ? moment(new Date(`${PersonsData?.items[0].birth_date}`))
+            .add(1, "day")
+            .toISOString()
+        : undefined,
     });
   }, [PersonsData]);
 
@@ -839,9 +841,9 @@ export const PersonUpdate = () => {
           <Spin size="large" />
         </div>
       ) : (
-        <Grid container spacing={1}>
+        <Grid container spacing={1} >
           <Grid xs={12} item>
-            <Dragger
+            <Upload
               listType="picture"
               multiple={false}
               onRemove={(file) => {
@@ -871,14 +873,30 @@ export const PersonUpdate = () => {
                 return false;
               }}
             >
-              <p className="ant-upload-drag-icon">
-                <InboxOutlined />
-              </p>
-              <p className="ant-upload-text">{t("messages.upload_label")}</p>
-              <p className="ant-upload-hint">
-                {t("messages.upload_description")}
-              </p>
-            </Dragger>
+              <motion.div
+                style={{
+                  width: "calc(100vw - 28%)",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  border: "2px dashed #acacac53",
+                  padding: 24,
+                  cursor: "pointer",
+                  transition: "all 0.3s ease",
+                  borderRadius: 10,
+                }}
+                whileHover={{ backgroundColor: "#c5c5c522" }}
+                transition={{ duration: 0.5 }}
+              >
+                <Typography>
+                  <InboxOutlined style={{ fontSize: 32 }} />
+                </Typography>
+                <Typography.Title level={3}>
+                  {t("messages.upload_label")}
+                </Typography.Title>
+                <Typography>{t("messages.upload_description")}</Typography>
+              </motion.div>
+            </Upload>
           </Grid>
 
           {!Files?.total && !fileBody?.base64_file && (
@@ -965,26 +983,26 @@ export const PersonUpdate = () => {
             />
           )}
 
-            <FiltersModal
-              open={isFiltersOpen}
-              setOpen={setIsFiltersOpen}
-              query={query}
-              setQuery={setQuery}
-              filters={["initial_date", "final_date", "step"]}
-              refetch={refetchHistoryPersonsData}
-              selectOptions={{
-                step: [
-                  "UPDATE_CPF",
-                  "CREATE_CPF",
-                  "UPDATE_FILE",
-                  "CREATE_FILE",
-                  "DELETE_FILE",
-                ],
-              }}
-              startDateKeyName="initial_date"
-              endDateKeyName="final_date"
-              initialQuery={INITIAL_QUERY}
-            />
+          <FiltersModal
+            open={isFiltersOpen}
+            setOpen={setIsFiltersOpen}
+            query={query}
+            setQuery={setQuery}
+            filters={["initial_date", "final_date", "step"]}
+            refetch={refetchHistoryPersonsData}
+            selectOptions={{
+              step: [
+                "UPDATE_CPF",
+                "CREATE_CPF",
+                "UPDATE_FILE",
+                "CREATE_FILE",
+                "DELETE_FILE",
+              ],
+            }}
+            startDateKeyName="initial_date"
+            endDateKeyName="final_date"
+            initialQuery={INITIAL_QUERY}
+          />
         </Grid>
       ),
     },
