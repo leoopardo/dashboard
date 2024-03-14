@@ -2627,7 +2627,7 @@ export const SidebarNavigation = () => {
               false,
               undefined,
               {
-                display: permissions?.report?.person?.check_cpf?.menu
+                display: permissions?.report?.person?.report_person_check_cpf_list
                   ? undefined
                   : "none",
               },
@@ -2648,7 +2648,7 @@ export const SidebarNavigation = () => {
               false,
               undefined,
               {
-                display: permissions?.report?.person?.check_cpf?.menu
+                display: permissions?.report?.person?.report_check_document_by_merchant_list
                   ? undefined
                   : "none",
               },
@@ -2674,7 +2674,7 @@ export const SidebarNavigation = () => {
                   false,
                   undefined,
                   {
-                    display: permissions?.report?.person?.check_cpf?.menu
+                    display: permissions?.report?.person?.menu
                       ? undefined
                       : "none",
                   },
@@ -2699,8 +2699,7 @@ export const SidebarNavigation = () => {
                   false,
                   undefined,
                   {
-                    display: permissions?.report?.person?.check_cpf
-                      ?.report_person_check_cpf_list
+                    display: permissions?.report?.person?.report_check_document_by_merchant_list
                       ? undefined
                       : "none",
                   },
@@ -2721,7 +2720,7 @@ export const SidebarNavigation = () => {
               undefined,
               undefined,
               {
-                display: permissions?.report?.person?.check_cpf?.menu
+                display: permissions?.report?.person?.report_check_document_by_merchant_export_csv
                   ? undefined
                   : "none",
               }
