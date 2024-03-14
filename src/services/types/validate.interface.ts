@@ -442,13 +442,10 @@ export interface ValidateInterface {
       };
       person: {
         menu: boolean;
-        check_cpf: {
-          menu: boolean;
-          report_person_check_cpf_list: boolean;
-        };
-        check_serpro: {
-          report_check_document_serpro: boolean;
-        };
+        report_check_document_by_merchant_export_csv: boolean;
+        report_check_document_by_merchant_list: boolean;
+        report_check_document_total: boolean;
+        report_person_check_cpf_list: boolean;
       };
     };
     support: {
