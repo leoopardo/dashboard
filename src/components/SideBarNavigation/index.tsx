@@ -2570,7 +2570,7 @@ export const SidebarNavigation = () => {
                 null,
                 false,
                 {
-                  display: permissions?.report?.person?.check_cpf?.menu
+                  display: permissions?.report?.person?.report_person_check_cpf_list
                     ? undefined
                     : "none",
                 },
@@ -2590,7 +2590,7 @@ export const SidebarNavigation = () => {
                 null,
                 false,
                 {
-                  display: permissions?.report?.person?.check_cpf?.menu
+                  display: permissions?.report?.person?.report_check_document_by_merchant_list
                     ? undefined
                     : "none",
                 },
@@ -2611,7 +2611,7 @@ export const SidebarNavigation = () => {
                 null,
                 false,
                 {
-                  display: permissions?.report?.person?.check_serpro?.report_check_document_serpro
+                  display: permissions?.report?.person?.report_check_document_total
                     ? undefined
                     : "none",
                 },
@@ -2635,7 +2635,7 @@ export const SidebarNavigation = () => {
                     null,
                     false,
                     {
-                      display: permissions?.report?.person?.check_cpf?.menu
+                      display: permissions?.report?.person?.report_check_document_by_merchant_list
                         ? undefined
                         : "none",
                     },
@@ -2659,8 +2659,7 @@ export const SidebarNavigation = () => {
                     null,
                     false,
                     {
-                      display: permissions?.report?.person?.check_cpf
-                        ?.report_person_check_cpf_list
+                      display: permissions?.report?.person?.report_check_document_by_merchant_list
                         ? undefined
                         : "none",
                     },
@@ -2680,7 +2679,7 @@ export const SidebarNavigation = () => {
                 ],
                 false,
                 {
-                  display: permissions?.report?.person?.check_cpf?.menu
+                  display: permissions?.report?.person?.report_check_document_by_merchant_export_csv
                     ? undefined
                     : "none",
                 }
