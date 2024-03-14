@@ -550,8 +550,7 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      responseValidate?.permissions?.register?.merchant
-                        ?.merchant?.menu
+                      responseValidate?.permissions?.report?.person?.report_check_document_by_merchant_list
                     }
                   >
                     <HistoricCpfByMerchant />
@@ -563,7 +562,7 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      responseValidate?.permissions?.report?.person?.menu
+                      responseValidate?.permissions?.report?.person?.report_person_check_cpf_list
                     }
                   >
                     <HistoricCpfByMerchantDetails />
@@ -590,7 +589,7 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      responseValidate?.permissions?.report?.person?.menu
+                      responseValidate?.permissions?.report?.person?.report_check_document_by_merchant_export_csv
                     }
                   >
                     <HistoricCpfByMerchantReports />
@@ -602,7 +601,7 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      responseValidate?.permissions?.report?.person?.menu
+                      responseValidate?.permissions?.report?.person?.report_check_document_by_merchant_export_csv
                     }
                   >
                     <HistoricCpfByMerchantDetailsReports />
