@@ -39,8 +39,14 @@ export const Login = () => {
   });
   const { theme } = useTheme();
 
-  const { Login, isValidateFetching, validateError, LoginError, isLoading } =
-    useToken(user, rememerMe);
+  const {
+    Login,
+    isValidateFetching,
+    validateError,
+    LoginError,
+    isLoading,
+    reset,
+  } = useToken(user, rememerMe);
 
   async function handleLogin() {
     Login();
@@ -174,12 +180,13 @@ export const Login = () => {
                   status={validateError && LoginError ? "error" : undefined}
                   size="large"
                   value={user.username}
-                  onChange={(event) =>
+                  onChange={(event) => {
                     setUser((state) => ({
                       ...state,
                       username: event.target.value,
-                    }))
-                  }
+                    }));
+                    reset();
+                  }}
                   placeholder={`${t("login.user")}123`}
                   style={{ height: "50px" }}
                   prefix={<UserOutlined data-test-id="icon-user" />}
@@ -204,12 +211,13 @@ export const Login = () => {
                   data-test-id="input-password"
                   status={validateError && LoginError ? "error" : undefined}
                   value={user.password}
-                  onChange={(event) =>
+                  onChange={(event) => {
                     setUser((state) => ({
                       ...state,
                       password: event.target.value,
-                    }))
-                  }
+                    }));
+                    reset();
+                  }}
                   size="large"
                   placeholder="*********"
                   style={{ height: "50px" }}
@@ -224,11 +232,33 @@ export const Login = () => {
                 />
               </Form.Item>
             </Grid>
-            {validateError && LoginError && (
+            {validateError &&
+              LoginError &&
+              ![
+                "MERCHANT DISABLED",
+                "AGGREGATOR DISABLED",
+                "OPERATOR DISABLED",
+                "PARTNER DISABLED",
+              ].includes(LoginError?.response?.data?.message) && (
+                <Grid item xs={8}>
+                  <Alert
+                    data-test-id="alert-error"
+                    message={t("error.password_or_username")}
+                    type="error"
+                    closable
+                  />
+                </Grid>
+              )}
+            {[
+              "MERCHANT DISABLED",
+              "AGGREGATOR DISABLED",
+              "OPERATOR DISABLED",
+              "PARTNER DISABLED",
+            ].includes(LoginError?.response?.data?.message) && (
               <Grid item xs={8}>
                 <Alert
                   data-test-id="alert-error"
-                  message={t("error.password_or_username")}
+                  message={t("error.disabled_entity")}
                   type="error"
                   closable
                 />
