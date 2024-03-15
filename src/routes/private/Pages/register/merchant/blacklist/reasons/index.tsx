@@ -91,7 +91,7 @@ export const MerchantBlacklistReasons = () => {
           </Button>
         </Grid>
         <Grid item xs={12} md={4} lg={6}>
-          <FilterChips
+          <FilterChips initial_query={INITIAL_QUERY}
             startDateKeyName="initial_date"
             endDateKeyName="final_date"
             query={query}

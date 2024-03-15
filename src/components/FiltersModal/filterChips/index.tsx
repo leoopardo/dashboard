@@ -154,14 +154,14 @@ export const FilterChips = ({
                         if (haveInitialDate) {
                           q[key] =
                             initial_query[startDateKeyName] ??
-                            moment(new Date())
+                            moment(initial_query[startDateKeyName])
                               .startOf("day")
                               .utc()
                               .format("YYYY-MM-DDTHH:mm:ss.SSS");
 
                           q[endDateKeyName] =
                             initial_query[endDateKeyName] ??
-                            moment(new Date())
+                            moment(initial_query[endDateKeyName])
                               .add(1, "day")
                               .startOf("day")
                               .utc()

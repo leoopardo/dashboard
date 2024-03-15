@@ -60,7 +60,7 @@ export const MerchantReports = () => {
           </Button>
         </Grid>
         <Grid item xs={12} md={6} lg={8}>
-          <FilterChips
+          <FilterChips initial_query={INITIAL_QUERY}
             startDateKeyName="createdat_end"
             endDateKeyName="createdat_start"
             query={query}

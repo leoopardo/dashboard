@@ -219,7 +219,7 @@ export const OperatorDetails = () => {
               </Button>
             </Col>{" "}
             <Col xs={{ span: 24 }} md={{ span: 12 }} lg={{ span: 15 }}>
-              <FilterChips
+              <FilterChips 
                 disabled={["operator_id"]}
                 startDateKeyName="start_date"
                 endDateKeyName="end_date"

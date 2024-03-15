@@ -467,7 +467,7 @@ export const UpdateLicense = () => {
               </Button>
             </Col>{" "}
             <Col xs={{ span: 24 }} md={{ span: 12 }} lg={{ span: 15 }}>
-              <FilterChips
+              <FilterChips initial_query={INITIAL_QUERY}
                 disabled={["license_id"]}
                 startDateKeyName=""
                 endDateKeyName=""

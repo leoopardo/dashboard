@@ -59,7 +59,7 @@ export const AggregatorsBlacklistReports = () => {
           </Button>
         </Grid>
         <Grid item xs={12} md={6} lg={8}>
-          <FilterChips
+          <FilterChips initial_query={INITIAL_QUERY}
             startDateKeyName="createdat_start"
             endDateKeyName="createdat_end"
             query={query}

@@ -95,12 +95,12 @@ export const SerproAssertiva = () => {
           </Col>
           <Col xs={{ span: 24 }} md={{ span: 16 }} lg={{ span: 12 }}>
             <FilterChips
+              initial_query={INITIAL_QUERY}
               startDateKeyName="start_date"
               endDateKeyName="end_date"
               query={query}
               setQuery={setQuery}
               haveInitialDate
-              initial_query={INITIAL_QUERY}
             />
           </Col>
         </Row>
@@ -112,7 +112,6 @@ export const SerproAssertiva = () => {
           setCurrentItem={() => {
             return;
           }}
-         
           setQuery={setQuery}
           data={data}
           refetch={refetch}
@@ -126,7 +125,7 @@ export const SerproAssertiva = () => {
             { name: "serpro_cnpj_count", type: "text" },
           ]}
           loading={isFetching}
-          label={["assertiva_count", "serpro_count", "createdAt"]}          
+          label={["assertiva_count", "serpro_count", "createdAt"]}
         />
       </Col>
       <FiltersModal

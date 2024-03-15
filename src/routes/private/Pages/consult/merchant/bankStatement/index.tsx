@@ -98,7 +98,7 @@ export const MerchantBankStatement = () => {
           </Button>
         </Grid>
         <Grid item xs={12} md={6} lg={6}>
-          <FilterChips
+          <FilterChips initial_query={INITIAL_QUERY}
             startDateKeyName="start_date"
             endDateKeyName="end_date"
             query={query}

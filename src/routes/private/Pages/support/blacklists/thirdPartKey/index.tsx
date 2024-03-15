@@ -64,7 +64,7 @@ export const ThirdPartKeyBlacklist = () => {
           </Button>
         </Grid>
         <Grid item xs={12} md={8} lg={10}>
-          <FilterChips
+          <FilterChips initial_query={INITIAL_QUERY}
             startDateKeyName="createdat_start"
             endDateKeyName="createdat_end"
             query={query}
