@@ -147,7 +147,7 @@ export const Licenses = () => {
           </Button>
         </Grid>
         <Grid item xs={12} md={8} lg={10}>
-          <FilterChips
+          <FilterChips initial_query={INITIAL_QUERY}
             startDateKeyName="start_date"
             endDateKeyName="end_date"
             query={query}

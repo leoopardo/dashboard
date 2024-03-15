@@ -375,7 +375,7 @@ export const Dashboard = () => {
                 </Button>
               </Col>
               <Col xs={{ span: 24 }} md={{ span: 16 }}>
-                <FilterChips
+                <FilterChips initial_query={INITIAL_QUERY}
                   data-test-id="filter-chips-1"
                   startDateKeyName="start_date"
                   endDateKeyName="end_date"

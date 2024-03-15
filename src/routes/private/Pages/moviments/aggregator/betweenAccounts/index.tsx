@@ -140,7 +140,7 @@ export const AggregatorTransfersBetweenAccounts = () => {
           </Button>
         </Col>
         <Col xs={{ span: 24 }} md={{ span: 9 }} lg={12}>
-          <FilterChips
+          <FilterChips initial_query={INITIAL_QUERY}
             startDateKeyName="start_date"
             endDateKeyName="end_date"
             query={query}

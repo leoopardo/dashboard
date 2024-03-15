@@ -364,7 +364,7 @@
     "deposit_bank": "Deposit bank",
     "withdraw_bank": "Withdraw bank",
     "cpf": "CPF",
-    "document": "CPF",
+    "document": "Document",
     "deposit_fee_type": "Deposit fee type",
     "deposit_fee_plan": "Deposit fee plan",
     "deposit_fee_percent": "Deposit fee percent",
@@ -1014,8 +1014,10 @@
     "withdraw_webhook": "Withdraw webhook",
     "webhook_preview": "Webhook preview",
     "assertiva_count": "Assertiva",
-    "serpro_count": "Serpro",
-    "waiting_refund_to_end_user": "Waiting refund to end user"
+    "serpro_count": "Serpro CPF",
+    "serpro_cnpj_count": "Serpro CNPJ",
+    "waiting_refund_to_end_user": "Waiting refund to end user",
+    "document_type": "Document type"
   },
   "actions": {
     "details": "Details",
@@ -1065,7 +1067,9 @@
     "phone_must_be_a_valid_phone_number": "The phone number must be a valid phone number.",
     "forbidden_resource": "This user does not have permission to perform this function. Please contact support.",
     "from_value_must_be_more_than_to_value": "The initial value must be greater than the final value.",
-    "is_possible_to_create_report_from_max_30_days": "It is only possible to create a report for a maximum of 30 days."
+    "is_possible_to_create_report_from_max_30_days": "It is only possible to create a report for a maximum of 30 days.",
+    "document_already_on_blacklist": "Document already on blacklist",
+    "invalidCPFOrCNPJ": "Please enter a valid CPF or CNPJ"
   },
   "logs": {
     "login": "Login",

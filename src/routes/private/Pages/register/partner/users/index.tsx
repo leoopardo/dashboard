@@ -104,6 +104,12 @@ export const PartnerUsers = () => {
     refetchUsersData();
   }, [query]);
 
+  useEffect(() => {
+    if (!isViewModalOpen) {
+      setCurrentItem(null);
+    }
+  }, [isViewModalOpen]);
+
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid
@@ -125,7 +131,7 @@ export const PartnerUsers = () => {
           </Button>
         </Grid>
         <Grid item xs={12} md={8} lg={9}>
-          <FilterChips
+          <FilterChips initial_query={INITIAL_QUERY}
             startDateKeyName="start_date"
             endDateKeyName="end_date"
             query={query}
@@ -151,7 +157,7 @@ export const PartnerUsers = () => {
 
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
         <Grid item xs={12} md={4} lg={4} ref={ref2}>
-          <Search query={query} setQuery={setQuery} searchOption="name" />
+          <Search query={query} setQuery={setQuery} searchOption="search"  />
         </Grid>
         <Grid item xs={12} md={3} lg={2}>
           <Button

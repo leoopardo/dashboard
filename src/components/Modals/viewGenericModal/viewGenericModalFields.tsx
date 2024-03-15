@@ -113,7 +113,7 @@ export const ViewModalFields = ({
               return;
             }
 
-            if (!sortItems[key] && sortItems[key] !== 0) {
+            if (!sortItems[key] && sortItems[key] !== 0 && sortItems[key] !== false) {
               return;
             }
             if (key === "merchantConfig") {

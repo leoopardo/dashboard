@@ -109,8 +109,17 @@ export const MerchantUser = () => {
   }, [query]);
 
   useEffect(() => {
-    updateIsSuccess && setIsValidateTokenOpen(false);
+    if (updateIsSuccess) {
+      setIsValidateTokenOpen(false);
+      updateReset();
+    }
   }, [updateIsSuccess]);
+
+  useEffect(() => {
+    if (!isViewModalOpen) {
+      setCurrentItem(null);
+    }
+  }, [isViewModalOpen]);
 
   return (
     <Grid container style={{ padding: "25px" }}>
@@ -132,7 +141,7 @@ export const MerchantUser = () => {
           </Button>
         </Grid>
         <Grid item xs={12} md={8} lg={10}>
-          <FilterChips
+          <FilterChips initial_query={INITIAL_QUERY}
             startDateKeyName="start_date"
             endDateKeyName="end_date"
             query={query}
@@ -143,7 +152,7 @@ export const MerchantUser = () => {
 
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
         <Grid item xs={12} md={4} lg={4}>
-          <Search query={query} setQuery={setQuery} searchOption="name" />
+          <Search query={query} setQuery={setQuery} searchOption="search" />
         </Grid>
         <Grid item xs={12} md={3} lg={2}>
           <Button
@@ -295,12 +304,15 @@ export const MerchantUser = () => {
         />
       )}
 
-      <Toast
-        actionSuccess={t("messages.updated")}
-        actionError={t("messages.update")}
-        error={updateError}
-        success={updateIsSuccess}
-      />
+     
+        <Toast
+          actionSuccess={t("messages.updated")}
+          actionError={t("messages.update")}
+          error={updateError}
+          success={updateIsSuccess}
+          timeout={2000}
+        />
+    
 
       <UpdateUserModal
         action={requestType}

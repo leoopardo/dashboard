@@ -189,7 +189,7 @@ export const Partners = () => {
           </Button>
         </Grid>
         <Grid item xs={12} md={8} lg={10}>
-          <FilterChips
+          <FilterChips initial_query={INITIAL_QUERY}
             startDateKeyName="start_date"
             endDateKeyName="end_date"
             query={query}
@@ -199,7 +199,7 @@ export const Partners = () => {
       </Grid>
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
         <Grid item xs={12} md={4} lg={4} ref={ref2}>
-          <Search query={query} setQuery={setQuery} searchOption="name" />
+          <Search query={query} setQuery={setQuery} searchOption="search"  />
         </Grid>
         <Grid item xs={12} md={2} lg={2}>
           <Button

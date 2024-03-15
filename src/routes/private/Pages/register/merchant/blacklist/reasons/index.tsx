@@ -91,7 +91,7 @@ export const MerchantBlacklistReasons = () => {
           </Button>
         </Grid>
         <Grid item xs={12} md={4} lg={6}>
-          <FilterChips
+          <FilterChips initial_query={INITIAL_QUERY}
             startDateKeyName="initial_date"
             endDateKeyName="final_date"
             query={query}
@@ -192,7 +192,7 @@ export const MerchantBlacklistReasons = () => {
       <ViewModal
         item={currentItem}
         loading={isMerchantBlacklistDataFetching}
-        modalName={`CPF: ${currentItem?.cpf}`}
+        modalName={`${t("table.document")}: ${currentItem?.document}`}
         open={isViewModalOpen}
         setOpen={setIsViewModalOpen}
       />

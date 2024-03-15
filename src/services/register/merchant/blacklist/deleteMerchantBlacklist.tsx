@@ -3,7 +3,7 @@ import { useMutation } from "react-query";
 import { api } from "../../../../config/api";
 import { queryClient } from "../../../queryClient";
 
-export function useDeleteMechantBlacklist(  params: {cpf?: string} | null) {
+export function useDeleteMechantBlacklist(  params: {document?: string} | null) {
   const { isLoading, error, mutate, isSuccess } = useMutation<
     any | null | undefined
   >("DeleteMerchantBlacklist", async () => {

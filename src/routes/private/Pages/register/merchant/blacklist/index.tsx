@@ -54,7 +54,7 @@ export const MerchantBlacklist = () => {
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [body, setBody] = useState<MerchantBlacklistItem | null>({
-    cpf: "",
+    document: "",
     description: "",
     can_be_deleted_only_by_organization: merchant_id ? false : true,
   });
@@ -77,11 +77,11 @@ export const MerchantBlacklist = () => {
 
   const { isDeleteLoading, mutateDelete, DeleteError, isDeleteSuccess } =
     useDeleteMechantBlacklist({
-      cpf: currentItem?.cpf,
+      document: currentItem?.document,
     });
 
   const columns: ColumnInterface[] = [
-    { name: "cpf", type: "document" },
+    { name: "document", type: "document" },
     { name: "merchant_name", type: "text" },
     { name: "reason", type: "text", sort: true },
     { name: "description", type: "text" },
@@ -92,7 +92,7 @@ export const MerchantBlacklist = () => {
   useEffect(() => {
     if (!isUpdateModalOpen) {
       setBody({
-        cpf: "",
+        document: "",
         description: "",
         can_be_deleted_only_by_organization: merchant_id ? false : true,
       });
@@ -106,17 +106,17 @@ export const MerchantBlacklist = () => {
   useEffect(() => {
     if (!debounceSearch) {
       const q = { ...query };
-      delete q.cpf;
+      delete q.document;
       return setQuery(q);
     }
-    setQuery((state) => ({ ...state, cpf: debounceSearch }));
+    setQuery((state) => ({ ...state, document: debounceSearch }));
   }, [debounceSearch]);
 
   return (
     <Grid container style={{ padding: "25px" }}>
       <Grid
         container
-        style={{ marginTop: "20px", display: "flex", alignItems: "center" }}
+        style={{  display: "flex", alignItems: "center" }}
         spacing={1}
       >
         <Grid item xs={12} md={4} lg={2}>
@@ -132,7 +132,7 @@ export const MerchantBlacklist = () => {
           </Button>
         </Grid>
         <Grid item xs={12} md={8} lg={10}>
-          <FilterChips
+          <FilterChips initial_query={INITIAL_QUERY}
             startDateKeyName="initial_date"
             endDateKeyName="final_date"
             query={query}
@@ -145,8 +145,8 @@ export const MerchantBlacklist = () => {
         <Grid item xs={12} md={4} lg={4}>
           <ReactInputMask
             value={search}
-            placeholder="CPF"
-            mask="999.999.999-99"
+            placeholder={t("table.document") ?? ""}
+            mask=""
             onChange={(event) => {
               const value = event.target.value.replace(/[^\d]/g, "");
               setSearch(value);
@@ -226,7 +226,7 @@ export const MerchantBlacklist = () => {
             error={merchantBlacklistDataError}
             columns={columns}
             loading={isMerchantBlacklistDataFetching}
-            label={["cpf", "merchant_name"]}
+            label={["document", "merchant_name"]}
             refetch={refetchMerchantBlacklistData}
             actions={[
               {
@@ -266,7 +266,7 @@ export const MerchantBlacklist = () => {
           title={t("actions.delete")}
           description={`${t("messages.are_you_sure", {
             action: t("actions.delete").toLocaleLowerCase(),
-            itens: currentItem?.cpf,
+            itens: currentItem?.document,
           })}`}
           loading={isDeleteLoading}
         />
@@ -283,7 +283,7 @@ export const MerchantBlacklist = () => {
                 required: true,
               }
             : undefined,
-          { label: "cpf", required: true },
+          { label: "document", required: true },
           { label: "reason", required: true },
           { label: "description", required: true },
           !merchant_id
@@ -308,7 +308,7 @@ export const MerchantBlacklist = () => {
       <ViewModal
         item={currentItem}
         loading={isMerchantBlacklistDataFetching}
-        modalName={`CPF: ${currentItem?.cpf}`}
+        modalName={`${t("table.document")}: ${currentItem?.document}`}
         open={isViewModalOpen}
         setOpen={setIsViewModalOpen}
       />

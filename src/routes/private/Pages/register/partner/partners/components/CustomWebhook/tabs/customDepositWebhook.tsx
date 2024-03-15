@@ -22,7 +22,7 @@ import {
   message,
 } from "antd";
 import { t } from "i18next";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import ReactJson from "react-json-view";
 
 export const TabDepositWebhook = ({
@@ -180,7 +180,7 @@ export const TabDepositWebhook = ({
     }
   }, [customWebhookDeposit, depositWebhookStandard]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (customWebhookDeposit) {
       setDepositWebhookStandard(customWebhookDeposit?.default);
       formDepositRef.current?.setFieldsValue({
@@ -190,6 +190,7 @@ export const TabDepositWebhook = ({
   }, [customWebhookDeposit]);
 
   return (
+    !isCustomWebhookDepositFetching ? (
     <Row>
       {openAlert && (
         <Alert
@@ -331,5 +332,5 @@ export const TabDepositWebhook = ({
         success={isDeleteSCustomDepositWebhookuccess}
       />
     </Row>
-  );
+  ) : <></>);
 };

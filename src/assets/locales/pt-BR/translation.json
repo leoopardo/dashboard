@@ -405,7 +405,7 @@
     "deposit_bank": "Banco depósito",
     "withdraw_bank": "Banco saque",
     "cpf": "CPF",
-    "document": "CPF",
+    "document": "Documento",
     "deposit_fee_type": "Tipo de taxa de depósito",
     "deposit_fee_plan": "Plano de taxa de depósito",
     "deposit_fee_percent": "Percentual de taxa de depósito",
@@ -1022,8 +1022,10 @@
     "withdraw_webhook": "Webhook de saque",
     "webhook_preview": "Pré-visualização do webhook",
     "assertiva_count": "Assertiva",
-    "serpro_count": "Serpro",
-    "waiting_refund_to_end_user": "Aguardando devolução para usuário final"
+    "serpro_count": "Serpro CPF",
+    "serpro_cnpj_count": "Serpro CNPJ",
+    "waiting_refund_to_end_user": "Aguardando devolução para usuário final",
+    "document_type": "Tipo de documento"
   },
   "actions": {
     "details": "Detalhes",
@@ -1055,7 +1057,7 @@
     "undefined": "Recurso temporariamente fora de ar. Caso persista ao recarregar a página, entre em contato com o suporte.",
     "password_must_match_/^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9]).{8,}$/_regular_expression": "A senha deve possuir 8 dígitos, letras maiúsculas e minusculas, números e caracteres especiais (!@#$%^&*)",
     "INVALID_USER": "Usuário inválido",
-    "disabled_entity": "Usuário vinculado a uma entidade disabilitada.",
+    "disabled_entity": "Usuário vinculado a uma entidade desabilitada.",
     "category_exists": "Categoria já cadastrada.",
     "invalid_user": "Nome de usuário inválido, tente utilizar outro.",
     "items_not_found": "Nenhum item encontrado.",
@@ -1076,7 +1078,9 @@
     "phone_must_be_a_valid_phone_number": "Numero de telefone inválido.",
     "forbidden_resource": "Este usuário não tem permissão para executar essa função. Entre em contato com o suporte.",
     "from_value_must_be_more_than_to_value": "O valor de origem deve ser maior que o valor a ser transferido.",
-    "is_possible_to_create_report_from_max_30_days": "É possível criar relatórios de no máximo 30 dias."
+    "is_possible_to_create_report_from_max_30_days": "É possível criar relatórios de no máximo 30 dias.",
+    "document_already_on_blacklist": "Documento já está na blacklist.",
+    "invalidCPFOrCNPJ": "Insira um CPF ou CNPJ válido."
   },
   "logs": {
     "login": "Login",

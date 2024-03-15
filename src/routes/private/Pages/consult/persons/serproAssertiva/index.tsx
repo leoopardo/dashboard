@@ -33,7 +33,7 @@ export const SerproAssertiva = () => {
   useEffect(() => {
     refetch();
   }, [query]);
-  
+
   const { t } = useTranslation();
   return (
     <Row style={{ padding: 25 }} gutter={[8, 8]}>
@@ -95,12 +95,12 @@ export const SerproAssertiva = () => {
           </Col>
           <Col xs={{ span: 24 }} md={{ span: 16 }} lg={{ span: 12 }}>
             <FilterChips
+              initial_query={INITIAL_QUERY}
               startDateKeyName="start_date"
               endDateKeyName="end_date"
               query={query}
               setQuery={setQuery}
               haveInitialDate
-              initial_query={INITIAL_QUERY}
             />
           </Col>
         </Row>
@@ -122,26 +122,27 @@ export const SerproAssertiva = () => {
             { name: "date", type: "birth" },
             { name: "assertiva_count", type: "text" },
             { name: "serpro_count", type: "text" },
+            { name: "serpro_cnpj_count", type: "text" },
           ]}
           loading={isFetching}
           label={["assertiva_count", "serpro_count", "createdAt"]}
         />
       </Col>
-        <FiltersModal
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          filters={["start_date", "end_date"]}
-          refetch={() => {
-            return;
-          }}
-          selectOptions={{}}
-          startDateKeyName="start_date"
-          endDateKeyName="end_date"
-          initialQuery={INITIAL_QUERY}
-          haveInitialDate
-        />
+      <FiltersModal
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        filters={["start_date", "end_date"]}
+        refetch={() => {
+          return;
+        }}
+        selectOptions={{}}
+        startDateKeyName="start_date"
+        endDateKeyName="end_date"
+        initialQuery={INITIAL_QUERY}
+        haveInitialDate
+      />
     </Row>
   );
 };

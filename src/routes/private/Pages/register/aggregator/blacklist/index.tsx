@@ -50,7 +50,7 @@ export const AggregatorBlacklist = () => {
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [body, setBody] = useState<MerchantBlacklistItem | null>({
-    cpf: "",
+    document: "",
     reason: "",
     description: "",
   });
@@ -91,10 +91,10 @@ export const AggregatorBlacklist = () => {
   useEffect(() => {
     if (!debounceSearch) {
       const q = { ...query };
-      delete q.cpf;
+      delete q.document;
       return setQuery(q);
     }
-    setQuery((state) => ({ ...state, cpf: debounceSearch }));
+    setQuery((state) => ({ ...state, document: debounceSearch }));
   }, [debounceSearch]);
 
   return (
@@ -118,7 +118,7 @@ export const AggregatorBlacklist = () => {
           </Button>
         </Grid>
         <Grid item xs={12} md={7} lg={9}>
-          <FilterChips
+          <FilterChips initial_query={INITIAL_QUERY}
             startDateKeyName="start_date"
             endDateKeyName="end_date"
             query={query}
@@ -154,7 +154,7 @@ export const AggregatorBlacklist = () => {
         <Grid item xs={12} md={3} lg={3} ref={ref3}>
           <Input
             size="large"
-            placeholder={t("table.cpf") || ""}
+            placeholder={t("table.document") || ""}
             value={search}
             onChange={(event) => {
               setSearch(event.target.value);
@@ -236,7 +236,7 @@ export const AggregatorBlacklist = () => {
             error={AggregatorsBlacklistDataError}
             refetch={refetchAggregatorsBlacklistData}
             columns={[
-              { name: "cpf", type: "document", key: refDoc },
+              { name: "document", type: "document", key: refDoc },
               { name: "merchant_name", type: "text", key: refMerchant },
               { name: "reason", type: "text", sort: true, key: refReason },
               { name: "description", type: "text", key: refDescription },
@@ -250,7 +250,7 @@ export const AggregatorBlacklist = () => {
             ]}
             disableActions
             loading={isAggregatorsBlacklistDataFetching}
-            label={["cpf", "merchant_name"]}
+            label={["document", "merchant_name"]}
             actions={[{}]}
           />
         </Grid>
@@ -274,7 +274,7 @@ export const AggregatorBlacklist = () => {
         open={isUpdateModalOpen}
         setOpen={setIsUpdateModalOpen}
         fields={[
-          { label: "cpf", required: true },
+          { label: "document", required: true },
           { label: "reason", required: true },
           { label: "description", required: true },
         ]}
@@ -291,7 +291,7 @@ export const AggregatorBlacklist = () => {
       <ViewModal
         item={currentItem}
         loading={isAggregatorsBlacklistDataFetching}
-        modalName={`CPF: ${currentItem?.cpf}`}
+        modalName={`${t("table.document")}: ${currentItem?.document}`}
         open={isViewModalOpen}
         setOpen={setIsViewModalOpen}
       />

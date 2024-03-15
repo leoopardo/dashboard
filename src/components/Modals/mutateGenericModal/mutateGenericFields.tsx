@@ -39,6 +39,7 @@ import { useTranslation } from "react-i18next";
 import ReactInputMask from "react-input-mask";
 import { MerchantSelect } from "../../Selects/merchantSelect";
 import { PartnerSelect } from "../../Selects/partnerSelect";
+import { getUtcOffset } from "@src/utils/getUtc";
 const { RangePicker } = DatePicker;
 
 interface mutateProps {
@@ -199,6 +200,32 @@ export const MutateModalFields = ({
     }
   }, [success]);
 
+  const isCPFValid = (cpf: string) => {
+    // Regex para validar CPF
+    const regexCPF = /(\d{3})(\d{3})(\d{3})(\d{2})/;
+    return regexCPF.test(cpf);
+  };
+
+  const isCNPJValid = (cnpj: string) => {
+    // Regex para validar CNPJ
+    const regexCNPJ = /(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/;
+    return regexCNPJ.test(cnpj);
+  };
+
+  const validateCPFOrCNPJ = (rule: any, value: any) => {
+    const isCPF = isCPFValid(value.replace(/\D/g, ""));
+    const isCNPJ = isCNPJValid(value.replace(/\D/g, ""));
+
+    console.log(value, rule);
+    
+
+    if (!isCPF && !isCNPJ) {
+      return Promise.reject(t("error.invalidCPFOrCNPJ", { value: value }));
+    }
+
+    return Promise.resolve();
+  };
+
   return (
     <>
       <Form
@@ -229,47 +256,46 @@ export const MutateModalFields = ({
                     >
                       <ConfigProvider locale={locale}>
                         <RangePicker
-                          data-test-id="date-picker"
-                          size="large"
-                          panelRender={panelRender}
+                          size="small"
                           format={
                             navigator.language === "pt-BR"
                               ? "DD/MM/YYYY HH:mm"
                               : "YYYY/MM/DD HH:mm"
                           }
-                          popupStyle={{ marginLeft: "40px" }}
                           showTime
                           value={[
-                            body?.start_date
-                              ? dayjs(body?.start_date).subtract(3, "hours")
-                              : null,
-                            body?.end_date
-                              ? dayjs(body?.end_date).subtract(3, "hours")
-                              : null,
+                            dayjs(body.start_date, "YYYY-MM-DD HH:mm:ss").add(
+                              getUtcOffset(),
+                              "hours"
+                            ),
+                            dayjs(body.end_date, "YYYY-MM-DD HH:mm:ss").add(
+                              getUtcOffset(),
+                              "hours"
+                            ),
                           ]}
                           clearIcon={<></>}
+                          popupStyle={{ marginLeft: "40px" }}
+                          style={{
+                            width: "100%",
+                            height: "40px",
+                          }}
                           placeholder={[
                             t("table.initial_date"),
                             t("table.final_date"),
                           ]}
-                          inputReadOnly
                           onChange={(value: any) => {
-                            const [startDate, endDate] = value;
                             setBody((state: any) => ({
                               ...state,
-                              start_date: startDate
-                                ? moment(startDate)
-                                    .utc()
-                                    .format("YYYY-MM-DDTHH:mm:00.000")
-                                : null,
-                              end_date: endDate
-                                ? endDate
-                                    .utc()
-                                    .format("YYYY-MM-DDTHH:mm:59.999")
-                                : null,
+                              start_date: moment(value[0]?.$d)
+                                .utc()
+                                .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+                              end_date: moment(value[1]?.$d)
+                                .utc()
+                                .format("YYYY-MM-DDTHH:mm:ss.SSS"),
                             }));
                             formRef?.current?.validateFields();
                           }}
+                          inputReadOnly
                         />
                       </ConfigProvider>
                     </Form.Item>
@@ -488,7 +514,8 @@ export const MutateModalFields = ({
 
               case "aggregator_id":
                 if (
-                  permissions?.register?.aggregator?.aggregator?.aggregator_list &&
+                  permissions?.register?.aggregator?.aggregator
+                    ?.aggregator_list &&
                   !user?.aggregator_id
                 ) {
                   return (
@@ -937,6 +964,45 @@ export const MutateModalFields = ({
                           return () => {
                             clearTimeout(timer);
                           };
+                        }}
+                      >
+                        <Input
+                          data-test-id={`${field.label}-input`}
+                          size="large"
+                        />
+                      </ReactInputMask>
+                    </Form.Item>
+                  </Col>
+                );
+
+              case "document":
+                return (
+                  <Col span={24}>
+                    <Form.Item
+                      data-test-id={`${field.label}-form-item`}
+                      label={t(`table.${field.label}`)}
+                      name={field.label}
+                      style={{ margin: 10 }}
+                      rules={[
+                        {
+                          required: field.required,
+                          message:
+                            t("input.required", {
+                              field: t(`input.${field.label}`),
+                            }) || "",
+                        },
+                        { validator: validateCPFOrCNPJ },
+                      ]}
+                    >
+                      <ReactInputMask
+                        data-test-id={`${field.label}-input-mask`}
+                        value={body[field.label]}
+                        mask="999.999.999-99999"
+                        onChange={(event) => {
+                          setBody((state: any) => ({
+                            ...state,
+                            [field.label]: event.target.value,
+                          }));
                         }}
                       >
                         <Input

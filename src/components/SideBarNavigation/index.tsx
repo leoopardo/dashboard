@@ -71,7 +71,7 @@ export const SidebarNavigation = () => {
 
   // function handleNavigate(pathArray: string[]) {
   //   navigate(pathArray.reverse().join("/"));
-  //   handleChangeSidebar(false);
+  // setOpenKeys([])
   // }
 
   function getItem(
@@ -132,8 +132,11 @@ export const SidebarNavigation = () => {
         { fontSize: "16px" },
         <Link
           onClickCapture={() => {
-            setCollapsed(false);
-            handleChangeSidebar(false);
+            if (isMobile) {
+              setCollapsed(false);
+              handleChangeSidebar(false);
+            }
+            setOpenKeys([]);
           }}
           to={"/dashboard"}
         >
@@ -165,8 +168,11 @@ export const SidebarNavigation = () => {
 
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/register/organization/users"}
                   title={`${t("menus.users")}`}
@@ -187,8 +193,11 @@ export const SidebarNavigation = () => {
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/register/organization/categories"}
                 >
@@ -207,8 +216,11 @@ export const SidebarNavigation = () => {
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/register/organization/current_accounts"}
                 >
@@ -228,8 +240,11 @@ export const SidebarNavigation = () => {
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/register/organization/bank_maintain"}
                 >
@@ -249,8 +264,11 @@ export const SidebarNavigation = () => {
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/register/organization/general_configs"}
                 >
@@ -267,8 +285,11 @@ export const SidebarNavigation = () => {
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/register/organization/permissions_groups"}
                 >
@@ -292,8 +313,11 @@ export const SidebarNavigation = () => {
                     },
                     <Link
                       onClickCapture={() => {
-                        setCollapsed(false);
-                        handleChangeSidebar(false);
+                        if (isMobile) {
+                          setCollapsed(false);
+                          handleChangeSidebar(false);
+                        }
+                        setOpenKeys([]);
                       }}
                       to={
                         "/register/organization/organization_reports/organization_reports_users"
@@ -317,8 +341,11 @@ export const SidebarNavigation = () => {
                     },
                     <Link
                       onClickCapture={() => {
-                        setCollapsed(false);
-                        handleChangeSidebar(false);
+                        if (isMobile) {
+                          setCollapsed(false);
+                          handleChangeSidebar(false);
+                        }
+                        setOpenKeys([]);
                       }}
                       to={
                         "/register/organization/organization_reports/organization_reports_categories"
@@ -364,8 +391,11 @@ export const SidebarNavigation = () => {
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/register/aggregator/aggregators"}
                 >
@@ -384,8 +414,11 @@ export const SidebarNavigation = () => {
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/register/aggregator/aggregator_users"}
                 >
@@ -405,8 +438,11 @@ export const SidebarNavigation = () => {
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/register/aggregator/self_exclusion"}
                 >
@@ -430,8 +466,11 @@ export const SidebarNavigation = () => {
                     },
                     <Link
                       onClickCapture={() => {
-                        setCollapsed(false);
-                        handleChangeSidebar(false);
+                        if (isMobile) {
+                          setCollapsed(false);
+                          handleChangeSidebar(false);
+                        }
+                        setOpenKeys([]);
                       }}
                       to={
                         "/register/aggregator/aggregator_blacklist/aggregator_blacklist_blacklist"
@@ -466,8 +505,11 @@ export const SidebarNavigation = () => {
                     },
                     <Link
                       onClickCapture={() => {
-                        setCollapsed(false);
-                        handleChangeSidebar(false);
+                        if (isMobile) {
+                          setCollapsed(false);
+                          handleChangeSidebar(false);
+                        }
+                        setOpenKeys([]);
                       }}
                       to={
                         "/register/aggregator/aggregator_reports/aggregator_aggregators_reports"
@@ -489,8 +531,11 @@ export const SidebarNavigation = () => {
                     },
                     <Link
                       onClickCapture={() => {
-                        setCollapsed(false);
-                        handleChangeSidebar(false);
+                        if (isMobile) {
+                          setCollapsed(false);
+                          handleChangeSidebar(false);
+                        }
+                        setOpenKeys([]);
                       }}
                       to={
                         "/register/aggregator/aggregator_reports/aggregator_users_reports"
@@ -513,8 +558,11 @@ export const SidebarNavigation = () => {
                     },
                     <Link
                       onClickCapture={() => {
-                        setCollapsed(false);
-                        handleChangeSidebar(false);
+                        if (isMobile) {
+                          setCollapsed(false);
+                          handleChangeSidebar(false);
+                        }
+                        setOpenKeys([]);
                       }}
                       to={
                         "/register/aggregator/aggregator_reports/aggregator_blacklist_reports"
@@ -536,8 +584,11 @@ export const SidebarNavigation = () => {
                     },
                     <Link
                       onClickCapture={() => {
-                        setCollapsed(false);
-                        handleChangeSidebar(false);
+                        if (isMobile) {
+                          setCollapsed(false);
+                          handleChangeSidebar(false);
+                        }
+                        setOpenKeys([]);
                       }}
                       to={
                         "/register/aggregator/aggregator_reports/self_exclusion_reports"
@@ -583,8 +634,11 @@ export const SidebarNavigation = () => {
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/register/partner/partners"}
                 >
@@ -603,8 +657,11 @@ export const SidebarNavigation = () => {
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/register/partner/partner_users"}
                 >
@@ -628,8 +685,11 @@ export const SidebarNavigation = () => {
                     },
                     <Link
                       onClickCapture={() => {
-                        setCollapsed(false);
-                        handleChangeSidebar(false);
+                        if (isMobile) {
+                          setCollapsed(false);
+                          handleChangeSidebar(false);
+                        }
+                        setOpenKeys([]);
                       }}
                       to={
                         "/register/partner/partner_reports/partner_partners_reports"
@@ -651,8 +711,11 @@ export const SidebarNavigation = () => {
                     },
                     <Link
                       onClickCapture={() => {
-                        setCollapsed(false);
-                        handleChangeSidebar(false);
+                        if (isMobile) {
+                          setCollapsed(false);
+                          handleChangeSidebar(false);
+                        }
+                        setOpenKeys([]);
                       }}
                       to={
                         "/register/partner/partner_reports/partner_users_reports"
@@ -699,8 +762,11 @@ export const SidebarNavigation = () => {
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/register/operator/operators"}
                 >
@@ -719,8 +785,11 @@ export const SidebarNavigation = () => {
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/register/operator/operator_users"}
                 >
@@ -744,8 +813,11 @@ export const SidebarNavigation = () => {
                     },
                     <Link
                       onClickCapture={() => {
-                        setCollapsed(false);
-                        handleChangeSidebar(false);
+                        if (isMobile) {
+                          setCollapsed(false);
+                          handleChangeSidebar(false);
+                        }
+                        setOpenKeys([]);
                       }}
                       to={
                         "/register/operator/operator_reports/operator_operators_reports"
@@ -767,8 +839,11 @@ export const SidebarNavigation = () => {
                     },
                     <Link
                       onClickCapture={() => {
-                        setCollapsed(false);
-                        handleChangeSidebar(false);
+                        if (isMobile) {
+                          setCollapsed(false);
+                          handleChangeSidebar(false);
+                        }
+                        setOpenKeys([]);
                       }}
                       to={
                         "/register/operator/operator_reports/operator_users_reports"
@@ -815,8 +890,11 @@ export const SidebarNavigation = () => {
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/register/merchant/merchants"}
                 >
@@ -835,8 +913,11 @@ export const SidebarNavigation = () => {
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/register/merchant/merchant_users"}
                 >
@@ -856,8 +937,11 @@ export const SidebarNavigation = () => {
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/register/merchant/manual_entry_category"}
                 >
@@ -876,8 +960,11 @@ export const SidebarNavigation = () => {
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/register/merchant/fee_plans"}
                 >
@@ -897,8 +984,11 @@ export const SidebarNavigation = () => {
                   },
                   <Link
                     onClickCapture={() => {
-                      setCollapsed(false);
-                      handleChangeSidebar(false);
+                      if (isMobile) {
+                        setCollapsed(false);
+                        handleChangeSidebar(false);
+                      }
+                      setOpenKeys([]);
                     }}
                     to={
                       "/register/merchant/merchant_blacklists/merchant_blacklist"
@@ -922,8 +1012,11 @@ export const SidebarNavigation = () => {
                   },
                   <Link
                     onClickCapture={() => {
-                      setCollapsed(false);
-                      handleChangeSidebar(false);
+                      if (isMobile) {
+                        setCollapsed(false);
+                        handleChangeSidebar(false);
+                      }
+                      setOpenKeys([]);
                     }}
                     to={
                       "/register/merchant/merchant_blacklists/import_merchant_blacklist"
@@ -946,8 +1039,11 @@ export const SidebarNavigation = () => {
                   },
                   <Link
                     onClickCapture={() => {
-                      setCollapsed(false);
-                      handleChangeSidebar(false);
+                      if (isMobile) {
+                        setCollapsed(false);
+                        handleChangeSidebar(false);
+                      }
+                      setOpenKeys([]);
                     }}
                     to={
                       "/register/merchant/merchant_blacklists/uploads_merchant_blacklist"
@@ -970,8 +1066,11 @@ export const SidebarNavigation = () => {
                   },
                   <Link
                     onClickCapture={() => {
-                      setCollapsed(false);
-                      handleChangeSidebar(false);
+                      if (isMobile) {
+                        setCollapsed(false);
+                        handleChangeSidebar(false);
+                      }
+                      setOpenKeys([]);
                     }}
                     to={
                       "/register/merchant/merchant_blacklists/merchant_blacklist_reasons"
@@ -999,8 +1098,11 @@ export const SidebarNavigation = () => {
                     },
                     <Link
                       onClickCapture={() => {
-                        setCollapsed(false);
-                        handleChangeSidebar(false);
+                        if (isMobile) {
+                          setCollapsed(false);
+                          handleChangeSidebar(false);
+                        }
+                        setOpenKeys([]);
                       }}
                       to={
                         "/register/merchant/merchant_reports/merchant_merchants_reports"
@@ -1022,8 +1124,11 @@ export const SidebarNavigation = () => {
                     },
                     <Link
                       onClickCapture={() => {
-                        setCollapsed(false);
-                        handleChangeSidebar(false);
+                        if (isMobile) {
+                          setCollapsed(false);
+                          handleChangeSidebar(false);
+                        }
+                        setOpenKeys([]);
                       }}
                       to={
                         "/register/merchant/merchant_reports/merchant_users_reports"
@@ -1045,8 +1150,11 @@ export const SidebarNavigation = () => {
                     },
                     <Link
                       onClickCapture={() => {
-                        setCollapsed(false);
-                        handleChangeSidebar(false);
+                        if (isMobile) {
+                          setCollapsed(false);
+                          handleChangeSidebar(false);
+                        }
+                        setOpenKeys([]);
                       }}
                       to={
                         "/register/merchant/merchant_reports/merchant_blacklist_reports"
@@ -1092,8 +1200,11 @@ export const SidebarNavigation = () => {
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/register/person/persons"}
                 >
@@ -1124,8 +1235,11 @@ export const SidebarNavigation = () => {
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/register/person/person_accounts"}
                 >
@@ -1148,8 +1262,11 @@ export const SidebarNavigation = () => {
                     },
                     <Link
                       onClickCapture={() => {
-                        setCollapsed(false);
-                        handleChangeSidebar(false);
+                        if (isMobile) {
+                          setCollapsed(false);
+                          handleChangeSidebar(false);
+                        }
+                        setOpenKeys([]);
                       }}
                       to={
                         "/register/person/person_blacklist/upload_person_blacklist"
@@ -1170,8 +1287,11 @@ export const SidebarNavigation = () => {
                     },
                     <Link
                       onClickCapture={() => {
-                        setCollapsed(false);
-                        handleChangeSidebar(false);
+                        if (isMobile) {
+                          setCollapsed(false);
+                          handleChangeSidebar(false);
+                        }
+                        setOpenKeys([]);
                       }}
                       to={
                         "/register/person/person_blacklist/person_blacklist_uploads"
@@ -1192,8 +1312,11 @@ export const SidebarNavigation = () => {
                     },
                     <Link
                       onClickCapture={() => {
-                        setCollapsed(false);
-                        handleChangeSidebar(false);
+                        if (isMobile) {
+                          setCollapsed(false);
+                          handleChangeSidebar(false);
+                        }
+                        setOpenKeys([]);
                       }}
                       to={
                         "/register/person/person_blacklist/person_blacklist_reasons"
@@ -1228,8 +1351,11 @@ export const SidebarNavigation = () => {
                     },
                     <Link
                       onClickCapture={() => {
-                        setCollapsed(false);
-                        handleChangeSidebar(false);
+                        if (isMobile) {
+                          setCollapsed(false);
+                          handleChangeSidebar(false);
+                        }
+                        setOpenKeys([]);
                       }}
                       to={
                         "/register/person/person_reports/person_persons_reports"
@@ -1251,8 +1377,11 @@ export const SidebarNavigation = () => {
                     },
                     <Link
                       onClickCapture={() => {
-                        setCollapsed(false);
-                        handleChangeSidebar(false);
+                        if (isMobile) {
+                          setCollapsed(false);
+                          handleChangeSidebar(false);
+                        }
+                        setOpenKeys([]);
                       }}
                       to={"/register/person/person_reports/client_bank_reports"}
                     >
@@ -1309,8 +1438,11 @@ export const SidebarNavigation = () => {
 
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/register/licenses"}
                   title={`${t("menus.licenses")}`}
@@ -1332,8 +1464,11 @@ export const SidebarNavigation = () => {
 
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/register/licenses/reports"}
                   title={`${t("menus.licenses")}`}
@@ -1390,8 +1525,11 @@ export const SidebarNavigation = () => {
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={
                     "/moviment/organization_moviments/organization_manual_moviments"
@@ -1414,8 +1552,11 @@ export const SidebarNavigation = () => {
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={
                     "/moviment/organization_moviments/organization_transfer_between_accounts"
@@ -1443,8 +1584,11 @@ export const SidebarNavigation = () => {
                     },
                     <Link
                       onClickCapture={() => {
-                        setCollapsed(false);
-                        handleChangeSidebar(false);
+                        if (isMobile) {
+                          setCollapsed(false);
+                          handleChangeSidebar(false);
+                        }
+                        setOpenKeys([]);
                       }}
                       to={
                         "/moviment/organization_moviments/organization_moviments_reports/organization_manual_moviments_reports"
@@ -1471,8 +1615,11 @@ export const SidebarNavigation = () => {
                     },
                     <Link
                       onClickCapture={() => {
-                        setCollapsed(false);
-                        handleChangeSidebar(false);
+                        if (isMobile) {
+                          setCollapsed(false);
+                          handleChangeSidebar(false);
+                        }
+                        setOpenKeys([]);
                       }}
                       to={
                         "/moviment/organization_moviments/organization_moviments_reports/organization_transfer_between_accounts_reports"
@@ -1523,8 +1670,11 @@ export const SidebarNavigation = () => {
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={
                     "/moviment/aggregator_moviments/aggregator_transfer_between_accounts"
@@ -1553,8 +1703,11 @@ export const SidebarNavigation = () => {
                     },
                     <Link
                       onClickCapture={() => {
-                        setCollapsed(false);
-                        handleChangeSidebar(false);
+                        if (isMobile) {
+                          setCollapsed(false);
+                          handleChangeSidebar(false);
+                        }
+                        setOpenKeys([]);
                       }}
                       to={
                         "/moviment/aggregator_moviments/aggregator_moviments_reports/aggregator_transfer_between_accounts_reports"
@@ -1600,8 +1753,11 @@ export const SidebarNavigation = () => {
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/moviment/merchant_moviments/merchant_manual_moviments"}
                 >
@@ -1623,8 +1779,11 @@ export const SidebarNavigation = () => {
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/moviment/merchant_moviments/between_accounts_transfers"}
                   title={`${t("menus.between_accounts_transfers")}`}
@@ -1649,8 +1808,11 @@ export const SidebarNavigation = () => {
                     },
                     <Link
                       onClickCapture={() => {
-                        setCollapsed(false);
-                        handleChangeSidebar(false);
+                        if (isMobile) {
+                          setCollapsed(false);
+                          handleChangeSidebar(false);
+                        }
+                        setOpenKeys([]);
                       }}
                       to={
                         "/moviment/merchant_moviments/merchant_pre_manual_moviment/merchant_pre_manual_moviments"
@@ -1673,8 +1835,11 @@ export const SidebarNavigation = () => {
                     },
                     <Link
                       onClickCapture={() => {
-                        setCollapsed(false);
-                        handleChangeSidebar(false);
+                        if (isMobile) {
+                          setCollapsed(false);
+                          handleChangeSidebar(false);
+                        }
+                        setOpenKeys([]);
                       }}
                       to={
                         "/moviment/merchant_moviments/merchant_pre_manual_moviment/merchant_pre_manual_moviments_import"
@@ -1699,8 +1864,11 @@ export const SidebarNavigation = () => {
                     },
                     <Link
                       onClickCapture={() => {
-                        setCollapsed(false);
-                        handleChangeSidebar(false);
+                        if (isMobile) {
+                          setCollapsed(false);
+                          handleChangeSidebar(false);
+                        }
+                        setOpenKeys([]);
                       }}
                       to={
                         "/moviment/merchant_moviments/merchant_pre_manual_moviment/merchant_pre_manual_moviments_uploads"
@@ -1739,8 +1907,11 @@ export const SidebarNavigation = () => {
                     },
                     <Link
                       onClickCapture={() => {
-                        setCollapsed(false);
-                        handleChangeSidebar(false);
+                        if (isMobile) {
+                          setCollapsed(false);
+                          handleChangeSidebar(false);
+                        }
+                        setOpenKeys([]);
                       }}
                       to={
                         "/moviment/merchant_moviments/merchant_moviments_reports/merchant_manual_moviments_reports"
@@ -1764,8 +1935,11 @@ export const SidebarNavigation = () => {
                     },
                     <Link
                       onClickCapture={() => {
-                        setCollapsed(false);
-                        handleChangeSidebar(false);
+                        if (isMobile) {
+                          setCollapsed(false);
+                          handleChangeSidebar(false);
+                        }
+                        setOpenKeys([]);
                       }}
                       to={
                         "/moviment/merchant_moviments/merchant_moviments_reports/merchant_between_accounts_reports"
@@ -1789,8 +1963,11 @@ export const SidebarNavigation = () => {
                     },
                     <Link
                       onClickCapture={() => {
-                        setCollapsed(false);
-                        handleChangeSidebar(false);
+                        if (isMobile) {
+                          setCollapsed(false);
+                          handleChangeSidebar(false);
+                        }
+                        setOpenKeys([]);
                       }}
                       to={
                         "/moviment/merchant_moviments/merchant_moviments_reports/merchant_pre_manual_moviments_reports"
@@ -1831,8 +2008,11 @@ export const SidebarNavigation = () => {
             },
             <Link
               onClickCapture={() => {
-                setCollapsed(false);
-                handleChangeSidebar(false);
+                if (isMobile) {
+                  setCollapsed(false);
+                  handleChangeSidebar(false);
+                }
+                setOpenKeys([]);
               }}
               to={"/moviment/merchant_transfers"}
               title={`${t("menus.merchant_transfers")}`}
@@ -1868,8 +2048,11 @@ export const SidebarNavigation = () => {
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={
                     "/consult/consult_organization/organization_bank_statement"
@@ -1890,8 +2073,11 @@ export const SidebarNavigation = () => {
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/consult/consult_organization/organization_balance"}
                 >
@@ -1910,8 +2096,11 @@ export const SidebarNavigation = () => {
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/consult/consult_organization/organization_bank_balance"}
                 >
@@ -1930,8 +2119,11 @@ export const SidebarNavigation = () => {
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/consult/consult_organization/organization_history"}
                 >
@@ -1951,8 +2143,11 @@ export const SidebarNavigation = () => {
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={
                     "/consult/consult_organization/consult_organization_reports"
@@ -1987,8 +2182,11 @@ export const SidebarNavigation = () => {
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/consult/consult_merchant/merchant_bank_statement"}
                 >
@@ -2007,8 +2205,11 @@ export const SidebarNavigation = () => {
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/consult/consult_merchant/merchant_balance"}
                 >
@@ -2027,8 +2228,11 @@ export const SidebarNavigation = () => {
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/consult/consult_merchant/merchant_history"}
                 >
@@ -2048,8 +2252,11 @@ export const SidebarNavigation = () => {
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/consult/consult_merchant/consult_merchant_reports"}
                 >
@@ -2079,8 +2286,11 @@ export const SidebarNavigation = () => {
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/consult/deposit/generated_deposits"}
                 >
@@ -2099,8 +2309,11 @@ export const SidebarNavigation = () => {
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/consult/deposit/paid_deposits"}
                 >
@@ -2120,8 +2333,11 @@ export const SidebarNavigation = () => {
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/consult/deposit/undelivered_deposits"}
                   title={`${t("menus.undelivered_deposits")}`}
@@ -2141,8 +2357,11 @@ export const SidebarNavigation = () => {
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/consult/deposit/receipts"}
                 >
@@ -2167,8 +2386,11 @@ export const SidebarNavigation = () => {
                     },
                     <Link
                       onClickCapture={() => {
-                        setCollapsed(false);
-                        handleChangeSidebar(false);
+                        if (isMobile) {
+                          setCollapsed(false);
+                          handleChangeSidebar(false);
+                        }
+                        setOpenKeys([]);
                       }}
                       to={
                         "/consult/deposit/deposits_reports/generated_deposits_reports"
@@ -2190,8 +2412,11 @@ export const SidebarNavigation = () => {
                     },
                     <Link
                       onClickCapture={() => {
-                        setCollapsed(false);
-                        handleChangeSidebar(false);
+                        if (isMobile) {
+                          setCollapsed(false);
+                          handleChangeSidebar(false);
+                        }
+                        setOpenKeys([]);
                       }}
                       to={
                         "/consult/deposit/deposits_reports/paid_deposits_reports"
@@ -2213,8 +2438,11 @@ export const SidebarNavigation = () => {
                     },
                     <Link
                       onClickCapture={() => {
-                        setCollapsed(false);
-                        handleChangeSidebar(false);
+                        if (isMobile) {
+                          setCollapsed(false);
+                          handleChangeSidebar(false);
+                        }
+                        setOpenKeys([]);
                       }}
                       to={"/consult/deposit/deposits_reports/webhooks_reports"}
                     >
@@ -2254,8 +2482,11 @@ export const SidebarNavigation = () => {
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/consult/withdrawals/generated_withdrawals"}
                 >
@@ -2274,8 +2505,11 @@ export const SidebarNavigation = () => {
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/consult/withdrawals/paid_withdrawals"}
                 >
@@ -2295,8 +2529,11 @@ export const SidebarNavigation = () => {
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/consult/withdrawals/undelivered_withdrawals"}
                 >
@@ -2321,8 +2558,11 @@ export const SidebarNavigation = () => {
                     },
                     <Link
                       onClickCapture={() => {
-                        setCollapsed(false);
-                        handleChangeSidebar(false);
+                        if (isMobile) {
+                          setCollapsed(false);
+                          handleChangeSidebar(false);
+                        }
+                        setOpenKeys([]);
                       }}
                       to={
                         "/consult/withdrawals/withdrawals_reports/generated_withdrawals_reports"
@@ -2344,8 +2584,11 @@ export const SidebarNavigation = () => {
                     },
                     <Link
                       onClickCapture={() => {
-                        setCollapsed(false);
-                        handleChangeSidebar(false);
+                        if (isMobile) {
+                          setCollapsed(false);
+                          handleChangeSidebar(false);
+                        }
+                        setOpenKeys([]);
                       }}
                       to={
                         "/consult/withdrawals/withdrawals_reports/paid_withdrawals_reports"
@@ -2367,8 +2610,11 @@ export const SidebarNavigation = () => {
                     },
                     <Link
                       onClickCapture={() => {
-                        setCollapsed(false);
-                        handleChangeSidebar(false);
+                        if (isMobile) {
+                          setCollapsed(false);
+                          handleChangeSidebar(false);
+                        }
+                        setOpenKeys([]);
                       }}
                       to={
                         "/consult/withdrawals/withdrawals_reports/withdrawals_webhooks_reports"
@@ -2410,8 +2656,11 @@ export const SidebarNavigation = () => {
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/consult/refunds/refund_deposits"}
                   title={`${t("menus.refund_deposits")}`}
@@ -2432,8 +2681,11 @@ export const SidebarNavigation = () => {
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/consult/refunds/refund_withdrawals"}
                   title={`${t("menus.refund_withdrawals")}`}
@@ -2454,8 +2706,11 @@ export const SidebarNavigation = () => {
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/consult/refunds/refund_manual_deposits"}
                   title={`${t("menus.refund_manual_deposits")}`}
@@ -2481,8 +2736,11 @@ export const SidebarNavigation = () => {
                     },
                     <Link
                       onClickCapture={() => {
-                        setCollapsed(false);
-                        handleChangeSidebar(false);
+                        if (isMobile) {
+                          setCollapsed(false);
+                          handleChangeSidebar(false);
+                        }
+                        setOpenKeys([]);
                       }}
                       to={
                         "/consult/refunds/refund_reports/refund_deposits_reports"
@@ -2506,8 +2764,11 @@ export const SidebarNavigation = () => {
                     },
                     <Link
                       onClickCapture={() => {
-                        setCollapsed(false);
-                        handleChangeSidebar(false);
+                        if (isMobile) {
+                          setCollapsed(false);
+                          handleChangeSidebar(false);
+                        }
+                        setOpenKeys([]);
                       }}
                       to={
                         "/consult/refunds/refund_reports/refund_manual_reports"
@@ -2531,8 +2792,11 @@ export const SidebarNavigation = () => {
                     },
                     <Link
                       onClickCapture={() => {
-                        setCollapsed(false);
-                        handleChangeSidebar(false);
+                        if (isMobile) {
+                          setCollapsed(false);
+                          handleChangeSidebar(false);
+                        }
+                        setOpenKeys([]);
                       }}
                       to={
                         "/consult/refunds/refund_reports/refund_withdrawals_reports"
@@ -2570,14 +2834,18 @@ export const SidebarNavigation = () => {
                 null,
                 false,
                 {
-                  display: permissions?.report?.person?.check_cpf?.menu
+                  display: permissions?.report?.person
+                    ?.report_person_check_cpf_list
                     ? undefined
                     : "none",
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/consult/consult_persons/check_cpf"}
                 >
@@ -2590,14 +2858,18 @@ export const SidebarNavigation = () => {
                 null,
                 false,
                 {
-                  display: permissions?.report?.person?.check_cpf?.menu
+                  display: permissions?.report?.person
+                    ?.report_check_document_by_merchant_list
                     ? undefined
                     : "none",
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/consult/consult_persons/historic_cpf_merchant"}
                   title={`${t("menus.historic_cpf_merchant")}`}
@@ -2611,14 +2883,18 @@ export const SidebarNavigation = () => {
                 null,
                 false,
                 {
-                  display: permissions?.report?.person?.check_serpro?.report_check_document_serpro
+                  display: permissions?.report?.person
+                    ?.report_check_document_total
                     ? undefined
                     : "none",
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/consult/consult_persons/serpro_assertiva"}
                 >
@@ -2635,14 +2911,18 @@ export const SidebarNavigation = () => {
                     null,
                     false,
                     {
-                      display: permissions?.report?.person?.check_cpf?.menu
+                      display: permissions?.report?.person
+                        ?.report_check_document_by_merchant_list
                         ? undefined
                         : "none",
                     },
                     <Link
                       onClickCapture={() => {
-                        setCollapsed(false);
-                        handleChangeSidebar(false);
+                        if (isMobile) {
+                          setCollapsed(false);
+                          handleChangeSidebar(false);
+                        }
+                        setOpenKeys([]);
                       }}
                       to={
                         "/consult/consult_persons/reports/historic_cpf_merchant"
@@ -2659,15 +2939,18 @@ export const SidebarNavigation = () => {
                     null,
                     false,
                     {
-                      display: permissions?.report?.person?.check_cpf
-                        ?.report_person_check_cpf_list
+                      display: permissions?.report?.person
+                        ?.report_check_document_by_merchant_list
                         ? undefined
                         : "none",
                     },
                     <Link
                       onClickCapture={() => {
-                        setCollapsed(false);
-                        handleChangeSidebar(false);
+                        if (isMobile) {
+                          setCollapsed(false);
+                          handleChangeSidebar(false);
+                        }
+                        setOpenKeys([]);
                       }}
                       to={
                         "/consult/consult_persons/reports/historic_cpf_merchant_details"
@@ -2680,7 +2963,8 @@ export const SidebarNavigation = () => {
                 ],
                 false,
                 {
-                  display: permissions?.report?.person?.check_cpf?.menu
+                  display: permissions?.report?.person
+                    ?.report_check_document_by_merchant_export_csv
                     ? undefined
                     : "none",
                 }
@@ -2719,8 +3003,11 @@ export const SidebarNavigation = () => {
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/support/blacklists/bank_institutions"}
                 >
@@ -2740,8 +3027,11 @@ export const SidebarNavigation = () => {
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/support/blacklists/third_parties_pix_key"}
                 >
@@ -2761,8 +3051,11 @@ export const SidebarNavigation = () => {
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/support/blacklists/invalid_pix_key"}
                 >
@@ -2781,8 +3074,11 @@ export const SidebarNavigation = () => {
                     {},
                     <Link
                       onClickCapture={() => {
-                        setCollapsed(false);
-                        handleChangeSidebar(false);
+                        if (isMobile) {
+                          setCollapsed(false);
+                          handleChangeSidebar(false);
+                        }
+                        setOpenKeys([]);
                       }}
                       to={
                         "/support/blacklists/blacklists_reports/bank_institutions_reports"
@@ -2826,8 +3122,11 @@ export const SidebarNavigation = () => {
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/support/api_logs/error_logs_deposits"}
                 >
@@ -2846,8 +3145,11 @@ export const SidebarNavigation = () => {
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/support/api_logs/error_logs_withdrawals"}
                 >
@@ -2866,8 +3168,11 @@ export const SidebarNavigation = () => {
                 },
                 <Link
                   onClickCapture={() => {
-                    setCollapsed(false);
-                    handleChangeSidebar(false);
+                    if (isMobile) {
+                      setCollapsed(false);
+                      handleChangeSidebar(false);
+                    }
+                    setOpenKeys([]);
                   }}
                   to={"/support/api_logs/authentication_logs"}
                 >
@@ -2902,8 +3207,11 @@ export const SidebarNavigation = () => {
                     },
                     <Link
                       onClickCapture={() => {
-                        setCollapsed(false);
-                        handleChangeSidebar(false);
+                        if (isMobile) {
+                          setCollapsed(false);
+                          handleChangeSidebar(false);
+                        }
+                        setOpenKeys([]);
                       }}
                       to={"/support/contestation/deposit_contestation/uploads"}
                     >
@@ -2923,8 +3231,11 @@ export const SidebarNavigation = () => {
                     },
                     <Link
                       onClickCapture={() => {
-                        setCollapsed(false);
-                        handleChangeSidebar(false);
+                        if (isMobile) {
+                          setCollapsed(false);
+                          handleChangeSidebar(false);
+                        }
+                        setOpenKeys([]);
                       }}
                       to={
                         "/support/contestation/deposit_contestation/import_csv"
@@ -2988,7 +3299,9 @@ export const SidebarNavigation = () => {
       ),
       ...(recents?.find((obj) => obj?.id === id)?.paths ?? []).map((path) =>
         getItem(
-          `${path.split("/").reverse().join("/")[path.split("/").length - 1]}_recent`,
+          `${
+            path.split("/").reverse().join("/")[path.split("/").length - 1]
+          }_recent`,
           null,
           null,
           false,
@@ -3000,8 +3313,11 @@ export const SidebarNavigation = () => {
           },
           <Link
             onClickCapture={() => {
-              setCollapsed(false);
-              handleChangeSidebar(false);
+              if (isMobile) {
+                setCollapsed(false);
+                handleChangeSidebar(false);
+              }
+              setOpenKeys([]);
             }}
             to={path.split("/").reverse().join("/")}
           >
