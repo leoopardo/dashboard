@@ -243,28 +243,29 @@ export const NewUserModalFields = ({
           />
         </Form.Item>
 
-        {user.permissions.register.partner.partner.partner_list && (
-          <Form.Item
-            data-test-id="partner"
-            label={t(`table.partner`)}
-            name="partner_id"
-            style={{ margin: 10 }}
-            rules={[
-              {
-                required:
-                  !body.partner_id && action === "create" ? true : false,
-                message:
-                  t("input.required", { field: t("input.partner") }) || "",
-              },
-            ]}
-          >
-            <PartnerSelect
-              queryOptions={body ?? currentUser}
-              setQueryFunction={setBody}
-              notClearble
-            />
-          </Form.Item>
-        )}
+        {user.permissions.register.partner.partner.partner_list &&
+          action === "create" && (
+            <Form.Item
+              data-test-id="partner"
+              label={t(`table.partner`)}
+              name="partner_id"
+              style={{ margin: 10 }}
+              rules={[
+                {
+                  required:
+                    !body.partner_id && action === "create" ? true : false,
+                  message:
+                    t("input.required", { field: t("input.partner") }) || "",
+                },
+              ]}
+            >
+              <PartnerSelect
+                queryOptions={body ?? currentUser}
+                setQueryFunction={setBody}
+                notClearble
+              />
+            </Form.Item>
+          )}
 
         <Form.Item
           data-test-id="group"

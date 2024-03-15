@@ -109,7 +109,10 @@ export const MerchantUser = () => {
   }, [query]);
 
   useEffect(() => {
-    updateIsSuccess && setIsValidateTokenOpen(false);
+    if (updateIsSuccess) {
+      setIsValidateTokenOpen(false);
+      updateReset();
+    }
   }, [updateIsSuccess]);
 
   useEffect(() => {
@@ -149,7 +152,7 @@ export const MerchantUser = () => {
 
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
         <Grid item xs={12} md={4} lg={4}>
-          <Search query={query} setQuery={setQuery} searchOption="search"  />
+          <Search query={query} setQuery={setQuery} searchOption="search" />
         </Grid>
         <Grid item xs={12} md={3} lg={2}>
           <Button
@@ -301,12 +304,15 @@ export const MerchantUser = () => {
         />
       )}
 
-      <Toast
-        actionSuccess={t("messages.updated")}
-        actionError={t("messages.update")}
-        error={updateError}
-        success={updateIsSuccess}
-      />
+     
+        <Toast
+          actionSuccess={t("messages.updated")}
+          actionError={t("messages.update")}
+          error={updateError}
+          success={updateIsSuccess}
+          timeout={2000}
+        />
+    
 
       <UpdateUserModal
         action={requestType}

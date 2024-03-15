@@ -248,7 +248,8 @@ export const NewUserModalFields = ({
           />
         </Form.Item>
         {permissions.register.aggregator.aggregator.aggregator_list &&
-          !user.aggregator_id && (
+          !user.aggregator_id &&
+          action === "create" && (
             <Form.Item
               data-test-id="aggregator"
               label={t("input.aggregator")}

@@ -79,6 +79,7 @@ export const UpdateUserModalFields = ({
       setUpdateBody(body);
       setCurrentUser(null);
       setIsValidateTokenOpen(true);
+      setOpen(false);
       return;
     }
     mutate();
@@ -238,7 +239,7 @@ export const UpdateUserModalFields = ({
             onChange={handleChangeUserBody}
           />
         </Form.Item>
-        {!user.merchant_id && (
+        {!user.merchant_id && action === "create" && (
           <Form.Item
             data-test-id="merchant"
             label={t(`table.merchant`)}
