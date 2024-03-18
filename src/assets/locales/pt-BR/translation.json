@@ -439,7 +439,7 @@
     "primary": "Primário",
     "secondary": "Secundário",
     "both": "Ambos",
- 
+
     "options": "Opções",
     "csv_columns": "Selecione as colunas do CSV",
     "comma_separator": "Separador de casas decimais",
@@ -779,9 +779,9 @@
     "upload_file": "Fazer upload",
     "total_rows": "Total de linhas",
     "failed_rows": "Nº erro",
-    "success_rows":"Nº sucesso",
+    "success_rows": "Nº sucesso",
     "webhook_url_type_filter": "Tipo",
-    "both":"Ambos",
+    "both": "Ambos",
     "created_by_ip": "Ip do criador",
     "WAITING": "Aguardando",
     "created_by": "Criado por",
@@ -1036,7 +1036,8 @@
     "cnpj/inactive": "CNPJ inativo",
     "legal_nature_description": "Natureza jurídica",
     "registration_status_date": "Data do status de registro",
-    "registration_status_reason": "Motivo do status de registro"
+    "registration_status_reason": "Motivo do status de registro",
+    "main_cnae_code": "Código CNAE"
   },
   "actions": {
     "details": "Detalhes",
@@ -1054,7 +1055,7 @@
     "check_payments": "Checar pagamentos",
     "resend_webhook": "Reenviar webhook",
     "permissions": "Permissões",
-    "custom_webhook":"Personalizar webhook"
+    "custom_webhook": "Personalizar webhook"
   },
   "error": {
     "400": "Nenhum dado encontrado.",

@@ -1027,7 +1027,8 @@
     "cnpj/canceled": "CNPJ canceled",
     "cnpj/inactive": "CNPJ inactive",
     "registration_status_date": "Registration status date",
-    "registration_status_reason": "Registration status reason"
+    "registration_status_reason": "Registration status reason",
+    "main_cnae_code": "CNAE code"
   },
   "actions": {
     "details": "Details",
