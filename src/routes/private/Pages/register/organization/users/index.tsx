@@ -179,7 +179,7 @@ export const OrganizationUser = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        {permissions.register.paybrokers.users.paybrokers_user_create && (
+        {permissions?.register?.paybrokers?.users?.paybrokers_user_create && (
           <Grid item xs={12} md={3} lg={2}>
             <Button
               ref={ref4}
@@ -202,7 +202,7 @@ export const OrganizationUser = () => {
             </Button>
           </Grid>
         )}
-        {permissions.register.paybrokers.users.paybrokers_user_export_csv && (
+        {permissions?.register?.paybrokers?.users?.paybrokers_user_export_csv && (
           <Grid item xs={12} md="auto" ref={ref5}>
             <Tooltip
               placement="topRight"
@@ -244,7 +244,7 @@ export const OrganizationUser = () => {
                   setIsViewModalOpen(true);
                 },
               },
-              permissions.register.paybrokers.users.paybrokers_user_update && {
+              permissions?.register?.paybrokers?.users?.paybrokers_user_update && {
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
                 onClick: () => {
@@ -348,14 +348,14 @@ export const OrganizationUser = () => {
         searchByNameStepRef={ref2}
         removeFiltersStepRef={ref3}
         createRegisterStep={
-          permissions.register.paybrokers.users.paybrokers_user_create && {
+          permissions?.register?.paybrokers?.users?.paybrokers_user_create && {
             title: t("wiki.register_users"),
             description: t("wiki.register_users_descriptions"),
             target: () => ref4.current,
           }
         }
         exportCsvStep={
-          permissions.register.paybrokers.users.paybrokers_user_export_csv && {
+          permissions?.register?.paybrokers?.users?.paybrokers_user_export_csv && {
             title: t("wiki.generate_reports"),
             description: (
               <Typography>

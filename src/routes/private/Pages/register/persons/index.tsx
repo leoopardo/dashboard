@@ -233,7 +233,7 @@ export const Persons = () => {
             {t("table.clear_filters")}
           </Button>
         </Col>
-        {permissions.register.person.person.person_person_create && (
+        {permissions?.register?.person?.person?.person_person_create && (
           <Col xs={{ span: 24 }} md={{ span: 4 }}>
             <Button
               type="primary"
@@ -255,7 +255,7 @@ export const Persons = () => {
           </Col>
         )}
 
-        {permissions.register.person.person.person_person_export_csv && (
+        {permissions?.register?.person?.person?.person_person_export_csv && (
           <Col xs={{ span: 24 }} md={{ span: 2 }}>
             <Tooltip
               placement="topRight"
@@ -303,7 +303,7 @@ export const Persons = () => {
                     { state: item }
                   ),
               },
-              permissions.register.person.person.person_person_update && {
+              permissions?.register?.person?.person?.person_person_update && {
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
                 onClick: (item) => {

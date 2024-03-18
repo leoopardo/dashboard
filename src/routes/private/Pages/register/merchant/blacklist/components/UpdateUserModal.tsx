@@ -246,7 +246,7 @@ export const UpdateUserModal = ({
             onChange={handleChangeUserBody}
           />
         </Form.Item>
-        {permissions.register.merchant.merchant.merchant_list && (
+        {permissions?.register?.merchant?.merchant?.merchant_list && (
           <Form.Item
             label={t(`table.merchant`)}
             name="merchant"
@@ -267,7 +267,7 @@ export const UpdateUserModal = ({
             <MerchantSelect queryOptions={body} setQueryFunction={setBody} />
           </Form.Item>
         )}
-        {permissions.register.merchant.merchant.merchant_list && (
+        {permissions?.register?.merchant?.merchant?.merchant_list && (
           <Form.Item
             label={t(`table.group`)}
             name="group_id"

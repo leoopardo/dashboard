@@ -180,7 +180,7 @@ export const PartnerUsers = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        {permissions.register.partner.users.partner_user_create && (
+        {permissions?.register?.partner?.users?.partner_user_create && (
           <Grid item xs={12} md={2} lg={2}>
             <Button
               ref={ref4}
@@ -205,7 +205,7 @@ export const PartnerUsers = () => {
           </Grid>
         )}
 
-        {permissions.register.partner.users.partner_user_export_csv && (
+        {permissions?.register?.partner?.users?.partner_user_export_csv && (
           <Grid item xs={12} md="auto">
             <Tooltip
               placement="topRight"
@@ -247,7 +247,7 @@ export const PartnerUsers = () => {
                   setIsViewModalOpen(true);
                 },
               },
-              permissions.register.partner.users.partner_user_update && {
+              permissions?.register?.partner?.users?.partner_user_update && {
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
                 onClick: () => {
@@ -385,14 +385,14 @@ export const PartnerUsers = () => {
         searchByNameStepRef={ref2}
         removeFiltersStepRef={ref3}
         createRegisterStep={
-          permissions.register.partner.users.partner_user_create && {
+          permissions?.register?.partner?.users?.partner_user_create && {
             title: t("wiki.register_users"),
             description: t("wiki.register_aggregator_users_descriptions"),
             target: () => ref4.current,
           }
         }
         exportCsvStep={
-          permissions.register.partner.users.partner_user_export_csv && {
+          permissions?.register?.partner?.users?.partner_user_export_csv && {
             title: t("wiki.generate_reports"),
             description: (
               <Typography>

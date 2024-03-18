@@ -33,13 +33,13 @@ export const MerchantConfigs = () => {
   const tabIps = document.querySelector('[data-node-key="6"]');
 
   const initialTab = () => {
-    if (!permissions.register.merchant.merchant.merchant_config_banks) {
-      if (!permissions.register.merchant.merchant.merchant_config_fees) {
-        if (!permissions.register.merchant.merchant.merchant_config_merchant) {
+    if (!permissions?.register?.merchant?.merchant?.merchant_config_banks) {
+      if (!permissions?.register?.merchant?.merchant?.merchant_config_fees) {
+        if (!permissions?.register?.merchant?.merchant?.merchant_config_merchant) {
           if (
-            !permissions.register.merchant.merchant.merchant_config_paybrokers
+            !permissions?.register?.merchant?.merchant?.merchant_config_paybrokers
           ) {
-            if (!permissions.register.merchant.merchant.merchant_config_ips) {
+            if (!permissions?.register?.merchant?.merchant?.merchant_config_ips) {
               setFirstChildDivTestId(tabIps, "tab-ips");
               return "6";
             }
@@ -76,84 +76,84 @@ export const MerchantConfigs = () => {
       label: `${t("table.bank")}s`,
       children: <BanksTab id={params.id} />,
       style: {
-        display: permissions.register.merchant.merchant.merchant_config_banks
+        display: permissions?.register?.merchant?.merchant?.merchant_config_banks
           ? undefined
           : "none",
       },
-      disabled: !permissions.register.merchant.merchant.merchant_config_banks,
+      disabled: !permissions?.register?.merchant?.merchant?.merchant_config_banks,
     },
     {
       key: "2",
       label: `${t("table.fee")}s`,
       children: <FeesTab id={params.id} />,
       style: {
-        display: permissions.register.merchant.merchant.merchant_config_fees
+        display: permissions?.register?.merchant?.merchant?.merchant_config_fees
           ? undefined
           : "none",
       },
-      disabled: !permissions.register.merchant.merchant.merchant_config_fees,
+      disabled: !permissions?.register?.merchant?.merchant?.merchant_config_fees,
     },
     {
       key: "3",
       label: t("menus.current_accounts"),
       children: <AccountTab id={params.id} />,
       style: {
-        display: permissions.register.merchant.merchant
-          .merchant_account_api_update
+        display: permissions?.register?.merchant?.merchant
+          ?.merchant_account_api_update
           ? undefined
           : "none",
       },
       disabled:
-        !permissions.register.merchant.merchant.merchant_account_api_update,
+        !permissions?.register?.merchant?.merchant?.merchant_account_api_update,
     },
     {
       key: "4",
       label: t("menus.merchant_settings"),
       children: <MerchantConfigTab id={params.id} />,
       style: {
-        display: permissions.register.merchant.merchant.merchant_config_merchant
+        display: permissions?.register?.merchant?.merchant?.merchant_config_merchant
           ? undefined
           : "none",
       },
       disabled:
-        !permissions.register.merchant.merchant.merchant_config_merchant,
+        !permissions?.register?.merchant?.merchant?.merchant_config_merchant,
     },
     {
       key: "5",
       label: t("menus.organization_settings"),
       children: <OrganizationConfigTab id={params.id} />,
       style: {
-        display: permissions.register.merchant.merchant
-          .merchant_config_paybrokers
+        display: permissions?.register?.merchant?.merchant
+          ?.merchant_config_paybrokers
           ? undefined
           : "none",
       },
       disabled:
-        !permissions.register.merchant.merchant.merchant_config_paybrokers,
+        !permissions?.register?.merchant?.merchant?.merchant_config_paybrokers,
     },
     {
       key: "6",
       label: `${t("menus.credentials")}`,
       children: <CredentialConfigTab id={params.id} />,
       style: {
-        display: permissions.register.merchant.merchant
-          .merchant_config_credentials
+        display: permissions?.register?.merchant?.merchant
+          ?.merchant_config_credentials
           ? undefined
           : "none",
       },
       disabled:
-        !permissions.register.merchant.merchant.merchant_config_credentials,
+        !permissions?.register?.merchant?.merchant?.merchant_config_credentials,
     },
     {
       key: "7",
       label: "IPs",
       children: <IpsConfigTab id={params.id} />,
       style: {
-        display: permissions.register.merchant.merchant.merchant_config_ips
+        display: permissions?.register?.merchant?.merchant?.merchant_config_ips
           ? undefined
           : "none",
       },
-      disabled: !permissions.register.merchant.merchant.merchant_config_ips,
+      disabled: !permissions?.register?.merchant?.merchant?.merchant_config_ips,
     },
   ];
 

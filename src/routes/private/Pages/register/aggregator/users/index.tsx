@@ -181,7 +181,7 @@ export const AggregatorUsers = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        {permissions.register.aggregator.users.aggregator_user_create && (
+        {permissions?.register?.aggregator?.users?.aggregator_user_create && (
           <Grid item xs={12} md={2} lg={2}>
             <Button
               ref={ref4}
@@ -206,7 +206,7 @@ export const AggregatorUsers = () => {
             </Button>
           </Grid>
         )}
-        {permissions.register.aggregator.users.aggregator_user_export_csv && (
+        {permissions?.register?.aggregator?.users?.aggregator_user_export_csv && (
           <Grid item xs={12} md="auto" ref={ref5}>
             <Tooltip
               placement="topRight"
@@ -365,14 +365,14 @@ export const AggregatorUsers = () => {
         searchByNameStepRef={ref2}
         removeFiltersStepRef={ref3}
         createRegisterStep={
-          permissions.register.aggregator.users.aggregator_user_create && {
+          permissions?.register?.aggregator?.users?.aggregator_user_create && {
             title: t("wiki.register_users"),
             description: t("wiki.register_aggregator_users_descriptions"),
             target: () => ref4.current,
           }
         }
         exportCsvStep={
-          permissions.register.aggregator.users.aggregator_user_export_csv && {
+          permissions?.register?.aggregator?.users?.aggregator_user_export_csv && {
             title: t("wiki.generate_reports"),
             description: (
               <Typography>

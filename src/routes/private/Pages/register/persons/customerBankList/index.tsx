@@ -154,8 +154,8 @@ export const CostumerBanks = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        {permissions.register.person.client_banks
-          .person_client_banks_export_csv && (
+        {permissions?.register?.person?.client_banks
+          ?.person_client_banks_export_csv && (
           <Grid item xs={12} md="auto">
             <ExportReportsModal
               disabled={!clientbankListData?.total || clientbankListError}

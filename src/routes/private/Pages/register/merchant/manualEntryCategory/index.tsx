@@ -132,8 +132,8 @@ export const MerchantManualEntryCategory = () => {
           </Button>
         </Grid>
 
-        {permissions.register.merchant.release_category
-          .merchant_release_category_create && (
+        {permissions?.register?.merchant?.release_category
+          ?.merchant_release_category_create && (
           <Grid item xs={12} md={3} lg={2}>
             <Button
               type="primary"
@@ -170,8 +170,8 @@ export const MerchantManualEntryCategory = () => {
             label={["name", "description"]}
             refetch={refetchCategoryData}
             actions={[
-              permissions.register.merchant.release_category
-                .merchant_release_category_update && {
+              permissions?.register?.merchant?.release_category
+                ?.merchant_release_category_update && {
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
                 onClick: () => {

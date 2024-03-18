@@ -119,8 +119,8 @@ export const MerchantBankStatement = () => {
           </Button>
         </Grid>
 
-        {permissions.report.merchant.extract
-          .report_merchant_extract_export_csv && (
+        {permissions?.report?.merchant?.extract
+          ?.report_merchant_extract_export_csv && (
           <Grid item xs={12} md={1}>
             <ExportReportsModal
               disabled={

@@ -219,7 +219,7 @@ export const Operators = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        {permissions.register.operator.operator.operator_create && (
+        {permissions?.register?.operator?.operator?.operator_create && (
           <Grid item xs={12} md={3} lg={2}>
             <Button
               ref={ref4}
@@ -241,7 +241,7 @@ export const Operators = () => {
             </Button>
           </Grid>
         )}
-        {permissions.register.paybrokers.users.paybrokers_user_export_csv && (
+        {permissions?.register?.paybrokers?.users?.paybrokers_user_export_csv && (
           <Grid item xs={12} md="auto">
             <Tooltip
               placement="topRight"
@@ -284,7 +284,7 @@ export const Operators = () => {
                   navigate("details", { state: item });
                 },
               },
-              permissions.register.operator.operator.operator_update && {
+              permissions?.register?.operator?.operator?.operator_update && {
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
                 onClick: (item) => {
@@ -391,14 +391,14 @@ export const Operators = () => {
         searchByNameStepRef={ref2}
         removeFiltersStepRef={ref3}
         createRegisterStep={
-          permissions.register.operator.operator.operator_create && {
+          permissions?.register?.operator?.operator?.operator_create && {
             title: t("wiki.register_operator"),
             description: t("wiki.register_operator_description"),
             target: () => ref4.current,
           }
         }
         exportCsvStep={
-          permissions.register.operator.operator.operator_export_csv && {
+          permissions?.register?.operator?.operator?.operator_export_csv && {
             title: t("wiki.generate_reports"),
             description: (
               <Typography>

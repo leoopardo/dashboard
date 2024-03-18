@@ -222,7 +222,7 @@ export const Partners = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        {permissions.register.partner.partner.partner_create && (
+        {permissions?.register?.partner?.partner?.partner_create && (
           <Grid item xs={12} md={3} lg={2}>
             <Button
               ref={ref4}
@@ -245,7 +245,7 @@ export const Partners = () => {
           </Grid>
         )}
 
-        {permissions.register.partner.partner.partner_export_csv && (
+        {permissions?.register?.partner?.partner?.partner_export_csv && (
           <Grid item xs={12} md="auto" ref={ref5}>
             <Tooltip
               placement="topRight"
@@ -288,7 +288,7 @@ export const Partners = () => {
                   navigate("details", { state: item });
                 },
               },
-              permissions.register.partner.partner.partner_update && {
+              permissions?.register?.partner?.partner?.partner_update && {
                 id: "table-edit-button",
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
@@ -296,7 +296,7 @@ export const Partners = () => {
                   navigate("update", { state: item });
                 },
               },
-              permissions.register.partner.partner.partner_customWebhook_list && {
+              permissions?.register?.partner?.partner?.partner_customWebhook_list && {
                 label: "custom_webhook",
                 icon: <ToolOutlined style={{ fontSize: "20px" }} />,
                 onClick: (item) =>
@@ -405,16 +405,16 @@ export const Partners = () => {
         searchByNameStepRef={ref2}
         removeFiltersStepRef={ref3}
         createRegisterStep={
-          permissions.register.paybrokers.release_category
-            .paybrokers_release_category_create && {
+          permissions?.register?.paybrokers?.release_category
+            ?.paybrokers_release_category_create && {
             title: t("wiki.register_categories"),
             description: t("wiki.register_categories_description"),
             target: () => ref4.current,
           }
         }
         exportCsvStep={
-          permissions.register.paybrokers.release_category
-            .paybrokers_release_category_export_csv && {
+          permissions?.register?.paybrokers?.release_category
+            ?.paybrokers_release_category_export_csv && {
             title: t("wiki.generate_reports"),
             description: (
               <Typography>

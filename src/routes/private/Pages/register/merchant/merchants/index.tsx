@@ -38,10 +38,10 @@ import { useMediaQuery } from "react-responsive";
 import { useNavigate } from "react-router-dom";
 import { ViewMerchantModal } from "./components/ViewMerchantModal";
 import { TotalizerPerBanks } from "./components/totalizerPerBank";
-import { TotalizersCards } from "./components/totalizersCards";
-import { UpdateBanks } from "./components/updatebanks";
-import UpdateAccountsModal from "./components/updateAccountModal";
 import { TotalizersAccounts } from "./components/totalizersAccounts";
+import { TotalizersCards } from "./components/totalizersCards";
+import UpdateAccountsModal from "./components/updateAccountModal";
+import { UpdateBanks } from "./components/updatebanks";
 
 const INITIAL_QUERY: MerchantsQuery = {
   limit: 25,
@@ -175,7 +175,7 @@ export const MerchantView = () => {
   const refCreatedAt = useRef(null);
 
   const TotalizersTabs = [];
-  if ([1, 2].includes(user.type)) {
+  if (user.type && [1, 2].includes(user.type)) {
     TotalizersTabs.push({
       label: `${t("titles.merchants_per_bank")}`,
       key: "total_banks",
@@ -199,7 +199,7 @@ export const MerchantView = () => {
     });
   }
 
-  if (permissions.register.merchant.merchant.merchant_account_api_get) {
+  if (permissions?.register?.merchant?.merchant?.merchant_account_api_get) {
     TotalizersTabs.push({
       label: `${t("titles.total", {
         entity: t("menus.current_accounts")?.toLowerCase(),
@@ -274,7 +274,8 @@ export const MerchantView = () => {
           </Button>
         </Grid>
         <Grid item xs={12} md={8} lg={10}>
-          <FilterChips initial_query={INITIAL_QUERY}
+          <FilterChips
+            initial_query={INITIAL_QUERY}
             startDateKeyName="start_date"
             endDateKeyName="end_date"
             query={query}
@@ -290,7 +291,7 @@ export const MerchantView = () => {
             ref={searchref}
             placeholder={t("table.search") || ""}
             onSearch={(value) =>
-              setQuery((state) => ({ ...state, search: value }))
+              setQuery((state: any) => ({ ...state, search: value }))
             }
           />
         </Grid>
@@ -320,7 +321,7 @@ export const MerchantView = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        {permissions.register.merchant.merchant.merchant_config_banks && (
+        {permissions?.register?.merchant?.merchant?.merchant_config_banks && (
           <Grid item xs={12} md={3} lg={2}>
             <Button
               type="primary"
@@ -341,7 +342,7 @@ export const MerchantView = () => {
             </Button>
           </Grid>
         )}
-        {permissions.register.merchant.merchant.merchant_create && (
+        {permissions?.register?.merchant?.merchant?.merchant_create && (
           <Grid item xs={12} md={3} lg={2}>
             <Button
               ref={ref4}
@@ -364,7 +365,8 @@ export const MerchantView = () => {
             </Button>
           </Grid>
         )}
-        {permissions.register.merchant.merchant.merchant_account_api_update && (
+        {permissions?.register?.merchant?.merchant
+          ?.merchant_account_api_update && (
           <Grid item xs={12} md={3} lg={2}>
             <UpdateAccountsModal
               open={updateAccountsModal}
@@ -377,7 +379,7 @@ export const MerchantView = () => {
           </Grid>
         )}
 
-        {permissions.register.merchant.merchant.merchant_export_csv && (
+        {permissions?.register?.merchant?.merchant?.merchant_export_csv && (
           <Grid item xs={12} md={2} lg={isDesktop ? 2 : 1} container>
             <Tooltip
               placement="topRight"
@@ -426,14 +428,14 @@ export const MerchantView = () => {
             selectedKeys={selectedItems}
             refetch={refetchMerchantData}
             actions={[
-              permissions.register.merchant.merchant.merchant_list && {
+              permissions?.register?.merchant?.merchant?.merchant_list && {
                 label: "details",
                 icon: <EyeFilled style={{ fontSize: "20px" }} />,
                 onClick: (item) => {
                   navigate("details", { state: item });
                 },
               },
-              permissions.register.merchant.merchant.merchant_update && {
+              permissions?.register?.merchant?.merchant?.merchant_update && {
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
                 onClick: (item) => {
@@ -441,15 +443,18 @@ export const MerchantView = () => {
                   navigate("update", { state: item });
                 },
               },
-              (permissions.register.merchant.merchant.merchant_config_banks ||
-                permissions.register.merchant.merchant
-                  .merchant_config_credentials ||
-                permissions.register.merchant.merchant.merchant_config_fees ||
-                permissions.register.merchant.merchant.merchant_config_ips ||
-                permissions.register.merchant.merchant
-                  .merchant_config_merchant ||
-                permissions.register.merchant.merchant
-                  .merchant_config_paybrokers) && {
+              (permissions?.register?.merchant?.merchant
+                ?.merchant_config_banks ||
+                permissions?.register?.merchant?.merchant
+                  ?.merchant_config_credentials ||
+                permissions?.register?.merchant?.merchant
+                  ?.merchant_config_fees ||
+                permissions?.register?.merchant?.merchant
+                  ?.merchant_config_ips ||
+                permissions?.register?.merchant?.merchant
+                  ?.merchant_config_merchant ||
+                permissions?.register?.merchant?.merchant
+                  ?.merchant_config_paybrokers) && {
                 label: "configs",
                 icon: <ToolOutlined style={{ fontSize: "20px" }} />,
                 onClick: () => setIsConfigOpen(true),
@@ -583,14 +588,14 @@ export const MerchantView = () => {
         searchByNameStepRef={ref2}
         removeFiltersStepRef={ref3}
         createRegisterStep={
-          permissions.register.operator.operator.operator_create && {
+          permissions?.register?.operator?.operator?.operator_create && {
             title: t("wiki.register_operator"),
             description: t("wiki.register_operator_description"),
             target: () => ref4.current,
           }
         }
         exportCsvStep={
-          permissions.register.operator.operator.operator_export_csv && {
+          permissions?.register?.operator?.operator?.operator_export_csv && {
             title: t("wiki.generate_reports"),
             description: (
               <Typography>
@@ -611,37 +616,38 @@ export const MerchantView = () => {
           }
         }
         steps={[
-          [1, 2].includes(user.type) && {
-            title: t("wiki.totalizers_merchant_per_bank"),
-            description: (
-              <Typography>
-                {t("wiki.totalizers_merchant_per_bank_description")}
+          user.type &&
+            [1, 2].includes(user.type) && {
+              title: t("wiki.totalizers_merchant_per_bank"),
+              description: (
                 <Typography>
-                  <span style={{ color: defaultTheme.colors.paid }}>
-                    {t("wiki.deposit_bank")}:
-                  </span>
-                  {t("wiki.deposit_bank_description")}
+                  {t("wiki.totalizers_merchant_per_bank_description")}
+                  <Typography>
+                    <span style={{ color: defaultTheme.colors.paid }}>
+                      {t("wiki.deposit_bank")}:
+                    </span>
+                    {t("wiki.deposit_bank_description")}
+                  </Typography>
+                  <Typography>
+                    <span style={{ color: defaultTheme.colors.error }}>
+                      {t("wiki.withdraw_bank")}:
+                    </span>
+                    {t("wiki.withdraw_bank_description")}
+                  </Typography>
+                  <Typography>
+                    <span style={{ color: defaultTheme.colors.info }}>
+                      {t("wiki.fast_pix_bank")}:
+                    </span>
+                    {t("wiki.fast_pix_bank_description")}
+                  </Typography>
                 </Typography>
-                <Typography>
-                  <span style={{ color: defaultTheme.colors.error }}>
-                    {t("wiki.withdraw_bank")}:
-                  </span>
-                  {t("wiki.withdraw_bank_description")}
-                </Typography>
-                <Typography>
-                  <span style={{ color: defaultTheme.colors.info }}>
-                    {t("wiki.fast_pix_bank")}:
-                  </span>
-                  {t("wiki.fast_pix_bank_description")}
-                </Typography>
-              </Typography>
-            ),
-            target: () => ref.current,
-            style: { maxHeight: "100px" },
-            nextButtonProps: {
-              onClick: () => setActiveTotalizer("total_merchants"),
+              ),
+              target: () => ref.current,
+              style: { maxHeight: "100px" },
+              nextButtonProps: {
+                onClick: () => setActiveTotalizer("total_merchants"),
+              },
             },
-          },
           !user.merchant_id && {
             title: t("wiki.totalizers"),
             description: (

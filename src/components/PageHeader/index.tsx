@@ -212,7 +212,7 @@ export const PageHeader = () => {
                       marginRight: "5px",
                     }}
                   >
-                    {responseValidate?.name.toLocaleUpperCase()[0]}
+                    {responseValidate?.name?.toLocaleUpperCase()[0]}
                   </Avatar>
                   {responseValidate?.name}
                 </div>
@@ -287,7 +287,7 @@ export const PageHeader = () => {
               marginLeft: "20px",
             }}
           >
-            {responseValidate?.name.toLocaleUpperCase()[0]}
+            {responseValidate?.name?.toLocaleUpperCase()[0]}
           </Avatar>
         </Dropdown>
       </Col>
@@ -372,7 +372,7 @@ export const PageHeader = () => {
                       marginRight: "5px",
                     }}
                   >
-                    {responseValidate?.name.toLocaleUpperCase()[0]}
+                    {responseValidate?.name?.toLocaleUpperCase()[0]}
                   </Avatar>
                   {responseValidate?.name}
                 </div>
@@ -441,7 +441,7 @@ export const PageHeader = () => {
               marginLeft: "20px",
             }}
           >
-            {responseValidate?.name.toLocaleUpperCase()[0]}
+            {responseValidate?.name?.toLocaleUpperCase()[0]}
           </Avatar>
         </Dropdown>
       </Col>

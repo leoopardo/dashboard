@@ -141,8 +141,8 @@ export const PixKeyWhitelist = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        {permissions.register.person.pix_whitelist
-          .person_pix_whitelist_export_csv && (
+        {permissions?.register?.person?.pix_whitelist
+          ?.person_pix_whitelist_export_csv && (
           <Grid item xs={12} md="auto">
             <ExportReportsModal
               disabled={!PixKeyWhitelistData?.total || PixKeyWhitelistDataError}
@@ -170,8 +170,8 @@ export const PixKeyWhitelist = () => {
                   setIsViewModalOpen(true);
                 },
               },
-              permissions.register.person.pix_whitelist
-                .person_pix_whitelist_delete && {
+              permissions?.register?.person?.pix_whitelist
+                ?.person_pix_whitelist_delete && {
                 label: "delete",
                 icon: <DeleteOutlined />,
                 onClick() {

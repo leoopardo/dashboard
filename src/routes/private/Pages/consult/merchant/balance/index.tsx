@@ -200,7 +200,7 @@ export const MerchantBalance = () => {
           }}
           spacing={1}
         >
-          {permissions.register.merchant.merchant.merchant_list && (
+          {permissions?.register?.merchant?.merchant?.merchant_list && (
             <Grid item xs={12} md={4} lg={2}>
               <MerchantSelect
                 queryOptions={query}

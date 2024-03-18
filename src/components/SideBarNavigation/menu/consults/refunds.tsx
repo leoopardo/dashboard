@@ -24,7 +24,7 @@ export function Refunds({ permissions }: ItemInterface): MenuRouteInterface {
         label: "refund_manual_deposits",
         path: "/consult/refunds/refund_manual_deposits",
         permission:
-          permissions?.report?.chargeback.manual_deposit_chargeback?.menu,
+          permissions?.report?.chargeback?.manual_deposit_chargeback?.menu,
       },
       {
         key: "refund_reports",
@@ -34,7 +34,7 @@ export function Refunds({ permissions }: ItemInterface): MenuRouteInterface {
             ?.report_chargeback_deposit_chargeback_export_csv ||
           permissions?.report?.chargeback?.withdraw_chargeback
             ?.report_chargeback_withdraw_chargeback_export_csv ||
-          permissions?.report?.chargeback.manual_deposit_chargeback
+          permissions?.report?.chargeback?.manual_deposit_chargeback
             ?.report_chargeback_manual_deposit_chargeback_export_csv,
         children: [
           {
@@ -58,7 +58,7 @@ export function Refunds({ permissions }: ItemInterface): MenuRouteInterface {
             label: "refund_withdrawals_reports",
             path: "/consult/refunds/refund_reports/refund_withdrawals_reports",
             permission:
-              permissions?.report?.chargeback.manual_deposit_chargeback
+              permissions?.report?.chargeback?.manual_deposit_chargeback
                 ?.report_chargeback_manual_deposit_chargeback_export_csv,
           },
         ],
