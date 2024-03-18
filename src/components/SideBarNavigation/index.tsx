@@ -194,6 +194,7 @@ export const SidebarNavigation = () => {
                                         setOpenKeys([]);
                                       }}
                                       to={children4.path}
+                                      title={t(`menus.${children4.label}`) || ""}
                                     >
                                       {t(`menus.${children4.label}`)}
                                     </Link>
@@ -220,6 +221,7 @@ export const SidebarNavigation = () => {
                                   setOpenKeys([]);
                                 }}
                                 to={children3.path}
+                                title={t(`menus.${children3.label}`) || ""}
                               >
                                 {t(`menus.${children3.label}`)}
                               </Link>
@@ -244,6 +246,7 @@ export const SidebarNavigation = () => {
                             setOpenKeys([]);
                           }}
                           to={children2.path}
+                          title={t(`menus.${children2.label}`) || ""}
                         >
                           {t(`menus.${children2.label}`)}
                         </Link>
@@ -268,6 +271,7 @@ export const SidebarNavigation = () => {
                       setOpenKeys([]);
                     }}
                     to={children1.path}
+                    title={t(`menus.${children1.label}`) || ""}
                   >
                     {t(`menus.${children1.label}`)}
                   </Link>

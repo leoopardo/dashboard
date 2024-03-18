@@ -4,7 +4,7 @@ import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { useGetCheckCpf } from "@src/services/consult/persons/checkDocument";
 import { useGetCheckCpfDetails } from "@src/services/consult/persons/checkDocumentsDetails";
-import { Button, Descriptions, Input, Space } from "antd";
+import { Button, Descriptions, Input, Select, Space } from "antd";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import ReactInputMask from "react-input-mask";
@@ -16,6 +16,7 @@ export const CheckDocument = () => {
   const [search, setSearch] = useState<string>("");
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const isMobile = useMediaQuery({ maxWidth: "750px" });
+  const [searchOption, setSearchOption] = useState<string>("cpf");
 
   const {
     CheckCpfData,
@@ -30,14 +31,32 @@ export const CheckDocument = () => {
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
         <Grid item xs={12} md={5} lg={5}>
           <Space.Compact block size="large">
+            <Select
+              value={searchOption}
+              onChange={(value) => setSearchOption(value)}
+              style={{ width: "40%" }}
+              options={[
+                { label: t("table.cpf"), value: "cpf" },
+                { label: t("table.cnpj"), value: "cnpj" },
+              ]}
+            />
             <ReactInputMask
               value={search}
-              mask="999.999.999-99"
+              mask={
+                searchOption === "cpf" ? "999.999.999-99" : "99.999.999/9999-99"
+              }
               onChange={(event) => {
                 setSearch(event.target.value);
               }}
             >
-              <Input size="large" placeholder={t("table.cpf") || ""} />
+              <Input
+                size="large"
+                placeholder={
+                  searchOption === "cpf"
+                    ? t("table.cpf") || ""
+                    : t("table.cnpj") || ""
+                }
+              />
             </ReactInputMask>
             <Button
               type="primary"
@@ -77,7 +96,7 @@ export const CheckDocument = () => {
         </Grid>
       </Grid>
       <Grid container style={{ marginTop: "25px" }}>
-        {CheckCpfDataSuccess && (
+        {CheckCpfDataSuccess && CheckCpfData && (
           <Grid
             container
             item
