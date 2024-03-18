@@ -20,7 +20,7 @@
     "merchant_blacklist": "Merchants blacklist",
     "merchant_reports": "Merchants reports",
     "person": "Persons",
-    "persons": "Persons",
+    "persons": "Physical persons",
     "whitelist": "Whitelist",
     "person_accounts": "Customer banks",
     "person_blacklist": "Persons blacklist",
@@ -1017,7 +1017,17 @@
     "serpro_count": "Serpro CPF",
     "serpro_cnpj_count": "Serpro CNPJ",
     "waiting_refund_to_end_user": "Waiting refund to end user",
-    "document_type": "Document type"
+    "document_type": "Document type",
+    "legal_nature_description": "Legal nature",
+    "business_name": "Razão social",
+    "registration_status_description": "Registration status",
+    "cnpj/active": "CNPJ active",
+    "cnpj/not found": "CNPJ not found",
+    "cnpj/suspended": "CNPJ suspended",
+    "cnpj/canceled": "CNPJ canceled",
+    "cnpj/inactive": "CNPJ inactive",
+    "registration_status_date": "Registration status date",
+    "registration_status_reason": "Registration status reason"
   },
   "actions": {
     "details": "Details",
