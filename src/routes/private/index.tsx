@@ -96,12 +96,14 @@ import { PermissionsGroups } from "./Pages/register/permissionsGroups";
 import { Persons } from "./Pages/register/persons";
 import { PersonBlacklistReasons } from "./Pages/register/persons/blacklist/blacklistReasons";
 import { ImportPersonsBlacklist } from "./Pages/register/persons/blacklist/importBlacklist";
+import { ImportLegalPersonsBlacklist } from "./Pages/register/persons/legalPersons/blacklist/importBlacklist";
 import { PersonBlacklistUploads } from "./Pages/register/persons/blacklist/uploads";
 import { CostumerBanks } from "./Pages/register/persons/customerBankList";
 import { PersonDetails } from "./Pages/register/persons/personDetails";
 import { PersonUpdate } from "./Pages/register/persons/personUpdate";
 import { CustomerBanksReports } from "./Pages/register/persons/reports/customerBanks";
 import { PersonsReports } from "./Pages/register/persons/reports/persons";
+import { LegalPersonsReports } from "./Pages/register/persons/legalPersons/reports/persons";
 import { AuthLogs } from "./Pages/support/apiLogs/AuthLogs";
 import { DepositsErrors } from "./Pages/support/apiLogs/DepositsErrors";
 import { WithdrawalsErrors } from "./Pages/support/apiLogs/WithdrawalsErrors";
@@ -1346,6 +1348,48 @@ export const PrivateRoutes = () => {
                 }
               />
             </Route>
+            {/* AJUSTAR PERMISSÕES*/}
+            <Route path="legal_person_blacklist">
+              <Route
+                path="upload_person_blacklist"
+                element={
+                  <Permission
+                    permission={
+                      responseValidate?.permissions?.register?.person?.blacklist
+                        ?.import_csv?.person_blacklist_import_csv
+                    }
+                  >
+                    <ImportLegalPersonsBlacklist />
+                  </Permission>
+                }
+              />
+              <Route
+                path="person_blacklist_uploads"
+                element={
+                  <Permission
+                    permission={
+                      responseValidate?.permissions?.register?.person?.blacklist
+                        ?.import_csv?.person_blacklist_import_csv
+                    }
+                  >
+                    <PersonBlacklistUploads />
+                  </Permission>
+                }
+              />
+              <Route
+                path="person_blacklist_reasons"
+                element={
+                  <Permission
+                    permission={
+                      responseValidate?.permissions?.register?.person?.blacklist
+                        ?.reason?.menu
+                    }
+                  >
+                    <PersonBlacklistReasons />
+                  </Permission>
+                }
+              />
+            </Route>
             <Route path="person_reports">
               <Route
                 path="person_persons_reports"
@@ -1357,6 +1401,35 @@ export const PrivateRoutes = () => {
                     }
                   >
                     <PersonsReports />
+                  </Permission>
+                }
+              />
+              <Route
+                path="client_bank_reports"
+                element={
+                  <Permission
+                    permission={
+                      responseValidate?.permissions?.register?.person
+                        ?.client_banks?.person_client_banks_export_csv
+                    }
+                  >
+                    <CustomerBanksReports />
+                  </Permission>
+                }
+              />
+            </Route>
+            {/* AJUSTAR PERMISSÕES */}
+            <Route path="legal_person_reports">
+              <Route
+                path="legal_persons"
+                element={
+                  <Permission
+                    permission={
+                      responseValidate?.permissions?.register?.person?.person
+                        ?.person_person_export_csv
+                    }
+                  >
+                    <LegalPersonsReports />
                   </Permission>
                 }
               />

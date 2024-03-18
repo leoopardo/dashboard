@@ -167,7 +167,11 @@
     "current_accounts": "Contas Corrente",
     "consult_person_reports": "Relatórios",
     "recents": "Recentes",
-    "serpro_assertiva": "Totalizador de consultas"
+    "serpro_assertiva": "Totalizador de consultas",
+    "physical_persons": "Pessoas físicas",
+    "legal_persons": "Pessoas jurídicas",
+    "legal_person_blacklist": "Blacklist pessoas jurídicas",
+    "legal_person_reports": "Relatórios"
   },
 
   "titles": {
