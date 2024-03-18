@@ -6,18 +6,18 @@ import { queryClient } from "@src/services/queryClient";
 import { ValidateInterface } from "@src/services/types/validate.interface";
 import { getUtcOffset } from "@src/utils/getUtc";
 import {
-    Button,
-    Checkbox,
-    Col,
-    ConfigProvider,
-    DatePicker,
-    Form,
-    FormInstance,
-    Row,
-    Segmented,
-    Select,
-    Slider,
-    Typography
+  Button,
+  Checkbox,
+  Col,
+  ConfigProvider,
+  DatePicker,
+  Form,
+  FormInstance,
+  Row,
+  Segmented,
+  Select,
+  Slider,
+  Typography,
 } from "antd";
 import locale from "antd/locale/pt_BR";
 import dayjs from "dayjs";
@@ -58,7 +58,7 @@ interface FilterModalProps {
   maxRange?: boolean;
   disabled?: string[];
   disableMinutes?: boolean;
-  submitRef?: any
+  submitRef?: any;
 }
 
 export const FiltersModalFields = ({
@@ -74,7 +74,7 @@ export const FiltersModalFields = ({
   initialQuery,
   disabled,
   disableMinutes,
-  submitRef
+  submitRef,
 }: FilterModalProps) => {
   const { permissions } = queryClient.getQueryData(
     "validate"
@@ -394,7 +394,9 @@ export const FiltersModalFields = ({
                           validator: () => {
                             if (
                               maxRange &&
-                              filtersQuery[endDateKeyName] >
+                              moment(
+                                new Date(filtersQuery[endDateKeyName])
+                              ).format("YYYY-MM-DDTHH:mm:00.000") >
                                 moment(new Date(filtersQuery[startDateKeyName]))
                                   .add(32, "days")
                                   .format("YYYY-MM-DDTHH:mm:00.000")
