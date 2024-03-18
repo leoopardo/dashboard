@@ -10,20 +10,30 @@ import { useTranslation } from "react-i18next";
 import ReactInputMask from "react-input-mask";
 import { useMediaQuery } from "react-responsive";
 import { ViewModal } from "./components/ViewModal";
+import { useGetCheckCnpj } from "@src/services/consult/persons/checkCNPJ";
+import moment from "moment";
+import { moneyFormatter } from "@src/utils/moneyFormatter";
 
 export const CheckDocument = () => {
   const { t } = useTranslation();
   const [search, setSearch] = useState<string>("");
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const isMobile = useMediaQuery({ maxWidth: "750px" });
-  const [searchOption, setSearchOption] = useState<string>("cpf");
+  const [searchOption, setSearchOption] = useState<"cpf" | "cnpj">("cpf");
 
   const {
     CheckCpfData,
     isCheckCpfDataFetching,
     refetchCheckCpfData,
     CheckCpfDataSuccess,
-  } = useGetCheckCpf(search);
+    remove,
+  } = useGetCheckCpf(searchOption === "cpf" ? search : "");
+  const {
+    CheckCnpjData,
+    isCheckCnpjDataFetching,
+    refetchCheckCnpjData,
+    removeCnpj,
+  } = useGetCheckCnpj(searchOption === "cnpj" ? search : "");
   const merchantsBlacklistData = useGetCheckCpfDetails(search);
 
   return (
@@ -33,7 +43,12 @@ export const CheckDocument = () => {
           <Space.Compact block size="large">
             <Select
               value={searchOption}
-              onChange={(value) => setSearchOption(value)}
+              onChange={(value) => {
+                setSearchOption(value);
+                setSearch("");
+                remove();
+                removeCnpj();
+              }}
               style={{ width: "40%" }}
               options={[
                 { label: t("table.cpf"), value: "cpf" },
@@ -46,6 +61,9 @@ export const CheckDocument = () => {
                 searchOption === "cpf" ? "999.999.999-99" : "99.999.999/9999-99"
               }
               onChange={(event) => {
+                if (searchOption === "cnpj") {
+                  event.target.value = event.target.value.replace(/\D/g, "");
+                }
                 setSearch(event.target.value);
               }}
             >
@@ -62,8 +80,13 @@ export const CheckDocument = () => {
               type="primary"
               loading={isCheckCpfDataFetching}
               onClickCapture={() => {
-                refetchCheckCpfData();
-                merchantsBlacklistData.refetchCheckCpfData();
+                if (searchOption === "cpf") {
+                  refetchCheckCpfData();
+                  merchantsBlacklistData.refetchCheckCpfData();
+                }
+                if (searchOption === "cnpj") {
+                  refetchCheckCnpjData();
+                }
               }}
               icon={<SearchOutlined />}
             >
@@ -79,9 +102,8 @@ export const CheckDocument = () => {
             icon={<FilterAltOffOutlinedIcon />}
             onClick={() => {
               setSearch("");
-              setTimeout(() => {
-                refetchCheckCpfData();
-              }, 100);
+              remove();
+              removeCnpj();
             }}
             style={{
               height: 40,
@@ -96,7 +118,7 @@ export const CheckDocument = () => {
         </Grid>
       </Grid>
       <Grid container style={{ marginTop: "25px" }}>
-        {CheckCpfDataSuccess && CheckCpfData && (
+        {CheckCpfDataSuccess && CheckCpfData && searchOption === "cpf" && (
           <Grid
             container
             item
@@ -120,6 +142,7 @@ export const CheckDocument = () => {
             column={isMobile ? 1 : 3}
           >
             {CheckCpfData &&
+              searchOption === "cpf" &&
               Object.keys(CheckCpfData).map((key: string, index) => {
                 switch (key) {
                   case "birth_date":
@@ -128,7 +151,7 @@ export const CheckDocument = () => {
                         key={key}
                         label={t(`table.${key}`)}
                         labelStyle={{
-                          maxWidth: "120px !important",
+                          maxWidth: "140px !important",
                           margin: 0,
                           padding: 0,
                           textAlign: "center",
@@ -148,7 +171,7 @@ export const CheckDocument = () => {
                         key={key}
                         label={t(`table.${key}`)}
                         labelStyle={{
-                          maxWidth: "120px !important",
+                          maxWidth: "140px !important",
                           margin: 0,
                           padding: 0,
                           textAlign: "center",
@@ -167,7 +190,7 @@ export const CheckDocument = () => {
                         key={key}
                         label={t(`table.${key}`)}
                         labelStyle={{
-                          maxWidth: "120px !important",
+                          maxWidth: "140px !important",
                           margin: 0,
                           padding: 0,
                           textAlign: "center",
@@ -183,7 +206,7 @@ export const CheckDocument = () => {
                         key={index}
                         label={t(`table.${key}`)}
                         labelStyle={{
-                          maxWidth: "120px !important",
+                          maxWidth: "140px !important",
                           margin: 0,
                           padding: 0,
                           textAlign: "center",
@@ -194,38 +217,304 @@ export const CheckDocument = () => {
                     );
                 }
               })}
-            {CheckCpfData && merchantsBlacklistData?.CheckCpfData?.total && (
+            {!isCheckCnpjDataFetching &&
+              CheckCpfData &&
+              merchantsBlacklistData?.CheckCpfData?.total &&
+              searchOption === "cpf" && (
+                <>
+                  {merchantsBlacklistData?.CheckCpfData?.total > 0 ? (
+                    <Descriptions.Item
+                      key={"merchant_blacklist"}
+                      label={t(`table.merchant_blacklist`)}
+                      labelStyle={{
+                        maxWidth: "140px !important",
+                        margin: 0,
+                        padding: 0,
+                        textAlign: "center",
+                      }}
+                    >
+                      {t("table.true")}
+                    </Descriptions.Item>
+                  ) : (
+                    <Descriptions.Item
+                      key={"merchant_blacklist"}
+                      label={t(`table.merchant_blacklist`)}
+                      labelStyle={{
+                        maxWidth: "140px !important",
+                        margin: 0,
+                        padding: 0,
+                        textAlign: "center",
+                      }}
+                    >
+                      {t("table.false")}
+                    </Descriptions.Item>
+                  )}
+                </>
+              )}
+
+            {CheckCnpjData && searchOption === "cnpj" && (
               <>
-                {merchantsBlacklistData?.CheckCpfData?.total > 0 ? (
-                  <Descriptions.Item
-                    key={"merchant_blacklist"}
-                    label={t(`table.merchant_blacklist`)}
-                    labelStyle={{
-                      maxWidth: "120px !important",
-                      margin: 0,
-                      padding: 0,
-                      textAlign: "center",
-                    }}
-                  >
-                    {t("table.true")}
-                  </Descriptions.Item>
-                ) : (
-                  <Descriptions.Item
-                    key={"merchant_blacklist"}
-                    label={t(`table.merchant_blacklist`)}
-                    labelStyle={{
-                      maxWidth: "120px !important",
-                      margin: 0,
-                      padding: 0,
-                      textAlign: "center",
-                    }}
-                  >
-                    {t("table.false")}
-                  </Descriptions.Item>
-                )}
+                <Descriptions.Item
+                  key={"business_name"}
+                  label={t(`table.business_name`)}
+                  labelStyle={{
+                    maxWidth: "140px !important",
+                    margin: 0,
+                    padding: 0,
+                    textAlign: "center",
+                  }}
+                >
+                  {CheckCnpjData?.business_name}
+                </Descriptions.Item>
+                <Descriptions.Item
+                  key={"email"}
+                  label={t(`table.email`)}
+                  labelStyle={{
+                    maxWidth: "140px !important",
+                    margin: 0,
+                    padding: 0,
+                    textAlign: "center",
+                  }}
+                >
+                  {CheckCnpjData?.email}
+                </Descriptions.Item>
+                <Descriptions.Item
+                  key={"country"}
+                  label={t(`table.country`)}
+                  labelStyle={{
+                    maxWidth: "140px !important",
+                    margin: 0,
+                    padding: 0,
+                    textAlign: "center",
+                  }}
+                >
+                  {CheckCnpjData?.address_country}
+                </Descriptions.Item>
+                <Descriptions.Item
+                  key={"legal_nature_description"}
+                  label={t(`table.legal_nature_description`)}
+                  labelStyle={{
+                    maxWidth: "140px !important",
+                    margin: 0,
+                    padding: 0,
+                    textAlign: "center",
+                  }}
+                >
+                  {CheckCnpjData?.legal_nature_description}
+                </Descriptions.Item>
+                <Descriptions.Item
+                  key={"cellphone"}
+                  label={t(`table.cellphone`)}
+                  labelStyle={{
+                    maxWidth: "140px !important",
+                    margin: 0,
+                    padding: 0,
+                    textAlign: "center",
+                  }}
+                >
+                  {CheckCnpjData?.phone}
+                </Descriptions.Item>
+                <Descriptions.Item
+                  key={"state"}
+                  label={t(`table.state`)}
+                  labelStyle={{
+                    maxWidth: "140px !important",
+                    margin: 0,
+                    padding: 0,
+                    textAlign: "center",
+                  }}
+                >
+                  {CheckCnpjData?.address_state}
+                </Descriptions.Item>
+                <Descriptions.Item
+                  key={"registration_status_description"}
+                  label={t(`table.registration_status_description`)}
+                  labelStyle={{
+                    maxWidth: "140px !important",
+                    margin: 0,
+                    padding: 0,
+                    textAlign: "center",
+                  }}
+                >
+                  {t(
+                    `table.${CheckCnpjData?.registration_status_description?.toLowerCase()}`
+                  )}
+                </Descriptions.Item>
+                <Descriptions.Item
+                  key={"registration_status_date"}
+                  label={t(`table.registration_status_date`)}
+                  labelStyle={{
+                    maxWidth: "140px !important",
+                    margin: 0,
+                    padding: 0,
+                    textAlign: "center",
+                  }}
+                >
+                  {CheckCnpjData?.registration_status_date
+                    ? moment(new Date(CheckCnpjData?.registration_status_date))
+                        .utc()
+                        .format(
+                          navigator.language === "pt-BR"
+                            ? "DD/MM/YYYY HH:mm"
+                            : "YYYY/MM/DD HH:mm"
+                        )
+                    : "-"}
+                </Descriptions.Item>
+                <Descriptions.Item
+                  key={"neighborhood"}
+                  label={t(`table.neighborhood`)}
+                  labelStyle={{
+                    maxWidth: "140px !important",
+                    margin: 0,
+                    padding: 0,
+                    textAlign: "center",
+                  }}
+                >
+                  {CheckCnpjData?.address_neighborhood}
+                </Descriptions.Item>
+                <Descriptions.Item
+                  key={"registration_status_reason"}
+                  label={t(`table.registration_status_reason`)}
+                  labelStyle={{
+                    maxWidth: "140px !important",
+                    margin: 0,
+                    padding: 0,
+                    textAlign: "center",
+                  }}
+                >
+                  {CheckCnpjData?.registration_status_reason ?? "-"}
+                </Descriptions.Item>
+                <Descriptions.Item
+                  key={"last_check"}
+                  label={t(`table.last_check`)}
+                  labelStyle={{
+                    maxWidth: "140px !important",
+                    margin: 0,
+                    padding: 0,
+                    textAlign: "center",
+                  }}
+                >
+                  {CheckCnpjData?.last_check
+                    ? moment(new Date(CheckCnpjData?.last_check))
+                        .utc()
+                        .format(
+                          navigator.language === "pt-BR"
+                            ? "DD/MM/YYYY HH:mm"
+                            : "YYYY/MM/DD HH:mm"
+                        )
+                    : "-"}
+                </Descriptions.Item>
+                <Descriptions.Item
+                  key={"street"}
+                  label={t(`table.street`)}
+                  labelStyle={{
+                    maxWidth: "140px !important",
+                    margin: 0,
+                    padding: 0,
+                    textAlign: "center",
+                  }}
+                >
+                  {CheckCnpjData?.address_street}
+                </Descriptions.Item>
+                <Descriptions.Item
+                  key={"main_cnae_code"}
+                  label={t(`table.main_cnae_code`)}
+                  labelStyle={{
+                    maxWidth: "140px !important",
+                    margin: 0,
+                    padding: 0,
+                    textAlign: "center",
+                  }}
+                >
+                  {CheckCnpjData?.main_cnae_code}
+                </Descriptions.Item>
               </>
             )}
           </Descriptions>
+          {CheckCnpjData && searchOption === "cnpj" && (
+            <Descriptions
+              bordered
+              style={{ margin: 0, padding: 0 }}
+              column={isMobile ? 1 : 3}
+            >
+              <Descriptions.Item
+                key={"black_list"}
+                label={t(`table.black_list`)}
+                labelStyle={{
+                  maxWidth: "140px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {CheckCnpjData?.black_list ? t("table.true") : t("table.false")}
+              </Descriptions.Item>
+              <Descriptions.Item
+                key={"flag_pep"}
+                label={t(`table.flag_pep`)}
+                labelStyle={{
+                  maxWidth: "140px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {CheckCnpjData?.flag_pep ? t("table.true") : t("table.false")}
+              </Descriptions.Item>
+              <Descriptions.Item
+                key={"flag_alert"}
+                label={t(`table.flag_alert`)}
+                labelStyle={{
+                  maxWidth: "140px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {CheckCnpjData?.flag_alert}
+              </Descriptions.Item>
+              <Descriptions.Item
+                key={"cash_in_max_value"}
+                label={t(`table.cash_in_max_value`)}
+                labelStyle={{
+                  maxWidth: "140px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {CheckCnpjData?.cash_in_max_value
+                  ? moneyFormatter(CheckCnpjData?.cash_in_max_value)
+                  : "-"}
+              </Descriptions.Item>
+              <Descriptions.Item
+                key={"cash_out_max_value"}
+                label={t(`table.cash_out_max_value`)}
+                labelStyle={{
+                  maxWidth: "140px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {CheckCnpjData?.cash_out_max_value
+                  ? moneyFormatter(CheckCnpjData?.cash_out_max_value)
+                  : "-"}
+              </Descriptions.Item>
+              <Descriptions.Item
+                key={"cash_out_transaction_limit"}
+                label={t(`table.cash_out_transaction_limit`)}
+                labelStyle={{
+                  maxWidth: "140px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {CheckCnpjData?.cash_out_transaction_limit ?? "-"}
+              </Descriptions.Item>
+            </Descriptions>
+          )}
         </Grid>
       </Grid>
 
