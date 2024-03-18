@@ -19,7 +19,7 @@ export const CheckDocument = () => {
   const [search, setSearch] = useState<string>("");
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const isMobile = useMediaQuery({ maxWidth: "750px" });
-  const [searchOption, setSearchOption] = useState<"cpf" | "cnpj">("cpf");
+  const [searchOption, setSearchOption] = useState<string>("cpf");
 
   const {
     CheckCpfData,
