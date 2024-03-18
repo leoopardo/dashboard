@@ -184,8 +184,8 @@ export const OrganizationCategories = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        {permissions.register.paybrokers.release_category
-          .paybrokers_release_category_create && (
+        {permissions?.register?.paybrokers?.release_category
+          ?.paybrokers_release_category_create && (
           <Grid item xs={12} md={3} lg={2}>
             <Button
               ref={ref4}
@@ -208,8 +208,8 @@ export const OrganizationCategories = () => {
           </Grid>
         )}
 
-        {permissions.register.paybrokers.release_category
-          .paybrokers_release_category_export_csv && (
+        {permissions?.register?.paybrokers?.release_category
+          ?.paybrokers_release_category_export_csv && (
           <Grid item xs={12} md="auto" ref={ref5}>
             <ExportReportsModal
               disabled={!CategoriesData?.total || CategoriesDataError}
@@ -237,8 +237,8 @@ export const OrganizationCategories = () => {
                   setIsViewModalOpen(true);
                 },
               },
-              permissions.register.paybrokers.release_category
-                .paybrokers_release_category_update && {
+              permissions?.register?.paybrokers?.release_category
+                ?.paybrokers_release_category_update && {
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
                 onClick: () => {
@@ -350,16 +350,16 @@ export const OrganizationCategories = () => {
         searchByNameStepRef={ref2}
         removeFiltersStepRef={ref3}
         createRegisterStep={
-          permissions.register.paybrokers.release_category
-            .paybrokers_release_category_create && {
+          permissions?.register?.paybrokers?.release_category
+            ?.paybrokers_release_category_create && {
             title: t("wiki.register_categories"),
             description: t("wiki.register_categories_description"),
             target: () => ref4.current,
           }
         }
         exportCsvStep={
-          permissions.register.paybrokers.release_category
-            .paybrokers_release_category_export_csv && {
+          permissions?.register?.paybrokers?.release_category
+            ?.paybrokers_release_category_export_csv && {
             title: t("wiki.generate_reports"),
             description: (
               <Typography>

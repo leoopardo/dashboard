@@ -247,7 +247,7 @@ export const NewUserModalFields = ({
             onChange={handleChangeUserBody}
           />
         </Form.Item>
-        {permissions.register.aggregator.aggregator.aggregator_list &&
+        {permissions?.register?.aggregator?.aggregator?.aggregator_list &&
           !user.aggregator_id &&
           action === "create" && (
             <Form.Item

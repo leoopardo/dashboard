@@ -142,7 +142,7 @@ export const BankBlacklist = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        {permissions.support.blacklist.banks.support_blacklist_bank_create && (
+        {permissions?.support?.blacklist?.banks?.support_blacklist_bank_create && (
           <Grid item xs={12} md={3} lg={2}>
             <Button
               type="primary"
@@ -163,8 +163,8 @@ export const BankBlacklist = () => {
           </Grid>
         )}
 
-        {permissions.support.blacklist.banks
-          .support_blacklist_bank_export_csv && (
+        {permissions?.support?.blacklist?.banks
+          ?.support_blacklist_bank_export_csv && (
           <Grid item xs={12} md="auto">
             <ExportReportsModal
               disabled={!BankBlacklist?.total || BankBlacklistError}
@@ -197,7 +197,7 @@ export const BankBlacklist = () => {
             refetch={refetchBankBlacklist}
             loading={isBankBlacklistFetching}
             actions={
-              permissions.support.blacklist.banks.support_blacklist_bank_delete
+              permissions?.support?.blacklist?.banks?.support_blacklist_bank_delete
                 ? [
                     {
                       label: "delete",

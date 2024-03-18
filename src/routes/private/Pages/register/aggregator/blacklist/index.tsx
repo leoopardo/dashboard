@@ -185,8 +185,8 @@ export const AggregatorBlacklist = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        {permissions.register.aggregator.blacklist
-          .aggregator_blacklist_create && (
+        {permissions?.register?.aggregator?.blacklist
+          ?.aggregator_blacklist_create && (
           <Grid item xs={12} md={2} lg={2}>
             <Button
               ref={ref5}
@@ -207,8 +207,8 @@ export const AggregatorBlacklist = () => {
           </Grid>
         )}
 
-        {permissions.register.aggregator.blacklist
-          .aggregator_blacklist_export_csv && (
+        {permissions?.register?.aggregator?.blacklist
+          ?.aggregator_blacklist_export_csv && (
           <Grid item xs={12} md={2} ref={ref6}>
             <ExportReportsModal
               disabled={
@@ -302,14 +302,14 @@ export const AggregatorBlacklist = () => {
         searchFilterStepRef={ref1}
         removeFiltersStepRef={ref4}
         createRegisterStep={
-          permissions.register.aggregator.users.aggregator_user_create && {
+          permissions?.register?.aggregator?.users?.aggregator_user_create && {
             title: t("wiki.register_self_exclusion"),
             description: t("wiki.register_self_exclusion_descriptions"),
             target: () => ref5.current,
           }
         }
         exportCsvStep={
-          permissions.register.aggregator.users.aggregator_user_export_csv && {
+          permissions?.register?.aggregator?.users?.aggregator_user_export_csv && {
             title: t("wiki.generate_reports"),
             description: (
               <Typography>

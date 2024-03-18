@@ -333,7 +333,7 @@ export const PrivateRoutes = () => {
                   <Permission
                     permission={
                       responseValidate?.permissions?.report?.deposit
-                        ?.paid_deposit.report_deposit_paid_deposit_export_csv
+                        ?.paid_deposit?.report_deposit_paid_deposit_export_csv
                     }
                   >
                     <PaidDepositsReports />
@@ -477,7 +477,7 @@ export const PrivateRoutes = () => {
                 <Permission
                   permission={
                     responseValidate?.permissions?.report?.chargeback
-                      ?.manual_deposit_chargeback.menu
+                      ?.manual_deposit_chargeback?.menu
                   }
                 >
                   <RefundDepositsManual />
@@ -1312,7 +1312,7 @@ export const PrivateRoutes = () => {
                   <Permission
                     permission={
                       responseValidate?.permissions?.register?.person?.blacklist
-                        ?.import_csv.person_blacklist_import_csv
+                        ?.import_csv?.person_blacklist_import_csv
                     }
                   >
                     <ImportPersonsBlacklist />
@@ -1325,7 +1325,7 @@ export const PrivateRoutes = () => {
                   <Permission
                     permission={
                       responseValidate?.permissions?.register?.person?.blacklist
-                        ?.import_csv.person_blacklist_import_csv
+                        ?.import_csv?.person_blacklist_import_csv
                     }
                   >
                     <PersonBlacklistUploads />
@@ -1338,7 +1338,7 @@ export const PrivateRoutes = () => {
                   <Permission
                     permission={
                       responseValidate?.permissions?.register?.person?.blacklist
-                        .reason.menu
+                        ?.reason?.menu
                     }
                   >
                     <PersonBlacklistReasons />
@@ -1434,7 +1434,7 @@ export const PrivateRoutes = () => {
                   <Permission
                     permission={
                       responseValidate?.permissions?.transactions?.paybrokers
-                        ?.internal_transfers.menu
+                        ?.internal_transfers?.menu
                     }
                   >
                     <OrganizationTransferBetweenAccountsReports />
@@ -1740,7 +1740,7 @@ export const PrivateRoutes = () => {
                   <Permission
                     permission={
                       responseValidate?.permissions?.support?.contestation
-                        ?.deposits?.import_csv.menu
+                        ?.deposits?.import_csv?.menu
                     }
                   >
                     <ImportContastationDeposit />

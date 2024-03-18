@@ -179,7 +179,7 @@ export const Licenses = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        {permissions.register.licenses.licenses.license_create && (
+        {permissions?.register?.licenses?.licenses?.license_create && (
           <Grid item xs={12} md={3} lg={2}>
             <Button
               type="primary"
@@ -201,7 +201,7 @@ export const Licenses = () => {
           </Grid>
         )}
 
-        {permissions.register.licenses.licenses.license_export_csv && (
+        {permissions?.register?.licenses?.licenses?.license_export_csv && (
           <Grid item xs={12} md="auto">
             <Tooltip
               placement="topRight"
@@ -244,7 +244,7 @@ export const Licenses = () => {
                   setIsViewModalOpen(true);
                 },
               },
-              permissions.register.licenses.licenses.license_update && {
+              permissions?.register?.licenses?.licenses?.license_update && {
                 id: "table-edit-button",
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
@@ -252,7 +252,7 @@ export const Licenses = () => {
                   navigate("update", { state: item });
                 },
               },
-              permissions.register.licenses.licenses.license_delete && {
+              permissions?.register?.licenses?.licenses?.license_delete && {
                 label: "delete",
                 icon: <DeleteOutlined style={{ fontSize: "20px" }} />,
                 onClick: () => {

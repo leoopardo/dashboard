@@ -193,8 +193,8 @@ export const MerchantManual = () => {
                 return;
             }
           })}
-        {permissions.transactions.merchant.manual_transactions
-          .merchant_manual_transactions_create && (
+        {permissions?.transactions?.merchant?.manual_transactions
+          ?.merchant_manual_transactions_create && (
           <Grid container item xs={12} md={4} lg={2} rowSpacing={1}>
             <Grid item xs={12}>
               <Button
@@ -303,8 +303,8 @@ export const MerchantManual = () => {
               {t("table.clear_filters")}
             </Button>
           </Grid>
-          {permissions.transactions.merchant.manual_transactions
-            .merchant_manual_transactions_export_csv && (
+          {permissions?.transactions?.merchant?.manual_transactions
+            ?.merchant_manual_transactions_export_csv && (
             <Grid item xs={12} md={3} lg={3}>
               <ExportReportsModal
                 disabled={

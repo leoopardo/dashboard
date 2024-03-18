@@ -123,7 +123,7 @@ export const MerchantFeePlans = () => {
             setQuery={setQuery}
           />
         </Grid>
-        {permissions.register.merchant.fee_plans.merchant_fee_plans_create && (
+        {permissions?.register?.merchant?.fee_plans?.merchant_fee_plans_create && (
           <Grid item xs={12} md={3} lg={2}>
             <Button
               type="primary"
@@ -169,16 +169,16 @@ export const MerchantFeePlans = () => {
                   setIsViewModalOpen(true);
                 },
               },
-              permissions.register.merchant.fee_plans
-                .merchant_fee_plans_update && {
+              permissions?.register?.merchant?.fee_plans
+                ?.merchant_fee_plans_update && {
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
                 onClick: () => {
                   setIsUpdateModalOpen(true);
                 },
               },
-              permissions.register.merchant.fee_plans
-                .merchant_fee_plans_delete && {
+              permissions?.register?.merchant?.fee_plans
+                ?.merchant_fee_plans_delete && {
                 label: "delete",
                 icon: <DeleteOutlined style={{ fontSize: "20px" }} />,
                 onClick: () => setIsConfirmOpen(true),

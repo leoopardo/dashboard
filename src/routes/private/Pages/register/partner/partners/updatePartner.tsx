@@ -373,7 +373,7 @@ export const UpdatePartner = () => {
         </Form>
       ),
     },
-    permissions.register.partner.partner.partner_responsible_list && {
+    permissions?.register?.partner?.partner?.partner_responsible_list && {
       key: "2",
       label: t("table.responsibles"),
       children: (
@@ -399,8 +399,8 @@ export const UpdatePartner = () => {
                 setQuery={setResponsibleQuery}
               />
             </Col>
-            {permissions.register.partner.partner
-              .partner_responsible_create && (
+            {permissions?.register?.partner?.partner
+              ?.partner_responsible_create && (
               <Col xs={{ span: 24 }} md={{ span: 8 }} lg={{ span: 5 }}>
                 <Button
                   size="large"
@@ -422,8 +422,8 @@ export const UpdatePartner = () => {
               setCurrentItem={setCurrentResponsible}
               setQuery={setResponsibleQuery}
               actions={[
-                permissions.register.partner.partner
-                  .partner_responsible_update && {
+                permissions?.register?.partner?.partner
+                  ?.partner_responsible_update && {
                   label: "edit",
                   icon: <EditOutlined style={{ fontSize: "20px" }} />,
                   onClick: (item) => {
@@ -437,8 +437,8 @@ export const UpdatePartner = () => {
                     setIsUpdateResponsibleOpen(true);
                   },
                 },
-                permissions.register.partner.partner
-                  .partner_responsible_delete && {
+                permissions?.register?.partner?.partner
+                  ?.partner_responsible_delete && {
                   label: "delete",
                   icon: <DeleteOutlined style={{ fontSize: "20px" }} />,
                   onClick: () => {
@@ -538,7 +538,7 @@ export const UpdatePartner = () => {
         </Row>
       ),
     },
-    permissions.register.partner.partner.partner_files_list && {
+    permissions?.register?.partner?.partner?.partner_files_list && {
       key: "3",
       label: t("table.attachments"),
       children: PartnerAttachmentIsLoading ? (
@@ -561,7 +561,7 @@ export const UpdatePartner = () => {
               listType="picture"
               multiple={false}
               disabled={
-                !permissions.register.partner.partner.partner_files_create
+                !permissions?.register?.partner?.partner?.partner_files_create
               }
               onRemove={(file) => {
                 setDeleteFileId(file?.uid);

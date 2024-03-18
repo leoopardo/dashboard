@@ -409,7 +409,7 @@ export const UpdateOperator = () => {
         </Form>
       ),
     },
-    permissions.register.operator.operator.operator_responsible_list && {
+    permissions?.register?.operator?.operator?.operator_responsible_list && {
       key: "2",
       label: t("table.responsibles"),
       children: (
@@ -435,8 +435,8 @@ export const UpdateOperator = () => {
                 setQuery={setResponsibleQuery}
               />
             </Col>
-            {permissions.register.operator.operator
-              .operator_responsible_create && (
+            {permissions?.register?.operator?.operator
+              ?.operator_responsible_create && (
               <Col xs={{ span: 24 }} md={{ span: 8 }} lg={{ span: 5 }}>
                 <Button
                   size="large"
@@ -458,8 +458,8 @@ export const UpdateOperator = () => {
               setCurrentItem={setCurrentResponsible}
               setQuery={setResponsibleQuery}
               actions={[
-                permissions.register.operator.operator
-                  .operator_responsible_update && {
+                permissions?.register?.operator?.operator
+                  ?.operator_responsible_update && {
                   label: "edit",
                   icon: <EditOutlined style={{ fontSize: "20px" }} />,
                   onClick: (item) => {
@@ -473,8 +473,8 @@ export const UpdateOperator = () => {
                     setIsUpdateResponsibleOpen(true);
                   },
                 },
-                permissions.register.operator.operator
-                  .operator_responsible_delete && {
+                permissions?.register?.operator?.operator
+                  ?.operator_responsible_delete && {
                   label: "delete",
                   icon: <DeleteOutlined style={{ fontSize: "20px" }} />,
                   onClick: () => {
@@ -574,7 +574,7 @@ export const UpdateOperator = () => {
         </Row>
       ),
     },
-    permissions.register.operator.operator.operator_files_list && {
+    permissions?.register?.operator?.operator?.operator_files_list && {
       key: "3",
       label: t("table.attachments"),
       children: OperatorAttachmentIsLoading ? (
@@ -596,7 +596,7 @@ export const UpdateOperator = () => {
               style={{ maxHeight: "150px" }}
               listType="picture"
               disabled={
-                !permissions.register.operator.operator.operator_files_create
+                !permissions?.register?.operator?.operator?.operator_files_create
               }
               multiple={false}
               onRemove={(file) => {

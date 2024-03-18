@@ -157,8 +157,8 @@ export const RefundDeposits = () => {
         loading={isRefundDepositsTotalFetching}
         query={query}
       />
-      {permissions.report.deposit.generated_deposit
-        .report_deposit_generated_deposit_list_totals &&
+      {permissions?.report?.deposit?.generated_deposit
+        ?.report_deposit_generated_deposit_list_totals &&
         !isRefundDepositsTotalFetching &&
         refundDepositsTotalError && (
           <Col span={24}>

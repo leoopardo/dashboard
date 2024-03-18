@@ -63,7 +63,7 @@ export const NewUserModalFields = ({
     useCreatePartnerUser(body);
   const { updateLoading } = useUpdatePartnerUser({
     ...body,
-    partner_id: body?.partner_id || currentUser?.partner_id || user.partner_id,
+    partner_id: body?.partner_id || currentUser?.partner_id || user?.partner_id,
   });
   function handleChangeUserBody(event: any) {
     setBody((state) => ({
@@ -93,12 +93,12 @@ export const NewUserModalFields = ({
     if (currentUser && action === "update")
       setBody((state) => ({
         ...state,
-        name: currentUser.name,
-        group_id: currentUser.group_id,
-        user_id: currentUser.id,
-        status: currentUser.status,
-        username: currentUser.username,
-        partner_id: currentUser.partner_id,
+        name: currentUser?.name,
+        group_id: currentUser?.group_id,
+        user_id: currentUser?.id,
+        status: currentUser?.status,
+        username: currentUser?.username,
+        partner_id: currentUser?.partner_id,
         cellphone: currentUser?.cellphone,
         email: currentUser?.email,
       }));
@@ -130,7 +130,7 @@ export const NewUserModalFields = ({
       setBody({
         name: "",
         username: "",
-        partner_id: user.partner_id,
+        partner_id: user?.partner_id,
         group_id: 0,
         status: true,
         type: 2,
@@ -243,7 +243,7 @@ export const NewUserModalFields = ({
           />
         </Form.Item>
 
-        {user.permissions.register.partner.partner.partner_list &&
+        {user?.permissions?.register?.partner?.partner?.partner_list &&
           action === "create" && (
             <Form.Item
               data-test-id="partner"
