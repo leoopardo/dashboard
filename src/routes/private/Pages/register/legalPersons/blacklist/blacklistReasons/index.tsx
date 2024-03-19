@@ -5,9 +5,9 @@ import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
 import { Toast } from "@src/components/Toast";
-import { useCreatePersonBlacklistReason } from "@src/services/register/persons/blacklist/createReason";
-import { useDeletePersonReason } from "@src/services/register/persons/blacklist/deleteReason";
-import { useGetPersonBlacklistReasons } from "@src/services/register/persons/blacklist/getPersonBlacklistReasons";
+import { useCreateLegalPersonBlacklistReason } from "@src/services/register/legalPersons/blacklist/createReason";
+import { useDeleteLegalPersonReason } from "@src/services/register/legalPersons/blacklist/deleteReason";
+import { useGetLegalPersonBlacklistReasons } from "@src/services/register/legalPersons/blacklist/getPersonBlacklistReasons";
 import {
   PersonBlacklistReasonsItem,
   PersonBlacklistReasonsQuery,
@@ -22,12 +22,12 @@ const INITIAL_QUERY: PersonBlacklistReasonsQuery = {
   page: 1,
 };
 
-export const PersonBlacklistReasons = () => {
+export const LegalPersonBlacklistReasons = () => {
   const [query, setQuery] =
     useState<PersonBlacklistReasonsQuery>(INITIAL_QUERY);
   const { t } = useTranslation();
   const { reasonsIsFetching, reasonsData, reasonsError, refetchReasons } =
-    useGetPersonBlacklistReasons(query);
+    useGetLegalPersonBlacklistReasons(query);
   const [isCreateReasonOpen, setIsCreateReasonOpen] = useState(false);
   const [body, setBody] = useState<{ reason: string }>({
     reason: "",
@@ -35,15 +35,15 @@ export const PersonBlacklistReasons = () => {
   const [currentItem, setCurrentItem] =
     useState<PersonBlacklistReasonsItem | null>(null);
   const { error, isLoading, isSuccess, mutate } =
-    useCreatePersonBlacklistReason(body);
+    useCreateLegalPersonBlacklistReason(body);
   const [search, setSearch] = useState<string>("");
   const debounceSearch = useDebounce(search);
   const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false);
   const {
-    deletePersonReasonError,
-    deletePersonReasonIsSuccess,
-    deletePersonReasonMutate,
-  } = useDeletePersonReason(currentItem?.id);
+    deleteLegalPersonReasonMutate,
+    deleteLegalPersonReasonError,
+    deleteLegalPersonReasonIsSuccess,
+  } = useDeleteLegalPersonReason(currentItem?.id);
 
   const columns: ColumnInterface[] = [
     { name: "id", type: "id" },
@@ -117,7 +117,7 @@ export const PersonBlacklistReasons = () => {
               alignItems: "center",
               justifyContent: "center",
             }}
-            icon={<PlusOutlined style={{  fontSize: 22 }} />}
+            icon={<PlusOutlined style={{ fontSize: 22 }} />}
           >
             {t("buttons.new_reason")}
           </Button>
@@ -147,24 +147,24 @@ export const PersonBlacklistReasons = () => {
             isConfirmOpen={isDeleteOpen}
             setIsConfirmOpen={setIsDeleteOpen}
             itemToAction={currentItem?.reason}
-            onConfirmAction={() => deletePersonReasonMutate()}
+            onConfirmAction={() => deleteLegalPersonReasonMutate()}
           />
         </Grid>
       </Grid>
 
-        <MutateModal
-          type="create"
-          open={isCreateReasonOpen}
-          setOpen={setIsCreateReasonOpen}
-          fields={[{ label: "person_reason", required: true }]}
-          body={body}
-          setBody={setBody}
-          modalName={t("modal.new_reason")}
-          submit={mutate}
-          submitLoading={isLoading}
-          error={error}
-          success={isSuccess}
-        />
+      <MutateModal
+        type="create"
+        open={isCreateReasonOpen}
+        setOpen={setIsCreateReasonOpen}
+        fields={[{ label: "person_reason", required: true }]}
+        body={body}
+        setBody={setBody}
+        modalName={t("modal.new_reason")}
+        submit={mutate}
+        submitLoading={isLoading}
+        error={error}
+        success={isSuccess}
+      />
 
       <Toast
         actionError={t("messages.create")}
@@ -175,8 +175,8 @@ export const PersonBlacklistReasons = () => {
       <Toast
         actionError={t("messages.delete").toLowerCase()}
         actionSuccess={t("messages.deleted")}
-        error={deletePersonReasonError}
-        success={deletePersonReasonIsSuccess}
+        error={deleteLegalPersonReasonError}
+        success={deleteLegalPersonReasonIsSuccess}
       />
     </Grid>
   );

@@ -8,7 +8,7 @@ import {
   UploadOutlined,
 } from "@ant-design/icons";
 import { Toast } from "@src/components/Toast";
-import { useUpdatePersonsBlacklist } from "@src/services/register/persons/blacklist/uploadBlacklistFile";
+import { useUpdateLegalPersonsBlacklist } from "@src/services/register/legalPersons/blacklist/useUpdateLegalPersonBlacklist";
 import {
   Button,
   Col,
@@ -152,7 +152,7 @@ export const ImportLegalPersonsBlacklist = () => {
   const [dataSource, setDataSource] = useState<DataType[]>([]);
   const [body, setBody] = useState<{ content: string }>({ content: "" });
   const { error, isLoading, isSuccess, mutate } =
-    useUpdatePersonsBlacklist(body);
+  useUpdateLegalPersonsBlacklist(body);
   const uploadRef = useRef<HTMLButtonElement | null>(null);
   const { CSVDownloader } = useCSVDownloader();
 

@@ -15,18 +15,6 @@ export function Persons({ permissions }: ItemInterface): MenuRouteInterface {
         children: null,
       },
       {
-        key: "legal_persons",
-        label: "legal_persons",
-        path: "/register/person/legal_persons",
-        permission: permissions?.register?.person?.person?.menu,
-      },
-      {
-        key: "person_accounts",
-        label: "person_accounts",
-        path: "/register/person/person_accounts",
-        permission: permissions?.register?.person?.client_banks?.menu,
-      },
-      {
         key: "person_blacklist",
         label: "person_blacklist",
         permission:
@@ -55,14 +43,13 @@ export function Persons({ permissions }: ItemInterface): MenuRouteInterface {
           },
         ],
       },
-
       {
         key: "legal_persons",
         label: "legal_persons",
-        path: "/register/person/persons",
+        path: "/register/person/legal_persons",
         permission: permissions?.register?.person?.person?.menu,
-        children: null,
       },
+
       {
         key: "legal_person_blacklist",
         label: "legal_person_blacklist",
@@ -92,6 +79,14 @@ export function Persons({ permissions }: ItemInterface): MenuRouteInterface {
           },
         ],
       },
+
+      {
+        key: "person_accounts",
+        label: "person_accounts",
+        path: "/register/person/person_accounts",
+        permission: permissions?.register?.person?.client_banks?.menu,
+      },
+
       {
         key: "person_reports",
         label: "person_reports",

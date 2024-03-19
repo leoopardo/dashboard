@@ -6,7 +6,7 @@ import { CustomTable } from "@src/components/CustomTable";
 import { FiltersModal } from "@src/components/FiltersModal";
 import { FilterChips } from "@src/components/FiltersModal/filterChips";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
-import { useGetPersonBlacklistUploads } from "@src/services/register/persons/blacklist/getBlacklistUploads";
+import { useGetLegalPersonBlacklistUploads } from "@src/services/register/legalPersons/blacklist/getBlacklistUploads";
 import {
   PersonBlacklistUploadsItem,
   PersonBlacklistUploadsQuery,
@@ -16,11 +16,13 @@ import { Button } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
+const INITIAL_QUERY: PersonBlacklistUploadsQuery = {
+  limit: 25,
+  page: 1,
+};
+
 export const LegalPersonBlacklistUploads = () => {
-  const INITIAL_QUERY: PersonBlacklistUploadsQuery = {
-    limit: 25,
-    page: 1,
-  };
+  const { t } = useTranslation();
   const [query, setQuery] =
     useState<PersonBlacklistUploadsQuery>(INITIAL_QUERY);
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
@@ -30,9 +32,8 @@ export const LegalPersonBlacklistUploads = () => {
     useState<PersonBlacklistUploadsItem | null>(null);
   const debounceSearch = useDebounce(search);
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
-  const { t } = useTranslation();
   const { data, error, isFetching, refetch } =
-    useGetPersonBlacklistUploads(query);
+  useGetLegalPersonBlacklistUploads(query);
 
   useEffect(() => {
     refetch();
@@ -68,7 +69,8 @@ export const LegalPersonBlacklistUploads = () => {
           </Button>
         </Grid>
         <Grid item xs={12} md={6} lg={8}>
-          <FilterChips initial_query={INITIAL_QUERY}
+          <FilterChips
+            initial_query={INITIAL_QUERY}
             startDateKeyName="createdat_start"
             endDateKeyName="createdat_end"
             query={query}
