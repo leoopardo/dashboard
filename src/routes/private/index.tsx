@@ -119,9 +119,9 @@ import { CustomWebhookPartners } from "./Pages/register/partner/partners/compone
 import { Permission } from "./permission";
 import { Redirect } from "./redirect";
 import { SerproAssertiva } from "./Pages/consult/persons/serproAssertiva";
-import { LegalPersons } from "./Pages/register/legal_persons";
-import { LegalPersonDetails } from "./Pages/register/legal_persons/detais";
-import { LegalPersonUpdate } from "./Pages/register/legal_persons/update";
+import { LegalPersons } from "./Pages/register/legalPersons";
+import { LegalPersonDetails } from "./Pages/register/legalPersons/detais";
+import { LegalPersonUpdate } from "./Pages/register/legalPersons/update";
 export const PrivateRoutes = () => {
   const { responseValidate } = useValidate();
 
