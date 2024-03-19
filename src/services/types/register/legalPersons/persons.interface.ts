@@ -22,6 +22,8 @@ export interface LegalPersonsQuery {
   flag_pep?: boolean;
   initial_date?: string;
   final_date?: string;
+  fields?: string[];
+  comma_separate_value?: boolean
 }
 export interface LegalPersonsItem {
   _id?: string;
