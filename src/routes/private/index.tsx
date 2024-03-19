@@ -122,6 +122,7 @@ import { SerproAssertiva } from "./Pages/consult/persons/serproAssertiva";
 import { LegalPersons } from "./Pages/register/legalPersons";
 import { LegalPersonDetails } from "./Pages/register/legalPersons/detais";
 import { LegalPersonUpdate } from "./Pages/register/legalPersons/update";
+import { LegalPersonsReports } from "./Pages/register/legalPersons/reports/legalPersonsReports";
 export const PrivateRoutes = () => {
   const { responseValidate } = useValidate();
 
@@ -1406,7 +1407,19 @@ export const PrivateRoutes = () => {
                     <PersonsReports />
                   </Permission>
                 }
-              />
+              /> <Route
+              path="legal_persons_reports"
+              element={
+                <Permission
+                  permission={
+                    responseValidate?.permissions?.register?.person?.person
+                      ?.person_person_export_csv
+                  }
+                >
+                  <LegalPersonsReports />
+                </Permission>
+              }
+            />
               <Route
                 path="client_bank_reports"
                 element={

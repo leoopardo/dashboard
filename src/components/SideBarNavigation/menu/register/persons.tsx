@@ -68,6 +68,12 @@ export function Persons({ permissions }: ItemInterface): MenuRouteInterface {
             path: "/register/person/person_reports/person_persons_reports",
             permission:
               permissions?.register?.person?.person?.person_person_export_csv,
+          }, {
+            key: "legal_persons_reports",
+            label: "legal_persons",
+            path: "/register/person/person_reports/legal_persons_reports",
+            permission:
+              permissions?.register?.person?.person?.person_person_export_csv,
           },
           {
             key: "client_bank_reports",

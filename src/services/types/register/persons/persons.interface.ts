@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface PersonsQuery {
-  page: number;
-  limit: number;
-  sort_field: string;
-  sort_order: "ASC" | "DESC";
+  page?: number;
+  limit?: number;
+  sort_field?: string;
+  sort_order?: "ASC" | "DESC";
   cpf?: string;
   name?: string;
   birth_date?: string;

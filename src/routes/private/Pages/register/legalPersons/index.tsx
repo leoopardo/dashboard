@@ -3,14 +3,16 @@
 import {
   EditOutlined,
   EyeFilled,
+  FileAddOutlined,
   FilterOutlined,
-  UserAddOutlined,
+  UserAddOutlined
 } from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Search } from "@src/components/Inputs/search";
+import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
 import { Toast } from "@src/components/Toast";
@@ -18,10 +20,12 @@ import { useGetCheckCnpj } from "@src/services/consult/persons/checkCNPJ";
 import { queryClient } from "@src/services/queryClient";
 import { useGetLegalPersons } from "@src/services/register/legalPersons/getPersons";
 import { useUpdatePartner } from "@src/services/register/partner/updatePartner";
+import { useCreateLegalPersonsReports } from "@src/services/reports/register/legalPersons/createPersonReports";
+import { useGetLegalPersonReportFields } from "@src/services/reports/register/legalPersons/getPersonReportFields";
 import { LegalPersonsQuery } from "@src/services/types/register/legalPersons/persons.interface";
 import { PersonsItem } from "@src/services/types/register/persons/persons.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Col, Row, Select, Space } from "antd";
+import { Button, Col, Row, Select, Space, Tooltip } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
@@ -47,10 +51,10 @@ export const LegalPersons = () => {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<PersonsItem | null>(null);
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
-  // const [isExportReportsOpen, setIsExportReportsOpen] =
-  //   useState<boolean>(false);
-  // const [csvFields, setCsvFields] = useState<any>();
-  // const [comma, setIsComma] = useState<boolean>(false);
+  const [isExportReportsOpen, setIsExportReportsOpen] =
+    useState<boolean>(false);
+  const [csvFields, setCsvFields] = useState<any>();
+  const [comma, setIsComma] = useState<boolean>(false);
   const [createBody, setCreateBody] = useState<{ cnpj: string }>({
     cnpj: "",
   });
@@ -61,7 +65,7 @@ export const LegalPersons = () => {
     "cnpj" | "business_name" | "email" | "cellphone" | undefined
   >(undefined);
 
-  // const { fields } = useGetPersonReportFields();
+  const { fields } = useGetLegalPersonReportFields();
 
   const {
     LegalPersonsData,
@@ -70,16 +74,16 @@ export const LegalPersons = () => {
     refetchLegalPersonsData,
   } = useGetLegalPersons(query);
 
-  // const {
-  //   PersonsReportsError,
-  //   PersonsReportsIsLoading,
-  //   PersonsReportsIsSuccess,
-  //   PersonsReportsMutate,
-  // } = useCreatePersonsReports({
-  //   ...query,
-  //   fields: csvFields,
-  //   comma_separate_value: comma,
-  // });
+  const {
+    PersonsReportsError,
+    PersonsReportsIsLoading,
+    PersonsReportsIsSuccess,
+    PersonsReportsMutate,
+  } = useCreateLegalPersonsReports({
+    ...query,
+    fields: csvFields,
+    comma_separate_value: comma,
+  });
 
   const {
     CheckCnpjData,
@@ -252,7 +256,7 @@ export const LegalPersons = () => {
           </Col>
         )}
 
-        {/* {permissions?.register?.person?.person?.person_person_export_csv && (
+        {permissions?.register?.person?.person?.person_person_export_csv && (
           <Col xs={{ span: 24 }} md={{ span: 2 }}>
             <Tooltip
               placement="topRight"
@@ -279,7 +283,7 @@ export const LegalPersons = () => {
               </Button>
             </Tooltip>
           </Col>
-        )} */}
+        )}
       </Row>
 
       <Row style={{ width: "100%" }}>
@@ -387,7 +391,7 @@ export const LegalPersons = () => {
         setOpen={setIsViewModalOpen}
       />
 
-      {/* <ExportCustomReportsModal
+      <ExportCustomReportsModal
         open={isExportReportsOpen}
         setOpen={setIsExportReportsOpen}
         disabled={LegalPersonsData?.total === 0 || PersonsReportsError}
@@ -401,8 +405,8 @@ export const LegalPersons = () => {
         comma={comma}
         setIsComma={setIsComma}
         setCsvFields={setCsvFields}
-        reportName="persons"
-      /> */}
+        reportName="legalPersons"
+      />
       <Toast
         actionSuccess={t("messages.updated")}
         actionError={t("messages.update")}
