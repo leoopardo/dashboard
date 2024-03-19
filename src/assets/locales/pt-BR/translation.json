@@ -1092,7 +1092,8 @@
     "from_value_must_be_more_than_to_value": "O valor de origem deve ser maior que o valor a ser transferido.",
     "is_possible_to_create_report_from_max_30_days": "É possível criar relatórios de no máximo 30 dias.",
     "document_already_on_blacklist": "Documento já está na blacklist.",
-    "invalidCPFOrCNPJ": "Insira um CPF ou CNPJ válido."
+    "invalidCPFOrCNPJ": "Insira um CPF ou CNPJ válido.",
+    "invalid_cnpj": "CNPJ inválido."
   },
   "logs": {
     "login": "Login",

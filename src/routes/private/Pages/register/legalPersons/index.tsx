@@ -14,10 +14,10 @@ import { Search } from "@src/components/Inputs/search";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
 import { Toast } from "@src/components/Toast";
+import { useGetCheckCnpj } from "@src/services/consult/persons/checkCNPJ";
 import { queryClient } from "@src/services/queryClient";
 import { useGetLegalPersons } from "@src/services/register/legalPersons/getPersons";
 import { useUpdatePartner } from "@src/services/register/partner/updatePartner";
-import { useCreatePerson } from "@src/services/register/persons/persons/createPerson";
 import { LegalPersonsQuery } from "@src/services/types/register/legalPersons/persons.interface";
 import { PersonsItem } from "@src/services/types/register/persons/persons.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
@@ -30,7 +30,7 @@ import { useNavigate } from "react-router-dom";
 const INITIAL_QUERY: LegalPersonsQuery = {
   limit: 25,
   page: 1,
-  sort_field: "name",
+  sort_field: "created_at",
   sort_order: "DESC",
 };
 
@@ -51,8 +51,8 @@ export const LegalPersons = () => {
   //   useState<boolean>(false);
   // const [csvFields, setCsvFields] = useState<any>();
   // const [comma, setIsComma] = useState<boolean>(false);
-  const [createBody, setCreateBody] = useState<{ cpf: string }>({
-    cpf: "",
+  const [createBody, setCreateBody] = useState<{ cnpj: string }>({
+    cnpj: "",
   });
   const [updateBody, setUpdateBody] = useState<PersonsItem>({
     ...currentItem,
@@ -81,8 +81,14 @@ export const LegalPersons = () => {
   //   comma_separate_value: comma,
   // });
 
-  const { PersonIsLoading, PersonMutate, PersonError, PersonIsSuccess, reset } =
-    useCreatePerson(createBody);
+  const {
+    CheckCnpjData,
+    isCheckCnpjDataFetching,
+    refetchCheckCnpjData,
+    CheckCnpjDataError,
+    CheckCnpjDataSuccess,
+    removeCnpj,
+  } = useGetCheckCnpj(createBody.cnpj);
 
   const { UpdateError, UpdateIsLoading, UpdateMutate, UpdateIsSuccess } =
     useUpdatePartner(updateBody);
@@ -105,6 +111,11 @@ export const LegalPersons = () => {
       ...currentItem,
     });
   }, [currentItem]);
+
+  useEffect(() => {
+    if (CheckCnpjDataSuccess)
+      navigate(`${CheckCnpjData?.cnpj}`, { state: currentItem });
+  }, [CheckCnpjDataSuccess]);
   return (
     <Row
       gutter={[8, 8]}
@@ -236,7 +247,7 @@ export const LegalPersons = () => {
               }}
               icon={<UserAddOutlined style={{ fontSize: 22 }} />}
             >
-              {`${t("buttons.create")} ${t("buttons.person")}`}
+              {`${t("modal.add")} ${t("modal.person").toLowerCase()}`}
             </Button>
           </Col>
         )}
@@ -336,15 +347,16 @@ export const LegalPersons = () => {
         type="create"
         open={isNewModal}
         setOpen={setIsNewModal}
-        fields={[{ label: "cpf", required: true }]}
+        fields={[{ label: "cnpj", required: true }]}
         body={createBody}
         setBody={setCreateBody}
-        modalName={t("modal.new_person")}
-        submit={PersonMutate}
-        submitLoading={PersonIsLoading}
-        error={PersonError}
-        success={PersonIsSuccess}
-        clear={reset}
+        modalName={`${t("modal.add")} ${t("modal.person").toLowerCase()}`}
+        submit={refetchCheckCnpjData}
+        submitLoading={isCheckCnpjDataFetching}
+        error={CheckCnpjDataError}
+        success={CheckCnpjDataSuccess}
+        clear={removeCnpj}
+        submitText={t("modal.add") || ""}
       />
 
       <MutateModal
@@ -400,8 +412,8 @@ export const LegalPersons = () => {
       <Toast
         actionSuccess={t("messages.created")}
         actionError={t("messages.create")}
-        error={PersonError}
-        success={PersonIsSuccess}
+        error={CheckCnpjDataError}
+        success={CheckCnpjDataSuccess}
       />
     </Row>
   );

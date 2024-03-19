@@ -207,9 +207,8 @@ export const MutateModalFields = ({
   };
 
   const isCNPJValid = (cnpj: string) => {
-    // Regex para validar CNPJ
-    const regexCNPJ = /(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/;
-    return regexCNPJ.test(cnpj);
+    if(cnpj.length < 14) return false;
+    return true;
   };
 
   const validateCPFOrCNPJ = (rule: any, value: any) => {

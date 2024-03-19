@@ -2,6 +2,7 @@
 import { LegalPersonsItem } from "@src/services/types/register/legalPersons/persons.interface";
 import { useQuery } from "react-query";
 import { api } from "../../../config/api";
+import { queryClient } from "@src/services/queryClient";
 
 export function useGetCheckCnpj(cnpj?: string) {
   const { data, isFetching, error, refetch, isSuccess, remove } = useQuery<
@@ -10,6 +11,7 @@ export function useGetCheckCnpj(cnpj?: string) {
     "CheckCnpj",
     async () => {
       const response = await api.get(`customer/check_cnpj/${cnpj}`, {});
+      await queryClient.refetchQueries({ queryKey: ["LegalPersons"] });
       return response.data;
     },
     {
@@ -17,6 +19,7 @@ export function useGetCheckCnpj(cnpj?: string) {
       refetchIntervalInBackground: false,
       refetchOnMount: false,
       keepPreviousData: false,
+      enabled: false,
     }
   );
 
