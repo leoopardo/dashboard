@@ -38,6 +38,7 @@ interface ExportCustomreportsInterface {
   comma?: boolean;
   setIsComma?: Dispatch<SetStateAction<boolean>>;
   reportName: string;
+  url?: string;
 }
 
 type NotificationType = "success" | "info" | "warning" | "error";
@@ -55,6 +56,7 @@ export const ExportCustomReportsModal = ({
   comma,
   setIsComma,
   reportName,
+  url,
 }: ExportCustomreportsInterface) => {
   const { t } = useTranslation();
 
@@ -92,19 +94,36 @@ export const ExportCustomReportsModal = ({
     e.target.checked ? setSelectedFields(fields ?? []) : setSelectedFields([]);
   };
 
-  const openNotificationWithIcon = (type: NotificationType) => {
-    const BtnNavigate = (
-      <Button onClick={() => navigate(reportPath)}>
-        {reportPageName ?? t("menus.reports")}
-      </Button>
-    );
-    api[type]({
-      message: t("messages.creating_csv"),
-      description: t("messages.creating_csv_message"),
-      duration: 0,
-      btn: BtnNavigate,
-    });
-  };
+  const openNotificationWithIcon = url
+    ? (type: NotificationType) => {
+        const BtnNavigate = (
+          <Button
+            icon={<DownloadOutlined />}
+            onClick={() => window.location.assign(url)}
+          >
+            {t("table.download")}
+          </Button>
+        );
+        api[type]({
+          message: t("messages.csv_generated"),
+          description: t("messages.generated_csv_message"),
+          duration: 0,
+          btn: BtnNavigate,
+        });
+      }
+    : (type: NotificationType) => {
+        const BtnNavigate = (
+          <Button onClick={() => navigate(reportPath)}>
+            {reportPageName ?? t("menus.reports")}
+          </Button>
+        );
+        api[type]({
+          message: t("messages.creating_csv"),
+          description: t("messages.creating_csv_message"),
+          duration: 0,
+          btn: BtnNavigate,
+        });
+      };
 
   useEffect(() => {
     const storage: string[] | undefined = `${secureLocalStorage?.getItem(
@@ -149,8 +168,11 @@ export const ExportCustomReportsModal = ({
   }, [selectedFields]);
 
   useEffect(() => {
-    if (success) {
+    if (success && !url) {
       openNotificationWithIcon("info");
+    }
+    if (success && url) {
+      openNotificationWithIcon("success");
     }
 
     if (error) {
