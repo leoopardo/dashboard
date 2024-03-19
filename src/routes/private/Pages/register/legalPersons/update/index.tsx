@@ -92,8 +92,6 @@ export const LegalPersonUpdate = () => {
     useUpdateLegalPerson(
       {
         ...body,
-        black_list: body?.black_list ? "true" : "false",
-        flag_pep: body?.black_list ? "true" : "false",
       },
       cnpj
     );
