@@ -280,7 +280,9 @@
     "delivered_on_time": "Delivered on time",
     "delivered_late": "Delivered late",
     "not_delivered_on_time": "Not delivered on time",
-    "not_delivered_late": "Not delivered late"
+    "not_delivered_late": "Not delivered late",
+    "csv_generated": "CSV generated",
+    "generated_csv_message": "The CSV file has been generated. You can download on the button below."
   },
   "login": {
     "sign_in": "Sign in",
