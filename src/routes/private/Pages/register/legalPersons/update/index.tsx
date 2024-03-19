@@ -773,7 +773,7 @@ export const LegalPersonUpdate = () => {
               onRemove={(file) => {
                 setDeleteFileId(file?.uid);
               }}
-              defaultFileList={Files?.items.map((file) => {
+              defaultFileList={Files?.items.map((file: any) => {
                 return {
                   uid: file._id,
                   name: file.file_name,
