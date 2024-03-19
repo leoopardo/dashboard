@@ -1080,7 +1080,8 @@
     "from_value_must_be_more_than_to_value": "The initial value must be greater than the final value.",
     "is_possible_to_create_report_from_max_30_days": "It is only possible to create a report for a maximum of 30 days.",
     "document_already_on_blacklist": "Document already on blacklist",
-    "invalidCPFOrCNPJ": "Please enter a valid CPF or CNPJ"
+    "invalidCPFOrCNPJ": "Please enter a valid CPF or CNPJ",
+    "invalid_cnpj": "Invalid CNPJ"
   },
   "logs": {
     "login": "Login",
