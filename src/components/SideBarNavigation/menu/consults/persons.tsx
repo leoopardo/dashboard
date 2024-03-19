@@ -36,7 +36,7 @@ export function Persons({ permissions }: ItemInterface): MenuRouteInterface {
           //TODO permissão
           {
             key: "historic_cpf_merchant_reports",
-            label: "historic_cpf_merchant_reports",
+            label: "historic_cpf_merchant",
             path: "/consult/consult_persons/reports/historic_cpf_merchant",
             permission:
               permissions?.report?.person

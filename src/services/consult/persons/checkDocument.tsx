@@ -4,7 +4,7 @@ import { useQuery } from "react-query";
 import { api } from "../../../config/api";
 
 export function useGetCheckCpf(cpf?: string) {
-  const { data, isFetching, error, refetch, isSuccess } = useQuery<
+  const { data, isFetching, error, refetch, isSuccess, remove } = useQuery<
     CheckCpf | null | undefined
   >(
     "CheckCpf",
@@ -30,6 +30,6 @@ export function useGetCheckCpf(cpf?: string) {
     CheckCpfDataSuccess,
     isCheckCpfDataFetching,
     CheckCpfDataError,
-    refetchCheckCpfData,
+    refetchCheckCpfData,remove
   };
 }

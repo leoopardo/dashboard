@@ -1,4 +1,3 @@
-
 import { MenuRouteInterface } from "..";
 import { ItemInterface } from "../types/item.interface";
 
@@ -12,6 +11,12 @@ export function Persons({ permissions }: ItemInterface): MenuRouteInterface {
         key: "persons",
         label: "persons",
         path: "/register/person/persons",
+        permission: permissions?.register?.person?.person?.menu,
+      },
+      {
+        key: "legal_persons",
+        label: "legal_persons",
+        path: "/register/person/legal_persons",
         permission: permissions?.register?.person?.person?.menu,
       },
       {

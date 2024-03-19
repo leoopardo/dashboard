@@ -1,36 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { EyeFilled, InboxOutlined } from "@ant-design/icons";
 import { Grid } from "@mui/material";
-import { ColumnInterface, CustomTable } from "@src/components/CustomTable";
-import { FiltersModal } from "@src/components/FiltersModal";
-import { FilterChips } from "@src/components/FiltersModal/filterChips";
 import { Toast } from "@src/components/Toast";
-import { useDeleteDeleteFile } from "@src/services/register/persons/persons/files/deleteFile";
-import { useGetFiles } from "@src/services/register/persons/persons/files/getFiles";
-import {
-  CreateFileInterface,
-  useUploadFile,
-} from "@src/services/register/persons/persons/files/uploadFile";
+import { useGetLegalPersonsByCnpj } from "@src/services/register/legalPersons/getPersonsByCnpj";
+import { useUpdateLegalPerson } from "@src/services/register/legalPersons/updatePerson";
 import { useGetBlacklistReasons } from "@src/services/register/persons/persons/getPersonBlacklistReasons";
 import { useGetPersons } from "@src/services/register/persons/persons/getPersons";
-import {
-  useGetPersonHistory,
-  useGetPersonHistoryDetails,
-} from "@src/services/register/persons/persons/getPersonsHistory";
-import { useUpdatePerson } from "@src/services/register/persons/persons/updatePerson";
 import { useGetCities } from "@src/services/states_cities/getCities";
 import { useGetStates } from "@src/services/states_cities/getStates";
-import {
-  PersonsItem,
-  PersonsQuery,
-} from "@src/services/types/register/persons/persons.interface";
+import { LegalPersonsItem } from "@src/services/types/register/legalPersons/persons.interface";
+import { PersonsQuery } from "@src/services/types/register/persons/persons.interface";
 import { setFirstChildDivId } from "@src/utils/functions";
 import {
   AutoComplete,
   Button,
-  DatePicker,
-  Empty,
   Form,
   FormInstance,
   Input,
@@ -39,131 +22,135 @@ import {
   Spin,
   Tabs,
   TabsProps,
-  Typography,
-  Upload,
 } from "antd";
-import dayjs from "dayjs";
-import { motion } from "framer-motion";
-import moment from "moment";
 import { useEffect, useRef, useState } from "react";
 import { CurrencyInput } from "react-currency-mask";
 import { useTranslation } from "react-i18next";
 import ReactInputMask from "react-input-mask";
-import { useLocation, useParams } from "react-router-dom";
-import { ViewModal } from "./components/ViewModal";
+import { useParams } from "react-router-dom";
 
-const INITIAL_QUERY: PersonsQuery = {
-  limit: 25,
-  page: 1,
-  sort_field: "created_at",
-  sort_order: "DESC",
-};
+// const INITIAL_QUERY: PersonsQuery = {
+//   limit: 25,
+//   page: 1,
+//   sort_field: "created_at",
+//   sort_order: "DESC",
+// };
 
-export const PersonUpdate = () => {
+export const LegalPersonUpdate = () => {
   const { t } = useTranslation();
-  const { cpf } = useParams();
-  const currentData = useLocation()?.state;
-  const [body, setBody] = useState<PersonsItem | undefined>(undefined);
-  const [currentObj, setCurrentObj] = useState<any | undefined>(undefined);
+  const { cnpj } = useParams();
+  // const currentData = useLocation()?.state;
+  const [body, setBody] = useState<LegalPersonsItem | null | undefined>(
+    undefined
+  );
+  //  const [currentObj, setCurrentObj] = useState<any | undefined>(undefined);
   const [currState, setCurrState] = useState<string | undefined>("");
-  const [fileBody, setFileBody] = useState<CreateFileInterface | null>(null);
+  // const [fileBody, setFileBody] = useState<CreateFileInterface | null>(null);
   const [isConfirmOpen, setIsConfirmOpen] = useState<boolean>(false);
-  const [isViewOpen, setIsViewOpen] = useState<boolean>(false);
-  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
-  const [deleteFileId, setDeleteFileId] = useState<string>("");
+  // const [isViewOpen, setIsViewOpen] = useState<boolean>(false);
+  // const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+  // const [deleteFileId, setDeleteFileId] = useState<string>("");
   const formRef = useRef<FormInstance>(null);
   const formRefBlock = useRef<FormInstance>(null);
   const submitRef1 = useRef<HTMLButtonElement>(null);
   const submitRefBlock = useRef<HTMLButtonElement>(null);
-
   const tabGeneralData = document.querySelector('[data-node-key="1"]');
   const tabBlocks = document.querySelector('[data-node-key="2"]');
   const tabLimits = document.querySelector('[data-node-key="3"]');
   const tabAttachments = document.querySelector('[data-node-key="4"]');
   const tabHistoric = document.querySelector('[data-node-key="5"]');
 
-  const [query, setQuery] = useState<PersonsQuery>({
+  const [query,] = useState<PersonsQuery>({
     limit: 25,
     page: 1,
     sort_field: "created_at",
     sort_order: "DESC",
-    cpf: cpf?.split(" ").join("."),
+    cpf: cnpj,
   });
   const { states } = useGetStates();
   const { cities, refetchCities } = useGetCities(currState);
   const { PersonsData, isPersonsDataFetching } = useGetPersons(query);
   const { BlacklistReasons } = useGetBlacklistReasons({ limit: 200, page: 1 });
-  const {
-    PersonsHistoryData,
-    PersonsHistoryDataError,
-    isPersonsHistoryDataFetching,
-    refetchHistoryPersonsData,
-  } = useGetPersonHistory(
-    { ...query, cpf: undefined },
-    cpf?.split(" ").join(".") || ""
-  );
 
-  const { refetchHistoryPersonsDetailsData } = useGetPersonHistoryDetails(
-    { ...query, cpf: undefined },
-    cpf?.split(" ").join(".") || "",
-    currentObj?._id
-  );
+  const { LegalPersonsByCnpjData, isLegalPersonsByCnpjDataFetching } =
+    useGetLegalPersonsByCnpj(cnpj);
+
+  // const {
+  //   PersonsHistoryData,
+  //   PersonsHistoryDataError,
+  //   isPersonsHistoryDataFetching,
+  //   refetchHistoryPersonsData,
+  // } = useGetPersonHistory({ ...query, cpf: undefined }, cnpj);
+
+  // const { refetchHistoryPersonsDetailsData } = useGetPersonHistoryDetails(
+  //   { ...query, cpf: undefined },
+  //   cnpj,
+  //   currentObj?._id
+  // );
+
   const { UpdateMutate, UpdateError, UpdateIsLoading, UpdateIsSuccess } =
-    useUpdatePerson(body, cpf?.split(" ").join("."));
+    useUpdateLegalPerson(
+      {
+        ...body,
+        black_list: `${body?.black_list}` ?? "false",
+        flag_pep: `${body?.flag_pep}` ?? "false",
+      },
+      cnpj
+    );
 
-  const { FileMutate, FileError, FileIsSuccess } = useUploadFile(
-    fileBody,
-    cpf?.split(" ").join(".")
-  );
-  const { DeleteFileError, DeleteFileIsSuccess, DeleteFileMutate } =
-    useDeleteDeleteFile(cpf?.split(" ").join("."), deleteFileId);
+  // const { FileMutate, FileError, FileIsSuccess } = useUploadFile(
+  //   fileBody,
+  //   cnpj
+  // );
+  // const { DeleteFileError, DeleteFileIsSuccess, DeleteFileMutate } =
+  //   useDeleteDeleteFile(cnpj, deleteFileId);
 
-  const { Files, isFilesFetching, refetchFiles } = useGetFiles(
-    currentData?.cpf
-  );
+  // const { Files, isFilesFetching, refetchFiles } = useGetFiles(
+  //   currentData?.cpf
+  // );
 
-  const columns: ColumnInterface[] = [
-    { name: "_id", type: "id" },
-    { name: "cpf", type: "document" },
-    { name: "user_name", type: "text" },
-    { name: "step", type: "translate" },
-    { name: "createdAt", type: "date" },
-  ];
+  // const columns: ColumnInterface[] = [
+  //   { name: "_id", type: "id" },
+  //   { name: "cpf", type: "document" },
+  //   { name: "user_name", type: "text" },
+  //   { name: "step", type: "translate" },
+  //   { name: "createdAt", type: "date" },
+  // ];
 
   const onChangeConfigs = (event: any) => {
     const { value } = event.target;
     setBody((state) => ({ ...state, [event.target.name]: value }));
   };
 
-  useEffect(() => {
-    refetchFiles();
-    setCurrState(currentData?.state);
-  }, [PersonsData]);
+  // useEffect(() => {
+  //   refetchFiles();
+  //   setCurrState(currentData?.state);
+  // }, [PersonsData]);
 
-  useEffect(() => {
-    refetchHistoryPersonsData();
-  }, [query]);
+  // useEffect(() => {
+  //   refetchHistoryPersonsData();
+  // }, [query]);
 
-  useEffect(() => {
-    if (currentObj && isViewOpen) {
-      refetchHistoryPersonsDetailsData();
-    }
-  }, [isViewOpen]);
+  // useEffect(() => {
+  //   if (currentObj && isViewOpen) {
+  //     refetchHistoryPersonsDetailsData();
+  //   }
+  // }, [isViewOpen]);
 
   useEffect(() => {
     refetchCities();
   }, [currState]);
 
-  useEffect(() => {
-    if (deleteFileId) DeleteFileMutate();
-  }, [deleteFileId]);
+  // useEffect(() => {
+  //   if (deleteFileId) DeleteFileMutate();
+  // }, [deleteFileId]);
 
-  useEffect(() => {
-    if (fileBody?.base64_file) {
-      FileMutate();
-      setFileBody({ base64_file: "", file_name: "" });
-    }
-  }, [fileBody]);
+  // useEffect(() => {
+  //   if (fileBody?.base64_file) {
+  //     FileMutate();
+  //     setFileBody({ base64_file: "", file_name: "" });
+  //   }
+  // }, [fileBody]);
 
   useEffect(() => {
     setFirstChildDivId(tabGeneralData, "tab-general-data");
@@ -178,21 +165,14 @@ export const PersonUpdate = () => {
   }, [PersonsData]);
 
   useEffect(() => {
-    setBody({
-      ...PersonsData?.items[0],
-      birth_date: PersonsData?.items[0].birth_date
-        ? moment(new Date(`${PersonsData?.items[0].birth_date}`))
-            .add(1, "day")
-            .toISOString()
-        : undefined,
-    });
+    setBody(LegalPersonsByCnpjData);
   }, [PersonsData]);
 
   const items: TabsProps["items"] = [
     {
       key: "1",
       label: t("table.general_data"),
-      children: isPersonsDataFetching ? (
+      children: isLegalPersonsByCnpjDataFetching ? (
         <div
           style={{
             height: "70vh",
@@ -208,13 +188,7 @@ export const PersonUpdate = () => {
         <Form
           layout="vertical"
           ref={formRef}
-          initialValues={{
-            ...PersonsData?.items[0],
-            birth_date: dayjs(
-              `${moment(PersonsData?.items[0]?.birth_date)}`,
-              "YYYY-MM-DD HH:mm:ss"
-            ),
-          }}
+          initialValues={LegalPersonsByCnpjData || {}}
           onFinish={() => {
             UpdateMutate();
             setIsConfirmOpen(false);
@@ -223,95 +197,50 @@ export const PersonUpdate = () => {
           <Grid container columnSpacing={1}>
             <Grid item xs={12} md={4} lg={3}>
               <Form.Item
-                label={t("table.name")}
-                name="name"
+                label={t("table.business_name")}
+                name="business_name"
                 rules={[
                   {
                     required: true,
                     message:
-                      t("input.required", { field: t("input.name") }) || "",
+                      t("input.required", {
+                        field: t("table.business_name").toLowerCase(),
+                      }) || "",
                   },
                 ]}
               >
                 <Input
                   size="large"
                   name="name"
-                  value={body?.name}
+                  value={body?.business_name}
                   onChange={onChangeConfigs}
                 />
               </Form.Item>
             </Grid>
+
             <Grid item xs={12} md={4} lg={3}>
-              <Form.Item
-                label={t("table.birth_date")}
-                rules={[
-                  {
-                    required: true,
-                    message:
-                      t("input.required(a)", {
-                        field: t("table.birth_date"),
-                      }) || "",
-                  },
-                ]}
-              >
-                <DatePicker
-                  style={{ width: "100%" }}
-                  size="large"
-                  name="birth_date"
-                  format={"DD/MM/YYYY"}
-                  value={
-                    formRef.current?.getFieldValue("birth_date")
-                      ? dayjs(body?.birth_date, "YYYY-MM-DD HH:mm:ss")
-                      : null
-                  }
-                  onChange={(e: any) => {
-                    setBody((state) => ({
-                      ...state,
-                      birth_date: moment(e?.$d ?? new Date()).format(
-                        "YYYY-MM-DDTHH:mm:ss"
-                      ),
-                    }));
-                  }}
-                />
-              </Form.Item>
-            </Grid>
-            <Grid item xs={12} md={4} lg={3}>
-              <Form.Item label={t("table.mother_name")} name="mother_name">
+              <Form.Item label={t("table.trade_name")} name="trade_name">
                 <Input
                   size="large"
-                  name="mother_name"
-                  value={body?.mother_name}
+                  name="trade_name"
+                  value={body?.trade_name}
                   onChange={onChangeConfigs}
                 />
               </Form.Item>
             </Grid>
-            <Grid item xs={12} md={4} lg={3}>
-              <Form.Item label={t("table.gender")} name="gender">
-                <Select
-                  size="large"
-                  options={[
-                    { label: t("table.male"), value: "masculino" },
-                    { label: t("table.female"), value: "feminino" },
-                  ]}
-                  value={body?.gender}
-                  onChange={(_value, option: any) => {
-                    setBody((state) => ({ ...state, gender: option.value }));
-                  }}
-                />
-              </Form.Item>
-            </Grid>
+
             <Grid item xs={12} md={4} lg={1}>
-              <Form.Item label={t("table.state")} name="state">
+              <Form.Item label={t("table.state")} name="address_state">
                 <AutoComplete
                   size="large"
                   style={{ width: "100%", height: "40px" }}
                   placeholder={t(`table.state`)}
-                  value={body?.state}
+                  value={body?.address_state}
                   onSelect={(value) => {
-                    delete body?.city;
+                    delete body?.address_city;
                     setBody((state: any) => ({
                       ...state,
-                      state: value,
+                      address_state: value,
                     }));
                     setCurrState(value);
                   }}
@@ -330,17 +259,17 @@ export const PersonUpdate = () => {
               </Form.Item>
             </Grid>
             <Grid item xs={12} md={4} lg={2}>
-              <Form.Item label={t("table.city")} name="city">
+              <Form.Item label={t("table.city")} name="address_city">
                 <AutoComplete
                   size="large"
-                  disabled={!formRef.current?.getFieldValue("state")}
+                  disabled={!body?.address_state}
                   style={{ width: "100%", height: "40px" }}
                   placeholder={t(`table.city`)}
-                  value={body?.city}
+                  value={body?.address_city}
                   onSelect={(value) => {
                     setBody((state: any) => ({
                       ...state,
-                      city: value,
+                      address_city: value,
                     }));
                   }}
                   filterOption={(inputValue, option) =>
@@ -358,44 +287,47 @@ export const PersonUpdate = () => {
               </Form.Item>
             </Grid>
             <Grid item xs={12} md={4} lg={3}>
-              <Form.Item label={t("table.neighborhood")} name="neighborhood">
+              <Form.Item
+                label={t("table.neighborhood")}
+                name="address_neighborhood"
+              >
                 <Input
                   size="large"
                   name="neighborhood"
-                  value={body?.neighborhood}
+                  value={body?.address_neighborhood}
                   onChange={onChangeConfigs}
                 />
               </Form.Item>
             </Grid>
             <Grid item xs={12} md={4} lg={3}>
-              <Form.Item label={t("table.street")} name="street">
+              <Form.Item label={t("table.street")} name="address_city">
                 <Input
                   size="large"
                   name="street"
-                  value={body?.street}
+                  value={body?.address_city}
                   onChange={onChangeConfigs}
                 />
               </Form.Item>
             </Grid>
             <Grid item xs={12} md={4} lg={1}>
-              <Form.Item label={t("table.number")} name="number">
+              <Form.Item label={t("table.number")} name="address_number">
                 <Input
                   size="large"
                   name="number"
-                  value={body?.number}
+                  value={body?.address_number}
                   onChange={onChangeConfigs}
                 />
               </Form.Item>
             </Grid>
             <Grid item xs={12} md={4} lg={2}>
-              <Form.Item label={t("table.zip_code")} name="zip_code">
+              <Form.Item label={t("table.zip_code")} name="address_postal_code">
                 <ReactInputMask
                   mask="99999-999"
-                  value={body?.zip_code}
+                  value={body?.address_postal_code}
                   onChange={(e) => {
                     setBody((state) => ({
                       ...state,
-                      zip_code: e.target.value,
+                      address_postal_code: e.target.value,
                     }));
                   }}
                 >
@@ -403,7 +335,7 @@ export const PersonUpdate = () => {
                 </ReactInputMask>
               </Form.Item>
             </Grid>
-            <Grid item xs={12} md={4} lg={4}>
+            <Grid item xs={12} md={4} lg={3}>
               <Form.Item
                 label={t("table.email")}
                 name="email"
@@ -424,11 +356,11 @@ export const PersonUpdate = () => {
               </Form.Item>
             </Grid>
             <Grid item xs={12} md={4} lg={3}>
-              <Form.Item label={t("table.cellphone")} name="cellphone">
+              <Form.Item label={t("table.cellphone")} name="phone">
                 <Input
                   size="large"
-                  name="cellphone"
-                  value={body?.cellphone}
+                  name="phone"
+                  value={body?.phone}
                   onChange={onChangeConfigs}
                 />
               </Form.Item>
@@ -453,7 +385,7 @@ export const PersonUpdate = () => {
                   })}
                   description={t("messages.are_you_sure", {
                     action: t("messages.update"),
-                    itens: body?.name,
+                    itens: body?.business_name,
                   })}
                   open={isConfirmOpen}
                   style={{ maxWidth: "340px" }}
@@ -484,7 +416,7 @@ export const PersonUpdate = () => {
     {
       key: "2",
       label: t("table.locks"),
-      children: isPersonsDataFetching ? (
+      children: isLegalPersonsByCnpjDataFetching ? (
         <div
           style={{
             height: "70vh",
@@ -499,7 +431,7 @@ export const PersonUpdate = () => {
       ) : (
         <Form
           layout="vertical"
-          initialValues={PersonsData?.items[0]}
+          initialValues={LegalPersonsByCnpjData || {}}
           ref={formRefBlock}
           onFinish={() => {
             UpdateMutate();
@@ -542,7 +474,7 @@ export const PersonUpdate = () => {
                 name="black_list_reason"
                 rules={[
                   {
-                    required: body?.black_list !== undefined,
+                    required: body?.black_list,
                     validator: (_, value) => {
                       if (
                         body?.black_list &&
@@ -614,24 +546,7 @@ export const PersonUpdate = () => {
                 />
               </Form.Item>
             </Grid>
-            <Grid item xs={12} md={4} lg={2}>
-              <Form.Item label={t("table.flag_aux_gov")} name="flag_aux_gov">
-                <Select
-                  size="large"
-                  options={[
-                    { label: t("table.true"), value: true },
-                    { label: t("table.false"), value: false },
-                  ]}
-                  value={body?.flag_aux_gov}
-                  onChange={(_value, option: any) => {
-                    setBody((state) => ({
-                      ...state,
-                      flag_aux_gov: option.value,
-                    }));
-                  }}
-                />
-              </Form.Item>
-            </Grid>
+
             <Grid item xs={12} md={4} lg={2}>
               <Form.Item label={t("table.flag_alert")} name="flag_alert">
                 <Select
@@ -665,7 +580,7 @@ export const PersonUpdate = () => {
                   })}
                   description={t("messages.are_you_sure", {
                     action: t("messages.update"),
-                    itens: body?.name,
+                    itens: body?.business_name,
                   })}
                   open={isConfirmOpen}
                   style={{ maxWidth: "340px" }}
@@ -696,7 +611,7 @@ export const PersonUpdate = () => {
     {
       key: "3",
       label: t("table.limits"),
-      children: isPersonsDataFetching ? (
+      children: isLegalPersonsByCnpjDataFetching ? (
         <div
           style={{
             height: "70vh",
@@ -709,7 +624,7 @@ export const PersonUpdate = () => {
           <Spin size="large" />
         </div>
       ) : (
-        <Form layout="vertical" initialValues={PersonsData?.items[0]}>
+        <Form layout="vertical" initialValues={LegalPersonsByCnpjData || {}}>
           <Grid
             container
             columnSpacing={1}
@@ -800,7 +715,7 @@ export const PersonUpdate = () => {
                   })}
                   description={t("messages.are_you_sure", {
                     action: t("messages.update"),
-                    itens: body?.name,
+                    itens: body?.business_name,
                   })}
                   open={isConfirmOpen}
                   style={{ maxWidth: "340px" }}
@@ -828,188 +743,176 @@ export const PersonUpdate = () => {
         </Form>
       ),
     },
-    {
-      key: "4",
-      label: t("table.attachments"),
-      children: isFilesFetching ? (
-        <div
-          style={{
-            height: "100%",
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Spin size="large" />
-        </div>
-      ) : (
-        <Grid container spacing={1}>
-          <Grid xs={12} item>
-            <Upload
-              listType="picture"
-              multiple={false}
-              onRemove={(file) => {
-                setDeleteFileId(file?.uid);
-              }}
-              defaultFileList={Files?.items.map((file) => {
-                return {
-                  uid: file._id,
-                  name: file.file_name,
-                  url: file.file_url,
-                };
-              })}
-              beforeUpload={(file) => {
-                setFileBody({ base64_file: "", file_name: "" });
-                setFileBody((state: any) => ({
-                  ...state,
-                  file_name: file.name,
-                }));
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = () => {
-                  setFileBody((state: any) => ({
-                    ...state,
-                    base64_file: reader.result,
-                  }));
-                };
-                return false;
-              }}
-            >
-              <motion.div
-                style={{
-                  width: "calc(100vw - 28%)",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  border: "2px dashed #acacac53",
-                  padding: 24,
-                  cursor: "pointer",
-                  transition: "all 0.3s ease",
-                  borderRadius: 10,
-                }}
-                whileHover={{ backgroundColor: "#c5c5c522" }}
-                transition={{ duration: 0.5 }}
-              >
-                <Typography>
-                  <InboxOutlined style={{ fontSize: 32 }} />
-                </Typography>
-                <Typography.Title level={3}>
-                  {t("messages.upload_label")}
-                </Typography.Title>
-                <Typography>{t("messages.upload_description")}</Typography>
-              </motion.div>
-            </Upload>
-          </Grid>
+    // {
+    //   key: "4",
+    //   label: t("table.attachments"),
+    //   children: isFilesFetching ? (
+    //     <div
+    //       style={{
+    //         height: "100%",
+    //         width: "100%",
+    //         display: "flex",
+    //         alignItems: "center",
+    //         justifyContent: "center",
+    //       }}
+    //     >
+    //       <Spin size="large" />
+    //     </div>
+    //   ) : (
+    //     <Grid container spacing={1} >
+    //       <Grid xs={12} item>
+    //         <Upload
+    //           listType="picture"
+    //           multiple={false}
+    //           onRemove={(file) => {
+    //             setDeleteFileId(file?.uid);
+    //           }}
+    //           defaultFileList={Files?.items.map((file) => {
+    //             return {
+    //               uid: file._id,
+    //               name: file.file_name,
+    //               url: file.file_url,
+    //             };
+    //           })}
+    //           beforeUpload={(file) => {
+    //             setFileBody({ base64_file: "", file_name: "" });
+    //             setFileBody((state: any) => ({
+    //               ...state,
+    //               file_name: file.name,
+    //             }));
+    //             const reader = new FileReader();
+    //             reader.readAsDataURL(file);
+    //             reader.onload = () => {
+    //               setFileBody((state: any) => ({
+    //                 ...state,
+    //                 base64_file: reader.result,
+    //               }));
+    //             };
+    //             return false;
+    //           }}
+    //         >
+    //           <motion.div
+    //             style={{
+    //               width: "calc(100vw - 28%)",
+    //               display: "flex",
+    //               flexDirection: "column",
+    //               alignItems: "center",
+    //               border: "2px dashed #acacac53",
+    //               padding: 24,
+    //               cursor: "pointer",
+    //               transition: "all 0.3s ease",
+    //               borderRadius: 10,
+    //             }}
+    //             whileHover={{ backgroundColor: "#c5c5c522" }}
+    //             transition={{ duration: 0.5 }}
+    //           >
+    //             <Typography>
+    //               <InboxOutlined style={{ fontSize: 32 }} />
+    //             </Typography>
+    //             <Typography.Title level={3}>
+    //               {t("messages.upload_label")}
+    //             </Typography.Title>
+    //             <Typography>{t("messages.upload_description")}</Typography>
+    //           </motion.div>
+    //         </Upload>
+    //       </Grid>
 
-          {!Files?.total && !fileBody?.base64_file && (
-            <Grid item xs={12}>
-              <Empty
-                image={Empty.PRESENTED_IMAGE_SIMPLE}
-                description={t("error.400")}
-              />
-            </Grid>
-          )}
-        </Grid>
-      ),
-    },
-    {
-      key: "5",
-      label: t("table.historic"),
-      children: isFilesFetching ? (
-        <div
-          style={{
-            height: "100%",
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Spin size="large" />
-        </div>
-      ) : (
-        <Grid container spacing={1}>
-          <Grid
-            container
-            style={{ display: "flex", alignItems: "center" }}
-            spacing={1}
-          >
-            <Grid item xs={12} md={4} lg={2}>
-              <Button
-                size="large"
-                style={{ width: "100%" }}
-                loading={isPersonsDataFetching}
-                type="primary"
-                onClick={() => setIsFiltersOpen(true)}
-              >
-                {t("table.filters")}
-              </Button>
-            </Grid>
-            <Grid item xs={12} md={8} lg={10}>
-              <FilterChips
-                initial_query={INITIAL_QUERY}
-                startDateKeyName="initial_date"
-                endDateKeyName="final_date"
-                query={query}
-                setQuery={setQuery}
-              />
-            </Grid>
-          </Grid>
-          <Grid xs={12} item>
-            <CustomTable
-              query={query}
-              setCurrentItem={setCurrentObj}
-              setQuery={setQuery}
-              actions={[
-                {
-                  label: "details",
-                  icon: <EyeFilled style={{ fontSize: "20px" }} />,
-                  onClick: () => setIsViewOpen(true),
-                },
-              ]}
-              data={PersonsHistoryData}
-              items={PersonsHistoryData?.items}
-              error={PersonsHistoryDataError}
-              columns={columns}
-              loading={isPersonsHistoryDataFetching}
-              label={["user_name", "step"]}
-            />
-          </Grid>
-
-          {isViewOpen && (
-            <ViewModal
-              cpf={currentObj?.cpf}
-              id={currentObj?._id}
-              open={isViewOpen}
-              setOpen={setIsViewOpen}
-              query={query}
-            />
-          )}
-
-          <FiltersModal
-            open={isFiltersOpen}
-            setOpen={setIsFiltersOpen}
-            query={query}
-            setQuery={setQuery}
-            filters={["initial_date", "final_date", "step"]}
-            refetch={refetchHistoryPersonsData}
-            selectOptions={{
-              step: [
-                "UPDATE_CPF",
-                "CREATE_CPF",
-                "UPDATE_FILE",
-                "CREATE_FILE",
-                "DELETE_FILE",
-              ],
-            }}
-            startDateKeyName="initial_date"
-            endDateKeyName="final_date"
-            initialQuery={INITIAL_QUERY}
-          />
-        </Grid>
-      ),
-    },
+    //       {!Files?.total && !fileBody?.base64_file && (
+    //         <Grid item xs={12}>
+    //           <Empty
+    //             image={Empty.PRESENTED_IMAGE_SIMPLE}
+    //             description={t("error.400")}
+    //           />
+    //         </Grid>
+    //       )}
+    //     </Grid>
+    //   ),
+    // },
+    // {
+    //   key: "5",
+    //   label: t("table.historic"),
+    //   children: isFilesFetching ? (
+    //     <div
+    //       style={{
+    //         height: "100%",
+    //         width: "100%",
+    //         display: "flex",
+    //         alignItems: "center",
+    //         justifyContent: "center",
+    //       }}
+    //     >
+    //       <Spin size="large" />
+    //     </div>
+    //   ) : (
+    //     <Grid container spacing={1}>
+    //       <Grid
+    //         container
+    //         style={{ display: "flex", alignItems: "center" }}
+    //         spacing={1}
+    //       >
+    //         <Grid item xs={12} md={4} lg={2}>
+    //           <Button
+    //             size="large"
+    //             style={{ width: "100%" }}
+    //             loading={isPersonsDataFetching}
+    //             type="primary"
+    //             onClick={() => setIsFiltersOpen(true)}
+    //           >
+    //             {t("table.filters")}
+    //           </Button>
+    //         </Grid>
+    //         <Grid item xs={12} md={8} lg={10}>
+    //           <FilterChips initial_query={INITIAL_QUERY}
+    //             startDateKeyName="initial_date"
+    //             endDateKeyName="final_date"
+    //             query={query}
+    //             setQuery={setQuery}
+    //           />
+    //         </Grid>
+    //       </Grid>
+    //       <Grid xs={12} item>
+    //         <CustomTable
+    //           query={query}
+    //           setCurrentItem={setCurrentObj}
+    //           setQuery={setQuery}
+    //           actions={[
+    //             {
+    //               label: "details",
+    //               icon: <EyeFilled style={{ fontSize: "20px" }} />,
+    //               onClick: () => setIsViewOpen(true),
+    //             },
+    //           ]}
+    //           data={PersonsHistoryData}
+    //           items={PersonsHistoryData?.items}
+    //           error={PersonsHistoryDataError}
+    //           columns={columns}
+    //           loading={isPersonsHistoryDataFetching}
+    //           label={["user_name", "step"]}
+    //         />
+    //       </Grid>
+    //       <FiltersModal
+    //         open={isFiltersOpen}
+    //         setOpen={setIsFiltersOpen}
+    //         query={query}
+    //         setQuery={setQuery}
+    //         filters={["initial_date", "final_date", "step"]}
+    //         refetch={refetchHistoryPersonsData}
+    //         selectOptions={{
+    //           step: [
+    //             "UPDATE_CPF",
+    //             "CREATE_CPF",
+    //             "UPDATE_FILE",
+    //             "CREATE_FILE",
+    //             "DELETE_FILE",
+    //           ],
+    //         }}
+    //         startDateKeyName="initial_date"
+    //         endDateKeyName="final_date"
+    //         initialQuery={INITIAL_QUERY}
+    //       />
+    //     </Grid>
+    //   ),
+    // },
   ];
 
   return (
@@ -1030,7 +933,7 @@ export const PersonUpdate = () => {
         error={UpdateError}
         success={UpdateIsSuccess}
       />
-      <Toast
+      {/* <Toast
         actionSuccess={t("messages.uploaded")}
         actionError={t("messages.upload")}
         error={FileError}
@@ -1041,7 +944,7 @@ export const PersonUpdate = () => {
         actionError={t("messages.delete")}
         error={DeleteFileError}
         success={DeleteFileIsSuccess}
-      />
+      /> */}
     </Grid>
   );
 };

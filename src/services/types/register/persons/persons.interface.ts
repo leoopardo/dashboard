@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface PersonsQuery {
   page: number;
   limit: number;
@@ -18,8 +19,8 @@ export interface PersonsQuery {
   flag_alert?: boolean;
   initial_date?: string;
   final_date?: string;
-  fields?: string[],
-  comma_separate_value?: boolean
+  fields?: string[];
+  comma_separate_value?: boolean;
 }
 export interface PersonsItem {
   _id?: string;
@@ -30,7 +31,7 @@ export interface PersonsItem {
   email?: string;
   birth_date?: string;
   mother_name?: string;
-  black_list?: boolean;
+  black_list?: boolean | string;
   gender?: string;
   street?: string;
   number?: string;
@@ -39,7 +40,7 @@ export interface PersonsItem {
   state?: string;
   zip_code?: string;
   cellphone?: string;
-  flag_pep?: boolean;
+  flag_pep?: boolean | string;
   flag_aux_gov?: boolean;
   flag_alert?: number;
   cash_in_max_value?: any;
