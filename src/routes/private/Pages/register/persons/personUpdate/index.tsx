@@ -14,7 +14,10 @@ import {
 } from "@src/services/register/persons/persons/files/uploadFile";
 import { useGetBlacklistReasons } from "@src/services/register/persons/persons/getPersonBlacklistReasons";
 import { useGetPersons } from "@src/services/register/persons/persons/getPersons";
-import { useGetPersonHistory, useGetPersonHistoryDetails } from "@src/services/register/persons/persons/getPersonsHistory";
+import {
+  useGetPersonHistory,
+  useGetPersonHistoryDetails,
+} from "@src/services/register/persons/persons/getPersonsHistory";
 import { useUpdatePerson } from "@src/services/register/persons/persons/updatePerson";
 import { useGetCities } from "@src/services/states_cities/getCities";
 import { useGetStates } from "@src/services/states_cities/getStates";
@@ -539,7 +542,7 @@ export const PersonUpdate = () => {
                 name="black_list_reason"
                 rules={[
                   {
-                    required: body?.black_list,
+                    required: body?.black_list !== undefined,
                     validator: (_, value) => {
                       if (
                         body?.black_list &&
@@ -841,7 +844,7 @@ export const PersonUpdate = () => {
           <Spin size="large" />
         </div>
       ) : (
-        <Grid container spacing={1} >
+        <Grid container spacing={1}>
           <Grid xs={12} item>
             <Upload
               listType="picture"
@@ -944,7 +947,8 @@ export const PersonUpdate = () => {
               </Button>
             </Grid>
             <Grid item xs={12} md={8} lg={10}>
-              <FilterChips initial_query={INITIAL_QUERY}
+              <FilterChips
+                initial_query={INITIAL_QUERY}
                 startDateKeyName="initial_date"
                 endDateKeyName="final_date"
                 query={query}
