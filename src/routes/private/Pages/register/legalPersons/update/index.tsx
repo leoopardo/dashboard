@@ -60,7 +60,7 @@ export const LegalPersonUpdate = () => {
   const tabAttachments = document.querySelector('[data-node-key="4"]');
   const tabHistoric = document.querySelector('[data-node-key="5"]');
 
-  const [query,] = useState<PersonsQuery>({
+  const [query] = useState<PersonsQuery>({
     limit: 25,
     page: 1,
     sort_field: "created_at",
@@ -92,8 +92,8 @@ export const LegalPersonUpdate = () => {
     useUpdateLegalPerson(
       {
         ...body,
-        black_list: `${body?.black_list}` ?? "false",
-        flag_pep: `${body?.flag_pep}` ?? "false",
+        black_list: body?.black_list ? "true" : "false",
+        flag_pep: body?.black_list ? "true" : "false",
       },
       cnpj
     );
