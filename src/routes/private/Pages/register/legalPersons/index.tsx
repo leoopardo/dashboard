@@ -3,7 +3,6 @@
 import {
   EditOutlined,
   EyeFilled,
-  FileAddOutlined,
   FilterOutlined,
   UserAddOutlined,
 } from "@ant-design/icons";
@@ -12,31 +11,26 @@ import { FiltersModal } from "@components/FiltersModal";
 import { FilterChips } from "@components/FiltersModal/filterChips";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Search } from "@src/components/Inputs/search";
-import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
 import { Toast } from "@src/components/Toast";
+import { useGetCheckCnpj } from "@src/services/consult/persons/checkCNPJ";
 import { queryClient } from "@src/services/queryClient";
+import { useGetLegalPersons } from "@src/services/register/legalPersons/getPersons";
 import { useUpdatePartner } from "@src/services/register/partner/updatePartner";
-import { useCreatePerson } from "@src/services/register/persons/persons/createPerson";
-import { useGetPersons } from "@src/services/register/persons/persons/getPersons";
-import { useCreatePersonsReports } from "@src/services/reports/register/persons/persons/createPersonReports";
-import { useGetPersonReportFields } from "@src/services/reports/register/persons/persons/getPersonReportFields";
-import {
-  PersonsItem,
-  PersonsQuery,
-} from "@src/services/types/register/persons/persons.interface";
+import { LegalPersonsQuery } from "@src/services/types/register/legalPersons/persons.interface";
+import { PersonsItem } from "@src/services/types/register/persons/persons.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Col, Row, Select, Space, Tooltip } from "antd";
+import { Button, Col, Row, Select, Space } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import { useNavigate } from "react-router-dom";
 
-const INITIAL_QUERY: PersonsQuery = {
+const INITIAL_QUERY: LegalPersonsQuery = {
   limit: 25,
   page: 1,
-  sort_field: "name",
+  sort_field: "created_at",
   sort_order: "DESC",
 };
 
@@ -47,67 +41,69 @@ export const LegalPersons = () => {
     "validate"
   ) as ValidateInterface;
   const isMobile = useMediaQuery({ maxWidth: "750px" });
-  const [query, setQuery] = useState<PersonsQuery>(INITIAL_QUERY);
+  const [query, setQuery] = useState<LegalPersonsQuery>(INITIAL_QUERY);
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const [isNewModal, setIsNewModal] = useState<boolean>(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState<boolean>(false);
   const [currentItem, setCurrentItem] = useState<PersonsItem | null>(null);
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
-  const [isExportReportsOpen, setIsExportReportsOpen] =
-    useState<boolean>(false);
-  const [csvFields, setCsvFields] = useState<any>();
-  const [comma, setIsComma] = useState<boolean>(false);
-  const [createBody, setCreateBody] = useState<{ cpf: string }>({
-    cpf: "",
+  // const [isExportReportsOpen, setIsExportReportsOpen] =
+  //   useState<boolean>(false);
+  // const [csvFields, setCsvFields] = useState<any>();
+  // const [comma, setIsComma] = useState<boolean>(false);
+  const [createBody, setCreateBody] = useState<{ cnpj: string }>({
+    cnpj: "",
   });
   const [updateBody, setUpdateBody] = useState<PersonsItem>({
     ...currentItem,
   });
   const [searchOption, setSearchOption] = useState<
-    "cpf" | "name" | "email" | "cellphone" | undefined
+    "cnpj" | "business_name" | "email" | "cellphone" | undefined
   >(undefined);
 
-  const { fields } = useGetPersonReportFields();
+  // const { fields } = useGetPersonReportFields();
 
   const {
-    PersonsData,
-    PersonsDataError,
-    isPersonsDataFetching,
-    refetchPersonsData,
-  } = useGetPersons(query);
+    LegalPersonsData,
+    LegalPersonsDataError,
+    isLegalPersonsDataFetching,
+    refetchLegalPersonsData,
+  } = useGetLegalPersons(query);
+
+  // const {
+  //   PersonsReportsError,
+  //   PersonsReportsIsLoading,
+  //   PersonsReportsIsSuccess,
+  //   PersonsReportsMutate,
+  // } = useCreatePersonsReports({
+  //   ...query,
+  //   fields: csvFields,
+  //   comma_separate_value: comma,
+  // });
 
   const {
-    PersonsReportsError,
-    PersonsReportsIsLoading,
-    PersonsReportsIsSuccess,
-    PersonsReportsMutate,
-  } = useCreatePersonsReports({
-    ...query,
-    fields: csvFields,
-    comma_separate_value: comma,
-  });
-
-  const { PersonIsLoading, PersonMutate, PersonError, PersonIsSuccess, reset } =
-    useCreatePerson(createBody);
+    CheckCnpjData,
+    isCheckCnpjDataFetching,
+    refetchCheckCnpjData,
+    CheckCnpjDataError,
+    CheckCnpjDataSuccess,
+    removeCnpj,
+  } = useGetCheckCnpj(createBody.cnpj);
 
   const { UpdateError, UpdateIsLoading, UpdateMutate, UpdateIsSuccess } =
     useUpdatePartner(updateBody);
 
   const columns: ColumnInterface[] = [
-    { name: "cpf", type: "document" },
-    { name: "situation_text", type: "text" },
-    { name: "name", type: "text" },
-    { name: "birth_date", type: "birth" },
-    { name: "mother_name", type: "text" },
+    { name: "cnpj", type: "document" },
+    { name: "business_name", type: "text" },
+    { name: "registration_status_description", type: "translate" },
     { name: "black_list", type: "boolean" },
     { name: "flag_pep", type: "boolean" },
-    { name: "flag_aux_gov", type: "boolean" },
     { name: "flag_alert", type: "text" },
-    { name: "updatedAt", type: "date" },
   ];
 
   useEffect(() => {
-    refetchPersonsData();
+    refetchLegalPersonsData();
   }, [query]);
 
   useEffect(() => {
@@ -115,6 +111,11 @@ export const LegalPersons = () => {
       ...currentItem,
     });
   }, [currentItem]);
+
+  useEffect(() => {
+    if (CheckCnpjDataSuccess)
+      navigate(`${CheckCnpjData?.cnpj}`, { state: currentItem });
+  }, [CheckCnpjDataSuccess]);
   return (
     <Row
       gutter={[8, 8]}
@@ -132,7 +133,7 @@ export const LegalPersons = () => {
           <Button
             size="large"
             style={{ width: "100%" }}
-            loading={isPersonsDataFetching}
+            loading={isLegalPersonsDataFetching}
             type="primary"
             onClick={() => setIsFiltersOpen(true)}
             icon={<FilterOutlined />}
@@ -141,7 +142,8 @@ export const LegalPersons = () => {
           </Button>
         </Col>
         <Col xs={{ span: 24 }} md={{ span: 20 }}>
-          <FilterChips initial_query={INITIAL_QUERY}
+          <FilterChips
+            initial_query={INITIAL_QUERY}
             startDateKeyName="initial_date"
             endDateKeyName="final_date"
             query={query}
@@ -163,9 +165,7 @@ export const LegalPersons = () => {
                 allowClear
                 onClear={() => {
                   const q = { ...query };
-                  delete q[
-                    searchOption as "name" | "cpf" | "email" | "cellphone"
-                  ];
+                  delete q[searchOption as "cnpj" | "phone"];
                   setQuery(q);
                   setSearchOption(undefined);
                 }}
@@ -175,10 +175,8 @@ export const LegalPersons = () => {
                 value={searchOption}
                 placeholder={t("input.options")}
                 options={[
-                  { value: "name", label: t("table.name") },
-                  { value: "cellphone", label: t("table.cellphone") },
-                  { value: "cpf", label: t("table.cpf") },
-                  { value: "email", label: t("table.email") },
+                  { value: "business_name", label: t("table.business_name") },
+                  { value: "cnpj", label: t("table.cnpj") },
                 ]}
               />{" "}
               <Search
@@ -195,10 +193,9 @@ export const LegalPersons = () => {
               value={searchOption}
               placeholder={t("input.options")}
               options={[
-                { value: "name", label: t("table.name") },
-                { value: "cellphone", label: t("table.cellphone") },
-                { value: "cpf", label: t("table.cpf") },
-                { value: "email", label: t("table.email") },
+                { value: "business_name", label: t("table.business_name") },
+                { value: "phone", label: t("table.cellphone") },
+                { value: "cnpj", label: t("table.cnpj") },
               ]}
             />
           )}
@@ -215,7 +212,7 @@ export const LegalPersons = () => {
         <Col xs={{ span: 24 }} md={{ span: 4 }}>
           <Button
             type="dashed"
-            loading={isPersonsDataFetching}
+            loading={isLegalPersonsDataFetching}
             danger
             onClick={() => {
               setQuery(INITIAL_QUERY);
@@ -237,7 +234,7 @@ export const LegalPersons = () => {
           <Col xs={{ span: 24 }} md={{ span: 4 }}>
             <Button
               type="primary"
-              loading={isPersonsDataFetching}
+              loading={isLegalPersonsDataFetching}
               onClick={() => {
                 setIsNewModal(true);
               }}
@@ -250,17 +247,17 @@ export const LegalPersons = () => {
               }}
               icon={<UserAddOutlined style={{ fontSize: 22 }} />}
             >
-              {`${t("buttons.create")} ${t("buttons.person")}`}
+              {`${t("modal.add")} ${t("modal.person").toLowerCase()}`}
             </Button>
           </Col>
         )}
 
-        {permissions?.register?.person?.person?.person_person_export_csv && (
+        {/* {permissions?.register?.person?.person?.person_person_export_csv && (
           <Col xs={{ span: 24 }} md={{ span: 2 }}>
             <Tooltip
               placement="topRight"
               title={
-                PersonsData?.total === 0 || PersonsDataError
+                LegalPersonsData?.total === 0 || LegalPersonsDataError
                   ? t("messages.no_records_to_export")
                   : t("messages.export_csv")
               }
@@ -273,14 +270,16 @@ export const LegalPersons = () => {
                 type="dashed"
                 size="large"
                 loading={PersonsReportsIsLoading}
-                disabled={PersonsData?.total === 0 || PersonsDataError}
+                disabled={
+                  LegalPersonsData?.total === 0 || LegalPersonsDataError
+                }
                 icon={<FileAddOutlined style={{ fontSize: 22 }} />}
               >
                 CSV
               </Button>
             </Tooltip>
           </Col>
-        )}
+        )} */}
       </Row>
 
       <Row style={{ width: "100%" }}>
@@ -289,39 +288,26 @@ export const LegalPersons = () => {
             query={query}
             setCurrentItem={setCurrentItem}
             setQuery={setQuery}
-            refetch={refetchPersonsData}
+            refetch={refetchLegalPersonsData}
             actions={[
               {
                 label: "details",
                 icon: <EyeFilled style={{ fontSize: "20px" }} />,
-                onClick: (item) =>
-                  navigate(
-                    `${item?.cpf
-                      ?.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")
-                      .split(".")
-                      .join("%20")}`,
-                    { state: item }
-                  ),
+                onClick: (item) => navigate(`${item?.cnpj}`, { state: item }),
               },
               permissions?.register?.person?.person?.person_person_update && {
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
                 onClick: (item) => {
-                  navigate(
-                    `update/${item?.cpf
-                      ?.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")
-                      .split(".")
-                      .join("%20")}`,
-                    { state: item }
-                  );
+                  navigate(`update/${item?.cnpj}`, { state: item });
                 },
               },
             ]}
-            data={PersonsData}
-            items={PersonsData?.items}
-            error={PersonsDataError}
+            data={LegalPersonsData}
+            items={LegalPersonsData?.items}
+            error={LegalPersonsDataError}
             columns={columns}
-            loading={isPersonsDataFetching}
+            loading={isLegalPersonsDataFetching}
             label={["name", "cpf"]}
             removeTotal
           />
@@ -344,7 +330,7 @@ export const LegalPersons = () => {
           "city",
           "gender",
         ]}
-        refetch={refetchPersonsData}
+        refetch={refetchLegalPersonsData}
         selectOptions={{
           black_list: ["true", "false"],
           flag_pep: ["true", "false"],
@@ -361,15 +347,16 @@ export const LegalPersons = () => {
         type="create"
         open={isNewModal}
         setOpen={setIsNewModal}
-        fields={[{ label: "cpf", required: true }]}
+        fields={[{ label: "cnpj", required: true }]}
         body={createBody}
         setBody={setCreateBody}
-        modalName={t("modal.new_person")}
-        submit={PersonMutate}
-        submitLoading={PersonIsLoading}
-        error={PersonError}
-        success={PersonIsSuccess}
-        clear={reset}
+        modalName={`${t("modal.add")} ${t("modal.person").toLowerCase()}`}
+        submit={refetchCheckCnpjData}
+        submitLoading={isCheckCnpjDataFetching}
+        error={CheckCnpjDataError}
+        success={CheckCnpjDataSuccess}
+        clear={removeCnpj}
+        submitText={t("modal.add") || ""}
       />
 
       <MutateModal
@@ -394,16 +381,16 @@ export const LegalPersons = () => {
 
       <ViewModal
         item={currentItem}
-        loading={isPersonsDataFetching}
+        loading={isLegalPersonsDataFetching}
         modalName={`${t("modal.person")}: ${currentItem?.name}`}
         open={isViewModalOpen}
         setOpen={setIsViewModalOpen}
       />
 
-      <ExportCustomReportsModal
+      {/* <ExportCustomReportsModal
         open={isExportReportsOpen}
         setOpen={setIsExportReportsOpen}
-        disabled={PersonsData?.total === 0 || PersonsReportsError}
+        disabled={LegalPersonsData?.total === 0 || PersonsReportsError}
         mutateReport={() => PersonsReportsMutate()}
         error={PersonsReportsError}
         success={PersonsReportsIsSuccess}
@@ -415,7 +402,7 @@ export const LegalPersons = () => {
         setIsComma={setIsComma}
         setCsvFields={setCsvFields}
         reportName="persons"
-      />
+      /> */}
       <Toast
         actionSuccess={t("messages.updated")}
         actionError={t("messages.update")}
@@ -425,8 +412,8 @@ export const LegalPersons = () => {
       <Toast
         actionSuccess={t("messages.created")}
         actionError={t("messages.create")}
-        error={PersonError}
-        success={PersonIsSuccess}
+        error={CheckCnpjDataError}
+        success={CheckCnpjDataSuccess}
       />
     </Row>
   );

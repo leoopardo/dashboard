@@ -121,6 +121,9 @@ import { CustomWebhookPartners } from "./Pages/register/partner/partners/compone
 import { Permission } from "./permission";
 import { Redirect } from "./redirect";
 import { SerproAssertiva } from "./Pages/consult/persons/serproAssertiva";
+import { LegalPersons } from "./Pages/register/legalPersons";
+import { LegalPersonDetails } from "./Pages/register/legalPersons/detais";
+import { LegalPersonUpdate } from "./Pages/register/legalPersons/update";
 export const PrivateRoutes = () => {
   const { responseValidate } = useValidate();
 
@@ -1289,6 +1292,50 @@ export const PrivateRoutes = () => {
                       }
                     >
                       <PersonUpdate />
+                    </Permission>
+                  }
+                />
+              </Route>
+            </Route>
+
+            <Route path="legal_persons">
+              <Route
+                index
+                element={
+                  <Permission
+                    permission={
+                      responseValidate?.permissions?.register?.person?.person
+                        ?.menu
+                    }
+                  >
+                    <LegalPersons />
+                  </Permission>
+                }
+              />
+              <Route
+                path=":cnpj"
+                element={
+                  <Permission
+                    permission={
+                      responseValidate?.permissions?.register?.person?.person
+                        ?.person_person_list
+                    }
+                  >
+                    <LegalPersonDetails />
+                  </Permission>
+                }
+              />
+              <Route path="update">
+                <Route
+                  path=":cnpj"
+                  element={
+                    <Permission
+                      permission={
+                        responseValidate?.permissions?.register?.person?.person
+                          ?.person_person_update
+                      }
+                    >
+                      <LegalPersonUpdate />
                     </Permission>
                   }
                 />

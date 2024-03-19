@@ -15,7 +15,13 @@ export function Persons({ permissions }: ItemInterface): MenuRouteInterface {
         children: null,
       },
       {
-        key: "persons_cpf_accounts",
+        key: "legal_persons",
+        label: "legal_persons",
+        path: "/register/person/legal_persons",
+        permission: permissions?.register?.person?.person?.menu,
+      },
+      {
+        key: "person_accounts",
         label: "person_accounts",
         path: "/register/person/person_accounts",
         permission: permissions?.register?.person?.client_banks?.menu,
