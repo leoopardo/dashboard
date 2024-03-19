@@ -290,7 +290,9 @@
     "delivered_on_time": "Entregue no prazo",
     "delivered_late": "Entregue atrasado",
     "not_delivered_on_time": "Não entregue no prazo",
-    "not_delivered_late": "Não entregue atrasado"
+    "not_delivered_late": "Não entregue atrasado",
+    "csv_generated": "CSV Gerado",
+    "generated_csv_message": "Seu relatório está pronto para download. Clique no botão abaixo para baixar o arquivo."
   },
   "login": {
     "sign_in": "Faça login",

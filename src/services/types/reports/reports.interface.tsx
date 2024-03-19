@@ -26,3 +26,9 @@ export interface ReportsData {
   total: number;
   items: ReportsItem[];
 }
+
+export interface ReportsDataResponse {
+  message: string;
+  status: string;
+  url: string;
+}
