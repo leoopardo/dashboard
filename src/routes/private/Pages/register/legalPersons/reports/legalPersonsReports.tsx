@@ -8,7 +8,6 @@ import { FiltersModal } from "@src/components/FiltersModal";
 import { FilterChips } from "@src/components/FiltersModal/filterChips";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
 import { useGetLegalPersonsReports } from "@src/services/reports/register/legalPersons/getPersonsReports";
-import { useGetPersonsReports } from "@src/services/reports/register/persons/persons/getPersonsReports";
 import { ReportsQuery } from "@src/services/types/reports/reports.interface";
 import { Button } from "antd";
 import { useEffect, useState } from "react";
