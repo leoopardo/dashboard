@@ -19,8 +19,8 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import { useLocation, useParams } from "react-router-dom";
-import { TotalizersCards as DepositsCards } from "../../../../consult/deposits/generated/components/TotalizersCards";
-import { TotalizersCards } from "../../../../consult/withdrawals/generated/components/TotalizersCards";
+import { TotalizersCards as DepositsCards } from "../../../consult/deposits/generated/components/TotalizersCards";
+import { TotalizersCards } from "../../../consult/withdrawals/generated/components/TotalizersCards";
 import { moneyFormatter } from "@src/utils/moneyFormatter";
 
 export const LegalPersonDetails = () => {

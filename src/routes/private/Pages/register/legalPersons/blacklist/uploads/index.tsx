@@ -16,7 +16,7 @@ import { Button } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-export const PersonBlacklistUploads = () => {
+export const LegalPersonBlacklistUploads = () => {
   const INITIAL_QUERY: PersonBlacklistUploadsQuery = {
     limit: 25,
     page: 1,
