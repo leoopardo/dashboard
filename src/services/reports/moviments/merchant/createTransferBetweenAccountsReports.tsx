@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { queryClient } from "@src/services/queryClient";
 import { MerchantTransferBetweenAccountsQuery } from "@src/services/types/moviments/merchant/transferBetweenAccounts.interface";
-import { ReportsItem } from "@src/services/types/reports/reports.interface";
+import { ReportsDataResponse } from "@src/services/types/reports/reports.interface";
 import { useMutation } from "react-query";
 import { api } from "../../../../config/api";
 
 export function useCreateMerchantTransferBetweenAccountsReports(
   body: MerchantTransferBetweenAccountsQuery
 ) {
-  const { isLoading, error, mutate, isSuccess } = useMutation<
-    ReportsItem | null | undefined
+  const { isLoading, error, mutate, isSuccess, data } = useMutation<
+  ReportsDataResponse | null | undefined
   >("CreateMerchantTransferBetweenAccountsReports", async () => {
     const response = await api.post(
       "core/csv/merchant/account/balance/transfer",
@@ -28,11 +28,13 @@ export function useCreateMerchantTransferBetweenAccountsReports(
   const MerchantTransferBetweenAccountsIsLoading = isLoading;
   const MerchantTransferBetweenAccountsError: any = error;
   const MerchantTransferBetweenAccountsIsSuccess = isSuccess;
+  const MerchantTransferBetweenAccountsData = data;
 
   return {
     MerchantTransferBetweenAccountsMutate,
     MerchantTransferBetweenAccountsIsLoading,
     MerchantTransferBetweenAccountsError,
     MerchantTransferBetweenAccountsIsSuccess,
+    MerchantTransferBetweenAccountsData,
   };
 }

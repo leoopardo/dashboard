@@ -86,6 +86,7 @@ export const OperatorUsers = () => {
     OperatorUsersReportsIsLoading,
     OperatorUsersReportsIsSuccess,
     OperatorUsersReportsMutate,
+    OperatorUsersReportsData,
   } = useCreateOperatorUsersReports({
     ...query,
     fields: csvFields,
@@ -117,7 +118,6 @@ export const OperatorUsers = () => {
     refetchUsersData();
   }, [query]);
 
-  
   useEffect(() => {
     if (!isViewModalOpen) {
       setCurrentItem(null);
@@ -145,7 +145,8 @@ export const OperatorUsers = () => {
           </Button>
         </Grid>
         <Grid item xs={12} md={8} lg={9}>
-          <FilterChips initial_query={INITIAL_QUERY}
+          <FilterChips
+            initial_query={INITIAL_QUERY}
             startDateKeyName="start_date"
             endDateKeyName="end_date"
             query={query}
@@ -171,7 +172,7 @@ export const OperatorUsers = () => {
 
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
         <Grid item xs={12} md={4} lg={4} ref={ref2}>
-          <Search query={query} setQuery={setQuery} searchOption="search"  />
+          <Search query={query} setQuery={setQuery} searchOption="search" />
         </Grid>
         <Grid item xs={12} md={3} lg={2}>
           <Button
@@ -397,6 +398,7 @@ export const OperatorUsers = () => {
         setIsComma={setIsComma}
         setCsvFields={setCsvFields}
         reportName="OperatorUsers"
+        url={OperatorUsersReportsData?.url}
       />
       <TuorComponent
         open={isTuorOpen}

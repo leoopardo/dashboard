@@ -96,6 +96,7 @@ export const Partners = () => {
     PartnerReportsIsLoading,
     PartnerReportsIsSuccess,
     PartnerReportsMutate,
+    PartnerReportsData
   } = useCreatePartnerReports({
     ...query,
     fields: csvFields,
@@ -512,6 +513,7 @@ export const Partners = () => {
         setIsComma={setIsComma}
         setCsvFields={setCsvFields}
         reportName="Partner"
+        url={PartnerReportsData?.url}
       />
     </Grid>
   );

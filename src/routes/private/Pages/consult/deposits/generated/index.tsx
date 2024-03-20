@@ -98,6 +98,7 @@ export const GeneratedDeposits = () => {
     GeneratedDepositsReportsIsLoading,
     GeneratedDepositsReportsIsSuccess,
     GeneratedDepositsReportsMutate,
+    GeneratedDepositsReportsData,
   } = useCreateGeneratedDepositsReports({
     ...query,
     fields: { ...csvFields },
@@ -553,6 +554,7 @@ export const GeneratedDeposits = () => {
         comma={isComma}
         setIsComma={setIsComma}
         reportName="depositReportsFields"
+        url={GeneratedDepositsReportsData?.url}
       />
 
       <FiltersModal

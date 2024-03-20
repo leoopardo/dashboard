@@ -28,7 +28,7 @@ export interface ReportsData {
 }
 
 export interface ReportsDataResponse {
-  message: string;
-  status: string;
-  url: string;
+  message?: string;
+  status?: string;
+  url?: string;
 }
