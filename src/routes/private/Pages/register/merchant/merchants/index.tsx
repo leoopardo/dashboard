@@ -119,6 +119,7 @@ export const MerchantView = () => {
     MerchantReportsIsSuccess,
     MerchantReportsMutate,
     MerchantReset,
+    MerchantReportsData,
   } = useCreateMerchantReports({
     ...query,
     fields: csvFields,
@@ -580,6 +581,7 @@ export const MerchantView = () => {
         setIsComma={setIsComma}
         setCsvFields={setCsvFields}
         reportName="Merchant"
+        url={MerchantReportsData?.url}
       />
       <TuorComponent
         open={isTuorOpen}
