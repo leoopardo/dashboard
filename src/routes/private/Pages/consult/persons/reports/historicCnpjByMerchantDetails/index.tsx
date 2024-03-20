@@ -11,11 +11,10 @@ import { FiltersModal } from "@src/components/FiltersModal";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { CustomTable } from "@src/components/CustomTable";
 import { DownloadOutlined, EyeFilled } from "@ant-design/icons";
-import { useGetReportsHistoricCpfMerchant } from "@src/services/consult/persons/getReportsHistoricCpfByMerchant";
 import { ViewModal } from "@src/components/Modals/viewGenericModal";
+import { useGetReportsHistoricCnpjMerchantDetails } from "@src/services/consult/persons/getReportsHistoricCnpjByMerchantDetails";
 
-export const HistoricCpfByMerchantReports = () => {
-  const { t } = useTranslation();
+export const HistoricCnpjByMerchantDetailsReports = () => {
   const INITIAL_QUERY: ReportsQuery = {
     limit: 25,
     page: 1,
@@ -29,20 +28,22 @@ export const HistoricCpfByMerchantReports = () => {
       .utc()
       .format("YYYY-MM-DDTHH:mm:ss.SSS"),
   };
+  const { t } = useTranslation();
+
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [query, setQuery] = useState<ReportsQuery>(INITIAL_QUERY);
   const [currentItem, setCurrentItem] = useState<any>();
 
   const {
-    ReportsHistoricCpfMerchantData,
-    ReportsHistoricCpfMerchantDataError,
-    isReportsHistoricCpfMerchantDataFetching,
-    refetchReportsHistoricCpfMerchantData,
-  } = useGetReportsHistoricCpfMerchant(query);
+    ReportsHistoricCnpjMerchantDetailsData,
+    ReportsHistoricCnpjMerchantDetailsDataError,
+    isReportsHistoricCnpjMerchantDetailsDataFetching,
+    refetchReportsHistoricCnpjMerchantDetailsData,
+  } = useGetReportsHistoricCnpjMerchantDetails(query);
 
   useEffect(() => {
-    refetchReportsHistoricCpfMerchantData();
+    refetchReportsHistoricCnpjMerchantDetailsData();
   }, [query]);
 
   return (
@@ -56,7 +57,7 @@ export const HistoricCpfByMerchantReports = () => {
           <Button
             size="large"
             style={{ width: "100%" }}
-            loading={isReportsHistoricCpfMerchantDataFetching}
+            loading={isReportsHistoricCnpjMerchantDetailsDataFetching}
             type="primary"
             onClick={() => setIsFiltersOpen(true)}
           >
@@ -74,7 +75,7 @@ export const HistoricCpfByMerchantReports = () => {
         <Grid item xs={12} md={2} lg={2}>
           <Button
             type="dashed"
-            loading={isReportsHistoricCpfMerchantDataFetching}
+            loading={isReportsHistoricCnpjMerchantDetailsDataFetching}
             danger
             onClick={() => {
               setQuery(INITIAL_QUERY);
@@ -115,10 +116,10 @@ export const HistoricCpfByMerchantReports = () => {
                 onClick: () => setIsViewModalOpen(true),
               },
             ]}
-            refetch={refetchReportsHistoricCpfMerchantData}
-            data={ReportsHistoricCpfMerchantData}
-            items={ReportsHistoricCpfMerchantData?.items}
-            error={ReportsHistoricCpfMerchantDataError}
+            refetch={refetchReportsHistoricCnpjMerchantDetailsData}
+            data={ReportsHistoricCnpjMerchantDetailsData}
+            items={ReportsHistoricCnpjMerchantDetailsData?.items}
+            error={ReportsHistoricCnpjMerchantDetailsDataError}
             columns={[
               { name: "_id", type: "id", sort: true },
               { name: "createdAt", type: "date", sort: true },
@@ -128,7 +129,7 @@ export const HistoricCpfByMerchantReports = () => {
               { name: "rows", type: "text", sort: true },
               { name: "progress", type: "progress", sort: true },
             ]}
-            loading={isReportsHistoricCpfMerchantDataFetching}
+            loading={isReportsHistoricCnpjMerchantDetailsDataFetching}
             label={["createdAt", "progress"]}
           />
         </Grid>

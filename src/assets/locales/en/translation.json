@@ -156,14 +156,17 @@
     "receipts": "Receipts",
     "organization_settings": "Organization settings",
     "merchant_settings": "Merchant settings",
-    "historic_cpf_merchant": "CPF historic by merchant",
-    "historic_cpf_merchant_details": "CPF historic by merchant details",
+    "historic_cpf_merchant": "CPF consults by merchant",
+    "historic_cpf_merchant_details": "CPF consults by merchant details",
     "licenses": "Licenses",
     "custom_webhook": "Custom webhooks",
     "current_accounts": "Current accounts",
     "serpro_assertiva": "Consult totalizers",
     "physical_persons": "Physical persons",
-    "legal_persons_reports": "Legal persons"
+    "legal_persons_reports": "Legal persons",
+    "historic_cnpj_merchant_reports": "CNPJ consults by merchant",
+    "historic_cpf_merchant_reports": "CPF consults by merchant",
+    "historic_cnpj_merchant_details": "CNPJ consults by merchant details"
   },
 
   "titles": {

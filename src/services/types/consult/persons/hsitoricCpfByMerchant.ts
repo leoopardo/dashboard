@@ -9,7 +9,8 @@ export interface HistoricCpfByMerchantQuery {
 export interface IHistoricCpfByMerchant {
   merchant_id?: string
   merchant_name?: string
-  total?: number
+  total?: number;
+  totalCnpjChecks?: number;
 }
 
 export interface HistoricCpfByMerchantQueryDetails {
