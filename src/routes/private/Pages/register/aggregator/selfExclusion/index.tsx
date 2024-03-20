@@ -86,6 +86,7 @@ export const AggregatorSelfExclusion = () => {
   const ref2 = useRef(null);
   const ref3 = useRef(null);
   const refDoc = useRef(null);
+  const refDocType = useRef(null);
   const refMerchant = useRef(null);
   const refOrganization = useRef(null);
   const refPartner = useRef(null);
@@ -197,6 +198,7 @@ export const AggregatorSelfExclusion = () => {
             error={SelfExclusionDataError}
             columns={[
               { name: "document", type: "document", key: refDoc },
+              { name: "document_type", type: "text", key: refDocType },
               { name: "merchant_name", type: "text", key: refMerchant },
               {
                 name: "organization_name",
@@ -307,6 +309,11 @@ export const AggregatorSelfExclusion = () => {
             title: t("table.document"),
             description: t("wiki.document_description"),
             target: () => refDoc.current,
+          },
+          {
+            title: t("table.document"),
+            description: t("wiki.document_description"),
+            target: () => refDocType.current,
           },
           {
             title: t("table.merchant"),

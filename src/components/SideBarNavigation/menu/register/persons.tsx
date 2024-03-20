@@ -67,16 +67,16 @@ export function Persons({ permissions }: ItemInterface): MenuRouteInterface {
           {
             key: "persons_cnpj_blacklist_uploads",
             label: "person_blacklist_uploads",
-            path: "/register/person/person_blacklist/person_blacklist_uploads",
+            path: "/register/person/legal_person_blacklist/legal_person_blacklist_uploads",
             permission:
               permissions?.register?.person?.blacklist?.import_csv?.menu,
           },
-          {
+          /* {
             key: "persons_cnpj_blacklist_reasons",
             label: "person_blacklist_reasons",
             path: "/register/person/person_blacklist/person_blacklist_reasons",
             permission: permissions?.register?.person?.blacklist?.reason?.menu,
-          },
+          }, */
         ],
       },
 

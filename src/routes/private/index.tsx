@@ -124,6 +124,7 @@ import { SerproAssertiva } from "./Pages/consult/persons/serproAssertiva";
 import { LegalPersons } from "./Pages/register/legalPersons";
 import { LegalPersonDetails } from "./Pages/register/legalPersons/detais";
 import { LegalPersonUpdate } from "./Pages/register/legalPersons/update";
+import { LegalPersonBlacklistUploads } from "./Pages/register/legalPersons/blacklist/uploads";
 export const PrivateRoutes = () => {
   const { responseValidate } = useValidate();
 
@@ -1411,7 +1412,7 @@ export const PrivateRoutes = () => {
                 }
               />
               <Route
-                path="person_blacklist_uploads"
+                path="legal_person_blacklist_uploads"
                 element={
                   <Permission
                     permission={
@@ -1419,7 +1420,7 @@ export const PrivateRoutes = () => {
                         ?.import_csv?.person_blacklist_import_csv
                     }
                   >
-                    <PersonBlacklistUploads />
+                    <LegalPersonBlacklistUploads />
                   </Permission>
                 }
               />

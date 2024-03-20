@@ -162,7 +162,7 @@ export const ImportLegalPersonsBlacklist = () => {
     const BtnNavigate = (
       <Button
         onClick={() =>
-          navigate("/register/person/person_blacklist/person_blacklist_uploads")
+          navigate("/register/person/legal_person_blacklist/legal_person_blacklist_uploads")
         }
       >
         Uploads
@@ -302,29 +302,29 @@ export const ImportLegalPersonsBlacklist = () => {
             }}
           >
             <CSVDownloader
-              filename="sample_file"
-              bom
+              filename="sample_file_cnpj"
+              bom={true}
               config={{
                 delimiter: ";",
               }}
               data={[
                 {
-                  CPF: 11111111111,
+                  CNPJ: 11111111111111,
                   REASON: "Fraude",
                   DESCRIPTION: "Solicitado pelo merchant xyz",
                 },
                 {
-                  CPF: 22222222222,
+                  CNPJ: 22222222222222,
                   REASON: "Administrativo",
                   DESCRIPTION: "Solicitado pelo merchant xyz",
                 },
                 {
-                  CPF: 33333333333,
+                  CNPJ: 33333333333333,
                   REASON: "Interno",
                   DESCRIPTION: "Solicitado pelo merchant xyz",
                 },
                 {
-                  CPF: 44444444444,
+                  CNPJ: 44444444444444,
                   REASON: "Morte",
                   DESCRIPTION: "Solicitado pelo merchant xyz",
                 },
