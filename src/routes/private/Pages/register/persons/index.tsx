@@ -81,6 +81,7 @@ export const Persons = () => {
     PersonsReportsIsLoading,
     PersonsReportsIsSuccess,
     PersonsReportsMutate,
+    PersonsReportsData
   } = useCreatePersonsReports({
     ...query,
     fields: csvFields,
@@ -415,6 +416,7 @@ export const Persons = () => {
         setIsComma={setIsComma}
         setCsvFields={setCsvFields}
         reportName="persons"
+        url={PersonsReportsData?.url}
       />
       <Toast
         actionSuccess={t("messages.updated")}
