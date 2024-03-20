@@ -60,8 +60,12 @@ export const UndeliveredDeposits = () => {
   const isMobile = useMediaQuery({ maxWidth: "750px" });
   const { t } = useTranslation();
   const [query, setQuery] = useState<generatedDepositTotalQuery>(INITIAL_QUERY);
-  const { depositsTotal, isDepositsTotalFetching, refetchDepositsTotal, depositsTotalError } =
-    useGetTotalGeneratedDeposits(query);
+  const {
+    depositsTotal,
+    isDepositsTotalFetching,
+    refetchDepositsTotal,
+    depositsTotalError,
+  } = useGetTotalGeneratedDeposits(query);
 
   const {
     depositsRows,
@@ -80,6 +84,7 @@ export const UndeliveredDeposits = () => {
     GeneratedDepositsReportsIsLoading,
     GeneratedDepositsReportsIsSuccess,
     GeneratedDepositsReportsMutate,
+    GeneratedDepositsReportsData,
   } = useCreateGeneratedDepositsReports({
     ...query,
     fields: { ...csvFields },
@@ -166,7 +171,9 @@ export const UndeliveredDeposits = () => {
                 message={`${t("table.error")}:`}
                 description={t(
                   `error.${
-                    (ErrorList as any)[depositsTotalError?.response?.data?.message]
+                    (ErrorList as any)[
+                      depositsTotalError?.response?.data?.message
+                    ]
                   }`
                 )}
                 type="error"
@@ -198,7 +205,8 @@ export const UndeliveredDeposits = () => {
           </Button>
         </Col>
         <Col xs={{ span: 24 }} md={{ span: 20 }}>
-          <FilterChips initial_query={INITIAL_QUERY}
+          <FilterChips
+            initial_query={INITIAL_QUERY}
             startDateKeyName="initial_date"
             endDateKeyName="final_date"
             query={query}
@@ -672,6 +680,7 @@ export const UndeliveredDeposits = () => {
         comma={isComma}
         setIsComma={setIsComma}
         reportName="depositReportsFields"
+        url={GeneratedDepositsReportsData?.url}
       />
     </Row>
   );

@@ -84,6 +84,7 @@ export const Licenses = () => {
     LicenseReportsIsLoading,
     LicenseReportsIsSuccess,
     LicenseReportsMutate,
+    LicenseReportsData,
   } = useCreateLicenseReports({
     ...query,
     fields: csvFields,
@@ -147,7 +148,8 @@ export const Licenses = () => {
           </Button>
         </Grid>
         <Grid item xs={12} md={8} lg={10}>
-          <FilterChips initial_query={INITIAL_QUERY}
+          <FilterChips
+            initial_query={INITIAL_QUERY}
             startDateKeyName="start_date"
             endDateKeyName="end_date"
             query={query}
@@ -364,6 +366,7 @@ export const Licenses = () => {
         setIsComma={setIsComma}
         setCsvFields={setCsvFields}
         reportName="License"
+        url={LicenseReportsData?.url}
       />
 
       <Toast

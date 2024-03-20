@@ -94,6 +94,7 @@ export const RefundDepositsManual = () => {
     RefundManualDepositsReportsIsLoading,
     RefundManualDepositsReportsIsSuccess,
     RefundManualDepositsReportsMutate,
+    RefundManualDepositsReportsData,
   } = useCreateRefundManualDepositsReports({
     ...query,
     fields: { ...csvFields },
@@ -233,7 +234,8 @@ export const RefundDepositsManual = () => {
           </Button>
         </Col>
         <Col xs={{ span: 24 }} md={{ span: 20 }}>
-          <FilterChips initial_query={INITIAL_QUERY}
+          <FilterChips
+            initial_query={INITIAL_QUERY}
             startDateKeyName="start_date"
             endDateKeyName="end_date"
             query={query}
@@ -520,6 +522,7 @@ export const RefundDepositsManual = () => {
         comma={isComma}
         setIsComma={setIsComma}
         reportName="RefundManulReportsFields"
+        url={RefundManualDepositsReportsData?.url}
       />
 
       <ViewModal

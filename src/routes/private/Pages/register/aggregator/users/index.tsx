@@ -70,6 +70,7 @@ export const AggregatorUsers = () => {
     AggregatorUsersReportsIsLoading,
     AggregatorUsersReportsIsSuccess,
     AggregatorUsersReportsMutate,
+    AggregatorUsersReportsData,
   } = useCreateAggregatorUsersReports({
     ...query,
     fields: csvFields,
@@ -132,7 +133,8 @@ export const AggregatorUsers = () => {
           </Button>
         </Grid>
         <Grid item xs={12} md={7} lg={9}>
-          <FilterChips initial_query={INITIAL_QUERY}
+          <FilterChips
+            initial_query={INITIAL_QUERY}
             startDateKeyName="start_date"
             endDateKeyName="end_date"
             query={query}
@@ -206,7 +208,8 @@ export const AggregatorUsers = () => {
             </Button>
           </Grid>
         )}
-        {permissions?.register?.aggregator?.users?.aggregator_user_export_csv && (
+        {permissions?.register?.aggregator?.users
+          ?.aggregator_user_export_csv && (
           <Grid item xs={12} md="auto" ref={ref5}>
             <Tooltip
               placement="topRight"
@@ -372,7 +375,8 @@ export const AggregatorUsers = () => {
           }
         }
         exportCsvStep={
-          permissions?.register?.aggregator?.users?.aggregator_user_export_csv && {
+          permissions?.register?.aggregator?.users
+            ?.aggregator_user_export_csv && {
             title: t("wiki.generate_reports"),
             description: (
               <Typography>
@@ -446,6 +450,7 @@ export const AggregatorUsers = () => {
         setIsComma={setIsComma}
         setCsvFields={setCsvFields}
         reportName="AggregatorUsers"
+        url={AggregatorUsersReportsData?.url}
       />
     </Grid>
   );

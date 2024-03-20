@@ -74,6 +74,7 @@ export const MerchantUser = () => {
     MerchantUsersReportsIsLoading,
     MerchantUsersReportsIsSuccess,
     MerchantUsersReportsMutate,
+    MerchantUsersReportsData,
   } = useCreateMerchantUsersReports({
     ...query,
     fields: csvFields,
@@ -141,7 +142,8 @@ export const MerchantUser = () => {
           </Button>
         </Grid>
         <Grid item xs={12} md={8} lg={10}>
-          <FilterChips initial_query={INITIAL_QUERY}
+          <FilterChips
+            initial_query={INITIAL_QUERY}
             startDateKeyName="start_date"
             endDateKeyName="end_date"
             query={query}
@@ -304,15 +306,13 @@ export const MerchantUser = () => {
         />
       )}
 
-     
-        <Toast
-          actionSuccess={t("messages.updated")}
-          actionError={t("messages.update")}
-          error={updateError}
-          success={updateIsSuccess}
-          timeout={2000}
-        />
-    
+      <Toast
+        actionSuccess={t("messages.updated")}
+        actionError={t("messages.update")}
+        error={updateError}
+        success={updateIsSuccess}
+        timeout={2000}
+      />
 
       <UpdateUserModal
         action={requestType}
@@ -339,6 +339,7 @@ export const MerchantUser = () => {
         setIsComma={setIsComma}
         setCsvFields={setCsvFields}
         reportName="MerchantUsers"
+        url={MerchantUsersReportsData?.url}
       />
     </Grid>
   );
