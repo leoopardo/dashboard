@@ -156,8 +156,8 @@
     "receipts": "Receipts",
     "organization_settings": "Organization settings",
     "merchant_settings": "Merchant settings",
-    "historic_cpf_merchant": "CPF historic by merchant",
-    "historic_cpf_merchant_details": "CPF historic by merchant details",
+    "historic_cpf_merchant": "CPF consults by merchant",
+    "historic_cpf_merchant_details": "CPF consults by merchant details",
     "licenses": "Licenses",
     "custom_webhook": "Custom webhooks",
     "current_accounts": "Current accounts",
@@ -169,7 +169,10 @@
     "legal_persons_reports": "Legal persons",
     "upload_persons_cnpj_blacklist": "Import blacklist Cnpj",
     "legal_person_blacklist_uploads": "Check uploads Cnpj",
-    "persons_cnpj_blacklist_uploads": "Check uploads Cnpj"
+    "persons_cnpj_blacklist_uploads": "Check uploads Cnpj",
+    "historic_cnpj_merchant_reports": "CNPJ consults by merchant",
+    "historic_cpf_merchant_reports": "CPF consults by merchant",
+    "historic_cnpj_merchant_details": "CNPJ consults by merchant details"
   },
 
   "titles": {
