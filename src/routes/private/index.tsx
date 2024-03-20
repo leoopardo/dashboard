@@ -637,7 +637,7 @@ export const PrivateRoutes = () => {
                   </Permission>
                 }
               />
-               <Route
+              <Route
                 path="historic_cnpj_merchant_details"
                 element={
                   <Permission
