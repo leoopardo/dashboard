@@ -127,6 +127,8 @@ import { LegalPersonDetails } from "./Pages/register/legalPersons/detais";
 import { LegalPersonUpdate } from "./Pages/register/legalPersons/update";
 import { LegalPersonBlacklistUploads } from "./Pages/register/legalPersons/blacklist/uploads";
 import { LegalPersonsReports } from "./Pages/register/legalPersons/reports/legalPersonsReports";
+import { HistoricCnpjByMerchantReports } from "./Pages/consult/persons/reports/historicCnpjByMerchant";
+import { HistoricCnpjByMerchantDetailsReports } from "./Pages/consult/persons/reports/historicCnpjByMerchantDetails";
 export const PrivateRoutes = () => {
   const { responseValidate } = useValidate();
 
@@ -597,7 +599,7 @@ export const PrivateRoutes = () => {
 
             <Route path="reports">
               <Route
-                path="historic_cpf_merchant"
+                path="historic_cpf_merchant_reports"
                 element={
                   <Permission
                     permission={
@@ -606,6 +608,19 @@ export const PrivateRoutes = () => {
                     }
                   >
                     <HistoricCpfByMerchantReports />
+                  </Permission>
+                }
+              />
+              <Route
+                path="historic_cnpj_merchant_reports"
+                element={
+                  <Permission
+                    permission={
+                      responseValidate?.permissions?.report?.person
+                        ?.report_check_document_by_merchant_export_csv
+                    }
+                  >
+                    <HistoricCnpjByMerchantReports />
                   </Permission>
                 }
               />
@@ -619,6 +634,19 @@ export const PrivateRoutes = () => {
                     }
                   >
                     <HistoricCpfByMerchantDetailsReports />
+                  </Permission>
+                }
+              />
+               <Route
+                path="historic_cnpj_merchant_details"
+                element={
+                  <Permission
+                    permission={
+                      responseValidate?.permissions?.report?.person
+                        ?.report_check_document_by_merchant_export_csv
+                    }
+                  >
+                    <HistoricCnpjByMerchantDetailsReports />
                   </Permission>
                 }
               />

@@ -21,6 +21,7 @@ export function useGetHistoricCpfByMerchantDetails(
       refetchOnWindowFocus: false,
     }
   );
+  
 
   const HistoricCpfByMerchantDetailsData = data;
   const isHistoricCpfByMerchantDetailsDataFetching = isFetching;
