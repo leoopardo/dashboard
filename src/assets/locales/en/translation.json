@@ -165,7 +165,8 @@
     "physical_persons": "Physical persons",
     "legal_persons": "Legal persons",
     "legal_person_blacklist": "Blacklist legal person",
-    "legal_person_reports": "Reports"
+    "legal_person_reports": "Reports",
+    "legal_persons_reports": "Legal persons"
   },
 
   "titles": {

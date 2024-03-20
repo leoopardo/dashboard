@@ -103,7 +103,6 @@ import { PersonDetails } from "./Pages/register/persons/personDetails";
 import { PersonUpdate } from "./Pages/register/persons/personUpdate";
 import { CustomerBanksReports } from "./Pages/register/persons/reports/customerBanks";
 import { PersonsReports } from "./Pages/register/persons/reports/persons";
-import { LegalPersonsReports } from "./Pages/register/legalPersons/reports/persons";
 import { AuthLogs } from "./Pages/support/apiLogs/AuthLogs";
 import { DepositsErrors } from "./Pages/support/apiLogs/DepositsErrors";
 import { WithdrawalsErrors } from "./Pages/support/apiLogs/WithdrawalsErrors";
@@ -125,6 +124,7 @@ import { LegalPersons } from "./Pages/register/legalPersons";
 import { LegalPersonDetails } from "./Pages/register/legalPersons/detais";
 import { LegalPersonUpdate } from "./Pages/register/legalPersons/update";
 import { LegalPersonBlacklistUploads } from "./Pages/register/legalPersons/blacklist/uploads";
+import { LegalPersonsReports } from "./Pages/register/legalPersons/reports/legalPersonsReports";
 export const PrivateRoutes = () => {
   const { responseValidate } = useValidate();
 
@@ -1451,7 +1451,19 @@ export const PrivateRoutes = () => {
                     <PersonsReports />
                   </Permission>
                 }
-              />
+              /> <Route
+              path="legal_persons_reports"
+              element={
+                <Permission
+                  permission={
+                    responseValidate?.permissions?.register?.person?.person
+                      ?.person_person_export_csv
+                  }
+                >
+                  <LegalPersonsReports />
+                </Permission>
+              }
+            />
               <Route
                 path="client_bank_reports"
                 element={

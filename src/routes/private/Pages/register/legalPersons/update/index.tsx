@@ -1,7 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
+import { InboxOutlined } from "@ant-design/icons";
 import { Grid } from "@mui/material";
 import { Toast } from "@src/components/Toast";
+import { CreateFileInterface } from "@src/services/register/aggregator/attachments/uploadAttachment";
+import { useDeleteLegalPersonFile } from "@src/services/register/legalPersons/files/deleteFile";
+import { useGetLegalPersonFiles } from "@src/services/register/legalPersons/files/getFiles";
+import { useUploadLegalPersonFile } from "@src/services/register/legalPersons/files/uploadFile";
 import { useGetLegalPersonsByCnpj } from "@src/services/register/legalPersons/getPersonsByCnpj";
 import { useUpdateLegalPerson } from "@src/services/register/legalPersons/updatePerson";
 import { useGetBlacklistReasons } from "@src/services/register/persons/persons/getPersonBlacklistReasons";
@@ -14,6 +19,7 @@ import { setFirstChildDivId } from "@src/utils/functions";
 import {
   AutoComplete,
   Button,
+  Empty,
   Form,
   FormInstance,
   Input,
@@ -22,7 +28,10 @@ import {
   Spin,
   Tabs,
   TabsProps,
+  Typography,
+  Upload,
 } from "antd";
+import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { CurrencyInput } from "react-currency-mask";
 import { useTranslation } from "react-i18next";
@@ -45,11 +54,13 @@ export const LegalPersonUpdate = () => {
   );
   //  const [currentObj, setCurrentObj] = useState<any | undefined>(undefined);
   const [currState, setCurrState] = useState<string | undefined>("");
-  // const [fileBody, setFileBody] = useState<CreateFileInterface | null>(null);
+  const [fileBody, setFileBody] = useState<CreateFileInterface | undefined>(
+    undefined
+  );
   const [isConfirmOpen, setIsConfirmOpen] = useState<boolean>(false);
   // const [isViewOpen, setIsViewOpen] = useState<boolean>(false);
   // const [isFiltersOpen, setIsFiltersOpen] = useState(false);
-  // const [deleteFileId, setDeleteFileId] = useState<string>("");
+  const [deleteFileId, setDeleteFileId] = useState<string>("");
   const formRef = useRef<FormInstance>(null);
   const formRefBlock = useRef<FormInstance>(null);
   const submitRef1 = useRef<HTMLButtonElement>(null);
@@ -96,16 +107,14 @@ export const LegalPersonUpdate = () => {
       cnpj
     );
 
-  // const { FileMutate, FileError, FileIsSuccess } = useUploadFile(
-  //   fileBody,
-  //   cnpj
-  // );
-  // const { DeleteFileError, DeleteFileIsSuccess, DeleteFileMutate } =
-  //   useDeleteDeleteFile(cnpj, deleteFileId);
+  const { Files, isFilesFetching, refetchFiles } = useGetLegalPersonFiles(cnpj);
+  const { DeleteFileError, DeleteFileIsSuccess, DeleteFileMutate } =
+    useDeleteLegalPersonFile(cnpj, deleteFileId);
 
-  // const { Files, isFilesFetching, refetchFiles } = useGetFiles(
-  //   currentData?.cpf
-  // );
+  const { FileError, FileIsSuccess, FileMutate } = useUploadLegalPersonFile(
+    fileBody,
+    cnpj
+  );
 
   // const columns: ColumnInterface[] = [
   //   { name: "_id", type: "id" },
@@ -120,10 +129,10 @@ export const LegalPersonUpdate = () => {
     setBody((state) => ({ ...state, [event.target.name]: value }));
   };
 
-  // useEffect(() => {
-  //   refetchFiles();
-  //   setCurrState(currentData?.state);
-  // }, [PersonsData]);
+  useEffect(() => {
+    refetchFiles();
+    setCurrState(LegalPersonsByCnpjData?.address_state);
+  }, [PersonsData]);
 
   // useEffect(() => {
   //   refetchHistoryPersonsData();
@@ -139,16 +148,16 @@ export const LegalPersonUpdate = () => {
     refetchCities();
   }, [currState]);
 
-  // useEffect(() => {
-  //   if (deleteFileId) DeleteFileMutate();
-  // }, [deleteFileId]);
+  useEffect(() => {
+    if (deleteFileId) DeleteFileMutate();
+  }, [deleteFileId]);
 
-  // useEffect(() => {
-  //   if (fileBody?.base64_file) {
-  //     FileMutate();
-  //     setFileBody({ base64_file: "", file_name: "" });
-  //   }
-  // }, [fileBody]);
+  useEffect(() => {
+    if (fileBody?.base64_file) {
+      FileMutate();
+      setFileBody({ base64_file: "", file_name: "" });
+    }
+  }, [fileBody]);
 
   useEffect(() => {
     setFirstChildDivId(tabGeneralData, "tab-general-data");
@@ -740,91 +749,91 @@ export const LegalPersonUpdate = () => {
         </Form>
       ),
     },
-    // {
-    //   key: "4",
-    //   label: t("table.attachments"),
-    //   children: isFilesFetching ? (
-    //     <div
-    //       style={{
-    //         height: "100%",
-    //         width: "100%",
-    //         display: "flex",
-    //         alignItems: "center",
-    //         justifyContent: "center",
-    //       }}
-    //     >
-    //       <Spin size="large" />
-    //     </div>
-    //   ) : (
-    //     <Grid container spacing={1} >
-    //       <Grid xs={12} item>
-    //         <Upload
-    //           listType="picture"
-    //           multiple={false}
-    //           onRemove={(file) => {
-    //             setDeleteFileId(file?.uid);
-    //           }}
-    //           defaultFileList={Files?.items.map((file) => {
-    //             return {
-    //               uid: file._id,
-    //               name: file.file_name,
-    //               url: file.file_url,
-    //             };
-    //           })}
-    //           beforeUpload={(file) => {
-    //             setFileBody({ base64_file: "", file_name: "" });
-    //             setFileBody((state: any) => ({
-    //               ...state,
-    //               file_name: file.name,
-    //             }));
-    //             const reader = new FileReader();
-    //             reader.readAsDataURL(file);
-    //             reader.onload = () => {
-    //               setFileBody((state: any) => ({
-    //                 ...state,
-    //                 base64_file: reader.result,
-    //               }));
-    //             };
-    //             return false;
-    //           }}
-    //         >
-    //           <motion.div
-    //             style={{
-    //               width: "calc(100vw - 28%)",
-    //               display: "flex",
-    //               flexDirection: "column",
-    //               alignItems: "center",
-    //               border: "2px dashed #acacac53",
-    //               padding: 24,
-    //               cursor: "pointer",
-    //               transition: "all 0.3s ease",
-    //               borderRadius: 10,
-    //             }}
-    //             whileHover={{ backgroundColor: "#c5c5c522" }}
-    //             transition={{ duration: 0.5 }}
-    //           >
-    //             <Typography>
-    //               <InboxOutlined style={{ fontSize: 32 }} />
-    //             </Typography>
-    //             <Typography.Title level={3}>
-    //               {t("messages.upload_label")}
-    //             </Typography.Title>
-    //             <Typography>{t("messages.upload_description")}</Typography>
-    //           </motion.div>
-    //         </Upload>
-    //       </Grid>
+    {
+      key: "4",
+      label: t("table.attachments"),
+      children: isFilesFetching ? (
+        <div
+          style={{
+            height: "100%",
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Spin size="large" />
+        </div>
+      ) : (
+        <Grid container spacing={1}>
+          <Grid xs={12} item>
+            <Upload
+              listType="picture"
+              multiple={false}
+              onRemove={(file) => {
+                setDeleteFileId(file?.uid);
+              }}
+              defaultFileList={Files?.items.map((file) => {
+                return {
+                  uid: file._id,
+                  name: file.file_name,
+                  url: file.file_url,
+                };
+              })}
+              beforeUpload={(file) => {
+                setFileBody({ base64_file: "", file_name: "" });
+                setFileBody((state: any) => ({
+                  ...state,
+                  file_name: file.name,
+                }));
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => {
+                  setFileBody((state: any) => ({
+                    ...state,
+                    base64_file: reader.result,
+                  }));
+                };
+                return false;
+              }}
+            >
+              <motion.div
+                style={{
+                  width: "calc(100vw - 28%)",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  border: "2px dashed #acacac53",
+                  padding: 24,
+                  cursor: "pointer",
+                  transition: "all 0.3s ease",
+                  borderRadius: 10,
+                }}
+                whileHover={{ backgroundColor: "#c5c5c522" }}
+                transition={{ duration: 0.5 }}
+              >
+                <Typography>
+                  <InboxOutlined style={{ fontSize: 32 }} />
+                </Typography>
+                <Typography.Title level={3}>
+                  {t("messages.upload_label")}
+                </Typography.Title>
+                <Typography>{t("messages.upload_description")}</Typography>
+              </motion.div>
+            </Upload>
+          </Grid>
 
-    //       {!Files?.total && !fileBody?.base64_file && (
-    //         <Grid item xs={12}>
-    //           <Empty
-    //             image={Empty.PRESENTED_IMAGE_SIMPLE}
-    //             description={t("error.400")}
-    //           />
-    //         </Grid>
-    //       )}
-    //     </Grid>
-    //   ),
-    // },
+          {!Files?.total && !fileBody?.base64_file && (
+            <Grid item xs={12}>
+              <Empty
+                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                description={t("error.400")}
+              />
+            </Grid>
+          )}
+        </Grid>
+      ),
+    },
     // {
     //   key: "5",
     //   label: t("table.historic"),
@@ -930,7 +939,7 @@ export const LegalPersonUpdate = () => {
         error={UpdateError}
         success={UpdateIsSuccess}
       />
-      {/* <Toast
+      <Toast
         actionSuccess={t("messages.uploaded")}
         actionError={t("messages.upload")}
         error={FileError}
@@ -941,7 +950,7 @@ export const LegalPersonUpdate = () => {
         actionError={t("messages.delete")}
         error={DeleteFileError}
         success={DeleteFileIsSuccess}
-      /> */}
+      />
     </Grid>
   );
 };

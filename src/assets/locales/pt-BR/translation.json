@@ -170,9 +170,9 @@
     "recents": "Recentes",
     "serpro_assertiva": "Totalizador de consultas",
     "physical_persons": "Pessoas físicas",
-    "legal_persons": "Pessoas jurídicas",
     "legal_person_blacklist": "Blacklist pessoas jurídicas",
-    "legal_person_reports": "Relatórios"
+    "legal_person_reports": "Relatórios",
+    "legal_persons_reports": "Pessoas jurídicas"
   },
 
   "titles": {
