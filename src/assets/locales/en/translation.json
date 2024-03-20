@@ -166,7 +166,10 @@
     "legal_persons": "Legal persons",
     "legal_person_blacklist": "Blacklist legal person",
     "legal_person_reports": "Reports",
-    "legal_persons_reports": "Legal persons"
+    "legal_persons_reports": "Legal persons",
+    "upload_persons_cnpj_blacklist": "Import blacklist Cnpj",
+    "legal_person_blacklist_uploads": "Check uploads Cnpj",
+    "persons_cnpj_blacklist_uploads": "Check uploads Cnpj"
   },
 
   "titles": {

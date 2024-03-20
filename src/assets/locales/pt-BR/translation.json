@@ -172,7 +172,11 @@
     "physical_persons": "Pessoas físicas",
     "legal_person_blacklist": "Blacklist pessoas jurídicas",
     "legal_person_reports": "Relatórios",
-    "legal_persons_reports": "Pessoas jurídicas"
+    "legal_persons_reports": "Pessoas jurídicas",
+    "upload_persons_cnpj_blacklist": "Importar blacklist Cnpj",
+    "legal_person_blacklist_uploads": "Verificar uploads Cnpj",
+    "persons_cnpj_blacklist_uploads": "Verificar uploads Cnpj"
+    
   },
 
   "titles": {
