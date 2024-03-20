@@ -149,6 +149,9 @@ function App() {
                   colorBgElevated: defaultTheme.colors.secondary,
                   colorBgLayout: theme === "dark" ?  "#272727" : "#f0f0f0",
                 },
+                Badge: {
+                  colorError: import.meta.env.VITE_APP_COLOR_SECONDARY
+                }
               },
 
               token: {

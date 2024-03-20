@@ -15,7 +15,7 @@ import { generatedDepositTotalQuery } from "@src/services/types/consult/deposits
 import { generatedWithdrawalsRowsQuery } from "@src/services/types/consult/withdrawals/generatedWithdrawals.interface";
 import { PersonsQuery } from "@src/services/types/register/persons/persons.interface";
 import { moneyFormatter } from "@src/utils/moneyFormatter";
-import { Descriptions, Spin, Tabs, TabsProps } from "antd";
+import { Descriptions, Empty, Spin, Tabs, TabsProps, Upload } from "antd";
 import moment from "moment";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -23,6 +23,7 @@ import { useMediaQuery } from "react-responsive";
 import { useLocation, useParams } from "react-router-dom";
 import { TotalizersCards as DepositsCards } from "../../../consult/deposits/generated/components/TotalizersCards";
 import { TotalizersCards } from "../../../consult/withdrawals/generated/components/TotalizersCards";
+import { useGetLegalPersonFiles } from "@src/services/register/legalPersons/files/getFiles";
 
 export const LegalPersonDetails = () => {
   const { t } = useTranslation();
@@ -36,11 +37,9 @@ export const LegalPersonDetails = () => {
     sort_order: "DESC",
     cpf: currentData?.cpf,
   };
-  const {
-    LegalPersonsByCnpjData,
-    isLegalPersonsByCnpjDataFetching,
-  } = useGetLegalPersonsByCnpj(cnpj);
-  
+  const { LegalPersonsByCnpjData, isLegalPersonsByCnpjDataFetching } =
+    useGetLegalPersonsByCnpj(cnpj);
+
   const { isPersonsDataFetching } = useGetPersons(query);
 
   ///// generated deposits ------------------
@@ -96,7 +95,7 @@ export const LegalPersonDetails = () => {
 
   ///// attachments -------------------------
 
-  // const { Files, isFilesFetching } = useGetFiles(cnpj?.split(" ").join("."));
+  const { Files, isFilesFetching } = useGetLegalPersonFiles(cnpj);
 
   const items: TabsProps["items"] = [
     {
@@ -445,54 +444,54 @@ export const LegalPersonDetails = () => {
         </Grid>
       ),
     },
-    // {
-    //   key: "4",
-    //   label: t("table.attachments"),
-    //   children: isFilesFetching ? (
-    //     <div
-    //       style={{
-    //         height: "70vh",
-    //         width: "100%",
-    //         display: "flex",
-    //         alignItems: "center",
-    //         justifyContent: "center",
-    //       }}
-    //     >
-    //       <Spin size="large" />
-    //     </div>
-    //   ) : Files?.total && Files.total >= 1 ? (
-    //     <Upload
-    //       listType="picture"
-    //       accept="*"
-    //       multiple={false}
-    //       showUploadList={{
-    //         showRemoveIcon: false,
-    //       }}
-    //       defaultFileList={Files?.items.map((file) => {
-    //         return {
-    //           uid: file._id,
-    //           name: file.file_name,
-    //           url: file.file_url,
-    //         };
-    //       })}
-    //     />
-    //   ) : (
-    //     <div
-    //       style={{
-    //         height: "70vh",
-    //         width: "100%",
-    //         display: "flex",
-    //         alignItems: "center",
-    //         justifyContent: "center",
-    //       }}
-    //     >
-    //       <Empty
-    //         image={Empty.PRESENTED_IMAGE_SIMPLE}
-    //         description={t("error.400")}
-    //       />
-    //     </div>
-    //   ),
-    // },
+    {
+      key: "4",
+      label: t("table.attachments"),
+      children: isFilesFetching ? (
+        <div
+          style={{
+            height: "70vh",
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Spin size="large" />
+        </div>
+      ) : Files?.total && Files.total >= 1 ? (
+        <Upload
+          listType="picture"
+          accept="*"
+          multiple={false}
+          showUploadList={{
+            showRemoveIcon: false,
+          }}
+          defaultFileList={Files?.items.map((file) => {
+            return {
+              uid: file._id,
+              name: file.file_name,
+              url: file.file_url,
+            };
+          })}
+        />
+      ) : (
+        <div
+          style={{
+            height: "70vh",
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Empty
+            image={Empty.PRESENTED_IMAGE_SIMPLE}
+            description={t("error.400")}
+          />
+        </div>
+      ),
+    },
     {
       key: "5",
       label: t("menus.generated_deposits"),
