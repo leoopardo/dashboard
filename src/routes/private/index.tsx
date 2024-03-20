@@ -125,6 +125,8 @@ import { LegalPersonDetails } from "./Pages/register/legalPersons/detais";
 import { LegalPersonUpdate } from "./Pages/register/legalPersons/update";
 import { LegalPersonBlacklistUploads } from "./Pages/register/legalPersons/blacklist/uploads";
 import { LegalPersonsReports } from "./Pages/register/legalPersons/reports/legalPersonsReports";
+import { HistoricCnpjByMerchantReports } from "./Pages/consult/persons/reports/historicCnpjByMerchant";
+import { HistoricCnpjByMerchantDetailsReports } from "./Pages/consult/persons/reports/historicCnpjByMerchantDetails";
 export const PrivateRoutes = () => {
   const { responseValidate } = useValidate();
 
@@ -543,7 +545,8 @@ export const PrivateRoutes = () => {
               element={
                 <Permission
                   permission={
-                    responseValidate?.permissions?.report?.person?.report_person_check_cpf_list
+                    responseValidate?.permissions?.report?.person
+                      ?.report_person_check_cpf_list
                   }
                 >
                   <CheckDocument />
@@ -556,7 +559,8 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      responseValidate?.permissions?.report?.person?.report_check_document_by_merchant_list
+                      responseValidate?.permissions?.report?.person
+                        ?.report_check_document_by_merchant_list
                     }
                   >
                     <HistoricCpfByMerchant />
@@ -568,7 +572,8 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      responseValidate?.permissions?.report?.person?.report_person_check_cpf_list
+                      responseValidate?.permissions?.report?.person
+                        ?.report_person_check_cpf_list
                     }
                   >
                     <HistoricCpfByMerchantDetails />
@@ -581,7 +586,8 @@ export const PrivateRoutes = () => {
               element={
                 <Permission
                   permission={
-                    responseValidate?.permissions?.report?.person?.report_check_document_total
+                    responseValidate?.permissions?.report?.person
+                      ?.report_check_document_total
                   }
                 >
                   <SerproAssertiva />
@@ -591,14 +597,28 @@ export const PrivateRoutes = () => {
 
             <Route path="reports">
               <Route
-                path="historic_cpf_merchant"
+                path="historic_cpf_merchant_reports"
                 element={
                   <Permission
                     permission={
-                      responseValidate?.permissions?.report?.person?.report_check_document_by_merchant_export_csv
+                      responseValidate?.permissions?.report?.person
+                        ?.report_check_document_by_merchant_export_csv
                     }
                   >
                     <HistoricCpfByMerchantReports />
+                  </Permission>
+                }
+              />
+              <Route
+                path="historic_cnpj_merchant_reports"
+                element={
+                  <Permission
+                    permission={
+                      responseValidate?.permissions?.report?.person
+                        ?.report_check_document_by_merchant_export_csv
+                    }
+                  >
+                    <HistoricCnpjByMerchantReports />
                   </Permission>
                 }
               />
@@ -607,10 +627,24 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      responseValidate?.permissions?.report?.person?.report_check_document_by_merchant_export_csv
+                      responseValidate?.permissions?.report?.person
+                        ?.report_check_document_by_merchant_export_csv
                     }
                   >
                     <HistoricCpfByMerchantDetailsReports />
+                  </Permission>
+                }
+              />
+              <Route
+                path="historic_cnpj_merchant_details"
+                element={
+                  <Permission
+                    permission={
+                      responseValidate?.permissions?.report?.person
+                        ?.report_check_document_by_merchant_export_csv
+                    }
+                  >
+                    <HistoricCnpjByMerchantDetailsReports />
                   </Permission>
                 }
               />
@@ -1451,19 +1485,20 @@ export const PrivateRoutes = () => {
                     <PersonsReports />
                   </Permission>
                 }
-              /> <Route
-              path="legal_persons_reports"
-              element={
-                <Permission
-                  permission={
-                    responseValidate?.permissions?.register?.person?.person
-                      ?.person_person_export_csv
-                  }
-                >
-                  <LegalPersonsReports />
-                </Permission>
-              }
-            />
+              />{" "}
+              <Route
+                path="legal_persons_reports"
+                element={
+                  <Permission
+                    permission={
+                      responseValidate?.permissions?.register?.person?.person
+                        ?.person_person_export_csv
+                    }
+                  >
+                    <LegalPersonsReports />
+                  </Permission>
+                }
+              />
               <Route
                 path="client_bank_reports"
                 element={

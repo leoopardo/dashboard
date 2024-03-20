@@ -158,7 +158,7 @@
     "receipts": "Comprovantes",
     "organization_settings": "Organização Configurações",
     "merchant_settings": "Empresa Configurações",
-    "historic_cpf_merchant": "Histórico de CPF por Merchant",
+    "historic_cpf_merchant": "Consultas de documento por empresa",
     "historic_cpf_merchant_details": "Detalhes de CPF por Merchant",
     "settings": "Configurações",
     "permissions_groups": "Grupos de permissões",
@@ -175,8 +175,10 @@
     "legal_persons_reports": "Pessoas jurídicas",
     "upload_persons_cnpj_blacklist": "Importar blacklist Cnpj",
     "legal_person_blacklist_uploads": "Verificar uploads Cnpj",
-    "persons_cnpj_blacklist_uploads": "Verificar uploads Cnpj"
-    
+    "persons_cnpj_blacklist_uploads": "Verificar uploads Cnpj",
+    "historic_cnpj_merchant_reports": "Consultas de CNPJ por empresa",
+    "historic_cpf_merchant_reports": "Consultas de CPF por empresa",
+    "historic_cnpj_merchant_details": "Detalhes de CNPJ por Merchant"
   },
 
   "titles": {
@@ -287,7 +289,9 @@
     "delivered_on_time": "Entregue no prazo",
     "delivered_late": "Entregue atrasado",
     "not_delivered_on_time": "Não entregue no prazo",
-    "not_delivered_late": "Não entregue atrasado"
+    "not_delivered_late": "Não entregue atrasado",
+    "csv_generated": "CSV Gerado",
+    "generated_csv_message": "Seu relatório está pronto para download. Clique no botão abaixo para baixar o arquivo."
   },
   "login": {
     "sign_in": "Faça login",
@@ -959,7 +963,7 @@
     "balance": "Saldo",
     "permission_group": "Grupo",
     "withdraw_id": "ID da organização",
-    "total_cpf_checks": "Total CPF checados",
+    "total_cpf_checks": "CPFs consultados",
     "user_merchant_id": "ID da empresa do usuário",
     "user_merchant_name": "Nome da empresa do usuário",
     "user_operator_id": "ID do operador do usuário",
@@ -1045,7 +1049,8 @@
     "legal_nature_description": "Natureza jurídica",
     "registration_status_date": "Data do status de registro",
     "registration_status_reason": "Motivo do status de registro",
-    "main_cnae_code": "Código CNAE"
+    "main_cnae_code": "Código CNAE",
+    "total_cnpj_checks": "CNPJs consultados"
   },
   "actions": {
     "details": "Detalhes",

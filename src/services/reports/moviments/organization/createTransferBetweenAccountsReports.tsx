@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { queryClient } from "@src/services/queryClient";
 import { OrganizationTransferBetweenAccountsQuery } from "@src/services/types/moviments/organization/transferBetweenAccounts.interface";
-import { ReportsItem } from "@src/services/types/reports/reports.interface";
+import { ReportsDataResponse } from "@src/services/types/reports/reports.interface";
 import { useMutation } from "react-query";
 import { api } from "../../../../config/api";
 
 export function useCreateOrganizationTransferBetweenAccountsReports(
   body: OrganizationTransferBetweenAccountsQuery
 ) {
-  const { isLoading, error, mutate, isSuccess } = useMutation<
-    ReportsItem | null | undefined
+  const { isLoading, error, mutate, isSuccess, data } = useMutation<
+    ReportsDataResponse | null | undefined
   >("CreateOrganizationTransferBetweenAccountsReports", async () => {
     const response = await api.post(
       "core/csv/organization/account/balance/transfer",
@@ -28,11 +28,13 @@ export function useCreateOrganizationTransferBetweenAccountsReports(
   const organizationTransferBetweenAccountsIsLoading = isLoading;
   const organizationTransferBetweenAccountsError: any = error;
   const organizationTransferBetweenAccountsIsSuccess = isSuccess;
+  const organizationTransferBetweenAccountsData = data;
 
   return {
     organizationTransferBetweenAccountsMutate,
     organizationTransferBetweenAccountsIsLoading,
     organizationTransferBetweenAccountsError,
     organizationTransferBetweenAccountsIsSuccess,
+    organizationTransferBetweenAccountsData,
   };
 }

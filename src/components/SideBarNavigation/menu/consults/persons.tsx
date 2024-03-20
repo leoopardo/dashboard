@@ -36,8 +36,16 @@ export function Persons({ permissions }: ItemInterface): MenuRouteInterface {
           //TODO permissão
           {
             key: "historic_cpf_merchant_reports",
-            label: "historic_cpf_merchant",
-            path: "/consult/consult_persons/reports/historic_cpf_merchant",
+            label: "historic_cpf_merchant_reports",
+            path: "/consult/consult_persons/reports/historic_cpf_merchant_reports",
+            permission:
+              permissions?.report?.person
+                ?.report_check_document_by_merchant_export_csv,
+          },
+          {
+            key: "historic_cnpj_merchant_reports",
+            label: "historic_cnpj_merchant_reports",
+            path: "/consult/consult_persons/reports/historic_cnpj_merchant_reports",
             permission:
               permissions?.report?.person
                 ?.report_check_document_by_merchant_export_csv,
@@ -46,6 +54,14 @@ export function Persons({ permissions }: ItemInterface): MenuRouteInterface {
             key: "historic_cpf_merchant_details",
             label: "historic_cpf_merchant_details",
             path: "/consult/consult_persons/reports/historic_cpf_merchant_details",
+            permission:
+              permissions?.report?.person
+                ?.report_check_document_by_merchant_export_csv,
+          },
+          {
+            key: "historic_cnpj_merchant_details",
+            label: "historic_cnpj_merchant_details",
+            path: "/consult/consult_persons/reports/historic_cnpj_merchant_details",
             permission:
               permissions?.report?.person
                 ?.report_check_document_by_merchant_export_csv,

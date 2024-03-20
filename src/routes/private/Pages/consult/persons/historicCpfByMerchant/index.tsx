@@ -1,20 +1,31 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { EyeFilled, FilterOutlined } from "@ant-design/icons";
+import { DownOutlined, EyeFilled, FilterOutlined } from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
+import { FiltersModal } from "@src/components/FiltersModal";
+import { FilterChips } from "@src/components/FiltersModal/filterChips";
+import { useExportHistoricCnpjByMerchant } from "@src/services/consult/persons/createReportHistoricCnpjByMerchant";
 import { useExportHistoricCpfByMerchant } from "@src/services/consult/persons/createReportHistoricCpfByMerchant";
-import { PersonBlacklistReasonsItem } from "@src/services/types/register/persons/blacklist/reasons.interface";
-import { Button } from "antd";
-import moment from "moment";
+import { useGetHistoricCnpjByMerchant } from "@src/services/consult/persons/historicCnpjByMerchant";
 import { useGetHistoricCpfByMerchant } from "@src/services/consult/persons/historicCpfByMerchant";
+import { HistoricCpfByMerchantQuery } from "@src/services/types/consult/persons/hsitoricCpfByMerchant";
+import { PersonBlacklistReasonsItem } from "@src/services/types/register/persons/blacklist/reasons.interface";
+import {
+  Badge,
+  Button,
+  Dropdown,
+  Space,
+  Tabs,
+  Typography,
+  notification,
+} from "antd";
+import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { HistoricCpfByMerchantQuery } from "@src/services/types/consult/persons/hsitoricCpfByMerchant";
-import { FilterChips } from "@src/components/FiltersModal/filterChips";
-import { FiltersModal } from "@src/components/FiltersModal";
 import { useNavigate } from "react-router-dom";
-import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
+
+type NotificationType = "success" | "info" | "warning" | "error";
 
 const INITIAL_QUERY: HistoricCpfByMerchantQuery = {
   limit: 25,
@@ -34,7 +45,6 @@ export const HistoricCpfByMerchant = () => {
   const navigate = useNavigate();
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [query, setQuery] = useState<HistoricCpfByMerchantQuery>(INITIAL_QUERY);
-  const [navigateTo, setNavigateTo] = useState<boolean>(false);
   const { t } = useTranslation();
   const {
     HistoricCpfByMerchantData,
@@ -42,16 +52,28 @@ export const HistoricCpfByMerchant = () => {
     isHistoricCpfByMerchantDataFetching,
     refetchHistoricCpfByMerchantData,
   } = useGetHistoricCpfByMerchant(query);
+  const [api, contextHolder] = notification.useNotification();
 
   const {
-    HistoricCpfByMerchantReportsError,
+    HistoricCnpjByMerchantData,
+    HistoricCnpjByMerchantDataError,
+    isHistoricCnpjByMerchantDataFetching,
+    refetchHistoricCnpjByMerchantData,
+  } = useGetHistoricCnpjByMerchant(query);
+
+  const {
     HistoricCpfByMerchantReportsIsLoading,
     HistoricCpfByMerchantReportsIsSuccess,
     HistoricCpfByMerchantReportsMutate,
   } = useExportHistoricCpfByMerchant(query);
 
-  const [currentItem, setCurrentItem] =
-    useState<PersonBlacklistReasonsItem | null>(null);
+  const {
+    HistoricCnpjByMerchantReportsIsLoading,
+    HistoricCnpjByMerchantReportsIsSuccess,
+    HistoricCnpjByMerchantReportsMutate,
+  } = useExportHistoricCnpjByMerchant(query);
+
+  const [, setCurrentItem] = useState<PersonBlacklistReasonsItem | null>(null);
 
   const columns: ColumnInterface[] = [
     { name: "merchant_id", type: "text", head: "id" },
@@ -63,40 +85,73 @@ export const HistoricCpfByMerchant = () => {
     refetchHistoricCpfByMerchantData();
   }, [query]);
 
+  const openNotificationWithIcon = (type: NotificationType, path: string) => {
+    const BtnNavigate = (
+      <Button onClick={() => navigate(path)}>{t("menus.reports")}</Button>
+    );
+    api[type]({
+      message: t("messages.creating_csv"),
+      description: t("messages.creating_csv_message"),
+      duration: 0,
+      btn: BtnNavigate,
+    });
+  };
+
   useEffect(() => {
-    if (navigateTo) {
-      navigate("details", { state: { item: currentItem, query } });
-      setNavigateTo(false);
+    if (HistoricCpfByMerchantReportsIsSuccess) {
+      openNotificationWithIcon(
+        "info",
+        "/consult/consult_persons/reports/historic_cpf_merchant_reports"
+      );
     }
-  }, [navigateTo]);
+  }, [HistoricCpfByMerchantReportsIsSuccess]);
+
+  useEffect(() => {
+    if (HistoricCnpjByMerchantReportsIsSuccess) {
+      openNotificationWithIcon(
+        "info",
+        "/consult/consult_persons/reports/historic_cnpj_merchant_reports"
+      );
+    }
+  }, [HistoricCnpjByMerchantReportsIsSuccess]);
 
   return (
     <Grid container style={{ padding: "25px" }}>
+      {contextHolder}
       <Grid
         container
         style={{ display: "flex", alignItems: "center" }}
         spacing={1}
       >
-        <Grid item xs={12} md={3} lg={2}>
-          <Button
-            size="large"
-            style={{ width: "100%" }}
-            loading={isHistoricCpfByMerchantDataFetching}
-            type="primary"
-            icon={<FilterOutlined />}
-            onClick={() => setIsFiltersOpen(true)}
+        <Grid item xs={12} md={8} lg={9}>
+          <Grid
+            container
+            style={{ display: "flex", alignItems: "center" }}
+            spacing={1}
           >
-            {t("table.filters")}
-          </Button>
-        </Grid>
-        <Grid item xs={12} md={5} lg={6}>
-          <FilterChips initial_query={INITIAL_QUERY}
-            startDateKeyName="start_date"
-            endDateKeyName="end_date"
-            query={query}
-            setQuery={setQuery}
-            haveInitialDate
-          />
+            <Grid item xs={12} md={2} lg={2}>
+              <Button
+                size="large"
+                style={{ width: "100%" }}
+                loading={isHistoricCpfByMerchantDataFetching}
+                type="primary"
+                icon={<FilterOutlined />}
+                onClick={() => setIsFiltersOpen(true)}
+              >
+                {t("table.filters")}
+              </Button>
+            </Grid>
+            <Grid item xs={12} md={9} lg={9}>
+              <FilterChips
+                initial_query={INITIAL_QUERY}
+                startDateKeyName="start_date"
+                endDateKeyName="end_date"
+                query={query}
+                setQuery={setQuery}
+                haveInitialDate
+              />
+            </Grid>
+          </Grid>
         </Grid>
 
         <Grid item xs={12} md={2} lg={2}>
@@ -120,62 +175,147 @@ export const HistoricCpfByMerchant = () => {
           </Button>
         </Grid>
 
-        <Grid item xs={12} md="auto">
-          <ExportReportsModal
-            disabled={
-              !HistoricCpfByMerchantData?.length ||
-              HistoricCpfByMerchantDataError
-            }
-            mutateReport={() => HistoricCpfByMerchantReportsMutate()}
-            error={HistoricCpfByMerchantReportsError}
-            success={HistoricCpfByMerchantReportsIsSuccess}
-            loading={HistoricCpfByMerchantReportsIsLoading}
-            reportPath="/consult/consult_persons/reports/historic_cpf_merchant"
-          />
+        <Grid item xs={12} md={2} lg={1}>
+          <Dropdown
+            menu={{
+              items: [
+                {
+                  label: "CPF",
+                  key: "cpf",
+                  onClick: () => {
+                    HistoricCpfByMerchantReportsMutate();
+                  },
+                  disabled: HistoricCpfByMerchantData?.length === 0,
+                },
+                {
+                  label: "CNPJ",
+                  key: "cnpj",
+                  onClick: () => {
+                    HistoricCnpjByMerchantReportsMutate();
+                  },
+                  disabled: HistoricCnpjByMerchantData?.length === 0,
+                },
+              ],
+            }}
+          >
+            <Button
+              size="large"
+              loading={
+                HistoricCpfByMerchantReportsIsLoading ||
+                HistoricCnpjByMerchantReportsIsLoading
+              }
+            >
+              <Space>
+                CSV <DownOutlined style={{ fontSize: 12 }} />
+              </Space>
+            </Button>
+          </Dropdown>
         </Grid>
       </Grid>
 
-      <Grid container style={{ marginTop: "30px" }}>
+      <Grid container style={{ marginTop: "8px" }}>
         <Grid item xs={12}>
-          <CustomTable
-            query={query}
-            setCurrentItem={setCurrentItem}
-            setQuery={setQuery}
-            data={HistoricCpfByMerchantData}
-            items={HistoricCpfByMerchantData}
-            error={HistoricCpfByMerchantDataError}
-            columns={columns}
-            loading={isHistoricCpfByMerchantDataFetching}
-            label={["merchant_name"]}
-            refetch={refetchHistoricCpfByMerchantData}
-            actions={[
+          <Tabs
+            items={[
               {
-                label: "details",
-                icon: <EyeFilled style={{ fontSize: "18px" }} />,
-                onClick: (item) => {
-                  setCurrentItem(item);
-                  setNavigateTo(true);
-                },
+                label: (
+                  <Badge count={HistoricCpfByMerchantData?.length}>
+                    <Typography style={{ width: 32, marginLeft: 8 }}>
+                      CPF
+                    </Typography>
+                  </Badge>
+                ),
+                key: "cpf",
+                children: (
+                  <CustomTable
+                    query={query}
+                    setCurrentItem={setCurrentItem}
+                    setQuery={setQuery}
+                    data={HistoricCpfByMerchantData}
+                    items={HistoricCpfByMerchantData}
+                    error={HistoricCpfByMerchantDataError}
+                    columns={columns}
+                    loading={isHistoricCpfByMerchantDataFetching}
+                    label={["merchant_name"]}
+                    refetch={refetchHistoricCpfByMerchantData}
+                    removePagination
+                    actions={[
+                      {
+                        label: "details",
+                        icon: <EyeFilled style={{ fontSize: "18px" }} />,
+                        onClick: (item) => {
+                          navigate("details", {
+                            state: { item: item, query, cpf: true },
+                          });
+                        },
+                      },
+                    ]}
+                  />
+                ),
+              },
+              {
+                label: (
+                  <Badge count={HistoricCnpjByMerchantData?.length}>
+                    <Typography style={{ width: 38, marginLeft: 8 }}>
+                      CNPJ
+                    </Typography>
+                  </Badge>
+                ),
+                key: "cnpj",
+                children: (
+                  <CustomTable
+                    query={query}
+                    setCurrentItem={setCurrentItem}
+                    setQuery={setQuery}
+                    data={HistoricCnpjByMerchantData}
+                    items={HistoricCnpjByMerchantData}
+                    error={HistoricCnpjByMerchantDataError}
+                    columns={[
+                      { name: "merchant_id", type: "text", head: "id" },
+                      { name: "merchant_name", type: "text" },
+
+                      {
+                        name: "totalCnpjChecks",
+                        type: "text",
+                        head: "total_cnpj_checks",
+                      },
+                    ]}
+                    loading={isHistoricCnpjByMerchantDataFetching}
+                    label={["merchant_name"]}
+                    refetch={refetchHistoricCnpjByMerchantData}
+                    removePagination
+                    actions={[
+                      {
+                        label: "details",
+                        icon: <EyeFilled style={{ fontSize: "18px" }} />,
+                        onClick: (item) => {
+                          navigate("details", {
+                            state: { item: item, query, cnpj: true },
+                          });
+                        },
+                      },
+                    ]}
+                  />
+                ),
               },
             ]}
           />
         </Grid>
       </Grid>
 
-        <FiltersModal
-          open={isFiltersOpen}
-          setOpen={setIsFiltersOpen}
-          query={query}
-          setQuery={setQuery}
-          filters={["start_date", "end_date", "merchant_id"]}
-          refetch={refetchHistoricCpfByMerchantData}
-          selectOptions={{}}
-          startDateKeyName="start_date"
-          endDateKeyName="end_date"
-          initialQuery={INITIAL_QUERY}
-          haveInitialDate
-        />
-      
+      <FiltersModal
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        filters={["start_date", "end_date", "merchant_id"]}
+        refetch={refetchHistoricCpfByMerchantData}
+        selectOptions={{}}
+        startDateKeyName="start_date"
+        endDateKeyName="end_date"
+        initialQuery={INITIAL_QUERY}
+        haveInitialDate
+      />
     </Grid>
   );
 };

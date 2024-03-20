@@ -69,6 +69,7 @@ export const OrganizationUser = () => {
     OrganizationReportsIsLoading,
     OrganizationReportsIsSuccess,
     OrganizationReportsMutate,
+    OrganizationReportsData
   } = useCreateOrganizationReports({
     ...query,
     fields: csvFields,
@@ -425,6 +426,7 @@ export const OrganizationUser = () => {
         setIsComma={setIsComma}
         setCsvFields={setCsvFields}
         reportName="organizationUsers"
+        url={OrganizationReportsData?.url}
       />
     </Grid>
   );

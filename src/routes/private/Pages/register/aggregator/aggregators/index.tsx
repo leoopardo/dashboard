@@ -77,6 +77,7 @@ export const Aggregators = () => {
     AggregatorReportsIsLoading,
     AggregatorReportsIsSuccess,
     AggregatorReportsMutate,
+    AggregatorReportsData
   } = useCreateAggregatorReports({
     ...query,
     fields: csvFields,
@@ -504,6 +505,7 @@ export const Aggregators = () => {
         setIsComma={setIsComma}
         setCsvFields={setCsvFields}
         reportName="Aggregators"
+        url={AggregatorReportsData?.url}
       />
     </Grid>
   );

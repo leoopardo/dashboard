@@ -103,6 +103,7 @@ export const Operators = () => {
     OperatorReportsIsLoading,
     OperatorReportsIsSuccess,
     OperatorReportsMutate,
+    OperatorReportsData
   } = useCreateOperatorReports({
     ...query,
     fields: csvFields,
@@ -383,6 +384,7 @@ export const Operators = () => {
         setIsComma={setIsComma}
         setCsvFields={setCsvFields}
         reportName="Operators"
+        url={OperatorReportsData?.url}
       />
       <TuorComponent
         open={isTuorOpen}

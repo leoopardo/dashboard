@@ -54,7 +54,7 @@ export const RefundWithdrawals = () => {
     isRefundWithdrawalsTotalFetching,
     refetchRefundWithdrawalsTotal,
     refundWithdrawalsTotal,
-    refundWithdrawalsTotalError
+    refundWithdrawalsTotalError,
   } = useGetTotalRefundWithdrawals(query);
 
   const {
@@ -76,6 +76,7 @@ export const RefundWithdrawals = () => {
     RefundWithdrawalsReportsIsLoading,
     RefundWithdrawalsReportsIsSuccess,
     RefundWithdrawalsReportsMutate,
+    RefundWithdrawalsReportsData,
   } = useCreateRefundWithdrawalsReports({
     ...query,
     fields: { ...csvFields },
@@ -183,7 +184,8 @@ export const RefundWithdrawals = () => {
           </Button>
         </Col>
         <Col xs={{ span: 24 }} md={{ span: 20 }}>
-          <FilterChips initial_query={INITIAL_QUERY}
+          <FilterChips
+            initial_query={INITIAL_QUERY}
             startDateKeyName="start_date"
             endDateKeyName="end_date"
             query={query}
@@ -449,6 +451,7 @@ export const RefundWithdrawals = () => {
         comma={isComma}
         setIsComma={setIsComma}
         reportName="RefundWithdrawalsReportsFields"
+        url={RefundWithdrawalsReportsData?.url}
       />
 
       <ViewModal
