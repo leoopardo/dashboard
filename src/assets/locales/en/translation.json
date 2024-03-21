@@ -801,7 +801,7 @@
     "refund_id": "Refund ID",
     "refund_date": "Refund date",
     "blacklist_data": "Locks data",
-    "limits_data": "limits data",
+    "limits_data": "Limits data",
     "merchant_origin": "Merchant from",
     "merchant_destination": "Merchant to",
     "debit_balance_type": "Origin balance type",
@@ -1045,7 +1045,15 @@
     "main_cnae_code": "CNAE code",
     "general_use": "General use",
     "total_cnpj_checks": "CNPJ's checks",
-    "trade_name": "Editable name"
+    "trade_name": "Editable name",
+    "business_type": "Businees type",
+    "registration_status_code": "Registration status code",
+    "address_city": "City",
+    "address_state": "State",
+    "address_country": "Country",
+    "address_street": "Street",
+    "jurisdiction_city": "Jurisdiction city",
+    "phone": "Cellphone"
   },
   "actions": {
     "details": "Details",

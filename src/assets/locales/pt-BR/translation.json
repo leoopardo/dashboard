@@ -921,11 +921,9 @@
     "license_end_validity_date": "Data final de validade da licença",
     "cashin_bank": "Banco de depósitos",
     "cashout_bank": "Banco de saques",
-
     "exchange_spread": "Exchange spread",
     "exchange_iof": "Exchange IOF",
     "exchange_operating_rate": "Exchange operating rate",
-
     "cash_in_permission": "Depósitos habilitado?",
     "cash_out_permission": "Saques habilitado?",
     "cpf_api_permission": "API de consulta de CPF habilitada?",
@@ -1055,7 +1053,15 @@
     "main_cnae_code": "Código CNAE",
     "total_cnpj_checks": "CNPJs consultados",
     "general_use": "Uso geral",
-    "trade_name": "Nome editável"
+    "trade_name": "Nome editável",
+    "business_type": "Tipo de negócio",
+    "registration_status_code": "Código do status de registro",
+    "address_city": "Cidade",
+    "address_state": "Estado",
+    "address_country": "País",
+    "address_street": "Rua",
+    "jurisdiction_city": "Cidade de jurisdição",
+    "phone": "Telefone"
   },
   "actions": {
     "details": "Detalhes",

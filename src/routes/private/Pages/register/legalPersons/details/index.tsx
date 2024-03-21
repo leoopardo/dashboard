@@ -8,6 +8,7 @@ import { useGetRowsPaidDeposits } from "@src/services/consult/deposits/paidDepos
 import { useGetTotalPaidDeposits } from "@src/services/consult/deposits/paidDeposits/getTotal";
 import { useGetRowsGeneratedWithdrawals } from "@src/services/consult/withdrawals/generatedWithdrawals/getRows";
 import { useGetTotalGeneratedWithdrawals } from "@src/services/consult/withdrawals/generatedWithdrawals/getTotal";
+import { useGetLegalPersonFiles } from "@src/services/register/legalPersons/files/getFiles";
 import { useGetLegalPersonsByCnpj } from "@src/services/register/legalPersons/getPersonsByCnpj";
 import { useGetPersons } from "@src/services/register/persons/persons/getPersons";
 import { paidDepositTotalQuery } from "@src/services/types/consult/deposits/PaidDeposits.interface";
@@ -19,16 +20,13 @@ import { Descriptions, Empty, Spin, Tabs, TabsProps, Upload } from "antd";
 import moment from "moment";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useMediaQuery } from "react-responsive";
 import { useLocation, useParams } from "react-router-dom";
 import { TotalizersCards as DepositsCards } from "../../../consult/deposits/generated/components/TotalizersCards";
 import { TotalizersCards } from "../../../consult/withdrawals/generated/components/TotalizersCards";
-import { useGetLegalPersonFiles } from "@src/services/register/legalPersons/files/getFiles";
 
 export const LegalPersonDetails = () => {
   const { t } = useTranslation();
   const currentData = useLocation()?.state;
-  const isMobile = useMediaQuery({ maxWidth: "750px" });
   const { cnpj } = useParams();
   const query: PersonsQuery = {
     limit: 25,
@@ -116,11 +114,7 @@ export const LegalPersonDetails = () => {
       ) : (
         <Grid container spacing={1} display="flex" justifyContent="center">
           <Grid item md={12} xs={12}>
-            <Descriptions
-              bordered
-              style={{ margin: 0, padding: 0 }}
-              column={isMobile ? 1 : 3}
-            >
+            <Descriptions bordered style={{ margin: 0, padding: 0 }}>
               <Descriptions.Item
                 key={"business_name"}
                 label={t(`table.business_name`)}
@@ -345,7 +339,7 @@ export const LegalPersonDetails = () => {
       ) : (
         <Grid container spacing={1} display="flex" justifyContent="center">
           <Grid item md={12} xs={12}>
-            <Descriptions bordered style={{ margin: 0, padding: 0 }} column={3}>
+            <Descriptions bordered style={{ margin: 0, padding: 0 }}>
               <Descriptions.Item
                 key={"black_list"}
                 label={t(`table.black_list`)}
@@ -437,7 +431,7 @@ export const LegalPersonDetails = () => {
       ) : (
         <Grid container spacing={1} display="flex" justifyContent="center">
           <Grid item md={12} xs={12}>
-            <Descriptions bordered style={{ margin: 0, padding: 0 }} column={3}>
+            <Descriptions bordered style={{ margin: 0, padding: 0 }}>
               <Descriptions.Item
                 key={"cash_in_max_value"}
                 label={t(`table.cash_in_max_value`)}
@@ -449,32 +443,6 @@ export const LegalPersonDetails = () => {
                 }}
               >
                 {moneyFormatter(LegalPersonsByCnpjData?.cash_in_max_value || 0)}
-              </Descriptions.Item>
-              <Descriptions.Item
-                key={"cash_out_max_value"}
-                label={t(`table.cash_out_max_value`)}
-                labelStyle={{
-                  maxWidth: "120px !important",
-                  margin: 0,
-                  padding: 0,
-                  textAlign: "center",
-                }}
-              >
-                {moneyFormatter(
-                  LegalPersonsByCnpjData?.cash_out_max_value || 0
-                )}
-              </Descriptions.Item>
-              <Descriptions.Item
-                key={"cash_out_transaction_limit"}
-                label={t(`table.cash_out_transaction_limit`)}
-                labelStyle={{
-                  maxWidth: "120px !important",
-                  margin: 0,
-                  padding: 0,
-                  textAlign: "center",
-                }}
-              >
-                {LegalPersonsByCnpjData?.cash_out_transaction_limit || 0}
               </Descriptions.Item>
             </Descriptions>
           </Grid>
