@@ -14,19 +14,17 @@ import { paidDepositTotalQuery } from "@src/services/types/consult/deposits/Paid
 import { generatedDepositTotalQuery } from "@src/services/types/consult/deposits/generatedDeposits.interface";
 import { generatedWithdrawalsRowsQuery } from "@src/services/types/consult/withdrawals/generatedWithdrawals.interface";
 import { PersonsQuery } from "@src/services/types/register/persons/persons.interface";
+import { moneyFormatter } from "@src/utils/moneyFormatter";
 import { Descriptions, Empty, Spin, Tabs, TabsProps, Upload } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useMediaQuery } from "react-responsive";
 import { useLocation, useParams } from "react-router-dom";
 import { TotalizersCards as DepositsCards } from "../../../consult/deposits/generated/components/TotalizersCards";
 import { TotalizersCards } from "../../../consult/withdrawals/generated/components/TotalizersCards";
-import { moneyFormatter } from "@src/utils/moneyFormatter";
 
 export const PersonDetails = () => {
   const { t } = useTranslation();
   const currentData = useLocation()?.state;
-  const isMobile = useMediaQuery({ maxWidth: "750px" });
   const { cpf } = useParams();
   const query: PersonsQuery = {
     limit: 25,
@@ -99,7 +97,6 @@ export const PersonDetails = () => {
 
   const { paidRows, paidRowsError, isPaidRowsFetching } =
     useGetRowsPaidDeposits(pDepositQuery);
-
 
   ////////// withdrawals --------------------
 
@@ -178,12 +175,8 @@ export const PersonDetails = () => {
         </div>
       ) : (
         <Grid container spacing={1} display="flex" justifyContent="center">
-          <Grid item md={10} xs={12}>
-            <Descriptions
-              bordered
-              style={{ margin: 0, padding: 0 }}
-              column={isMobile ? 1 : 2}
-            >
+          <Grid item md={12} xs={12}>
+            <Descriptions bordered style={{ margin: 0, padding: 0 }}>
               {!isPersonsDataFetching &&
                 Object.keys(personData).map((key, index) => {
                   switch (key) {
@@ -291,7 +284,7 @@ export const PersonDetails = () => {
       ) : (
         <Grid container spacing={1} display="flex" justifyContent="center">
           <Grid item md={8} xs={12}>
-            <Descriptions bordered style={{ margin: 0, padding: 0 }} column={1}>
+            <Descriptions bordered style={{ margin: 0, padding: 0 }}>
               {!isPersonsDataFetching &&
                 Object.keys(blacklistData).map((key, index) => {
                   switch (key) {
@@ -354,8 +347,8 @@ export const PersonDetails = () => {
         </div>
       ) : (
         <Grid container spacing={1} display="flex" justifyContent="center">
-          <Grid item md={8} xs={12}>
-            <Descriptions bordered style={{ margin: 0, padding: 0 }} column={1}>
+          <Grid item md={12} xs={12}>
+            <Descriptions bordered style={{ margin: 0, padding: 0 }}>
               {!isPersonsDataFetching &&
                 Object.keys(LimitsData).map((key, index) => {
                   switch (key) {

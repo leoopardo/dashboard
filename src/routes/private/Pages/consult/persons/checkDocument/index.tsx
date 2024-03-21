@@ -6,14 +6,7 @@ import { useGetCheckCnpj } from "@src/services/consult/persons/checkCNPJ";
 import { useGetCheckCpf } from "@src/services/consult/persons/checkDocument";
 import { useGetCheckCpfDetails } from "@src/services/consult/persons/checkDocumentsDetails";
 import { moneyFormatter } from "@src/utils/moneyFormatter";
-import {
-  Button,
-  Descriptions,
-  Input,
-  Select,
-  Space,
-  Typography
-} from "antd";
+import { Button, Descriptions, Input, Select, Space, Typography } from "antd";
 import moment from "moment";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -32,7 +25,6 @@ export const CheckDocument = () => {
     CheckCpfData,
     isCheckCpfDataFetching,
     refetchCheckCpfData,
-    CheckCpfDataSuccess,
     remove,
     CheckCpfDataError,
   } = useGetCheckCpf(searchOption === "cpf" ? search : "");
@@ -96,6 +88,7 @@ export const CheckDocument = () => {
                 }
                 if (searchOption === "cnpj") {
                   refetchCheckCnpjData();
+                  merchantsBlacklistData.refetchCheckCpfData();
                 }
               }}
               icon={<SearchOutlined />}
@@ -133,7 +126,7 @@ export const CheckDocument = () => {
         </Grid>
       </Grid>
       <Grid container style={{ marginTop: "25px" }}>
-        {CheckCpfDataSuccess && CheckCpfData && searchOption === "cpf" && (
+        {(CheckCpfData || CheckCnpjData) && (
           <Grid
             container
             item
@@ -464,6 +457,46 @@ export const CheckDocument = () => {
               >
                 {CheckCnpjData?.black_list ? t("table.true") : t("table.false")}
               </Descriptions.Item>
+              {merchantsBlacklistData &&
+              merchantsBlacklistData?.CheckCpfData?.total > 0 ? (
+                <Descriptions.Item
+                  key={"merchant_blacklist"}
+                  label={t(`table.merchant_blacklist`)}
+                  labelStyle={{
+                    maxWidth: "140px !important",
+                    margin: 0,
+                    padding: 0,
+                    textAlign: "center",
+                  }}
+                >
+                  {t("table.true")}
+                </Descriptions.Item>
+              ) : (
+                <Descriptions.Item
+                  key={"merchant_blacklist"}
+                  label={t(`table.merchant_blacklist`)}
+                  labelStyle={{
+                    maxWidth: "140px !important",
+                    margin: 0,
+                    padding: 0,
+                    textAlign: "center",
+                  }}
+                >
+                  {t("table.false")}
+                </Descriptions.Item>
+              )}
+              <Descriptions.Item
+                key={"flag_pep"}
+                label={t(`table.flag_pep`)}
+                labelStyle={{
+                  maxWidth: "140px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {CheckCnpjData?.flag_pep ? t("table.true") : t("table.false")}
+              </Descriptions.Item>
               <Descriptions.Item
                 key={"flag_pep"}
                 label={t(`table.flag_pep`)}
@@ -502,39 +535,14 @@ export const CheckDocument = () => {
                   ? moneyFormatter(CheckCnpjData?.cash_in_max_value)
                   : "-"}
               </Descriptions.Item>
-              <Descriptions.Item
-                key={"cash_out_max_value"}
-                label={t(`table.cash_out_max_value`)}
-                labelStyle={{
-                  maxWidth: "140px !important",
-                  margin: 0,
-                  padding: 0,
-                  textAlign: "center",
-                }}
-              >
-                {CheckCnpjData?.cash_out_max_value
-                  ? moneyFormatter(CheckCnpjData?.cash_out_max_value)
-                  : "-"}
-              </Descriptions.Item>
-              <Descriptions.Item
-                key={"cash_out_transaction_limit"}
-                label={t(`table.cash_out_transaction_limit`)}
-                labelStyle={{
-                  maxWidth: "140px !important",
-                  margin: 0,
-                  padding: 0,
-                  textAlign: "center",
-                }}
-              >
-                {CheckCnpjData?.cash_out_transaction_limit ?? "-"}
-              </Descriptions.Item>
+              
             </Descriptions>
           )}
         </Grid>
       </Grid>
 
       <ViewModal
-        modalName={`Blacklist: ${CheckCpfData?.cpf}`}
+        modalName={`Blacklist: ${CheckCnpjData?.business_name}`}
         open={isViewModalOpen}
         setOpen={setIsViewModalOpen}
         cpf={CheckCpfData?.cpf}
