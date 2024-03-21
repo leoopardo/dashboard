@@ -55,13 +55,6 @@ export function Persons({ permissions }: ItemInterface): MenuRouteInterface {
         ],
       },
       {
-        key: "legal_persons",
-        label: "legal_persons",
-        path: "/register/person/legal_persons",
-        permission: permissions?.register?.person?.person?.menu,
-      },
-
-      {
         key: "legal_person_blacklist",
         label: "legal_person_blacklist",
         permission:
