@@ -1030,7 +1030,7 @@
     "waiting_refund_to_end_user": "Waiting refund to end user",
     "document_type": "Document type",
     "legal_nature_description": "Legal nature",
-    "business_name": "Razão social",
+    "business_name": "Business name",
     "registration_status_description": "Registration status",
     "cnpj/active": "CNPJ active",
     "cnpj/not found": "CNPJ not found",
