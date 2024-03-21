@@ -483,6 +483,12 @@ export const LegalPersonUpdate = () => {
                   options={BlacklistReasons?.items.map((reason) => {
                     return { label: reason.reason, value: reason.reason };
                   })}
+                  disabled={
+                    body?.black_list === "false" ||
+                    !body?.black_list ||
+                    (LegalPersonsByCnpjData?.black_list_reason === "false" &&
+                      !body?.black_list)
+                  }
                   value={body?.black_list_reason ?? undefined}
                   filterOption={(inputValue, option) =>
                     option?.value
@@ -506,12 +512,17 @@ export const LegalPersonUpdate = () => {
             <Grid item xs={12} md={4} lg={3}>
               <Form.Item
                 label={t("table.black_list_description")}
-                name="black_list_description"
               >
                 <Input
+                  disabled={
+                    body?.black_list === "false" ||
+                    !body?.black_list ||
+                    (LegalPersonsByCnpjData?.black_list_reason === "false" &&
+                      !body?.black_list)
+                  }
                   size="large"
                   name="black_list_description"
-                  value={body?.black_list_description}
+                  value={body?.black_list_description ?? undefined}
                   onChange={onChangeConfigs}
                 />
               </Form.Item>
