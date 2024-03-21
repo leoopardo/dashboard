@@ -8,7 +8,7 @@ import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import useDebounce from "@utils/useDebounce";
 import { Button } from "antd";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
@@ -19,6 +19,8 @@ import {
   CreateMerchantBlacklistReasons,
   MerchantBlacklistReasonQuery,
 } from "@src/services/types/register/merchants/merchantBlacklistReasons.interface";
+import { queryClient } from "@src/services/queryClient";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 
 const INITIAL_QUERY: MerchantBlacklistReasonQuery = {
   limit: 25,
@@ -26,9 +28,10 @@ const INITIAL_QUERY: MerchantBlacklistReasonQuery = {
 };
 
 export const MerchantBlacklistReasons = () => {
+  const { t } = useTranslation();
+  const { type } = queryClient.getQueryData("validate") as ValidateInterface;
   const [query, setQuery] =
     useState<MerchantBlacklistReasonQuery>(INITIAL_QUERY);
-  const { t } = useTranslation();
   const {
     isMerchantBlacklistDataFetching,
     merchantBlacklistData,
@@ -46,8 +49,43 @@ export const MerchantBlacklistReasons = () => {
     null
   );
 
+  const renderUpdateFields = useCallback(() => {
+    if (type === 1 || type === 2) {
+      if (body?.general_use) {
+        return [
+          { label: "general_use", required: false },
+          { label: "reason_name", required: true },
+        ];
+      }
+
+      return [
+        { label: "general_use", required: false },
+        { label: "merchant_id", required: true },
+        { label: "reason_name", required: true },
+      ];
+    }
+
+    return [
+      { label: "merchant_id", required: true },
+      { label: "reason_name", required: true },
+    ];
+  }, [body, type]);
+
+  const bodyToSend = useMemo(() => {
+    if (body?.general_use) {
+      return {
+        reason_name: body.reason_name,
+      };
+    }
+
+    return {
+      reason_name: body?.reason_name,
+      merchant_id: body?.merchant_id,
+    };
+  }, [body]);
+
   const { error, isLoading, isSuccess, mutate } =
-    useCreateMerchantBlacklistReason(body);
+    useCreateMerchantBlacklistReason(bodyToSend);
   const [search, setSearch] = useState<string>("");
   const debounceSearch = useDebounce(search);
 
@@ -91,7 +129,8 @@ export const MerchantBlacklistReasons = () => {
           </Button>
         </Grid>
         <Grid item xs={12} md={4} lg={6}>
-          <FilterChips initial_query={INITIAL_QUERY}
+          <FilterChips
+            initial_query={INITIAL_QUERY}
             startDateKeyName="initial_date"
             endDateKeyName="final_date"
             query={query}
@@ -176,10 +215,7 @@ export const MerchantBlacklistReasons = () => {
         type="create"
         open={isCreateReasonOpen}
         setOpen={setIsCreateReasonOpen}
-        fields={[
-          { label: "merchant_id", required: true },
-          { label: "reason_name", required: true },
-        ]}
+        fields={renderUpdateFields()}
         body={body}
         setBody={setBody}
         modalName={t("modal.new_reason")}

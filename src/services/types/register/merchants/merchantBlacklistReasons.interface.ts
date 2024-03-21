@@ -20,10 +20,14 @@ export interface MerchantBlacklistReasonData {
 export interface MerchantBlacklistReasonQuery {
   limit?: number;
   page?: number;
+  merchant_id?: number;
+  aggregator_id?: number;
   sort_field?: string;
   sort_order?: "ASC" | "DESC";
 }
 
 export interface CreateMerchantBlacklistReasons {
-  reason_name : string;
+  reason_name?: string;
+  merchant_id?: number;
+  general_use?: boolean;
 }

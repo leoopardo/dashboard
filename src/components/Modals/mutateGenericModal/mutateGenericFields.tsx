@@ -150,14 +150,20 @@ export const MutateModalFields = ({
     group: true,
   });
 
-  const { merchantBlacklistData } = useGetRowsMerchantBlacklistReasons({
+  const { merchantBlacklistData, refetchMerchantBlacklistData } = useGetRowsMerchantBlacklistReasons({
     limit: 200,
     page: 1,
+    merchant_id: body?.merchant_id,
+    aggregator_id: body?.aggregator_id,
   });
 
   const panelRender = (panelNode: any) => (
     <StyleWrapperDatePicker>{panelNode}</StyleWrapperDatePicker>
   );
+
+  useEffect(() => {
+    refetchMerchantBlacklistData()
+  }, [body?.merchant_id, body?.aggregator_id]);
 
   useEffect(() => {
     if (clear) clear();
@@ -801,6 +807,7 @@ export const MutateModalFields = ({
               case "cash_out":
               case "fastpix_in":
               case "indeterminate_validity":
+              case "general_use":
                 return (
                   <Col
                     style={{ display: "flex", justifyContent: "flex-start" }}
