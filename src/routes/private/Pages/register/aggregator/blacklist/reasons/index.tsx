@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
   DeleteOutlined,
@@ -15,17 +16,17 @@ import { Button } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import { Confirmation } from "@src/components/Modals/confirmation";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
 import { Toast } from "@src/components/Toast";
 import { useCreateAggregatorBlacklistReason } from "@src/services/register/aggregator/blacklist/createAggregatorBlacklistReason";
+import { useDeleteAggregatorReason } from "@src/services/register/aggregator/blacklist/deleteMerchantBlacklist";
 import { useGetRowsAggregatorBlacklistReasons } from "@src/services/register/aggregator/blacklist/getAggregatorBlacklistReason";
 import { MerchantBlacklistItem } from "@src/services/types/register/merchants/merchantBlacklist.interface";
 import {
   CreateMerchantBlacklistReasons,
   MerchantBlacklistReasonQuery,
 } from "@src/services/types/register/merchants/merchantBlacklistReasons.interface";
-import { useDeleteAggregatorReason } from "@src/services/register/aggregator/blacklist/deleteMerchantBlacklist";
-import { Confirmation } from "@src/components/Modals/confirmation";
 
 const INITIAL_QUERY: MerchantBlacklistReasonQuery = {
   limit: 25,
