@@ -277,7 +277,7 @@ export const LegalPersonUpdate = () => {
               >
                 <Input
                   size="large"
-                  name="neighborhood"
+                  name="address_neighborhood"
                   value={body?.address_neighborhood}
                   onChange={onChangeConfigs}
                 />
@@ -287,7 +287,7 @@ export const LegalPersonUpdate = () => {
               <Form.Item label={t("table.street")} name="address_street">
                 <Input
                   size="large"
-                  name="street"
+                  name="address_street"
                   value={body?.address_city}
                   onChange={onChangeConfigs}
                 />
@@ -297,7 +297,7 @@ export const LegalPersonUpdate = () => {
               <Form.Item label={t("table.number")} name="address_number">
                 <Input
                   size="large"
-                  name="number"
+                  name="address_number"
                   value={body?.address_number}
                   onChange={onChangeConfigs}
                 />
