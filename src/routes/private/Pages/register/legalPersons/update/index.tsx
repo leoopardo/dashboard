@@ -103,13 +103,6 @@ export const LegalPersonUpdate = () => {
     useUpdateLegalPerson(
       {
         ...body,
-        black_list:
-          body?.black_list || LegalPersonsByCnpjData?.black_list
-            ? "true"
-            : "false",
-        flag_pep:
-          body?.flag_pep || LegalPersonsByCnpjData?.flag_pep ? "true" : "false",
-        black_list_reason: body?.black_list_reason,
       },
       cnpj
     );
@@ -291,7 +284,7 @@ export const LegalPersonUpdate = () => {
               </Form.Item>
             </Grid>
             <Grid item xs={12} md={4} lg={3}>
-              <Form.Item label={t("table.street")} name="address_city">
+              <Form.Item label={t("table.street")} name="address_street">
                 <Input
                   size="large"
                   name="street"
@@ -438,12 +431,13 @@ export const LegalPersonUpdate = () => {
               Submit
             </button>
             <Grid item xs={12} md={4} lg={1}>
-              <Form.Item label={t("table.black_list")} name="black_list">
+              <Form.Item label={t("table.black_list")}>
                 <Select
                   size="large"
+
                   options={[
-                    { label: t("table.true"), value: true },
-                    { label: t("table.false"), value: false },
+                    { label: t("table.true"), value: "true" },
+                    { label: t("table.false"), value: "false" },
                   ]}
                   value={body?.black_list}
                   onChange={(_value, option: any) => {
@@ -456,7 +450,7 @@ export const LegalPersonUpdate = () => {
                     }
                     setBody((state) => ({
                       ...state,
-                      black_list: option.value,
+                      black_list: `${option.value}`,
                     }));
                   }}
                 />
@@ -468,7 +462,7 @@ export const LegalPersonUpdate = () => {
                 name="black_list_reason"
                 rules={[
                   {
-                    required: body?.black_list,
+                    required: body?.black_list == true,
                     validator: (_, value) => {
                       if (
                         body?.black_list &&
@@ -532,8 +526,8 @@ export const LegalPersonUpdate = () => {
                 <Select
                   size="large"
                   options={[
-                    { label: t("table.true"), value: true },
-                    { label: t("table.false"), value: false },
+                    { label: t("table.true"), value: "true" },
+                    { label: t("table.false"), value: "false" },
                   ]}
                   value={body?.flag_pep}
                   onChange={(_value, option: any) => {

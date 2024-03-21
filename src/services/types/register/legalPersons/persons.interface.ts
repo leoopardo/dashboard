@@ -54,8 +54,8 @@ export interface LegalPersonsItem {
   size?: string;
   special_situation?: string;
   special_situation_date?: string;
-  black_list?: boolean;
-  flag_pep?: boolean;
+  black_list?: boolean | string;
+  flag_pep?: boolean | string;
   flag_alert?: number;
   cash_in_max_value?: number;
   cash_out_max_value?: number;
