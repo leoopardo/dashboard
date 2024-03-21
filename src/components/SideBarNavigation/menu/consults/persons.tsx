@@ -8,9 +8,9 @@ export function Persons({ permissions }: ItemInterface): MenuRouteInterface {
     permission: permissions?.report?.person?.menu,
     children: [
       {
-        key: "check_cpf",
-        label: "check_cpf",
-        path: "/consult/consult_persons/check_cpf",
+        key: "check_document",
+        label: "check_document",
+        path: "/consult/consult_persons/check_document",
         permission: permissions?.report?.person?.report_person_check_cpf_list,
       },
       {
