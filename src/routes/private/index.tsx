@@ -127,6 +127,7 @@ import { LegalPersonBlacklistUploads } from "./Pages/register/legalPersons/black
 import { LegalPersonsReports } from "./Pages/register/legalPersons/reports/legalPersonsReports";
 import { HistoricCnpjByMerchantReports } from "./Pages/consult/persons/reports/historicCnpjByMerchant";
 import { HistoricCnpjByMerchantDetailsReports } from "./Pages/consult/persons/reports/historicCnpjByMerchantDetails";
+import { AggregatorBlacklistReasons } from "./Pages/register/aggregator/blacklist/reasons";
 export const PrivateRoutes = () => {
   const { responseValidate } = useValidate();
 
@@ -843,7 +844,19 @@ export const PrivateRoutes = () => {
                   </Permission>
                 }
               />
-              <Route path="aggregator_blacklist_reasons" />
+              <Route
+                path="aggregator_blacklist_reasons"
+                element={
+                  <Permission
+                    permission={
+                      responseValidate?.permissions?.register?.aggregator
+                        ?.blacklist?.aggregator_blacklist_create
+                    }
+                  >
+                    <AggregatorBlacklistReasons />
+                  </Permission>
+                }
+              />
             </Route>
             <Route path="aggregator_reports">
               <Route

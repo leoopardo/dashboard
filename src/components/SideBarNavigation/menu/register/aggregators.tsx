@@ -37,6 +37,11 @@ export function Aggregators({
             label: "aggregator_blacklist_blacklist",
             path: "/register/aggregator/aggregator_blacklist/aggregator_blacklist_blacklist",
             permission: permissions?.register?.aggregator?.blacklist?.menu,
+          },{
+            key: "aggregator_blacklist_reasons",
+            label: "aggregator_blacklist_reasons",
+            path: "/register/aggregator/aggregator_blacklist/aggregator_blacklist_reasons",
+            permission: permissions?.register?.aggregator?.blacklist?.menu,
           },
         ],
       },
