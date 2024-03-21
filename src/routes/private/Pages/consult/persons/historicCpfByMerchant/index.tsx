@@ -83,6 +83,7 @@ export const HistoricCpfByMerchant = () => {
 
   useEffect(() => {
     refetchHistoricCpfByMerchantData();
+    refetchHistoricCnpjByMerchantData()
   }, [query]);
 
   const openNotificationWithIcon = (type: NotificationType, path: string) => {
