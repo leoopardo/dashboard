@@ -427,7 +427,8 @@ export const LegalPersonUpdate = () => {
           <Grid
             container
             columnSpacing={1}
-            style={{ display: "flex", alignItems: "flex-end" }}
+           
+
           >
             <button
               type="submit"
@@ -486,8 +487,10 @@ export const LegalPersonUpdate = () => {
                   },
                 ]}
               >
-                <AutoComplete
+                <Select
                   size="large"
+                  allowClear
+                  showSearch
                   options={BlacklistReasons?.items.map((reason) => {
                     return { label: reason.reason, value: reason.reason };
                   })}
