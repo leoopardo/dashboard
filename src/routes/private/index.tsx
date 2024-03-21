@@ -541,7 +541,7 @@ export const PrivateRoutes = () => {
           {/* Consultas de pessoas */}
           <Route path="consult_persons">
             <Route
-              path="check_cpf"
+              path="check_document"
               element={
                 <Permission
                   permission={

@@ -2,17 +2,24 @@
 import { LockOutlined, SearchOutlined } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
+import { useGetCheckCnpj } from "@src/services/consult/persons/checkCNPJ";
 import { useGetCheckCpf } from "@src/services/consult/persons/checkDocument";
 import { useGetCheckCpfDetails } from "@src/services/consult/persons/checkDocumentsDetails";
-import { Button, Descriptions, Input, Select, Space } from "antd";
+import { moneyFormatter } from "@src/utils/moneyFormatter";
+import {
+  Button,
+  Descriptions,
+  Input,
+  Select,
+  Space,
+  Typography
+} from "antd";
+import moment from "moment";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import ReactInputMask from "react-input-mask";
 import { useMediaQuery } from "react-responsive";
 import { ViewModal } from "./components/ViewModal";
-import { useGetCheckCnpj } from "@src/services/consult/persons/checkCNPJ";
-import moment from "moment";
-import { moneyFormatter } from "@src/utils/moneyFormatter";
 
 export const CheckDocument = () => {
   const { t } = useTranslation();
@@ -27,12 +34,14 @@ export const CheckDocument = () => {
     refetchCheckCpfData,
     CheckCpfDataSuccess,
     remove,
+    CheckCpfDataError,
   } = useGetCheckCpf(searchOption === "cpf" ? search : "");
   const {
     CheckCnpjData,
     isCheckCnpjDataFetching,
     refetchCheckCnpjData,
     removeCnpj,
+    CheckCnpjDataError,
   } = useGetCheckCnpj(searchOption === "cnpj" ? search : "");
   const merchantsBlacklistData = useGetCheckCpfDetails(search);
 
@@ -74,11 +83,12 @@ export const CheckDocument = () => {
                     ? t("table.cpf") || ""
                     : t("table.cnpj") || ""
                 }
+                status={CheckCnpjDataError || CheckCpfDataError ? "error" : ""}
               />
             </ReactInputMask>
             <Button
               type="primary"
-              loading={isCheckCpfDataFetching}
+              loading={isCheckCpfDataFetching || isCheckCnpjDataFetching}
               onClickCapture={() => {
                 if (searchOption === "cpf") {
                   refetchCheckCpfData();
@@ -93,6 +103,11 @@ export const CheckDocument = () => {
               {t("buttons.check")}
             </Button>
           </Space.Compact>
+          <Typography.Text type="danger">
+            {CheckCnpjDataError || CheckCpfDataError
+              ? t("error.invalidCPFOrCNPJ")
+              : ""}
+          </Typography.Text>
         </Grid>
         <Grid item xs={12} md={3} lg={2}>
           <Button
