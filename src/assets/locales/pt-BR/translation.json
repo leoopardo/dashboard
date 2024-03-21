@@ -1050,7 +1050,8 @@
     "registration_status_date": "Data do status de registro",
     "registration_status_reason": "Motivo do status de registro",
     "main_cnae_code": "Código CNAE",
-    "total_cnpj_checks": "CNPJs consultados"
+    "total_cnpj_checks": "CNPJs consultados",
+    "trade_name": "Nome editável"
   },
   "actions": {
     "details": "Detalhes",

@@ -203,29 +203,6 @@ export const LegalPersonUpdate = () => {
         >
           <Grid container columnSpacing={1}>
             <Grid item xs={12} md={4} lg={3}>
-              <Form.Item
-                label={t("table.business_name")}
-                name="business_name"
-                rules={[
-                  {
-                    required: true,
-                    message:
-                      t("input.required", {
-                        field: t("table.business_name").toLowerCase(),
-                      }) || "",
-                  },
-                ]}
-              >
-                <Input
-                  size="large"
-                  name="name"
-                  value={body?.business_name}
-                  onChange={onChangeConfigs}
-                />
-              </Form.Item>
-            </Grid>
-
-            <Grid item xs={12} md={4} lg={3}>
               <Form.Item label={t("table.trade_name")} name="trade_name">
                 <Input
                   size="large"
