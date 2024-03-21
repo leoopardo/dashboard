@@ -54,7 +54,8 @@ import {
   Switch,
   Tabs,
   TabsProps,
-  Typography,Upload
+  Typography,
+  Upload,
 } from "antd";
 import { FormInstance } from "antd/lib/form/Form";
 import { useEffect, useRef, useState } from "react";
@@ -422,24 +423,24 @@ export const UpdateMerchant = () => {
                 />
               </Form.Item>
             </Col>
-          </Row> <Col xs={{ span: 24 }} md={{ span: 4 }}>
-              <Form.Item
-                label={t("table.status")}
-                name="status"
-                valuePropName="checked"
-              >
-                <Switch
-                  checked={merchantBody?.status}
-                  onChange={(checked) => {
-                    setMerchantBody((state) => ({
-                      ...state,
-                      status: checked,
-                    }));
-                  }}
-                />
-              </Form.Item>
-            </Col>
-
+          </Row>{" "}
+          <Col xs={{ span: 24 }} md={{ span: 4 }}>
+            <Form.Item
+              label={t("table.status")}
+              name="status"
+              valuePropName="checked"
+            >
+              <Switch
+                checked={merchantBody?.status}
+                onChange={(checked) => {
+                  setMerchantBody((state) => ({
+                    ...state,
+                    status: checked,
+                  }));
+                }}
+              />
+            </Form.Item>
+          </Col>
           <Row
             style={{
               display: "flex",
@@ -461,7 +462,6 @@ export const UpdateMerchant = () => {
               </Button>
             </Col>
           </Row>
-
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
             <button type="submit" ref={submitRef} style={{ display: "none" }}>
               Submit
@@ -488,7 +488,7 @@ export const UpdateMerchant = () => {
               </Button>
             </Col>{" "}
             <Col xs={{ span: 24 }} md={{ span: 12 }} lg={{ span: 15 }}>
-              <FilterChips 
+              <FilterChips
                 disabled={["merchant_id"]}
                 startDateKeyName="start_date"
                 endDateKeyName="end_date"
@@ -655,6 +655,7 @@ export const UpdateMerchant = () => {
         <Row gutter={[8, 8]}>
           <Col span={24}>
             <Upload
+              accept="image/png, image/jpeg, .pdf, .doc"
               style={{ maxHeight: "150px" }}
               listType="picture"
               disabled={
