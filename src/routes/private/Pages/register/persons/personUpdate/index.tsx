@@ -561,7 +561,9 @@ export const PersonUpdate = () => {
                   },
                 ]}
               >
-                <AutoComplete
+                <Select
+                  allowClear
+                  showSearch
                   size="large"
                   options={BlacklistReasons?.items.map((reason) => {
                     return { label: reason.reason, value: reason.reason };

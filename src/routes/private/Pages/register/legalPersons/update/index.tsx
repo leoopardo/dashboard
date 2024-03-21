@@ -427,8 +427,6 @@ export const LegalPersonUpdate = () => {
           <Grid
             container
             columnSpacing={1}
-           
-
           >
             <button
               type="submit"
