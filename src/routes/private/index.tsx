@@ -121,7 +121,7 @@ import { Permission } from "./permission";
 import { Redirect } from "./redirect";
 import { SerproAssertiva } from "./Pages/consult/persons/serproAssertiva";
 import { LegalPersons } from "./Pages/register/legalPersons";
-import { LegalPersonDetails } from "./Pages/register/legalPersons/detais";
+import { LegalPersonDetails } from "./Pages/register/legalPersons/details";
 import { LegalPersonUpdate } from "./Pages/register/legalPersons/update";
 import { LegalPersonBlacklistUploads } from "./Pages/register/legalPersons/blacklist/uploads";
 import { LegalPersonsReports } from "./Pages/register/legalPersons/reports/legalPersonsReports";
@@ -541,7 +541,7 @@ export const PrivateRoutes = () => {
           {/* Consultas de pessoas */}
           <Route path="consult_persons">
             <Route
-              path="check_cpf"
+              path="check_document"
               element={
                 <Permission
                   permission={

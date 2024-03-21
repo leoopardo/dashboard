@@ -17,6 +17,7 @@ export function useGetCheckCpf(cpf?: string) {
       refetchIntervalInBackground: false,
       refetchOnMount: false,
       keepPreviousData: false,
+      enabled: false,
     }
   );
 
