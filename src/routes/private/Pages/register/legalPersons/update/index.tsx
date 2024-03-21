@@ -61,6 +61,7 @@ export const LegalPersonUpdate = () => {
   // const [isViewOpen, setIsViewOpen] = useState<boolean>(false);
   // const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [deleteFileId, setDeleteFileId] = useState<string>("");
+  const reasonsRef = useRef<any>(null);
   const formRef = useRef<FormInstance>(null);
   const formRefBlock = useRef<FormInstance>(null);
   const submitRef1 = useRef<HTMLButtonElement>(null);
@@ -100,12 +101,7 @@ export const LegalPersonUpdate = () => {
   // );
 
   const { UpdateMutate, UpdateError, UpdateIsLoading, UpdateIsSuccess } =
-    useUpdateLegalPerson(
-      {
-        ...body,
-      },
-      cnpj
-    );
+    useUpdateLegalPerson(body, cnpj);
 
   const { Files, isFilesFetching, refetchFiles } = useGetLegalPersonFiles(cnpj);
   const { DeleteFileError, DeleteFileIsSuccess, DeleteFileMutate } =
@@ -431,17 +427,16 @@ export const LegalPersonUpdate = () => {
               Submit
             </button>
             <Grid item xs={12} md={4} lg={1}>
-              <Form.Item label={t("table.black_list")}>
+              <Form.Item label={t("table.black_list")} name="black_list">
                 <Select
                   size="large"
-
                   options={[
                     { label: t("table.true"), value: "true" },
                     { label: t("table.false"), value: "false" },
                   ]}
                   value={body?.black_list}
-                  onChange={(_value, option: any) => {
-                    if (!option.value) {
+                  onChange={(value, option: any) => {
+                    if (value == "false") {
                       setBody((state) => ({
                         ...state,
                         black_list_reason: null,
@@ -459,10 +454,9 @@ export const LegalPersonUpdate = () => {
             <Grid item xs={12} md={4} lg={2}>
               <Form.Item
                 label={t("table.black_list_reason")}
-                name="black_list_reason"
                 rules={[
                   {
-                    required: body?.black_list == true,
+                    required: true,
                     validator: (_, value) => {
                       if (
                         body?.black_list &&
@@ -482,13 +476,14 @@ export const LegalPersonUpdate = () => {
                 ]}
               >
                 <Select
+                  ref={reasonsRef}
                   size="large"
                   allowClear
                   showSearch
                   options={BlacklistReasons?.items.map((reason) => {
                     return { label: reason.reason, value: reason.reason };
                   })}
-                  value={body?.black_list_reason}
+                  value={body?.black_list_reason ?? undefined}
                   filterOption={(inputValue, option) =>
                     option?.value
                       .toUpperCase()
