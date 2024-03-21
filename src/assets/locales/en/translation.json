@@ -1044,7 +1044,8 @@
     "cnpj/inactive": "CNPJ inactive",
     "registration_status_date": "Registration status date",
     "registration_status_reason": "Registration status reason",
-    "main_cnae_code": "CNAE code"
+    "main_cnae_code": "CNAE code",
+    "trade_name": "Editable name"
   },
   "actions": {
     "details": "Details",
