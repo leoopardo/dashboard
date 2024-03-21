@@ -105,6 +105,7 @@ export const LegalPersonUpdate = () => {
         ...body,
         black_list: body?.black_list ? "true" : "false",
         flag_pep: body?.flag_pep ? "true" : "false",
+        black_list_reason: body?.black_list_reason,
       },
       cnpj
     );
@@ -424,10 +425,7 @@ export const LegalPersonUpdate = () => {
             setIsConfirmOpen(false);
           }}
         >
-          <Grid
-            container
-            columnSpacing={1}
-          >
+          <Grid container columnSpacing={1}>
             <button
               type="submit"
               ref={submitRefBlock}
