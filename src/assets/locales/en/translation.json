@@ -1040,6 +1040,7 @@
     "registration_status_date": "Registration status date",
     "registration_status_reason": "Registration status reason",
     "main_cnae_code": "CNAE code",
+    "total_cnpj_checks": "CNPJ's checks",
     "trade_name": "Editable name"
   },
   "actions": {
