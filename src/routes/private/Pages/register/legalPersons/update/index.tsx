@@ -758,6 +758,7 @@ export const LegalPersonUpdate = () => {
           <Grid xs={12} item>
             <Upload
               listType="picture"
+              accept="image/png, image/jpeg, .pdf, .doc"
               multiple={false}
               onRemove={(file) => {
                 setDeleteFileId(file?.uid);

@@ -179,7 +179,7 @@ export const OperatorDetails = () => {
               >
                 {location?.state?.linked_merchants_total ?? 0}
               </Descriptions.Item>
-             
+
               <Descriptions.Item
                 key={"createdAt"}
                 label={t(`table.created_at`)}
@@ -219,7 +219,7 @@ export const OperatorDetails = () => {
               </Button>
             </Col>{" "}
             <Col xs={{ span: 24 }} md={{ span: 12 }} lg={{ span: 15 }}>
-              <FilterChips 
+              <FilterChips
                 disabled={["operator_id"]}
                 startDateKeyName="start_date"
                 endDateKeyName="end_date"
@@ -288,7 +288,7 @@ export const OperatorDetails = () => {
           <Col span={24}>
             <Upload
               listType="picture"
-              accept="*"
+              accept="image/png, image/jpeg, .pdf, .doc"
               multiple={false}
               showUploadList={{
                 showRemoveIcon: false,
