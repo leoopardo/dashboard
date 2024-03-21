@@ -57,6 +57,7 @@ import { Aggregators } from "./Pages/register/aggregator/aggregators";
 import { UpdateAggregator } from "./Pages/register/aggregator/aggregators/updateAggregator";
 import { AggregatorDetails } from "./Pages/register/aggregator/aggregators/viewAggregator";
 import { AggregatorBlacklist } from "./Pages/register/aggregator/blacklist";
+import { AggregatorBlacklistReasons } from "./Pages/register/aggregator/blacklist/reasons";
 import { AggregatorBlacklistReasonsReports } from "./Pages/register/aggregator/blacklist/reports/reasons";
 import { AggregatorsReports } from "./Pages/register/aggregator/reports/aggregators";
 import { AggregatorsBlacklistReports } from "./Pages/register/aggregator/reports/blacklist";
@@ -67,7 +68,7 @@ import { AggregatorUsers } from "./Pages/register/aggregator/users";
 import { LegalPersons } from "./Pages/register/legalPersons";
 import { ImportLegalPersonsBlacklist } from "./Pages/register/legalPersons/blacklist/importBlacklist";
 import { LegalPersonBlacklistUploads } from "./Pages/register/legalPersons/blacklist/uploads";
-import { LegalPersonDetails } from "./Pages/register/legalPersons/detais";
+import { LegalPersonDetails } from "./Pages/register/legalPersons/details";
 import { LegalPersonsReports } from "./Pages/register/legalPersons/reports/legalPersonsReports";
 import { LegalPersonUpdate } from "./Pages/register/legalPersons/update";
 import { Licenses } from "./Pages/register/licenses/licenses";
@@ -845,7 +846,19 @@ export const PrivateRoutes = () => {
                   </Permission>
                 }
               />
-              <Route path="aggregator_blacklist_reasons" />
+              <Route
+                path="aggregator_blacklist_reasons"
+                element={
+                  <Permission
+                    permission={
+                      responseValidate?.permissions?.register?.aggregator
+                        ?.blacklist?.aggregator_blacklist_create
+                    }
+                  >
+                    <AggregatorBlacklistReasons />
+                  </Permission>
+                }
+              />
             </Route>
             <Route path="aggregator_reports">
               <Route
