@@ -453,7 +453,8 @@
     "deposit_standard_webhook": "Deposit standard webhook",
     "deposit_webhook_data": "Deposit webhook data",
     "withdraw_webhook_data": "Withdraw webhook data",
-    "withdraw_standard_webhook": "Withdraw standard webhook"
+    "withdraw_standard_webhook": "Withdraw standard webhook",
+    "aggregator_id": "Aggregator"
   },
 
   "modal": {
@@ -1017,7 +1018,8 @@
     "serpro_count": "Serpro CPF",
     "serpro_cnpj_count": "Serpro CNPJ",
     "waiting_refund_to_end_user": "Waiting refund to end user",
-    "document_type": "Document type"
+    "document_type": "Document type",
+    "general_use": "General use"
   },
   "actions": {
     "details": "Details",

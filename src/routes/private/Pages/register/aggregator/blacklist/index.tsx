@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
+  DeleteOutlined,
   FilterOutlined,
   InfoCircleOutlined,
   LockOutlined,
@@ -10,22 +11,24 @@ import { FilterChips } from "@components/FiltersModal/filterChips";
 import { ViewModal } from "@components/Modals/viewGenericModal";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
+import { Confirmation } from "@src/components/Modals/confirmation";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
-import { ReasonSelect } from "@src/components/Selects/reasonSelect";
 import { Toast } from "@src/components/Toast";
 import { TuorComponent } from "@src/components/Tuor";
 import { queryClient } from "@src/services/queryClient";
 import { useCreateAggregatorBlacklist } from "@src/services/register/aggregator/blacklist/createAggregatorBlacklist";
+import { useDeleteAggregatorBlacklist } from "@src/services/register/aggregator/blacklist/deleteAggregatorBlacklist";
 import { useGetAggregatorsBlacklist } from "@src/services/register/aggregator/blacklist/getAggregatorsBlacklist";
 import { useCreateAggregatorBlacklistReports } from "@src/services/reports/register/aggregators/createAggregatorBlacklistReports";
 import { AggregatorBlacklistQuery } from "@src/services/types/register/aggregators/aggregatorBlacklist.interface";
 import { MerchantBlacklistItem } from "@src/services/types/register/merchants/merchantBlacklist.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
 import useDebounce from "@utils/useDebounce";
-import { Button, Input, Tooltip, Typography } from "antd";
+import { Button, Input, Select, Space, Tooltip, Typography } from "antd";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import ReactInputMask from "react-input-mask";
 
 const INITIAL_QUERY: AggregatorBlacklistQuery = {
   limit: 25,
@@ -35,7 +38,7 @@ const INITIAL_QUERY: AggregatorBlacklistQuery = {
 };
 
 export const AggregatorBlacklist = () => {
-  const { permissions } = queryClient.getQueryData(
+  const { permissions, type } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
   const [query, setQuery] = useState<AggregatorBlacklistQuery>(INITIAL_QUERY);
@@ -46,6 +49,8 @@ export const AggregatorBlacklist = () => {
     AggregatorsBlacklistDataError,
     refetchAggregatorsBlacklistData,
   } = useGetAggregatorsBlacklist(query);
+  const [docType, setDocType] = useState<"cpf" | "cnpj">("cpf");
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
@@ -57,6 +62,11 @@ export const AggregatorBlacklist = () => {
   const [currentItem, setCurrentItem] = useState<MerchantBlacklistItem | null>(
     null
   );
+
+  const { isDeleteLoading, mutateDelete, DeleteError, isDeleteSuccess } =
+    useDeleteAggregatorBlacklist({
+      blacklist_id: currentItem?._id,
+    });
 
   const {
     AggregatorReportsError,
@@ -78,7 +88,7 @@ export const AggregatorBlacklist = () => {
   const ref5 = useRef(null);
   const ref6 = useRef(null);
   const refDoc = useRef(null);
-  const refMerchant = useRef(null);
+  const refAggregator = useRef(null);
   const refReason = useRef(null);
   const refDescription = useRef(null);
   const refWhoAdd = useRef(null);
@@ -118,7 +128,8 @@ export const AggregatorBlacklist = () => {
           </Button>
         </Grid>
         <Grid item xs={12} md={7} lg={9}>
-          <FilterChips initial_query={INITIAL_QUERY}
+          <FilterChips
+            initial_query={INITIAL_QUERY}
             startDateKeyName="start_date"
             endDateKeyName="end_date"
             query={query}
@@ -148,18 +159,33 @@ export const AggregatorBlacklist = () => {
       </Grid>
 
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
-        <Grid item xs={12} md={2} lg={2} ref={ref2}>
-          <ReasonSelect queryOptions={query} setQueryFunction={setQuery} />
-        </Grid>
-        <Grid item xs={12} md={3} lg={3} ref={ref3}>
-          <Input
-            size="large"
-            placeholder={t("table.document") || ""}
-            value={search}
-            onChange={(event) => {
-              setSearch(event.target.value);
-            }}
-          />
+      <Grid item xs={12} md={4} lg={4}>
+          <Space.Compact style={{ width: "100%" }} size="large">
+            <Select
+              size="small"
+              style={{ width: "100%", maxWidth: "100px", marginBottom: 16 }}
+              options={[
+                { label: "CPF", value: "cpf" },
+                { label: "CNPJ", value: "cnpj" },
+               
+              ]}
+              value={docType}
+              onChange={(value) => {
+                setDocType(value);
+              }}
+            />
+            <ReactInputMask
+              value={search}
+              placeholder={t("table.document") ?? ""}
+              mask={docType === "cpf" ? "999.999.999-99" : "99.999.999/9999-99"}
+              onChange={(event) => {
+                const value = event.target.value.replace(/[^\d]/g, "");
+                setSearch(value);
+              }}
+            >
+              <Input size="large" style={{height: "40px"}}/>
+            </ReactInputMask>
+          </Space.Compact>
         </Grid>
         <Grid item xs={12} md={3} lg={2}>
           <Button
@@ -237,7 +263,7 @@ export const AggregatorBlacklist = () => {
             refetch={refetchAggregatorsBlacklistData}
             columns={[
               { name: "document", type: "document", key: refDoc },
-              { name: "merchant_name", type: "text", key: refMerchant },
+              { name: "aggregator_name", type: "text", key: refAggregator },
               { name: "reason", type: "text", sort: true, key: refReason },
               { name: "description", type: "text", key: refDescription },
               { name: "create_user_name", type: "text", key: refWhoAdd },
@@ -248,10 +274,21 @@ export const AggregatorBlacklist = () => {
                 key: refCreatedAt,
               },
             ]}
-            disableActions
             loading={isAggregatorsBlacklistDataFetching}
-            label={["document", "merchant_name"]}
-            actions={[{}]}
+            label={["document", "aggregator_name"]}
+            actions={[
+              {
+                label: "delete",
+                icon: <DeleteOutlined style={{ fontSize: "18px" }} />,
+                onClick: () => setIsDeleteOpen(true),
+                disabled: (item) =>
+                  !permissions?.register?.merchant?.blacklist
+                    ?.merchant_blacklist_delete ||
+                  (item?.can_be_deleted_only_by_organization &&
+                    type !== 1 &&
+                    type !== 2),
+              },
+            ]}
           />
         </Grid>
       </Grid>
@@ -261,20 +298,41 @@ export const AggregatorBlacklist = () => {
         setOpen={setIsFiltersOpen}
         query={query}
         setQuery={setQuery}
-        filters={["start_date", "end_date", "merchant_id"]}
+        filters={["start_date", "end_date", "aggregator_id", "document_type", "reason" ]}
         refetch={refetchAggregatorsBlacklistData}
-        selectOptions={{}}
+        selectOptions={{ document_type: ["CPF", "CNPJ"],}}
         startDateKeyName="start_date"
         endDateKeyName="end_date"
         initialQuery={INITIAL_QUERY}
       />
+
+      {isDeleteOpen && (
+        <Confirmation
+          open={isDeleteOpen}
+          setOpen={setIsDeleteOpen}
+          submit={mutateDelete}
+          title={t("actions.delete")}
+          description={`${t("messages.are_you_sure", {
+            action: t("actions.delete").toLocaleLowerCase(),
+            itens: currentItem?.document,
+          })}`}
+          loading={isDeleteLoading}
+        />
+      )}
 
       <MutateModal
         type="create"
         open={isUpdateModalOpen}
         setOpen={setIsUpdateModalOpen}
         fields={[
+          type == 1 || type === 2
+            ? {
+                label: "can_be_deleted_only_by_organization",
+                required: true,
+              }
+            : undefined,
           { label: "document", required: true },
+          { label: "aggregator_id", required: true },
           { label: "reason", required: true },
           { label: "description", required: true },
         ]}
@@ -344,8 +402,8 @@ export const AggregatorBlacklist = () => {
           },
           {
             title: t("table.merchant"),
-            description: t("wiki.merchant_description"),
-            target: () => refMerchant.current,
+            description: t("wiki.aggregator_description"),
+            target: () => refAggregator.current,
           },
           {
             title: t("table.reason"),
@@ -378,6 +436,13 @@ export const AggregatorBlacklist = () => {
         actionSuccess={t("messages.created")}
         error={error}
         success={isSuccess}
+      />
+
+      <Toast
+        actionError={t("messages.delete")}
+        actionSuccess={t("messages.deleted")}
+        error={DeleteError}
+        success={isDeleteSuccess}
       />
     </Grid>
   );
