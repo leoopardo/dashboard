@@ -446,6 +446,13 @@ export const LegalPersonUpdate = () => {
                   ]}
                   value={body?.black_list}
                   onChange={(_value, option: any) => {
+                    if (!option.value) {
+                      setBody((state) => ({
+                        ...state,
+                        black_list_reason: null,
+                        black_list_description: "",
+                      }));
+                    }
                     setBody((state) => ({
                       ...state,
                       black_list: option.value,
