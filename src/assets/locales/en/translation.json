@@ -464,7 +464,8 @@
     "deposit_standard_webhook": "Deposit standard webhook",
     "deposit_webhook_data": "Deposit webhook data",
     "withdraw_webhook_data": "Withdraw webhook data",
-    "withdraw_standard_webhook": "Withdraw standard webhook"
+    "withdraw_standard_webhook": "Withdraw standard webhook",
+    "aggregator_id": "Aggregator"
   },
 
   "modal": {
@@ -1042,6 +1043,7 @@
     "registration_status_date": "Registration status date",
     "registration_status_reason": "Registration status reason",
     "main_cnae_code": "CNAE code",
+    "general_use": "General use",
     "total_cnpj_checks": "CNPJ's checks",
     "trade_name": "Editable name"
   },
