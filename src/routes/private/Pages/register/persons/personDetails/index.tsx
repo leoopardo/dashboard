@@ -283,7 +283,7 @@ export const PersonDetails = () => {
         </div>
       ) : (
         <Grid container spacing={1} display="flex" justifyContent="center">
-          <Grid item md={8} xs={12}>
+          <Grid item md={12} xs={12}>
             <Descriptions bordered style={{ margin: 0, padding: 0 }}>
               {!isPersonsDataFetching &&
                 Object.keys(blacklistData).map((key, index) => {
