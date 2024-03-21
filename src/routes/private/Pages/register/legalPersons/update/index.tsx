@@ -454,9 +454,10 @@ export const LegalPersonUpdate = () => {
             <Grid item xs={12} md={4} lg={2}>
               <Form.Item
                 label={t("table.black_list_reason")}
+                name={"black_list_reason"}
                 rules={[
                   {
-                    required: true,
+                    required: body?.black_list === "true",
                     validator: (_, value) => {
                       if (
                         body?.black_list &&
@@ -510,9 +511,7 @@ export const LegalPersonUpdate = () => {
               </Form.Item>
             </Grid>
             <Grid item xs={12} md={4} lg={3}>
-              <Form.Item
-                label={t("table.black_list_description")}
-              >
+              <Form.Item label={t("table.black_list_description")}>
                 <Input
                   disabled={
                     body?.black_list === "false" ||
