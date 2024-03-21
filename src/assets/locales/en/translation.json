@@ -1035,7 +1035,7 @@
     "document_type": "Document type",
     "general_use": "General use",
     "legal_nature_description": "Legal nature",
-    "business_name": "Razão social",
+    "business_name": "Business name",
     "registration_status_description": "Registration status",
     "cnpj/active": "CNPJ active",
     "cnpj/not found": "CNPJ not found",
