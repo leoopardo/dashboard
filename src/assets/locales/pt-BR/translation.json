@@ -455,7 +455,6 @@
     "primary": "Primário",
     "secondary": "Secundário",
     "both": "Ambos",
-
     "options": "Opções",
     "csv_columns": "Selecione as colunas do CSV",
     "comma_separator": "Separador de casas decimais",
@@ -513,7 +512,8 @@
     "deposit_webhook_data": "Dados do webhook de depósito",
     "withdraw_webhook_data": "Dados do webhook de saque",
     "withdraw_standard_webhook": "Webhook de saque padrão",
-    "aggregator_id": "Aggregator"
+    "aggregator_id": "Aggregator",
+    "accept_annonymous_cash_in": "Permitir depósito anônimo"
   },
   "table": {
     "id": "id",

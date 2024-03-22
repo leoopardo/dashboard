@@ -483,6 +483,27 @@ export const OrganizationConfigTab = (props: { id?: string }) => {
                 />
               </Form.Item>
             </Col>
+            <Col xs={{ span: 8 }} md={{ span: 4 }}>
+              <Form.Item
+                label={t("input.accept_annonymous_cash_in")}
+                name="accept_deposit_without_document"
+              >
+                <Switch
+                  data-test-id="accept_deposit_without_document"
+                  checked={bodyUpdate?.accept_deposit_without_document}
+                  onChange={(value) => {
+                    setBody((state) => ({
+                      ...state,
+                      accept_deposit_without_document: value,
+                    }));
+                    setBodyUpdate((state) => ({
+                      ...state,
+                      accept_deposit_without_document: value,
+                    }));
+                  }}
+                />
+              </Form.Item>
+            </Col>
 
             <Col span={24} />
             <Col span={24}>
