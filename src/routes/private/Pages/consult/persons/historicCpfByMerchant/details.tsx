@@ -1,5 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { DownOutlined, FilterOutlined } from "@ant-design/icons";
+import {
+  DownOutlined,
+  FileAddOutlined,
+  FilterOutlined,
+} from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
@@ -64,7 +68,7 @@ export const HistoricCpfByMerchantDetails = () => {
   const {
     HistoricCnpjByMerchantDetailsData,
     HistoricCnpjByMerchantDetailsDataError,
-    refetchHistoricCnpjByMerchantDetailsData
+    refetchHistoricCnpjByMerchantDetailsData,
   } = useGetHistoricCnpjByMerchantDetails({
     ...query,
     merchant_id: location.state?.item?.merchant_id,
@@ -84,7 +88,7 @@ export const HistoricCpfByMerchantDetails = () => {
 
   useEffect(() => {
     refetchHistoricCpfByMerchantDetailsData();
-    refetchHistoricCnpjByMerchantDetailsData()
+    refetchHistoricCnpjByMerchantDetailsData();
   }, [query]);
 
   useEffect(() => {
@@ -139,7 +143,7 @@ export const HistoricCpfByMerchantDetails = () => {
         style={{ display: "flex", alignItems: "center" }}
         spacing={1}
       >
-        <Grid item xs={12} md={8} lg={9}>
+        <Grid item xs={12} md={8} lg={8}>
           <Grid
             container
             style={{ display: "flex", alignItems: "center" }}
@@ -170,62 +174,74 @@ export const HistoricCpfByMerchantDetails = () => {
           </Grid>
         </Grid>
 
-        <Grid item xs={12} md={2} lg={2}>
-          <Button
-            size="large"
-            type="dashed"
-            loading={isHistoricCpfByMerchantDetailsDataFetching}
-            danger
-            onClick={() => {
-              setQuery(INITIAL_QUERY);
-            }}
-            icon={<FilterAltOffOutlinedIcon />}
-            style={{
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            {t("table.clear_filters")}
-          </Button>
-        </Grid>
-
-        <Grid item xs={12} md={2} lg={1}>
-          <Dropdown
-            menu={{
-              items: [
-                {
-                  label: "CPF",
-                  key: "cpf",
-                  onClick: () => {
-                    HistoricCpfByMerchantDetailsMutate();
-                  },
-                  disabled: HistoricCpfByMerchantDetailsData?.total === 0,
-                },
-                {
-                  label: "CNPJ",
-                  key: "cnpj",
-                  onClick: () => {
-                    HistoricCnpjByMerchantDetailsMutate();
-                  },
-                  disabled: HistoricCnpjByMerchantDetailsData?.total === 0,
-                },
-              ],
-            }}
-          >
+        <Grid
+          container
+          item
+          xs={12}
+          md={4}
+          lg={4}
+          spacing={1}
+          style={{ display: "flex", justifyContent: "flex-end" }}
+        >
+          <Grid item xs={12} md={6} lg={7}>
             <Button
               size="large"
-              loading={
-                HistoricCpfByMerchantDetailsIsLoading ||
-                HistoricCnpjByMerchantDetailsIsLoading
-              }
+              type="dashed"
+              loading={isHistoricCpfByMerchantDetailsDataFetching}
+              danger
+              onClick={() => {
+                setQuery(INITIAL_QUERY);
+              }}
+              icon={<FilterAltOffOutlinedIcon />}
+              style={{
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
             >
-              <Space>
-                CSV <DownOutlined style={{ fontSize: 12 }} />
-              </Space>
+              {t("table.clear_filters")}
             </Button>
-          </Dropdown>
+          </Grid>{" "}
+          <Grid item xs={12} md={4} lg={4}>
+            <Dropdown
+              menu={{
+                items: [
+                  {
+                    label: "CPF",
+                    key: "cpf",
+                    onClick: () => {
+                      HistoricCpfByMerchantDetailsMutate();
+                    },
+                    disabled: HistoricCpfByMerchantDetailsData?.total === 0,
+                  },
+                  {
+                    label: "CNPJ",
+                    key: "cnpj",
+                    onClick: () => {
+                      HistoricCnpjByMerchantDetailsMutate();
+                    },
+                    disabled: HistoricCnpjByMerchantDetailsData?.total === 0,
+                  },
+                ],
+              }}
+            >
+              <Button
+                style={{ width: "100%" }}
+                size="large"
+                loading={
+                  HistoricCpfByMerchantDetailsIsLoading ||
+                  HistoricCnpjByMerchantDetailsIsLoading
+                }
+                shape="round"
+                icon={<FileAddOutlined style={{ fontSize: 22 }} />}
+              >
+                <Space>
+                  CSV <DownOutlined style={{ fontSize: 12 }} />
+                </Space>
+              </Button>
+            </Dropdown>
+          </Grid>
         </Grid>
       </Grid>
 

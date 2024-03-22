@@ -1,5 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { DownOutlined, EyeFilled, FilterOutlined } from "@ant-design/icons";
+import {
+  DownOutlined,
+  EyeFilled,
+  FileAddOutlined,
+  FilterOutlined,
+} from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
@@ -83,7 +88,7 @@ export const HistoricCpfByMerchant = () => {
 
   useEffect(() => {
     refetchHistoricCpfByMerchantData();
-    refetchHistoricCnpjByMerchantData()
+    refetchHistoricCnpjByMerchantData();
   }, [query]);
 
   const openNotificationWithIcon = (type: NotificationType, path: string) => {
@@ -124,13 +129,13 @@ export const HistoricCpfByMerchant = () => {
         style={{ display: "flex", alignItems: "center" }}
         spacing={1}
       >
-        <Grid item xs={12} md={8} lg={9}>
+        <Grid item xs={12} md={8} lg={8}>
           <Grid
             container
             style={{ display: "flex", alignItems: "center" }}
             spacing={1}
           >
-            <Grid item xs={12} md={2} lg={2}>
+            <Grid item xs={12} md={3} lg={2}>
               <Button
                 size="large"
                 style={{ width: "100%" }}
@@ -142,7 +147,7 @@ export const HistoricCpfByMerchant = () => {
                 {t("table.filters")}
               </Button>
             </Grid>
-            <Grid item xs={12} md={9} lg={9}>
+            <Grid item xs={12} md={9} lg={10}>
               <FilterChips
                 initial_query={INITIAL_QUERY}
                 startDateKeyName="start_date"
@@ -155,62 +160,75 @@ export const HistoricCpfByMerchant = () => {
           </Grid>
         </Grid>
 
-        <Grid item xs={12} md={2} lg={2}>
-          <Button
-            size="large"
-            type="dashed"
-            loading={isHistoricCpfByMerchantDataFetching}
-            danger
-            onClick={() => {
-              setQuery(INITIAL_QUERY);
-            }}
-            icon={<FilterAltOffOutlinedIcon />}
-            style={{
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            {t("table.clear_filters")}
-          </Button>
-        </Grid>
-
-        <Grid item xs={12} md={2} lg={1}>
-          <Dropdown
-            menu={{
-              items: [
-                {
-                  label: "CPF",
-                  key: "cpf",
-                  onClick: () => {
-                    HistoricCpfByMerchantReportsMutate();
-                  },
-                  disabled: HistoricCpfByMerchantData?.length === 0,
-                },
-                {
-                  label: "CNPJ",
-                  key: "cnpj",
-                  onClick: () => {
-                    HistoricCnpjByMerchantReportsMutate();
-                  },
-                  disabled: HistoricCnpjByMerchantData?.length === 0,
-                },
-              ],
-            }}
-          >
+        <Grid
+          container
+          item
+          xs={12}
+          md={4}
+          lg={4}
+          spacing={1}
+          style={{ display: "flex", justifyContent: "flex-end" }}
+        >
+          <Grid item xs={12} md={6} lg={7}>
             <Button
               size="large"
-              loading={
-                HistoricCpfByMerchantReportsIsLoading ||
-                HistoricCnpjByMerchantReportsIsLoading
-              }
+              type="dashed"
+              loading={isHistoricCpfByMerchantDataFetching}
+              danger
+              onClick={() => {
+                setQuery(INITIAL_QUERY);
+              }}
+              icon={<FilterAltOffOutlinedIcon />}
+              style={{
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
             >
-              <Space>
-                CSV <DownOutlined style={{ fontSize: 12 }} />
-              </Space>
+              {t("table.clear_filters")}
             </Button>
-          </Dropdown>
+          </Grid>
+
+          <Grid item xs={12} md={4} lg={4}>
+            <Dropdown
+              menu={{
+                items: [
+                  {
+                    label: "CPF",
+                    key: "cpf",
+                    onClick: () => {
+                      HistoricCpfByMerchantReportsMutate();
+                    },
+                    disabled: HistoricCpfByMerchantData?.length === 0,
+                  },
+                  {
+                    label: "CNPJ",
+                    key: "cnpj",
+                    onClick: () => {
+                      HistoricCnpjByMerchantReportsMutate();
+                    },
+                    disabled: HistoricCnpjByMerchantData?.length === 0,
+                  },
+                ],
+              }}
+            >
+              <Button
+                style={{ width: "100%" }}
+                size="large"
+                loading={
+                  HistoricCpfByMerchantReportsIsLoading ||
+                  HistoricCnpjByMerchantReportsIsLoading
+                }
+                shape="round"
+                icon={<FileAddOutlined style={{ fontSize: 22 }} />}
+              >
+                <Space>
+                  CSV <DownOutlined style={{ fontSize: 12 }} />
+                </Space>
+              </Button>
+            </Dropdown>
+          </Grid>
         </Grid>
       </Grid>
 
