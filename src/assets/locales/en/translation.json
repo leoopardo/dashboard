@@ -23,7 +23,7 @@
     "persons": "Physical persons",
     "whitelist": "Whitelist",
     "person_accounts": "Customer banks",
-    "person_blacklist": "Persons blacklist",
+    "person_blacklist": "Blacklist",
     "porson_reports": "Relatórios pessoas",
     "moviment": "Bank transactions",
     "moviments": "Manual transactions",
@@ -172,7 +172,8 @@
     "persons_cnpj_blacklist_uploads": "Check uploads Cnpj",
     "historic_cnpj_merchant_reports": "CNPJ consults by merchant",
     "historic_cpf_merchant_reports": "CPF consults by merchant",
-    "historic_cnpj_merchant_details": "CNPJ consults by merchant details"
+    "historic_cnpj_merchant_details": "CNPJ consults by merchant details",
+    "physical_person_blacklist": "Physical persons"
   },
 
   "titles": {

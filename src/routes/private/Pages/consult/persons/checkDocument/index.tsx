@@ -485,7 +485,7 @@ export const CheckDocument = () => {
                   {t("table.false")}
                 </Descriptions.Item>
               )}
-              <Descriptions.Item
+              {/* <Descriptions.Item
                 key={"flag_pep"}
                 label={t(`table.flag_pep`)}
                 labelStyle={{
@@ -496,19 +496,8 @@ export const CheckDocument = () => {
                 }}
               >
                 {CheckCnpjData?.flag_pep ? t("table.true") : t("table.false")}
-              </Descriptions.Item>
-              <Descriptions.Item
-                key={"flag_pep"}
-                label={t(`table.flag_pep`)}
-                labelStyle={{
-                  maxWidth: "140px !important",
-                  margin: 0,
-                  padding: 0,
-                  textAlign: "center",
-                }}
-              >
-                {CheckCnpjData?.flag_pep ? t("table.true") : t("table.false")}
-              </Descriptions.Item>
+              </Descriptions.Item> */}
+
               <Descriptions.Item
                 key={"flag_alert"}
                 label={t(`table.flag_alert`)}
@@ -535,7 +524,6 @@ export const CheckDocument = () => {
                   ? moneyFormatter(CheckCnpjData?.cash_in_max_value)
                   : "-"}
               </Descriptions.Item>
-              
             </Descriptions>
           )}
         </Grid>

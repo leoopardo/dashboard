@@ -33,62 +33,65 @@ export function Persons({ permissions }: ItemInterface): MenuRouteInterface {
           permissions?.register?.person?.blacklist?.reason?.menu,
         children: [
           {
-            key: "upload_person_blacklist",
-            label: "upload_person_blacklist",
-            path: "/register/person/person_blacklist/upload_person_blacklist",
+            key: "physical_person_blacklist",
+            label: "physical_person_blacklist",
             permission:
-              permissions?.register?.person?.blacklist?.import_csv?.menu,
+              permissions?.register?.person?.blacklist?.import_csv?.menu ||
+              permissions?.register?.person?.blacklist?.reason?.menu,
+            children: [
+              {
+                key: "upload_person_blacklist",
+                label: "upload_person_blacklist",
+                path: "/register/person/person_blacklist/upload_person_blacklist",
+                permission:
+                  permissions?.register?.person?.blacklist?.import_csv?.menu,
+              },
+              {
+                key: "persons_cpf_blacklist_uploads",
+                label: "person_blacklist_uploads",
+                path: "/register/person/person_blacklist/person_blacklist_uploads",
+                permission:
+                  permissions?.register?.person?.blacklist?.import_csv?.menu,
+              },
+              {
+                key: "persons_cpf_blacklist_reasons",
+                label: "person_blacklist_reasons",
+                path: "/register/person/person_blacklist/person_blacklist_reasons",
+                permission:
+                  permissions?.register?.person?.blacklist?.reason?.menu,
+              },
+            ],
           },
           {
-            key: "persons_cpf_blacklist_uploads",
-            label: "person_blacklist_uploads",
-            path: "/register/person/person_blacklist/person_blacklist_uploads",
+            key: "legal_person_blacklist",
+            label: "legal_person_blacklist",
             permission:
-              permissions?.register?.person?.blacklist?.import_csv?.menu,
-          },
-          {
-            key: "persons_cpf_blacklist_reasons",
-            label: "person_blacklist_reasons",
-            path: "/register/person/person_blacklist/person_blacklist_reasons",
-            permission: permissions?.register?.person?.blacklist?.reason?.menu,
+              permissions?.register?.person?.blacklist?.import_csv?.menu ||
+              permissions?.register?.person?.blacklist?.reason?.menu,
+            children: [
+              {
+                key: "upload_persons_cnpj_blacklist",
+                label: "upload_person_blacklist",
+                path: "/register/person/legal_person_blacklist/upload_person_blacklist",
+                permission:
+                  permissions?.register?.person?.blacklist?.import_csv?.menu,
+              },
+              {
+                key: "persons_cnpj_blacklist_uploads",
+                label: "person_blacklist_uploads",
+                path: "/register/person/legal_person_blacklist/legal_person_blacklist_uploads",
+                permission:
+                  permissions?.register?.person?.blacklist?.import_csv?.menu,
+              },
+              /* {
+              key: "persons_cnpj_blacklist_reasons",
+              label: "person_blacklist_reasons",
+              path: "/register/person/person_blacklist/person_blacklist_reasons",
+              permission: permissions?.register?.person?.blacklist?.reason?.menu,
+            }, */
+            ],
           },
         ],
-      },
-      {
-        key: "legal_person_blacklist",
-        label: "legal_person_blacklist",
-        permission:
-          permissions?.register?.person?.blacklist?.import_csv?.menu ||
-          permissions?.register?.person?.blacklist?.reason?.menu,
-        children: [
-          {
-            key: "upload_persons_cnpj_blacklist",
-            label: "upload_person_blacklist",
-            path: "/register/person/legal_person_blacklist/upload_person_blacklist",
-            permission:
-              permissions?.register?.person?.blacklist?.import_csv?.menu,
-          },
-          {
-            key: "persons_cnpj_blacklist_uploads",
-            label: "person_blacklist_uploads",
-            path: "/register/person/legal_person_blacklist/legal_person_blacklist_uploads",
-            permission:
-              permissions?.register?.person?.blacklist?.import_csv?.menu,
-          },
-          /* {
-            key: "persons_cnpj_blacklist_reasons",
-            label: "person_blacklist_reasons",
-            path: "/register/person/person_blacklist/person_blacklist_reasons",
-            permission: permissions?.register?.person?.blacklist?.reason?.menu,
-          }, */
-        ],
-      },
-
-      {
-        key: "person_accounts",
-        label: "person_accounts",
-        path: "/register/person/person_accounts",
-        permission: permissions?.register?.person?.client_banks?.menu,
       },
 
       {
@@ -105,7 +108,8 @@ export function Persons({ permissions }: ItemInterface): MenuRouteInterface {
             path: "/register/person/person_reports/person_persons_reports",
             permission:
               permissions?.register?.person?.person?.person_person_export_csv,
-          }, {
+          },
+          {
             key: "legal_persons_reports",
             label: "legal_persons",
             path: "/register/person/person_reports/legal_persons_reports",

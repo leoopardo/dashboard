@@ -24,7 +24,7 @@
     "legal_persons": "Pessoas jurídicas",
     "whitelist": "Whitelist",
     "person_accounts": "Bancos de clientes",
-    "person_blacklist": "Blacklist pessoas",
+    "person_blacklist": "Blacklist",
     "porson_reports": "Relatórios",
     "moviment": "Movimentações",
     "moviments": "Lançamentos manuais",
@@ -170,7 +170,7 @@
     "recents": "Recentes",
     "serpro_assertiva": "Totalizador de consultas",
     "physical_persons": "Pessoas físicas",
-    "legal_person_blacklist": "Blacklist pessoas jurídicas",
+    "legal_person_blacklist": "Pessoas jurídicas",
     "legal_person_reports": "Relatórios",
     "legal_persons_reports": "Pessoas jurídicas",
     "upload_persons_cnpj_blacklist": "Importar blacklist Cnpj",
@@ -178,7 +178,8 @@
     "persons_cnpj_blacklist_uploads": "Verificar uploads Cnpj",
     "historic_cnpj_merchant_reports": "Consultas de CNPJ por empresa",
     "historic_cpf_merchant_reports": "Consultas de CPF por empresa",
-    "historic_cnpj_merchant_details": "Detalhes de CNPJ por Merchant"
+    "historic_cnpj_merchant_details": "Detalhes de CNPJ por Merchant",
+    "physical_person_blacklist": "Pessoas fisicas"
   },
 
   "titles": {

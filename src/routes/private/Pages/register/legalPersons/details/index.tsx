@@ -382,7 +382,7 @@ export const LegalPersonDetails = () => {
                   {LegalPersonsByCnpjData?.black_list_reason}
                 </Descriptions.Item>
               )}
-              <Descriptions.Item
+              {/* <Descriptions.Item
                 key={"flag_pep"}
                 label={t(`table.flag_pep`)}
                 labelStyle={{
@@ -395,7 +395,7 @@ export const LegalPersonDetails = () => {
                 {LegalPersonsByCnpjData?.flag_pep
                   ? t("table.true")
                   : t("table.false")}
-              </Descriptions.Item>
+              </Descriptions.Item> */}
               <Descriptions.Item
                 key={"flag_alert"}
                 label={t(`table.flag_alert`)}
