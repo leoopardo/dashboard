@@ -27,6 +27,7 @@ export interface IOrganizationUpdateConfig {
   fastpix_in_min_value?: number;
   fastpix_in_max_value?: number;
   merchant_hash?: string;
+  accept_deposit_without_document?: boolean;
 }
 
 export interface IOrganizationConfigResponse {
