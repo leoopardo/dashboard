@@ -146,6 +146,7 @@ export const MerchantSelect = ({
             merchant_name: undefined,
             [multiple ? "merchants_ids" : "merchant_id"]: undefined,
             group_id: undefined,
+            reason: undefined,
           }));
           return;
         }
@@ -154,6 +155,7 @@ export const MerchantSelect = ({
           merchant_name: name ? (option as any)["label"] : undefined,
           [multiple ? "merchants_ids" : "merchant_id"]: value,
           group_id: undefined,
+          reason: undefined,
         }));
         setValue(
           merchantsData?.items.find((merchant) => merchant.id === value)?.name

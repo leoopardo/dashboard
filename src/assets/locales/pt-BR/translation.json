@@ -210,6 +210,7 @@
     "generated_voucher": "gerar comprovante de pagamento do",
     "confirm_action_title": "{{action}} dados",
     "are_you_sure": "Deseja {{action}} {{itens}}?",
+    "are_you_sure_blacklist": "Deseja {{action}} {{itens}} da blacklist da {{entity}} {{name}}?",
     "yes_update": "Sim, atualizar",
     "yes_delete": "Sim, deletar",
     "no_cancel": "Não, cancelar",

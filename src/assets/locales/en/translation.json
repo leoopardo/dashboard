@@ -206,6 +206,7 @@
     "generated_voucher": "Payment voucher generated",
     "confirm_action_title": "{{action}} data",
     "are_you_sure": "Do you want {{action}} the {{itens}}?",
+    "are_you_sure_blacklist": "Do you want {{action}} {{itens}} of blacklist {{entity}} {{name}}?",
     "yes_update": "Yes, update",
     "yes_delete": "Yes, delete",
     "no_cancel": "No, cancel",
