@@ -13,8 +13,8 @@ export function useGetLegalPersonsByCnpj(cnpj?: string) {
 
   const LegalPersonsByCnpjData: LegalPersonsItem = {
     ...data,
-    black_list: data?.black_list  ? "true" : "false",
-    flag_pep: data?.flag_pep ? "true" : "false",
+    black_list: data ? (data?.black_list ? "true" : "false") : undefined,
+    flag_pep: data ? (data?.flag_pep ? "true" : "false") : undefined,
   };
   const isLegalPersonsByCnpjDataFetching = isFetching;
   const LegalPersonsByCnpjDataError: any = error;
