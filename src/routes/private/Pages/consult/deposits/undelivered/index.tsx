@@ -133,8 +133,8 @@ export const UndeliveredDeposits = () => {
       justify="center"
       style={{ padding: "25px" }}
     >
-      {permissions.report.deposit.undelivered_deposit
-        .report_deposit_undelivered_deposit_list_totals && (
+      {permissions?.report?.deposit?.undelivered_deposit
+        ?.report_deposit_undelivered_deposit_list_totals && (
         <TotalizersCards
           data={depositsTotal}
           fetchData={() => {
@@ -146,8 +146,8 @@ export const UndeliveredDeposits = () => {
         />
       )}
 
-      {permissions.report.deposit.generated_deposit
-        .report_deposit_generated_deposit_list_totals &&
+      {permissions?.report?.deposit?.generated_deposit
+        ?.report_deposit_generated_deposit_list_totals &&
         !isDepositsTotalFetching &&
         depositsTotalError && (
           <Col span={24}>
@@ -399,8 +399,8 @@ export const UndeliveredDeposits = () => {
           </Button>
         </Col>
 
-        {permissions.report.deposit.generated_deposit
-          .report_deposit_generated_deposit_resend_notification && (
+        {permissions?.report?.deposit?.generated_deposit
+          ?.report_deposit_generated_deposit_resend_notification && (
           <Col xs={{ span: 24 }} md={{ span: 8 }} lg={{ span: 4 }}>
             <Button
               disabled={depositsRows?.items.length === 0 || depositsRowsError}
@@ -422,8 +422,8 @@ export const UndeliveredDeposits = () => {
             </Button>
           </Col>
         )}
-        {permissions.report.deposit.undelivered_deposit
-          .report_deposit_undelivered_deposit_export_csv && (
+        {permissions?.report?.deposit?.undelivered_deposit
+          ?.report_deposit_undelivered_deposit_export_csv && (
           <Col xs={{ span: 24 }} md={{ span: 6 }} lg={{ span: 3 }}>
             <Tooltip
               placement="topLeft"
@@ -497,8 +497,8 @@ export const UndeliveredDeposits = () => {
                         icon: <SettingFilled style={{ fontSize: "18px" }} />,
                         onClick: () => setIsWebhookModalOpen(true),
                       },
-                      permissions.report.deposit.paid_deposit
-                        .report_deposit_paid_deposit_resend_notification && {
+                      permissions?.report?.deposit?.paid_deposit
+                        ?.report_deposit_paid_deposit_resend_notification && {
                         label: "resend_webhook",
                         icon: <SendOutlined style={{ fontSize: "18px" }} />,
                         onClick: (item) => {
@@ -551,8 +551,8 @@ export const UndeliveredDeposits = () => {
                         icon: <SettingFilled style={{ fontSize: "18px" }} />,
                         onClick: () => setIsWebhookModalOpen(true),
                       },
-                      permissions.report.deposit.paid_deposit
-                        .report_deposit_paid_deposit_resend_notification && {
+                      permissions?.report?.deposit?.paid_deposit
+                        ?.report_deposit_paid_deposit_resend_notification && {
                         label: "resend_webhook",
                         icon: <SendOutlined style={{ fontSize: "18px" }} />,
                         onClick: (item) => {

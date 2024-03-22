@@ -224,7 +224,7 @@ export const Aggregators = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        {permissions.register.aggregator.aggregator.aggregator_create && (
+        {permissions?.register?.aggregator?.aggregator?.aggregator_create && (
           <Grid item xs={12} md={3} lg={2}>
             <Button
               ref={ref4}
@@ -249,7 +249,7 @@ export const Aggregators = () => {
             </Button>
           </Grid>
         )}
-        {permissions.register.aggregator.aggregator.aggregator_export_csv && (
+        {permissions?.register?.aggregator?.aggregator?.aggregator_export_csv && (
           <Grid item xs={12} md="auto" ref={ref5}>
             <Tooltip
               placement="topRight"
@@ -291,7 +291,7 @@ export const Aggregators = () => {
                   navigate("details", { state: item });
                 },
               },
-              permissions.register.aggregator.aggregator.aggregator_update && {
+              permissions?.register?.aggregator?.aggregator?.aggregator_update && {
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
                 onClick: (item) => {
@@ -397,16 +397,16 @@ export const Aggregators = () => {
         searchByNameStepRef={ref2}
         removeFiltersStepRef={ref3}
         createRegisterStep={
-          permissions.register.paybrokers.release_category
-            .paybrokers_release_category_create && {
+          permissions?.register?.paybrokers?.release_category
+            ?.paybrokers_release_category_create && {
             title: t("wiki.register_categories"),
             description: t("wiki.register_categories_description"),
             target: () => ref4.current,
           }
         }
         exportCsvStep={
-          permissions.register.paybrokers.release_category
-            .paybrokers_release_category_export_csv && {
+          permissions?.register?.paybrokers?.release_category
+            ?.paybrokers_release_category_export_csv && {
             title: t("wiki.generate_reports"),
             description: (
               <Typography>

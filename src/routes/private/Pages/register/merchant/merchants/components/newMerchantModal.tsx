@@ -129,7 +129,7 @@ export const NewMerchantModal = ({ open, setOpen }: NewuserModalprops) => {
           />
         </Form.Item>
 
-        {permissions.register.partner.partner.partner_list && (
+        {permissions?.register?.partner?.partner?.partner_list && (
           <Form.Item
             label={t(`table.partner`)}
             name="partner_id"

@@ -132,8 +132,8 @@ export const BankMaintenence = () => {
               },
             ]}
             actions={
-              permissions.register.paybrokers.banks_maintain
-                .banks_maintain_update
+              permissions?.register?.paybrokers?.banks_maintain
+                ?.banks_maintain_update
                 ? [
                     {
                       label: "edit",

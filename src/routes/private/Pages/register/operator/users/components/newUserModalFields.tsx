@@ -233,7 +233,7 @@ export const NewUserModalFields = ({
             onChange={handleChangeUserBody}
           />
         </Form.Item>
-        {permissions.register.operator.operator.operator_list &&
+        {permissions?.register?.operator?.operator?.operator_list &&
           action === "create" &&
           !user.operator_id && (
             <Form.Item

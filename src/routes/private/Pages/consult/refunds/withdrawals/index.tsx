@@ -127,8 +127,8 @@ export const RefundWithdrawals = () => {
         query={query}
       />
 
-      {permissions.report.deposit.generated_deposit
-        .report_deposit_generated_deposit_list_totals &&
+      {permissions?.report?.deposit?.generated_deposit
+        ?.report_deposit_generated_deposit_list_totals &&
         !isRefundWithdrawalsTotalFetching &&
         refundWithdrawalsTotalError && (
           <Col span={24}>
@@ -423,8 +423,8 @@ export const RefundWithdrawals = () => {
                 icon: <ReplayIcon style={{ fontSize: "18px" }} />,
                 onClick: () => setIsRefundModalOpen(true),
                 disabled: (item) =>
-                  !permissions.report.chargeback.withdraw_chargeback
-                    .report_chargeback_withdraw_chargeback_paid_to_merchant &&
+                  !permissions?.report?.chargeback?.withdraw_chargeback
+                    ?.report_chargeback_withdraw_chargeback_paid_to_merchant &&
                   !["WAITING", "ERROR"].includes(item?.status),
               },
             ]}

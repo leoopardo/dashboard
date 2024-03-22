@@ -362,7 +362,7 @@ export const UpdateLicense = () => {
       key: "2",
       label: `${t("table.document")}s`,
       style: {
-        display: permissions.register.licenses.licenses.license_files_list
+        display: permissions?.register?.licenses?.licenses?.license_files_list
           ? undefined
           : "none",
       },
@@ -382,12 +382,12 @@ export const UpdateLicense = () => {
         <Row gutter={[8, 8]}>
           <Col span={24}>
             <Dragger
-              className={permissions.register.licenses.licenses.license_files_create ? "show" :"hide"}
+              className={permissions?.register?.licenses?.licenses?.license_files_create ? "show" :"hide"}
               style={{ maxHeight: "150px" }}
               listType="picture"
               multiple={false}
               disabled={
-                !permissions.register.licenses.licenses.license_files_create
+                !permissions?.register?.licenses?.licenses?.license_files_create
               }
               onRemove={(file) => {
                 setDeleteFileId(file?.uid);
@@ -401,7 +401,7 @@ export const UpdateLicense = () => {
               })}
               showUploadList={{
                 showRemoveIcon:
-                  permissions.register.licenses.licenses.license_files_delete,
+                  permissions?.register?.licenses?.licenses?.license_files_delete,
               }}
               height={1000}
               beforeUpload={(file) => {

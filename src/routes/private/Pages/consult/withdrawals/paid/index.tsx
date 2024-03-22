@@ -140,8 +140,8 @@ export const PaidWithdrawals = () => {
       justify="center"
       style={{ padding: "25px" }}
     >
-      {permissions.report.withdraw.paid_withdraw
-        .report_withdraw_paid_withdraw_list_totals && (
+      {permissions?.report?.withdraw?.paid_withdraw
+        ?.report_withdraw_paid_withdraw_list_totals && (
         <TotalizersCards
           data={PaidWithdrawalsTotal}
           fetchData={() => {
@@ -153,8 +153,8 @@ export const PaidWithdrawals = () => {
         />
       )}
 
-      {permissions.report.deposit.generated_deposit
-        .report_deposit_generated_deposit_list_totals &&
+      {permissions?.report?.deposit?.generated_deposit
+        ?.report_deposit_generated_deposit_list_totals &&
         !isPaidWithdrawalsTotalFetching &&
         PaidWithdrawalsTotalError && (
           <Col span={24}>
@@ -398,8 +398,8 @@ export const PaidWithdrawals = () => {
             {t("table.clear_filters")}
           </Button>
         </Col>
-        {permissions.report.withdraw.generated_withdraw
-          .report_withdraw_generated_withdraw_resend_notification && (
+        {permissions?.report?.withdraw?.generated_withdraw
+          ?.report_withdraw_generated_withdraw_resend_notification && (
           <Col xs={{ span: 24 }} md={{ span: 8 }} lg={{ span: 4 }}>
             <Button
               type="primary"
@@ -421,8 +421,8 @@ export const PaidWithdrawals = () => {
           </Col>
         )}
 
-        {permissions.report.withdraw.paid_withdraw
-          .report_withdraw_paid_withdraw_export_csv && (
+        {permissions?.report?.withdraw?.paid_withdraw
+          ?.report_withdraw_paid_withdraw_export_csv && (
           <Col xs={{ span: 24 }} md={{ span: 6 }} lg={{ span: 3 }}>
             <Tooltip
               placement="topRight"
@@ -476,8 +476,8 @@ export const PaidWithdrawals = () => {
                 icon: <SettingFilled style={{ fontSize: "18px" }} />,
                 onClick: () => setIsWebhookModalOpen(true),
               },
-              permissions.report.deposit.paid_deposit
-                .report_deposit_paid_deposit_resend_notification && {
+              permissions?.report?.deposit?.paid_deposit
+                ?.report_deposit_paid_deposit_resend_notification && {
                 label: "resend_webhook",
                 icon: <SendOutlined style={{ fontSize: "18px" }} />,
                 onClick: (item) => {
