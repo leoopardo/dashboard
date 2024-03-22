@@ -572,6 +572,32 @@ export const SidebarNavigation = () => {
                     </Link>
                   ),
                   getItem(
+                    "aggregator_blacklist_reason_reports",
+                    null,
+                    null,
+                    false,
+                    {
+                      display: permissions?.register?.aggregator
+                      ?.blacklist?.aggregator_blacklist_export_csv
+                        ? undefined
+                        : "none",
+                    },
+                    <Link
+                      onClickCapture={() => {
+                        if (isMobile) {
+                          setCollapsed(false);
+                          handleChangeSidebar(false);
+                        }
+                        setOpenKeys([]);
+                      }}
+                      to={
+                        "/register/aggregator/aggregator_reports/aggregator_blacklist_reason_reports"
+                      }
+                    >
+                      {t("menus.aggregator_blacklist_reason_reports")}
+                    </Link>
+                  ),
+                  getItem(
                     "self_exclusion_reports",
                     null,
                     null,
@@ -1161,6 +1187,32 @@ export const SidebarNavigation = () => {
                       }
                     >
                       {t("menus.merchant_blacklist_reports")}
+                    </Link>
+                  ),
+                  getItem(
+                    "merchant_blacklist_reasons_reports",
+                    null,
+                    null,
+                    false,
+                    {
+                      display: permissions?.register?.merchant?.black_list_reason
+                        .merchant_blacklist_reason_export_csv
+                        ? undefined
+                        : "none",
+                    },
+                    <Link
+                      onClickCapture={() => {
+                        if (isMobile) {
+                          setCollapsed(false);
+                          handleChangeSidebar(false);
+                        }
+                        setOpenKeys([]);
+                      }}
+                      to={
+                        "/register/merchant/merchant_reports/merchant_blacklist_reasons_reports"
+                      }
+                    >
+                      {t("menus.merchant_blacklist_reasons_reports")}
                     </Link>
                   ),
                 ],

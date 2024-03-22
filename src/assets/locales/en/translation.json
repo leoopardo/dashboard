@@ -163,7 +163,9 @@
     "current_accounts": "Current accounts",
     "serpro_assertiva": "Consult totalizers",
     "physical_persons": "Pessoas físicas",
-    "legal_persons": "Pessoas jurídicas"
+    "legal_persons": "Pessoas jurídicas",
+    "merchant_blacklist_reasons_reports": "Blacklist reasons",
+    "aggregator_blacklist_reason_reports": "Blacklist reasons"
   },
 
   "titles": {

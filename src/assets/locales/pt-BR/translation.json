@@ -167,7 +167,9 @@
     "current_accounts": "Contas Corrente",
     "consult_person_reports": "Relatórios",
     "recents": "Recentes",
-    "serpro_assertiva": "Totalizador de consultas"
+    "serpro_assertiva": "Totalizador de consultas",
+    "merchant_blacklist_reasons_reports": "Motivos de blacklist",
+    "aggregator_blacklist_reason_reports": "Motivos de blacklist"
   },
 
   "titles": {

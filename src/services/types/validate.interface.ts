@@ -125,6 +125,7 @@ export interface ValidateInterface {
           merchant_blacklist_create: boolean;
           merchant_blacklist_delete: boolean;
           merchant_blacklist_export_csv: boolean;
+          merchant_blacklist_reason_export_csv: boolean;
         };
         black_list_reason: {
           menu: boolean;

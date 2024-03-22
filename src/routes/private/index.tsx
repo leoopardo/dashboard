@@ -119,6 +119,8 @@ import { CustomWebhookPartners } from "./Pages/register/partner/partners/compone
 import { Permission } from "./permission";
 import { Redirect } from "./redirect";
 import { SerproAssertiva } from "./Pages/consult/persons/serproAssertiva";
+import { MerchantBlacklistReasonsReports } from "./Pages/register/merchant/blacklist/reports/reasons";
+import { AggregatorBlacklistReasonsReports } from "./Pages/register/aggregator/blacklist/reports/reasons";
 export const PrivateRoutes = () => {
   const { responseValidate } = useValidate();
 
@@ -537,7 +539,8 @@ export const PrivateRoutes = () => {
               element={
                 <Permission
                   permission={
-                    responseValidate?.permissions?.report?.person?.report_person_check_cpf_list
+                    responseValidate?.permissions?.report?.person
+                      ?.report_person_check_cpf_list
                   }
                 >
                   <CheckDocument />
@@ -550,7 +553,8 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      responseValidate?.permissions?.report?.person?.report_check_document_by_merchant_list
+                      responseValidate?.permissions?.report?.person
+                        ?.report_check_document_by_merchant_list
                     }
                   >
                     <HistoricCpfByMerchant />
@@ -562,7 +566,8 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      responseValidate?.permissions?.report?.person?.report_person_check_cpf_list
+                      responseValidate?.permissions?.report?.person
+                        ?.report_person_check_cpf_list
                     }
                   >
                     <HistoricCpfByMerchantDetails />
@@ -575,7 +580,8 @@ export const PrivateRoutes = () => {
               element={
                 <Permission
                   permission={
-                    responseValidate?.permissions?.report?.person?.report_check_document_total
+                    responseValidate?.permissions?.report?.person
+                      ?.report_check_document_total
                   }
                 >
                   <SerproAssertiva />
@@ -589,7 +595,8 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      responseValidate?.permissions?.report?.person?.report_check_document_by_merchant_export_csv
+                      responseValidate?.permissions?.report?.person
+                        ?.report_check_document_by_merchant_export_csv
                     }
                   >
                     <HistoricCpfByMerchantReports />
@@ -601,7 +608,8 @@ export const PrivateRoutes = () => {
                 element={
                   <Permission
                     permission={
-                      responseValidate?.permissions?.report?.person?.report_check_document_by_merchant_export_csv
+                      responseValidate?.permissions?.report?.person
+                        ?.report_check_document_by_merchant_export_csv
                     }
                   >
                     <HistoricCpfByMerchantDetailsReports />
@@ -851,10 +859,24 @@ export const PrivateRoutes = () => {
                   <Permission
                     permission={
                       responseValidate?.permissions?.register?.aggregator
-                        ?.blacklist?.aggregator_blacklist_export_csv
+                        ?.black_list_reason?.aggregator_blacklist_reason_export_csv
                     }
                   >
                     <AggregatorsBlacklistReports />
+                  </Permission>
+                }
+              />
+
+              <Route
+                path="aggregator_blacklist_reason_reports"
+                element={
+                  <Permission
+                    permission={
+                      responseValidate?.permissions?.register?.aggregator
+                        ?.blacklist?.aggregator_blacklist_export_csv
+                    }
+                  >
+                    <AggregatorBlacklistReasonsReports />
                   </Permission>
                 }
               />
@@ -1178,6 +1200,7 @@ export const PrivateRoutes = () => {
                 }
               />
             </Route>
+
             <Route
               path="fee_plans"
               element={
@@ -1241,6 +1264,21 @@ export const PrivateRoutes = () => {
                     }
                   >
                     <MerchantBlacklistReports />
+                  </Permission>
+                }
+              />
+
+              <Route
+                path="merchant_blacklist_reasons_reports"
+                element={
+                  <Permission
+                    permission={
+                      responseValidate?.permissions?.register?.merchant
+                        ?.black_list_reason
+                        ?.merchant_blacklist_reason_export_csv
+                    }
+                  >
+                    <MerchantBlacklistReasonsReports />
                   </Permission>
                 }
               />
