@@ -102,6 +102,14 @@ export function Merchants({ permissions }: ItemInterface): MenuRouteInterface {
               permissions?.register?.merchant?.blacklist
                 ?.merchant_blacklist_export_csv,
           },
+          {
+            key: "merchant_blacklist_reasons_reports",
+            label: "merchant_blacklist_reasons_reports",
+            path: "/register/merchant/merchant_reports/merchant_blacklist_reasons_reports",
+            permission:
+              permissions?.register?.merchant?.black_list_reason
+                ?.merchant_blacklist_reason_export_csv,
+          },
         ],
       },
     ],
