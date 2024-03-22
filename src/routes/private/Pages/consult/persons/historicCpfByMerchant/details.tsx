@@ -307,6 +307,7 @@ export const HistoricCpfByMerchantDetails = () => {
         startDateKeyName="start_date"
         endDateKeyName="end_date"
         initialQuery={INITIAL_QUERY}
+        haveInitialDate
       />
     </Grid>
   );
