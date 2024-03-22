@@ -78,6 +78,14 @@ export function Aggregators({
                 ?.aggregator_blacklist_export_csv,
           },
           {
+          key: "aggregator_blacklist_reason_reports",
+          label: "aggregator_blacklist_reason_reports",
+          path: "/register/aggregator/aggregator_reports/aggregator_blacklist_reason_reports",
+          permission:
+            permissions?.register?.aggregator?.blacklist
+              ?.aggregator_blacklist_export_csv,
+        },
+          {
             key: "self_exclusion_reports",
             label: "self_exclusion_reports",
             path: "/register/aggregator/aggregator_reports/self_exclusion_reports",
