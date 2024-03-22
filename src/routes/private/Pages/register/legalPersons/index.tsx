@@ -401,7 +401,7 @@ export const LegalPersons = () => {
         error={PersonsReportsError}
         success={PersonsReportsIsSuccess}
         loading={PersonsReportsIsLoading}
-        reportPath="/register/person/person_reports/person_persons_reports"
+        reportPath="/register/person/person_reports/legal_persons_reports"
         fields={fields}
         csvFields={csvFields}
         comma={comma}
