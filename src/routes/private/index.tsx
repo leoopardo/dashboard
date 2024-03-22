@@ -865,7 +865,8 @@ export const PrivateRoutes = () => {
                   <Permission
                     permission={
                       responseValidate?.permissions?.register?.aggregator
-                        ?.black_list_reason?.aggregator_blacklist_reason_export_csv
+                        ?.black_list_reason
+                        ?.aggregator_blacklist_reason_export_csv
                     }
                   >
                     <AggregatorsBlacklistReports />
@@ -1489,19 +1490,20 @@ export const PrivateRoutes = () => {
                     <PersonsReports />
                   </Permission>
                 }
-              /> <Route
-              path="legal_persons_reports"
-              element={
-                <Permission
-                  permission={
-                    responseValidate?.permissions?.register?.person?.person
-                      ?.person_person_export_csv
-                  }
-                >
-                  <LegalPersonsReports />
-                </Permission>
-              }
-            />
+              />{" "}
+              <Route
+                path="legal_persons_reports"
+                element={
+                  <Permission
+                    permission={
+                      responseValidate?.permissions?.register?.person?.person
+                        ?.person_person_export_csv
+                    }
+                  >
+                    <LegalPersonsReports />
+                  </Permission>
+                }
+              />
               <Route
                 path="client_bank_reports"
                 element={
