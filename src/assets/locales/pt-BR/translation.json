@@ -178,7 +178,9 @@
     "persons_cnpj_blacklist_uploads": "Verificar uploads Cnpj",
     "historic_cnpj_merchant_reports": "Consultas de CNPJ por empresa",
     "historic_cpf_merchant_reports": "Consultas de CPF por empresa",
-    "historic_cnpj_merchant_details": "Detalhes de CNPJ por Merchant"
+    "historic_cnpj_merchant_details": "Detalhes de CNPJ por Merchant",
+    "merchant_blacklist_reasons_reports": "Motivos de blacklist",
+    "aggregator_blacklist_reason_reports": "Motivos de blacklist"
   },
 
   "titles": {

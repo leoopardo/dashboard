@@ -132,7 +132,7 @@ type EditableTableProps = Parameters<typeof Table>[0];
 
 interface DataType {
   key: React.Key;
-  CPF: string;
+  DOCUMENT: string;
   REASON: string;
   DESCRIPTION: string;
   MERCHANT_ID: string;
@@ -191,8 +191,8 @@ export const ImportBlacklist = () => {
     dataIndex: string;
   })[] = [
     {
-      title: "CPF",
-      dataIndex: "CPF",
+      title: t("table.document"),
+      dataIndex: "DOCUMENT",
       width: "30%",
       editable: true,
     },
@@ -350,28 +350,28 @@ export const ImportBlacklist = () => {
               }}
               data={[
                 {
-                  CPF: 11111111111,
+                  DOCUMENT: 11111111111,
                   REASON: "Fraude",
                   DESCRIPTION: "Solicitado pelo merchant xyz",
                   MERCHANT_ID: "1",
                   CAN_BE_DELETED_ONLY_BY_ORGANIZATION: "false",
                 },
                 {
-                  CPF: 11111111111,
+                  DOCUMENT: 11111111111,
                   REASON: "Fraude",
                   DESCRIPTION: "Solicitado pelo merchant xyz",
                   MERCHANT_ID: "1",
                   CAN_BE_DELETED_ONLY_BY_ORGANIZATION: "false",
                 },
                 {
-                  CPF: 11111111111,
+                  DOCUMENT: 11111111111,
                   REASON: "Fraude",
                   DESCRIPTION: "Solicitado pelo merchant xyz",
                   MERCHANT_ID: "1",
                   CAN_BE_DELETED_ONLY_BY_ORGANIZATION: "false",
                 },
                 {
-                  CPF: 11111111111,
+                  DOCUMENT: 11111111111,
                   REASON: "Fraude",
                   DESCRIPTION: "Solicitado pelo merchant xyz",
                   MERCHANT_ID: "1",
