@@ -208,7 +208,7 @@ export const TabWithdrawWebhook = ({
         />
       )}
       <Row style={{ width: "100%" }} gutter={[8, 8]}>
-        {permissions.register.partner.partner.partner_customWebhook_update && (
+        {permissions?.register?.partner?.partner?.partner_customWebhook_update && (
           <Col lg={{ span: 12 }} style={{ paddingRight: 10 }}>
             <Form
               ref={formWithdrawRef}
@@ -275,7 +275,7 @@ export const TabWithdrawWebhook = ({
           />
         </Col>
 
-        {permissions.register.partner.partner.partner_customWebhook_update && (
+        {permissions?.register?.partner?.partner?.partner_customWebhook_update && (
           <Row
             style={{ width: "100%", marginTop: 10, paddingRight: 10 }}
             justify={"end"}

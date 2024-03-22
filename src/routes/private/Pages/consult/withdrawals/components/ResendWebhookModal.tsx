@@ -159,7 +159,7 @@ export const ResendWebhookModal = ({
                 />
               </ConfigProvider>
             </Form.Item>
-            {permissions.register.partner.partner.partner_list && (
+            {permissions?.register?.partner?.partner?.partner_list && (
               <Form.Item
                 label={t("table.partner")}
                 style={{ margin: 10 }}
@@ -168,7 +168,7 @@ export const ResendWebhookModal = ({
                 <PartnerSelect queryOptions={body} setQueryFunction={setBody} />
               </Form.Item>
             )}
-            {permissions.register.merchant.merchant.merchant_list && (
+            {permissions?.register?.merchant?.merchant?.merchant_list && (
               <Form.Item
                 label={t("table.merchant")}
                 style={{ margin: 10 }}

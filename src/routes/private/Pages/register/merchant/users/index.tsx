@@ -174,7 +174,7 @@ export const MerchantUser = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        {permissions.register.merchant.users.merchant_user_create && (
+        {permissions?.register?.merchant?.users?.merchant_user_create && (
           <Grid item xs={12} md={3} lg={2}>
             <Button
               type="primary"
@@ -196,7 +196,7 @@ export const MerchantUser = () => {
             </Button>
           </Grid>
         )}
-        {permissions.register.merchant.users.merchant_user_export_csv && (
+        {permissions?.register?.merchant?.users?.merchant_user_export_csv && (
           <Grid item xs={12} md="auto">
             <Tooltip
               placement="topRight"
@@ -249,7 +249,7 @@ export const MerchantUser = () => {
                   setIsViewModalOpen(true);
                 },
               },
-              permissions.register.merchant.users.merchant_user_update && {
+              permissions?.register?.merchant?.users?.merchant_user_update && {
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,
                 onClick: () => {

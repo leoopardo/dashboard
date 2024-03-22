@@ -231,7 +231,7 @@ export const MerchantPreManual = () => {
             })}
         </Grid>
 
-        {permissions.transactions.merchant?.merchant_pre_manual
+        {permissions?.transactions?.merchant?.merchant_pre_manual
           ?.merchant_pre_manual_transactions_create && (
           <Grid container item xs={12} md={4} lg={2} rowSpacing={1}>
             <Grid item xs={12}>
@@ -379,7 +379,7 @@ export const MerchantPreManual = () => {
               {t("table.clear_filters")}
             </Button>
           </Grid>
-          {permissions.transactions.merchant?.merchant_pre_manual?.menu && (
+          {permissions?.transactions?.merchant?.merchant_pre_manual?.menu && (
             <Grid item xs={12} md={"auto"} lg={"auto"}>
               <ExportReportsModal
                 disabled={!preManualData?.total || preManualDataError}
@@ -392,7 +392,7 @@ export const MerchantPreManual = () => {
             </Grid>
           )}
 
-          {permissions.transactions.merchant?.merchant_pre_manual
+          {permissions?.transactions?.merchant?.merchant_pre_manual
             ?.merchant_pre_manual_transactions_approve && (
             <Grid item xs={12} md={4} lg={4}>
               <ApproveModal
@@ -440,7 +440,7 @@ export const MerchantPreManual = () => {
                 icon: <EyeFilled style={{ fontSize: "20px" }} />,
                 onClick: () => setIsViewModalOpen(true),
               },
-              permissions.transactions.merchant?.merchant_pre_manual
+              permissions?.transactions?.merchant?.merchant_pre_manual
                 ?.merchant_pre_manual_transactions_update && {
                 label: "edit",
                 icon: <EditOutlined style={{ fontSize: "20px" }} />,

@@ -176,8 +176,8 @@ export const RefundDepositsManual = () => {
         query={query}
       />
 
-      {permissions.report.deposit.generated_deposit
-        .report_deposit_generated_deposit_list_totals &&
+      {permissions?.report?.deposit?.generated_deposit
+        ?.report_deposit_generated_deposit_list_totals &&
         !isRefundDepositManualTotalFetching &&
         refundDepositManualTotalError && (
           <Col span={24}>

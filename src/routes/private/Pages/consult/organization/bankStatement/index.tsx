@@ -127,8 +127,8 @@ export const OrganizationBankStatement = () => {
             {t("buttons.refresh")}
           </Button>
         </Grid>
-        {permissions.report.paybrokers.extract
-          .report_paybrokers_extract_export_csv && (
+        {permissions?.report?.paybrokers?.extract
+          ?.report_paybrokers_extract_export_csv && (
           <Grid item xs={12} md="auto" lg={1}>
             <ExportReportsModal
               disabled={

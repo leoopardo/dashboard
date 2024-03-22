@@ -158,7 +158,7 @@ export const CurrentAccountPage: FC = () => {
           </Button>
         </Col>
 
-        {permissions.register.paybrokers.account.account_api_create && (
+        {permissions?.register?.paybrokers?.account?.account_api_create && (
           <Col
             xs={{ span: 24 }}
             md={{ span: isSmallDesktop ? 8 : 6 }}
@@ -207,7 +207,7 @@ export const CurrentAccountPage: FC = () => {
               setIsViewModalOpen(true);
             },
           },
-          permissions.register.paybrokers.account.account_api_update && {
+          permissions?.register?.paybrokers?.account?.account_api_update && {
             id: "table-edit-button",
             label: "edit",
             icon: <EditOutlined style={{ fontSize: "20px" }} />,

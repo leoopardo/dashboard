@@ -33,8 +33,8 @@ export const GeneralConfigs = () => {
 
   const { data, isFetching } = useGetGeneralconfigs();
   const [activeKey, setactiveKey] = useState<"1" | "2">(
-    permissions.register.paybrokers.general_configs
-      .general_configs_update_financial
+    permissions?.register?.paybrokers?.general_configs
+      ?.general_configs_update_financial
       ? "1"
       : "2"
   );
@@ -95,8 +95,8 @@ export const GeneralConfigs = () => {
   }, [data]);
 
   const items: TabsProps["items"] | any = [
-    permissions.register.paybrokers.general_configs
-      .general_configs_update_financial && {
+    permissions?.register?.paybrokers?.general_configs
+      ?.general_configs_update_financial && {
       key: "1",
       label: t("table.financial"),
       children: (
@@ -430,17 +430,17 @@ export const GeneralConfigs = () => {
         </Form>
       ),
       style: {
-        display: permissions.register.paybrokers.general_configs
-          .general_configs_update_financial
+        display: permissions?.register?.paybrokers?.general_configs
+          ?.general_configs_update_financial
           ? undefined
           : "none",
       },
       disabled:
-        !permissions.register.paybrokers.general_configs
-          .general_configs_update_financial,
+        !permissions?.register?.paybrokers?.general_configs
+          ?.general_configs_update_financial,
     },
-    permissions.register.paybrokers.general_configs
-      .general_configs_update_adminstrative && {
+    permissions?.register?.paybrokers?.general_configs
+      ?.general_configs_update_adminstrative && {
       key: "2",
       label: t("table.administrative"),
       children: (
@@ -816,8 +816,8 @@ export const GeneralConfigs = () => {
       <Grid item xs={12}>
         <Tabs
           defaultActiveKey={
-            permissions.register.paybrokers.general_configs
-              .general_configs_update_financial
+            permissions?.register?.paybrokers?.general_configs
+              ?.general_configs_update_financial
               ? "1"
               : "2"
           }

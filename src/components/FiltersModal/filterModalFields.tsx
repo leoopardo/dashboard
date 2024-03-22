@@ -543,7 +543,7 @@ export const FiltersModalFields = ({
 
             case "partner_id":
               if (
-                permissions.register.partner.partner.partner_list &&
+                permissions?.register?.partner?.partner?.partner_list &&
                 !user.partner_id
               ) {
                 return (
@@ -582,7 +582,7 @@ export const FiltersModalFields = ({
             case "cash_in_bank":
             case "cash_out_bank":
               if (
-                permissions.register.merchant.merchant.merchant_config_banks
+                permissions?.register?.merchant?.merchant?.merchant_config_banks
               ) {
                 return (
                   <Form.Item
@@ -603,8 +603,8 @@ export const FiltersModalFields = ({
 
             case "payer_bank":
               if (
-                permissions.register.person.client_banks
-                  .person_client_banks_list
+                permissions?.register?.person?.client_banks
+                  ?.person_client_banks_list
               ) {
                 return (
                   <Form.Item
@@ -791,7 +791,7 @@ export const FiltersModalFields = ({
 
             case "merchant_id":
               if (
-                permissions.register.merchant.merchant.merchant_list &&
+                permissions?.register?.merchant?.merchant?.merchant_list &&
                 !user.merchant_id
               ) {
                 return (
@@ -810,7 +810,7 @@ export const FiltersModalFields = ({
 
             case "aggregator_id":
               if (
-                permissions.register.aggregator.aggregator.aggregator_list &&
+                permissions?.register?.aggregator?.aggregator?.aggregator_list &&
                 !user.aggregator_id
               ) {
                 return (
@@ -832,7 +832,7 @@ export const FiltersModalFields = ({
 
             case "operator_id":
               if (
-                permissions.register.operator.operator.operator_list &&
+                permissions?.register?.operator?.operator?.operator_list &&
                 !user.operator_id
               ) {
                 return (

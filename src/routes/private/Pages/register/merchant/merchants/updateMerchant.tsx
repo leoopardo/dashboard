@@ -96,7 +96,6 @@ export const UpdateMerchant = () => {
     UpdateReset,
   } = useUpdateMerchant({
     ...merchantBody,
-    status: merchantBody?.status ? true : false,
     v3_id: Number(merchantBody?.v3_id) ?? undefined,
     merchant_id: location.state.id,
     aggregator_id: merchantBody?.aggregator_id ?? null,
@@ -471,7 +470,7 @@ export const UpdateMerchant = () => {
         </Form>
       ),
     },
-    permissions.register.merchant.merchant.merchant_responsible_list && {
+    permissions?.register?.merchant?.merchant?.merchant_responsible_list && {
       key: "2",
       label: t("table.responsibles"),
       children: (
@@ -637,7 +636,7 @@ export const UpdateMerchant = () => {
         </Row>
       ),
     },
-    permissions.register.merchant.merchant.merchant_files_list && {
+    permissions?.register?.merchant?.merchant?.merchant_files_list && {
       key: "3",
       label: t("table.attachments"),
       children: MerchantAttachmentIsLoading ? (

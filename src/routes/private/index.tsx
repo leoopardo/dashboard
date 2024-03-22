@@ -96,6 +96,7 @@ import { PermissionsGroups } from "./Pages/register/permissionsGroups";
 import { Persons } from "./Pages/register/persons";
 import { PersonBlacklistReasons } from "./Pages/register/persons/blacklist/blacklistReasons";
 import { ImportPersonsBlacklist } from "./Pages/register/persons/blacklist/importBlacklist";
+import { ImportLegalPersonsBlacklist } from "./Pages/register/legalPersons/blacklist/importBlacklist";
 import { PersonBlacklistUploads } from "./Pages/register/persons/blacklist/uploads";
 import { CostumerBanks } from "./Pages/register/persons/customerBankList";
 import { PersonDetails } from "./Pages/register/persons/personDetails";
@@ -121,6 +122,11 @@ import { Redirect } from "./redirect";
 import { SerproAssertiva } from "./Pages/consult/persons/serproAssertiva";
 import { MerchantBlacklistReasonsReports } from "./Pages/register/merchant/blacklist/reports/reasons";
 import { AggregatorBlacklistReasonsReports } from "./Pages/register/aggregator/blacklist/reports/reasons";
+import { LegalPersons } from "./Pages/register/legalPersons";
+import { LegalPersonDetails } from "./Pages/register/legalPersons/detais";
+import { LegalPersonUpdate } from "./Pages/register/legalPersons/update";
+import { LegalPersonBlacklistUploads } from "./Pages/register/legalPersons/blacklist/uploads";
+import { LegalPersonsReports } from "./Pages/register/legalPersons/reports/legalPersonsReports";
 export const PrivateRoutes = () => {
   const { responseValidate } = useValidate();
 
@@ -335,7 +341,7 @@ export const PrivateRoutes = () => {
                   <Permission
                     permission={
                       responseValidate?.permissions?.report?.deposit
-                        ?.paid_deposit.report_deposit_paid_deposit_export_csv
+                        ?.paid_deposit?.report_deposit_paid_deposit_export_csv
                     }
                   >
                     <PaidDepositsReports />
@@ -479,7 +485,7 @@ export const PrivateRoutes = () => {
                 <Permission
                   permission={
                     responseValidate?.permissions?.report?.chargeback
-                      ?.manual_deposit_chargeback.menu
+                      ?.manual_deposit_chargeback?.menu
                   }
                 >
                   <RefundDepositsManual />
@@ -1330,6 +1336,50 @@ export const PrivateRoutes = () => {
                 />
               </Route>
             </Route>
+
+            <Route path="legal_persons">
+              <Route
+                index
+                element={
+                  <Permission
+                    permission={
+                      responseValidate?.permissions?.register?.person?.person
+                        ?.menu
+                    }
+                  >
+                    <LegalPersons />
+                  </Permission>
+                }
+              />
+              <Route
+                path=":cnpj"
+                element={
+                  <Permission
+                    permission={
+                      responseValidate?.permissions?.register?.person?.person
+                        ?.person_person_list
+                    }
+                  >
+                    <LegalPersonDetails />
+                  </Permission>
+                }
+              />
+              <Route path="update">
+                <Route
+                  path=":cnpj"
+                  element={
+                    <Permission
+                      permission={
+                        responseValidate?.permissions?.register?.person?.person
+                          ?.person_person_update
+                      }
+                    >
+                      <LegalPersonUpdate />
+                    </Permission>
+                  }
+                />
+              </Route>
+            </Route>
             <Route
               path="person_accounts"
               element={
@@ -1350,7 +1400,7 @@ export const PrivateRoutes = () => {
                   <Permission
                     permission={
                       responseValidate?.permissions?.register?.person?.blacklist
-                        ?.import_csv.person_blacklist_import_csv
+                        ?.import_csv?.person_blacklist_import_csv
                     }
                   >
                     <ImportPersonsBlacklist />
@@ -1363,7 +1413,7 @@ export const PrivateRoutes = () => {
                   <Permission
                     permission={
                       responseValidate?.permissions?.register?.person?.blacklist
-                        ?.import_csv.person_blacklist_import_csv
+                        ?.import_csv?.person_blacklist_import_csv
                     }
                   >
                     <PersonBlacklistUploads />
@@ -1376,7 +1426,49 @@ export const PrivateRoutes = () => {
                   <Permission
                     permission={
                       responseValidate?.permissions?.register?.person?.blacklist
-                        .reason.menu
+                        ?.reason?.menu
+                    }
+                  >
+                    <PersonBlacklistReasons />
+                  </Permission>
+                }
+              />
+            </Route>
+            {/* AJUSTAR PERMISSÕES*/}
+            <Route path="legal_person_blacklist">
+              <Route
+                path="upload_person_blacklist"
+                element={
+                  <Permission
+                    permission={
+                      responseValidate?.permissions?.register?.person?.blacklist
+                        ?.import_csv?.person_blacklist_import_csv
+                    }
+                  >
+                    <ImportLegalPersonsBlacklist />
+                  </Permission>
+                }
+              />
+              <Route
+                path="legal_person_blacklist_uploads"
+                element={
+                  <Permission
+                    permission={
+                      responseValidate?.permissions?.register?.person?.blacklist
+                        ?.import_csv?.person_blacklist_import_csv
+                    }
+                  >
+                    <LegalPersonBlacklistUploads />
+                  </Permission>
+                }
+              />
+              <Route
+                path="person_blacklist_reasons"
+                element={
+                  <Permission
+                    permission={
+                      responseValidate?.permissions?.register?.person?.blacklist
+                        ?.reason?.menu
                     }
                   >
                     <PersonBlacklistReasons />
@@ -1395,6 +1487,47 @@ export const PrivateRoutes = () => {
                     }
                   >
                     <PersonsReports />
+                  </Permission>
+                }
+              /> <Route
+              path="legal_persons_reports"
+              element={
+                <Permission
+                  permission={
+                    responseValidate?.permissions?.register?.person?.person
+                      ?.person_person_export_csv
+                  }
+                >
+                  <LegalPersonsReports />
+                </Permission>
+              }
+            />
+              <Route
+                path="client_bank_reports"
+                element={
+                  <Permission
+                    permission={
+                      responseValidate?.permissions?.register?.person
+                        ?.client_banks?.person_client_banks_export_csv
+                    }
+                  >
+                    <CustomerBanksReports />
+                  </Permission>
+                }
+              />
+            </Route>
+            {/* AJUSTAR PERMISSÕES */}
+            <Route path="legal_person_reports">
+              <Route
+                path="legal_persons"
+                element={
+                  <Permission
+                    permission={
+                      responseValidate?.permissions?.register?.person?.person
+                        ?.person_person_export_csv
+                    }
+                  >
+                    <LegalPersonsReports />
                   </Permission>
                 }
               />
@@ -1472,7 +1605,7 @@ export const PrivateRoutes = () => {
                   <Permission
                     permission={
                       responseValidate?.permissions?.transactions?.paybrokers
-                        ?.internal_transfers.menu
+                        ?.internal_transfers?.menu
                     }
                   >
                     <OrganizationTransferBetweenAccountsReports />
@@ -1778,7 +1911,7 @@ export const PrivateRoutes = () => {
                   <Permission
                     permission={
                       responseValidate?.permissions?.support?.contestation
-                        ?.deposits?.import_csv.menu
+                        ?.deposits?.import_csv?.menu
                     }
                   >
                     <ImportContastationDeposit />

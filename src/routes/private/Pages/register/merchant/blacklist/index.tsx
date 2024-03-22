@@ -195,7 +195,7 @@ export const MerchantBlacklist = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        {permissions.register.merchant.blacklist.merchant_blacklist_create && (
+        {permissions?.register?.merchant?.blacklist?.merchant_blacklist_create && (
           <Grid item xs={12} md={3} lg={2}>
             <Button
               type="primary"
@@ -215,8 +215,8 @@ export const MerchantBlacklist = () => {
           </Grid>
         )}
 
-        {permissions.register.merchant.blacklist
-          .merchant_blacklist_export_csv && (
+        {permissions?.register?.merchant?.blacklist
+          ?.merchant_blacklist_export_csv && (
           <Grid item xs={12} md={"auto"}>
             <ExportReportsModal
               disabled={

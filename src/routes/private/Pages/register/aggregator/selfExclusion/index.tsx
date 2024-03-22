@@ -86,6 +86,7 @@ export const AggregatorSelfExclusion = () => {
   const ref2 = useRef(null);
   const ref3 = useRef(null);
   const refDoc = useRef(null);
+  const refDocType = useRef(null);
   const refMerchant = useRef(null);
   const refOrganization = useRef(null);
   const refPartner = useRef(null);
@@ -149,8 +150,8 @@ export const AggregatorSelfExclusion = () => {
             setQuery={setQuery}
           />
         </Grid>
-        {permissions.register.aggregator.self_exclusion
-          .aggregator_self_exclusion_create && (
+        {permissions?.register?.aggregator?.self_exclusion
+          ?.aggregator_self_exclusion_create && (
           <Grid item xs={12} md={4} lg={2}>
             <Button
               ref={ref2}
@@ -171,8 +172,8 @@ export const AggregatorSelfExclusion = () => {
           </Grid>
         )}
 
-        {permissions.register.aggregator.self_exclusion
-          .aggregator_self_exclusion_export_csv && (
+        {permissions?.register?.aggregator?.self_exclusion
+          ?.aggregator_self_exclusion_export_csv && (
           <Grid item xs={12} md={1} ref={ref3}>
             <ExportReportsModal
               disabled={!SelfExclusionData?.total || SelfExclusionDataError}
@@ -197,6 +198,7 @@ export const AggregatorSelfExclusion = () => {
             error={SelfExclusionDataError}
             columns={[
               { name: "document", type: "document", key: refDoc },
+              { name: "document_type", type: "text", key: refDocType },
               { name: "merchant_name", type: "text", key: refMerchant },
               {
                 name: "organization_name",
@@ -278,14 +280,14 @@ export const AggregatorSelfExclusion = () => {
         setOpen={setIsTuorOpen}
         searchFilterStepRef={ref1}
         createRegisterStep={
-          permissions.register.aggregator.users.aggregator_user_create && {
+          permissions?.register?.aggregator?.users?.aggregator_user_create && {
             title: t("wiki.register_self_exclusion"),
             description: t("wiki.register_self_exclusion_descriptions"),
             target: () => ref2.current,
           }
         }
         exportCsvStep={
-          permissions.register.aggregator.users.aggregator_user_export_csv && {
+          permissions?.register?.aggregator?.users?.aggregator_user_export_csv && {
             title: t("wiki.generate_reports"),
             description: (
               <Typography>
@@ -307,6 +309,11 @@ export const AggregatorSelfExclusion = () => {
             title: t("table.document"),
             description: t("wiki.document_description"),
             target: () => refDoc.current,
+          },
+          {
+            title: t("table.document"),
+            description: t("wiki.document_description"),
+            target: () => refDocType.current,
           },
           {
             title: t("table.merchant"),

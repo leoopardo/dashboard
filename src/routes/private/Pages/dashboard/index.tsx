@@ -419,10 +419,10 @@ export const Dashboard = () => {
             </Row>
           </Layout>
 
-          {(permissions.report.deposit.generated_deposit
-            .report_deposit_generated_deposit_list_totals ||
-            permissions.report.withdraw.generated_withdraw
-              .report_withdraw_generated_withdraw_list_totals) && (
+          {(permissions?.report?.deposit?.generated_deposit
+            ?.report_deposit_generated_deposit_list_totals ||
+            permissions?.report?.withdraw?.generated_withdraw
+              ?.report_withdraw_generated_withdraw_list_totals) && (
             <Col
               span={24}
               style={{
@@ -439,14 +439,14 @@ export const Dashboard = () => {
                     {t("table.in_out_conversion")}
                   </Typography.Title>
                 </Divider>
-                {permissions.report.deposit.generated_deposit
-                  .report_deposit_generated_deposit_list_totals && (
+                {permissions?.report?.deposit?.generated_deposit
+                  ?.report_deposit_generated_deposit_list_totals && (
                   <Col xs={{ span: 24 }} md={{ span: 12 }} ref={refIn}>
                     <ChartIn query={query} data-test-id="chart-in" />
                   </Col>
                 )}
-                {permissions.report.withdraw.generated_withdraw
-                  .report_withdraw_generated_withdraw_list_totals && (
+                {permissions?.report?.withdraw?.generated_withdraw
+                  ?.report_withdraw_generated_withdraw_list_totals && (
                   <Col xs={{ span: 24 }} md={{ span: 12 }} ref={refOut}>
                     <ChartOut query={query} data-test-id="chart-out" />
                   </Col>
@@ -456,7 +456,7 @@ export const Dashboard = () => {
           )}
         </Row>
 
-        {!user.merchant_id && permissions.report.merchant.balance.menu && (
+        {!user.merchant_id && permissions?.report?.merchant?.balance?.menu && (
           <Row
             style={{
               marginTop: permissions?.report?.paybrokers?.bank_balance?.menu
@@ -564,7 +564,7 @@ export const Dashboard = () => {
               onClick: () => setActiveKey("2"),
             },
           },
-          permissions.report.paybrokers.bank_balance.menu && {
+          permissions?.report?.paybrokers?.bank_balance?.menu && {
             title: t("menus.organization_bank_balance"),
             description: (
               <Typography data-test-id="organization-bank-balance-description">
@@ -624,52 +624,52 @@ export const Dashboard = () => {
             ),
             target: () => ref2.current,
           },
-          permissions.report.merchant.extract.menu && {
+          permissions?.report?.merchant?.extract?.menu && {
             title: t("table.operations"),
             description: t("wiki.operations_description"),
             target: () => ref4.current,
           },
-          permissions.report.merchant.extract.menu && {
+          permissions?.report?.merchant?.extract?.menu && {
             title: t("table.type"),
             description: t("wiki.operation_type_description"),
             target: () => refType.current,
           },
-          permissions.report.merchant.extract.menu && {
+          permissions?.report?.merchant?.extract?.menu && {
             title: t("wiki.operations_number"),
             description: t("wiki.operations_number_description"),
             target: () => refOpNum.current,
           },
-          permissions.report.merchant.extract.menu && {
+          permissions?.report?.merchant?.extract?.menu && {
             title: t("wiki.operations_value"),
             description: t("wiki.operations_value_description"),
             target: () => refOpVal.current,
           },
-          permissions.report.merchant.extract.menu && {
+          permissions?.report?.merchant?.extract?.menu && {
             title: t("wiki.ticket"),
             description: t("wiki.ticket_description"),
             target: () => refTicket.current,
           },
-          permissions.report.merchant.extract.menu && {
+          permissions?.report?.merchant?.extract?.menu && {
             title: t("wiki.fee"),
             description: t("wiki.fee_description"),
             target: () => refFee.current,
           },
-          (permissions.report.deposit.generated_deposit
-            .report_deposit_generated_deposit_list_totals ||
-            permissions.report.withdraw.generated_withdraw
-              .report_withdraw_generated_withdraw_list_totals) && {
+          (permissions?.report?.deposit?.generated_deposit
+            ?.report_deposit_generated_deposit_list_totals ||
+            permissions?.report?.withdraw?.generated_withdraw
+              ?.report_withdraw_generated_withdraw_list_totals) && {
             title: t("wiki.in_out_conversions"),
             description: t("wiki.in_out_conversions_description"),
             target: () => refInOut.current,
           },
-          permissions.report.deposit.generated_deposit
-            .report_deposit_generated_deposit_list_totals && {
+          permissions?.report?.deposit?.generated_deposit
+            ?.report_deposit_generated_deposit_list_totals && {
             title: t("wiki.in_conversions"),
             description: t("wiki.in_conversions_description"),
             target: () => refIn.current,
           },
-          permissions.report.withdraw.generated_withdraw
-            .report_withdraw_generated_withdraw_list_totals && {
+          permissions?.report?.withdraw?.generated_withdraw
+            ?.report_withdraw_generated_withdraw_list_totals && {
             title: t("wiki.out_conversions"),
             description: t("wiki.out_conversions_description"),
             target: () => refOut.current,
