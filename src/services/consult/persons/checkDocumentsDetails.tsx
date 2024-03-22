@@ -1,15 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { CheckCpfDetails } from "@src/services/types/consult/persons/checkDocument.interface";
 import { useQuery } from "react-query";
 import { api } from "../../../config/api";
 
-export function useGetCheckCpfDetails(cpf?: string) {
+export function useGetCheckCpfDetails(document?: string) {
   const { data, isFetching, error, refetch } = useQuery<
-  CheckCpfDetails | null | undefined
+    any | null | undefined
   >(
     "BlacklistPersonDetails",
     async () => {
-      const response = await api.get(`blacklist/merchant-black-list`, {params: {cpf: cpf}});
+      const response = await api.get(`blacklist/merchant-black-list`, {
+        params: { document },
+      });
       return response.data;
     },
     {

@@ -9,9 +9,7 @@ export function useCreateLegalPersonsReports(body: LegalPersonsQuery) {
   const { isLoading, error, mutate, isSuccess, data } = useMutation<
     ReportsDataResponse | null | undefined
   >("CreateLegalPersonsReports", async () => {
-    const response = await api.post("/customer/csv/companies", body, {
-      params: body,
-    });
+    const response = await api.post("/customer/csv/companies", body, {});
     await queryClient.refetchQueries({ queryKey: ["LegalPersonsReports"] });
     return response.data;
   });

@@ -23,7 +23,7 @@ export interface LegalPersonsQuery {
   initial_date?: string;
   final_date?: string;
   fields?: string[];
-  comma_separate_value?: boolean
+  comma_separate_value?: boolean;
 }
 export interface LegalPersonsItem {
   _id?: string;
@@ -39,32 +39,32 @@ export interface LegalPersonsItem {
   legal_nature_description?: string;
   opening_date?: string;
   main_cnae_code?: string;
-  address_street?:string;
+  address_street?: string;
   address_number?: string;
   address_complement?: string;
   address_postal_code?: string;
   address_neighborhood?: string;
   address_city?: string;
-  address_state?:string;
+  address_state?: string;
   address_country?: string;
   jurisdiction_city?: string;
   phone?: string;
   email?: string;
   capital?: number;
-  size?:string;
+  size?: string;
   special_situation?: string;
   special_situation_date?: string;
-  black_list?: boolean;
-  flag_pep?: boolean;
+  black_list?: boolean | string;
+  flag_pep?: boolean | string;
   flag_alert?: number;
   cash_in_max_value?: number;
   cash_out_max_value?: number;
   cash_out_transaction_limit?: number;
-  last_check?:string;
-  createdAt?:string;
+  last_check?: string;
+  createdAt?: string;
   updatedAt?: string;
   black_list_description?: string;
-  black_list_reason?: string;
+  black_list_reason?: string | null;
 }
 
 export interface LegalPersonsResponse {

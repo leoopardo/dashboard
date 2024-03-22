@@ -24,7 +24,7 @@
     "legal_persons": "Pessoas jurídicas",
     "whitelist": "Whitelist",
     "person_accounts": "Bancos de clientes",
-    "person_blacklist": "Blacklist pessoas",
+    "person_blacklist": "Blacklist",
     "porson_reports": "Relatórios",
     "moviment": "Movimentações",
     "moviments": "Lançamentos manuais",
@@ -170,7 +170,7 @@
     "recents": "Recentes",
     "serpro_assertiva": "Totalizador de consultas",
     "physical_persons": "Pessoas físicas",
-    "legal_person_blacklist": "Blacklist pessoas jurídicas",
+    "legal_person_blacklist": "Pessoas jurídicas",
     "legal_person_reports": "Relatórios",
     "legal_persons_reports": "Pessoas jurídicas",
     "upload_persons_cnpj_blacklist": "Importar blacklist Cnpj",
@@ -180,7 +180,8 @@
     "historic_cpf_merchant_reports": "Consultas de CPF por empresa",
     "historic_cnpj_merchant_details": "Detalhes de CNPJ por Merchant",
     "merchant_blacklist_reasons_reports": "Motivos de blacklist",
-    "aggregator_blacklist_reason_reports": "Motivos de blacklist"
+    "aggregator_blacklist_reason_reports": "Motivos de blacklist",
+    "physical_person_blacklist": "Pessoas fisicas"
   },
 
   "titles": {
@@ -923,11 +924,9 @@
     "license_end_validity_date": "Data final de validade da licença",
     "cashin_bank": "Banco de depósitos",
     "cashout_bank": "Banco de saques",
-
     "exchange_spread": "Exchange spread",
     "exchange_iof": "Exchange IOF",
     "exchange_operating_rate": "Exchange operating rate",
-
     "cash_in_permission": "Depósitos habilitado?",
     "cash_out_permission": "Saques habilitado?",
     "cpf_api_permission": "API de consulta de CPF habilitada?",
@@ -1057,7 +1056,15 @@
     "main_cnae_code": "Código CNAE",
     "total_cnpj_checks": "CNPJs consultados",
     "general_use": "Uso geral",
-    "trade_name": "Nome editável"
+    "trade_name": "Nome editável",
+    "business_type": "Tipo de negócio",
+    "registration_status_code": "Código do status de registro",
+    "address_city": "Cidade",
+    "address_state": "Estado",
+    "address_country": "País",
+    "address_street": "Rua",
+    "jurisdiction_city": "Cidade de jurisdição",
+    "phone": "Telefone"
   },
   "actions": {
     "details": "Detalhes",

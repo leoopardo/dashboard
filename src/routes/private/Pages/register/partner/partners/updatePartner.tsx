@@ -391,7 +391,7 @@ export const UpdatePartner = () => {
               </Button>
             </Col>{" "}
             <Col xs={{ span: 24 }} md={{ span: 12 }} lg={{ span: 15 }}>
-              <FilterChips 
+              <FilterChips
                 disabled={["partner_id"]}
                 startDateKeyName="start_date"
                 endDateKeyName="end_date"
@@ -557,6 +557,7 @@ export const UpdatePartner = () => {
         <Row gutter={[8, 8]}>
           <Col span={24}>
             <Upload
+              accept="image/png, image/jpeg, .pdf, .doc"
               style={{ maxHeight: "150px" }}
               listType="picture"
               multiple={false}

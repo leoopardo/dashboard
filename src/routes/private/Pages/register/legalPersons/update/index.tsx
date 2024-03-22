@@ -61,6 +61,7 @@ export const LegalPersonUpdate = () => {
   // const [isViewOpen, setIsViewOpen] = useState<boolean>(false);
   // const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [deleteFileId, setDeleteFileId] = useState<string>("");
+  const reasonsRef = useRef<any>(null);
   const formRef = useRef<FormInstance>(null);
   const formRefBlock = useRef<FormInstance>(null);
   const submitRef1 = useRef<HTMLButtonElement>(null);
@@ -100,12 +101,7 @@ export const LegalPersonUpdate = () => {
   // );
 
   const { UpdateMutate, UpdateError, UpdateIsLoading, UpdateIsSuccess } =
-    useUpdateLegalPerson(
-      {
-        ...body,
-      },
-      cnpj
-    );
+    useUpdateLegalPerson(body, cnpj);
 
   const { Files, isFilesFetching, refetchFiles } = useGetLegalPersonFiles(cnpj);
   const { DeleteFileError, DeleteFileIsSuccess, DeleteFileMutate } =
@@ -277,17 +273,17 @@ export const LegalPersonUpdate = () => {
               >
                 <Input
                   size="large"
-                  name="neighborhood"
+                  name="address_neighborhood"
                   value={body?.address_neighborhood}
                   onChange={onChangeConfigs}
                 />
               </Form.Item>
             </Grid>
             <Grid item xs={12} md={4} lg={3}>
-              <Form.Item label={t("table.street")} name="address_city">
+              <Form.Item label={t("table.street")} name="address_street">
                 <Input
                   size="large"
-                  name="street"
+                  name="address_street"
                   value={body?.address_city}
                   onChange={onChangeConfigs}
                 />
@@ -297,7 +293,7 @@ export const LegalPersonUpdate = () => {
               <Form.Item label={t("table.number")} name="address_number">
                 <Input
                   size="large"
-                  name="number"
+                  name="address_number"
                   value={body?.address_number}
                   onChange={onChangeConfigs}
                 />
@@ -422,11 +418,7 @@ export const LegalPersonUpdate = () => {
             setIsConfirmOpen(false);
           }}
         >
-          <Grid
-            container
-            columnSpacing={1}
-            style={{ display: "flex", alignItems: "flex-end" }}
-          >
+          <Grid container columnSpacing={1}>
             <button
               type="submit"
               ref={submitRefBlock}
@@ -439,14 +431,21 @@ export const LegalPersonUpdate = () => {
                 <Select
                   size="large"
                   options={[
-                    { label: t("table.true"), value: true },
-                    { label: t("table.false"), value: false },
+                    { label: t("table.true"), value: "true" },
+                    { label: t("table.false"), value: "false" },
                   ]}
                   value={body?.black_list}
-                  onChange={(_value, option: any) => {
+                  onChange={(value, option: any) => {
+                    if (value == "false") {
+                      setBody((state) => ({
+                        ...state,
+                        black_list_reason: null,
+                        black_list_description: "",
+                      }));
+                    }
                     setBody((state) => ({
                       ...state,
-                      black_list: option.value,
+                      black_list: `${option.value}`,
                     }));
                   }}
                 />
@@ -455,10 +454,10 @@ export const LegalPersonUpdate = () => {
             <Grid item xs={12} md={4} lg={2}>
               <Form.Item
                 label={t("table.black_list_reason")}
-                name="black_list_reason"
+                name={"black_list_reason"}
                 rules={[
                   {
-                    required: body?.black_list,
+                    required: body?.black_list === "true",
                     validator: (_, value) => {
                       if (
                         body?.black_list &&
@@ -477,12 +476,21 @@ export const LegalPersonUpdate = () => {
                   },
                 ]}
               >
-                <AutoComplete
+                <Select
+                  ref={reasonsRef}
                   size="large"
+                  allowClear
+                  showSearch
                   options={BlacklistReasons?.items.map((reason) => {
                     return { label: reason.reason, value: reason.reason };
                   })}
-                  value={body?.black_list_reason}
+                  disabled={
+                    body?.black_list === "false" ||
+                    !body?.black_list ||
+                    (LegalPersonsByCnpjData?.black_list_reason === "false" &&
+                      !body?.black_list)
+                  }
+                  value={body?.black_list_reason ?? undefined}
                   filterOption={(inputValue, option) =>
                     option?.value
                       .toUpperCase()
@@ -503,14 +511,17 @@ export const LegalPersonUpdate = () => {
               </Form.Item>
             </Grid>
             <Grid item xs={12} md={4} lg={3}>
-              <Form.Item
-                label={t("table.black_list_description")}
-                name="black_list_description"
-              >
+              <Form.Item label={t("table.black_list_description")}>
                 <Input
+                  disabled={
+                    body?.black_list === "false" ||
+                    !body?.black_list ||
+                    (LegalPersonsByCnpjData?.black_list_reason === "false" &&
+                      !body?.black_list)
+                  }
                   size="large"
                   name="black_list_description"
-                  value={body?.black_list_description}
+                  value={body?.black_list_description ?? undefined}
                   onChange={onChangeConfigs}
                 />
               </Form.Item>
@@ -520,8 +531,8 @@ export const LegalPersonUpdate = () => {
                 <Select
                   size="large"
                   options={[
-                    { label: t("table.true"), value: true },
-                    { label: t("table.false"), value: false },
+                    { label: t("table.true"), value: "true" },
+                    { label: t("table.false"), value: "false" },
                   ]}
                   value={body?.flag_pep}
                   onChange={(_value, option: any) => {
@@ -636,55 +647,6 @@ export const LegalPersonUpdate = () => {
                 />
               </Form.Item>
             </Grid>
-            <Grid item xs={12} md={4} lg={3}>
-              <Form.Item
-                label={t("table.cash_out_max_value_per_day")}
-                name="cash_out_max_value"
-              >
-                <CurrencyInput
-                  data-test-id="cash_out_max_value"
-                  onChangeValue={(_event, originalValue) => {
-                    setBody((state) => ({
-                      ...state,
-                      cash_out_max_value: +originalValue,
-                    }));
-                  }}
-                  InputElement={
-                    <Input
-                      size="large"
-                      style={{ width: "100%" }}
-                      value={body?.cash_out_max_value}
-                    />
-                  }
-                />
-              </Form.Item>
-            </Grid>
-
-            <Grid item xs={12} md={4} lg={2}>
-              <Form.Item
-                label={t("table.cash_out_transaction_limit_per_day")}
-                name="cash_out_transaction_limit"
-              >
-                <Select
-                  size="large"
-                  options={[
-                    { label: t("input.unlimited")?.slice(0, -1), value: 0 },
-                    { label: 1, value: 1 },
-                    { label: 2, value: 2 },
-                    { label: 3, value: 3 },
-                    { label: 4, value: 4 },
-                    { label: 5, value: 5 },
-                  ]}
-                  value={body?.cash_out_transaction_limit}
-                  onChange={(_value, option: any) => {
-                    setBody((state) => ({
-                      ...state,
-                      cash_out_transaction_limit: option.value,
-                    }));
-                  }}
-                />
-              </Form.Item>
-            </Grid>
           </Grid>
           <Grid
             container
@@ -746,6 +708,7 @@ export const LegalPersonUpdate = () => {
           <Grid xs={12} item>
             <Upload
               listType="picture"
+              accept="image/png, image/jpeg, .pdf, .doc"
               multiple={false}
               onRemove={(file) => {
                 setDeleteFileId(file?.uid);

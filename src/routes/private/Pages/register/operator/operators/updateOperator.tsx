@@ -52,7 +52,8 @@ import {
   Switch,
   Tabs,
   TabsProps,
-  Typography,Upload
+  Typography,
+  Upload,
 } from "antd";
 import { FormInstance } from "antd/lib/form/Form";
 import { useEffect, useRef, useState } from "react";
@@ -427,7 +428,7 @@ export const UpdateOperator = () => {
               </Button>
             </Col>{" "}
             <Col xs={{ span: 24 }} md={{ span: 12 }} lg={{ span: 15 }}>
-              <FilterChips 
+              <FilterChips
                 disabled={["operator_id"]}
                 startDateKeyName="start_date"
                 endDateKeyName="end_date"
@@ -593,10 +594,12 @@ export const UpdateOperator = () => {
         <Row gutter={[8, 8]}>
           <Col span={24}>
             <Upload
+              accept="image/png, image/jpeg, .pdf, .doc"
               style={{ maxHeight: "150px" }}
               listType="picture"
               disabled={
-                !permissions?.register?.operator?.operator?.operator_files_create
+                !permissions?.register?.operator?.operator
+                  ?.operator_files_create
               }
               multiple={false}
               onRemove={(file) => {

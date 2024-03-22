@@ -561,7 +561,9 @@ export const PersonUpdate = () => {
                   },
                 ]}
               >
-                <AutoComplete
+                <Select
+                  allowClear
+                  showSearch
                   size="large"
                   options={BlacklistReasons?.items.map((reason) => {
                     return { label: reason.reason, value: reason.reason };
@@ -589,7 +591,6 @@ export const PersonUpdate = () => {
             <Grid item xs={12} md={4} lg={3}>
               <Form.Item
                 label={t("table.black_list_description")}
-                name="black_list_description"
               >
                 <Input
                   size="large"
