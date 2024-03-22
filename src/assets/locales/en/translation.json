@@ -173,6 +173,8 @@
     "historic_cnpj_merchant_reports": "CNPJ consults by merchant",
     "historic_cpf_merchant_reports": "CPF consults by merchant",
     "historic_cnpj_merchant_details": "CNPJ consults by merchant details",
+    "merchant_blacklist_reasons_reports": "Blacklist reasons",
+    "aggregator_blacklist_reason_reports": "Blacklist reasons",
     "physical_person_blacklist": "Physical persons"
   },
 

@@ -21,6 +21,8 @@ import {
 } from "@src/services/types/register/merchants/merchantBlacklistReasons.interface";
 import { queryClient } from "@src/services/queryClient";
 import { ValidateInterface } from "@src/services/types/validate.interface";
+import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
+import { useCreateMerchantBlacklistReasonsReports } from "@src/services/register/merchant/blacklist/exportCsvMerchantBlacklistReason";
 
 const INITIAL_QUERY: MerchantBlacklistReasonQuery = {
   limit: 25,
@@ -29,7 +31,9 @@ const INITIAL_QUERY: MerchantBlacklistReasonQuery = {
 
 export const MerchantBlacklistReasons = () => {
   const { t } = useTranslation();
-  const { type } = queryClient.getQueryData("validate") as ValidateInterface;
+  const { type, permissions } = queryClient.getQueryData(
+    "validate"
+  ) as ValidateInterface;
   const [query, setQuery] =
     useState<MerchantBlacklistReasonQuery>(INITIAL_QUERY);
   const {
@@ -38,6 +42,13 @@ export const MerchantBlacklistReasons = () => {
     merchantBlacklistDataError,
     refetchMerchantBlacklistData,
   } = useGetRowsMerchantBlacklistReasons(query);
+
+  const {
+    MerchantBlacklistReasonsReportsError,
+    MerchantBlacklistReasonsReportsIsLoading,
+    MerchantBlacklistReasonsReportsMutate,
+    MerchantBlacklistReasonsReportsIsSuccess,
+  } = useCreateMerchantBlacklistReasonsReports(query);
 
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
@@ -128,7 +139,7 @@ export const MerchantBlacklistReasons = () => {
             {t("table.filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={4} lg={6}>
+        <Grid item xs={12} md={3} lg={4}>
           <FilterChips
             initial_query={INITIAL_QUERY}
             startDateKeyName="initial_date"
@@ -137,7 +148,7 @@ export const MerchantBlacklistReasons = () => {
             setQuery={setQuery}
           />
         </Grid>
-        <Grid item xs={12} md={3} lg={2}>
+        <Grid item xs={12} md={2} lg={2}>
           <Button
             type="dashed"
             loading={isMerchantBlacklistDataFetching}
@@ -177,6 +188,20 @@ export const MerchantBlacklistReasons = () => {
             {t("buttons.new_reason")}
           </Button>
         </Grid>
+
+        {permissions.register.merchant.black_list_reason
+          .merchant_blacklist_reason_export_csv && (
+          <Grid item xs={12} md="auto">
+            <ExportReportsModal
+              disabled={!merchantBlacklistData?.total || !!MerchantBlacklistReasonsReportsError}
+              mutateReport={() => MerchantBlacklistReasonsReportsMutate()}
+              error={MerchantBlacklistReasonsReportsError}
+              success={MerchantBlacklistReasonsReportsIsSuccess}
+              loading={MerchantBlacklistReasonsReportsIsLoading}
+              reportPath="/register/merchant/merchant_reports/merchant_blacklist_reasons_reports"
+            />
+          </Grid>
+        )}
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
