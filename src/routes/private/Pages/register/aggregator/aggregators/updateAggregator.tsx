@@ -51,7 +51,7 @@ import {
   Tabs,
   TabsProps,
   Typography,
-  Upload
+  Upload,
 } from "antd";
 import { FormInstance } from "antd/lib/form/Form";
 import { useEffect, useRef, useState } from "react";
@@ -390,7 +390,8 @@ export const UpdateAggregator = () => {
         </Form>
       ),
     },
-    permissions?.register?.aggregator?.aggregator?.aggregator_responsible_list && {
+    permissions?.register?.aggregator?.aggregator
+      ?.aggregator_responsible_list && {
       key: "2",
       label: t("table.responsibles"),
       children: (
@@ -575,6 +576,7 @@ export const UpdateAggregator = () => {
         <Row gutter={[8, 8]}>
           <Col span={24}>
             <Upload
+              accept="image/png, image/jpeg, .pdf, .doc"
               disabled={
                 !permissions?.register?.aggregator?.aggregator
                   ?.aggregator_files_create

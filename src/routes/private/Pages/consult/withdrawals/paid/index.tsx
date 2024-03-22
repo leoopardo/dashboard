@@ -93,6 +93,7 @@ export const PaidWithdrawals = () => {
     PaidWithdrawalsReportsIsLoading,
     PaidWithdrawalsReportsIsSuccess,
     PaidWithdrawalsReportsMutate,
+    PaidWithdrawalsReportsData,
   } = useCreatePaidWithdrawalsReports({
     ...query,
     fields: { ...csvFields },
@@ -209,7 +210,8 @@ export const PaidWithdrawals = () => {
           </Button>
         </Col>
         <Col xs={{ span: 24 }} md={{ span: 20 }}>
-          <FilterChips initial_query={INITIAL_QUERY}
+          <FilterChips
+            initial_query={INITIAL_QUERY}
             startDateKeyName="initial_date"
             endDateKeyName="final_date"
             query={query}
@@ -522,6 +524,7 @@ export const PaidWithdrawals = () => {
         comma={isComma}
         setIsComma={setIsComma}
         reportName="PaidWithdrawalsReportsFields"
+        url={PaidWithdrawalsReportsData?.url}
       />
 
       <ViewModal

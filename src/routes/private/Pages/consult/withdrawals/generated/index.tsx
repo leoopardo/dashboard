@@ -93,6 +93,7 @@ export const GeneratedWithdrawals = () => {
     GeneratedWithdrawalsReportsIsLoading,
     GeneratedWithdrawalsReportsIsSuccess,
     GeneratedWithdrawalsReportsMutate,
+    GeneratedWithdrawalsReportsData,
   } = useCreateGeneratedWithdrawalsReports({
     ...query,
     fields: { ...csvFields },
@@ -154,7 +155,7 @@ export const GeneratedWithdrawals = () => {
           query={query}
         />
       )}
-      
+
       {permissions?.report?.deposit?.generated_deposit
         ?.report_deposit_generated_deposit_list_totals &&
         !isWithdrawalsTotalFetching &&
@@ -209,7 +210,8 @@ export const GeneratedWithdrawals = () => {
           </Button>
         </Col>
         <Col xs={{ span: 24 }} md={{ span: 20 }}>
-          <FilterChips initial_query={INITIAL_QUERY}
+          <FilterChips
+            initial_query={INITIAL_QUERY}
             startDateKeyName="initial_date"
             endDateKeyName="final_date"
             query={query}
@@ -511,6 +513,7 @@ export const GeneratedWithdrawals = () => {
         comma={isComma}
         setIsComma={setIsComma}
         reportName="withdrawalsReportsFields"
+        url={GeneratedWithdrawalsReportsData?.url}
       />
 
       <ViewModal

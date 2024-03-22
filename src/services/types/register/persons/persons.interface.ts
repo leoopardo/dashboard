@@ -49,7 +49,7 @@ export interface PersonsItem {
   last_check?: string;
   createdAt?: string;
   updatedAt?: string;
-  black_list_reason?: string;
+  black_list_reason?: string | null;
   black_list_description?: string;
   __v?: number;
 }

@@ -8,26 +8,26 @@ import { useGetRowsPaidDeposits } from "@src/services/consult/deposits/paidDepos
 import { useGetTotalPaidDeposits } from "@src/services/consult/deposits/paidDeposits/getTotal";
 import { useGetRowsGeneratedWithdrawals } from "@src/services/consult/withdrawals/generatedWithdrawals/getRows";
 import { useGetTotalGeneratedWithdrawals } from "@src/services/consult/withdrawals/generatedWithdrawals/getTotal";
-import { useGetFiles } from "@src/services/register/persons/persons/files/getFiles";
+import { useGetLegalPersonFiles } from "@src/services/register/legalPersons/files/getFiles";
+import { useGetLegalPersonsByCnpj } from "@src/services/register/legalPersons/getPersonsByCnpj";
 import { useGetPersons } from "@src/services/register/persons/persons/getPersons";
 import { paidDepositTotalQuery } from "@src/services/types/consult/deposits/PaidDeposits.interface";
 import { generatedDepositTotalQuery } from "@src/services/types/consult/deposits/generatedDeposits.interface";
 import { generatedWithdrawalsRowsQuery } from "@src/services/types/consult/withdrawals/generatedWithdrawals.interface";
 import { PersonsQuery } from "@src/services/types/register/persons/persons.interface";
+import { moneyFormatter } from "@src/utils/moneyFormatter";
 import { Descriptions, Empty, Spin, Tabs, TabsProps, Upload } from "antd";
-import { useEffect, useState } from "react";
+import moment from "moment";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useMediaQuery } from "react-responsive";
 import { useLocation, useParams } from "react-router-dom";
 import { TotalizersCards as DepositsCards } from "../../../consult/deposits/generated/components/TotalizersCards";
 import { TotalizersCards } from "../../../consult/withdrawals/generated/components/TotalizersCards";
-import { moneyFormatter } from "@src/utils/moneyFormatter";
 
 export const LegalPersonDetails = () => {
   const { t } = useTranslation();
   const currentData = useLocation()?.state;
-  const isMobile = useMediaQuery({ maxWidth: "750px" });
-  const { cpf } = useParams();
+  const { cnpj } = useParams();
   const query: PersonsQuery = {
     limit: 25,
     page: 1,
@@ -35,36 +35,9 @@ export const LegalPersonDetails = () => {
     sort_order: "DESC",
     cpf: currentData?.cpf,
   };
-  const [personData, setPersonData] = useState({
-    _id: currentData?._id,
-    cpf: currentData?.cpf,
-    state: currentData?.state,
-    name: currentData?.name,
-    city: currentData?.city,
-    mother_name: currentData?.mother_name,
-    neighborhood: currentData?.neighborhood,
-    birth_date: currentData?.birth_date,
-    createdAt: currentData?.createdAt,
-    gender: currentData?.gender,
-    updatedAt: currentData?.updatedAt,
-    situation_text: currentData?.situation_text,
-    email: currentData?.email,
-    last_check: currentData?.last_check,
-    cellphone: currentData?.cellphone,
-  });
-  const [blacklistData, setBlacklistData] = useState({
-    black_list: currentData?.black_list,
-    black_list_reason: currentData?.black_list_reason,
-    black_list_description: currentData?.black_list_description,
-    flag_pep: currentData?.flag_pep,
-    flag_aux_gov: currentData?.flag_aux_gov,
-    flag_alert: currentData?.flag_alert,
-  });
-  const [LimitsData, setLimitsData] = useState({
-    cash_in_max_value: currentData?.cash_in_max_value,
-    cash_out_max_value: currentData?.cash_out_max_value,
-    cash_out_transaction_limit: currentData?.cash_out_transaction_limit,
-  });
+  const { LegalPersonsByCnpjData, isLegalPersonsByCnpjDataFetching } =
+    useGetLegalPersonsByCnpj(cnpj);
+
   const { isPersonsDataFetching } = useGetPersons(query);
 
   ///// generated deposits ------------------
@@ -75,9 +48,8 @@ export const LegalPersonDetails = () => {
       sort_field: "created_at",
       limit: 25,
       page: 1,
-      buyer_document: cpf?.split(" ").join("").split("-").join(""),
+      buyer_document: cnpj?.split(" ").join("").split("-").join(""),
     });
-
   const { depositsTotal, isDepositsTotalFetching, refetchDepositsTotal } =
     useGetTotalGeneratedDeposits(gDepositQuery);
 
@@ -91,7 +63,7 @@ export const LegalPersonDetails = () => {
     sort_field: "created_at",
     limit: 25,
     page: 1,
-    payer_document: cpf?.split(" ").join("").split("-").join(""),
+    payer_document: cnpj?.split(" ").join("").split("-").join(""),
   });
 
   const { paidTotal, isPaidTotalFetching, refetchPaidTotal } =
@@ -99,7 +71,6 @@ export const LegalPersonDetails = () => {
 
   const { paidRows, paidRowsError, isPaidRowsFetching } =
     useGetRowsPaidDeposits(pDepositQuery);
-
 
   ////////// withdrawals --------------------
 
@@ -109,7 +80,7 @@ export const LegalPersonDetails = () => {
       sort_field: "created_at",
       limit: 25,
       page: 1,
-      receiver_document: cpf?.split(" ").join("").split("-").join(""),
+      receiver_document: cnpj?.split(" ").join("").split("-").join(""),
     });
   const {
     WithdrawalsTotal,
@@ -122,49 +93,13 @@ export const LegalPersonDetails = () => {
 
   ///// attachments -------------------------
 
-  const { Files, isFilesFetching } = useGetFiles(cpf?.split(" ").join("."));
-
-  useEffect(() => {
-    if (!isPersonsDataFetching && currentData) {
-      setPersonData({
-        _id: currentData?._id,
-        cpf: currentData?.cpf,
-        state: currentData?.state,
-        name: currentData?.name,
-        city: currentData?.city,
-        mother_name: currentData?.mother_name,
-        neighborhood: currentData?.neighborhood,
-        birth_date: currentData?.birth_date,
-        createdAt: currentData?.createdAt,
-        gender: currentData?.gender,
-        updatedAt: currentData?.updatedAt,
-        situation_text: currentData?.situation_text,
-        email: currentData?.email,
-        last_check: currentData?.last_check,
-        cellphone: currentData?.cellphone,
-      });
-
-      setBlacklistData({
-        black_list: currentData?.black_list,
-        black_list_reason: currentData?.black_list_reason,
-        black_list_description: currentData?.black_list_description,
-        flag_pep: currentData?.flag_pep,
-        flag_aux_gov: currentData?.flag_aux_gov,
-        flag_alert: currentData?.flag_alert,
-      });
-      setLimitsData({
-        cash_in_max_value: currentData?.cash_in_max_value,
-        cash_out_max_value: currentData?.cash_out_max_value,
-        cash_out_transaction_limit: currentData?.cash_out_transaction_limit,
-      });
-    }
-  }, [currentData]);
+  const { Files, isFilesFetching } = useGetLegalPersonFiles(cnpj);
 
   const items: TabsProps["items"] = [
     {
       key: "1",
       label: t("table.general_data"),
-      children: isPersonsDataFetching ? (
+      children: isLegalPersonsByCnpjDataFetching ? (
         <div
           style={{
             height: "70vh",
@@ -178,96 +113,209 @@ export const LegalPersonDetails = () => {
         </div>
       ) : (
         <Grid container spacing={1} display="flex" justifyContent="center">
-          <Grid item md={10} xs={12}>
-            <Descriptions
-              bordered
-              style={{ margin: 0, padding: 0 }}
-              column={isMobile ? 1 : 2}
-            >
-              {!isPersonsDataFetching &&
-                Object.keys(personData).map((key, index) => {
-                  switch (key) {
-                    case "birth_date":
-                      return (
-                        <Descriptions.Item
-                          key={key}
-                          label={t(`table.${key}`)}
-                          labelStyle={{
-                            maxWidth: "120px !important",
-                            margin: 0,
-                            padding: 0,
-                            textAlign: "center",
-                          }}
-                        >
-                          {currentData[key]
-                            ? `${new Date(
-                                currentData[key] ?? ""
-                              ).toLocaleDateString("pt-BR", {
-                                timeZone: "UTC",
-                              })}`
-                            : "-"}
-                        </Descriptions.Item>
-                      );
+          <Grid item md={12} xs={12}>
+            <Descriptions bordered style={{ margin: 0, padding: 0 }}>
+              <Descriptions.Item
+                key={"business_name"}
+                label={t(`table.business_name`)}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {LegalPersonsByCnpjData?.business_name}
+              </Descriptions.Item>
 
-                    case "createdAt":
-                    case "last_check":
-                    case "updatedAt":
-                      return (
-                        <Descriptions.Item
-                          key={key}
-                          label={t(`table.${key}`)}
-                          labelStyle={{
-                            maxWidth: "120px !important",
-                            margin: 0,
-                            padding: 0,
-                            textAlign: "center",
-                          }}
-                        >
-                          {`${new Date(
-                            currentData[key] ?? ""
-                          ).toLocaleDateString()} ${new Date(
-                            currentData[key] ?? ""
-                          ).toLocaleTimeString()}`}
-                        </Descriptions.Item>
-                      );
-
-                    case "flag_pep":
-                    case "flag_aux_gov":
-                    case "black_list":
-                      return (
-                        <Descriptions.Item
-                          key={key}
-                          label={t(`table.${key}`)}
-                          labelStyle={{
-                            maxWidth: "120px !important",
-                            margin: 0,
-                            padding: 0,
-                            textAlign: "center",
-                          }}
-                        >
-                          {currentData[key]
-                            ? t("table.true")
-                            : t("table.false")}
-                        </Descriptions.Item>
-                      );
-
-                    default:
-                      return (
-                        <Descriptions.Item
-                          key={index}
-                          label={t(`table.${key}`)}
-                          labelStyle={{
-                            maxWidth: "120px !important",
-                            margin: 0,
-                            padding: 0,
-                            textAlign: "center",
-                          }}
-                        >
-                          {(currentData as any)[key] ?? "-"}
-                        </Descriptions.Item>
-                      );
-                  }
-                })}
+              <Descriptions.Item
+                key={"email"}
+                label={t(`table.email`)}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {LegalPersonsByCnpjData?.email}
+              </Descriptions.Item>
+              <Descriptions.Item
+                key={"country"}
+                label={t(`table.country`)}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {LegalPersonsByCnpjData?.address_country}
+              </Descriptions.Item>
+              <Descriptions.Item
+                key={"trade_name"}
+                label={t(`table.trade_name`)}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {LegalPersonsByCnpjData?.trade_name}
+              </Descriptions.Item>
+              <Descriptions.Item
+                key={"cnpj"}
+                label={t(`table.cnpj`)}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {LegalPersonsByCnpjData?.cnpj}
+              </Descriptions.Item>
+              <Descriptions.Item
+                key={"state"}
+                label={t(`table.state`)}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {LegalPersonsByCnpjData?.address_state}
+              </Descriptions.Item>
+              <Descriptions.Item
+                key={"legal_nature_description"}
+                label={t(`table.legal_nature_description`)}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {LegalPersonsByCnpjData?.legal_nature_description}
+              </Descriptions.Item>
+              <Descriptions.Item
+                key={"cellphone"}
+                label={t(`table.cellphone`)}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {LegalPersonsByCnpjData?.phone}
+              </Descriptions.Item>
+              <Descriptions.Item
+                key={"zip_code"}
+                label={t(`table.zip_code`)}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {LegalPersonsByCnpjData?.address_postal_code}
+              </Descriptions.Item>
+              <Descriptions.Item
+                key={"registration_status_description"}
+                label={t(`table.registration_status_description`)}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {t(
+                  `table.${LegalPersonsByCnpjData?.registration_status_description?.toLowerCase()}`
+                )}
+              </Descriptions.Item>
+              <Descriptions.Item
+                key={"registration_status_date"}
+                label={t(`table.registration_status_date`)}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {LegalPersonsByCnpjData?.registration_status_date
+                  ? moment(
+                      new Date(LegalPersonsByCnpjData?.registration_status_date)
+                    )
+                      .utc()
+                      .format(
+                        navigator.language === "pt-BR"
+                          ? "DD/MM/YYYY HH:mm"
+                          : "YYYY/MM/DD HH:mm"
+                      )
+                  : "-"}
+              </Descriptions.Item>
+              <Descriptions.Item
+                key={"neighborhood"}
+                label={t(`table.neighborhood`)}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {LegalPersonsByCnpjData?.address_neighborhood}
+              </Descriptions.Item>
+              <Descriptions.Item
+                key={"registration_status_reason"}
+                label={t(`table.registration_status_reason`)}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {LegalPersonsByCnpjData?.registration_status_reason ?? "-"}
+              </Descriptions.Item>
+              <Descriptions.Item
+                key={"last_check"}
+                label={t(`table.last_check`)}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {LegalPersonsByCnpjData?.last_check
+                  ? moment(new Date(LegalPersonsByCnpjData?.last_check))
+                      .utc()
+                      .format(
+                        navigator.language === "pt-BR"
+                          ? "DD/MM/YYYY HH:mm"
+                          : "YYYY/MM/DD HH:mm"
+                      )
+                  : "-"}
+              </Descriptions.Item>
+              <Descriptions.Item
+                key={"street"}
+                label={t(`table.street`)}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {LegalPersonsByCnpjData?.address_street}
+              </Descriptions.Item>
             </Descriptions>
           </Grid>
         </Grid>
@@ -290,48 +338,76 @@ export const LegalPersonDetails = () => {
         </div>
       ) : (
         <Grid container spacing={1} display="flex" justifyContent="center">
-          <Grid item md={8} xs={12}>
-            <Descriptions bordered style={{ margin: 0, padding: 0 }} column={1}>
-              {!isPersonsDataFetching &&
-                Object.keys(blacklistData).map((key, index) => {
-                  switch (key) {
-                    case "flag_pep":
-                    case "flag_aux_gov":
-                    case "black_list":
-                      return (
-                        <Descriptions.Item
-                          key={key}
-                          label={t(`table.${key}`)}
-                          labelStyle={{
-                            maxWidth: "120px !important",
-                            margin: 0,
-                            padding: 0,
-                            textAlign: "center",
-                          }}
-                        >
-                          {currentData[key]
-                            ? t("table.true")
-                            : t("table.false")}
-                        </Descriptions.Item>
-                      );
-
-                    default:
-                      return (
-                        <Descriptions.Item
-                          key={index}
-                          label={t(`table.${key}`)}
-                          labelStyle={{
-                            maxWidth: "120px !important",
-                            margin: 0,
-                            padding: 0,
-                            textAlign: "center",
-                          }}
-                        >
-                          {(currentData as any)[key] ?? "-"}
-                        </Descriptions.Item>
-                      );
-                  }
-                })}
+          <Grid item md={12} xs={12}>
+            <Descriptions bordered style={{ margin: 0, padding: 0 }}>
+              <Descriptions.Item
+                key={"black_list"}
+                label={t(`table.black_list`)}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {LegalPersonsByCnpjData?.black_list
+                  ? t("table.true")
+                  : t("table.false")}
+              </Descriptions.Item>
+              {LegalPersonsByCnpjData?.black_list_description && (
+                <Descriptions.Item
+                  key={"description"}
+                  label={t(`table.description`)}
+                  labelStyle={{
+                    maxWidth: "120px !important",
+                    margin: 0,
+                    padding: 0,
+                    textAlign: "center",
+                  }}
+                >
+                  {LegalPersonsByCnpjData?.black_list_description}
+                </Descriptions.Item>
+              )}
+              {LegalPersonsByCnpjData?.black_list_reason && (
+                <Descriptions.Item
+                  key={"reason"}
+                  label={t(`table.reason`)}
+                  labelStyle={{
+                    maxWidth: "120px !important",
+                    margin: 0,
+                    padding: 0,
+                    textAlign: "center",
+                  }}
+                >
+                  {LegalPersonsByCnpjData?.black_list_reason}
+                </Descriptions.Item>
+              )}
+              {/* <Descriptions.Item
+                key={"flag_pep"}
+                label={t(`table.flag_pep`)}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {LegalPersonsByCnpjData?.flag_pep
+                  ? t("table.true")
+                  : t("table.false")}
+              </Descriptions.Item> */}
+              <Descriptions.Item
+                key={"flag_alert"}
+                label={t(`table.flag_alert`)}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {LegalPersonsByCnpjData?.flag_alert}
+              </Descriptions.Item>
             </Descriptions>
           </Grid>
         </Grid>
@@ -354,48 +430,20 @@ export const LegalPersonDetails = () => {
         </div>
       ) : (
         <Grid container spacing={1} display="flex" justifyContent="center">
-          <Grid item md={8} xs={12}>
-            <Descriptions bordered style={{ margin: 0, padding: 0 }} column={1}>
-              {!isPersonsDataFetching &&
-                Object.keys(LimitsData).map((key, index) => {
-                  switch (key) {
-                    case "cash_out_transaction_limit":
-                      return (
-                        <Descriptions.Item
-                          key={index}
-                          label={t(`table.${key}`)}
-                          labelStyle={{
-                            maxWidth: "120px !important",
-                            margin: 0,
-                            padding: 0,
-                            textAlign: "center",
-                          }}
-                        >
-                          {(currentData as any)[key]
-                            ? (currentData as any)[key]
-                            : "-"}
-                        </Descriptions.Item>
-                      );
-
-                    default:
-                      return (
-                        <Descriptions.Item
-                          key={index}
-                          label={t(`table.${key}`)}
-                          labelStyle={{
-                            maxWidth: "120px !important",
-                            margin: 0,
-                            padding: 0,
-                            textAlign: "center",
-                          }}
-                        >
-                          {(currentData as any)[key]
-                            ? moneyFormatter((currentData as any)[key])
-                            : "-"}
-                        </Descriptions.Item>
-                      );
-                  }
-                })}
+          <Grid item md={12} xs={12}>
+            <Descriptions bordered style={{ margin: 0, padding: 0 }}>
+              <Descriptions.Item
+                key={"cash_in_max_value"}
+                label={t(`table.cash_in_max_value`)}
+                labelStyle={{
+                  maxWidth: "120px !important",
+                  margin: 0,
+                  padding: 0,
+                  textAlign: "center",
+                }}
+              >
+                {moneyFormatter(LegalPersonsByCnpjData?.cash_in_max_value || 0)}
+              </Descriptions.Item>
             </Descriptions>
           </Grid>
         </Grid>

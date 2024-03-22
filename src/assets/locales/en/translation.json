@@ -23,7 +23,7 @@
     "persons": "Physical persons",
     "whitelist": "Whitelist",
     "person_accounts": "Customer banks",
-    "person_blacklist": "Persons blacklist",
+    "person_blacklist": "Blacklist",
     "porson_reports": "Relatórios pessoas",
     "moviment": "Bank transactions",
     "moviments": "Manual transactions",
@@ -62,7 +62,7 @@
     "refund_deposits_reports": "Withdrawals refunds",
     "refund_withdrawals_reports": "Withdrawals refunds",
     "consult_persons": "Persons",
-    "check_cpf": "Check document",
+    "check_document": "Check document",
     "api_logs": "API logs",
     "bank_institutions": "Bank institutions",
     "third_parties_pix_key": "Third parties pix keys",
@@ -156,8 +156,8 @@
     "receipts": "Receipts",
     "organization_settings": "Organization settings",
     "merchant_settings": "Merchant settings",
-    "historic_cpf_merchant": "CPF historic by merchant",
-    "historic_cpf_merchant_details": "CPF historic by merchant details",
+    "historic_cpf_merchant": "Document consults by merchant",
+    "historic_cpf_merchant_details": "Docyment consults by merchant details",
     "licenses": "Licenses",
     "custom_webhook": "Custom webhooks",
     "current_accounts": "Current accounts",
@@ -168,7 +168,14 @@
     "aggregator_blacklist_reason_reports": "Blacklist reasons",
     "legal_person_blacklist": "Blacklist legal person",
     "legal_person_reports": "Reports",
-    "legal_persons_reports": "Legal persons"
+    "legal_persons_reports": "Legal persons",
+    "upload_persons_cnpj_blacklist": "Import blacklist Cnpj",
+    "legal_person_blacklist_uploads": "Check uploads Cnpj",
+    "persons_cnpj_blacklist_uploads": "Check uploads Cnpj",
+    "historic_cnpj_merchant_reports": "CNPJ consults by merchant",
+    "historic_cpf_merchant_reports": "CPF consults by merchant",
+    "historic_cnpj_merchant_details": "CNPJ consults by merchant details",
+    "physical_person_blacklist": "Physical persons"
   },
 
   "titles": {
@@ -280,7 +287,9 @@
     "delivered_on_time": "Delivered on time",
     "delivered_late": "Delivered late",
     "not_delivered_on_time": "Not delivered on time",
-    "not_delivered_late": "Not delivered late"
+    "not_delivered_late": "Not delivered late",
+    "csv_generated": "CSV generated",
+    "generated_csv_message": "The CSV file has been generated. You can download on the button below."
   },
   "login": {
     "sign_in": "Sign in",
@@ -460,7 +469,8 @@
     "deposit_webhook_data": "Deposit webhook data",
     "withdraw_webhook_data": "Withdraw webhook data",
     "withdraw_standard_webhook": "Withdraw standard webhook",
-    "aggregator_id": "Aggregator"
+    "aggregator_id": "Aggregator",
+    "accept_annonymous_cash_in": "Accept anonymous deposits"
   },
 
   "modal": {
@@ -796,7 +806,7 @@
     "refund_id": "Refund ID",
     "refund_date": "Refund date",
     "blacklist_data": "Locks data",
-    "limits_data": "limits data",
+    "limits_data": "Limits data",
     "merchant_origin": "Merchant from",
     "merchant_destination": "Merchant to",
     "debit_balance_type": "Origin balance type",
@@ -1027,16 +1037,28 @@
     "document_type": "Document type",
     "general_use": "General use",
     "legal_nature_description": "Legal nature",
-    "business_name": "Razão social",
+    "business_name": "Business name",
     "registration_status_description": "Registration status",
     "cnpj/active": "CNPJ active",
     "cnpj/not found": "CNPJ not found",
     "cnpj/suspended": "CNPJ suspended",
     "cnpj/canceled": "CNPJ canceled",
     "cnpj/inactive": "CNPJ inactive",
+    "cnpj/null": "CNPJ null",
+    "cnpj/unfit": "CNPJ unfit",
     "registration_status_date": "Registration status date",
     "registration_status_reason": "Registration status reason",
-    "main_cnae_code": "CNAE code"
+    "main_cnae_code": "CNAE code",
+    "total_cnpj_checks": "CNPJ's checks",
+    "trade_name": "Editable name",
+    "business_type": "Businees type",
+    "registration_status_code": "Registration status code",
+    "address_city": "City",
+    "address_state": "State",
+    "address_country": "Country",
+    "address_street": "Street",
+    "jurisdiction_city": "Jurisdiction city",
+    "phone": "Cellphone"
   },
   "actions": {
     "details": "Details",

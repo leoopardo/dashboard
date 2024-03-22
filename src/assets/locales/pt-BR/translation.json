@@ -24,7 +24,7 @@
     "legal_persons": "Pessoas jurídicas",
     "whitelist": "Whitelist",
     "person_accounts": "Bancos de clientes",
-    "person_blacklist": "Blacklist pessoas",
+    "person_blacklist": "Blacklist",
     "porson_reports": "Relatórios",
     "moviment": "Movimentações",
     "moviments": "Lançamentos manuais",
@@ -64,7 +64,7 @@
     "refund_deposits_reports": "Devolução de depósitos",
     "refund_withdrawals_reports": "Devolução de saques",
     "consult_persons": "Pessoas",
-    "check_cpf": "Checar documento",
+    "check_document": "Checar documento",
     "api_logs": "Logs de API",
     "bank_institutions": "Instituições bancárias",
     "third_parties_pix_key": "Chaves pix de terceiros",
@@ -158,7 +158,7 @@
     "receipts": "Comprovantes",
     "organization_settings": "Organização Configurações",
     "merchant_settings": "Empresa Configurações",
-    "historic_cpf_merchant": "Histórico de CPF por Merchant",
+    "historic_cpf_merchant": "Consultas de documento por empresa",
     "historic_cpf_merchant_details": "Detalhes de CPF por Merchant",
     "settings": "Configurações",
     "permissions_groups": "Grupos de permissões",
@@ -172,9 +172,16 @@
     "merchant_blacklist_reasons_reports": "Motivos de blacklist",
     "aggregator_blacklist_reason_reports": "Motivos de blacklist",
     "physical_persons": "Pessoas físicas",
-    "legal_person_blacklist": "Blacklist pessoas jurídicas",
+    "legal_person_blacklist": "Pessoas jurídicas",
     "legal_person_reports": "Relatórios",
-    "legal_persons_reports": "Pessoas jurídicas"
+    "legal_persons_reports": "Pessoas jurídicas",
+    "upload_persons_cnpj_blacklist": "Importar blacklist Cnpj",
+    "legal_person_blacklist_uploads": "Verificar uploads Cnpj",
+    "persons_cnpj_blacklist_uploads": "Verificar uploads Cnpj",
+    "historic_cnpj_merchant_reports": "Consultas de CNPJ por empresa",
+    "historic_cpf_merchant_reports": "Consultas de CPF por empresa",
+    "historic_cnpj_merchant_details": "Detalhes de CNPJ por Merchant",
+    "physical_person_blacklist": "Pessoas fisicas"
   },
 
   "titles": {
@@ -286,7 +293,9 @@
     "delivered_on_time": "Entregue no prazo",
     "delivered_late": "Entregue atrasado",
     "not_delivered_on_time": "Não entregue no prazo",
-    "not_delivered_late": "Não entregue atrasado"
+    "not_delivered_late": "Não entregue atrasado",
+    "csv_generated": "CSV Gerado",
+    "generated_csv_message": "Seu relatório está pronto para download. Clique no botão abaixo para baixar o arquivo."
   },
   "login": {
     "sign_in": "Faça login",
@@ -446,7 +455,6 @@
     "primary": "Primário",
     "secondary": "Secundário",
     "both": "Ambos",
-
     "options": "Opções",
     "csv_columns": "Selecione as colunas do CSV",
     "comma_separator": "Separador de casas decimais",
@@ -504,7 +512,8 @@
     "deposit_webhook_data": "Dados do webhook de depósito",
     "withdraw_webhook_data": "Dados do webhook de saque",
     "withdraw_standard_webhook": "Webhook de saque padrão",
-    "aggregator_id": "Aggregator"
+    "aggregator_id": "Aggregator",
+    "accept_annonymous_cash_in": "Permitir depósito anônimo"
   },
   "table": {
     "id": "id",
@@ -916,11 +925,9 @@
     "license_end_validity_date": "Data final de validade da licença",
     "cashin_bank": "Banco de depósitos",
     "cashout_bank": "Banco de saques",
-
     "exchange_spread": "Exchange spread",
     "exchange_iof": "Exchange IOF",
     "exchange_operating_rate": "Exchange operating rate",
-
     "cash_in_permission": "Depósitos habilitado?",
     "cash_out_permission": "Saques habilitado?",
     "cpf_api_permission": "API de consulta de CPF habilitada?",
@@ -959,7 +966,7 @@
     "balance": "Saldo",
     "permission_group": "Grupo",
     "withdraw_id": "ID da organização",
-    "total_cpf_checks": "Total CPF checados",
+    "total_cpf_checks": "CPFs consultados",
     "user_merchant_id": "ID da empresa do usuário",
     "user_merchant_name": "Nome da empresa do usuário",
     "user_operator_id": "ID do operador do usuário",
@@ -1043,10 +1050,22 @@
     "cnpj/suspended": "CNPJ suspenso",
     "cnpj/canceled": "CNPJ cancelado",
     "cnpj/inactive": "CNPJ inativo",
+    "cnpj/null": "CNPJ nulo",
+    "cnpj/unfit": "CNPJ inapto",
     "legal_nature_description": "Natureza jurídica",
     "registration_status_date": "Data do status de registro",
     "registration_status_reason": "Motivo do status de registro",
-    "main_cnae_code": "Código CNAE"
+    "main_cnae_code": "Código CNAE",
+    "total_cnpj_checks": "CNPJs consultados",
+    "trade_name": "Nome editável",
+    "business_type": "Tipo de negócio",
+    "registration_status_code": "Código do status de registro",
+    "address_city": "Cidade",
+    "address_state": "Estado",
+    "address_country": "País",
+    "address_street": "Rua",
+    "jurisdiction_city": "Cidade de jurisdição",
+    "phone": "Telefone"
   },
   "actions": {
     "details": "Detalhes",

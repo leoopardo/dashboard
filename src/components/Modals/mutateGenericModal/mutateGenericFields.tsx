@@ -104,7 +104,7 @@ export const MutateModalFields = ({
   formRef,
   submitRef,
 }: mutateProps) => {
-  const { permissions, merchant_id, aggregator_id } = queryClient.getQueryData(
+  const { permissions, merchant_id } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
   const user = queryClient.getQueryData("validate") as ValidateInterface;

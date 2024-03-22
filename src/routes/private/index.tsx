@@ -20,8 +20,11 @@ import { ConsultOrganizationReports } from "./Pages/consult/organization/reports
 import { CheckDocument } from "./Pages/consult/persons/checkDocument";
 import { HistoricCpfByMerchant } from "./Pages/consult/persons/historicCpfByMerchant";
 import { HistoricCpfByMerchantDetails } from "./Pages/consult/persons/historicCpfByMerchant/details";
+import { HistoricCnpjByMerchantReports } from "./Pages/consult/persons/reports/historicCnpjByMerchant";
+import { HistoricCnpjByMerchantDetailsReports } from "./Pages/consult/persons/reports/historicCnpjByMerchantDetails";
 import { HistoricCpfByMerchantReports } from "./Pages/consult/persons/reports/historicCpfByMerchant";
 import { HistoricCpfByMerchantDetailsReports } from "./Pages/consult/persons/reports/historicCpfByMerchantDetails";
+import { SerproAssertiva } from "./Pages/consult/persons/serproAssertiva";
 import { RefundDeposits } from "./Pages/consult/refunds/deposits";
 import { RefundDepositsManual } from "./Pages/consult/refunds/depositsManual";
 import { RefundDepositsReports } from "./Pages/consult/refunds/reports/deposits";
@@ -54,15 +57,27 @@ import { Aggregators } from "./Pages/register/aggregator/aggregators";
 import { UpdateAggregator } from "./Pages/register/aggregator/aggregators/updateAggregator";
 import { AggregatorDetails } from "./Pages/register/aggregator/aggregators/viewAggregator";
 import { AggregatorBlacklist } from "./Pages/register/aggregator/blacklist";
+import { AggregatorBlacklistReasons } from "./Pages/register/aggregator/blacklist/reasons";
+import { AggregatorBlacklistReasonsReports } from "./Pages/register/aggregator/blacklist/reports/reasons";
 import { AggregatorsReports } from "./Pages/register/aggregator/reports/aggregators";
 import { AggregatorsBlacklistReports } from "./Pages/register/aggregator/reports/blacklist";
 import { SelfExclusionReports } from "./Pages/register/aggregator/reports/selfExclusion";
 import { AggregatorUsersReports } from "./Pages/register/aggregator/reports/users";
 import { AggregatorSelfExclusion } from "./Pages/register/aggregator/selfExclusion";
 import { AggregatorUsers } from "./Pages/register/aggregator/users";
+import { LegalPersons } from "./Pages/register/legalPersons";
+import { ImportLegalPersonsBlacklist } from "./Pages/register/legalPersons/blacklist/importBlacklist";
+import { LegalPersonBlacklistUploads } from "./Pages/register/legalPersons/blacklist/uploads";
+import { LegalPersonDetails } from "./Pages/register/legalPersons/details";
+import { LegalPersonsReports } from "./Pages/register/legalPersons/reports/legalPersonsReports";
+import { LegalPersonUpdate } from "./Pages/register/legalPersons/update";
+import { Licenses } from "./Pages/register/licenses/licenses";
+import { UpdateLicense } from "./Pages/register/licenses/licenses/updateLicense";
+import { LicenseReports } from "./Pages/register/licenses/reports/license";
 import { MerchantBlacklist } from "./Pages/register/merchant/blacklist";
 import { ImportBlacklist } from "./Pages/register/merchant/blacklist/importBlacklist";
 import { MerchantBlacklistReasons } from "./Pages/register/merchant/blacklist/reasons";
+import { MerchantBlacklistReasonsReports } from "./Pages/register/merchant/blacklist/reports/reasons";
 import { MerchantsBlacklistUploads } from "./Pages/register/merchant/blacklist/uploads";
 import { MerchantFeePlans } from "./Pages/register/merchant/feeplans";
 import { MerchantManualEntryCategory } from "./Pages/register/merchant/manualEntryCategory";
@@ -82,11 +97,13 @@ import { OperatorUsersReports } from "./Pages/register/operator/reports/users";
 import { OperatorUsers } from "./Pages/register/operator/users";
 import { BankMaintenence } from "./Pages/register/organization/bankMaintenance";
 import { OrganizationCategories } from "./Pages/register/organization/categories";
+import { CurrentAccountPage } from "./Pages/register/organization/currentAccounts";
 import { GeneralConfigs } from "./Pages/register/organization/generalConfigs";
 import { OrganizationCategoriesReports } from "./Pages/register/organization/reports/categories";
 import { OrganizationUserReports } from "./Pages/register/organization/reports/user";
 import { OrganizationUser } from "./Pages/register/organization/users";
 import { Partners } from "./Pages/register/partner/partners";
+import { CustomWebhookPartners } from "./Pages/register/partner/partners/components/CustomWebhook/customWebhook";
 import { UpdatePartner } from "./Pages/register/partner/partners/updatePartner";
 import { PartnerDetails } from "./Pages/register/partner/partners/viewPartner";
 import { PartnerReports } from "./Pages/register/partner/reports/partner";
@@ -96,7 +113,6 @@ import { PermissionsGroups } from "./Pages/register/permissionsGroups";
 import { Persons } from "./Pages/register/persons";
 import { PersonBlacklistReasons } from "./Pages/register/persons/blacklist/blacklistReasons";
 import { ImportPersonsBlacklist } from "./Pages/register/persons/blacklist/importBlacklist";
-import { ImportLegalPersonsBlacklist } from "./Pages/register/legalPersons/blacklist/importBlacklist";
 import { PersonBlacklistUploads } from "./Pages/register/persons/blacklist/uploads";
 import { CostumerBanks } from "./Pages/register/persons/customerBankList";
 import { PersonDetails } from "./Pages/register/persons/personDetails";
@@ -112,21 +128,8 @@ import { BankBlackistReports } from "./Pages/support/blacklists/reports/bankBlac
 import { ThirdPartKeyBlacklist } from "./Pages/support/blacklists/thirdPartKey";
 import { ImportContastationDeposit } from "./Pages/support/contastation/importCSV";
 import { ContestationUploads } from "./Pages/support/contastation/uploads";
-import { Licenses } from "./Pages/register/licenses/licenses";
-import { LicenseReports } from "./Pages/register/licenses/reports/license";
-import { UpdateLicense } from "./Pages/register/licenses/licenses/updateLicense";
-import { CurrentAccountPage } from "./Pages/register/organization/currentAccounts";
-import { CustomWebhookPartners } from "./Pages/register/partner/partners/components/CustomWebhook/customWebhook";
 import { Permission } from "./permission";
 import { Redirect } from "./redirect";
-import { SerproAssertiva } from "./Pages/consult/persons/serproAssertiva";
-import { MerchantBlacklistReasonsReports } from "./Pages/register/merchant/blacklist/reports/reasons";
-import { AggregatorBlacklistReasonsReports } from "./Pages/register/aggregator/blacklist/reports/reasons";
-import { LegalPersons } from "./Pages/register/legalPersons";
-import { LegalPersonDetails } from "./Pages/register/legalPersons/detais";
-import { LegalPersonUpdate } from "./Pages/register/legalPersons/update";
-import { LegalPersonBlacklistUploads } from "./Pages/register/legalPersons/blacklist/uploads";
-import { LegalPersonsReports } from "./Pages/register/legalPersons/reports/legalPersonsReports";
 export const PrivateRoutes = () => {
   const { responseValidate } = useValidate();
 
@@ -541,7 +544,7 @@ export const PrivateRoutes = () => {
           {/* Consultas de pessoas */}
           <Route path="consult_persons">
             <Route
-              path="check_cpf"
+              path="check_document"
               element={
                 <Permission
                   permission={
@@ -597,7 +600,7 @@ export const PrivateRoutes = () => {
 
             <Route path="reports">
               <Route
-                path="historic_cpf_merchant"
+                path="historic_cpf_merchant_reports"
                 element={
                   <Permission
                     permission={
@@ -606,6 +609,19 @@ export const PrivateRoutes = () => {
                     }
                   >
                     <HistoricCpfByMerchantReports />
+                  </Permission>
+                }
+              />
+              <Route
+                path="historic_cnpj_merchant_reports"
+                element={
+                  <Permission
+                    permission={
+                      responseValidate?.permissions?.report?.person
+                        ?.report_check_document_by_merchant_export_csv
+                    }
+                  >
+                    <HistoricCnpjByMerchantReports />
                   </Permission>
                 }
               />
@@ -619,6 +635,19 @@ export const PrivateRoutes = () => {
                     }
                   >
                     <HistoricCpfByMerchantDetailsReports />
+                  </Permission>
+                }
+              />
+              <Route
+                path="historic_cnpj_merchant_details"
+                element={
+                  <Permission
+                    permission={
+                      responseValidate?.permissions?.report?.person
+                        ?.report_check_document_by_merchant_export_csv
+                    }
+                  >
+                    <HistoricCnpjByMerchantDetailsReports />
                   </Permission>
                 }
               />
@@ -817,7 +846,19 @@ export const PrivateRoutes = () => {
                   </Permission>
                 }
               />
-              <Route path="aggregator_blacklist_reasons" />
+              <Route
+                path="aggregator_blacklist_reasons"
+                element={
+                  <Permission
+                    permission={
+                      responseValidate?.permissions?.register?.aggregator
+                        ?.blacklist?.aggregator_blacklist_create
+                    }
+                  >
+                    <AggregatorBlacklistReasons />
+                  </Permission>
+                }
+              />
             </Route>
             <Route path="aggregator_reports">
               <Route

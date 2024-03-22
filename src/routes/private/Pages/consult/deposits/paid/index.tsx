@@ -90,6 +90,7 @@ export const PaidDeposits = () => {
     PaidDepositsReportsIsLoading,
     PaidDepositsReportsIsSuccess,
     PaidDepositsReportsMutate,
+    PaidDepositsReportsData
   } = useCreatePaidDepositsReports({
     ...query,
     fields: { ...csvFields },
@@ -499,6 +500,7 @@ export const PaidDeposits = () => {
         comma={isComma}
         setIsComma={setIsComma}
         reportName="paidDepositsReportsFields"
+        url={PaidDepositsReportsData?.url}
       />
 
       <FiltersModal

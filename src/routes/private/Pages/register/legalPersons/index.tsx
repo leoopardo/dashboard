@@ -5,7 +5,7 @@ import {
   EyeFilled,
   FileAddOutlined,
   FilterOutlined,
-  UserAddOutlined
+  UserAddOutlined,
 } from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
@@ -79,8 +79,13 @@ export const LegalPersons = () => {
     PersonsReportsIsLoading,
     PersonsReportsIsSuccess,
     PersonsReportsMutate,
+    PersonsReportsData,
   } = useCreateLegalPersonsReports({
     ...query,
+    sort_field: undefined,
+    sort_order: undefined,
+    page: undefined,
+    limit: undefined,
     fields: csvFields,
     comma_separate_value: comma,
   });
@@ -312,7 +317,7 @@ export const LegalPersons = () => {
             error={LegalPersonsDataError}
             columns={columns}
             loading={isLegalPersonsDataFetching}
-            label={["name", "cpf"]}
+            label={["business_name", "cnpj"]}
             removeTotal
           />
         </Col>
@@ -327,12 +332,9 @@ export const LegalPersons = () => {
           "initial_date",
           "final_date",
           "black_list",
-          "flag_pep",
-          "flag_aux_gov",
           "flag_alert",
           "state",
           "city",
-          "gender",
         ]}
         refetch={refetchLegalPersonsData}
         selectOptions={{
@@ -399,13 +401,14 @@ export const LegalPersons = () => {
         error={PersonsReportsError}
         success={PersonsReportsIsSuccess}
         loading={PersonsReportsIsLoading}
-        reportPath="/register/person/person_reports/person_persons_reports"
+        reportPath="/register/person/person_reports/legal_persons_reports"
         fields={fields}
         csvFields={csvFields}
         comma={comma}
         setIsComma={setIsComma}
         setCsvFields={setCsvFields}
         reportName="legalPersons"
+        url={PersonsReportsData?.url}
       />
       <Toast
         actionSuccess={t("messages.updated")}

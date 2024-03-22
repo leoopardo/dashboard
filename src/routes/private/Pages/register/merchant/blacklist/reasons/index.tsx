@@ -189,8 +189,8 @@ export const MerchantBlacklistReasons = () => {
           </Button>
         </Grid>
 
-        {permissions.register.merchant.black_list_reason
-          .merchant_blacklist_reason_export_csv && (
+        {permissions?.register?.merchant?.black_list_reason
+          ?.merchant_blacklist_reason_export_csv && (
           <Grid item xs={12} md="auto">
             <ExportReportsModal
               disabled={!merchantBlacklistData?.total || !!MerchantBlacklistReasonsReportsError}
