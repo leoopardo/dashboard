@@ -86,6 +86,9 @@ export const LegalPersonUpdate = () => {
   const { LegalPersonsByCnpjData, isLegalPersonsByCnpjDataFetching } =
     useGetLegalPersonsByCnpj(cnpj);
 
+    console.log(LegalPersonsByCnpjData);
+    
+
   // const {
   //   PersonsHistoryData,
   //   PersonsHistoryDataError,
