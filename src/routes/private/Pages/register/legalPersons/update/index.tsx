@@ -28,7 +28,7 @@ import {
   Tabs,
   TabsProps,
   Typography,
-  Upload
+  Upload,
 } from "antd";
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
@@ -86,8 +86,7 @@ export const LegalPersonUpdate = () => {
   const { LegalPersonsByCnpjData, isLegalPersonsByCnpjDataFetching } =
     useGetLegalPersonsByCnpj(cnpj);
 
-    console.log(LegalPersonsByCnpjData);
-    
+  console.log(LegalPersonsByCnpjData);
 
   // const {
   //   PersonsHistoryData,
@@ -175,6 +174,8 @@ export const LegalPersonUpdate = () => {
   useEffect(() => {
     setBody(LegalPersonsByCnpjData);
   }, [PersonsData]);
+
+  console.log(body);
 
   const items: TabsProps["items"] = [
     {
@@ -494,15 +495,13 @@ export const LegalPersonUpdate = () => {
                   size="large"
                   allowClear
                   showSearch
+                  disabled={
+                    body?.black_list === "false" ??
+                    LegalPersonsByCnpjData?.black_list_reason == "false"
+                  }
                   options={BlacklistReasons?.items.map((reason) => {
                     return { label: reason.reason, value: reason.reason };
                   })}
-                  disabled={
-                    body?.black_list === "false" ||
-                    !body?.black_list ||
-                    (LegalPersonsByCnpjData?.black_list_reason === "false" &&
-                      !body?.black_list)
-                  }
                   value={body?.black_list_reason ?? undefined}
                   filterOption={(inputValue, option) =>
                     option?.value
@@ -527,10 +526,8 @@ export const LegalPersonUpdate = () => {
               <Form.Item label={t("table.black_list_description")}>
                 <Input
                   disabled={
-                    body?.black_list === "false" ||
-                    !body?.black_list ||
-                    (LegalPersonsByCnpjData?.black_list_reason === "false" &&
-                      !body?.black_list)
+                    body?.black_list === "false" ??
+                    LegalPersonsByCnpjData?.black_list_reason
                   }
                   size="large"
                   name="black_list_description"
