@@ -29,6 +29,7 @@ import { Button, Input, Select, Space } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import ReactInputMask from "react-input-mask";
+import { formatCPF, formatCNPJ } from "@src/utils/functions";
 
 const INITIAL_QUERY: MerchantBlacklistQuery = {
   limit: 25,
@@ -78,7 +79,7 @@ export const MerchantBlacklist = () => {
 
   const { isDeleteLoading, mutateDelete, DeleteError, isDeleteSuccess } =
     useDeleteMechantBlacklist({
-      document: currentItem?.document,
+      blacklist_id: currentItem?._id,
     });
 
   const columns: ColumnInterface[] = [
@@ -152,7 +153,6 @@ export const MerchantBlacklist = () => {
               options={[
                 { label: "CPF", value: "cpf" },
                 { label: "CNPJ", value: "cnpj" },
-               
               ]}
               value={docType}
               onChange={(value) => {
@@ -168,7 +168,7 @@ export const MerchantBlacklist = () => {
                 setSearch(value);
               }}
             >
-              <Input size="large" style={{height: "40px"}}/>
+              <Input size="large" style={{ height: "40px" }} />
             </ReactInputMask>
           </Space.Compact>
         </Grid>
@@ -289,9 +289,14 @@ export const MerchantBlacklist = () => {
           setOpen={setIsDeleteOpen}
           submit={mutateDelete}
           title={t("actions.delete")}
-          description={`${t("messages.are_you_sure", {
+          description={`${t("messages.are_you_sure_blacklist", {
             action: t("actions.delete").toLocaleLowerCase(),
-            itens: currentItem?.document,
+            itens:
+              (currentItem?.document?.length ?? 0) === 14
+                ? formatCNPJ(currentItem?.document ?? "")
+                : formatCPF(currentItem?.document ?? ''),
+            entity: t("table.merchant"),
+            name: currentItem?.merchant_name,
           })}`}
           loading={isDeleteLoading}
         />

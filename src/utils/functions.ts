@@ -14,6 +14,18 @@ export function formatCPF(cpf: string | '') {
     return cleanedCPF?.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
 }
 
+export function formatCNPJ(CNPJ: string | '') {
+  const cleanedCNPJ = CNPJ?.replace(/\D/g, '');
+  if (!cleanedCNPJ || cleanedCNPJ.length !== 14) {
+    return '-';
+  }
+
+  return cleanedCNPJ?.replace(
+    /(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/,
+    "$1.$2.$3/$4-$5"
+  );
+}
+
 export const setFirstChildDivId = (tabIndex: Element | null, id: string): void => {
   if (tabIndex) {
     const firstChildDiv = tabIndex.querySelector('div');
