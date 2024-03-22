@@ -364,7 +364,6 @@ export const FiltersModalFields = ({
                             .startOf("M")
                             .format("YYYY-MM-DDTHH:mm:00.000"),
                           [endDateKeyName]: moment(new Date())
-                            .endOf("M")
                             .add(1, "day")
                             .startOf("day")
                             .format("YYYY-MM-DDTHH:mm:00.000"),
@@ -431,7 +430,6 @@ export const FiltersModalFields = ({
                                     value: [
                                       dayjs().startOf("M"),
                                       dayjs()
-                                        .endOf("M")
                                         .add(1, "D")
                                         .startOf("day"),
                                     ],
@@ -482,6 +480,15 @@ export const FiltersModalFields = ({
                           }
                           showMinute={disableMinutes ? false : true}
                           popupStyle={{ marginLeft: "40px" }}
+                          disabledDate={(current: any) => {
+                            if (
+                              current &&
+                              current > moment().add(1, "day").endOf("day")
+                            )
+                              return true;
+
+                            return false;
+                          }}
                           showTime
                           value={[
                             filtersQuery[startDateKeyName]
@@ -810,7 +817,8 @@ export const FiltersModalFields = ({
 
             case "aggregator_id":
               if (
-                permissions?.register?.aggregator?.aggregator?.aggregator_list &&
+                permissions?.register?.aggregator?.aggregator
+                  ?.aggregator_list &&
                 !user.aggregator_id
               ) {
                 return (
