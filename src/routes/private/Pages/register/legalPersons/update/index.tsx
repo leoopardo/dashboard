@@ -17,7 +17,6 @@ import { LegalPersonsItem } from "@src/services/types/register/legalPersons/pers
 import { PersonsQuery } from "@src/services/types/register/persons/persons.interface";
 import { setFirstChildDivId } from "@src/utils/functions";
 import {
-  AutoComplete,
   Button,
   Empty,
   Form,
@@ -29,7 +28,7 @@ import {
   Tabs,
   TabsProps,
   Typography,
-  Upload,
+  Upload
 } from "antd";
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
@@ -126,9 +125,12 @@ export const LegalPersonUpdate = () => {
   };
 
   useEffect(() => {
+    setCurrState(body?.address_state ?? LegalPersonsByCnpjData?.address_state);
+  }, [LegalPersonsByCnpjData, body]);
+
+  useEffect(() => {
     refetchFiles();
-    setCurrState(LegalPersonsByCnpjData?.address_state);
-  }, [PersonsData]);
+  }, []);
 
   // useEffect(() => {
   //   refetchHistoryPersonsData();
@@ -211,7 +213,9 @@ export const LegalPersonUpdate = () => {
 
             <Grid item xs={12} md={4} lg={1}>
               <Form.Item label={t("table.state")} name="address_state">
-                <AutoComplete
+                <Select
+                  showSearch
+                  allowClear
                   size="large"
                   style={{ width: "100%", height: "40px" }}
                   placeholder={t(`table.state`)}
@@ -221,6 +225,7 @@ export const LegalPersonUpdate = () => {
                     setBody((state: any) => ({
                       ...state,
                       address_state: value,
+                      address_city: "",
                     }));
                     setCurrState(value);
                   }}
@@ -240,9 +245,14 @@ export const LegalPersonUpdate = () => {
             </Grid>
             <Grid item xs={12} md={4} lg={2}>
               <Form.Item label={t("table.city")} name="address_city">
-                <AutoComplete
+                <Select
+                  showSearch
+                  allowClear
                   size="large"
-                  disabled={!body?.address_state}
+                  disabled={
+                    !body?.address_state &&
+                    !LegalPersonsByCnpjData?.address_state
+                  }
                   style={{ width: "100%", height: "40px" }}
                   placeholder={t(`table.city`)}
                   value={body?.address_city}
