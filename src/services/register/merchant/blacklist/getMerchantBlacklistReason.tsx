@@ -7,15 +7,18 @@ import {
 } from "@src/services/types/register/merchants/merchantBlacklistReasons.interface";
 
 export function useGetRowsMerchantBlacklistReasons(
-  params?: MerchantBlacklistReasonQuery
+  params?: MerchantBlacklistReasonQuery,
+  isNotFetch?: boolean
 ) {
   const { data, isFetching, error, refetch } = useQuery<
     MerchantBlacklistReasonData | null | undefined
   >("MerchantBlacklistReason", async () => {
-    const response = await api.get("blacklist/merchant-black-list/reasons", {
-      params,
-    });
-    return response.data;
+    const response =
+      !isNotFetch &&
+      (await api.get("blacklist/merchant-black-list/reasons", {
+        params,
+      }));
+    return response ? response.data : { data: { items: [] } };
   });
 
   const merchantBlacklistData = data;
