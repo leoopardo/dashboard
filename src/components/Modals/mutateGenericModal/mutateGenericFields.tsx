@@ -104,7 +104,7 @@ export const MutateModalFields = ({
   formRef,
   submitRef,
 }: mutateProps) => {
-  const { permissions } = queryClient.getQueryData(
+  const { permissions, merchant_id, aggregator_id } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
   const user = queryClient.getQueryData("validate") as ValidateInterface;
@@ -150,14 +150,28 @@ export const MutateModalFields = ({
     group: true,
   });
 
-  const { merchantBlacklistData } = useGetRowsMerchantBlacklistReasons({
-    limit: 200,
-    page: 1,
-  });
+  const { merchantBlacklistData, refetchMerchantBlacklistData } =
+    useGetRowsMerchantBlacklistReasons(
+      {
+        limit: 200,
+        page: 1,
+        merchant_id: body?.merchant_id || merchant_id,
+      },
+      !body?.merchant_id &&
+        !body?.aggregator_id &&
+        !merchant_id 
+    );
 
   const panelRender = (panelNode: any) => (
     <StyleWrapperDatePicker>{panelNode}</StyleWrapperDatePicker>
   );
+
+  useEffect(() => {
+    refetchMerchantBlacklistData();
+    formRef.current.setFieldsValue({
+      reason: undefined,
+    });
+  }, [body?.merchant_id, body?.aggregator_id]);
 
   useEffect(() => {
     if (clear) clear();
@@ -216,7 +230,6 @@ export const MutateModalFields = ({
     const isCNPJ = isCNPJValid(value.replace(/\D/g, ""));
 
     console.log(value, rule);
-    
 
     if (!isCPF && !isCNPJ) {
       return Promise.reject(t("error.invalidCPFOrCNPJ", { value: value }));
@@ -569,7 +582,7 @@ export const MutateModalFields = ({
                       <Select
                         data-test-id="reason-select"
                         size="large"
-                        options={merchantBlacklistData?.items.map((reason) => {
+                        options={merchantBlacklistData?.items?.map((reason) => {
                           return {
                             label: reason.reason_name,
                             value: reason._id,
@@ -801,6 +814,7 @@ export const MutateModalFields = ({
               case "cash_out":
               case "fastpix_in":
               case "indeterminate_validity":
+              case "general_use":
                 return (
                   <Col
                     style={{ display: "flex", justifyContent: "flex-start" }}

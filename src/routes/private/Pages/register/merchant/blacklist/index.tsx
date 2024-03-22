@@ -25,10 +25,11 @@ import {
 } from "@src/services/types/register/merchants/merchantBlacklist.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
 import useDebounce from "@utils/useDebounce";
-import { Button, Input } from "antd";
+import { Button, Input, Select, Space } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import ReactInputMask from "react-input-mask";
+import { formatCPF, formatCNPJ } from "@src/utils/functions";
 
 const INITIAL_QUERY: MerchantBlacklistQuery = {
   limit: 25,
@@ -38,12 +39,13 @@ const INITIAL_QUERY: MerchantBlacklistQuery = {
 };
 
 export const MerchantBlacklist = () => {
+  const { t } = useTranslation();
   const { permissions, type, merchant_id } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
 
   const [query, setQuery] = useState<MerchantBlacklistQuery>(INITIAL_QUERY);
-  const { t } = useTranslation();
+  const [docType, setDocType] = useState<"cpf" | "cnpj">("cpf");
   const {
     isMerchantBlacklistDataFetching,
     merchantBlacklistData,
@@ -77,14 +79,14 @@ export const MerchantBlacklist = () => {
 
   const { isDeleteLoading, mutateDelete, DeleteError, isDeleteSuccess } =
     useDeleteMechantBlacklist({
-      document: currentItem?.document,
+      blacklist_id: currentItem?._id,
     });
 
   const columns: ColumnInterface[] = [
     { name: "document", type: "document" },
-    { name: "merchant_name", type: "text" },
+    { name: "merchant_name", type: "text", sort: true },
     { name: "reason", type: "text", sort: true },
-    { name: "description", type: "text" },
+    { name: "description", type: "text", sort: true },
     { name: "create_user_name", type: "text" },
     { name: "createdAt", type: "date", sort: true },
   ];
@@ -116,7 +118,7 @@ export const MerchantBlacklist = () => {
     <Grid container style={{ padding: "25px" }}>
       <Grid
         container
-        style={{  display: "flex", alignItems: "center" }}
+        style={{ display: "flex", alignItems: "center" }}
         spacing={1}
       >
         <Grid item xs={12} md={4} lg={2}>
@@ -132,7 +134,8 @@ export const MerchantBlacklist = () => {
           </Button>
         </Grid>
         <Grid item xs={12} md={8} lg={10}>
-          <FilterChips initial_query={INITIAL_QUERY}
+          <FilterChips
+            initial_query={INITIAL_QUERY}
             startDateKeyName="initial_date"
             endDateKeyName="final_date"
             query={query}
@@ -143,17 +146,31 @@ export const MerchantBlacklist = () => {
 
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
         <Grid item xs={12} md={4} lg={4}>
-          <ReactInputMask
-            value={search}
-            placeholder={t("table.document") ?? ""}
-            mask=""
-            onChange={(event) => {
-              const value = event.target.value.replace(/[^\d]/g, "");
-              setSearch(value);
-            }}
-          >
-            <Input size="large" />
-          </ReactInputMask>
+          <Space.Compact style={{ width: "100%" }} size="large">
+            <Select
+              size="small"
+              style={{ width: "100%", maxWidth: "100px", marginBottom: 16 }}
+              options={[
+                { label: "CPF", value: "cpf" },
+                { label: "CNPJ", value: "cnpj" },
+              ]}
+              value={docType}
+              onChange={(value) => {
+                setDocType(value);
+              }}
+            />
+            <ReactInputMask
+              value={search}
+              placeholder={t("table.document") ?? ""}
+              mask={docType === "cpf" ? "999.999.999-99" : "99.999.999/9999-99"}
+              onChange={(event) => {
+                const value = event.target.value.replace(/[^\d]/g, "");
+                setSearch(value);
+              }}
+            >
+              <Input size="large" style={{ height: "40px" }} />
+            </ReactInputMask>
+          </Space.Compact>
         </Grid>
         <Grid item xs={12} md={3} lg={2}>
           <Button
@@ -250,9 +267,17 @@ export const MerchantBlacklist = () => {
         setOpen={setIsFiltersOpen}
         query={query}
         setQuery={setQuery}
-        filters={["start_date", "end_date", "merchant_id", "reason"]}
+        filters={[
+          "start_date",
+          "end_date",
+          "merchant_id",
+          "document_type",
+          "reason",
+        ]}
         refetch={refetchMerchantBlacklistData}
-        selectOptions={{}}
+        selectOptions={{
+          document_type: ["CPF", "CNPJ"],
+        }}
         startDateKeyName="start_date"
         endDateKeyName="end_date"
         initialQuery={INITIAL_QUERY}
@@ -264,9 +289,14 @@ export const MerchantBlacklist = () => {
           setOpen={setIsDeleteOpen}
           submit={mutateDelete}
           title={t("actions.delete")}
-          description={`${t("messages.are_you_sure", {
+          description={`${t("messages.are_you_sure_blacklist", {
             action: t("actions.delete").toLocaleLowerCase(),
-            itens: currentItem?.document,
+            itens:
+              (currentItem?.document?.length ?? 0) === 14
+                ? formatCNPJ(currentItem?.document ?? "")
+                : formatCPF(currentItem?.document ?? ''),
+            entity: t("table.merchant"),
+            name: currentItem?.merchant_name,
           })}`}
           loading={isDeleteLoading}
         />
@@ -284,8 +314,6 @@ export const MerchantBlacklist = () => {
               }
             : undefined,
           { label: "document", required: true },
-          { label: "reason", required: true },
-          { label: "description", required: true },
           !merchant_id
             ? {
                 label: "merchant_id",
@@ -293,6 +321,8 @@ export const MerchantBlacklist = () => {
                 selectOption: true,
               }
             : undefined,
+          { label: "reason", required: true },
+          { label: "description", required: true },
         ]}
         body={body}
         setBody={setBody}

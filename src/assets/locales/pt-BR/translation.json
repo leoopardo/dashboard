@@ -169,6 +169,8 @@
     "consult_person_reports": "Relatórios",
     "recents": "Recentes",
     "serpro_assertiva": "Totalizador de consultas",
+    "merchant_blacklist_reasons_reports": "Motivos de blacklist",
+    "aggregator_blacklist_reason_reports": "Motivos de blacklist",
     "physical_persons": "Pessoas físicas",
     "legal_person_blacklist": "Blacklist pessoas jurídicas",
     "legal_person_reports": "Relatórios",
@@ -213,6 +215,7 @@
     "generated_voucher": "gerar comprovante de pagamento do",
     "confirm_action_title": "{{action}} dados",
     "are_you_sure": "Deseja {{action}} {{itens}}?",
+    "are_you_sure_blacklist": "Deseja {{action}} {{itens}} da blacklist da {{entity}} {{name}}?",
     "yes_update": "Sim, atualizar",
     "yes_delete": "Sim, deletar",
     "no_cancel": "Não, cancelar",
@@ -500,7 +503,8 @@
     "deposit_standard_webhook": "Webhook de depósito padrão",
     "deposit_webhook_data": "Dados do webhook de depósito",
     "withdraw_webhook_data": "Dados do webhook de saque",
-    "withdraw_standard_webhook": "Webhook de saque padrão"
+    "withdraw_standard_webhook": "Webhook de saque padrão",
+    "aggregator_id": "Aggregator"
   },
   "table": {
     "id": "id",
@@ -1031,6 +1035,7 @@
     "serpro_cnpj_count": "Serpro CNPJ",
     "waiting_refund_to_end_user": "Aguardando devolução para usuário final",
     "document_type": "Tipo de documento",
+    "general_use": "Uso geral",
     "business_name": "Razão social",
     "registration_status_description": "Descrição do status de registro",
     "cnpj/active": "CNPJ ativo",

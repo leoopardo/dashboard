@@ -3,13 +3,13 @@ import { useMutation } from "react-query";
 import { api } from "../../../../config/api";
 import { queryClient } from "../../../queryClient";
 
-export function useDeleteMechantBlacklist(  data: {blacklist_id?: string} | null) {
+export function useDeleteAggregatorBlacklist(  data: {blacklist_id?: string} | null) {
   const { isLoading, error, mutate, isSuccess } = useMutation<
     any | null | undefined
-  >("DeleteMerchantBlacklist", async () => {
-    const response = await api.delete(`blacklist/merchant-black-list`, {data});
+  >("DeleteAggregatorBlacklist", async () => {
+    const response = await api.delete(`blacklist/aggregator-black-list`, {data});
     await queryClient.refetchQueries({
-      queryKey: ["MerchantBlacklist"],
+      queryKey: ["AggregatorBlacklist"],
     });
     return response.data;
   });

@@ -8,7 +8,7 @@ import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { Grid } from "@mui/material";
 import useDebounce from "@utils/useDebounce";
 import { Button } from "antd";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { MutateModal } from "@src/components/Modals/mutateGenericModal";
@@ -19,6 +19,10 @@ import {
   CreateMerchantBlacklistReasons,
   MerchantBlacklistReasonQuery,
 } from "@src/services/types/register/merchants/merchantBlacklistReasons.interface";
+import { queryClient } from "@src/services/queryClient";
+import { ValidateInterface } from "@src/services/types/validate.interface";
+import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
+import { useCreateMerchantBlacklistReasonsReports } from "@src/services/register/merchant/blacklist/exportCsvMerchantBlacklistReason";
 
 const INITIAL_QUERY: MerchantBlacklistReasonQuery = {
   limit: 25,
@@ -26,15 +30,25 @@ const INITIAL_QUERY: MerchantBlacklistReasonQuery = {
 };
 
 export const MerchantBlacklistReasons = () => {
+  const { t } = useTranslation();
+  const { type, permissions } = queryClient.getQueryData(
+    "validate"
+  ) as ValidateInterface;
   const [query, setQuery] =
     useState<MerchantBlacklistReasonQuery>(INITIAL_QUERY);
-  const { t } = useTranslation();
   const {
     isMerchantBlacklistDataFetching,
     merchantBlacklistData,
     merchantBlacklistDataError,
     refetchMerchantBlacklistData,
   } = useGetRowsMerchantBlacklistReasons(query);
+
+  const {
+    MerchantBlacklistReasonsReportsError,
+    MerchantBlacklistReasonsReportsIsLoading,
+    MerchantBlacklistReasonsReportsMutate,
+    MerchantBlacklistReasonsReportsIsSuccess,
+  } = useCreateMerchantBlacklistReasonsReports(query);
 
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
@@ -46,8 +60,43 @@ export const MerchantBlacklistReasons = () => {
     null
   );
 
+  const renderUpdateFields = useCallback(() => {
+    if (type === 1 || type === 2) {
+      if (body?.general_use) {
+        return [
+          { label: "general_use", required: false },
+          { label: "reason_name", required: true },
+        ];
+      }
+
+      return [
+        { label: "general_use", required: false },
+        { label: "merchant_id", required: true },
+        { label: "reason_name", required: true },
+      ];
+    }
+
+    return [
+      { label: "merchant_id", required: true },
+      { label: "reason_name", required: true },
+    ];
+  }, [body, type]);
+
+  const bodyToSend = useMemo(() => {
+    if (body?.general_use) {
+      return {
+        reason_name: body.reason_name,
+      };
+    }
+
+    return {
+      reason_name: body?.reason_name,
+      merchant_id: body?.merchant_id,
+    };
+  }, [body]);
+
   const { error, isLoading, isSuccess, mutate } =
-    useCreateMerchantBlacklistReason(body);
+    useCreateMerchantBlacklistReason(bodyToSend);
   const [search, setSearch] = useState<string>("");
   const debounceSearch = useDebounce(search);
 
@@ -90,15 +139,16 @@ export const MerchantBlacklistReasons = () => {
             {t("table.filters")}
           </Button>
         </Grid>
-        <Grid item xs={12} md={4} lg={6}>
-          <FilterChips initial_query={INITIAL_QUERY}
+        <Grid item xs={12} md={3} lg={4}>
+          <FilterChips
+            initial_query={INITIAL_QUERY}
             startDateKeyName="initial_date"
             endDateKeyName="final_date"
             query={query}
             setQuery={setQuery}
           />
         </Grid>
-        <Grid item xs={12} md={3} lg={2}>
+        <Grid item xs={12} md={2} lg={2}>
           <Button
             type="dashed"
             loading={isMerchantBlacklistDataFetching}
@@ -138,6 +188,20 @@ export const MerchantBlacklistReasons = () => {
             {t("buttons.new_reason")}
           </Button>
         </Grid>
+
+        {permissions.register.merchant.black_list_reason
+          .merchant_blacklist_reason_export_csv && (
+          <Grid item xs={12} md="auto">
+            <ExportReportsModal
+              disabled={!merchantBlacklistData?.total || !!MerchantBlacklistReasonsReportsError}
+              mutateReport={() => MerchantBlacklistReasonsReportsMutate()}
+              error={MerchantBlacklistReasonsReportsError}
+              success={MerchantBlacklistReasonsReportsIsSuccess}
+              loading={MerchantBlacklistReasonsReportsIsLoading}
+              reportPath="/register/merchant/merchant_reports/merchant_blacklist_reasons_reports"
+            />
+          </Grid>
+        )}
       </Grid>
 
       <Grid container style={{ marginTop: "15px" }}>
@@ -176,10 +240,7 @@ export const MerchantBlacklistReasons = () => {
         type="create"
         open={isCreateReasonOpen}
         setOpen={setIsCreateReasonOpen}
-        fields={[
-          { label: "merchant_id", required: true },
-          { label: "reason_name", required: true },
-        ]}
+        fields={renderUpdateFields()}
         body={body}
         setBody={setBody}
         modalName={t("modal.new_reason")}

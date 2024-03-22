@@ -162,8 +162,10 @@
     "custom_webhook": "Custom webhooks",
     "current_accounts": "Current accounts",
     "serpro_assertiva": "Consult totalizers",
-    "physical_persons": "Physical persons",
-    "legal_persons": "Legal persons",
+    "physical_persons": "Pessoas físicas",
+    "legal_persons": "Pessoas jurídicas",
+    "merchant_blacklist_reasons_reports": "Blacklist reasons",
+    "aggregator_blacklist_reason_reports": "Blacklist reasons",
     "legal_person_blacklist": "Blacklist legal person",
     "legal_person_reports": "Reports",
     "legal_persons_reports": "Legal persons"
@@ -207,6 +209,7 @@
     "generated_voucher": "Payment voucher generated",
     "confirm_action_title": "{{action}} data",
     "are_you_sure": "Do you want {{action}} the {{itens}}?",
+    "are_you_sure_blacklist": "Do you want {{action}} {{itens}} of blacklist {{entity}} {{name}}?",
     "yes_update": "Yes, update",
     "yes_delete": "Yes, delete",
     "no_cancel": "No, cancel",
@@ -456,7 +459,8 @@
     "deposit_standard_webhook": "Deposit standard webhook",
     "deposit_webhook_data": "Deposit webhook data",
     "withdraw_webhook_data": "Withdraw webhook data",
-    "withdraw_standard_webhook": "Withdraw standard webhook"
+    "withdraw_standard_webhook": "Withdraw standard webhook",
+    "aggregator_id": "Aggregator"
   },
 
   "modal": {
@@ -1021,6 +1025,7 @@
     "serpro_cnpj_count": "Serpro CNPJ",
     "waiting_refund_to_end_user": "Waiting refund to end user",
     "document_type": "Document type",
+    "general_use": "General use",
     "legal_nature_description": "Legal nature",
     "business_name": "Razão social",
     "registration_status_description": "Registration status",
