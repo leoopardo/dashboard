@@ -328,12 +328,9 @@ export const LegalPersons = () => {
           "initial_date",
           "final_date",
           "black_list",
-          "flag_pep",
-          "flag_aux_gov",
           "flag_alert",
           "state",
           "city",
-          "gender",
         ]}
         refetch={refetchLegalPersonsData}
         selectOptions={{

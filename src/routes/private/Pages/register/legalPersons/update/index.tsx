@@ -647,55 +647,6 @@ export const LegalPersonUpdate = () => {
                 />
               </Form.Item>
             </Grid>
-            <Grid item xs={12} md={4} lg={3}>
-              <Form.Item
-                label={t("table.cash_out_max_value_per_day")}
-                name="cash_out_max_value"
-              >
-                <CurrencyInput
-                  data-test-id="cash_out_max_value"
-                  onChangeValue={(_event, originalValue) => {
-                    setBody((state) => ({
-                      ...state,
-                      cash_out_max_value: +originalValue,
-                    }));
-                  }}
-                  InputElement={
-                    <Input
-                      size="large"
-                      style={{ width: "100%" }}
-                      value={body?.cash_out_max_value}
-                    />
-                  }
-                />
-              </Form.Item>
-            </Grid>
-
-            <Grid item xs={12} md={4} lg={2}>
-              <Form.Item
-                label={t("table.cash_out_transaction_limit_per_day")}
-                name="cash_out_transaction_limit"
-              >
-                <Select
-                  size="large"
-                  options={[
-                    { label: t("input.unlimited")?.slice(0, -1), value: 0 },
-                    { label: 1, value: 1 },
-                    { label: 2, value: 2 },
-                    { label: 3, value: 3 },
-                    { label: 4, value: 4 },
-                    { label: 5, value: 5 },
-                  ]}
-                  value={body?.cash_out_transaction_limit}
-                  onChange={(_value, option: any) => {
-                    setBody((state) => ({
-                      ...state,
-                      cash_out_transaction_limit: option.value,
-                    }));
-                  }}
-                />
-              </Form.Item>
-            </Grid>
           </Grid>
           <Grid
             container
