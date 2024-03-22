@@ -64,6 +64,7 @@ export const HistoricCpfByMerchantDetails = () => {
   const {
     HistoricCnpjByMerchantDetailsData,
     HistoricCnpjByMerchantDetailsDataError,
+    refetchHistoricCnpjByMerchantDetailsData
   } = useGetHistoricCnpjByMerchantDetails({
     ...query,
     merchant_id: location.state?.item?.merchant_id,
@@ -83,6 +84,7 @@ export const HistoricCpfByMerchantDetails = () => {
 
   useEffect(() => {
     refetchHistoricCpfByMerchantDetailsData();
+    refetchHistoricCnpjByMerchantDetailsData()
   }, [query]);
 
   useEffect(() => {
