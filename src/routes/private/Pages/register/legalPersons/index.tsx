@@ -317,7 +317,7 @@ export const LegalPersons = () => {
             error={LegalPersonsDataError}
             columns={columns}
             loading={isLegalPersonsDataFetching}
-            label={["name", "cpf"]}
+            label={["business_name", "cnpj"]}
             removeTotal
           />
         </Col>
