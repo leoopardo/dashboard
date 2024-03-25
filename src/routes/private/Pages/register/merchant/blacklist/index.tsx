@@ -87,7 +87,7 @@ export const MerchantBlacklist = () => {
     { name: "merchant_name", type: "text", sort: true },
     { name: "reason", type: "text", sort: true },
     { name: "description", type: "text", sort: true },
-    { name: "can_be_deleted_only_by_organization", type: "boolean", sort: true },
+   // { name: "can_be_deleted_only_by_organization", type: "boolean", sort: true },
     { name: "create_user_name", type: "text" },
     { name: "createdAt", type: "date", sort: true },
   ];

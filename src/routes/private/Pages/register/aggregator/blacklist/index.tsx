@@ -266,11 +266,11 @@ export const AggregatorBlacklist = () => {
               { name: "reason", type: "text", sort: true, key: refReason },
               { name: "description", type: "text", key: refDescription },
               { name: "create_user_name", type: "text", key: refWhoAdd },
-              {
+           /*    {
                 name: "can_be_deleted_only_by_organization",
                 type: "boolean",
                 sort: true,
-              },
+              }, */
               {
                 name: "createdAt",
                 type: "date",
