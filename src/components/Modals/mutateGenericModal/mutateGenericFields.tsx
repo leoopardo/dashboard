@@ -16,6 +16,7 @@ import { ProfileInterface } from "@src/services/types/register/permissionsGroup/
 import { ValidateInterface } from "@src/services/types/validate.interface";
 import { unmask, validateFormCnpj } from "@src/utils/functions";
 import { moneyFormatter } from "@src/utils/moneyFormatter";
+import { useGetRowsAggregatorBlacklistReasons } from "@src/services/register/aggregator/blacklist/getAggregatorBlacklistReason";
 import {
   AutoComplete,
   Avatar,
@@ -104,7 +105,7 @@ export const MutateModalFields = ({
   formRef,
   submitRef,
 }: mutateProps) => {
-  const { permissions, merchant_id } = queryClient.getQueryData(
+  const { permissions, merchant_id, aggregator_id } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
   const user = queryClient.getQueryData("validate") as ValidateInterface;
@@ -157,10 +158,17 @@ export const MutateModalFields = ({
         page: 1,
         merchant_id: body?.merchant_id || merchant_id,
       },
-      !body?.merchant_id &&
-        !body?.aggregator_id &&
-        !merchant_id 
+      !body?.merchant_id && !merchant_id
     );
+
+    const {AggregatorBlacklistData, refetchAggregatorBlacklistData} = useGetRowsAggregatorBlacklistReasons(
+      {
+        limit: 200,
+        page: 1,
+        aggregator_id: body?.aggregator_id,
+      },
+       !body?.aggregator_id && !aggregator_id
+    )
 
   const panelRender = (panelNode: any) => (
     <StyleWrapperDatePicker>{panelNode}</StyleWrapperDatePicker>
@@ -171,7 +179,16 @@ export const MutateModalFields = ({
     formRef.current.setFieldsValue({
       reason: undefined,
     });
-  }, [body?.merchant_id, body?.aggregator_id]);
+    setBody((state: any) => ({ ...state, reason_id: undefined }));
+  }, [body?.merchant_id]);
+
+  useEffect(() => {
+    refetchAggregatorBlacklistData();
+    formRef.current.setFieldsValue({
+      aggregator_reason: undefined,
+    });
+    setBody((state: any) => ({ ...state, reason_id: undefined }));
+  }, [body?.aggregator_id]);
 
   useEffect(() => {
     if (clear) clear();
@@ -221,7 +238,7 @@ export const MutateModalFields = ({
   };
 
   const isCNPJValid = (cnpj: string) => {
-    if(cnpj.length < 14) return false;
+    if (cnpj.length < 14) return false;
     return true;
   };
 
@@ -583,6 +600,45 @@ export const MutateModalFields = ({
                         data-test-id="reason-select"
                         size="large"
                         options={merchantBlacklistData?.items?.map((reason) => {
+                          return {
+                            label: reason.reason_name,
+                            value: reason._id,
+                          };
+                        })}
+                        value={body[field.label]}
+                        onChange={(value) =>
+                          setBody((state: any) => ({
+                            ...state,
+                            reason_id: value,
+                          }))
+                        }
+                      />
+                    </Form.Item>
+                  </Col>
+                );
+
+              case "aggregator_reason":
+                return (
+                  <Col span={24}>
+                    <Form.Item
+                      data-test-id="reason-select-form-item"
+                      label={t(`table.black_list_reason`)}
+                      name={field.label}
+                      style={{ margin: 10 }}
+                      rules={[
+                        {
+                          required: field.required,
+                          message:
+                            t("input.required", {
+                              field: t(`input.${field.label}`),
+                            }) || "",
+                        },
+                      ]}
+                    >
+                      <Select
+                        data-test-id="reason-select"
+                        size="large"
+                        options={AggregatorBlacklistData?.items?.map((reason) => {
                           return {
                             label: reason.reason_name,
                             value: reason._id,
