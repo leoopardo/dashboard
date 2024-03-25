@@ -37,6 +37,7 @@ import { MerchantSelect } from "../Selects/merchantSelect";
 import { OperatorSelect } from "../Selects/operatorSelect";
 import { PartnerSelect } from "../Selects/partnerSelect";
 import { ReasonSelect } from "../Selects/reasonSelect";
+import { AggregatorReasonSelect } from "../Selects/aggregatorReasonSelect";
 import { FilterChips } from "./filterChips";
 import { StyleWrapperDatePicker } from "./styles";
 const { RangePicker } = DatePicker;
@@ -429,9 +430,7 @@ export const FiltersModalFields = ({
                                     label: t("table.this_month"),
                                     value: [
                                       dayjs().startOf("M"),
-                                      dayjs()
-                                        .add(1, "D")
-                                        .startOf("day"),
+                                      dayjs().add(1, "D").startOf("day"),
                                     ],
                                   },
                                   {
@@ -873,6 +872,23 @@ export const FiltersModalFields = ({
                     setQueryFunction={setFiltersQuery}
                   />
                 </Form.Item>
+              );
+
+            case "aggregator_reason":
+              return (
+                <Col span={24}>
+                  <Form.Item
+                    data-test-id="aggregator-reason-select-form-item"
+                    label={t(`table.black_list_reason`)}
+                    name={filter}
+                  >
+                    <AggregatorReasonSelect
+                      data-test-id="aggregator-reason-select"
+                      queryOptions={filtersQuery}
+                      setQueryFunction={setFiltersQuery}
+                    />
+                  </Form.Item>
+                </Col>
               );
 
             case "profiles":
