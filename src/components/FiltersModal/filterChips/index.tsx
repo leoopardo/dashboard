@@ -8,6 +8,7 @@ import { useListOperatorById } from "@src/services/register/operator/getListOper
 import { useGetOrganizationCategories } from "@src/services/register/organization/categories/getCategories";
 import { useListPartnerById } from "@src/services/register/partner/getListPartnerById";
 import { useGetProfiles } from "@src/services/register/permissionGroups/getProfiles";
+import { formatCNPJ, formatCPF } from "@src/utils/functions";
 import { moneyFormatter } from "@src/utils/moneyFormatter";
 import { Col, Row, Tag } from "antd";
 import moment from "moment";
@@ -431,6 +432,32 @@ export const FilterChips = ({
                   }
                 >
                   {t(`table.${key}`)}: {t(`table.${filtersQuery[key]}`)}
+                </Tag>
+              </Col>
+            );
+
+          case "document":
+            return (
+              <Col key={key}>
+                <Tag
+                  data-test-id="filter-chip-status"
+                  style={{
+                    width: "100%",
+                    textOverflow: "ellipsis",
+                    overflow: "hidden",
+                    wordBreak: "break-all",
+                    display: disabled?.includes(key) ? "none" : undefined,
+                  }}
+                  key={key}
+                  color="cyan"
+                  icon={
+                    <CloseCircleOutlined onClick={() => deleteFilter(key)} />
+                  }
+                >
+                  {t(`table.${key}`)}:{" "}
+                  {filtersQuery[key]?.length > 11
+                    ? formatCNPJ(filtersQuery[key])
+                    : formatCPF(filtersQuery[key])}
                 </Tag>
               </Col>
             );
