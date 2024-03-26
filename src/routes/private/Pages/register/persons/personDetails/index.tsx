@@ -52,6 +52,7 @@ export const PersonDetails = () => {
   });
   const [blacklistData, setBlacklistData] = useState({
     black_list: currentData?.black_list,
+    black_listedAt: currentData?.black_listedAt,
     black_list_reason: currentData?.black_list_reason,
     black_list_description: currentData?.black_list_description,
     flag_pep: currentData?.flag_pep,
@@ -143,6 +144,7 @@ export const PersonDetails = () => {
 
       setBlacklistData({
         black_list: currentData?.black_list,
+        black_listedAt: currentData?.black_listedAt,
         black_list_reason: currentData?.black_list_reason,
         black_list_description: currentData?.black_list_description,
         flag_pep: currentData?.flag_pep,
@@ -305,6 +307,25 @@ export const PersonDetails = () => {
                           {currentData[key]
                             ? t("table.true")
                             : t("table.false")}
+                        </Descriptions.Item>
+                      );
+                    case "black_listedAt":
+                      return (
+                        <Descriptions.Item
+                          key={key}
+                          label={t(`table.${key}`)}
+                          labelStyle={{
+                            maxWidth: "120px !important",
+                            margin: 0,
+                            padding: 0,
+                            textAlign: "center",
+                          }}
+                        >
+                          {`${new Date(
+                            currentData[key] ?? ""
+                          ).toLocaleDateString()} ${new Date(
+                            currentData[key] ?? ""
+                          ).toLocaleTimeString()}`}
                         </Descriptions.Item>
                       );
 

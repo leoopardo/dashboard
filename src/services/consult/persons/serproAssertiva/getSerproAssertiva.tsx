@@ -12,7 +12,7 @@ export function useGetSerproAssertiva(params?: SerproAssertivaQuery) {
   >(
     "SerproAssertiva",
     async () => {
-      const response = await api.get("customer/check_cpf/history/count", { params });
+      const response = await api.get("customer/check_document/history/count", { params });
       return response.data;
     },
     {

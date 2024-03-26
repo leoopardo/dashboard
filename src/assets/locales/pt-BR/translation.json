@@ -441,7 +441,7 @@
     "general_deposit_permission": "Permissão de depósito geral",
     "general_withdraw_permission": "Permissão de saque geral",
     "account_PJ_payment_permission": "Permissão pagamento de conta PJ",
-    "max_value_payer_pj_by_day": "Valor máximo PJ/dia",
+    "max_value_payer_pj_by_day": "Valor máximo depósito PJ/dia",
     "permission_different_payer_pf": "Permissão pagamentos de terceiros",
     "max_value_different_payer_pf_by_day": "Valor máximo terceiros/dia",
     "withdraw_limit_document_by_day": "Limite de Saques por CPF (Quantidade por dia)",
@@ -1065,7 +1065,8 @@
     "address_country": "País",
     "address_street": "Rua",
     "jurisdiction_city": "Cidade de jurisdição",
-    "phone": "Telefone"
+    "phone": "Telefone",
+    "black_listedAt": "Data de inclusão na blacklist"
   },
   "actions": {
     "details": "Detalhes",
@@ -1121,7 +1122,9 @@
     "is_possible_to_create_report_from_max_30_days": "É possível criar relatórios de no máximo 30 dias.",
     "document_already_on_blacklist": "Documento já está na blacklist.",
     "invalidCPFOrCNPJ": "Insira um CPF ou CNPJ válido.",
-    "invalid_cnpj": "CNPJ inválido."
+    "invalid_cnpj": "CNPJ inválido.",
+    "cpf_already_exists": "CPF já cadastrado.",
+    "reason_already_created": "Motivo já cadastrado."
   },
   "logs": {
     "login": "Login",

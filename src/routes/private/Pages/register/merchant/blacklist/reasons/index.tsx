@@ -23,6 +23,7 @@ import { queryClient } from "@src/services/queryClient";
 import { ValidateInterface } from "@src/services/types/validate.interface";
 import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
 import { useCreateMerchantBlacklistReasonsReports } from "@src/services/register/merchant/blacklist/exportCsvMerchantBlacklistReason";
+import { Toast } from "@src/components/Toast";
 
 const INITIAL_QUERY: MerchantBlacklistReasonQuery = {
   limit: 25,
@@ -71,13 +72,13 @@ export const MerchantBlacklistReasons = () => {
 
       return [
         { label: "general_use", required: false },
-        { label: "merchant_id", required: true },
+        { label: "merchant_id", required: false },
         { label: "reason_name", required: true },
       ];
     }
 
     return [
-      { label: "merchant_id", required: true },
+      { label: "merchant_id", required: false },
       { label: "reason_name", required: true },
     ];
   }, [body, type]);
@@ -193,7 +194,10 @@ export const MerchantBlacklistReasons = () => {
           ?.merchant_blacklist_reason_export_csv && (
           <Grid item xs={12} md="auto">
             <ExportReportsModal
-              disabled={!merchantBlacklistData?.total || !!MerchantBlacklistReasonsReportsError}
+              disabled={
+                !merchantBlacklistData?.total ||
+                !!MerchantBlacklistReasonsReportsError
+              }
               mutateReport={() => MerchantBlacklistReasonsReportsMutate()}
               error={MerchantBlacklistReasonsReportsError}
               success={MerchantBlacklistReasonsReportsIsSuccess}
@@ -212,7 +216,7 @@ export const MerchantBlacklistReasons = () => {
             setQuery={setQuery}
             data={merchantBlacklistData}
             items={merchantBlacklistData?.items}
-            error={merchantBlacklistDataError}
+            error={merchantBlacklistDataError }
             columns={columns}
             refetch={refetchMerchantBlacklistData}
             disableActions
@@ -256,6 +260,12 @@ export const MerchantBlacklistReasons = () => {
         modalName={`${t("table.document")}: ${currentItem?.document}`}
         open={isViewModalOpen}
         setOpen={setIsViewModalOpen}
+      />
+      <Toast
+        actionError={t("messages.create")}
+        actionSuccess={t("messages.created")}
+        error={error}
+        success={isSuccess}
       />
     </Grid>
   );

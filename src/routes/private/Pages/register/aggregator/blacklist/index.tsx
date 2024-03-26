@@ -182,7 +182,7 @@ export const AggregatorBlacklist = () => {
                 setSearch(value);
               }}
             >
-              <Input size="large" style={{ height: "40px" }} />
+              <Input size="large" style={{ height: "40px" }} allowClear />
             </ReactInputMask>
           </Space.Compact>
         </Grid>

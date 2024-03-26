@@ -11,28 +11,37 @@ interface SearchInterface {
 }
 
 export const Search = ({ query, setQuery, searchOption }: SearchInterface) => {
-  const [search, setSearch] = useState<string>("");
+  const [search, setSearch] = useState<string | undefined>(undefined);
   const { t } = useTranslation();
 
   useEffect(() => {
-    if (!query[searchOption as any] && search) {
-      setSearch("");
+    if (!searchOption && search) {
+      setSearch(undefined);
     }
-  }, [query, searchOption]);
+
+  }, [searchOption, search]);
 
   return (
     <Input.Search
-    readOnly={!searchOption}
+      readOnly={!searchOption}
       size="large"
       placeholder={`${t("table.search")}`}
       value={search}
       style={{ width: "100%" }}
       onChange={(event) => {
+        if (!searchOption) return;
         setSearch(event.target.value);
       }}
-      onSearch={(value) =>
-        setQuery((state: any) => ({ ...state, [searchOption as any]: value }))
-      }
+      onSearch={(value) => {
+        if (!value) {
+          const q = { ...query };
+          delete q[searchOption as any];
+          setQuery(q);
+          return;
+        }
+        setQuery((state: any) => ({ ...state, [searchOption as any]: value }));
+      }}
+      allowClear
     />
   );
 };
