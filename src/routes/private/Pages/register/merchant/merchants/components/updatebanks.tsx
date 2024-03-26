@@ -81,6 +81,7 @@ export const UpdateBanks = ({
   };
 
   useEffect(() => {
+    refetcMerchant();
     setBody((state) => ({
       ...state,
       merchants_ids: items?.map((merchant) => merchant?.id),
