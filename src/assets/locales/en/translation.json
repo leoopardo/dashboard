@@ -1112,7 +1112,8 @@
     "document_already_on_blacklist": "Document already on blacklist",
     "invalidCPFOrCNPJ": "Please enter a valid CPF or CNPJ",
     "invalid_cnpj": "Invalid CNPJ",
-    "cpf_already_exists": "CPF already exists"
+    "cpf_already_exists": "CPF already exists",
+    "reason_already_created": "Reason already created"
   },
   "logs": {
     "login": "Login",

@@ -20,4 +20,5 @@ export const ErrorList = {
   ["DOCUMENT ALREADY ON BLACKLIST"]: "document_already_on_blacklist",
   ["CNPJ inválido"]: "invalid_cnpj",
   ["CPF already exists"]: "cpf_already_exists",
+  ["REASON ALREADY CREATED"]: "reason_already_created",
 };
