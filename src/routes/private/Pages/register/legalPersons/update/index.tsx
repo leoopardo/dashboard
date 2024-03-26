@@ -496,8 +496,8 @@ export const LegalPersonUpdate = () => {
                   allowClear
                   showSearch
                   disabled={
-                    body?.black_list === "false" ??
-                    LegalPersonsByCnpjData?.black_list_reason == "false"
+                    (body?.black_list === "false" ) ??
+                    (LegalPersonsByCnpjData?.black_list_reason == "false" || !LegalPersonsByCnpjData?.black_list_reason)
                   }
                   options={BlacklistReasons?.items.map((reason) => {
                     return { label: reason.reason, value: reason.reason };

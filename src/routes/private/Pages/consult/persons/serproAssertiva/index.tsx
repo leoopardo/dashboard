@@ -56,7 +56,17 @@ export const SerproAssertiva = () => {
             <Card bordered={false}>
               <Statistic
                 title={t("table.serpro_count")}
-                value={data?.serpro_count_total}
+                value={data?.serpro_cpf_count_total}
+                precision={0}
+                valueStyle={{ color: defaultTheme.colors.chartBlue }}
+              />
+            </Card>
+          </Col>
+          <Col xs={{ span: 24 }} md={{ span: 4 }}>
+            <Card bordered={false}>
+              <Statistic
+                title={t("table.serpro_cnpj_count")}
+                value={data?.serpro_cnpj_count_total}
                 precision={0}
                 valueStyle={{ color: defaultTheme.colors.chartBlue }}
               />
@@ -68,7 +78,7 @@ export const SerproAssertiva = () => {
                 title="Total"
                 value={
                   (data?.assertiva_count_total || 0) +
-                  (data?.serpro_count_total || 0)
+                  (data?.serpro_cpf_count_total || 0)
                 }
                 precision={0}
                 valueStyle={{ color: defaultTheme.colors.chartGreen }}

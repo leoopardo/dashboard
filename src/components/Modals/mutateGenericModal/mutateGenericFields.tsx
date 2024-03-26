@@ -9,11 +9,14 @@ import { ValidateToken } from "@src/components/ValidateToken";
 import { useListClientClientBanks } from "@src/services/bank/listClientBanks";
 import { useGetMerchantBalanceTotal } from "@src/services/consult/merchant/balance/getMerchantBalanceTotal";
 import { queryClient } from "@src/services/queryClient";
+import { useListRowsAggregatorBlacklistReasons } from "@src/services/register/aggregator/blacklist/listAggregatorBlacklistReason";
+import { useListRowsMerchantBlacklistReasons } from "@src/services/register/merchant/blacklist/listMerchantBlacklistReason";
 import { useGetProfiles } from "@src/services/register/permissionGroups/getProfiles";
 import { useGetrefetchCountries } from "@src/services/states_cities/getCountries";
 import { ProfileInterface } from "@src/services/types/register/permissionsGroup/permissionsGroupinterface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
 import { unmask, validateFormCnpj } from "@src/utils/functions";
+import { getUtcOffset } from "@src/utils/getUtc";
 import { moneyFormatter } from "@src/utils/moneyFormatter";
 import {
   AutoComplete,
@@ -38,9 +41,6 @@ import { useTranslation } from "react-i18next";
 import ReactInputMask from "react-input-mask";
 import { MerchantSelect } from "../../Selects/merchantSelect";
 import { PartnerSelect } from "../../Selects/partnerSelect";
-import { getUtcOffset } from "@src/utils/getUtc";
-import { useListRowsMerchantBlacklistReasons } from "@src/services/register/merchant/blacklist/listMerchantBlacklistReason";
-import { useListRowsAggregatorBlacklistReasons } from "@src/services/register/aggregator/blacklist/listAggregatorBlacklistReason";
 const { RangePicker } = DatePicker;
 
 interface mutateProps {
@@ -105,7 +105,7 @@ export const MutateModalFields = ({
   formRef,
   submitRef,
 }: mutateProps) => {
-  const { permissions, merchant_id, aggregator_id } = queryClient.getQueryData(
+  const { permissions, aggregator_id, merchant_id } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
   const user = queryClient.getQueryData("validate") as ValidateInterface;

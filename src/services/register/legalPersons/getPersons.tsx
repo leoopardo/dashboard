@@ -11,7 +11,10 @@ export function useGetLegalPersons(params: LegalPersonsQuery) {
     LegalPersonsResponse | null | undefined
   >("LegalPersons", async () => {
     const response = await api.get("customer/companies", {
-      params,
+      params: {
+        ...params,
+        cnpj: params.cnpj ? params?.cnpj?.replace(/[^\d]/g, "") : undefined,
+      },
     });
     return response.data;
   });

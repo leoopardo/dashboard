@@ -169,12 +169,19 @@ export const ViewModalFields = (props: ViewModalProps) => {
                     textAlign: "center",
                   }}
                 >
-                  {Refund?.payer_document
-                    ? Refund?.payer_document.replace(
+                  {+`${Refund?.payer_document}`?.replace(/\D/g, "").length ===
+                  11
+                    ? `${Refund?.payer_document}`?.replace(
                         /(\d{3})(\d{3})(\d{3})(\d{2})/,
                         "$1.$2.$3-$4"
                       )
-                    : "-"}
+                    : +`${Refund?.payer_document}`?.replace(/\D/g, "")
+                        .length === 14
+                    ? `${Refund?.payer_document}`?.replace(
+                        /(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/,
+                        "$1.$2.$3/$4-$5"
+                      )
+                    : Refund?.payer_document ?? "-"}
                 </Descriptions.Item>
                 <Descriptions.Item
                   key={"value"}
@@ -374,12 +381,19 @@ export const ViewModalFields = (props: ViewModalProps) => {
                   textAlign: "center",
                 }}
               >
-                {RefundManual?.payer_document
-                  ? RefundManual?.payer_document.replace(
+                {+`${RefundManual?.payer_document}`?.replace(/\D/g, "")
+                  .length === 11
+                  ? `${RefundManual?.payer_document}`?.replace(
                       /(\d{3})(\d{3})(\d{3})(\d{2})/,
                       "$1.$2.$3-$4"
                     )
-                  : "-"}
+                  : +`${RefundManual?.payer_document}`?.replace(/\D/g, "")
+                      .length === 14
+                  ? `${RefundManual?.payer_document}`?.replace(
+                      /(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/,
+                      "$1.$2.$3/$4-$5"
+                    )
+                  : RefundManual?.payer_document ?? "-"}
               </Descriptions.Item>
               <Descriptions.Item
                 key={"value"}
@@ -573,10 +587,19 @@ export const ViewModalFields = (props: ViewModalProps) => {
                             textAlign: "center",
                           }}
                         >
-                          {`${RefundWithdraw[key]}`.replace(
-                            /(\d{3})(\d{3})(\d{3})(\d{2})/,
-                            "$1.$2.$3-$4"
-                          )}
+                          {+`${RefundWithdraw[key]}`?.replace(/\D/g, "")
+                            .length === 11
+                            ? `${RefundWithdraw[key]}`?.replace(
+                                /(\d{3})(\d{3})(\d{3})(\d{2})/,
+                                "$1.$2.$3-$4"
+                              )
+                            : +`${RefundWithdraw[key]}`?.replace(/\D/g, "")
+                                .length === 14
+                            ? `${RefundWithdraw[key]}`?.replace(
+                                /(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/,
+                                "$1.$2.$3/$4-$5"
+                              )
+                            : RefundWithdraw[key] ?? "-"}
                         </Descriptions.Item>
                       );
 
@@ -661,10 +684,21 @@ export const ViewModalFields = (props: ViewModalProps) => {
                             textAlign: "center",
                           }}
                         >
-                          {`${depositsRows?.items[0][key]}`.replace(
-                            /(\d{3})(\d{3})(\d{3})(\d{2})/,
-                            "$1.$2.$3-$4"
-                          )}
+                          {+`${depositsRows?.items[0][key]}`?.replace(/\D/g, "")
+                            .length === 11
+                            ? `${depositsRows?.items[0][key]}`?.replace(
+                                /(\d{3})(\d{3})(\d{3})(\d{2})/,
+                                "$1.$2.$3-$4"
+                              )
+                            : +`${depositsRows?.items[0][key]}`?.replace(
+                                /\D/g,
+                                ""
+                              ).length === 14
+                            ? `${depositsRows?.items[0][key]}`?.replace(
+                                /(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/,
+                                "$1.$2.$3/$4-$5"
+                              )
+                            : depositsRows?.items[0][key] ?? "-"}
                         </Descriptions.Item>
                       );
 

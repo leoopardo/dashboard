@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
-  DeleteOutlined,
   FilterOutlined,
-  PlusOutlined,
+  PlusOutlined
 } from "@ant-design/icons";
 import { ColumnInterface, CustomTable } from "@components/CustomTable";
 import { FiltersModal } from "@components/FiltersModal";
@@ -53,7 +52,7 @@ export const AggregatorBlacklistReasons = () => {
   const [currentItem, setCurrentItem] = useState<MerchantBlacklistItem | null>(
     null
   );
-  const [deleteItem, setDeleteItem] = useState<any>({});
+  const [deleteItem] = useState<any>({});
   const { error, isLoading, isSuccess, mutate } =
     useCreateAggregatorBlacklistReason(body);
   const { DeleteError, isDeleteSuccess, mutateDelete } =
@@ -166,16 +165,9 @@ export const AggregatorBlacklistReasons = () => {
             refetch={refetchAggregatorBlacklistData}
             loading={isAggregatorBlacklistDataFetching}
             label={["aggregator_name", "reason_name"]}
-            actions={[
-              {
-                label: "delete",
-                onClick: (item) => {
-                  setDeleteItem(item);
-                  setIsConfirmDeleteOpen(true);
-                },
-                icon: <DeleteOutlined />,
-              },
-            ]}
+            actions={[]}
+            disableActions
+            
           />
         </Grid>
       </Grid>
@@ -198,7 +190,7 @@ export const AggregatorBlacklistReasons = () => {
         open={isCreateReasonOpen}
         setOpen={setIsCreateReasonOpen}
         fields={[
-          { label: "aggregator_id", required: true },
+          { label: "aggregator_id", required: false },
           { label: "reason_name", required: true },
         ]}
         body={body}
