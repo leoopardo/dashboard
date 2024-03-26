@@ -282,6 +282,7 @@ export const FiltersModalFields = ({
             endDateKeyName={endDateKeyName}
             haveInitialDate={haveInitialDate}
             disabled={disabled}
+            initial_query={initialQuery}
           />
         </Col>
       </Row>
