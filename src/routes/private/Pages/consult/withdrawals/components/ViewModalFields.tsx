@@ -8,13 +8,7 @@ import { Grid } from "@mui/material";
 import { useCreateWithdrawVoucherRefund } from "@src/services/consult/withdrawals/generatedWithdrawals/generateWithdrawVoucher";
 import { useGetWithdraw } from "@src/services/consult/withdrawals/generatedWithdrawals/getWithdraw";
 import { moneyFormatter } from "@src/utils/moneyFormatter";
-import {
-  Button,
-  Descriptions,
-  Segmented,
-  Spin,
-  Typography
-} from "antd";
+import { Button, Descriptions, Segmented, Spin, Typography } from "antd";
 import { Dispatch, SetStateAction, useState } from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
@@ -391,7 +385,7 @@ export const ViewModalFields = (props: ViewModalProps) => {
                             textAlign: "center",
                           }}
                         >
-                           {`${new Date(withdraw[key]).toLocaleDateString(
+                          {`${new Date(withdraw[key]).toLocaleDateString(
                             "pt-BR",
                             {
                               timeZone: "UTC",
@@ -441,8 +435,19 @@ export const ViewModalFields = (props: ViewModalProps) => {
                           }}
                         >
                           <Typography.Text copyable>
-                            {" "}
-                            {withdraw[key]}
+                            {+`${withdraw[key]}`?.replace(/\D/g, "").length ===
+                            11
+                              ? `${withdraw[key]}`?.replace(
+                                  /(\d{3})(\d{3})(\d{3})(\d{2})/,
+                                  "$1.$2.$3-$4"
+                                )
+                              : +`${withdraw[key]}`?.replace(/\D/g, "")
+                                  .length === 14
+                              ? `${withdraw[key]}`?.replace(
+                                  /(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/,
+                                  "$1.$2.$3/$4-$5"
+                                )
+                              : withdraw[key] ?? "-"}
                           </Typography.Text>
                         </Descriptions.Item>
                       );
