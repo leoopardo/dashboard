@@ -350,7 +350,7 @@ export const LegalPersonDetails = () => {
                   textAlign: "center",
                 }}
               >
-                {LegalPersonsByCnpjData?.black_list
+                {LegalPersonsByCnpjData?.black_list === "true"
                   ? t("table.true")
                   : t("table.false")}
               </Descriptions.Item>

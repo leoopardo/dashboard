@@ -398,7 +398,7 @@
     "general_deposit_permission": "General deposit permission",
     "general_withdraw_permission": "General withdraw permission",
     "account_PJ_payment_permission": "Account PJ payment permission",
-    "max_value_payer_pj_by_day": "Max value payer pj/day",
+    "max_value_payer_pj_by_day": "Cash in max value payer pj/day",
     "permission_different_payer_pf": "Permission different payer",
     "max_value_different_payer_pf_by_day": "Max value different payer by days",
     "withdraw_limit_document_by_day": "Withdraw limit document by day",
@@ -459,7 +459,7 @@
     "v3_id": "ID V3",
     "position": "Position",
     "search": "Search",
-    "allows_generate_qrcode": "Allows generate QRCode",
+    "allows_generate_qrcode": "Allows PJ generate QRCode",
     "license_number": "License number",
     "add_all_columns": "Add all columns",
     "ip": "IP",
@@ -1058,7 +1058,8 @@
     "address_country": "Country",
     "address_street": "Street",
     "jurisdiction_city": "Jurisdiction city",
-    "phone": "Cellphone"
+    "phone": "Cellphone",
+    "black_listedAt": "Blacklisted at"
   },
   "actions": {
     "details": "Details",

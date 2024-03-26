@@ -18,5 +18,6 @@ export interface SerproAssertivaData {
   page: number;
   total: number;
   assertiva_count_total: number;
-  serpro_count_total: number;
+  serpro_cpf_count_total: number;
+  serpro_cnpj_count_total: number;
 }
