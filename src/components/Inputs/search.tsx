@@ -15,10 +15,11 @@ export const Search = ({ query, setQuery, searchOption }: SearchInterface) => {
   const { t } = useTranslation();
 
   useEffect(() => {
-    if (!query[searchOption as any] && search) {
+    if (!searchOption && search) {
       setSearch(undefined);
     }
-  }, [query, searchOption]);
+
+  }, [searchOption, search]);
 
   return (
     <Input.Search
