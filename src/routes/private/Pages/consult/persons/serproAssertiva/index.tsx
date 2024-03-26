@@ -78,7 +78,7 @@ export const SerproAssertiva = () => {
                 title="Total"
                 value={
                   (data?.assertiva_count_total || 0) +
-                  (data?.serpro_count_total || 0)
+                  (data?.serpro_cpf_count_total || 0)
                 }
                 precision={0}
                 valueStyle={{ color: defaultTheme.colors.chartGreen }}
