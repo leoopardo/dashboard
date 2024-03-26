@@ -185,10 +185,18 @@ export const ViewModalFields = (props: ViewModalProps) => {
                             textAlign: "center",
                           }}
                         >
-                          {`${deposit[key]}`.replace(
-                            /(\d{3})(\d{3})(\d{3})(\d{2})/,
-                            "$1.$2.$3-$4"
-                          )}
+                          {+`${deposit[key]}`?.replace(/\D/g, "").length === 11
+                            ? `${deposit[key]}`?.replace(
+                                /(\d{3})(\d{3})(\d{3})(\d{2})/,
+                                "$1.$2.$3-$4"
+                              )
+                            : +`${deposit[key]}`?.replace(/\D/g, "").length ===
+                              14
+                            ? `${deposit[key]}`?.replace(
+                                /(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/,
+                                "$1.$2.$3/$4-$5"
+                              )
+                            : deposit[key] ?? "-"}
                         </Descriptions.Item>
                       );
 
@@ -324,10 +332,18 @@ export const ViewModalFields = (props: ViewModalProps) => {
                             textAlign: "center",
                           }}
                         >
-                          {`${deposit[key]}`.replace(
-                            /(\d{3})(\d{3})(\d{3})(\d{2})/,
-                            "$1.$2.$3-$4"
-                          )}
+                          {+`${deposit[key]}`?.replace(/\D/g, "").length === 11
+                            ? `${deposit[key]}`?.replace(
+                                /(\d{3})(\d{3})(\d{3})(\d{2})/,
+                                "$1.$2.$3-$4"
+                              )
+                            : +`${deposit[key]}`?.replace(/\D/g, "").length ===
+                              14
+                            ? `${deposit[key]}`?.replace(
+                                /(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/,
+                                "$1.$2.$3/$4-$5"
+                              )
+                            : deposit[key] ?? "-"}
                         </Descriptions.Item>
                       );
 
@@ -372,10 +388,18 @@ export const ViewModalFields = (props: ViewModalProps) => {
                             textAlign: "center",
                           }}
                         >
-                          {`${deposit[key]}`.replace(
-                            /(\d{3})(\d{3})(\d{3})(\d{2})/,
-                            "$1.$2.$3-$4"
-                          )}
+                          {+`${deposit[key]}`?.replace(/\D/g, "").length === 11
+                            ? `${deposit[key]}`?.replace(
+                                /(\d{3})(\d{3})(\d{3})(\d{2})/,
+                                "$1.$2.$3-$4"
+                              )
+                            : +`${deposit[key]}`?.replace(/\D/g, "").length ===
+                              14
+                            ? `${deposit[key]}`?.replace(
+                                /(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/,
+                                "$1.$2.$3/$4-$5"
+                              )
+                            : deposit[key] ?? "-"}
                         </Descriptions.Item>
                       );
 
@@ -444,7 +468,19 @@ export const ViewModalFields = (props: ViewModalProps) => {
                       textAlign: "center",
                     }}
                   >
-                    {Refund?.payer_document}
+                    {+`${Refund?.payer_document}`?.replace(/\D/g, "").length ===
+                    11
+                      ? `${Refund?.payer_document}`?.replace(
+                          /(\d{3})(\d{3})(\d{3})(\d{2})/,
+                          "$1.$2.$3-$4"
+                        )
+                      : +`${Refund?.payer_document}`?.replace(/\D/g, "")
+                          .length === 14
+                      ? `${Refund?.payer_document}`?.replace(
+                          /(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/,
+                          "$1.$2.$3/$4-$5"
+                        )
+                      : Refund?.payer_document ?? "-"}
                   </Descriptions.Item>
                   <Descriptions.Item
                     key={"value"}
