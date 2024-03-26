@@ -1121,7 +1121,8 @@
     "is_possible_to_create_report_from_max_30_days": "É possível criar relatórios de no máximo 30 dias.",
     "document_already_on_blacklist": "Documento já está na blacklist.",
     "invalidCPFOrCNPJ": "Insira um CPF ou CNPJ válido.",
-    "invalid_cnpj": "CNPJ inválido."
+    "invalid_cnpj": "CNPJ inválido.",
+    "cpf_already_exists": "CPF já cadastrado."
   },
   "logs": {
     "login": "Login",

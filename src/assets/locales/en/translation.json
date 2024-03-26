@@ -1111,7 +1111,8 @@
     "is_possible_to_create_report_from_max_30_days": "It is only possible to create a report for a maximum of 30 days.",
     "document_already_on_blacklist": "Document already on blacklist",
     "invalidCPFOrCNPJ": "Please enter a valid CPF or CNPJ",
-    "invalid_cnpj": "Invalid CNPJ"
+    "invalid_cnpj": "Invalid CNPJ",
+    "cpf_already_exists": "CPF already exists"
   },
   "logs": {
     "login": "Login",

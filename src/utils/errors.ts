@@ -19,4 +19,5 @@ export const ErrorList = {
   ["is possible to create report from max 30 days"]: "is_possible_to_create_report_from_max_30_days",
   ["DOCUMENT ALREADY ON BLACKLIST"]: "document_already_on_blacklist",
   ["CNPJ inválido"]: "invalid_cnpj",
+  ["CPF already exists"]: "cpf_already_exists",
 };
