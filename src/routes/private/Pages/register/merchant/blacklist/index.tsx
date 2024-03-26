@@ -87,6 +87,7 @@ export const MerchantBlacklist = () => {
     { name: "merchant_name", type: "text", sort: true },
     { name: "reason", type: "text", sort: true },
     { name: "description", type: "text", sort: true },
+   // { name: "can_be_deleted_only_by_organization", type: "boolean", sort: true },
     { name: "create_user_name", type: "text" },
     { name: "createdAt", type: "date", sort: true },
   ];
@@ -195,7 +196,8 @@ export const MerchantBlacklist = () => {
             {t("table.clear_filters")}
           </Button>
         </Grid>
-        {permissions?.register?.merchant?.blacklist?.merchant_blacklist_create && (
+        {permissions?.register?.merchant?.blacklist
+          ?.merchant_blacklist_create && (
           <Grid item xs={12} md={3} lg={2}>
             <Button
               type="primary"
@@ -276,7 +278,7 @@ export const MerchantBlacklist = () => {
         ]}
         refetch={refetchMerchantBlacklistData}
         selectOptions={{
-          document_type: ["CPF", "CNPJ"],
+          document_type: ["CPF", "CNPJ"]
         }}
         startDateKeyName="start_date"
         endDateKeyName="end_date"
@@ -294,7 +296,7 @@ export const MerchantBlacklist = () => {
             itens:
               (currentItem?.document?.length ?? 0) === 14
                 ? formatCNPJ(currentItem?.document ?? "")
-                : formatCPF(currentItem?.document ?? ''),
+                : formatCPF(currentItem?.document ?? ""),
             entity: t("table.merchant"),
             name: currentItem?.merchant_name,
           })}`}
@@ -303,7 +305,7 @@ export const MerchantBlacklist = () => {
       )}
 
       <MutateModal
-        type="update"
+        type="create"
         open={isUpdateModalOpen}
         setOpen={setIsUpdateModalOpen}
         fields={[

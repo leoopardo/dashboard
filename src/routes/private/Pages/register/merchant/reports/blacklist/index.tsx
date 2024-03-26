@@ -124,7 +124,6 @@ export const MerchantBlacklistReports = () => {
               { name: "createdAt", type: "date", sort: true },
               { name: "created_by_name", type: "text" },
               { name: "rows", type: "text" },
-              { name: "can_be_deleted_only_by_organization", type: "boolean" },
               { name: "progress", type: "progress" },
             ]}
             loading={isMerchantBlacklistReportsDataFetching}

@@ -159,7 +159,7 @@ export const AggregatorBlacklist = () => {
       </Grid>
 
       <Grid container style={{ marginTop: "5px" }} spacing={1}>
-      <Grid item xs={12} md={4} lg={4}>
+        <Grid item xs={12} md={4} lg={4}>
           <Space.Compact style={{ width: "100%" }} size="large">
             <Select
               size="small"
@@ -167,7 +167,6 @@ export const AggregatorBlacklist = () => {
               options={[
                 { label: "CPF", value: "cpf" },
                 { label: "CNPJ", value: "cnpj" },
-               
               ]}
               value={docType}
               onChange={(value) => {
@@ -183,7 +182,7 @@ export const AggregatorBlacklist = () => {
                 setSearch(value);
               }}
             >
-              <Input size="large" style={{height: "40px"}}/>
+              <Input size="large" style={{ height: "40px" }} />
             </ReactInputMask>
           </Space.Compact>
         </Grid>
@@ -267,6 +266,11 @@ export const AggregatorBlacklist = () => {
               { name: "reason", type: "text", sort: true, key: refReason },
               { name: "description", type: "text", key: refDescription },
               { name: "create_user_name", type: "text", key: refWhoAdd },
+           /*    {
+                name: "can_be_deleted_only_by_organization",
+                type: "boolean",
+                sort: true,
+              }, */
               {
                 name: "createdAt",
                 type: "date",
@@ -298,9 +302,18 @@ export const AggregatorBlacklist = () => {
         setOpen={setIsFiltersOpen}
         query={query}
         setQuery={setQuery}
-        filters={["start_date", "end_date", "aggregator_id", "document_type", "reason" ]}
+        filters={[
+          "start_date",
+          "end_date",
+          "aggregator_id",
+          "document_type",
+          "aggregator_reason",
+        ]}
         refetch={refetchAggregatorsBlacklistData}
-        selectOptions={{ document_type: ["CPF", "CNPJ"],}}
+        selectOptions={{
+          document_type: ["CPF", "CNPJ"],
+          can_be_deleted_only_by_organization: ["true", "false"],
+        }}
         startDateKeyName="start_date"
         endDateKeyName="end_date"
         initialQuery={INITIAL_QUERY}
@@ -333,7 +346,7 @@ export const AggregatorBlacklist = () => {
             : undefined,
           { label: "document", required: true },
           { label: "aggregator_id", required: true },
-          { label: "reason", required: true },
+          { label: "aggregator_reason", required: true },
           { label: "description", required: true },
         ]}
         body={body}
@@ -367,7 +380,8 @@ export const AggregatorBlacklist = () => {
           }
         }
         exportCsvStep={
-          permissions?.register?.aggregator?.users?.aggregator_user_export_csv && {
+          permissions?.register?.aggregator?.users
+            ?.aggregator_user_export_csv && {
             title: t("wiki.generate_reports"),
             description: (
               <Typography>
