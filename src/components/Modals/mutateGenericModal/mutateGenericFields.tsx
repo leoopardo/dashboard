@@ -9,14 +9,12 @@ import { ValidateToken } from "@src/components/ValidateToken";
 import { useListClientClientBanks } from "@src/services/bank/listClientBanks";
 import { useGetMerchantBalanceTotal } from "@src/services/consult/merchant/balance/getMerchantBalanceTotal";
 import { queryClient } from "@src/services/queryClient";
-import { useGetRowsMerchantBlacklistReasons } from "@src/services/register/merchant/blacklist/getMerchantBlacklistReason";
 import { useGetProfiles } from "@src/services/register/permissionGroups/getProfiles";
 import { useGetrefetchCountries } from "@src/services/states_cities/getCountries";
 import { ProfileInterface } from "@src/services/types/register/permissionsGroup/permissionsGroupinterface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
 import { unmask, validateFormCnpj } from "@src/utils/functions";
 import { moneyFormatter } from "@src/utils/moneyFormatter";
-import { useGetRowsAggregatorBlacklistReasons } from "@src/services/register/aggregator/blacklist/getAggregatorBlacklistReason";
 import {
   AutoComplete,
   Avatar,
@@ -41,6 +39,8 @@ import ReactInputMask from "react-input-mask";
 import { MerchantSelect } from "../../Selects/merchantSelect";
 import { PartnerSelect } from "../../Selects/partnerSelect";
 import { getUtcOffset } from "@src/utils/getUtc";
+import { useListRowsMerchantBlacklistReasons } from "@src/services/register/merchant/blacklist/listMerchantBlacklistReason";
+import { useListRowsAggregatorBlacklistReasons } from "@src/services/register/aggregator/blacklist/listAggregatorBlacklistReason";
 const { RangePicker } = DatePicker;
 
 interface mutateProps {
@@ -152,7 +152,7 @@ export const MutateModalFields = ({
   });
 
   const { merchantBlacklistData, refetchMerchantBlacklistData } =
-    useGetRowsMerchantBlacklistReasons(
+    useListRowsMerchantBlacklistReasons(
       {
         limit: 200,
         page: 1,
@@ -161,14 +161,15 @@ export const MutateModalFields = ({
       !body?.merchant_id && !merchant_id
     );
 
-    const {AggregatorBlacklistData, refetchAggregatorBlacklistData} = useGetRowsAggregatorBlacklistReasons(
+  const { AggregatorBlacklistData, refetchAggregatorBlacklistData } =
+    useListRowsAggregatorBlacklistReasons(
       {
         limit: 200,
         page: 1,
         aggregator_id: body?.aggregator_id,
       },
-       !body?.aggregator_id && !aggregator_id
-    )
+      !body?.aggregator_id && !aggregator_id
+    );
 
   const panelRender = (panelNode: any) => (
     <StyleWrapperDatePicker>{panelNode}</StyleWrapperDatePicker>
@@ -587,17 +588,39 @@ export const MutateModalFields = ({
                       name={field.label}
                       style={{ margin: 10 }}
                       rules={[
-                        {
-                          required: field.required,
-                          message:
-                            t("input.required", {
-                              field: t(`input.${field.label}`),
-                            }) || "",
-                        },
+                        () => ({
+                          validator(_, value) {
+                            if (value && value.length > 0) {
+                              return Promise.resolve();
+                            }
+
+                            if (!value && body.merchant_id) {
+                              return Promise.reject(
+                                new Error(
+                                  t("input.required", {
+                                    field: t(`input.reason`),
+                                  }) || ""
+                                )
+                              );
+                            }
+
+                            if (!body?.merchant_id && !merchant_id) {
+                              return Promise.reject(
+                                new Error(
+                                  t("input.enable_field", {
+                                    field: t(`input.merchant_id`),
+                                    currentField: t(`input.reason`),
+                                  }) || ""
+                                )
+                              );
+                            }
+                          },
+                        }),
                       ]}
                     >
                       <Select
                         data-test-id="reason-select"
+                        disabled={!body?.merchant_id && !merchant_id}
                         size="large"
                         options={merchantBlacklistData?.items?.map((reason) => {
                           return {
@@ -621,29 +644,53 @@ export const MutateModalFields = ({
                 return (
                   <Col span={24}>
                     <Form.Item
-                      data-test-id="reason-select-form-item"
+                      data-test-id="aggregator-reason-select-form-item"
                       label={t(`table.black_list_reason`)}
                       name={field.label}
                       style={{ margin: 10 }}
                       rules={[
-                        {
-                          required: field.required,
-                          message:
-                            t("input.required", {
-                              field: t(`input.${field.label}`),
-                            }) || "",
-                        },
+                        () => ({
+                          validator(_, value) {
+                            if (value && value.length > 0) {
+                              return Promise.resolve();
+                            }
+
+                            if (!value && body.aggregator_id) {
+                              return Promise.reject(
+                                new Error(
+                                  t("input.required", {
+                                    field: t(`input.reason`),
+                                  }) || ""
+                                )
+                              );
+                            }
+
+                            if (!body?.aggregator_id && !aggregator_id) {
+                              return Promise.reject(
+                                new Error(
+                                  t("input.enable_field", {
+                                    field: t(`input.aggregator_id`),
+                                    currentField: t(`input.reason`),
+                                  }) || ""
+                                )
+                              );
+                            }
+                          },
+                        }),
                       ]}
                     >
                       <Select
-                        data-test-id="reason-select"
+                        disabled={!body?.aggregator_id && !aggregator_id}
+                        data-test-id="aggregator-reason-select"
                         size="large"
-                        options={AggregatorBlacklistData?.items?.map((reason) => {
-                          return {
-                            label: reason.reason_name,
-                            value: reason._id,
-                          };
-                        })}
+                        options={AggregatorBlacklistData?.items?.map(
+                          (reason) => {
+                            return {
+                              label: reason.reason_name,
+                              value: reason._id,
+                            };
+                          }
+                        )}
                         value={body[field.label]}
                         onChange={(value) =>
                           setBody((state: any) => ({

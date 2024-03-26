@@ -381,6 +381,7 @@
   "input": {
     "required": "Por favor, insira o {{field}}",
     "required(a)": "Por favor, insira a {{field}}",
+    "enable_field": "Por favor, insira um {{field}} para habilitar o campo {{currentField}}",
     "confirm_password": "Por favor, confirme sua senha!",
     "doest_match": "As senhas não coincidem!",
     "name": "Nome",

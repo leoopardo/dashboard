@@ -337,6 +337,7 @@
   "input": {
     "required": "Please input the {{field}}",
     "required(a)": "Please input the {{field}}",
+    "enable_field": "Please, input the {{field}} to enable the input {{currentField}}",
     "confirm_password": "PLease confirm your password",
     "doest_match": "The new password that you entered do not match!",
     "name": "Name",
