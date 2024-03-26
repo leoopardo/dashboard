@@ -198,7 +198,7 @@ export const AggregatorBlacklistReasons = () => {
         open={isCreateReasonOpen}
         setOpen={setIsCreateReasonOpen}
         fields={[
-          { label: "aggregator_id", required: true },
+          { label: "aggregator_id", required: false },
           { label: "reason_name", required: true },
         ]}
         body={body}
