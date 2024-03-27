@@ -131,7 +131,9 @@ export const FeesTab = (props: { id?: string }) => {
           </Typography.Title>
           <Typography.Title level={5} mark>
             {t("titles.current_deposit_refund_fee")}:{" "}
-            {merchantFeesData?.fees?.pix_refund_fee_type === "PERCENT" ?  `${merchantFeesData?.fees?.pix_refund_fee_percent}%` : moneyFormatter(
+            {merchantFeesData?.fees?.pix_refund_fee_type === "PERCENT"
+              ? `${merchantFeesData?.fees?.pix_refund_fee_percent}%`
+              : moneyFormatter(
                   merchantFeesData?.fees?.pix_refund_fee_value || 0
                 )}
           </Typography.Title>
