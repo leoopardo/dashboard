@@ -82,6 +82,7 @@ export const MerchantManual = () => {
     page: 1,
     sort_field: "created_at",
     sort_order: "DESC",
+    enabled: true,
   });
 
   const { mutate, error, isSuccess } =
