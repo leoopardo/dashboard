@@ -261,6 +261,7 @@ export const ImportBlacklist = () => {
               accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
               style={{ minWidth: "100%", display: "none" }}
               action=""
+              maxCount={1}
               onRemove={() => setDataSource(initialData)}
               beforeUpload={(file) => {
                 const fileType = file.type;

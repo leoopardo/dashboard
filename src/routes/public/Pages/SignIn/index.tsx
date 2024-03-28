@@ -28,7 +28,6 @@ const Logo = import.meta.env.VITE_APP_LOGO ?? PbLogo;
 
 export const Login = () => {
   const { t } = useTranslation();
-  // const { signIn, token } = useAuth();
   document.title = `Login | ${import.meta.env.VITE_APP_COMPANY_NAME}`;
   const submitRef = useRef<HTMLButtonElement>(null);
   const isMobile = useMediaQuery({ maxWidth: "900px" });
