@@ -13,8 +13,10 @@ import { useExportHistoricCnpjByMerchantDetails } from "@src/services/consult/pe
 import { useExportHistoricCpfByMerchantDetails } from "@src/services/consult/persons/exportCsvHistoricCpfByMerchantDetails";
 import { useGetHistoricCnpjByMerchantDetails } from "@src/services/consult/persons/historicCnpjByMerchantDetails";
 import { useGetHistoricCpfByMerchantDetails } from "@src/services/consult/persons/historicCpfByMerchantDetails";
+import { queryClient } from "@src/services/queryClient";
 import { HistoricCpfByMerchantQuery } from "@src/services/types/consult/persons/hsitoricCpfByMerchant";
 import { PersonBlacklistReasonsItem } from "@src/services/types/register/persons/blacklist/reasons.interface";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 import {
   Badge,
   Button,
@@ -29,6 +31,7 @@ import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate } from "react-router-dom";
 
 export const HistoricCpfByMerchantDetails = () => {
+  const { type } = queryClient.getQueryData("validate") as ValidateInterface;
   const location = useLocation();
   const navigate = useNavigate();
   const INITIAL_QUERY: HistoricCpfByMerchantQuery = location?.state?.query;
@@ -76,15 +79,30 @@ export const HistoricCpfByMerchantDetails = () => {
 
   const [, setCurrentItem] = useState<PersonBlacklistReasonsItem | null>(null);
 
-  const columns: ColumnInterface[] = [
-    { name: "_id", type: "id", head: "id" },
-    { name: "user_name", type: "text" },
-    { name: "merchant_id", type: "text" },
-    { name: "cpf", type: "document" },
-    { name: "date", type: "date" },
-    { name: "ip", type: "text" },
-    { name: "createdAt", type: "date" },
-  ];
+  const columns: ColumnInterface[] =
+    type && [1, 2].includes(type)
+      ? [
+          { name: "_id", type: "id", head: "id" },
+          { name: "user_name", type: "text" },
+          { name: "merchant_id", type: "text" },
+          { name: "cpf", type: "document" },
+          { name: "date", type: "date" },
+          { name: "ip", type: "text" },
+          { name: "createdAt", type: "date" },
+          {
+            name: "checked_on_provider",
+            type: "boolean",
+          },
+        ]
+      : [
+          { name: "_id", type: "id", head: "id" },
+          { name: "user_name", type: "text" },
+          { name: "merchant_id", type: "text" },
+          { name: "cpf", type: "document" },
+          { name: "date", type: "date" },
+          { name: "ip", type: "text" },
+          { name: "createdAt", type: "date" },
+        ];
 
   useEffect(() => {
     refetchHistoricCpfByMerchantDetailsData();
@@ -292,15 +310,31 @@ export const HistoricCpfByMerchantDetails = () => {
                     data={HistoricCnpjByMerchantDetailsData}
                     items={HistoricCnpjByMerchantDetailsData?.items}
                     error={HistoricCnpjByMerchantDetailsDataError}
-                    columns={[
-                      { name: "_id", type: "id", head: "id" },
-                      { name: "user_name", type: "text" },
-                      { name: "merchant_id", type: "text" },
-                      { name: "cnpj", type: "document" },
-                      { name: "date", type: "date" },
-                      { name: "ip", type: "text" },
-                      { name: "createdAt", type: "date" },
-                    ]}
+                    columns={
+                      type && [1, 2].includes(type)
+                        ? [
+                            { name: "_id", type: "id", head: "id" },
+                            { name: "user_name", type: "text" },
+                            { name: "merchant_id", type: "text" },
+                            { name: "cnpj", type: "document" },
+                            { name: "date", type: "date" },
+                            { name: "ip", type: "text" },
+                            { name: "createdAt", type: "date" },
+                            {
+                              name: "checked_on_provider",
+                              type: "boolean",
+                            },
+                          ]
+                        : [
+                            { name: "_id", type: "id", head: "id" },
+                            { name: "user_name", type: "text" },
+                            { name: "merchant_id", type: "text" },
+                            { name: "cnpj", type: "document" },
+                            { name: "date", type: "date" },
+                            { name: "ip", type: "text" },
+                            { name: "createdAt", type: "date" },
+                          ]
+                    }
                     loading={isHistoricCpfByMerchantDetailsDataFetching}
                     label={["cpf", "merchant_name"]}
                     actions={[]}

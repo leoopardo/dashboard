@@ -1061,7 +1061,10 @@
     "jurisdiction_city": "Jurisdiction city",
     "phone": "Cellphone",
     "black_listedAt": "Blacklisted at",
-    "merchant_category_id": "Category"
+    "merchant_category_id": "Category",
+    "totalCheckedInternal": "Internal checks",
+    "totalCheckedOnProvider": "External checks",
+    "checked_on_provider": "External check"
   },
   "actions": {
     "details": "Details",
