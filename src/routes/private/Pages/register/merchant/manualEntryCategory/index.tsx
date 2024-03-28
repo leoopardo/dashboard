@@ -31,7 +31,6 @@ export const MerchantManualEntryCategory = () => {
   const { permissions } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
-
   const [query, setQuery] =
     useState<MerchantManualEntryCategoryQuery>(INITIAL_QUERY);
   const { t } = useTranslation();

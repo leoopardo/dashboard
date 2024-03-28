@@ -78,10 +78,11 @@ export const OrgonizationManual = () => {
     OrganizationManualReportsMutate,
   } = useCreateOrganizationManualReports(query);
 
-  const { CategoriesData } = useGetOrganizationCategories({
-    limit: 200,
-    page: 1,
-  });
+  const { CategoriesData, refetchCategoriesData } =
+    useGetOrganizationCategories({
+      limit: 200,
+      page: 1,
+    });
 
   const onSubmitIn = () => {
     setOperationInIOpen(false);
@@ -92,6 +93,10 @@ export const OrgonizationManual = () => {
   useEffect(() => {
     refetchOrganizationMovimentsData();
   }, [query]);
+
+  useEffect(() => {
+    refetchCategoriesData();
+  }, []);
 
   useEffect(() => {
     if (isSuccess) {
@@ -235,7 +240,8 @@ export const OrgonizationManual = () => {
             </Button>
           </Grid>
           <Grid item xs={12} md={9} lg={9}>
-            <FilterChips initial_query={INITIAL_QUERY}
+            <FilterChips
+              initial_query={INITIAL_QUERY}
               startDateKeyName="start_date"
               endDateKeyName="end_date"
               query={query}

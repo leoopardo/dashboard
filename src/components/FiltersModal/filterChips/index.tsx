@@ -70,7 +70,7 @@ export const FilterChips = ({
     page: 1,
     sort_field: "created_at",
     sort_order: "DESC",
-    enabled: query?.category_id ? true : false,
+    enabled: query?.merchant_category_id ? true : false,
   });
   const { ProfilesData } = useGetProfiles({
     group: true,
@@ -277,6 +277,31 @@ export const FilterChips = ({
                     categoryData?.items.find((c) => c.id === query?.category_id)
                       ?.name ??
                     "-"}
+                </Tag>
+              </Col>
+            );
+
+          case "merchant_category_id":
+            return (
+              <Col key={key}>
+                <Tag
+                  data-test-id="filter-chip-merchant-id"
+                  style={{
+                    width: "100%",
+                    textOverflow: "ellipsis",
+                    overflow: "hidden",
+                    wordBreak: "break-all",
+                    display: disabled?.includes(key) ? "none" : undefined,
+                  }}
+                  key={key}
+                  color="cyan"
+                  icon={
+                    <CloseCircleOutlined onClick={() => deleteFilter(key)} />
+                  }
+                >
+                  {t(`table.category`)}:{" "}
+                  {categoryData?.items.find((c) => c.id === query?.merchant_category_id)
+                    ?.name ?? "-"}
                 </Tag>
               </Col>
             );
