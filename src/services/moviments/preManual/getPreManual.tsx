@@ -12,7 +12,7 @@ export function useGetPreManualEntry(params: GetMerchantMovimentsQuery) {
     GetMerchantMovimentsData | null | undefined
   >("PreManualEntry", async () => {
     const response = await api.get("core/pre-entry-account", {
-      params,
+      params: { ...params, category_id: params.merchant_category_id },
     });
     return response.data;
   });

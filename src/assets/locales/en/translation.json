@@ -1060,7 +1060,8 @@
     "address_street": "Street",
     "jurisdiction_city": "Jurisdiction city",
     "phone": "Cellphone",
-    "black_listedAt": "Blacklisted at"
+    "black_listedAt": "Blacklisted at",
+    "merchant_category_id": "Category"
   },
   "actions": {
     "details": "Details",

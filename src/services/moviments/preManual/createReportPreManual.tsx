@@ -13,8 +13,8 @@ export function useCreatePreMerchantManualReports(
       "core/csv/pre-entry-account/",
       {
         ...body,
+        category_id: body.merchant_category_id,
       },
-      { params: body }
     );
     await queryClient.refetchQueries({
       queryKey: ["PreManualReports"],

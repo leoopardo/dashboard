@@ -1,6 +1,7 @@
 export interface GetMerchantMovimentsQuery {
   user_id?: number;
   category_id?: number;
+  merchant_category_id?: number;
   start_date: string;
   end_date: string;
   status?: string;

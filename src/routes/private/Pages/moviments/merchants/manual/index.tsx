@@ -372,13 +372,13 @@ export const MerchantManual = () => {
           "aggregator_id",
           "merchant_id",
           "operator_id",
-          "category_id",
+          "merchant_category_id",
           "type",
         ]}
         refetch={refetchMerchantMovimentsData}
         selectOptions={{
           status: ["PROCESSING", "SUCCESS", "CANCELED"],
-          category_id:
+          merchant_category_id:
             categoryData?.items?.map((category) => {
               return { label: category?.name, value: category?.id };
             }) || [],
