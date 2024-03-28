@@ -9,6 +9,7 @@ import {
   IMerchantFeesProps,
   IMerchantFeesUpdate,
 } from "@src/services/types/register/merchants/merchantFeesConfig.interface";
+import { moneyFormatter } from "@src/utils/moneyFormatter";
 import {
   Button,
   Divider,
@@ -79,17 +80,17 @@ export const FeesTab = (props: { id?: string }) => {
   useEffect(() => {
     const handleWheel = () => {
       const activeElement = document.activeElement as HTMLElement;
-      if (activeElement?.tagName.toLowerCase() === 'input') {
+      if (activeElement?.tagName.toLowerCase() === "input") {
         activeElement?.blur();
       }
     };
 
-    document.addEventListener('wheel', handleWheel);
+    document.addEventListener("wheel", handleWheel);
 
     return () => {
-      document.removeEventListener('wheel', handleWheel);
+      document.removeEventListener("wheel", handleWheel);
     };
-  }, []); 
+  }, []);
 
   useEffect(() => {
     refetchMerchantFeesData();
@@ -114,15 +115,27 @@ export const FeesTab = (props: { id?: string }) => {
         <Grid item xs={12}>
           <Typography.Title level={5} mark>
             {t("titles.current_deposit_fee")}:{" "}
-            {merchantFeesData?.fees?.cashin_pix_fee_percent}%{" "}
+            {merchantFeesData?.fees?.cashin_pix_fee_type === "PERCENT"
+              ? `${merchantFeesData?.fees?.cashin_pix_fee_percent}%`
+              : moneyFormatter(
+                  merchantFeesData?.fees?.cashin_pix_fee_value || 0
+                )}
           </Typography.Title>
           <Typography.Title level={5} mark>
             {t("titles.current_withdraw_fee")}:{" "}
-            {merchantFeesData?.fees?.customer_withdraw_fee_percent}%{" "}
+            {merchantFeesData?.fees?.customer_withdraw_fee_type === "PERCENT"
+              ? `${merchantFeesData?.fees?.customer_withdraw_fee_percent}%`
+              : moneyFormatter(
+                  merchantFeesData?.fees?.customer_withdraw_fee_value || 0
+                )}
           </Typography.Title>
           <Typography.Title level={5} mark>
             {t("titles.current_deposit_refund_fee")}:{" "}
-            {merchantFeesData?.fees?.pix_refund_fee_percent}%{" "}
+            {merchantFeesData?.fees?.pix_refund_fee_type === "PERCENT"
+              ? `${merchantFeesData?.fees?.pix_refund_fee_percent}%`
+              : moneyFormatter(
+                  merchantFeesData?.fees?.pix_refund_fee_value || 0
+                )}
           </Typography.Title>
         </Grid>
 
@@ -188,12 +201,15 @@ export const FeesTab = (props: { id?: string }) => {
               {
                 validator: () => {
                   const numericValue = body?.cashin_pix_fee_percent || 0;
-                  const minValue = body?.cashin_pix_fee_type === "PERCENT" ? 0.01 : 0;
-          
+                  const minValue =
+                    body?.cashin_pix_fee_type === "PERCENT" ? 0.01 : 0;
+
                   if (numericValue < minValue) {
-                    return Promise.reject(t("messages.min_value_higher_then_zero") || "");
+                    return Promise.reject(
+                      t("messages.min_value_higher_then_zero") || ""
+                    );
                   }
-          
+
                   return Promise.resolve();
                 },
               },
@@ -229,12 +245,15 @@ export const FeesTab = (props: { id?: string }) => {
               {
                 validator: () => {
                   const numericValue = body?.cashin_pix_fee_value || 0;
-                  const minValue = body?.cashin_pix_fee_type === "VALUE" ? 0.01 : 0;
-          
+                  const minValue =
+                    body?.cashin_pix_fee_type === "VALUE" ? 0.01 : 0;
+
                   if (numericValue < minValue) {
-                    return Promise.reject(t("messages.min_value_higher_then_zero") || "");
+                    return Promise.reject(
+                      t("messages.min_value_higher_then_zero") || ""
+                    );
                   }
-          
+
                   return Promise.resolve();
                 },
               },
@@ -365,17 +384,19 @@ export const FeesTab = (props: { id?: string }) => {
               {
                 validator: () => {
                   const numericValue = body?.customer_withdraw_fee_percent || 0;
-                  const minValue = body?.customer_withdraw_fee_type === "PERCENT" ? 0.01 : 0;
-          
+                  const minValue =
+                    body?.customer_withdraw_fee_type === "PERCENT" ? 0.01 : 0;
+
                   if (numericValue < minValue) {
-                    return Promise.reject(t("messages.min_value_higher_then_zero") || "");
+                    return Promise.reject(
+                      t("messages.min_value_higher_then_zero") || ""
+                    );
                   }
-          
+
                   return Promise.resolve();
                 },
               },
             ]}
-            
           >
             <Input
               data-test-id="withdraw_fee_percent"
@@ -405,12 +426,15 @@ export const FeesTab = (props: { id?: string }) => {
               {
                 validator: () => {
                   const numericValue = body?.customer_withdraw_fee_value || 0;
-                  const minValue = body?.customer_withdraw_fee_type === "VALUE" ? 0.01 : 0;
-          
+                  const minValue =
+                    body?.customer_withdraw_fee_type === "VALUE" ? 0.01 : 0;
+
                   if (numericValue < minValue) {
-                    return Promise.reject(t("messages.min_value_higher_then_zero") || "");
+                    return Promise.reject(
+                      t("messages.min_value_higher_then_zero") || ""
+                    );
                   }
-          
+
                   return Promise.resolve();
                 },
               },
@@ -508,7 +532,7 @@ export const FeesTab = (props: { id?: string }) => {
             name="pix_refund_fee_percent"
           >
             <Input
-            data-test-id="deposit_refund_fee_percent"
+              data-test-id="deposit_refund_fee_percent"
               size="large"
               type="number"
               name="pix_refund_fee_percent"
@@ -534,7 +558,7 @@ export const FeesTab = (props: { id?: string }) => {
             name="pix_refund_fee_value"
           >
             <CurrencyInput
-            data-test-id="deposit_refund_fee_value"
+              data-test-id="deposit_refund_fee_value"
               onChangeValue={(_event, originalValue) => {
                 setBody((state) => ({
                   ...state,
@@ -822,7 +846,12 @@ export const FeesTab = (props: { id?: string }) => {
       >
         <Grid item xs={12} md={4} lg={2}>
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-            <button data-test-id="submit" type="submit" ref={submitRef} style={{ display: "none" }}>
+            <button
+              data-test-id="submit"
+              type="submit"
+              ref={submitRef}
+              style={{ display: "none" }}
+            >
               Submit
             </button>
             <Popconfirm
