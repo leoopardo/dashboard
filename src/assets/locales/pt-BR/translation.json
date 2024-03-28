@@ -1528,6 +1528,7 @@
     "cadastros_merchants_responsaveis": "Responsáveis",
     "cadastros_merchants_arquivos": "Arquivos",
     "financeiro_transferencias_merchantManualPre": "Pré lançamento manuais",
-    "financeiro_transferencias_merchantManualPre_aprovar": "Aprovar"
+    "financeiro_transferencias_merchantManualPre_aprovar": "Aprovar",
+    "operacoes_pessoas_totalizadorConsultas": "Totalizador de consultas"
   }
 }
