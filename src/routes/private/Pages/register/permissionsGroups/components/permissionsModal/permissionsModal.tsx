@@ -148,10 +148,31 @@ export const PermissionsModal = ({
                                     : undefined,
                               },
                               children: [
+                                ...sub3.permissions.map((sub4) => {
+                                  return {
+                                    title: t(
+                                      `permissions.${sub4?.permission_type.name}`
+                                    ),
+                                    key: `${sub4.id.toString()}`,
+                                    style: {
+                                      color:
+                                        searchValue &&
+                                        t(
+                                          `permissions.${sub4?.permission_type?.name}`
+                                        )
+                                          .toLowerCase()
+                                          .includes(searchValue.toLowerCase())
+                                          ? defaultTheme.colors.secondary
+                                          : undefined,
+                                    },
+                                  };
+                                }),
                                 ...sub3.menu_id_children.map((sub4) => {
                                   return {
                                     title: t(`permissions.${sub4?.name}`),
-                                    key: `${sub4?.name}-${sub4.id.toString()}_menu`,
+                                    key: `${
+                                      sub4?.name
+                                    }-${sub4.id.toString()}_menu`,
                                     style: {
                                       color:
                                         searchValue &&
@@ -162,25 +183,27 @@ export const PermissionsModal = ({
                                           : undefined,
                                     },
                                     children: [
-                                        ...sub4.permissions.map((sub5) => {
-                                          return {
-                                            title: t(
-                                              `permissions.${sub5?.permission_type.name}`
-                                            ),
-                                            key: `${sub5.id.toString()}`,
-                                            style: {
-                                              color:
-                                                searchValue &&
-                                                t(
-                                                  `permissions.${sub5?.permission_type?.name}`
+                                      ...sub4.permissions.map((sub5) => {
+                                        return {
+                                          title: t(
+                                            `permissions.${sub5?.permission_type.name}`
+                                          ),
+                                          key: `${sub5.id.toString()}`,
+                                          style: {
+                                            color:
+                                              searchValue &&
+                                              t(
+                                                `permissions.${sub5?.permission_type?.name}`
+                                              )
+                                                .toLowerCase()
+                                                .includes(
+                                                  searchValue.toLowerCase()
                                                 )
-                                                  .toLowerCase()
-                                                  .includes(searchValue.toLowerCase())
-                                                  ? defaultTheme.colors.secondary
-                                                  : undefined,
-                                            },
-                                          };
-                                        }),
+                                                ? defaultTheme.colors.secondary
+                                                : undefined,
+                                          },
+                                        };
+                                      }),
                                     ],
                                   };
                                 }),
