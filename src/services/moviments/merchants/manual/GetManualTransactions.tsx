@@ -12,7 +12,7 @@ export function useGetMerchantMoviments(params: GetMerchantMovimentsQuery) {
     GetMerchantMovimentsData | null | undefined
   >("MerchantMoviments", async () => {
     const response = await api.get("core/entry-account", {
-      params,
+      params: { ...params, category_id: params.merchant_category_id },
     });
     return response.data;
   });

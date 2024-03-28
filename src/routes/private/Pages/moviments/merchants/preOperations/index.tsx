@@ -481,12 +481,12 @@ export const MerchantPreManual = () => {
           "aggregator_id",
           "partner_id",
           "merchant_id",
-          "category_id",
+          "merchant_category_id",
           "type",
         ]}
         refetch={refetchPreManualData}
         selectOptions={{
-          category_id:
+          merchant_category_id:
             categoryData?.items?.map((category) => {
               return { label: category?.name, value: category?.id };
             }) || [],
