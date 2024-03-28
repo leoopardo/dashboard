@@ -1068,7 +1068,10 @@
     "jurisdiction_city": "Cidade de jurisdição",
     "phone": "Telefone",
     "black_listedAt": "Data de inclusão na blacklist",
-    "merchant_category_id": "Categoria"
+    "merchant_category_id": "Categoria",
+    "totalCheckedInternal": "Consultas internas",
+    "totalCheckedOnProvider": "Consultas externas",
+    "checked_on_provider": "Checagem externa"
   },
   "actions": {
     "details": "Detalhes",

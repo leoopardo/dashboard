@@ -14,8 +14,10 @@ import { useExportHistoricCnpjByMerchant } from "@src/services/consult/persons/c
 import { useExportHistoricCpfByMerchant } from "@src/services/consult/persons/createReportHistoricCpfByMerchant";
 import { useGetHistoricCnpjByMerchant } from "@src/services/consult/persons/historicCnpjByMerchant";
 import { useGetHistoricCpfByMerchant } from "@src/services/consult/persons/historicCpfByMerchant";
+import { queryClient } from "@src/services/queryClient";
 import { HistoricCpfByMerchantQuery } from "@src/services/types/consult/persons/hsitoricCpfByMerchant";
 import { PersonBlacklistReasonsItem } from "@src/services/types/register/persons/blacklist/reasons.interface";
+import { ValidateInterface } from "@src/services/types/validate.interface";
 import {
   Badge,
   Button,
@@ -47,6 +49,7 @@ const INITIAL_QUERY: HistoricCpfByMerchantQuery = {
 };
 
 export const HistoricCpfByMerchant = () => {
+  const { type } = queryClient.getQueryData("validate") as ValidateInterface;
   const navigate = useNavigate();
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [query, setQuery] = useState<HistoricCpfByMerchantQuery>(INITIAL_QUERY);
@@ -80,11 +83,20 @@ export const HistoricCpfByMerchant = () => {
 
   const [, setCurrentItem] = useState<PersonBlacklistReasonsItem | null>(null);
 
-  const columns: ColumnInterface[] = [
-    { name: "merchant_id", type: "text", head: "id" },
-    { name: "merchant_name", type: "text" },
-    { name: "totalCpfChecks", type: "text", head: "total_cpf_checks" },
-  ];
+  const columns: ColumnInterface[] =
+    type && [1, 2].includes(type)
+      ? [
+          { name: "merchant_id", type: "text", head: "id" },
+          { name: "merchant_name", type: "text" },
+          { name: "totalCheckedInternal", type: "text" },
+          { name: "totalCheckedOnProvider", type: "text" },
+          { name: "totalCpfChecks", type: "text", head: "total_cpf_checks" },
+        ]
+      : [
+          { name: "merchant_id", type: "text", head: "id" },
+          { name: "merchant_name", type: "text" },
+          { name: "totalCpfChecks", type: "text", head: "total_cpf_checks" },
+        ];
 
   useEffect(() => {
     refetchHistoricCpfByMerchantData();
@@ -289,16 +301,29 @@ export const HistoricCpfByMerchant = () => {
                     data={HistoricCnpjByMerchantData}
                     items={HistoricCnpjByMerchantData}
                     error={HistoricCnpjByMerchantDataError}
-                    columns={[
-                      { name: "merchant_id", type: "text", head: "id" },
-                      { name: "merchant_name", type: "text" },
-
-                      {
-                        name: "totalCnpjChecks",
-                        type: "text",
-                        head: "total_cnpj_checks",
-                      },
-                    ]}
+                    columns={
+                      type && [1, 2].includes(type)
+                        ? [
+                            { name: "merchant_id", type: "text", head: "id" },
+                            { name: "merchant_name", type: "text" },
+                            { name: "totalCheckedInternal", type: "text" },
+                            { name: "totalCheckedOnProvider", type: "text" },
+                            {
+                              name: "totalCnpjChecks",
+                              type: "text",
+                              head: "total_cnpj_checks",
+                            },
+                          ]
+                        : [
+                            { name: "merchant_id", type: "text", head: "id" },
+                            { name: "merchant_name", type: "text" },
+                            {
+                              name: "totalCnpjChecks",
+                              type: "text",
+                              head: "total_cnpj_checks",
+                            },
+                          ]
+                    }
                     loading={isHistoricCnpjByMerchantDataFetching}
                     label={["merchant_name"]}
                     refetch={refetchHistoricCnpjByMerchantData}
