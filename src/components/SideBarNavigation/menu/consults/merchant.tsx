@@ -26,12 +26,21 @@ export function Merchant({ permissions }: ItemInterface): MenuRouteInterface {
         permission: permissions?.report?.merchant?.balance_history?.menu,
       },
       {
-        key: "consult_merchant_reports",
-        label: "consult_merchant_reports",
-        path: "/consult/consult_merchant/consult_merchant_reports",
+        key: "consult_merchant_report",
+        label: "consult_merchant_report",
         permission:
           permissions?.report?.merchant?.extract
             ?.report_merchant_extract_export_csv,
+        children: [
+          {
+            key: "consult_merchant_reports",
+            label: "consult_merchant_reports",
+            path: "/consult/consult_merchant/reports/consult_merchant_reports",
+            permission:
+              permissions?.report?.merchant?.extract
+                ?.report_merchant_extract_export_csv,
+          },
+        ],
       },
     ],
   };

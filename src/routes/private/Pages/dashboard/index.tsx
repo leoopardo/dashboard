@@ -24,8 +24,7 @@ import {
   Row,
   Tabs,
   Tooltip,
-  Typography,
-  theme,
+  Typography
 } from "antd";
 import moment from "moment";
 import { useRef, useState } from "react";
@@ -136,7 +135,7 @@ export const Dashboard = () => {
   return (
     <Row
       style={{
-        backgroundColor: theme.useToken().token.colorBgLayout,
+     
         minHeight: "100vh",
         width: "100%",
         padding: 26,

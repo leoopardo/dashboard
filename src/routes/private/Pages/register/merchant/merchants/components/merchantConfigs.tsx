@@ -1,9 +1,9 @@
 import { Grid } from "@mui/material";
 import { queryClient } from "@src/services/queryClient";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Tabs, TabsProps } from "antd";
+import { Tabs, TabsProps, Typography } from "antd";
 import { useTranslation } from "react-i18next";
-import { useParams, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { BanksTab } from "./tabs/banks";
 import { CredentialConfigTab } from "./tabs/credentials";
 import { FeesTab } from "./tabs/fees";
@@ -20,7 +20,6 @@ export const MerchantConfigs = () => {
   ) as ValidateInterface;
 
   const { t } = useTranslation();
-  const params = useParams();
   const location = useLocation();
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   const onChange = () => {};
@@ -35,11 +34,16 @@ export const MerchantConfigs = () => {
   const initialTab = () => {
     if (!permissions?.register?.merchant?.merchant?.merchant_config_banks) {
       if (!permissions?.register?.merchant?.merchant?.merchant_config_fees) {
-        if (!permissions?.register?.merchant?.merchant?.merchant_config_merchant) {
+        if (
+          !permissions?.register?.merchant?.merchant?.merchant_config_merchant
+        ) {
           if (
-            !permissions?.register?.merchant?.merchant?.merchant_config_paybrokers
+            !permissions?.register?.merchant?.merchant
+              ?.merchant_config_paybrokers
           ) {
-            if (!permissions?.register?.merchant?.merchant?.merchant_config_ips) {
+            if (
+              !permissions?.register?.merchant?.merchant?.merchant_config_ips
+            ) {
               setFirstChildDivTestId(tabIps, "tab-ips");
               return "6";
             }
@@ -74,29 +78,32 @@ export const MerchantConfigs = () => {
     {
       key: "1",
       label: `${t("table.bank")}s`,
-      children: <BanksTab id={params.id} />,
+      children: <BanksTab id={location?.state?.id} />,
       style: {
-        display: permissions?.register?.merchant?.merchant?.merchant_config_banks
+        display: permissions?.register?.merchant?.merchant
+          ?.merchant_config_banks
           ? undefined
           : "none",
       },
-      disabled: !permissions?.register?.merchant?.merchant?.merchant_config_banks,
+      disabled:
+        !permissions?.register?.merchant?.merchant?.merchant_config_banks,
     },
     {
       key: "2",
       label: `${t("table.fee")}s`,
-      children: <FeesTab id={params.id} />,
+      children: <FeesTab id={location?.state?.id} />,
       style: {
         display: permissions?.register?.merchant?.merchant?.merchant_config_fees
           ? undefined
           : "none",
       },
-      disabled: !permissions?.register?.merchant?.merchant?.merchant_config_fees,
+      disabled:
+        !permissions?.register?.merchant?.merchant?.merchant_config_fees,
     },
     {
       key: "3",
       label: t("menus.current_accounts"),
-      children: <AccountTab id={params.id} />,
+      children: <AccountTab id={location?.state?.id} />,
       style: {
         display: permissions?.register?.merchant?.merchant
           ?.merchant_account_api_update
@@ -109,9 +116,10 @@ export const MerchantConfigs = () => {
     {
       key: "4",
       label: t("menus.merchant_settings"),
-      children: <MerchantConfigTab id={params.id} />,
+      children: <MerchantConfigTab id={location?.state?.id} />,
       style: {
-        display: permissions?.register?.merchant?.merchant?.merchant_config_merchant
+        display: permissions?.register?.merchant?.merchant
+          ?.merchant_config_merchant
           ? undefined
           : "none",
       },
@@ -121,7 +129,7 @@ export const MerchantConfigs = () => {
     {
       key: "5",
       label: t("menus.organization_settings"),
-      children: <OrganizationConfigTab id={params.id} />,
+      children: <OrganizationConfigTab id={location?.state?.id} />,
       style: {
         display: permissions?.register?.merchant?.merchant
           ?.merchant_config_paybrokers
@@ -134,7 +142,7 @@ export const MerchantConfigs = () => {
     {
       key: "6",
       label: `${t("menus.credentials")}`,
-      children: <CredentialConfigTab id={params.id} />,
+      children: <CredentialConfigTab id={location?.state?.id} />,
       style: {
         display: permissions?.register?.merchant?.merchant
           ?.merchant_config_credentials
@@ -147,7 +155,7 @@ export const MerchantConfigs = () => {
     {
       key: "7",
       label: "IPs",
-      children: <IpsConfigTab id={params.id} />,
+      children: <IpsConfigTab id={location?.state?.id} />,
       style: {
         display: permissions?.register?.merchant?.merchant?.merchant_config_ips
           ? undefined
@@ -171,7 +179,7 @@ export const MerchantConfigs = () => {
     tabOrganizationConfig,
     tabCredential,
     tabIps,
-    params,
+    location?.state,
     location,
   ]);
 
@@ -183,6 +191,14 @@ export const MerchantConfigs = () => {
         display: "flex",
       }}
     >
+      <Grid item xs={12}>
+        <Typography.Title
+          style={{ textTransform: "capitalize" }}
+          level={4}
+        >{`${t("input.merchant_id")}: ${
+          location.state.name
+        }`}</Typography.Title>
+      </Grid>
       <Grid item xs={12}>
         <Tabs
           defaultActiveKey={initialTab()}

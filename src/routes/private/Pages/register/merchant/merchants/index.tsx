@@ -131,7 +131,6 @@ export const MerchantView = () => {
     useState<boolean>(false);
 
   const [, setSearch] = useState<string>("");
-  const [isConfigOpen, setIsConfigOpen] = useState(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [selectedItems, setSelectedItems] = useState<
     (MerchantsItem | undefined | { id: number })[] | null | undefined
@@ -214,11 +213,6 @@ export const MerchantView = () => {
       ),
     });
   }
-
-  useEffect(() => {
-    const id = currentItem?.id;
-    isConfigOpen && navigate(`${id}`);
-  }, [isConfigOpen]);
 
   useEffect(() => {
     isSuccessMerchantData && refetchMerchantData();
@@ -458,7 +452,7 @@ export const MerchantView = () => {
                   ?.merchant_config_paybrokers) && {
                 label: "configs",
                 icon: <ToolOutlined style={{ fontSize: "20px" }} />,
-                onClick: () => setIsConfigOpen(true),
+                onClick: (item) => navigate("configs", { state: item }),
               },
             ]}
           />

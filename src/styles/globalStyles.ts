@@ -12,7 +12,7 @@ export const GlobalStyle = createGlobalStyle`
     h1, h2, h3, p{
         color: ${(props) => props.theme.colors.dark};
     }
-    
+
     ::-webkit-scrollbar {
   width: 6px;
 }
@@ -21,7 +21,8 @@ export const GlobalStyle = createGlobalStyle`
 ::-webkit-scrollbar-track {
   background-color: transparent;
   background-color: #ebebeb;
-  background-color: ${(props) => props.theme.colors.dark}; /* Set scrollbar track background to dark */
+  background-color: ${(props) =>
+    props.theme.colors.dark}; /* Set scrollbar track background to dark */
 }
 
 /* Customizing the scrollbar thumb */
