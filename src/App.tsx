@@ -235,7 +235,7 @@ function App() {
                               ? 10
                               : isMobile
                               ? 200
-                              : 150,
+                              : 125,
                             borderRadius: 10,
                             background:
                               theme === "dark" ? "#222222 " : "#fdfdfd",
