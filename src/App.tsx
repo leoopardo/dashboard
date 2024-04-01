@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { ArrowUpOutlined } from "@ant-design/icons";
 import PBLogo from "@assets/icon.png";
 import { ConfigProvider, FloatButton, Layout, Spin } from "antd";
+import { motion, useViewportScroll } from "framer-motion";
 import { useEffect, useState } from "react";
 import ReactGA from "react-ga4";
 import { Toaster } from "react-hot-toast";
@@ -19,8 +21,6 @@ import { PublicRoutes } from "./routes/public";
 import { useValidate } from "./services/siginIn/validate.tsx";
 import { defaultTheme } from "./styles/defaultTheme/index.ts";
 import { GlobalStyle } from "./styles/globalStyles.ts";
-import { ArrowUpOutlined } from "@ant-design/icons";
-import { useViewportScroll, motion } from "framer-motion";
 const Logo = import.meta.env.VITE_APP_ICON ?? PBLogo;
 
 ReactGA.initialize(import.meta.env.VITE_APP_ANALYTICS_ID ?? "");
@@ -57,8 +57,8 @@ function App() {
         alignItems: "center",
       }}
     >
-      <img src={import.meta.env.VITE_APP_ICON} style={{width: "7vw"}}/>
-      <Spin tip={t("messages.loading")} size="large" style={{marginTop: -26}}>
+      <img src={import.meta.env.VITE_APP_ICON} style={{ width: "7vw" }} />
+      <Spin tip={t("messages.loading")} size="large" style={{ marginTop: -26 }}>
         <Layout className="content" />
       </Spin>
     </Layout>
@@ -79,7 +79,13 @@ function App() {
 
   return (
     <I18nextProvider i18n={i18n} defaultNS={"translation"}>
-      <ThemeProvider theme={theme === "dark" ? defaultTheme : {colors: {...defaultTheme.colors, dark: "#ebebeb"}}}>
+      <ThemeProvider
+        theme={
+          theme === "dark"
+            ? defaultTheme
+            : { colors: { ...defaultTheme.colors, dark: "#DCDFE7" } }
+        }
+      >
         <BrowserRouter>
           <GlobalStyle />
           <ConfigProvider
@@ -89,7 +95,13 @@ function App() {
                   colorError: "#000",
                   colorText: "#000",
                 },
-    
+                Breadcrumb: {
+                  colorFill: "#fff",
+                  colorPrimary: "#000",
+                  colorTextLabel: "#000",
+                  lastItemColor: "#fff",
+                  linkHoverColor: "#ffffff",
+                },
                 Menu: {
                   colorTextLightSolid:
                     theme === "dark"
@@ -143,15 +155,15 @@ function App() {
                       : "0px 4px 15.7px -3px rgba(0, 0, 0, 0.144)",
                 },
                 Layout: {
-                  colorBgHeader: theme === "dark" ? "#222222" : "#ffffff",
+                  colorBgHeader: theme === "dark" ? "#222222" : "#fdfdfd",
                 },
                 Segmented: {
                   colorBgElevated: defaultTheme.colors.secondary,
-                  colorBgLayout: theme === "dark" ?  "#272727" : "#f0f0f0",
+                  colorBgLayout: theme === "dark" ? "#272727" : "#fdfdfd",
                 },
                 Badge: {
-                  colorError: import.meta.env.VITE_APP_COLOR_SECONDARY
-                }
+                  colorError: import.meta.env.VITE_APP_COLOR_SECONDARY,
+                },
               },
 
               token: {
@@ -159,7 +171,7 @@ function App() {
                 colorBgTextHover: defaultTheme.colors.secondary,
                 colorBgContainer: theme === "dark" ? "#222222" : "#ffffff",
 
-                colorBgLayout: theme === "dark" ? "#1a1a1a" : "#f5f5f5",
+                colorBgLayout: theme === "dark" ? "#1a1a1a" : "#DCDFE7",
                 colorText: theme === "dark" ? "#f5f5f5" : "rgba(0, 0, 0, 0.88)",
                 colorTextHeading:
                   theme === "dark" ? "#f5f5f5" : "rgba(0, 0, 0, 0.88)",
@@ -203,16 +215,31 @@ function App() {
                       <Layout
                         style={{
                           padding: isMobile ? "4px" : "0 8px 8px",
-                          minHeight: "94vh",
+                          minHeight: "100vh",
+                          marginTop: "64px",
+                          maxWidth: "98vw",
+                          overflow: "hidden",
                         }}
                       >
                         <Content
                           style={{
                             padding: 0,
-                            margin: 0,
-                            height: "100%",
+                            margin: 18,
+                            marginTop: t(
+                              `menus.${
+                                location.pathname.split("/")[
+                                  location.pathname.split("/").length - 1
+                                ]
+                              }`
+                            ).includes("menus")
+                              ? 10
+                              : isMobile
+                              ? 200
+                              : 150,
+                            borderRadius: 10,
                             background:
                               theme === "dark" ? "#222222 " : "#fdfdfd",
+                            zIndex: 2,
                           }}
                         >
                           {element}
@@ -232,7 +259,10 @@ function App() {
                               style={{ backgroundColor: "#b6b6b6" }}
                               tooltip={<div>{t("messages.scrool_top")}</div>}
                               icon={
-                                <ArrowUpOutlined data-test-id="float-button" style={{color: "#000"}} />
+                                <ArrowUpOutlined
+                                  data-test-id="float-button"
+                                  style={{ color: "#000" }}
+                                />
                               }
                               onClick={() =>
                                 window.scrollTo({
