@@ -8,16 +8,17 @@ import {
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export const BreadcrumbComponent = () => {
   const { t } = useTranslation();
-  const isMobile = useMediaQuery({ maxWidth: "750px" });
+  const isMobile = useMediaQuery({ maxWidth: "1250px" });
   const [breadcrumbs, setBreadcrumbs] = useState<
     Partial<BreadcrumbItemType & BreadcrumbSeparatorType>[]
   >([{ title: <HomeOutlined style={{ fontSize: 16 }} /> }]);
   const location = useLocation();
   const translation = useTranslation().i18n.language;
+  const navigate = useNavigate();
 
   const isNotPath: string[] = [
     "register",
@@ -62,6 +63,8 @@ export const BreadcrumbComponent = () => {
     "aggregator_moviments_reports",
     "merchant_moviments_reports",
     "organization_moviments_reports",
+    "reports",
+    "merchant_pre_manual_moviment",
   ];
 
   useEffect(() => {
@@ -80,9 +83,11 @@ export const BreadcrumbComponent = () => {
                     justifyContent: "center",
                   }}
                 >
-                  <Typography.Title level={4} style={{ margin: 0 }}>
-                    <HomeOutlined style={{ fontSize: 18, marginRight: 8 }} />/{" "}
-                    {t("menus.dashboard")}
+                  <Typography.Title
+                    level={4}
+                    style={{ margin: 0, color: "#dddddd" }}
+                  >
+                    <HomeOutlined style={{ fontSize: 18, marginRight: 8 }} />
                   </Typography.Title>
                 </div>
               ),
@@ -96,29 +101,83 @@ export const BreadcrumbComponent = () => {
                     {index === 0 && (
                       <>
                         <a href="/dashboard">
-                          <HomeOutlined style={{ fontSize: 16 }} />
+                          <HomeOutlined
+                            style={{ fontSize: 16, color: "#dddddd" }}
+                          />
                         </a>{" "}
                         /{" "}
                       </>
                     )}
-                    {value.includes("%20")
-                      ? value.split("%20").join(".")
-                      : Number(value)
-                      ? value
-                      : t(`menus.${value}`)}
-                  </>
-                ) : (
-                  <>
-                    {index === 0 && <HomeOutlined />}
-                    <a href={`/${l.slice(0, l.indexOf(value) + 1).join("/")}`}>
+                    <Typography.Text
+                      style={{
+                        color: "#dddddd",
+                        fontSize: 15,
+                        fontWeight: 500,
+                      }}
+                    >
                       {value.includes("%20")
                         ? value.split("%20").join(".")
                         : Number(value)
+                        ? value
+                        : t(`menus.${value}`).split(".")[0] === "menus"
+                        ? value
+                        : t(`menus.${value}`)}
+                    </Typography.Text>
+                  </>
+                ) : (
+                  <>
+                    {index === 0 && (
+                      <HomeOutlined
+                        style={{ fontSize: 16, color: "#dddddd" }}
+                      />
+                    )}
+                    <a
+                      href={`/${l.slice(0, l.indexOf(value) + 1).join("/")}`}
+                      style={{ color: "#ffffff" }}
+                    >
+                      {value.includes("%20")
+                        ? value.split("%20").join(".")
+                        : Number(value)
+                        ? value
+                        : t(`menus.${value}`).split(".")[0] === "menus"
                         ? value
                         : t(`menus.${value}`)}
                     </a>
                   </>
                 ),
+              menu:
+                value === "details"
+                  ? {
+                      items: [
+                        {
+                          key: "edit",
+                          label: <a>{t("actions.edit")}</a>,
+                          onClick: () => {
+                            navigate(
+                              `${l.splice(0, l.length - 1).join("/")}/update`,
+                              { state: location.state, replace: true }
+                            );
+                          },
+                        },
+                      ],
+                    }
+                  : value === "update"
+                  ? {
+                      items: [
+                        {
+                          key: "details",
+                          label: <a>{t("actions.details")}</a>,
+                          onClick: () => {
+                            navigate(
+                              `${l.splice(0, l.length - 1).join("/")}/details`,
+                              { state: location.state, replace: true }
+                            );
+                          },
+                        },
+                      ],
+                      style: { color: "#ffffff" },
+                    }
+                  : undefined,
             };
         }
       })
@@ -129,6 +188,8 @@ export const BreadcrumbComponent = () => {
         value.includes("%20")
           ? value.split("%20").join(" ")
           : Number(value)
+          ? value
+          : t(`menus.${value}`).split(".")[0] === "menus"
           ? value
           : t(`menus.${value}`)
       )
@@ -146,7 +207,12 @@ export const BreadcrumbComponent = () => {
   return (
     <Breadcrumb
       items={breadcrumbs}
-      style={{ margin: isMobile ? "16px 32px" : "16px 0", fontSize: "16px" }}
+      style={{
+        margin: isMobile ? "16px 32px" : "16px 0",
+        fontSize: "16px",
+        color: "#dddddd",
+      }}
+      separator={<span style={{ color: "#dddddd" }}> / </span>}
     />
   );
 };

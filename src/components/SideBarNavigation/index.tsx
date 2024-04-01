@@ -9,7 +9,8 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
 } from "@ant-design/icons";
-import PbLogo from "@assets/logo.png";
+import PbLogoDark from "@assets/logo.png";
+import PbLogo from "@assets/logo.svg";
 import { useErrorContext } from "@src/contexts/ErrorContext";
 import { useTheme } from "@src/contexts/ThemeContext";
 import { queryClient } from "@src/services/queryClient";
@@ -23,7 +24,6 @@ import { useMediaQuery } from "react-responsive";
 import { Link, useLocation } from "react-router-dom";
 import secureLocalStorage from "react-secure-storage";
 import { useMenu } from "../../contexts/SidebarContext";
-import { defaultTheme } from "../../styles/defaultTheme";
 import { MenuRouteInterface, MenuRoutes } from "./menu";
 
 type MenuItem = Required<MenuProps>["items"][number];
@@ -194,7 +194,9 @@ export const SidebarNavigation = () => {
                                         setOpenKeys([]);
                                       }}
                                       to={children4.path}
-                                      title={t(`menus.${children4.label}`) || ""}
+                                      title={
+                                        t(`menus.${children4.label}`) || ""
+                                      }
                                     >
                                       {t(`menus.${children4.label}`)}
                                     </Link>
@@ -382,7 +384,13 @@ export const SidebarNavigation = () => {
         whileTap={{ filter: "contrast(100%)" }}
       >
         <Button
-          type={isMobile && !isSidebarOpen ? "ghost" : "primary"}
+          type={
+            isMobile && !isSidebarOpen
+              ? "ghost"
+              : theme === "dark"
+              ? "primary"
+              : "default"
+          }
           onClick={toggleCollapsed}
           style={{
             height: LargeDesktop ? "8vh" : "6vh",
@@ -393,15 +401,16 @@ export const SidebarNavigation = () => {
                 ? undefined
                 : theme === "dark"
                 ? "#222222"
-                : defaultTheme.colors.primary,
+                : "#fdfdfd",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            border: "none",
             borderBottom: isMobile
               ? "none"
               : theme === "light"
-              ? "1px solid #797979ac"
-              : "1px solid #4b4b4bac",
+              ? "1px solid #79797932"
+              : "1px solid #4b4b4b44",
           }}
         >
           <div
@@ -411,9 +420,15 @@ export const SidebarNavigation = () => {
               alignItems: "center",
             }}
           >
-            {isSidebarOpen && (
+            {isSidebarOpen && theme === "light" && (
               <img
-                src={import.meta.env.VITE_APP_LOGO || PbLogo}
+                src={import.meta.env.VITE_APP_LOGO_LIGHT || PbLogo}
+                style={{ width: "160px" }}
+              />
+            )}
+             {isSidebarOpen && theme === "dark" && (
+              <img
+                src={import.meta.env.VITE_APP_LOGO || PbLogoDark}
                 style={{ width: "180px", marginLeft: "-24px" }}
               />
             )}
@@ -424,9 +439,9 @@ export const SidebarNavigation = () => {
 
                   color:
                     !isSidebarOpen && isMobile && theme === "light"
-                      ? "#000"
-                      : import.meta.env.VITE_APP_MENU_THEME === "dark"
-                      ? "#fff"
+                      ? "#ffffff"
+                      : theme === "dark"
+                      ? "#fdfdfd"
                       : "#000",
                 }}
               />
@@ -438,8 +453,8 @@ export const SidebarNavigation = () => {
                   color:
                     !isSidebarOpen && isMobile && theme === "light"
                       ? "#000"
-                      : import.meta.env.VITE_APP_MENU_THEME === "dark"
-                      ? "#fff"
+                      : theme === "dark"
+                      ? "#fdfdfd"
                       : "#000",
                 }}
               />
@@ -453,8 +468,7 @@ export const SidebarNavigation = () => {
           minHeight: LargeDesktop ? "85vh" : "89vh",
           maxHeight: LargeDesktop ? "85vh" : "89vh",
           overflow: "auto",
-          backgroundColor:
-            theme === "dark" ? "#222222" : defaultTheme.colors.primary,
+          backgroundColor: theme === "dark" ? "#222222" : "#fff",
           display: isMobile && !isSidebarOpen ? "none" : "inherit",
         }}
         openKeys={isSidebarOpen ? openKeys : undefined}
@@ -463,7 +477,7 @@ export const SidebarNavigation = () => {
         disabledOverflow
         translate="yes"
         mode="inline"
-        theme={theme === "dark" ? "light" : import.meta.env.VITE_APP_MENU_THEME}
+        theme={"light"}
         inlineCollapsed={!isSidebarOpen}
         items={items}
       />

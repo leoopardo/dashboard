@@ -34,13 +34,22 @@ export function Organization({
         permission: permissions?.report?.paybrokers?.bank_history?.menu,
       },
       {
-        key: "consult_organization_reports",
-        label: "consult_organization_reports",
-        path: "/consult/consult_organization/consult_organization_reports",
-        permission:
-          permissions?.report?.paybrokers?.extract
-            ?.report_paybrokers_extract_export_csv,
+        key: "consult_organization_report",
+        label: "reports",
+        permission: permissions?.report?.paybrokers?.extract
+        ?.report_paybrokers_extract_export_csv,
+        children: [
+          {
+            key: "consult_organization_reports",
+            label: "consult_organization_reports",
+            path: "/consult/consult_organization/reports/consult_organization_reports",
+            permission:
+              permissions?.report?.paybrokers?.extract
+                ?.report_paybrokers_extract_export_csv,
+          },
+        ]
       },
+      
     ],
   };
 }

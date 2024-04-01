@@ -18,7 +18,7 @@ export function Licenses({
       {
         key: "licenses_reports",
         label: "reports",
-        path: "/register/licenses/reports",
+        path: "/register/licenses/reports/licenses_reports",
         permission: permissions?.register?.licenses?.licenses?.license_export_csv,
       },
 

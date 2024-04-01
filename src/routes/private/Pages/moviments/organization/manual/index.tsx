@@ -110,7 +110,7 @@ export const OrgonizationManual = () => {
   }, [tokenState]);
 
   return (
-    <Grid container style={{ padding: "25px" }}>
+    <Grid container style={{ padding: "25px", }}>
       <Grid
         container
         item

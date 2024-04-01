@@ -199,19 +199,21 @@ export const PrivateRoutes = () => {
                 </Permission>
               }
             />
-            <Route
-              path="consult_organization_reports"
-              element={
-                <Permission
-                  permission={
-                    responseValidate?.permissions?.report?.paybrokers?.balance
-                      ?.report_paybrokers_balance_export_csv
-                  }
-                >
-                  <ConsultOrganizationReports />
-                </Permission>
-              }
-            />
+            <Route path="reports">
+              <Route
+                path="consult_organization_reports"
+                element={
+                  <Permission
+                    permission={
+                      responseValidate?.permissions?.report?.paybrokers?.balance
+                        ?.report_paybrokers_balance_export_csv
+                    }
+                  >
+                    <ConsultOrganizationReports />
+                  </Permission>
+                }
+              />
+            </Route>
           </Route>
           {/*Consultas de Empresa */}
           <Route path="consult_merchant">
@@ -254,19 +256,21 @@ export const PrivateRoutes = () => {
                 </Permission>
               }
             />
-            <Route
-              path="consult_merchant_reports"
-              element={
-                <Permission
-                  permission={
-                    responseValidate?.permissions?.report?.merchant?.extract
-                      ?.report_merchant_extract_export_csv
-                  }
-                >
-                  <ConsultMerchantReports />
-                </Permission>
-              }
-            />
+            <Route path="reports">
+              <Route
+                path="consult_merchant_reports"
+                element={
+                  <Permission
+                    permission={
+                      responseValidate?.permissions?.report?.merchant?.extract
+                        ?.report_merchant_extract_export_csv
+                    }
+                  >
+                    <ConsultMerchantReports />
+                  </Permission>
+                }
+              />
+            </Route>
           </Route>
           {/*Consultas de Depósitos */}
           <Route path="deposit">
@@ -1131,7 +1135,7 @@ export const PrivateRoutes = () => {
                 }
               />
               <Route
-                path=":id"
+                path="configs"
                 element={
                   <Permission
                     permission={
@@ -1335,7 +1339,7 @@ export const PrivateRoutes = () => {
 
           {/* cadastros de pessoas */}
           <Route path="person">
-            <Route path="persons">
+            <Route path="physical_persons">
               <Route
                 index
                 element={
@@ -1435,9 +1439,9 @@ export const PrivateRoutes = () => {
                 </Permission>
               }
             />
-            <Route path="person_blacklist">
+            <Route path="physical_person_blacklist">
               <Route
-                path="upload_person_blacklist"
+                path="upload_cpf_blacklist"
                 element={
                   <Permission
                     permission={
@@ -1450,7 +1454,7 @@ export const PrivateRoutes = () => {
                 }
               />
               <Route
-                path="person_blacklist_uploads"
+                path="persons_cpf_blacklist_uploads"
                 element={
                   <Permission
                     permission={
@@ -1463,7 +1467,7 @@ export const PrivateRoutes = () => {
                 }
               />
               <Route
-                path="person_blacklist_reasons"
+                path="cpf_blacklist_reasons"
                 element={
                   <Permission
                     permission={
@@ -1479,7 +1483,7 @@ export const PrivateRoutes = () => {
             {/* AJUSTAR PERMISSÕES*/}
             <Route path="legal_person_blacklist">
               <Route
-                path="upload_person_blacklist"
+                path="upload_persons_cnpj_blacklist"
                 element={
                   <Permission
                     permission={
@@ -1492,7 +1496,7 @@ export const PrivateRoutes = () => {
                 }
               />
               <Route
-                path="legal_person_blacklist_uploads"
+                path="persons_cnpj_blacklist_uploads"
                 element={
                   <Permission
                     permission={
@@ -1520,7 +1524,7 @@ export const PrivateRoutes = () => {
             </Route>
             <Route path="person_reports">
               <Route
-                path="person_persons_reports"
+                path="persons_cpf_persons_reports"
                 element={
                   <Permission
                     permission={
@@ -1606,7 +1610,9 @@ export const PrivateRoutes = () => {
               }
             />
             <Route path="update" element={<UpdateLicense />} />
-            <Route path="reports" element={<LicenseReports />} />
+            <Route path="reports">
+              <Route path="licenses_reports" element={<LicenseReports />} />
+            </Route>
           </Route>
         </Route>
         {/* movimentações */}
