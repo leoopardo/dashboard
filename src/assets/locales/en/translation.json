@@ -182,7 +182,11 @@
     "persons_cpf_blacklist_uploads": "Check uploads",
     "cpf_blacklist_reasons": "Blacklist reasons",
     "reports_page_title": "{{page}} reports",
-    "consult_merchant_report": "Reports"
+    "consult_merchant_report": "Reports",
+    "permissions_groups": "Permissions groups",
+    "persons_cpf_persons_reports": "Physical persons",
+    "consult_organization_report": "Reports",
+    "recents": "Recents"
   },
   "menus_description": {
     "dashboard": "Here you will find a summary of all important information for your organization.",

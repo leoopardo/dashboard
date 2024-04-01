@@ -487,7 +487,7 @@ export const SidebarNavigation = () => {
           whileTap={{ filter: "contrast(100%)" }}
         >
           <Button
-            type={isMobile && !isSidebarOpen ? "ghost" : "primary"}
+            type={"default"}
             onClick={() => {
               secureLocalStorage.removeItem("token");
               sessionStorage.removeItem("token");
@@ -502,6 +502,7 @@ export const SidebarNavigation = () => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              border: "none",
             }}
             icon={<LogoutOutlined style={{ fontSize: "23px" }} />}
           >
