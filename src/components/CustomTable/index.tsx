@@ -2,6 +2,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   BankOutlined,
+  CheckOutlined,
+  CloseOutlined,
   CopyOutlined,
   EllipsisOutlined,
   InfoCircleTwoTone,
@@ -26,6 +28,7 @@ import {
   Table,
   Tooltip,
   Typography,
+  Tag,
 } from "antd";
 import type { ColumnsType, TableProps as TablePropsAntD } from "antd/es/table";
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
@@ -33,6 +36,7 @@ import { toast } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import { Mobile } from "./mobile";
+import { StatusColors } from "./utils";
 
 export interface ColumnInterface {
   name: string | any; // (nome da coluna caso não passe head) e chave do objeto a ser acessado nos items
@@ -59,6 +63,9 @@ export interface ColumnInterface {
     | "merchant_name" // exibe nome da empresa caso seja um obj
     | "partner_name" // exibe nome da plataforma caso seja um obj
     | "deadline" // exibe prazo de entrega
+    | "transaction_person" // exibe nome e documento do envolvido na transação, passar o tipo ["buyer", "payer"]
+    | "transaction_status" // exibe status da transação com a data de atualização do status
+    | "webhook_status" // exibe status do webhook
     | "";
   sort?: boolean; // habilita ordenação
   key?: any;
@@ -200,20 +207,24 @@ export const CustomTable = (props: TableProps) => {
                     justifyContent: "center",
                   }}
                 >
-                  <Tooltip title={text}>
-                    <Button
-                      size="large"
-                      type="ghost"
-                      onClick={() => {
-                        navigator.clipboard.writeText(text);
-                        toast.success(t("table.copied"));
-                      }}
-                    >
-                      <CopyOutlined
-                        style={{ color: defaultTheme.colors.info }}
-                      />
-                    </Button>
-                  </Tooltip>
+                  {text ? (
+                    <Tooltip title={text}>
+                      <Button
+                        size="large"
+                        type="ghost"
+                        onClick={() => {
+                          navigator.clipboard.writeText(text);
+                          toast.success(t("table.copied"));
+                        }}
+                      >
+                        <CopyOutlined
+                          style={{ color: defaultTheme.colors.info }}
+                        />
+                      </Button>
+                    </Tooltip>
+                  ) : (
+                    "-"
+                  )}
                 </div>
               ),
               sorter: column.sort
@@ -613,6 +624,108 @@ export const CustomTable = (props: TableProps) => {
                   }
                 : undefined,
             };
+
+          case "transaction_person":
+            return {
+              title: (
+                <Tooltip title={t(`table.${column?.head || column?.name}`)}>
+                  <Typography
+                    ref={column.key}
+                    style={{
+                      width: "100%",
+                      maxHeight: "50px",
+                      overflow: "hidden",
+                      textAlign: "center",
+                      textOverflow: "ellipsis",
+                    }}
+                  >
+                    {t(`table.${column?.head || column?.name}`)}
+                  </Typography>
+                </Tooltip>
+              ),
+              key: column?.sort_name
+                ? column.sort_name
+                : Array.isArray(column?.name)
+                ? column?.name + `${Math.random()}`
+                : column?.name,
+              dataIndex: column?.name,
+              render: (text: string, record: any) => (
+                <div>
+                  <Typography
+                    style={{
+                      width: "100%",
+                      textAlign: "center",
+                      minWidth: 50,
+                    }}
+                    full-text={text}
+                    title={record[`${column.name}_name`]}
+                  >
+                    {record[`${column.name}_name`]
+                      ? record[`${column.name}_name`].length > 15
+                        ? `${record[`${column.name}_name`].substring(0, 15)}...`
+                        : record[`${column.name}_name`]
+                      : "-"}
+                  </Typography>
+                  {record[`${column.name}_document`] && (
+                    <Typography.Text
+                      copyable={{
+                        icon: (
+                          <CopyOutlined
+                            style={{ color: defaultTheme.colors.info }}
+                          />
+                        ),
+                        text,
+                      }}
+                      key={column?.name}
+                      style={{
+                        width: "100%",
+                        textAlign: "center",
+                        minWidth: 50,
+                        display: "flex",
+                        justifyContent: "center",
+                      }}
+                    >
+                      {record[`${column.name}_document`]
+                        ? +`${record[`${column.name}_document`]}`?.replace(
+                            /\D/g,
+                            ""
+                          ).length === 11
+                          ? `${record[`${column.name}_document`]}`?.replace(
+                              /(\d{3})(\d{3})(\d{3})(\d{2})/,
+                              "$1.$2.$3-$4"
+                            )
+                          : +`${record[`${column.name}_document`]}`?.replace(
+                              /\D/g,
+                              ""
+                            ).length === 14
+                          ? `${record[`${column.name}_document`]}`?.replace(
+                              /(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/,
+                              "$1.$2.$3/$4-$5"
+                            )
+                          : `${record[`${column.name}_document`]}` ?? "-"
+                        : "-"}
+                    </Typography.Text>
+                  )}
+                </div>
+              ),
+              sorter: column.sort
+                ? () => {
+                    props.setQuery((state: any) => ({
+                      ...state,
+                      sort_field: column?.sort_name
+                        ? column.sort_name
+                        : Array.isArray(column?.name)
+                        ? column?.name[1]
+                        : column?.name,
+                      sort_order:
+                        props.query.sort_order === "DESC" ? "ASC" : "DESC",
+                    }));
+
+                    return 0;
+                  }
+                : undefined,
+            };
+
           case "icon":
             return {
               title: (
@@ -730,6 +843,166 @@ export const CustomTable = (props: TableProps) => {
                   )}
                 </div>
               ),
+              sorter: column.sort
+                ? () => {
+                    props.setQuery((state: any) => ({
+                      ...state,
+                      sort_field: column?.sort_name
+                        ? column.sort_name
+                        : Array.isArray(column?.name)
+                        ? column?.name[1]
+                        : column?.name,
+                      sort_order:
+                        props.query.sort_order === "DESC" ? "ASC" : "DESC",
+                    }));
+
+                    return 0;
+                  }
+                : undefined,
+            };
+
+          case "transaction_status":
+            return {
+              title: (
+                <Tooltip title={t(`table.${column?.head || column?.name}`)}>
+                  <Typography
+                    ref={column.key}
+                    style={{
+                      width: "100%",
+                      maxHeight: "50px",
+                      overflow: "hidden",
+                      textAlign: "center",
+                      textOverflow: "ellipsis",
+                      wordBreak: "keep-all",
+                    }}
+                  >
+                    {t(`table.${column?.head || column?.name}`)}
+                  </Typography>
+                </Tooltip>
+              ),
+              key: column?.sort_name
+                ? column.sort_name
+                : Array.isArray(column?.name)
+                ? column?.name + `${Math.random()}`
+                : column?.name,
+              dataIndex: column?.name,
+              render: (text: any, record: any) => {
+                return (
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <Tag
+                      color={StatusColors[text?.toLocaleLowerCase() as any]}
+                      style={{ marginBottom: 4, width: "fit-content" }}
+                    >
+                      {t(`table.${text?.toLocaleLowerCase()}`)}
+                    </Tag>
+
+                    {text?.toLocaleLowerCase() === "paid" &&
+                      record?.paid_at && (
+                        <Typography
+                          key={column?.name}
+                          style={{ width: "100%", textAlign: "center" }}
+                        >{`${new Date(
+                          `${record?.paid_at?.split("Z")[0]}Z`
+                        ).toLocaleDateString()} ${new Date(
+                          `${record?.paid_at?.split("Z")[0]}Z`
+                        ).toLocaleTimeString()}`}</Typography>
+                      )}
+                    {text?.toLocaleLowerCase() === "refunded" &&
+                      record?.refund_date && (
+                        <Typography
+                          key={column?.name}
+                          style={{ width: "100%", textAlign: "center" }}
+                        >{`${new Date(
+                          `${record?.refund_date?.split("Z")[0]}Z`
+                        ).toLocaleDateString()} ${new Date(
+                          `${record?.refund_date?.split("Z")[0]}Z`
+                        ).toLocaleTimeString()}`}</Typography>
+                      )}
+                  </div>
+                );
+              },
+              sorter: column.sort
+                ? () => {
+                    props.setQuery((state: any) => ({
+                      ...state,
+                      sort_field: column?.sort_name
+                        ? column.sort_name
+                        : Array.isArray(column?.name)
+                        ? column?.name[1]
+                        : column?.name,
+                      sort_order:
+                        props.query.sort_order === "DESC" ? "ASC" : "DESC",
+                    }));
+
+                    return 0;
+                  }
+                : undefined,
+            };
+          case "webhook_status":
+            return {
+              title: (
+                <Tooltip title={t(`table.${column?.head || column?.name}`)}>
+                  <Typography
+                    ref={column.key}
+                    style={{
+                      width: "100%",
+                      maxHeight: "50px",
+                      overflow: "hidden",
+                      textAlign: "center",
+                      textOverflow: "ellipsis",
+                      wordBreak: "keep-all",
+                    }}
+                  >
+                    {t(`table.${column?.head || column?.name}`)}
+                  </Typography>
+                </Tooltip>
+              ),
+              key: column?.sort_name
+                ? column.sort_name
+                : Array.isArray(column?.name)
+                ? column?.name + `${Math.random()}`
+                : column?.name,
+              dataIndex: column?.name,
+              render: (text: any) => {
+                return (
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <Tag
+                      color={text ? "success" : "error"}
+                      style={{ marginBottom: 4, width: "fit-content" }}
+                      icon={text ? <CheckOutlined /> : <CloseOutlined />}
+                    >
+                      {text
+                        ? t(`messages.delivered`) || ""
+                        : t(`messages.not_delivered`) || ""}
+                    </Tag>
+
+                    {text && (
+                      <Typography.Text
+                        key={column?.name}
+                        style={{ width: "100%", textAlign: "center" }}
+                      >{`${new Date(
+                        `${text?.split("Z")[0]}Z`
+                      ).toLocaleDateString()} ${new Date(
+                        `${text?.split("Z")[0]}Z`
+                      ).toLocaleTimeString()}`}</Typography.Text>
+                    )}
+                  </div>
+                );
+              },
               sorter: column.sort
                 ? () => {
                     props.setQuery((state: any) => ({

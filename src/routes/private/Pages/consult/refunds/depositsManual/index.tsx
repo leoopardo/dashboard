@@ -145,14 +145,12 @@ export const RefundDepositsManual = () => {
     { name: "rtrId", head: "refund_id", type: "id" },
     { name: "bank", type: "bankNameToIcon" },
     { name: "merchant_name", type: "text" },
-    { name: "value", type: "value" },
-    { name: "payer_name", type: "text" },
-    { name: "payer_document", type: "document" },
-    { name: "pix_type", head: "payment_type", type: "pix_type" },
     { name: "createdAt", type: "small_date" },
-    { name: "refund_date", type: "small_date" },
+    { name: "status", type: "transaction_status" },
+    { name: "value", type: "value" },
+    { name: "pix_type", type: "pix_type" },
     { name: "reason", type: "text" },
-    { name: "status", type: "status" },
+    { name: "payer", type: "transaction_person" },
   ];
 
   useEffect(() => {
