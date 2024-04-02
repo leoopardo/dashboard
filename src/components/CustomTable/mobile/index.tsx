@@ -25,6 +25,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ColumnInterface, actionsInterface } from "..";
 import { moneyFormatter } from "@src/utils/moneyFormatter";
+import { useGetrefetchCountries } from "@src/services/states_cities/getCountries";
 
 interface MobileProps {
   columns: ColumnInterface[];
@@ -42,6 +43,8 @@ interface MobileProps {
 export const Mobile = (props: MobileProps) => {
   const { t } = useTranslation();
   const [active, setActive] = useState<string | string[]>([]);
+  const { Countries } = useGetrefetchCountries();
+  const translation = useTranslation().i18n.language;
   const [items, setItems] = useState<CollapseProps["items"]>([]);
   const [checkedRows, setCheckedRows] = useState<any[]>([]);
   const { bankListData } = useListBanks({
@@ -520,6 +523,86 @@ export const Mobile = (props: MobileProps) => {
                           )}
                         </Descriptions.Item>
                       );
+
+                    case "country": {
+                      const currentCountry = Countries?.find((country) => {
+                        return (
+                          country?.name?.common ===
+                          item[value.name as keyof typeof item]
+                        );
+                      });
+
+                      return (
+                        <Descriptions.Item
+                          key={item[value?.name]}
+                          label={t(`table.${value?.head ?? value.name}`)}
+                          labelStyle={{
+                            maxWidth: "100px",
+                            margin: 0,
+                            padding: 5,
+                          }}
+                        >
+                          <Typography
+                            key={value?.name}
+                            style={{ width: "100%", textAlign: "center" }}
+                          >
+                            {translation === "pt-BR"
+                              ? currentCountry?.translations?.por?.common
+                              : currentCountry?.name?.common}
+                          </Typography>
+                        </Descriptions.Item>
+                      );
+                    }
+
+                    case "status_color": {
+                      return (
+                        <Descriptions.Item
+                          key={value?.name}
+                          label={t(`table.${value?.head ?? value?.name}`)}
+                          labelStyle={{
+                            maxWidth: "100px",
+                            margin: 0,
+                            padding: 5,
+                          }}
+                        >
+                          <Typography
+                            key={value?.name}
+                            style={{
+                              display: "flex",
+                              justifyContent: "center",
+                              alignContent: "center",
+                              textAlign: "center",
+                              color: (defaultTheme.colors as any)[
+                                item[value?.name]?.toLocaleLowerCase()
+                              ],
+                              fontWeight: 600,
+                              wordBreak: "keep-all",
+                              alignItems: "center",
+                              gap: "6px",
+                              borderRadius: "4px",
+                              border: "1px solid #DCDFE7",
+                              padding: "0 4px 0 4px",
+                              width: "fit-content",
+                              margin: "0 auto",
+                            }}
+                          >
+                            <div
+                              style={{
+                                width: "8px",
+                                height: "8px",
+                                borderRadius: "50%",
+                                backgroundColor: (defaultTheme.colors as any)[
+                                  item[value?.name]?.toLocaleLowerCase()
+                                ],
+                              }}
+                            />
+                            {t(
+                              `table.${item[value?.name]?.toLocaleLowerCase()}`
+                            )}
+                          </Typography>
+                        </Descriptions.Item>
+                      );
+                    }
 
                     case "boolean":
                       return (
