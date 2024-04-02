@@ -159,7 +159,7 @@ function App() {
                 },
                 Segmented: {
                   colorBgElevated: defaultTheme.colors.secondary,
-                  colorBgLayout: theme === "dark" ? "#272727" : "#fdfdfd",
+                  colorBgLayout: theme === "dark" ? "#272727" : "#f1f1f1",
                 },
                 Badge: {
                   colorError: import.meta.env.VITE_APP_COLOR_SECONDARY,
