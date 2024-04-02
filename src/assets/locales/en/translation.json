@@ -1093,7 +1093,7 @@
     "date_too_log": "The diffrence between dates should be equal or less than 30 days",
     "password_or_username": "Invalid username or password",
     "BANK_ALREADY_CREATED": "Bank already created",
-    "date_1_hour": "The max range is one hour",
+    "date_2_hour": "The max range is two hours",
     "undefined": "Temporary service interruption. If the issue persists after reloading the page, please contact support.",
     "INVALID_USER": "Invalid username",
     "category_exists": "Category already exists",

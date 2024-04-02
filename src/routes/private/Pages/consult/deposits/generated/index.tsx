@@ -109,13 +109,13 @@ export const GeneratedDeposits = () => {
   const { fields } = useGetDepositReportFields();
 
   const [webhookBody, setWebhookBody] = useState<ResendWebhookBody>({
-    start_date: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss.SSS"),
-    end_date: moment(new Date())
-      .add(1, "hour")
+    start_date: moment(new Date()).subtract(2, "hours").startOf("hour").format("YYYY-MM-DDTHH:mm:ss.SSS"),
+    end_date: moment(new Date()).startOf("hour")
       .format("YYYY-MM-DDTHH:mm:ss.SSS"),
-    merchant_id: undefined,
-    partner_id: undefined,
+    merchants_ids: undefined,
+    partners_ids: undefined,
     webhook_url_type: "both",
+    delivered_at: true
   });
 
   const [webhookId, setWebhookId] = useState<string>("");

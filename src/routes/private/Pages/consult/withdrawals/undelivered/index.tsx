@@ -103,13 +103,13 @@ export const UndeliveredWithdrawals = () => {
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
 
   const [webhookBody, setWebhookBody] = useState<ResendWebhookBody>({
-    start_date: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss.SSS"),
-    end_date: moment(new Date())
-      .add(1, "hour")
+    start_date: moment(new Date()).subtract(1, "day").startOf("day").format("YYYY-MM-DDTHH:mm:ss.SSS"),
+    end_date: moment(new Date()).startOf("day")
       .format("YYYY-MM-DDTHH:mm:ss.SSS"),
-    merchant_id: undefined,
-    partner_id: undefined,
+    merchants_ids: undefined,
+    partners_ids: undefined,
     webhook_url_type: "both",
+    delivered_at: false
   });
 
   const [webhookId, setWebhookId] = useState<string>("");
