@@ -21,7 +21,6 @@ import { defaultTheme } from "./styles/defaultTheme/index.ts";
 import { GlobalStyle } from "./styles/globalStyles.ts";
 import { ArrowUpOutlined } from "@ant-design/icons";
 import { useViewportScroll, motion } from "framer-motion";
-import { ThemeProvider as PbThemeProvider } from "pb-components";
 const Logo = import.meta.env.VITE_APP_ICON ?? PBLogo;
 
 ReactGA.initialize(import.meta.env.VITE_APP_ANALYTICS_ID ?? "");
@@ -87,7 +86,6 @@ function App() {
             : { colors: { ...defaultTheme.colors, dark: "#ebebeb" } }
         }
       >
-        <PbThemeProvider theme={{ theme }}>
           <BrowserRouter>
             <GlobalStyle />
             <ConfigProvider
@@ -267,7 +265,6 @@ function App() {
               </ErrorProvider>
             </ConfigProvider>
           </BrowserRouter>
-        </PbThemeProvider>
       </ThemeProvider>
     </I18nextProvider>
   );
