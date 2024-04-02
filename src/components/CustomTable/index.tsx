@@ -558,7 +558,11 @@ export const CustomTable = (props: TableProps) => {
                         />
                       </Tooltip>
                     ) : (
-                      "-"
+                      <div
+                        style={{ display: "flex", justifyContent: "center" }}
+                      >
+                        -
+                      </div>
                     )}
                   </>
                 );
@@ -873,7 +877,7 @@ export const CustomTable = (props: TableProps) => {
                     alignContent: "center",
                     textAlign: "center",
                     color: (defaultTheme.colors as any)[
-                      text?.toLocaleLowerCase()
+                      text?.toString()?.toLocaleLowerCase()
                     ],
                     fontWeight: 600,
                     wordBreak: "keep-all",
@@ -883,20 +887,30 @@ export const CustomTable = (props: TableProps) => {
                     border: "1px solid #DCDFE7",
                     padding: "0 4px 0 4px",
                     width: "fit-content",
-                    margin: "0 auto"
+                    margin: "0 auto",
                   }}
                 >
-                  <div
-                    style={{
-                      width: "8px",
-                      height: "8px",
-                      borderRadius: "50%",
-                      backgroundColor: (defaultTheme.colors as any)[
-                        text?.toLocaleLowerCase()
-                      ],
-                    }}
-                  />
-                  {text ? t(`table.${text?.toLocaleLowerCase()}`) : "-"}
+                  {typeof text === "boolean" || text === 1 || text === 0 ? (
+                    <div style={{ display: "flex", justifyContent: "center" }}>
+                      -
+                    </div>
+                  ) : (
+                    <>
+                      <div
+                        style={{
+                          width: "8px",
+                          height: "8px",
+                          borderRadius: "50%",
+                          backgroundColor: (defaultTheme.colors as any)[
+                            text?.toString()?.toLocaleLowerCase()
+                          ],
+                        }}
+                      />
+                      {text
+                        ? t(`table.${text?.toString()?.toLocaleLowerCase()}`)
+                        : "-"}
+                    </>
+                  )}
                 </Typography>
               ),
               sorter: column.sort
@@ -967,7 +981,7 @@ export const CustomTable = (props: TableProps) => {
                           width: "100%",
                           textAlign: "center",
                           color: (defaultTheme.colors as any)[
-                            text?.toLocaleLowerCase()
+                            text?.toString()?.toLocaleLowerCase()()
                           ],
                           fontWeight: 600,
                           wordBreak: "keep-all",

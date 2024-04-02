@@ -472,7 +472,8 @@
     "withdraw_webhook_data": "Withdraw webhook data",
     "withdraw_standard_webhook": "Withdraw standard webhook",
     "aggregator_id": "Aggregator",
-    "accept_annonymous_cash_in": "Accept anonymous deposits"
+    "accept_annonymous_cash_in": "Accept anonymous deposits",
+    "business_name": "Business name"
   },
 
   "modal": {

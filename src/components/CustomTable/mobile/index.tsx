@@ -573,7 +573,7 @@ export const Mobile = (props: MobileProps) => {
                               alignContent: "center",
                               textAlign: "center",
                               color: (defaultTheme.colors as any)[
-                                item[value?.name]?.toLocaleLowerCase()
+                                item[value?.name]?.toString()?.toLocaleLowerCase()
                               ],
                               fontWeight: 600,
                               wordBreak: "keep-all",
@@ -592,12 +592,12 @@ export const Mobile = (props: MobileProps) => {
                                 height: "8px",
                                 borderRadius: "50%",
                                 backgroundColor: (defaultTheme.colors as any)[
-                                  item[value?.name]?.toLocaleLowerCase()
+                                  item[value?.name]?.toString()?.toLocaleLowerCase()
                                 ],
                               }}
                             />
                             {t(
-                              `table.${item[value?.name]?.toLocaleLowerCase()}`
+                              `table.${item[value?.name]?.toString()?.toLocaleLowerCase()}`
                             )}
                           </Typography>
                         </Descriptions.Item>

@@ -515,7 +515,8 @@
     "withdraw_webhook_data": "Dados do webhook de saque",
     "withdraw_standard_webhook": "Webhook de saque padrão",
     "aggregator_id": "Aggregator",
-    "accept_annonymous_cash_in": "Permitir depósito anônimo"
+    "accept_annonymous_cash_in": "Permitir depósito anônimo",
+    "business_name": "Razão social"
   },
   "table": {
     "id": "id",
