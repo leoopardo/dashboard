@@ -946,7 +946,7 @@
     "main_user_name": "Main user name",
     "main_user_username": "Main user username",
     "row": "Row",
-    "pix_type": "Tipo de pix",
+    "pix_type": "Type",
     "standard": "Standard",
     "unassigned": "Unassigned",
     "access_key": "Access key",
@@ -1064,7 +1064,8 @@
     "merchant_category_id": "Category",
     "totalCheckedInternal": "Internal checks",
     "totalCheckedOnProvider": "External checks",
-    "checked_on_provider": "External check"
+    "checked_on_provider": "External check",
+    "webhook": "Webhook"
   },
   "actions": {
     "details": "Details",

@@ -127,14 +127,13 @@ export const RefundDeposits = () => {
     { name: "endToEndId", type: "id" },
     { name: "bank", type: "bankNameToIcon" },
     { name: "merchant_name", type: "text" },
-    { name: "value", type: "value" },
     { name: "createdAt", type: "small_date" },
-    { name: "pix_type", head: "payment_type", type: "pix_type" },
-    { name: "buyer_name", type: "text" },
-    { name: "buyer_document", type: "document" },
-    { name: "payer_document", type: "document" },
+    { name: "status", type: "transaction_status" },
+    { name: "value", type: "value" },
+    { name: "pix_type", type: "pix_type" },
     { name: "reason", type: "text" },
-    { name: "status", type: "status" },
+    { name: "buyer", type: "transaction_person" },
+    { name: "payer", type: "transaction_person" },
   ];
 
   useEffect(() => {

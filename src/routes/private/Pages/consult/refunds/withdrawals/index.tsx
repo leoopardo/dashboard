@@ -98,12 +98,10 @@ export const RefundWithdrawals = () => {
     { name: "rtrId", head: "refund_id", type: "id" },
     { name: "bank", type: "bankNameToIcon" },
     { name: "merchant_name", type: "text" },
-    { name: "value", type: "value" },
     { name: "createdAt", type: "small_date" },
-    { name: "refund_date", type: "small_date" },
-    { name: "receiver_name", type: "text" },
-    { name: "receiver_document", type: "document" },
-    { name: "status", type: "status" },
+    { name: "status", type: "transaction_status" },
+    { name: "value", type: "value" },
+    { name: "receiver", type: "transaction_person" },
   ];
 
   useEffect(() => {

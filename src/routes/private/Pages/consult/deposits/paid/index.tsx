@@ -109,14 +109,12 @@ export const PaidDeposits = () => {
     { name: "bank", type: "bankNameToIcon" },
     { name: "merchant_name", type: "text" },
     { name: "partner_name", type: "text" },
-    { name: "value", type: "value" },
     { name: "createdAt", type: "small_date" },
-    { name: "delivered_at", type: "small_date" },
+    { name: "status", type: "transaction_status" },
+    { name: "delivered_at", head: "webhook", type: "webhook_status" },
+    { name: "value", type: "value" },
     { name: "pix_type", head: "pix_type", type: "pix_type" },
-    { name: "buyer_name", type: "text" },
-    { name: "buyer_document", type: "document" },
-    { name: "status", type: "status" },
-    { name: "deadline", type: "deadline" },
+    { name: "buyer", type: "transaction_person" },
   ];
 
   useEffect(() => {
