@@ -4,15 +4,14 @@ import {
   CheckCircleOutlined,
   EyeFilled,
   FileAddOutlined,
-  FilterOutlined,
   SendOutlined,
   SettingFilled,
 } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
-import { Tooltip } from "@mui/material";
 import { Search } from "@src/components/Inputs/search";
 import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
 import { Toast } from "@src/components/Toast";
+import { useTotalizer } from "@src/contexts/totalizerContext";
 import { useCheckPayment } from "@src/services/consult/deposits/generatedDeposits/checkPayment";
 import { useCreateSendWebhook } from "@src/services/consult/deposits/generatedDeposits/resendWebhook";
 import { useGetDepositReportFields } from "@src/services/consult/deposits/reportCsvFields/getReportFields";
@@ -20,7 +19,8 @@ import { queryClient } from "@src/services/queryClient";
 import { useCreateGeneratedDepositsReports } from "@src/services/reports/consult/deposits/createGeneratedDepositsReports";
 import { ResendWebhookBody } from "@src/services/types/consult/deposits/createResendWebhook.interface";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Alert, Button, Col, Row, Select, Space } from "antd";
+import { ErrorList } from "@src/utils/errors";
+import { Alert, Button, Col, Row, Select, Space, Tooltip } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -38,7 +38,6 @@ import { ResendWebhookModal } from "../components/ResendWebhookModal";
 import { ViewModal } from "../components/ViewModal";
 import { WebhookModal } from "../components/webhooksModal";
 import { TotalizersCards } from "./components/TotalizersCards";
-import { ErrorList } from "@src/utils/errors";
 
 const INITIAL_QUERY: generatedDepositTotalQuery = {
   page: 1,
@@ -61,6 +60,7 @@ export const GeneratedDeposits = () => {
   ) as ValidateInterface;
   const isMobile = useMediaQuery({ maxWidth: "750px" });
   const { t } = useTranslation();
+  const { setTotalizer } = useTotalizer();
   const [query, setQuery] = useState<generatedDepositTotalQuery>(INITIAL_QUERY);
   const {
     depositsTotal,
@@ -134,15 +134,14 @@ export const GeneratedDeposits = () => {
     { name: "pix_type", head: "pix_type", type: "pix_type" },
     { name: "buyer", type: "transaction_person" },
   ];
-  return (
-    <Row
-      gutter={[8, 8]}
-      align="middle"
-      justify="center"
-      style={{ padding: "25px" }}
-    >
-      {permissions?.report?.deposit?.generated_deposit
-        ?.report_deposit_generated_deposit_list_totals && (
+
+  useEffect(() => {
+    if (
+      permissions?.report?.deposit?.generated_deposit
+        ?.report_deposit_generated_deposit_list_totals &&
+      depositsTotal
+    )
+      setTotalizer(
         <TotalizersCards
           data={depositsTotal}
           fetchData={() => {
@@ -150,86 +149,151 @@ export const GeneratedDeposits = () => {
           }}
           loading={isDepositsTotalFetching}
           query={query}
+          setIsFiltersOpen={setIsFiltersOpen}
         />
-      )}
-      {permissions?.report?.deposit?.generated_deposit
-        ?.report_deposit_generated_deposit_list_totals &&
-        !isDepositsTotalFetching &&
-        depositsTotalError && (
-          <Col span={24}>
-            {depositsTotalError?.response?.data?.status == 500 ? (
-              <Alert
-                message={`${t("table.error")}:`}
-                description={t(`error.500`)}
-                type="error"
-                closable
-                onClose={() => {
-                  refetchDepositsTotal();
-                }}
-              />
+      );
+
+    return () => {
+      setTotalizer(undefined);
+    };
+  }, [depositsTotal, query, isDepositsTotalFetching]);
+  return (
+    <Row
+      gutter={[8, 8]}
+      align="middle"
+      justify="center"
+      style={{ padding: "16px 4px" }}
+    >
+      <Row
+        align="middle"
+        justify="center"
+        gutter={[8, 8]}
+        style={{ width: "100%", padding: "0 16px" }}
+      >
+        {permissions?.report?.deposit?.generated_deposit
+          ?.report_deposit_generated_deposit_list_totals &&
+          !isDepositsTotalFetching &&
+          depositsTotalError && (
+            <Col span={24}>
+              {depositsTotalError?.response?.data?.status == 500 ? (
+                <Alert
+                  message={`${t("table.error")}:`}
+                  description={t(`error.500`)}
+                  type="error"
+                  closable
+                  onClose={() => {
+                    refetchDepositsTotal();
+                  }}
+                />
+              ) : (
+                <Alert
+                  message={`${t("table.error")}:`}
+                  description={t(
+                    `error.${
+                      (ErrorList as any)[
+                        depositsTotalError?.response?.data?.message
+                      ]
+                    }`
+                  )}
+                  type="error"
+                  closable
+                  onClose={() => {
+                    refetchDepositsTotal();
+                  }}
+                />
+              )}
+            </Col>
+          )}
+        <Row
+          align="middle"
+          justify="start"
+          style={{ width: "100%" }}
+          gutter={[8, 8]}
+        >
+          <Col xs={{ span: 24 }} md={{ span: 18 }} lg={{ span: 13 }}>
+            {!isMobile ? (
+              <Space.Compact style={{ width: "100%" }} size="large">
+                <Select
+                  allowClear
+                  onClear={() => {
+                    delete query.pix_id;
+                    delete query.endToEndId;
+                    delete query.txid;
+                    delete query.reference_id;
+                    delete query.payer_document;
+                    delete query.buyer_document;
+                    delete query.buyer_name;
+                    delete query.payer_name;
+                    delete query.description;
+                  }}
+                  style={{ width: "40%" }}
+                  size="large"
+                  onChange={(value) => {
+                    delete query.pix_id;
+                    delete query.endToEndId;
+                    delete query.txid;
+                    delete query.reference_id;
+                    delete query.payer_document;
+                    delete query.buyer_document;
+                    delete query.buyer_name;
+                    delete query.payer_name;
+                    delete query.description;
+
+                    if (
+                      [
+                        "pix_id",
+                        "endToEndId",
+                        "txid",
+                        "reference_id",
+                        "payer_document",
+                        "buyer_document",
+                      ].includes(value)
+                    ) {
+                      delete query.initial_date;
+                      delete query.final_date;
+                    } else if (!query.initial_date && !query.final_date) {
+                      setQuery((state) => ({
+                        ...state,
+                        initial_date: moment(new Date())
+                          .startOf("day")
+                          .utc()
+                          .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+                        final_date: moment(new Date())
+                          .add(1, "day")
+                          .startOf("day")
+                          .utc()
+                          .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+                      }));
+                    }
+                    setSearchOption(value);
+                  }}
+                  value={searchOption}
+                  placeholder={t("input.options")}
+                  options={[
+                    { value: "pix_id", label: t("table.pix_id") },
+                    { value: "endToEndId", label: t("table.endToEndId") },
+                    {
+                      value: "payer_document",
+                      label: t("table.payer_document"),
+                    },
+                    {
+                      value: "buyer_document",
+                      label: t("table.buyer_document"),
+                    },
+                    { value: "buyer_name", label: t("table.buyer_name") },
+                    { value: "payer_name", label: t("table.payer_name") },
+                    { value: "txid", label: t("table.txid") },
+                    { value: "reference_id", label: t("table.reference_id") },
+                    { value: "description", label: t("table.description") },
+                  ]}
+                />
+                <Search
+                  query={query}
+                  setQuery={setQuery}
+                  searchOption={searchOption}
+                />
+              </Space.Compact>
             ) : (
-              <Alert
-                message={`${t("table.error")}:`}
-                description={t(
-                  `error.${
-                    (ErrorList as any)[
-                      depositsTotalError?.response?.data?.message
-                    ]
-                  }`
-                )}
-                type="error"
-                closable
-                onClose={() => {
-                  refetchDepositsTotal();
-                }}
-              />
-            )}
-          </Col>
-        )}
-
-      <Row
-        align="middle"
-        justify="start"
-        gutter={[8, 8]}
-        style={{ width: "100%" }}
-      >
-        <Col xs={{ span: 24 }} md={{ span: 4 }}>
-          <Button
-            size="large"
-            style={{ width: "100%" }}
-            loading={isDepositsRowsFetching || isDepositsTotalFetching}
-            type="primary"
-            onClick={() => setIsFiltersOpen(true)}
-            icon={<FilterOutlined />}
-          >
-            {t("table.filters")}
-          </Button>
-        </Col>
-        <Col xs={{ span: 24 }} md={{ span: 20 }}>
-          <FilterChips
-            initial_query={INITIAL_QUERY}
-            startDateKeyName="initial_date"
-            endDateKeyName="final_date"
-            query={query}
-            setQuery={setQuery}
-            haveInitialDate={
-              !["pix_id", "endToEndId", "txid", "reference_id"].includes(
-                searchOption as any
-              )
-            }
-          />
-        </Col>
-      </Row>
-
-      <Row
-        align="middle"
-        justify="start"
-        style={{ width: "100%" }}
-        gutter={[8, 8]}
-      >
-        <Col xs={{ span: 24 }} md={{ span: 18 }} lg={{ span: 9 }}>
-          {!isMobile ? (
-            <Space.Compact style={{ width: "100%" }} size="large">
               <Select
                 allowClear
                 onClear={() => {
@@ -243,7 +307,7 @@ export const GeneratedDeposits = () => {
                   delete query.payer_name;
                   delete query.description;
                 }}
-                style={{ width: "60%" }}
+                style={{ width: "100%" }}
                 size="large"
                 onChange={(value) => {
                   delete query.pix_id;
@@ -298,125 +362,28 @@ export const GeneratedDeposits = () => {
                   { value: "description", label: t("table.description") },
                 ]}
               />
+            )}
+          </Col>
+
+          {isMobile && (
+            <Col xs={{ span: 24 }}>
               <Search
                 query={query}
                 setQuery={setQuery}
                 searchOption={searchOption}
               />
-            </Space.Compact>
-          ) : (
-            <Select
-              allowClear
-              onClear={() => {
-                delete query.pix_id;
-                delete query.endToEndId;
-                delete query.txid;
-                delete query.reference_id;
-                delete query.payer_document;
-                delete query.buyer_document;
-                delete query.buyer_name;
-                delete query.payer_name;
-                delete query.description;
-              }}
-              style={{ width: "100%" }}
-              size="large"
-              onChange={(value) => {
-                delete query.pix_id;
-                delete query.endToEndId;
-                delete query.txid;
-                delete query.reference_id;
-                delete query.payer_document;
-                delete query.buyer_document;
-                delete query.buyer_name;
-                delete query.payer_name;
-                delete query.description;
-
-                if (
-                  [
-                    "pix_id",
-                    "endToEndId",
-                    "txid",
-                    "reference_id",
-                    "payer_document",
-                    "buyer_document",
-                  ].includes(value)
-                ) {
-                  delete query.initial_date;
-                  delete query.final_date;
-                } else if (!query.initial_date && !query.final_date) {
-                  setQuery((state) => ({
-                    ...state,
-                    initial_date: moment(new Date())
-                      .startOf("day")
-                      .utc()
-                      .format("YYYY-MM-DDTHH:mm:ss.SSS"),
-                    final_date: moment(new Date())
-                      .add(1, "day")
-                      .startOf("day")
-                      .utc()
-                      .format("YYYY-MM-DDTHH:mm:ss.SSS"),
-                  }));
-                }
-                setSearchOption(value);
-              }}
-              value={searchOption}
-              placeholder={t("input.options")}
-              options={[
-                { value: "pix_id", label: t("table.pix_id") },
-                { value: "endToEndId", label: t("table.endToEndId") },
-                { value: "payer_document", label: t("table.payer_document") },
-                { value: "buyer_document", label: t("table.buyer_document") },
-                { value: "buyer_name", label: t("table.buyer_name") },
-                { value: "payer_name", label: t("table.payer_name") },
-                { value: "txid", label: t("table.txid") },
-                { value: "reference_id", label: t("table.reference_id") },
-                { value: "description", label: t("table.description") },
-              ]}
-            />
+            </Col>
           )}
-        </Col>
 
-        {isMobile && (
-          <Col xs={{ span: 24 }}>
-            <Search
-              query={query}
-              setQuery={setQuery}
-              searchOption={searchOption}
-            />
-          </Col>
-        )}
-
-        <Col xs={{ span: 24 }} md={{ span: 5 }} lg={{ span: 4 }}>
-          <Button
-            type="dashed"
-            loading={isDepositsRowsFetching}
-            danger
-            size="large"
-            onClick={() => {
-              setQuery(INITIAL_QUERY);
-              setSearchOption(undefined);
-            }}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              width: "100%",
-            }}
-            icon={<FilterAltOffOutlinedIcon />}
-          >
-            {t("table.clear_filters")}
-          </Button>
-        </Col>
-        {permissions?.report?.deposit?.generated_deposit
-          ?.report_deposit_generated_deposit_resend_notification && (
-          <Col xs={{ span: 24 }} md={{ span: 8 }} lg={{ span: 4 }}>
+          <Col xs={{ span: 24 }} md={{ span: 5 }} lg={{ span: 4 }}>
             <Button
-              disabled={depositsRows?.items.length === 0 || depositsRowsError}
-              type="primary"
+              type="default"
               loading={isDepositsRowsFetching}
+              danger
               size="large"
               onClick={() => {
-                setIsResendWebhookModalOpen(true);
+                setQuery(INITIAL_QUERY);
+                setSearchOption(undefined);
               }}
               style={{
                 display: "flex",
@@ -424,40 +391,83 @@ export const GeneratedDeposits = () => {
                 justifyContent: "center",
                 width: "100%",
               }}
-              icon={<SendOutlined />}
+              icon={<FilterAltOffOutlinedIcon />}
             >
-              {t("modal.resend_webhook")}
+              {t("table.clear_filters")}
             </Button>
           </Col>
-        )}
-
-        {permissions?.report?.deposit?.generated_deposit
-          ?.report_deposit_generated_deposit_export_csv && (
-          <Col xs={{ span: 24 }} md={{ span: 6 }} lg={{ span: 3 }}>
-            <Tooltip
-              placement="top-end"
-              title={
-                depositsRows?.items.length === 0 || depositsRowsError
-                  ? t("messages.no_records_to_export")
-                  : t("messages.export_csv")
-              }
-              arrow
-            >
+          {permissions?.report?.deposit?.generated_deposit
+            ?.report_deposit_generated_deposit_resend_notification && (
+            <Col xs={{ span: 24 }} md={{ span: 8 }} lg={{ span: 4 }}>
               <Button
-                onClick={() => setIsExportReportsOpen(true)}
-                style={{ width: "100%" }}
-                shape="round"
-                type="dashed"
+                disabled={depositsRows?.items.length === 0 || depositsRowsError}
+                type="default"
+                loading={isDepositsRowsFetching}
                 size="large"
-                loading={GeneratedDepositsReportsIsLoading}
-                disabled={!depositsRows?.items.length || depositsRowsError}
-                icon={<FileAddOutlined style={{ fontSize: 22 }} />}
+                onClick={() => {
+                  setIsResendWebhookModalOpen(true);
+                }}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: "100%",
+                }}
+                icon={<SendOutlined />}
               >
-                CSV
+                {t("modal.resend_webhook")}
               </Button>
-            </Tooltip>
+            </Col>
+          )}
+
+          {permissions?.report?.deposit?.generated_deposit
+            ?.report_deposit_generated_deposit_export_csv && (
+            <Col xs={{ span: 24 }} md={{ span: 6 }} lg={{ span: 3 }}>
+              <Tooltip
+                placement="topRight"
+                title={
+                  depositsRows?.items.length === 0 || depositsRowsError
+                    ? t("messages.no_records_to_export")
+                    : t("messages.export_csv")
+                }
+                arrow
+              >
+                <Button
+                  onClick={() => setIsExportReportsOpen(true)}
+                  style={{ width: "100%" }}
+                  type="default"
+                  size="large"
+                  loading={GeneratedDepositsReportsIsLoading}
+                  disabled={!depositsRows?.items.length || depositsRowsError}
+                  icon={<FileAddOutlined style={{ fontSize: 22 }} />}
+                >
+                  CSV
+                </Button>
+              </Tooltip>
+            </Col>
+          )}
+        </Row>
+        <Row
+          align="middle"
+          justify="start"
+          gutter={[8, 8]}
+          style={{ width: "100%" }}
+        >
+          <Col xs={{ span: 24 }} md={{ span: 20 }}>
+            <FilterChips
+              initial_query={INITIAL_QUERY}
+              startDateKeyName="initial_date"
+              endDateKeyName="final_date"
+              query={query}
+              setQuery={setQuery}
+              haveInitialDate={
+                !["pix_id", "endToEndId", "txid", "reference_id"].includes(
+                  searchOption as any
+                )
+              }
+            />
           </Col>
-        )}
+        </Row>
       </Row>
 
       <Row style={{ width: "100%" }}>

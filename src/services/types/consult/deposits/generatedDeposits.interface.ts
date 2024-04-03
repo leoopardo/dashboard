@@ -12,6 +12,7 @@ export interface generatedDepositTotalQuery {
     | "EXPIRED"
     | "WAITING"
     | "AWAITING_REFUND"
+    | "WAITING_REFUND"
     | "REFUNDED";
   pix_id?: string;
   endToEndId?: string;

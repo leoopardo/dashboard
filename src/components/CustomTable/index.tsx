@@ -2248,7 +2248,7 @@ export const CustomTable = (props: TableProps) => {
               style={{
                 width: "100%",
                 display: "flex",
-                justifyContent: "flex-end",
+                justifyContent: "center",
                 marginTop: "5px",
               }}
             >

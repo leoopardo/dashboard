@@ -15,6 +15,7 @@ import { SidebarNavigation } from "./components/SideBarNavigation/index.tsx";
 import { ErrorProvider } from "./contexts/ErrorContext/index.tsx";
 import { useMenu } from "./contexts/SidebarContext/index.tsx";
 import { useTheme } from "./contexts/ThemeContext/index.tsx";
+import { useTotalizer } from "./contexts/totalizerContext/index.tsx";
 import i18n from "./i18n";
 import { PrivateRoutes } from "./routes/private";
 import { PublicRoutes } from "./routes/public";
@@ -35,6 +36,7 @@ function App() {
   const { theme } = useTheme();
   const { scrollYProgress } = useViewportScroll();
   const [showButton, setShowButton] = useState(false);
+  const { Totalizer } = useTotalizer();
 
   scrollYProgress.onChange((v) => {
     setShowButton(document.documentElement.scrollHeight > 1300 && v > 0.3);
@@ -171,7 +173,7 @@ function App() {
                 colorBgTextHover: defaultTheme.colors.secondary,
                 colorBgContainer: theme === "dark" ? "#222222" : "#ffffff",
 
-                colorBgLayout: theme === "dark" ? "#1a1a1a" : "#DCDFE7",
+                colorBgLayout: theme === "dark" ? "#1a1a1a" : "#F5F6F8",
                 colorText: theme === "dark" ? "#f5f5f5" : "rgba(0, 0, 0, 0.88)",
                 colorTextHeading:
                   theme === "dark" ? "#f5f5f5" : "rgba(0, 0, 0, 0.88)",
@@ -221,25 +223,54 @@ function App() {
                           overflow: "hidden",
                         }}
                       >
+                        {Totalizer && (
+                          <Content
+                            style={{
+                              padding: 16,
+                              margin: 18,
+                              marginTop: t(
+                                `menus.${
+                                  location.pathname.split("/")[
+                                    location.pathname.split("/").length - 1
+                                  ]
+                                }`
+                              ).includes("menus")
+                                ? 10
+                                : isMobile
+                                ? 180
+                                : 125,
+                              borderRadius: 12,
+                              background:
+                                theme === "dark" ? "#222222 " : "#fdfdfd",
+                              zIndex: 2,
+                              border: theme === "light" ? "1px solid #DCDFE7" : "1px solid #3b3b3b",
+                            }}
+                          >
+                            {Totalizer}
+                          </Content>
+                        )}
                         <Content
                           style={{
                             padding: 0,
                             margin: 18,
-                            marginTop: t(
-                              `menus.${
-                                location.pathname.split("/")[
-                                  location.pathname.split("/").length - 1
-                                ]
-                              }`
-                            ).includes("menus")
+                            marginTop: Totalizer
+                              ? 0
+                              : t(
+                                  `menus.${
+                                    location.pathname.split("/")[
+                                      location.pathname.split("/").length - 1
+                                    ]
+                                  }`
+                                ).includes("menus")
                               ? 10
                               : isMobile
-                              ? 200
+                              ? 180
                               : 125,
-                            borderRadius: 10,
+                            borderRadius: 12,
                             background:
                               theme === "dark" ? "#222222 " : "#fdfdfd",
                             zIndex: 2,
+                            border: theme === "light" ? "1px solid #DCDFE7" : "1px solid #3b3b3b",
                           }}
                         >
                           {element}
