@@ -36,12 +36,13 @@ import { ViewModal } from "../components/ViewModal";
 import { WebhookModal } from "../components/webhooksModal";
 import { TotalizersCards } from "./components/TotalizersCards";
 import { ErrorList } from "@src/utils/errors";
+import { useTotalizer } from "@src/contexts/totalizerContext";
 
 export const GeneratedWithdrawals = () => {
   const { permissions } = queryClient.getQueryData(
     "validate"
   ) as ValidateInterface;
-
+  const { setTotalizer } = useTotalizer();
   const INITIAL_QUERY: generatedWithdrawalsRowsQuery = {
     page: 1,
     limit: 25,
@@ -127,13 +128,36 @@ export const GeneratedWithdrawals = () => {
     { name: "value", type: "value" },
     { name: "pix_type", head: "pix_type", type: "pix_type" },
     { name: "pix_key", type: "text" },
-    { name: "receiver", type: "transaction_person" }
+    { name: "receiver", type: "transaction_person" },
   ];
 
   useEffect(() => {
     refetchWithdrawalsTotalRows();
     refetchWithdrawalsTotal();
   }, [query]);
+
+  useEffect(() => {
+    if (
+      permissions?.report?.deposit?.generated_deposit
+        ?.report_deposit_generated_deposit_list_totals &&
+      WithdrawalsTotal
+    )
+      setTotalizer(
+        <TotalizersCards
+          data={WithdrawalsTotal}
+          fetchData={() => {
+            refetchWithdrawalsTotal();
+          }}
+          loading={isWithdrawalsTotalFetching}
+          query={query}
+          setIsFiltersOpen={setIsFiltersOpen}
+        />
+      );
+
+    return () => {
+      setTotalizer(undefined);
+    };
+  }, [WithdrawalsTotal, query, isWithdrawalsTotalFetching]);
 
   return (
     <Row
@@ -142,19 +166,7 @@ export const GeneratedWithdrawals = () => {
       justify="center"
       style={{ padding: "25px" }}
     >
-      {permissions?.report?.withdraw?.generated_withdraw
-        ?.report_withdraw_generated_withdraw_list_totals && (
-        <TotalizersCards
-          data={WithdrawalsTotal}
-          fetchData={() => {
-            refetchWithdrawalsTotal();
-            refetchWithdrawalsTotalRows();
-          }}
-          loading={isWithdrawalsTotalFetching}
-          query={query}
-        />
-      )}
-
+    
       {permissions?.report?.deposit?.generated_deposit
         ?.report_deposit_generated_deposit_list_totals &&
         !isWithdrawalsTotalFetching &&

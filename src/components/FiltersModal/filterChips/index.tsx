@@ -252,6 +252,7 @@ export const FilterChips = ({
                 </Tag>
               </Col>
             );
+            
           case "category_id":
             return (
               <Col key={key}>

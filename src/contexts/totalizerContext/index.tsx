@@ -10,8 +10,8 @@ import {
 } from "react";
 
 interface TotalizerContext {
-  Totalizer: ReactChild;
-  setTotalizer: Dispatch<SetStateAction<ReactChild>>;
+  Totalizer?: ReactChild;
+  setTotalizer: Dispatch<SetStateAction<ReactChild | undefined>>;
 }
 
 const TotalizerContext = createContext<TotalizerContext>(
@@ -19,8 +19,7 @@ const TotalizerContext = createContext<TotalizerContext>(
 );
 
 export const TotalizerProvider = ({ children }: any) => {
-  const [Totalizer, setTotalizer] = useState<ReactChild>(<></>);
-
+  const [Totalizer, setTotalizer] = useState<ReactChild | undefined>(undefined);
 
   return (
     <TotalizerContext.Provider value={{ Totalizer, setTotalizer }}>

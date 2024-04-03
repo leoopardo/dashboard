@@ -10,12 +10,14 @@ import {
 } from "../../../../../../../services/types/consult/withdrawals/generatedWithdrawals.interface";
 import { defaultTheme } from "../../../../../../../styles/defaultTheme";
 import { moneyFormatter } from "@src/utils/moneyFormatter";
+import { Dispatch, SetStateAction } from "react";
 
 interface TotalizersInterface {
   data: generatedWithdrawalsTotal | null | undefined;
   query: generatedWithdrawalsRowsQuery;
   loading: boolean;
   fetchData: () => void;
+  setIsFiltersOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 export const TotalizersCards = (props: TotalizersInterface) => {
@@ -100,7 +102,8 @@ export const TotalizersCards = (props: TotalizersInterface) => {
                 color: defaultTheme.colors.success,
                 fontSize: isMobile ? "12px" : "18px",
                 wordBreak: "break-all",
-              }}style={{
+              }}
+              style={{
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-between",
@@ -140,7 +143,8 @@ export const TotalizersCards = (props: TotalizersInterface) => {
                 color: defaultTheme.colors.error,
                 fontSize: isMobile ? "12px" : "18px",
                 wordBreak: "break-all",
-              }}style={{
+              }}
+              style={{
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-between",
@@ -180,7 +184,8 @@ export const TotalizersCards = (props: TotalizersInterface) => {
                 color: defaultTheme.colors.warnning,
                 fontSize: isMobile ? "12px" : "18px",
                 wordBreak: "break-all",
-              }}style={{
+              }}
+              style={{
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-between",
@@ -219,7 +224,8 @@ export const TotalizersCards = (props: TotalizersInterface) => {
                 color: defaultTheme.colors.warnning,
                 fontSize: isMobile ? "12px" : "18px",
                 wordBreak: "break-all",
-              }}style={{
+              }}
+              style={{
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-between",
@@ -259,7 +265,8 @@ export const TotalizersCards = (props: TotalizersInterface) => {
                 color: defaultTheme.colors.warnning,
                 fontSize: isMobile ? "12px" : "18px",
                 wordBreak: "break-all",
-              }}style={{
+              }}
+              style={{
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-between",
@@ -298,7 +305,8 @@ export const TotalizersCards = (props: TotalizersInterface) => {
                 color: defaultTheme.colors.info,
                 fontSize: isMobile ? "12px" : "18px",
                 wordBreak: "break-all",
-              }}style={{
+              }}
+              style={{
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-between",
@@ -338,7 +346,8 @@ export const TotalizersCards = (props: TotalizersInterface) => {
               color: theme === "dark" ? "#fff" : defaultTheme.colors.dark,
               fontSize: isMobile ? "12px" : "18px",
               wordBreak: "break-all",
-            }}style={{
+            }}
+            style={{
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",
