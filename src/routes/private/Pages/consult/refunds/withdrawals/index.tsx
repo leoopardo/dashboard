@@ -368,8 +368,8 @@ export const RefundWithdrawals = () => {
           </Button>
         </Col>
 
-        {permissions?.report?.chargeback?.deposit_chargeback
-          ?.report_chargeback_deposit_chargeback_export_csv && (
+        {permissions?.report?.chargeback?.withdraw_chargeback
+          ?.report_chargeback_withdraw_chargeback_export_csv && (
           <Col xs={{ span: 24 }} md={{ span: 6 }} lg={{ span: 3 }}>
             <Tooltip
               placement="topLeft"
