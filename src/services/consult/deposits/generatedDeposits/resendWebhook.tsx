@@ -8,8 +8,8 @@ export function useCreateSendWebhook(body: ResendWebhookBody, id?: string) {
   >("CreateResendWebhook", async () => {
     const response = await api.post(
       `webhook/schedule/deposit/pix/${id ?? ""}`,
-      {},
-      { params: { ...body } }
+      body,
+      
     );
     return response.data;
   });

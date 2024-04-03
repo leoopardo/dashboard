@@ -15,7 +15,6 @@ export function useCreateMerchantManualReports(
       {
         ...body,
       },
-      { params: body }
     );
     await queryClient.refetchQueries({
       queryKey: ["MerchantManualReports"],

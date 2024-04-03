@@ -57,8 +57,8 @@ function App() {
         alignItems: "center",
       }}
     >
-      <img src={import.meta.env.VITE_APP_ICON} style={{width: "7vw"}}/>
-      <Spin tip={t("messages.loading")} size="large" style={{marginTop: -26}}>
+      <img src={import.meta.env.VITE_APP_ICON} style={{ width: "7vw" }} />
+      <Spin tip={t("messages.loading")} size="large" style={{ marginTop: -26 }}>
         <Layout className="content" />
       </Spin>
     </Layout>
@@ -79,181 +79,192 @@ function App() {
 
   return (
     <I18nextProvider i18n={i18n} defaultNS={"translation"}>
-      <ThemeProvider theme={theme === "dark" ? defaultTheme : {colors: {...defaultTheme.colors, dark: "#ebebeb"}}}>
-        <BrowserRouter>
-          <GlobalStyle />
-          <ConfigProvider
-            theme={{
-              components: {
-                Alert: {
-                  colorError: "#000",
-                  colorText: "#000",
+      <ThemeProvider
+        theme={
+          theme === "dark"
+            ? defaultTheme
+            : { colors: { ...defaultTheme.colors, dark: "#ebebeb" } }
+        }
+      >
+          <BrowserRouter>
+            <GlobalStyle />
+            <ConfigProvider
+              theme={{
+                components: {
+                  Alert: {
+                    colorError: "#000",
+                    colorText: "#000",
+                  },
+
+                  Menu: {
+                    colorTextLightSolid:
+                      theme === "dark"
+                        ? "#fff"
+                        : import.meta.env.VITE_APP_MENU_THEME === "dark"
+                        ? "#fff"
+                        : "#000",
+                  },
+                  Tooltip: {
+                    colorTextLightSolid: theme === "dark" ? "#000" : "#fff",
+                  },
+                  DatePicker: {
+                    controlItemBgActive:
+                      theme === "dark"
+                        ? "#303030"
+                        : defaultTheme.colors.secondary,
+                    padding: 0,
+                    margin: 0,
+                    paddingXS: 5,
+                  },
+                  FloatButton: { colorBgElevated: "#e4e4e4" },
+
+                  Button: {
+                    colorTextLightSolid:
+                      import.meta.env.VITE_APP_BUTTON === "dark"
+                        ? "rgba(0, 0, 0, 0.88)"
+                        : "#fff",
+                  },
+                  Select: {
+                    controlItemBgActive:
+                      theme === "dark"
+                        ? "#303030"
+                        : defaultTheme.colors.secondary,
+                  },
+                  Table: {
+                    controlItemBgActive: defaultTheme.colors.secondary,
+                    controlItemBgActiveHover: "#c0c0c09f",
+                  },
+                  Card: {
+                    boxShadow:
+                      theme === "dark"
+                        ? "0px 4px 15.7px -3px rgba(0, 0, 0, 0.25)"
+                        : "0px 4px 15.7px -3px rgba(0, 0, 0, 0.144)",
+                    boxShadowSecondary:
+                      theme === "dark"
+                        ? "0px 4px 15.7px -3px rgba(0, 0, 0, 0.25)"
+                        : "0px 4px 15.7px -3px rgba(0, 0, 0, 0.144)",
+                    boxShadowTertiary:
+                      theme === "dark"
+                        ? "0px 4px 15.7px -3px rgba(0, 0, 0, 0.25)"
+                        : "0px 4px 15.7px -3px rgba(0, 0, 0, 0.144)",
+                  },
+                  Layout: {
+                    colorBgHeader: theme === "dark" ? "#222222" : "#ffffff",
+                  },
+                  Segmented: {
+                    colorBgElevated: defaultTheme.colors.secondary,
+                    colorBgLayout: theme === "dark" ? "#272727" : "#f0f0f0",
+                  },
+                  Badge: {
+                    colorError: import.meta.env.VITE_APP_COLOR_SECONDARY,
+                  },
                 },
-    
-                Menu: {
+
+                token: {
+                  colorPrimary: defaultTheme.colors.secondary,
+                  colorBgTextHover: defaultTheme.colors.secondary,
+                  colorBgContainer: theme === "dark" ? "#222222" : "#ffffff",
+
+                  colorBgLayout: theme === "dark" ? "#1a1a1a" : "#f5f5f5",
+                  colorText:
+                    theme === "dark" ? "#f5f5f5" : "rgba(0, 0, 0, 0.88)",
+                  colorTextHeading:
+                    theme === "dark" ? "#f5f5f5" : "rgba(0, 0, 0, 0.88)",
                   colorTextLightSolid:
-                    theme === "dark"
-                      ? "#fff"
-                      : import.meta.env.VITE_APP_MENU_THEME === "dark"
-                      ? "#fff"
-                      : "#000",
-                },
-                Tooltip: {
-                  colorTextLightSolid: theme === "dark" ? "#000" : "#fff",
-                },
-                DatePicker: {
-                  controlItemBgActive:
-                    theme === "dark"
-                      ? "#303030"
-                      : defaultTheme.colors.secondary,
-                  padding: 0,
-                  margin: 0,
-                  paddingXS: 5,
-                },
-                FloatButton: { colorBgElevated: "#e4e4e4" },
+                    theme === "dark" ? "#ffffff" : "rgba(0, 0, 0, 0.88)",
+                  colorTextBase:
+                    theme === "dark" ? "#f5f5f5" : "rgba(0, 0, 0, 0.88)",
+                  colorTextLabel:
+                    theme === "dark" ? "#f5f5f5" : "rgba(0, 0, 0, 0.88)",
 
-                Button: {
-                  colorTextLightSolid:
-                    import.meta.env.VITE_APP_BUTTON === "dark"
-                      ? "rgba(0, 0, 0, 0.88)"
-                      : "#fff",
+                  colorBgElevated: theme === "dark" ? "#1a1a1a" : "#ffffff",
+                  colorBorder: "#ACACAC",
+                  colorInfoBorder: "#ACACAC",
+                  colorBorderSecondary:
+                    theme === "dark" ? "#353535" : "#f5f5f5",
                 },
-                Select: {
-                  controlItemBgActive:
-                    theme === "dark"
-                      ? "#303030"
-                      : defaultTheme.colors.secondary,
-                },
-                Table: {
-                  controlItemBgActive: defaultTheme.colors.secondary,
-                  controlItemBgActiveHover: "#c0c0c09f",
-                },
-                Card: {
-                  boxShadow:
-                    theme === "dark"
-                      ? "0px 4px 15.7px -3px rgba(0, 0, 0, 0.25)"
-                      : "0px 4px 15.7px -3px rgba(0, 0, 0, 0.144)",
-                  boxShadowSecondary:
-                    theme === "dark"
-                      ? "0px 4px 15.7px -3px rgba(0, 0, 0, 0.25)"
-                      : "0px 4px 15.7px -3px rgba(0, 0, 0, 0.144)",
-                  boxShadowTertiary:
-                    theme === "dark"
-                      ? "0px 4px 15.7px -3px rgba(0, 0, 0, 0.25)"
-                      : "0px 4px 15.7px -3px rgba(0, 0, 0, 0.144)",
-                },
-                Layout: {
-                  colorBgHeader: theme === "dark" ? "#222222" : "#ffffff",
-                },
-                Segmented: {
-                  colorBgElevated: defaultTheme.colors.secondary,
-                  colorBgLayout: theme === "dark" ?  "#272727" : "#f0f0f0",
-                },
-                Badge: {
-                  colorError: import.meta.env.VITE_APP_COLOR_SECONDARY
-                }
-              },
-
-              token: {
-                colorPrimary: defaultTheme.colors.secondary,
-                colorBgTextHover: defaultTheme.colors.secondary,
-                colorBgContainer: theme === "dark" ? "#222222" : "#ffffff",
-
-                colorBgLayout: theme === "dark" ? "#1a1a1a" : "#f5f5f5",
-                colorText: theme === "dark" ? "#f5f5f5" : "rgba(0, 0, 0, 0.88)",
-                colorTextHeading:
-                  theme === "dark" ? "#f5f5f5" : "rgba(0, 0, 0, 0.88)",
-                colorTextLightSolid:
-                  theme === "dark" ? "#ffffff" : "rgba(0, 0, 0, 0.88)",
-                colorTextBase:
-                  theme === "dark" ? "#f5f5f5" : "rgba(0, 0, 0, 0.88)",
-                colorTextLabel:
-                  theme === "dark" ? "#f5f5f5" : "rgba(0, 0, 0, 0.88)",
-
-                colorBgElevated: theme === "dark" ? "#1a1a1a" : "#ffffff",
-                colorBorder: "#ACACAC",
-                colorInfoBorder: "#ACACAC",
-                colorBorderSecondary: theme === "dark" ? "#353535" : "#f5f5f5",
-              },
-            }}
-          >
-            <ErrorProvider>
-              <Toaster
-                position="top-center"
-                data-test-id="toaster"
-                containerClassName="toaster"
-              />
-              {isSuccess ? (
-                <Layout>
+              }}
+            >
+              <ErrorProvider>
+                <Toaster
+                  position="top-center"
+                  data-test-id="toaster"
+                  containerClassName="toaster"
+                />
+                {isSuccess ? (
                   <Layout>
-                    <SidebarNavigation />
+                    <Layout>
+                      <SidebarNavigation />
 
-                    <div
-                      style={{
-                        marginLeft:
-                          !isSuccess || isMobile
-                            ? "0"
-                            : isSidebarOpen
-                            ? "256px"
-                            : "90px",
-                      }}
-                    >
-                      <PageHeader />
-
-                      <Layout
+                      <div
                         style={{
-                          padding: isMobile ? "4px" : "0 8px 8px",
-                          minHeight: "94vh",
+                          marginLeft:
+                            !isSuccess || isMobile
+                              ? "0"
+                              : isSidebarOpen
+                              ? "256px"
+                              : "90px",
                         }}
                       >
-                        <Content
+                        <PageHeader />
+
+                        <Layout
                           style={{
-                            padding: 0,
-                            margin: 0,
-                            height: "100%",
-                            background:
-                              theme === "dark" ? "#222222 " : "#fdfdfd",
+                            padding: isMobile ? "4px" : "0 8px 8px",
+                            minHeight: "94vh",
                           }}
                         >
-                          {element}
-                          <motion.div
-                            initial={{
-                              opacity: !showButton ? 0 : 1,
-                              display: !showButton ? "none" : "flex",
+                          <Content
+                            style={{
+                              padding: 0,
+                              margin: 0,
+                              height: "100%",
+                              background:
+                                theme === "dark" ? "#222222 " : "#fdfdfd",
                             }}
-                            animate={{
-                              opacity: showButton ? 1 : 0,
-                              display: showButton ? "flex" : "none",
-                            }}
-                            transition={{ duration: 0.5 }}
                           >
-                            <FloatButton
-                              data-test-id="float-button"
-                              style={{ backgroundColor: "#b6b6b6" }}
-                              tooltip={<div>{t("messages.scrool_top")}</div>}
-                              icon={
-                                <ArrowUpOutlined data-test-id="float-button" style={{color: "#000"}} />
-                              }
-                              onClick={() =>
-                                window.scrollTo({
-                                  top: 0,
-                                  left: 0,
-                                  behavior: "smooth",
-                                })
-                              }
-                            />
-                          </motion.div>
-                        </Content>
-                      </Layout>
-                    </div>
+                            {element}
+                            <motion.div
+                              initial={{
+                                opacity: !showButton ? 0 : 1,
+                                display: !showButton ? "none" : "flex",
+                              }}
+                              animate={{
+                                opacity: showButton ? 1 : 0,
+                                display: showButton ? "flex" : "none",
+                              }}
+                              transition={{ duration: 0.5 }}
+                            >
+                              <FloatButton
+                                data-test-id="float-button"
+                                style={{ backgroundColor: "#b6b6b6" }}
+                                tooltip={<div>{t("messages.scrool_top")}</div>}
+                                icon={
+                                  <ArrowUpOutlined
+                                    data-test-id="float-button"
+                                    style={{ color: "#000" }}
+                                  />
+                                }
+                                onClick={() =>
+                                  window.scrollTo({
+                                    top: 0,
+                                    left: 0,
+                                    behavior: "smooth",
+                                  })
+                                }
+                              />
+                            </motion.div>
+                          </Content>
+                        </Layout>
+                      </div>
+                    </Layout>
                   </Layout>
-                </Layout>
-              ) : (
-                element
-              )}
-            </ErrorProvider>
-          </ConfigProvider>
-        </BrowserRouter>
+                ) : (
+                  element
+                )}
+              </ErrorProvider>
+            </ConfigProvider>
+          </BrowserRouter>
       </ThemeProvider>
     </I18nextProvider>
   );

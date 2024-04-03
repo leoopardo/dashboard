@@ -57,6 +57,9 @@ export const MerchantSelect = ({
     return uniqueObjects;
   }
 
+  useEffect(() => {refetcMerchant()}, 
+  [])
+
   useEffect(() => {
     setValue(undefined);
     refetchMerchantById();

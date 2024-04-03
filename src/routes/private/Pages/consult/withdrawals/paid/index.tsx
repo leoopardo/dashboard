@@ -101,13 +101,17 @@ export const PaidWithdrawals = () => {
   });
 
   const [webhookBody, setWebhookBody] = useState<ResendWebhookBody>({
-    start_date: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss.SSS"),
-    end_date: moment(new Date())
-      .add(1, "hour")
+    start_date: moment(new Date())
+      .subtract(2, "hours")
+      .startOf("hour")
       .format("YYYY-MM-DDTHH:mm:ss.SSS"),
-    merchant_id: undefined,
-    partner_id: undefined,
+    end_date: moment(new Date())
+      .startOf("hour")
+      .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+    merchants_ids: undefined,
+    partners_ids: undefined,
     webhook_url_type: "both",
+    delivered_at: true,
   });
 
   const [webhookId, setWebhookId] = useState<string>("");
@@ -119,14 +123,13 @@ export const PaidWithdrawals = () => {
     { name: "bank", type: "bankNameToIcon" },
     { name: "merchant_name", type: "text" },
     { name: "partner_name", type: "text" },
-    { name: "value", type: "value" },
     { name: "createdAt", type: "small_date" },
-    { name: "delivered_at", type: "small_date" },
-    { name: "receiver_name", type: "text" },
-    { name: "receiver_document", type: "document" },
+    { name: "status", type: "transaction_status" },
+    { name: "delivered_at", head: "webhook", type: "webhook_status" },
+    { name: "value", type: "value" },
     { name: "pix_type", head: "pix_type", type: "pix_type" },
     { name: "pix_key", type: "text" },
-    { name: "status", type: "status" },
+    { name: "receiver", type: "transaction_person" },
   ];
 
   useEffect(() => {

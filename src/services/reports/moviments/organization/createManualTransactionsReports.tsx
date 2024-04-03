@@ -1,9 +1,8 @@
 import { queryClient } from "@src/services/queryClient";
 import { GetMovimentsQuery } from "@src/services/types/moviments/organization/getMoviments";
-import moment from "moment";
+import { ReportsDataResponse } from "@src/services/types/reports/reports.interface";
 import { useMutation } from "react-query";
 import { api } from "../../../../config/api";
-import { ReportsDataResponse } from "@src/services/types/reports/reports.interface";
 
 export function useCreateOrganizationManualReports(body: GetMovimentsQuery) {
   const { isLoading, error, mutate, isSuccess, data } = useMutation<
@@ -11,16 +10,7 @@ export function useCreateOrganizationManualReports(body: GetMovimentsQuery) {
   >("CreateOrganizationManualReports", async () => {
     const response = await api.post(
       "core/csv/organization/entry-account",
-      {
-        ...body,
-        start_date: body.start_date
-          ? moment(body.start_date).utc().format("YYYY-MM-DDTHH:mm:ss.SSS")
-          : null,
-        end_date: body.end_date
-          ? moment(body.end_date).utc().format("YYYY-MM-DDTHH:mm:ss.SSS")
-          : null,
-      },
-      { params: body }
+     body,
     );
     await queryClient.refetchQueries({
       queryKey: ["OrganizationManualReports"],

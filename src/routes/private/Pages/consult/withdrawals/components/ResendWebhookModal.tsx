@@ -16,7 +16,7 @@ import {
 import locale from "antd/locale/pt_BR";
 import dayjs from "dayjs";
 import moment from "moment";
-import { Dispatch, SetStateAction, useRef } from "react";
+import { Dispatch, SetStateAction, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 const { RangePicker } = DatePicker;
 
@@ -45,6 +45,7 @@ export const ResendWebhookModal = ({
   const { t } = useTranslation();
   const formRef = useRef<FormInstance>(null);
   const submitRef = useRef<HTMLButtonElement>(null);
+  const [entity, setEntity] = useState<"merchant" | "partner">("merchant");
 
   const handleChange = (event: any) => {
     setBody((state) => ({ ...state, [event.target.name]: event.target.value }));
@@ -84,16 +85,28 @@ export const ResendWebhookModal = ({
           }
         }}
       >
+        <Form.Item label={t("table.status")} style={{ margin: 10 }}>
+          <Radio.Group
+            onChange={(e) => {
+              setBody((state) => ({
+                ...state,
+                delivered_at: e.target.value === "not_delivered" ? false : true,
+              }));
+              formRef?.current?.validateFields(["start_date", "end_date"]);
+            }}
+            value={body.delivered_at ? "delivered" : "not_delivered"}
+            name="webhook_url_type"
+            size="large"
+          >
+            <Radio value="delivered">{t("messages.delivered")}</Radio>
+            <Radio value="not_delivered">{t("messages.not_delivered")}</Radio>
+          </Radio.Group>
+        </Form.Item>
         <Form.Item label={t("input.webhook_type")} style={{ margin: 10 }}>
           <Radio.Group
             onChange={handleChange}
             value={body.webhook_url_type}
             name="webhook_url_type"
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              flexWrap: "wrap",
-            }}
             size="large"
           >
             <Radio value="primary">{t("input.primary")}</Radio>
@@ -110,14 +123,25 @@ export const ResendWebhookModal = ({
               rules={[
                 {
                   validator: () => {
+                    if (body.delivered_at) {
+                      if (
+                        body?.end_date &&
+                        body?.end_date >
+                          moment(new Date(body?.start_date as any))
+                            .add(121, "minutes")
+                            .format("YYYY-MM-DDTHH:mm:00.000")
+                      ) {
+                        return Promise.reject(t("error.date_2_hour"));
+                      } else return Promise.resolve();
+                    }
                     if (
                       body?.end_date &&
                       body?.end_date >
                         moment(new Date(body?.start_date as any))
-                          .add(2, "hours")
+                          .add(25, "hours")
                           .format("YYYY-MM-DDTHH:mm:00.000")
                     ) {
-                      return Promise.reject(t("error.date_1_hour"));
+                      return Promise.reject(t("error.date_1_day"));
                     } else return Promise.resolve();
                   },
                 },
@@ -159,27 +183,75 @@ export const ResendWebhookModal = ({
                 />
               </ConfigProvider>
             </Form.Item>
-            {permissions?.register?.partner?.partner?.partner_list && (
-              <Form.Item
-                label={t("table.partner")}
-                style={{ margin: 10 }}
-                rules={[{ required: !body.partner_id }]}
+            <Form.Item label={t("table.profile_id")} style={{ margin: 10 }}>
+              <Radio.Group
+                onChange={(e) => {
+                  setEntity(e.target.value);
+                  setBody((state) => ({
+                    ...state,
+                    merchants_ids: undefined,
+                    partners_ids: undefined,
+                  }));
+                }}
+                value={entity}
+                name="webhook_url_type"
+                style={{
+                  display: "flex",
+
+                  flexWrap: "wrap",
+                }}
+                size="large"
               >
-                <PartnerSelect queryOptions={body} setQueryFunction={setBody} />
-              </Form.Item>
-            )}
-            {permissions?.register?.merchant?.merchant?.merchant_list && (
-              <Form.Item
-                label={t("table.merchant")}
-                style={{ margin: 10 }}
-                rules={[{ required: !body.merchant_id }]}
-              >
-                <MerchantSelect
-                  queryOptions={body}
-                  setQueryFunction={setBody}
-                />
-              </Form.Item>
-            )}
+                <Radio value="partner">{t("table.partner")}</Radio>
+                <Radio value="merchant">{t("table.merchant")}</Radio>
+              </Radio.Group>
+            </Form.Item>
+            {permissions?.register?.partner?.partner?.partner_list &&
+              entity === "partner" && (
+                <Form.Item
+                  label={t("table.partner")}
+                  style={{ margin: 10 }}
+                  rules={[
+                    {
+                      required: !body.merchants_ids && !body.partners_ids,
+                      message:
+                        t("input.required(a)", {
+                          field: t("table.partner"),
+                        }) || "",
+                    },
+                  ]}
+                  name={"partners_ids"}
+                >
+                  <PartnerSelect
+                    queryOptions={body}
+                    setQueryFunction={setBody}
+                    multiple
+                  />
+                </Form.Item>
+              )}
+            {permissions?.register?.merchant?.merchant?.merchant_list &&
+              entity === "merchant" && (
+                <Form.Item
+                  label={t("table.merchant")}
+                  style={{ margin: 10 }}
+                  rules={[
+                    {
+                      required: !body.merchants_ids && !body.partners_ids,
+                      message:
+                        t("input.required(a)", {
+                          field: t("table.merchant"),
+                        }) || "",
+                    },
+                  ]}
+                  name={"merchants_ids"}
+                >
+                  <MerchantSelect
+                    queryOptions={body}
+                    setQueryFunction={setBody}
+                    multiple
+                  />
+                </Form.Item>
+              )}
           </>
         )}
 

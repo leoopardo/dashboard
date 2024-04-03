@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   ArrowDownOutlined,
   ArrowUpOutlined,
+  FileAddOutlined,
   FilterOutlined,
 } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
@@ -10,26 +12,27 @@ import { Grid } from "@mui/material";
 import { CustomTable } from "@src/components/CustomTable";
 import { FiltersModal } from "@src/components/FiltersModal";
 import { FilterChips } from "@src/components/FiltersModal/filterChips";
-import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
+import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
+import { Toast } from "@src/components/Toast";
 import { ValidateToken } from "@src/components/ValidateToken";
 import { useGetMerchantMoviments } from "@src/services/moviments/merchants/manual/GetManualTransactions";
 import { useCreateMerchantManualTransaction } from "@src/services/moviments/merchants/manual/createManualTransaction";
 import { queryClient } from "@src/services/queryClient";
 import { useGetRowsMerchantManualEntryCategory } from "@src/services/register/merchant/manualEntryCategory/getManualEntryCategory";
 import { useCreateMerchantManualReports } from "@src/services/reports/moviments/merchant/createManualTransactionsReports";
+import { useGetManualTransactionReportFields } from "@src/services/reports/moviments/merchant/getManualTransactionFields";
 import { CreateMerchantManualTransaction } from "@src/services/types/moviments/merchant/createManualTransaction.interface";
 import {
   GetMerchantMovimentsItem,
   GetMerchantMovimentsQuery,
 } from "@src/services/types/moviments/merchant/getMoviments";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Divider, Statistic } from "antd";
+import { moneyFormatter } from "@src/utils/moneyFormatter";
+import { Button, Divider, Statistic, Tooltip } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { CreateMovimentModal } from "../../components/createMovimentModal";
-import { Toast } from "@src/components/Toast";
-import { moneyFormatter } from "@src/utils/moneyFormatter";
 
 export const MerchantManual = () => {
   const { t } = useTranslation();
@@ -62,7 +65,8 @@ export const MerchantManual = () => {
     useState<boolean>(false);
   const [operationInBody, setOperationInBody] =
     useState<CreateMerchantManualTransaction | null>(null);
-
+  const [isExportReportsOpen, setIsExportReportsOpen] =
+    useState<boolean>(false);
   const {
     MerchantMovimentsData,
     isMerchantMovimentsDataFetching,
@@ -70,12 +74,21 @@ export const MerchantManual = () => {
     refetchMerchantMovimentsData,
   } = useGetMerchantMoviments(query);
 
+  const { fields } = useGetManualTransactionReportFields();
+  const [csvFields, setCsvFields] = useState<any>();
+  const [comma, setIsComma] = useState<boolean>(false);
+
   const {
     MerchantManualReportsError,
     MerchantManualReportsIsLoading,
     MerchantManualReportsIsSuccess,
     MerchantManualReportsMutate,
-  } = useCreateMerchantManualReports(query);
+    MerchantManualReportsData,
+  } = useCreateMerchantManualReports({
+    ...query,
+    fields: csvFields,
+    comma_separate_value: comma,
+  });
 
   const { categoryData } = useGetRowsMerchantManualEntryCategory({
     limit: 200,
@@ -262,7 +275,8 @@ export const MerchantManual = () => {
             </Button>
           </Grid>
           <Grid item xs={12} md={9} lg={9}>
-            <FilterChips initial_query={INITIAL_QUERY}
+            <FilterChips
+              initial_query={INITIAL_QUERY}
               startDateKeyName="start_date"
               endDateKeyName="end_date"
               query={query}
@@ -306,17 +320,31 @@ export const MerchantManual = () => {
           </Grid>
           {permissions?.transactions?.merchant?.manual_transactions
             ?.merchant_manual_transactions_export_csv && (
-            <Grid item xs={12} md={3} lg={3}>
-              <ExportReportsModal
-                disabled={
+            <Grid item xs={12} md="auto">
+              <Tooltip
+                placement="topRight"
+                title={
                   !MerchantMovimentsData?.total || MerchantMovimentsDataError
+                    ? t("messages.no_records_to_export")
+                    : t("messages.export_csv")
                 }
-                mutateReport={() => MerchantManualReportsMutate()}
-                error={MerchantManualReportsError}
-                success={MerchantManualReportsIsSuccess}
-                loading={MerchantManualReportsIsLoading}
-                reportPath="/moviment/merchant_moviments/merchant_moviments_reports/merchant_manual_moviments_reports"
-              />
+                arrow
+              >
+                <Button
+                  onClick={() => setIsExportReportsOpen(true)}
+                  style={{ width: "100%" }}
+                  icon={<FileAddOutlined style={{ fontSize: 22 }} />}
+                  shape="round"
+                  type="dashed"
+                  size="large"
+                  loading={MerchantManualReportsIsLoading}
+                  disabled={
+                    !MerchantMovimentsData?.total || MerchantMovimentsDataError
+                  }
+                >
+                  CSV
+                </Button>
+              </Tooltip>
             </Grid>
           )}
         </Grid>
@@ -432,6 +460,24 @@ export const MerchantManual = () => {
         success={isSuccess}
         actionSuccess={t("messages.created")}
         actionError={t("messages.create")}
+      />
+
+      <ExportCustomReportsModal
+        open={isExportReportsOpen}
+        setOpen={setIsExportReportsOpen}
+        disabled={!MerchantMovimentsData?.total || MerchantMovimentsDataError}
+        mutateReport={() => MerchantManualReportsMutate()}
+        error={MerchantManualReportsError}
+        success={MerchantManualReportsIsSuccess}
+        loading={MerchantManualReportsIsLoading}
+        reportPath="/moviment/merchant_moviments/merchant_moviments_reports/merchant_manual_moviments_reports"
+        fields={fields}
+        csvFields={csvFields}
+        comma={comma}
+        setIsComma={setIsComma}
+        setCsvFields={setCsvFields}
+        reportName="asuyguydsguysfeuygsgguy"
+        url={MerchantManualReportsData?.url}
       />
     </Grid>
   );

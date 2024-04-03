@@ -12,6 +12,8 @@ export interface GetMerchantMovimentsQuery {
   sort_order?: string;
   page?: number;
   limit?: number;
+  fields?: string[];
+  comma_separate_value?: boolean;
 }
 
 export interface GetMerchantMovimentsItem {
@@ -24,7 +26,7 @@ export interface GetMerchantMovimentsItem {
   status: string;
   value: number;
   type: string;
-  description:string;
+  description: string;
   createdAt: string;
   updatedAt: string;
 }

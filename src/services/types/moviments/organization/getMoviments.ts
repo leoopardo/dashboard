@@ -11,6 +11,8 @@ export interface GetMovimentsQuery {
   sort_order?: string;
   page?: number;
   limit?: number;
+  fields?: string[];
+  comma_separate_value?: boolean;
 }
 
 export interface GetMovimentsItem {
