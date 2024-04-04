@@ -64,23 +64,6 @@ export const Licenses = () => {
     refetchLicenseData,
   } = useGetLicenses(query);
 
-  /*  const LicenseData = {
-    total: 20,
-    items: [
-      {
-        country: "Brazil",
-        created_at: "2024-03-18T14:27:39.070Z",
-        end_validity_date: "2024-06-30T17:26:00.000Z",
-        id: 36,
-        indeterminate_validity: null,
-        linked_merchants_total: 1,
-        name: "LICENÇA HEITOR",
-        start_validity_date: "2024-03-18T11:26:28.000Z",
-        status: "CANCELED",
-      },
-    ],
-  }; */
-
   const {
     LicenseDataTotal,
     isLicenseDataTotalDataFetching,
