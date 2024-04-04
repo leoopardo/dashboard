@@ -54,11 +54,10 @@ export const TotalizersCards = (props: {
 
                 series: [
                   {
-                    name: t("menus.licensess"),
+                    name: t("menus.licenses"),
                     type: "pie",
                     radius: ["40%", "70%"],
                     center: ["50%", "70%"],
-                    // adjust the start angle
                     startAngle: 180,
                     label: {
                       show: false,

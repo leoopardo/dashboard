@@ -1306,6 +1306,15 @@ export const MutateModalFields = ({
                       data-test-id={`${field.label}-form-item`}
                       label={t(`table.${field.label}`)}
                       name={field.label}
+                      rules={[
+                        {
+                          required: field.required,
+                          message:
+                            t("input.required", {
+                              field: t(`input.${field.label}`),
+                            }) || "",
+                        },
+                      ]}
                       style={{ margin: 10 }}
                     >
                       <AutoComplete
@@ -1368,6 +1377,35 @@ export const MutateModalFields = ({
                         size="large"
                         name="reason"
                         value={body?.reason}
+                        onChange={handleChange}
+                      />
+                    </Form.Item>
+                  </Col>
+                );
+
+              case "business_name":
+                return (
+                  <Col span={24}>
+                    <Form.Item
+                      data-test-id={`${field.label}-form-item`}
+                      label={t(`table.business_name`)}
+                      name="business_name"
+                      style={{ margin: 10 }}
+                      rules={[
+                        {
+                          required: field.required,
+                          message:
+                            t("input.required", {
+                              field: t(`table.business_name`),
+                            }) || "",
+                        },
+                      ]}
+                    >
+                      <Input
+                        data-test-id={`${field.label}-input`}
+                        size="large"
+                        name="business_name"
+                        value={body?.business_name}
                         onChange={handleChange}
                       />
                     </Form.Item>

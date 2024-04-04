@@ -217,6 +217,7 @@
     "confirm_action_title": "{{action}} data",
     "are_you_sure": "Do you want {{action}} the {{itens}}?",
     "are_you_sure_blacklist": "Do you want {{action}} {{itens}} of blacklist {{entity}} {{name}}?",
+    "are_you_sure_status": "Do you want to {{action}} status of {{itens}}?",
     "yes_update": "Yes, update",
     "yes_delete": "Yes, delete",
     "no_cancel": "No, cancel",
@@ -471,7 +472,8 @@
     "withdraw_webhook_data": "Withdraw webhook data",
     "withdraw_standard_webhook": "Withdraw standard webhook",
     "aggregator_id": "Aggregator",
-    "accept_annonymous_cash_in": "Accept anonymous deposits"
+    "accept_annonymous_cash_in": "Accept anonymous deposits",
+    "business_name": "Business name"
   },
 
   "modal": {
@@ -1065,7 +1067,8 @@
     "totalCheckedInternal": "Internal checks",
     "totalCheckedOnProvider": "External checks",
     "checked_on_provider": "External check",
-    "webhook": "Webhook"
+    "webhook": "Webhook",
+    "registration_status": "Registration Status"
   },
   "actions": {
     "details": "Details",

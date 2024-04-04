@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
@@ -21,6 +22,7 @@ import {
   Col,
   Dropdown,
   Empty,
+  Image,
   Modal,
   Pagination,
   Progress,
@@ -29,7 +31,9 @@ import {
   Tooltip,
   Typography,
   Tag,
+  Switch,
 } from "antd";
+import { useGetrefetchCountries } from "@src/services/states_cities/getCountries";
 import type { ColumnsType, TableProps as TablePropsAntD } from "antd/es/table";
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
 import { toast } from "react-hot-toast";
@@ -37,6 +41,7 @@ import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import { Mobile } from "./mobile";
 import { StatusColors } from "./utils";
+import { Confirmation } from "../Modals/confirmation";
 
 export interface ColumnInterface {
   name: string | any; // (nome da coluna caso não passe head) e chave do objeto a ser acessado nos items
@@ -47,6 +52,7 @@ export interface ColumnInterface {
     | "cpf" // Não usar esse type, usar document
     | "birth" // exibe formatação para data de nascimento (dd/mm/yyyy)
     | "text" // exibe texto
+    | "country" // exibe a bandeira do país com tooltip contendo o nome do país
     | "translate" // exibe texto traduzido
     | "pix_type" // exibe tipo de pix (FastPix ou Regular)
     | "date" // exibe data
@@ -55,6 +61,7 @@ export interface ColumnInterface {
     | "value" // exibe valor formatado para moeda R$
     | "action" // exibe botões de ação
     | "status" // exibe status (ativo ou inativo ou status de transação)
+    | "status_color" // exibe status com cor
     | "actions"
     | "icon" // exibe ícone de banco caso seja url
     | "boolean" // exibe booleano (sim e não)
@@ -66,6 +73,7 @@ export interface ColumnInterface {
     | "transaction_person" // exibe nome e documento do envolvido na transação, passar o tipo ["buyer", "payer"]
     | "transaction_status" // exibe status da transação com a data de atualização do status
     | "webhook_status" // exibe status do webhook
+    | "switch" // exibe switch para troca de status
     | "";
   sort?: boolean; // habilita ordenação
   key?: any;
@@ -85,17 +93,21 @@ interface TableProps {
   items: any; // itens da tabela. array contendo somente os itens a ser mapeados
   columns: ColumnInterface[]; // colunas da tabela
   loading: boolean; // define se a tabela está carregando
+  updateLoading?: boolean; // define se os botões de atualizar da tabela estão carregando
   query: any; // váriavel contendo os parâmetros de busca para a chamada que mapeia a tabela
   error?: any; // erro da chamada que mapeia a tabela
   removeValue?: boolean; //remove o valor total da tabela caso mobile
   setQuery: Dispatch<SetStateAction<any>>; // função para setar os parâmetros de busca
   label?: string[]; // valores que aparecerão nos accordeons da tabela mobile
+  currentItem?: any; // item atual, ou seja, o que o usuário clicou no botão de ações
   setCurrentItem: Dispatch<SetStateAction<any>>; // função para setar o item atual, ou seja, o que o usuário clicou no botão de ações
   removeTotal?: boolean; // remove a contagem total de registros da tabela
   actions?: (actionsInterface | false | undefined)[]; // array de objetos contendo as ações que aparecerão na tabela
   removePagination?: boolean; // remove a paginação da tabela
   isConfirmOpen?: boolean; // define se o modal de confirmação está aberto
   setIsConfirmOpen?: Dispatch<SetStateAction<boolean>>; // função para setar o modal de confirmação
+  isConfirmUpdateOpen?: boolean; // define se o modal de confirmação de atualizçaão está aberto
+  setIsConfirmUpdateOpen?: Dispatch<SetStateAction<boolean>>; // função para setar o modal de confirmação de atualização
   itemToAction?: string | null; // item que será afetado pela ação de confirmação
   onConfirmAction?: () => void; // função que será executada ao confirmar a ação
   disableScrollToTop?: boolean; // desabilita o scroll para o topo da página
@@ -103,6 +115,7 @@ interface TableProps {
   setSelectedRows?: Dispatch<SetStateAction<any>>; // função para setar as linhas selecionadas
   selectedKeys?: any; // chaves das linhas selecionadas
   refetch?: () => void; // função para rebuscar dos dados
+  update?: () => void; // função para atualizar os dados
   disableActions?: boolean; // desabilita as ações
   rowKey?: string;
   size?: "large" | "middle" | "small"; // tamanho da tabela
@@ -111,8 +124,10 @@ interface TableProps {
 
 export const CustomTable = (props: TableProps) => {
   const { t } = useTranslation();
+  const translation = useTranslation().i18n.language;
   const isMobile = useMediaQuery({ maxWidth: "950px" });
   const isSmallDesktop = useMediaQuery({ maxWidth: "1250px" });
+  const { Countries } = useGetrefetchCountries();
   const [columns, setColumns] = useState<ColumnsType<ColumnInterface>>([]);
   const [sortOrder] = useState(false);
   const [sorterObj, setSorterObj] = useState<any | undefined>();
@@ -502,6 +517,85 @@ export const CustomTable = (props: TableProps) => {
                 : undefined,
             };
 
+          case "country":
+            return {
+              title: (
+                <Tooltip title={t(`table.${column?.head || column?.name}`)}>
+                  <Typography
+                    ref={column.key}
+                    style={{
+                      width: "100%",
+                      maxHeight: "50px",
+                      overflow: "hidden",
+                      textAlign: "center",
+                      textOverflow: "ellipsis",
+                    }}
+                  >
+                    {t(`table.${column?.head || column?.name}`)}
+                  </Typography>
+                </Tooltip>
+              ),
+              width: 65,
+              key: column?.sort_name
+                ? column.sort_name
+                : Array.isArray(column?.name)
+                ? column?.name + `${Math.random()}`
+                : column?.name,
+              dataIndex: column?.name,
+              render: (text: string) => {
+                const currentCountry = Countries?.find(
+                  (item) => item?.name?.common === text
+                );
+
+                return (
+                  <>
+                    {currentCountry ? (
+                      <Tooltip
+                        title={
+                          translation === "pt-BR"
+                            ? currentCountry?.translations?.por?.common
+                            : currentCountry?.name?.common
+                        }
+                      >
+                        <Image
+                          preview={false}
+                          src={currentCountry?.flags?.svg}
+                          style={{
+                            margin: "10px",
+                            border: "1px solid gray",
+                            borderRadius: "2px",
+                            width: "25px",
+                          }}
+                        />
+                      </Tooltip>
+                    ) : (
+                      <div
+                        style={{ display: "flex", justifyContent: "center" }}
+                      >
+                        -
+                      </div>
+                    )}
+                  </>
+                );
+              },
+              sorter: column.sort
+                ? () => {
+                    props.setQuery((state: any) => ({
+                      ...state,
+                      sort_field: column?.sort_name
+                        ? column.sort_name
+                        : Array.isArray(column?.name)
+                        ? column?.name[1]
+                        : column?.name,
+                      sort_order:
+                        props.query.sort_order === "DESC" ? "ASC" : "DESC",
+                    }));
+
+                    return 0;
+                  }
+                : undefined,
+            };
+
           case "value":
             return {
               title: (
@@ -861,6 +955,85 @@ export const CustomTable = (props: TableProps) => {
                 : undefined,
             };
 
+            case "status_color":
+            return {
+              title: (
+                <Tooltip title={t(`table.${column?.head || column?.name}`)}>
+                  <Typography
+                    ref={column.key}
+                    style={{
+                      width: "100%",
+                      maxHeight: "50px",
+                      overflow: "hidden",
+                      textAlign: "center",
+                      textOverflow: "ellipsis",
+                      wordBreak: "keep-all",
+                      minWidth: 60,
+                    }}
+                  >
+                    {t(`table.${column?.head || column?.name}`)}
+                  </Typography>
+                </Tooltip>
+              ),
+              key: column?.sort_name
+                ? column.sort_name
+                : Array.isArray(column?.name)
+                ? column?.name + `${Math.random()}`
+                : column?.name,
+              dataIndex: column?.name,
+              render: (text: any) => (
+                <Typography
+                  key={column?.name}
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignContent: "center",
+                    textAlign: "center",
+                    color: (defaultTheme.colors as any)[
+                      text?.toLocaleLowerCase()
+                    ],
+                    fontWeight: 600,
+                    wordBreak: "keep-all",
+                    alignItems: "center",
+                    gap: "6px",
+                    borderRadius: "4px",
+                    border: "1px solid #DCDFE7",
+                    padding: "0 4px 0 4px",
+                    width: "fit-content",
+                    margin: "0 auto"
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "8px",
+                      height: "8px",
+                      borderRadius: "50%",
+                      backgroundColor: (defaultTheme.colors as any)[
+                        text?.toLocaleLowerCase()
+                      ],
+                    }}
+                  />
+                  {text ? t(`table.${text?.toLocaleLowerCase()}`) : "-"}
+                </Typography>
+              ),
+              sorter: column.sort
+                ? () => {
+                    props.setQuery((state: any) => ({
+                      ...state,
+                      sort_field: column?.sort_name
+                        ? column.sort_name
+                        : Array.isArray(column?.name)
+                        ? column?.name[1]
+                        : column?.name,
+                      sort_order:
+                        props.query.sort_order === "DESC" ? "ASC" : "DESC",
+                    }));
+
+                    return 0;
+                  }
+                : undefined,
+            };
+
           case "transaction_status":
             return {
               title: (
@@ -1071,7 +1244,7 @@ export const CustomTable = (props: TableProps) => {
                           width: "100%",
                           textAlign: "center",
                           color: (defaultTheme.colors as any)[
-                            text?.toLocaleLowerCase()
+                            text?.toString()?.toLocaleLowerCase()()
                           ],
                           fontWeight: 600,
                           wordBreak: "keep-all",
@@ -1442,6 +1615,7 @@ export const CustomTable = (props: TableProps) => {
                     >
                       <Button
                         onClick={() => {
+                          console.log("record", record);
                           props.setCurrentItem(record);
                         }}
                       >
@@ -1800,6 +1974,67 @@ export const CustomTable = (props: TableProps) => {
                   }
                 : undefined,
             };
+
+          case "switch":
+            return {
+              title: (
+                <Tooltip title={t(`table.${column?.head || column?.name}`)}>
+                  <Typography
+                    style={{
+                      width: "100%",
+                      maxHeight: "50px",
+                      overflow: "hidden",
+                      textAlign: "center",
+                      textOverflow: "ellipsis",
+                    }}
+                    ref={column.key}
+                  >
+                    {t(`table.${column?.head ?? column?.name}`)}
+                  </Typography>
+                </Tooltip>
+              ),
+              key: column?.sort_name
+                ? column.sort_name
+                : Array.isArray(column?.name)
+                ? column?.name + `${Math.random()}`
+                : column?.name,
+              dataIndex: column?.name,
+              render: (_a: any, record: any) => (
+                <div
+                  style={{ display: "flex", justifyContent: "center" }}
+                  onClick={() => {
+                    props.setCurrentItem(record);
+                    props?.setIsConfirmUpdateOpen &&
+                      props.setIsConfirmUpdateOpen(true);
+                  }}
+                >
+                  <Switch
+                    loading={
+                      props?.currentItem?.id === record.id &&
+                      props?.updateLoading
+                    }
+                    checked={record?.status}
+                  />
+                </div>
+              ),
+              sorter: column.sort
+                ? () => {
+                    props.setQuery((state: any) => ({
+                      ...state,
+                      sort_field: column?.sort_name
+                        ? column.sort_name
+                        : Array.isArray(column?.name)
+                        ? column?.name[1]
+                        : column?.name,
+                      sort_order:
+                        props.query.sort_order === "DESC" ? "ASC" : "DESC",
+                    }));
+
+                    return 0;
+                  }
+                : undefined,
+            };
+
           default:
             return {
               title: (
@@ -1954,6 +2189,19 @@ export const CustomTable = (props: TableProps) => {
               bordered
             />
           </Col>
+
+          <Confirmation
+            open={props?.isConfirmUpdateOpen as any}
+            setOpen={props?.setIsConfirmUpdateOpen || (() => {})}
+            submit={props?.update || (() => {})}
+            title={t("actions.edit")}
+            description={`${t("messages.are_you_sure_status", {
+              action: t("actions.edit").toLocaleLowerCase(),
+              itens: props?.currentItem?.name,
+            })}`}
+            loading={props?.loading}
+          />
+
           {props.bankStatement && (
             <div
               style={{

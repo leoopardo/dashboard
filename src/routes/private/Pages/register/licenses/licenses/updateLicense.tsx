@@ -179,7 +179,15 @@ export const UpdateLicense = () => {
         >
           <Row gutter={[8, 8]} style={{ width: "100%" }}>
             <Col xs={{ span: 24 }} md={{ span: 10 }}>
-              <Form.Item label={t("table.validity_date")} name="validity_date">
+              <Form.Item label={t("table.validity_date")} name="validity_date" rules={[
+                  {
+                    required: !licenseBody?.indeterminate_validity,
+                    message:
+                      t("input.required", {
+                        field: t(`table.validity_date`),
+                      }) || "",
+                  },
+                ]}>
                 <ConfigProvider locale={locale}>
                   <RangePicker
                     data-test-id="date-picker"
@@ -252,6 +260,7 @@ export const UpdateLicense = () => {
               >
                 <Input
                   name="number"
+                  disabled
                   size="large"
                   value={licenseBody?.number}
                   onChange={handleChangeLicense}
@@ -261,12 +270,43 @@ export const UpdateLicense = () => {
           </Row>
 
           <Row gutter={[8, 8]} style={{ width: "100%" }}>
+          <Col xs={{ span: 24 }} md={{ span: 6 }}>
+              <Form.Item
+                label={t("input.business_name")}
+                name="business_name"
+                rules={[
+                  {
+                    required: true,
+                    message:
+                      t("input.required", {
+                        field: t(`input.business_name`),
+                      }) || "",
+                  },
+                ]}
+              >
+                <Input
+                  name="business_name"
+                  size="large"
+                  value={licenseBody?.business_name}
+                  onChange={handleChangeLicense}
+                />
+              </Form.Item>
+            </Col>
+
             <Col
               xs={{ span: 24 }}
               md={{ span: 6 }}
               style={{ marginRight: "auto" }}
             >
-              <Form.Item label={t("table.country")} name="country">
+              <Form.Item label={t("table.country")} name="country" rules={[
+                  {
+                    required: true,
+                    message:
+                      t("input.required", {
+                        field: t(`input.country`),
+                      }) || "",
+                  },
+                ]}>
                 <AutoComplete
                   options={Countries?.map((country) => {
                     return {
@@ -316,7 +356,7 @@ export const UpdateLicense = () => {
                 valuePropName="checked"
               >
                 <Switch
-                  checked={licenseBody?.status}
+                  checked={licenseBody?.indeterminate_validity}
                   onChange={(checked) => {
                     setLicenseBody((state) => ({
                       ...state,
