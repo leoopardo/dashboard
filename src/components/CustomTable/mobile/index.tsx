@@ -485,6 +485,7 @@ export const Mobile = (props: MobileProps) => {
                         </Descriptions.Item>
                       );
 
+                    case "switch":
                     case "status":
                       return (
                         <Descriptions.Item
