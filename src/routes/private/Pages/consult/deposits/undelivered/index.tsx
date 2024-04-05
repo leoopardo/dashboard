@@ -101,13 +101,13 @@ export const UndeliveredDeposits = () => {
   const [isResendWebhookModalOpen, setIsResendWebhookModalOpen] =
     useState<boolean>(false);
   const [webhookBody, setWebhookBody] = useState<ResendWebhookBody>({
-    start_date: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss.SSS"),
-    end_date: moment(new Date())
-      .add(1, "hour")
+    start_date: moment(new Date()).subtract(1, "day").startOf("day").format("YYYY-MM-DDTHH:mm:ss.SSS"),
+    end_date: moment(new Date()).startOf("day")
       .format("YYYY-MM-DDTHH:mm:ss.SSS"),
-    merchant_id: undefined,
-    partner_id: undefined,
+    merchants_ids: undefined,
+    partners_ids: undefined,
     webhook_url_type: "both",
+    delivered_at: false
   });
   const [webhookId, setWebhookId] = useState<string>("");
 
@@ -119,12 +119,12 @@ export const UndeliveredDeposits = () => {
     { name: "bank", type: "bankNameToIcon" },
     { name: "merchant_name", type: "text" },
     { name: "partner_name", type: "text" },
-    { name: "value", type: "value" },
     { name: "createdAt", type: "small_date" },
-    { name: "delivered_at", type: "small_date" },
-    { name: "buyer_name", type: "text" },
-    { name: "buyer_document", type: "document" },
-    { name: "status", type: "status" },
+    { name: "status", type: "transaction_status" },
+    { name: "delivered_at", head: "webhook", type: "webhook_status" },
+    { name: "value", type: "value" },
+    { name: "pix_type", head: "pix_type", type: "pix_type" },
+    { name: "buyer", type: "transaction_person" },
   ];
 
   useEffect(() => {

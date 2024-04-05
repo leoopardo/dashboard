@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
   ArrowDownOutlined,
   ArrowUpOutlined,
+  FileAddOutlined,
   FilterOutlined,
 } from "@ant-design/icons";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
@@ -9,25 +11,26 @@ import { Grid } from "@mui/material";
 import { CustomTable } from "@src/components/CustomTable";
 import { FiltersModal } from "@src/components/FiltersModal";
 import { FilterChips } from "@src/components/FiltersModal/filterChips";
-import { ExportReportsModal } from "@src/components/Modals/exportReportsModal";
+import { ExportCustomReportsModal } from "@src/components/Modals/exportCustomReportsModal";
 import { ValidateToken } from "@src/components/ValidateToken";
 import { useGetOrganizationMoviments } from "@src/services/moviments/organization/manual/GetManualTransactions";
 import { useCreateManualTransaction } from "@src/services/moviments/organization/manual/createManualTransaction";
 import { queryClient } from "@src/services/queryClient";
 import { useGetOrganizationCategories } from "@src/services/register/organization/categories/getCategories";
 import { useCreateOrganizationManualReports } from "@src/services/reports/moviments/organization/createManualTransactionsReports";
+import { useGetManualOrganizationTransactionReportFields } from "@src/services/reports/moviments/organization/getManualTransactionFields";
 import { CreateManualTransaction } from "@src/services/types/moviments/organization/createManualTransaction.interface";
 import {
   GetMovimentsItem,
   GetMovimentsQuery,
 } from "@src/services/types/moviments/organization/getMoviments";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { Button, Divider, Statistic } from "antd";
+import { moneyFormatter } from "@src/utils/moneyFormatter";
+import { Button, Divider, Statistic, Tooltip } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { CreateMovimentModal } from "../../components/createMovimentModal";
-import { moneyFormatter } from "@src/utils/moneyFormatter";
 
 export const OrgonizationManual = () => {
   const { t } = useTranslation();
@@ -60,7 +63,11 @@ export const OrgonizationManual = () => {
     useState<boolean>(false);
   const [operationInBody, setOperationInBody] =
     useState<CreateManualTransaction | null>(null);
-
+  const { fields } = useGetManualOrganizationTransactionReportFields();
+  const [csvFields, setCsvFields] = useState<any>();
+  const [comma, setIsComma] = useState<boolean>(false);
+  const [isExportReportsOpen, setIsExportReportsOpen] =
+    useState<boolean>(false);
   const {
     OrganizationMovimentsData,
     isOrganizationMovimentsDataFetching,
@@ -76,7 +83,12 @@ export const OrgonizationManual = () => {
     OrganizationManualReportsIsLoading,
     OrganizationManualReportsIsSuccess,
     OrganizationManualReportsMutate,
-  } = useCreateOrganizationManualReports(query);
+    OrganizationManualReportsData,
+  } = useCreateOrganizationManualReports({
+    ...query,
+    fields: csvFields,
+    comma_separate_value: comma,
+  });
 
   const { CategoriesData, refetchCategoriesData } =
     useGetOrganizationCategories({
@@ -282,20 +294,35 @@ export const OrgonizationManual = () => {
               {t("table.clear_filters")}
             </Button>
           </Grid>
-          {permissions?.transactions?.paybrokers?.manual_transactions
-            ?.paybrokers_manual_transactions_export_csv && (
-            <Grid item xs={12} md={3} lg={3}>
-              <ExportReportsModal
-                disabled={
+          {permissions?.transactions?.merchant?.manual_transactions
+            ?.merchant_manual_transactions_export_csv && (
+            <Grid item xs={12} md="auto">
+              <Tooltip
+                placement="topRight"
+                title={
                   !OrganizationMovimentsData?.total ||
                   OrganizationMovimentsDataError
+                    ? t("messages.no_records_to_export")
+                    : t("messages.export_csv")
                 }
-                mutateReport={() => OrganizationManualReportsMutate()}
-                error={OrganizationManualReportsError}
-                success={OrganizationManualReportsIsSuccess}
-                loading={OrganizationManualReportsIsLoading}
-                reportPath="/moviment/organization_moviments/organization_moviments_reports/organization_manual_moviments_reports"
-              />
+                arrow
+              >
+                <Button
+                  onClick={() => setIsExportReportsOpen(true)}
+                  style={{ width: "100%" }}
+                  icon={<FileAddOutlined style={{ fontSize: 22 }} />}
+                  shape="round"
+                  type="dashed"
+                  size="large"
+                  loading={OrganizationManualReportsIsLoading}
+                  disabled={
+                    !OrganizationMovimentsData?.total ||
+                    OrganizationMovimentsDataError
+                  }
+                >
+                  CSV
+                </Button>
+              </Tooltip>
             </Grid>
           )}
         </Grid>
@@ -399,6 +426,26 @@ export const OrgonizationManual = () => {
           }}
         />
       )}
+
+      <ExportCustomReportsModal
+        open={isExportReportsOpen}
+        setOpen={setIsExportReportsOpen}
+        disabled={
+          !OrganizationMovimentsData?.total || OrganizationMovimentsDataError
+        }
+        mutateReport={() => OrganizationManualReportsMutate()}
+        error={OrganizationManualReportsError}
+        success={OrganizationManualReportsIsSuccess}
+        loading={OrganizationManualReportsIsLoading}
+        reportPath="/moviment/organization_moviments/organization_moviments_reports/organization_manual_moviments_reports"
+        fields={fields}
+        csvFields={csvFields}
+        comma={comma}
+        setIsComma={setIsComma}
+        setCsvFields={setCsvFields}
+        reportName="OrganizationManualTransactions"
+        url={OrganizationManualReportsData?.url}
+      />
     </Grid>
   );
 };

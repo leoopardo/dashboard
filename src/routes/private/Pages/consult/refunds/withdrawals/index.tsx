@@ -98,12 +98,10 @@ export const RefundWithdrawals = () => {
     { name: "rtrId", head: "refund_id", type: "id" },
     { name: "bank", type: "bankNameToIcon" },
     { name: "merchant_name", type: "text" },
-    { name: "value", type: "value" },
     { name: "createdAt", type: "small_date" },
-    { name: "refund_date", type: "small_date" },
-    { name: "receiver_name", type: "text" },
-    { name: "receiver_document", type: "document" },
-    { name: "status", type: "status" },
+    { name: "status", type: "transaction_status" },
+    { name: "value", type: "value" },
+    { name: "receiver", type: "transaction_person" },
   ];
 
   useEffect(() => {
@@ -368,8 +366,8 @@ export const RefundWithdrawals = () => {
           </Button>
         </Col>
 
-        {permissions?.report?.chargeback?.deposit_chargeback
-          ?.report_chargeback_deposit_chargeback_export_csv && (
+        {permissions?.report?.chargeback?.withdraw_chargeback
+          ?.report_chargeback_withdraw_chargeback_export_csv && (
           <Col xs={{ span: 24 }} md={{ span: 6 }} lg={{ span: 3 }}>
             <Tooltip
               placement="topLeft"

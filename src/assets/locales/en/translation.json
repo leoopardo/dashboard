@@ -437,7 +437,7 @@
     "fastpix_in_max_value": "FastPix min. value",
     "fastpix_in_min_value": "FastPix max. value",
     "fastpix_qr_code_expire_seconds": "QRCode FastPIX expiration time (seconds)",
-    "category_id": "Category",
+    "category_id": "Category Id",
     "password_type": "The password must contain at least 8 characters, including at least 1 number, 1 uppercase letter, and 1 special character.",
     "merchant_id": "merchant",
     "reason": "reason",
@@ -949,7 +949,7 @@
     "main_user_name": "Main user name",
     "main_user_username": "Main user username",
     "row": "Row",
-    "pix_type": "Tipo de pix",
+    "pix_type": "Type",
     "standard": "Standard",
     "unassigned": "Unassigned",
     "access_key": "Access key",
@@ -1070,7 +1070,8 @@
     "checked_on_provider": "External check",
     "registration_status": "Registration Status",
     "license_number": "License number",
-    "expiring_in_30_days": "Expiring"
+    "expiring_in_30_days": "Expiring",
+    "webhook": "Webhook"
   },
   "actions": {
     "details": "Details",
@@ -1098,7 +1099,7 @@
     "date_too_log": "The diffrence between dates should be equal or less than 30 days",
     "password_or_username": "Invalid username or password",
     "BANK_ALREADY_CREATED": "Bank already created",
-    "date_1_hour": "The max range is one hour",
+    "date_2_hour": "The max range is two hours",
     "undefined": "Temporary service interruption. If the issue persists after reloading the page, please contact support.",
     "INVALID_USER": "Invalid username",
     "category_exists": "Category already exists",
