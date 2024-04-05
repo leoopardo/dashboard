@@ -17,7 +17,7 @@ interface TotalizersInterface {
   query: generatedWithdrawalsRowsQuery;
   loading: boolean;
   fetchData: () => void;
-  setIsFiltersOpen: Dispatch<SetStateAction<boolean>>;
+  setIsFiltersOpen?: Dispatch<SetStateAction<boolean>>;
 }
 
 export const TotalizersCards = (props: TotalizersInterface) => {

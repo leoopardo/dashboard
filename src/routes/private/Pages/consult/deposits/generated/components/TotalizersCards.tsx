@@ -17,7 +17,7 @@ interface TotalizersInterface {
   query: generatedDepositTotalQuery;
   loading: boolean;
   fetchData: () => void;
-  setIsFiltersOpen: Dispatch<SetStateAction<boolean>>;
+  setIsFiltersOpen?: Dispatch<SetStateAction<boolean>>;
 }
 
 export const TotalizersCards = (props: TotalizersInterface) => {
@@ -45,9 +45,9 @@ export const TotalizersCards = (props: TotalizersInterface) => {
           <Statistic
             loading={props.loading}
             title={
-              <div style={{fontSize: 16}}>
+              <div style={{ fontSize: 16 }}>
                 <>Total</>:{" "}
-                <span style={{ fontSize: 16}}>
+                <span style={{ fontSize: 16 }}>
                   {props?.data?.transactions_total || 0}
                 </span>
               </div>
@@ -73,7 +73,9 @@ export const TotalizersCards = (props: TotalizersInterface) => {
             size="large"
             style={{ width: "100%" }}
             type="default"
-            onClick={() => props.setIsFiltersOpen(true)}
+            onClick={() =>
+              props.setIsFiltersOpen && props.setIsFiltersOpen(true)
+            }
             icon={<FilterOutlined />}
           >
             {t("table.filters")}
