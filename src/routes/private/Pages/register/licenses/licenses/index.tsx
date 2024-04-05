@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
-  DeleteOutlined,
   EditOutlined,
   EyeFilled,
   FileAddOutlined,
@@ -35,7 +34,7 @@ import { TotalizersCards } from "./components/totalizersCards";
 import { useGetLicenseReportFields } from "@src/services/reports/register/license/getLicenseReportFields";
 import { useCreateLicense } from "@src/services/register/licenses/createLicense";
 import { useCreateLicenseReports } from "@src/services/register/licenses/createLicenseReports";
-import { useDeleteLicense } from "@src/services/register/licenses/deleteLicense";
+import { useUpdateLicense } from "@src/services/register/licenses/updateLicense";
 
 const INITIAL_QUERY: LicenseQuery = {
   limit: 25,
@@ -50,6 +49,11 @@ export const Licenses = () => {
     "validate"
   ) as ValidateInterface;
   const user = queryClient.getQueryData("validate") as ValidateInterface;
+  const [currentItem, setCurrentItem] = useState<LicenseItem | null>(null);
+  const { UpdateMutate } = useUpdateLicense({
+    status: !currentItem?.status,
+    license_id: currentItem?.id,
+  });
   const navigate = useNavigate();
   const [query, setQuery] = useState<LicenseQuery>(INITIAL_QUERY);
 
@@ -70,7 +74,6 @@ export const Licenses = () => {
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
   const [isNewLicenseModal, setIsNewLicenseModal] = useState<boolean>(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
-  const [currentItem, setCurrentItem] = useState<LicenseItem | null>(null);
   const [confirmDelete, setConfirmDelete] = useState<boolean>(false);
   const [createBody, setCreateBody] = useState<LicenseItem>({
     name: "",
@@ -102,11 +105,6 @@ export const Licenses = () => {
     LicenseMutate,
     reset,
   } = useCreateLicense(createBody);
-
-  const { deleteLicenseMutate, deleteLicenseError, deleteLicenseIsSuccess } =
-    useDeleteLicense({
-      license_id: currentItem?.id,
-    });
 
   useEffect(() => {
     isSuccessLicenseDataTotalData && refetchLicenseDataTotalData();
@@ -235,6 +233,7 @@ export const Licenses = () => {
         <Grid item xs={12}>
           <CustomTable
             query={query}
+            currentItem={currentItem}
             setCurrentItem={setCurrentItem}
             setQuery={setQuery}
             actions={[
@@ -254,25 +253,29 @@ export const Licenses = () => {
                   navigate("update", { state: item });
                 },
               },
-              permissions?.register?.licenses?.licenses?.license_delete && {
-                label: "delete",
-                icon: <DeleteOutlined style={{ fontSize: "20px" }} />,
-                onClick: () => {
-                  setConfirmDelete(true);
-                },
-              },
             ]}
-            isConfirmOpen={confirmDelete}
-            setIsConfirmOpen={setConfirmDelete}
-            itemToAction={currentItem?.license_id as any}
-            onConfirmAction={() => deleteLicenseMutate()}
+            isConfirmUpdateOpen={confirmDelete}
+            setIsConfirmUpdateOpen={setConfirmDelete}
             refetch={refetchLicenseData}
+            update={UpdateMutate}
             data={LicenseData}
             items={LicenseData?.items}
             error={LicenseDataError}
             columns={[
+              {
+                name: "status",
+                type: "switch",
+                head: "registration_status",
+                sort: true,
+              },
               { name: "id", type: "id", sort: true },
+              { name: "license_number", type: "text", sort: true },
               { name: "name", type: "text", sort: true },
+              {
+                name: "country",
+                type: "country",
+                sort: true,
+              },
               {
                 name: "indeterminate_validity",
                 type: "boolean",
@@ -293,7 +296,7 @@ export const Licenses = () => {
                 type: "date",
                 sort: true,
               },
-              { name: "status", type: "status" },
+              { name: "validity_status", head: 'validity_date', type: "status_color" },
             ]}
             loading={isLicenseDataFetching}
             label={["name"]}
@@ -319,10 +322,14 @@ export const Licenses = () => {
         open={isNewLicenseModal}
         setOpen={setIsNewLicenseModal}
         fields={[
-          { label: "validity_date", required: false },
+          {
+            label: "validity_date",
+            required: !createBody?.indeterminate_validity,
+          },
           { label: "name", required: true },
-          { label: "number", required: false, head: "license_number" },
-          { label: "country", required: false },
+          { label: "number", required: true, head: "license_number" },
+          { label: "corporate_reason", head: "business_name", required: true },
+          { label: "country", required: true },
           { label: "status", required: false },
           { label: "indeterminate_validity", required: false },
         ]}
@@ -367,13 +374,6 @@ export const Licenses = () => {
         setCsvFields={setCsvFields}
         reportName="License"
         url={LicenseReportsData?.url}
-      />
-
-      <Toast
-        error={deleteLicenseError}
-        success={deleteLicenseIsSuccess}
-        actionError={t("messages.delete")}
-        actionSuccess={t("messages.delete")}
       />
     </Grid>
   );

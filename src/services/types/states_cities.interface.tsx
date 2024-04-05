@@ -57,7 +57,7 @@ export interface CityItem {
 export interface CountryInterface {
   name: {
     common: string;
-    official:string;
+    official: string;
   };
   cca2: string;
   currencies: {
@@ -81,5 +81,11 @@ export interface CountryInterface {
   postalCode: {
     format: string;
     regex: string;
+  };
+  translations: {
+    por: {
+      official: string;
+      common: string;
+    };
   };
 }

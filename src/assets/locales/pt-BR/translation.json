@@ -223,6 +223,7 @@
     "confirm_action_title": "{{action}} dados",
     "are_you_sure": "Deseja {{action}} {{itens}}?",
     "are_you_sure_blacklist": "Deseja {{action}} {{itens}} da blacklist da {{entity}} {{name}}?",
+    "are_you_sure_status": "Deseja {{action}} a situação cadastral de {{itens}}?",
     "yes_update": "Sim, atualizar",
     "yes_delete": "Sim, deletar",
     "no_cancel": "Não, cancelar",
@@ -293,7 +294,8 @@
     "delivered": "Entregue",
     "not_delivered": "Não entregue",
     "csv_generated": "CSV Gerado",
-    "generated_csv_message": "Seu relatório está pronto para download. Clique no botão abaixo para baixar o arquivo."
+    "generated_csv_message": "Seu relatório está pronto para download. Clique no botão abaixo para baixar o arquivo.",
+    "license_expired": "Liçença expirada"
   },
   "login": {
     "sign_in": "Faça login",
@@ -512,7 +514,8 @@
     "withdraw_webhook_data": "Dados do webhook de saque",
     "withdraw_standard_webhook": "Webhook de saque padrão",
     "aggregator_id": "Aggregator",
-    "accept_annonymous_cash_in": "Permitir depósito anônimo"
+    "accept_annonymous_cash_in": "Permitir depósito anônimo",
+    "business_name": "Razão social"
   },
   "table": {
     "id": "id",
@@ -1070,7 +1073,10 @@
     "totalCheckedInternal": "Consultas internas",
     "totalCheckedOnProvider": "Consultas externas",
     "checked_on_provider": "Checagem externa",
-    "webhook": "Webhook"
+    "webhook": "Webhook",
+    "registration_status": "Situação Cadastral",
+    "license_number": "N° da licença",
+    "expiring_in_30_days": "Expirando"
   },
   "actions": {
     "details": "Detalhes",
