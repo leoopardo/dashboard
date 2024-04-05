@@ -189,8 +189,8 @@ export const ResendWebhookModal = ({
                   setEntity(e.target.value);
                   setBody((state) => ({
                     ...state,
-                    merchants_ids: undefined,
-                    partners_ids: undefined,
+                    merchant_id: undefined,
+                    partner_id: undefined,
                   }));
                 }}
                 value={entity}
@@ -213,7 +213,7 @@ export const ResendWebhookModal = ({
                   style={{ margin: 10 }}
                   rules={[
                     {
-                      required: !body.merchants_ids && !body.partners_ids,
+                      required: !body.merchant_id && !body.partner_id,
                       message:
                         t("input.required(a)", {
                           field: t("table.partner"),
@@ -225,7 +225,7 @@ export const ResendWebhookModal = ({
                   <PartnerSelect
                     queryOptions={body}
                     setQueryFunction={setBody}
-                    multiple
+                    
                   />
                 </Form.Item>
               )}
@@ -236,19 +236,19 @@ export const ResendWebhookModal = ({
                   style={{ margin: 10 }}
                   rules={[
                     {
-                      required: !body.merchants_ids && !body.partners_ids,
+                      required: !body.merchant_id && !body.partners_ids,
                       message:
                         t("input.required(a)", {
                           field: t("table.merchant"),
                         }) || "",
                     },
                   ]}
-                  name={"merchants_ids"}
+                  name={"merchant_id"}
                 >
                   <MerchantSelect
                     queryOptions={body}
                     setQueryFunction={setBody}
-                    multiple
+                    
                   />
                 </Form.Item>
               )}

@@ -5,4 +5,6 @@ export interface ResendWebhookBody {
   start_date?: string;
   end_date?: string;
   delivered_at?: boolean;
+  partner_id?: number;
+  merchant_id?: number;
 }
