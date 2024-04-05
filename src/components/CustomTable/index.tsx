@@ -3,12 +3,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   BankOutlined,
-  CheckOutlined,
-  CloseOutlined,
   CopyOutlined,
   EllipsisOutlined,
   InfoCircleTwoTone,
-  ReloadOutlined,
+  ReloadOutlined
 } from "@ant-design/icons";
 import CachedIcon from "@mui/icons-material/Cached";
 import { useListBanks } from "@src/services/bank/listBanks";
@@ -30,9 +28,8 @@ import {
   Row,
   Switch,
   Table,
-  Tag,
   Tooltip,
-  Typography,
+  Typography
 } from "antd";
 import type { ColumnsType, TableProps as TablePropsAntD } from "antd/es/table";
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
