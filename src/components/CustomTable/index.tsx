@@ -1736,7 +1736,7 @@ export const CustomTable = (props: TableProps) => {
                     minWidth: "30px",
                   }}
                 >
-                  {text ? t(`table.${text.toLocaleLowerCase()}`) : "-"}
+                  {text ? t(`table.${text?.toLocaleLowerCase()}`) : "-"}
                 </Typography>
               ),
               sorter: column.sort
@@ -1787,7 +1787,7 @@ export const CustomTable = (props: TableProps) => {
                   }}
                 >
                   {text
-                    ? t(`table.${text.toLocaleLowerCase()}`)
+                    ? t(`table.${text?.toLocaleLowerCase()}`)
                     : t("table.standard")}
                 </Typography>
               ),
@@ -2194,7 +2194,7 @@ export const CustomTable = (props: TableProps) => {
               props?.currentItem?.validity_status === "EXPIRED"
                 ? `${t("messages.license_expired")}`
                 : `${t("messages.are_you_sure_status", {
-                    action: t("actions.edit").toLocaleLowerCase(),
+                    action: t("actions.edit")?.toLocaleLowerCase(),
                     itens: props?.currentItem?.name,
                   })}`
             }
