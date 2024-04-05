@@ -345,7 +345,7 @@ export const Licenses = () => {
           },
           { label: "name", required: true },
           { label: "number", required: true, head: "license_number" },
-          { label: "business_name", required: true },
+          { label: "corporate_reason", head: "business_name", required: true },
           { label: "country", required: true },
           { label: "status", required: false },
           { label: "indeterminate_validity", required: false },
