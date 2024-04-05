@@ -33,6 +33,8 @@ declare module "styled-components" {
       chartYellow: string;
       chartBlue: string;
       chartRed: string;
+      expiring_in_30_days: string;
+      active: string;
     };
   }
 }

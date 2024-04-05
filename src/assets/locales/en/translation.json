@@ -290,7 +290,8 @@
     "not_delivered_on_time": "Not delivered on time",
     "not_delivered_late": "Not delivered late",
     "csv_generated": "CSV generated",
-    "generated_csv_message": "The CSV file has been generated. You can download on the button below."
+    "generated_csv_message": "The CSV file has been generated. You can download on the button below.",
+    "license_expired": "License expired"
   },
   "login": {
     "sign_in": "Sign in",
@@ -1067,7 +1068,9 @@
     "totalCheckedInternal": "Internal checks",
     "totalCheckedOnProvider": "External checks",
     "checked_on_provider": "External check",
-    "registration_status": "Registration Status"
+    "registration_status": "Registration Status",
+    "license_number": "License number",
+    "expiring_in_30_days": "Expiring"
   },
   "actions": {
     "details": "Details",

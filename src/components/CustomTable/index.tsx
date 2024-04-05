@@ -1932,10 +1932,14 @@ export const CustomTable = (props: TableProps) => {
             setOpen={props?.setIsConfirmUpdateOpen || (() => {})}
             submit={props?.update || (() => {})}
             title={t("actions.edit")}
-            description={`${t("messages.are_you_sure_status", {
-              action: t("actions.edit").toLocaleLowerCase(),
-              itens: props?.currentItem?.name,
-            })}`}
+            description={
+              props?.currentItem?.validity_status === "EXPIRED"
+                ? `${t("messages.license_expired")}`
+                : `${t("messages.are_you_sure_status", {
+                    action: t("actions.edit").toLocaleLowerCase(),
+                    itens: props?.currentItem?.name,
+                  })}`
+            }
             loading={props?.loading}
           />
 

@@ -296,7 +296,8 @@
     "not_delivered_on_time": "Não entregue no prazo",
     "not_delivered_late": "Não entregue atrasado",
     "csv_generated": "CSV Gerado",
-    "generated_csv_message": "Seu relatório está pronto para download. Clique no botão abaixo para baixar o arquivo."
+    "generated_csv_message": "Seu relatório está pronto para download. Clique no botão abaixo para baixar o arquivo.",
+    "license_expired": "Liçença expirada"
   },
   "login": {
     "sign_in": "Faça login",
@@ -1074,7 +1075,9 @@
     "totalCheckedInternal": "Consultas internas",
     "totalCheckedOnProvider": "Consultas externas",
     "checked_on_provider": "Checagem externa",
-    "registration_status": "Situação Cadastral"
+    "registration_status": "Situação Cadastral",
+    "license_number": "N° da licença",
+    "expiring_in_30_days": "Expirando"
   },
   "actions": {
     "details": "Detalhes",

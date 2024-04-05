@@ -134,6 +134,23 @@ export const UpdateLicense = () => {
     return currentItems;
   };
 
+  const requiredFields = (field: string, value: number[] | undefined) => {
+    if (
+      licenseBody &&
+      (!licenseBody[field as keyof LicenseItem] ||
+        (
+          licenseBody[field as keyof LicenseItem] as unknown as (
+            | number
+            | undefined
+          )[]
+        )?.length === 0) &&
+      (!value || (value as number[])?.length === 0)
+    ) {
+      return true;
+    }
+    return false;
+  };
+
   useEffect(() => {
     if (fileBody?.base64_file) {
       LicenseAttachmentMutate();
@@ -166,6 +183,8 @@ export const UpdateLicense = () => {
     setFirstChildDivId(tabindex2, "tab-attachments");
   }, [tabindex0, tabindex1, tabindex2]);
 
+  console.log({ licenseBody });
+
   const items: TabsProps["items"] = [
     {
       key: "1",
@@ -179,15 +198,24 @@ export const UpdateLicense = () => {
         >
           <Row gutter={[8, 8]} style={{ width: "100%" }}>
             <Col xs={{ span: 24 }} md={{ span: 10 }}>
-              <Form.Item label={t("table.validity_date")} name="validity_date" rules={[
+              <Form.Item
+                label={t("table.validity_date")}
+                name="validity_date"
+                rules={[
                   {
-                    required: !licenseBody?.indeterminate_validity,
-                    message:
-                      t("input.required", {
-                        field: t(`table.validity_date`),
-                      }) || "",
+                    validator(_, value) {
+                      if (requiredFields("end_validity_date", value) && !licenseBody?.indeterminate_validity) {
+                        return Promise.reject(
+                          t("input.required", {
+                            field: t(`table.validity_date`).toLowerCase(),
+                          }) || ""
+                        );
+                      }
+                      return Promise.resolve();
+                    },
                   },
-                ]}>
+                ]}
+              >
                 <ConfigProvider locale={locale}>
                   <RangePicker
                     data-test-id="date-picker"
@@ -211,8 +239,9 @@ export const UpdateLicense = () => {
                             "YYYY-MM-DDTHH:mm:ss.SSS"
                           ),
                           end_validity_date: dayjs(
-                            dayjs(value[1]?.$d)
-                              .format("YYYY-MM-DDTHH:mm:00.000")
+                            dayjs(value[1]?.$d).format(
+                              "YYYY-MM-DDTHH:mm:00.000"
+                            )
                           ),
                         }));
                       } else {
@@ -270,10 +299,10 @@ export const UpdateLicense = () => {
           </Row>
 
           <Row gutter={[8, 8]} style={{ width: "100%" }}>
-          <Col xs={{ span: 24 }} md={{ span: 6 }}>
+            <Col xs={{ span: 24 }} md={{ span: 6 }}>
               <Form.Item
                 label={t("input.business_name")}
-                name="business_name"
+                name="corporate_reason"
                 rules={[
                   {
                     required: true,
@@ -285,9 +314,9 @@ export const UpdateLicense = () => {
                 ]}
               >
                 <Input
-                  name="business_name"
+                  name="corporate_reason"
                   size="large"
-                  value={licenseBody?.business_name}
+                  value={licenseBody?.corporate_reason}
                   onChange={handleChangeLicense}
                 />
               </Form.Item>
@@ -298,7 +327,10 @@ export const UpdateLicense = () => {
               md={{ span: 6 }}
               style={{ marginRight: "auto" }}
             >
-              <Form.Item label={t("table.country")} name="country" rules={[
+              <Form.Item
+                label={t("table.country")}
+                name="country"
+                rules={[
                   {
                     required: true,
                     message:
@@ -306,7 +338,8 @@ export const UpdateLicense = () => {
                         field: t(`input.country`),
                       }) || "",
                   },
-                ]}>
+                ]}
+              >
                 <AutoComplete
                   options={Countries?.map((country) => {
                     return {
@@ -422,7 +455,11 @@ export const UpdateLicense = () => {
         <Row gutter={[8, 8]}>
           <Col span={24}>
             <Dragger
-              className={permissions?.register?.licenses?.licenses?.license_files_create ? "show" :"hide"}
+              className={
+                permissions?.register?.licenses?.licenses?.license_files_create
+                  ? "show"
+                  : "hide"
+              }
               style={{ maxHeight: "150px" }}
               listType="picture"
               multiple={false}
@@ -441,7 +478,8 @@ export const UpdateLicense = () => {
               })}
               showUploadList={{
                 showRemoveIcon:
-                  permissions?.register?.licenses?.licenses?.license_files_delete,
+                  permissions?.register?.licenses?.licenses
+                    ?.license_files_delete,
               }}
               height={1000}
               beforeUpload={(file) => {
@@ -475,7 +513,6 @@ export const UpdateLicense = () => {
                 {t("messages.upload_description")}
               </Typography>
             </Dragger>
-
           </Col>
 
           {!LicenseDataAttachments?.total && !fileBody?.base64_file && (
@@ -507,7 +544,8 @@ export const UpdateLicense = () => {
               </Button>
             </Col>{" "}
             <Col xs={{ span: 24 }} md={{ span: 12 }} lg={{ span: 15 }}>
-              <FilterChips initial_query={INITIAL_QUERY}
+              <FilterChips
+                initial_query={INITIAL_QUERY}
                 disabled={["license_id"]}
                 startDateKeyName=""
                 endDateKeyName=""
@@ -537,19 +575,18 @@ export const UpdateLicense = () => {
             />
           </Col>
 
-            <FiltersModal
-              open={isFiltersOpen}
-              setOpen={setIsFiltersOpen}
-              query={merchantAttachedQuery}
-              setQuery={setMerchantAttachedQuery}
-              filters={["status"]}
-              refetch={refetchMerchantData}
-              selectOptions={{}}
-              startDateKeyName=""
-              endDateKeyName=""
-              initialQuery={INITIAL_QUERY}
-            />
-          
+          <FiltersModal
+            open={isFiltersOpen}
+            setOpen={setIsFiltersOpen}
+            query={merchantAttachedQuery}
+            setQuery={setMerchantAttachedQuery}
+            filters={["status"]}
+            refetch={refetchMerchantData}
+            selectOptions={{}}
+            startDateKeyName=""
+            endDateKeyName=""
+            initialQuery={INITIAL_QUERY}
+          />
         </Row>
       ),
     },

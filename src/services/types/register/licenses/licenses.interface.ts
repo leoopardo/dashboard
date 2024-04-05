@@ -18,7 +18,7 @@ export interface LicenseItem {
   id?: number;
   name?: string;
   status?: boolean;
-  business_name?: string;
+  corporate_reason?: string;
   number?: number;
   start_validity_date?: string;
   end_validity_date?: string | null;
