@@ -990,7 +990,7 @@ export const CustomTable = (props: TableProps) => {
                       alignContent: "center",
                       textAlign: "center",
                       color: (defaultTheme.colors as any)[
-                        text?.toLocaleLowerCase()
+                        text?.toLocaleLowerCase() || ""
                       ],
                       fontWeight: 600,
                       wordBreak: "keep-all",
@@ -1009,7 +1009,7 @@ export const CustomTable = (props: TableProps) => {
                         height: "8px",
                         borderRadius: "50%",
                         backgroundColor: (defaultTheme.colors as any)[
-                          text?.toLocaleLowerCase()
+                          text?.toLocaleLowerCase() || ""
                         ],
                       }}
                     />
