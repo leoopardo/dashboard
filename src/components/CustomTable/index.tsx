@@ -956,6 +956,85 @@ export const CustomTable = (props: TableProps) => {
             };
 
             case "status_color":
+              return {
+                title: (
+                  <Tooltip title={t(`table.${column?.head || column?.name}`)}>
+                    <Typography
+                      ref={column.key}
+                      style={{
+                        width: "100%",
+                        maxHeight: "50px",
+                        overflow: "hidden",
+                        textAlign: "center",
+                        textOverflow: "ellipsis",
+                        wordBreak: "keep-all",
+                        minWidth: 60,
+                      }}
+                    >
+                      {t(`table.${column?.head || column?.name}`)}
+                    </Typography>
+                  </Tooltip>
+                ),
+                key: column?.sort_name
+                  ? column.sort_name
+                  : Array.isArray(column?.name)
+                  ? column?.name + `${Math.random()}`
+                  : column?.name,
+                dataIndex: column?.name,
+                render: (text: any) => (
+                  <Typography
+                    key={column?.name}
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignContent: "center",
+                      textAlign: "center",
+                      color: (defaultTheme.colors as any)[
+                        text?.toLocaleLowerCase()
+                      ],
+                      fontWeight: 600,
+                      wordBreak: "keep-all",
+                      alignItems: "center",
+                      gap: "6px",
+                      borderRadius: "4px",
+                      border: "1px solid #DCDFE7",
+                      padding: "0 4px 0 4px",
+                      width: "fit-content",
+                      margin: "0 auto"
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: "8px",
+                        height: "8px",
+                        borderRadius: "50%",
+                        backgroundColor: (defaultTheme.colors as any)[
+                          text?.toLocaleLowerCase()
+                        ],
+                      }}
+                    />
+                    {text ? t(`table.${text?.toLocaleLowerCase()}`) : "-"}
+                  </Typography>
+                ),
+                sorter: column.sort
+                  ? () => {
+                      props.setQuery((state: any) => ({
+                        ...state,
+                        sort_field: column?.sort_name
+                          ? column.sort_name
+                          : Array.isArray(column?.name)
+                          ? column?.name[1]
+                          : column?.name,
+                        sort_order:
+                          props.query.sort_order === "DESC" ? "ASC" : "DESC",
+                      }));
+  
+                      return 0;
+                    }
+                  : undefined,
+              };
+
+          case "transaction_status":
             return {
               title: (
                 <Tooltip title={t(`table.${column?.head || column?.name}`)}>
@@ -1034,90 +1113,6 @@ export const CustomTable = (props: TableProps) => {
                 : undefined,
             };
 
-          case "transaction_status":
-            return {
-              title: (
-                <Tooltip title={t(`table.${column?.head || column?.name}`)}>
-                  <Typography
-                    ref={column.key}
-                    style={{
-                      width: "100%",
-                      maxHeight: "50px",
-                      overflow: "hidden",
-                      textAlign: "center",
-                      textOverflow: "ellipsis",
-                      wordBreak: "keep-all",
-                    }}
-                  >
-                    {t(`table.${column?.head || column?.name}`)}
-                  </Typography>
-                </Tooltip>
-              ),
-              key: column?.sort_name
-                ? column.sort_name
-                : Array.isArray(column?.name)
-                ? column?.name + `${Math.random()}`
-                : column?.name,
-              dataIndex: column?.name,
-              render: (text: any, record: any) => {
-                return (
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      flexDirection: "column",
-                    }}
-                  >
-                    <Tag
-                      color={StatusColors[text?.toLocaleLowerCase() as any]}
-                      style={{ marginBottom: 4, width: "fit-content" }}
-                    >
-                      {t(`table.${text?.toLocaleLowerCase()}`)}
-                    </Tag>
-
-                    {text?.toLocaleLowerCase() === "paid" &&
-                      record?.paid_at && (
-                        <Typography
-                          key={column?.name}
-                          style={{ width: "100%", textAlign: "center" }}
-                        >{`${new Date(
-                          `${record?.paid_at?.split("Z")[0]}Z`
-                        ).toLocaleDateString()} ${new Date(
-                          `${record?.paid_at?.split("Z")[0]}Z`
-                        ).toLocaleTimeString()}`}</Typography>
-                      )}
-                    {text?.toLocaleLowerCase() === "refunded" &&
-                      record?.refund_date && (
-                        <Typography
-                          key={column?.name}
-                          style={{ width: "100%", textAlign: "center" }}
-                        >{`${new Date(
-                          `${record?.refund_date?.split("Z")[0]}Z`
-                        ).toLocaleDateString()} ${new Date(
-                          `${record?.refund_date?.split("Z")[0]}Z`
-                        ).toLocaleTimeString()}`}</Typography>
-                      )}
-                  </div>
-                );
-              },
-              sorter: column.sort
-                ? () => {
-                    props.setQuery((state: any) => ({
-                      ...state,
-                      sort_field: column?.sort_name
-                        ? column.sort_name
-                        : Array.isArray(column?.name)
-                        ? column?.name[1]
-                        : column?.name,
-                      sort_order:
-                        props.query.sort_order === "DESC" ? "ASC" : "DESC",
-                    }));
-
-                    return 0;
-                  }
-                : undefined,
-            };
           case "webhook_status":
             return {
               title: (
@@ -2195,10 +2190,14 @@ export const CustomTable = (props: TableProps) => {
             setOpen={props?.setIsConfirmUpdateOpen || (() => {})}
             submit={props?.update || (() => {})}
             title={t("actions.edit")}
-            description={`${t("messages.are_you_sure_status", {
-              action: t("actions.edit").toLocaleLowerCase(),
-              itens: props?.currentItem?.name,
-            })}`}
+            description={
+              props?.currentItem?.validity_status === "EXPIRED"
+                ? `${t("messages.license_expired")}`
+                : `${t("messages.are_you_sure_status", {
+                    action: t("actions.edit").toLocaleLowerCase(),
+                    itens: props?.currentItem?.name,
+                  })}`
+            }
             loading={props?.loading}
           />
 

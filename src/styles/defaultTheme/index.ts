@@ -7,6 +7,7 @@ export const defaultTheme: DefaultTheme = {
     primary: import.meta.env.VITE_APP_COLOR_PRIMARY,
     secondary: import.meta.env.VITE_APP_COLOR_SECONDARY,
 
+    active: "#3f8600",
     success: "#3f8600",
     paid: "#3f8600",
     refund: "#3f8600",
@@ -21,6 +22,7 @@ export const defaultTheme: DefaultTheme = {
     canceled: "#cf1322",
     expired: "#cf1322",
     invalid: "#cf1322",
+    expiring_in_30_days:"#cfa913",
     warnning: "#cfa913",
     in_analysis: "#cfa913",
     processing: "#cfa913",
@@ -29,6 +31,7 @@ export const defaultTheme: DefaultTheme = {
     waiting_refund: "#cfa913",
     waiting_refund_to_end_user: "#cfa913",
     info: "#4682B4",
+ 
 
     chartGreen: "#60873e",
     chartBlue: "#5f8aad",

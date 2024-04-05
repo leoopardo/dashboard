@@ -269,6 +269,7 @@ export const Licenses = () => {
                 sort: true,
               },
               { name: "id", type: "id", sort: true },
+              { name: "license_number", type: "text", sort: true },
               { name: "name", type: "text", sort: true },
               {
                 name: "country",
@@ -295,7 +296,7 @@ export const Licenses = () => {
                 type: "date",
                 sort: true,
               },
-              { name: "status", type: "status_color" },
+              { name: "validity_status", head: 'validity_date', type: "status_color" },
             ]}
             loading={isLicenseDataFetching}
             label={["name"]}
