@@ -12,6 +12,7 @@ import {
 } from "@ant-design/icons";
 import CachedIcon from "@mui/icons-material/Cached";
 import { useListBanks } from "@src/services/bank/listBanks";
+import { useGetrefetchCountries } from "@src/services/states_cities/getCountries";
 import { defaultTheme } from "@src/styles/defaultTheme";
 import { ErrorList } from "@src/utils/errors";
 import { formatCPF } from "@src/utils/functions";
@@ -27,21 +28,19 @@ import {
   Pagination,
   Progress,
   Row,
+  Switch,
   Table,
+  Tag,
   Tooltip,
   Typography,
-  Tag,
-  Switch,
 } from "antd";
-import { useGetrefetchCountries } from "@src/services/states_cities/getCountries";
 import type { ColumnsType, TableProps as TablePropsAntD } from "antd/es/table";
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
-import { Mobile } from "./mobile";
-import { StatusColors } from "./utils";
 import { Confirmation } from "../Modals/confirmation";
+import { Mobile } from "./mobile";
 
 export interface ColumnInterface {
   name: string | any; // (nome da coluna caso não passe head) e chave do objeto a ser acessado nos items
