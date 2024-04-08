@@ -9,8 +9,8 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
 } from "@ant-design/icons";
-import PbLogoDark from "@assets/logo_dark.svg";
-import PbLogo from "@assets/logo_white.svg";
+import PbLogoDark from "@assets/logo_white.svg";
+import PbLogo from "@assets/logo_dark.svg";
 import { useErrorContext } from "@src/contexts/ErrorContext";
 import { useTheme } from "@src/contexts/ThemeContext";
 import { queryClient } from "@src/services/queryClient";
