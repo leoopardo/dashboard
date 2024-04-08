@@ -287,7 +287,7 @@ export const TransfersBetweenAccounts = () => {
               { name: "partner_name", type: "text" },
               { name: "merchant_name", type: "text" },
               { name: "value", type: "value" },
-              { name: "status", type: "status" },
+              { name: "status", type: "status_color" },
               { name: "createdAt", type: "date", sort: true },
             ]}
             loading={isTransferBetweenAccountsDataFetching}

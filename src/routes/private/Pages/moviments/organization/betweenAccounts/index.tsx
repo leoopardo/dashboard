@@ -138,7 +138,8 @@ export const OrganizationTransfersBetweenAccounts = () => {
           </Button>
         </Col>
         <Col xs={{ span: 24 }} md={{ span: 6 }} lg={13}>
-          <FilterChips initial_query={INITIAL_QUERY}
+          <FilterChips
+            initial_query={INITIAL_QUERY}
             startDateKeyName="start_date"
             endDateKeyName="end_date"
             query={query}
@@ -212,7 +213,7 @@ export const OrganizationTransfersBetweenAccounts = () => {
               { name: "to", type: "translate" },
               { name: "user_name", type: "text" },
               { name: "value", type: "value" },
-              { name: "status", type: "status" },
+              { name: "status", type: "status_color" },
               { name: "createdAt", type: "date", sort: true },
             ]}
             loading={isTransferBetweenAccountsDataFetching}

@@ -268,6 +268,8 @@ export const Dashboard = () => {
         minHeight: "100vh",
         height: "100%",
         width: "100%",
+        borderRadius: 8,
+        margin: -1,
       }}
     >
       <Row
@@ -283,6 +285,7 @@ export const Dashboard = () => {
             minHeight: "100vh",
             padding: "8px 25px",
             borderRadius: 8,
+            margin: -1,
           }}
         >
           <Row gutter={[8, 16]}>
