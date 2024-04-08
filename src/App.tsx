@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ArrowUpOutlined } from "@ant-design/icons";
-import PBLogo from "@assets/icon.png";
+import PBLogo from "@assets/icon.svg";
 import { ConfigProvider, FloatButton, Layout, Spin } from "antd";
 import { motion, useViewportScroll } from "framer-motion";
 import { useEffect, useState } from "react";

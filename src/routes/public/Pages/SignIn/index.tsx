@@ -5,7 +5,7 @@ import {
   LoginOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import PbLogo from "@assets/logo.png";
+import PbLogo from "@assets/logo_white.svg";
 import { Grid } from "@mui/material";
 import { useTheme } from "@src/contexts/ThemeContext";
 import { useToken } from "@src/services/siginIn/signIn";
