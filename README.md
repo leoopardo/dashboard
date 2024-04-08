@@ -1,6 +1,6 @@
-# PB-V6-Dashboard
+# Dashboard
 
-Welcome to PB-V6-Dashboard! This project focuses on creating a dashboard for managing transactions involving deposits, payments, and refunds. It works seamlessly with bet houses, merchants, and lotteries. The project is primarily built using React TypeScript along with several essential libraries:
+Welcome to Dashboard! This project focuses on creating a dashboard for managing transactions involving deposits, payments, and refunds. It works seamlessly with bet houses, merchants, and lotteries. The project is primarily built using React TypeScript along with several essential libraries:
 
 - **AntDesign Component Library:** Offers a robust set of components for seamless UI development.
 - **ReactQuery Restful API Library:** Facilitates smooth interaction with RESTful APIs.
