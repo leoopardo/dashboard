@@ -9,8 +9,8 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
 } from "@ant-design/icons";
-import PbLogoDark from "@assets/logo.png";
-import PbLogo from "@assets/logo.svg";
+import PbLogoDark from "@assets/logo_dark.svg";
+import PbLogo from "@assets/logo_white.svg";
 import { useErrorContext } from "@src/contexts/ErrorContext";
 import { useTheme } from "@src/contexts/ThemeContext";
 import { queryClient } from "@src/services/queryClient";
@@ -429,7 +429,7 @@ export const SidebarNavigation = () => {
              {isSidebarOpen && theme === "dark" && (
               <img
                 src={import.meta.env.VITE_APP_LOGO || PbLogoDark}
-                style={{ width: "180px", marginLeft: "-24px" }}
+                style={{ width: "160px" }}
               />
             )}
             {!isSidebarOpen ? (
