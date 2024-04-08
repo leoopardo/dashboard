@@ -1,12 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { InfoCircleFilled, ReloadOutlined } from "@ant-design/icons";
+import { useTheme } from "@src/contexts/ThemeContext";
 import { useGetBankBalance } from "@src/services/consult/organization/bankBalance/getBankBalance";
 import { BankItem } from "@src/services/types/banks.interface";
 import { defaultTheme } from "@src/styles/defaultTheme";
-import BanksBanners from "@src/utils/BankBanners";
 import { moneyFormatter } from "@src/utils/moneyFormatter";
-import { Card, Spin, Statistic, Tooltip, Typography } from "antd";
-import { motion } from "framer-motion";
+import {
+  Avatar,
+  Col,
+  List,
+  Row,
+  Spin,
+  Statistic,
+  Tooltip,
+  Typography,
+} from "antd";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
 
@@ -15,6 +22,7 @@ interface BankcardInterface {
 }
 
 export const BankCard = ({ bank }: BankcardInterface) => {
+  const { theme } = useTheme();
   const {
     OrganizationBankBalance,
     isOrganizationBankBalanceFetching,
@@ -28,125 +36,97 @@ export const BankCard = ({ bank }: BankcardInterface) => {
   }
 
   return OrganizationBankBalance && !OrganizationBankBalanceError ? (
-    <div className="swiper-slide">
-      <Card
-        loading={isOrganizationBankBalanceFetching}
-        headStyle={{ padding: 0 }}
-        bordered={false}
-        title={
-          <Tooltip title={bank?.label_name}>
-            <motion.div
-              animate={{
-                backgroundImage: [
-                  `url(${
-                    (BanksBanners as any)[bank?.label_name || ""] ||
-                    bank?.icon_url
-                  })`,
-                ],
-                transition: {
-                  duration: 4,
-                  delay: 1,
-                  repeat: Infinity,
-                  repeatType: "reverse",
-                  type: "keyframes",
-                },
+    <List.Item
+      style={{
+        backgroundColor: theme === "dark" ? "#222222" : "#ffffff",
+        padding: 16,
+        borderRadius: 10,
+        marginBottom: 8,
+        cursor: "pointer",
+      }}
+      onClick={() => refetchOrganizationBankBalance()}
+    >
+      <Tooltip title={bank?.label_name}>
+        <Row gutter={[8, 8]}>
+          <Col
+            span={4}
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            {" "}
+            {isOrganizationBankBalanceFetching ? (
+              <Spin />
+            ) : (
+              <Avatar src={bank?.icon_url} size="large" />
+            )}
+          </Col>
+          <Col span={11}>
+            <Statistic
+              title="Total:"
+              value={moneyFormatter(OrganizationBankBalance?.value || 0)}
+              precision={2}
+              valueStyle={{
+                fontSize: "16px",
+                
               }}
-              style={{
-                width: "100%",
-                height: "80px",
-                backgroundPosition: "center",
-                backgroundSize: "cover",
-                backgroundRepeat: "no-repeat",
-                padding: 0,
-                margin: 0,
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                borderTopLeftRadius: 8,
-                borderTopRightRadius: 8,
-              }}
-            >
-              {isOrganizationBankBalanceFetching ? (
-                <Spin
-                  size="small"
-                  style={{
-                    position: "absolute",
-                    right: 8,
-                    top: 8,
-                    color: "#fff",
-                    cursor: "pointer",
-                  }}
-                />
-              ) : (
-                <ReloadOutlined
-                  style={{
-                    position: "absolute",
-                    right: 8,
-                    top: 8,
-                    color: "#fff",
-                    cursor: "pointer",
-                    fontSize: 14,
-                  }}
-                  onClick={() => refetchOrganizationBankBalance()}
-                />
+            />
+          </Col>
+          <Col span={9}>
+            {" "}
+            <Statistic
+              title={`${t("table.blocked_value")}:`}
+              value={moneyFormatter(
+                OrganizationBankBalance?.value_blocked || 0
               )}
-
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
+              precision={2}
+              valueStyle={{
+                fontSize: "14px",
+                color: defaultTheme.colors.error,
+                
+              }}
+            />
+          </Col>
+          <Col
+            span={24}
+            style={{ display: "flex", justifyContent: "flex-end" }}
+          >
+            <div style={{ width: "36%" }}>
+              <Tooltip
+                title={
+                  moment(new Date()).format("YYYY-MM-DDTHH:mm:00.000") >
+                  moment(new Date(OrganizationBankBalance?.date_checked))
+                    .add(20, "minutes")
+                    .format("YYYY-MM-DDTHH:mm:00.000")
+                    ? t("messages.20_minutes_consult")
+                    : undefined
+                }
               >
-                <div style={{ display: "flex" }}></div>
-              </div>
-            </motion.div>
-          </Tooltip>
-        }
-      >
-        <Statistic
-          title="Total:"
-          value={moneyFormatter(OrganizationBankBalance?.value || 0)}
-          precision={2}
-          valueStyle={{
-            fontSize: "16px",
-          }}
-        />
-        <Statistic
-          title={`${t("table.blocked_value")}:`}
-          value={moneyFormatter(OrganizationBankBalance?.value_blocked || 0)}
-          precision={2}
-          valueStyle={{
-            fontSize: "14px",
-            color: defaultTheme.colors.error,
-          }}
-        />
-        <Typography.Text
-          mark={
-            moment(new Date()).format("YYYY-MM-DDTHH:mm:00.000") >
-            moment(new Date(OrganizationBankBalance?.date_checked))
-              .add(20, "minutes")
-              .format("YYYY-MM-DDTHH:mm:00.000")
-          }
-          style={{ color: "#d6d6d6", fontSize: "12px" }}
-        >
-          {moment(new Date(OrganizationBankBalance?.date_checked)).format(
-            navigator.language === "pt-BR"
-              ? "DD/MM/YYYY HH:mm"
-              : "YYYY/MM/DD HH:mm"
-          )}
-          {moment(new Date()).format("YYYY-MM-DDTHH:mm:00.000") >
-            moment(new Date(OrganizationBankBalance?.date_checked))
-              .add(20, "minutes")
-              .format("YYYY-MM-DDTHH:mm:00.000") && (
-            <Tooltip title={t("messages.20_minutes_consult")}>
-              <InfoCircleFilled style={{ marginLeft: 5, paddingRight: 5 }} />
-            </Tooltip>
-          )}
-        </Typography.Text>
-      </Card>
-    </div>
+                <Typography.Text
+                  mark={
+                    moment(new Date()).format("YYYY-MM-DDTHH:mm:00.000") >
+                    moment(new Date(OrganizationBankBalance?.date_checked))
+                      .add(20, "minutes")
+                      .format("YYYY-MM-DDTHH:mm:00.000")
+                  }
+                  style={{ color: "#d6d6d6", fontSize: "11px" }}
+                >
+                  {moment(
+                    new Date(OrganizationBankBalance?.date_checked)
+                  ).format(
+                    navigator.language === "pt-BR"
+                      ? "DD/MM/YYYY HH:mm"
+                      : "YYYY/MM/DD HH:mm"
+                  )}
+                </Typography.Text>{" "}
+              </Tooltip>
+            </div>
+          </Col>
+        </Row>
+      </Tooltip>
+    </List.Item>
   ) : (
     <></>
   );

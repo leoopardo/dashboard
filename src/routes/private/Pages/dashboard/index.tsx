@@ -1,50 +1,58 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
-  BarChartOutlined,
-  DashOutlined,
-  InfoCircleOutlined,
-  ReloadOutlined,
+  ArrowDownOutlined,
+  ArrowUpOutlined,
+  FilterOutlined,
 } from "@ant-design/icons";
+import CachedIcon from "@mui/icons-material/Cached";
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined";
 import { FiltersModal } from "@src/components/FiltersModal";
 import { FilterChips } from "@src/components/FiltersModal/filterChips";
-import { TuorComponent } from "@src/components/Tuor";
 import { useErrorContext } from "@src/contexts/ErrorContext";
 import { useListBanks } from "@src/services/bank/listBanks";
+import { useGetHourly } from "@src/services/consult/merchant/bankStatement/getHourly";
 import { useGetMerchantBankStatementTotals } from "@src/services/consult/merchant/bankStatement/getTotals";
+import { useGetHeatMapTotalByCity } from "@src/services/heatMap/getTotalByCity";
+import { useGetHeatMapTotalByStates } from "@src/services/heatMap/getTotalByStates";
+import { useGetMerchantMoviments } from "@src/services/moviments/merchants/manual/GetManualTransactions";
 import { queryClient } from "@src/services/queryClient";
 import { MerchantBankStatementTotalsQuery } from "@src/services/types/consult/merchant/bankStatement";
 import { ValidateInterface } from "@src/services/types/validate.interface";
-import { defaultTheme } from "@src/styles/defaultTheme";
+import { moneyFormatter } from "@src/utils/moneyFormatter";
 import {
   Button,
+  Card,
   Col,
-  Divider,
-  Layout,
+  List,
   Row,
+  Select,
+  Space,
+  Spin,
+  Statistic,
   Tabs,
   Tooltip,
-  Typography
+  theme,
 } from "antd";
 import moment from "moment";
-import { useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
-import secureLocalStorage from "react-secure-storage";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { Autoplay, Pagination } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { TabsTable } from "./components/TabsTable";
+import { MerchantHourlyLineChart } from "../consult/merchant/bankStatement/components/HourlyChart";
 import { BankCard } from "./components/bankCard";
-import { BankBalanceChart } from "./components/charts/bankBalanceChart";
 import { ChartIn } from "./components/charts/chartIn";
 import { ChartOut } from "./components/charts/chartOut";
+import { RootMap } from "./components/map";
 import { MerchantBalance } from "./components/merchantBalance";
 import { MerchantsBalance } from "./components/merchantsBalance";
 import { OrganizationBalance } from "./components/organizationBalance";
 import { ValuesTable } from "./components/valuesTable";
+import { RefundDepositsCard } from "./components/refundDepositsCard";
+import { RefundWithdrawalCard } from "./components/refundWithdrawalsCard";
+import { TabsTable } from "./components/TabsTable";
 
 const INITIAL_QUERY = {
   start_date: moment(new Date())
@@ -66,36 +74,21 @@ export const Dashboard = () => {
   ) as ValidateInterface;
   const user = queryClient.getQueryData("validate") as ValidateInterface;
   const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(false);
-  const [isBankChart, setIsBankChart] = useState<boolean>(
-    secureLocalStorage.getItem("isBankChart") === "true"
-  );
   const totilizersTabs = [];
   const isMobile = useMediaQuery({ maxWidth: "767px" });
-
   const [query, setQuery] =
     useState<MerchantBankStatementTotalsQuery>(INITIAL_QUERY);
-  const [isTuorOpen, setIsTuorOpen] = useState<boolean>(false);
-  const ref1 = useRef(null);
-  const ref2 = useRef(null);
-  const ref3 = useRef(null);
-  const ref4 = useRef(null);
-  const refType = useRef(null);
-  const refOpNum = useRef(null);
-  const refOpVal = useRef(null);
-  const refTicket = useRef(null);
-  const refFee = useRef(null);
-  const refInOut = useRef(null);
-  const refIn = useRef(null);
-  const refOut = useRef(null);
-  const refMerchantsBalance = useRef(null);
-  const refMerchantname = useRef(null);
-  const refTransaction = useRef(null);
-  const refPayment = useRef(null);
-  const refReserved = useRef(null);
-  const { bankListData } = useListBanks({
+  const [mapQuery, setMapQuery] = useState<any>({
+    createdat_start: query.start_date,
+    createdat_end: query.end_date,
+  });
+  const { bankListData, isBankListFetching } = useListBanks({
     limit: 200,
     page: 1,
   });
+  const { Hourly, refetchHourlyTotal } = useGetHourly(query);
+  const { MerchantMovimentsData, isMerchantMovimentsDataFetching } =
+    useGetMerchantMoviments(query);
   const [activeKey, setActiveKey] = useState<string>(
     permissions?.report?.paybrokers?.balance?.report_paybrokers_balance_list
       ? "1"
@@ -103,6 +96,27 @@ export const Dashboard = () => {
       ? "2"
       : ""
   );
+  const {
+    heatMapTotalByCity,
+    isHeatMapTotalByCityFetching,
+    refetcHeatMapTotalByCity,
+  } = useGetHeatMapTotalByCity(mapQuery);
+  const {
+    heatMapTotalByState,
+    isHeatMapTotalByStateFetching,
+    refetcHeatMapTotalByState,
+  } = useGetHeatMapTotalByStates(mapQuery);
+
+  const [fastDateFilter, setFastDateFilter] = useState<
+    | "today"
+    | "yesterday"
+    | "week"
+    | "month"
+    | "lastMonth"
+    | null
+    | "custom_date"
+  >("today");
+  const [fastDateDay, setFastDateDay] = useState<number | null>(null);
 
   const { refetchMerchantBankStatementTotalsTotal } =
     useGetMerchantBankStatementTotals(query);
@@ -113,11 +127,7 @@ export const Dashboard = () => {
     totilizersTabs.push({
       key: "1",
       label: t("table.organization_balance"),
-      children: (
-        <Col span={24}>
-          <OrganizationBalance />
-        </Col>
-      ),
+      children: <OrganizationBalance />,
     });
   }
   if (permissions?.report?.merchant?.balance?.report_merchant_balance_list) {
@@ -131,51 +141,571 @@ export const Dashboard = () => {
       ),
     });
   }
+  totilizersTabs.push({
+    key: "3",
+    label: t("table.heat_map"),
+    children:
+      isHeatMapTotalByCityFetching || isHeatMapTotalByStateFetching ? (
+        <div
+          style={{
+            width: "100%",
+            height: 500,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Spin />
+        </div>
+      ) : (
+        <RootMap
+          data={heatMapTotalByCity}
+          state={heatMapTotalByState}
+          query={{
+            createdat_start: query.start_date,
+            createdat_end: query.end_date,
+            state: (query as any).state,
+          }}
+          setQuery={setQuery}
+        />
+      ),
+  });
+
+  useEffect(() => {
+    refetchHourlyTotal();
+    setMapQuery((state: any) => ({
+      ...state,
+      createdat_start: query.start_date,
+      createdat_end: query.end_date,
+    }));
+  }, [query]);
+
+  useEffect(() => {
+    refetcHeatMapTotalByCity();
+    refetcHeatMapTotalByState();
+  }, [mapQuery.createdat_start, mapQuery.createdat_end]);
+  useEffect(() => {
+    if (
+      moment(new Date(query.start_date)).format("YYYY-MM-DDTHH:mm:00.000") ===
+        moment(new Date())
+          .startOf("day")
+          .utc()
+          .format("YYYY-MM-DDTHH:mm:00.000") &&
+      moment(new Date(query.end_date)).format("YYYY-MM-DDTHH:mm:00.000") ===
+        moment(new Date())
+          .add(1, "day")
+          .startOf("day")
+          .utc()
+          .format("YYYY-MM-DDTHH:mm:00.000")
+    ) {
+      setFastDateFilter("today");
+    } else if (
+      moment(new Date(query.start_date)).format("YYYY-MM-DDTHH:mm:00.000") ===
+        moment(new Date())
+          .subtract(1, "day")
+          .startOf("day")
+          .utc()
+          .format("YYYY-MM-DDTHH:mm:00.000") &&
+      moment(new Date(query.end_date)).format("YYYY-MM-DDTHH:mm:00.000") ===
+        moment(new Date())
+          .startOf("day")
+          .utc()
+          .format("YYYY-MM-DDTHH:mm:00.000")
+    ) {
+      setFastDateFilter("yesterday");
+    } else if (
+      moment(new Date(query.start_date)).format("YYYY-MM-DDTHH:mm:00.000") ===
+        moment(new Date())
+          .startOf("M")
+          .utc()
+          .format("YYYY-MM-DDTHH:mm:00.000") &&
+      moment(new Date(query.end_date)).format("YYYY-MM-DDTHH:mm:00.000") ===
+        moment(new Date())
+          .endOf("M")
+          .add(1, "day")
+          .startOf("day")
+          .utc()
+          .format("YYYY-MM-DDTHH:mm:00.000")
+    ) {
+      setFastDateFilter("month");
+    } else if (
+      moment(new Date(query.start_date)).format("YYYY-MM-DDTHH:mm:00.000") ===
+        moment(new Date())
+          .startOf("week")
+          .utc()
+          .format("YYYY-MM-DDTHH:mm:00.000") &&
+      moment(new Date(query.end_date)).format("YYYY-MM-DDTHH:mm:00.000") ===
+        moment(new Date())
+          .add(1, "day")
+          .startOf("day")
+          .utc()
+          .format("YYYY-MM-DDTHH:mm:00.000")
+    ) {
+      setFastDateFilter("week");
+    } else {
+      if (
+        moment(query.start_date).get("M") === moment(new Date()).get("M") &&
+        moment(query.end_date).get("M") === moment(new Date()).get("M")
+      ) {
+        setFastDateFilter("month");
+        setFastDateDay(moment(query.start_date).get("D"));
+      } else if (
+        moment(new Date(query.start_date)).get("M") ===
+        moment(new Date()).subtract(1, "M").get("M")
+      ) {
+        setFastDateFilter("lastMonth");
+        setFastDateDay(moment(query.start_date).get("D"));
+      } else {
+        setFastDateFilter("custom_date");
+      }
+    }
+  }, [query]);
 
   return (
     <Row
       style={{
-     
+        backgroundColor: theme.useToken().token.colorBgLayout,
         minHeight: "100vh",
+        height: "100%",
         width: "100%",
-        padding: 26,
       }}
     >
-      {(permissions?.report?.paybrokers?.balance
-        ?.report_paybrokers_balance_list ||
-        permissions?.report?.merchant?.balance
-          ?.report_merchant_balance_list) && (
-        <Layout
-          ref={ref1}
+      <Row
+        gutter={[16, 16]}
+        style={{ width: "100%", display: "flex", flexWrap: "wrap-reverse" }}
+      >
+        <Col
+          xs={{ span: 24 }}
+          md={{ span: 24 }}
+          lg={{ span: 18 }}
           style={{
-            marginBottom:
-              permissions?.report?.merchant?.balance
-                ?.report_merchant_balance_list &&
-              !permissions?.report?.paybrokers?.balance
-                ?.report_paybrokers_balance_list
-                ? 25
-                : -36,
-            paddingBottom: 16,
-            display: "flex",
-            justifyContent: "center",
+            backgroundColor: theme.useToken().token.colorBgElevated,
+            minHeight: "100vh",
+            padding: "8px 25px",
+            borderRadius: 8,
           }}
         >
-          {(permissions?.report?.paybrokers?.balance
-            ?.report_paybrokers_balance_list ||
-            permissions?.report?.merchant?.balance
-              ?.report_merchant_balance_list) && (
-            <Tabs
-              data-test-id="tabs-1"
-              activeKey={activeKey}
-              onChange={(value) => {
-                setActiveKey(value);
+          <Row gutter={[8, 16]}>
+            <Col
+              span={24}
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+                marginBottom: isMobile ? -10 : -60,
+                marginTop: 8,
+                alignItems: "center",
               }}
-              items={totilizersTabs}
-            />
-          )}
-        </Layout>
-      )}
+            >
+              <Row
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  alignItems: "center",
+                }}
+                gutter={[8, 8]}
+              >
+                <Col xs={{ span: 3 }} md={{ span: 1 }}>
+                  <Tooltip title={t("table.filters")}>
+                    <Button
+                      type="primary"
+                      style={{
+                        zIndex: 999,
+                        width: "100%",
+                      }}
+                      icon={<FilterOutlined style={{ fontSize: 16 }} />}
+                      onClick={() => setIsFiltersOpen(true)}
+                    />
+                  </Tooltip>
+                </Col>
+                <Col xs={{ span: 3 }} md={{ span: 1 }}>
+                  <Tooltip title={t("table.clear_filters")}>
+                    <Button
+                      type="dashed"
+                      danger
+                      style={{
+                        zIndex: 999,
+                        width: "100%",
+                      }}
+                      icon={
+                        <FilterAltOffOutlinedIcon style={{ fontSize: 20 }} />
+                      }
+                      onClick={() => setQuery(INITIAL_QUERY)}
+                    />
+                  </Tooltip>
+                </Col>
+                <Col
+                  xs={{ span: 14 }}
+                  md={{
+                    span:
+                      fastDateFilter === "month" ||
+                      fastDateFilter === "lastMonth"
+                        ? 6
+                        : 4,
+                  }}
+                >
+                  <Space.Compact style={{ width: "100%" }}>
+                    <Select
+                      placeholder={t("table.fast_date_filter")}
+                      style={{
+                        width:
+                          fastDateFilter === "month" ||
+                          fastDateFilter === "lastMonth"
+                            ? "60%"
+                            : "100%",
+                        zIndex: 999,
+                      }}
+                      options={[
+                        { label: t("table.today"), value: "today" },
+                        { label: t("table.yesterday"), value: "yesterday" },
+                        { label: t("table.week"), value: "week" },
+                        { label: t("table.this_month"), value: "month" },
+                        { label: t("table.last_month"), value: "lastMonth" },
+                        {
+                          label: t("table.c_date"),
+                          value: "custom_date",
+                          disabled: true,
+                        },
+                      ]}
+                      onChange={(value) => {
+                        setFastDateFilter(value);
+                        setFastDateDay(null);
+                        switch (value) {
+                          case "today":
+                            setQuery((state) => ({
+                              ...state,
+                              start_date: moment(new Date())
+                                .startOf("day")
+                                .utc()
+                                .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+                              end_date: moment(new Date())
+                                .add(1, "day")
+                                .startOf("day")
+                                .utc()
+                                .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+                            }));
+                            break;
+                          case "yesterday":
+                            setQuery((state) => ({
+                              ...state,
+                              start_date: moment(new Date())
+                                .subtract(1, "day")
+                                .startOf("day")
+                                .utc()
+                                .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+                              end_date: moment(new Date())
+                                .startOf("day")
+                                .utc()
+                                .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+                            }));
+                            break;
+                          case "week":
+                            setQuery((state) => ({
+                              ...state,
+                              start_date: moment(new Date())
+                                .startOf("week")
+                                .utc()
+                                .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+                              end_date: moment(new Date())
+                                .add(1, "day")
+                                .startOf("day")
+                                .utc()
+                                .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+                            }));
+                            break;
+                          case "month":
+                            setQuery((state) => ({
+                              ...state,
+                              start_date: moment(new Date())
+                                .startOf("month")
+                                .utc()
+                                .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+                              end_date: moment(new Date())
+                                .endOf("month")
+                                .add(1, "day")
+                                .startOf("day")
+                                .utc()
+                                .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+                            }));
+                            break;
+                          case "lastMonth":
+                            setQuery((state) => ({
+                              ...state,
+                              start_date: moment(new Date())
+                                .subtract(1, "month")
+                                .startOf("month")
+                                .utc()
+                                .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+                              end_date: moment(new Date())
+                                .startOf("M")
+                                .startOf("day")
+                                .utc()
+                                .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+                            }));
+                        }
+                      }}
+                      value={fastDateFilter}
+                    />
+                    {fastDateFilter === "month" && (
+                      <Select
+                        allowClear
+                        value={fastDateDay}
+                        onClear={() => {
+                          setFastDateDay(null);
+                          setQuery((state) => ({
+                            ...state,
+                            start_date: moment(new Date())
+                              .startOf("month")
+                              .utc()
+                              .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+                            end_date: moment(new Date())
+                              .endOf("month")
+                              .add(1, "day")
+                              .startOf("day")
+                              .utc()
+                              .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+                          }));
+                        }}
+                        placeholder={t("table.day")}
+                        style={{ width: "40%", zIndex: 999 }}
+                        options={Array.from(
+                          { length: moment(new Date()).daysInMonth() },
+                          (_, i) => i + 1
+                        ).map((i) => ({ label: i, value: i }))}
+                        onChange={(value) => {
+                          if (!value) return;
+                          setFastDateDay(value);
+                          setQuery((state) => ({
+                            ...state,
+                            start_date: moment(new Date())
+                              .startOf("month")
+                              .add(value - 1, "day")
+                              .utc()
+                              .format(`YYYY-MM-DDTHH:mm:ss.SSS`),
+                            end_date: moment(new Date())
+                              .startOf("month")
+                              .add(value, "day")
+                              .utc()
+                              .format(`YYYY-MM-DDTHH:mm:ss.SSS`),
+                          }));
+                        }}
+                      />
+                    )}
+                    {fastDateFilter === "lastMonth" && (
+                      <Select
+                        allowClear
+                        onClear={() => {
+                          setFastDateDay(null);
+                          setQuery((state) => ({
+                            ...state,
+                            start_date: moment(new Date())
+                              .subtract(1, "month")
+                              .startOf("month")
+                              .utc()
+                              .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+                            end_date: moment(new Date())
+                              .subtract(1, "month")
+                              .endOf("month")
+                              .add(1, "day")
+                              .startOf("day")
+                              .utc()
+                              .format("YYYY-MM-DDTHH:mm:ss.SSS"),
+                          }));
+                        }}
+                        placeholder={t("table.day")}
+                        style={{ width: "40%", zIndex: 999 }}
+                        options={Array.from(
+                          {
+                            length: moment(new Date())
+                              .subtract(1, "M")
+                              .daysInMonth(),
+                          },
+                          (_, i) => i + 1
+                        ).map((i) => ({ label: i, value: i }))}
+                        onChange={(value) => {
+                          if (!value) return;
+                          setQuery((state) => ({
+                            ...state,
+                            start_date: moment(new Date())
+                              .subtract(1, "month")
+                              .startOf("month")
+                              .add(value - 1, "day")
+                              .utc()
+                              .format(`YYYY-MM-DDTHH:mm:ss.SSS`),
+                            end_date: moment(new Date())
+                              .subtract(1, "month")
+                              .startOf("month")
+                              .add(value, "day")
+                              .utc()
+                              .format(`YYYY-MM-DDTHH:mm:ss.SSS`),
+                          }));
+                        }}
+                      />
+                    )}
+                  </Space.Compact>
+                </Col>
+                <Col xs={{ span: 3 }} md={{ span: 1 }}>
+                  <Tooltip title={t("table.refetch")}>
+                    <Button
+                      type="link"
+                      style={{
+                        zIndex: 999,
+                        marginLeft: 8,
+                      }}
+                      onClick={() => queryClient.invalidateQueries()}
+                      loading={isBankListFetching}
+                      icon={<CachedIcon />}
+                    />
+                  </Tooltip>
+                </Col>
+              </Row>
+            </Col>
+            <Col span={24}>
+              {(permissions?.report?.paybrokers?.balance
+                ?.report_paybrokers_balance_list ||
+                permissions?.report?.merchant?.balance
+                  ?.report_merchant_balance_list) && (
+                <Tabs
+                  data-test-id="tabs-1"
+                  activeKey={activeKey}
+                  onChange={(value) => {
+                    setActiveKey(value);
+                  }}
+                  items={totilizersTabs}
+                />
+              )}
+            </Col>
+            <Col xs={{ span: 24 }} md={{ span: 24 }}>
+              <FilterChips
+                data-test-id="filter-chips-1"
+                startDateKeyName="start_date"
+                endDateKeyName="end_date"
+                query={query}
+                setQuery={setQuery}
+                haveInitialDate
+              />
+            </Col>
 
+            {permissions?.report?.merchant?.extract && (
+              <>
+                <Col span={24}>
+                  <ValuesTable query={query} />
+                </Col>
+                <Col span={24}>
+                  <MerchantHourlyLineChart items={Hourly} />
+                </Col>
+              </>
+            )}
+            {!user.merchant_id && permissions?.report?.merchant?.balance && (
+              <Col span={24}>
+                {" "}
+                <MerchantsBalance
+                  data-test-id="merchants-balance-1"
+                  query={query}
+                />
+              </Col>
+            )}
+            <Col span={24}>
+              {(!error.rankingFee ||
+                !error.rankingOperations ||
+                !error.rankingValue) && (
+                <TabsTable data-test-id="tabs-table" query={query} />
+              )}
+            </Col>
+          </Row>
+        </Col>
+        <Col xs={{ span: 24 }} md={{ span: 24 }} lg={{ span: 6 }}>
+          <Row
+            style={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+            gutter={[8, 8]}
+          >
+            {permissions?.transactions?.merchant?.manual_transactions
+              ?.merchant_manual_transactions_list && (
+              <>
+                <Col span={24}>
+                  <Card bordered={false}>
+                    <Statistic
+                      loading={isMerchantMovimentsDataFetching}
+                      title="Entrada manual"
+                      value={moneyFormatter(
+                        MerchantMovimentsData.total_in_success || 0
+                      )}
+                      precision={2}
+                      valueStyle={{ color: "#3f8600" }}
+                      prefix={<ArrowUpOutlined />}
+                    />
+                  </Card>
+                </Col>
+                <Col span={24}>
+                  <Card bordered={false}>
+                    <Statistic
+                      loading={isMerchantMovimentsDataFetching}
+                      title="Saída manual"
+                      value={moneyFormatter(
+                        MerchantMovimentsData.total_out_success || 0
+                      )}
+                      precision={2}
+                      valueStyle={{ color: "#cf1322" }}
+                      prefix={<ArrowDownOutlined />}
+                    />
+                  </Card>
+                </Col>
+              </>
+            )}
+
+            {permissions?.report?.paybrokers?.bank_balance?.menu && (
+              <Col span={24}>
+                <List
+                  loading={isBankListFetching}
+                  style={{ width: "100%" }}
+                  itemLayout="horizontal"
+                  dataSource={bankListData?.itens.filter(
+                    (b) => b?.status === true
+                  )}
+                  renderItem={(item: any, index) => (
+                    <BankCard
+                      bank={item}
+                      key={item?.id}
+                      data-test-id={`bank-${index}`}
+                    />
+                  )}
+                />
+              </Col>
+            )}
+            {permissions?.report?.deposit?.generated_deposit
+              ?.report_deposit_generated_deposit_list_totals && (
+              <Col span={24}>
+                <ChartIn query={query} data-test-id="chart-in" />
+              </Col>
+            )}
+            {permissions?.report?.deposit?.generated_deposit
+              ?.report_deposit_generated_deposit_list_totals && (
+              <Col span={24}>
+                <ChartOut query={query} data-test-id="chart-in" />
+              </Col>
+            )}
+            {permissions?.report?.chargeback?.deposit_chargeback
+              ?.report_chargeback_deposit_chargeback_list_totals && (
+              <Col span={24}>
+                <RefundDepositsCard query={query} />
+              </Col>
+            )}
+
+            {permissions?.report?.chargeback?.withdraw_chargeback
+              ?.report_chargeback_withdraw_chargeback_list_totals && (
+              <Col span={24}>
+                <RefundWithdrawalCard query={query} />
+              </Col>
+            )}
+          </Row>
+        </Col>
+      </Row>
+
+      {/* 
       <Col
         span={24}
         style={{
@@ -195,167 +725,7 @@ export const Dashboard = () => {
             : 0,
         }}
       >
-        {permissions?.report?.paybrokers?.bank_balance?.menu && (
-          <Row
-            style={{
-              width: "100%",
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <Col xs={{ span: 6 }} md={{ span: 6 }}>
-              <Typography.Title
-                level={isMobile ? 5 : 3}
-                ref={ref2}
-                data-test-id="text-1"
-              >
-                {t("menus.organization_bank_balance")}
-              </Typography.Title>
-            </Col>
-
-            <Col
-              xs={{ span: 18 }}
-              md={{ span: 18 }}
-              style={{ display: "flex", justifyContent: "flex-end" }}
-            >
-              <Tooltip title={t("buttons.help")} data-test-id="tootip-1">
-                <Button
-                  data-test-id="button-1"
-                  type="link"
-                  onClick={() => setIsTuorOpen((state) => !state)}
-                >
-                  <InfoCircleOutlined data-test-id="icon-1" />
-                </Button>
-              </Tooltip>
-              <Button
-                data-test-id="button-2"
-                type="link"
-                onClick={() => queryClient.invalidateQueries()}
-                style={{ marginRight: 8 }}
-              >
-                <ReloadOutlined data-test-id="icon-2" />
-              </Button>
-              <Button
-                data-test-id="button-3"
-                shape="circle"
-                onClick={() => {
-                  if (isBankChart) {
-                    setIsBankChart(false);
-                    secureLocalStorage.setItem("isBankChart", "false");
-                  } else {
-                    setIsBankChart(true);
-                    secureLocalStorage.setItem("isBankChart", "true");
-                  }
-                }}
-              >
-                {!isBankChart ? (
-                  <BarChartOutlined data-test-id="icon-3" />
-                ) : (
-                  <DashOutlined data-test-id="icon-4" />
-                )}
-              </Button>
-            </Col>
-            <Row
-              style={{
-                width: "100%",
-                marginBottom: 16,
-                display: "flex",
-              }}
-              gutter={[16, 16]}
-              ref={ref3}
-            >
-              {isBankChart ? (
-                <Col span={24}>
-                  <BankBalanceChart data-test-id="chart-1" />
-                </Col>
-              ) : (
-                <Col span={24}>
-                  {isMobile ? (
-                    <Row gutter={[8, 8]}>
-                      {bankListData?.itens
-                        .filter((b) => b?.status === true)
-                        .map((bank: any, index) => (
-                          <Col span={24}>
-                            <BankCard
-                              bank={bank}
-                              key={bank?.id}
-                              data-test-id={`bank-${index}`}
-                            />
-                          </Col>
-                        ))}
-                    </Row>
-                  ) : (
-                    <Swiper
-                      data-test-id="swiper-1"
-                      slidesPerView={6}
-                      spaceBetween={8}
-                      pagination={{
-                        clickable: true,
-                      }}
-                      modules={[Autoplay, Pagination]}
-                      draggable
-                      grabCursor
-                      className="mySwiper"
-                      style={{
-                        height: 260,
-                        paddingLeft: 24,
-                        paddingRight: 24,
-                      }}
-                      loop={true}
-                      autoplay={{
-                        delay: 2500,
-                        disableOnInteraction: false,
-                        pauseOnMouseEnter: true,
-                      }}
-                      breakpoints={{
-                        300: {
-                          slidesPerView: 1,
-                          spaceBetween: 8,
-                        },
-                        640: {
-                          slidesPerView: 2,
-                          spaceBetween: 8,
-                        },
-                        950: {
-                          slidesPerView: 3,
-                          spaceBetween: 8,
-                        },
-                        1024: {
-                          slidesPerView: 5,
-                          spaceBetween: 8,
-                        },
-                        1400: {
-                          slidesPerView: 5,
-                          spaceBetween: 8,
-                        },
-                        1700: {
-                          slidesPerView: 7,
-                          spaceBetween: 8,
-                        },
-                        2000: {
-                          slidesPerView: 8,
-                          spaceBetween: 8,
-                        },
-                      }}
-                    >
-                      {bankListData?.itens
-                        .filter((b) => b?.status === true)
-                        .map((bank: any, index) => (
-                          <SwiperSlide key={bank?.id}>
-                            <BankCard
-                              bank={bank}
-                              key={bank?.id}
-                              data-test-id={`bank-${index}`}
-                            />
-                          </SwiperSlide>
-                        ))}
-                    </Swiper>
-                  )}
-                </Col>
-              )}
-            </Row>
-          </Row>
-        )}
+        
         <Row gutter={[8, 4]} align="middle" justify="center">
           <Layout
             style={{
@@ -374,7 +744,7 @@ export const Dashboard = () => {
                 </Button>
               </Col>
               <Col xs={{ span: 24 }} md={{ span: 16 }}>
-                <FilterChips initial_query={INITIAL_QUERY}
+                <FilterChips
                   data-test-id="filter-chips-1"
                   startDateKeyName="start_date"
                   endDateKeyName="end_date"
@@ -403,12 +773,8 @@ export const Dashboard = () => {
                   {t("table.clear_filters")}
                 </Button>
               </Col>
-              <Col span={24} style={{ marginTop: 16 }}>
-                <Divider orientation="left" data-test-id="divider-1">
-                  <Typography.Title level={3} ref={ref4} data-test-id="text-2">
-                    {t("table.operations")}
-                  </Typography.Title>
-                </Divider>
+              <Col span={24} style={{ marginTop: 0 }}>
+                <Divider style={{ marginTop: 0, marginBottom: 16 }}></Divider>
                 <ValuesTable
                   data-test-id="values-table-1"
                   query={query}
@@ -418,10 +784,10 @@ export const Dashboard = () => {
             </Row>
           </Layout>
 
-          {(permissions?.report?.deposit?.generated_deposit
-            ?.report_deposit_generated_deposit_list_totals ||
-            permissions?.report?.withdraw?.generated_withdraw
-              ?.report_withdraw_generated_withdraw_list_totals) && (
+          {(permissions.report.deposit.generated_deposit
+            .report_deposit_generated_deposit_list_totals ||
+            permissions.report.withdraw.generated_withdraw
+              .report_withdraw_generated_withdraw_list_totals) && (
             <Col
               span={24}
               style={{
@@ -438,14 +804,14 @@ export const Dashboard = () => {
                     {t("table.in_out_conversion")}
                   </Typography.Title>
                 </Divider>
-                {permissions?.report?.deposit?.generated_deposit
-                  ?.report_deposit_generated_deposit_list_totals && (
+                {permissions.report.deposit.generated_deposit
+                  .report_deposit_generated_deposit_list_totals && (
                   <Col xs={{ span: 24 }} md={{ span: 12 }} ref={refIn}>
                     <ChartIn query={query} data-test-id="chart-in" />
                   </Col>
                 )}
-                {permissions?.report?.withdraw?.generated_withdraw
-                  ?.report_withdraw_generated_withdraw_list_totals && (
+                {permissions.report.withdraw.generated_withdraw
+                  .report_withdraw_generated_withdraw_list_totals && (
                   <Col xs={{ span: 24 }} md={{ span: 12 }} ref={refOut}>
                     <ChartOut query={query} data-test-id="chart-out" />
                   </Col>
@@ -455,7 +821,7 @@ export const Dashboard = () => {
           )}
         </Row>
 
-        {!user.merchant_id && permissions?.report?.merchant?.balance?.menu && (
+        {!user.merchant_id && permissions.report.merchant.balance.menu && (
           <Row
             style={{
               marginTop: permissions?.report?.paybrokers?.bank_balance?.menu
@@ -497,35 +863,9 @@ export const Dashboard = () => {
         )}
       </Col>
 
-      <FiltersModal
-        data-test-id="filters-modal"
-        open={isFiltersOpen}
-        setOpen={setIsFiltersOpen}
-        query={query}
-        setQuery={setQuery}
-        filters={[
-          "start_date",
-          "end_date",
-          "partner_id",
-          "merchant_id",
-          "aggregator_id",
-          "operator_id",
-          "type",
-          "payment_type",
-        ]}
-        refetch={refetchMerchantBankStatementTotalsTotal}
-        selectOptions={{
-          type: ["deposit", "withdraw"],
-          payment_type: ["pix"],
-        }}
-        startDateKeyName="start_date"
-        endDateKeyName="end_date"
-        initialQuery={INITIAL_QUERY}
-        haveInitialDate
-        maxRange
-      />
+       */}
 
-      <TuorComponent
+      {/* <TuorComponent
         data-test-id="tuor-component"
         open={isTuorOpen}
         setOpen={setIsTuorOpen}
@@ -563,7 +903,7 @@ export const Dashboard = () => {
               onClick: () => setActiveKey("2"),
             },
           },
-          permissions?.report?.paybrokers?.bank_balance?.menu && {
+          permissions.report.paybrokers.bank_balance.menu && {
             title: t("menus.organization_bank_balance"),
             description: (
               <Typography data-test-id="organization-bank-balance-description">
@@ -623,52 +963,52 @@ export const Dashboard = () => {
             ),
             target: () => ref2.current,
           },
-          permissions?.report?.merchant?.extract?.menu && {
+          permissions.report.merchant.extract.menu && {
             title: t("table.operations"),
             description: t("wiki.operations_description"),
             target: () => ref4.current,
           },
-          permissions?.report?.merchant?.extract?.menu && {
+          permissions.report.merchant.extract.menu && {
             title: t("table.type"),
             description: t("wiki.operation_type_description"),
             target: () => refType.current,
           },
-          permissions?.report?.merchant?.extract?.menu && {
+          permissions.report.merchant.extract.menu && {
             title: t("wiki.operations_number"),
             description: t("wiki.operations_number_description"),
             target: () => refOpNum.current,
           },
-          permissions?.report?.merchant?.extract?.menu && {
+          permissions.report.merchant.extract.menu && {
             title: t("wiki.operations_value"),
             description: t("wiki.operations_value_description"),
             target: () => refOpVal.current,
           },
-          permissions?.report?.merchant?.extract?.menu && {
+          permissions.report.merchant.extract.menu && {
             title: t("wiki.ticket"),
             description: t("wiki.ticket_description"),
             target: () => refTicket.current,
           },
-          permissions?.report?.merchant?.extract?.menu && {
+          permissions.report.merchant.extract.menu && {
             title: t("wiki.fee"),
             description: t("wiki.fee_description"),
             target: () => refFee.current,
           },
-          (permissions?.report?.deposit?.generated_deposit
-            ?.report_deposit_generated_deposit_list_totals ||
-            permissions?.report?.withdraw?.generated_withdraw
-              ?.report_withdraw_generated_withdraw_list_totals) && {
+          (permissions.report.deposit.generated_deposit
+            .report_deposit_generated_deposit_list_totals ||
+            permissions.report.withdraw.generated_withdraw
+              .report_withdraw_generated_withdraw_list_totals) && {
             title: t("wiki.in_out_conversions"),
             description: t("wiki.in_out_conversions_description"),
             target: () => refInOut.current,
           },
-          permissions?.report?.deposit?.generated_deposit
-            ?.report_deposit_generated_deposit_list_totals && {
+          permissions.report.deposit.generated_deposit
+            .report_deposit_generated_deposit_list_totals && {
             title: t("wiki.in_conversions"),
             description: t("wiki.in_conversions_description"),
             target: () => refIn.current,
           },
-          permissions?.report?.withdraw?.generated_withdraw
-            ?.report_withdraw_generated_withdraw_list_totals && {
+          permissions.report.withdraw.generated_withdraw
+            .report_withdraw_generated_withdraw_list_totals && {
             title: t("wiki.out_conversions"),
             description: t("wiki.out_conversions_description"),
             target: () => refOut.current,
@@ -678,6 +1018,33 @@ export const Dashboard = () => {
           title: t("menus.dashboard"),
           description: t("wiki.dashboard_description"),
         }}
+      /> */}
+      <FiltersModal
+        data-test-id="filters-modal"
+        open={isFiltersOpen}
+        setOpen={setIsFiltersOpen}
+        query={query}
+        setQuery={setQuery}
+        filters={[
+          "start_date",
+          "end_date",
+          "partner_id",
+          "merchant_id",
+          "aggregator_id",
+          "operator_id",
+          "type",
+          "payment_type",
+        ]}
+        refetch={refetchMerchantBankStatementTotalsTotal}
+        selectOptions={{
+          type: ["deposit", "withdraw"],
+          payment_type: ["pix"],
+        }}
+        startDateKeyName="start_date"
+        endDateKeyName="end_date"
+        initialQuery={INITIAL_QUERY}
+        haveInitialDate
+        maxRange
       />
     </Row>
   );

@@ -1,15 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { ReloadOutlined } from "@ant-design/icons";
 import { useGetMerchantBalanceTotal } from "@src/services/consult/merchant/balance/getMerchantBalanceTotal";
 import { MerchantBalanceQuery } from "@src/services/types/consult/merchant/balance";
 import { defaultTheme } from "@src/styles/defaultTheme";
-import { Button, Card, Col, Row, Statistic } from "antd";
+import { moneyFormatter } from "@src/utils/moneyFormatter";
+import { Card, Col, Row, Statistic } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import "./style.css";
-import { moneyFormatter } from "@src/utils/moneyFormatter";
 
 interface MerchantBalanceInterface {
   customQuery?: any;
@@ -37,7 +36,7 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
         <>
           <Col
             xs={{ span: 24 }}
-            md={{ span: 5 }}
+            md={{ span: 6 }}
             style={{
               minWidth: isMerchantBalanceFetching ? "220px" : undefined,
             }}
@@ -486,23 +485,7 @@ export const MerchantBalance = ({ customQuery }: MerchantBalanceInterface) => {
               )} */}
             </Card>
           </Col>
-          <Col
-            xs={24}
-            md={1}
-            style={{
-              display: "flex",
-              alignItems: "start",
-              justifyContent: "flex-start",
-            }}
-          >
-            <Button
-              data-test-id="button-1"
-              type="link"
-              loading={isMerchantBalanceFetching}
-              onClick={refetchMerchantBalance}
-              icon={<ReloadOutlined />}
-            ></Button>
-          </Col>
+        
         </>
       )}
     </Row>

@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { ReloadOutlined } from "@ant-design/icons";
 import { useGetOrganizationBalance } from "@src/services/consult/organization/balance/getPerBank";
 import { defaultTheme } from "@src/styles/defaultTheme";
 import { moneyFormatter } from "@src/utils/moneyFormatter";
-import { Button, Card, Col, Row, Statistic } from "antd";
+import { Card, Col, Row, Statistic } from "antd";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -11,7 +10,6 @@ export const OrganizationBalance = () => {
   const { t } = useTranslation();
   const {
     OrganizationBalance,
-    refetchOrganizationBalance,
     isOrganizationBalanceFetching,
   } = useGetOrganizationBalance();
   const [isHoverCurrency] = useState<"real" | "dolar" | "euro" | "btc">("real");
@@ -23,7 +21,7 @@ export const OrganizationBalance = () => {
         <>
           <Col
             xs={{ span: 24 }}
-            md={{ span: 5 }}
+            md={{ span: 6 }}
             style={{
               minWidth: isOrganizationBalanceFetching ? "222px" : undefined,
             }}
@@ -467,22 +465,7 @@ export const OrganizationBalance = () => {
               )} */}
             </Card>
           </Col>
-          <Col
-            xs={24}
-            md={1}
-            style={{
-              display: "flex",
-              alignItems: "start",
-              justifyContent: "flex-start",
-            }}
-          >
-            <Button
-              type="link"
-              loading={isOrganizationBalanceFetching}
-              onClick={refetchOrganizationBalance}
-              icon={<ReloadOutlined />}
-            ></Button>
-          </Col>
+         
         </>
       )}
     </Row>

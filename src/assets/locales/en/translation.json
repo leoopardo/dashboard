@@ -330,7 +330,8 @@
     "deposits_bank": "Deposit banks",
     "withdraw_bank": "Withdrawal banks",
     "fastpix_bank": "FastPix banks",
-    "merchants_per_bank": "Total merchants per bank"
+    "merchants_per_bank": "Total merchants per bank",
+    "period_results": "Results for the period"
   },
 
   "messages": {
@@ -1205,7 +1206,12 @@
     "webhook": "Webhook",
     "registration_status": "Registration Status",
     "license_number": "License number",
-    "expiring_in_30_days": "Expiring"
+    "expiring_in_30_days": "Expiring",
+    "deposits_withdraws_view": "Deposits and withdrawals",
+    "real_time_last_30": "Real time last 30 minutes",
+    "transactions_by_minute": "Transactions by minute",
+    "in_out_last_30": "In/Out last 30 minutes",
+    "heat_map": "Heat map"
   },
   "actions": {
     "details": "Details",

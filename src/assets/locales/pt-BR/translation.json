@@ -335,7 +335,8 @@
     "deposits_bank": "Bancos de depósito",
     "withdraw_bank": "Bancos de saque",
     "fastpix_bank": "Bancos de FastPix",
-    "merchants_per_bank": "Total de empresas por banco"
+    "merchants_per_bank": "Total de empresas por banco",
+    "period_results": "Resultados do período"
   },
 
   "messages": {
@@ -1209,7 +1210,13 @@
     "webhook": "Webhook",
     "registration_status": "Situação Cadastral",
     "license_number": "N° da licença",
-    "expiring_in_30_days": "Expirando"
+    "expiring_in_30_days": "Expirando",
+    "deposits_withdraws_view": "Visualização de depósitos e saques",
+    "real_time_last_30": "Últimos 30 dias",
+    "transactions_by_minute": "Transações por minuto",
+    "in_out_last_30": "Entradas e saídas últimos 30 minutos",
+    "heat_map": "Mapa de calor"
+
   },
   "actions": {
     "details": "Detalhes",

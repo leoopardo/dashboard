@@ -8,12 +8,8 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 export const MerchantsBalance = ({
-  ref,
-  refs,
   query,
 }: {
-  ref: any;
-  refs: any[];
   query: any;
 }) => {
   const { t } = useTranslation();
@@ -29,7 +25,7 @@ export const MerchantsBalance = ({
   return (
     <Col span={24}>
       <Divider orientation="left" data-test-id="divider-1">
-        <Typography.Title ref={ref} data-test-id="text-1" level={4}>
+        <Typography.Title data-test-id="text-1" level={4}>
           {t("table.merchants_balance")}
         </Typography.Title>
       </Divider>
@@ -46,10 +42,10 @@ export const MerchantsBalance = ({
         items={MerchantBalance?.items}
         error={false}
         columns={[
-          { name: "merchant_name", type: "text", key: refs[0] },
-          { name: "balance_to_transactions", type: "value", key: refs[1] },
-          { name: "balance_to_payment", type: "value", key: refs[2] },
-          { name: "balance_reserved", type: "value", key: refs[3] },
+          { name: "merchant_name", type: "text" },
+          { name: "balance_to_transactions", type: "value" },
+          { name: "balance_to_payment", type: "value" },
+          { name: "balance_reserved", type: "value" },
         ]}
         label={["merchant_name", "balance_to_transactions"]}
         disableScrollToTop
