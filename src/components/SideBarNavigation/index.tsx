@@ -429,7 +429,7 @@ export const SidebarNavigation = () => {
              {isSidebarOpen && theme === "dark" && (
               <img
                 src={import.meta.env.VITE_APP_LOGO || PbLogoDark}
-                style={{ width: "180px", marginLeft: "-24px" }}
+                style={{ width: "160px" }}
               />
             )}
             {!isSidebarOpen ? (
