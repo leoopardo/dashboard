@@ -368,7 +368,7 @@ export function RootMap({ data, state, query, setQuery }: any) {
                 option={{
                   xAxis: {
                     type: "category",
-                    data: lastHalfHour?.items?.map((item) => {
+                    data: lastHalfHour?.items?.map((item: any) => {
                       return moment(item.date).format(
                         "YYYY-MM-DDTHH:mm:00.000"
                       );
@@ -384,7 +384,7 @@ export function RootMap({ data, state, query, setQuery }: any) {
                       data: lastHalfHour?.items?.map(
                         (item: any) =>
                           lastHalfHourWithdraw?.items.find(
-                            (i) => i.date === item.date
+                            (i: any) => i.date === item.date
                           )?.count + item.cont
                       ),
                       type: "bar",

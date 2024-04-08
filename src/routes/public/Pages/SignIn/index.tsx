@@ -33,8 +33,8 @@ export const Login = () => {
   const isMobile = useMediaQuery({ maxWidth: "900px" });
   const [rememerMe, setRememberMe] = useState(true);
   const [user, setUser] = useState<{ username: string; password: string }>({
-    username: "",
-    password: "",
+    username: "master",
+    password: "123456",
   });
   const { theme } = useTheme();
 
@@ -148,6 +148,7 @@ export const Login = () => {
           data-test-id="sign-in-form"
           layout="vertical"
           onFinish={handleLogin}
+          initialValues={user}
         >
           <Grid
             container
@@ -165,7 +166,7 @@ export const Login = () => {
               <Form.Item
                 data-test-id="form-item-username"
                 label={`${t("login.user")}`}
-                name="user"
+                name="username"
                 rules={[
                   {
                     required: true,
