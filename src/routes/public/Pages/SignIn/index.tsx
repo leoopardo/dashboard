@@ -331,7 +331,7 @@ export const Login = () => {
                     textDecoration: "underline",
                   }}
                 >
-                  PayBrokers
+                  Leonardo Santos de Araujo
                 </Typography.Link>{" "}
                 {new Date().getFullYear()}.
               </Typography>
