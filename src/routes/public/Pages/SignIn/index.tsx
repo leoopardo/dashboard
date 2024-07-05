@@ -324,7 +324,7 @@ export const Login = () => {
               >
                 Copyright ©{" "}
                 <Typography.Link
-                  href="#"
+                  href="https://www.linkedin.com/in/leonardo-araujo-/"
                   target="_blank"
                   style={{
                     color: theme === "dark" ? "#fff" : "#4a4a4a",
